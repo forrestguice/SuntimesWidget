@@ -30,7 +30,7 @@ public class SuntimesWidgetSettings
     public static enum TimeMode
     {
         OFFICIAL("Actual Time"),
-        NAUTICAL("Natical Twiglight"),
+        NAUTICAL("Nautical Twilight"),
         CIVIL("Civil Twilight"),
         ASTRONOMICAL("Astronomical Twilight");
 

@@ -18,7 +18,9 @@
         <TextView
             style="@style/SunsetTimeTextSuffixView"
             android:id="@+id/text_time_sunset_suffix"
-            android:text="PM" />
+            android:text="PM"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical" />
 
     </LinearLayout>
 </merge>

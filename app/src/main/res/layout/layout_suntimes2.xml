@@ -4,12 +4,15 @@
     android:orientation="vertical"
     android:layout_width="match_parent">
 
-    <include layout="@layout/info_time_sunrise" />
-    <include layout="@layout/info_time_sunset" />
-
     <TextView style="@style/SunsetTimeTextTitleView"
         android:id="@+id/text_title"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:text="title" />
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:text="title"
+        android:gravity="left" />
+
+    <include layout="@layout/info_time_sunrise" />
+
+    <include layout="@layout/info_time_sunset" />
 
 </LinearLayout>

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -35,6 +36,8 @@ public class SuntimesWidgetSettingsActivity extends Activity
     private TextView label_timezone;
 
     private Spinner spinner_timeMode;
+
+    private CheckBox checkbox_showtitle;
 
     public SuntimesWidgetSettingsActivity()
     {
@@ -133,9 +136,8 @@ public class SuntimesWidgetSettingsActivity extends Activity
         //
         // widget: show title
         //
-
-        // TODO:
-
+        checkbox_showtitle = (CheckBox)findViewById(R.id.appwidget_appearance_showtitle);
+        checkbox_showtitle.setChecked(showTitle);
 
         //
         // widget: add button
@@ -204,7 +206,7 @@ public class SuntimesWidgetSettingsActivity extends Activity
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
 
             // save: appearance (show title)
-            boolean showTitle = false;  // TODO
+            boolean showTitle = checkbox_showtitle.isChecked();
             SuntimesWidgetSettings.saveShowTitlePref(context, appWidgetId, showTitle);
 
             // save: time mode

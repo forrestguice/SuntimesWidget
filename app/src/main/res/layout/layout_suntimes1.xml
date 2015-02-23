@@ -3,6 +3,13 @@
     style="@style/SunsetTimeWidget"
     android:orientation="vertical">
 
+    <TextView style="@style/SunsetTimeTextTitleView"
+        android:id="@+id/text_title"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="title"
+        android:gravity="left" />
+
     <LinearLayout
         style="@style/SunsetTimeLayout"
         android:orientation="horizontal"

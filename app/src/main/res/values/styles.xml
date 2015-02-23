@@ -44,7 +44,7 @@
     </style>
 
     <style name="SunsetTimeTextTitleView" parent="SunsetTimeTextView">
-        <item name="android:textSize">6sp</item>
+        <item name="android:textSize">8sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_gravity">bottom</item>
     </style>

@@ -228,12 +228,7 @@ public class SuntimesWidget extends AppWidgetProvider
         views.setViewVisibility(R.id.text_delta_day_units, (dayDeltaUnits.trim().equals("") ? View.GONE : View.VISIBLE));
         views.setViewVisibility(R.id.text_delta_day_suffix, (dayDeltaSuffix.trim().equals("") ? View.GONE : View.VISIBLE));
 
-        if (showTitle)
-        {
-            // TODO
-        } else {
-            // TODO
-        }
+        views.setViewVisibility(R.id.text_title, ((showTitle) ? View.VISIBLE : View.GONE));
 
         // update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
