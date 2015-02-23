@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout style="@style/SunsetTimeLayout"
+        android:orientation="horizontal">
+
+        <ImageView
+            style="@style/SunsetTimeImageView"
+            android:id="@+id/icon_time_sunrise"
+            android:background="@drawable/ic_sunrise" />
+
+        <TextView
+            style="@style/SunsetTimeTextView"
+            android:id="@+id/text_time_sunrise"
+            android:textColor="@color/sunicon_color_rising"
+            android:text="7:00" />
+
+        <TextView
+            style="@style/SunsetTimeTextSuffixView"
+            android:id="@+id/text_time_sunrise_suffix"
+            android:text="AM" />
+
+    </LinearLayout>
+
+</merge>

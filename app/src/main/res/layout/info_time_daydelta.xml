@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout style="@style/SunsetTimeLayout"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/SunsetTimeTextView"
+            android:id="@+id/text_delta_day_prefix"
+            android:gravity="left"
+            android:layout_weight="0"
+            android:text="Tomorrow will be" />
+
+        <TextView
+            style="@style/SunsetTimeTextView"
+            android:id="@+id/text_delta_day_value"
+            android:gravity="left"
+            android:layout_weight="0"
+            android:text="4" />
+
+        <TextView
+            style="@style/SunsetTimeTextView"
+            android:id="@+id/text_delta_day_units"
+            android:gravity="left"
+            android:layout_weight="0"
+            android:text="min" />
+
+        <TextView
+            style="@style/SunsetTimeTextView"
+            android:id="@+id/text_delta_day_suffix"
+            android:gravity="left"
+            android:layout_weight="1"
+            android:text="shorter" />
+
+    </LinearLayout>
+</merge>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout style="@style/SunsetTimeLayout"
+        android:orientation="horizontal">
+
+        <ImageView
+            style="@style/SunsetTimeImageView"
+            android:id="@+id/icon_time_sunset"
+            android:background="@drawable/ic_sunset" />
+
+        <TextView
+            style="@style/SunsetTimeTextView"
+            android:id="@+id/text_time_sunset"
+            android:textColor="@color/sunicon_color_setting"
+            android:text="4:20" />
+
+        <TextView
+            style="@style/SunsetTimeTextSuffixView"
+            android:id="@+id/text_time_sunset_suffix"
+            android:text="PM" />
+
+    </LinearLayout>
+</merge>

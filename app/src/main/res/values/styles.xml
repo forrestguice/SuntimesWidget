@@ -1,0 +1,59 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="SunsetTimeLayout">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
+    <style name="SunsetTimeWidget">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">@dimen/widget_padding_left</item>
+        <item name="android:paddingRight">@dimen/widget_padding_right</item>
+        <item name="android:paddingTop">@dimen/widget_padding_top</item>
+        <item name="android:paddingBottom">@dimen/widget_padding_bottom</item>
+        <item name="android:background">@drawable/bg_widget_dark</item>
+    </style>
+
+    <style name="SunsetTimeImageView">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical|right</item>
+        <item name="android:layout_marginLeft">2dp</item>
+        <item name="android:layout_marginRight">0dp</item>
+    </style>
+
+    <style name="SunsetTimeTextView" parent="TextAppearance.AppCompat.Small">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_marginLeft">2dp</item>
+        <item name="android:layout_marginRight">0dp</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:layout_marginBottom">2dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:antialias">true</item>
+    </style>
+
+    <style name="SunsetTimeTextTitleView" parent="SunsetTimeTextView">
+        <item name="android:textSize">6sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_gravity">bottom</item>
+    </style>
+
+    <style name="SunsetTimeTextSuffixView" parent="SunsetTimeTextView">
+        <item name="android:textSize">6sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+
+</resources>

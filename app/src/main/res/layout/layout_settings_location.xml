@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:paddingTop="16dp">
+
+        <TextView
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Location Settings" />
+        
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="16dp" android:paddingLeft="16dp" android:paddingTop="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="Mode:" />
+
+            <Spinner android:id="@+id/appwidget_location_mode" android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <GridLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:columnCount="2" android:rowCount="2" android:orientation="horizontal"
+            android:paddingLeft="16dp" android:paddingRight="16dp" android:paddingTop="8dp">
+
+            <TextView android:id="@+id/appwidget_location_lat_label"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="Latitude:" android:enabled="false"/>
+
+            <EditText android:id="@+id/appwidget_location_lat"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:inputType="text" android:text="0.000" android:enabled="false" />
+
+            <TextView android:id="@+id/appwidget_location_lon_label"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="Longitude:" android:enabled="false" />
+
+            <EditText android:id="@+id/appwidget_location_lon"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:inputType="text" android:text="0.000" android:enabled="false" />
+
+        </GridLayout>
+
+    </LinearLayout>
+
+</merge>

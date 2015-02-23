@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/SunsetTimeWidget"
+    android:orientation="vertical">
+
+    <LinearLayout
+        style="@style/SunsetTimeLayout"
+        android:orientation="horizontal"
+        android:showDividers="middle"
+        android:divider="@drawable/ic_spacer">
+
+        <include layout="@layout/info_time_sunrise" />
+
+        <include layout="@layout/info_time_sunset" />
+
+    </LinearLayout>
+
+    <include layout="@layout/info_time_daydelta" />
+
+</LinearLayout>

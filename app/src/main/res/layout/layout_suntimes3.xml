@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/SunsetTimeWidget"
+    android:orientation="vertical">
+
+    <GridLayout
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:columnCount="3" android:rowCount="2"
+        android:orientation="horizontal">
+
+        <include layout="@layout/info_time_sunrise" />
+        <ImageView android:layout_width="@dimen/widget_layout_spacing_small" android:layout_height="@dimen/widget_layout_spacing_small" />
+        <include layout="@layout/info_time_sunset" />
+
+        <include layout="@layout/info_delta_sunrise" />
+        <ImageView android:layout_width= "@dimen/widget_layout_spacing_small" android:layout_height="@dimen/widget_layout_spacing_small" />
+        <include layout="@layout/info_delta_sunset" />
+
+    </GridLayout>
+
+</LinearLayout>

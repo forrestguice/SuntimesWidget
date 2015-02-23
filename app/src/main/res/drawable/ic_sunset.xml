@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:insetTop="@dimen/sunicon_inset">
+
+    <shape android:shape="oval">
+        <size android:width="@dimen/sunicon_width" android:height="@dimen/sunicon_height" />
+        <solid android:color="@color/sunicon_color_setting" />
+
+        <stroke android:width="@dimen/sunicon_width_settingBorder"
+                android:color="@color/sunicon_color_settingBorder" />
+
+    </shape>
+</inset>

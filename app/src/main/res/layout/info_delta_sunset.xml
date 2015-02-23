@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout style="@style/SunsetTimeLayout"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/SunsetTimeTextView"
+            android:id="@+id/text_delta_sunset"
+            android:textColor="@color/sunicon_color_setting"
+            android:text="+0:40"
+            android:textSize="8sp" />
+
+        <TextView
+            style="@style/SunsetTimeTextView"
+            android:id="@+id/text_delta_sunset_suffix"
+            android:text="min"
+            android:textSize="10sp" />
+
+
+    </LinearLayout>
+</merge>

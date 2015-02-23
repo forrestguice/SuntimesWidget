@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/SunsetTimeWidget"
+    android:orientation="vertical"
+    android:layout_width="match_parent">
+
+    <include layout="@layout/info_time_sunrise" />
+    <include layout="@layout/info_time_sunset" />
+
+    <TextView style="@style/SunsetTimeTextTitleView"
+        android:id="@+id/text_title"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="title" />
+
+</LinearLayout>
