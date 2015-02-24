@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -38,6 +39,8 @@ public class SuntimesWidgetSettingsActivity extends Activity
     private Spinner spinner_timeMode;
 
     private CheckBox checkbox_showtitle;
+    private EditText text_titletext;
+    private TextView label_titletext;
 
     public SuntimesWidgetSettingsActivity()
     {
@@ -74,6 +77,7 @@ public class SuntimesWidgetSettingsActivity extends Activity
         String timezone = SuntimesWidgetSettings.loadTimezonePref(context, appWidgetId);
 
         boolean showTitle = SuntimesWidgetSettings.loadShowTitlePref(context, appWidgetId);
+        String titleText = SuntimesWidgetSettings.loadTitleTextPref(context, appWidgetId);
 
         //
         // widget: time mode
@@ -137,13 +141,27 @@ public class SuntimesWidgetSettingsActivity extends Activity
         // widget: show title
         //
         checkbox_showtitle = (CheckBox)findViewById(R.id.appwidget_appearance_showtitle);
+        checkbox_showtitle.setOnCheckedChangeListener(onShowTitleListener);
         checkbox_showtitle.setChecked(showTitle);
+
+        //
+        // widget: title text
+        //
+        label_titletext = (TextView)findViewById(R.id.appwidget_appearance_titletext_label);
+        text_titletext = (EditText)findViewById(R.id.appwidget_appearance_titletext);
+        text_titletext.setText(titleText);
 
         //
         // widget: add button
         //
         Button button_addWidget = (Button)findViewById(R.id.add_button);
         button_addWidget.setOnClickListener(onAddButtonClickListener);
+    }
+
+    private void setTitleTextEnabled( boolean value )
+    {
+        label_titletext.setEnabled(value);
+        text_titletext.setEnabled(value);
     }
 
     private void setCustomTimezoneEnabled( boolean value )
@@ -160,6 +178,18 @@ public class SuntimesWidgetSettingsActivity extends Activity
         label_locationLat.setEnabled(value);
         text_locationLat.setEnabled(value);
     }
+
+    /**
+     *
+     */
+    CheckBox.OnCheckedChangeListener onShowTitleListener = new CheckBox.OnCheckedChangeListener()
+    {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+        {
+            setTitleTextEnabled(isChecked);
+        }
+    };
 
     /**
      *
@@ -208,6 +238,10 @@ public class SuntimesWidgetSettingsActivity extends Activity
             // save: appearance (show title)
             boolean showTitle = checkbox_showtitle.isChecked();
             SuntimesWidgetSettings.saveShowTitlePref(context, appWidgetId, showTitle);
+
+            // save:: appearance (title text)
+            String titleText = text_titletext.getText().toString().trim();
+            SuntimesWidgetSettings.saveTitleTextPref(context, appWidgetId, titleText);
 
             // save: time mode
             final SuntimesWidgetSettings.TimeMode[] timeModes = SuntimesWidgetSettings.TimeMode.values();

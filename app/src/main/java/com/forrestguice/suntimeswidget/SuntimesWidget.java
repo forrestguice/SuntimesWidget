@@ -53,15 +53,13 @@ public class SuntimesWidget extends AppWidgetProvider
     @Override
     public void onEnabled(Context context)
     {
-        // Enter relevant functionality for when the first widget is created
-        // TODO
+        // functionality for when the first widget is created
     }
 
     @Override
     public void onDisabled(Context context)
     {
-        // Enter relevant functionality for when the last widget is disabled
-        // TODO
+        // functionality for when the last widget is disabled
     }
 
     public static TimeDisplayText calendarTimeShortDisplayString(Context context, Calendar cal)
@@ -110,9 +108,32 @@ public class SuntimesWidget extends AppWidgetProvider
     }
 
     /**
-     * @param context
-     * @param appWidgetManager
-     * @param appWidgetId
+     * Creates a title string from a given title "pattern".
+     *
+     * The following substitutions are supported:
+     *   %% .. the % character
+     *   %m .. the time mode (e.g. nautical / civil / actual) -> timeMode.getDisplayString()
+     *
+     * @param titlePattern a pattern string (simple substitutions)
+     * @return a display string suitable for display as a widget title
+     */
+    private static String displayStringForTitlePattern(String titlePattern, Context context, int appWidgetId)
+    {
+        SuntimesWidgetSettings.TimeMode timeMode = SuntimesWidgetSettings.loadTimeModePref(context, appWidgetId);
+
+        String displayString = titlePattern;
+        String modePattern = "%m";
+        String percentPattern = "%%";
+
+        displayString = displayString.replaceAll(modePattern, timeMode.getDisplayString());
+        displayString = displayString.replaceAll(percentPattern, "%");
+        return displayString;
+    }
+
+    /**
+     * @param context the application context
+     * @param appWidgetManager widget manager
+     * @param appWidgetId id of widget to be updated
      */
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
@@ -139,11 +160,14 @@ public class SuntimesWidget extends AppWidgetProvider
         }
 
         boolean showTitle = SuntimesWidgetSettings.loadShowTitlePref(context, appWidgetId);
-        views.setTextViewText(R.id.text_title, timeMode.getDisplayString());
+        String titlePattern = SuntimesWidgetSettings.loadTitleTextPref(context, appWidgetId);
+        String titleText = displayStringForTitlePattern(titlePattern, context, appWidgetId);
+        views.setTextViewText(R.id.text_title, titleText);
         views.setViewVisibility(R.id.text_title, showTitle ? View.VISIBLE : View.GONE);
 
         Log.v("DEBUG", "rows: " + widgetRows + ", " + "cols: " + widgetCols);
         Log.v("DEBUG", "show title: " + showTitle);
+        Log.v("DEBUG", "title text: " + titleText);
         Log.v("DEBUG", "time mode: " + timeMode);
         Log.v("DEBUG", "location_mode: " + locationMode.name());
         Log.v("DEBUG", "latitude: " + location.getLatitude().toPlainString());
@@ -235,7 +259,7 @@ public class SuntimesWidget extends AppWidgetProvider
     }
 
     /**
-     * @param context
+     * @param context the application context
      * @param rows number of rows in widget
      * @param columns number of cols in widget
      * @return a RemoteViews instance for the specified widget size

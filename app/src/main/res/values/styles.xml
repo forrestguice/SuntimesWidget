@@ -43,6 +43,10 @@
         <item name="android:antialias">true</item>
     </style>
 
+    <style name="SunsetTimeTextView2" parent="SunsetTimeTextView">
+        <item name="android:textSize">10sp</item>
+    </style>
+
     <style name="SunsetTimeTextTitleView" parent="SunsetTimeTextView">
         <item name="android:textSize">8sp</item>
         <item name="android:textStyle">bold</item>

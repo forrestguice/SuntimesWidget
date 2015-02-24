@@ -3,6 +3,13 @@
     style="@style/SunsetTimeWidget"
     android:orientation="vertical">
 
+    <TextView style="@style/SunsetTimeTextTitleView"
+        android:id="@+id/text_title"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="title"
+        android:gravity="left" />
+
     <GridLayout
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:columnCount="3" android:rowCount="2"
@@ -17,11 +24,5 @@
         <include layout="@layout/info_delta_sunset" />
 
     </GridLayout>
-
-    <TextView style="@style/SunsetTimeTextTitleView"
-        android:id="@+id/text_title"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:text="title" />
 
 </LinearLayout>

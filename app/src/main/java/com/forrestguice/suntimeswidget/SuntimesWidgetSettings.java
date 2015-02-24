@@ -45,7 +45,6 @@ public class SuntimesWidgetSettings
         {
             return displayString;
         }
-
     }
 
     /**
@@ -61,6 +60,9 @@ public class SuntimesWidgetSettings
 
     public static final String PREF_KEY_APPEARANCE_SHOWTITLE = "showtitle";
     public static final boolean PREF_DEF_APPEARANCE_SHOWTITLE = false;
+
+    private static final String PREF_KEY_APPEARANCE_TITLETEXT = "titletext";
+    private static final String PREF_DEF_APPEARANCE_TITLETEXT = "%m";
 
     public static final String PREF_KEY_GENERAL_MODE = "timemode";
     public static final TimeMode PREF_DEF_GENERAL_MODE = TimeMode.OFFICIAL;
@@ -99,6 +101,28 @@ public class SuntimesWidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
         prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_SHOWTITLE);
+        prefs.commit();
+    }
+
+
+    static void saveTitleTextPref(Context context, int appWidgetId, String titleText)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.putString(prefs_prefix + PREF_KEY_APPEARANCE_TITLETEXT, titleText);
+        prefs.commit();
+    }
+    static String loadTitleTextPref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        return prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_TITLETEXT, PREF_DEF_APPEARANCE_TITLETEXT);
+    }
+    static void deleteTitleTextPref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_TITLETEXT);
         prefs.commit();
     }
 
@@ -250,6 +274,7 @@ public class SuntimesWidgetSettings
     static void deletePrefs(Context context, int appWidgetId)
     {
         deleteShowTitlePref(context, appWidgetId);
+        deleteTitleTextPref(context, appWidgetId);
 
         deleteTimeModePref(context, appWidgetId);
 
