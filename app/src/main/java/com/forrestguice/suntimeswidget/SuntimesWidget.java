@@ -110,11 +110,12 @@ public class SuntimesWidget extends AppWidgetProvider
     }
 
     /**
-     * Creates a title string from a given title "pattern".
+     * Creates a title string from a given "title pattern".
      *
      * The following substitutions are supported:
      *   %% .. the % character
-     *   %m .. the time mode (e.g. nautical / civil / actual) -> timeMode.getDisplayString()
+     *   %m .. the time mode (e.g. nautical twilight / civil twilight / actual time) -> timeMode.getLongDisplayString()
+     *   %M .. the time mode (short version) -> timeMode.getShortDisplayString()
      *
      * @param titlePattern a pattern string (simple substitutions)
      * @return a display string suitable for display as a widget title
@@ -124,10 +125,12 @@ public class SuntimesWidget extends AppWidgetProvider
         SuntimesWidgetSettings.TimeMode timeMode = SuntimesWidgetSettings.loadTimeModePref(context, appWidgetId);
 
         String displayString = titlePattern;
-        String modePattern = "%m";
+        String modePattern = "%M";
+        String modePatternShort = "%m";
         String percentPattern = "%%";
 
-        displayString = displayString.replaceAll(modePattern, timeMode.getDisplayString());
+        displayString = displayString.replaceAll(modePatternShort, timeMode.getShortDisplayString());
+        displayString = displayString.replaceAll(modePattern, timeMode.getLongDisplayString());
         displayString = displayString.replaceAll(percentPattern, "%");
         return displayString;
     }
@@ -167,6 +170,8 @@ public class SuntimesWidget extends AppWidgetProvider
         views.setTextViewText(R.id.text_title, titleText);
         views.setViewVisibility(R.id.text_title, showTitle ? View.VISIBLE : View.GONE);
 
+        boolean compareToTomorrow = false;      // TODO: from settings
+
         Log.v("DEBUG", "rows: " + widgetRows + ", " + "cols: " + widgetCols);
         Log.v("DEBUG", "show title: " + showTitle);
         Log.v("DEBUG", "title text: " + titleText);
@@ -176,46 +181,47 @@ public class SuntimesWidget extends AppWidgetProvider
         Log.v("DEBUG", "longitude: " + location.getLongitude().toPlainString());
         Log.v("DEBUG", "timezone_mode: " + timezoneMode.name());
         Log.v("DEBUG", "timezone: " + timezone);
+        Log.v("DEBUG", "compareToTomorrow: " + compareToTomorrow);
 
         SunriseSunsetCalculator calculator = new SunriseSunsetCalculator(location, timezone);
         Calendar todaysCalendar = Calendar.getInstance();
-        Calendar tomorrowsCalendar = Calendar.getInstance();
-        tomorrowsCalendar.add(Calendar.DAY_OF_MONTH, 1);
+        Calendar otherCalendar = Calendar.getInstance();
+        otherCalendar.add(Calendar.DAY_OF_MONTH, ((compareToTomorrow) ? 1 : -1));
 
         Calendar sunriseCalendarToday;
         Calendar sunsetCalendarToday;
-        Calendar sunriseCalendarTomorrow;
-        Calendar sunsetCalendarTomorrow;
+        Calendar sunriseCalendarOther;
+        Calendar sunsetCalendarOther;
 
         switch (timeMode)
         {
             case CIVIL:
                 sunriseCalendarToday = calculator.getCivilSunriseCalendarForDate(todaysCalendar);
                 sunsetCalendarToday = calculator.getCivilSunsetCalendarForDate(todaysCalendar);
-                sunriseCalendarTomorrow = calculator.getCivilSunriseCalendarForDate(tomorrowsCalendar);
-                sunsetCalendarTomorrow = calculator.getCivilSunsetCalendarForDate(tomorrowsCalendar);
+                sunriseCalendarOther = calculator.getCivilSunriseCalendarForDate(otherCalendar);
+                sunsetCalendarOther = calculator.getCivilSunsetCalendarForDate(otherCalendar);
                 break;
 
             case NAUTICAL:
                 sunriseCalendarToday = calculator.getNauticalSunriseCalendarForDate(todaysCalendar);
                 sunsetCalendarToday = calculator.getNauticalSunsetCalendarForDate(todaysCalendar);
-                sunriseCalendarTomorrow = calculator.getNauticalSunriseCalendarForDate(tomorrowsCalendar);
-                sunsetCalendarTomorrow = calculator.getNauticalSunsetCalendarForDate(tomorrowsCalendar);
+                sunriseCalendarOther = calculator.getNauticalSunriseCalendarForDate(otherCalendar);
+                sunsetCalendarOther = calculator.getNauticalSunsetCalendarForDate(otherCalendar);
                 break;
 
             case ASTRONOMICAL:
                 sunriseCalendarToday = calculator.getAstronomicalSunriseCalendarForDate(todaysCalendar);
                 sunsetCalendarToday = calculator.getAstronomicalSunsetCalendarForDate(todaysCalendar);
-                sunriseCalendarTomorrow = calculator.getAstronomicalSunriseCalendarForDate(tomorrowsCalendar);
-                sunsetCalendarTomorrow = calculator.getAstronomicalSunsetCalendarForDate(tomorrowsCalendar);
+                sunriseCalendarOther = calculator.getAstronomicalSunriseCalendarForDate(otherCalendar);
+                sunsetCalendarOther = calculator.getAstronomicalSunsetCalendarForDate(otherCalendar);
                 break;
 
             case OFFICIAL:
             default:
                 sunriseCalendarToday = calculator.getOfficialSunriseCalendarForDate(todaysCalendar);
                 sunsetCalendarToday = calculator.getOfficialSunsetCalendarForDate(todaysCalendar);
-                sunriseCalendarTomorrow = calculator.getOfficialSunriseCalendarForDate(tomorrowsCalendar);
-                sunsetCalendarTomorrow = calculator.getOfficialSunsetCalendarForDate(tomorrowsCalendar);
+                sunriseCalendarOther = calculator.getOfficialSunriseCalendarForDate(otherCalendar);
+                sunsetCalendarOther = calculator.getOfficialSunsetCalendarForDate(otherCalendar);
                 break;
         }
 
@@ -238,15 +244,18 @@ public class SuntimesWidget extends AppWidgetProvider
         //views.setTextViewText(R.id.text_delta_sunset, sunsetDeltaString);
 
         // update day delta
+        String dayDeltaPrefix = (compareToTomorrow) ? context.getString(R.string.delta_day_tomorrow) :
+                                                      context.getString(R.string.delta_day_yesterday);
+
         long dayLengthToday = sunsetCalendarToday.getTimeInMillis() - sunriseCalendarToday.getTimeInMillis();
-        long dayLengthTomorrow = sunsetCalendarTomorrow.getTimeInMillis() - sunriseCalendarTomorrow.getTimeInMillis();
+        long dayLengthOther = sunsetCalendarOther.getTimeInMillis() - sunriseCalendarOther.getTimeInMillis();
 
-        TimeDisplayText dayDeltaString = timeDeltaLongDisplayString(dayLengthToday, dayLengthTomorrow);
-        String dayDeltaValue = dayDeltaString.getValue();
-        String dayDeltaUnits = dayDeltaString.getUnits();
-        String dayDeltaSuffix = dayDeltaString.getSuffix();
+        TimeDisplayText dayDeltaDisplay = timeDeltaLongDisplayString(dayLengthToday, dayLengthOther);
+        String dayDeltaValue = dayDeltaDisplay.getValue();
+        String dayDeltaUnits = dayDeltaDisplay.getUnits();
+        String dayDeltaSuffix = dayDeltaDisplay.getSuffix();
 
-        views.setTextViewText(R.id.text_delta_day_prefix, "Tomorrow will be");    // TODO: i18n
+        views.setTextViewText(R.id.text_delta_day_prefix, dayDeltaPrefix);
         views.setTextViewText(R.id.text_delta_day_value, dayDeltaValue);
         views.setTextViewText(R.id.text_delta_day_units, dayDeltaUnits);
         views.setTextViewText(R.id.text_delta_day_suffix, dayDeltaSuffix);

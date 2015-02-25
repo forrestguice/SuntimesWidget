@@ -5,11 +5,19 @@
     <string name="configure">Configure Widget</string>
     <string name="add_widget">Add Widget</string>
 
+    <string name="delta_day_tomorrow">Tomorrow will be</string>
+    <string name="delta_day_yesterday">Yesterday was</string>
+
     <string name="locationmode_current">Current Location</string>
     <string name="locationmode_custom">Custom Location</string>
 
     <string name="timezonemode_current">Current Timezone</string>
     <string name="timezonemode_custom">Custom Timezone</string>
+
+    <string name="timemode_official_short">Actual</string>
+    <string name="timemode_civil_short">Civil</string>
+    <string name="timemode_nautical_short">Nautical</string>
+    <string name="timemode_astronomical_short">Astronomical</string>
 
     <string name="timemode_official">Actual Time</string>
     <string name="timemode_civil">Civil Twilight</string>
