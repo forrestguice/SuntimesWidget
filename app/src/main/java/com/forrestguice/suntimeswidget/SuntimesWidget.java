@@ -33,6 +33,8 @@ public class SuntimesWidget extends AppWidgetProvider
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds)
     {
+        SuntimesWidgetSettings.TimeMode.initDisplayStrings(context);
+
         final int numWidgets = appWidgetIds.length;
         for (int i = 0; i < numWidgets; i++)
         {

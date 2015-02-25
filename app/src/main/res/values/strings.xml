@@ -5,4 +5,15 @@
     <string name="configure">Configure Widget</string>
     <string name="add_widget">Add Widget</string>
 
+    <string name="locationmode_current">Current Location</string>
+    <string name="locationmode_custom">Custom Location</string>
+
+    <string name="timezonemode_current">Current Timezone</string>
+    <string name="timezonemode_custom">Custom Timezone</string>
+
+    <string name="timemode_official">Actual Time</string>
+    <string name="timemode_civil">Civil Twilight</string>
+    <string name="timemode_nautical">Nautical Twilight</string>
+    <string name="timemode_astronomical">Astronomical Twilight</string>
+
 </resources>

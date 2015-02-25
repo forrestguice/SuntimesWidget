@@ -69,12 +69,15 @@ public class SuntimesWidgetSettingsActivity extends Activity
             return;
         }
 
+        SuntimesWidgetSettings.LocationMode.initDisplayStrings(context);
+        SuntimesWidgetSettings.TimezoneMode.initDisplayStrings(context);
+
         SuntimesWidgetSettings.TimeMode timeMode = SuntimesWidgetSettings.loadTimeModePref(context, appWidgetId);
         SuntimesWidgetSettings.LocationMode locationMode = SuntimesWidgetSettings.loadLocationModePref(context, appWidgetId);
         SuntimesWidgetSettings.TimezoneMode timezoneMode = SuntimesWidgetSettings.loadTimezoneModePref(context, appWidgetId);
 
         Location location = SuntimesWidgetSettings.loadLocationPref(context, appWidgetId);
-        String timezone = SuntimesWidgetSettings.loadTimezonePref(context, appWidgetId);
+        String timezone = SuntimesWidgetSettings.loadTimezonePref(context, appWidgetId);    // TODO: finish custom timezone feature
 
         boolean showTitle = SuntimesWidgetSettings.loadShowTitlePref(context, appWidgetId);
         String titleText = SuntimesWidgetSettings.loadTitleTextPref(context, appWidgetId);
@@ -138,18 +141,19 @@ public class SuntimesWidgetSettingsActivity extends Activity
         text_locationLat.setText(location.getLatitude().toPlainString());
 
         //
-        // widget: show title
-        //
-        checkbox_showtitle = (CheckBox)findViewById(R.id.appwidget_appearance_showtitle);
-        checkbox_showtitle.setOnCheckedChangeListener(onShowTitleListener);
-        checkbox_showtitle.setChecked(showTitle);
-
-        //
         // widget: title text
         //
         label_titletext = (TextView)findViewById(R.id.appwidget_appearance_titletext_label);
         text_titletext = (EditText)findViewById(R.id.appwidget_appearance_titletext);
         text_titletext.setText(titleText);
+
+        //
+        // widget: show title
+        //
+        checkbox_showtitle = (CheckBox)findViewById(R.id.appwidget_appearance_showtitle);
+        checkbox_showtitle.setOnCheckedChangeListener(onShowTitleListener);
+        checkbox_showtitle.setChecked(showTitle);
+        setTitleTextEnabled(showTitle);
 
         //
         // widget: add button
@@ -253,9 +257,9 @@ public class SuntimesWidgetSettingsActivity extends Activity
             SuntimesWidgetSettings.LocationMode locationMode = locationModes[ spinner_locationMode.getSelectedItemPosition() ];
             SuntimesWidgetSettings.saveLocationModePref(context, appWidgetId, locationMode);
 
-            // save: lon / lat
-            String longitude = text_locationLon.getText().toString();
+            // save: lat / lon
             String latitude = text_locationLat.getText().toString();
+            String longitude = text_locationLon.getText().toString();
             Location location = new Location(latitude, longitude);
             SuntimesWidgetSettings.saveLocationPref(context, appWidgetId, location);
 

@@ -11,8 +11,36 @@ public class SuntimesWidgetSettings
      */
     public static enum TimezoneMode
     {
-        CURRENT_TIMEZONE,
-        CUSTOM_TIMEZONE;
+        CURRENT_TIMEZONE("Current Timezone"),
+        CUSTOM_TIMEZONE("Custom Timezone");
+
+        private String displayString;
+
+        private TimezoneMode(String displayString)
+        {
+            this.displayString = displayString;
+        }
+
+        public String toString()
+        {
+            return displayString;
+        }
+
+        public String getDisplayString()
+        {
+            return displayString;
+        }
+
+        public void setDisplayString( String displayString )
+        {
+            this.displayString = displayString;
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            CURRENT_TIMEZONE.setDisplayString(context.getString(R.string.timezonemode_current));
+            CUSTOM_TIMEZONE.setDisplayString(context.getString(R.string.timezonemode_current));
+        }
     }
 
     /**
@@ -20,8 +48,36 @@ public class SuntimesWidgetSettings
      */
     public static enum LocationMode
     {
-        CURRENT_LOCATION,
-        CUSTOM_LOCATION;
+        CURRENT_LOCATION("Current Location"),
+        CUSTOM_LOCATION("Custom Location");
+
+        private String displayString;
+
+        private LocationMode(String displayString)
+        {
+            this.displayString = displayString;
+        }
+
+        public String toString()
+        {
+            return displayString;
+        }
+
+        public String getDisplayString()
+        {
+            return displayString;
+        }
+
+        public void setDisplayString( String displayString )
+        {
+            this.displayString = displayString;
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            CURRENT_LOCATION.setDisplayString(context.getString(R.string.locationmode_current));
+            CUSTOM_LOCATION.setDisplayString(context.getString(R.string.locationmode_custom));
+        }
     }
 
     /**
@@ -41,9 +97,27 @@ public class SuntimesWidgetSettings
             this.displayString = displayString;
         }
 
+        public String toString()
+        {
+            return displayString;
+        }
+
         public String getDisplayString()
         {
             return displayString;
+        }
+
+        public void setDisplayString(String displayString)
+        {
+            this.displayString = displayString;
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            OFFICIAL.setDisplayString( context.getString(R.string.timemode_official) );
+            NAUTICAL.setDisplayString( context.getString(R.string.timemode_nautical) );
+            CIVIL.setDisplayString(context.getString(R.string.timemode_civil));
+            ASTRONOMICAL.setDisplayString(context.getString(R.string.timemode_astronomical));
         }
     }
 
@@ -59,7 +133,7 @@ public class SuntimesWidgetSettings
     public static final String PREF_PREFIX_KEY_TIMEZONE = "_timezone_";
 
     public static final String PREF_KEY_APPEARANCE_SHOWTITLE = "showtitle";
-    public static final boolean PREF_DEF_APPEARANCE_SHOWTITLE = false;
+    public static final boolean PREF_DEF_APPEARANCE_SHOWTITLE = true;
 
     private static final String PREF_KEY_APPEARANCE_TITLETEXT = "titletext";
     private static final String PREF_DEF_APPEARANCE_TITLETEXT = "%m";
