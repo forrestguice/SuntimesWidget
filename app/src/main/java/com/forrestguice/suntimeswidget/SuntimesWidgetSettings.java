@@ -85,39 +85,61 @@ public class SuntimesWidgetSettings
      */
     public static enum TimeMode
     {
-        OFFICIAL("Actual Time"),
-        NAUTICAL("Nautical Twilight"),
-        CIVIL("Civil Twilight"),
-        ASTRONOMICAL("Astronomical Twilight");
+        OFFICIAL("Actual", "Actual Time"),
+        NAUTICAL("Nautical", "Nautical Twilight"),
+        CIVIL("Civil", "Civil Twilight"),
+        ASTRONOMICAL("Astronomical", "Astronomical Twilight");
 
-        private String displayString;
+        public static boolean shortDisplayStrings = false;
+        private String longDisplayString;
+        private String shortDisplayString;
 
-        private TimeMode(String displayString)
+        private TimeMode(String shortDisplayString, String longDisplayString)
         {
-            this.displayString = displayString;
+            this.shortDisplayString = shortDisplayString;
+            this.longDisplayString = longDisplayString;
         }
 
         public String toString()
         {
-            return displayString;
+            if (shortDisplayStrings)
+            {
+                return shortDisplayString;
+
+            } else {
+                return longDisplayString;
+            }
         }
 
-        public String getDisplayString()
+        public String getShortDisplayString()
         {
-            return displayString;
+            return shortDisplayString;
         }
 
-        public void setDisplayString(String displayString)
+        public String getLongDisplayString()
         {
-            this.displayString = displayString;
+            return longDisplayString;
+        }
+
+        public void setDisplayStrings(String shortDisplayString, String longDisplayString)
+        {
+            this.shortDisplayString = shortDisplayString;
+            this.longDisplayString = longDisplayString;
         }
 
         public static void initDisplayStrings( Context context )
         {
-            OFFICIAL.setDisplayString( context.getString(R.string.timemode_official) );
-            NAUTICAL.setDisplayString( context.getString(R.string.timemode_nautical) );
-            CIVIL.setDisplayString(context.getString(R.string.timemode_civil));
-            ASTRONOMICAL.setDisplayString(context.getString(R.string.timemode_astronomical));
+            OFFICIAL.setDisplayStrings( context.getString(R.string.timemode_official_short),
+                                        context.getString(R.string.timemode_official) );
+
+            NAUTICAL.setDisplayStrings( context.getString(R.string.timemode_nautical_short),
+                                        context.getString(R.string.timemode_nautical));
+
+            CIVIL.setDisplayStrings( context.getString(R.string.timemode_civil_short),
+                                     context.getString(R.string.timemode_civil) );
+
+            ASTRONOMICAL.setDisplayStrings( context.getString(R.string.timemode_astronomical_short),
+                                            context.getString(R.string.timemode_astronomical) );
         }
     }
 
