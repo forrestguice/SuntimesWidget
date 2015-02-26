@@ -170,7 +170,7 @@ public class SuntimesWidget extends AppWidgetProvider
         views.setTextViewText(R.id.text_title, titleText);
         views.setViewVisibility(R.id.text_title, showTitle ? View.VISIBLE : View.GONE);
 
-        boolean compareToTomorrow = false;      // TODO: from settings
+        SuntimesWidgetSettings.CompareMode compareMode = SuntimesWidgetSettings.loadCompareModePref(context, appWidgetId);
 
         Log.v("DEBUG", "rows: " + widgetRows + ", " + "cols: " + widgetCols);
         Log.v("DEBUG", "show title: " + showTitle);
@@ -181,13 +181,27 @@ public class SuntimesWidget extends AppWidgetProvider
         Log.v("DEBUG", "longitude: " + location.getLongitude().toPlainString());
         Log.v("DEBUG", "timezone_mode: " + timezoneMode.name());
         Log.v("DEBUG", "timezone: " + timezone);
-        Log.v("DEBUG", "compareToTomorrow: " + compareToTomorrow);
+        Log.v("DEBUG", "compare mode: " + compareMode.name());
 
-        SunriseSunsetCalculator calculator = new SunriseSunsetCalculator(location, timezone);
+        String dayDeltaPrefix = "";
         Calendar todaysCalendar = Calendar.getInstance();
         Calendar otherCalendar = Calendar.getInstance();
-        otherCalendar.add(Calendar.DAY_OF_MONTH, ((compareToTomorrow) ? 1 : -1));
 
+        switch (compareMode)
+        {
+            case YESTERDAY:
+                otherCalendar.add(Calendar.DAY_OF_MONTH, -1);
+                dayDeltaPrefix = context.getString(R.string.delta_day_yesterday);
+                break;
+
+            case TOMORROW:
+            default:
+                dayDeltaPrefix = context.getString(R.string.delta_day_tomorrow);
+                otherCalendar.add(Calendar.DAY_OF_MONTH, 1);
+                break;
+        }
+
+        SunriseSunsetCalculator calculator = new SunriseSunsetCalculator(location, timezone);
         Calendar sunriseCalendarToday;
         Calendar sunsetCalendarToday;
         Calendar sunriseCalendarOther;
@@ -244,9 +258,6 @@ public class SuntimesWidget extends AppWidgetProvider
         //views.setTextViewText(R.id.text_delta_sunset, sunsetDeltaString);
 
         // update day delta
-        String dayDeltaPrefix = (compareToTomorrow) ? context.getString(R.string.delta_day_tomorrow) :
-                                                      context.getString(R.string.delta_day_yesterday);
-
         long dayLengthToday = sunsetCalendarToday.getTimeInMillis() - sunriseCalendarToday.getTimeInMillis();
         long dayLengthOther = sunsetCalendarOther.getTimeInMillis() - sunriseCalendarOther.getTimeInMillis();
 

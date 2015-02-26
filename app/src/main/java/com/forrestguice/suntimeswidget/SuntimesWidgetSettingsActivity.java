@@ -37,6 +37,7 @@ public class SuntimesWidgetSettingsActivity extends Activity
     private TextView label_timezone;
 
     private Spinner spinner_timeMode;
+    private Spinner spinner_compareMode;
 
     private CheckBox checkbox_showtitle;
     private EditText text_titletext;
@@ -71,10 +72,12 @@ public class SuntimesWidgetSettingsActivity extends Activity
 
         SuntimesWidgetSettings.LocationMode.initDisplayStrings(context);
         SuntimesWidgetSettings.TimezoneMode.initDisplayStrings(context);
+        SuntimesWidgetSettings.CompareMode.initDisplayStrings(context);
 
         SuntimesWidgetSettings.TimeMode timeMode = SuntimesWidgetSettings.loadTimeModePref(context, appWidgetId);
         SuntimesWidgetSettings.LocationMode locationMode = SuntimesWidgetSettings.loadLocationModePref(context, appWidgetId);
         SuntimesWidgetSettings.TimezoneMode timezoneMode = SuntimesWidgetSettings.loadTimezoneModePref(context, appWidgetId);
+        SuntimesWidgetSettings.CompareMode compareMode = SuntimesWidgetSettings.loadCompareModePref(context, appWidgetId);
 
         Location location = SuntimesWidgetSettings.loadLocationPref(context, appWidgetId);
         String timezone = SuntimesWidgetSettings.loadTimezonePref(context, appWidgetId);    // TODO: finish custom timezone feature
@@ -91,7 +94,7 @@ public class SuntimesWidgetSettingsActivity extends Activity
                 SuntimesWidgetSettings.TimeMode.values());
         spinner_timeModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        spinner_timeMode = (Spinner)findViewById(R.id.appwidget_general_timemode);
+        spinner_timeMode = (Spinner)findViewById(R.id.appwidget_general_timeMode);
         spinner_timeMode.setAdapter(spinner_timeModeAdapter);
         spinner_timeMode.setSelection(timeMode.ordinal());
 
@@ -143,17 +146,30 @@ public class SuntimesWidgetSettingsActivity extends Activity
         //
         // widget: title text
         //
-        label_titletext = (TextView)findViewById(R.id.appwidget_appearance_titletext_label);
-        text_titletext = (EditText)findViewById(R.id.appwidget_appearance_titletext);
+        label_titletext = (TextView)findViewById(R.id.appwidget_appearance_titleText_label);
+        text_titletext = (EditText)findViewById(R.id.appwidget_appearance_titleText);
         text_titletext.setText(titleText);
 
         //
         // widget: show title
         //
-        checkbox_showtitle = (CheckBox)findViewById(R.id.appwidget_appearance_showtitle);
+        checkbox_showtitle = (CheckBox)findViewById(R.id.appwidget_appearance_showTitle);
         checkbox_showtitle.setOnCheckedChangeListener(onShowTitleListener);
         checkbox_showtitle.setChecked(showTitle);
         setTitleTextEnabled(showTitle);
+
+        //
+        // widget: compare mode
+        //
+        ArrayAdapter<SuntimesWidgetSettings.CompareMode> spinner_compareModeAdapter;
+        spinner_compareModeAdapter = new ArrayAdapter<SuntimesWidgetSettings.CompareMode>(this,
+                android.R.layout.simple_spinner_item,
+                SuntimesWidgetSettings.CompareMode.values());
+        spinner_compareModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner_compareMode = (Spinner)findViewById(R.id.appwidget_general_compareMode);
+        spinner_compareMode.setAdapter(spinner_compareModeAdapter);
+        spinner_compareMode.setSelection(compareMode.ordinal());
 
         //
         // widget: add button
@@ -271,6 +287,11 @@ public class SuntimesWidgetSettingsActivity extends Activity
             // save: custom timezone
             String customTimezone = SuntimesWidgetSettings.PREF_DEF_TIMEZONE_CUSTOM;  // TODO
             SuntimesWidgetSettings.saveTimezonePref(context, appWidgetId, customTimezone);
+
+            // save: compare mode
+            final SuntimesWidgetSettings.CompareMode[] compareModes = SuntimesWidgetSettings.CompareMode.values();
+            SuntimesWidgetSettings.CompareMode compareMode = compareModes[ spinner_compareMode.getSelectedItemPosition() ];
+            SuntimesWidgetSettings.saveCompareModePref(context, appWidgetId, compareMode);
 
             // update and return
             SuntimesWidget.updateAppWidget(context, appWidgetManager, appWidgetId);

@@ -7,6 +7,44 @@ import com.luckycatlabs.sunrisesunset.dto.Location;
 public class SuntimesWidgetSettings
 {
     /**
+     *
+     */
+    private static final String PREFS_NAME = "com.forrestguice.suntimeswidget.SuntimesWidget";
+
+    public static final String PREF_PREFIX_KEY = "appwidget_";
+    public static final String PREF_PREFIX_KEY_APPEARANCE = "_appearance_";
+    public static final String PREF_PREFIX_KEY_GENERAL = "_general_";
+    public static final String PREF_PREFIX_KEY_LOCATION = "_location_";
+    public static final String PREF_PREFIX_KEY_TIMEZONE = "_timezone_";
+
+    public static final String PREF_KEY_APPEARANCE_SHOWTITLE = "showtitle";
+    public static final boolean PREF_DEF_APPEARANCE_SHOWTITLE = true;
+
+    private static final String PREF_KEY_APPEARANCE_TITLETEXT = "titletext";
+    private static final String PREF_DEF_APPEARANCE_TITLETEXT = "%m";
+
+    public static final String PREF_KEY_GENERAL_TIMEMODE = "timemode";
+    public static final TimeMode PREF_DEF_GENERAL_TIMEMODE = TimeMode.OFFICIAL;
+
+    public static final String PREF_KEY_GENERAL_COMPAREMODE = "comparemode";
+    public static final CompareMode PREF_DEF_GENERAL_COMPAREMODE = CompareMode.TOMORROW;
+
+    public static final String PREF_KEY_LOCATION_MODE = "locationMode";
+    public static final LocationMode PREF_DEF_LOCATION_MODE = LocationMode.CUSTOM_LOCATION;
+
+    public static final String PREF_KEY_LOCATION_LONGITUDE = "longitude";
+    public static final String PREF_DEF_LOCATION_LONGITUDE = "-112.4677778";
+
+    public static final String PREF_KEY_LOCATION_LATITUDE = "latitude";
+    public static final String PREF_DEF_LOCATION_LATITUDE = "34.54";
+
+    public static final String PREF_KEY_TIMEZONE_MODE = "timezoneMode";
+    public static final TimezoneMode PREF_DEF_TIMEZONE_MODE = TimezoneMode.CUSTOM_TIMEZONE;
+
+    public static final String PREF_KEY_TIMEZONE_CUSTOM = "timezone";
+    public static final String PREF_DEF_TIMEZONE_CUSTOM = "US/Arizona";
+
+    /**
      * TimezoneMode
      */
     public static enum TimezoneMode
@@ -38,8 +76,8 @@ public class SuntimesWidgetSettings
 
         public static void initDisplayStrings( Context context )
         {
-            CURRENT_TIMEZONE.setDisplayString(context.getString(R.string.timezonemode_current));
-            CUSTOM_TIMEZONE.setDisplayString(context.getString(R.string.timezonemode_current));
+            CURRENT_TIMEZONE.setDisplayString(context.getString(R.string.timezoneMode_current));
+            CUSTOM_TIMEZONE.setDisplayString(context.getString(R.string.timezoneMode_current));
         }
     }
 
@@ -75,8 +113,42 @@ public class SuntimesWidgetSettings
 
         public static void initDisplayStrings( Context context )
         {
-            CURRENT_LOCATION.setDisplayString(context.getString(R.string.locationmode_current));
-            CUSTOM_LOCATION.setDisplayString(context.getString(R.string.locationmode_custom));
+            CURRENT_LOCATION.setDisplayString(context.getString(R.string.locationMode_current));
+            CUSTOM_LOCATION.setDisplayString(context.getString(R.string.locationMode_custom));
+        }
+    }
+
+    public static enum CompareMode
+    {
+        YESTERDAY("Yesterday"),
+        TOMORROW("Tomorrow");
+
+        private String displayString;
+
+        private CompareMode( String displayString )
+        {
+            this.displayString = displayString;
+        }
+
+        public String getDisplayString()
+        {
+            return displayString;
+        }
+
+        public void setDisplayString( String displayString )
+        {
+            this.displayString = displayString;
+        }
+
+        public String toString()
+        {
+            return displayString;
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            YESTERDAY.setDisplayString( context.getString(R.string.compareMode_yesterday) );
+            TOMORROW.setDisplayString( context.getString(R.string.compareMode_tomorrow) );
         }
     }
 
@@ -129,54 +201,19 @@ public class SuntimesWidgetSettings
 
         public static void initDisplayStrings( Context context )
         {
-            OFFICIAL.setDisplayStrings( context.getString(R.string.timemode_official_short),
-                                        context.getString(R.string.timemode_official) );
+            OFFICIAL.setDisplayStrings( context.getString(R.string.timeMode_official_short),
+                    context.getString(R.string.timeMode_official) );
 
-            NAUTICAL.setDisplayStrings( context.getString(R.string.timemode_nautical_short),
-                                        context.getString(R.string.timemode_nautical));
+            NAUTICAL.setDisplayStrings( context.getString(R.string.timeMode_nautical_short),
+                    context.getString(R.string.timeMode_nautical));
 
-            CIVIL.setDisplayStrings( context.getString(R.string.timemode_civil_short),
-                                     context.getString(R.string.timemode_civil) );
+            CIVIL.setDisplayStrings( context.getString(R.string.timeMode_civil_short),
+                    context.getString(R.string.timeMode_civil) );
 
-            ASTRONOMICAL.setDisplayStrings( context.getString(R.string.timemode_astronomical_short),
-                                            context.getString(R.string.timemode_astronomical) );
+            ASTRONOMICAL.setDisplayStrings( context.getString(R.string.timeMode_astronomical_short),
+                    context.getString(R.string.timeMode_astronomical) );
         }
     }
-
-    /**
-     *
-     */
-    private static final String PREFS_NAME = "com.forrestguice.suntimeswidget.SuntimesWidget";
-
-    public static final String PREF_PREFIX_KEY = "appwidget_";
-    public static final String PREF_PREFIX_KEY_APPEARANCE = "_appearance_";
-    public static final String PREF_PREFIX_KEY_GENERAL = "_general_";
-    public static final String PREF_PREFIX_KEY_LOCATION = "_location_";
-    public static final String PREF_PREFIX_KEY_TIMEZONE = "_timezone_";
-
-    public static final String PREF_KEY_APPEARANCE_SHOWTITLE = "showtitle";
-    public static final boolean PREF_DEF_APPEARANCE_SHOWTITLE = true;
-
-    private static final String PREF_KEY_APPEARANCE_TITLETEXT = "titletext";
-    private static final String PREF_DEF_APPEARANCE_TITLETEXT = "%m";
-
-    public static final String PREF_KEY_GENERAL_MODE = "timemode";
-    public static final TimeMode PREF_DEF_GENERAL_MODE = TimeMode.OFFICIAL;
-
-    public static final String PREF_KEY_LOCATION_MODE = "locationMode";
-    public static final LocationMode PREF_DEF_LOCATION_MODE = LocationMode.CUSTOM_LOCATION;
-
-    public static final String PREF_KEY_LOCATION_LONGITUDE = "longitude";
-    public static final String PREF_DEF_LOCATION_LONGITUDE = "-112.4677778";
-
-    public static final String PREF_KEY_LOCATION_LATITUDE = "latitude";
-    public static final String PREF_DEF_LOCATION_LATITUDE = "34.54";
-
-    public static final String PREF_KEY_TIMEZONE_MODE = "timezoneMode";
-    public static final TimezoneMode PREF_DEF_TIMEZONE_MODE = TimezoneMode.CUSTOM_TIMEZONE;
-
-    public static final String PREF_KEY_TIMEZONE_CUSTOM = "timezone";
-    public static final String PREF_DEF_TIMEZONE_CUSTOM = "US/Arizona";
 
 
     static void saveShowTitlePref(Context context, int appWidgetId, boolean showTitle)
@@ -227,14 +264,14 @@ public class SuntimesWidgetSettings
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
-        prefs.putString(prefs_prefix + PREF_KEY_GENERAL_MODE, mode.name());
+        prefs.putString(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE, mode.name());
         prefs.commit();
     }
     static SuntimesWidgetSettings.TimeMode loadTimeModePref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
-        String modeString = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_MODE, PREF_DEF_GENERAL_MODE.name());
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE, PREF_DEF_GENERAL_TIMEMODE.name());
 
         TimeMode timeMode;
         try
@@ -242,7 +279,7 @@ public class SuntimesWidgetSettings
             timeMode = SuntimesWidgetSettings.TimeMode.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
-            timeMode = PREF_DEF_GENERAL_MODE;
+            timeMode = PREF_DEF_GENERAL_TIMEMODE;
         }
         return timeMode;
     }
@@ -250,7 +287,7 @@ public class SuntimesWidgetSettings
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
-        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_MODE);
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE);
         prefs.commit();
     }
 
@@ -367,12 +404,45 @@ public class SuntimesWidgetSettings
     }
 
 
+    static void saveCompareModePref(Context context, int appWidgetId, SuntimesWidgetSettings.CompareMode mode)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putString(prefs_prefix + PREF_KEY_GENERAL_COMPAREMODE, mode.name());
+        prefs.commit();
+    }
+    static SuntimesWidgetSettings.CompareMode loadCompareModePref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_COMPAREMODE, PREF_DEF_GENERAL_COMPAREMODE.name());
+
+        CompareMode compareMode;
+        try
+        {
+            compareMode = SuntimesWidgetSettings.CompareMode.valueOf(modeString);
+
+        } catch (IllegalArgumentException e) {
+            compareMode = PREF_DEF_GENERAL_COMPAREMODE;
+        }
+        return compareMode;
+    }
+    static void deleteCompareModePref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_COMPAREMODE);
+        prefs.commit();
+    }
+
+
     static void deletePrefs(Context context, int appWidgetId)
     {
         deleteShowTitlePref(context, appWidgetId);
         deleteTitleTextPref(context, appWidgetId);
 
         deleteTimeModePref(context, appWidgetId);
+        deleteCompareModePref(context, appWidgetId);
 
         deleteLocationModePref(context, appWidgetId);
         deleteLocationPref(context, appWidgetId);
