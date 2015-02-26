@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
-
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="vertical" android:paddingTop="16dp">
 
         <TextView
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="General Settings" />
+            android:text="@string/configLabel_general" />
         
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -15,13 +13,25 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="Mode:" />
+                android:layout_height="wrap_content" android:text="@string/configLabel_general_timeMode" />
 
-            <Spinner android:id="@+id/appwidget_general_timemode" android:layout_width="match_parent"
+            <Spinner android:id="@+id/appwidget_general_timeMode" android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="16dp" android:paddingLeft="16dp" android:paddingTop="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="@string/configLabel_general_compareMode" />
+
+            <Spinner android:id="@+id/appwidget_general_compareMode" android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
 
     </LinearLayout>
-
 </merge>

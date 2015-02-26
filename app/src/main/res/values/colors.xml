@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="sunicon_color_rising">#ffcc00</color>
-    <color name="sunicon_color_setting">#ff9900</color>
-    <color name="sunicon_color_risingBorder">#ff9900</color>
-    <color name="sunicon_color_settingBorder">#ffcc00</color>
+    <color name="sunIcon_color_rising">#ffcc00</color>
+    <color name="sunIcon_color_setting">#ff9900</color>
+    <color name="sunIcon_color_risingBorder">#ff9900</color>
+    <color name="sunIcon_color_settingBorder">#ffcc00</color>
 
-    <drawable name="transperent_color">#00000000</drawable>
+    <drawable name="transparent_color">#00000000</drawable>
 </resources>

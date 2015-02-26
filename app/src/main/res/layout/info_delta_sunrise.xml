@@ -7,7 +7,7 @@
         <TextView
             style="@style/SunsetTimeTextView"
             android:id="@+id/text_delta_sunrise"
-            android:textColor="@color/sunicon_color_rising"
+            android:textColor="@color/sunIcon_color_rising"
             android:text="+2:40"
             android:textSize="8sp" />
 

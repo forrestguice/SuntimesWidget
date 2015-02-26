@@ -6,22 +6,22 @@
 
         <TextView
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Appearance Settings" />
+            android:text="@string/configLabel_appearance" />
 
-        <CheckBox android:id="@+id/appwidget_appearance_showtitle" android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:text="Show Title" />
+        <CheckBox android:id="@+id/appwidget_appearance_showTitle" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:text="@string/configLabel_appearance_showTitle" />
 
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="horizontal" android:paddingLeft="8dp">
+            android:orientation="horizontal" android:paddingLeft="8dp" android:paddingRight="8dp">
 
             <TextView
-                android:id="@+id/appwidget_appearance_titletext_label"
+                android:id="@+id/appwidget_appearance_titleText_label"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Title:" />
+                android:text="@string/configLabel_appearance_titleText" />
 
-            <EditText android:id="@+id/appwidget_appearance_titletext" android:layout_width="match_parent"
+            <EditText android:id="@+id/appwidget_appearance_titleText" android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Title Text (supports: %m)" android:text="" />
+                android:hint="@string/configHint_appearance_titleText" android:text="" />
 
         </LinearLayout>
 

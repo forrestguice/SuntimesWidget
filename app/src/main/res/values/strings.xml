@@ -8,20 +8,44 @@
     <string name="delta_day_tomorrow">Tomorrow will be</string>
     <string name="delta_day_yesterday">Yesterday was</string>
 
-    <string name="locationmode_current">Current Location</string>
-    <string name="locationmode_custom">Custom Location</string>
+    <string name="locationMode_current">Current Location</string>
+    <string name="locationMode_custom">Custom Location</string>
 
-    <string name="timezonemode_current">Current Timezone</string>
-    <string name="timezonemode_custom">Custom Timezone</string>
+    <string name="timezoneMode_current">Current Timezone</string>
+    <string name="timezoneMode_custom">Custom Timezone</string>
 
-    <string name="timemode_official_short">Actual</string>
-    <string name="timemode_civil_short">Civil</string>
-    <string name="timemode_nautical_short">Nautical</string>
-    <string name="timemode_astronomical_short">Astronomical</string>
+    <string name="compareMode_yesterday">Yesterday</string>
+    <string name="compareMode_tomorrow">Tomorrow</string>
 
-    <string name="timemode_official">Actual Time</string>
-    <string name="timemode_civil">Civil Twilight</string>
-    <string name="timemode_nautical">Nautical Twilight</string>
-    <string name="timemode_astronomical">Astronomical Twilight</string>
+    <string name="timeMode_official_short">Actual</string>
+    <string name="timeMode_civil_short">Civil</string>
+    <string name="timeMode_nautical_short">Nautical</string>
+    <string name="timeMode_astronomical_short">Astronomical</string>
+
+    <string name="timeMode_official">Actual Time</string>
+    <string name="timeMode_civil">Civil Twilight</string>
+    <string name="timeMode_nautical">Nautical Twilight</string>
+    <string name="timeMode_astronomical">Astronomical Twilight</string>
+
+    <string name="configLabel_general">General Settings</string>
+    <string name="configLabel_general_timeMode">Mode:</string>
+    <string name="configLabel_general_compareMode">Compare Against:</string>
+
+    <string name="configLabel_location">Location Settings</string>
+    <string name="configLabel_location_mode">Mode:</string>
+    <string name="configLabel_location_lat">Latitude:</string>
+    <string name="configHint_location_lat">34.54</string>
+    <string name="configLabel_location_lon">Longitude:</string>
+    <string name="configHint_location_lon">-112.4677778</string>
+
+    <string name="configLabel_appearance">Appearance Settings</string>
+    <string name="configLabel_appearance_showTitle">Show Title</string>
+    <string name="configLabel_appearance_titleText">Title:</string>
+    <string name="configHint_appearance_titleText">Title Text (supports: %m)</string>
+
+    <string name="configLabel_timezone">Timezone Settings</string>
+    <string name="configLabel_timezone_mode">Mode:</string>
+    <string name="configLabel_timezone_custom">Timezone:</string>
+
 
 </resources>

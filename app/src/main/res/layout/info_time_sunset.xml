@@ -12,7 +12,7 @@
         <TextView
             style="@style/SunsetTimeTextView"
             android:id="@+id/text_time_sunset"
-            android:textColor="@color/sunicon_color_setting"
+            android:textColor="@color/sunIcon_color_setting"
             android:text="4:20" />
 
         <TextView
