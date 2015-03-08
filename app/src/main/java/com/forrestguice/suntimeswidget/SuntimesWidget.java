@@ -198,8 +198,6 @@ public class SuntimesWidget extends AppWidgetProvider
                 break;
         }
 
-        sunriseCalendarToday.set
-
         // update sunrise time
         SuntimesUtils.TimeDisplayText sunriseString = SuntimesUtils.calendarTimeShortDisplayString(context, sunriseCalendarToday);
         views.setTextViewText(R.id.text_time_sunrise, sunriseString.getValue());
