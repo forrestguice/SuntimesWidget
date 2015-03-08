@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,6 +19,10 @@ import android.widget.TextView;
 
 import com.luckycatlabs.sunrisesunset.dto.Location;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * The configuration screen for the {@link SuntimesWidget SuntimesWidget} AppWidget.
@@ -25,8 +31,14 @@ public class SuntimesWidgetSettingsActivity extends Activity
 {
     private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 
-    private Spinner spinner_locationMode;
+    private Spinner spinner_timeMode;
+    private Spinner spinner_compareMode;
 
+    private CheckBox checkbox_showTitle;
+    private EditText text_titleText;
+    private TextView label_titleText;
+
+    private Spinner spinner_locationMode;
     private EditText text_locationLon;
     private EditText text_locationLat;
     private TextView label_locationLon;
@@ -35,13 +47,6 @@ public class SuntimesWidgetSettingsActivity extends Activity
     private Spinner spinner_timezoneMode;
     private Spinner spinner_timezone;
     private TextView label_timezone;
-
-    private Spinner spinner_timeMode;
-    private Spinner spinner_compareMode;
-
-    private CheckBox checkbox_showtitle;
-    private EditText text_titletext;
-    private TextView label_titletext;
 
     public SuntimesWidgetSettingsActivity()
     {
@@ -70,21 +75,43 @@ public class SuntimesWidgetSettingsActivity extends Activity
             return;
         }
 
-        SuntimesWidgetSettings.LocationMode.initDisplayStrings(context);
-        SuntimesWidgetSettings.TimezoneMode.initDisplayStrings(context);
-        SuntimesWidgetSettings.CompareMode.initDisplayStrings(context);
+        initViews(context);
 
-        SuntimesWidgetSettings.TimeMode timeMode = SuntimesWidgetSettings.loadTimeModePref(context, appWidgetId);
-        SuntimesWidgetSettings.LocationMode locationMode = SuntimesWidgetSettings.loadLocationModePref(context, appWidgetId);
-        SuntimesWidgetSettings.TimezoneMode timezoneMode = SuntimesWidgetSettings.loadTimezoneModePref(context, appWidgetId);
-        SuntimesWidgetSettings.CompareMode compareMode = SuntimesWidgetSettings.loadCompareModePref(context, appWidgetId);
+        loadGeneralSettings(context);
+        loadAppearanceSettings(context);
+        loadLocationSettings(context);
+        loadTimezoneSettings(context);
+    }
 
-        Location location = SuntimesWidgetSettings.loadLocationPref(context, appWidgetId);
-        String timezone = SuntimesWidgetSettings.loadTimezonePref(context, appWidgetId);    // TODO: finish custom timezone feature
+    View.OnClickListener onAddButtonClickListener = new View.OnClickListener()
+    {
+        public void onClick(View v)
+        {
+            addWidget();
+        }
+    };
 
-        boolean showTitle = SuntimesWidgetSettings.loadShowTitlePref(context, appWidgetId);
-        String titleText = SuntimesWidgetSettings.loadTitleTextPref(context, appWidgetId);
+    private void addWidget()
+    {
+        final Context context = SuntimesWidgetSettingsActivity.this;
 
+        saveGeneralSettings(context);
+        saveLocationSettings(context);
+        saveTimezoneSettings(context);
+        saveAppearanceSettings(context);
+
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        SuntimesWidget.updateAppWidget(context, appWidgetManager, appWidgetId);
+
+        Intent resultValue = new Intent();
+        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        setResult(RESULT_OK, resultValue);
+        finish();
+    }
+
+
+    private void initViews( Context context )
+    {
         //
         // widget: time mode
         //
@@ -96,21 +123,19 @@ public class SuntimesWidgetSettingsActivity extends Activity
 
         spinner_timeMode = (Spinner)findViewById(R.id.appwidget_general_timeMode);
         spinner_timeMode.setAdapter(spinner_timeModeAdapter);
-        spinner_timeMode.setSelection(timeMode.ordinal());
 
         //
         // widget: timezone mode
         //
         ArrayAdapter<SuntimesWidgetSettings.TimezoneMode> spinner_timezoneModeAdapter;
         spinner_timezoneModeAdapter = new ArrayAdapter<SuntimesWidgetSettings.TimezoneMode>(this,
-                                                                                    android.R.layout.simple_spinner_item,
-                                                                                    SuntimesWidgetSettings.TimezoneMode.values());
+                android.R.layout.simple_spinner_item,
+                SuntimesWidgetSettings.TimezoneMode.values());
         spinner_timezoneModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner_timezoneMode = (Spinner)findViewById(R.id.appwidget_timezone_mode);
         spinner_timezoneMode.setAdapter(spinner_timezoneModeAdapter);
         spinner_timezoneMode.setOnItemSelectedListener(onTimezoneModeListener);
-        spinner_timezoneMode.setSelection(timezoneMode.ordinal());
 
         //
         // widget: timezone
@@ -123,40 +148,34 @@ public class SuntimesWidgetSettingsActivity extends Activity
         //
         ArrayAdapter<SuntimesWidgetSettings.LocationMode> spinner_locationModeAdapter;
         spinner_locationModeAdapter = new ArrayAdapter<SuntimesWidgetSettings.LocationMode>(this,
-                                                                                    android.R.layout.simple_spinner_item,
-                                                                                    SuntimesWidgetSettings.LocationMode.values());
+                android.R.layout.simple_spinner_item,
+                SuntimesWidgetSettings.LocationMode.values());
         spinner_locationModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner_locationMode = (Spinner)findViewById(R.id.appwidget_location_mode);
         spinner_locationMode.setAdapter(spinner_locationModeAdapter);
         spinner_locationMode.setOnItemSelectedListener(onLocationModeListener);
-        spinner_locationMode.setSelection(locationMode.ordinal());
 
         //
         // widget: custom lon / lat
         //
         label_locationLon = (TextView)findViewById(R.id.appwidget_location_lon_label);
         text_locationLon = (EditText)findViewById(R.id.appwidget_location_lon);
-        text_locationLon.setText(location.getLongitude().toPlainString());
 
         label_locationLat = (TextView)findViewById(R.id.appwidget_location_lat_label);
         text_locationLat = (EditText)findViewById(R.id.appwidget_location_lat);
-        text_locationLat.setText(location.getLatitude().toPlainString());
 
         //
         // widget: title text
         //
-        label_titletext = (TextView)findViewById(R.id.appwidget_appearance_titleText_label);
-        text_titletext = (EditText)findViewById(R.id.appwidget_appearance_titleText);
-        text_titletext.setText(titleText);
+        label_titleText = (TextView)findViewById(R.id.appwidget_appearance_titleText_label);
+        text_titleText = (EditText)findViewById(R.id.appwidget_appearance_titleText);
 
         //
         // widget: show title
         //
-        checkbox_showtitle = (CheckBox)findViewById(R.id.appwidget_appearance_showTitle);
-        checkbox_showtitle.setOnCheckedChangeListener(onShowTitleListener);
-        checkbox_showtitle.setChecked(showTitle);
-        setTitleTextEnabled(showTitle);
+        checkbox_showTitle = (CheckBox)findViewById(R.id.appwidget_appearance_showTitle);
+        checkbox_showTitle.setOnCheckedChangeListener(onShowTitleListener);
 
         //
         // widget: compare mode
@@ -169,7 +188,6 @@ public class SuntimesWidgetSettingsActivity extends Activity
 
         spinner_compareMode = (Spinner)findViewById(R.id.appwidget_general_compareMode);
         spinner_compareMode.setAdapter(spinner_compareModeAdapter);
-        spinner_compareMode.setSelection(compareMode.ordinal());
 
         //
         // widget: add button
@@ -178,10 +196,38 @@ public class SuntimesWidgetSettingsActivity extends Activity
         button_addWidget.setOnClickListener(onAddButtonClickListener);
     }
 
+
+    /**private Location getLocationFromAddress(String address, Context context)
+    {
+        Geocoder geocoder = new Geocoder(context);
+        List<Address> locations;
+        try
+        {
+            locations = geocoder.getFromLocationName(address, 1);
+
+        } catch (IOException e) {
+            locations = new ArrayList<Address>();
+        }
+
+        Location location = null;
+        if (!locations.isEmpty())
+        {
+            double lat = locations.get(0).getLatitude();
+            double lon = locations.get(0).getLongitude();
+            location = new Location(lat, lon);
+        } else {
+
+        }
+
+        return location;
+    }*/
+
+
+
     private void setTitleTextEnabled( boolean value )
     {
-        label_titletext.setEnabled(value);
-        text_titletext.setEnabled(value);
+        label_titleText.setEnabled(value);
+        text_titleText.setEnabled(value);
     }
 
     private void setCustomTimezoneEnabled( boolean value )
@@ -245,65 +291,100 @@ public class SuntimesWidgetSettingsActivity extends Activity
         }
     };
 
-    /**
-     * OnClickListener called when the add button is clicked.
-     */
-    View.OnClickListener onAddButtonClickListener = new View.OnClickListener()
+
+    private void saveAppearanceSettings(Context context)
     {
-        public void onClick(View v)
-        {
-            final Context context = SuntimesWidgetSettingsActivity.this;
-            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        // save: appearance (show title)
+        boolean showTitle = checkbox_showTitle.isChecked();
+        SuntimesWidgetSettings.saveShowTitlePref(context, appWidgetId, showTitle);
 
-            // save: appearance (show title)
-            boolean showTitle = checkbox_showtitle.isChecked();
-            SuntimesWidgetSettings.saveShowTitlePref(context, appWidgetId, showTitle);
+        // save:: appearance (title text)
+        String titleText = text_titleText.getText().toString().trim();
+        SuntimesWidgetSettings.saveTitleTextPref(context, appWidgetId, titleText);
+    }
 
-            // save:: appearance (title text)
-            String titleText = text_titletext.getText().toString().trim();
-            SuntimesWidgetSettings.saveTitleTextPref(context, appWidgetId, titleText);
+    private void loadAppearanceSettings(Context context)
+    {
+        boolean showTitle = SuntimesWidgetSettings.loadShowTitlePref(context, appWidgetId);
+        checkbox_showTitle.setChecked(showTitle);
+        setTitleTextEnabled(showTitle);
 
-            // save: time mode
-            final SuntimesWidgetSettings.TimeMode[] timeModes = SuntimesWidgetSettings.TimeMode.values();
-            SuntimesWidgetSettings.TimeMode timeMode = timeModes[ spinner_timeMode.getSelectedItemPosition() ];
-            SuntimesWidgetSettings.saveTimeModePref(context, appWidgetId, timeMode);
+        String titleText = SuntimesWidgetSettings.loadTitleTextPref(context, appWidgetId);
+        text_titleText.setText(titleText);
+    }
 
-            // save: location mode
-            final SuntimesWidgetSettings.LocationMode[] locationModes = SuntimesWidgetSettings.LocationMode.values();
-            SuntimesWidgetSettings.LocationMode locationMode = locationModes[ spinner_locationMode.getSelectedItemPosition() ];
-            SuntimesWidgetSettings.saveLocationModePref(context, appWidgetId, locationMode);
 
-            // save: lat / lon
-            String latitude = text_locationLat.getText().toString();
-            String longitude = text_locationLon.getText().toString();
-            Location location = new Location(latitude, longitude);
-            SuntimesWidgetSettings.saveLocationPref(context, appWidgetId, location);
+    private void saveGeneralSettings(Context context)
+    {
+        // save: time mode
+        final SuntimesWidgetSettings.TimeMode[] timeModes = SuntimesWidgetSettings.TimeMode.values();
+        SuntimesWidgetSettings.TimeMode timeMode = timeModes[ spinner_timeMode.getSelectedItemPosition() ];
+        SuntimesWidgetSettings.saveTimeModePref(context, appWidgetId, timeMode);
 
-            // save: timezone mode
-            final SuntimesWidgetSettings.TimezoneMode[] timezoneModes = SuntimesWidgetSettings.TimezoneMode.values();
-            SuntimesWidgetSettings.TimezoneMode timezoneMode = timezoneModes[ spinner_timezoneMode.getSelectedItemPosition() ];
-            SuntimesWidgetSettings.saveTimezoneModePref(context, appWidgetId, timezoneMode);
+        // save: compare mode
+        final SuntimesWidgetSettings.CompareMode[] compareModes = SuntimesWidgetSettings.CompareMode.values();
+        SuntimesWidgetSettings.CompareMode compareMode = compareModes[ spinner_compareMode.getSelectedItemPosition() ];
+        SuntimesWidgetSettings.saveCompareModePref(context, appWidgetId, compareMode);
+    }
 
-            // save: custom timezone
-            String customTimezone = SuntimesWidgetSettings.PREF_DEF_TIMEZONE_CUSTOM;  // TODO
-            SuntimesWidgetSettings.saveTimezonePref(context, appWidgetId, customTimezone);
+    private void loadGeneralSettings(Context context)
+    {
+        SuntimesWidgetSettings.CompareMode.initDisplayStrings(context);
+        SuntimesWidgetSettings.CompareMode compareMode = SuntimesWidgetSettings.loadCompareModePref(context, appWidgetId);
+        spinner_compareMode.setSelection(compareMode.ordinal());
 
-            // save: compare mode
-            final SuntimesWidgetSettings.CompareMode[] compareModes = SuntimesWidgetSettings.CompareMode.values();
-            SuntimesWidgetSettings.CompareMode compareMode = compareModes[ spinner_compareMode.getSelectedItemPosition() ];
-            SuntimesWidgetSettings.saveCompareModePref(context, appWidgetId, compareMode);
+        SuntimesWidgetSettings.TimeMode.initDisplayStrings(context);
+        SuntimesWidgetSettings.TimeMode timeMode = SuntimesWidgetSettings.loadTimeModePref(context, appWidgetId);
+        spinner_timeMode.setSelection(timeMode.ordinal());
+    }
 
-            // update and return
-            SuntimesWidget.updateAppWidget(context, appWidgetManager, appWidgetId);
 
-            Intent resultValue = new Intent();
-            resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-            setResult(RESULT_OK, resultValue);
-            finish();
-        }
-    };
+    private void saveLocationSettings(Context context)
+    {
+        // save: location mode
+        final SuntimesWidgetSettings.LocationMode[] locationModes = SuntimesWidgetSettings.LocationMode.values();
+        SuntimesWidgetSettings.LocationMode locationMode = locationModes[ spinner_locationMode.getSelectedItemPosition() ];
+        SuntimesWidgetSettings.saveLocationModePref(context, appWidgetId, locationMode);
+
+        // save: lat / lon
+        String latitude = text_locationLat.getText().toString();
+        String longitude = text_locationLon.getText().toString();
+        Location location = new Location(latitude, longitude);
+        SuntimesWidgetSettings.saveLocationPref(context, appWidgetId, location);
+    }
+
+    private void loadLocationSettings(Context context)
+    {
+        SuntimesWidgetSettings.LocationMode.initDisplayStrings(context);
+        SuntimesWidgetSettings.LocationMode locationMode = SuntimesWidgetSettings.loadLocationModePref(context, appWidgetId);
+        spinner_locationMode.setSelection(locationMode.ordinal());
+
+        Location location = SuntimesWidgetSettings.loadLocationPref(context, appWidgetId);
+        text_locationLat.setText(location.getLatitude().toPlainString());
+        text_locationLon.setText(location.getLongitude().toPlainString());
+    }
+
+
+    private void saveTimezoneSettings(Context context)
+    {
+        // save: timezone mode
+        final SuntimesWidgetSettings.TimezoneMode[] timezoneModes = SuntimesWidgetSettings.TimezoneMode.values();
+        SuntimesWidgetSettings.TimezoneMode timezoneMode = timezoneModes[ spinner_timezoneMode.getSelectedItemPosition() ];
+        SuntimesWidgetSettings.saveTimezoneModePref(context, appWidgetId, timezoneMode);
+
+        // save: custom timezone
+        String customTimezone = SuntimesWidgetSettings.PREF_DEF_TIMEZONE_CUSTOM;  // TODO
+        SuntimesWidgetSettings.saveTimezonePref(context, appWidgetId, customTimezone);
+    }
+
+    private void loadTimezoneSettings(Context context)
+    {
+        SuntimesWidgetSettings.TimezoneMode.initDisplayStrings(context);
+        SuntimesWidgetSettings.TimezoneMode timezoneMode = SuntimesWidgetSettings.loadTimezoneModePref(context, appWidgetId);
+        spinner_timezoneMode.setSelection(timezoneMode.ordinal());
+
+        String timezone = SuntimesWidgetSettings.loadTimezonePref(context, appWidgetId);    // TODO: finish custom timezone feature
+        // TODO
+    }
 
 }
-
-
-
