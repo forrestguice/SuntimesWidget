@@ -8,6 +8,9 @@
 # Java class files
 *.class
 
+# editor backup files
+*~
+
 # Generated files
 bin/
 gen/
