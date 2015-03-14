@@ -6,10 +6,23 @@
         <TextView
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="@string/configLabel_general" />
-        
+
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingRight="16dp" android:paddingLeft="16dp" android:paddingTop="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="@string/configLabel_general_calculator" />
+
+            <Spinner android:id="@+id/appwidget_general_calculator" android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="16dp" android:paddingLeft="16dp" android:paddingTop="8dp">
 
             <TextView
                 android:layout_width="wrap_content"

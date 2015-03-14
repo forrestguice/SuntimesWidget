@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,11 +15,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.luckycatlabs.sunrisesunset.dto.Location;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 
 
 /**
@@ -31,6 +25,7 @@ public class SuntimesWidgetSettingsActivity extends Activity
 {
     private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 
+    private Spinner spinner_calculatorMode;
     private Spinner spinner_timeMode;
     private Spinner spinner_compareMode;
 
@@ -113,6 +108,19 @@ public class SuntimesWidgetSettingsActivity extends Activity
     private void initViews( Context context )
     {
         //
+        // widget: source
+        //
+        ArrayAdapter<SuntimesCalculatorDescriptor> spinner_calculatorModeAdapter;
+        spinner_calculatorModeAdapter = new ArrayAdapter<SuntimesCalculatorDescriptor>(this,
+                android.R.layout.simple_spinner_item,
+                SuntimesCalculatorDescriptor.values());  // TODO: source of values
+        spinner_calculatorModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner_calculatorMode = (Spinner)findViewById(R.id.appwidget_general_calculator);
+        spinner_calculatorMode.setAdapter(spinner_calculatorModeAdapter);
+
+
+        //
         // widget: time mode
         //
         ArrayAdapter<SuntimesWidgetSettings.TimeMode> spinner_timeModeAdapter;
@@ -123,6 +131,7 @@ public class SuntimesWidgetSettingsActivity extends Activity
 
         spinner_timeMode = (Spinner)findViewById(R.id.appwidget_general_timeMode);
         spinner_timeMode.setAdapter(spinner_timeModeAdapter);
+
 
         //
         // widget: timezone mode
@@ -316,6 +325,11 @@ public class SuntimesWidgetSettingsActivity extends Activity
 
     private void saveGeneralSettings(Context context)
     {
+        // save: calculator mode
+        final SuntimesCalculatorDescriptor[] calculators = SuntimesCalculatorDescriptor.values();
+        SuntimesCalculatorDescriptor calculator = calculators[ spinner_calculatorMode.getSelectedItemPosition() ];
+        SuntimesWidgetSettings.saveCalculatorModePref(context, appWidgetId, calculator);
+
         // save: time mode
         final SuntimesWidgetSettings.TimeMode[] timeModes = SuntimesWidgetSettings.TimeMode.values();
         SuntimesWidgetSettings.TimeMode timeMode = timeModes[ spinner_timeMode.getSelectedItemPosition() ];
@@ -329,10 +343,16 @@ public class SuntimesWidgetSettingsActivity extends Activity
 
     private void loadGeneralSettings(Context context)
     {
+        // load: calculator mode
+        SuntimesCalculatorDescriptor calculatorMode = SuntimesWidgetSettings.loadCalculatorModePref(context, appWidgetId);
+        spinner_calculatorMode.setSelection(calculatorMode.ordinal());
+
+        // load: time mode
         SuntimesWidgetSettings.CompareMode.initDisplayStrings(context);
         SuntimesWidgetSettings.CompareMode compareMode = SuntimesWidgetSettings.loadCompareModePref(context, appWidgetId);
         spinner_compareMode.setSelection(compareMode.ordinal());
 
+        // load: compare mode
         SuntimesWidgetSettings.TimeMode.initDisplayStrings(context);
         SuntimesWidgetSettings.TimeMode timeMode = SuntimesWidgetSettings.loadTimeModePref(context, appWidgetId);
         spinner_timeMode.setSelection(timeMode.ordinal());
@@ -349,7 +369,7 @@ public class SuntimesWidgetSettingsActivity extends Activity
         // save: lat / lon
         String latitude = text_locationLat.getText().toString();
         String longitude = text_locationLon.getText().toString();
-        Location location = new Location(latitude, longitude);
+        SuntimesWidgetSettings.Location location = new SuntimesWidgetSettings.Location(latitude, longitude);
         SuntimesWidgetSettings.saveLocationPref(context, appWidgetId, location);
     }
 
@@ -359,9 +379,9 @@ public class SuntimesWidgetSettingsActivity extends Activity
         SuntimesWidgetSettings.LocationMode locationMode = SuntimesWidgetSettings.loadLocationModePref(context, appWidgetId);
         spinner_locationMode.setSelection(locationMode.ordinal());
 
-        Location location = SuntimesWidgetSettings.loadLocationPref(context, appWidgetId);
-        text_locationLat.setText(location.getLatitude().toPlainString());
-        text_locationLon.setText(location.getLongitude().toPlainString());
+        SuntimesWidgetSettings.Location location = SuntimesWidgetSettings.loadLocationPref(context, appWidgetId);
+        text_locationLat.setText(location.getLatitude());
+        text_locationLon.setText(location.getLongitude());
     }
 
 

@@ -2,7 +2,8 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import com.luckycatlabs.sunrisesunset.dto.Location;
+
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 
 public class SuntimesWidgetSettings
 {
@@ -16,6 +17,9 @@ public class SuntimesWidgetSettings
     public static final String PREF_PREFIX_KEY_GENERAL = "_general_";
     public static final String PREF_PREFIX_KEY_LOCATION = "_location_";
     public static final String PREF_PREFIX_KEY_TIMEZONE = "_timezone_";
+
+    public static final String PREF_KEY_GENERAL_CALCULATOR = "calculator";
+    public static final String PREF_DEF_GENERAL_CALCULATOR = "any";
 
     public static final String PREF_KEY_APPEARANCE_SHOWTITLE = "showtitle";
     public static final boolean PREF_DEF_APPEARANCE_SHOWTITLE = true;
@@ -43,6 +47,11 @@ public class SuntimesWidgetSettings
 
     public static final String PREF_KEY_TIMEZONE_CUSTOM = "timezone";
     public static final String PREF_DEF_TIMEZONE_CUSTOM = "US/Arizona";
+
+
+    /**
+     * Calculator
+     */
 
     /**
      * TimezoneMode
@@ -115,6 +124,29 @@ public class SuntimesWidgetSettings
         {
             CURRENT_LOCATION.setDisplayString(context.getString(R.string.locationMode_current));
             CUSTOM_LOCATION.setDisplayString(context.getString(R.string.locationMode_custom));
+        }
+    }
+
+    public static class Location
+    {
+        String latitude;
+        String longitude;
+
+        public Location( String latitude, String longitude )
+        {
+            this.latitude = latitude;
+            this.longitude = longitude;
+        }
+
+
+        public String getLatitude()
+        {
+            return latitude;
+        }
+
+        public String getLongitude()
+        {
+            return longitude;
         }
     }
 
@@ -216,20 +248,53 @@ public class SuntimesWidgetSettings
     }
 
 
-    static void saveShowTitlePref(Context context, int appWidgetId, boolean showTitle)
+
+    public static void saveCalculatorModePref(Context context, int appWidgetId, SuntimesCalculatorDescriptor mode)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putString(prefs_prefix + PREF_KEY_GENERAL_CALCULATOR, mode.name());
+        prefs.commit();
+    }
+    public static SuntimesCalculatorDescriptor loadCalculatorModePref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_CALCULATOR, PREF_DEF_GENERAL_CALCULATOR);
+
+        SuntimesCalculatorDescriptor calculatorMode;
+        try
+        {
+            calculatorMode = SuntimesCalculatorDescriptor.valueOf(modeString);
+
+        } catch (IllegalArgumentException e) {
+            calculatorMode = new SuntimesCalculatorDescriptor(modeString, modeString, "");
+        }
+        return calculatorMode;
+    }
+    public static void deleteCalculatorModePref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_CALCULATOR);
+        prefs.commit();
+    }
+
+
+    public static void saveShowTitlePref(Context context, int appWidgetId, boolean showTitle)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
         prefs.putBoolean(prefs_prefix + PREF_KEY_APPEARANCE_SHOWTITLE, showTitle);
         prefs.commit();
     }
-    static boolean loadShowTitlePref(Context context, int appWidgetId)
+    public static boolean loadShowTitlePref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
         return prefs.getBoolean(prefs_prefix + PREF_KEY_APPEARANCE_SHOWTITLE, PREF_DEF_APPEARANCE_SHOWTITLE);
     }
-    static void deleteShowTitlePref(Context context, int appWidgetId)
+    public static void deleteShowTitlePref(Context context, int appWidgetId)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
@@ -238,20 +303,20 @@ public class SuntimesWidgetSettings
     }
 
 
-    static void saveTitleTextPref(Context context, int appWidgetId, String titleText)
+    public static void saveTitleTextPref(Context context, int appWidgetId, String titleText)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
         prefs.putString(prefs_prefix + PREF_KEY_APPEARANCE_TITLETEXT, titleText);
         prefs.commit();
     }
-    static String loadTitleTextPref(Context context, int appWidgetId)
+   public static String loadTitleTextPref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
         return prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_TITLETEXT, PREF_DEF_APPEARANCE_TITLETEXT);
     }
-    static void deleteTitleTextPref(Context context, int appWidgetId)
+    public static void deleteTitleTextPref(Context context, int appWidgetId)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
@@ -260,14 +325,14 @@ public class SuntimesWidgetSettings
     }
 
 
-    static void saveTimeModePref(Context context, int appWidgetId, SuntimesWidgetSettings.TimeMode mode)
+    public static void saveTimeModePref(Context context, int appWidgetId, SuntimesWidgetSettings.TimeMode mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
         prefs.putString(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE, mode.name());
         prefs.commit();
     }
-    static SuntimesWidgetSettings.TimeMode loadTimeModePref(Context context, int appWidgetId)
+    public static SuntimesWidgetSettings.TimeMode loadTimeModePref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
@@ -283,7 +348,7 @@ public class SuntimesWidgetSettings
         }
         return timeMode;
     }
-    static void deleteTimeModePref(Context context, int appWidgetId)
+    public static void deleteTimeModePref(Context context, int appWidgetId)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
@@ -292,14 +357,14 @@ public class SuntimesWidgetSettings
     }
 
 
-    static void saveLocationModePref(Context context, int appWidgetId, SuntimesWidgetSettings.LocationMode mode)
+    public static void saveLocationModePref(Context context, int appWidgetId, SuntimesWidgetSettings.LocationMode mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_LOCATION;
         prefs.putString(prefs_prefix + PREF_KEY_LOCATION_MODE, mode.name());
         prefs.commit();
     }
-    static SuntimesWidgetSettings.LocationMode loadLocationModePref(Context context, int appWidgetId)
+    public static SuntimesWidgetSettings.LocationMode loadLocationModePref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_LOCATION;
@@ -315,7 +380,7 @@ public class SuntimesWidgetSettings
         }
         return locationMode;
     }
-    static void deleteLocationModePref(Context context, int appWidgetId)
+    public static void deleteLocationModePref(Context context, int appWidgetId)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_LOCATION;
@@ -324,14 +389,14 @@ public class SuntimesWidgetSettings
     }
 
 
-    static void saveTimezoneModePref(Context context, int appWidgetId, SuntimesWidgetSettings.TimezoneMode mode)
+    public static void saveTimezoneModePref(Context context, int appWidgetId, SuntimesWidgetSettings.TimezoneMode mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_TIMEZONE;
         prefs.putString(prefs_prefix + PREF_KEY_TIMEZONE_MODE, mode.name());
         prefs.commit();
     }
-    static SuntimesWidgetSettings.TimezoneMode loadTimezoneModePref(Context context, int appWidgetId)
+    public static SuntimesWidgetSettings.TimezoneMode loadTimezoneModePref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_TIMEZONE;
@@ -347,7 +412,7 @@ public class SuntimesWidgetSettings
         }
         return timezoneMode;
     }
-    static void deleteTimezoneModePref(Context context, int appWidgetId)
+    public static void deleteTimezoneModePref(Context context, int appWidgetId)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_TIMEZONE;
@@ -356,15 +421,15 @@ public class SuntimesWidgetSettings
     }
 
 
-    static void saveLocationPref(Context context, int appWidgetId, Location location)
+    public static void saveLocationPref(Context context, int appWidgetId, Location location)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_LOCATION;
-        prefs.putString(prefs_prefix + PREF_KEY_LOCATION_LONGITUDE, location.getLongitude().toPlainString());
-        prefs.putString(prefs_prefix + PREF_KEY_LOCATION_LATITUDE, location.getLatitude().toPlainString());
+        prefs.putString(prefs_prefix + PREF_KEY_LOCATION_LONGITUDE, location.getLongitude());
+        prefs.putString(prefs_prefix + PREF_KEY_LOCATION_LATITUDE, location.getLatitude());
         prefs.commit();
     }
-    static Location loadLocationPref(Context context, int appWidgetId)
+    public static Location loadLocationPref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_LOCATION;
@@ -372,7 +437,7 @@ public class SuntimesWidgetSettings
         String latString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_LATITUDE, PREF_DEF_LOCATION_LATITUDE);
         return new Location(latString, lonString);
     }
-    static void deleteLocationPref(Context context, int appWidgetId)
+    public static void deleteLocationPref(Context context, int appWidgetId)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_LOCATION;
@@ -382,20 +447,20 @@ public class SuntimesWidgetSettings
     }
 
 
-    static void saveTimezonePref(Context context, int appWidgetId, String timezone)
+    public static void saveTimezonePref(Context context, int appWidgetId, String timezone)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_TIMEZONE;
         prefs.putString(prefs_prefix + PREF_KEY_TIMEZONE_CUSTOM, timezone);
         prefs.commit();
     }
-    static String loadTimezonePref(Context context, int appWidgetId)
+    public static String loadTimezonePref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_TIMEZONE;
         return prefs.getString(prefs_prefix + PREF_KEY_TIMEZONE_CUSTOM, PREF_DEF_TIMEZONE_CUSTOM);
     }
-    static void deleteTimezonePref(Context context, int appWidgetId)
+    public static void deleteTimezonePref(Context context, int appWidgetId)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_TIMEZONE;
@@ -404,14 +469,14 @@ public class SuntimesWidgetSettings
     }
 
 
-    static void saveCompareModePref(Context context, int appWidgetId, SuntimesWidgetSettings.CompareMode mode)
+    public static void saveCompareModePref(Context context, int appWidgetId, SuntimesWidgetSettings.CompareMode mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
         prefs.putString(prefs_prefix + PREF_KEY_GENERAL_COMPAREMODE, mode.name());
         prefs.commit();
     }
-    static SuntimesWidgetSettings.CompareMode loadCompareModePref(Context context, int appWidgetId)
+    public static SuntimesWidgetSettings.CompareMode loadCompareModePref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
@@ -427,7 +492,7 @@ public class SuntimesWidgetSettings
         }
         return compareMode;
     }
-    static void deleteCompareModePref(Context context, int appWidgetId)
+    public static void deleteCompareModePref(Context context, int appWidgetId)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
@@ -436,11 +501,12 @@ public class SuntimesWidgetSettings
     }
 
 
-    static void deletePrefs(Context context, int appWidgetId)
+    public static void deletePrefs(Context context, int appWidgetId)
     {
         deleteShowTitlePref(context, appWidgetId);
         deleteTitleTextPref(context, appWidgetId);
 
+        deleteCalculatorModePref(context, appWidgetId);
         deleteTimeModePref(context, appWidgetId);
         deleteCompareModePref(context, appWidgetId);
 

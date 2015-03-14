@@ -8,6 +8,8 @@
     <string name="delta_day_tomorrow">Tomorrow will be</string>
     <string name="delta_day_yesterday">Yesterday was</string>
 
+    <string name="calculator_sunrisesunsetlib_name">sunrisesunsetlib-java</string>
+
     <string name="locationMode_current">Current Location</string>
     <string name="locationMode_custom">Custom Location</string>
 
@@ -28,6 +30,7 @@
     <string name="timeMode_astronomical">Astronomical Twilight</string>
 
     <string name="configLabel_general">General Settings</string>
+    <string name="configLabel_general_calculator">Source:</string>
     <string name="configLabel_general_timeMode">Mode:</string>
     <string name="configLabel_general_compareMode">Compare Against:</string>
 

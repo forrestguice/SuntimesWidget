@@ -9,11 +9,12 @@ import android.widget.RemoteViews;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorFactory;
+
 import java.util.Calendar;
 import java.util.TimeZone;
-
-import com.luckycatlabs.sunrisesunset.dto.Location;
-import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator;
 
 /**
  * Implementation of App Widget functionality.
@@ -31,6 +32,7 @@ public class SuntimesWidget extends AppWidgetProvider
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds)
     {
+        SuntimesCalculatorFactory.initCalculators(context);
         SuntimesWidgetSettings.TimeMode.initDisplayStrings(context);
         for (int appWidgetId : appWidgetIds)
         {
@@ -80,7 +82,7 @@ public class SuntimesWidget extends AppWidgetProvider
         return new RemoteViews(context.getPackageName(), R.layout.layout_sunwidget1x1);
     }
 
-    private static Location getCurrentLocation(Context context)
+    private static SuntimesWidgetSettings.Location getCurrentLocation(Context context)
     {
         return null;   // TODO
     }
@@ -105,11 +107,12 @@ public class SuntimesWidget extends AppWidgetProvider
         views.setViewVisibility(R.id.text_title, showTitle ? View.VISIBLE : View.GONE);
 
         // get general settings
+        SuntimesCalculatorDescriptor calculatorMode = SuntimesWidgetSettings.loadCalculatorModePref(context, appWidgetId);
         SuntimesWidgetSettings.TimeMode timeMode = SuntimesWidgetSettings.loadTimeModePref(context, appWidgetId);
         SuntimesWidgetSettings.CompareMode compareMode = SuntimesWidgetSettings.loadCompareModePref(context, appWidgetId);
 
         // get location settings
-        Location location = SuntimesWidgetSettings.loadLocationPref(context, appWidgetId);
+        SuntimesWidgetSettings.Location location = SuntimesWidgetSettings.loadLocationPref(context, appWidgetId);
         SuntimesWidgetSettings.LocationMode locationMode = SuntimesWidgetSettings.loadLocationModePref(context, appWidgetId);
         if (locationMode == SuntimesWidgetSettings.LocationMode.CURRENT_LOCATION)
         {
@@ -130,8 +133,8 @@ public class SuntimesWidget extends AppWidgetProvider
         Log.v("DEBUG", "title text: " + titleText);
         Log.v("DEBUG", "time mode: " + timeMode);
         Log.v("DEBUG", "location_mode: " + locationMode.name());
-        Log.v("DEBUG", "latitude: " + location.getLatitude().toPlainString());
-        Log.v("DEBUG", "longitude: " + location.getLongitude().toPlainString());
+        Log.v("DEBUG", "latitude: " + location.getLatitude());
+        Log.v("DEBUG", "longitude: " + location.getLongitude());
         Log.v("DEBUG", "timezone_mode: " + timezoneMode.name());
         Log.v("DEBUG", "timezone: " + timezone);
         Log.v("DEBUG", "compare mode: " + compareMode.name());
@@ -160,7 +163,8 @@ public class SuntimesWidget extends AppWidgetProvider
             return;
         }
 
-        SunriseSunsetCalculator calculator = new SunriseSunsetCalculator(location, timezone);
+        SuntimesCalculatorFactory calculatorFactory = new SuntimesCalculatorFactory(calculatorMode);
+        SuntimesCalculator calculator = calculatorFactory.createCalculator(location, timezone);
         Calendar sunriseCalendarToday;
         Calendar sunsetCalendarToday;
         Calendar sunriseCalendarOther;
