@@ -50,6 +50,7 @@ public class SuntimesCalculatorDescriptor implements Comparable
 
     public static SuntimesCalculatorDescriptor valueOf(String value)
     {
+        SuntimesCalculatorDescriptor descriptor = null;
         value = value.trim().toLowerCase();
         SuntimesCalculatorDescriptor[] values = SuntimesCalculatorDescriptor.values();
         for (int i=0; i<values.length; i++)
@@ -57,10 +58,16 @@ public class SuntimesCalculatorDescriptor implements Comparable
             SuntimesCalculatorDescriptor calculator = values[i];
             if (calculator.name().equals(value) || value.equals("any"))
             {
-                return values[i];
+                descriptor = calculator;
+                break;
             }
         }
-        throw new InvalidParameterException("Calculator value for " + value + " not found.");
+
+        if (descriptor == null) {
+            throw new InvalidParameterException("Calculator value for " + value + " not found.");
+        } else {
+            return descriptor;
+        }
     }
 
     private String name;

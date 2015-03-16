@@ -22,7 +22,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.luckycatlabs.sunrisesunset.dto.Location;
 import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator;
 import java.util.Calendar;
-import com.forrestguice.suntimeswidget.SuntimesWidgetSettings;
+import com.forrestguice.suntimeswidget.settings.SuntimesWidgetSettings;
 
 public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
 {

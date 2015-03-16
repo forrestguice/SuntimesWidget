@@ -18,7 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
-import com.forrestguice.suntimeswidget.SuntimesWidgetSettings;
+import com.forrestguice.suntimeswidget.settings.SuntimesWidgetSettings;
 
 import java.util.Calendar;
 
