@@ -23,6 +23,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -34,6 +35,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorFactory;
+import com.forrestguice.suntimeswidget.settings.SuntimesWidgetSettings;
+import com.forrestguice.suntimeswidget.settings.SuntimesWidgetTheme;
+import com.forrestguice.suntimeswidget.settings.SuntimesWidgetThemes;
 
 
 /**
@@ -47,6 +52,7 @@ public class SuntimesWidgetSettingsActivity extends Activity
     private Spinner spinner_timeMode;
     private Spinner spinner_compareMode;
 
+    private Spinner spinner_theme;
     private CheckBox checkbox_showTitle;
     private EditText text_titleText;
     private TextView label_titleText;
@@ -71,7 +77,7 @@ public class SuntimesWidgetSettingsActivity extends Activity
     {
         super.onCreate(icicle);
         setResult(RESULT_CANCELED);  // causes widget host to cancel if user presses back
-        setContentView(R.layout.sunrise_and_set_widget_configure);
+        setContentView(R.layout.layout_settings);
 
         Context context = SuntimesWidgetSettingsActivity.this;
         Intent intent = getIntent();
@@ -79,7 +85,7 @@ public class SuntimesWidgetSettingsActivity extends Activity
         if (extras != null)
         {
             appWidgetId = extras.getInt( AppWidgetManager.EXTRA_APPWIDGET_ID,
-                                          AppWidgetManager.INVALID_APPWIDGET_ID );
+                                         AppWidgetManager.INVALID_APPWIDGET_ID );
         }
 
         if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID)
@@ -87,6 +93,9 @@ public class SuntimesWidgetSettingsActivity extends Activity
             finish();
             return;
         }
+
+        SuntimesWidgetThemes.initThemes(context);
+        SuntimesCalculatorFactory.initCalculators(context);
 
         initViews(context);
 
@@ -128,10 +137,22 @@ public class SuntimesWidgetSettingsActivity extends Activity
         //
         // widget: source
         //
+        ArrayAdapter<SuntimesWidgetThemes.ThemeDescriptor> spinner_themeAdapter;
+        spinner_themeAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item,
+                SuntimesWidgetThemes.values());
+        spinner_themeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner_theme = (Spinner)findViewById(R.id.appwidget_appearance_theme);
+        spinner_theme.setAdapter(spinner_themeAdapter);
+
+        //
+        // widget: source
+        //
         ArrayAdapter<SuntimesCalculatorDescriptor> spinner_calculatorModeAdapter;
         spinner_calculatorModeAdapter = new ArrayAdapter<SuntimesCalculatorDescriptor>(this,
                 android.R.layout.simple_spinner_item,
-                SuntimesCalculatorDescriptor.values());  // TODO: source of values
+                SuntimesCalculatorDescriptor.values());
         spinner_calculatorModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner_calculatorMode = (Spinner)findViewById(R.id.appwidget_general_calculator);
@@ -321,6 +342,13 @@ public class SuntimesWidgetSettingsActivity extends Activity
 
     private void saveAppearanceSettings(Context context)
     {
+        // save: theme
+        final SuntimesWidgetThemes.ThemeDescriptor[] themes = SuntimesWidgetThemes.values();
+        SuntimesWidgetThemes.ThemeDescriptor theme = themes[ spinner_theme.getSelectedItemPosition() ];
+        SuntimesWidgetSettings.saveThemePref(context, appWidgetId, theme.name());
+        Log.d("DEBUG", "Saved theme: " + theme.name());
+
+
         // save: appearance (show title)
         boolean showTitle = checkbox_showTitle.isChecked();
         SuntimesWidgetSettings.saveShowTitlePref(context, appWidgetId, showTitle);
@@ -332,6 +360,10 @@ public class SuntimesWidgetSettingsActivity extends Activity
 
     private void loadAppearanceSettings(Context context)
     {
+        SuntimesWidgetTheme theme = SuntimesWidgetSettings.loadThemePref(context, appWidgetId);
+        SuntimesWidgetThemes.ThemeDescriptor themeDescriptor = SuntimesWidgetThemes.valueOf(theme.getThemeName());
+        spinner_theme.setSelection(themeDescriptor.ordinal());
+
         boolean showTitle = SuntimesWidgetSettings.loadShowTitlePref(context, appWidgetId);
         checkbox_showTitle.setChecked(showTitle);
         setTitleTextEnabled(showTitle);

@@ -18,6 +18,8 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.util.Log;
 
 import android.os.Bundle;
@@ -30,6 +32,9 @@ import android.appwidget.AppWidgetProvider;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorFactory;
+import com.forrestguice.suntimeswidget.settings.SuntimesWidgetSettings;
+import com.forrestguice.suntimeswidget.settings.SuntimesWidgetTheme;
+import com.forrestguice.suntimeswidget.settings.SuntimesWidgetThemes;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -50,8 +55,10 @@ public class SuntimesWidget extends AppWidgetProvider
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds)
     {
+        SuntimesWidgetThemes.initThemes(context);
         SuntimesCalculatorFactory.initCalculators(context);
         SuntimesWidgetSettings.TimeMode.initDisplayStrings(context);
+
         for (int appWidgetId : appWidgetIds)
         {
             updateAppWidget(context, appWidgetManager, appWidgetId);
@@ -70,7 +77,7 @@ public class SuntimesWidget extends AppWidgetProvider
     @Override
     public void onEnabled(Context context)
     {
-        // when the first widget is created
+
     }
 
     @Override
@@ -87,17 +94,61 @@ public class SuntimesWidget extends AppWidgetProvider
      */
     private static RemoteViews getWidgetViews(Context context, int rows, int columns)
     {
+        RemoteViews views;
         if (columns >= 3)
         {
-            return new RemoteViews(context.getPackageName(), R.layout.layout_sunwidget1x3);
-        }
+            views = new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x3);
 
-        if (columns >= 2)
+        } else if (columns == 2)
         {
-            return new RemoteViews(context.getPackageName(), R.layout.layout_sunwidget1x2);
-        }
+            views = new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x2);
 
-        return new RemoteViews(context.getPackageName(), R.layout.layout_sunwidget1x1);
+        } else {
+            views = new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x1);
+        }
+        return views;
+    }
+
+    /**
+     * @param context
+     * @param views
+     * @param theme
+     */
+    static void themeViews(Context context, RemoteViews views, SuntimesWidgetTheme theme)
+    {
+        Resources resources = context.getResources();
+        int[] padding = new int[] { (int)resources.getDimension(R.dimen.widget_padding_left),
+                                    (int)resources.getDimension(R.dimen.widget_padding_top),
+                                    (int)resources.getDimension(R.dimen.widget_padding_right),
+                                    (int)resources.getDimension(R.dimen.widget_padding_bottom) };
+        int sunriseColor = theme.getSunriseTextColor();
+        int sunsetColor = theme.getSunsetTextColor();
+        int suffixColor = theme.getThemeTimeSuffixColor();
+        int textColor = theme.getTextColor();
+
+        views.setInt(R.id.widgetframe_inner_1x1, "setBackgroundResource", theme.getBackgroundId());
+        views.setViewPadding( R.id.widgetframe_inner_1x1, padding[0], padding[1], padding[2], padding[3] );
+
+        views.setInt(R.id.widgetframe_inner_1x2, "setBackgroundResource", theme.getBackgroundId());
+        views.setViewPadding( R.id.widgetframe_inner_1x2, padding[0], padding[1], padding[2], padding[3] );
+
+        views.setInt(R.id.widgetframe_inner_1x3, "setBackgroundResource", theme.getBackgroundId());
+        views.setViewPadding( R.id.widgetframe_inner_1x3, padding[0], padding[1], padding[2], padding[3] );
+
+        views.setTextColor(R.id.text_title, theme.getTitleColor());
+
+        views.setTextColor(R.id.text_time_sunrise_suffix, suffixColor);
+        views.setTextColor(R.id.text_time_sunrise, sunriseColor);
+        views.setTextColor(R.id.text_delta_sunrise, sunriseColor);
+
+        views.setTextColor(R.id.text_time_sunset_suffix, suffixColor);
+        views.setTextColor(R.id.text_time_sunset, sunsetColor);
+        views.setTextColor(R.id.text_delta_sunset, sunsetColor);
+
+        views.setTextColor(R.id.text_delta_day_prefix, textColor);
+        views.setTextColor(R.id.text_delta_day_value, sunsetColor);
+        views.setTextColor(R.id.text_delta_day_units, textColor);
+        views.setTextColor(R.id.text_delta_day_suffix, suffixColor);
     }
 
     private static SuntimesWidgetSettings.Location getCurrentLocation(Context context)
@@ -113,18 +164,21 @@ public class SuntimesWidget extends AppWidgetProvider
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
         Bundle options = appWidgetManager.getAppWidgetOptions(appWidgetId);
-        int widgetRows = SuntimesUtils.getCellsForSize(options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT));
-        int widgetCols = SuntimesUtils.getCellsForSize(options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH));
-        RemoteViews views = getWidgetViews(context, widgetRows, widgetCols);
+        int widgetRows = SuntimesWidgetUtils.getCellsForSize(options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT));
+        int widgetCols = SuntimesWidgetUtils.getCellsForSize(options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH));
 
-        // get appearance settings
+        // apply appearance settings
+        SuntimesWidgetTheme theme = SuntimesWidgetSettings.loadThemePref(context, appWidgetId);
+        RemoteViews views = getWidgetViews(context, widgetRows, widgetCols);
+        themeViews(context, views, theme);
+
         boolean showTitle = SuntimesWidgetSettings.loadShowTitlePref(context, appWidgetId);
         String titlePattern = SuntimesWidgetSettings.loadTitleTextPref(context, appWidgetId);
-        String titleText = SuntimesUtils.displayStringForTitlePattern(titlePattern, context, appWidgetId);
+        String titleText = SuntimesWidgetUtils.displayStringForTitlePattern(titlePattern, context, appWidgetId);
         views.setTextViewText(R.id.text_title, titleText);
         views.setViewVisibility(R.id.text_title, showTitle ? View.VISIBLE : View.GONE);
 
-        // get general settings
+        // apply general settings
         SuntimesCalculatorDescriptor calculatorMode = SuntimesWidgetSettings.loadCalculatorModePref(context, appWidgetId);
         SuntimesWidgetSettings.TimeMode timeMode = SuntimesWidgetSettings.loadTimeModePref(context, appWidgetId);
         SuntimesWidgetSettings.CompareMode compareMode = SuntimesWidgetSettings.loadCompareModePref(context, appWidgetId);
@@ -156,6 +210,7 @@ public class SuntimesWidget extends AppWidgetProvider
         Log.v("DEBUG", "timezone_mode: " + timezoneMode.name());
         Log.v("DEBUG", "timezone: " + timezone);
         Log.v("DEBUG", "compare mode: " + compareMode.name());
+        Log.v("DEBUG", "theme: " + theme.getThemeName());
 
         String dayDeltaPrefix;
         Calendar todaysCalendar = Calendar.getInstance();
@@ -221,12 +276,12 @@ public class SuntimesWidget extends AppWidgetProvider
         }
 
         // update sunrise time
-        SuntimesUtils.TimeDisplayText sunriseString = SuntimesUtils.calendarTimeShortDisplayString(context, sunriseCalendarToday);
+        SuntimesWidgetUtils.TimeDisplayText sunriseString = SuntimesWidgetUtils.calendarTimeShortDisplayString(context, sunriseCalendarToday);
         views.setTextViewText(R.id.text_time_sunrise, sunriseString.getValue());
         views.setTextViewText(R.id.text_time_sunrise_suffix, sunriseString.getSuffix());
 
         // upset sunset time
-        SuntimesUtils.TimeDisplayText sunsetString = SuntimesUtils.calendarTimeShortDisplayString(context, sunsetCalendarToday);
+        SuntimesWidgetUtils.TimeDisplayText sunsetString = SuntimesWidgetUtils.calendarTimeShortDisplayString(context, sunsetCalendarToday);
         views.setTextViewText(R.id.text_time_sunset, sunsetString.getValue());
         views.setTextViewText(R.id.text_time_sunset_suffix, sunsetString.getSuffix());
 
@@ -245,7 +300,7 @@ public class SuntimesWidget extends AppWidgetProvider
         long sunsetOther = sunsetCalendarOther.getTime().getTime();
         long dayLengthOther = sunsetOther - sunriseOther;
 
-        SuntimesUtils.TimeDisplayText dayDeltaDisplay = SuntimesUtils.timeDeltaLongDisplayString(dayLengthToday, dayLengthOther);
+        SuntimesWidgetUtils.TimeDisplayText dayDeltaDisplay = SuntimesWidgetUtils.timeDeltaLongDisplayString(dayLengthToday, dayLengthOther);
         String dayDeltaValue = dayDeltaDisplay.getValue();
         String dayDeltaUnits = dayDeltaDisplay.getUnits();
         String dayDeltaSuffix = dayDeltaDisplay.getSuffix();
