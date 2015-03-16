@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="widget_title">#000000</color>
     <color name="sunIcon_color_rising">#ffcc00</color>
     <color name="sunIcon_color_setting">#ff9900</color>
     <color name="sunIcon_color_risingBorder">#ff9900</color>

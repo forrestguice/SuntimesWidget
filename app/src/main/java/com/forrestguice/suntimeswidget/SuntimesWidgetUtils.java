@@ -20,12 +20,14 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 
+import com.forrestguice.suntimeswidget.settings.SuntimesWidgetSettings;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class SuntimesUtils
+public class SuntimesWidgetUtils
 {
     /**
      * TimeDisplayText : class

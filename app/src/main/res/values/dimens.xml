@@ -19,4 +19,7 @@
     <dimen name="sunIcon_width_risingBorder">@dimen/sunIcon_width_border</dimen>
     <dimen name="sunIcon_width_settingBorder">@dimen/sunIcon_width_border</dimen>
 
+    <dimen name="settingsGroup_margin">5dp</dimen>
+    <dimen name="settingsGroup_padding">4dp</dimen>
+
 </resources>

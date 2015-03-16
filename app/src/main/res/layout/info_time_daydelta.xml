@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout style="@style/SunsetTimeLayout"
         android:orientation="horizontal">
@@ -9,28 +9,28 @@
             android:id="@+id/text_delta_day_prefix"
             android:gravity="left"
             android:layout_weight="0"
-            android:text="Tomorrow will be" />
+            tools:text="Tomorrow will be" />
 
         <TextView
             style="@style/SunsetTimeTextView2"
             android:id="@+id/text_delta_day_value"
             android:gravity="left"
             android:layout_weight="0"
-            android:text="4" />
+            tools:text="4" />
 
         <TextView
             style="@style/SunsetTimeTextView2"
             android:id="@+id/text_delta_day_units"
             android:gravity="left"
             android:layout_weight="0"
-            android:text="min" />
+            tools:text="min" />
 
         <TextView
             style="@style/SunsetTimeTextView2"
             android:id="@+id/text_delta_day_suffix"
             android:gravity="left"
             android:layout_weight="1"
-            android:text="shorter" />
+            tools:text="shorter" />
 
     </LinearLayout>
 </merge>

@@ -15,7 +15,7 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/sunrise_and_set_widget_info" />
+                android:resource="@xml/suntimeswidget_info" />
         </receiver>
 
         <activity android:name="com.forrestguice.suntimeswidget.SuntimesWidgetSettingsActivity" >

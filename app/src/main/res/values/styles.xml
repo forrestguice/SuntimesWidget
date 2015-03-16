@@ -3,22 +3,36 @@
     <style name="AppTheme" parent="ThemeOverlay.AppCompat.Dark">
     </style>
 
+    <!-- The outermost frame around the widget -->
+    <style name="SunsetTimeWidgetFrame">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/widget_margin</item>
+    </style>
+
+    <!-- The inner frame around the widget -->
+    <style name="SunsetTimeWidget">
+        <item name="android:background">@drawable/bg_widget</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">@dimen/widget_padding_left</item>
+        <item name="android:paddingRight">@dimen/widget_padding_right</item>
+        <item name="android:paddingTop">@dimen/widget_padding_top</item>
+        <item name="android:paddingBottom">@dimen/widget_padding_bottom</item>
+    </style>
+    <style name="SunsetTimeWidget_dark" parent="SunsetTimeWidget">
+        <item name="android:background">@drawable/bg_widget_dark</item>
+    </style>
+
+    <!-- A layout for widget content within the inner frame -->
     <style name="SunsetTimeLayout">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center_vertical</item>
     </style>
 
-    <style name="SunsetTimeWidget">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingLeft">@dimen/widget_padding_left</item>
-        <item name="android:paddingRight">@dimen/widget_padding_right</item>
-        <item name="android:paddingTop">@dimen/widget_padding_top</item>
-        <item name="android:paddingBottom">@dimen/widget_padding_bottom</item>
-        <item name="android:background">@drawable/bg_widget_dark</item>
-    </style>
-
+    <!-- An ImageView (icon) appearing to left of text/time -->
     <style name="SunsetTimeImageView">
         <item name="android:gravity">center</item>
         <item name="android:layout_width">wrap_content</item>
@@ -28,6 +42,7 @@
         <item name="android:layout_marginRight">0dp</item>
     </style>
 
+    <!-- A TextView for displaying text/time -->
     <style name="SunsetTimeTextView" parent="TextAppearance.AppCompat.Small">
         <item name="android:gravity">center</item>
         <item name="android:layout_width">wrap_content</item>
@@ -40,22 +55,27 @@
         <item name="android:textSize">12sp</item>
         <item name="android:antialias">true</item>
     </style>
-
     <style name="SunsetTimeTextView2" parent="SunsetTimeTextView">
         <item name="android:textSize">10sp</item>
     </style>
 
+    <!-- A TextView for displaying the widget title -->
     <style name="SunsetTimeTextTitleView" parent="SunsetTimeTextView">
         <item name="android:textSize">8sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_gravity">bottom</item>
     </style>
 
+    <!-- A TextView for displaying some suffix after time/text -->
     <style name="SunsetTimeTextSuffixView" parent="SunsetTimeTextView">
         <item name="android:textSize">6sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_gravity">center_horizontal</item>
     </style>
 
+
+    <style name="SunsetTimeSettingsGroupTitle">
+        <item name="android:textStyle">bold</item>
+    </style>
 
 </resources>
