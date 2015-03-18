@@ -2,9 +2,9 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:minWidth="40dp" android:minHeight="40dp" android:updatePeriodMillis="86400000"
     android:previewImage="@drawable/ic_suntimes"
-    android:initialLayout="@layout/layout_widget_1x1"
+    android:initialLayout="@layout/layout_widget_1x1_0"
     android:configure="com.forrestguice.suntimeswidget.SuntimesWidgetSettingsActivity"
     android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen|keyguard"
-    android:initialKeyguardLayout="@layout/layout_widget_1x1">
+    android:initialKeyguardLayout="@layout/layout_widget_1x1_0">
 </appwidget-provider>

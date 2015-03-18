@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget;
 
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.util.Log;
 
 import android.os.Bundle;
@@ -29,7 +28,6 @@ import android.content.Context;
 import android.widget.RemoteViews;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
-import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
@@ -108,7 +106,7 @@ public class SuntimesWidget extends AppWidgetProvider
             views = new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x2);
 
         } else {
-            views = new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x1);
+            views = new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x1_0);
         }
         return views;
     }
