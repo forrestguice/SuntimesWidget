@@ -164,15 +164,21 @@ public class SuntimesWidgetUtils
     public static String displayStringForTitlePattern(String titlePattern, Context context, int appWidgetId)
     {
         SuntimesWidgetSettings.TimeMode timeMode = SuntimesWidgetSettings.loadTimeModePref(context, appWidgetId);
+        SuntimesWidgetSettings.Location location = SuntimesWidgetSettings.loadLocationPref(context, appWidgetId);
 
         String displayString = titlePattern;
         String modePattern = "%M";
         String modePatternShort = "%m";
+        String latPattern = "%lat";
+        String lonPattern = "%lon";
         String percentPattern = "%%";
 
         displayString = displayString.replaceAll(modePatternShort, timeMode.getShortDisplayString());
         displayString = displayString.replaceAll(modePattern, timeMode.getLongDisplayString());
+        displayString = displayString.replaceAll(latPattern, location.getLatitude());
+        displayString = displayString.replaceAll(lonPattern, location.getLongitude());
         displayString = displayString.replaceAll(percentPattern, "%");
+
         return displayString;
     }
 }
