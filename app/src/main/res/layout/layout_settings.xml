@@ -22,13 +22,13 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
 
-            <include layout="@layout/layout_settings_appearance" />
-
-            <include layout="@layout/layout_settings_general" />
-
             <include layout="@layout/layout_settings_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
+            <include layout="@layout/layout_settings_general" />
+
+            <include layout="@layout/layout_settings_appearance" />
 
             <include layout="@layout/layout_settings_timezone" />
 

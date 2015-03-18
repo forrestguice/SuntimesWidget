@@ -36,8 +36,16 @@
                 android:text="@string/configLabel_appearance_titleText" />
 
             <EditText android:id="@+id/appwidget_appearance_titleText" android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="wrap_content" android:layout_weight="1"
                 android:hint="@string/configHint_appearance_titleText" android:text="" />
+
+            <ImageButton android:id="@+id/appwidget_appearance_titleText_helpButton"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:src="@android:drawable/ic_menu_help"
+                android:scaleType="center"
+                android:cropToPadding="false"
+                android:adjustViewBounds="false" />
 
         </LinearLayout>
 

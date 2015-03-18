@@ -5,6 +5,8 @@
     <string name="configure">Configure Widget</string>
     <string name="add_widget">Add Widget</string>
 
+    <string name="help_dialog_title">Help</string>
+
     <string name="delta_day_tomorrow">Tomorrow will be</string>
     <string name="delta_day_yesterday">Yesterday was</string>
 
@@ -50,6 +52,19 @@
     <string name="configLabel_timezone">Timezone Settings</string>
     <string name="configLabel_timezone_mode">Mode:</string>
     <string name="configLabel_timezone_custom">Timezone:</string>
+
+    <string name="help_appearance_title"><![CDATA[
+        Supported title substitutions: <br>
+                <br />
+                * <b>%lat</b> for the latitude
+                <br/>
+                * <b>%lon</b> for the longitude
+                <br />
+                * <b>%M</b> for time mode (long) (e.g. "Civil Twilight")
+                <br/>
+                * <b>%m</b> for time mode (short) (e.g. "Civil")
+                <br/>
+    ]]></string>
 
 
 </resources>
