@@ -3,7 +3,7 @@
 
     <dimen name="widget_margin">8dp</dimen>
 
-    <dimen name="widget_padding_left">4dp</dimen>
+    <dimen name="widget_padding_left">2dp</dimen>
     <dimen name="widget_padding_right">4dp</dimen>
     <dimen name="widget_padding_top">4dp</dimen>
     <dimen name="widget_padding_bottom">4dp</dimen>
@@ -12,9 +12,9 @@
     <dimen name="widget_layout_spacing_small">4dp</dimen>
     <dimen name="widget_layout_spacing">8dp</dimen>
 
-    <dimen name="sunIcon_inset">-8dip</dimen> <!-- this should be the same as sunicon_height to produce a half circle -->
-    <dimen name="sunIcon_height">8dip</dimen>
-    <dimen name="sunIcon_width">16dip</dimen>
+    <dimen name="sunIcon_inset">-9dip</dimen> <!-- this should be the same as sunicon_height to produce a half circle -->
+    <dimen name="sunIcon_height">9dip</dimen>
+    <dimen name="sunIcon_width">18dip</dimen>
     <dimen name="sunIcon_width_border">0dip</dimen>
     <dimen name="sunIcon_width_risingBorder">@dimen/sunIcon_width_border</dimen>
     <dimen name="sunIcon_width_settingBorder">@dimen/sunIcon_width_border</dimen>

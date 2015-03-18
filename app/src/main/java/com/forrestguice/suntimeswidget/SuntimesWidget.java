@@ -23,11 +23,13 @@ import android.graphics.Color;
 import android.util.Log;
 
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
 import android.content.Context;
 import android.widget.RemoteViews;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
@@ -92,11 +94,13 @@ public class SuntimesWidget extends AppWidgetProvider
      * @param columns number of cols in widget
      * @return a RemoteViews instance for the specified widget size
      */
-    private static RemoteViews getWidgetViews(Context context, int rows, int columns)
-    {
+    private static RemoteViews getWidgetViews(Context context, int rows, int columns) {
         RemoteViews views;
-        if (columns >= 3)
+        if (columns >= 4)
         {
+            views = new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x4);
+
+        } else if (columns >= 3) {
             views = new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x3);
 
         } else if (columns == 2)
@@ -135,6 +139,7 @@ public class SuntimesWidget extends AppWidgetProvider
         views.setInt(R.id.widgetframe_inner_1x3, "setBackgroundResource", theme.getBackgroundId());
         views.setViewPadding( R.id.widgetframe_inner_1x3, padding[0], padding[1], padding[2], padding[3] );
 
+        views.setTextViewTextSize(R.id.text_title, TypedValue.COMPLEX_UNIT_SP, theme.getTitleSizeSp());
         views.setTextColor(R.id.text_title, theme.getTitleColor());
 
         views.setTextColor(R.id.text_time_sunrise_suffix, suffixColor);

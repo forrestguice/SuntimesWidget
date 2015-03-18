@@ -27,9 +27,6 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 
 public class SuntimesWidgetSettings
 {
-    /**
-     *
-     */
     private static final String PREFS_WIDGET = "com.forrestguice.suntimeswidget";
 
     public static final String PREF_PREFIX_KEY = "appwidget_";
@@ -42,13 +39,13 @@ public class SuntimesWidgetSettings
     public static final String PREF_DEF_GENERAL_CALCULATOR = "any";
 
     public static final String PREF_KEY_APPEARANCE_THEME = "theme";
-    public static final String PREF_DEF_APPEARANCE_THEME = SuntimesWidgetTheme.THEMEDEF_DEF_NAME;
+    public static final String PREF_DEF_APPEARANCE_THEME = SuntimesWidgetThemes.THEMEDEF_DEF_NAME;
 
     public static final String PREF_KEY_APPEARANCE_SHOWTITLE = "showtitle";
     public static final boolean PREF_DEF_APPEARANCE_SHOWTITLE = true;
 
     private static final String PREF_KEY_APPEARANCE_TITLETEXT = "titletext";
-    private static final String PREF_DEF_APPEARANCE_TITLETEXT = "%m";
+    private static final String PREF_DEF_APPEARANCE_TITLETEXT = "%M";
 
     public static final String PREF_KEY_GENERAL_TIMEMODE = "timemode";
     public static final TimeMode PREF_DEF_GENERAL_TIMEMODE = TimeMode.OFFICIAL;

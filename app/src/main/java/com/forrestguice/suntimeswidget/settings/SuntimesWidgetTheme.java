@@ -5,28 +5,21 @@ import android.content.SharedPreferences;
 
 public class SuntimesWidgetTheme
 {
-    public static final String THEME_NAME = "_name";
-    public static final String THEME_DISPLAYSTRING = "_display";
-    public static final String THEME_BACKGROUND = "_backgroundID";
-    public static final String THEME_TEXTCOLOR = "_textcolor";
-    public static final String THEME_TITLECOLOR = "_titlecolor";
-    public static final String THEME_TIMESUFFIXCOLOR = "_timesuffixcolor";
-    public static final String THEME_SUNRISECOLOR = "_sunrisecolor";
-    public static final String THEME_SUNSETCOLOR = "_sunsetcolor";
-
-    public static final String THEMEDEF_DEF_NAME = SuntimesWidgetThemes.THEMEDEF_DARK_NAME ;
-    public static final String THEMEDEF_DEF_DISPLAYSTRING = SuntimesWidgetThemes.THEMEDEF_DARK_DISPLAYSTRING;
-    public static final int THEMEDEF_DEF_BACKGROUND_ID = SuntimesWidgetThemes.THEMEDEF_DARK_BACKGROUND_ID;
-    public static final int THEMEDEF_DEF_TEXTCOLOR_ID = SuntimesWidgetThemes.THEMEDEF_DARK_TEXTCOLOR_ID;
-    public static final int THEMEDEF_DEF_TITLECOLOR_ID = SuntimesWidgetThemes.THEMEDEF_DARK_TITLECOLOR_ID;
-    public static final int THEMEDEF_DEF_TIMESUFFIXCOLOR_ID = SuntimesWidgetThemes.THEMEDEF_DARK_TIMESUFFIXCOLOR_ID;
-    public static final int THEMEDEF_DEF_SUNRISECOLOR_ID = SuntimesWidgetThemes.THEMEDEF_DARK_SUNRISECOLOR_ID;
-    public static final int THEMEDEF_DEF_SUNSETCOLOR_ID = SuntimesWidgetThemes.THEMEDEF_DARK_SUNSETCOLOR_ID;
+    public static final String THEME_NAME = "name";
+    public static final String THEME_DISPLAYSTRING = "display";
+    public static final String THEME_BACKGROUND = "backgroundID";
+    public static final String THEME_TEXTCOLOR = "textcolor";
+    public static final String THEME_TITLECOLOR = "titlecolor";
+    public static final String THEME_TIMESUFFIXCOLOR = "timesuffixcolor";
+    public static final String THEME_SUNRISECOLOR = "sunrisecolor";
+    public static final String THEME_SUNSETCOLOR = "sunsetcolor";
+    public static final String THEME_TITLESIZE = "titlesize";
 
     private String themeName;
     private String themeDisplayString;
     private int themeBackground;
     private int themeTitleColor;
+    private float themeTitleSize;
     private int themeTextColor;
     private int themeSunriseTextColor;
     private int themeSunsetTextColor;
@@ -39,14 +32,15 @@ public class SuntimesWidgetTheme
 
     private void initDefault(Context context)
     {
-        this.themeName = THEMEDEF_DEF_NAME;
-        this.themeDisplayString = THEMEDEF_DEF_DISPLAYSTRING;
-        this.themeBackground = THEMEDEF_DEF_BACKGROUND_ID;
-        this.themeTextColor = context.getResources().getColor(THEMEDEF_DEF_TEXTCOLOR_ID);
-        this.themeTitleColor = context.getResources().getColor(THEMEDEF_DEF_TITLECOLOR_ID);
-        this.themeTimeSuffixColor = context.getResources().getColor(THEMEDEF_DEF_TIMESUFFIXCOLOR_ID);
-        this.themeSunriseTextColor = context.getResources().getColor(THEMEDEF_DEF_SUNRISECOLOR_ID);
-        this.themeSunsetTextColor = context.getResources().getColor(THEMEDEF_DEF_SUNSETCOLOR_ID);
+        this.themeName = SuntimesWidgetThemes.THEMEDEF_DEF_NAME;
+        this.themeDisplayString = SuntimesWidgetThemes.THEMEDEF_DEF_DISPLAYSTRING;
+        this.themeBackground = SuntimesWidgetThemes.THEMEDEF_DEF_BACKGROUND_ID;
+        this.themeTextColor = context.getResources().getColor(SuntimesWidgetThemes.THEMEDEF_DEF_TEXTCOLOR_ID);
+        this.themeTitleColor = context.getResources().getColor(SuntimesWidgetThemes.THEMEDEF_DEF_TITLECOLOR_ID);
+        this.themeTimeSuffixColor = context.getResources().getColor(SuntimesWidgetThemes.THEMEDEF_DEF_TIMESUFFIXCOLOR_ID);
+        this.themeSunriseTextColor = context.getResources().getColor(SuntimesWidgetThemes.THEMEDEF_DEF_SUNRISECOLOR_ID);
+        this.themeSunsetTextColor = context.getResources().getColor(SuntimesWidgetThemes.THEMEDEF_DEF_SUNSETCOLOR_ID);
+        this.themeTitleSize = SuntimesWidgetThemes.THEMEDEF_DEF_TITLESIZE;
     }
 
     public boolean initTheme( Context context, String themeName )
@@ -54,15 +48,15 @@ public class SuntimesWidgetTheme
         SharedPreferences themes = context.getSharedPreferences(SuntimesWidgetThemes.PREFS_THEMES, Context.MODE_PRIVATE);
         String theme = SuntimesWidgetThemes.themePrefix(themeName);
 
-        this.themeName = themes.getString( theme + THEME_NAME, THEMEDEF_DEF_NAME );
-        this.themeDisplayString = themes.getString( theme + THEME_DISPLAYSTRING, THEMEDEF_DEF_DISPLAYSTRING );
-        this.themeBackground = themes.getInt( theme + THEME_BACKGROUND, THEMEDEF_DEF_BACKGROUND_ID);
-        this.themeTextColor = themes.getInt( theme + THEME_TEXTCOLOR, context.getResources().getColor(THEMEDEF_DEF_TEXTCOLOR_ID));
-        this.themeTitleColor = themes.getInt( theme + THEME_TITLECOLOR, context.getResources().getColor(THEMEDEF_DEF_TITLECOLOR_ID));
-        this.themeTimeSuffixColor = themes.getInt(theme + THEME_TIMESUFFIXCOLOR, context.getResources().getColor(THEMEDEF_DEF_TIMESUFFIXCOLOR_ID));
-        this.themeSunriseTextColor = themes.getInt(theme + THEME_SUNRISECOLOR, context.getResources().getColor(THEMEDEF_DEF_SUNRISECOLOR_ID));
-        this.themeSunsetTextColor = themes.getInt(theme + THEME_SUNSETCOLOR, context.getResources().getColor(THEMEDEF_DEF_SUNSETCOLOR_ID));
-
+        this.themeName = themes.getString( theme + THEME_NAME, SuntimesWidgetThemes.THEMEDEF_DEF_NAME );
+        this.themeDisplayString = themes.getString( theme + THEME_DISPLAYSTRING, SuntimesWidgetThemes.THEMEDEF_DEF_DISPLAYSTRING );
+        this.themeBackground = themes.getInt( theme + THEME_BACKGROUND, SuntimesWidgetThemes.THEMEDEF_DEF_BACKGROUND_ID);
+        this.themeTextColor = themes.getInt( theme + THEME_TEXTCOLOR, context.getResources().getColor(SuntimesWidgetThemes.THEMEDEF_DEF_TEXTCOLOR_ID));
+        this.themeTitleColor = themes.getInt( theme + THEME_TITLECOLOR, context.getResources().getColor(SuntimesWidgetThemes.THEMEDEF_DEF_TITLECOLOR_ID));
+        this.themeTimeSuffixColor = themes.getInt(theme + THEME_TIMESUFFIXCOLOR, context.getResources().getColor(SuntimesWidgetThemes.THEMEDEF_DEF_TIMESUFFIXCOLOR_ID));
+        this.themeSunriseTextColor = themes.getInt(theme + THEME_SUNRISECOLOR, context.getResources().getColor(SuntimesWidgetThemes.THEMEDEF_DEF_SUNRISECOLOR_ID));
+        this.themeSunsetTextColor = themes.getInt(theme + THEME_SUNSETCOLOR, context.getResources().getColor(SuntimesWidgetThemes.THEMEDEF_DEF_SUNSETCOLOR_ID));
+        this.themeTitleSize = themes.getFloat(theme + THEME_TITLESIZE, SuntimesWidgetThemes.THEMEDEF_DEF_TITLESIZE);
         return true;
     }
 
@@ -79,6 +73,11 @@ public class SuntimesWidgetTheme
     public int getTitleColor()
     {
         return themeTitleColor;
+    }
+
+    public float getTitleSizeSp()
+    {
+        return themeTitleSize;
     }
 
     public int getTextColor()

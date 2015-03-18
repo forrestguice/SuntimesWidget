@@ -17,18 +17,29 @@ public class SuntimesWidgetThemes
     public static final String THEME_KEY = "theme_";
     public static final String themePrefix(String themeName)
     {
-        return THEME_KEY + themeName;
+        StringBuilder themePrefix = new StringBuilder(THEME_KEY);
+        themePrefix.append(themeName);
+        themePrefix.append("_");
+        return themePrefix.toString();
     }
 
+    // Theme: Light
     public static final String THEMEDEF_LIGHT_NAME = "light";
     public static final String THEMEDEF_LIGHT_DISPLAYSTRING = "Light";
     public static final int THEMEDEF_LIGHT_BACKGROUND_ID = R.drawable.bg_widget;
     public static final int THEMEDEF_LIGHT_TEXTCOLOR_ID = android.R.color.tertiary_text_light;
-    public static final int THEMEDEF_LIGHT_TITLECOLOR_ID = android.R.color.tertiary_text_light;
+    public static final int THEMEDEF_LIGHT_TITLECOLOR_ID = android.R.color.secondary_text_light;
     public static final int THEMEDEF_LIGHT_TIMESUFFIXCOLOR_ID = android.R.color.tertiary_text_light;
     public static final int THEMEDEF_LIGHT_SUNRISECOLOR_ID = R.color.sunIcon_color_rising;
     public static final int THEMEDEF_LIGHT_SUNSETCOLOR_ID = R.color.sunIcon_color_setting;
+    public static final float THEMEDEF_LIGHT_TITLESIZE = 10;
 
+    // Theme: Light (no background)
+    public static final String THEMEDEF_LIGHT_TRANSPARENT_NAME = "light_transparent";
+    public static final String THEMEDEF_LIGHT_TRANSPARENT_DISPLAYSTRING = "Light (transparent)";
+    public static final int THEMEDEF_LIGHT_TRANSPARENT_BACKGROUND_ID = android.R.color.transparent;
+
+    // Theme: Dark
     public static final String THEMEDEF_DARK_NAME = "dark";
     public static final String THEMEDEF_DARK_DISPLAYSTRING = "Dark";
     public static final int THEMEDEF_DARK_BACKGROUND_ID = R.drawable.bg_widget_dark;
@@ -37,40 +48,110 @@ public class SuntimesWidgetThemes
     public static final int THEMEDEF_DARK_TIMESUFFIXCOLOR_ID = android.R.color.tertiary_text_dark;
     public static final int THEMEDEF_DARK_SUNRISECOLOR_ID = R.color.sunIcon_color_rising;
     public static final int THEMEDEF_DARK_SUNSETCOLOR_ID = R.color.sunIcon_color_setting;
+    public static final float THEMEDEF_DARK_TITLESIZE = 10;
+
+    // Theme: Dark (no background)
+    public static final String THEMEDEF_DARK_TRANSPARENT_NAME = "dark_transparent";
+    public static final String THEMEDEF_DARK_TRANSPARENT_DISPLAYSTRING = "Dark (transparent)";
+    public static final int THEMEDEF_DARK_TRANSPARENT_BACKGROUND_ID = android.R.color.transparent;
+
+    // Default Theme: Dark
+    public static final String THEMEDEF_DEF_NAME = SuntimesWidgetThemes.THEMEDEF_DARK_NAME ;
+    public static final String THEMEDEF_DEF_DISPLAYSTRING = SuntimesWidgetThemes.THEMEDEF_DARK_DISPLAYSTRING;
+    public static final int THEMEDEF_DEF_BACKGROUND_ID = SuntimesWidgetThemes.THEMEDEF_DARK_BACKGROUND_ID;
+    public static final int THEMEDEF_DEF_TEXTCOLOR_ID = SuntimesWidgetThemes.THEMEDEF_DARK_TEXTCOLOR_ID;
+    public static final int THEMEDEF_DEF_TITLECOLOR_ID = SuntimesWidgetThemes.THEMEDEF_DARK_TITLECOLOR_ID;
+    public static final int THEMEDEF_DEF_TIMESUFFIXCOLOR_ID = SuntimesWidgetThemes.THEMEDEF_DARK_TIMESUFFIXCOLOR_ID;
+    public static final int THEMEDEF_DEF_SUNRISECOLOR_ID = SuntimesWidgetThemes.THEMEDEF_DARK_SUNRISECOLOR_ID;
+    public static final int THEMEDEF_DEF_SUNSETCOLOR_ID = SuntimesWidgetThemes.THEMEDEF_DARK_SUNSETCOLOR_ID;
+    public static final float THEMEDEF_DEF_TITLESIZE = SuntimesWidgetThemes.THEMEDEF_DARK_TITLESIZE;
 
     public static final void initThemes(Context context)
     {
         Resources resources = context.getResources();
+        SharedPreferences.Editor themePrefs = context.getSharedPreferences(PREFS_THEMES, Context.MODE_PRIVATE).edit();
+        boolean themesAdded = false;
 
-        SharedPreferences.Editor themes = context.getSharedPreferences(PREFS_THEMES, Context.MODE_PRIVATE).edit();
-        String lightTheme = SuntimesWidgetThemes.themePrefix(THEMEDEF_LIGHT_NAME);
-        String darkTheme =  SuntimesWidgetThemes.themePrefix(THEMEDEF_DARK_NAME);
+        ThemeDescriptor lightThemeDescriptor = new ThemeDescriptor(THEMEDEF_LIGHT_NAME, THEMEDEF_LIGHT_DISPLAYSTRING);
+        if (!SuntimesWidgetThemes.hasValue(lightThemeDescriptor))
+        {
+            String lightTheme = SuntimesWidgetThemes.themePrefix(THEMEDEF_LIGHT_NAME);
+            themePrefs.putString(lightTheme + SuntimesWidgetTheme.THEME_NAME, THEMEDEF_LIGHT_NAME);
+            themePrefs.putString(lightTheme + SuntimesWidgetTheme.THEME_DISPLAYSTRING, THEMEDEF_LIGHT_DISPLAYSTRING);
+            themePrefs.putInt(lightTheme + SuntimesWidgetTheme.THEME_BACKGROUND, THEMEDEF_LIGHT_BACKGROUND_ID);
+            themePrefs.putInt(lightTheme + SuntimesWidgetTheme.THEME_TEXTCOLOR, resources.getColor(THEMEDEF_LIGHT_TEXTCOLOR_ID));
+            themePrefs.putInt(lightTheme + SuntimesWidgetTheme.THEME_TITLECOLOR, resources.getColor(THEMEDEF_LIGHT_TITLECOLOR_ID));
+            themePrefs.putInt(lightTheme + SuntimesWidgetTheme.THEME_TIMESUFFIXCOLOR, resources.getColor(THEMEDEF_LIGHT_TIMESUFFIXCOLOR_ID));
+            themePrefs.putInt(lightTheme + SuntimesWidgetTheme.THEME_SUNRISECOLOR, resources.getColor(THEMEDEF_LIGHT_SUNRISECOLOR_ID));
+            themePrefs.putInt(lightTheme + SuntimesWidgetTheme.THEME_SUNSETCOLOR, resources.getColor(THEMEDEF_LIGHT_SUNSETCOLOR_ID));
+            themePrefs.putFloat(lightTheme + SuntimesWidgetTheme.THEME_TITLESIZE, THEMEDEF_LIGHT_TITLESIZE);
+            addValue(lightThemeDescriptor);
+            themesAdded = true;
+        }
 
-        themes.putString( lightTheme + SuntimesWidgetTheme.THEME_NAME, THEMEDEF_LIGHT_NAME );
-        themes.putString(lightTheme + SuntimesWidgetTheme.THEME_DISPLAYSTRING, THEMEDEF_LIGHT_DISPLAYSTRING);
-        themes.putInt( lightTheme + SuntimesWidgetTheme.THEME_BACKGROUND, THEMEDEF_LIGHT_BACKGROUND_ID);
-        themes.putInt( lightTheme + SuntimesWidgetTheme.THEME_TEXTCOLOR, resources.getColor(THEMEDEF_LIGHT_TEXTCOLOR_ID) );
-        themes.putInt( lightTheme + SuntimesWidgetTheme.THEME_TITLECOLOR, resources.getColor(THEMEDEF_LIGHT_TITLECOLOR_ID) );
-        themes.putInt( lightTheme + SuntimesWidgetTheme.THEME_TIMESUFFIXCOLOR, resources.getColor(THEMEDEF_LIGHT_TIMESUFFIXCOLOR_ID) );
-        themes.putInt( lightTheme + SuntimesWidgetTheme.THEME_SUNRISECOLOR, resources.getColor(THEMEDEF_LIGHT_SUNRISECOLOR_ID) );
-        themes.putInt( lightTheme + SuntimesWidgetTheme.THEME_SUNSETCOLOR, resources.getColor(THEMEDEF_LIGHT_SUNSETCOLOR_ID) );
+        ThemeDescriptor lightTransThemeDescriptor = new ThemeDescriptor(THEMEDEF_LIGHT_TRANSPARENT_NAME, THEMEDEF_LIGHT_TRANSPARENT_DISPLAYSTRING);
+        if (!SuntimesWidgetThemes.hasValue(lightTransThemeDescriptor))
+        {
+            String lightTheme = SuntimesWidgetThemes.themePrefix(THEMEDEF_LIGHT_TRANSPARENT_NAME);
+            themePrefs.putString(lightTheme + SuntimesWidgetTheme.THEME_NAME, THEMEDEF_LIGHT_TRANSPARENT_NAME);
+            themePrefs.putString(lightTheme + SuntimesWidgetTheme.THEME_DISPLAYSTRING, THEMEDEF_LIGHT_TRANSPARENT_DISPLAYSTRING);
+            themePrefs.putInt(lightTheme + SuntimesWidgetTheme.THEME_BACKGROUND, THEMEDEF_LIGHT_TRANSPARENT_BACKGROUND_ID);
+            themePrefs.putInt(lightTheme + SuntimesWidgetTheme.THEME_TEXTCOLOR, resources.getColor(THEMEDEF_LIGHT_TEXTCOLOR_ID));
+            themePrefs.putInt(lightTheme + SuntimesWidgetTheme.THEME_TITLECOLOR, resources.getColor(THEMEDEF_LIGHT_TITLECOLOR_ID));
+            themePrefs.putInt(lightTheme + SuntimesWidgetTheme.THEME_TIMESUFFIXCOLOR, resources.getColor(THEMEDEF_LIGHT_TIMESUFFIXCOLOR_ID));
+            themePrefs.putInt(lightTheme + SuntimesWidgetTheme.THEME_SUNRISECOLOR, resources.getColor(THEMEDEF_LIGHT_SUNRISECOLOR_ID));
+            themePrefs.putInt(lightTheme + SuntimesWidgetTheme.THEME_SUNSETCOLOR, resources.getColor(THEMEDEF_LIGHT_SUNSETCOLOR_ID));
+            themePrefs.putFloat(lightTheme + SuntimesWidgetTheme.THEME_TITLESIZE, THEMEDEF_LIGHT_TITLESIZE);
+            addValue(lightTransThemeDescriptor);
+            themesAdded = true;
+        }
 
-        themes.putString( darkTheme + SuntimesWidgetTheme.THEME_NAME, THEMEDEF_DARK_NAME );
-        themes.putString( darkTheme + SuntimesWidgetTheme.THEME_DISPLAYSTRING, THEMEDEF_DARK_DISPLAYSTRING);
-        themes.putInt( darkTheme + SuntimesWidgetTheme.THEME_BACKGROUND, THEMEDEF_DARK_BACKGROUND_ID );
-        themes.putInt( darkTheme + SuntimesWidgetTheme.THEME_TEXTCOLOR, resources.getColor(THEMEDEF_DARK_TEXTCOLOR_ID) );
-        themes.putInt( darkTheme + SuntimesWidgetTheme.THEME_TITLECOLOR, resources.getColor(THEMEDEF_DARK_TITLECOLOR_ID) );
-        themes.putInt( darkTheme + SuntimesWidgetTheme.THEME_TIMESUFFIXCOLOR, resources.getColor(THEMEDEF_DARK_TIMESUFFIXCOLOR_ID) );
-        themes.putInt( darkTheme + SuntimesWidgetTheme.THEME_SUNRISECOLOR, resources.getColor(THEMEDEF_DARK_SUNRISECOLOR_ID) );
-        themes.putInt( darkTheme + SuntimesWidgetTheme.THEME_SUNSETCOLOR, resources.getColor(THEMEDEF_DARK_SUNSETCOLOR_ID) );
+        ThemeDescriptor darkThemeDescriptor = new ThemeDescriptor(THEMEDEF_DARK_NAME, THEMEDEF_DARK_DISPLAYSTRING);
+        if (!SuntimesWidgetThemes.hasValue(darkThemeDescriptor))
+        {
+            String darkTheme =  SuntimesWidgetThemes.themePrefix(THEMEDEF_DARK_NAME);
+            themePrefs.putString(darkTheme + SuntimesWidgetTheme.THEME_NAME, THEMEDEF_DARK_NAME);
+            themePrefs.putString(darkTheme + SuntimesWidgetTheme.THEME_DISPLAYSTRING, THEMEDEF_DARK_DISPLAYSTRING);
+            themePrefs.putInt(darkTheme + SuntimesWidgetTheme.THEME_BACKGROUND, THEMEDEF_DARK_BACKGROUND_ID);
+            themePrefs.putInt(darkTheme + SuntimesWidgetTheme.THEME_TEXTCOLOR, resources.getColor(THEMEDEF_DARK_TEXTCOLOR_ID));
+            themePrefs.putInt(darkTheme + SuntimesWidgetTheme.THEME_TITLECOLOR, resources.getColor(THEMEDEF_DARK_TITLECOLOR_ID));
+            themePrefs.putInt(darkTheme + SuntimesWidgetTheme.THEME_TIMESUFFIXCOLOR, resources.getColor(THEMEDEF_DARK_TIMESUFFIXCOLOR_ID));
+            themePrefs.putInt(darkTheme + SuntimesWidgetTheme.THEME_SUNRISECOLOR, resources.getColor(THEMEDEF_DARK_SUNRISECOLOR_ID));
+            themePrefs.putInt(darkTheme + SuntimesWidgetTheme.THEME_SUNSETCOLOR, resources.getColor(THEMEDEF_DARK_SUNSETCOLOR_ID));
+            themePrefs.putFloat(darkTheme + SuntimesWidgetTheme.THEME_TITLESIZE, THEMEDEF_DARK_TITLESIZE);
+            addValue(darkThemeDescriptor);
+            themesAdded = true;
+        }
 
-        themes.commit();
+        ThemeDescriptor darkTransThemeDescriptor = new ThemeDescriptor(THEMEDEF_DARK_TRANSPARENT_NAME, THEMEDEF_DARK_TRANSPARENT_DISPLAYSTRING);
+        if (!SuntimesWidgetThemes.hasValue(darkTransThemeDescriptor))
+        {
+            String darkTheme =  SuntimesWidgetThemes.themePrefix(THEMEDEF_DARK_TRANSPARENT_NAME);
+            themePrefs.putString(darkTheme + SuntimesWidgetTheme.THEME_NAME, THEMEDEF_DARK_TRANSPARENT_NAME);
+            themePrefs.putString(darkTheme + SuntimesWidgetTheme.THEME_DISPLAYSTRING, THEMEDEF_DARK_TRANSPARENT_DISPLAYSTRING);
+            themePrefs.putInt(darkTheme + SuntimesWidgetTheme.THEME_BACKGROUND, THEMEDEF_DARK_TRANSPARENT_BACKGROUND_ID);
+            themePrefs.putInt(darkTheme + SuntimesWidgetTheme.THEME_TEXTCOLOR, resources.getColor(THEMEDEF_DARK_TEXTCOLOR_ID));
+            themePrefs.putInt(darkTheme + SuntimesWidgetTheme.THEME_TITLECOLOR, resources.getColor(THEMEDEF_DARK_TITLECOLOR_ID));
+            themePrefs.putInt(darkTheme + SuntimesWidgetTheme.THEME_TIMESUFFIXCOLOR, resources.getColor(THEMEDEF_DARK_TIMESUFFIXCOLOR_ID));
+            themePrefs.putInt(darkTheme + SuntimesWidgetTheme.THEME_SUNRISECOLOR, resources.getColor(THEMEDEF_DARK_SUNRISECOLOR_ID));
+            themePrefs.putInt(darkTheme + SuntimesWidgetTheme.THEME_SUNSETCOLOR, resources.getColor(THEMEDEF_DARK_SUNSETCOLOR_ID));
+            themePrefs.putFloat(darkTheme + SuntimesWidgetTheme.THEME_TITLESIZE, THEMEDEF_DARK_TITLESIZE);
+            addValue(darkTransThemeDescriptor);
+            themesAdded = true;
+        }
 
-        addValue(new ThemeDescriptor(THEMEDEF_LIGHT_NAME, THEMEDEF_LIGHT_DISPLAYSTRING));   // todo: i18n
-        addValue(new ThemeDescriptor(THEMEDEF_DARK_NAME, THEMEDEF_DARK_DISPLAYSTRING));   // todo: i18n
+        if (themesAdded)
+        {
+            themePrefs.commit();
+        }
     }
 
-    public static ArrayList<ThemeDescriptor> themes = new ArrayList<>();
+    private static ArrayList<ThemeDescriptor> themes = new ArrayList<>();
+
+    public static boolean hasValue( ThemeDescriptor theme )
+    {
+        return themes.contains(theme);
+    }
 
     public static void addValue( ThemeDescriptor theme )
     {

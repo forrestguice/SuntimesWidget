@@ -12,7 +12,7 @@
 
     <!-- The inner frame around the widget -->
     <style name="SunsetTimeWidget">
-        <item name="android:background">@drawable/bg_widget</item>
+        <item name="android:background">@drawable/bg_dark</item>
         <item name="android:orientation">vertical</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -22,7 +22,7 @@
         <item name="android:paddingBottom">@dimen/widget_padding_bottom</item>
     </style>
     <style name="SunsetTimeWidget_dark" parent="SunsetTimeWidget">
-        <item name="android:background">@drawable/bg_widget_dark</item>
+        <item name="android:background">@drawable/bg_dark</item>
     </style>
 
     <!-- A layout for widget content within the inner frame -->
@@ -58,11 +58,14 @@
     <style name="SunsetTimeTextView2" parent="SunsetTimeTextView">
         <item name="android:textSize">10sp</item>
     </style>
+    <style name="SunsetTimeTextViewLarge" parent="SunsetTimeTextView">
+        <item name="android:textSize">12sp</item>
+    </style>
 
     <!-- A TextView for displaying the widget title -->
     <style name="SunsetTimeTextTitleView" parent="SunsetTimeTextView">
-        <item name="android:textSize">8sp</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">10sp</item>
+        <!--<item name="android:textStyle">bold</item>-->
         <item name="android:layout_gravity">bottom</item>
     </style>
 

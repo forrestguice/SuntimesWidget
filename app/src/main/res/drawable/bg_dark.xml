@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <shape android:shape="rectangle">
+        <solid android:color="@color/sunIcon_color_rising" />
+
+        <stroke android:width="@dimen/sunIcon_width_risingBorder"
+                android:color="@color/sunIcon_color_risingBorder" />
+
+        <corners android:radius="16dp" />
+
+    </shape>
+</inset>
