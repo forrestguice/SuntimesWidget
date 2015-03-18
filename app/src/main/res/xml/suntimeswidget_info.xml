@@ -5,6 +5,6 @@
     android:initialLayout="@layout/layout_widget_1x1"
     android:configure="com.forrestguice.suntimeswidget.SuntimesWidgetSettingsActivity"
     android:resizeMode="horizontal|vertical"
-    android:widgetCategory="home_screen|keyguard"
+    android:widgetCategory="home_screen"
     android:initialKeyguardLayout="@layout/layout_widget_1x1">
 </appwidget-provider>
