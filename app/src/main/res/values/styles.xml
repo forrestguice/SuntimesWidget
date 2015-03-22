@@ -41,6 +41,9 @@
         <item name="android:layout_marginLeft">2dp</item>
         <item name="android:layout_marginRight">0dp</item>
     </style>
+    <style name="SunsetTimeImageView2" parent="SunsetTimeImageView">
+        <item name="android:layout_gravity">center_vertical|left</item>
+    </style>
 
     <!-- A TextView for displaying text/time -->
     <style name="SunsetTimeTextView" parent="TextAppearance.AppCompat.Small">
@@ -57,9 +60,6 @@
     </style>
     <style name="SunsetTimeTextView2" parent="SunsetTimeTextView">
         <item name="android:textSize">10sp</item>
-    </style>
-    <style name="SunsetTimeTextViewLarge" parent="SunsetTimeTextView">
-        <item name="android:textSize">12sp</item>
     </style>
 
     <!-- A TextView for displaying the widget title -->

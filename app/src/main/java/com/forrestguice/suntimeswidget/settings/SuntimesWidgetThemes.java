@@ -42,7 +42,7 @@ public class SuntimesWidgetThemes
     // Theme: Dark
     public static final String THEMEDEF_DARK_NAME = "dark";
     public static final String THEMEDEF_DARK_DISPLAYSTRING = "Dark";
-    public static final int THEMEDEF_DARK_BACKGROUND_ID = R.drawable.bg_widget_dark;
+    public static final int THEMEDEF_DARK_BACKGROUND_ID = R.drawable.bg_dark;
     public static final int THEMEDEF_DARK_TEXTCOLOR_ID = android.R.color.tertiary_text_dark;
     public static final int THEMEDEF_DARK_TITLECOLOR_ID = android.R.color.tertiary_text_dark;
     public static final int THEMEDEF_DARK_TIMESUFFIXCOLOR_ID = android.R.color.tertiary_text_dark;
