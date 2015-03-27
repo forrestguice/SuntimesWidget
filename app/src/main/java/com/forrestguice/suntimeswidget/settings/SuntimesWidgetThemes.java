@@ -1,5 +1,6 @@
 package com.forrestguice.suntimeswidget.settings;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -66,8 +67,14 @@ public class SuntimesWidgetThemes
     public static final int THEMEDEF_DEF_SUNSETCOLOR_ID = SuntimesWidgetThemes.THEMEDEF_DARK_SUNSETCOLOR_ID;
     public static final float THEMEDEF_DEF_TITLESIZE = SuntimesWidgetThemes.THEMEDEF_DARK_TITLESIZE;
 
+    private static boolean initialized = false;
     public static final void initThemes(Context context)
     {
+        if (initialized)
+        {
+            return;
+        }
+
         Resources resources = context.getResources();
         SharedPreferences.Editor themePrefs = context.getSharedPreferences(PREFS_THEMES, Context.MODE_PRIVATE).edit();
         boolean themesAdded = false;
@@ -144,6 +151,8 @@ public class SuntimesWidgetThemes
         {
             themePrefs.commit();
         }
+
+        initialized = true;
     }
 
     private static ArrayList<ThemeDescriptor> themes = new ArrayList<>();
@@ -193,6 +202,11 @@ public class SuntimesWidgetThemes
 
     public static SuntimesWidgetTheme loadTheme(Context context, String themeName)
     {
+        if (!initialized)
+        {
+            initThemes(context);
+        }
+
         SuntimesWidgetTheme theme = new SuntimesWidgetTheme(context);
         theme.initTheme(context, themeName);
         return theme;
