@@ -21,6 +21,17 @@ package com.forrestguice.suntimeswidget.calculator;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
+/**
+ * An instance of SuntimesCalculatorDescriptor specifies a calculator's name (see name()),
+ * display string (see getDisplayString()), and (fully qualified) class string that can be
+ * instantiated using reflection (see getReference()).
+ *
+ * SuntimesCalculatorDescriptor also keeps a static list of installed calculators. Descriptors may
+ * be added or removed from this list using the addValue and removeValue methods. The values() method
+ * will return the list as an array (suitable for use in an adaptor), and the valueOf(String)
+ * method can be used to retrieve a descriptor from this list using its name. The ordinal() method
+ * will return a descriptor's order within the list.
+ */
 public class SuntimesCalculatorDescriptor implements Comparable
 {
     private static ArrayList<Object> calculators = new ArrayList<Object>();
@@ -40,6 +51,11 @@ public class SuntimesCalculatorDescriptor implements Comparable
 
     public static SuntimesCalculatorDescriptor[] values()
     {
+        if (!SuntimesCalculatorFactory.initialized)
+        {
+            SuntimesCalculatorFactory.initCalculators();
+        }
+
         SuntimesCalculatorDescriptor[] array = new SuntimesCalculatorDescriptor[calculators.size()];
         for (int i=0; i<calculators.size(); i++)
         {
@@ -50,6 +66,11 @@ public class SuntimesCalculatorDescriptor implements Comparable
 
     public static SuntimesCalculatorDescriptor valueOf(String value)
     {
+        if (!SuntimesCalculatorFactory.initialized)
+        {
+            SuntimesCalculatorFactory.initCalculators();
+        }
+
         SuntimesCalculatorDescriptor descriptor = null;
         value = value.trim().toLowerCase();
         SuntimesCalculatorDescriptor[] values = SuntimesCalculatorDescriptor.values();
@@ -64,7 +85,8 @@ public class SuntimesCalculatorDescriptor implements Comparable
         }
 
         if (descriptor == null) {
-            throw new InvalidParameterException("Calculator value for " + value + " not found.");
+            throw new InvalidParameterException("Calculator value for " + value + " not found. ..btw there are " + values.length + " items total.");
+
         } else {
             return descriptor;
         }
@@ -74,6 +96,12 @@ public class SuntimesCalculatorDescriptor implements Comparable
     private String displayString;
     private String calculatorRef;
 
+    /**
+     * Create a SuntimesCalculatorDescriptor object.
+     * @param name the name of the SuntimesCalculator
+     * @param displayString a short display string describing the calculator
+     * @param classRef a fully qualified class string that can be used to instantiate the calculator via reflection
+     */
     public SuntimesCalculatorDescriptor(String name, String displayString, String classRef)
     {
         this.name = name;
@@ -81,6 +109,10 @@ public class SuntimesCalculatorDescriptor implements Comparable
         this.calculatorRef = classRef;
     }
 
+    /**
+     * Get the order of this descriptor within the static list of recognized descriptors.
+     * @return the order of this descriptor within the descriptor list (or -1 if not in the list)
+     */
     public int ordinal()
     {
         int ordinal = -1;
@@ -97,21 +129,35 @@ public class SuntimesCalculatorDescriptor implements Comparable
         return ordinal;
     }
 
-    public String toString()
-    {
-        return displayString;
-    }
-
+    /**
+     * Get the calculator's name.
+     * @return the name of the SuntimesCalculator this descriptor represents
+     */
     public String name()
     {
         return name;
     }
 
+    /**
+     * Get a descriptive string that describes the calculator.
+     * @return a display string for the SuntimesCalculator this descriptor represents
+     */
     public String getDisplayString()
     {
         return displayString;
     }
+    /**
+     * @return the value of getDisplayString()
+     */
+    public String toString()
+    {
+        return displayString;
+    }
 
+    /**
+     * Get the class string that points to the calculator's implementation.
+     * @return a fully qualified class string that can be instantiated via reflection to obtain a SuntimesCalculator instance
+     */
     public String getReference()
     {
         return calculatorRef;
@@ -120,12 +166,14 @@ public class SuntimesCalculatorDescriptor implements Comparable
     @Override
     public boolean equals(Object other)
     {
-        return this.toString().equals(other.toString());
+        SuntimesCalculatorDescriptor otherDescriptor = (SuntimesCalculatorDescriptor)other;
+        return this.name().equals(otherDescriptor.name());
     }
 
     @Override
     public int compareTo(Object other)
     {
-        return this.toString().compareTo(other.toString());
+        SuntimesCalculatorDescriptor otherDescriptor = (SuntimesCalculatorDescriptor)other;
+        return this.name().compareTo(otherDescriptor.name());
     }
 }

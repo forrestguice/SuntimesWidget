@@ -19,11 +19,16 @@
 package com.forrestguice.suntimeswidget.calculator.sunrisesunset_java;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.luckycatlabs.sunrisesunset.dto.Location;
 import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator;
 import java.util.Calendar;
 import com.forrestguice.suntimeswidget.settings.SuntimesWidgetSettings;
 
+/**
+ * A thin wrapper around a SunriseSunsetCalculator instance (from sunrisesunsetlib-java) that
+ * implements the SuntimesCalculator interface used by the widget.
+ */
 public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
 {
     public static final String NAME = "sunrisesunsetlib";
@@ -84,5 +89,9 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
         return calculator.getOfficialSunsetCalendarForDate(date);
     }
 
+    public static SuntimesCalculatorDescriptor getDescriptor()
+    {
+        return new SuntimesCalculatorDescriptor(SunriseSunsetSuntimesCalculator.NAME, SunriseSunsetSuntimesCalculator.NAME, SunriseSunsetSuntimesCalculator.REF);
+    }
 }
 

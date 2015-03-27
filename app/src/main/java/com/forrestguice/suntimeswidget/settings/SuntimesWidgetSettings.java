@@ -24,6 +24,7 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorFactory;
 
 public class SuntimesWidgetSettings
 {
@@ -312,7 +313,9 @@ public class SuntimesWidgetSettings
             calculatorMode = SuntimesCalculatorDescriptor.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
-            Log.w("loadCalculatorModePref", e.toString());
+            Log.e("loadCalculatorModePref", e.toString() + " ... It looks like " + modeString + " isn't in our list of calculators.");
+            // TODO: handle this better. right now it allows this function to return a null, which triggers NullPointerExceptions later
+            // ... what is the right course of action? either instantiate a default (that couples us to that third party code) or ...? our widget doesn't currently have an error state
         }
         return calculatorMode;
     }

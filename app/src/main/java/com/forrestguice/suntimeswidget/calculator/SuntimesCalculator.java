@@ -22,6 +22,10 @@ import com.forrestguice.suntimeswidget.settings.SuntimesWidgetSettings;
 
 import java.util.Calendar;
 
+/**
+ * An interface used by the widget when calculating/displaying sunrise and sunset times. Instances
+ * of this interface are intended to be thin wrappers around third party code.
+ */
 public interface SuntimesCalculator
 {
     public String name();

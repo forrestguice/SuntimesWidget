@@ -24,37 +24,82 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.settings.SuntimesWidgetSettings;
 import com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator;
 
+/**
+ * A factory class that creates instances of SuntimesCalculator. The specific implementation returned
+ * by the factory's createCalculator method is controlled by the SuntimesCalculatorDescriptor arg
+ * passed to the constructor.
+
+ * The SuntimesCalculatorDescriptor specifies a (fully qualified) class string that is instantiated
+ * using reflection when the createCalculator method is called. The descriptor identifies the
+ * calculator using name(), the class to instantiate using getReference(), and the value to display
+ * in the UI using getDisplayString().
+ *
+ * SuntimesCalculatorDescriptor keeps a static list of installed calculators that SuntimesCalculatorFactory
+ * must initialize - initialization is performed using the SuntimesCalculatorFactory.initCalculators() method.
+ * Using the SuntimesCalculatorDescriptor.values() and SuntimesCalculatorDescriptor.valueOf() methods will
+ * trigger lazy initialization by the factory class.
+ *
+ * This factory knows about the following implementations:
+ *
+ *   * sunrisesunsetlib
+ *     :: com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.class
+ *
+ */
 public class SuntimesCalculatorFactory
 {
-    private SuntimesCalculatorDescriptor current;
-
-    public SuntimesCalculatorFactory(SuntimesCalculatorDescriptor calculatorSetting)
+    protected static boolean initialized = false;
+    public static void initCalculators()
     {
-        current = calculatorSetting;
+        if (!initialized)
+        {
+            SuntimesCalculatorDescriptor.addValue(SunriseSunsetSuntimesCalculator.getDescriptor());
+
+            initialized = true;
+        }
     }
 
+    private SuntimesCalculatorDescriptor current;
+    private Context context;
+
+    /**
+     * Create a SuntimesCalculatorFactory object.
+     * @param context the Android context used by this factory
+     * @param calculatorSetting a SuntimesCalculatorDescriptor that specifies the implementation this factory creates
+     */
+    public SuntimesCalculatorFactory(Context context, SuntimesCalculatorDescriptor calculatorSetting)
+    {
+        this.context = context;
+        this.current = calculatorSetting;
+
+        if (!initialized)
+        {
+            SuntimesCalculatorFactory.initCalculators();
+        }
+    }
+
+    /**
+     * Create a calculator for a given location and timezone using the calculator descriptor that was
+     * passed to the factory when it was created.
+     * @param location a SuntimesWidgetSettings.Location specifying latitude and longitude
+     * @param timezone a timezone string
+     * @return a calculator object that implements SuntimesCalculator
+     */
     public SuntimesCalculator createCalculator(SuntimesWidgetSettings.Location location, String timezone)
     {
         SuntimesCalculator calculator;
-
         try {
+            Log.d("createCalculator", "trying .oO( " + current.getReference() + " )");
             Class calculatorClass = Class.forName(current.getReference());
+
             calculator = (SuntimesCalculator)calculatorClass.newInstance();
-            Log.d("createCalculator", "using calculator: " + calculator.name());
+            Log.d("createCalculator", "using .oO( " + calculator.name() + " )");
 
         } catch (Exception e1) {
-            e1.printStackTrace();
             calculator = new SunriseSunsetSuntimesCalculator();
-            Log.d("createCalculator", "failed to create calculator: " + current.name() + ", using default: " + calculator.name());
+            Log.e("createCalculator", "fail! .oO( " + current.name() + "), so using the default: " + calculator.name());
         }
 
         calculator.init(location, timezone);
         return calculator;
-    }
-
-    public static void initCalculators(Context context)
-    {
-        SuntimesCalculatorDescriptor calculatorSetting = new SuntimesCalculatorDescriptor(SunriseSunsetSuntimesCalculator.NAME, SunriseSunsetSuntimesCalculator.NAME, SunriseSunsetSuntimesCalculator.REF);
-        SuntimesCalculatorDescriptor.addValue(calculatorSetting);
     }
 }
