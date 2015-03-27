@@ -18,7 +18,9 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.util.Log;
 
 import android.os.Bundle;
@@ -56,13 +58,14 @@ public class SuntimesWidget extends AppWidgetProvider
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds)
     {
         SuntimesWidgetThemes.initThemes(context);
-        SuntimesCalculatorFactory.initCalculators(context);
         SuntimesWidgetSettings.TimeMode.initDisplayStrings(context);
 
         for (int appWidgetId : appWidgetIds)
         {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
+
+        super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
 
     @Override
@@ -77,13 +80,13 @@ public class SuntimesWidget extends AppWidgetProvider
     @Override
     public void onEnabled(Context context)
     {
-
+        super.onEnabled(context);
     }
 
     @Override
     public void onDisabled(Context context)
     {
-        // when the last widget is disabled
+        super.onDisabled(context);
     }
 
     /**
@@ -92,23 +95,56 @@ public class SuntimesWidget extends AppWidgetProvider
      * @param columns number of cols in widget
      * @return a RemoteViews instance for the specified widget size
      */
-    private static RemoteViews getWidgetViews(Context context, int rows, int columns) {
+    private static RemoteViews getWidgetViews(Context context, int appWidgetId, int rows, int columns)
+    {
         RemoteViews views;
-        if (columns >= 4)
+        if (columns >= 3)
         {
-            views = new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x4);
-
-        } else if (columns >= 3) {
             views = new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x3);
 
-        } else if (columns == 2)
-        {
+        } else if (columns == 2) {
             views = new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x2);
 
         } else {
-            views = new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x1_0);
+            Intent intent = new Intent(context, SuntimesWidgetService.class);
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+            intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
+
+            views = new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x1);
+            views.setRemoteAdapter(R.id.view_flip, intent);
+            views.setEmptyView(R.id.view_flip, R.id.emptyView);
         }
+
         return views;
+    }
+
+    private static SuntimesWidgetSettings.Location getCurrentLocation(Context context)
+    {
+        return null;   // TODO
+    }
+
+    /**
+     * @param context the application context
+     * @param appWidgetManager widget manager
+     * @param appWidgetId id of widget to be updated
+     */
+    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
+    {
+        Bundle options = appWidgetManager.getAppWidgetOptions(appWidgetId);
+        int widgetRows = SuntimesWidgetUtils.getCellsForSize(options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT));
+        int widgetCols = SuntimesWidgetUtils.getCellsForSize(options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH));
+        RemoteViews views = getWidgetViews(context, appWidgetId, widgetRows, widgetCols);
+
+        themeViews(context, views, appWidgetId);
+        updateViews(appWidgetId, views, context);
+
+        appWidgetManager.updateAppWidget(appWidgetId, views);
+    }
+
+    public static void themeViews(Context context, RemoteViews views, int appWidgetId)
+    {
+        SuntimesWidgetTheme theme = SuntimesWidgetSettings.loadThemePref(context, appWidgetId);
+        themeViews(context, views, theme);
     }
 
     /**
@@ -116,20 +152,28 @@ public class SuntimesWidget extends AppWidgetProvider
      * @param views
      * @param theme
      */
-    static void themeViews(Context context, RemoteViews views, SuntimesWidgetTheme theme)
+    public static void themeViews(Context context, RemoteViews views, SuntimesWidgetTheme theme)
     {
         Resources resources = context.getResources();
         int[] padding = new int[] { (int)resources.getDimension(R.dimen.widget_padding_left),
-                                    (int)resources.getDimension(R.dimen.widget_padding_top),
-                                    (int)resources.getDimension(R.dimen.widget_padding_right),
-                                    (int)resources.getDimension(R.dimen.widget_padding_bottom) };
+                (int)resources.getDimension(R.dimen.widget_padding_top),
+                (int)resources.getDimension(R.dimen.widget_padding_right),
+                (int)resources.getDimension(R.dimen.widget_padding_bottom) };
         int sunriseColor = theme.getSunriseTextColor();
         int sunsetColor = theme.getSunsetTextColor();
         int suffixColor = theme.getThemeTimeSuffixColor();
         int textColor = theme.getTextColor();
 
-        views.setInt(R.id.widgetframe_inner_1x1, "setBackgroundResource", theme.getBackgroundId());
-        views.setViewPadding( R.id.widgetframe_inner_1x1, padding[0], padding[1], padding[2], padding[3] );
+
+        views.setInt(R.id.widgetframe_inner_1x1_0, "setBackgroundResource", theme.getBackgroundId());
+        views.setViewPadding( R.id.widgetframe_inner_1x1_0, padding[0], padding[1], padding[2], padding[3] );
+
+        views.setInt(R.id.widgetframe_inner_1x1_1, "setBackgroundResource", theme.getBackgroundId());
+        views.setViewPadding( R.id.widgetframe_inner_1x1_1, padding[0], padding[1], padding[2], padding[3] );
+
+        views.setInt(R.id.widgetframe_inner_1x1_2, "setBackgroundResource", theme.getBackgroundId());
+        views.setViewPadding( R.id.widgetframe_inner_1x1_2, padding[0], padding[1], padding[2], padding[3] );
+
 
         views.setInt(R.id.widgetframe_inner_1x2, "setBackgroundResource", theme.getBackgroundId());
         views.setViewPadding( R.id.widgetframe_inner_1x2, padding[0], padding[1], padding[2], padding[3] );
@@ -154,27 +198,13 @@ public class SuntimesWidget extends AppWidgetProvider
         views.setTextColor(R.id.text_delta_day_suffix, suffixColor);
     }
 
-    private static SuntimesWidgetSettings.Location getCurrentLocation(Context context)
-    {
-        return null;   // TODO
-    }
-
     /**
-     * @param context the application context
-     * @param appWidgetManager widget manager
-     * @param appWidgetId id of widget to be updated
+     * @param appWidgetId
+     * @param views
+     * @param context
      */
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
+    public static void updateViews(int appWidgetId, RemoteViews views, Context context)
     {
-        Bundle options = appWidgetManager.getAppWidgetOptions(appWidgetId);
-        int widgetRows = SuntimesWidgetUtils.getCellsForSize(options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT));
-        int widgetCols = SuntimesWidgetUtils.getCellsForSize(options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH));
-
-        // apply appearance settings
-        SuntimesWidgetTheme theme = SuntimesWidgetSettings.loadThemePref(context, appWidgetId);
-        RemoteViews views = getWidgetViews(context, widgetRows, widgetCols);
-        themeViews(context, views, theme);
-
         boolean showTitle = SuntimesWidgetSettings.loadShowTitlePref(context, appWidgetId);
         String titlePattern = SuntimesWidgetSettings.loadTitleTextPref(context, appWidgetId);
         String titleText = SuntimesWidgetUtils.displayStringForTitlePattern(titlePattern, context, appWidgetId);
@@ -191,7 +221,7 @@ public class SuntimesWidget extends AppWidgetProvider
         SuntimesWidgetSettings.LocationMode locationMode = SuntimesWidgetSettings.loadLocationModePref(context, appWidgetId);
         if (locationMode == SuntimesWidgetSettings.LocationMode.CURRENT_LOCATION)
         {
-            location = getCurrentLocation(context);
+            //location = getCurrentLocation(context);
         }
 
         // get timezone settings
@@ -203,7 +233,7 @@ public class SuntimesWidget extends AppWidgetProvider
         }
 
         // DEBUG (comment me)
-        Log.v("DEBUG", "rows: " + widgetRows + ", " + "cols: " + widgetCols);
+        //Log.v("DEBUG", "rows: " + widgetRows + ", " + "cols: " + widgetCols);
         Log.v("DEBUG", "show title: " + showTitle);
         Log.v("DEBUG", "title text: " + titleText);
         Log.v("DEBUG", "time mode: " + timeMode);
@@ -213,7 +243,7 @@ public class SuntimesWidget extends AppWidgetProvider
         Log.v("DEBUG", "timezone_mode: " + timezoneMode.name());
         Log.v("DEBUG", "timezone: " + timezone);
         Log.v("DEBUG", "compare mode: " + compareMode.name());
-        Log.v("DEBUG", "theme: " + theme.getThemeName());
+        //Log.v("DEBUG", "theme: " + theme.getThemeName());
 
         String dayDeltaPrefix;
         Calendar todaysCalendar = Calendar.getInstance();
@@ -233,13 +263,13 @@ public class SuntimesWidget extends AppWidgetProvider
                 break;
         }
 
-        if (location == null)
-        {
-            // TODO: display error state
-            return;
-        }
+        //if (location == null)
+        //{
+        //    // TODO: display error state
+        //    return;
+        //}
 
-        SuntimesCalculatorFactory calculatorFactory = new SuntimesCalculatorFactory(calculatorMode);
+        SuntimesCalculatorFactory calculatorFactory = new SuntimesCalculatorFactory(context, calculatorMode);
         SuntimesCalculator calculator = calculatorFactory.createCalculator(location, timezone);
         Calendar sunriseCalendarToday;
         Calendar sunsetCalendarToday;
@@ -317,9 +347,6 @@ public class SuntimesWidget extends AppWidgetProvider
         views.setViewVisibility(R.id.text_delta_day_suffix, (dayDeltaSuffix.trim().equals("") ? View.GONE : View.VISIBLE));
 
         views.setViewVisibility(R.id.text_title, ((showTitle) ? View.VISIBLE : View.GONE));
-
-        // update the widget
-        appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 }
 

@@ -11,11 +11,13 @@
     </style>
 
     <!-- The inner frame around the widget -->
-    <style name="SunsetTimeWidget">
-        <item name="android:background">@drawable/bg_dark</item>
-        <item name="android:orientation">vertical</item>
+    <style name="SunsetTimeWidgetBase">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="SunsetTimeWidget" parent="SunsetTimeWidgetBase">
+        <item name="android:background">@drawable/bg_dark</item>
+        <item name="android:orientation">vertical</item>
         <item name="android:paddingLeft">@dimen/widget_padding_left</item>
         <item name="android:paddingRight">@dimen/widget_padding_right</item>
         <item name="android:paddingTop">@dimen/widget_padding_top</item>
