@@ -25,4 +25,5 @@ This project uses [sunrisesunsetlib-java](http://mikereedell.github.io/sunrisesu
 ** configure comparison mode (against tomorrow or yesterday)
 
 **Legal Stuff**
+
 This widget is open source. The source code is available (under GPLv3) at: https://github.com/forrestguice/SuntimesWidget
