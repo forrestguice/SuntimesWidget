@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
     style="@style/SunsetTimeWidget"
-    android:id="@+id/widgetframe_inner_1x1_2" android:paddingBottom="8dp">
+    android:id="@+id/widgetframe_inner" android:paddingBottom="8dp">
 
     <TextView style="@style/SunsetTimeTextTitleView"
         android:id="@+id/text_title"
@@ -20,13 +20,13 @@
 
             <TextView
                 style="@style/SunsetTimeTextView"
-                android:id="@+id/text_time_sunrise"
+                android:id="@+id/text_time_sunset"
                 android:textColor="@color/sunIcon_color_setting"
                 tools:text="4:20" />
 
             <TextView
                 style="@style/SunsetTimeTextSuffixView"
-                android:id="@+id/text_time_sunrise_suffix"
+                android:id="@+id/text_time_sunset_suffix"
                 android:layout_gravity="bottom"
                 android:layout_height="match_parent"
                 tools:text="PM" />

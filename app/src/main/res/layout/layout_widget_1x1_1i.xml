@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
     style="@style/SunsetTimeWidget"
-    android:id="@+id/widgetframe_inner_1x1_1"
+    android:id="@+id/widgetframe_inner"
     android:background="@drawable/bg_widget_dark">
 
     <TextView style="@style/SunsetTimeTextTitleView"

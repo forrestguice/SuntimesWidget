@@ -12,6 +12,11 @@
 
     <string name="calculator_sunrisesunsetlib_name">sunrisesunsetlib-java</string>
 
+    <string name="widgetMode1x1_sunrise">Sunrise only</string>
+    <string name="widgetMode1x1_sunset">Sunset only</string>
+    <string name="widgetMode1x1_both_1">Sunrise &amp; Sunset (1)</string>
+    <string name="widgetMode1x1_both_2">Sunrise &amp; Sunset (2)</string>
+
     <string name="locationMode_current">Current Location</string>
     <string name="locationMode_custom">Custom Location</string>
 
@@ -44,6 +49,7 @@
     <string name="configHint_location_lon">-112.4677778</string>
 
     <string name="configLabel_appearance">Appearance Settings</string>
+    <string name="configLabel_appearance_1x1mode">1x1 Layout:</string>
     <string name="configLabel_appearance_theme">Theme</string>
     <string name="configLabel_appearance_showTitle">Show Title</string>
     <string name="configLabel_appearance_titleText">Title:</string>
