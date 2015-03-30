@@ -23,7 +23,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
-import android.widget.StackView;
+
+import com.forrestguice.suntimeswidget.calculator.SuntimesWidgetData;
+
+import java.util.ArrayList;
 
 /**
  * SuntimesWidgetService : RemoteViewsService
@@ -44,14 +47,15 @@ class SuntimesWidgetRemoteViewsFactory implements RemoteViewsService.RemoteViews
 {
     private Context context;
     private int appWidgetId;
-    private int count;
+    private int viewCount = 0;
+
+    private ArrayList<SuntimesWidgetData> dataset = new ArrayList<>();
 
     public SuntimesWidgetRemoteViewsFactory( Context context, Intent intent )
     {
         this.context = context;
         this.appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                                               AppWidgetManager.INVALID_APPWIDGET_ID);
-        this.count = 3;
     }
 
     @Override
@@ -62,6 +66,14 @@ class SuntimesWidgetRemoteViewsFactory implements RemoteViewsService.RemoteViews
     @Override
     public void onDataSetChanged()
     {
+        SuntimesWidgetData data = new SuntimesWidgetData(context, appWidgetId);
+        data.calculate();
+
+        dataset.clear();
+        dataset.add(new SuntimesWidgetData(data, R.layout.layout_widget_1x1_0i));
+        dataset.add(new SuntimesWidgetData(data, R.layout.layout_widget_1x1_1i));
+        dataset.add(new SuntimesWidgetData(data, R.layout.layout_widget_1x1_2i));
+        viewCount = 3;
     }
 
     @Override
@@ -72,34 +84,17 @@ class SuntimesWidgetRemoteViewsFactory implements RemoteViewsService.RemoteViews
     @Override
     public int getCount()
     {
-        return count;
+        return dataset.size();
     }
 
     @Override
     public RemoteViews getViewAt(int position)
     {
-        RemoteViews views;
-        switch (position)
-        {
-            case 2:
-                views = new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x1_2i);
-                break;
+        SuntimesWidgetData data = dataset.get(position);
 
-            case 1:
-                views = new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x1_1i);
-                break;
-
-            case 0:
-            default:
-                views = new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x1_0i);
-                break;
-        }
-
-        //StackView v;
-        //v.set
-
+        RemoteViews views = new RemoteViews(context.getPackageName(), data.layoutID());
         SuntimesWidget.themeViews(context, views, appWidgetId);
-        SuntimesWidget.updateViews(appWidgetId, views, context);
+        SuntimesWidget.updateViews(context, appWidgetId, views, data);
         return views;
     }
 
@@ -112,7 +107,7 @@ class SuntimesWidgetRemoteViewsFactory implements RemoteViewsService.RemoteViews
     @Override
     public int getViewTypeCount()
     {
-        return count + 2;  // a different type of view for each item, plus loading view, plus error view
+        return viewCount + 2;  // a different type of view for each item, plus loading view, plus error view
     }
 
     @Override
@@ -124,6 +119,6 @@ class SuntimesWidgetRemoteViewsFactory implements RemoteViewsService.RemoteViews
     @Override
     public boolean hasStableIds()
     {
-        return true;
+        return false;
     }
 }
