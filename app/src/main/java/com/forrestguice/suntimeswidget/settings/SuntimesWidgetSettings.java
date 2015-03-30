@@ -48,6 +48,9 @@ public class SuntimesWidgetSettings
     private static final String PREF_KEY_APPEARANCE_TITLETEXT = "titletext";
     private static final String PREF_DEF_APPEARANCE_TITLETEXT = "%M";
 
+    private static final String PREF_KEY_APPEARANCE_WIDGETMODE_1x1 = "widgetmode_1x1";
+    private static final WidgetMode1x1 PREF_DEF_APPEARANCE_WIDGETMODE_1x1 = WidgetMode1x1.WIDGETMODE1x1_BOTH_1;
+
     public static final String PREF_KEY_GENERAL_TIMEMODE = "timemode";
     public static final TimeMode PREF_DEF_GENERAL_TIMEMODE = TimeMode.OFFICIAL;
 
@@ -70,9 +73,50 @@ public class SuntimesWidgetSettings
     public static final String PREF_DEF_TIMEZONE_CUSTOM = "US/Arizona";
 
 
-    /**
-     * Calculator
-     */
+    public static enum WidgetMode1x1
+    {
+        WIDGETMODE1x1_SUNRISE("Sunrise only", R.layout.layout_widget_1x1_1),
+        WIDGETMODE1x1_SUNSET("Sunset only", R.layout.layout_widget_1x1_2),
+        WIDGETMODE1x1_BOTH_1("Sunrise & Sunset (1)", R.layout.layout_widget_1x1_0),
+        WIDGETMODE1x1_BOTH_2("Sunrise & Sunset (2)", R.layout.layout_widget_1x1_3);
+
+        private int layoutID;
+        private String displayString;
+
+        private WidgetMode1x1(String displayString, int layoutID)
+        {
+            this.displayString = displayString;
+            this.layoutID = layoutID;
+        }
+
+        public int getLayoutID()
+        {
+            return layoutID;
+        }
+
+        public String toString()
+        {
+            return displayString;
+        }
+
+        public String getDisplayString()
+        {
+            return displayString;
+        }
+
+        public void setDisplayString( String displayString )
+        {
+            this.displayString = displayString;
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            WIDGETMODE1x1_SUNRISE.setDisplayString(context.getString(R.string.widgetMode1x1_sunrise));
+            WIDGETMODE1x1_SUNSET.setDisplayString(context.getString(R.string.widgetMode1x1_sunset));
+            WIDGETMODE1x1_BOTH_1.setDisplayString(context.getString(R.string.widgetMode1x1_both_1));
+            WIDGETMODE1x1_BOTH_2.setDisplayString(context.getString(R.string.widgetMode1x1_both_2));
+        }
+    }
 
     /**
      * TimezoneMode
@@ -267,6 +311,42 @@ public class SuntimesWidgetSettings
                     context.getString(R.string.timeMode_astronomical) );
         }
     }
+
+
+
+    public static void save1x1ModePref(Context context, int appWidgetId, SuntimesWidgetSettings.WidgetMode1x1 mode)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.putString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_1x1, mode.name());
+        prefs.commit();
+    }
+    public static SuntimesWidgetSettings.WidgetMode1x1 load1x1ModePref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_1x1, PREF_DEF_APPEARANCE_WIDGETMODE_1x1.name());
+
+        WidgetMode1x1 widgetMode;
+        try
+        {
+            widgetMode = SuntimesWidgetSettings.WidgetMode1x1.valueOf(modeString);
+
+        } catch (IllegalArgumentException e) {
+            widgetMode = PREF_DEF_APPEARANCE_WIDGETMODE_1x1;
+            Log.w("load1x1ModePref", "Failed to load value '" + modeString + "'; using default '" + PREF_DEF_APPEARANCE_WIDGETMODE_1x1.name() + "'.");
+        }
+        return widgetMode;
+    }
+    public static void delete1x1ModePref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_1x1);
+        prefs.commit();
+    }
+
+
 
 
     public static void saveThemePref(Context context, int appWidgetId, String themeName)
@@ -550,6 +630,8 @@ public class SuntimesWidgetSettings
 
     public static void deletePrefs(Context context, int appWidgetId)
     {
+        delete1x1ModePref(context, appWidgetId);
+
         deleteThemePref(context, appWidgetId);
         deleteShowTitlePref(context, appWidgetId);
         deleteTitleTextPref(context, appWidgetId);

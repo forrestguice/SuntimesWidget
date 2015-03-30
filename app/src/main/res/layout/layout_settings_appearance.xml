@@ -23,6 +23,8 @@
 
         </LinearLayout>
 
+
+
         <CheckBox android:id="@+id/appwidget_appearance_showTitle" android:layout_width="match_parent"
             android:paddingTop="@dimen/settingsGroup_padding"
             android:layout_height="wrap_content" android:text="@string/configLabel_appearance_showTitle" />
@@ -46,6 +48,19 @@
                 android:scaleType="center"
                 android:cropToPadding="false"
                 android:adjustViewBounds="false" />
+
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="@string/configLabel_appearance_1x1mode" />
+
+            <Spinner android:id="@+id/appwidget_appearance_1x1mode" android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 

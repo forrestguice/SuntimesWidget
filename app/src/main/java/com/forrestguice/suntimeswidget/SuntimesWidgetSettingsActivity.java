@@ -55,6 +55,7 @@ public class SuntimesWidgetSettingsActivity extends Activity
     private Spinner spinner_timeMode;
     private Spinner spinner_compareMode;
 
+    private Spinner spinner_1x1mode;
     private Spinner spinner_theme;
     private CheckBox checkbox_showTitle;
     private EditText text_titleText;
@@ -98,7 +99,6 @@ public class SuntimesWidgetSettingsActivity extends Activity
         }
 
         SuntimesWidgetThemes.initThemes(context);
-        SuntimesCalculatorFactory.initCalculators(context);
 
         initViews(context);
 
@@ -209,6 +209,16 @@ public class SuntimesWidgetSettingsActivity extends Activity
 
         label_locationLat = (TextView)findViewById(R.id.appwidget_location_lat_label);
         text_locationLat = (EditText)findViewById(R.id.appwidget_location_lat);
+
+        //
+        // widget: 1x1 widget mode
+        //
+        ArrayAdapter<SuntimesWidgetSettings.WidgetMode1x1> spinner_1x1ModeAdapter;
+        spinner_1x1ModeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, SuntimesWidgetSettings.WidgetMode1x1.values());
+        spinner_1x1ModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner_1x1mode = (Spinner)findViewById(R.id.appwidget_appearance_1x1mode);
+        spinner_1x1mode.setAdapter(spinner_1x1ModeAdapter);
 
         //
         // widget: title text
@@ -350,32 +360,44 @@ public class SuntimesWidgetSettingsActivity extends Activity
 
     private void saveAppearanceSettings(Context context)
     {
+        // save: widgetmode_1x1
+        final SuntimesWidgetSettings.WidgetMode1x1[] modes = SuntimesWidgetSettings.WidgetMode1x1.values();
+        SuntimesWidgetSettings.WidgetMode1x1 mode = modes[ spinner_1x1mode.getSelectedItemPosition() ];
+        SuntimesWidgetSettings.save1x1ModePref(context, appWidgetId, mode);
+
         // save: theme
         final SuntimesWidgetThemes.ThemeDescriptor[] themes = SuntimesWidgetThemes.values();
         SuntimesWidgetThemes.ThemeDescriptor theme = themes[ spinner_theme.getSelectedItemPosition() ];
         SuntimesWidgetSettings.saveThemePref(context, appWidgetId, theme.name());
         Log.d("DEBUG", "Saved theme: " + theme.name());
 
-
-        // save: appearance (show title)
+        // save: show title
         boolean showTitle = checkbox_showTitle.isChecked();
         SuntimesWidgetSettings.saveShowTitlePref(context, appWidgetId, showTitle);
 
-        // save:: appearance (title text)
+        // save:: title text
         String titleText = text_titleText.getText().toString().trim();
         SuntimesWidgetSettings.saveTitleTextPref(context, appWidgetId, titleText);
     }
 
     private void loadAppearanceSettings(Context context)
     {
+        // load: widgetmode_1x1
+        SuntimesWidgetSettings.WidgetMode1x1.initDisplayStrings(context);
+        SuntimesWidgetSettings.WidgetMode1x1 mode1x1 = SuntimesWidgetSettings.load1x1ModePref(context, appWidgetId);
+        spinner_1x1mode.setSelection(mode1x1.ordinal());
+
+        // load: theme
         SuntimesWidgetTheme theme = SuntimesWidgetSettings.loadThemePref(context, appWidgetId);
         SuntimesWidgetThemes.ThemeDescriptor themeDescriptor = SuntimesWidgetThemes.valueOf(theme.getThemeName());
         spinner_theme.setSelection(themeDescriptor.ordinal());
 
+        // load: show title
         boolean showTitle = SuntimesWidgetSettings.loadShowTitlePref(context, appWidgetId);
         checkbox_showTitle.setChecked(showTitle);
         setTitleTextEnabled(showTitle);
 
+        // load: title text
         String titleText = SuntimesWidgetSettings.loadTitleTextPref(context, appWidgetId);
         text_titleText.setText(titleText);
     }
