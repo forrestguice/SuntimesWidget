@@ -20,12 +20,15 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesWidgetData;
 import com.forrestguice.suntimeswidget.settings.SuntimesWidgetSettings;
+import com.forrestguice.suntimeswidget.settings.SuntimesWidgetTimeZones;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 public class SuntimesWidgetUtils
 {
@@ -102,12 +105,14 @@ public class SuntimesWidgetUtils
      */
     public static TimeDisplayText calendarTimeShortDisplayString(Context context, Calendar cal)
     {
-        Date time = cal.getTime();
         SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm");
-        SimpleDateFormat suffixFormat = new SimpleDateFormat("a");
+        timeFormat.setTimeZone(cal.getTimeZone());
 
+        SimpleDateFormat suffixFormat = new SimpleDateFormat("a");
+        suffixFormat.setTimeZone(cal.getTimeZone());
+
+        Date time = cal.getTime();
         return new TimeDisplayText( timeFormat.format(time), "", suffixFormat.format(time) );
-        //return DateUtils.formatDateTime(context, cal.getTimeInMillis(), DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_A);
     }
 
     /**
@@ -155,28 +160,34 @@ public class SuntimesWidgetUtils
      *
      * The following substitutions are supported:
      *   %% .. the % character
-     *   %m .. the time mode (e.g. nautical twilight / civil twilight / actual time) -> timeMode.getLongDisplayString()
-     *   %M .. the time mode (short version) -> timeMode.getShortDisplayString()
+     *   %m .. the time mode (short version; e.g. civil)
+     *   %M .. the time mode (long version; e.g. civil twilight)
+     *   %t .. the timezoneID (e.g. US/Arizona)
+     *   %lat .. the location (latitude)
+     *   %lon .. the location (longitude)
      *
      * @param titlePattern a pattern string (simple substitutions)
      * @return a display string suitable for display as a widget title
      */
-    public static String displayStringForTitlePattern(String titlePattern, Context context, int appWidgetId)
+    public static String displayStringForTitlePattern(String titlePattern, SuntimesWidgetData data)
     {
-        SuntimesWidgetSettings.TimeMode timeMode = SuntimesWidgetSettings.loadTimeModePref(context, appWidgetId);
-        SuntimesWidgetSettings.Location location = SuntimesWidgetSettings.loadLocationPref(context, appWidgetId);
+        SuntimesWidgetSettings.TimeMode timeMode = data.timeMode();
+        SuntimesWidgetSettings.Location location = data.location();
+        String timezoneID = data.timezone();
 
         String displayString = titlePattern;
         String modePattern = "%M";
         String modePatternShort = "%m";
         String latPattern = "%lat";
         String lonPattern = "%lon";
+        String timezoneIDPattern = "%t";
         String percentPattern = "%%";
 
         displayString = displayString.replaceAll(modePatternShort, timeMode.getShortDisplayString());
         displayString = displayString.replaceAll(modePattern, timeMode.getLongDisplayString());
         displayString = displayString.replaceAll(latPattern, location.getLatitude());
         displayString = displayString.replaceAll(lonPattern, location.getLongitude());
+        displayString = displayString.replaceAll(timezoneIDPattern, timezoneID);
         displayString = displayString.replaceAll(percentPattern, "%");
 
         return displayString;

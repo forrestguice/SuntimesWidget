@@ -92,11 +92,11 @@ public class SuntimesCalculatorFactory
             Class calculatorClass = Class.forName(current.getReference());
 
             calculator = (SuntimesCalculator)calculatorClass.newInstance();
-            Log.d("createCalculator", "using .oO( " + calculator.name() + " )");
+            Log.d("createCalculator", "using .oO( " + calculator.name() + " ): " + timezone);
 
         } catch (Exception e1) {
             calculator = new SunriseSunsetSuntimesCalculator();
-            Log.e("createCalculator", "fail! .oO( " + current.name() + "), so using the default: " + calculator.name());
+            Log.e("createCalculator", "fail! .oO( " + current.name() + "), so using the default: " + calculator.name() +": " + timezone);
         }
 
         calculator.init(location, timezone);

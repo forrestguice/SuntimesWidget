@@ -209,8 +209,9 @@ public class SuntimesWidgetData
 
         SuntimesCalculatorFactory calculatorFactory = new SuntimesCalculatorFactory(context, calculatorMode);
         SuntimesCalculator calculator = calculatorFactory.createCalculator(location, timezone);
-        Calendar todaysCalendar = Calendar.getInstance();
-        Calendar otherCalendar = Calendar.getInstance();
+
+        Calendar todaysCalendar = Calendar.getInstance(TimeZone.getTimeZone(timezone));
+        Calendar otherCalendar = Calendar.getInstance(TimeZone.getTimeZone(timezone));
 
         switch (compareMode)
         {
@@ -262,6 +263,9 @@ public class SuntimesWidgetData
         long sunriseOther = sunriseCalendarOther.getTime().getTime();
         long sunsetOther = sunsetCalendarOther.getTime().getTime();
         dayLengthOther = sunsetOther - sunriseOther;
+
+
+        Log.d("sunset: ", sunsetCalendarToday.toString() + " (" + sunsetCalendarOther.getTimeZone().getID() + ")");
 
         calculated = true;
     }

@@ -26,6 +26,9 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorFactory;
 
+import java.util.ArrayList;
+import java.util.TimeZone;
+
 public class SuntimesWidgetSettings
 {
     private static final String PREFS_WIDGET = "com.forrestguice.suntimeswidget";
@@ -151,7 +154,7 @@ public class SuntimesWidgetSettings
         public static void initDisplayStrings( Context context )
         {
             CURRENT_TIMEZONE.setDisplayString(context.getString(R.string.timezoneMode_current));
-            CUSTOM_TIMEZONE.setDisplayString(context.getString(R.string.timezoneMode_current));
+            CUSTOM_TIMEZONE.setDisplayString(context.getString(R.string.timezoneMode_custom));
         }
     }
 
