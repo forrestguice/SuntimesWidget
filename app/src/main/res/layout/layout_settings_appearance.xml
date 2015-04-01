@@ -4,7 +4,8 @@
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="vertical"
         style="@style/SunsetTimeWidget_dark"
-        android:layout_marginBottom="@dimen/settingsGroup_margin">
+        android:layout_marginBottom="@dimen/settingsGroup_margin"
+        android:paddingLeft="5dp">
 
         <TextView style="@style/SunsetTimeSettingsGroupTitle"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -24,6 +25,19 @@
         </LinearLayout>
 
 
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="@string/configLabel_appearance_1x1mode" />
+
+            <Spinner android:id="@+id/appwidget_appearance_1x1mode" android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
 
         <CheckBox android:id="@+id/appwidget_appearance_showTitle" android:layout_width="match_parent"
             android:paddingTop="@dimen/settingsGroup_padding"
@@ -39,7 +53,8 @@
 
             <EditText android:id="@+id/appwidget_appearance_titleText" android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:layout_weight="1"
-                android:hint="@string/configHint_appearance_titleText" android:text="" />
+                android:hint="@string/configHint_appearance_titleText" android:text=""
+                android:textAppearance="?android:attr/textAppearanceSmallPopupMenu" />
 
             <ImageButton android:id="@+id/appwidget_appearance_titleText_helpButton"
                 android:layout_height="wrap_content"
@@ -48,19 +63,6 @@
                 android:scaleType="center"
                 android:cropToPadding="false"
                 android:adjustViewBounds="false" />
-
-        </LinearLayout>
-
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="@string/configLabel_appearance_1x1mode" />
-
-            <Spinner android:id="@+id/appwidget_appearance_1x1mode" android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
