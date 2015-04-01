@@ -18,9 +18,7 @@
 
 package com.forrestguice.suntimeswidget;
 
-import android.content.Intent;
 import android.content.res.Resources;
-import android.net.Uri;
 import android.util.Log;
 
 import android.os.Bundle;
@@ -91,7 +89,7 @@ public class SuntimesWidget extends AppWidgetProvider
         RemoteViews views;
         if (columns >= 3)
         {
-            views = new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x3);
+            views = new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x3_0);
 
         } else if (columns == 2) {
             views = new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x2);
@@ -131,7 +129,7 @@ public class SuntimesWidget extends AppWidgetProvider
         RemoteViews views = getWidgetViews(context, appWidgetId, widgetRows, widgetCols);
         themeViews(context, views, appWidgetId);
 
-        SuntimesWidgetData data = new SuntimesWidgetData(context, appWidgetId);
+        SuntimesWidgetData data = new SuntimesWidgetData(context, appWidgetId); // constructor inits data from widget settings
         data.calculate();
         updateViews(context, appWidgetId, views, data);
         appWidgetManager.updateAppWidget(appWidgetId, views);
@@ -195,7 +193,7 @@ public class SuntimesWidget extends AppWidgetProvider
     {
         boolean showTitle = SuntimesWidgetSettings.loadShowTitlePref(context, appWidgetId);
         String titlePattern = SuntimesWidgetSettings.loadTitleTextPref(context, appWidgetId);
-        String titleText = SuntimesWidgetUtils.displayStringForTitlePattern(titlePattern, context, appWidgetId);
+        String titleText = SuntimesWidgetUtils.displayStringForTitlePattern(titlePattern, data);
         views.setTextViewText(R.id.text_title, titleText);
         views.setViewVisibility(R.id.text_title, showTitle ? View.VISIBLE : View.GONE);
 
