@@ -16,7 +16,6 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.forrestguice.suntimeswidget.settings;
 
 import android.content.Context;
