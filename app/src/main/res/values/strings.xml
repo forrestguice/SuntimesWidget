@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">SuntimesWidget</string>
+    <string name="app_name">Suntimes Widget</string>
+    <string name="app_version"><b>Version:</b> <i>0.0.1</i></string>
+    <string name="app_shortdesc">A widget that displays sunrise and sunset times.</string>
+    <string name="app_support_url"><![CDATA[
+        <b>Support:</b> see the
+        <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a>
+    ]]></string>
+    <string name="app_url"><![CDATA[
+        <a href="https://github.com/forrestguice/SuntimesWidget">github.com/forrestguice/SuntimesWidget</a>
+    ]]></string>
+    <string name="app_legal"><![CDATA[
+        Copyright &#169 2014 Forrest Guice <br />
+        Source code available under GPLv3.
+    ]]></string>
+
     <string name="configure">Configure Widget</string>
+
     <string name="add_widget">Add Widget</string>
+    <string name="about_widget">About</string>
 
     <string name="help_dialog_title">Help</string>
+    <string name="about_dialog_title">About</string>
 
     <string name="delta_day_tomorrow">Tomorrow will be</string>
     <string name="delta_day_yesterday">Yesterday was</string>
@@ -17,11 +34,11 @@
     <string name="widgetMode1x1_both_1">Sunrise &amp; Sunset (1)</string>
     <string name="widgetMode1x1_both_2">Sunrise &amp; Sunset (2)</string>
 
-    <string name="locationMode_current">Current Location</string>
-    <string name="locationMode_custom">Custom Location</string>
+    <string name="locationMode_current">Current (last known)</string>
+    <string name="locationMode_custom">User Defined</string>
 
-    <string name="timezoneMode_current">Current Timezone</string>
-    <string name="timezoneMode_custom">Custom Timezone</string>
+    <string name="timezoneMode_current">System</string>
+    <string name="timezoneMode_custom">User Defined</string>
 
     <string name="compareMode_yesterday">Yesterday</string>
     <string name="compareMode_tomorrow">Tomorrow</string>
@@ -50,7 +67,7 @@
 
     <string name="configLabel_appearance">Appearance Settings</string>
     <string name="configLabel_appearance_1x1mode">1x1 Layout:</string>
-    <string name="configLabel_appearance_theme">Theme</string>
+    <string name="configLabel_appearance_theme">Theme:</string>
     <string name="configLabel_appearance_showTitle">Show Title</string>
     <string name="configLabel_appearance_titleText">Title:</string>
     <string name="configHint_appearance_titleText">Title Text (supports: %m)</string>
@@ -70,6 +87,13 @@
                 <br/>
                 * <b>%m</b> for time mode (short) (e.g. "Civil")
                 <br/>
+    ]]></string>
+
+    <string name="help_general_timeMode"><![CDATA[
+          <b>Actual Time:</b> [TBD] <br/>
+          <b>Civil Twilight:</b> [TBD]<br/>
+          <b>Nautical Twilight:</b> [TBD]<br/>
+          <b>Astronomical Twilight:</b> [TBD] <br/>
     ]]></string>
 
 
