@@ -25,6 +25,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -38,10 +39,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorFactory;
 import com.forrestguice.suntimeswidget.settings.SuntimesWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.SuntimesWidgetTheme;
 import com.forrestguice.suntimeswidget.settings.SuntimesWidgetThemes;
+import com.forrestguice.suntimeswidget.settings.SuntimesWidgetTimeZones;
+
+import java.util.TimeZone;
 
 
 /**
@@ -70,6 +73,7 @@ public class SuntimesWidgetSettingsActivity extends Activity
     private Spinner spinner_timezoneMode;
     private Spinner spinner_timezone;
     private TextView label_timezone;
+    private String customTimezoneID;
 
     public SuntimesWidgetSettingsActivity()
     {
@@ -99,6 +103,7 @@ public class SuntimesWidgetSettingsActivity extends Activity
         }
 
         SuntimesWidgetThemes.initThemes(context);
+        SuntimesWidgetSettingsActivity.initDisplayStrings(context);
 
         initViews(context);
 
@@ -108,32 +113,14 @@ public class SuntimesWidgetSettingsActivity extends Activity
         loadTimezoneSettings(context);
     }
 
-    View.OnClickListener onAddButtonClickListener = new View.OnClickListener()
+    private static void initDisplayStrings( Context context )
     {
-        public void onClick(View v)
-        {
-            addWidget();
-        }
-    };
-
-    private void addWidget()
-    {
-        final Context context = SuntimesWidgetSettingsActivity.this;
-
-        saveGeneralSettings(context);
-        saveLocationSettings(context);
-        saveTimezoneSettings(context);
-        saveAppearanceSettings(context);
-
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        SuntimesWidget.updateAppWidget(context, appWidgetManager, appWidgetId);
-
-        Intent resultValue = new Intent();
-        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        setResult(RESULT_OK, resultValue);
-        finish();
+        SuntimesWidgetSettings.WidgetMode1x1.initDisplayStrings(context);
+        SuntimesWidgetSettings.CompareMode.initDisplayStrings(context);
+        SuntimesWidgetSettings.TimeMode.initDisplayStrings(context);
+        SuntimesWidgetSettings.LocationMode.initDisplayStrings(context);
+        SuntimesWidgetSettings.TimezoneMode.initDisplayStrings(context);
     }
-
 
     private void initViews( Context context )
     {
@@ -142,7 +129,7 @@ public class SuntimesWidgetSettingsActivity extends Activity
         //
         ArrayAdapter<SuntimesWidgetThemes.ThemeDescriptor> spinner_themeAdapter;
         spinner_themeAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item,
+                R.layout.layout_listitem_oneline,
                 SuntimesWidgetThemes.values());
         spinner_themeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -153,7 +140,7 @@ public class SuntimesWidgetSettingsActivity extends Activity
         // widget: source
         //
         ArrayAdapter<SuntimesCalculatorDescriptor> spinner_calculatorModeAdapter;
-        spinner_calculatorModeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, SuntimesCalculatorDescriptor.values());
+        spinner_calculatorModeAdapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, SuntimesCalculatorDescriptor.values());
         spinner_calculatorModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner_calculatorMode = (Spinner)findViewById(R.id.appwidget_general_calculator);
@@ -165,19 +152,31 @@ public class SuntimesWidgetSettingsActivity extends Activity
         //
         ArrayAdapter<SuntimesWidgetSettings.TimeMode> spinner_timeModeAdapter;
         spinner_timeModeAdapter = new ArrayAdapter<SuntimesWidgetSettings.TimeMode>(this,
-                android.R.layout.simple_spinner_item,
+                R.layout.layout_listitem_oneline,
                 SuntimesWidgetSettings.TimeMode.values());
         spinner_timeModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner_timeMode = (Spinner)findViewById(R.id.appwidget_general_timeMode);
         spinner_timeMode.setAdapter(spinner_timeModeAdapter);
 
+        ImageButton button_timeModeHelp = (ImageButton)findViewById(R.id.appwidget_generale_timeMode_helpButton);
+        button_timeModeHelp.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                SettingsHelpDialog helpDialog = new SettingsHelpDialog(SuntimesWidgetSettingsActivity.this);
+                String helpContent = getString(R.string.help_general_timeMode);
+                helpDialog.onPrepareDialog(helpContent);
+                helpDialog.show();
+            }
+        });
 
         //
         // widget: timezone mode
         //
         ArrayAdapter<SuntimesWidgetSettings.TimezoneMode> spinner_timezoneModeAdapter;
-        spinner_timezoneModeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, SuntimesWidgetSettings.TimezoneMode.values());
+        spinner_timezoneModeAdapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, SuntimesWidgetSettings.TimezoneMode.values());
         spinner_timezoneModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner_timezoneMode = (Spinner)findViewById(R.id.appwidget_timezone_mode);
@@ -188,13 +187,19 @@ public class SuntimesWidgetSettingsActivity extends Activity
         // widget: timezone
         //
         label_timezone = (TextView)findViewById(R.id.appwidget_timezone_custom_label);
+
+        SuntimesWidgetTimeZones.TimeZoneItemAdapter spinner_timezoneAdapter;
+        spinner_timezoneAdapter = new SuntimesWidgetTimeZones.TimeZoneItemAdapter(this,
+                R.layout.layout_listitem_twoline, SuntimesWidgetTimeZones.getValues() );
+
         spinner_timezone = (Spinner)findViewById(R.id.app_widget_timezone_custom);
+        spinner_timezone.setAdapter(spinner_timezoneAdapter);
 
         //
         // widget: location mode
         //
         ArrayAdapter<SuntimesWidgetSettings.LocationMode> spinner_locationModeAdapter;
-        spinner_locationModeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, SuntimesWidgetSettings.LocationMode.values());
+        spinner_locationModeAdapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, SuntimesWidgetSettings.LocationMode.values());
         spinner_locationModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner_locationMode = (Spinner)findViewById(R.id.appwidget_location_mode);
@@ -214,7 +219,7 @@ public class SuntimesWidgetSettingsActivity extends Activity
         // widget: 1x1 widget mode
         //
         ArrayAdapter<SuntimesWidgetSettings.WidgetMode1x1> spinner_1x1ModeAdapter;
-        spinner_1x1ModeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, SuntimesWidgetSettings.WidgetMode1x1.values());
+        spinner_1x1ModeAdapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, SuntimesWidgetSettings.WidgetMode1x1.values());
         spinner_1x1ModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner_1x1mode = (Spinner)findViewById(R.id.appwidget_appearance_1x1mode);
@@ -249,7 +254,7 @@ public class SuntimesWidgetSettingsActivity extends Activity
         // widget: compare mode
         //
         ArrayAdapter<SuntimesWidgetSettings.CompareMode> spinner_compareModeAdapter;
-        spinner_compareModeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, SuntimesWidgetSettings.CompareMode.values());
+        spinner_compareModeAdapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, SuntimesWidgetSettings.CompareMode.values());
         spinner_compareModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner_compareMode = (Spinner)findViewById(R.id.appwidget_general_compareMode);
@@ -260,6 +265,12 @@ public class SuntimesWidgetSettingsActivity extends Activity
         //
         Button button_addWidget = (Button)findViewById(R.id.add_button);
         button_addWidget.setOnClickListener(onAddButtonClickListener);
+
+        //
+        // widget: about button
+        //
+        Button button_aboutWidget = (Button)findViewById(R.id.about_button);
+        button_aboutWidget.setOnClickListener(onAboutButtonClickListener);
     }
 
 
@@ -288,8 +299,6 @@ public class SuntimesWidgetSettingsActivity extends Activity
         return location;
     }*/
 
-
-
     private void setTitleTextEnabled( boolean value )
     {
         label_titleText.setEnabled(value);
@@ -298,6 +307,9 @@ public class SuntimesWidgetSettingsActivity extends Activity
 
     private void setCustomTimezoneEnabled( boolean value )
     {
+        String timezoneID = (value ? customTimezoneID : TimeZone.getDefault().getID());
+        spinner_timezone.setSelection(SuntimesWidgetTimeZones.ordinal(timezoneID), true);
+
         label_timezone.setEnabled(value);
         spinner_timezone.setEnabled(value);
     }
@@ -383,7 +395,6 @@ public class SuntimesWidgetSettingsActivity extends Activity
     private void loadAppearanceSettings(Context context)
     {
         // load: widgetmode_1x1
-        SuntimesWidgetSettings.WidgetMode1x1.initDisplayStrings(context);
         SuntimesWidgetSettings.WidgetMode1x1 mode1x1 = SuntimesWidgetSettings.load1x1ModePref(context, appWidgetId);
         spinner_1x1mode.setSelection(mode1x1.ordinal());
 
@@ -428,12 +439,10 @@ public class SuntimesWidgetSettingsActivity extends Activity
         spinner_calculatorMode.setSelection(calculatorMode.ordinal());
 
         // load: time mode
-        SuntimesWidgetSettings.CompareMode.initDisplayStrings(context);
         SuntimesWidgetSettings.CompareMode compareMode = SuntimesWidgetSettings.loadCompareModePref(context, appWidgetId);
         spinner_compareMode.setSelection(compareMode.ordinal());
 
         // load: compare mode
-        SuntimesWidgetSettings.TimeMode.initDisplayStrings(context);
         SuntimesWidgetSettings.TimeMode timeMode = SuntimesWidgetSettings.loadTimeModePref(context, appWidgetId);
         spinner_timeMode.setSelection(timeMode.ordinal());
     }
@@ -455,7 +464,6 @@ public class SuntimesWidgetSettingsActivity extends Activity
 
     private void loadLocationSettings(Context context)
     {
-        SuntimesWidgetSettings.LocationMode.initDisplayStrings(context);
         SuntimesWidgetSettings.LocationMode locationMode = SuntimesWidgetSettings.loadLocationModePref(context, appWidgetId);
         spinner_locationMode.setSelection(locationMode.ordinal());
 
@@ -473,18 +481,103 @@ public class SuntimesWidgetSettingsActivity extends Activity
         SuntimesWidgetSettings.saveTimezoneModePref(context, appWidgetId, timezoneMode);
 
         // save: custom timezone
-        String customTimezone = SuntimesWidgetSettings.PREF_DEF_TIMEZONE_CUSTOM;  // TODO
-        SuntimesWidgetSettings.saveTimezonePref(context, appWidgetId, customTimezone);
+        SuntimesWidgetTimeZones.TimeZoneItem customTimezone = (SuntimesWidgetTimeZones.TimeZoneItem)spinner_timezone.getSelectedItem();
+        SuntimesWidgetSettings.saveTimezonePref(context, appWidgetId, customTimezone.getID());
     }
 
     private void loadTimezoneSettings(Context context)
     {
-        SuntimesWidgetSettings.TimezoneMode.initDisplayStrings(context);
         SuntimesWidgetSettings.TimezoneMode timezoneMode = SuntimesWidgetSettings.loadTimezoneModePref(context, appWidgetId);
         spinner_timezoneMode.setSelection(timezoneMode.ordinal());
 
-        String timezone = SuntimesWidgetSettings.loadTimezonePref(context, appWidgetId);    // TODO: finish custom timezone feature
-        // TODO
+        customTimezoneID = SuntimesWidgetSettings.loadTimezonePref(context, appWidgetId);
+        int timezonePos = SuntimesWidgetTimeZones.ordinal(customTimezoneID);
+        int numTimeZones = SuntimesWidgetTimeZones.values().length;
+
+        if (timezonePos >= 0 && timezonePos < numTimeZones)
+        {
+            spinner_timezone.setSelection(timezonePos);
+        } else {
+            spinner_timezone.setSelection(0);
+            Log.w("loadTimezoneSettings", "unable to find timezone " + customTimezoneID + " in the list! Setting selection to 0." );
+        }
+    }
+
+    /**
+     * Click handler executed when the "Add Widget" button is pressed.
+     */
+    View.OnClickListener onAddButtonClickListener = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+            addWidget();
+        }
+    };
+
+    private void addWidget()
+    {
+        final Context context = SuntimesWidgetSettingsActivity.this;
+
+        saveGeneralSettings(context);
+        saveLocationSettings(context);
+        saveTimezoneSettings(context);
+        saveAppearanceSettings(context);
+
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        SuntimesWidget.updateAppWidget(context, appWidgetManager, appWidgetId);
+
+        Intent resultValue = new Intent();
+        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        setResult(RESULT_OK, resultValue);
+        finish();
+    }
+
+    /**
+     * Click handler executed when the "About" button is pressed.
+     */
+    View.OnClickListener onAboutButtonClickListener = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+            SettingsAboutDialog aboutDialog = new SettingsAboutDialog(SuntimesWidgetSettingsActivity.this);
+            aboutDialog.onPrepareDialog();
+            aboutDialog.show();
+        }
+    };
+
+    /**
+     * SettingsAboutDialog : Dialog
+     */
+    public class SettingsAboutDialog extends Dialog
+    {
+        private Activity myParent;
+
+        public SettingsAboutDialog( Activity c )
+        {
+            super(c);
+            myParent = c;
+            setContentView(R.layout.layout_dialog_about);
+            setCancelable(true);
+        }
+
+        public void onPrepareDialog()
+        {
+            setTitle(myParent.getString(R.string.about_dialog_title));
+
+            TextView urlView = (TextView)findViewById(R.id.txt_about_url);
+            urlView.setMovementMethod(LinkMovementMethod.getInstance());
+            urlView.setText(Html.fromHtml(myParent.getString(R.string.app_url)));
+
+            TextView supportView = (TextView)findViewById(R.id.txt_about_support);
+            supportView.setMovementMethod(LinkMovementMethod.getInstance());
+            supportView.setText(Html.fromHtml(myParent.getString(R.string.app_support_url)));
+
+            TextView legalView = (TextView)findViewById(R.id.txt_about_legal);
+            legalView.setMovementMethod(LinkMovementMethod.getInstance());
+            legalView.setText(Html.fromHtml(myParent.getString(R.string.app_legal)));
+        }
     }
 
     /**
@@ -498,7 +591,7 @@ public class SuntimesWidgetSettingsActivity extends Activity
         {
             super(c);
             myParent = c;
-            setContentView(R.layout.dialog_help);
+            setContentView(R.layout.layout_dialog_help);
             setTitle(myParent.getString(R.string.help_dialog_title));
             setCancelable(true);
         }
