@@ -20,14 +20,14 @@ package com.forrestguice.suntimeswidget.calculator.sunrisesunset_java;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.luckycatlabs.sunrisesunset.dto.Location;
 import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator;
 import java.util.Calendar;
-import com.forrestguice.suntimeswidget.settings.SuntimesWidgetSettings;
 
 /**
  * A thin wrapper around a SunriseSunsetCalculator instance (from sunrisesunsetlib-java) that
- * implements the SuntimesCalculator interface used by the widget.
+ * implements the interface used by the widget.
  */
 public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
 {
@@ -39,7 +39,7 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     {
     }
 
-    public void init(SuntimesWidgetSettings.Location locationSetting, String timezone)
+    public void init(WidgetSettings.Location locationSetting, String timezone)
     {
         Location location = new Location(locationSetting.getLatitude(), locationSetting.getLongitude());
         calculator = new SunriseSunsetCalculator(location, timezone);

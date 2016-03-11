@@ -18,24 +18,31 @@
 
 package com.forrestguice.suntimeswidget;
 
-import android.content.res.Resources;
-import android.util.Log;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.os.Build;
 
 import android.os.Bundle;
-import android.util.TypedValue;
+import android.util.Log;
 import android.view.View;
 import android.content.Context;
 import android.widget.RemoteViews;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesWidgetData;
-import com.forrestguice.suntimeswidget.settings.SuntimesWidgetSettings;
-import com.forrestguice.suntimeswidget.settings.SuntimesWidgetTheme;
-import com.forrestguice.suntimeswidget.settings.SuntimesWidgetThemes;
+import com.forrestguice.suntimeswidget.calculator.SuntimesData;
+import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
+import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x3_0;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 
+/**
+ * Main widget
+ */
 public class SuntimesWidget extends AppWidgetProvider
 {
+    protected static SuntimesUtils utils = new SuntimesUtils();
+
     @Override
     public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions)
     {
@@ -44,10 +51,69 @@ public class SuntimesWidget extends AppWidgetProvider
     }
 
     @Override
+    public void onReceive(Context context, Intent intent)
+    {
+        super.onReceive(context, intent);
+        handleClickAction(context, intent);
+    }
+
+    protected boolean handleClickAction(Context context, Intent intent)
+    {
+        String action = intent.getAction();
+        Bundle extras = intent.getExtras();
+        int appWidgetId = (extras != null ? extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, 0) : 0);
+
+        // OnTap: Ignore
+        if (action.equals(WidgetSettings.ActionMode.ONTAP_DONOTHING.name()))
+        {
+            return false;
+        }
+
+        // OnTap: Launch an Activity
+        if (action.equals(WidgetSettings.ActionMode.ONTAP_LAUNCH_ACTIVITY.name()))
+        {
+            String launchClassName = WidgetSettings.loadActionLaunchPref(context, appWidgetId);
+            Class<?> launchClass;
+            try {
+                launchClass = Class.forName(launchClassName);
+
+            } catch (ClassNotFoundException e) {
+                launchClass = getConfigClass();
+                Log.e("SuntimesWidget", "LaunchApp :: " + launchClassName + " cannot be found! " + e.toString());
+            }
+
+            Intent launchIntent = new Intent(context, launchClass);
+            launchIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+            launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(launchIntent);
+            return true;
+        }
+
+        // OnTap: Reconfigure the Widget
+        if (action.equals(WidgetSettings.ActionMode.ONTAP_LAUNCH_CONFIG.name()))
+        {
+            Intent configIntent = new Intent(context, getConfigClass());
+            configIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+            configIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            configIntent.putExtra(WidgetSettings.ActionMode.ONTAP_LAUNCH_CONFIG.name(), true);
+            context.startActivity(configIntent);
+            return true;
+        }
+
+        Log.w("SuntimeWidget", "Unsupported click action: " + action + " (" + appWidgetId + ")");
+        return false;
+    }
+
+    protected Class getConfigClass()
+    {
+        return SuntimesConfigActivity.class;
+    }
+
+    @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds)
     {
-        SuntimesWidgetThemes.initThemes(context);
-        SuntimesWidgetSettings.TimeMode.initDisplayStrings(context);
+        WidgetThemes.initThemes(context);
+        WidgetSettings.TimeMode.initDisplayStrings(context);
 
         for (int appWidgetId : appWidgetIds)
         {
@@ -62,7 +128,7 @@ public class SuntimesWidget extends AppWidgetProvider
     {
         for (int appWidgetId : appWidgetIds)
         {
-            SuntimesWidgetSettings.deletePrefs(context, appWidgetId);
+            WidgetSettings.deletePrefs(context, appWidgetId);
         }
     }
 
@@ -78,41 +144,32 @@ public class SuntimesWidget extends AppWidgetProvider
         super.onDisabled(context);
     }
 
-    /**
-     * @param context the application context
-     * @param rows number of rows in widget
-     * @param columns number of cols in widget
-     * @return a RemoteViews instance for the specified widget size
-     */
-    private static RemoteViews getWidgetViews(Context context, int appWidgetId, int rows, int columns)
+    protected SuntimesLayout getWidgetLayout( Context context, AppWidgetManager appWidgetManager, int appWidgetId )
     {
-        RemoteViews views;
-        if (columns >= 3)
+        int[] mustFitWithinDp = {40, 40};
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
-            views = new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x3_0);
+            Bundle widgetOptions = appWidgetManager.getAppWidgetOptions(appWidgetId);
+            int[]  sizePortrait = { widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH),
+                                    widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT) };
+            int[]  sizeLandscape = { widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH),
+                                     widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT) };
 
-        } else if (columns == 2) {
-            views = new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x2);
+            //Log.d("updateAppWidget", "portrait:  [" + sizePortrait[0] + ", " + sizePortrait[1] + "]");
+            //Log.d("updateAppWidget", "landscape: [" + sizeLandscape[0] + ", " + sizeLandscape[1] + "]");
+            //Toast toast = Toast.makeText(context, "[" + sizePortrait[0] + ", " + sizePortrait[1] + "]; " + "[" + sizeLandscape[0] + ", " + sizeLandscape[1] + "]", Toast.LENGTH_SHORT);
+            //toast.show();
 
-        } else {
-            SuntimesWidgetSettings.WidgetMode1x1 mode1x1 = SuntimesWidgetSettings.load1x1ModePref(context, appWidgetId);
-            views = new RemoteViews(context.getPackageName(), mode1x1.getLayoutID());
-
-            //Intent intent = new Intent(context, SuntimesWidgetService.class);
-            //intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-            //intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
-
-            //views = new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x1);
-            //views.setRemoteAdapter(R.id.view_flip, intent);
-            //views.setEmptyView(R.id.view_flip, R.id.emptyView);
+            mustFitWithinDp[0] = Math.min( sizePortrait[0], sizeLandscape[0] );
+            mustFitWithinDp[1] = Math.min( sizePortrait[1], sizeLandscape[1] );
+            Log.d("updateAppWidget", "must fit:  [" + mustFitWithinDp[0] + ", " + mustFitWithinDp[1] + "]");
         }
 
-        return views;
-    }
-
-    private static SuntimesWidgetSettings.Location getCurrentLocation(Context context)
-    {
-        return null;   // TODO
+        SuntimesLayout layout = ((110 <= mustFitWithinDp[0]) ? new SuntimesLayout_1x3_0()
+                                                             : WidgetSettings.load1x1ModePref_asLayout(context, appWidgetId));
+        Log.d("getWidgetLayout", "layout is: " + layout);
+        return layout;
     }
 
     /**
@@ -120,121 +177,54 @@ public class SuntimesWidget extends AppWidgetProvider
      * @param appWidgetManager widget manager
      * @param appWidgetId id of widget to be updated
      */
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
+    protected void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
-        Bundle options = appWidgetManager.getAppWidgetOptions(appWidgetId);
-        int widgetRows = SuntimesWidgetUtils.getCellsForSize(options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT));
-        int widgetCols = SuntimesWidgetUtils.getCellsForSize(options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH));
+        //Log.d("updateAppWidget", "start: ");
 
-        RemoteViews views = getWidgetViews(context, appWidgetId, widgetRows, widgetCols);
-        themeViews(context, views, appWidgetId);
+        /**SuntimesLayout layout = getWidgetLayout(context, appWidgetManager, appWidgetId);
+        RemoteViews views = layout.getViews(context);
+
+        boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId);
+        views.setViewVisibility(R.id.text_title, showTitle ? View.VISIBLE : View.GONE);
+
+        layout.themeViews(context, views, appWidgetId);
 
         SuntimesWidgetData data = new SuntimesWidgetData(context, appWidgetId); // constructor inits data from widget settings
         data.calculate();
-        updateViews(context, appWidgetId, views, data);
+
+        layout.updateViews(context, appWidgetId, views, data);
+        appWidgetManager.updateAppWidget(appWidgetId, views);*/
+
+        SuntimesLayout layout = getWidgetLayout(context, appWidgetManager, appWidgetId);
+        updateAppWidget(context, appWidgetManager, appWidgetId, layout);
+
+        //Log.d("updateAppWidget", "end: ");
+    }
+
+    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SuntimesLayout layout)
+    {
+        RemoteViews views = layout.getViews(context);
+
+        boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId);
+        views.setViewVisibility(R.id.text_title, showTitle ? View.VISIBLE : View.GONE);
+
+        layout.themeViews(context, views, appWidgetId);
+
+        SuntimesData data = new SuntimesData(context, appWidgetId); // constructor inits data from widget settings
+        data.calculate();
+
+        WidgetSettings.ActionMode actionMode = WidgetSettings.loadActionModePref(context, appWidgetId);
+        Intent intent = new Intent(context, SuntimesWidget.class);
+        intent.setAction(actionMode.name());
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, appWidgetId, intent, 0);
+        views.setOnClickPendingIntent(R.id.widgetframe_inner, pendingIntent);
+
+        layout.updateViews(context, appWidgetId, views, data);
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
-    /**
-     * @param context
-     * @param views
-     * @param appWidgetId
-     */
-    public static void themeViews(Context context, RemoteViews views, int appWidgetId)
-    {
-        SuntimesWidgetTheme theme = SuntimesWidgetSettings.loadThemePref(context, appWidgetId);
-        themeViews(context, views, theme);
-    }
 
-    /**
-     * @param context
-     * @param views
-     * @param theme
-     */
-    public static void themeViews(Context context, RemoteViews views, SuntimesWidgetTheme theme)
-    {
-        Resources resources = context.getResources();
-        int[] padding = new int[] { (int)resources.getDimension(R.dimen.widget_padding_left),
-                (int)resources.getDimension(R.dimen.widget_padding_top),
-                (int)resources.getDimension(R.dimen.widget_padding_right),
-                (int)resources.getDimension(R.dimen.widget_padding_bottom) };
-        int sunriseColor = theme.getSunriseTextColor();
-        int sunsetColor = theme.getSunsetTextColor();
-        int suffixColor = theme.getThemeTimeSuffixColor();
-        int textColor = theme.getTextColor();
-
-        views.setInt(R.id.widgetframe_inner, "setBackgroundResource", theme.getBackgroundId());
-        views.setViewPadding( R.id.widgetframe_inner, padding[0], padding[1], padding[2], padding[3] );
-
-        views.setTextViewTextSize(R.id.text_title, TypedValue.COMPLEX_UNIT_SP, theme.getTitleSizeSp());
-        views.setTextColor(R.id.text_title, theme.getTitleColor());
-
-        views.setTextColor(R.id.text_time_sunrise_suffix, suffixColor);
-        views.setTextColor(R.id.text_time_sunrise, sunriseColor);
-        views.setTextColor(R.id.text_delta_sunrise, sunriseColor);
-
-        views.setTextColor(R.id.text_time_sunset_suffix, suffixColor);
-        views.setTextColor(R.id.text_time_sunset, sunsetColor);
-        views.setTextColor(R.id.text_delta_sunset, sunsetColor);
-
-        views.setTextColor(R.id.text_delta_day_prefix, textColor);
-        views.setTextColor(R.id.text_delta_day_value, sunsetColor);
-        views.setTextColor(R.id.text_delta_day_units, textColor);
-        views.setTextColor(R.id.text_delta_day_suffix, suffixColor);
-    }
-
-    /**
-     * @param context
-     * @param appWidgetId
-     * @param views
-     * @param context
-     */
-    public static void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesWidgetData data)
-    {
-        boolean showTitle = SuntimesWidgetSettings.loadShowTitlePref(context, appWidgetId);
-        String titlePattern = SuntimesWidgetSettings.loadTitleTextPref(context, appWidgetId);
-        String titleText = SuntimesWidgetUtils.displayStringForTitlePattern(titlePattern, data);
-        views.setTextViewText(R.id.text_title, titleText);
-        views.setViewVisibility(R.id.text_title, showTitle ? View.VISIBLE : View.GONE);
-
-        // DEBUG (comment me)
-        Log.v("DEBUG", "show title: " + showTitle);
-        Log.v("DEBUG", "title text: " + titleText);
-
-        // update sunrise time
-        SuntimesWidgetUtils.TimeDisplayText sunriseString = SuntimesWidgetUtils.calendarTimeShortDisplayString(context, data.sunriseCalendarToday());
-        views.setTextViewText(R.id.text_time_sunrise, sunriseString.getValue());
-        views.setTextViewText(R.id.text_time_sunrise_suffix, sunriseString.getSuffix());
-
-        // upset sunset time
-        SuntimesWidgetUtils.TimeDisplayText sunsetString = SuntimesWidgetUtils.calendarTimeShortDisplayString(context, data.sunsetCalendarToday());
-        views.setTextViewText(R.id.text_time_sunset, sunsetString.getValue());
-        views.setTextViewText(R.id.text_time_sunset_suffix, sunsetString.getSuffix());
-
-        // update sunrise delta
-        //String sunriseDeltaString = calendarDeltaShortDisplayString(sunriseCalendarToday, sunriseCalendarTomorrow);
-        //views.setTextViewText(R.id.text_delta_sunrise, sunriseDeltaString);
-
-        // update sunset delta
-        //String sunsetDeltaString = calendarDeltaShortDisplayString(sunsetCalendarToday, sunsetCalendarTomorrow);
-        //views.setTextViewText(R.id.text_delta_sunset, sunsetDeltaString);
-
-        // update day delta
-        SuntimesWidgetUtils.TimeDisplayText dayDeltaDisplay = SuntimesWidgetUtils.timeDeltaLongDisplayString(data.dayLengthToday(), data.dayLengthOther());
-        String dayDeltaValue = dayDeltaDisplay.getValue();
-        String dayDeltaUnits = dayDeltaDisplay.getUnits();
-        String dayDeltaSuffix = dayDeltaDisplay.getSuffix();
-
-        views.setTextViewText(R.id.text_delta_day_prefix, data.dayDeltaPrefix());
-        views.setTextViewText(R.id.text_delta_day_value, dayDeltaValue);
-        views.setTextViewText(R.id.text_delta_day_units, dayDeltaUnits);
-        views.setTextViewText(R.id.text_delta_day_suffix, dayDeltaSuffix);
-
-        views.setViewVisibility(R.id.text_delta_day_units, (dayDeltaUnits.trim().equals("") ? View.GONE : View.VISIBLE));
-        views.setViewVisibility(R.id.text_delta_day_suffix, (dayDeltaSuffix.trim().equals("") ? View.GONE : View.VISIBLE));
-
-        views.setViewVisibility(R.id.text_title, ((showTitle) ? View.VISIBLE : View.GONE));
-    }
 }
 
 

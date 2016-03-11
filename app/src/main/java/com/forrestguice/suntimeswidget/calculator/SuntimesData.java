@@ -23,23 +23,23 @@ import android.content.Context;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.settings.SuntimesWidgetSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Calendar;
 import java.util.TimeZone;
 
-public class SuntimesWidgetData
+public class SuntimesData
 {
     private boolean calculated = false;
 
     private Context context;
 
     private SuntimesCalculatorDescriptor calculatorMode;
-    private SuntimesWidgetSettings.LocationMode locationMode;
-    private SuntimesWidgetSettings.TimezoneMode timezoneMode;
-    private SuntimesWidgetSettings.CompareMode compareMode;
-    private SuntimesWidgetSettings.Location location;
-    private SuntimesWidgetSettings.TimeMode timeMode;
+    private WidgetSettings.LocationMode locationMode;
+    private WidgetSettings.TimezoneMode timezoneMode;
+    private WidgetSettings.CompareMode compareMode;
+    private WidgetSettings.Location location;
+    private WidgetSettings.TimeMode timeMode;
     private String timezone;
 
     private Calendar sunriseCalendarToday;
@@ -52,16 +52,16 @@ public class SuntimesWidgetData
 
     private int layoutID = R.layout.layout_widget_1x1_0i;
 
-    public SuntimesWidgetData(Context context, int appWidgetId)
+    public SuntimesData(Context context, int appWidgetId)
     {
         this.context = context;
         initFromSettings(context, appWidgetId);
     }
-    public SuntimesWidgetData( SuntimesWidgetData other )
+    public SuntimesData(SuntimesData other)
     {
         initFromOther(other, other.layoutID);
     }
-    public SuntimesWidgetData( SuntimesWidgetData other, int layoutID )
+    public SuntimesData(SuntimesData other, int layoutID)
     {
         initFromOther(other, layoutID);
     }
@@ -85,12 +85,12 @@ public class SuntimesWidgetData
         return timezone;
     }
 
-    public SuntimesWidgetSettings.TimeMode timeMode()
+    public WidgetSettings.TimeMode timeMode()
     {
         return timeMode;
     }
 
-    public SuntimesWidgetSettings.Location location()
+    public WidgetSettings.Location location()
     {
         return location;
     }
@@ -100,17 +100,17 @@ public class SuntimesWidgetData
         return calculatorMode;
     }
 
-    public SuntimesWidgetSettings.LocationMode locationMode()
+    public WidgetSettings.LocationMode locationMode()
     {
         return locationMode;
     }
 
-    public SuntimesWidgetSettings.TimezoneMode timezoneMode()
+    public WidgetSettings.TimezoneMode timezoneMode()
     {
         return timezoneMode;
     }
 
-    public SuntimesWidgetSettings.CompareMode compareMode()
+    public WidgetSettings.CompareMode compareMode()
     {
         return compareMode;
     }
@@ -147,7 +147,7 @@ public class SuntimesWidgetData
         return dayLengthOther;
     }
 
-    private void initFromOther( SuntimesWidgetData other, int layoutID )
+    private void initFromOther( SuntimesData other, int layoutID )
     {
         this.layoutID = layoutID;
 
@@ -175,22 +175,22 @@ public class SuntimesWidgetData
         calculated = false;
 
         // from general settings
-        calculatorMode = SuntimesWidgetSettings.loadCalculatorModePref(context, appWidgetId);
-        timeMode = SuntimesWidgetSettings.loadTimeModePref(context, appWidgetId);
-        compareMode = SuntimesWidgetSettings.loadCompareModePref(context, appWidgetId);
+        calculatorMode = WidgetSettings.loadCalculatorModePref(context, appWidgetId);
+        timeMode = WidgetSettings.loadTimeModePref(context, appWidgetId);
+        compareMode = WidgetSettings.loadCompareModePref(context, appWidgetId);
 
         // from location settings
-        location = SuntimesWidgetSettings.loadLocationPref(context, appWidgetId);
-        locationMode = SuntimesWidgetSettings.loadLocationModePref(context, appWidgetId);
-        if (locationMode == SuntimesWidgetSettings.LocationMode.CURRENT_LOCATION)
-        {
-            //location = getCurrentLocation(context);
-        }
+        location = WidgetSettings.loadLocationPref(context, appWidgetId);
+        locationMode = WidgetSettings.loadLocationModePref(context, appWidgetId);
+        //if (locationMode == SuntimesWidgetSettings.LocationMode.CURRENT_LOCATION)
+        //{
+        //    //location = getCurrentLocation(context);
+        //}
 
         // from timezone settings
-        timezone = SuntimesWidgetSettings.loadTimezonePref(context, appWidgetId);
-        timezoneMode = SuntimesWidgetSettings.loadTimezoneModePref(context, appWidgetId);
-        if (timezoneMode == SuntimesWidgetSettings.TimezoneMode.CURRENT_TIMEZONE)
+        timezone = WidgetSettings.loadTimezonePref(context, appWidgetId);
+        timezoneMode = WidgetSettings.loadTimezoneModePref(context, appWidgetId);
+        if (timezoneMode == WidgetSettings.TimezoneMode.CURRENT_TIMEZONE)
         {
             timezone = TimeZone.getDefault().getID();
         }
@@ -198,14 +198,13 @@ public class SuntimesWidgetData
 
     public void calculate()
     {
-        // DEBUG (comment me)
-        Log.v("SuntimesWidgetData", "time mode: " + timeMode);
-        Log.v("SuntimesWidgetData", "location_mode: " + locationMode.name());
-        Log.v("SuntimesWidgetData", "latitude: " + location.getLatitude());
-        Log.v("SuntimesWidgetData", "longitude: " + location.getLongitude());
-        Log.v("SuntimesWidgetData", "timezone_mode: " + timezoneMode.name());
-        Log.v("SuntimesWidgetData", "timezone: " + timezone);
-        Log.v("SuntimesWidgetData", "compare mode: " + compareMode.name());
+        //Log.v("SuntimesWidgetData", "time mode: " + timeMode);
+        //Log.v("SuntimesWidgetData", "location_mode: " + locationMode.name());
+        //Log.v("SuntimesWidgetData", "latitude: " + location.getLatitude());
+        //Log.v("SuntimesWidgetData", "longitude: " + location.getLongitude());
+        //Log.v("SuntimesWidgetData", "timezone_mode: " + timezoneMode.name());
+        //Log.v("SuntimesWidgetData", "timezone: " + timezone);
+        //Log.v("SuntimesWidgetData", "compare mode: " + compareMode.name());
 
         SuntimesCalculatorFactory calculatorFactory = new SuntimesCalculatorFactory(context, calculatorMode);
         SuntimesCalculator calculator = calculatorFactory.createCalculator(location, timezone);
@@ -264,9 +263,7 @@ public class SuntimesWidgetData
         long sunsetOther = sunsetCalendarOther.getTime().getTime();
         dayLengthOther = sunsetOther - sunriseOther;
 
-
-        Log.d("sunset: ", sunsetCalendarToday.toString() + " (" + sunsetCalendarOther.getTimeZone().getID() + ")");
-
+        //Log.d("sunset: ", sunsetCalendarToday.toString() + " (" + sunsetCalendarOther.getTimeZone().getID() + ")");
         calculated = true;
     }
 }

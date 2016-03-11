@@ -48,7 +48,9 @@
     </style>
 
     <!-- A TextView for displaying text/time -->
-    <style name="SunsetTimeTextView" parent="TextAppearance.AppCompat.Small">
+    <style name="SunsetTimeTextViewBase" parent="android:TextAppearance.Small">
+    </style>
+    <style name="SunsetTimeTextView" parent="SunsetTimeTextViewBase">
         <item name="android:gravity">center</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

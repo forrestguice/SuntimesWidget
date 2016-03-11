@@ -18,7 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
-import com.forrestguice.suntimeswidget.settings.SuntimesWidgetSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Calendar;
 
@@ -29,7 +29,7 @@ import java.util.Calendar;
 public interface SuntimesCalculator
 {
     public String name();
-    public void init( SuntimesWidgetSettings.Location location, String timezone );
+    public void init( WidgetSettings.Location location, String timezone );
 
     public Calendar getCivilSunriseCalendarForDate( Calendar date );
     public Calendar getNauticalSunriseCalendarForDate( Calendar date );

@@ -36,9 +36,9 @@
             android:showDividers="middle"
             android:divider="@drawable/ic_spacer">
 
-            <include layout="@layout/info_time_sunrise" />
+            <include layout="@layout/info_time_sunrise_0" />
 
-            <include layout="@layout/info_time_sunset" />
+            <include layout="@layout/info_time_sunset_0" />
 
         </LinearLayout>
 

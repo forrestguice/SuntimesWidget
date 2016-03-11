@@ -21,7 +21,7 @@ package com.forrestguice.suntimeswidget.calculator;
 import android.content.Context;
 import android.util.Log;
 
-import com.forrestguice.suntimeswidget.settings.SuntimesWidgetSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator;
 
 /**
@@ -50,12 +50,9 @@ public class SuntimesCalculatorFactory
     protected static boolean initialized = false;
     public static void initCalculators()
     {
-        if (!initialized)
-        {
-            SuntimesCalculatorDescriptor.addValue(SunriseSunsetSuntimesCalculator.getDescriptor());
-
-            initialized = true;
-        }
+        SuntimesCalculatorDescriptor.addValue(SunriseSunsetSuntimesCalculator.getDescriptor());
+        initialized = true;
+        Log.d("CalculatorFactory", "Initialized suntimes calculator list.");
     }
 
     private SuntimesCalculatorDescriptor current;
@@ -84,19 +81,19 @@ public class SuntimesCalculatorFactory
      * @param timezone a timezone string
      * @return a calculator object that implements SuntimesCalculator
      */
-    public SuntimesCalculator createCalculator(SuntimesWidgetSettings.Location location, String timezone)
+    public SuntimesCalculator createCalculator(WidgetSettings.Location location, String timezone)
     {
         SuntimesCalculator calculator;
         try {
             Log.d("createCalculator", "trying .oO( " + current.getReference() + " )");
-            Class calculatorClass = Class.forName(current.getReference());
-
+            Class calculatorClass = Class.forName(current.getReference());  // may fail if using proguard without exempting key classes
+            Log.d("createCalculator", "found class " + calculatorClass.getName());
             calculator = (SuntimesCalculator)calculatorClass.newInstance();
             Log.d("createCalculator", "using .oO( " + calculator.name() + " ): " + timezone);
 
         } catch (Exception e1) {
             calculator = new SunriseSunsetSuntimesCalculator();
-            Log.e("createCalculator", "fail! .oO( " + current.name() + "), so using the default: " + calculator.name() +": " + timezone);
+            Log.e("createCalculator", "fail! .oO( " + current.getReference() + "), so instantiating default: " + calculator.getClass().getName() + " :: " + timezone);
         }
 
         calculator.init(location, timezone);

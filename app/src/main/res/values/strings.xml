@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- ~~~~~~~~~~~~ -->
+    <!-- About Widget -->
+    <!-- ~~~~~~~~~~~~ -->
+
+    <string name="about_dialog_title">About</string>
     <string name="app_name">Suntimes Widget</string>
-    <string name="app_version"><b>Version:</b> <i>0.0.1</i></string>
+    <string name="app_name_widget1">Suntimes (flippable)</string>
+    <string name="app_version"><b>Version:</b> <i>0.0.2</i></string>
     <string name="app_shortdesc">A widget that displays sunrise and sunset times.</string>
     <string name="app_support_url"><![CDATA[
-        <b>Support:</b> see the
+        <b>Support:</b> visit the
         <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a>
     ]]></string>
     <string name="app_url"><![CDATA[
@@ -16,16 +22,16 @@
         Source code available under GPLv3.
     ]]></string>
 
-    <string name="configure">Configure Widget</string>
-
-    <string name="add_widget">Add Widget</string>
-    <string name="about_widget">About</string>
-
-    <string name="help_dialog_title">Help</string>
-    <string name="about_dialog_title">About</string>
+    <!-- ~~~~~~~~~~~ -->
+    <!-- Widget Text -->
+    <!-- ~~~~~~~~~~~ -->
 
     <string name="delta_day_tomorrow">Tomorrow will be</string>
     <string name="delta_day_yesterday">Yesterday was</string>
+
+    <!-- ~~~~~~~~~~~~~~~ -->
+    <!-- Widget Settings -->
+    <!-- ~~~~~~~~~~~~~~~ -->
 
     <string name="calculator_sunrisesunsetlib_name">sunrisesunsetlib-java</string>
 
@@ -33,6 +39,11 @@
     <string name="widgetMode1x1_sunset">Sunset only</string>
     <string name="widgetMode1x1_both_1">Sunrise &amp; Sunset (1)</string>
     <string name="widgetMode1x1_both_2">Sunrise &amp; Sunset (2)</string>
+
+    <string name="actionMode_doNothing">Do Nothing</string>
+    <string name="actionMode_config">Reconfigure Widget</string>
+    <string name="actionMode_launchActivity">Launch App</string>
+    <string name="actionMode_flipToNextItem">Flip Views</string>
 
     <string name="locationMode_current">Current (last known)</string>
     <string name="locationMode_custom">User Defined</string>
@@ -53,8 +64,22 @@
     <string name="timeMode_nautical">Nautical Twilight</string>
     <string name="timeMode_astronomical">Astronomical Twilight</string>
 
+    <!-- ~~~~~~~~~~~~~~~ -->
+    <!-- Config Activity -->
+    <!-- ~~~~~~~~~~~~~~~ -->
+
+    <string name="configAction_addWidget">Add Widget</string>
+    <string name="configAction_reconfigWidget">Reconfigure Widget</string>
+    <string name="configAction_aboutWidget">About</string>
+
+    <string name="configLabel_title0">Configure Widget</string>
+    <string name="configLabel_title1">Flippable Widget</string>
+
+    <string name="configLabel_action_launch">Activity:</string>
+    <string name="configHint_action_launch">com.forrestguice.suntimeswidget.SuntimesConfigActivity</string>
+
     <string name="configLabel_general">General Settings</string>
-    <string name="configLabel_general_calculator">Source:</string>
+    <string name="configLabel_general_calculator">Data Source:</string>
     <string name="configLabel_general_timeMode">Mode:</string>
     <string name="configLabel_general_compareMode">Compare Against:</string>
 
@@ -64,37 +89,53 @@
     <string name="configHint_location_lat">34.54</string>
     <string name="configLabel_location_lon">Longitude:</string>
     <string name="configHint_location_lon">-112.4677778</string>
+    <string name="configLabel_location_name">Label:</string>
+    <string name="configHint_location_name">(optional)</string>
+
+    <string name="configLabel_action">Action Settings</string>
+    <string name="configLabel_action_onTap">On Tap:</string>
 
     <string name="configLabel_appearance">Appearance Settings</string>
     <string name="configLabel_appearance_1x1mode">1x1 Layout:</string>
     <string name="configLabel_appearance_theme">Theme:</string>
     <string name="configLabel_appearance_showTitle">Show Title</string>
     <string name="configLabel_appearance_titleText">Title:</string>
-    <string name="configHint_appearance_titleText">Title Text (supports: %m)</string>
+    <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string>
 
-    <string name="configLabel_timezone">Timezone Settings</string>
+    <string name="configLabel_timezone">Time Zone Settings</string>
     <string name="configLabel_timezone_mode">Mode:</string>
-    <string name="configLabel_timezone_custom">Timezone:</string>
+    <string name="configLabel_timezone_custom">Time Zone:</string>
+
+    <string name="gps_dialog_msg">GPS is disabled. Enable it?</string>
+    <string name="gps_dialog_ok">Yes</string>
+    <string name="gps_dialog_cancel">No</string>
+
+    <!-- ~~~~~~~~~~~~ -->
+    <!-- Help Stuff -->
+    <!-- ~~~~~~~~~~~~ -->
+
+    <string name="help_dialog_title">Help</string>
 
     <string name="help_appearance_title"><![CDATA[
-        Supported title substitutions: <br>
-                <br />
-                * <b>%lat</b> for the latitude
-                <br/>
-                * <b>%lon</b> for the longitude
-                <br />
-                * <b>%M</b> for time mode (long) (e.g. "Civil Twilight")
-                <br/>
-                * <b>%m</b> for time mode (short) (e.g. "Civil")
-                <br/>
+        The following substitutions are supported: <br />
+                * <b>%loc</b> for label <br />
+                * <b>%lat</b> for latitude <br />
+                * <b>%lon</b> for longitude <br/>
+                * <b>%m</b> for time mode (short) (e.g. "Civil") <br/>
+                * <b>%M</b> for time mode (long) (e.g. "Civil Twilight") <br/>
+                * <b>%t</b> for time zone (id) (e.g. US/Arizona) <br/>
     ]]></string>
 
     <string name="help_general_timeMode"><![CDATA[
-          <b>Actual Time:</b> [TBD] <br/>
-          <b>Civil Twilight:</b> [TBD]<br/>
-          <b>Nautical Twilight:</b> [TBD]<br/>
-          <b>Astronomical Twilight:</b> [TBD] <br/>
+          <b>Actual Time:</b> The sun is on the horizon; this is the approximate time of sunrise and sunset.<br/><br/>
+          <b>Civil Twilight:</b> The sun is 6 degrees below the horizon; the brightest stars are visible. There is enough light for most outdoor activities without requiring a light.<br/><br/>
+          <b>Nautical Twilight:</b> The sun is 12 degrees below the horizon; object outlines and the horizon are increasingly indistinct. There isn\'t enough light for most outdoor activities without requiring a light.<br/><br/>
+          <b>Astronomical Twilight:</b> The sun is 18 degrees below the horizon.<br/>
     ]]></string>
 
+
+    <string name="help_action_launch"><![CDATA[
+        The fully qualified class name of the Activity to be launched.
+    ]]></string>
 
 </resources>

@@ -53,7 +53,7 @@
                         style="@style/SunsetTimeTextView"
                         android:id="@+id/text_time_sunset"
                         android:textColor="@color/sunIcon_color_rising"
-                        tools:text="4:20" />
+                        tools:text="6:20" />
 
                     <TextView
                         style="@style/SunsetTimeTextSuffixView"
@@ -69,7 +69,7 @@
             <TextView
                 style="@style/SunsetTimeTextView"
                 android:id="@+id/text_timetil_sunrise"
-                tools:text="4 hours and 20 minutes from now"
+                tools:text="2 hours and 1 minute from now"
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp" />
 

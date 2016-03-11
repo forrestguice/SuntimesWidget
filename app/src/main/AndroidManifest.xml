@@ -2,25 +2,60 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.forrestguice.suntimeswidget" >
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_suntimes"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
 
-        <receiver android:name="com.forrestguice.suntimeswidget.SuntimesWidget" >
+        <!-- Widget 0: Resizable (falls back to static 1x1 for api less than 16) -->
+        <receiver android:name=".SuntimesWidget"
+                  android:label="@string/app_name">
+
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
+
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/suntimeswidget_info" />
+                android:resource="@xml/suntimeswidget_info_0" />
         </receiver>
 
-        <service android:name="com.forrestguice.suntimeswidget.SuntimesWidgetService"
-            android:permission="android.permission.BIND_REMOTEVIEWS" />
+        <!-- Widget 0 Configuration Activity -->
+        <activity
+            android:name=".SuntimesConfigActivity" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
 
-        <activity android:name="com.forrestguice.suntimeswidget.SuntimesWidgetSettingsActivity" >
+
+        <!-- Widget 1: Flippable widget (uses RemoteView collections [requires api 14+]) -->
+        <receiver
+            android:name=".SuntimesWidget1"
+            android:enabled="@bool/api_post_14"
+            android:label="@string/app_name_widget1">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/suntimeswidget_info_1" />
+        </receiver>
+
+        <!-- Widget 1 Service: Flippable widget [requires api 14+] -->
+        <service
+            android:name=".SuntimesWidget1Service"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            android:enabled="@bool/api_post_14" />
+
+        <!-- Widget 1 Configuration Activity -->
+        <activity
+            android:name=".SuntimesConfigActivity1" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>

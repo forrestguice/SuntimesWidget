@@ -2,6 +2,8 @@
 <resources>
 
     <dimen name="widget_margin">8dp</dimen>
+    <dimen name="widget_size_percell">70px</dimen>
+    <dimen name="widget_size_less">30px</dimen>
 
     <dimen name="widget_padding_left">2dp</dimen>
     <dimen name="widget_padding_right">4dp</dimen>

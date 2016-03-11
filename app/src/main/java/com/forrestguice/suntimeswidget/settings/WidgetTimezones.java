@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
 
-public class SuntimesWidgetTimeZones
+public class WidgetTimezones
 {
     private static ArrayList<TimeZoneItem> timezones = new ArrayList<>();
     private static boolean initialized = false;

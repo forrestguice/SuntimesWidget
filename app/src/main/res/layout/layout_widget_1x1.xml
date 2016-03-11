@@ -27,7 +27,8 @@
         android:gravity="center"
         android:loopViews="true"
         android:numColumns="1"
-        android:autoStart="true" />
+        android:autoStart="false"
+        />
 
     <TextView
         android:layout_width="match_parent"

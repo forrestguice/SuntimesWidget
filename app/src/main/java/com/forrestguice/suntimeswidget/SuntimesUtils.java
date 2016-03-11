@@ -20,18 +20,20 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesWidgetData;
-import com.forrestguice.suntimeswidget.settings.SuntimesWidgetSettings;
-import com.forrestguice.suntimeswidget.settings.SuntimesWidgetTimeZones;
+import com.forrestguice.suntimeswidget.calculator.SuntimesData;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.TimeZone;
 
-public class SuntimesWidgetUtils
+public class SuntimesUtils
 {
+    public SuntimesUtils()
+    {
+    }
+
     /**
      * TimeDisplayText : class
      */
@@ -76,34 +78,11 @@ public class SuntimesWidgetUtils
     }
 
     /**
-     * @param specifiedSize
-     * @return
-     */
-    public static int getCellsForSize( int specifiedSize )
-    {
-        int numCells = 1;
-        while (getSizeForCells(numCells) < specifiedSize)
-        {
-            numCells++;
-        }
-        return numCells-1;
-    }
-
-    /**
-     * @param numCells
-     * @return
-     */
-    public static int getSizeForCells( int numCells )
-    {
-        return (70 * numCells) - 30;
-    }
-
-    /**
      * @param context
      * @param cal
      * @return
      */
-    public static TimeDisplayText calendarTimeShortDisplayString(Context context, Calendar cal)
+    public TimeDisplayText calendarTimeShortDisplayString(Context context, Calendar cal)
     {
         SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm");
         timeFormat.setTimeZone(cal.getTimeZone());
@@ -120,7 +99,7 @@ public class SuntimesWidgetUtils
      * @param c2
      * @return
      */
-    public static String calendarDeltaShortDisplayString(Calendar c1, Calendar c2)
+    public String calendarDeltaShortDisplayString(Calendar c1, Calendar c2)
     {
         return "";  // TODO
     }
@@ -130,7 +109,7 @@ public class SuntimesWidgetUtils
      * @param timeSpan2 second event
      * @return a TimeDisplayText object that describes difference between the two spans
      */
-    public static TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2)
+    public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2)
     {
         String value = "";
         String units = "";
@@ -163,28 +142,31 @@ public class SuntimesWidgetUtils
      *   %m .. the time mode (short version; e.g. civil)
      *   %M .. the time mode (long version; e.g. civil twilight)
      *   %t .. the timezoneID (e.g. US/Arizona)
+     *   %loc .. the location (label/name)
      *   %lat .. the location (latitude)
      *   %lon .. the location (longitude)
      *
      * @param titlePattern a pattern string (simple substitutions)
      * @return a display string suitable for display as a widget title
      */
-    public static String displayStringForTitlePattern(String titlePattern, SuntimesWidgetData data)
+    public String displayStringForTitlePattern(String titlePattern, SuntimesData data)
     {
-        SuntimesWidgetSettings.TimeMode timeMode = data.timeMode();
-        SuntimesWidgetSettings.Location location = data.location();
-        String timezoneID = data.timezone();
-
-        String displayString = titlePattern;
         String modePattern = "%M";
         String modePatternShort = "%m";
+        String locPattern = "%loc";
         String latPattern = "%lat";
         String lonPattern = "%lon";
         String timezoneIDPattern = "%t";
         String percentPattern = "%%";
 
+        WidgetSettings.TimeMode timeMode = data.timeMode();
+        WidgetSettings.Location location = data.location();
+        String timezoneID = data.timezone();
+
+        String displayString = titlePattern;
         displayString = displayString.replaceAll(modePatternShort, timeMode.getShortDisplayString());
         displayString = displayString.replaceAll(modePattern, timeMode.getLongDisplayString());
+        displayString = displayString.replaceAll(locPattern, location.getLabel());
         displayString = displayString.replaceAll(latPattern, location.getLatitude());
         displayString = displayString.replaceAll(lonPattern, location.getLongitude());
         displayString = displayString.replaceAll(timezoneIDPattern, timezoneID);

@@ -1,0 +1,89 @@
+-- Merging decision tree log ---
+manifest
+ADDED from AndroidManifest.xml:2:1
+	xmlns:android
+		ADDED from AndroidManifest.xml:2:11
+	package
+		ADDED from AndroidManifest.xml:3:5
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	android:versionName
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	android:versionCode
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from AndroidManifest.xml:5:5
+	android:name
+		ADDED from AndroidManifest.xml:5:22
+application
+ADDED from AndroidManifest.xml:7:5
+MERGED from com.android.support:appcompat-v7:21.0.3:16:5
+MERGED from com.android.support:support-v4:21.0.3:16:5
+	android:label
+		ADDED from AndroidManifest.xml:10:9
+	android:allowBackup
+		ADDED from AndroidManifest.xml:8:9
+	android:icon
+		ADDED from AndroidManifest.xml:9:9
+	android:theme
+		ADDED from AndroidManifest.xml:11:9
+receiver#com.forrestguice.suntimeswidget.SuntimesWidget
+ADDED from AndroidManifest.xml:14:9
+	android:label
+		ADDED from AndroidManifest.xml:15:19
+	android:name
+		ADDED from AndroidManifest.xml:14:19
+intent-filter#android.appwidget.action.APPWIDGET_UPDATE
+ADDED from AndroidManifest.xml:17:13
+action#android.appwidget.action.APPWIDGET_UPDATE
+ADDED from AndroidManifest.xml:18:17
+	android:name
+		ADDED from AndroidManifest.xml:18:25
+meta-data#android.appwidget.provider
+ADDED from AndroidManifest.xml:21:13
+	android:resource
+		ADDED from AndroidManifest.xml:23:17
+	android:name
+		ADDED from AndroidManifest.xml:22:17
+activity#com.forrestguice.suntimeswidget.SuntimesConfigActivity
+ADDED from AndroidManifest.xml:27:9
+	android:name
+		ADDED from AndroidManifest.xml:28:13
+intent-filter#android.appwidget.action.APPWIDGET_CONFIGURE
+ADDED from AndroidManifest.xml:29:13
+action#android.appwidget.action.APPWIDGET_CONFIGURE
+ADDED from AndroidManifest.xml:30:17
+	android:name
+		ADDED from AndroidManifest.xml:30:25
+receiver#com.forrestguice.suntimeswidget.SuntimesWidget1
+ADDED from AndroidManifest.xml:36:9
+	android:label
+		ADDED from AndroidManifest.xml:39:13
+	android:enabled
+		ADDED from AndroidManifest.xml:38:13
+	android:name
+		ADDED from AndroidManifest.xml:37:13
+service#com.forrestguice.suntimeswidget.SuntimesWidget1Service
+ADDED from AndroidManifest.xml:51:9
+	android:enabled
+		ADDED from AndroidManifest.xml:54:13
+	android:permission
+		ADDED from AndroidManifest.xml:53:13
+	android:name
+		ADDED from AndroidManifest.xml:52:13
+activity#com.forrestguice.suntimeswidget.SuntimesConfigActivity1
+ADDED from AndroidManifest.xml:57:9
+	android:name
+		ADDED from AndroidManifest.xml:58:13
+uses-sdk
+INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
+MERGED from com.android.support:appcompat-v7:21.0.3:15:5
+MERGED from com.android.support:support-v4:21.0.3:15:5
+	android:targetSdkVersion
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	android:minSdkVersion
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0

@@ -9,9 +9,8 @@
 
 # Add any project specific keep options here:
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+
+# don't obfuscate; the code is GPLed so what is the point, ...and this has a way
+# of screwing up functionality that uses reflection (loading plugins from class
+# name, etc) - to enable obfuscation these classes must be identified and exempted.
+-dontobfuscate

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2014 Forrest Guice
+    This file is part of SuntimesWidget.
+
+    SuntimesWidget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SuntimesWidget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical"
+        style="@style/SunsetTimeWidget_dark"
+        android:layout_marginBottom="@dimen/settingsGroup_margin"
+        android:paddingLeft="5dp">
+
+        <TextView style="@style/SunsetTimeSettingsGroupTitle"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/configLabel_action" />
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp" android:paddingRight="8dp"
+            android:paddingTop="@dimen/settingsGroup_padding">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="@string/configLabel_action_onTap" />
+
+            <Spinner android:id="@+id/appwidget_action_onTap" android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <!-- <CheckBox android:id="@+id/appwidget_appearance_showTitle" android:layout_width="match_parent"
+            android:paddingTop="@dimen/settingsGroup_padding"
+            android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+            android:layout_height="wrap_content" android:text="@string/configLabel_appearance_showTitle" />-->
+
+        <LinearLayout android:id="@+id/applayout_action_launch"
+            android:visibility="gone" android:orientation="horizontal"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:paddingLeft="16dp" android:paddingRight="8dp">
+
+            <TextView
+                android:id="@+id/appwidget_action_launch_label"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/configLabel_action_launch" />
+
+            <EditText android:id="@+id/appwidget_action_launch" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:layout_weight="1"
+                android:hint="@string/configHint_action_launch" android:text=""
+                android:textAppearance="?android:attr/textAppearanceSmallPopupMenu" />
+
+            <ImageButton android:id="@+id/appwidget_action_launch_helpButton"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:src="@android:drawable/ic_menu_help"
+                android:scaleType="center"
+                android:cropToPadding="false"
+                android:adjustViewBounds="false" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</merge>
