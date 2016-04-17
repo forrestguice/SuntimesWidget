@@ -60,6 +60,12 @@ public class WidgetSettings
     public static final String PREF_KEY_GENERAL_TIMEMODE = "timemode";
     public static final TimeMode PREF_DEF_GENERAL_TIMEMODE = TimeMode.OFFICIAL;
 
+    public static final String PREF_KEY_GENERAL_TIMENOTE_RISE = "timenoterise";
+    public static final TimeMode PREF_DEF_GENERAL_TIMENOTE_RISE = TimeMode.ASTRONOMICAL;
+
+    public static final String PREF_KEY_GENERAL_TIMENOTE_SET = "timenoteset";
+    public static final TimeMode PREF_DEF_GENERAL_TIMENOTE_SET = TimeMode.OFFICIAL;
+
     public static final String PREF_KEY_GENERAL_COMPAREMODE = "comparemode";
     public static final CompareMode PREF_DEF_GENERAL_COMPAREMODE = CompareMode.TOMORROW;
 
@@ -67,7 +73,7 @@ public class WidgetSettings
     public static final ActionMode PREF_DEF_ACTION_MODE = ActionMode.ONTAP_LAUNCH_CONFIG;
 
     public static final String PREF_KEY_ACTION_LAUNCH = "launch";
-    public static final String PREF_DEF_ACTION_LAUNCH = "com.forrestguice.suntimeswidget.SuntimesConfigActivity";
+    public static final String PREF_DEF_ACTION_LAUNCH = "com.forrestguice.suntimeswidget.SuntimesActivity";
 
     public static final String PREF_KEY_LOCATION_MODE = "locationMode";
     public static final LocationMode PREF_DEF_LOCATION_MODE = LocationMode.CUSTOM_LOCATION;
@@ -337,19 +343,22 @@ public class WidgetSettings
      */
     public static enum TimeMode
     {
-        OFFICIAL("Actual", "Actual Time"),
-        NAUTICAL("Nautical", "Nautical Twilight"),
-        CIVIL("Civil", "Civil Twilight"),
-        ASTRONOMICAL("Astronomical", "Astronomical Twilight");
+        OFFICIAL("Actual", "Actual Time", 3, 0),
+        CIVIL("Civil", "Civil Twilight", 2, 1),
+        NAUTICAL("Nautical", "Nautical Twilight", 1, 2),
+        ASTRONOMICAL("Astronomical", "Astronomical Twilight", 0, 3);
 
         public static boolean shortDisplayStrings = false;
         private String longDisplayString;
         private String shortDisplayString;
+        private int riseOrder, setOrder;
 
-        private TimeMode(String shortDisplayString, String longDisplayString)
+        private TimeMode(String shortDisplayString, String longDisplayString, int riseOrder, int setOrder)
         {
             this.shortDisplayString = shortDisplayString;
             this.longDisplayString = longDisplayString;
+            this.riseOrder = riseOrder;
+            this.setOrder = setOrder;
         }
 
         public String toString()
@@ -361,6 +370,40 @@ public class WidgetSettings
             } else {
                 return longDisplayString;
             }
+        }
+
+        public static TimeMode getModeForRiseOrder( int riseOrder )
+        {
+            for (TimeMode mode : TimeMode.values())
+            {
+                if (mode.getRiseOrder() == riseOrder)
+                {
+                    return mode;
+                }
+            }
+            return OFFICIAL;
+        }
+
+        public int getRiseOrder()
+        {
+            return riseOrder;
+        }
+
+        public int getSetOrder()
+        {
+            return setOrder;
+        }
+
+        public static TimeMode getModeForSetOrder( int setOrder )
+        {
+            for (TimeMode mode : TimeMode.values())
+            {
+                if (mode.getSetOrder() == setOrder)
+                {
+                    return mode;
+                }
+            }
+            return ASTRONOMICAL;
         }
 
         public String getShortDisplayString()
@@ -795,6 +838,72 @@ public class WidgetSettings
     }
 
 
+
+    public static void saveTimeNoteRisePref(Context context, int appWidgetId, TimeMode riseChoice)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_RISE, riseChoice.name());
+        prefs.commit();
+    }
+    public static TimeMode loadTimeNoteRisePref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_RISE, PREF_DEF_GENERAL_TIMENOTE_RISE.name());
+
+        TimeMode riseMode;
+        try {
+            riseMode = WidgetSettings.TimeMode.valueOf(modeString);
+
+        } catch (IllegalArgumentException e) {
+            riseMode = PREF_DEF_GENERAL_TIMENOTE_RISE;
+        }
+        return riseMode;
+    }
+    public static void deleteTimeNoteRisePref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_RISE);
+        prefs.commit();
+    }
+
+
+
+    public static void saveTimeNoteSetPref(Context context, int appWidgetId, TimeMode setChoice)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_SET, setChoice.name());
+        prefs.commit();
+    }
+    public static TimeMode loadTimeNoteSetPref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_SET, PREF_DEF_GENERAL_TIMENOTE_SET.name());
+
+        TimeMode setMode;
+        try {
+            setMode = WidgetSettings.TimeMode.valueOf(modeString);
+
+        } catch (IllegalArgumentException e) {
+            setMode = PREF_DEF_GENERAL_TIMENOTE_SET;
+        }
+        return setMode;
+    }
+    public static void deleteTimeNoteSetPref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_SET);
+        prefs.commit();
+    }
+
+
+
+
     public static void deletePrefs(Context context, int appWidgetId)
     {
         deleteActionModePref(context, appWidgetId);
@@ -815,6 +924,9 @@ public class WidgetSettings
 
         deleteTimezoneModePref(context, appWidgetId);
         deleteTimezonePref(context, appWidgetId);
+
+        deleteTimeNoteRisePref(context, appWidgetId);
+        deleteTimeNoteSetPref(context, appWidgetId);
     }
 
 
