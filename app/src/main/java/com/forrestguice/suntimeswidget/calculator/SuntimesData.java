@@ -26,6 +26,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.TimeZone;
 
 public class SuntimesData
@@ -41,6 +42,10 @@ public class SuntimesData
     private WidgetSettings.Location location;
     private WidgetSettings.TimeMode timeMode;
     private String timezone;
+    private Date date = new Date();
+    private Date dateOther = new Date();
+    private Calendar todaysCalendar;
+    private Calendar otherCalendar;
 
     private Calendar sunriseCalendarToday;
     private Calendar sunsetCalendarToday;
@@ -59,10 +64,12 @@ public class SuntimesData
     }
     public SuntimesData(SuntimesData other)
     {
+        this.context = other.context;
         initFromOther(other, other.layoutID);
     }
     public SuntimesData(SuntimesData other, int layoutID)
     {
+        this.context = other.context;
         initFromOther(other, layoutID);
     }
 
@@ -85,9 +92,19 @@ public class SuntimesData
         return timezone;
     }
 
+    public Date date() { return date; }
+    public Date dateOther() { return dateOther; }
+
+    public Calendar calendar() { return todaysCalendar; }
+    public Calendar getOtherCalendar() { return otherCalendar; }
+
     public WidgetSettings.TimeMode timeMode()
     {
         return timeMode;
+    }
+    public void setTimeMode( WidgetSettings.TimeMode mode )
+    {
+        timeMode = mode;
     }
 
     public WidgetSettings.Location location()
@@ -113,6 +130,10 @@ public class SuntimesData
     public WidgetSettings.CompareMode compareMode()
     {
         return compareMode;
+    }
+    public void setCompareMode( WidgetSettings.CompareMode mode )
+    {
+        compareMode = mode;
     }
 
     public Calendar sunriseCalendarToday()
@@ -209,9 +230,10 @@ public class SuntimesData
         SuntimesCalculatorFactory calculatorFactory = new SuntimesCalculatorFactory(context, calculatorMode);
         SuntimesCalculator calculator = calculatorFactory.createCalculator(location, timezone);
 
-        Calendar todaysCalendar = Calendar.getInstance(TimeZone.getTimeZone(timezone));
-        Calendar otherCalendar = Calendar.getInstance(TimeZone.getTimeZone(timezone));
+        todaysCalendar = Calendar.getInstance(TimeZone.getTimeZone(timezone));
+        date = todaysCalendar.getTime();
 
+        otherCalendar = Calendar.getInstance(TimeZone.getTimeZone(timezone));
         switch (compareMode)
         {
             case YESTERDAY:
@@ -225,6 +247,7 @@ public class SuntimesData
                 otherCalendar.add(Calendar.DAY_OF_MONTH, 1);
                 break;
         }
+        dateOther = otherCalendar.getTime();
 
         switch (timeMode)
         {
