@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
+import java.text.DateFormat;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -39,6 +40,7 @@ public class SuntimesUtils
      */
     public static class TimeDisplayText
     {
+        private long rawValue = 0;
         private String value;
         private String units;
         private String suffix;
@@ -48,6 +50,16 @@ public class SuntimesUtils
             this.value = value;
             this.units = units;
             this.suffix = suffix;
+        }
+
+        public void setRawValue( long value )
+        {
+            rawValue = value;
+        }
+
+        public long getRawValue()
+        {
+            return rawValue;
         }
 
         public String getValue()
@@ -64,15 +76,28 @@ public class SuntimesUtils
         {
             return suffix;
         }
+        public void setSuffix( String suffix )
+        {
+            this.suffix = suffix;
+        }
 
         public String toString()
         {
             StringBuilder s = new StringBuilder();
             s.append(value);
-            s.append(" ");
-            s.append(units);
-            s.append(" ");
-            s.append(suffix);
+
+            if (!units.isEmpty())
+            {
+                s.append(" ");
+                s.append(units);
+            }
+
+            if (!suffix.isEmpty())
+            {
+                s.append(" ");
+                s.append(suffix);
+            }
+
             return s.toString();
         }
     }
@@ -84,14 +109,25 @@ public class SuntimesUtils
      */
     public TimeDisplayText calendarTimeShortDisplayString(Context context, Calendar cal)
     {
-        SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm");
-        timeFormat.setTimeZone(cal.getTimeZone());
-
-        SimpleDateFormat suffixFormat = new SimpleDateFormat("a");
-        suffixFormat.setTimeZone(cal.getTimeZone());
-
         Date time = cal.getTime();
-        return new TimeDisplayText( timeFormat.format(time), "", suffixFormat.format(time) );
+        TimeDisplayText retValue;
+
+        boolean is24 = android.text.format.DateFormat.is24HourFormat(context);
+        if (is24)
+        {
+            DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(context);
+            retValue = new TimeDisplayText(timeFormat.format(time), "", "");
+
+        } else {
+            SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm");
+            timeFormat.setTimeZone(cal.getTimeZone());
+
+            SimpleDateFormat suffixFormat = new SimpleDateFormat("a");
+            suffixFormat.setTimeZone(cal.getTimeZone());
+            retValue = new TimeDisplayText( timeFormat.format(time), "", suffixFormat.format(time) );
+        }
+
+        return retValue;
     }
 
     /**
@@ -99,9 +135,11 @@ public class SuntimesUtils
      * @param c2
      * @return
      */
-    public String calendarDeltaShortDisplayString(Calendar c1, Calendar c2)
+    public TimeDisplayText timeDeltaDisplayString(Date c1, Date c2)
     {
-        return "";  // TODO
+        TimeDisplayText displayText = timeDeltaLongDisplayString(c1.getTime(), c2.getTime());
+        displayText.setSuffix("");
+        return displayText;
     }
 
     /**
@@ -111,7 +149,12 @@ public class SuntimesUtils
      */
     public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2)
     {
-        String value = "";
+        return timeDeltaLongDisplayString(timeSpan1, timeSpan2, false);
+    }
+
+    public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2, boolean showSeconds)
+    {
+        String value = " ";  // space
         String units = "";
         String suffix = "";
 
@@ -125,13 +168,35 @@ public class SuntimesUtils
         numberOfSeconds = Math.abs(numberOfSeconds);
 
         long numberOfMinutes = numberOfSeconds / 60;
+        long numberOfHours = numberOfMinutes / 60;
+        long numberOfDays = numberOfHours / 24;
+
+        long remainingHours = numberOfHours % 24;
+        long remainingMinutes = numberOfMinutes % 60;
         long remainingSeconds = numberOfSeconds % 60;
 
-        value += ((numberOfMinutes < 1) ? "" : numberOfMinutes + "m")
-                + " " +
-                ((remainingSeconds < 1) ? "" : remainingSeconds + "s");
+        boolean showingDays = (numberOfDays > 0);
+        if (showingDays)
+            value += numberOfDays + "d";
 
-        return new TimeDisplayText(value, units, suffix);
+        boolean showingHours = (remainingHours > 0);
+        if (showingHours)
+            value += (showingDays ? " " : "") + remainingHours + "h";
+
+        boolean showingMinutes = (remainingMinutes > 0);
+        if (showingMinutes)
+            value += (showingDays || showingHours ? " " : "") + remainingMinutes + "m";
+
+        boolean showingSeconds = (showSeconds && !showingHours && !showingDays && (remainingSeconds > 0));
+        if (showingSeconds)
+            value += (showingMinutes ? " " : "") + remainingSeconds + "s";
+
+        if (!showingSeconds && !showingMinutes && !showingHours && !showingDays)
+            value += "1m";
+
+        TimeDisplayText text = new TimeDisplayText(value, units, suffix);
+        text.setRawValue(timeSpan);
+        return text;
     }
 
     /**
