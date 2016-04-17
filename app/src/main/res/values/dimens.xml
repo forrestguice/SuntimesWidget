@@ -24,4 +24,21 @@
     <dimen name="settingsGroup_margin">5dp</dimen>
     <dimen name="settingsGroup_padding">4dp</dimen>
 
+    <item name="anim_slidein_fade_fromalpha" format="float" type="dimen">0.1</item>
+    <item name="anim_slidein_fade_toalpha" format="float" type="dimen">1.0</item>
+    <integer name="anim_slidein_fade_duration">700</integer>
+    <integer name="anim_slidein_move_duration">700</integer>
+
+    <integer name="anim_fadein_duration">1750</integer>
+    <integer name="anim_fadeout_duration">700</integer>
+    <item name="anim_slideout_fade_fromalpha" format="float" type="dimen">1.0</item>
+    <item name="anim_slideout_fade_toalpha" format="float" type="dimen">0.1</item>
+    <integer name="anim_slideout_fade_duration">700</integer>
+    <integer name="anim_slideout_move_duration">700</integer>
+    <fraction name="anim_slideout_move_fromDelta">0%</fraction>
+    <fraction name="anim_slideout_move_top_toDelta">-110%</fraction>
+    <fraction name="anim_slideout_move_bottom_toDelta">110%</fraction>
+    <fraction name="anim_slideout_move_left_toDelta">-110%</fraction>
+    <fraction name="anim_slideout_move_right_toDelta">110%</fraction>
+
 </resources>
