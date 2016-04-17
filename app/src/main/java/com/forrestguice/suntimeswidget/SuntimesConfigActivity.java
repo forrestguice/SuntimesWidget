@@ -19,21 +19,10 @@
 package com.forrestguice.suntimeswidget;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.AsyncTask;
-import android.app.Dialog;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -48,6 +37,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
+import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
@@ -92,6 +83,9 @@ public class SuntimesConfigActivity extends Activity
     private EditText text_locationName;
     private ImageButton button_getfix;
     private ProgressBar progress_getfix;
+
+    private GetFixUI getFixUI;
+    private GetFixHelper getFixHelper;
 
     private Spinner spinner_timezoneMode;
 
@@ -138,12 +132,8 @@ public class SuntimesConfigActivity extends Activity
     @Override
     public void onDestroy()
     {
-        cancelGetFix();
-
-        if (gpsPrompt != null)
-        {
-            gpsPrompt.dismiss();
-        }
+        getFixHelper.cancelGetFix();
+        getFixHelper.dismissGPSEnabledPrompt();
 
         super.onDestroy();
     }
@@ -218,7 +208,7 @@ public class SuntimesConfigActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                SettingsHelpDialog helpDialog = new SettingsHelpDialog(SuntimesConfigActivity.this);
+                HelpDialog helpDialog = new HelpDialog(SuntimesConfigActivity.this);
                 String helpContent = getString(R.string.help_action_launch);
                 helpDialog.onPrepareDialog(helpContent);
                 helpDialog.show();
@@ -263,7 +253,7 @@ public class SuntimesConfigActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                SettingsHelpDialog helpDialog = new SettingsHelpDialog(SuntimesConfigActivity.this);
+                HelpDialog helpDialog = new HelpDialog(SuntimesConfigActivity.this);
                 String helpContent = getString(R.string.help_general_timeMode);
                 helpDialog.onPrepareDialog(helpContent);
                 helpDialog.show();
@@ -290,7 +280,7 @@ public class SuntimesConfigActivity extends Activity
         spinner_timezoneAdapter = new WidgetTimezones.TimeZoneItemAdapter(this,
                 R.layout.layout_listitem_twoline, WidgetTimezones.getValues() );
 
-        spinner_timezone = (Spinner)findViewById(R.id.app_widget_timezone_custom);
+        spinner_timezone = (Spinner)findViewById(R.id.appwidget_timezone_custom);
         spinner_timezone.setAdapter(spinner_timezoneAdapter);
 
         //
@@ -325,13 +315,16 @@ public class SuntimesConfigActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                getFix();
+                getFixHelper.getFix();
             }
         });
 
-        if (!isGPSEnabled())
+        getFixUI = new GetFixUI(text_locationName, text_locationLat, text_locationLon, progress_getfix, button_getfix);
+        getFixHelper = new GetFixHelper(this, getFixUI);
+
+        if (!getFixHelper.isGPSEnabled())
         {
-            button_getfix.setImageResource(GetFixTask.ICON_DISABLED);
+            button_getfix.setImageResource(GetFixUI.ICON_GPS_DISABLED);
         }
 
         //
@@ -356,7 +349,7 @@ public class SuntimesConfigActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                SettingsHelpDialog helpDialog = new SettingsHelpDialog(SuntimesConfigActivity.this);
+                HelpDialog helpDialog = new HelpDialog(SuntimesConfigActivity.this);
                 String helpContent = getString(R.string.help_appearance_title);
                 helpDialog.onPrepareDialog(helpContent);
                 helpDialog.show();
@@ -759,285 +752,10 @@ public class SuntimesConfigActivity extends Activity
         @Override
         public void onClick(View v)
         {
-            SettingsAboutDialog aboutDialog = new SettingsAboutDialog(SuntimesConfigActivity.this);
+            AboutDialog aboutDialog = new AboutDialog(SuntimesConfigActivity.this);
             aboutDialog.onPrepareDialog();
             aboutDialog.show();
         }
     };
 
-    /**
-     * SettingsAboutDialog : Dialog
-     */
-    public class SettingsAboutDialog extends Dialog
-    {
-        private Activity myParent;
-
-        public SettingsAboutDialog( Activity c )
-        {
-            super(c);
-            myParent = c;
-            setContentView(R.layout.layout_dialog_about);
-            setCancelable(true);
-        }
-
-        public void onPrepareDialog()
-        {
-            setTitle(myParent.getString(R.string.about_dialog_title));
-
-            TextView urlView = (TextView)findViewById(R.id.txt_about_url);
-            urlView.setMovementMethod(LinkMovementMethod.getInstance());
-            urlView.setText(Html.fromHtml(myParent.getString(R.string.app_url)));
-
-            TextView supportView = (TextView)findViewById(R.id.txt_about_support);
-            supportView.setMovementMethod(LinkMovementMethod.getInstance());
-            supportView.setText(Html.fromHtml(myParent.getString(R.string.app_support_url)));
-
-            TextView legalView = (TextView)findViewById(R.id.txt_about_legal);
-            legalView.setMovementMethod(LinkMovementMethod.getInstance());
-            legalView.setText(Html.fromHtml(myParent.getString(R.string.app_legal)));
-        }
-    }
-
-    /**
-     * SettingsHelpDialog : Dialog
-     */
-    public class SettingsHelpDialog extends Dialog
-    {
-        private Activity myParent;
-
-        public SettingsHelpDialog( Activity c )
-        {
-            super(c);
-            myParent = c;
-            setContentView(R.layout.layout_dialog_help);
-            setTitle(myParent.getString(R.string.help_dialog_title));
-            setCancelable(true);
-        }
-
-        public void onPrepareDialog(String content)
-        {
-            TextView txt = (TextView)findViewById(R.id.txt_help_content);
-            txt.setText(Html.fromHtml(content));
-        }
-    }
-
-    ///////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////
-
-    private boolean gettingFix = false;
-    private GetFixTask getFixTask = null;
-
-    /**
-     * Get a fix; main entry point for GPS "get fix" button in location settings.
-     * Spins up a GetFixTask; allows only one such task to execute at a time.
-     */
-    public void getFix()
-    {
-        if (!gettingFix)
-        {
-            if (isGPSEnabled())
-            {
-                getFixTask = new GetFixTask();
-                getFixTask.execute();
-
-            } else {
-                showGPSEnabledPrompt();
-            }
-        }
-    }
-
-    public boolean isGPSEnabled()
-    {
-        LocationManager locationManager = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-    }
-
-    private AlertDialog gpsPrompt = null;
-    private void showGPSEnabledPrompt()
-    {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(getString(R.string.gps_dialog_msg))
-               .setCancelable(false)
-               .setPositiveButton(getString(R.string.gps_dialog_ok), new DialogInterface.OnClickListener() {
-                   public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id)
-                   {
-                       startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                       gpsPrompt = null;
-                   }
-               })
-               .setNegativeButton(getString(R.string.gps_dialog_cancel), new DialogInterface.OnClickListener()
-               {
-                   public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id)
-                   {
-                       dialog.cancel();
-                       gpsPrompt = null;
-                   }
-               });
-
-        gpsPrompt = builder.create();
-        gpsPrompt.show();
-    }
-
-    /**
-     * Cancel acquiring a location fix (cancels running task(s)).
-     */
-    public void cancelGetFix()
-    {
-        if (gettingFix && getFixTask != null)
-        {
-            getFixTask.cancel(true);
-        }
-    }
-
-    /**
-     * An AsyncTask that registers a LocationListener, starts listening for
-     * gps updates, and then waits a predetermined amount of time for a
-     * good location fix to be acquired; updates progress in settings activity.
-     */
-    public class GetFixTask extends AsyncTask<String, Location, Location>
-    {
-        private static final int ICON_DISABLED = R.drawable.ic_action_location_off;
-        private static final int ICON_SEARCHING = R.drawable.ic_action_location_searching;
-        private static final int ICON_FOUND = R.drawable.ic_action_location_found;
-
-        private static final int MIN_ELAPSED = 1000 * 5;        // wait at least 5s before settling on a fix
-        private static final int MAX_ELAPSED = 1000 * 60;       // wait at most a minute for a fix
-        private static final int MAX_AGE = 1000 * 60 * 5;       // consider fixes over 5min be "too old"
-
-        private long startTime, stopTime, elapsedTime;
-        private Location bestFix, lastFix;
-        private LocationManager locationManager;
-        private LocationListener locationListener = new LocationListener()
-        {
-            @Override
-            public void onLocationChanged(Location location)
-            {
-                lastFix = location;
-                if (isBetterFix(lastFix, bestFix))
-                {
-                    bestFix = lastFix;
-                    onProgressUpdate(bestFix);
-                }
-            }
-
-            private boolean isBetterFix(Location location, Location location2)
-            {
-                if (location2 == null)
-                {
-                    return true;
-
-                } else if (location != null) {
-                    if ((location.getTime() - location2.getTime()) > MAX_AGE)
-                    {
-                        return true;  // more than 5min since last fix; assume the latest fix is better
-
-                    } else if (location.getAccuracy() < location2.getAccuracy()) {
-                        return true;  // accuracy is a measure of radius of certainty; smaller values are more accurate
-                    }
-                }
-                return false;
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) { }
-
-            @Override
-            public void onProviderEnabled(String provider) { }
-
-            @Override
-            public void onProviderDisabled(String provider) { }
-        };
-
-        @Override
-        protected void onPreExecute()
-        {
-            button_getfix.setVisibility(View.GONE);
-            progress_getfix.setVisibility(View.VISIBLE);
-            enableLocationUI(false);
-
-            bestFix = null;
-            gettingFix = true;
-            elapsedTime = 0;
-            startTime = stopTime = System.currentTimeMillis();
-        }
-
-        private void enableLocationUI(boolean value)
-        {
-            text_locationName.requestFocus();
-            text_locationLat.setEnabled(value);
-            text_locationLon.setEnabled(value);
-            text_locationName.setEnabled(value);
-        }
-
-
-        @Override
-        protected Location doInBackground(String... params)
-        {
-            locationManager = (LocationManager)SuntimesConfigActivity.this.getSystemService(Context.LOCATION_SERVICE);
-
-            Handler handler = new Handler(Looper.getMainLooper());
-            handler.post(new Runnable()
-            {
-                public void run()
-                {
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-                }
-            });
-
-
-            while (elapsedTime < MAX_ELAPSED && !isCancelled())
-            {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                stopTime = System.currentTimeMillis();
-                elapsedTime = stopTime - startTime;
-
-                if (bestFix != null && elapsedTime > MIN_ELAPSED)
-                {
-                    break;
-                }
-            }
-            return bestFix;
-        }
-
-        @Override
-        protected void onProgressUpdate(Location... locations)
-        {
-            text_locationLat.setText(locations[0].getLatitude() + "");
-            text_locationLon.setText(locations[0].getLongitude() + "");
-        }
-
-        @Override
-        protected void onPostExecute(Location result)
-        {
-            locationManager.removeUpdates(locationListener);
-            gettingFix = false;
-
-            progress_getfix.setVisibility(View.GONE);
-            enableLocationUI(true);
-
-            button_getfix.setImageResource((result == null) ? ICON_SEARCHING : ICON_FOUND);
-            button_getfix.setVisibility(View.VISIBLE);
-            button_getfix.setEnabled(true);
-        }
-
-        @Override
-        protected void onCancelled(Location result)
-        {
-            locationManager.removeUpdates(locationListener);
-            gettingFix = false;
-
-            progress_getfix.setVisibility(View.GONE);
-            enableLocationUI(true);
-
-            button_getfix.setImageResource( (result == null) ? ICON_SEARCHING : ICON_FOUND );
-            button_getfix.setVisibility(View.VISIBLE);
-            button_getfix.setEnabled(true);
-        }
-    }
 }

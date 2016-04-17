@@ -25,6 +25,7 @@
         android:paddingLeft="5dp">
 
         <TextView style="@style/SunsetTimeSettingsGroupTitle"
+            android:id="@+id/appwidget_location_grouptitle"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="@string/configLabel_location" />
 
