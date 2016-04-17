@@ -7,6 +7,11 @@
           android:title="@string/configAction_addLocation"
           app:showAsAction="always" />
 
+    <item android:id="@+id/action_location_show"
+          android:icon="?attr/icActionMap"
+          android:title="@string/configAction_mapLocation"
+          app:showAsAction="ifRoom" />
+
     <item android:id="@+id/action_timezone"
           android:icon="?attr/icActionTime"
           android:title="@string/configAction_setTimeZone"

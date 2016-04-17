@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.settings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
@@ -301,6 +302,15 @@ public class WidgetSettings
         public String getLongitude()
         {
             return longitude;
+        }
+
+        public Uri getUri()
+        {
+            StringBuilder mapUri = new StringBuilder("geo");
+            mapUri.append(latitude);
+            mapUri.append(",");
+            mapUri.append(longitude);
+            return Uri.parse(mapUri.toString());
         }
     }
 

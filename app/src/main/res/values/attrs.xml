@@ -9,6 +9,7 @@
 
     <attr name="toolbarTheme" format="reference" />
     <attr name="icActionPlace" format="reference" />
+    <attr name="icActionMap" format="reference" />
     <attr name="icActionTime" format="reference" />
     <attr name="icActionAbout" format="reference" />
     <attr name="icActionHelp" format="reference" />

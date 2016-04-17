@@ -92,6 +92,7 @@
 
     <string name="configAction_addWidget">Add Widget</string>
     <string name="configAction_addLocation">Location</string>
+    <string name="configAction_mapLocation">Show Map</string>
     <string name="configAction_setTimeZone">Time Zone</string>
     <string name="configAction_help">Help</string>
     <string name="configAction_reconfigWidget">Reconfigure Widget</string>

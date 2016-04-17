@@ -22,9 +22,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.AlarmClock;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -36,7 +34,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
@@ -463,6 +460,12 @@ public class SuntimesActivity extends AppCompatActivity
                 locationAlert.show();
                 return true;
 
+            case R.id.action_location_show:
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW);
+                mapIntent.setData(location.getUri());
+                startActivity(mapIntent);
+                return true;
+
             case R.id.action_timezone:
                 TimeZoneDialog timezoneDialog = new TimeZoneDialog(this);
                 timezoneDialog.setOnAcceptedListener(new DialogInterface.OnClickListener()
@@ -501,17 +504,10 @@ public class SuntimesActivity extends AppCompatActivity
     protected void calculateData( Context context )
     {
         initData(context);
-
         data_actualTime.calculate();
         data_civilTime.calculate();
         data_nauticalTime.calculate();
         data_astroTime.calculate();
-
-        //Calendar now = Calendar.getInstance(TimeZone.getTimeZone(data_actualTime.timezone()));
-        //boolean isNight = isNight(now.getTime());
-        //int noteIcon = (isNight ? R.drawable.ic_sunrise : R.drawable.ic_sunset);
-        //ic_time1_note.setBackgroundResource(noteIcon);
-        //ic_time2_note.setBackgroundResource(noteIcon);
     }
 
     protected void updateViews( Context context )
@@ -727,12 +723,7 @@ public class SuntimesActivity extends AppCompatActivity
             setTimeNote(note, transitionNext);
 
         } else if (!currentNote.equals(note)) {
-           // long deltaTime = timeString.getRawValue() - currentNote.timeText.getRawValue();
-           // long updateRate = 15000;
-           // if (deltaTime >= updateRate)
-           // {
-                setTimeNote(note, transitionNext);
-           // }
+            setTimeNote(note, transitionNext);
         }
     }
 
