@@ -6,13 +6,13 @@
     <!-- ~~~~~~~~~~~~ -->
 
     <string name="about_dialog_title">About</string>
-    <string name="app_name">Suntimes Widget</string>
+    <string name="app_name">Suntimes</string>
     <string name="app_name_widget1">Suntimes (flippable)</string>
-    <string name="app_version"><b>Version:</b> <i>0.0.2</i></string>
-    <string name="app_shortdesc">A widget that displays sunrise and sunset times.</string>
+    <string name="app_version"><b>Version:</b> <i>0.1.0</i></string>
+    <string name="app_shortdesc">An app that displays sunrise and sunset times.</string>
     <string name="app_support_url"><![CDATA[
         <b>Support:</b> visit the
-        <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a>
+        <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a> to submit a request.
     ]]></string>
     <string name="app_url"><![CDATA[
         <a href="https://github.com/forrestguice/SuntimesWidget">github.com/forrestguice/SuntimesWidget</a>
@@ -26,8 +26,30 @@
     <!-- Widget Text -->
     <!-- ~~~~~~~~~~~ -->
 
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="sunrise">Sunrise</string>
+    <string name="sunrise_short">Rise</string>
+    <string name="sunset">Sunset</string>
+    <string name="sunset_short">Set</string>
+    <string name="length_day">in the day</string>
+    <string name="length_light">of usable light</string>
     <string name="delta_day_tomorrow">Tomorrow will be</string>
     <string name="delta_day_yesterday">Yesterday was</string>
+
+    <string name="until">until</string>
+    <string name="until_end">until end</string>
+
+    <string name="until_astroTwilight">astronomical twilight</string>
+    <string name="until_civilTwilight">civil twilight</string>
+    <string name="until_nauticalTwilight">nautical twilight</string>
+    <string name="until_sunrise">sunrise</string>
+
+    <string name="until_sunset">sunset</string>
+    <string name="untilEnd_civilTwilight">civil twilight</string>
+    <string name="untilEnd_nauticalTwilight">nautical twilight</string>
+    <string name="untilEnd_astroTwilight">astronomical twilight</string>
+
 
     <!-- ~~~~~~~~~~~~~~~ -->
     <!-- Widget Settings -->
@@ -69,6 +91,9 @@
     <!-- ~~~~~~~~~~~~~~~ -->
 
     <string name="configAction_addWidget">Add Widget</string>
+    <string name="configAction_addLocation">Location</string>
+    <string name="configAction_setTimeZone">Time Zone</string>
+    <string name="configAction_help">Help</string>
     <string name="configAction_reconfigWidget">Reconfigure Widget</string>
     <string name="configAction_aboutWidget">About</string>
 
@@ -76,7 +101,7 @@
     <string name="configLabel_title1">Flippable Widget</string>
 
     <string name="configLabel_action_launch">Activity:</string>
-    <string name="configHint_action_launch">com.forrestguice.suntimeswidget.SuntimesConfigActivity</string>
+    <string name="configHint_action_launch">com.forrestguice.suntimeswidget.SuntimesActivity</string>
 
     <string name="configLabel_general">General Settings</string>
     <string name="configLabel_general_calculator">Data Source:</string>
@@ -110,6 +135,14 @@
     <string name="gps_dialog_ok">Yes</string>
     <string name="gps_dialog_cancel">No</string>
 
+    <string name="timezone_dialog_title">Time Zone</string>
+    <string name="timezone_dialog_ok">Set</string>
+    <string name="timezone_dialog_cancel">Cancel</string>
+
+    <string name="location_dialog_title">Location</string>
+    <string name="location_dialog_ok">Update</string>
+    <string name="location_dialog_cancel">Cancel</string>
+
     <!-- ~~~~~~~~~~~~ -->
     <!-- Help Stuff -->
     <!-- ~~~~~~~~~~~~ -->
@@ -130,12 +163,13 @@
           <b>Actual Time:</b> The sun is on the horizon; this is the approximate time of sunrise and sunset.<br/><br/>
           <b>Civil Twilight:</b> The sun is 6 degrees below the horizon; the brightest stars are visible. There is enough light for most outdoor activities without requiring a light.<br/><br/>
           <b>Nautical Twilight:</b> The sun is 12 degrees below the horizon; object outlines and the horizon are increasingly indistinct. There isn\'t enough light for most outdoor activities without requiring a light.<br/><br/>
-          <b>Astronomical Twilight:</b> The sun is 18 degrees below the horizon.<br/>
+          <b>Astronomical Twilight:</b> The sun is 18 degrees below the horizon. Near darkness of night.<br/>
     ]]></string>
 
 
     <string name="help_action_launch"><![CDATA[
         The fully qualified class name of the Activity to be launched.
     ]]></string>
+
 
 </resources>

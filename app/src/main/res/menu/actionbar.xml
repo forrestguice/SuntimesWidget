@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/action_location_add"
+          android:icon="?attr/icActionPlace"
+          android:title="@string/configAction_addLocation"
+          app:showAsAction="always" />
+
+    <item android:id="@+id/action_timezone"
+          android:icon="?attr/icActionTime"
+          android:title="@string/configAction_setTimeZone"
+          app:showAsAction="never" />
+
+    <item android:id="@+id/action_help"
+          android:icon="?attr/icActionHelp"
+          android:title="@string/configAction_help"
+          app:showAsAction="never" />
+
+    <item android:id="@+id/action_about"
+          android:icon="?attr/icActionAbout"
+          android:title="@string/configAction_aboutWidget"
+          app:showAsAction="never" />
+
+</menu>

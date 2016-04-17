@@ -2,4 +2,16 @@
 <resources>
     <bool name="api_pre_14">true</bool>
     <bool name="api_post_14">false</bool>
+
+    <attr name="dialogBackground" format="reference" />
+    <attr name="settingsCardBackground" format="reference" />
+    <attr name="timeCardBackground" format="reference" />
+
+    <attr name="toolbarTheme" format="reference" />
+    <attr name="icActionPlace" format="reference" />
+    <attr name="icActionTime" format="reference" />
+    <attr name="icActionAbout" format="reference" />
+    <attr name="icActionHelp" format="reference" />
+    <attr name="icActionNext" format="reference" />
+    <attr name="icActionPrevious" format="reference" />
 </resources>
