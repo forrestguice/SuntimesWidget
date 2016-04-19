@@ -3,7 +3,7 @@
     package="com.forrestguice.suntimeswidget" >
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <!--<uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>-->
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
 
     <application
         android:allowBackup="true"
@@ -24,6 +24,12 @@
 
         </activity>
 
+        <!--Settings Activity -->
+        <activity
+            android:name=".SuntimesSettingsActivity"
+            android:label="@string/app_name"
+            android:icon="@drawable/ic_suntimes">
+        </activity>
 
         <!-- Widget 0: Resizable (falls back to static 1x1 for api less than 16) -->
         <receiver android:name=".SuntimesWidget"

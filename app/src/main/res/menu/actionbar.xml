@@ -12,9 +12,19 @@
           android:title="@string/configAction_mapLocation"
           app:showAsAction="ifRoom" />
 
+    <item android:id="@+id/action_alarm"
+          android:icon="?attr/icActionAlarm"
+          android:title="@string/configAction_setAlarm"
+          app:showAsAction="never" />
+
     <item android:id="@+id/action_timezone"
           android:icon="?attr/icActionTime"
           android:title="@string/configAction_setTimeZone"
+          app:showAsAction="never" />
+
+    <item android:id="@+id/action_settings"
+          android:icon="?attr/icActionSettings"
+          android:title="@string/configAction_settings"
           app:showAsAction="never" />
 
     <item android:id="@+id/action_help"

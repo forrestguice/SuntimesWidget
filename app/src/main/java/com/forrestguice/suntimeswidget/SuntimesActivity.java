@@ -22,7 +22,9 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.AlarmClock;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -434,55 +436,192 @@ public class SuntimesActivity extends AppCompatActivity
     {
         switch (item.getItemId())
         {
+            case R.id.action_settings:
+                showSettings();
+                return true;
+
             case R.id.action_about:
-                AboutDialog aboutDialog = new AboutDialog(this);
-                aboutDialog.onPrepareDialog();
-                aboutDialog.show();
+                showAbout();
                 return true;
 
             case R.id.action_help:
-                HelpDialog helpDialog = new HelpDialog(this);
-                helpDialog.onPrepareDialog(getString(R.string.help_general_timeMode));
-                helpDialog.show();
+                showHelp();
                 return true;
 
             case R.id.action_location_add:
-                LocationDialog locationDialog = new LocationDialog(this);
-                locationDialog.setOnAcceptedListener(new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i)
-                    {
-                        updateViews(SuntimesActivity.this);
-                    }
-                });
-                AlertDialog locationAlert = locationDialog.toAlertDialog();
-                locationAlert.show();
+                configLocation();
                 return true;
 
             case R.id.action_location_show:
-                Intent mapIntent = new Intent(Intent.ACTION_VIEW);
-                mapIntent.setData(location.getUri());
-                startActivity(mapIntent);
+                showMap();
                 return true;
 
             case R.id.action_timezone:
-                TimeZoneDialog timezoneDialog = new TimeZoneDialog(this);
-                timezoneDialog.setOnAcceptedListener(new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i)
-                    {
-                        updateViews(SuntimesActivity.this);
-                    }
-                });
-                AlertDialog timezoneAlert = timezoneDialog.toAlertDialog();
-                timezoneAlert.show();
+                configTimeZone();
+                return true;
+
+            case R.id.action_alarm:
+                scheduleAlarm();
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    protected void configLocation()
+    {
+        LocationDialog locationDialog = new LocationDialog(this);
+        locationDialog.setOnAcceptedListener(new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
+                updateViews(SuntimesActivity.this);
+            }
+        });
+        AlertDialog locationAlert = locationDialog.toAlertDialog();
+        locationAlert.show();
+    }
+
+    protected void configTimeZone()
+    {
+        TimeZoneDialog timezoneDialog = new TimeZoneDialog(this);
+        timezoneDialog.setOnAcceptedListener(new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
+                updateViews(SuntimesActivity.this);
+            }
+        });
+        AlertDialog timezoneAlert = timezoneDialog.toAlertDialog();
+        timezoneAlert.show();
+    }
+
+    protected void showMap()
+    {
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW);
+        mapIntent.setData(location.getUri());
+
+        if (mapIntent.resolveActivity(getPackageManager()) != null)
+        {
+            startActivity(mapIntent);
+        }
+    }
+
+    protected void showHelp()
+    {
+        HelpDialog helpDialog = new HelpDialog(this);
+        helpDialog.onPrepareDialog(getString(R.string.help_general_timeMode));
+        helpDialog.show();
+    }
+
+    protected void showAbout()
+    {
+        AboutDialog aboutDialog = new AboutDialog(this);
+        aboutDialog.onPrepareDialog();
+        aboutDialog.show();
+    }
+
+    protected void showSettings()
+    {
+        Intent settingsIntent = new Intent(this, SuntimesSettingsActivity.class);
+        startActivity(settingsIntent);
+    }
+
+    protected void scheduleAlarm()
+    {
+        final AlarmDialog alarmDialog = new AlarmDialog(this, data_actualTime, data_civilTime, data_nauticalTime, data_astroTime);
+        alarmDialog.setOnAcceptedListener(new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
+                AlarmDialog.AlarmChoice choice = alarmDialog.getChoice();
+                String alarmLabel = choice.getShortDisplayString();
+                Calendar now = Calendar.getInstance(TimeZone.getTimeZone(data_actualTime.timezone()));
+                Calendar calendar = alarmDialog.getCalendarForAlarmChoice(choice, now);
+                scheduleAlarm(alarmLabel, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
+            }
+        });
+        AlertDialog alarmAlert = alarmDialog.toAlertDialog();
+        alarmAlert.show();
+    }
+
+    protected void scheduleAlarmFromNote()
+    {
+        scheduleAlarmFromNote(currentNote);
+    }
+
+    protected void scheduleAlarmFromNote(NoteData note)
+    {
+        String alarmLabel = note.noteText;
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone(data_actualTime.timezone()));
+        calendar.setTimeInMillis(note.timestamp);
+        scheduleAlarm(alarmLabel, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
+    }
+
+    /**protected Calendar getCalendarForAlarmChoice( AlarmDialog.AlarmChoice choice )
+    {
+        Calendar calendar;
+        switch (choice)
+        {
+            case MORNING_ASTRONOMICAL:
+                calendar = data_astroTime.sunriseCalendarToday();
+                break;
+            case MORNING_NAUTICAL:
+                calendar = data_nauticalTime.sunriseCalendarToday();
+                break;
+            case MORNING_CIVIL:
+                calendar = data_civilTime.sunriseCalendarToday();
+                break;
+            case SUNSET:
+                calendar = data_actualTime.sunsetCalendarToday();
+                break;
+            case EVENING_CIVIL:
+                calendar = data_civilTime.sunsetCalendarToday();
+                break;
+            case EVENING_NAUTICAL:
+                calendar = data_nauticalTime.sunsetCalendarToday();
+                break;
+            case EVENING_ASTRONOMICAL:
+                calendar = data_astroTime.sunsetCalendarToday();
+                break;
+            case SUNRISE:
+            default:
+                calendar = data_actualTime.sunriseCalendarToday();
+                break;
+        }
+        return calendar;
+    }*/
+
+    protected void scheduleAlarm(String label, int hour, int minutes)
+    {
+        Intent alarmIntent = new Intent(AlarmClock.ACTION_SET_ALARM);
+        alarmIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        alarmIntent.putExtra(AlarmClock.EXTRA_MESSAGE, label);
+        alarmIntent.putExtra(AlarmClock.EXTRA_HOUR, hour);
+        alarmIntent.putExtra(AlarmClock.EXTRA_MINUTES, minutes);
+
+        if (alarmIntent.resolveActivity(getPackageManager()) != null)
+        {
+            startActivity(alarmIntent);
+        }
+    }
+
+    protected void showAlarms()
+    {
+         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+         {
+             Intent alarmsIntent = new Intent(AlarmClock.ACTION_SHOW_ALARMS);
+             alarmsIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+             if (alarmsIntent.resolveActivity(getPackageManager()) != null)
+             {
+                 startActivity(alarmsIntent);
+             }
+         }
     }
 
     private void initData( Context context )
@@ -518,7 +657,7 @@ public class SuntimesActivity extends AppCompatActivity
 
         location = WidgetSettings.loadLocationPref(context, AppWidgetManager.INVALID_APPWIDGET_ID);
         String locationTitle = location.getLabel();
-        String locationSubtitle = location.getLatitude() + ", " + location.getLongitude();  // TODO: format
+        String locationSubtitle = location.toString();
 
         if (actionBar != null)
         {
@@ -615,6 +754,7 @@ public class SuntimesActivity extends AppCompatActivity
         int noteIcon, noteColor;
         SuntimesUtils.TimeDisplayText timeString;
         String noteString, untilString;
+        long timestamp;
 
         Date time = now.getTime();
         Date sunrise = data_actualTime.sunriseCalendarToday().getTime();
@@ -632,6 +772,7 @@ public class SuntimesActivity extends AppCompatActivity
             if (time.before(sunset) && setChoice <= WidgetSettings.TimeMode.OFFICIAL.getSetOrder())
             {
                 // day time: note the time until sunset
+                timestamp = sunset.getTime();
                 noteMode = WidgetSettings.TimeMode.OFFICIAL;
                 timeString = utils.timeDeltaDisplayString(time, sunset);
                 noteString = context.getString(R.string.until_sunset);
@@ -644,6 +785,7 @@ public class SuntimesActivity extends AppCompatActivity
                 if (time.before(civilTwilight) && setChoice <= WidgetSettings.TimeMode.CIVIL.getSetOrder())
                 {
                     // civil twilight: note time until end of civil twilight
+                    timestamp = civilTwilight.getTime();
                     noteMode = WidgetSettings.TimeMode.CIVIL;
                     timeString = utils.timeDeltaDisplayString(time, civilTwilight);
                     noteString = context.getString(R.string.untilEnd_civilTwilight);
@@ -653,12 +795,14 @@ public class SuntimesActivity extends AppCompatActivity
                     if (time.before(nauticalTwilight) && setChoice <= WidgetSettings.TimeMode.NAUTICAL.getSetOrder())
                     {
                         // nautical twilight: note time until end of nautical twilight
+                        timestamp = nauticalTwilight.getTime();
                         noteMode = WidgetSettings.TimeMode.NAUTICAL;
                         timeString = utils.timeDeltaDisplayString(time, nauticalTwilight);
                         noteString = context.getString(R.string.untilEnd_nauticalTwilight);
 
                     } else {
                         // astronomical twilight: note time until night
+                        timestamp = sunsetAstroTwilight.getTime();
                         noteMode = WidgetSettings.TimeMode.ASTRONOMICAL;
                         timeString = utils.timeDeltaDisplayString(time, sunsetAstroTwilight);
                         noteString = context.getString(R.string.untilEnd_astroTwilight);
@@ -678,6 +822,7 @@ public class SuntimesActivity extends AppCompatActivity
             if (time.before(astroTwilight) && riseChoice <= WidgetSettings.TimeMode.ASTRONOMICAL.getRiseOrder())
             {
                 // night: note time until astro twilight today
+                timestamp = astroTwilight.getTime();
                 noteMode = WidgetSettings.TimeMode.ASTRONOMICAL;
                 timeString = utils.timeDeltaDisplayString(time, astroTwilight);
                 noteString = context.getString(R.string.until_astroTwilight);
@@ -689,6 +834,7 @@ public class SuntimesActivity extends AppCompatActivity
                 if (time.before(nauticalTwilight) && riseChoice <= WidgetSettings.TimeMode.NAUTICAL.getRiseOrder())
                 {
                     // astronomical twilight: note time until nautical twilight
+                    timestamp = nauticalTwilight.getTime();
                     noteMode = WidgetSettings.TimeMode.NAUTICAL;
                     timeString = utils.timeDeltaDisplayString(time, nauticalTwilight);
                     noteString = context.getString(R.string.until_nauticalTwilight);
@@ -699,6 +845,7 @@ public class SuntimesActivity extends AppCompatActivity
                     if (time.before(civilTwilight) && riseChoice <= WidgetSettings.TimeMode.CIVIL.getRiseOrder())
                     {
                         // nautical twilight: note time until civil twilight
+                        timestamp = civilTwilight.getTime();
                         noteMode = WidgetSettings.TimeMode.CIVIL;
                         timeString = utils.timeDeltaDisplayString(time, civilTwilight);
                         noteString = context.getString(R.string.until_civilTwilight);
@@ -708,6 +855,7 @@ public class SuntimesActivity extends AppCompatActivity
                         sunrise = afterSunriseToday ? data_actualTime.sunriseCalendarOther().getTime()
                                                     : data_actualTime.sunriseCalendarToday().getTime();
 
+                        timestamp = sunrise.getTime();
                         noteMode = WidgetSettings.TimeMode.OFFICIAL;
                         timeString = utils.timeDeltaDisplayString(time, sunrise);
                         noteString = context.getString(R.string.until_sunrise);
@@ -717,6 +865,7 @@ public class SuntimesActivity extends AppCompatActivity
         }
 
         NoteData note = new NoteData(noteMode, timeString, untilString, noteString, noteIcon, noteColor);
+        note.timestamp = timestamp;
 
         if (currentNote == null)
         {
@@ -735,6 +884,7 @@ public class SuntimesActivity extends AppCompatActivity
         public String noteText;
         public int noteIconResource;
         public int noteColor;
+        public long timestamp;
 
         public NoteData(WidgetSettings.TimeMode noteMode, SuntimesUtils.TimeDisplayText timeText, String prefixText, String noteText, int noteIconResource, int noteColor)
         {
@@ -1118,7 +1268,6 @@ public class SuntimesActivity extends AppCompatActivity
         return (setOrder < WidgetSettings.TimeMode.ASTRONOMICAL.getSetOrder());
     }
 
-
     /**
      * Show the previous time note (sunrise).
      * @return true note was changed
@@ -1213,18 +1362,8 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public void onClick(View view)
         {
-
-            /**Intent alarmIntent = new Intent(AlarmClock.ACTION_SET_ALARM);
-            alarmIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            alarmIntent.putExtra(AlarmClock.EXTRA_HOUR, "6");
-            SuntimesActivity.this.startActivity(alarmIntent);*/
-
-            /**if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-            {
-                Intent mClockIntent = new Intent(AlarmClock.ACTION_SHOW_ALARMS);
-                mClockIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(mClockIntent);
-            }*/
+            // TODO: make click action configurable
+            scheduleAlarm();
         }
     };
 

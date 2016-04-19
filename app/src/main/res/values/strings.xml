@@ -93,8 +93,10 @@
     <string name="configAction_addWidget">Add Widget</string>
     <string name="configAction_addLocation">Location</string>
     <string name="configAction_mapLocation">Show Map</string>
+    <string name="configAction_setAlarm">Schedule Alarm</string>
     <string name="configAction_setTimeZone">Time Zone</string>
     <string name="configAction_help">Help</string>
+    <string name="configAction_settings">Settings</string>
     <string name="configAction_reconfigWidget">Reconfigure Widget</string>
     <string name="configAction_aboutWidget">About</string>
 
@@ -131,6 +133,33 @@
     <string name="configLabel_timezone">Time Zone Settings</string>
     <string name="configLabel_timezone_mode">Mode:</string>
     <string name="configLabel_timezone_custom">Time Zone:</string>
+
+    <string name="configLabel_schedalarm_mode">Schedule an alarm for</string>
+    <string name="schedalarm_dialog_title">Set Alarm</string>
+    <string name="schedalarm_dialog_ok">Set Alarm</string>
+    <string name="schedalarm_dialog_cancel">Cancel</string>
+
+    <string name="schedalarm_dialog_note">about %s from now.</string>
+    <string-array name="schedalarm_dialog_modes_short">
+        <item>astronomical twilight</item>
+        <item>nautical twilight</item>
+        <item>civil twilight</item>
+        <item>sunrise</item>
+        <item>sunset</item>
+        <item>civil twilight</item>
+        <item>nautical twilight</item>
+        <item>astronomical twilight</item>
+    </string-array>
+    <string-array name="schedalarm_dialog_modes_long">
+        <item>morning astronomical twilight (start)</item>
+        <item>morning nautical twilight (start)</item>
+        <item>morning civil twilight (start)</item>
+        <item>sunrise</item>
+        <item>sunset</item>
+        <item>evening civil twilight (end)</item>
+        <item>evening nautical twilight (end)</item>
+        <item>evening astronomical twilight (end)</item>
+    </string-array>
 
     <string name="gps_dialog_msg">GPS is disabled. Enable it?</string>
     <string name="gps_dialog_ok">Yes</string>

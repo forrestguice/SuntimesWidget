@@ -12,7 +12,9 @@
         <item name="icActionPlace">@drawable/ic_action_place_light</item>
         <item name="icActionMap">@drawable/ic_action_map_light</item>
         <item name="icActionTime">@drawable/ic_action_time_light</item>
+        <item name="icActionAlarm">@drawable/ic_action_alarms_light</item>
         <item name="icActionAbout">@drawable/ic_action_about_light</item>
+        <item name="icActionSettings">@drawable/ic_action_settings_light</item>
         <item name="icActionHelp">@drawable/ic_action_help_light</item>
         <item name="icActionNext">@drawable/ic_action_next_item_light</item>
         <item name="icActionPrevious">@drawable/ic_action_previous_item_light</item>
@@ -27,7 +29,9 @@
         <item name="icActionPlace">@drawable/ic_action_place</item>
         <item name="icActionMap">@drawable/ic_action_map</item>
         <item name="icActionTime">@drawable/ic_action_time</item>
+        <item name="icActionAlarm">@drawable/ic_action_alarms</item>
         <item name="icActionAbout">@drawable/ic_action_about</item>
+        <item name="icActionSettings">@drawable/ic_action_settings</item>
         <item name="icActionHelp">@drawable/ic_action_help</item>
         <item name="icActionNext">@drawable/ic_action_next_item</item>
         <item name="icActionPrevious">@drawable/ic_action_previous_item</item>
