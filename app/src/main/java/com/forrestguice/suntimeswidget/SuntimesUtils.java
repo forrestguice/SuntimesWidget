@@ -127,6 +127,7 @@ public class SuntimesUtils
             retValue = new TimeDisplayText( timeFormat.format(time), "", suffixFormat.format(time) );
         }
 
+        retValue.setRawValue(cal.getTimeInMillis());
         return retValue;
     }
 
