@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="test">
+
+        <CheckBoxPreference
+            android:key="checkbox_preference"
+            android:title="testcheck"
+            android:summary="debug one two" />
+
+        <ListPreference
+            android:key="appwidget_0_general_calculator"
+            android:title="@string/configLabel_general_calculator"
+            android:dialogTitle="@string/configLabel_general_calculator"
+            android:entries="@null"
+            android:entryValues="@null"
+            android:defaultValue="any"
+            android:summary="%s" />
+
+    </PreferenceCategory>
+
+
+</PreferenceScreen>

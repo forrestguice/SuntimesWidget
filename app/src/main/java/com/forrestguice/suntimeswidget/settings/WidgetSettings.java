@@ -34,7 +34,7 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 public class WidgetSettings
 {
-    private static final String PREFS_WIDGET = "com.forrestguice.suntimeswidget";
+    public static final String PREFS_WIDGET = "com.forrestguice.suntimeswidget";
 
     public static final String PREF_PREFIX_KEY = "appwidget_";
     public static final String PREF_PREFIX_KEY_APPEARANCE = "_appearance_";
@@ -306,11 +306,12 @@ public class WidgetSettings
 
         public Uri getUri()
         {
-            StringBuilder mapUri = new StringBuilder("geo");
-            mapUri.append(latitude);
-            mapUri.append(",");
-            mapUri.append(longitude);
-            return Uri.parse(mapUri.toString());
+            return Uri.parse("geo:" + latitude + "," + longitude);
+        }
+
+        public String toString()
+        {
+            return latitude + ", " + longitude;
         }
     }
 

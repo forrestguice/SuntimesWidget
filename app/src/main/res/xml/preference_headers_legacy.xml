@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:title="@string/configLabel_general"
+        android:summary=""  >
+        <intent
+            android:targetPackage="com.forrestguice.suntimeswidget"
+            android:targetClass="com.forrestguice.suntimeswidget.SuntimesSettingsActivity"
+            android:action="com.forrestguice.suntimeswidget.PREFS_ONE" />
+    </Preference>
+
+</PreferenceScreen>
