@@ -251,6 +251,11 @@ public class SuntimesData
 
         switch (timeMode)
         {
+            case NOON:
+                sunriseCalendarToday = sunsetCalendarToday = calculator.getSolarNoonCalendarForDate(todaysCalendar);
+                sunriseCalendarOther = sunsetCalendarOther = calculator.getSolarNoonCalendarForDate(otherCalendar);
+                break;
+
             case CIVIL:
                 sunriseCalendarToday = calculator.getCivilSunriseCalendarForDate(todaysCalendar);
                 sunsetCalendarToday = calculator.getCivilSunsetCalendarForDate(todaysCalendar);

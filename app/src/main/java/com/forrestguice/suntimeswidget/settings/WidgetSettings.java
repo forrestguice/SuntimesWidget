@@ -357,7 +357,8 @@ public class WidgetSettings
         OFFICIAL("Actual", "Actual Time", 3, 0),
         CIVIL("Civil", "Civil Twilight", 2, 1),
         NAUTICAL("Nautical", "Nautical Twilight", 1, 2),
-        ASTRONOMICAL("Astronomical", "Astronomical Twilight", 0, 3);
+        ASTRONOMICAL("Astronomical", "Astronomical Twilight", 0, 3),
+        NOON("Noon", "Solar Noon", -1, -1);
 
         public static boolean shortDisplayStrings = false;
         private String longDisplayString;
@@ -446,6 +447,9 @@ public class WidgetSettings
 
             ASTRONOMICAL.setDisplayStrings( context.getString(R.string.timeMode_astronomical_short),
                     context.getString(R.string.timeMode_astronomical) );
+
+            NOON.setDisplayStrings( context.getString(R.string.timeMode_noon_short),
+                    context.getString(R.string.timeMode_noon) );
         }
     }
 

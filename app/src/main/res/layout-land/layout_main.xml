@@ -88,6 +88,7 @@
                     android:layout_marginTop="20dp"
                     android:orientation="vertical">
 
+                    <include layout="@layout/info_time_noon" />
                     <include layout="@layout/info_time_daylength" />
                 </LinearLayout>
 
@@ -105,6 +106,7 @@
                     android:layout_marginTop="20dp"
                     android:orientation="vertical">
 
+                    <include layout="@layout/info_time_noon" />
                     <include layout="@layout/info_time_daylength" />
                 </LinearLayout>
 

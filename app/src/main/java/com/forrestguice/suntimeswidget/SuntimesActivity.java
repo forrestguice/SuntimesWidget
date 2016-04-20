@@ -104,6 +104,7 @@ public class SuntimesActivity extends AppCompatActivity
     private TextView txt_sunset_civil;
     private TextView txt_sunset_nautical;
     private TextView txt_sunset_astro;
+    private TextView txt_solarnoon;
     private TextView txt_daylength;
     private TextView txt_lightlength;
 
@@ -116,6 +117,7 @@ public class SuntimesActivity extends AppCompatActivity
     private TextView txt_sunset2_civil;
     private TextView txt_sunset2_nautical;
     private TextView txt_sunset2_astro;
+    private TextView txt_solarnoon2;
     private TextView txt_daylength2;
     private TextView txt_lightlength2;
 
@@ -123,6 +125,7 @@ public class SuntimesActivity extends AppCompatActivity
     private SuntimesData data_civilTime;
     private SuntimesData data_nauticalTime;
     private SuntimesData data_astroTime;
+    private SuntimesData data_noon;
 
     public SuntimesActivity()
     {
@@ -290,6 +293,8 @@ public class SuntimesActivity extends AppCompatActivity
             txt_sunrise_astro = (TextView) viewToday.findViewById(R.id.text_time_sunrise_astro);
             txt_sunset_astro = (TextView) viewToday.findViewById(R.id.text_time_sunset_astro);
 
+            txt_solarnoon = (TextView) viewToday.findViewById(R.id.text_time_noon);
+
             txt_daylength = (TextView) viewToday.findViewById(R.id.text_daylength);
             txt_lightlength = (TextView) viewToday.findViewById(R.id.text_lightlength);
 
@@ -335,6 +340,8 @@ public class SuntimesActivity extends AppCompatActivity
 
             txt_sunrise2_astro = (TextView) viewTomorrow.findViewById(R.id.text_time_sunrise_astro);
             txt_sunset2_astro = (TextView) viewTomorrow.findViewById(R.id.text_time_sunset_astro);
+
+            txt_solarnoon2 = (TextView) viewTomorrow.findViewById(R.id.text_time_noon);
 
             txt_daylength2 = (TextView) viewTomorrow.findViewById(R.id.text_daylength);
             txt_lightlength2 = (TextView) viewTomorrow.findViewById(R.id.text_lightlength);
@@ -562,40 +569,6 @@ public class SuntimesActivity extends AppCompatActivity
         scheduleAlarm(alarmLabel, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
     }
 
-    /**protected Calendar getCalendarForAlarmChoice( AlarmDialog.AlarmChoice choice )
-    {
-        Calendar calendar;
-        switch (choice)
-        {
-            case MORNING_ASTRONOMICAL:
-                calendar = data_astroTime.sunriseCalendarToday();
-                break;
-            case MORNING_NAUTICAL:
-                calendar = data_nauticalTime.sunriseCalendarToday();
-                break;
-            case MORNING_CIVIL:
-                calendar = data_civilTime.sunriseCalendarToday();
-                break;
-            case SUNSET:
-                calendar = data_actualTime.sunsetCalendarToday();
-                break;
-            case EVENING_CIVIL:
-                calendar = data_civilTime.sunsetCalendarToday();
-                break;
-            case EVENING_NAUTICAL:
-                calendar = data_nauticalTime.sunsetCalendarToday();
-                break;
-            case EVENING_ASTRONOMICAL:
-                calendar = data_astroTime.sunsetCalendarToday();
-                break;
-            case SUNRISE:
-            default:
-                calendar = data_actualTime.sunriseCalendarToday();
-                break;
-        }
-        return calendar;
-    }*/
-
     protected void scheduleAlarm(String label, int hour, int minutes)
     {
         Intent alarmIntent = new Intent(AlarmClock.ACTION_SET_ALARM);
@@ -638,6 +611,9 @@ public class SuntimesActivity extends AppCompatActivity
 
         data_astroTime = new SuntimesData(data_actualTime);
         data_astroTime.setTimeMode(WidgetSettings.TimeMode.ASTRONOMICAL);
+
+        data_noon = new SuntimesData(data_actualTime);
+        data_noon.setTimeMode(WidgetSettings.TimeMode.NOON);
     }
 
     protected void calculateData( Context context )
@@ -647,6 +623,7 @@ public class SuntimesActivity extends AppCompatActivity
         data_civilTime.calculate();
         data_nauticalTime.calculate();
         data_astroTime.calculate();
+        data_noon.calculate();
     }
 
     protected void updateViews( Context context )
@@ -673,6 +650,8 @@ public class SuntimesActivity extends AppCompatActivity
         SuntimesUtils.TimeDisplayText sunriseString_nauticalTime = utils.calendarTimeShortDisplayString(context, data_nauticalTime.sunriseCalendarToday());
         SuntimesUtils.TimeDisplayText sunriseString_astroTime = utils.calendarTimeShortDisplayString(context, data_astroTime.sunriseCalendarToday());
 
+        SuntimesUtils.TimeDisplayText noonString = utils.calendarTimeShortDisplayString(context, data_noon.sunriseCalendarToday() );
+
         SuntimesUtils.TimeDisplayText sunsetString_actualTime = utils.calendarTimeShortDisplayString(context, data_actualTime.sunsetCalendarToday());
         SuntimesUtils.TimeDisplayText sunsetString_civilTime = utils.calendarTimeShortDisplayString(context, data_civilTime.sunsetCalendarToday());
         SuntimesUtils.TimeDisplayText sunsetString_nauticalTime = utils.calendarTimeShortDisplayString(context, data_nauticalTime.sunsetCalendarToday());
@@ -682,6 +661,8 @@ public class SuntimesActivity extends AppCompatActivity
         txt_sunrise_civil.setText(sunriseString_civilTime.toString());
         txt_sunrise_nautical.setText(sunriseString_nauticalTime.toString());
         txt_sunrise_astro.setText(sunriseString_astroTime.toString());
+
+        txt_solarnoon.setText(noonString.toString());
 
         txt_sunset_actual.setText(sunsetString_actualTime.toString());
         txt_sunset_civil.setText(sunsetString_civilTime.toString());
@@ -710,6 +691,8 @@ public class SuntimesActivity extends AppCompatActivity
         SuntimesUtils.TimeDisplayText sunriseString_nauticalTime2 = utils.calendarTimeShortDisplayString(context, data_nauticalTime.sunriseCalendarOther());
         SuntimesUtils.TimeDisplayText sunriseString_astroTime2 = utils.calendarTimeShortDisplayString(context, data_astroTime.sunriseCalendarOther());
 
+        SuntimesUtils.TimeDisplayText noonString2 = utils.calendarTimeShortDisplayString(context, data_noon.sunriseCalendarOther() );
+
         SuntimesUtils.TimeDisplayText sunsetString_actualTime2 = utils.calendarTimeShortDisplayString(context, data_actualTime.sunsetCalendarOther());
         SuntimesUtils.TimeDisplayText sunsetString_civilTime2 = utils.calendarTimeShortDisplayString(context, data_civilTime.sunsetCalendarOther());
         SuntimesUtils.TimeDisplayText sunsetString_nauticalTime2 = utils.calendarTimeShortDisplayString(context, data_nauticalTime.sunsetCalendarOther());
@@ -719,6 +702,8 @@ public class SuntimesActivity extends AppCompatActivity
         txt_sunrise2_civil.setText(sunriseString_civilTime2.toString());
         txt_sunrise2_nautical.setText(sunriseString_nauticalTime2.toString());
         txt_sunrise2_astro.setText(sunriseString_astroTime2.toString());
+
+        txt_solarnoon2.setText(noonString2.toString());
 
         txt_sunset2_actual.setText(sunsetString_actualTime2.toString());
         txt_sunset2_civil.setText(sunsetString_civilTime2.toString());

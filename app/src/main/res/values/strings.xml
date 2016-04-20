@@ -32,6 +32,8 @@
     <string name="sunrise_short">Rise</string>
     <string name="sunset">Sunset</string>
     <string name="sunset_short">Set</string>
+    <string name="noon">Solar Noon</string>
+    <string name="noon_short">Noon</string>
     <string name="length_day">in the day</string>
     <string name="length_light">of usable light</string>
     <string name="delta_day_tomorrow">Tomorrow will be</string>
@@ -76,11 +78,13 @@
     <string name="compareMode_yesterday">Yesterday</string>
     <string name="compareMode_tomorrow">Tomorrow</string>
 
+    <string name="timeMode_noon_short">Noon</string>
     <string name="timeMode_official_short">Actual</string>
     <string name="timeMode_civil_short">Civil</string>
     <string name="timeMode_nautical_short">Nautical</string>
     <string name="timeMode_astronomical_short">Astronomical</string>
 
+    <string name="timeMode_noon">Solar Noon</string>
     <string name="timeMode_official">Actual Time</string>
     <string name="timeMode_civil">Civil Twilight</string>
     <string name="timeMode_nautical">Nautical Twilight</string>
