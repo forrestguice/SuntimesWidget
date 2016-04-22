@@ -31,9 +31,16 @@
             android:icon="@drawable/ic_suntimes">
         </activity>
 
+        <!--Widget List Activity -->
+        <activity
+            android:name=".SuntimesWidgetListActivity"
+            android:label="@string/app_name"
+            android:icon="@drawable/ic_suntimes">
+        </activity>
+
         <!-- Widget 0: Resizable (falls back to static 1x1 for api less than 16) -->
         <receiver android:name=".SuntimesWidget"
-                  android:label="@string/app_name">
+                  android:label="@string/app_name_widget0">
 
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

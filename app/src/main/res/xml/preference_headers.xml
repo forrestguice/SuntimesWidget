@@ -11,6 +11,15 @@
 
     </header>
 
+    <header android:icon="@drawable/ic_action_settings"
+            android:title="@string/configLabel_widgetList"
+            android:summary="">
+
+        <intent android:targetPackage="com.forrestguice.suntimeswidget"
+                android:targetClass="com.forrestguice.suntimeswidget.SuntimesWidgetListActivity" />
+
+    </header>
+
     <!--<header android:fragment="com.example.android.apis.preference.PreferenceWithHeaders$Prefs2Fragment"
             android:icon="@drawable/ic_settings_display"
             android:title="Prefs 2"

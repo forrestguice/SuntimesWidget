@@ -380,7 +380,10 @@ public class SuntimesConfigActivity extends Activity
 
         if (reconfigure)
         {
-            button_addWidget.setText(getString(R.string.configAction_reconfigWidget));
+            button_addWidget.setText(getString(R.string.configAction_reconfigWidget_short));
+
+            TextView activityTitle = (TextView) findViewById(R.id.activity_title);
+            activityTitle.setText(getString(R.string.configAction_reconfigWidget));
         }
 
         //

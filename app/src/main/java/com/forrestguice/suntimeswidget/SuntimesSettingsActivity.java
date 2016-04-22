@@ -40,6 +40,7 @@ import java.util.List;
 public class SuntimesSettingsActivity extends PreferenceActivity
 {
     final static String ACTION_PREFS_ONE = "com.forrestguice.suntimeswidget.PREFS_ONE";
+    final static String ACTION_PREFS_WIDGETLIST = "com.forrestguice.suntimeswidget.PREFS_WIDGETLIST";
 
     //protected static SuntimesUtils utils = new SuntimesUtils();
 
@@ -62,8 +63,10 @@ public class SuntimesSettingsActivity extends PreferenceActivity
         {
             addPreferencesFromResource(R.xml.preference_general);
 
-        } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
-        {
+        } else if (action != null && action.equals(ACTION_PREFS_WIDGETLIST)) {
+            // TODO
+
+        } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
             addPreferencesFromResource(R.xml.preference_headers_legacy);
         }
 
