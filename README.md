@@ -1,8 +1,9 @@
 # SuntimesWidget
-An Android app and homescreen widget that displays sunrise, sunset, and twilight times.
+An Android app and home screen widget that displays sunrise, sunset, and twilight times.
 Times are calculated using [sunrisesunsetlib-java](http://mikereedell.github.io/sunrisesunsetlib-java/).
 
 **General:**
+
 This app displays sunrise, sunset, civil twilight, nautical twilight, and astronomical twilight for a given location.
 * *does not* require GPS. The location is manually specified, or can be obtained from GPS (optional). 
 * *does not* require network connectivity. Calculations are performed locally on the device (does not rely on third-party weather services).
