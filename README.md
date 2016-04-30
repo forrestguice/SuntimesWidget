@@ -10,12 +10,6 @@ The app:
 
 **Widget Features**
 
-The widget is resizable and has layouts for:
-* a 1x1 widget that displays EITHER the sunrise OR sunset time.
-* a 1x1 widget that displays BOTH the sunrise AND sunset times.
-* a 1x2 widget that displays the sunrise and sunset times, and displays the difference in rise and set times between today and tomorrow (or today and yesterday).
-* a 1x3 widget that displays the sunrise and sunset times, and displays the difference in the amount of daylight (in minutes) between today and tomorrow (or today and yesterday).
-
 The widget is themeable and provides:
 * a Dark theme (and dark w/ transparent background)
 * a Light theme (and light w/ transparent background)
@@ -27,6 +21,11 @@ The widget is (re)configurable:
 * configure user-defined title (supports limited substitutions)
 * configure comparison mode (against tomorrow or yesterday)
 
+The home screen widget is resizable and has layouts for:
+* a 1x1 widget that displays either the sunrise OR sunset time.
+* a 1x1 widget that displays both the sunrise AND sunset times.
+* a 1x2 widget that displays the sunrise and sunset times, and displays the difference in rise and set times between today and tomorrow (or today and yesterday).
+* a 1x3 widget that displays the sunrise and sunset times, and displays the difference in the amount of daylight (in minutes) between today and tomorrow (or today and yesterday).
 
 **Legal Stuff**
 
