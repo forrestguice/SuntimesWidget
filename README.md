@@ -27,6 +27,9 @@ The home screen widget is resizable and has layouts for:
 * a 1x2 widget that displays the sunrise and sunset times, and displays the difference in rise and set times between today and tomorrow (or today and yesterday).
 * a 1x3 widget that displays the sunrise and sunset times, and displays the difference in the amount of daylight (in minutes) between today and tomorrow (or today and yesterday).
 
+
+[screen1](https://cloud.githubusercontent.com/assets/10246147/14938297/ab3697ee-0ed3-11e6-80c2-a9611c1f20cc.png)
+
 **Legal Stuff**
 
 The goal of this project is an app that is free and open-source (FOSS). Get the source code (under GPLv3) at: https://github.com/forrestguice/SuntimesWidget
