@@ -1,5 +1,5 @@
 # SuntimesWidget
-An Android app (and home screen widget) that displays sunrise, sunset, civil twilight, nautical twilight, and astronomical twilight times for a given location.
+An Android app (and home screen widget) that displays sunrise, sunset, civil/nautical/astronomical twilight times for a given location.
 
 The app:
 * displays the current time, and notes the time until next sunrise, sunset, or civil/nautical/astronomical twilight.
