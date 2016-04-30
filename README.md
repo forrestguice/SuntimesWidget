@@ -2,14 +2,12 @@
 An Android app (and home screen widget) that displays sunrise, sunset, civil twilight, nautical twilight, and astronomical twilight times for a given location.
 
 The app:
+* displays the current time, and notes the time until next sunrise, sunset, or civil/nautical/astronomical twilight.
+* can set an alarm for next sunrise, sunset, or civil/nautical/astronomical twilight.
+* can display the configured location on a map (requires a map application).
+
 * *does not* require GPS. The location is manually specified by default (and optionally obtained from GPS).
 * *does not* require network connectivity. Calculations are performed locally on the device (does not rely on third-party weather services). The app currently uses [sunrisesunsetlib-java](http://mikereedell.github.io/sunrisesunsetlib-java/) to calculate times.
-
-**App Features**
-
-* displays the current time, and notes the time until next sunrise, sunset, or civil/nautical/astronomical twilight 
-* can set an alarm for next sunrise, sunset, or civil/nautical/astronomical twilight
-* can display the configured location on a map (requires a map application)
 
 **Widget Features**
 
