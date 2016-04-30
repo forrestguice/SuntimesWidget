@@ -2,7 +2,7 @@
 An Android app (and home screen widget) that displays sunrise, sunset, civil twilight, nautical twilight, and astronomical twilight times for a given location.
 
 The app:
-* *does not* require GPS. The location is manually specified, or can be obtained from GPS (optional). 
+* *does not* require GPS. The location is manually specified or optionally obtained from GPS.
 * *does not* require network connectivity. Calculations are performed locally on the device (does not rely on third-party weather services). The app currently uses [sunrisesunsetlib-java](http://mikereedell.github.io/sunrisesunsetlib-java/) to calculate times.
 
 **App Features**
