@@ -22,9 +22,12 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.AlarmClock;
+
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -45,13 +48,21 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesDataset;
+import com.forrestguice.suntimeswidget.notes.NoteChangedListener;
+import com.forrestguice.suntimeswidget.notes.NoteData;
+import com.forrestguice.suntimeswidget.notes.SuntimesNotes;
+import com.forrestguice.suntimeswidget.notes.SuntimesNotes1;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.lang.reflect.Method;
 import java.text.DateFormat;
+
 import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
+import java.util.HashMap;
 
 public class SuntimesActivity extends AppCompatActivity
 {
@@ -59,7 +70,8 @@ public class SuntimesActivity extends AppCompatActivity
 
     private ActionBar actionBar;
     private WidgetSettings.Location location;
-    private NoteData currentNote = null;
+    private SuntimesNotes notes;
+    private SuntimesDataset dataset;
 
     // clock views
     private TextView txt_time;
@@ -121,11 +133,7 @@ public class SuntimesActivity extends AppCompatActivity
     private TextView txt_daylength2;
     private TextView txt_lightlength2;
 
-    private SuntimesData data_actualTime;
-    private SuntimesData data_civilTime;
-    private SuntimesData data_nauticalTime;
-    private SuntimesData data_astroTime;
-    private SuntimesData data_noon;
+    private HashMap<SolarEvents, TextView> timeFields;
 
     public SuntimesActivity()
     {
@@ -139,6 +147,7 @@ public class SuntimesActivity extends AppCompatActivity
     @Override
     public void onCreate(Bundle icicle)
     {
+        setTheme(AppSettings.loadTheme(this));
         super.onCreate(icicle);
         setResult(RESULT_CANCELED);
         setContentView(R.layout.layout_main);
@@ -148,6 +157,7 @@ public class SuntimesActivity extends AppCompatActivity
         Bundle extras = intent.getExtras();
         //WidgetThemes.initThemes(context);
 
+        AppSettings.initDisplayStrings(context);
         WidgetSettings.initDisplayStrings(context);
         initViews(context);
         calculateData(context);
@@ -181,7 +191,6 @@ public class SuntimesActivity extends AppCompatActivity
     {
         super.onPause();
     }
-
 
     /**
      * OnStop: the Activity no longer visible
@@ -266,6 +275,7 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private void initCardViews(Context context)
     {
+        timeFields = new HashMap<SolarEvents, TextView>();
         card_flipper = (ViewFlipper) findViewById(R.id.info_time_flipper);
         if (card_flipper != null)
         {
@@ -283,17 +293,26 @@ public class SuntimesActivity extends AppCompatActivity
 
             txt_sunrise_actual = (TextView) viewToday.findViewById(R.id.text_time_sunrise_actual);
             txt_sunset_actual = (TextView) viewToday.findViewById(R.id.text_time_sunset_actual);
+            timeFields.put(SolarEvents.SUNRISE, txt_sunrise_actual);
+            timeFields.put(SolarEvents.SUNSET, txt_sunset_actual);
 
             txt_sunrise_civil = (TextView) viewToday.findViewById(R.id.text_time_sunrise_civil);
             txt_sunset_civil = (TextView) viewToday.findViewById(R.id.text_time_sunset_civil);
+            timeFields.put(SolarEvents.MORNING_CIVIL, txt_sunrise_civil);
+            timeFields.put(SolarEvents.EVENING_CIVIL, txt_sunset_civil);
 
             txt_sunrise_nautical = (TextView) viewToday.findViewById(R.id.text_time_sunrise_nautical);
             txt_sunset_nautical = (TextView) viewToday.findViewById(R.id.text_time_sunset_nautical);
+            timeFields.put(SolarEvents.MORNING_NAUTICAL, txt_sunrise_nautical);
+            timeFields.put(SolarEvents.EVENING_NAUTICAL, txt_sunset_nautical);
 
             txt_sunrise_astro = (TextView) viewToday.findViewById(R.id.text_time_sunrise_astro);
             txt_sunset_astro = (TextView) viewToday.findViewById(R.id.text_time_sunset_astro);
+            timeFields.put(SolarEvents.MORNING_ASTRONOMICAL, txt_sunrise_astro);
+            timeFields.put(SolarEvents.EVENING_ASTRONOMICAL, txt_sunset_astro);
 
             txt_solarnoon = (TextView) viewToday.findViewById(R.id.text_time_noon);
+            timeFields.put(SolarEvents.NOON, txt_solarnoon);
 
             txt_daylength = (TextView) viewToday.findViewById(R.id.text_daylength);
             txt_lightlength = (TextView) viewToday.findViewById(R.id.text_lightlength);
@@ -406,6 +425,22 @@ public class SuntimesActivity extends AppCompatActivity
         anim_card_outNext = AnimationUtils.loadAnimation(this, R.anim.slide_out_left);
     }
 
+    /**
+     * Initialize note object and onChanged listener.
+     */
+    private void initNotes()
+    {
+        notes = new SuntimesNotes1();
+        notes.init(this, dataset);
+        notes.setOnChangedListener(new NoteChangedListener()
+        {
+            @Override
+            public void onNoteChanged(NoteData note, int transition)
+            {
+                updateNoteUI(note, transition);
+            }
+        });
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -539,15 +574,15 @@ public class SuntimesActivity extends AppCompatActivity
 
     protected void scheduleAlarm()
     {
-        final AlarmDialog alarmDialog = new AlarmDialog(this, data_actualTime, data_civilTime, data_nauticalTime, data_astroTime);
+        final AlarmDialog alarmDialog = new AlarmDialog(this, dataset);
         alarmDialog.setOnAcceptedListener(new DialogInterface.OnClickListener()
         {
             @Override
             public void onClick(DialogInterface dialogInterface, int i)
             {
-                AlarmDialog.AlarmChoice choice = alarmDialog.getChoice();
+                SolarEvents choice = alarmDialog.getChoice();
                 String alarmLabel = choice.getShortDisplayString();
-                Calendar now = Calendar.getInstance(TimeZone.getTimeZone(data_actualTime.timezone()));
+                Calendar now = dataset.now();
                 Calendar calendar = alarmDialog.getCalendarForAlarmChoice(choice, now);
                 scheduleAlarm(alarmLabel, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
             }
@@ -558,13 +593,13 @@ public class SuntimesActivity extends AppCompatActivity
 
     protected void scheduleAlarmFromNote()
     {
-        scheduleAlarmFromNote(currentNote);
+        scheduleAlarmFromNote(notes.getNote());
     }
 
     protected void scheduleAlarmFromNote(NoteData note)
     {
         String alarmLabel = note.noteText;
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone(data_actualTime.timezone()));
+        Calendar calendar = dataset.now();
         calendar.setTimeInMillis(note.timestamp);
         scheduleAlarm(alarmLabel, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
     }
@@ -599,31 +634,30 @@ public class SuntimesActivity extends AppCompatActivity
 
     private void initData( Context context )
     {
-        data_actualTime = new SuntimesData(context, AppWidgetManager.INVALID_APPWIDGET_ID);
+        SuntimesData data_actualTime = new SuntimesData(context, AppWidgetManager.INVALID_APPWIDGET_ID);
         data_actualTime.setCompareMode(WidgetSettings.CompareMode.TOMORROW);
         data_actualTime.setTimeMode(WidgetSettings.TimeMode.OFFICIAL);
 
-        data_civilTime = new SuntimesData(data_actualTime);
+        SuntimesData data_civilTime = new SuntimesData(data_actualTime);
         data_civilTime.setTimeMode(WidgetSettings.TimeMode.CIVIL);
 
-        data_nauticalTime = new SuntimesData(data_actualTime);
+        SuntimesData data_nauticalTime = new SuntimesData(data_actualTime);
         data_nauticalTime.setTimeMode(WidgetSettings.TimeMode.NAUTICAL);
 
-        data_astroTime = new SuntimesData(data_actualTime);
+        SuntimesData data_astroTime = new SuntimesData(data_actualTime);
         data_astroTime.setTimeMode(WidgetSettings.TimeMode.ASTRONOMICAL);
 
-        data_noon = new SuntimesData(data_actualTime);
+        SuntimesData data_noon = new SuntimesData(data_actualTime);
         data_noon.setTimeMode(WidgetSettings.TimeMode.NOON);
+
+        dataset = new SuntimesDataset(data_actualTime, data_civilTime, data_nauticalTime, data_astroTime, data_noon);
     }
 
     protected void calculateData( Context context )
     {
         initData(context);
-        data_actualTime.calculate();
-        data_civilTime.calculate();
-        data_nauticalTime.calculate();
-        data_astroTime.calculate();
-        data_noon.calculate();
+        dataset.calculateData();
+        initNotes();
     }
 
     protected void updateViews( Context context )
@@ -645,17 +679,17 @@ public class SuntimesActivity extends AppCompatActivity
         //
         // today's view
         //
-        SuntimesUtils.TimeDisplayText sunriseString_actualTime = utils.calendarTimeShortDisplayString(context, data_actualTime.sunriseCalendarToday());
-        SuntimesUtils.TimeDisplayText sunriseString_civilTime = utils.calendarTimeShortDisplayString(context, data_civilTime.sunriseCalendarToday());
-        SuntimesUtils.TimeDisplayText sunriseString_nauticalTime = utils.calendarTimeShortDisplayString(context, data_nauticalTime.sunriseCalendarToday());
-        SuntimesUtils.TimeDisplayText sunriseString_astroTime = utils.calendarTimeShortDisplayString(context, data_astroTime.sunriseCalendarToday());
+        SuntimesUtils.TimeDisplayText sunriseString_actualTime = utils.calendarTimeShortDisplayString(context, dataset.dataActual.sunriseCalendarToday());
+        SuntimesUtils.TimeDisplayText sunriseString_civilTime = utils.calendarTimeShortDisplayString(context, dataset.dataCivil.sunriseCalendarToday());
+        SuntimesUtils.TimeDisplayText sunriseString_nauticalTime = utils.calendarTimeShortDisplayString(context, dataset.dataNautical.sunriseCalendarToday());
+        SuntimesUtils.TimeDisplayText sunriseString_astroTime = utils.calendarTimeShortDisplayString(context, dataset.dataAstro.sunriseCalendarToday());
 
-        SuntimesUtils.TimeDisplayText noonString = utils.calendarTimeShortDisplayString(context, data_noon.sunriseCalendarToday() );
+        SuntimesUtils.TimeDisplayText noonString = utils.calendarTimeShortDisplayString(context, dataset.dataNoon.sunriseCalendarToday() );
 
-        SuntimesUtils.TimeDisplayText sunsetString_actualTime = utils.calendarTimeShortDisplayString(context, data_actualTime.sunsetCalendarToday());
-        SuntimesUtils.TimeDisplayText sunsetString_civilTime = utils.calendarTimeShortDisplayString(context, data_civilTime.sunsetCalendarToday());
-        SuntimesUtils.TimeDisplayText sunsetString_nauticalTime = utils.calendarTimeShortDisplayString(context, data_nauticalTime.sunsetCalendarToday());
-        SuntimesUtils.TimeDisplayText sunsetString_astroTime = utils.calendarTimeShortDisplayString(context, data_astroTime.sunsetCalendarToday());
+        SuntimesUtils.TimeDisplayText sunsetString_actualTime = utils.calendarTimeShortDisplayString(context, dataset.dataActual.sunsetCalendarToday());
+        SuntimesUtils.TimeDisplayText sunsetString_civilTime = utils.calendarTimeShortDisplayString(context, dataset.dataCivil.sunsetCalendarToday());
+        SuntimesUtils.TimeDisplayText sunsetString_nauticalTime = utils.calendarTimeShortDisplayString(context, dataset.dataNautical.sunsetCalendarToday());
+        SuntimesUtils.TimeDisplayText sunsetString_astroTime = utils.calendarTimeShortDisplayString(context, dataset.dataAstro.sunsetCalendarToday());
 
         txt_sunrise_actual.setText(sunriseString_actualTime.toString());
         txt_sunrise_civil.setText(sunriseString_civilTime.toString());
@@ -669,15 +703,15 @@ public class SuntimesActivity extends AppCompatActivity
         txt_sunset_nautical.setText(sunsetString_nauticalTime.toString());
         txt_sunset_astro.setText(sunsetString_astroTime.toString());
 
-        SuntimesUtils.TimeDisplayText dayLengthDisplay = utils.timeDeltaLongDisplayString(0, data_actualTime.dayLengthToday());
+        SuntimesUtils.TimeDisplayText dayLengthDisplay = utils.timeDeltaLongDisplayString(0, dataset.dataActual.dayLengthToday());
         dayLengthDisplay.setSuffix("");
         txt_daylength.setText(dayLengthDisplay.toString());
 
-        SuntimesUtils.TimeDisplayText lightLengthDisplay = utils.timeDeltaLongDisplayString(0, data_civilTime.dayLengthToday());
+        SuntimesUtils.TimeDisplayText lightLengthDisplay = utils.timeDeltaLongDisplayString(0, dataset.dataCivil.dayLengthToday());
         lightLengthDisplay.setSuffix("");
         txt_lightlength.setText(lightLengthDisplay.toString());
 
-        Date data_date = data_actualTime.date();
+        Date data_date = dataset.dataActual.date();
         //DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());       // 4/11/2016
         DateFormat dateFormat = android.text.format.DateFormat.getMediumDateFormat(getApplicationContext());   // Apr 11, 2016
         //DateFormat dateFormat = android.text.format.DateFormat.getLongDateFormat(getApplicationContext());   // April 11, 2016
@@ -686,17 +720,17 @@ public class SuntimesActivity extends AppCompatActivity
         //
         // tomorrow's view
         //
-        SuntimesUtils.TimeDisplayText sunriseString_actualTime2 = utils.calendarTimeShortDisplayString(context, data_actualTime.sunriseCalendarOther());
-        SuntimesUtils.TimeDisplayText sunriseString_civilTime2 = utils.calendarTimeShortDisplayString(context, data_civilTime.sunriseCalendarOther());
-        SuntimesUtils.TimeDisplayText sunriseString_nauticalTime2 = utils.calendarTimeShortDisplayString(context, data_nauticalTime.sunriseCalendarOther());
-        SuntimesUtils.TimeDisplayText sunriseString_astroTime2 = utils.calendarTimeShortDisplayString(context, data_astroTime.sunriseCalendarOther());
+        SuntimesUtils.TimeDisplayText sunriseString_actualTime2 = utils.calendarTimeShortDisplayString(context, dataset.dataActual.sunriseCalendarOther());
+        SuntimesUtils.TimeDisplayText sunriseString_civilTime2 = utils.calendarTimeShortDisplayString(context, dataset.dataCivil.sunriseCalendarOther());
+        SuntimesUtils.TimeDisplayText sunriseString_nauticalTime2 = utils.calendarTimeShortDisplayString(context, dataset.dataNautical.sunriseCalendarOther());
+        SuntimesUtils.TimeDisplayText sunriseString_astroTime2 = utils.calendarTimeShortDisplayString(context, dataset.dataAstro.sunriseCalendarOther());
 
-        SuntimesUtils.TimeDisplayText noonString2 = utils.calendarTimeShortDisplayString(context, data_noon.sunriseCalendarOther() );
+        SuntimesUtils.TimeDisplayText noonString2 = utils.calendarTimeShortDisplayString(context, dataset.dataNoon.sunriseCalendarOther() );
 
-        SuntimesUtils.TimeDisplayText sunsetString_actualTime2 = utils.calendarTimeShortDisplayString(context, data_actualTime.sunsetCalendarOther());
-        SuntimesUtils.TimeDisplayText sunsetString_civilTime2 = utils.calendarTimeShortDisplayString(context, data_civilTime.sunsetCalendarOther());
-        SuntimesUtils.TimeDisplayText sunsetString_nauticalTime2 = utils.calendarTimeShortDisplayString(context, data_nauticalTime.sunsetCalendarOther());
-        SuntimesUtils.TimeDisplayText sunsetString_astroTime2 = utils.calendarTimeShortDisplayString(context, data_astroTime.sunsetCalendarOther());
+        SuntimesUtils.TimeDisplayText sunsetString_actualTime2 = utils.calendarTimeShortDisplayString(context, dataset.dataActual.sunsetCalendarOther());
+        SuntimesUtils.TimeDisplayText sunsetString_civilTime2 = utils.calendarTimeShortDisplayString(context, dataset.dataCivil.sunsetCalendarOther());
+        SuntimesUtils.TimeDisplayText sunsetString_nauticalTime2 = utils.calendarTimeShortDisplayString(context, dataset.dataNautical.sunsetCalendarOther());
+        SuntimesUtils.TimeDisplayText sunsetString_astroTime2 = utils.calendarTimeShortDisplayString(context, dataset.dataAstro.sunsetCalendarOther());
 
         txt_sunrise2_actual.setText(sunriseString_actualTime2.toString());
         txt_sunrise2_civil.setText(sunriseString_civilTime2.toString());
@@ -710,229 +744,22 @@ public class SuntimesActivity extends AppCompatActivity
         txt_sunset2_nautical.setText(sunsetString_nauticalTime2.toString());
         txt_sunset2_astro.setText(sunsetString_astroTime2.toString());
 
-        SuntimesUtils.TimeDisplayText dayLengthDisplay2 = utils.timeDeltaLongDisplayString(0, data_actualTime.dayLengthOther());
+        SuntimesUtils.TimeDisplayText dayLengthDisplay2 = utils.timeDeltaLongDisplayString(0, dataset.dataActual.dayLengthOther());
         dayLengthDisplay2.setSuffix("");
         txt_daylength2.setText(dayLengthDisplay2.toString());
 
-        SuntimesUtils.TimeDisplayText lightLengthDisplay2 = utils.timeDeltaLongDisplayString(0, data_civilTime.dayLengthOther());
+        SuntimesUtils.TimeDisplayText lightLengthDisplay2 = utils.timeDeltaLongDisplayString(0, dataset.dataCivil.dayLengthOther());
         lightLengthDisplay2.setSuffix("");
         txt_lightlength2.setText(lightLengthDisplay2.toString());
 
-        Date data_date2 = data_actualTime.dateOther();
+        Date data_date2 = dataset.dataActual.dateOther();
         txt_date2.setText(getString(R.string.tomorrow) + "\n" + dateFormat.format(data_date2));
 
         //
         // clock
         //
-        txt_timezone.setText(data_actualTime.timezone());
+        txt_timezone.setText(dataset.timezone());
         startTimeTask();
-    }
-
-    private void timeNote(Context context, Calendar now )
-    {
-        timeNote(context, now, false);
-    }
-
-    private void timeNote(Context context, Calendar now, boolean transitionNext )
-    {
-        WidgetSettings.TimeMode noteMode;
-        int noteIcon, noteColor;
-        SuntimesUtils.TimeDisplayText timeString;
-        String noteString, untilString;
-        long timestamp;
-
-        Date time = now.getTime();
-        Date sunrise = data_actualTime.sunriseCalendarToday().getTime();
-        Date sunsetAstroTwilight = data_astroTime.sunsetCalendarToday().getTime();
-
-        boolean afterSunriseToday = time.after(sunrise);
-        if (afterSunriseToday && time.before(sunsetAstroTwilight))
-        {
-            // a time after sunrise
-            noteIcon = R.drawable.ic_sunset_large;
-            noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
-
-            int setChoice = WidgetSettings.loadTimeNoteSetPref(context, AppWidgetManager.INVALID_APPWIDGET_ID).getSetOrder();
-            Date sunset = data_actualTime.sunsetCalendarToday().getTime();
-            if (time.before(sunset) && setChoice <= WidgetSettings.TimeMode.OFFICIAL.getSetOrder())
-            {
-                // day time: note the time until sunset
-                timestamp = sunset.getTime();
-                noteMode = WidgetSettings.TimeMode.OFFICIAL;
-                timeString = utils.timeDeltaDisplayString(time, sunset);
-                noteString = context.getString(R.string.until_sunset);
-                untilString = getString(R.string.until);
-
-            } else {
-                untilString = getString(R.string.until_end);
-
-                Date civilTwilight = data_civilTime.sunsetCalendarToday().getTime();
-                if (time.before(civilTwilight) && setChoice <= WidgetSettings.TimeMode.CIVIL.getSetOrder())
-                {
-                    // civil twilight: note time until end of civil twilight
-                    timestamp = civilTwilight.getTime();
-                    noteMode = WidgetSettings.TimeMode.CIVIL;
-                    timeString = utils.timeDeltaDisplayString(time, civilTwilight);
-                    noteString = context.getString(R.string.untilEnd_civilTwilight);
-
-                } else {
-                    Date nauticalTwilight = data_nauticalTime.sunsetCalendarToday().getTime();
-                    if (time.before(nauticalTwilight) && setChoice <= WidgetSettings.TimeMode.NAUTICAL.getSetOrder())
-                    {
-                        // nautical twilight: note time until end of nautical twilight
-                        timestamp = nauticalTwilight.getTime();
-                        noteMode = WidgetSettings.TimeMode.NAUTICAL;
-                        timeString = utils.timeDeltaDisplayString(time, nauticalTwilight);
-                        noteString = context.getString(R.string.untilEnd_nauticalTwilight);
-
-                    } else {
-                        // astronomical twilight: note time until night
-                        timestamp = sunsetAstroTwilight.getTime();
-                        noteMode = WidgetSettings.TimeMode.ASTRONOMICAL;
-                        timeString = utils.timeDeltaDisplayString(time, sunsetAstroTwilight);
-                        noteString = context.getString(R.string.untilEnd_astroTwilight);
-                    }
-                }
-            }
-
-        } else {
-            // a time before sunrise
-            noteIcon = R.drawable.ic_sunrise_large;
-            untilString = getString(R.string.until);
-            noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_rising);
-
-            int riseChoice = WidgetSettings.loadTimeNoteRisePref(context, AppWidgetManager.INVALID_APPWIDGET_ID).getRiseOrder();
-            Date astroTwilight = afterSunriseToday ? data_astroTime.sunriseCalendarOther().getTime()
-                                                   : data_astroTime.sunriseCalendarToday().getTime();
-            if (time.before(astroTwilight) && riseChoice <= WidgetSettings.TimeMode.ASTRONOMICAL.getRiseOrder())
-            {
-                // night: note time until astro twilight today
-                timestamp = astroTwilight.getTime();
-                noteMode = WidgetSettings.TimeMode.ASTRONOMICAL;
-                timeString = utils.timeDeltaDisplayString(time, astroTwilight);
-                noteString = context.getString(R.string.until_astroTwilight);
-
-            } else {
-                Date nauticalTwilight = afterSunriseToday ? data_nauticalTime.sunriseCalendarOther().getTime()
-                                                          : data_nauticalTime.sunriseCalendarToday().getTime();
-
-                if (time.before(nauticalTwilight) && riseChoice <= WidgetSettings.TimeMode.NAUTICAL.getRiseOrder())
-                {
-                    // astronomical twilight: note time until nautical twilight
-                    timestamp = nauticalTwilight.getTime();
-                    noteMode = WidgetSettings.TimeMode.NAUTICAL;
-                    timeString = utils.timeDeltaDisplayString(time, nauticalTwilight);
-                    noteString = context.getString(R.string.until_nauticalTwilight);
-
-                } else {
-                    Date civilTwilight = afterSunriseToday ? data_civilTime.sunriseCalendarOther().getTime()
-                                                           : data_civilTime.sunriseCalendarToday().getTime();
-                    if (time.before(civilTwilight) && riseChoice <= WidgetSettings.TimeMode.CIVIL.getRiseOrder())
-                    {
-                        // nautical twilight: note time until civil twilight
-                        timestamp = civilTwilight.getTime();
-                        noteMode = WidgetSettings.TimeMode.CIVIL;
-                        timeString = utils.timeDeltaDisplayString(time, civilTwilight);
-                        noteString = context.getString(R.string.until_civilTwilight);
-
-                    } else {
-                        // civil twilight: note time until sunrise
-                        sunrise = afterSunriseToday ? data_actualTime.sunriseCalendarOther().getTime()
-                                                    : data_actualTime.sunriseCalendarToday().getTime();
-
-                        timestamp = sunrise.getTime();
-                        noteMode = WidgetSettings.TimeMode.OFFICIAL;
-                        timeString = utils.timeDeltaDisplayString(time, sunrise);
-                        noteString = context.getString(R.string.until_sunrise);
-                    }
-                }
-            }
-        }
-
-        NoteData note = new NoteData(noteMode, timeString, untilString, noteString, noteIcon, noteColor);
-        note.timestamp = timestamp;
-
-        if (currentNote == null)
-        {
-            setTimeNote(note, transitionNext);
-
-        } else if (!currentNote.equals(note)) {
-            setTimeNote(note, transitionNext);
-        }
-    }
-
-    private class NoteData
-    {
-        public WidgetSettings.TimeMode noteMode;
-        public SuntimesUtils.TimeDisplayText timeText;
-        public String prefixText;
-        public String noteText;
-        public int noteIconResource;
-        public int noteColor;
-        public long timestamp;
-
-        public NoteData(WidgetSettings.TimeMode noteMode, SuntimesUtils.TimeDisplayText timeText, String prefixText, String noteText, int noteIconResource, int noteColor)
-        {
-            this.noteMode = noteMode;
-            this.timeText = timeText;
-            this.prefixText = prefixText;
-            this.noteText = noteText;
-            this.noteIconResource = noteIconResource;
-            this.noteColor = noteColor;
-        }
-
-        @Override
-        public boolean equals(Object obj)
-        {
-            if (obj == null || !NoteData.class.isAssignableFrom(obj.getClass()))
-                return false;
-
-            final NoteData other = (NoteData) obj;
-            if (other.noteMode != noteMode)
-                return false;
-
-            if (!other.timeText.getValue().equals(timeText.getValue()))
-                return false;
-
-            return true;
-        }
-    }
-
-    protected void setTimeNote( NoteData note, boolean transitionNext )
-    {
-        if (note_flipper.getDisplayedChild() == 0)
-        {
-            // currently using view1, ready view2
-            ic_time2_note.setBackgroundResource(note.noteIconResource);
-            ic_time2_note.setVisibility(View.VISIBLE);
-            txt_time2_note1.setText(note.timeText.toString());
-            txt_time2_note2.setText(note.prefixText);
-            txt_time2_note3.setText(note.noteText);
-            txt_time2_note3.setTextColor(note.noteColor);
-
-        } else {
-            // currently using view2, ready view1
-            ic_time1_note.setBackgroundResource(note.noteIconResource);
-            ic_time1_note.setVisibility(View.VISIBLE);
-            txt_time1_note1.setText(note.timeText.toString());
-            txt_time1_note2.setText(note.prefixText);
-            txt_time1_note3.setText(note.noteText);
-            txt_time1_note3.setTextColor(note.noteColor);
-        }
-
-        if (transitionNext)
-        {
-            note_flipper.setInAnimation(anim_note_inNext);
-            note_flipper.setOutAnimation(anim_note_outNext);
-            note_flipper.showNext();
-
-        } else {
-            note_flipper.setInAnimation(anim_note_inPrev);
-            note_flipper.setOutAnimation(anim_note_outPrev);
-            note_flipper.showPrevious();
-        }
-
-        currentNote = note;
     }
 
     /**
@@ -964,7 +791,7 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public void run()
         {
-            if (data_actualTime == null || !data_actualTime.isCalculated())
+            if (!dataset.isCalculated())
             {
                 Log.w("SuntimesActivity", "updateTimeTask called before data was ready!");
                 return;
@@ -980,12 +807,11 @@ public class SuntimesActivity extends AppCompatActivity
      */
     protected void updateTimeViews(Context context)
     {
-        Calendar now = Calendar.getInstance(TimeZone.getTimeZone(data_actualTime.timezone()));
-
+        Calendar now = dataset.now();
         SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(this, now);
         txt_time.setText(timeText.getValue());
         txt_time_suffix.setText(timeText.getSuffix());
-        timeNote(context, now);
+        notes.updateNote(context, now);
     }
 
     /**
@@ -1021,10 +847,10 @@ public class SuntimesActivity extends AppCompatActivity
                     secondTouchX = event.getX();
                     if ((firstTouchX - secondTouchX) >= FLING_SENSITIVITY)
                     {
-                        showNextNote();
+                        notes.showNextNote();
 
                     } else if ((secondTouchX - firstTouchX) > FLING_SENSITIVITY) {
-                        showPreviousNote();
+                        notes.showPrevNote();
                     }
                     break;
 
@@ -1155,157 +981,6 @@ public class SuntimesActivity extends AppCompatActivity
         return (prev >= 0);
     }
 
-
-    private boolean isNight( Date time )
-    {
-        Date sunrise = data_actualTime.sunriseCalendarToday().getTime();
-        Date sunsetAstroTwilight = data_astroTime.sunsetCalendarToday().getTime();
-        return (time.before(sunrise) || time.after(sunsetAstroTwilight));
-    }
-
-    public boolean showNextNote()
-    {
-        if (data_actualTime.isCalculated())
-        {
-            Calendar now = Calendar.getInstance(TimeZone.getTimeZone(data_actualTime.timezone()));
-            Date time = now.getTime();
-
-            if (isNight(time))
-                showNextRiseNote();
-            else showNextSetNote();
-
-            timeNote(SuntimesActivity.this, now, true);
-            return true;
-
-        } else {
-            Log.w("showNextNote", "called before data was calculated!");
-            return false;
-        }
-    }
-
-    public boolean showPreviousNote()
-    {
-        if (data_actualTime.isCalculated())
-        {
-            Calendar now = Calendar.getInstance(TimeZone.getTimeZone(data_actualTime.timezone()));
-            Date time = now.getTime();
-
-            if (isNight(time))
-                showPreviousRiseNote();
-            else showPreviousSetNote();
-
-            timeNote(SuntimesActivity.this, now);
-            return true;
-
-        } else {
-            Log.w("showPreviousNote", "called before data was calculated!");
-            return false;
-        }
-    }
-
-    /**
-     * Show the next time note (sunrise).
-     * @return true note was changed
-     */
-    public boolean showNextRiseNote()
-    {
-        Log.d("showNextRiseNote", "...");
-        WidgetSettings.TimeMode currentNoteMode = WidgetSettings.loadTimeNoteRisePref(this, AppWidgetManager.INVALID_APPWIDGET_ID);
-        int currentNote = currentNoteMode.getRiseOrder();
-
-        int nextNote = 0;
-        if (hasNextRiseNote(currentNote))
-        {
-            nextNote = currentNote + 1;
-        }
-
-        WidgetSettings.TimeMode nextNoteMode = WidgetSettings.TimeMode.getModeForRiseOrder(nextNote);
-        WidgetSettings.saveTimeNoteRisePref(this, AppWidgetManager.INVALID_APPWIDGET_ID, nextNoteMode);
-        return true;
-    }
-    public boolean hasNextRiseNote( int riseOrder )
-    {
-        return (riseOrder < WidgetSettings.TimeMode.OFFICIAL.getRiseOrder());
-    }
-
-    /**
-     * Show the next time note (sunset).
-     * @return true note was changed
-     */
-    public boolean showNextSetNote()
-    {
-        Log.d("showNextSetNote", "...");
-        WidgetSettings.TimeMode currentNoteMode = WidgetSettings.loadTimeNoteSetPref(this, AppWidgetManager.INVALID_APPWIDGET_ID);
-        int currentNote = currentNoteMode.getSetOrder();
-
-        int nextNote = 0;
-        if (hasNextSetNote(currentNote))
-        {
-            nextNote = currentNote + 1;
-        }
-
-        WidgetSettings.TimeMode nextNoteMode = WidgetSettings.TimeMode.getModeForSetOrder(nextNote);
-        WidgetSettings.saveTimeNoteSetPref(this, AppWidgetManager.INVALID_APPWIDGET_ID, nextNoteMode);
-        return true;
-    }
-    public boolean hasNextSetNote( int setOrder )
-    {
-        return (setOrder < WidgetSettings.TimeMode.ASTRONOMICAL.getSetOrder());
-    }
-
-    /**
-     * Show the previous time note (sunrise).
-     * @return true note was changed
-     */
-    public boolean showPreviousRiseNote()
-    {
-        Log.d("showPreviousRiseNote", "...");
-        WidgetSettings.TimeMode currentNoteMode = WidgetSettings.loadTimeNoteRisePref(this, AppWidgetManager.INVALID_APPWIDGET_ID);
-        int currentNote = currentNoteMode.getRiseOrder();
-
-        int prevNote = WidgetSettings.TimeMode.OFFICIAL.getRiseOrder();
-        if (hasPreviousRiseNote(currentNote))
-        {
-            prevNote = currentNote - 1;
-        }
-
-        WidgetSettings.TimeMode prevNoteMode = WidgetSettings.TimeMode.getModeForRiseOrder(prevNote);
-        WidgetSettings.saveTimeNoteRisePref(this, AppWidgetManager.INVALID_APPWIDGET_ID, prevNoteMode);
-        return true;
-    }
-    public boolean hasPreviousRiseNote( int riseOrder )
-    {
-        return (riseOrder > 0);
-    }
-
-
-    /**
-     * Show the previous time note (sunset).
-     * @return true note was changed
-     */
-    public boolean showPreviousSetNote()
-    {
-        Log.d("showPreviousSetNote", "...");
-        WidgetSettings.TimeMode currentNoteMode = WidgetSettings.loadTimeNoteSetPref(this, AppWidgetManager.INVALID_APPWIDGET_ID);
-        int currentNote = currentNoteMode.getSetOrder();
-
-        int prevNote = WidgetSettings.TimeMode.ASTRONOMICAL.getSetOrder();
-        if (hasPreviousSetNote(currentNote))
-        {
-            prevNote = currentNote - 1;
-            if (prevNote < 0)
-                prevNote = 0;
-        }
-
-        WidgetSettings.TimeMode prevNoteMode = WidgetSettings.TimeMode.getModeForSetOrder(prevNote);
-        WidgetSettings.saveTimeNoteSetPref(this, AppWidgetManager.INVALID_APPWIDGET_ID, prevNoteMode);
-        return true;
-    }
-    public boolean hasPreviousSetNote( int setOrder )
-    {
-        return (setOrder > 0);
-    }
-
     View.OnClickListener onNextCardClick = new View.OnClickListener()
     {
         @Override
@@ -1329,7 +1004,7 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public void onClick(View view)
         {
-            showNextNote();
+            notes.showNextNote();
         }
     };
 
@@ -1338,7 +1013,7 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public void onClick(View view)
         {
-            showPreviousNote();
+            notes.showPrevNote();
         }
     };
 
@@ -1347,9 +1022,89 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public void onClick(View view)
         {
-            // TODO: make click action configurable
-            scheduleAlarm();
+            AppSettings.ClockTapAction action = AppSettings.loadClockTapActionPref(SuntimesActivity.this);
+            if (action == AppSettings.ClockTapAction.NOTHING)
+            {
+                return;
+            }
+
+            if (action == AppSettings.ClockTapAction.ALARM)
+            {
+                scheduleAlarm();
+                return;
+            }
+
+            if (action == AppSettings.ClockTapAction.NEXT_NOTE)
+            {
+                notes.showNextNote();
+                return;
+            }
+
+            if (action == AppSettings.ClockTapAction.PREV_NOTE)
+            {
+                notes.showPrevNote();
+                return;
+            }
+
+            Log.w("SuntimesActivity", "Unrecognized ClockTapAction (so doing nothing)" );
         }
     };
 
+
+    public void highlightField( SolarEvents highlightField )
+    {
+        for (SolarEvents event : timeFields.keySet())
+        {
+            TextView txtField = timeFields.get(event);
+            if (txtField != null)
+            {
+                if (event == highlightField)
+                {
+                    txtField.setTypeface(txtField.getTypeface(), Typeface.BOLD);
+                    txtField.setPaintFlags(txtField.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
+                } else {
+                    txtField.setTypeface(Typeface.create(txtField.getTypeface(), Typeface.NORMAL), Typeface.NORMAL);
+                    txtField.setPaintFlags(txtField.getPaintFlags() & (~Paint.UNDERLINE_TEXT_FLAG));
+                }
+            }
+        }
+    }
+
+    protected void updateNoteUI( NoteData note, int transition )
+    {
+        if (note_flipper.getDisplayedChild() == 0)
+        {
+            // currently using view1, ready view2
+            ic_time2_note.setBackgroundResource(note.noteIconResource);
+            ic_time2_note.setVisibility(View.VISIBLE);
+            txt_time2_note1.setText(note.timeText.toString());
+            txt_time2_note2.setText(note.prefixText);
+            txt_time2_note3.setText(note.noteText);
+            txt_time2_note3.setTextColor(note.noteColor);
+
+        } else {
+            // currently using view2, ready view1
+            ic_time1_note.setBackgroundResource(note.noteIconResource);
+            ic_time1_note.setVisibility(View.VISIBLE);
+            txt_time1_note1.setText(note.timeText.toString());
+            txt_time1_note2.setText(note.prefixText);
+            txt_time1_note3.setText(note.noteText);
+            txt_time1_note3.setTextColor(note.noteColor);
+        }
+
+        if (transition == NoteChangedListener.TRANSITION_NEXT)
+        {
+            note_flipper.setInAnimation(anim_note_inNext);
+            note_flipper.setOutAnimation(anim_note_outNext);
+            note_flipper.showNext();
+
+        } else {
+            note_flipper.setInAnimation(anim_note_inPrev);
+            note_flipper.setOutAnimation(anim_note_outPrev);
+            note_flipper.showPrevious();
+        }
+
+        highlightField(note.noteMode);
+    }
 }
