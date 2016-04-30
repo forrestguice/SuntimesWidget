@@ -30,7 +30,7 @@ The widget is (re)configurable:
 * configure location (latitude / longitude)
 * configure timezone
 * configure widget theme (dark theme, light theme, transparent themes)
-* configure user-defined title (that supports limited substitutions)
+* configure user-defined title (supports limited substitutions)
 * configure comparison mode (against tomorrow or yesterday)
 
 
