@@ -7,7 +7,6 @@ The app:
 
 **App Features**
 
-The app:
 * displays the current time, and notes the time until next sunrise, sunset, or civil/nautical/astronomical twilight 
 * can set an alarm for next sunrise, sunset, or civil/nautical/astronomical twilight
 * can display the configured location on a map (requires a map application)
