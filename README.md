@@ -28,9 +28,9 @@ The home screen widget is resizable and has layouts for:
 * a 1x3 widget that displays the sunrise and sunset times, and displays the difference in the amount of daylight (in minutes) between today and tomorrow (or today and yesterday).
 
 
-<img alt="screenshot1" src='https://cloud.githubusercontent.com/assets/10246147/14938297/ab3697ee-0ed3-11e6-80c2-a9611c1f20cc.png' width="280px" style="float:right; />
+<img alt="screenshot1" src='https://cloud.githubusercontent.com/assets/10246147/14938297/ab3697ee-0ed3-11e6-80c2-a9611c1f20cc.png' width="280px" style="float:right" />
 
-<img alt="screenshot2" src='https://cloud.githubusercontent.com/assets/10246147/14938299/ad52bc2e-0ed3-11e6-8916-9b7e75057a62.png' width="280px" style="float:right;" />
+<img alt="screenshot2" src='https://cloud.githubusercontent.com/assets/10246147/14938299/ad52bc2e-0ed3-11e6-8916-9b7e75057a62.png' width="280px" style="float:right" />
 
 
 **Legal Stuff**
