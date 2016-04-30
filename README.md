@@ -30,6 +30,9 @@ The home screen widget is resizable and has layouts for:
 
 <img alt="screenshot1" src='https://cloud.githubusercontent.com/assets/10246147/14938297/ab3697ee-0ed3-11e6-80c2-a9611c1f20cc.png' width="280px" />
 
+<img alt="screenshot2" src='https://cloud.githubusercontent.com/assets/10246147/14938299/ad52bc2e-0ed3-11e6-8916-9b7e75057a62.png' width="280px" />
+
+
 **Legal Stuff**
 
 The goal of this project is an app that is free and open-source (FOSS). Get the source code (under GPLv3) at: https://github.com/forrestguice/SuntimesWidget
