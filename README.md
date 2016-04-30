@@ -11,8 +11,8 @@ The app:
 **Widget Features**
 
 The widget is themeable and provides:
-* a Dark theme (and dark w/ transparent background)
-* a Light theme (and light w/ transparent background)
+* a dark theme (and dark w/ transparent background)
+* a light theme (and light w/ transparent background)
 
 The widget is (re)configurable:
 * configure location (latitude / longitude)
