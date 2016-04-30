@@ -8,11 +8,14 @@ This app displays sunrise, sunset, civil twilight, nautical twilight, and astron
 * *does not* require network connectivity. Calculations are performed locally on the device (does not rely on third-party weather services).
 
 **App Features**
+
+The app:
 * displays the current time, and notes the time until next sunrise, sunset, or civil/nautical/astronomical twilight 
 * can set an alarm for next sunrise, sunset, or civil/nautical/astronomical twilight
 * can display the configured location on a map (requires a map application)
 
 **Widget Features**
+
 The widget is resizable and has layouts for:
 * a 1x1 widget that displays EITHER the sunrise OR sunset time.
 * a 1x1 widget that displays BOTH the sunrise AND sunset times.
