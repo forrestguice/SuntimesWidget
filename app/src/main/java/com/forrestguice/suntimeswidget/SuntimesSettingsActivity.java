@@ -20,6 +20,8 @@ package com.forrestguice.suntimeswidget;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -27,8 +29,10 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.TypedValue;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.List;
@@ -39,7 +43,8 @@ import java.util.List;
  */
 public class SuntimesSettingsActivity extends PreferenceActivity
 {
-    final static String ACTION_PREFS_ONE = "com.forrestguice.suntimeswidget.PREFS_ONE";
+    final static String ACTION_PREFS_GENERAL = "com.forrestguice.suntimeswidget.PREFS_GENERAL";
+    final static String ACTION_PREFS_UI = "com.forrestguice.suntimeswidget.PREFS_UI";
     final static String ACTION_PREFS_WIDGETLIST = "com.forrestguice.suntimeswidget.PREFS_WIDGETLIST";
 
     //protected static SuntimesUtils utils = new SuntimesUtils();
@@ -56,12 +61,16 @@ public class SuntimesSettingsActivity extends PreferenceActivity
     @Override
     public void onCreate(Bundle icicle)
     {
+        setTheme(AppSettings.loadTheme(this));
         super.onCreate(icicle);
 
         String action = getIntent().getAction();
-        if (action != null && action.equals(ACTION_PREFS_ONE))
+        if (action != null && action.equals(ACTION_PREFS_GENERAL))
         {
             addPreferencesFromResource(R.xml.preference_general);
+
+        } else if (action != null && action.equals(ACTION_PREFS_UI)) {
+            addPreferencesFromResource(R.xml.preference_userinterface);
 
         } else if (action != null && action.equals(ACTION_PREFS_WIDGETLIST)) {
             // TODO
@@ -80,9 +89,26 @@ public class SuntimesSettingsActivity extends PreferenceActivity
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
         {
             loadHeadersFromResource(R.xml.preference_headers, target);
+
+            TypedValue typedValue = new TypedValue();   // force styled icons on headers
+            int[] icActionAttr = new int[] { R.attr.icActionSettings };
+            TypedArray a = obtainStyledAttributes(typedValue.data, icActionAttr);
+            int settingsIcon = a.getResourceId(0, R.drawable.ic_action_settings);
+            a.recycle();
+
+            for (Header header : target)
+            {
+                if (header.iconRes == 0)
+                {
+                    header.iconRes = settingsIcon;
+                }
+            }
         }
     }
 
+    /**
+     * General Prefs
+     */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class GeneralPrefsFragment extends PreferenceFragment
     {
@@ -90,7 +116,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
         public void onCreate(Bundle savedInstanceState)
         {
             super.onCreate(savedInstanceState);
-            Log.i("args", "Arguments: " + getArguments());
+            Log.i("GeneralPrefsFragment", "Arguments: " + getArguments());
 
             PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_general, false);
             addPreferencesFromResource(R.xml.preference_general);
@@ -116,10 +142,33 @@ public class SuntimesSettingsActivity extends PreferenceActivity
         }
     }
 
+    /**
+     * User Interface Prefs
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class UIPrefsFragment extends PreferenceFragment
+    {
+        @Override
+        public void onCreate(Bundle savedInstanceState)
+        {
+            super.onCreate(savedInstanceState);
+            Log.i("UIPrefsFragment", "Arguments: " + getArguments());
+
+            PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_userinterface, false);
+            addPreferencesFromResource(R.xml.preference_userinterface);
+        }
+    }
+
+    /**
+     *
+     * @param fragmentName
+     * @return
+     */
     @Override
     protected boolean isValidFragment(String fragmentName)
     {
-        return GeneralPrefsFragment.class.getName().equals(fragmentName);
+        return GeneralPrefsFragment.class.getName().equals(fragmentName) ||
+               UIPrefsFragment.class.getName().equals(fragmentName);
     }
 
     /**

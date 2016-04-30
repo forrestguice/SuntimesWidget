@@ -47,6 +47,7 @@
     <string name="until_civilTwilight">civil twilight</string>
     <string name="until_nauticalTwilight">nautical twilight</string>
     <string name="until_sunrise">sunrise</string>
+    <string name="until_noon">solar noon</string>
 
     <string name="until_sunset">sunset</string>
     <string name="untilEnd_civilTwilight">civil twilight</string>
@@ -116,6 +117,30 @@
     <string name="configLabel_action_launch">Activity:</string>
     <string name="configHint_action_launch">com.forrestguice.suntimeswidget.SuntimesActivity</string>
 
+    <string name="configLabel_ui">User Interface</string>
+    <string-array name="appThemes_display">
+        <item>Light Theme</item>
+        <item>Dark Theme</item>
+    </string-array>
+    <string-array name="appThemes_values">
+        <item>light</item>
+        <item>dark</item>
+    </string-array>
+
+    <string-array name="clockTapActions_display">
+        <item>Do nothing</item>
+        <item>Set an Alarm</item>
+        <item>Show next note</item>
+        <item>Show previous note</item>
+    </string-array>
+    <string-array name="clockTapActions_values">
+        <item>NOTHING</item>
+        <item>ALARM</item>
+        <item>NEXT_NOTE</item>
+        <item>PREV_NOTE</item>
+    </string-array>
+
+
     <string name="configLabel_general">General Settings</string>
     <string name="configLabel_general_calculator">Data Source:</string>
     <string name="configLabel_general_timeMode">Mode:</string>
@@ -132,6 +157,7 @@
 
     <string name="configLabel_action">Action Settings</string>
     <string name="configLabel_action_onTap">On Tap:</string>
+    <string name="configLabel_action_onClockTap">On Clock Tap:</string>
 
     <string name="configLabel_appearance">Appearance Settings</string>
     <string name="configLabel_appearance_1x1mode">1x1 Layout:</string>
@@ -150,26 +176,31 @@
     <string name="schedalarm_dialog_cancel">Cancel</string>
 
     <string name="schedalarm_dialog_note">about %s from now.</string>
-    <string-array name="schedalarm_dialog_modes_short">
+
+    <string-array name="solarevents_short">
         <item>astronomical twilight</item>
         <item>nautical twilight</item>
         <item>civil twilight</item>
         <item>sunrise</item>
+        <item>solar noon</item>
         <item>sunset</item>
         <item>civil twilight</item>
         <item>nautical twilight</item>
         <item>astronomical twilight</item>
     </string-array>
-    <string-array name="schedalarm_dialog_modes_long">
+    <string-array name="solarevents_long">
         <item>morning astronomical twilight (start)</item>
         <item>morning nautical twilight (start)</item>
         <item>morning civil twilight (start)</item>
         <item>sunrise</item>
+        <item>solar noon</item>
         <item>sunset</item>
         <item>evening civil twilight (end)</item>
         <item>evening nautical twilight (end)</item>
         <item>evening astronomical twilight (end)</item>
     </string-array>
+
+
 
     <string name="gps_dialog_msg">GPS is disabled. Enable it?</string>
     <string name="gps_dialog_ok">Yes</string>

@@ -40,6 +40,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
@@ -101,6 +102,7 @@ public class SuntimesConfigActivity extends Activity
     @Override
     public void onCreate(Bundle icicle)
     {
+        setTheme(AppSettings.loadTheme(this));
         super.onCreate(icicle);
         setResult(RESULT_CANCELED);  // causes widget host to cancel if user presses back
         setContentView(R.layout.layout_settings);

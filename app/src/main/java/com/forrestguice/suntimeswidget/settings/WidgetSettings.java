@@ -354,11 +354,11 @@ public class WidgetSettings
      */
     public static enum TimeMode
     {
-        OFFICIAL("Actual", "Actual Time", 3, 0),
-        CIVIL("Civil", "Civil Twilight", 2, 1),
-        NAUTICAL("Nautical", "Nautical Twilight", 1, 2),
-        ASTRONOMICAL("Astronomical", "Astronomical Twilight", 0, 3),
-        NOON("Noon", "Solar Noon", -1, -1);
+        OFFICIAL("Actual", "Actual Time", 3, 1),
+        CIVIL("Civil", "Civil Twilight", 2, 2),
+        NAUTICAL("Nautical", "Nautical Twilight", 1, 3),
+        ASTRONOMICAL("Astronomical", "Astronomical Twilight", 0, 4),
+        NOON("Noon", "Solar Noon", 4, 0);
 
         public static boolean shortDisplayStrings = false;
         private String longDisplayString;

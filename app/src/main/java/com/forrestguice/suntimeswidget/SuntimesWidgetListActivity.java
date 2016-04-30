@@ -39,6 +39,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.ArrayList;
@@ -59,6 +60,7 @@ public class SuntimesWidgetListActivity extends Activity
     @Override
     public void onCreate(Bundle icicle)
     {
+        setTheme(AppSettings.loadTheme(this));
         super.onCreate(icicle);
         setResult(RESULT_CANCELED);
         setContentView(R.layout.layout_widgetlist);

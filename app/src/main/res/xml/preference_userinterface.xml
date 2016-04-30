@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/configLabel_ui">
+
+        <ListPreference
+            android:key="app_appearance_theme"
+            android:title="@string/configLabel_appearance_theme"
+            android:dialogTitle="@string/configLabel_appearance_theme"
+            android:summary="%s"
+            android:entries="@array/appThemes_display" android:entryValues="@array/appThemes_values"
+            android:defaultValue="dark" />
+
+        <ListPreference
+            android:key="app_ui_clocktapaction"
+            android:title="@string/configLabel_action_onClockTap"
+            android:dialogTitle="@string/configLabel_action_onClockTap"
+            android:summary="%s"
+            android:entries="@array/clockTapActions_display" android:entryValues="@array/clockTapActions_values"
+            android:defaultValue="ALARM" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

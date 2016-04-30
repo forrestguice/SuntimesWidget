@@ -28,7 +28,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:theme="?attr/toolbarTheme"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        app:popupTheme="?attr/actionBarPopupTheme" />
 
     <LinearLayout
         android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -79,16 +79,15 @@
 
             <LinearLayout
                 style="@style/SunsetTimeCard"
-                android:id="@+id/info_time_all_today">
+                android:id="@+id/info_time_all_today"  android:layout_width="wrap_content">
 
                 <include layout="@layout/info_time_all" />
 
                 <LinearLayout
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="vertical">
 
-                    <include layout="@layout/info_time_noon" />
                     <include layout="@layout/info_time_daylength" />
                 </LinearLayout>
 
@@ -103,10 +102,9 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="vertical">
 
-                    <include layout="@layout/info_time_noon" />
                     <include layout="@layout/info_time_daylength" />
                 </LinearLayout>
 
