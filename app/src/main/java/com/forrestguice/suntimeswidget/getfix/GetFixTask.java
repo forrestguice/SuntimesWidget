@@ -30,6 +30,9 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * An AsyncTask that registers a LocationListener, starts listening for
  * gps updates, and then waits a predetermined amount of time for a
@@ -42,9 +45,9 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
     private static final int MAX_AGE = 1000 * 60 * 5;       // consider fixes over 5min be "too old"
 
     private GetFixHelper helper;
-    private Activity myParent;
+    private Context myParent;
     private GetFixUI uiObj;
-    public GetFixTask(Activity parent, GetFixHelper helper)
+    public GetFixTask(Context parent, GetFixHelper helper)
     {
         myParent = parent;
         this.helper = helper;
@@ -102,6 +105,8 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
         uiObj.showProgress(true);
         uiObj.enableUI(false);
 
+        signalStarted();
+
         bestFix = null;
         helper.gettingFix = true;
         elapsedTime = 0;
@@ -122,13 +127,12 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
             }
         });
 
-
         while (elapsedTime < MAX_ELAPSED && !isCancelled())
         {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                // e.printStackTrace();   // silent
             }
 
             stopTime = System.currentTimeMillis();
@@ -157,6 +161,7 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
         uiObj.showProgress(false);
         uiObj.enableUI(true);
         uiObj.onResult(result);
+        signalFinished(result);
     }
 
     @Override
@@ -168,5 +173,59 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
         uiObj.showProgress(false);
         uiObj.enableUI(true);
         uiObj.onResult(result);
+
+        signalCancelled();
+    }
+
+    private ArrayList<GetFixTaskListener> listeners = new ArrayList<GetFixTaskListener>();
+    public void addGetFixTaskListener( GetFixTaskListener listener )
+    {
+        if (!listeners.contains(listener))
+        {
+            listeners.add(listener);
+        }
+    }
+    public void removeGetFixTaskListener( GetFixTaskListener listener )
+    {
+        listeners.remove(listener);
+    }
+    public void addGetFixTaskListeners( List<GetFixTaskListener> listeners )
+    {
+        for (GetFixTask.GetFixTaskListener listener : listeners)
+        {
+            addGetFixTaskListener(listener);
+        }
+    }
+
+    protected void signalStarted()
+    {
+        for (GetFixTaskListener listener : listeners)
+        {
+            if (listener != null)
+                listener.onStarted();
+        }
+    }
+    protected void signalFinished(Location result)
+    {
+        for (GetFixTaskListener listener : listeners)
+        {
+            if (listener != null)
+                listener.onFinished(result);
+        }
+    }
+    protected void signalCancelled()
+    {
+        for (GetFixTaskListener listener : listeners)
+        {
+            if (listener != null)
+                listener.onCancelled();
+        }
+    }
+
+    public static abstract class GetFixTaskListener
+    {
+        public void onStarted() {};
+        public void onFinished(Location result) {};
+        public void onCancelled() {};
     }
 }

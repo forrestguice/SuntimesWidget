@@ -27,6 +27,8 @@ import android.location.LocationManager;
 
 import com.forrestguice.suntimeswidget.R;
 
+import java.util.ArrayList;
+
 /**
  * A helper class that helps to manage a GetFixTask; has methods for starting/stopping the task;
  * allows a single task to run at a time.
@@ -36,10 +38,10 @@ public class GetFixHelper
     public GetFixTask getFixTask = null;
     public boolean gettingFix = false;
 
-    private Activity myParent;
+    private Context myParent;
     private GetFixUI uiObj;
 
-    public GetFixHelper(Activity parent, GetFixUI ui)
+    public GetFixHelper(Context parent, GetFixUI ui)
     {
         myParent = parent;
         uiObj = ui;
@@ -61,10 +63,10 @@ public class GetFixHelper
             if (isGPSEnabled())
             {
                 getFixTask = new GetFixTask(myParent, this);
+                getFixTask.addGetFixTaskListeners(listeners);
                 getFixTask.execute();
 
-            } else
-            {
+            } else {
                 showGPSEnabledPrompt();
             }
         }
@@ -119,6 +121,27 @@ public class GetFixHelper
         if (gpsPrompt != null)
         {
             gpsPrompt.dismiss();
+        }
+    }
+
+    private ArrayList<GetFixTask.GetFixTaskListener> listeners = new ArrayList<>();
+    public void addGetFixTaskListener( GetFixTask.GetFixTaskListener listener )
+    {
+        if (!listeners.contains(listener))
+        {
+            listeners.add(listener);
+            if (getFixTask != null)
+            {
+                getFixTask.addGetFixTaskListener(listener);
+            }
+        }
+    }
+    public void removeGetFixTaskListener( GetFixTask.GetFixTaskListener listener )
+    {
+        listeners.remove(listener);
+        if (getFixTask != null)
+        {
+            getFixTask.removeGetFixTaskListener(listener);
         }
     }
 
