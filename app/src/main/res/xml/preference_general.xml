@@ -11,6 +11,8 @@
             android:summary="%s"
             android:entries="@null" android:entryValues="@null" android:defaultValue="any" />
 
+        <Preference android:title="Clear Places" android:key="general_clearplaces" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

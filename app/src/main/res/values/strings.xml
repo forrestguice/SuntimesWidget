@@ -40,6 +40,7 @@
     <string name="delta_day_tomorrow">Tomorrow will be</string>
     <string name="delta_day_yesterday">Yesterday was</string>
 
+    <string name="since">since</string>
     <string name="until">until</string>
     <string name="until_end">until end</string>
 
@@ -152,7 +153,7 @@
     <string name="configHint_location_lat">34.54</string>
     <string name="configLabel_location_lon">Longitude:</string>
     <string name="configHint_location_lon">-112.4677778</string>
-    <string name="configLabel_location_name">Label:</string>
+    <string name="configLabel_location_name">Name:</string>
     <string name="configHint_location_name">(optional)</string>
 
     <string name="configLabel_action">Action Settings</string>
@@ -213,6 +214,17 @@
     <string name="location_dialog_title">Location</string>
     <string name="location_dialog_ok">Update</string>
     <string name="location_dialog_cancel">Cancel</string>
+    <string name="location_dialog_error_lat">This is not a valid latitude.</string>
+    <string name="location_dialog_error_lon">This is not a valid longitude.</string>
+
+    <string name="locationclear_dialog_title">Clear Places?</string>
+    <string name="locationclear_dialog_message">Are you sure you want to clear the database of places?</string>
+    <string name="locationclear_dialog_ok">Clear</string>
+    <string name="locationclear_dialog_cancel">Cancel</string>
+
+    <string name="locationcleared_dialog_title">Clearing Places</string>
+    <string name="locationcleared_dialog_message">Clearing the database . . .</string>
+    <string name="locationcleared_toast_success">The database of places has been cleared.</string>
 
     <!-- ~~~~~~~~~~~~ -->
     <!-- Help Stuff -->

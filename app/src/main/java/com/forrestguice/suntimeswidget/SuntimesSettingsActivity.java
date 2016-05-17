@@ -19,19 +19,28 @@
 package com.forrestguice.suntimeswidget;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.TypedArray;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.TypedValue;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -47,7 +56,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
     final static String ACTION_PREFS_UI = "com.forrestguice.suntimeswidget.PREFS_UI";
     final static String ACTION_PREFS_WIDGETLIST = "com.forrestguice.suntimeswidget.PREFS_WIDGETLIST";
 
-    //protected static SuntimesUtils utils = new SuntimesUtils();
+    private Context context;
 
     public SuntimesSettingsActivity()
     {
@@ -79,7 +88,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
             addPreferencesFromResource(R.xml.preference_headers_legacy);
         }
 
-        Context context = SuntimesSettingsActivity.this;
+        context = SuntimesSettingsActivity.this;
         WidgetSettings.initDisplayStrings(context);
     }
 
@@ -112,6 +121,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class GeneralPrefsFragment extends PreferenceFragment
     {
+        private Context myParent;
+
         @Override
         public void onCreate(Bundle savedInstanceState)
         {
@@ -121,6 +132,91 @@ public class SuntimesSettingsActivity extends PreferenceActivity
             PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_general, false);
             addPreferencesFromResource(R.xml.preference_general);
             loadGeneral();
+
+            Preference myPref = (Preference)findPreference("general_clearplaces");
+            myPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
+            {
+                public boolean onPreferenceClick(Preference preference)
+                {
+                    if (myParent != null)
+                    {
+                        AlertDialog.Builder confirm = new AlertDialog.Builder(myParent)
+                                .setTitle(myParent.getString(R.string.locationclear_dialog_title))
+                                .setMessage(myParent.getString(R.string.locationclear_dialog_message))
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .setPositiveButton(myParent.getString(R.string.locationclear_dialog_ok), new DialogInterface.OnClickListener()
+                                {
+                                    public void onClick(DialogInterface dialog, int whichButton)
+                                    {
+                                        new ClearPlacesTask(myParent).execute((Object[]) null);
+                                    }
+                                })
+                                .setNegativeButton(myParent.getString(R.string.locationclear_dialog_cancel), null);
+
+                        confirm.show();
+                        return true;
+                    }
+                    return false;
+                }
+            });
+        }
+
+        @Override
+        public void onAttach(Context context)
+        {
+            super.onAttach(context);
+            myParent = context;
+        }
+
+        @Override
+        public void onAttach(Activity activity)
+        {
+            super.onAttach(activity);
+            myParent = activity;
+        }
+
+        public static class ClearPlacesTask extends AsyncTask<Object, Object, Boolean>
+        {
+            private Context myParent;
+            GetFixDatabaseAdapter db;
+            ProgressDialog progress;
+
+            public ClearPlacesTask( Context context )
+            {
+                myParent = context;
+                db = new GetFixDatabaseAdapter(context.getApplicationContext());
+            }
+
+            public static final long MIN_WAIT_TIME = 2000;
+
+            @Override
+            protected Boolean doInBackground(Object... params)
+            {
+                long startTime = System.currentTimeMillis();
+                db.open();
+                boolean cleared = db.clearPlaces();
+                db.close();
+                long endTime = System.currentTimeMillis();
+
+                while ((endTime - startTime) < MIN_WAIT_TIME)
+                {
+                    endTime = System.currentTimeMillis();
+                }
+                return cleared;
+            }
+
+            @Override
+            protected void onPreExecute()
+            {
+                progress = ProgressDialog.show(myParent, myParent.getString(R.string.locationcleared_dialog_title), myParent.getString(R.string.locationcleared_dialog_message), true);
+            }
+
+            @Override
+            protected void onPostExecute(Boolean result)
+            {
+                progress.dismiss();
+                Toast.makeText(myParent, myParent.getString(R.string.locationcleared_toast_success), Toast.LENGTH_LONG).show();
+            }
         }
 
         private void loadGeneral()
