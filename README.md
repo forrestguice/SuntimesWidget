@@ -1,29 +1,38 @@
 # SuntimesWidget
-An Android widget that displays sunrise and sunset times.
-This project uses [sunrisesunsetlib-java](http://mikereedell.github.io/sunrisesunsetlib-java/).
+An Android app (and home screen widget) that displays sunrise, sunset, civil/nautical/astronomical twilight times for a given location.
 
-**Widget Features:**
-* displays sunrise and sunset times (and related information) for a given location.
-* *does not* require GPS (the location is manually specified). 
-* *does not* require network connectivity; calculations are performed using sunrisesunsetlib-java.
+The app:
+* displays the current time, and notes the time until next sunrise, sunset, or civil/nautical/astronomical twilight.
+* can set an alarm for next sunrise, sunset, or civil/nautical/astronomical twilight.
+* can display the configured location on a map (requires a map application).
+* *does not* require GPS. The location is manually specified by default (and optionally obtained from GPS).
+* *does not* require network connectivity. Calculations are performed locally on the device (does not rely on third-party weather services). The app currently uses [sunrisesunsetlib-java](http://mikereedell.github.io/sunrisesunsetlib-java/) to calculate times.
 
-The widget is resizable and has the following layouts:
-* a 1x1 widget that displays EITHER the sunrise OR sunset time.
-* a 1x1 widget that displays BOTH the sunrise AND sunset times.
-* a 1x2 widget that displays the sunrise and sunset times, and displays the difference in rise and set times between today and tomorrow (or today and yesterday).
-* a 1x3 widget that displays the sunrise and sunset times, and displays the difference in the amount of daylight (in minutes) between today and tomorrow (or today and yesterday).
+**Widget Features**
 
-The widget is themeable and has the following appearances:
-* Dark theme (and dark w/ transparent background)
-* Light theme (and light w/ transparent background)
+The widget is themeable and provides:
+* a dark theme (and dark w/ transparent background)
+* a light theme (and light w/ transparent background)
 
-The widget is configurable:
+The widget is (re)configurable:
 * configure location (latitude / longitude)
 * configure timezone
 * configure widget theme (dark theme, light theme, transparent themes)
-* configure user-defined title (that supports limited substitutions)
+* configure user-defined title (supports limited substitutions)
 * configure comparison mode (against tomorrow or yesterday)
+
+The home screen widget is resizable and has layouts for:
+* a 1x1 widget that displays either the sunrise OR sunset time.
+* a 1x1 widget that displays both the sunrise AND sunset times.
+* a 1x2 widget that displays the sunrise and sunset times, and displays the difference in rise and set times between today and tomorrow (or today and yesterday).
+* a 1x3 widget that displays the sunrise and sunset times, and displays the difference in the amount of daylight (in minutes) between today and tomorrow (or today and yesterday).
+
+
+<img alt="screenshot1" src='https://cloud.githubusercontent.com/assets/10246147/14938297/ab3697ee-0ed3-11e6-80c2-a9611c1f20cc.png' width="280px" />
+
+<img alt="screenshot2" src='https://cloud.githubusercontent.com/assets/10246147/14938299/ad52bc2e-0ed3-11e6-8916-9b7e75057a62.png' width="280px" />
+
 
 **Legal Stuff**
 
-This widget is open source. The source code is available (under GPLv3) at: https://github.com/forrestguice/SuntimesWidget
+The goal of this project is an app that is free and open-source (FOSS). Get the source code (under GPLv3) at: https://github.com/forrestguice/SuntimesWidget
