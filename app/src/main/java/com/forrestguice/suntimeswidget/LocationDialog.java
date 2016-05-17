@@ -55,9 +55,70 @@ public class LocationDialog extends Dialog
 
     private ImageButton button_getfix;
     private ProgressBar progress_getfix;
-
     private GetFixUI getFixUI;
     private GetFixHelper getFixHelper;
+
+    private LocationDialogMode mode = LocationDialogMode.MODE_CUSTOM;
+    public LocationDialogMode getMode()
+    {
+        return mode;
+    }
+    public void setMode( LocationDialogMode mode )
+    {
+        this.mode = mode;
+        switch (mode)
+        {
+            case MODE_AUTO:
+                labl_locationLon.setEnabled(false);
+                text_locationLon.setEnabled(false);
+
+                labl_locationLat.setEnabled(false);
+                text_locationLat.setEnabled(false);
+
+                labl_locationName.setEnabled(false);
+                text_locationName.setEnabled(false);
+
+                button_getfix.setVisibility(View.GONE);
+                break;
+
+            case MODE_CUSTOM:
+            default:
+                labl_locationLon.setEnabled(false);
+                text_locationLon.setEnabled(false);
+
+                labl_locationLat.setEnabled(false);
+                text_locationLat.setEnabled(false);
+
+                labl_locationName.setEnabled(true);
+                text_locationName.setEnabled(true);
+
+                button_getfix.setVisibility(View.VISIBLE);
+                break;
+        }
+    }
+
+    public static enum LocationDialogMode
+    {
+        MODE_AUTO(), MODE_CUSTOM();
+        private LocationDialogMode() {}
+
+        public String toString()
+        {
+            return this.name();
+        }
+
+        public int ordinal( LocationDialogMode[] array )
+        {
+            for (int i=0; i<array.length; i++)
+            {
+                if (array[i].name().equals(this.name()))
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+    }
 
     public LocationDialog(Activity c)
     {
@@ -69,6 +130,7 @@ public class LocationDialog extends Dialog
 
         initViews(myParent);
         loadSettings(myParent);
+        setMode(mode);
     }
 
     protected void initViews( Context context )
@@ -90,7 +152,9 @@ public class LocationDialog extends Dialog
             {
                 final WidgetSettings.LocationMode[] locationModes = WidgetSettings.LocationMode.values();
                 WidgetSettings.LocationMode locationMode = locationModes[parent.getSelectedItemPosition()];
-                setUseCustomLocation((locationMode == WidgetSettings.LocationMode.CUSTOM_LOCATION));
+
+                LocationDialogMode dialogMode = (locationMode == WidgetSettings.LocationMode.CUSTOM_LOCATION) ? LocationDialogMode.MODE_CUSTOM : LocationDialogMode.MODE_AUTO;
+                setMode(dialogMode);
             }
 
             public void onNothingSelected(AdapterView<?> parent)
@@ -137,18 +201,6 @@ public class LocationDialog extends Dialog
     {
         appWidgetId = value;
         loadSettings(myParent);
-    }
-
-    private void setUseCustomLocation( boolean value )
-    {
-        labl_locationLon.setEnabled(value);
-        text_locationLon.setEnabled(value);
-
-        labl_locationLat.setEnabled(value);
-        text_locationLat.setEnabled(value);
-
-        labl_locationName.setEnabled(value);
-        text_locationName.setEnabled(value);
     }
 
     public void onPrepareDialog()
