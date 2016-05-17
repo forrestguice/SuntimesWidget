@@ -57,7 +57,7 @@
 
             <EditText android:id="@+id/appwidget_location_lat"
                       android:layout_width="wrap_content" android:layout_height="wrap_content"
-                      android:inputType="numberDecimal|numberSigned" android:digits="0123456789."
+                      android:inputType="numberDecimal|numberSigned"
                       android:textAppearance="?android:attr/textAppearanceSmallPopupMenu"
                       android:hint="@string/configHint_location_lat" android:enabled="false"
                       android:layout_row="0"
@@ -73,7 +73,7 @@
 
             <EditText android:id="@+id/appwidget_location_lon"
                       android:layout_width="wrap_content" android:layout_height="wrap_content"
-                      android:inputType="numberDecimal|numberSigned" android:digits="0123456789."
+                      android:inputType="numberDecimal|numberSigned"
                       android:textAppearance="?android:attr/textAppearanceSmallPopupMenu"
                       android:hint="@string/configHint_location_lon" android:enabled="false"
                       android:layout_row="1"
