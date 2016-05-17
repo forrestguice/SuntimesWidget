@@ -6,6 +6,7 @@
     <attr name="dialogBackground" format="reference" />
     <attr name="settingsCardBackground" format="reference" />
     <attr name="timeCardBackground" format="reference" />
+    <attr name="hrColor" format="reference" />
 
     <attr name="toolbarTheme" format="reference" />
     <attr name="icActionPlace" format="reference" />
@@ -17,4 +18,5 @@
     <attr name="icActionHelp" format="reference" />
     <attr name="icActionNext" format="reference" />
     <attr name="icActionPrevious" format="reference" />
+    <attr name="icActionSave" format="reference" />
 </resources>

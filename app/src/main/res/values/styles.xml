@@ -8,6 +8,7 @@
         <item name="settingsCardBackground">@drawable/bg_widget</item>
         <item name="timeCardBackground">@color/background_floating_material_light</item>
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
+        <item name="hrColor">@color/ripple_material_light</item>
 
         <item name="icActionPlace">@drawable/ic_action_place_light</item>
         <item name="icActionMap">@drawable/ic_action_map_light</item>
@@ -18,6 +19,7 @@
         <item name="icActionHelp">@drawable/ic_action_help_light</item>
         <item name="icActionNext">@drawable/ic_action_next_item_light</item>
         <item name="icActionPrevious">@drawable/ic_action_previous_item_light</item>
+        <item name="icActionSave">@drawable/ic_action_save_light</item>
     </style>
     
     <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
@@ -25,6 +27,7 @@
         <item name="settingsCardBackground">@drawable/bg_widget_dark</item>
         <item name="timeCardBackground">@color/background_floating_material_dark</item>
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="hrColor">@color/ripple_material_dark</item>
 
         <item name="icActionPlace">@drawable/ic_action_place</item>
         <item name="icActionMap">@drawable/ic_action_map</item>
@@ -35,6 +38,7 @@
         <item name="icActionHelp">@drawable/ic_action_help</item>
         <item name="icActionNext">@drawable/ic_action_next_item</item>
         <item name="icActionPrevious">@drawable/ic_action_previous_item</item>
+        <item name="icActionSave">@drawable/ic_action_save</item>
     </style>
 
     <!-- main activity card items -->
