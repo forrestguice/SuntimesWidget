@@ -517,9 +517,8 @@ public class SuntimesActivity extends AppCompatActivity
 
     protected void configLocation()
     {
-        //LocationDialog locationDialog = new LocationDialog(this);
-        //LocationConfigView locationDialog = new LocationConfigView(this);
         LocationConfigView.LocationConfigDialog locationDialog = new LocationConfigView.LocationConfigDialog(this);
+        locationDialog.getLocationConfigView().setHideTitle(true);
 
         locationDialog.setOnAcceptedListener(new DialogInterface.OnClickListener()
         {

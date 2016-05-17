@@ -22,8 +22,11 @@ import android.app.Dialog;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.provider.Contacts;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -50,7 +53,6 @@ import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 
 public class LocationConfigView extends LinearLayout
 {
@@ -81,9 +83,13 @@ public class LocationConfigView extends LinearLayout
         inflater.inflate((asDialog ? R.layout.layout_dialog_location2 : R.layout.layout_settings_location2), this);
         myParent = context;
         initViews(context);
-        loadSettings(context);
-        setMode(mode);
 
+        if (!isInEditMode())
+        {
+            loadSettings(context);
+        }
+
+        setMode(mode);
         populateLocationList();
     }
 
@@ -119,6 +125,18 @@ public class LocationConfigView extends LinearLayout
     {
         appWidgetId = value;
         loadSettings(myParent);
+    }
+
+    /**
+     * Property: hide title
+     */
+    private boolean hideTitle = false;
+    public boolean getHideTitle() { return hideTitle; }
+    public void setHideTitle(boolean value)
+    {
+        hideTitle = value;
+        TextView groupTitle = (TextView)findViewById(R.id.appwidget_location_grouptitle);
+        groupTitle.setVisibility( (hideTitle ? View.GONE : View.VISIBLE) );
     }
 
     /** Property: mode (auto, select, edit/add) */
@@ -244,9 +262,6 @@ public class LocationConfigView extends LinearLayout
         flipper2.setInAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in));
         flipper2.setOutAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_out));
 
-        TextView groupTitle = (TextView)findViewById(R.id.appwidget_location_grouptitle);
-        groupTitle.setVisibility(View.GONE);
-
         ArrayAdapter<WidgetSettings.LocationMode> spinner_locationModeAdapter;
         spinner_locationModeAdapter = new ArrayAdapter<>(myParent, R.layout.layout_listitem_oneline, WidgetSettings.LocationMode.values());
         spinner_locationModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -359,10 +374,17 @@ public class LocationConfigView extends LinearLayout
         getFixUI = new GetFixUI(text_locationName, text_locationLat, text_locationLon, progress_getfix, button_getfix);
         getFixHelper = new GetFixHelper(myParent, getFixUI);
 
-        if (!getFixHelper.isGPSEnabled())
+        if (!isInEditMode() && !getFixHelper.isGPSEnabled())
         {
             button_getfix.setImageResource(GetFixUI.ICON_GPS_DISABLED);
         }
+    }
+
+    private void updateViews(WidgetSettings.Location location)
+    {
+        text_locationLat.setText(location.getLatitude());
+        text_locationLon.setText(location.getLongitude());
+        text_locationName.setText(location.getLabel());
     }
 
     protected void loadSettings(Context context)
@@ -372,13 +394,6 @@ public class LocationConfigView extends LinearLayout
 
         WidgetSettings.Location location = WidgetSettings.loadLocationPref(context, appWidgetId);
         updateViews(location);
-    }
-
-    private void updateViews(WidgetSettings.Location location)
-    {
-        text_locationLat.setText(location.getLatitude());
-        text_locationLon.setText(location.getLongitude());
-        text_locationName.setText(location.getLabel());
     }
 
     protected boolean saveSettings(Context context)
@@ -406,6 +421,8 @@ public class LocationConfigView extends LinearLayout
         getFixHelper.cancelGetFix();
     }
 
+    public void dismissGPSEnabledPrompt() { getFixHelper.dismissGPSEnabledPrompt(); }
+
     /**
      * A dialog wrapper around the view.
      */
@@ -413,6 +430,7 @@ public class LocationConfigView extends LinearLayout
     {
         private Activity myParent;
         private LocationConfigView locationConfigView;
+        public LocationConfigView getLocationConfigView() { return locationConfigView; }
 
         public LocationConfigDialog(Activity context)
         {

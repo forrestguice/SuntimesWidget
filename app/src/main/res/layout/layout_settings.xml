@@ -56,7 +56,12 @@
                 android:layout_marginBottom="@dimen/settingsGroup_margin"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:background="?attr/settingsCardBackground">
-                <include layout="@layout/layout_settings_location" />
+
+                <com.forrestguice.suntimeswidget.LocationConfigView
+                    android:id="@+id/appwidget_location_config"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <!-- <include layout="@layout/layout_settings_location" /> -->
+
             </LinearLayout>
 
             <LinearLayout

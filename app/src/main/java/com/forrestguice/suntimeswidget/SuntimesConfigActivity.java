@@ -72,24 +72,9 @@ public class SuntimesConfigActivity extends Activity
     private TextView label_titleText;
     private EditText text_titleText;
 
-    private Spinner spinner_locationMode;
-
-    private TextView label_locationLon;
-    private EditText text_locationLon;
-
-    private TextView label_locationLat;
-    private EditText text_locationLat;
-
-    private TextView label_locationName;
-    private EditText text_locationName;
-    private ImageButton button_getfix;
-    private ProgressBar progress_getfix;
-
-    private GetFixUI getFixUI;
-    private GetFixHelper getFixHelper;
+    private LocationConfigView locationConfig;
 
     private Spinner spinner_timezoneMode;
-
     private TextView label_timezone;
     private Spinner spinner_timezone;
     private String customTimezoneID;
@@ -134,9 +119,8 @@ public class SuntimesConfigActivity extends Activity
     @Override
     public void onDestroy()
     {
-        getFixHelper.cancelGetFix();
-        getFixHelper.dismissGPSEnabledPrompt();
-
+        locationConfig.cancelGetFix();
+        locationConfig.dismissGPSEnabledPrompt();
         super.onDestroy();
     }
 
@@ -152,7 +136,7 @@ public class SuntimesConfigActivity extends Activity
     protected void saveSettings( Context context )
     {
         saveGeneralSettings(context);
-        saveLocationSettings(context);
+        locationConfig.saveSettings(context);
         saveTimezoneSettings(context);
         saveAppearanceSettings(context);
         saveActionSettings(context);
@@ -166,7 +150,7 @@ public class SuntimesConfigActivity extends Activity
     {
         loadGeneralSettings(context);
         loadAppearanceSettings(context);
-        loadLocationSettings(context);
+        locationConfig.loadSettings(context);
         loadTimezoneSettings(context);
         loadActionSettings(context);
     }
@@ -286,48 +270,10 @@ public class SuntimesConfigActivity extends Activity
         spinner_timezone.setAdapter(spinner_timezoneAdapter);
 
         //
-        // widget: location mode
+        // widget: location
         //
-        ArrayAdapter<WidgetSettings.LocationMode> spinner_locationModeAdapter;
-        spinner_locationModeAdapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, WidgetSettings.LocationMode.values());
-        spinner_locationModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinner_locationMode = (Spinner)findViewById(R.id.appwidget_location_mode);
-        spinner_locationMode.setAdapter(spinner_locationModeAdapter);
-        spinner_locationMode.setOnItemSelectedListener(onLocationModeListener);
-
-        //
-        // widget: custom lon / lat
-        //
-        label_locationLon = (TextView)findViewById(R.id.appwidget_location_lon_label);
-        text_locationLon = (EditText)findViewById(R.id.appwidget_location_lon);
-
-        label_locationLat = (TextView)findViewById(R.id.appwidget_location_lat_label);
-        text_locationLat = (EditText)findViewById(R.id.appwidget_location_lat);
-
-        label_locationName = (TextView)findViewById(R.id.appwidget_location_name_label);
-        text_locationName = (EditText)findViewById(R.id.appwidget_location_name);
-
-        progress_getfix = (ProgressBar)findViewById(R.id.appwidget_location_getfixprogress);
-        progress_getfix.setVisibility(View.GONE);
-
-        button_getfix = (ImageButton)findViewById(R.id.appwidget_location_getfix);
-        button_getfix.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                getFixHelper.getFix();
-            }
-        });
-
-        getFixUI = new GetFixUI(text_locationName, text_locationLat, text_locationLon, progress_getfix, button_getfix);
-        getFixHelper = new GetFixHelper(this, getFixUI);
-
-        if (!getFixHelper.isGPSEnabled())
-        {
-            button_getfix.setImageResource(GetFixUI.ICON_GPS_DISABLED);
-        }
+        locationConfig = (LocationConfigView)findViewById(R.id.appwidget_location_config);
+        locationConfig.setAppWidgetId(this.appWidgetId);
 
         //
         // widget: 1x1 widget mode
@@ -395,33 +341,6 @@ public class SuntimesConfigActivity extends Activity
         button_aboutWidget.setOnClickListener(onAboutButtonClickListener);
     }
 
-
-    /**private Location getLocationFromAddress(String address, Context context)
-    {
-        Geocoder geocoder = new Geocoder(context);
-        List<Address> locations;
-        try
-        {
-            locations = geocoder.getFromLocationName(address, 1);
-
-        } catch (IOException e) {
-            locations = new ArrayList<Address>();
-        }
-
-        Location location = null;
-        if (!locations.isEmpty())
-        {
-            double lat = locations.get(0).getLatitude();
-            double lon = locations.get(0).getLongitude();
-            location = new Location(lat, lon);
-        } else {
-
-        }
-
-        return location;
-    }*/
-
-
     private void setTitleTextEnabled( boolean value )
     {
         label_titleText.setEnabled(value);
@@ -435,18 +354,6 @@ public class SuntimesConfigActivity extends Activity
 
         label_timezone.setEnabled(value);
         spinner_timezone.setEnabled(value);
-    }
-
-    private void setCustomLocationEnabled( boolean value )
-    {
-        label_locationLon.setEnabled(value);
-        text_locationLon.setEnabled(value);
-
-        label_locationLat.setEnabled(value);
-        text_locationLat.setEnabled(value);
-
-        label_locationName.setEnabled(value);
-        text_locationName.setEnabled(value);
     }
 
     /**
@@ -471,23 +378,6 @@ public class SuntimesConfigActivity extends Activity
             final WidgetSettings.TimezoneMode[] timezoneModes = WidgetSettings.TimezoneMode.values();
             WidgetSettings.TimezoneMode timezoneMode = timezoneModes[ parent.getSelectedItemPosition() ];
             setCustomTimezoneEnabled( (timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE) );
-        }
-
-        public void onNothingSelected(AdapterView<?> parent)
-        {
-        }
-    };
-
-    /**
-     * OnItemSelected (Location Mode)
-     */
-    Spinner.OnItemSelectedListener onLocationModeListener = new Spinner.OnItemSelectedListener()
-    {
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-        {
-            final WidgetSettings.LocationMode[] locationModes = WidgetSettings.LocationMode.values();
-            WidgetSettings.LocationMode locationMode = locationModes[ parent.getSelectedItemPosition() ];
-            setCustomLocationEnabled( (locationMode == WidgetSettings.LocationMode.CUSTOM_LOCATION) );
         }
 
         public void onNothingSelected(AdapterView<?> parent)
@@ -563,7 +453,7 @@ public class SuntimesConfigActivity extends Activity
         // load: theme
         SuntimesTheme theme = WidgetSettings.loadThemePref(context, appWidgetId);
         ThemeDescriptor themeDescriptor = WidgetThemes.valueOf(theme.themeName());
-        spinner_theme.setSelection( themeDescriptor.ordinal(WidgetThemes.values()) );
+        spinner_theme.setSelection(themeDescriptor.ordinal(WidgetThemes.values()) );
 
         // load: show title
         boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId);
@@ -588,12 +478,12 @@ public class SuntimesConfigActivity extends Activity
 
         // save: time mode
         final WidgetSettings.TimeMode[] timeModes = WidgetSettings.TimeMode.values();
-        WidgetSettings.TimeMode timeMode = timeModes[ spinner_timeMode.getSelectedItemPosition() ];
+        WidgetSettings.TimeMode timeMode = timeModes[ spinner_timeMode.getSelectedItemPosition()];
         WidgetSettings.saveTimeModePref(context, appWidgetId, timeMode);
 
         // save: compare mode
         final WidgetSettings.CompareMode[] compareModes = WidgetSettings.CompareMode.values();
-        WidgetSettings.CompareMode compareMode = compareModes[ spinner_compareMode.getSelectedItemPosition() ];
+        WidgetSettings.CompareMode compareMode = compareModes[ spinner_compareMode.getSelectedItemPosition()];
         WidgetSettings.saveCompareModePref(context, appWidgetId, compareMode);
     }
 
@@ -614,40 +504,6 @@ public class SuntimesConfigActivity extends Activity
         // load: compare mode
         WidgetSettings.TimeMode timeMode = WidgetSettings.loadTimeModePref(context, appWidgetId);
         spinner_timeMode.setSelection(timeMode.ordinal());
-    }
-
-    /**
-     * Save UI state to settings (location group).
-     * @param context the android application context
-     */
-    protected void saveLocationSettings(Context context)
-    {
-        // save: location mode
-        final WidgetSettings.LocationMode[] locationModes = WidgetSettings.LocationMode.values();
-        WidgetSettings.LocationMode locationMode = locationModes[ spinner_locationMode.getSelectedItemPosition() ];
-        WidgetSettings.saveLocationModePref(context, appWidgetId, locationMode);
-
-        // save: lat / lon
-        String latitude = text_locationLat.getText().toString();
-        String longitude = text_locationLon.getText().toString();
-        String name = text_locationName.getText().toString();
-        WidgetSettings.Location location = new WidgetSettings.Location(name, latitude, longitude);
-        WidgetSettings.saveLocationPref(context, appWidgetId, location);
-    }
-
-    /**
-     * Load settings into UI state (location group).
-     * @param context the android application context
-     */
-    protected void loadLocationSettings(Context context)
-    {
-        WidgetSettings.LocationMode locationMode = WidgetSettings.loadLocationModePref(context, appWidgetId);
-        spinner_locationMode.setSelection(locationMode.ordinal());
-
-        WidgetSettings.Location location = WidgetSettings.loadLocationPref(context, appWidgetId);
-        text_locationLat.setText(location.getLatitude());
-        text_locationLon.setText(location.getLongitude());
-        text_locationName.setText(location.getLabel());
     }
 
     /**
