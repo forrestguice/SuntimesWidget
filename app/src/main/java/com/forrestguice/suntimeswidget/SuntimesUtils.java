@@ -116,6 +116,11 @@ public class SuntimesUtils
      */
     public TimeDisplayText calendarTimeShortDisplayString(Context context, Calendar cal)
     {
+        if (cal == null)
+        {
+            return new TimeDisplayText();
+        }
+
         Date time = cal.getTime();
         TimeDisplayText retValue;
 
@@ -145,9 +150,17 @@ public class SuntimesUtils
      */
     public TimeDisplayText timeDeltaDisplayString(Date c1, Date c2)
     {
-        TimeDisplayText displayText = timeDeltaLongDisplayString(c1.getTime(), c2.getTime());
-        displayText.setSuffix("");
-        return displayText;
+        if (c1 != null && c2 != null)
+        {
+            TimeDisplayText displayText = timeDeltaLongDisplayString(c1.getTime(), c2.getTime());
+            displayText.setSuffix("");
+            return displayText;
+
+        } else {
+            TimeDisplayText displayText = new TimeDisplayText();
+            displayText.setSuffix("");
+            return displayText;
+        }
     }
 
     /**

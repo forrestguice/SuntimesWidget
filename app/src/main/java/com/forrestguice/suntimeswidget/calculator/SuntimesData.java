@@ -135,18 +135,36 @@ public class SuntimesData
         compareMode = mode;
     }
 
+    public boolean hasSunriseTimeToday()
+    {
+        return (sunriseCalendarToday != null);
+    }
     public Calendar sunriseCalendarToday()
     {
         return sunriseCalendarToday;
+    }
+
+    public boolean hasSunsetTimeToday()
+    {
+        return (sunsetCalendarToday != null);
     }
     public Calendar sunsetCalendarToday()
     {
         return sunsetCalendarToday;
     }
 
+    public boolean hasSunriseTimeOther()
+    {
+        return (sunriseCalendarOther != null);
+    }
     public Calendar sunriseCalendarOther()
     {
         return sunriseCalendarOther;
+    }
+
+    public boolean hasSunsetTimeOther()
+    {
+        return (sunsetCalendarOther != null);
     }
     public Calendar sunsetCalendarOther()
     {
@@ -285,10 +303,16 @@ public class SuntimesData
                 break;
         }
 
-        dayLengthToday = sunsetCalendarToday.getTimeInMillis() - sunriseCalendarToday.getTimeInMillis();
-        long sunriseOther = sunriseCalendarOther.getTime().getTime();
-        long sunsetOther = sunsetCalendarOther.getTime().getTime();
-        dayLengthOther = sunsetOther - sunriseOther;
+        if (sunsetCalendarToday != null && sunriseCalendarToday != null)
+        {
+            dayLengthToday = sunsetCalendarToday.getTimeInMillis() - sunriseCalendarToday.getTimeInMillis();
+            long sunriseOther = sunriseCalendarOther.getTime().getTime();
+            long sunsetOther = sunsetCalendarOther.getTime().getTime();
+            dayLengthOther = sunsetOther - sunriseOther;
+
+        } else {
+            dayLengthToday = dayLengthOther = -1;
+        }
 
         //Log.d("sunset: ", sunsetCalendarToday.toString() + " (" + sunsetCalendarOther.getTimeZone().getID() + ")");
         calculated = true;

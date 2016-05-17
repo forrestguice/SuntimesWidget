@@ -302,60 +302,62 @@ public class SuntimesNotes3 implements SuntimesNotes
      */
     private void updateNote(NoteData note, Calendar now)
     {
-        Date time = now.getTime();
-        Date eventTime;
-        boolean afterToday;
-
+        Calendar date, dateOther;
         switch (note.noteMode)
         {
             case MORNING_ASTRONOMICAL:
-                Date morningAstro = dataset.dataAstro.sunriseCalendarToday().getTime();
-                afterToday = time.after(morningAstro);
-                eventTime = afterToday ? dataset.dataAstro.sunriseCalendarOther().getTime() : morningAstro;
+                date = dataset.dataAstro.sunriseCalendarToday();
+                dateOther = dataset.dataAstro.sunriseCalendarOther();
                 break;
             case MORNING_NAUTICAL:
-                Date morningNautical = dataset.dataNautical.sunriseCalendarToday().getTime();
-                afterToday = time.after(morningNautical);
-                eventTime = afterToday ? dataset.dataNautical.sunriseCalendarOther().getTime() : morningNautical;
+                date = dataset.dataNautical.sunriseCalendarToday();
+                dateOther = dataset.dataNautical.sunriseCalendarOther();
                 break;
             case MORNING_CIVIL:
-                Date morningCivil = dataset.dataCivil.sunriseCalendarToday().getTime();
-                afterToday = time.after(morningCivil);
-                eventTime = afterToday ? dataset.dataCivil.sunriseCalendarOther().getTime() : morningCivil;
+                date = dataset.dataCivil.sunriseCalendarToday();
+                dateOther = dataset.dataCivil.sunriseCalendarOther();
                 break;
             case SUNRISE:
-                Date sunrise = dataset.dataActual.sunriseCalendarToday().getTime();
-                afterToday = time.after(sunrise);
-                eventTime = afterToday ? dataset.dataActual.sunriseCalendarOther().getTime() : sunrise;
+                date = dataset.dataActual.sunriseCalendarToday();
+                dateOther = dataset.dataActual.sunriseCalendarOther();
                 break;
 
             case NOON:
-                Date noon = dataset.dataNoon.sunriseCalendarToday().getTime();
-                afterToday = time.after(noon);
-                eventTime = afterToday ? dataset.dataNoon.sunriseCalendarOther().getTime() : noon;
+                date = dataset.dataNoon.sunriseCalendarToday();
+                dateOther = dataset.dataNoon.sunriseCalendarOther();
                 break;
 
             case SUNSET:
-                Date sunset = dataset.dataActual.sunsetCalendarToday().getTime();
-                afterToday = time.after(sunset);
-                eventTime = afterToday ? dataset.dataActual.sunsetCalendarOther().getTime() : sunset;
+                date = dataset.dataActual.sunsetCalendarToday();
+                dateOther = dataset.dataActual.sunsetCalendarOther();
                 break;
             case EVENING_CIVIL:
-                Date eveningCivil = dataset.dataCivil.sunsetCalendarToday().getTime();
-                afterToday = time.after(eveningCivil);
-                eventTime = afterToday ? dataset.dataCivil.sunsetCalendarOther().getTime() : eveningCivil;
+                date = dataset.dataCivil.sunsetCalendarToday();
+                dateOther = dataset.dataCivil.sunsetCalendarOther();
                 break;
             case EVENING_NAUTICAL:
-                Date eveningNautical = dataset.dataNautical.sunsetCalendarToday().getTime();
-                afterToday = time.after(eveningNautical);
-                eventTime = afterToday ? dataset.dataNautical.sunsetCalendarOther().getTime() : eveningNautical;
+                date = dataset.dataNautical.sunsetCalendarToday();
+                dateOther = dataset.dataNautical.sunsetCalendarOther();
                 break;
             case EVENING_ASTRONOMICAL:
             default:
-                Date eveningAstro = dataset.dataAstro.sunsetCalendarToday().getTime();
-                afterToday = time.after(eveningAstro);
-                eventTime = afterToday ? dataset.dataAstro.sunsetCalendarOther().getTime() : eveningAstro;
+                date = dataset.dataAstro.sunsetCalendarToday();
+                dateOther = dataset.dataAstro.sunsetCalendarOther();
                 break;
+        }
+
+        Date eventTime = null;
+        Date time = now.getTime();
+
+        boolean afterToday = (date == null || time.after(date.getTime()));
+        if (afterToday)
+        {
+            if (dateOther != null)
+            {
+                eventTime = dateOther.getTime();
+            }
+        } else {
+            eventTime = date.getTime();
         }
 
         note.timeText = utils.timeDeltaDisplayString(time, eventTime);
@@ -371,11 +373,14 @@ public class SuntimesNotes3 implements SuntimesNotes
 
         for (NoteData note : notesList)
         {
-            long timeUntil = note.time.getTime() - time.getTime();
-            if (timeUntil < nearestTime || nearestTime < 0)
+            if (note.time != null)
             {
-                nearestTime = timeUntil;
-                nearestNote = note;
+                long timeUntil = note.time.getTime() - time.getTime();
+                if (timeUntil < nearestTime || nearestTime < 0)
+                {
+                    nearestTime = timeUntil;
+                    nearestNote = note;
+                }
             }
         }
 
