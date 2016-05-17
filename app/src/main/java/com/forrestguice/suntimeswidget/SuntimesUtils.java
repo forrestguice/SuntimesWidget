@@ -45,6 +45,13 @@ public class SuntimesUtils
         private String units;
         private String suffix;
 
+        public TimeDisplayText()
+        {
+            this.value = "";
+            this.units = "";
+            this.suffix = "";
+        }
+
         public TimeDisplayText(String value, String units, String suffix)
         {
             this.value = value;

@@ -39,9 +39,12 @@ public interface SuntimesNotes
     public boolean hasNextNote();
     public boolean hasPrevNote();
 
+    public void resetNoteIndex();
+
     public boolean showNextNote();
     public boolean showPrevNote();
 
+    public void updateNote(Context context);
     public void updateNote(Context context, Calendar now);
     public void updateNote(Context context, Calendar now, int transition);
 

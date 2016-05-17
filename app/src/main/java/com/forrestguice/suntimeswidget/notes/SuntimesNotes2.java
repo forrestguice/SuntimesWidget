@@ -29,15 +29,20 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesDataset;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
- * The first implementation of SuntimesNotes; needs to be renamed badly.
+ * The second implementation of SuntimesNotes; it does the same as the first (but hopefully a little cleaner).
  */
-public class SuntimesNotes1 implements SuntimesNotes
+public class SuntimesNotes2 implements SuntimesNotes
 {
     protected static SuntimesUtils utils = new SuntimesUtils();
+
+    private ArrayList<NoteData> notesList;
+    private HashMap<SolarEvents, NoteData> notesMap;
 
     private int noteIndex = 0;
     private NoteChangedListener changedListener;
@@ -46,7 +51,7 @@ public class SuntimesNotes1 implements SuntimesNotes
     private Context context;
     private SuntimesDataset dataset;
 
-    public SuntimesNotes1()
+    public SuntimesNotes2()
     {
         changedListener = new NoteChangedListener()
         {
@@ -60,6 +65,16 @@ public class SuntimesNotes1 implements SuntimesNotes
     {
         this.context = context;
         this.dataset = dataset;
+
+        notesList = new ArrayList<>();
+        notesMap = new HashMap<>();
+
+        for (SolarEvents event : SolarEvents.values())
+        {
+            NoteData note = createNote(event);
+            notesList.add(note);
+            notesMap.put(event, note);
+        }
     }
 
     @Override
@@ -71,7 +86,7 @@ public class SuntimesNotes1 implements SuntimesNotes
     @Override
     public int noteCount()
     {
-        return 0;
+        return notesList.size();
     }
 
     @Override
@@ -83,22 +98,35 @@ public class SuntimesNotes1 implements SuntimesNotes
     @Override
     public boolean setNoteIndex(int noteIndex)
     {
+        if (noteIndex >=0 && noteIndex < notesList.size())
+        {
+            this.noteIndex = noteIndex;
+            NoteData note = notesList.get(noteIndex);
+            updateNote(note, dataset.now());
+            setNote(note, NoteChangedListener.TRANSITION_NEXT);
+            return true;
+        }
         return false;
     }
 
     @Override
     public NoteData getNote()
     {
+        if (currentNote != null)
+        {
+            updateNote(currentNote, dataset.now());
+        }
         return currentNote;
     }
 
     @Override
     public NoteData getNote(int noteIndex)
     {
-        if (noteIndex >=0 && noteIndex < noteCount())
+        if (noteIndex >=0 && noteIndex < notesList.size())
         {
-            // TODO
-            return null;
+            NoteData note = notesList.get(noteIndex);
+            updateNote(note, dataset.now());
+            return note;
         }
         return null;
     }
@@ -112,43 +140,40 @@ public class SuntimesNotes1 implements SuntimesNotes
     {
         if (dataset.isCalculated())
         {
+            String tag;
+            int nextNote, currentNote;
+            SolarEvents nextNoteMode;
+
             Calendar now = dataset.now();
             Date time = now.getTime();
 
             if (dataset.isNight(time))
             {
                 // show next "rising" note
-                SolarEvents currentNoteMode = WidgetSettings.loadTimeNoteRisePref(context, AppWidgetManager.INVALID_APPWIDGET_ID);
-                int currentNote = currentNoteMode.ordinal();
-
-                int nextNote = 0;
+                SolarEvents currentNoteMode = WidgetSettings.loadTimeNoteRisePref(context, 0);
+                currentNote = currentNoteMode.ordinal();
+                nextNote = 0;
                 if (hasNextRiseNote(currentNote))
-                {
                     nextNote = currentNote + 1;
-                }
 
-                SolarEvents nextNoteMode = SolarEvents.values()[nextNote];
+                tag = "showNextRiseNote";
+                nextNoteMode = SolarEvents.values()[nextNote];
                 WidgetSettings.saveTimeNoteRisePref(context, AppWidgetManager.INVALID_APPWIDGET_ID, nextNoteMode);
-
-                Log.d("showNextRiseNote", "... current = " + currentNote + ", next = " + nextNote + ", mode = " + nextNoteMode.name());
 
             } else {
                 // show next "setting" note
-                SolarEvents currentNoteMode = WidgetSettings.loadTimeNoteSetPref(context, AppWidgetManager.INVALID_APPWIDGET_ID);
-                int currentNote = currentNoteMode.ordinal();
-
-                int nextNote = 0;
+                SolarEvents currentNoteMode = WidgetSettings.loadTimeNoteSetPref(context, 0);
+                currentNote = currentNoteMode.ordinal();
+                nextNote = 4;
                 if (hasNextSetNote(currentNote))
-                {
                     nextNote = currentNote + 1;
-                }
 
-               SolarEvents nextNoteMode = SolarEvents.values()[nextNote];
-                WidgetSettings.saveTimeNoteSetPref(context, AppWidgetManager.INVALID_APPWIDGET_ID, nextNoteMode);
-
-                Log.d("showNextSetNote", "... current = " + currentNote + ", next = " + nextNote + ", mode = " + nextNoteMode.name());
+                tag = "showNextSetNote";
+                nextNoteMode = SolarEvents.values()[nextNote];
+                WidgetSettings.saveTimeNoteSetPref(context, 0, nextNoteMode);
             }
 
+            Log.d(tag, "... current = " + currentNote + ", next = " + nextNote + ", mode = " + nextNoteMode.name());
             updateNote(context, now, NoteChangedListener.TRANSITION_NEXT);
             return true;
 
@@ -258,6 +283,7 @@ public class SuntimesNotes1 implements SuntimesNotes
         return changedListener;
     }
 
+
     @Override
     public void updateNote(Context context)
     {
@@ -270,14 +296,154 @@ public class SuntimesNotes1 implements SuntimesNotes
         updateNote(context, now, NoteChangedListener.TRANSITION_NONE);
     }
 
+    /**
+     * Create an empty note for a given SolarEvent.
+     * @param event the SolarEvent the note will display
+     * @return a note object with icon, color, untilString, and noteStril set (timestring empty).
+     */
+    private NoteData createNote(SolarEvents event)
+    {
+        int noteIcon;
+        int noteColor;
+        String untilString;
+        String noteString;
+
+        switch (event)
+        {
+            case MORNING_ASTRONOMICAL:
+                noteIcon = R.drawable.ic_sunrise_large;
+                noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_rising);
+                untilString = context.getString(R.string.until);
+                noteString = context.getString(R.string.until_astroTwilight);
+                break;
+            case MORNING_NAUTICAL:
+                noteIcon = R.drawable.ic_sunrise_large;
+                noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_rising);
+                untilString = context.getString(R.string.until);
+                noteString = context.getString(R.string.until_nauticalTwilight);
+                break;
+            case MORNING_CIVIL:
+                noteIcon = R.drawable.ic_sunrise_large;
+                noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_rising);
+                untilString = context.getString(R.string.until);
+                noteString = context.getString(R.string.until_civilTwilight);
+                break;
+            case SUNRISE:
+                noteIcon = R.drawable.ic_sunrise_large;
+                noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_rising);
+                untilString = context.getString(R.string.until);
+                noteString = context.getString(R.string.until_sunrise);
+                break;
+
+            case NOON:
+                noteIcon = R.drawable.ic_noon_large;
+                noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
+                untilString = context.getString(R.string.until);
+                noteString = context.getString(R.string.until_noon);
+                break;
+
+            case SUNSET:
+                noteIcon = R.drawable.ic_sunset_large;
+                noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
+                untilString = context.getString(R.string.until);
+                noteString = context.getString(R.string.until_sunset);
+                break;
+            case EVENING_CIVIL:
+                noteIcon = R.drawable.ic_sunset_large;
+                noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
+                untilString = context.getString(R.string.until_end);
+                noteString = context.getString(R.string.untilEnd_civilTwilight);
+                break;
+            case EVENING_NAUTICAL:
+                noteIcon = R.drawable.ic_sunset_large;
+                noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
+                untilString = context.getString(R.string.until_end);
+                noteString = context.getString(R.string.untilEnd_nauticalTwilight);
+                break;
+            case EVENING_ASTRONOMICAL:
+            default:
+                noteIcon = R.drawable.ic_sunset_large;
+                noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
+                untilString = context.getString(R.string.until_end);
+                noteString = context.getString(R.string.untilEnd_astroTwilight);
+                break;
+        }
+
+        SuntimesUtils.TimeDisplayText timeString = new SuntimesUtils.TimeDisplayText();
+        return new NoteData(event, timeString, untilString, noteString, noteIcon, noteColor);
+    }
+
+    /**
+     * Update a note with respect to given time 'now'.
+     * @param note the note object to be updated
+     * @param now the time to update the note against
+     */
+    private void updateNote(NoteData note, Calendar now)
+    {
+        Date time = now.getTime();
+        Date eventTime;
+        boolean afterToday;
+
+        switch (note.noteMode)
+        {
+            case MORNING_ASTRONOMICAL:
+                Date morningAstro = dataset.dataAstro.sunriseCalendarToday().getTime();
+                afterToday = time.after(morningAstro);
+                eventTime = afterToday ? dataset.dataAstro.sunriseCalendarOther().getTime() : morningAstro;
+                break;
+            case MORNING_NAUTICAL:
+                Date morningNautical = dataset.dataNautical.sunriseCalendarToday().getTime();
+                afterToday = time.after(morningNautical);
+                eventTime = afterToday ? dataset.dataNautical.sunriseCalendarOther().getTime() : morningNautical;
+                break;
+            case MORNING_CIVIL:
+                Date morningCivil = dataset.dataCivil.sunriseCalendarToday().getTime();
+                afterToday = time.after(morningCivil);
+                eventTime = afterToday ? dataset.dataCivil.sunriseCalendarOther().getTime() : morningCivil;
+                break;
+            case SUNRISE:
+                Date sunrise = dataset.dataActual.sunriseCalendarToday().getTime();
+                afterToday = time.after(sunrise);
+                eventTime = afterToday ? dataset.dataActual.sunriseCalendarOther().getTime() : sunrise;
+                break;
+
+            case NOON:
+                Date noon = dataset.dataNoon.sunriseCalendarToday().getTime();
+                afterToday = time.after(noon);
+                eventTime = afterToday ? dataset.dataNoon.sunriseCalendarOther().getTime() : noon;
+                break;
+
+            case SUNSET:
+                Date sunset = dataset.dataActual.sunsetCalendarToday().getTime();
+                afterToday = time.after(sunset);
+                eventTime = afterToday ? dataset.dataActual.sunsetCalendarOther().getTime() : sunset;
+                break;
+            case EVENING_CIVIL:
+                Date eveningCivil = dataset.dataCivil.sunsetCalendarToday().getTime();
+                afterToday = time.after(eveningCivil);
+                eventTime = afterToday ? dataset.dataCivil.sunsetCalendarOther().getTime() : eveningCivil;
+                break;
+            case EVENING_NAUTICAL:
+                Date eveningNautical = dataset.dataNautical.sunsetCalendarToday().getTime();
+                afterToday = time.after(eveningNautical);
+                eventTime = afterToday ? dataset.dataNautical.sunsetCalendarOther().getTime() : eveningNautical;
+                break;
+            case EVENING_ASTRONOMICAL:
+            default:
+                Date eveningAstro = dataset.dataAstro.sunsetCalendarToday().getTime();
+                afterToday = time.after(eveningAstro);
+                eventTime = afterToday ? dataset.dataAstro.sunsetCalendarOther().getTime() : eveningAstro;
+                break;
+        }
+
+        note.timeText = utils.timeDeltaDisplayString(time, eventTime);
+        note.time = eventTime;
+    }
+
     @Override
     public void updateNote(Context context, Calendar now, int transition)
     {
         SolarEvents noteMode;
-        int noteIcon, noteColor;
-        SuntimesUtils.TimeDisplayText timeString;
-        String noteString, untilString;
-        Date timestamp;
 
         Date time = now.getTime();
         Date sunrise = dataset.dataActual.sunriseCalendarToday().getTime();
@@ -287,145 +453,89 @@ public class SuntimesNotes1 implements SuntimesNotes
         if (afterSunriseToday && time.before(sunsetAstroTwilight))
         {
             // a time after sunrise (but before night)
-            noteIcon = R.drawable.ic_sunset_large;
-            noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
 
             int setChoice = WidgetSettings.loadTimeNoteSetPref(context, AppWidgetManager.INVALID_APPWIDGET_ID).ordinal();
             Date sunset = dataset.dataActual.sunsetCalendarToday().getTime();
-            if (time.before(sunset) && setChoice <= 1)
+            if (time.before(sunset) && setChoice <= SolarEvents.SUNSET.ordinal())
             {
-                untilString = context.getString(R.string.until);
-
                 Date noon = dataset.dataNoon.sunriseCalendarToday().getTime();
                 if (time.before(noon) && setChoice <= 0)
                 {
                     // morning: note the time until noon
-                    noteIcon = R.drawable.ic_noon_large;
-                    timestamp = noon;
                     noteMode = SolarEvents.NOON;
-                    timeString = utils.timeDeltaDisplayString(time, noon);
-                    noteString = context.getString(R.string.until_noon);
 
                 } else {
                     // afternoon: note the time until sunset
-                    timestamp = sunset;
                     noteMode = SolarEvents.SUNSET;
-                    timeString = utils.timeDeltaDisplayString(time, sunset);
-                    noteString = context.getString(R.string.until_sunset);
                 }
 
             } else {
-                untilString = context.getString(R.string.until_end);
-
                 Date civilTwilight = dataset.dataCivil.sunsetCalendarToday().getTime();
-                if (time.before(civilTwilight) && setChoice <= 2)
+                if (time.before(civilTwilight) && setChoice <= SolarEvents.EVENING_CIVIL.ordinal())
                 {
                     // civil twilight: note time until end of civil twilight
-                    timestamp = civilTwilight;
                     noteMode = SolarEvents.EVENING_CIVIL;
-                    timeString = utils.timeDeltaDisplayString(time, civilTwilight);
-                    noteString = context.getString(R.string.untilEnd_civilTwilight);
 
                 } else {
                     Date nauticalTwilight = dataset.dataNautical.sunsetCalendarToday().getTime();
-                    if (time.before(nauticalTwilight) && setChoice <= 3)
+                    if (time.before(nauticalTwilight) && setChoice <= SolarEvents.EVENING_NAUTICAL.ordinal())
                     {
                         // nautical twilight: note time until end of nautical twilight
-                        timestamp = nauticalTwilight;
                         noteMode = SolarEvents.EVENING_NAUTICAL;
-                        timeString = utils.timeDeltaDisplayString(time, nauticalTwilight);
-                        noteString = context.getString(R.string.untilEnd_nauticalTwilight);
 
                     } else {
                         // astronomical twilight: note time until night
-                        timestamp = sunsetAstroTwilight;
                         noteMode = SolarEvents.EVENING_ASTRONOMICAL;
-                        timeString = utils.timeDeltaDisplayString(time, sunsetAstroTwilight);
-                        noteString = context.getString(R.string.untilEnd_astroTwilight);
                     }
                 }
             }
 
         } else {
             // a time before sunrise
-            noteIcon = R.drawable.ic_sunrise_large;
-            untilString = context.getString(R.string.until);
-            noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_rising);
-
             int riseChoice = WidgetSettings.loadTimeNoteRisePref(context, AppWidgetManager.INVALID_APPWIDGET_ID).ordinal();
             Date astroTwilight = afterSunriseToday ? dataset.dataAstro.sunriseCalendarOther().getTime()
-                    : dataset.dataAstro.sunriseCalendarToday().getTime();
-            if (time.before(astroTwilight) && riseChoice <= 0)
+                                                   : dataset.dataAstro.sunriseCalendarToday().getTime();
+            if (time.before(astroTwilight) && riseChoice <= SolarEvents.MORNING_ASTRONOMICAL.ordinal())
             {
                 // night: note time until astro twilight today
-                timestamp = astroTwilight;
                 noteMode = SolarEvents.MORNING_ASTRONOMICAL;
-                timeString = utils.timeDeltaDisplayString(time, astroTwilight);
-                noteString = context.getString(R.string.until_astroTwilight);
 
             } else {
                 Date nauticalTwilight = afterSunriseToday ? dataset.dataNautical.sunriseCalendarOther().getTime()
-                        : dataset.dataNautical.sunriseCalendarToday().getTime();
+                                                          : dataset.dataNautical.sunriseCalendarToday().getTime();
 
-                if (time.before(nauticalTwilight) && riseChoice <= 1)
+                if (time.before(nauticalTwilight) && riseChoice <= SolarEvents.MORNING_NAUTICAL.ordinal())
                 {
                     // astronomical twilight: note time until nautical twilight
-                    timestamp = nauticalTwilight;
                     noteMode = SolarEvents.MORNING_NAUTICAL;
-                    timeString = utils.timeDeltaDisplayString(time, nauticalTwilight);
-                    noteString = context.getString(R.string.until_nauticalTwilight);
 
                 } else {
                     Date civilTwilight = afterSunriseToday ? dataset.dataCivil.sunriseCalendarOther().getTime()
-                            : dataset.dataCivil.sunriseCalendarToday().getTime();
-                    if (time.before(civilTwilight) && riseChoice <= 2)
+                                                           : dataset.dataCivil.sunriseCalendarToday().getTime();
+                    if (time.before(civilTwilight) && riseChoice <= SolarEvents.MORNING_CIVIL.ordinal())
                     {
                         // nautical twilight: note time until civil twilight
-                        timestamp = civilTwilight;
                         noteMode = SolarEvents.MORNING_CIVIL;
-                        timeString = utils.timeDeltaDisplayString(time, civilTwilight);
-                        noteString = context.getString(R.string.until_civilTwilight);
 
                     } else {
                         if (riseChoice <= 3)
                         {
                             // civil twilight: note time until sunrise
-                            sunrise = afterSunriseToday ? dataset.dataActual.sunriseCalendarOther().getTime()
-                                    : dataset.dataActual.sunriseCalendarToday().getTime();
-
-                            timestamp = sunrise;
                             noteMode = SolarEvents.SUNRISE;
-                            timeString = utils.timeDeltaDisplayString(time, sunrise);
-                            noteString = context.getString(R.string.until_sunrise);
 
                         } else {
                             // civil twilight: note time until noon
-                            Date noon = dataset.dataNoon.sunriseCalendarToday().getTime();
-                            boolean afterNoonToday = time.after(noon);
-                            if (afterNoonToday)
-                            {
-                                noon = dataset.dataNoon.sunriseCalendarOther().getTime();
-                            }
-                            timestamp = noon;
                             noteMode = SolarEvents.NOON;
-                            noteIcon = R.drawable.ic_noon_large;
-                            timeString = utils.timeDeltaDisplayString(time, noon);
-                            noteString = context.getString(R.string.until_noon);
                         }
-
                     }
                 }
             }
         }
 
-        NoteData note = new NoteData(noteMode, timeString, untilString, noteString, noteIcon, noteColor);
-        note.time = timestamp;
-
-        if (currentNote == null)
+        NoteData note = notesMap.get(noteMode);
+        updateNote(note, dataset.now());
+        if (currentNote == null || !currentNote.equals(note))
         {
-            setNote(note, NoteChangedListener.TRANSITION_NEXT);
-
-        } else if (!currentNote.equals(note)) {
             setNote(note, NoteChangedListener.TRANSITION_NEXT);
         }
     }

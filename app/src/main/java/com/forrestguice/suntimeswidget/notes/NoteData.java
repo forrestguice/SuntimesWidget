@@ -18,8 +18,12 @@
 
 package com.forrestguice.suntimeswidget.notes;
 
+import android.util.Log;
+
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
+
+import java.util.Date;
 
 public class NoteData
 {
@@ -29,7 +33,7 @@ public class NoteData
     public String noteText;
     public int noteIconResource;
     public int noteColor;
-    public long timestamp;
+    public Date time;
 
     public NoteData(SolarEvents noteMode, SuntimesUtils.TimeDisplayText timeText, String prefixText, String noteText, int noteIconResource, int noteColor)
     {
@@ -39,6 +43,16 @@ public class NoteData
         this.noteText = noteText;
         this.noteIconResource = noteIconResource;
         this.noteColor = noteColor;
+    }
+
+    public NoteData( NoteData other )
+    {
+        this.noteMode = other.noteMode;
+        this.timeText = other.timeText;
+        this.prefixText = other.prefixText;
+        this.noteText = other.noteText;
+        this.noteIconResource = other.noteIconResource;
+        this.noteColor = other.noteColor;
     }
 
     @Override
@@ -54,6 +68,13 @@ public class NoteData
         if (!other.timeText.getValue().equals(timeText.getValue()))
             return false;
 
+        //Log.d("NoteData.equals", "these notes are the same");
         return true;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "NoteData[" + this.noteMode + " (" + this.time + " in" + timeText + ")" + "]";
     }
 }

@@ -62,10 +62,10 @@ public class WidgetSettings
     public static final TimeMode PREF_DEF_GENERAL_TIMEMODE = TimeMode.OFFICIAL;
 
     public static final String PREF_KEY_GENERAL_TIMENOTE_RISE = "timenoterise";
-    public static final TimeMode PREF_DEF_GENERAL_TIMENOTE_RISE = TimeMode.ASTRONOMICAL;
+    public static final SolarEvents PREF_DEF_GENERAL_TIMENOTE_RISE = SolarEvents.SUNRISE;
 
     public static final String PREF_KEY_GENERAL_TIMENOTE_SET = "timenoteset";
-    public static final TimeMode PREF_DEF_GENERAL_TIMENOTE_SET = TimeMode.OFFICIAL;
+    public static final SolarEvents PREF_DEF_GENERAL_TIMENOTE_SET = SolarEvents.SUNSET;
 
     public static final String PREF_KEY_GENERAL_COMPAREMODE = "comparemode";
     public static final CompareMode PREF_DEF_GENERAL_COMPAREMODE = CompareMode.TOMORROW;
@@ -272,9 +272,9 @@ public class WidgetSettings
 
     public static class Location
     {
-        String label = "";
-        String latitude;
-        String longitude;
+        private String label = "";
+        private String latitude;
+        private String longitude;
 
         public Location( String latitude, String longitude )
         {
@@ -354,23 +354,21 @@ public class WidgetSettings
      */
     public static enum TimeMode
     {
-        OFFICIAL("Actual", "Actual Time", 3, 1),
-        CIVIL("Civil", "Civil Twilight", 2, 2),
-        NAUTICAL("Nautical", "Nautical Twilight", 1, 3),
-        ASTRONOMICAL("Astronomical", "Astronomical Twilight", 0, 4),
-        NOON("Noon", "Solar Noon", 4, 0);
+        OFFICIAL("Actual", "Actual Time"),
+        CIVIL("Civil", "Civil Twilight"),
+        NAUTICAL("Nautical", "Nautical Twilight"),
+        ASTRONOMICAL("Astronomical", "Astronomical Twilight"),
+        NOON("Noon", "Solar Noon");
 
         public static boolean shortDisplayStrings = false;
         private String longDisplayString;
         private String shortDisplayString;
-        private int riseOrder, setOrder;
 
-        private TimeMode(String shortDisplayString, String longDisplayString, int riseOrder, int setOrder)
+        private TimeMode(String shortDisplayString, String longDisplayString)
         {
             this.shortDisplayString = shortDisplayString;
             this.longDisplayString = longDisplayString;
-            this.riseOrder = riseOrder;
-            this.setOrder = setOrder;
+
         }
 
         public String toString()
@@ -382,40 +380,6 @@ public class WidgetSettings
             } else {
                 return longDisplayString;
             }
-        }
-
-        public static TimeMode getModeForRiseOrder( int riseOrder )
-        {
-            for (TimeMode mode : TimeMode.values())
-            {
-                if (mode.getRiseOrder() == riseOrder)
-                {
-                    return mode;
-                }
-            }
-            return OFFICIAL;
-        }
-
-        public int getRiseOrder()
-        {
-            return riseOrder;
-        }
-
-        public int getSetOrder()
-        {
-            return setOrder;
-        }
-
-        public static TimeMode getModeForSetOrder( int setOrder )
-        {
-            for (TimeMode mode : TimeMode.values())
-            {
-                if (mode.getSetOrder() == setOrder)
-                {
-                    return mode;
-                }
-            }
-            return ASTRONOMICAL;
         }
 
         public String getShortDisplayString()
@@ -854,22 +818,22 @@ public class WidgetSettings
 
 
 
-    public static void saveTimeNoteRisePref(Context context, int appWidgetId, TimeMode riseChoice)
+    public static void saveTimeNoteRisePref(Context context, int appWidgetId, SolarEvents riseChoice)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
         prefs.putString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_RISE, riseChoice.name());
         prefs.commit();
     }
-    public static TimeMode loadTimeNoteRisePref(Context context, int appWidgetId)
+    public static SolarEvents loadTimeNoteRisePref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
         String modeString = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_RISE, PREF_DEF_GENERAL_TIMENOTE_RISE.name());
 
-        TimeMode riseMode;
+        SolarEvents riseMode;
         try {
-            riseMode = WidgetSettings.TimeMode.valueOf(modeString);
+            riseMode = SolarEvents.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
             riseMode = PREF_DEF_GENERAL_TIMENOTE_RISE;
@@ -886,22 +850,22 @@ public class WidgetSettings
 
 
 
-    public static void saveTimeNoteSetPref(Context context, int appWidgetId, TimeMode setChoice)
+    public static void saveTimeNoteSetPref(Context context, int appWidgetId, SolarEvents setChoice)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
         prefs.putString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_SET, setChoice.name());
         prefs.commit();
     }
-    public static TimeMode loadTimeNoteSetPref(Context context, int appWidgetId)
+    public static SolarEvents loadTimeNoteSetPref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
         String modeString = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_SET, PREF_DEF_GENERAL_TIMENOTE_SET.name());
 
-        TimeMode setMode;
+        SolarEvents setMode;
         try {
-            setMode = WidgetSettings.TimeMode.valueOf(modeString);
+            setMode = SolarEvents.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
             setMode = PREF_DEF_GENERAL_TIMENOTE_SET;

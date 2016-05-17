@@ -53,6 +53,8 @@ import com.forrestguice.suntimeswidget.notes.NoteChangedListener;
 import com.forrestguice.suntimeswidget.notes.NoteData;
 import com.forrestguice.suntimeswidget.notes.SuntimesNotes;
 import com.forrestguice.suntimeswidget.notes.SuntimesNotes1;
+import com.forrestguice.suntimeswidget.notes.SuntimesNotes2;
+import com.forrestguice.suntimeswidget.notes.SuntimesNotes3;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -161,6 +163,8 @@ public class SuntimesActivity extends AppCompatActivity
         WidgetSettings.initDisplayStrings(context);
         initViews(context);
         calculateData(context);
+
+        notes.resetNoteIndex();
     }
 
     /**
@@ -430,7 +434,7 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private void initNotes()
     {
-        notes = new SuntimesNotes1();
+        notes = new SuntimesNotes3();
         notes.init(this, dataset);
         notes.setOnChangedListener(new NoteChangedListener()
         {
@@ -513,7 +517,10 @@ public class SuntimesActivity extends AppCompatActivity
 
     protected void configLocation()
     {
-        LocationDialog locationDialog = new LocationDialog(this);
+        //LocationDialog locationDialog = new LocationDialog(this);
+        //LocationConfigView locationDialog = new LocationConfigView(this);
+        LocationConfigView.LocationConfigDialog locationDialog = new LocationConfigView.LocationConfigDialog(this);
+
         locationDialog.setOnAcceptedListener(new DialogInterface.OnClickListener()
         {
             @Override
@@ -600,7 +607,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         String alarmLabel = note.noteText;
         Calendar calendar = dataset.now();
-        calendar.setTimeInMillis(note.timestamp);
+        calendar.setTimeInMillis(note.time.getTime());
         scheduleAlarm(alarmLabel, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
     }
 

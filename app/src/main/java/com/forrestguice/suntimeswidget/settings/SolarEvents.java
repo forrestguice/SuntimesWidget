@@ -33,15 +33,15 @@ import java.util.Arrays;
 
 public enum SolarEvents
 {
-    MORNING_ASTRONOMICAL("astronomical twilight", "morning astronomical twilight", R.drawable.ic_sunrise_large),
-    MORNING_NAUTICAL("nautical twilight", "morning nautical twilight", R.drawable.ic_sunrise_large),
-    MORNING_CIVIL("civil twilight", "morning civil twilight", R.drawable.ic_sunrise_large),
-    SUNRISE("sunrise", "sunrise", R.drawable.ic_sunrise_large),
-    NOON("solar noon", "solar noon", R.drawable.ic_noon_large),
-    SUNSET("sunset", "sunset", R.drawable.ic_sunset_large),
-    EVENING_CIVIL("civil twilight", "evening civil twilight", R.drawable.ic_sunset_large),
-    EVENING_NAUTICAL("nautical twilight", "evening nautical twilight", R.drawable.ic_sunset_large),
-    EVENING_ASTRONOMICAL("astronomical twilight", "evening astronomical twilight", R.drawable.ic_sunset_large);
+    MORNING_ASTRONOMICAL("astronomical twilight", "morning astronomical twilight", R.drawable.ic_sunrise_large), // 0
+    MORNING_NAUTICAL("nautical twilight", "morning nautical twilight", R.drawable.ic_sunrise_large),             // 1
+    MORNING_CIVIL("civil twilight", "morning civil twilight", R.drawable.ic_sunrise_large),                      // 2
+    SUNRISE("sunrise", "sunrise", R.drawable.ic_sunrise_large),                                                  // 3
+    NOON("solar noon", "solar noon", R.drawable.ic_noon_large),                                                  // 4
+    SUNSET("sunset", "sunset", R.drawable.ic_sunset_large),                                                      // 5
+    EVENING_CIVIL("civil twilight", "evening civil twilight", R.drawable.ic_sunset_large),                       // 6
+    EVENING_NAUTICAL("nautical twilight", "evening nautical twilight", R.drawable.ic_sunset_large),              // 7
+    EVENING_ASTRONOMICAL("astronomical twilight", "evening astronomical twilight", R.drawable.ic_sunset_large);  // 8
 
     private int iconResource;
     private String shortDisplayString, longDisplayString;
