@@ -23,9 +23,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.LocationManager;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.ArrayList;
 
@@ -35,6 +37,10 @@ import java.util.ArrayList;
  */
 public class GetFixHelper
 {
+    public static final String PREF_KEY_GETFIX_MINELAPSED = "getFix_minElapsed";
+    public static final String PREF_KEY_GETFIX_MAXELAPSED = "getFix_maxElapsed";
+    public static final String PREF_KEY_GETFIX_MAXAGE = "getFix_maxAge";
+
     public GetFixTask getFixTask = null;
     public boolean gettingFix = false;
 
@@ -62,7 +68,18 @@ public class GetFixHelper
         {
             if (isGPSEnabled())
             {
+                SharedPreferences prefs = myParent.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
                 getFixTask = new GetFixTask(myParent, this);
+
+                int minElapsed = prefs.getInt(PREF_KEY_GETFIX_MINELAPSED, GetFixTask.MIN_ELAPSED);
+                getFixTask.setMinElapsed(minElapsed);
+
+                int maxElapsed = prefs.getInt(PREF_KEY_GETFIX_MAXELAPSED, GetFixTask.MAX_ELAPSED);
+                getFixTask.setMaxElapsed(maxElapsed);
+
+                int maxAge = prefs.getInt(PREF_KEY_GETFIX_MAXAGE, GetFixTask.MAX_AGE);
+                getFixTask.setMaxAge(maxAge);
+
                 getFixTask.addGetFixTaskListeners(listeners);
                 getFixTask.execute();
 

@@ -28,6 +28,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -40,9 +41,9 @@ import java.util.List;
  */
 public class GetFixTask extends AsyncTask<String, Location, Location>
 {
-    private static final int MIN_ELAPSED = 1000 * 5;        // wait at least 5s before settling on a fix
-    private static final int MAX_ELAPSED = 1000 * 60;       // wait at most a minute for a fix
-    private static final int MAX_AGE = 1000 * 60 * 5;       // consider fixes over 5min be "too old"
+    public static final int MIN_ELAPSED = 1000 * 5;        // wait at least 5s before settling on a fix
+    public static final int MAX_ELAPSED = 1000 * 60;       // wait at most a minute for a fix
+    public static final int MAX_AGE = 1000 * 60 * 5;       // consider fixes over 5min be "too old"
 
     private GetFixHelper helper;
     private Context myParent;
@@ -54,6 +55,45 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
         uiObj = helper.getUI();
     }
 
+    /**
+     * Property: minimum amount of time that must elapse while searching for a location.
+     */
+    private int minElapsed = MIN_ELAPSED;
+    public int getMinElapsed()
+    {
+        return minElapsed;
+    }
+    public void setMinElapsed( int timeInMs )
+    {
+        minElapsed = timeInMs;
+    }
+
+    /**
+     * Property: maximum amount of time that may elapsed while searching for a location.
+     */
+    private int maxElapsed = MAX_ELAPSED;
+    public int getMaxElapsed()
+    {
+        return maxElapsed;
+    }
+    public void setMaxElapsed( int timeInMs )
+    {
+        maxElapsed = timeInMs;
+    }
+
+    /**
+     * Property: maximum amount of time a fix may age before its considered out-of-date.
+     */
+    private int maxAge = MAX_AGE;
+    public int getMaxAge()
+    {
+        return maxAge;
+    }
+    public void setMaxAge( int timeInMs )
+    {
+        maxAge = timeInMs;
+    }
+
     private long startTime, stopTime, elapsedTime;
     private Location bestFix, lastFix;
     private LocationManager locationManager;
@@ -62,6 +102,8 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
         @Override
         public void onLocationChanged(Location location)
         {
+            Log.d("GetFixTask", "onLocationChanged: " + location.toString());
+
             lastFix = location;
             if (isBetterFix(lastFix, bestFix))
             {
@@ -77,7 +119,7 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
                 return true;
 
             } else if (location != null) {
-                if ((location.getTime() - location2.getTime()) > MAX_AGE)
+                if ((location.getTime() - location2.getTime()) > maxAge)
                 {
                     return true;  // more than 5min since last fix; assume the latest fix is better
 
@@ -123,11 +165,12 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
         {
             public void run()
             {
+                Log.d("GetFixTask", "attached location listener; requesting updates");
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
             }
         });
 
-        while (elapsedTime < MAX_ELAPSED && !isCancelled())
+        while (elapsedTime < maxElapsed && !isCancelled())
         {
             try {
                 Thread.sleep(100);
@@ -138,7 +181,7 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
             stopTime = System.currentTimeMillis();
             elapsedTime = stopTime - startTime;
 
-            if (bestFix != null && elapsedTime > MIN_ELAPSED)
+            if (bestFix != null && elapsedTime > minElapsed)
             {
                 break;
             }
