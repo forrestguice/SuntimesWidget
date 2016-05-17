@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2014 Forrest Guice
+    This file is part of SuntimesWidget.
+
+    SuntimesWidget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SuntimesWidget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical"
+        style="@style/SunsetTimeWidget_dark"
+        android:layout_marginBottom="@dimen/settingsGroup_margin"
+        android:paddingLeft="5dp">
+
+        <TextView style="@style/SunsetTimeSettingsGroupTitle"
+            android:id="@+id/appwidget_location_grouptitle"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/configLabel_location" />
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="16dp" android:paddingLeft="16dp" android:paddingTop="@dimen/settingsGroup_padding">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="@string/configLabel_location_mode"
+                android:layout_gravity="center_vertical" />
+
+            <Spinner android:id="@+id/appwidget_location_mode" android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                     android:layout_gravity="center_vertical" />
+
+        </LinearLayout>
+
+        <View android:layout_height="2dp" android:layout_width="wrap_content"
+              android:layout_marginTop="16dp" android:layout_marginBottom="0dp"
+              android:layout_marginLeft="4dp" android:layout_marginRight="4dp"
+              android:paddingTop="@dimen/settingsGroup_padding"
+              android:background="@color/ripple_material_dark" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" android:paddingTop="@dimen/settingsGroup_padding">
+
+
+            <LinearLayout android:id="@+id/appwidget_location_controlPanel"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:orientation="horizontal"
+                          android:layout_gravity="center_vertical">
+
+                <ImageButton android:id="@+id/appwidget_location_edit"
+                             android:layout_width="wrap_content" android:layout_height="wrap_content"
+                             style="@android:style/Widget.ActionButton"
+                             android:src="@drawable/ic_action_place"
+                             />
+
+                <ImageButton android:id="@+id/appwidget_location_save"
+                             style="@android:style/Widget.ActionButton"
+                             android:layout_width="wrap_content" android:layout_height="wrap_content"
+                             android:src="@drawable/ic_action_save"
+                             android:visibility="gone"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal"
+                android:paddingLeft="5dp" android:paddingStart="5dp"
+                android:paddingRight="0dp" android:paddingEnd="0dp"
+                android:layout_gravity="center_vertical">
+
+                <TextView android:id="@+id/appwidget_location_name_label"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_gravity="end|center_vertical"
+                          android:text="@string/configLabel_location_name" android:enabled="false"
+                    />
+
+                <ViewFlipper android:id="@+id/view_flip"
+                             android:layout_width="fill_parent" android:layout_height="wrap_content"
+                             android:layout_gravity="center_vertical"
+                             android:paddingLeft="0dp" android:paddingStart="0dp"
+                             android:paddingRight="16dp" android:paddingEnd="16dp" >
+
+                    <EditText android:id="@+id/appwidget_location_name"
+                              android:layout_width="fill_parent" android:layout_height="wrap_content"
+                              android:textAppearance="?android:attr/textAppearanceSmallPopupMenu"
+                              android:hint="@string/configHint_location_name" android:enabled="false"
+                              android:paddingLeft="5dp"
+                        android:layout_gravity="center_vertical" />
+
+                    <Spinner android:id="@+id/appwidget_location_nameSelect"
+                             android:layout_width="fill_parent" android:layout_height="wrap_content"
+                             android:layout_gravity="center_vertical"
+                        />
+
+                </ViewFlipper>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+
+            <GridLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:columnCount="5" android:rowCount="4" android:orientation="horizontal"
+                        android:paddingLeft="16dp" android:paddingRight="16dp" android:paddingTop="0dp">
+
+                <TextView android:id="@+id/appwidget_location_lat_label"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_gravity="end"
+                          android:text="@string/configLabel_location_lat" android:enabled="false"
+                          android:layout_row="0"
+                          android:layout_column="0" />
+
+                <EditText android:id="@+id/appwidget_location_lat"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:inputType="numberDecimal|numberSigned"
+                          android:textAppearance="?android:attr/textAppearanceSmallPopupMenu"
+                          android:hint="@string/configHint_location_lat" android:enabled="false"
+                          android:layout_row="0"
+                          android:layout_column="1"
+                          android:layout_columnSpan="4"/>
+
+                <TextView android:id="@+id/appwidget_location_lon_label"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_gravity="end"
+                          android:text="@string/configLabel_location_lon" android:enabled="false"
+                          android:layout_row="1"
+                          android:layout_column="0" />
+
+                <EditText android:id="@+id/appwidget_location_lon"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:inputType="numberDecimal|numberSigned"
+                          android:textAppearance="?android:attr/textAppearanceSmallPopupMenu"
+                          android:hint="@string/configHint_location_lon" android:enabled="false"
+                          android:layout_row="1"
+                          android:layout_column="1"
+                          android:layout_columnSpan="4" />
+
+            </GridLayout>
+
+
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="fill_parent"
+                          android:orientation="vertical" android:layout_gravity="top">
+
+                <ViewFlipper android:id="@+id/view_flip2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+                        <ImageButton android:id="@+id/appwidget_location_getfix"
+                                     android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                     android:src="@drawable/ic_action_location_searching"
+                                     android:layout_gravity="center" />
+
+                        <ProgressBar
+                            android:id="@+id/appwidget_location_getfixprogress"
+                            style="?android:attr/progressBarStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent">
+
+                    </LinearLayout>
+
+                </ViewFlipper>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</merge>

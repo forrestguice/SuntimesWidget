@@ -48,7 +48,15 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     @Override
     public void init(WidgetSettings.Location locationSetting, String timezone)
     {
-        this.location = new Location(locationSetting.getLatitude(), locationSetting.getLongitude());
+        try
+        {
+            this.location = new Location(locationSetting.getLatitude(), locationSetting.getLongitude());
+
+        } catch (NumberFormatException e) {
+            Log.e("init", "location was invalid, falling back to default; " + e.toString());
+            this.location = new Location(WidgetSettings.PREF_DEF_LOCATION_LATITUDE, WidgetSettings.PREF_DEF_LOCATION_LONGITUDE);
+        }
+
         this.timezone = timezone;
         calculator = new SunriseSunsetCalculator(this.location, this.timezone);
     }
