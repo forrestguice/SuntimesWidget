@@ -360,6 +360,7 @@ public class SuntimesNotes3 implements SuntimesNotes
             eventTime = date.getTime();
         }
 
+        note.tomorrow = afterToday;
         note.timeText = utils.timeDeltaDisplayString(time, eventTime);
         note.time = eventTime;
     }

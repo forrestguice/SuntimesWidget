@@ -34,6 +34,7 @@ public class NoteData
     public int noteIconResource;
     public int noteColor;
     public Date time;
+    public boolean tomorrow = false;
 
     public NoteData(SolarEvents noteMode, SuntimesUtils.TimeDisplayText timeText, String prefixText, String noteText, int noteIconResource, int noteColor)
     {
