@@ -135,12 +135,14 @@ public class SuntimesActivity extends AppCompatActivity
     private TextView txt_daylength2;
     private TextView txt_lightlength2;
 
-    private HashMap<SolarEvents, TextView> timeFields;
+    private HashMap<SolarEventField, TextView> timeFields;
 
     public SuntimesActivity()
     {
         super();
     }
+
+
 
     /**
      * OnCreate: the Activity initially created
@@ -279,7 +281,7 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private void initCardViews(Context context)
     {
-        timeFields = new HashMap<SolarEvents, TextView>();
+        timeFields = new HashMap<SolarEventField, TextView>();
         card_flipper = (ViewFlipper) findViewById(R.id.info_time_flipper);
         if (card_flipper != null)
         {
@@ -297,26 +299,26 @@ public class SuntimesActivity extends AppCompatActivity
 
             txt_sunrise_actual = (TextView) viewToday.findViewById(R.id.text_time_sunrise_actual);
             txt_sunset_actual = (TextView) viewToday.findViewById(R.id.text_time_sunset_actual);
-            timeFields.put(SolarEvents.SUNRISE, txt_sunrise_actual);
-            timeFields.put(SolarEvents.SUNSET, txt_sunset_actual);
+            timeFields.put(new SolarEventField(SolarEvents.SUNRISE, false), txt_sunrise_actual);
+            timeFields.put(new SolarEventField(SolarEvents.SUNSET, false), txt_sunset_actual);
 
             txt_sunrise_civil = (TextView) viewToday.findViewById(R.id.text_time_sunrise_civil);
             txt_sunset_civil = (TextView) viewToday.findViewById(R.id.text_time_sunset_civil);
-            timeFields.put(SolarEvents.MORNING_CIVIL, txt_sunrise_civil);
-            timeFields.put(SolarEvents.EVENING_CIVIL, txt_sunset_civil);
+            timeFields.put(new SolarEventField(SolarEvents.MORNING_CIVIL, false), txt_sunrise_civil);
+            timeFields.put(new SolarEventField(SolarEvents.EVENING_CIVIL, false), txt_sunset_civil);
 
             txt_sunrise_nautical = (TextView) viewToday.findViewById(R.id.text_time_sunrise_nautical);
             txt_sunset_nautical = (TextView) viewToday.findViewById(R.id.text_time_sunset_nautical);
-            timeFields.put(SolarEvents.MORNING_NAUTICAL, txt_sunrise_nautical);
-            timeFields.put(SolarEvents.EVENING_NAUTICAL, txt_sunset_nautical);
+            timeFields.put(new SolarEventField(SolarEvents.MORNING_NAUTICAL, false), txt_sunrise_nautical);
+            timeFields.put(new SolarEventField(SolarEvents.EVENING_NAUTICAL, false), txt_sunset_nautical);
 
             txt_sunrise_astro = (TextView) viewToday.findViewById(R.id.text_time_sunrise_astro);
             txt_sunset_astro = (TextView) viewToday.findViewById(R.id.text_time_sunset_astro);
-            timeFields.put(SolarEvents.MORNING_ASTRONOMICAL, txt_sunrise_astro);
-            timeFields.put(SolarEvents.EVENING_ASTRONOMICAL, txt_sunset_astro);
+            timeFields.put(new SolarEventField(SolarEvents.MORNING_ASTRONOMICAL, false), txt_sunrise_astro);
+            timeFields.put(new SolarEventField(SolarEvents.EVENING_ASTRONOMICAL, false), txt_sunset_astro);
 
             txt_solarnoon = (TextView) viewToday.findViewById(R.id.text_time_noon);
-            timeFields.put(SolarEvents.NOON, txt_solarnoon);
+            timeFields.put(new SolarEventField(SolarEvents.NOON, false), txt_solarnoon);
 
             txt_daylength = (TextView) viewToday.findViewById(R.id.text_daylength);
             txt_lightlength = (TextView) viewToday.findViewById(R.id.text_lightlength);
@@ -354,17 +356,26 @@ public class SuntimesActivity extends AppCompatActivity
 
             txt_sunrise2_actual = (TextView) viewTomorrow.findViewById(R.id.text_time_sunrise_actual);
             txt_sunset2_actual = (TextView) viewTomorrow.findViewById(R.id.text_time_sunset_actual);
+            timeFields.put(new SolarEventField(SolarEvents.SUNRISE, true), txt_sunrise2_actual);
+            timeFields.put(new SolarEventField(SolarEvents.SUNSET, true), txt_sunset2_actual);
 
             txt_sunrise2_civil = (TextView) viewTomorrow.findViewById(R.id.text_time_sunrise_civil);
             txt_sunset2_civil = (TextView) viewTomorrow.findViewById(R.id.text_time_sunset_civil);
+            timeFields.put(new SolarEventField(SolarEvents.MORNING_CIVIL, true), txt_sunrise2_civil);
+            timeFields.put(new SolarEventField(SolarEvents.EVENING_CIVIL, true), txt_sunset2_civil);
 
             txt_sunrise2_nautical = (TextView) viewTomorrow.findViewById(R.id.text_time_sunrise_nautical);
             txt_sunset2_nautical = (TextView) viewTomorrow.findViewById(R.id.text_time_sunset_nautical);
+            timeFields.put(new SolarEventField(SolarEvents.MORNING_NAUTICAL, true), txt_sunrise2_nautical);
+            timeFields.put(new SolarEventField(SolarEvents.EVENING_NAUTICAL, true), txt_sunset2_nautical);
 
             txt_sunrise2_astro = (TextView) viewTomorrow.findViewById(R.id.text_time_sunrise_astro);
             txt_sunset2_astro = (TextView) viewTomorrow.findViewById(R.id.text_time_sunset_astro);
+            timeFields.put(new SolarEventField(SolarEvents.MORNING_ASTRONOMICAL, true), txt_sunrise2_astro);
+            timeFields.put(new SolarEventField(SolarEvents.EVENING_ASTRONOMICAL, true), txt_sunset2_astro);
 
             txt_solarnoon2 = (TextView) viewTomorrow.findViewById(R.id.text_time_noon);
+            timeFields.put(new SolarEventField(SolarEvents.NOON, true), txt_solarnoon2);
 
             txt_daylength2 = (TextView) viewTomorrow.findViewById(R.id.text_daylength);
             txt_lightlength2 = (TextView) viewTomorrow.findViewById(R.id.text_lightlength);
@@ -1057,23 +1068,42 @@ public class SuntimesActivity extends AppCompatActivity
     };
 
 
-    public void highlightField( SolarEvents highlightField )
+    public void highlightField( SolarEventField highlightField )
     {
-        for (SolarEvents event : timeFields.keySet())
+        int nextCardOffset = 0;
+        int currentCard = this.card_flipper.getDisplayedChild();
+
+        for (SolarEventField field : timeFields.keySet())
         {
-            TextView txtField = timeFields.get(event);
+            TextView txtField = timeFields.get(field);
             if (txtField != null)
             {
-                if (event == highlightField)
+                if (field.equals(highlightField))
                 {
                     txtField.setTypeface(txtField.getTypeface(), Typeface.BOLD);
                     txtField.setPaintFlags(txtField.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
+                    if (currentCard == 0 && field.tomorrow)
+                    {
+                        nextCardOffset = 1;
+
+                    } else if (currentCard == 1 && !field.tomorrow) {
+                        nextCardOffset = -1;
+                    }
 
                 } else {
                     txtField.setTypeface(Typeface.create(txtField.getTypeface(), Typeface.NORMAL), Typeface.NORMAL);
                     txtField.setPaintFlags(txtField.getPaintFlags() & (~Paint.UNDERLINE_TEXT_FLAG));
                 }
             }
+        }
+
+        if (nextCardOffset > 0)
+        {
+            showNextCard();
+
+        } else if (nextCardOffset < 0) {
+            showPreviousCard();
         }
     }
 
@@ -1111,6 +1141,40 @@ public class SuntimesActivity extends AppCompatActivity
             note_flipper.showPrevious();
         }
 
-        highlightField(note.noteMode);
+        highlightField(new SolarEventField(note.noteMode, note.tomorrow));
+    }
+
+    /**
+     * SolarEventField
+     */
+    private class SolarEventField
+    {
+        public SolarEvents event = SolarEvents.NOON;
+        public Boolean tomorrow = false;
+
+        public SolarEventField(SolarEvents event, boolean tomorrow)
+        {
+            this.event = event;
+            this.tomorrow = tomorrow;
+        }
+
+        public boolean equals(Object obj)
+        {
+            if (!(obj instanceof SolarEventField))
+            {
+                return false;
+
+            } else {
+                SolarEventField that = (SolarEventField)obj;
+                return (this.event.equals(that.event) && (this.tomorrow == that.tomorrow));
+            }
+        }
+
+        public int hashCode()
+        {
+            int hash = this.event.hashCode();
+            hash = hash * 37 + (tomorrow ? 0 : 1);
+            return hash;
+        }
     }
 }
