@@ -77,11 +77,36 @@ public class SuntimesDataset
         return dataActual.isCalculated();
     }
 
+    public boolean isNight()
+    {
+        return isNight(this.now().getTime());
+    }
+
     public boolean isNight( Date time )
     {
         Date sunrise = dataActual.sunriseCalendarToday().getTime();
         Date sunsetAstroTwilight = dataAstro.sunsetCalendarToday().getTime();
         return (time.before(sunrise) || time.after(sunsetAstroTwilight));
+    }
+
+    public boolean isDay()
+    {
+        return isDay(now().getTime());
+    }
+
+    public boolean isDay( Date time )
+    {
+        Calendar sunsetCal = dataActual.sunsetCalendarToday();
+        if (sunsetCal == null)    // no sunset time, must be day
+            return true;
+
+        Calendar sunriseCal = dataActual.sunriseCalendarToday();
+        if (sunriseCal == null)   // no sunrise time, must be night
+            return false;
+
+        Date sunrise = sunriseCal.getTime();
+        Date sunset = sunsetCal.getTime();
+        return (time.after(sunrise) && time.before(sunset));
     }
 
     public String timezone()

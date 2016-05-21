@@ -23,11 +23,16 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.calculator.SuntimesDataset;
 
 public class AppSettings
 {
+    public static final String THEME_DARK = "dark";
+    public static final String THEME_LIGHT = "light";
+    public static final String THEME_DAYNIGHT = "daynight";
+
     public static final String PREF_KEY_APPEARANCE_THEME = "app_appearance_theme";
-    public static final String PREF_DEF_APPEARANCE_THEME = "dark";
+    public static final String PREF_DEF_APPEARANCE_THEME = THEME_DARK;
 
     public static final String PREF_KEY_UI_CLOCKTAPACTION = "app_ui_clocktapaction";
     public static final ClockTapAction PREF_DEF_UI_CLOCKTAPACTION = ClockTapAction.ALARM;
@@ -103,12 +108,29 @@ public class AppSettings
 
     public static int loadTheme(Context context)
     {
+        return loadTheme(context, null);
+    }
+    public static int loadTheme(Context context, SuntimesDataset dataset)
+    {
+        int styleID = R.style.AppTheme_Dark;
         String themeName = loadThemePref(context);
         if (themeName != null)
         {
-            return (themeName.equals("light") ? R.style.AppTheme_Light : R.style.AppTheme_Dark);
+            if (themeName.equals(THEME_LIGHT))
+            {
+                styleID = R.style.AppTheme_Light;
+
+            } else if (themeName.equals(THEME_DARK)) {
+                styleID = R.style.AppTheme_Dark;
+
+            } else if (themeName.equals(THEME_DAYNIGHT)) {
+                if (dataset != null)
+                {
+                    styleID = (dataset.isDay() ? R.style.AppTheme_Light : R.style.AppTheme_Dark);
+                }
+            }
         }
-        return R.style.AppTheme_Dark;
+        return styleID;
     }
 
     public static void initDisplayStrings( Context context )

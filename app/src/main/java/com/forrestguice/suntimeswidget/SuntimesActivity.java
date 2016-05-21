@@ -151,12 +151,14 @@ public class SuntimesActivity extends AppCompatActivity
     @Override
     public void onCreate(Bundle icicle)
     {
-        setTheme(AppSettings.loadTheme(this));
+        Context context = SuntimesActivity.this;
+        calculateData(context);
+        setTheme(AppSettings.loadTheme(this, dataset));
+
         super.onCreate(icicle);
         setResult(RESULT_CANCELED);
         setContentView(R.layout.layout_main);
 
-        Context context = SuntimesActivity.this;
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         //WidgetThemes.initThemes(context);
@@ -164,7 +166,7 @@ public class SuntimesActivity extends AppCompatActivity
         AppSettings.initDisplayStrings(context);
         WidgetSettings.initDisplayStrings(context);
         initViews(context);
-        calculateData(context);
+
 
         notes.resetNoteIndex();
     }

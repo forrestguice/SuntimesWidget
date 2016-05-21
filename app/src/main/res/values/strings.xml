@@ -122,10 +122,12 @@
     <string-array name="appThemes_display">
         <item>Light Theme</item>
         <item>Dark Theme</item>
+        <item>Day Theme / Night Theme (Light / Dark)</item>
     </string-array>
     <string-array name="appThemes_values">
         <item>light</item>
         <item>dark</item>
+        <item>daynight</item>
     </string-array>
 
     <string-array name="clockTapActions_display">
