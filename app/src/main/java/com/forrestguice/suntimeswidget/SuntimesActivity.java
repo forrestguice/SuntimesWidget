@@ -245,6 +245,11 @@ public class SuntimesActivity extends AppCompatActivity
         if (note_flipper != null)
         {
             note_flipper.setOnTouchListener(noteTouchListener);
+            note_flipper.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view) { /* DO NOTHING HERE (but we still need this listener) */ }
+            });
 
         } else {
             Log.w("initNoteViews", "Failed to set touchListener; note_flipper is null!");
@@ -861,7 +866,7 @@ public class SuntimesActivity extends AppCompatActivity
             {
                 case MotionEvent.ACTION_DOWN:
                     firstTouchX = event.getX();
-                    break;
+                     break;
 
                 case MotionEvent.ACTION_UP:
                     secondTouchX = event.getX();
@@ -883,7 +888,7 @@ public class SuntimesActivity extends AppCompatActivity
                     }
                     break;
             }
-            return true;
+            return false;
         }
     };
 
