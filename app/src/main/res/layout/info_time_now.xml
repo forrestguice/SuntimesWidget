@@ -20,18 +20,16 @@
     <LinearLayout android:layout_width="wrap_content"
                   android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <LinearLayout android:id="@+id/layout_clock"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_margin="10dp">
+            android:padding="10dp" android:background="?attr/selectableItemBackground">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_gravity="right"
-                >
+                android:layout_gravity="right">
 
                 <TextView style="@style/SunsetTimeTextView"
                           android:id="@+id/text_time"

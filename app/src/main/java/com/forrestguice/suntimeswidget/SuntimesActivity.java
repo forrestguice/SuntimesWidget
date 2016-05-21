@@ -413,12 +413,13 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private void initClockViews(Context context)
     {
-        txt_time = (TextView) findViewById(R.id.text_time);
-        if (txt_time != null)
+        LinearLayout clockLayout = (LinearLayout) findViewById(R.id.layout_clock);
+        if (clockLayout != null)
         {
-            txt_time.setOnClickListener(onClockClick);
+            clockLayout.setOnClickListener(onClockClick);
         }
 
+        txt_time = (TextView) findViewById(R.id.text_time);
         txt_time_suffix = (TextView) findViewById(R.id.text_time_suffix);
         txt_timezone = (TextView) findViewById(R.id.text_timezone);
     }
