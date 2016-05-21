@@ -405,43 +405,17 @@ public class SuntimesNotes3 implements SuntimesNotes
     @Override
     public void updateNote(Context context, Calendar now, int transition)
     {
-        Date time = now.getTime();
-        long nearestTime = -1;
         int choice = WidgetSettings.loadTimeNoteRisePref(context, AppWidgetManager.INVALID_APPWIDGET_ID).ordinal();
-        Log.d("updateNote", "updating note with choice " + "[" + choice + "]");
-
-        //updateNotes(now);
-
-        //NoteData nearestNote = notesList.get(0);
-        /**for (NoteData note : notesList)
-        {
-            if (note.noteMode.ordinal() <= choice)
-            {
-                nearestNote = note;
-            }
-        }*/
-
-        /**for (NoteData note : notesList)
-        {
-            if (time.before(note.time) && choice <= note.noteMode.ordinal())
-            {
-                long timeUntil = note.time.getTime() - time.getTime();
-                if (timeUntil < nearestTime || nearestTime < 0)
-                {
-                    nearestTime = timeUntil;
-                    nearestNote = note;
-                }
-            }
-        }*/
-
         NoteData chosenNote = notesList.get(choice);
-        updateNote(chosenNote, now);
 
-        //if (currentNote == null || !currentNote.equals(chosenNote))
-        //{
-            Log.d("updateNote", "changing the note to " + chosenNote.toString() + "[" + choice + "]");
-            setNote(chosenNote, NoteChangedListener.TRANSITION_NEXT);
-        //}
+        NoteData updatedNote = new NoteData(chosenNote);
+        updateNote(updatedNote, now);
+
+        if (currentNote == null || !currentNote.equals(updatedNote))
+        {
+            Log.d("updateNote", "changing the note to " + updatedNote.toString() + "[" + choice + "]");
+            setNote(updatedNote, NoteChangedListener.TRANSITION_NEXT);
+        }
     }
 
     @Override

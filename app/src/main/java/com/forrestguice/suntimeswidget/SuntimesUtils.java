@@ -107,6 +107,36 @@ public class SuntimesUtils
 
             return s.toString();
         }
+
+
+        @Override
+        public boolean equals(Object obj)
+        {
+            if (obj == null || !TimeDisplayText.class.isAssignableFrom(obj.getClass()))
+                return false;
+
+            final TimeDisplayText other = (TimeDisplayText)obj;
+
+            if (!value.equals(other.getValue()))
+                return false;
+
+            if (!units.equals(other.getUnits()))
+                return false;
+
+            if (!suffix.equals(other.getSuffix()))
+                return false;
+
+            return true;
+        }
+
+        @Override
+        public int hashCode()
+        {
+            int hash = this.value.hashCode();
+            hash = hash * 37 + units.hashCode();
+            hash = hash * 37 + suffix.hashCode();
+            return hash;
+        }
     }
 
     /**

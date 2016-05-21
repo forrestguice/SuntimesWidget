@@ -74,6 +74,14 @@ public class NoteData
     }
 
     @Override
+    public int hashCode()
+    {
+        int hash = this.noteMode.hashCode();
+        hash = hash * 37 + this.timeText.hashCode();
+        return hash;
+    }
+
+    @Override
     public String toString()
     {
         return "NoteData[" + this.noteMode + " (" + this.time + " in" + timeText + ")" + "]";
