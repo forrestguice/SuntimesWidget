@@ -19,4 +19,6 @@
     <attr name="icActionNext" format="reference" />
     <attr name="icActionPrevious" format="reference" />
     <attr name="icActionSave" format="reference" />
+
+    <attr name="icActionGPS" format="reference" />
 </resources>

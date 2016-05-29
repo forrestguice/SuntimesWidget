@@ -10,6 +10,7 @@
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
         <item name="hrColor">@color/ripple_material_light</item>
 
+        <item name="icActionGPS">@drawable/ic_action_location_found_light</item>
         <item name="icActionPlace">@drawable/ic_action_place_light</item>
         <item name="icActionMap">@drawable/ic_action_map_light</item>
         <item name="icActionTime">@drawable/ic_action_time_light</item>
@@ -29,6 +30,7 @@
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
         <item name="hrColor">@color/ripple_material_dark</item>
 
+        <item name="icActionGPS">@drawable/ic_action_location_found</item>
         <item name="icActionPlace">@drawable/ic_action_place</item>
         <item name="icActionMap">@drawable/ic_action_map</item>
         <item name="icActionTime">@drawable/ic_action_time</item>
