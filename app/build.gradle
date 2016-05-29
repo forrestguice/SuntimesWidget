@@ -9,7 +9,7 @@ android
     {
         applicationId "com.forrestguice.suntimeswidget"
         minSdkVersion 10
-        targetSdkVersion 23
+        targetSdkVersion 22
         versionCode 3
         versionName "0.1.0"
     }
