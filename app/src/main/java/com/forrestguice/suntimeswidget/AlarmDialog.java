@@ -50,7 +50,7 @@ public class AlarmDialog extends Dialog
     private Spinner spinner_scheduleMode;
     private TextView txt_note;
 
-    private SolarEvents choice;
+    private SolarEvents choice = null;
     private SuntimesDataset dataset;
 
     public AlarmDialog(Activity c, SuntimesDataset dataset)
@@ -89,10 +89,12 @@ public class AlarmDialog extends Dialog
                         Calendar now = dataset.now();
                         Calendar alarmCalendar = getCalendarForAlarmChoice(choice, now);
                         SuntimesUtils.TimeDisplayText timeString = utils.timeDeltaDisplayString(now.getTime(), alarmCalendar.getTime());
-                        txt_note.setText( myParent.getString(R.string.schedalarm_dialog_note, timeString.getValue()) );
+                        txt_note.setText(myParent.getString(R.string.schedalarm_dialog_note, timeString.getValue()));
                     }
 
-                    public void onNothingSelected(AdapterView<?> parent) { }
+                    public void onNothingSelected(AdapterView<?> parent)
+                    {
+                    }
                 }
         );
     }
@@ -107,6 +109,11 @@ public class AlarmDialog extends Dialog
         loadSettings(myParent);
     }
 
+    public void setChoice( SolarEvents choice )
+    {
+        this.choice = choice;
+        spinner_scheduleMode.setSelection(choice.ordinal());
+    }
     public SolarEvents getChoice()
     {
         return choice;
@@ -118,6 +125,14 @@ public class AlarmDialog extends Dialog
 
     protected void loadSettings(Context context)
     {
+        loadSettings(context, false);
+    }
+
+    protected void loadSettings(Context context, boolean overwriteCurrent)
+    {
+        if (!overwriteCurrent && choice != null)
+            return;
+
         SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
         String choiceString = prefs.getString(PREF_KEY_ALARM_LASTCHOICE, PREF_DEF_ALARM_LASTCHOICE.name());
         try {
@@ -125,7 +140,7 @@ public class AlarmDialog extends Dialog
         } catch (IllegalArgumentException e) {
             choice = PREF_DEF_ALARM_LASTCHOICE;
         }
-        spinner_scheduleMode.setSelection(choice.ordinal());
+        setChoice(choice);
     }
 
     protected void saveSettings(Context context)
