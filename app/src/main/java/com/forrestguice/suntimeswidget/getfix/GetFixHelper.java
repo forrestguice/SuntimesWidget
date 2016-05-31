@@ -18,13 +18,17 @@
 
 package com.forrestguice.suntimeswidget.getfix;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -88,6 +92,14 @@ public class GetFixHelper
             }
         }
     }
+    public void getFix( GetFixUI uiObj )
+    {
+        if (!gettingFix)
+        {
+            this.uiObj = uiObj;
+            getFix();
+        }
+    }
 
     /**
      * Cancel acquiring a location fix (cancels running task(s)).
@@ -100,37 +112,60 @@ public class GetFixHelper
         }
     }
 
+    public boolean hasGPSPermissions(Activity activity, int requestID)
+    {
+        int permission = ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION);
+        boolean hasPermission = permission == PackageManager.PERMISSION_GRANTED;
+        if (!hasPermission)
+        {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.ACCESS_FINE_LOCATION))
+            {
+                /* intentionally empty; don't block here */
+            } else {
+                ActivityCompat.requestPermissions(activity, new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, requestID);
+            }
+        }
+
+        return hasPermission;
+    }
+
     public boolean isGPSEnabled()
     {
-        LocationManager locationManager = (LocationManager) myParent.getSystemService(Context.LOCATION_SERVICE);
+        return isGPSEnabled(myParent);
+    }
+    public static boolean isGPSEnabled(Context context)
+    {
+        LocationManager locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
     private AlertDialog gpsPrompt = null;
     public void showGPSEnabledPrompt()
     {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
-        builder.setMessage(myParent.getString(R.string.gps_dialog_msg))
+        gpsPrompt = GetFixHelper.createGPSEnabledPrompt(myParent);
+        gpsPrompt.show();
+    }
+    public static AlertDialog createGPSEnabledPrompt( final Context context )
+    {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(context.getString(R.string.gps_dialog_msg))
                 .setCancelable(false)
-                .setPositiveButton(myParent.getString(R.string.gps_dialog_ok), new DialogInterface.OnClickListener()
+                .setPositiveButton(context.getString(R.string.gps_dialog_ok), new DialogInterface.OnClickListener()
                 {
                     public void onClick(final DialogInterface dialog, final int id)
                     {
-                        myParent.startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                        gpsPrompt = null;
+                        context.startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
                     }
                 })
-                .setNegativeButton(myParent.getString(R.string.gps_dialog_cancel), new DialogInterface.OnClickListener()
+                .setNegativeButton(context.getString(R.string.gps_dialog_cancel), new DialogInterface.OnClickListener()
                 {
                     public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id)
                     {
                         dialog.cancel();
-                        gpsPrompt = null;
                     }
                 });
 
-        gpsPrompt = builder.create();
-        gpsPrompt.show();
+        return builder.create();
     }
 
     public void dismissGPSEnabledPrompt()
