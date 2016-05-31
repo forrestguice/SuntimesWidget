@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <dimen name="widget_margin">8dp</dimen>
     <dimen name="widget_size_percell">70px</dimen>
     <dimen name="widget_size_less">30px</dimen>
@@ -13,6 +12,9 @@
 
     <dimen name="widget_layout_spacing_small">4dp</dimen>
     <dimen name="widget_layout_spacing">8dp</dimen>
+
+    <dimen name="sunIconLarge_width">32dip</dimen>
+    <dimen name="sunIconLarge_height">8dip</dimen>
 
     <dimen name="sunIcon_inset">-9dip</dimen> <!-- this should be the same as sunicon_height to produce a half circle -->
     <dimen name="sunIcon_height">9dip</dimen>

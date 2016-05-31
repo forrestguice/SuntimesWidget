@@ -3,7 +3,7 @@
     android:insetBottom="@dimen/sunIcon_inset">
 
     <shape android:shape="oval">
-        <size android:width="32dp" android:height="8dp" />
+        <size android:width="@dimen/sunIconLarge_width" android:height="@dimen/sunIconLarge_height" />
         <solid android:color="@color/sunIcon_color_rising" />
 
         <stroke android:width="@dimen/sunIcon_width_risingBorder"

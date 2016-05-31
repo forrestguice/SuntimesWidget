@@ -89,8 +89,8 @@
     <!-- An ImageView (icon) appearing to left of text/time -->
     <style name="SunsetTimeImageView">
         <item name="android:gravity">center</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">@dimen/sunIcon_width</item>
+        <item name="android:layout_height">@dimen/sunIcon_height</item>
         <item name="android:layout_gravity">center_vertical|right</item>
         <item name="android:layout_marginLeft">2dp</item>
         <item name="android:layout_marginRight">0dp</item>

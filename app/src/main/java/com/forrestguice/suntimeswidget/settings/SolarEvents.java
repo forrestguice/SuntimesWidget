@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.settings;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -135,12 +136,31 @@ public enum SolarEvents
             View view = inflater.inflate(R.layout.layout_listitem_solarevent, parent, false);
 
             ImageView icon = (ImageView) view.findViewById(android.R.id.icon1);
-            icon.setImageResource(choices.get(position).getIcon());
+            int iconResource = choices.get(position).getIcon();
+            adjustIcon(iconResource, icon);
 
             TextView text = (TextView) view.findViewById(android.R.id.text1);
             text.setText(choices.get(position).getLongDisplayString());
 
             return view;
         }
+
+        private void adjustIcon(int iconResource, ImageView icon)
+        {
+            Resources resources = icon.getContext().getResources();
+            int iconWidth = (int)resources.getDimension(R.dimen.sunIconLarge_width);
+            int iconHeight = (int)resources.getDimension(R.dimen.sunIconLarge_height);
+            if ( iconResource == R.drawable.ic_noon_large)
+            {
+                iconHeight = iconWidth;
+            }
+
+            ViewGroup.LayoutParams iconParams = icon.getLayoutParams();
+            iconParams.width = iconWidth;
+            iconParams.height = iconHeight;
+
+            icon.setImageResource(iconResource);
+        }
+
     }
 }

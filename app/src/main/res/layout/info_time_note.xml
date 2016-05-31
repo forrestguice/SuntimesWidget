@@ -17,7 +17,8 @@
             <ImageView
                 style="@style/SunsetTimeImageView"
                 android:id="@+id/icon_timenote"
-                android:background="@drawable/ic_sunrise_large" />
+                android:background="@drawable/ic_sunrise_large"
+                android:layout_width="@dimen/sunIconLarge_width" android:layout_height="@dimen/sunIconLarge_height" />
 
             <TextView style="@style/SunsetTimeTextView"
                       android:id="@+id/text_timenote1"
