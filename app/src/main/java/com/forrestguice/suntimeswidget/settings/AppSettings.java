@@ -37,6 +37,8 @@ public class AppSettings
     public static final String PREF_KEY_UI_CLOCKTAPACTION = "app_ui_clocktapaction";
     public static final ClockTapAction PREF_DEF_UI_CLOCKTAPACTION = ClockTapAction.ALARM;
 
+    public static final String PREF_KEY_UI_NOTETAPACTION = "app_ui_notetapaction";
+    public static final ClockTapAction PREF_DEF_UI_NOTETAPACTION = ClockTapAction.NEXT_NOTE;
 
     public static enum ClockTapAction
     {
@@ -78,8 +80,7 @@ public class AppSettings
     }
 
     /**
-     * @param context
-     * @return
+     * Preference: the action that is performed when the clock ui is clicked/tapped
      */
     public static ClockTapAction loadClockTapActionPref( Context context )
     {
@@ -92,6 +93,24 @@ public class AppSettings
 
         } catch (IllegalArgumentException e) {
             actionMode = PREF_DEF_UI_CLOCKTAPACTION;
+        }
+        return actionMode;
+    }
+
+    /**
+     * Preference: the action that is performed when the note ui is clicked/tapped
+     */
+    public static ClockTapAction loadNoteTapActionPref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        String modeString = pref.getString(PREF_KEY_UI_NOTETAPACTION, PREF_DEF_UI_NOTETAPACTION.name());
+        ClockTapAction actionMode;
+
+        try {
+            actionMode = ClockTapAction.valueOf(modeString);
+
+        } catch (IllegalArgumentException e) {
+            actionMode = PREF_DEF_UI_NOTETAPACTION;
         }
         return actionMode;
     }
