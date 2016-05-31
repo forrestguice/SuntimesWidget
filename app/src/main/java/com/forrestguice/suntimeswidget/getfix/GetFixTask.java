@@ -19,7 +19,6 @@
 
 package com.forrestguice.suntimeswidget.getfix;
 
-import android.app.Activity;
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
@@ -29,7 +28,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,7 +141,7 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
     @Override
     protected void onPreExecute()
     {
-        uiObj.gpsButton.setVisibility(View.GONE);
+        uiObj.onStart();
         uiObj.showProgress(true);
         uiObj.enableUI(false);
 

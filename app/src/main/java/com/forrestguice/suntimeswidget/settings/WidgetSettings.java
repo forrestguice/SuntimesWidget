@@ -94,7 +94,6 @@ public class WidgetSettings
     public static final String PREF_KEY_TIMEZONE_CUSTOM = "timezone";
     public static final String PREF_DEF_TIMEZONE_CUSTOM = "US/Arizona";
 
-
     /**
      * WidgetOnTap
      */
@@ -238,7 +237,7 @@ public class WidgetSettings
      */
     public static enum LocationMode
     {
-        //CURRENT_LOCATION("Current Location"),
+        CURRENT_LOCATION("Current Location"),
         CUSTOM_LOCATION("Custom Location");
 
         private String displayString;
@@ -265,19 +264,20 @@ public class WidgetSettings
 
         public static void initDisplayStrings( Context context )
         {
-            //CURRENT_LOCATION.setDisplayString(context.getString(R.string.locationMode_current));
+            CURRENT_LOCATION.setDisplayString(context.getString(R.string.locationMode_current));
             CUSTOM_LOCATION.setDisplayString(context.getString(R.string.locationMode_custom));
         }
     }
 
     public static class Location
     {
-        private String label = "";
+        private String label;
         private String latitude;
         private String longitude;
 
         public Location( String latitude, String longitude )
         {
+            this.label = "";
             this.latitude = latitude;
             this.longitude = longitude;
         }
@@ -287,6 +287,13 @@ public class WidgetSettings
             this.label = label;
             this.latitude = latitude;
             this.longitude = longitude;
+        }
+
+        public Location( String label, android.location.Location location )
+        {
+            this.label = label;
+            this.latitude = location.getLatitude() + "";
+            this.longitude = location.getLongitude() + "";
         }
 
         public String getLabel()

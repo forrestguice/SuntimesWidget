@@ -27,54 +27,16 @@ import android.widget.ProgressBar;
 import com.forrestguice.suntimeswidget.R;
 
 /**
- * A wrapper class around a set of Views composing "get fix/location" UI; the constructor expects
- * references to the individual views; used by GetFixTask when making progress updates and posting
- * results.
  */
-public class GetFixUI
+public abstract class GetFixUI
 {
     public static final int ICON_GPS_DISABLED = R.drawable.ic_action_location_off;
     public static final int ICON_GPS_SEARCHING = R.drawable.ic_action_location_searching;
     public static final int ICON_GPS_FOUND = R.drawable.ic_action_location_found;
 
-    public EditText locationNameUI = null;
-    public EditText locationLatUI = null;
-    public EditText locationLonUI = null;
-    public ProgressBar locationProgress = null;
-    public ImageButton gpsButton;
-
-    public GetFixUI(EditText nameUI, EditText latUI, EditText lonUI, ProgressBar progress, ImageButton getFixButton)
-    {
-        locationNameUI = nameUI;
-        locationLatUI = latUI;
-        locationLonUI = lonUI;
-        locationProgress = progress;
-        gpsButton = getFixButton;
-    }
-
-    public void enableUI(boolean value)
-    {
-        locationNameUI.requestFocus();
-        locationLatUI.setEnabled(value);
-        locationLonUI.setEnabled(value);
-        locationNameUI.setEnabled(value);
-    }
-
-    public void updateUI(Location... locations)
-    {
-        locationLatUI.setText(locations[0].getLatitude() + "");
-        locationLonUI.setText(locations[0].getLongitude() + "");
-    }
-
-    public void showProgress(boolean showProgress)
-    {
-        locationProgress.setVisibility((showProgress ? View.VISIBLE : View.GONE));
-    }
-
-    public void onResult(Location result)
-    {
-        gpsButton.setImageResource((result == null) ? ICON_GPS_SEARCHING : ICON_GPS_FOUND);
-        gpsButton.setVisibility(View.VISIBLE);
-        gpsButton.setEnabled(true);
-    }
+    public abstract void enableUI(boolean value);
+    public abstract void updateUI(Location... locations);
+    public abstract void showProgress(boolean showProgress);
+    public abstract void onStart();
+    public abstract void onResult(Location result);
 }

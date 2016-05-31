@@ -22,8 +22,10 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.AlarmClock;
@@ -39,16 +41,20 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesDataset;
+import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
+import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 import com.forrestguice.suntimeswidget.notes.NoteChangedListener;
 import com.forrestguice.suntimeswidget.notes.NoteData;
 import com.forrestguice.suntimeswidget.notes.SuntimesNotes;
@@ -71,6 +77,10 @@ public class SuntimesActivity extends AppCompatActivity
     protected static SuntimesUtils utils = new SuntimesUtils();
 
     private ActionBar actionBar;
+    private Menu actionBarMenu;
+
+    private GetFixHelper getFixHelper;
+
     private WidgetSettings.Location location;
     private SuntimesNotes notes;
     private SuntimesDataset dataset;
@@ -167,7 +177,6 @@ public class SuntimesActivity extends AppCompatActivity
         WidgetSettings.initDisplayStrings(context);
         initViews(context);
 
-
         notes.resetNoteIndex();
     }
 
@@ -207,6 +216,7 @@ public class SuntimesActivity extends AppCompatActivity
     public void onStop()
     {
         stopTimeTask();
+        getFixHelper.cancelGetFix();
         super.onStop();
     }
 
@@ -225,14 +235,99 @@ public class SuntimesActivity extends AppCompatActivity
      */
     protected void initViews(Context context)
     {
-        Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
-        setSupportActionBar(menuBar);
-        actionBar = getSupportActionBar();
-
+        initActionBar(context);
         initAnimations(context);
         initClockViews(context);
         initNoteViews(context);
         initCardViews(context);
+    }
+
+    /**
+     * initialize the actionbar
+     */
+    private void initActionBar(Context context)
+    {
+        Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
+        setSupportActionBar(menuBar);
+        actionBar = getSupportActionBar();
+        initGetFix(context);
+    }
+
+    private void initGetFix(Context context)
+    {
+        getFixHelper = new GetFixHelper(this, new GetFixUI()
+        {
+            private MenuItem refreshItem = null;
+
+            @Override
+            public void enableUI(boolean value)
+            {
+                if (refreshItem != null)
+                {
+                    refreshItem.setEnabled(value);
+                }
+            }
+
+            @Override
+            public void updateUI(Location... locations)
+            {
+                WidgetSettings.Location location = new WidgetSettings.Location(getString(R.string.gps_lastfix_title_found), locations[0]);
+                actionBar.setSubtitle(location.toString());
+            }
+
+            @Override
+            public void showProgress(boolean showProgress) {}
+
+            @Override
+            public void onStart()
+            {
+                refreshItem = actionBarMenu.findItem(R.id.action_location_refresh);
+                if (refreshItem != null)
+                {
+                    actionBar.setTitle(getString(R.string.gps_lastfix_title_searching));
+                    refreshItem.setIcon(GetFixUI.ICON_GPS_SEARCHING);
+                }
+            }
+
+            @Override
+            public void onResult(Location result)
+            {
+                if (refreshItem != null)
+                {
+                    refreshItem.setIcon((result != null) ? ICON_GPS_FOUND :
+                            (getFixHelper.isGPSEnabled() ? ICON_GPS_FOUND
+                                                         : ICON_GPS_DISABLED));
+
+                    if (result != null)
+                    {
+                        WidgetSettings.Location location = new WidgetSettings.Location(getString(R.string.gps_lastfix_title_found), result);
+                        WidgetSettings.saveLocationPref(SuntimesActivity.this, 0, location);
+                    }
+                    SuntimesActivity.this.updateViews(SuntimesActivity.this);
+                }
+            }
+        });
+    }
+
+    /**
+     * update actionbar items; shouldn't be called until after the menu is inflated.
+     */
+    private void updateActionBar(Context context)
+    {
+        MenuItem refreshItem = actionBarMenu.findItem(R.id.action_location_refresh);
+        if (refreshItem != null)
+        {
+            WidgetSettings.LocationMode mode = WidgetSettings.loadLocationModePref(context, 0);
+            if (mode != WidgetSettings.LocationMode.CURRENT_LOCATION)
+            {
+                refreshItem.setVisible(false);
+
+            } else {
+                refreshItem.setIcon((getFixHelper.isGPSEnabled() ? GetFixUI.ICON_GPS_FOUND
+                                                                 : GetFixUI.ICON_GPS_DISABLED));
+                refreshItem.setVisible(true);
+            }
+        }
     }
 
     /**
@@ -248,7 +343,8 @@ public class SuntimesActivity extends AppCompatActivity
             note_flipper.setOnClickListener(new View.OnClickListener()
             {
                 @Override
-                public void onClick(View view) { /* DO NOTHING HERE (but we still need this listener) */ }
+                public void onClick(View view)
+                { /* DO NOTHING HERE (but we still need this listener) */ }
             });
 
         } else {
@@ -470,6 +566,8 @@ public class SuntimesActivity extends AppCompatActivity
     {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.actionbar, menu);
+        actionBarMenu = menu;
+        updateActionBar(this);
         return true;
     }
 
@@ -517,6 +615,10 @@ public class SuntimesActivity extends AppCompatActivity
                 configLocation();
                 return true;
 
+            case R.id.action_location_refresh:
+                refreshLocation();
+                return false;
+
             case R.id.action_location_show:
                 showMap();
                 return true;
@@ -534,9 +636,21 @@ public class SuntimesActivity extends AppCompatActivity
         }
     }
 
+    protected void refreshLocation()
+    {
+        if (GetFixHelper.isGPSEnabled(this))
+        {
+            getFixHelper.getFix();
+
+        } else {
+            android.app.AlertDialog dialog = GetFixHelper.createGPSEnabledPrompt(this);
+            dialog.show();
+        }
+    }
+
     protected void configLocation()
     {
-        LocationConfigView.LocationConfigDialog locationDialog = new LocationConfigView.LocationConfigDialog(this);
+        final LocationConfigView.LocationConfigDialog locationDialog = new LocationConfigView.LocationConfigDialog(this);
         locationDialog.getLocationConfigView().setHideTitle(true);
 
         locationDialog.setOnAcceptedListener(new DialogInterface.OnClickListener()
@@ -544,7 +658,14 @@ public class SuntimesActivity extends AppCompatActivity
             @Override
             public void onClick(DialogInterface dialogInterface, int i)
             {
+                updateActionBar(SuntimesActivity.this);
                 updateViews(SuntimesActivity.this);
+
+                WidgetSettings.LocationMode locationMode = locationDialog.getLocationConfigView().getLocationMode();
+                if (locationMode == WidgetSettings.LocationMode.CURRENT_LOCATION)
+                {
+                    getFixHelper.getFix();
+                }
             }
         });
         AlertDialog locationAlert = locationDialog.toAlertDialog();
@@ -599,7 +720,17 @@ public class SuntimesActivity extends AppCompatActivity
 
     protected void scheduleAlarm()
     {
+        scheduleAlarm(null);
+    }
+
+    protected void scheduleAlarm( SolarEvents suggested )
+    {
         final AlarmDialog alarmDialog = new AlarmDialog(this, dataset);
+        if (suggested != null)
+        {
+            alarmDialog.setChoice(suggested);
+        }
+
         alarmDialog.setOnAcceptedListener(new DialogInterface.OnClickListener()
         {
             @Override
@@ -609,7 +740,15 @@ public class SuntimesActivity extends AppCompatActivity
                 String alarmLabel = choice.getShortDisplayString();
                 Calendar now = dataset.now();
                 Calendar calendar = alarmDialog.getCalendarForAlarmChoice(choice, now);
-                scheduleAlarm(alarmLabel, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
+                if (calendar != null)
+                {
+                    scheduleAlarm(alarmLabel, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
+
+                } else {
+                    String alarmErrorTxt = getString(R.string.schedalarm_dialog_error) + "\n" + getString(R.string.schedalarm_dialog_note2, choice.getLongDisplayString());
+                    Toast alarmError = Toast.makeText(SuntimesActivity.this, alarmErrorTxt, Toast.LENGTH_LONG);
+                    alarmError.show();
+                }
             }
         });
         AlertDialog alarmAlert = alarmDialog.toAlertDialog();
@@ -618,7 +757,8 @@ public class SuntimesActivity extends AppCompatActivity
 
     protected void scheduleAlarmFromNote()
     {
-        scheduleAlarmFromNote(notes.getNote());
+        //scheduleAlarmFromNote(notes.getNote());
+        scheduleAlarm(notes.getNote().noteMode);
     }
 
     protected void scheduleAlarmFromNote(NoteData note)
@@ -856,7 +996,7 @@ public class SuntimesActivity extends AppCompatActivity
     private View.OnTouchListener noteTouchListener = new View.OnTouchListener()
     {
         public int MOVE_SENSITIVITY = 25;
-        public int FLING_SENSITIVITY = 0;
+        public int FLING_SENSITIVITY = 10;
         public float firstTouchX, secondTouchX;
 
         @Override
@@ -866,16 +1006,37 @@ public class SuntimesActivity extends AppCompatActivity
             {
                 case MotionEvent.ACTION_DOWN:
                     firstTouchX = event.getX();
-                     break;
+                    break;
 
                 case MotionEvent.ACTION_UP:
                     secondTouchX = event.getX();
                     if ((firstTouchX - secondTouchX) >= FLING_SENSITIVITY)
                     {
-                        notes.showNextNote();
+                        notes.showNextNote();    // swipe right: next
 
                     } else if ((secondTouchX - firstTouchX) > FLING_SENSITIVITY) {
-                        notes.showPrevNote();
+                        notes.showPrevNote();   // swipe left: prev
+
+                    } else {                    // click: user defined
+                        AppSettings.ClockTapAction action = AppSettings.loadNoteTapActionPref(SuntimesActivity.this);
+                        switch (action)
+                        {
+                            case NOTHING:
+                                break;
+
+                            case ALARM:
+                                scheduleAlarmFromNote();
+                                break;
+
+                            case PREV_NOTE:
+                                notes.showPrevNote();
+                                break;
+
+                            case NEXT_NOTE:
+                            default:
+                                notes.showNextNote();
+                                break;
+                        }
                     }
                     break;
 
@@ -1115,12 +1276,28 @@ public class SuntimesActivity extends AppCompatActivity
         }
     }
 
+    private void adjustNoteIconSize(NoteData note, ImageView icon)
+    {
+        Resources resources = getResources();
+        int iconWidth = (int)resources.getDimension(R.dimen.sunIconLarge_width);
+        int iconHeight = (int)resources.getDimension(R.dimen.sunIconLarge_height);
+        if (note.noteIconResource == R.drawable.ic_noon_large)
+        {
+            iconHeight = iconWidth;
+        }
+
+        ViewGroup.LayoutParams iconParams = icon.getLayoutParams();
+        iconParams.width = iconWidth;
+        iconParams.height = iconHeight;
+    }
+
     protected void updateNoteUI( NoteData note, int transition )
     {
         if (note_flipper.getDisplayedChild() == 0)
         {
             // currently using view1, ready view2
             ic_time2_note.setBackgroundResource(note.noteIconResource);
+            adjustNoteIconSize(note, ic_time2_note);
             ic_time2_note.setVisibility(View.VISIBLE);
             txt_time2_note1.setText(note.timeText.toString());
             txt_time2_note2.setText(note.prefixText);
@@ -1130,6 +1307,7 @@ public class SuntimesActivity extends AppCompatActivity
         } else {
             // currently using view2, ready view1
             ic_time1_note.setBackgroundResource(note.noteIconResource);
+        adjustNoteIconSize(note, ic_time1_note);
             ic_time1_note.setVisibility(View.VISIBLE);
             txt_time1_note1.setText(note.timeText.toString());
             txt_time1_note2.setText(note.prefixText);
@@ -1185,4 +1363,24 @@ public class SuntimesActivity extends AppCompatActivity
             return hash;
         }
     }
+
+
+
+    public static final int PERMISSION_REQUEST_LOCATION = 1;
+
+    /**
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
+    {
+        switch (requestCode)
+        {
+            case PERMISSION_REQUEST_LOCATION:
+                break;
+        }
+    }
+
 }

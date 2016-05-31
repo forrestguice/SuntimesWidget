@@ -38,6 +38,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -50,6 +51,8 @@ import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
 import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.getfix.GetFixTask;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
+import com.forrestguice.suntimeswidget.getfix.GetFixUI1;
+import com.forrestguice.suntimeswidget.getfix.GetFixUI2;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.math.BigDecimal;
@@ -113,6 +116,13 @@ public class LocationConfigView extends LinearLayout
         return new WidgetSettings.Location(name, latitude, longitude);
     }
 
+    public WidgetSettings.LocationMode getLocationMode()
+    {
+        final WidgetSettings.LocationMode[] locationModes = WidgetSettings.LocationMode.values();
+        WidgetSettings.LocationMode locationMode = locationModes[ spinner_locationMode.getSelectedItemPosition() ];
+        return locationMode;
+    }
+
     /**
      * Property: appwidget id
      */
@@ -147,6 +157,8 @@ public class LocationConfigView extends LinearLayout
     }
     public void setMode( LocationDialogMode mode )
     {
+        FrameLayout autoButtonLayout = (FrameLayout)findViewById(R.id.appwidget_location_auto_layout);
+
         this.mode = mode;
         switch (mode)
         {
@@ -158,9 +170,12 @@ public class LocationConfigView extends LinearLayout
 
                 labl_locationName.setEnabled(false);
                 text_locationName.setEnabled(false);
+
+                spin_locationName.setSelection(GetFixDatabaseAdapter.findPlaceByName(myParent.getString(R.string.gps_lastfix_title_found), getFixAdapter.getCursor()));
                 spin_locationName.setEnabled(false);
                 flipper.setDisplayedChild(1);
 
+                autoButtonLayout.setVisibility(View.VISIBLE);
                 button_edit.setVisibility(View.GONE);
                 button_save.setVisibility(View.GONE);
                 flipper2.setDisplayedChild(1);
@@ -179,6 +194,7 @@ public class LocationConfigView extends LinearLayout
                 flipper.setDisplayedChild(0);
                 text_locationName.requestFocus();
 
+                autoButtonLayout.setVisibility(View.GONE);
                 button_edit.setVisibility(View.GONE);
                 button_save.setVisibility(View.VISIBLE);
                 flipper2.setDisplayedChild(0);
@@ -196,6 +212,7 @@ public class LocationConfigView extends LinearLayout
                 spin_locationName.setEnabled(true);
                 flipper.setDisplayedChild(1);
 
+                autoButtonLayout.setVisibility(View.GONE);
                 button_edit.setVisibility(View.VISIBLE);
                 button_save.setVisibility(View.GONE);
                 flipper2.setDisplayedChild(1);
@@ -237,16 +254,22 @@ public class LocationConfigView extends LinearLayout
     private TextView labl_locationLon;
     private EditText text_locationLon;
 
+    private LinearLayout layout_locationName;
     private TextView labl_locationName;
     private Spinner spin_locationName;
     private EditText text_locationName;
 
     private ImageButton button_edit;
     private ImageButton button_save;
-    private ImageButton button_getfix;
 
+    private ImageButton button_getfix;
     private ProgressBar progress_getfix;
-    private GetFixUI getFixUI;
+    private GetFixUI getFixUI_editMode;
+
+    private ImageButton button_auto;
+    private ProgressBar progress_auto;
+    private GetFixUI getFixUI_autoMode;
+
     private GetFixHelper getFixHelper;
     private SimpleCursorAdapter getFixAdapter;
 
@@ -272,20 +295,20 @@ public class LocationConfigView extends LinearLayout
         {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
+                getFixHelper.cancelGetFix();
+
                 final WidgetSettings.LocationMode[] locationModes = WidgetSettings.LocationMode.values();
                 WidgetSettings.LocationMode locationMode = locationModes[parent.getSelectedItemPosition()];
-
                 LocationDialogMode dialogMode = (locationMode == WidgetSettings.LocationMode.CUSTOM_LOCATION) ? LocationDialogMode.MODE_CUSTOM_SELECT : LocationDialogMode.MODE_AUTO;
                 setMode(dialogMode);
             }
 
-            public void onNothingSelected(AdapterView<?> parent)
-            {
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        labl_locationName = (TextView)findViewById(R.id.appwidget_location_name_label);
-        text_locationName = (EditText)findViewById(R.id.appwidget_location_name);
+        layout_locationName = (LinearLayout) findViewById(R.id.appwidget_location_name_layout);
+        labl_locationName = (TextView) findViewById(R.id.appwidget_location_name_label);
+        text_locationName = (EditText) findViewById(R.id.appwidget_location_name);
 
         String[] from = new String[] {"name"};
         int[] to = new int[] {android.R.id.text1};
@@ -307,9 +330,10 @@ public class LocationConfigView extends LinearLayout
                 }
             }
 
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+            }
         });
-
 
         labl_locationLat = (TextView)findViewById(R.id.appwidget_location_lat_label);
         text_locationLat = (EditText)findViewById(R.id.appwidget_location_lat);
@@ -317,6 +341,7 @@ public class LocationConfigView extends LinearLayout
         labl_locationLon = (TextView)findViewById(R.id.appwidget_location_lon_label);
         text_locationLon = (EditText)findViewById(R.id.appwidget_location_lon);
 
+        // custom mode: toggle edit mode
         button_edit = (ImageButton)findViewById(R.id.appwidget_location_edit);
         button_edit.setOnClickListener(new View.OnClickListener()
         {
@@ -327,6 +352,7 @@ public class LocationConfigView extends LinearLayout
             }
         });
 
+        // custom mode: save location
         button_save = (ImageButton)findViewById(R.id.appwidget_location_save);
         button_save.setOnClickListener(new View.OnClickListener()
         {
@@ -358,25 +384,43 @@ public class LocationConfigView extends LinearLayout
             }
         });
 
+        // custom mode: get GPS fix
         progress_getfix = (ProgressBar)findViewById(R.id.appwidget_location_getfixprogress);
         progress_getfix.setVisibility(View.GONE);
 
         button_getfix = (ImageButton)findViewById(R.id.appwidget_location_getfix);
+        getFixUI_editMode = new GetFixUI1(text_locationName, text_locationLat, text_locationLon, progress_getfix, button_getfix);
+
         button_getfix.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                getFixHelper.getFix();
+                getFixHelper.getFix(getFixUI_editMode);
             }
         });
 
-        getFixUI = new GetFixUI(text_locationName, text_locationLat, text_locationLon, progress_getfix, button_getfix);
-        getFixHelper = new GetFixHelper(myParent, getFixUI);
+        // auto mode: get GPS fix
+        progress_auto = (ProgressBar)findViewById(R.id.appwidget_location_auto_progress);
+        progress_auto.setVisibility(View.GONE);
 
+        button_auto = (ImageButton)findViewById(R.id.appwidget_location_auto);
+        getFixUI_autoMode = new GetFixUI2(text_locationName, text_locationLat, text_locationLon, progress_auto, button_auto);
+
+        button_auto.setOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                getFixHelper.getFix(getFixUI_autoMode);
+            }
+        });
+
+        getFixHelper = new GetFixHelper(myParent, getFixUI_editMode);
         if (!isInEditMode() && !getFixHelper.isGPSEnabled())
         {
             button_getfix.setImageResource(GetFixUI.ICON_GPS_DISABLED);
+            button_auto.setImageResource(GetFixUI.ICON_GPS_DISABLED);
         }
     }
 
@@ -398,8 +442,10 @@ public class LocationConfigView extends LinearLayout
 
     protected boolean saveSettings(Context context)
     {
-        final WidgetSettings.LocationMode[] locationModes = WidgetSettings.LocationMode.values();
-        WidgetSettings.LocationMode locationMode = locationModes[ spinner_locationMode.getSelectedItemPosition() ];
+        //final WidgetSettings.LocationMode[] locationModes = WidgetSettings.LocationMode.values();
+        //WidgetSettings.LocationMode locationMode = locationModes[ spinner_locationMode.getSelectedItemPosition() ];
+
+        WidgetSettings.LocationMode locationMode = getLocationMode();
         WidgetSettings.saveLocationModePref(context, appWidgetId, locationMode);
 
         if (validateInput())
@@ -408,7 +454,6 @@ public class LocationConfigView extends LinearLayout
             String longitude = text_locationLon.getText().toString();
             String name = text_locationName.getText().toString();
             WidgetSettings.Location location = new WidgetSettings.Location(name, latitude, longitude);
-
             WidgetSettings.saveLocationPref(context, appWidgetId, location);
             return true;
         }
@@ -462,6 +507,7 @@ public class LocationConfigView extends LinearLayout
             dialogFrame.removeView(dialogContent);
 
             AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
+            //builder.setTitle(myParent.getString(R.string.location_dialog_title));
             builder.setView(dialogContent);
             final AlertDialog dialog = builder.create();
 
@@ -486,7 +532,8 @@ public class LocationConfigView extends LinearLayout
                     new DialogInterface.OnClickListener()
                     {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) { /* EMPTY */ }
+                        public void onClick(DialogInterface dialog, int which)
+                        { /* EMPTY */ }
                     }
             );
 

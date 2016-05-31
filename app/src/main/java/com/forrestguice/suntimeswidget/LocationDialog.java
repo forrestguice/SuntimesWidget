@@ -35,6 +35,7 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
+import com.forrestguice.suntimeswidget.getfix.GetFixUI1;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 public class LocationDialog extends Dialog
@@ -184,7 +185,7 @@ public class LocationDialog extends Dialog
             }
         });
 
-        getFixUI = new GetFixUI(text_locationName, text_locationLat, text_locationLon, progress_getfix, button_getfix);
+        getFixUI = new GetFixUI1(text_locationName, text_locationLat, text_locationLon, progress_getfix, button_getfix);
         getFixHelper = new GetFixHelper(myParent, getFixUI);
 
         if (!getFixHelper.isGPSEnabled())

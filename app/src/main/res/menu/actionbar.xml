@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item android:id="@+id/action_location_refresh"
+          android:icon="?attr/icActionGPS"
+          android:title="@string/configAction_refreshLocation"
+          app:showAsAction="always" />
+
     <item android:id="@+id/action_location_add"
           android:icon="?attr/icActionPlace"
           android:title="@string/configAction_addLocation"

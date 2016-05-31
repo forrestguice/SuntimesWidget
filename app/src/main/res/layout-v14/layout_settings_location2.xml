@@ -52,6 +52,7 @@
               android:background="?attr/hrColor" />
 
         <LinearLayout
+            android:id="@+id/appwidget_location_name_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal" android:paddingTop="@dimen/settingsGroup_padding">
@@ -61,6 +62,22 @@
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:orientation="horizontal"
                           android:layout_gravity="center_vertical">
+
+                <FrameLayout android:id="@+id/appwidget_location_auto_layout"
+                    android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+                    <ImageButton android:id="@+id/appwidget_location_auto"
+                                 android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                 style="@android:style/Widget.ActionButton"
+                                 android:src="?attr/icActionGPS" />
+
+                    <ProgressBar
+                        android:id="@+id/appwidget_location_auto_progress"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center" />
+                </FrameLayout>
 
                 <ImageButton android:id="@+id/appwidget_location_edit"
                              android:layout_width="wrap_content" android:layout_height="wrap_content"
