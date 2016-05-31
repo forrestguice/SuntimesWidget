@@ -27,6 +27,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -49,6 +50,7 @@ public class AlarmDialog extends Dialog
 
     private Spinner spinner_scheduleMode;
     private TextView txt_note;
+    private ImageView icon_note;
 
     private SolarEvents choice = null;
     private SuntimesDataset dataset;
@@ -72,6 +74,9 @@ public class AlarmDialog extends Dialog
         WidgetSettings.initDisplayStrings(context);
         SolarEvents.initDisplayStrings(myParent);
 
+        icon_note = (ImageView) findViewById(R.id.appwidget_schedalarm_note_icon);
+        icon_note.setVisibility(View.GONE);
+
         txt_note = (TextView) findViewById(R.id.appwidget_schedalarm_note);
         txt_note.setText("");
 
@@ -88,8 +93,16 @@ public class AlarmDialog extends Dialog
 
                         Calendar now = dataset.now();
                         Calendar alarmCalendar = getCalendarForAlarmChoice(choice, now);
-                        SuntimesUtils.TimeDisplayText timeString = utils.timeDeltaDisplayString(now.getTime(), alarmCalendar.getTime());
-                        txt_note.setText(myParent.getString(R.string.schedalarm_dialog_note, timeString.getValue()));
+
+                        if (alarmCalendar != null)
+                        {
+                            SuntimesUtils.TimeDisplayText timeString = utils.timeDeltaDisplayString(now.getTime(), alarmCalendar.getTime());
+                            txt_note.setText(myParent.getString(R.string.schedalarm_dialog_note, timeString.getValue()));
+                            icon_note.setVisibility(View.GONE);
+                        } else {
+                            txt_note.setText(myParent.getString(R.string.schedalarm_dialog_note2, choice.getLongDisplayString()));
+                            icon_note.setVisibility(View.VISIBLE);
+                        }
                     }
 
                     public void onNothingSelected(AdapterView<?> parent)
@@ -233,56 +246,56 @@ public class AlarmDialog extends Dialog
         {
             case MORNING_ASTRONOMICAL:
                 calendar = dataset.dataAstro.sunriseCalendarToday();
-                if (time.after(calendar.getTime()))
+                if (calendar != null && time.after(calendar.getTime()))
                 {
                     calendar = dataset.dataAstro.sunriseCalendarOther();
                 }
                 break;
             case MORNING_NAUTICAL:
                 calendar = dataset.dataNautical.sunriseCalendarToday();
-                if (time.after(calendar.getTime()))
+                if (calendar != null && time.after(calendar.getTime()))
                 {
                     calendar = dataset.dataNautical.sunriseCalendarOther();
                 }
                 break;
             case MORNING_CIVIL:
                 calendar = dataset.dataCivil.sunriseCalendarToday();
-                if (time.after(calendar.getTime()))
+                if (calendar != null && time.after(calendar.getTime()))
                 {
                     calendar = dataset.dataCivil.sunriseCalendarOther();
                 }
                 break;
             case NOON:
                 calendar = dataset.dataNoon.sunriseCalendarToday();
-                if (time.after(calendar.getTime()))
+                if (calendar != null && time.after(calendar.getTime()))
                 {
                     calendar = dataset.dataNoon.sunriseCalendarOther();
                 }
                 break;
             case SUNSET:
                 calendar = dataset.dataActual.sunsetCalendarToday();
-                if (time.after(calendar.getTime()))
+                if (calendar != null && time.after(calendar.getTime()))
                 {
                     calendar = dataset.dataActual.sunsetCalendarOther();
                 }
                 break;
             case EVENING_CIVIL:
                 calendar = dataset.dataCivil.sunsetCalendarToday();
-                if (time.after(calendar.getTime()))
+                if (calendar != null && time.after(calendar.getTime()))
                 {
                     calendar = dataset.dataCivil.sunsetCalendarOther();
                 }
                 break;
             case EVENING_NAUTICAL:
                 calendar = dataset.dataNautical.sunsetCalendarToday();
-                if (time.after(calendar.getTime()))
+                if (calendar != null && time.after(calendar.getTime()))
                 {
                     calendar = dataset.dataNautical.sunsetCalendarOther();
                 }
                 break;
             case EVENING_ASTRONOMICAL:
                 calendar = dataset.dataAstro.sunsetCalendarToday();
-                if (time.after(calendar.getTime()))
+                if (calendar != null && time.after(calendar.getTime()))
                 {
                     calendar = dataset.dataAstro.sunsetCalendarOther();
                 }
@@ -290,7 +303,7 @@ public class AlarmDialog extends Dialog
             case SUNRISE:
             default:
                 calendar = dataset.dataActual.sunriseCalendarToday();
-                if (time.after(calendar.getTime()))
+                if (calendar != null && time.after(calendar.getTime()))
                 {
                     calendar = dataset.dataActual.sunriseCalendarOther();
                 }
