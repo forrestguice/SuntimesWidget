@@ -273,6 +273,7 @@ public class SuntimesConfigActivity extends Activity
         // widget: location
         //
         locationConfig = (LocationConfigView)findViewById(R.id.appwidget_location_config);
+        locationConfig.init(this, false);
         locationConfig.setAppWidgetId(this.appWidgetId);
 
         //
@@ -618,5 +619,16 @@ public class SuntimesConfigActivity extends Activity
             aboutDialog.show();
         }
     };
+
+    /**
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
+    {
+        locationConfig.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 
 }

@@ -230,6 +230,26 @@ public class SuntimesActivity extends AppCompatActivity
     }
 
     /**
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
+    {
+        WidgetSettings.LocationMode locationMode = WidgetSettings.loadLocationModePref(this, 0);
+        if (locationMode == WidgetSettings.LocationMode.CURRENT_LOCATION)
+        {
+            getFixHelper.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+        if (locationDialog != null)
+        {
+            locationDialog.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    /**
      * initialize ui/views
      * @param context
      */
@@ -253,6 +273,9 @@ public class SuntimesActivity extends AppCompatActivity
         initGetFix(context);
     }
 
+    /**
+     * initialize gps helper
+     */
     private void initGetFix(Context context)
     {
         getFixHelper = new GetFixHelper(this, new GetFixUI()
@@ -308,6 +331,9 @@ public class SuntimesActivity extends AppCompatActivity
             }
         });
     }
+
+
+
 
     /**
      * update actionbar items; shouldn't be called until after the menu is inflated.
@@ -638,19 +664,23 @@ public class SuntimesActivity extends AppCompatActivity
 
     protected void refreshLocation()
     {
-        if (GetFixHelper.isGPSEnabled(this))
+        getFixHelper.getFix();
+
+        /**if (GetFixHelper.isGPSEnabled(this))
         {
             getFixHelper.getFix();
 
         } else {
             android.app.AlertDialog dialog = GetFixHelper.createGPSEnabledPrompt(this);
             dialog.show();
-        }
+        }*/
     }
+
+    private LocationConfigView.LocationConfigDialog locationDialog = null;
 
     protected void configLocation()
     {
-        final LocationConfigView.LocationConfigDialog locationDialog = new LocationConfigView.LocationConfigDialog(this);
+        locationDialog = new LocationConfigView.LocationConfigDialog(this);
         locationDialog.getLocationConfigView().setHideTitle(true);
 
         locationDialog.setOnAcceptedListener(new DialogInterface.OnClickListener()
@@ -666,6 +696,14 @@ public class SuntimesActivity extends AppCompatActivity
                 {
                     getFixHelper.getFix();
                 }
+            }
+        });
+        locationDialog.setOnDismissListener(new DialogInterface.OnDismissListener()
+        {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface)
+            {
+                locationDialog = null;
             }
         });
         AlertDialog locationAlert = locationDialog.toAlertDialog();
@@ -1280,11 +1318,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         Resources resources = getResources();
         int iconWidth = (int)resources.getDimension(R.dimen.sunIconLarge_width);
-        int iconHeight = (int)resources.getDimension(R.dimen.sunIconLarge_height);
-        if (note.noteIconResource == R.drawable.ic_noon_large)
-        {
-            iconHeight = iconWidth;
-        }
+        int iconHeight = ((note.noteIconResource == R.drawable.ic_noon_large) ? iconWidth : (int)resources.getDimension(R.dimen.sunIconLarge_height));
 
         ViewGroup.LayoutParams iconParams = icon.getLayoutParams();
         iconParams.width = iconWidth;
@@ -1307,7 +1341,7 @@ public class SuntimesActivity extends AppCompatActivity
         } else {
             // currently using view2, ready view1
             ic_time1_note.setBackgroundResource(note.noteIconResource);
-        adjustNoteIconSize(note, ic_time1_note);
+            adjustNoteIconSize(note, ic_time1_note);
             ic_time1_note.setVisibility(View.VISIBLE);
             txt_time1_note1.setText(note.timeText.toString());
             txt_time1_note2.setText(note.prefixText);
@@ -1361,25 +1395,6 @@ public class SuntimesActivity extends AppCompatActivity
             int hash = this.event.hashCode();
             hash = hash * 37 + (tomorrow ? 0 : 1);
             return hash;
-        }
-    }
-
-
-
-    public static final int PERMISSION_REQUEST_LOCATION = 1;
-
-    /**
-     * @param requestCode
-     * @param permissions
-     * @param grantResults
-     */
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
-    {
-        switch (requestCode)
-        {
-            case PERMISSION_REQUEST_LOCATION:
-                break;
         }
     }
 

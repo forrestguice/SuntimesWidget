@@ -59,28 +59,20 @@ import java.math.BigDecimal;
 
 public class LocationConfigView extends LinearLayout
 {
-    private Context myParent;
+    private Activity myParent;
+    private boolean isInitialized = false;
 
     public LocationConfigView(Context context)
     {
         super(context);
-        init(context, false);
-    }
-
-    public LocationConfigView(Context context, boolean asDialog)
-    {
-        super(context);
-        init(context, asDialog);
     }
 
     public LocationConfigView(Context context, AttributeSet attribs)
     {
         super(context, attribs);
-
-        init(context, false);
     }
 
-    private void init(Context context, boolean asDialog)
+    public void init(Activity context, boolean asDialog)
     {
         final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate((asDialog ? R.layout.layout_dialog_location2 : R.layout.layout_settings_location2), this);
@@ -94,7 +86,10 @@ public class LocationConfigView extends LinearLayout
 
         setMode(mode);
         populateLocationList();
+        isInitialized = true;
     }
+
+    public boolean isInitialized() { return isInitialized; }
 
     public WidgetSettings.Location getLocation()
     {
@@ -484,7 +479,8 @@ public class LocationConfigView extends LinearLayout
             setTitle(context.getString(R.string.location_dialog_title));
             setCancelable(true);
 
-            locationConfigView = new LocationConfigView(context, true);
+            locationConfigView = new LocationConfigView(context);
+            locationConfigView.init(myParent, true);
             setContentView(locationConfigView);
         }
 
@@ -498,6 +494,11 @@ public class LocationConfigView extends LinearLayout
         public void setOnCanceledListener( DialogInterface.OnClickListener listener )
         {
             onCanceled = listener;
+        }
+
+        public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
+        {
+            locationConfigView.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
         public AlertDialog toAlertDialog()
@@ -710,6 +711,16 @@ public class LocationConfigView extends LinearLayout
         }
 
         return isValid;
+    }
+
+    /**
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
+    {
+        getFixHelper.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
 }

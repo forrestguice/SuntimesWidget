@@ -29,6 +29,7 @@ import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -41,6 +42,8 @@ import java.util.ArrayList;
  */
 public class GetFixHelper
 {
+    public static final int REQUEST_GETFIX_LOCATION = 1;
+
     public static final String PREF_KEY_GETFIX_MINELAPSED = "getFix_minElapsed";
     public static final String PREF_KEY_GETFIX_MAXELAPSED = "getFix_maxElapsed";
     public static final String PREF_KEY_GETFIX_MAXAGE = "getFix_maxAge";
@@ -48,10 +51,10 @@ public class GetFixHelper
     public GetFixTask getFixTask = null;
     public boolean gettingFix = false;
 
-    private Context myParent;
+    private Activity myParent;
     private GetFixUI uiObj;
 
-    public GetFixHelper(Context parent, GetFixUI ui)
+    public GetFixHelper(Activity parent, GetFixUI ui)
     {
         myParent = parent;
         uiObj = ui;
@@ -70,25 +73,28 @@ public class GetFixHelper
     {
         if (!gettingFix)
         {
-            if (isGPSEnabled())
+            if (hasGPSPermissions(myParent, REQUEST_GETFIX_LOCATION))
             {
-                SharedPreferences prefs = myParent.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
-                getFixTask = new GetFixTask(myParent, this);
+                if (isGPSEnabled())
+                {
+                    SharedPreferences prefs = myParent.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
+                    getFixTask = new GetFixTask(myParent, this);
 
-                int minElapsed = prefs.getInt(PREF_KEY_GETFIX_MINELAPSED, GetFixTask.MIN_ELAPSED);
-                getFixTask.setMinElapsed(minElapsed);
+                    int minElapsed = prefs.getInt(PREF_KEY_GETFIX_MINELAPSED, GetFixTask.MIN_ELAPSED);
+                    getFixTask.setMinElapsed(minElapsed);
 
-                int maxElapsed = prefs.getInt(PREF_KEY_GETFIX_MAXELAPSED, GetFixTask.MAX_ELAPSED);
-                getFixTask.setMaxElapsed(maxElapsed);
+                    int maxElapsed = prefs.getInt(PREF_KEY_GETFIX_MAXELAPSED, GetFixTask.MAX_ELAPSED);
+                    getFixTask.setMaxElapsed(maxElapsed);
 
-                int maxAge = prefs.getInt(PREF_KEY_GETFIX_MAXAGE, GetFixTask.MAX_AGE);
-                getFixTask.setMaxAge(maxAge);
+                    int maxAge = prefs.getInt(PREF_KEY_GETFIX_MAXAGE, GetFixTask.MAX_AGE);
+                    getFixTask.setMaxAge(maxAge);
 
-                getFixTask.addGetFixTaskListeners(listeners);
-                getFixTask.execute();
+                    getFixTask.addGetFixTaskListeners(listeners);
+                    getFixTask.execute();
 
-            } else {
-                showGPSEnabledPrompt();
+                } else {
+                    showGPSEnabledPrompt();
+                }
             }
         }
     }
@@ -115,15 +121,12 @@ public class GetFixHelper
     public boolean hasGPSPermissions(Activity activity, int requestID)
     {
         int permission = ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION);
-        boolean hasPermission = permission == PackageManager.PERMISSION_GRANTED;
+        boolean hasPermission = (permission == PackageManager.PERMISSION_GRANTED);
+        Log.d("hasGPSPermissions", "" + hasPermission);
+
         if (!hasPermission)
         {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.ACCESS_FINE_LOCATION))
-            {
-                /* intentionally empty; don't block here */
-            } else {
-                ActivityCompat.requestPermissions(activity, new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, requestID);
-            }
+            ActivityCompat.requestPermissions(activity, new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, requestID);
         }
 
         return hasPermission;
@@ -194,6 +197,20 @@ public class GetFixHelper
         if (getFixTask != null)
         {
             getFixTask.removeGetFixTaskListener(listener);
+        }
+    }
+
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
+    {
+        switch (requestCode)
+        {
+            case REQUEST_GETFIX_LOCATION:
+                Log.d("onRequestPermissions", "results: " + grantResults[0]);
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                {
+                    getFix();
+                }
+                break;
         }
     }
 
