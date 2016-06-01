@@ -22,7 +22,10 @@ import android.app.Dialog;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
+import android.provider.AlarmClock;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +33,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesDataset;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
@@ -99,7 +103,8 @@ public class AlarmDialog extends Dialog
                             SuntimesUtils.TimeDisplayText timeString = utils.timeDeltaDisplayString(now.getTime(), alarmCalendar.getTime());
                             txt_note.setText(myParent.getString(R.string.schedalarm_dialog_note, timeString.getValue()));
                             icon_note.setVisibility(View.GONE);
-                        } else {
+                        } else
+                        {
                             txt_note.setText(myParent.getString(R.string.schedalarm_dialog_note2, choice.getLongDisplayString()));
                             icon_note.setVisibility(View.VISIBLE);
                         }
@@ -140,7 +145,6 @@ public class AlarmDialog extends Dialog
     {
         loadSettings(context, false);
     }
-
     protected void loadSettings(Context context, boolean overwriteCurrent)
     {
         if (!overwriteCurrent && choice != null)
@@ -238,6 +242,11 @@ public class AlarmDialog extends Dialog
         return dialog;
     }
 
+    /**
+     * @param choice
+     * @param now
+     * @return
+     */
     public Calendar getCalendarForAlarmChoice( SolarEvents choice, Calendar now )
     {
         Date time = now.getTime();
@@ -310,6 +319,87 @@ public class AlarmDialog extends Dialog
                 break;
         }
         return calendar;
+    }
+
+    /**
+     * @param context
+     * @param dataset
+     */
+    public static void scheduleAlarm( final Activity context, final SuntimesDataset dataset )
+    {
+        scheduleAlarm(context, dataset, null);
+    }
+
+    public static void scheduleAlarm( final Activity context, final SuntimesDataset dataset, final SolarEvents suggested )
+    {
+        if (dataset.isCalculated())
+        {
+            final AlarmDialog alarmDialog = new AlarmDialog(context, dataset);
+            if (suggested != null)
+            {
+                alarmDialog.setChoice(suggested);
+            }
+
+            alarmDialog.setOnAcceptedListener(new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i)
+                {
+                    SolarEvents choice = alarmDialog.getChoice();
+                    String alarmLabel = choice.getShortDisplayString();
+                    Calendar now = dataset.now();
+                    Calendar calendar = alarmDialog.getCalendarForAlarmChoice(choice, now);
+                    if (calendar != null)
+                    {
+                        AlarmDialog.scheduleAlarm(context, alarmLabel, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
+
+                    } else
+                    {
+                        String alarmErrorTxt = context.getString(R.string.schedalarm_dialog_error) + "\n" + context.getString(R.string.schedalarm_dialog_note2, choice.getLongDisplayString());
+                        Toast alarmError = Toast.makeText(context, alarmErrorTxt, Toast.LENGTH_LONG);
+                        alarmError.show();
+                    }
+                }
+            });
+            AlertDialog alarmAlert = alarmDialog.toAlertDialog();
+            alarmAlert.show();
+
+        } else {
+            String msg = context.getString(R.string.schedalarm_dialog_error2);
+            Toast errorMsg = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
+            errorMsg.show();
+        }
+    }
+
+    public static void scheduleAlarm(Activity context, String label, int hour, int minutes)
+    {
+        Intent alarmIntent = new Intent(AlarmClock.ACTION_SET_ALARM);
+        alarmIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        alarmIntent.putExtra(AlarmClock.EXTRA_MESSAGE, label);
+        alarmIntent.putExtra(AlarmClock.EXTRA_HOUR, hour);
+        alarmIntent.putExtra(AlarmClock.EXTRA_MINUTES, minutes);
+
+        if (alarmIntent.resolveActivity(context.getPackageManager()) != null)
+        {
+            context.startActivity(alarmIntent);
+        }
+    }
+
+    /**
+     * @param context
+     */
+    public static void showAlarms(Activity context)
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+        {
+            Intent alarmsIntent = new Intent(AlarmClock.ACTION_SHOW_ALARMS);
+            alarmsIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            if (alarmsIntent.resolveActivity(context.getPackageManager()) != null)
+            {
+                context.startActivity(alarmsIntent);
+            }
+        }
     }
 
 }
