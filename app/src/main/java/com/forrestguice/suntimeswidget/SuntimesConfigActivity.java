@@ -88,6 +88,8 @@ public class SuntimesConfigActivity extends Activity
     public void onCreate(Bundle icicle)
     {
         setTheme(AppSettings.loadTheme(this));
+        GetFixUI.themeIcons(this);
+
         super.onCreate(icicle);
         setResult(RESULT_CANCELED);  // causes widget host to cancel if user presses back
         setContentView(R.layout.layout_settings);

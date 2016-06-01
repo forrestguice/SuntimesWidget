@@ -185,7 +185,7 @@
 
                         <ImageButton android:id="@+id/appwidget_location_getfix"
                                      android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                     android:src="@drawable/ic_action_location_searching"
+                                     android:src="?attr/icActionGPS_searching"
                                      android:layout_gravity="center" />
 
                         <ProgressBar

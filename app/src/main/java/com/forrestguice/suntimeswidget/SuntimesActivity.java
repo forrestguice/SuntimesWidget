@@ -165,6 +165,7 @@ public class SuntimesActivity extends AppCompatActivity
         Context context = SuntimesActivity.this;
         calculateData(context);
         setTheme(AppSettings.loadTheme(this, dataset));
+        GetFixUI.themeIcons(this);
 
         super.onCreate(icicle);
         setResult(RESULT_CANCELED);

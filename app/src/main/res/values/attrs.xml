@@ -21,4 +21,6 @@
     <attr name="icActionSave" format="reference" />
 
     <attr name="icActionGPS" format="reference" />
+    <attr name="icActionGPS_off" format="reference" />
+    <attr name="icActionGPS_searching" format="reference" />
 </resources>

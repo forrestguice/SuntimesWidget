@@ -18,7 +18,11 @@
 
 package com.forrestguice.suntimeswidget.getfix;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.res.TypedArray;
 import android.location.Location;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -30,9 +34,19 @@ import com.forrestguice.suntimeswidget.R;
  */
 public abstract class GetFixUI
 {
-    public static final int ICON_GPS_DISABLED = R.drawable.ic_action_location_off;
-    public static final int ICON_GPS_SEARCHING = R.drawable.ic_action_location_searching;
-    public static final int ICON_GPS_FOUND = R.drawable.ic_action_location_found;
+    public static int ICON_GPS_FOUND = R.drawable.ic_action_location_found;
+    public static int ICON_GPS_SEARCHING = R.drawable.ic_action_location_searching;
+    public static int ICON_GPS_DISABLED = R.drawable.ic_action_location_off;
+
+    public static void themeIcons(Activity context)
+    {
+        int[] attrs = new int[] { R.attr.icActionGPS, R.attr.icActionGPS_searching, R.attr.icActionGPS_off };
+        TypedArray a = context.obtainStyledAttributes(attrs);
+        ICON_GPS_FOUND = a.getResourceId(0, R.drawable.ic_action_location_found);
+        ICON_GPS_SEARCHING = a.getResourceId(1, R.drawable.ic_action_location_searching);
+        ICON_GPS_DISABLED = a.getResourceId(2, R.drawable.ic_action_location_off);
+        a.recycle();
+    }
 
     public abstract void enableUI(boolean value);
     public abstract void updateUI(Location... locations);
