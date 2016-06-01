@@ -37,38 +37,49 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true">
 
             <include layout="@layout/info_time_now" />
 
-            <ViewFlipper
-                android:id="@+id/info_note_flipper"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:background="?attr/selectableItemBackground"
-                android:layout_marginLeft="5dp" android:layout_marginStart="5dp">
+            <FrameLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:id="@+id/info_time_note1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical">
+                <ViewFlipper
+                    android:id="@+id/info_note_flipper"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="?attr/selectableItemBackground"
+                    android:layout_marginLeft="5dp" android:layout_marginStart="5dp">
 
-                    <include layout="@layout/info_time_note" />
+                    <LinearLayout
+                        android:id="@+id/info_time_note1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical">
 
-                </LinearLayout>
+                        <include layout="@layout/info_time_note" />
 
-                <LinearLayout
-                    android:id="@+id/info_time_note2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical">
+                    </LinearLayout>
 
-                    <include layout="@layout/info_time_note" />
+                    <LinearLayout
+                        android:id="@+id/info_time_note2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical">
 
-                </LinearLayout>
+                        <include layout="@layout/info_time_note" />
 
-            </ViewFlipper>
+                    </LinearLayout>
+
+                </ViewFlipper>
+
+                <ProgressBar
+                    android:id="@+id/info_note_progress"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+
+            </FrameLayout>
 
         </LinearLayout>
 
@@ -81,14 +92,16 @@
             <LinearLayout
                 style="@style/SunsetTimeCard"
                 android:id="@+id/info_time_all_today"
-                android:layout_width="wrap_content">
+                android:layout_width="wrap_content"
+                android:animateLayoutChanges="true">
 
                 <include layout="@layout/info_time_all" />
 
                 <LinearLayout
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:animateLayoutChanges="true">
 
                     <include layout="@layout/info_time_daylength" />
                 </LinearLayout>
@@ -98,14 +111,16 @@
 
             <LinearLayout
                 style="@style/SunsetTimeCard"
-                android:id="@+id/info_time_all_tomorrow">
+                android:id="@+id/info_time_all_tomorrow"
+                android:animateLayoutChanges="true">
 
                 <include layout="@layout/info_time_all" />
 
                 <LinearLayout
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:animateLayoutChanges="true">
 
                     <include layout="@layout/info_time_daylength" />
 

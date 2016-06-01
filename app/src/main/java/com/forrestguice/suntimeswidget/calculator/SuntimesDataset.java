@@ -77,6 +77,15 @@ public class SuntimesDataset
         return dataActual.isCalculated();
     }
 
+    public void invalidateCalculation()
+    {
+        dataActual.invalidateCalculation();
+        dataCivil.invalidateCalculation();
+        dataNautical.invalidateCalculation();
+        dataAstro.invalidateCalculation();
+        dataNoon.invalidateCalculation();
+    }
+
     public boolean isNight()
     {
         return isNight(this.now().getTime());

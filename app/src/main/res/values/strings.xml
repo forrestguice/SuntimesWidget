@@ -194,6 +194,7 @@
     <string name="schedalarm_dialog_cancel">Cancel</string>
 
     <string name="schedalarm_dialog_error">Alarm was not set…</string>
+    <string name="schedalarm_dialog_error2">Alarm cannot be set…</string>
     <string name="schedalarm_dialog_note">about %s from now.</string>
     <string name="schedalarm_dialog_note2">%s does not occur.</string>
 
@@ -228,6 +229,8 @@
 
     <string name="gps_lastfix_title_found">Last Position</string>
     <string name="gps_lastfix_title_searching">Getting Position</string>
+    <string name="gps_lastfix_toast_notfound">GPS failed to get location; falling back to last known position.</string>
+    <string name="gps_lastfix_toast_cancelled">GPS update cancelled.</string>
 
     <string name="timezone_dialog_title">Time Zone</string>
     <string name="timezone_dialog_ok">Set</string>

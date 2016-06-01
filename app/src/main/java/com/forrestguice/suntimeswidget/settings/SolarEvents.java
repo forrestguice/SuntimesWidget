@@ -161,6 +161,39 @@ public enum SolarEvents
 
             icon.setImageResource(iconResource);
         }
+    }
 
+    /**
+     * SolarEventField
+     */
+    public static class SolarEventField
+    {
+        public SolarEvents event = SolarEvents.NOON;
+        public Boolean tomorrow = false;
+
+        public SolarEventField(SolarEvents event, boolean tomorrow)
+        {
+            this.event = event;
+            this.tomorrow = tomorrow;
+        }
+
+        public boolean equals(Object obj)
+        {
+            if (!(obj instanceof SolarEventField))
+            {
+                return false;
+
+            } else {
+                SolarEventField that = (SolarEventField)obj;
+                return (this.event.equals(that.event) && (this.tomorrow == that.tomorrow));
+            }
+        }
+
+        public int hashCode()
+        {
+            int hash = this.event.hashCode();
+            hash = hash * 37 + (tomorrow ? 0 : 1);
+            return hash;
+        }
     }
 }

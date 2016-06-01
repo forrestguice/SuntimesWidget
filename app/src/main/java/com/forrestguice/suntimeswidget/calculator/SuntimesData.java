@@ -208,6 +208,11 @@ public class SuntimesData
         this.calculated = other.isCalculated();
     }
 
+    public void invalidateCalculation()
+    {
+        this.calculated = false;
+    }
+
     public void initFromSettings(Context context, int appWidgetId)
     {
         calculated = false;
