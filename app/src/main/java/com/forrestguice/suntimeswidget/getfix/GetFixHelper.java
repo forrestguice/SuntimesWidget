@@ -132,6 +132,11 @@ public class GetFixHelper
         return hasPermission;
     }
 
+    public boolean isGettingFix()
+    {
+        return gettingFix;
+    }
+
     public boolean isGPSEnabled()
     {
         return isGPSEnabled(myParent);
@@ -205,8 +210,7 @@ public class GetFixHelper
         switch (requestCode)
         {
             case REQUEST_GETFIX_LOCATION:
-                Log.d("onRequestPermissions", "results: " + grantResults[0]);
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 {
                     getFix();
                 }

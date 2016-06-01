@@ -77,7 +77,7 @@ public class GetFixUI1 extends GetFixUI
     }
 
     @Override
-    public void onResult(Location result)
+    public void onResult(Location result, boolean wasCancelled)
     {
         gpsButton.setImageResource((result == null) ? ICON_GPS_SEARCHING : ICON_GPS_FOUND);
         gpsButton.setVisibility(View.VISIBLE);
