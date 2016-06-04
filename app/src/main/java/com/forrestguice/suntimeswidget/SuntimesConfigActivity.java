@@ -18,11 +18,11 @@
 
 package com.forrestguice.suntimeswidget;
 
-import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,12 +32,10 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
-import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -53,8 +51,11 @@ import java.util.TimeZone;
 /**
  * Main widget config activity.
  */
-public class SuntimesConfigActivity extends Activity
+public class SuntimesConfigActivity extends AppCompatActivity
 {
+    private static final String DIALOGTAG_ABOUT = "about";
+    private static final String DIALOGTAG_HELP = "help";
+
     protected int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     private boolean reconfigure = false;
 
@@ -196,10 +197,9 @@ public class SuntimesConfigActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                HelpDialog helpDialog = new HelpDialog(SuntimesConfigActivity.this);
-                String helpContent = getString(R.string.help_action_launch);
-                helpDialog.onPrepareDialog(helpContent);
-                helpDialog.show();
+                HelpDialog helpDialog = new HelpDialog();
+                helpDialog.setContent(getString(R.string.help_action_launch));
+                helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
             }
         });
 
@@ -241,10 +241,9 @@ public class SuntimesConfigActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                HelpDialog helpDialog = new HelpDialog(SuntimesConfigActivity.this);
-                String helpContent = getString(R.string.help_general_timeMode);
-                helpDialog.onPrepareDialog(helpContent);
-                helpDialog.show();
+                HelpDialog helpDialog = new HelpDialog();
+                helpDialog.setContent(getString(R.string.help_general_timeMode));
+                helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
             }
         });
 
@@ -300,10 +299,9 @@ public class SuntimesConfigActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                HelpDialog helpDialog = new HelpDialog(SuntimesConfigActivity.this);
-                String helpContent = getString(R.string.help_appearance_title);
-                helpDialog.onPrepareDialog(helpContent);
-                helpDialog.show();
+                HelpDialog helpDialog = new HelpDialog();
+                helpDialog.setContent(getString(R.string.help_appearance_title));
+                helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
             }
         });
 
@@ -616,9 +614,8 @@ public class SuntimesConfigActivity extends Activity
         @Override
         public void onClick(View v)
         {
-            AboutDialog aboutDialog = new AboutDialog(SuntimesConfigActivity.this);
-            aboutDialog.onPrepareDialog();
-            aboutDialog.show();
+            AboutDialog aboutDialog = new AboutDialog();
+            aboutDialog.show(getSupportFragmentManager(), DIALOGTAG_ABOUT);
         }
     };
 

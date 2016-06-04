@@ -20,25 +20,80 @@ package com.forrestguice.suntimeswidget;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.text.Html;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.TextView;
 
-public class HelpDialog extends Dialog
+public class HelpDialog extends DialogFragment
 {
-    private Activity myParent;
+    public static final String KEY_HELPTEXT = "helpText";
 
-    public HelpDialog(Activity c)
+    /**
+     * The text content displayed by the help dialog.
+     */
+    private String rawContent = "";
+    public String getContent()
     {
-        super(c);
-        myParent = c;
-        setContentView(R.layout.layout_dialog_help);
-        setTitle(myParent.getString(R.string.help_dialog_title));
-        setCancelable(true);
+        return rawContent;
+    }
+    public void setContent( String content )
+    {
+        rawContent = content;
+        if (txtView != null)
+        {
+            txtView.setText(Html.fromHtml(rawContent));
+        }
     }
 
-    public void onPrepareDialog(String content)
+    /**
+     * @param savedInstanceState a previously saved state (or null)
+     * @return a Dialog object ready to be displayed
+     */
+    @NonNull @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState)
     {
-        TextView txt = (TextView)findViewById(R.id.txt_help_content);
-        txt.setText(Html.fromHtml(content));
+        super.onCreate(savedInstanceState);
+
+        final Activity myParent = getActivity();
+        LayoutInflater inflater = myParent.getLayoutInflater();
+        View dialogContent = inflater.inflate(R.layout.layout_dialog_help, null);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
+        builder.setView(dialogContent);
+        builder.setTitle(myParent.getString(R.string.help_dialog_title));
+        AlertDialog dialog = builder.create();
+
+        initViews(dialogContent);
+        if (savedInstanceState != null)
+        {
+            Log.d("DEBUG", "HelpDialog onCreate (restoreState)");
+            rawContent = savedInstanceState.getString(KEY_HELPTEXT);
+        }
+        setContent(rawContent);
+        return dialog;
     }
+
+    /**
+     *
+     */
+    private TextView txtView;
+    public void initViews(View dialogView)
+    {
+        txtView = (TextView) dialogView.findViewById(R.id.txt_help_content);
+    }
+
+    @Override
+    public void onSaveInstanceState( Bundle outState )
+    {
+        Log.d("DEBUG", "HelpDialog onSaveInstanceState");
+        outState.putString(KEY_HELPTEXT, rawContent);
+        super.onSaveInstanceState(outState);
+    }
+
 }

@@ -25,10 +25,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.AlarmClock;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -42,49 +46,138 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import java.util.Calendar;
 import java.util.Date;
 
-public class AlarmDialog extends Dialog
+public class AlarmDialog extends DialogFragment
 {
     public static final String PREF_KEY_ALARM_LASTCHOICE = "alarmdialog_lastchoice";
     public static final SolarEvents PREF_DEF_ALARM_LASTCHOICE = SolarEvents.SUNRISE;
 
     protected static SuntimesUtils utils = new SuntimesUtils();
 
-    private Activity myParent;
+    /**
+     * The appWidgetID used when saving/loading choice to prefs (main app uses 0).
+     */
     private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
+    public int getAppWidgetId() { return appWidgetId; }
+    public void setAppWidgetId(int value) { appWidgetId = value; }
 
+    /**
+     * The supporting dataset.
+     */
+    private SuntimesDataset dataset;
+    public SuntimesDataset getData() { return dataset; }
+    public void setData( SuntimesDataset dataset) { this.dataset = dataset; }
+
+    /**
+     * The user's alarm choice.
+     */
+    private SolarEvents choice = null;
+    public void setChoice( SolarEvents choice )
+    {
+        if (choice != null)
+        {
+            this.choice = choice;
+            if (spinner_scheduleMode != null)
+            {
+                spinner_scheduleMode.setSelection(choice.ordinal());
+            }
+        }
+    }
+    public SolarEvents getChoice() { return choice; }
+
+    /**
+     * @param savedInstanceState
+     * @return
+     */
+    @NonNull @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+
+        final Activity myParent = getActivity();
+        LayoutInflater inflater = myParent.getLayoutInflater();
+        View dialogContent = inflater.inflate(R.layout.layout_dialog_schedalarm, null);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
+        builder.setView(dialogContent);
+        builder.setTitle(myParent.getString(R.string.schedalarm_dialog_title));
+        AlertDialog dialog = builder.create();
+
+        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.schedalarm_dialog_cancel),
+                new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        dialog.dismiss();
+
+                        if (onCanceled != null)
+                        {
+                            onCanceled.onClick(dialog, which);
+                        }
+                    }
+                }
+        );
+
+        dialog.setButton(AlertDialog.BUTTON_POSITIVE, myParent.getString(R.string.schedalarm_dialog_ok),
+                new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        saveSettings(myParent);
+                        dialog.dismiss();
+
+                        if (onAccepted != null)
+                        {
+                            onAccepted.onClick(dialog, which);
+                        }
+                    }
+                }
+        );
+
+        initViews(myParent, dialogContent);
+        if (savedInstanceState != null)
+        {
+            Log.d("DEBUG", "AlarmDialog onCreate (restoreState)");
+            loadSettings(savedInstanceState);
+
+        } else {
+            Log.d("DEBUG", "AlarmDialog onCreate (newState)");
+            loadSettings(myParent);
+        }
+        return dialog;
+    }
+
+    /**
+     * @param outState
+     */
+    @Override
+    public void onSaveInstanceState( Bundle outState )
+    {
+        Log.d("DEBUG", "AlarmDialog onSaveInstanceState");
+        saveSettings(outState);
+        super.onSaveInstanceState(outState);
+    }
+
+    /**
+     *
+     */
     private Spinner spinner_scheduleMode;
     private TextView txt_note;
     private ImageView icon_note;
 
-    private SolarEvents choice = null;
-    private SuntimesDataset dataset;
-
-    public AlarmDialog(Activity c, SuntimesDataset dataset)
-    {
-        super(c);
-        myParent = c;
-        this.dataset = dataset;
-
-        setContentView(R.layout.layout_dialog_schedalarm);
-        setTitle(myParent.getString(R.string.schedalarm_dialog_title));
-        setCancelable(true);
-
-        initViews(myParent);
-        loadSettings(myParent);
-    }
-
-    protected void initViews( Context context )
+    protected void initViews( final Context context, View dialogContent )
     {
         WidgetSettings.initDisplayStrings(context);
-        SolarEvents.initDisplayStrings(myParent);
+        SolarEvents.initDisplayStrings(context);
 
-        icon_note = (ImageView) findViewById(R.id.appwidget_schedalarm_note_icon);
+        icon_note = (ImageView) dialogContent.findViewById(R.id.appwidget_schedalarm_note_icon);
         icon_note.setVisibility(View.GONE);
 
-        txt_note = (TextView) findViewById(R.id.appwidget_schedalarm_note);
+        txt_note = (TextView) dialogContent.findViewById(R.id.appwidget_schedalarm_note);
         txt_note.setText("");
 
-        spinner_scheduleMode = (Spinner) findViewById(R.id.appwidget_schedalarm_mode);
+        spinner_scheduleMode = (Spinner) dialogContent.findViewById(R.id.appwidget_schedalarm_mode);
         spinner_scheduleMode.setAdapter(SolarEvents.createAdapter(context));
 
         spinner_scheduleMode.setOnItemSelectedListener(
@@ -101,11 +194,11 @@ public class AlarmDialog extends Dialog
                         if (alarmCalendar != null)
                         {
                             SuntimesUtils.TimeDisplayText timeString = utils.timeDeltaDisplayString(now.getTime(), alarmCalendar.getTime());
-                            txt_note.setText(myParent.getString(R.string.schedalarm_dialog_note, timeString.getValue()));
+                            txt_note.setText(context.getString(R.string.schedalarm_dialog_note, timeString.getValue()));
                             icon_note.setVisibility(View.GONE);
                         } else
                         {
-                            txt_note.setText(myParent.getString(R.string.schedalarm_dialog_note2, choice.getLongDisplayString()));
+                            txt_note.setText(context.getString(R.string.schedalarm_dialog_note2, choice.getLongDisplayString()));
                             icon_note.setVisibility(View.VISIBLE);
                         }
                     }
@@ -117,49 +210,45 @@ public class AlarmDialog extends Dialog
         );
     }
 
-    public int getAppWidgetId()
-    {
-        return appWidgetId;
-    }
-    public void setAppWidgetId(int value)
-    {
-        appWidgetId = value;
-        loadSettings(myParent);
-    }
-
-    public void setChoice( SolarEvents choice )
-    {
-        this.choice = choice;
-        spinner_scheduleMode.setSelection(choice.ordinal());
-    }
-    public SolarEvents getChoice()
-    {
-        return choice;
-    }
-
-    public void onPrepareDialog()
-    {
-    }
-
     protected void loadSettings(Context context)
     {
         loadSettings(context, false);
     }
     protected void loadSettings(Context context, boolean overwriteCurrent)
     {
-        if (!overwriteCurrent && choice != null)
-            return;
-
-        SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
-        String choiceString = prefs.getString(PREF_KEY_ALARM_LASTCHOICE, PREF_DEF_ALARM_LASTCHOICE.name());
-        try {
-            choice = SolarEvents.valueOf(choiceString);
-        } catch (IllegalArgumentException e) {
+        if (overwriteCurrent || choice == null)
+        {
+            SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
+            String choiceString = prefs.getString(PREF_KEY_ALARM_LASTCHOICE, PREF_DEF_ALARM_LASTCHOICE.name());
+            try
+            {
+                choice = SolarEvents.valueOf(choiceString);
+            } catch (IllegalArgumentException e) {
+                choice = PREF_DEF_ALARM_LASTCHOICE;
+            }
+        }
+        setChoice(choice);
+    }
+    protected void loadSettings(Bundle bundle)
+    {
+        String choiceString = bundle.getString(PREF_KEY_ALARM_LASTCHOICE);
+        if (choiceString != null)
+        {
+            try {
+                choice = SolarEvents.valueOf(choiceString);
+            } catch (IllegalArgumentException e) {
+                choice = PREF_DEF_ALARM_LASTCHOICE;
+            }
+        } else {
             choice = PREF_DEF_ALARM_LASTCHOICE;
         }
         setChoice(choice);
     }
 
+    /**
+     * Save alarm choice to prefs.
+     * @param context
+     */
     protected void saveSettings(Context context)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
@@ -167,79 +256,31 @@ public class AlarmDialog extends Dialog
         prefs.apply();
     }
 
-    private OnClickListener onAccepted = null;
-    public void setOnAcceptedListener( OnClickListener listener )
+    /**
+     * Save alarm choice to bundle.
+     * @param bundle
+     */
+    protected void saveSettings(Bundle bundle)
+    {
+        bundle.putString(PREF_KEY_ALARM_LASTCHOICE, choice.name());
+    }
+
+    /**
+     * Dialog accepted listener.
+     */
+    private DialogInterface.OnClickListener onAccepted = null;
+    public void setOnAcceptedListener( DialogInterface.OnClickListener listener )
     {
         onAccepted = listener;
     }
 
-    private OnClickListener onCanceled = null;
-    public void setOnCanceledListener( OnClickListener listener )
+    /**
+     * Dialog cancelled listener.
+     */
+    private DialogInterface.OnClickListener onCanceled = null;
+    public void setOnCanceledListener( DialogInterface.OnClickListener listener )
     {
         onCanceled = listener;
-    }
-
-    public AlertDialog toAlertDialog()
-    {
-        ViewGroup dialogFrame = (ViewGroup)this.getWindow().getDecorView();
-        View dialogContent = dialogFrame.getChildAt(0);
-        dialogFrame.removeView(dialogContent);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
-        builder.setView(dialogContent);
-        AlertDialog dialog = builder.create();
-
-        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.schedalarm_dialog_cancel),
-                new OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        dialog.dismiss();
-
-                        if (onCanceled != null)
-                        {
-                            onCanceled.onClick(dialog, which);
-                        }
-                    }
-                }
-        );
-
-        dialog.setButton(AlertDialog.BUTTON_POSITIVE, myParent.getString(R.string.schedalarm_dialog_ok),
-                new OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        saveSettings(myParent);
-                        dialog.dismiss();
-
-                        if (onAccepted != null)
-                        {
-                            onAccepted.onClick(dialog, which);
-                        }
-                    }
-                }
-        );
-
-        dialog.setOnShowListener(new OnShowListener()
-        {
-            @Override
-            public void onShow(DialogInterface dialogInterface)
-            {
-                loadSettings(myParent);
-            }
-        });
-
-        dialog.setOnDismissListener(new OnDismissListener()
-        {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface)
-            {
-            }
-        });
-
-        return dialog;
     }
 
     /**
@@ -322,54 +363,28 @@ public class AlarmDialog extends Dialog
     }
 
     /**
-     * @param context
-     * @param dataset
+     * Schedule the selected alarm on click.
      */
-    public static void scheduleAlarm( final Activity context, final SuntimesDataset dataset )
+    public DialogInterface.OnClickListener scheduleAlarmClickListener = new DialogInterface.OnClickListener()
     {
-        scheduleAlarm(context, dataset, null);
-    }
-
-    public static void scheduleAlarm( final Activity context, final SuntimesDataset dataset, final SolarEvents suggested )
-    {
-        if (dataset.isCalculated())
+        @Override
+        public void onClick(DialogInterface dialogInterface, int i)
         {
-            final AlarmDialog alarmDialog = new AlarmDialog(context, dataset);
-            if (suggested != null)
+            SolarEvents choice = getChoice();
+            String alarmLabel = choice.getShortDisplayString();
+            Calendar now = dataset.now();
+            Calendar calendar = getCalendarForAlarmChoice(choice, now);
+            if (calendar != null)
             {
-                alarmDialog.setChoice(suggested);
+                AlarmDialog.scheduleAlarm(getActivity(), alarmLabel, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
+
+            } else {
+                String alarmErrorTxt = getString(R.string.schedalarm_dialog_error) + "\n" + getString(R.string.schedalarm_dialog_note2, choice.getLongDisplayString());
+                Toast alarmError = Toast.makeText(getActivity(), alarmErrorTxt, Toast.LENGTH_LONG);
+                alarmError.show();
             }
-
-            alarmDialog.setOnAcceptedListener(new DialogInterface.OnClickListener()
-            {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i)
-                {
-                    SolarEvents choice = alarmDialog.getChoice();
-                    String alarmLabel = choice.getShortDisplayString();
-                    Calendar now = dataset.now();
-                    Calendar calendar = alarmDialog.getCalendarForAlarmChoice(choice, now);
-                    if (calendar != null)
-                    {
-                        AlarmDialog.scheduleAlarm(context, alarmLabel, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
-
-                    } else
-                    {
-                        String alarmErrorTxt = context.getString(R.string.schedalarm_dialog_error) + "\n" + context.getString(R.string.schedalarm_dialog_note2, choice.getLongDisplayString());
-                        Toast alarmError = Toast.makeText(context, alarmErrorTxt, Toast.LENGTH_LONG);
-                        alarmError.show();
-                    }
-                }
-            });
-            AlertDialog alarmAlert = alarmDialog.toAlertDialog();
-            alarmAlert.show();
-
-        } else {
-            String msg = context.getString(R.string.schedalarm_dialog_error2);
-            Toast errorMsg = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
-            errorMsg.show();
         }
-    }
+    };
 
     public static void scheduleAlarm(Activity context, String label, int hour, int minutes)
     {
