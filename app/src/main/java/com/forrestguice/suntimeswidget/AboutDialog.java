@@ -20,49 +20,36 @@ package com.forrestguice.suntimeswidget;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.TextView;
 
-public class AboutDialog extends DialogFragment
+public class AboutDialog extends Dialog
 {
-    @NonNull @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState)
+    private Activity myParent;
+
+    public AboutDialog(Activity c)
     {
-        super.onCreate(savedInstanceState);
-
-        final Activity myParent = getActivity();
-        LayoutInflater inflater = myParent.getLayoutInflater();
-        View dialogContent = inflater.inflate(R.layout.layout_dialog_about, null);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
-        builder.setView(dialogContent);
-        builder.setTitle(myParent.getString(R.string.about_dialog_title));
-        AlertDialog dialog = builder.create();
-
-        initViews(getActivity(), dialogContent);
-        return dialog;
+        super(c);
+        myParent = c;
+        setContentView(R.layout.layout_dialog_about);
+        setCancelable(true);
     }
 
-    public void initViews(Context context, View dialogContent)
+    public void onPrepareDialog()
     {
-        TextView urlView = (TextView) dialogContent.findViewById(R.id.txt_about_url);
+        setTitle(myParent.getString(R.string.about_dialog_title));
+
+        TextView urlView = (TextView)findViewById(R.id.txt_about_url);
         urlView.setMovementMethod(LinkMovementMethod.getInstance());
-        urlView.setText(Html.fromHtml(context.getString(R.string.app_url)));
+        urlView.setText(Html.fromHtml(myParent.getString(R.string.app_url)));
 
-        TextView supportView = (TextView) dialogContent.findViewById(R.id.txt_about_support);
+        TextView supportView = (TextView)findViewById(R.id.txt_about_support);
         supportView.setMovementMethod(LinkMovementMethod.getInstance());
-        supportView.setText(Html.fromHtml(context.getString(R.string.app_support_url)));
+        supportView.setText(Html.fromHtml(myParent.getString(R.string.app_support_url)));
 
-        TextView legalView = (TextView) dialogContent.findViewById(R.id.txt_about_legal);
+        TextView legalView = (TextView)findViewById(R.id.txt_about_legal);
         legalView.setMovementMethod(LinkMovementMethod.getInstance());
-        legalView.setText(Html.fromHtml(context.getString(R.string.app_legal)));
+        legalView.setText(Html.fromHtml(myParent.getString(R.string.app_legal)));
     }
 }
