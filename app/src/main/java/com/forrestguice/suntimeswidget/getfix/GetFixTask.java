@@ -208,6 +208,7 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
     @Override
     protected void onCancelled(Location result)
     {
+        locationManager = (LocationManager) myParent.getSystemService(Context.LOCATION_SERVICE);
         locationManager.removeUpdates(locationListener);
         helper.gettingFix = false;
 

@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -42,6 +43,8 @@ import java.util.ArrayList;
  */
 public class GetFixHelper
 {
+    public static final String KEY_LOCATION_GETTINGFIX = "gettingfix";
+
     public static final int REQUEST_GETFIX_LOCATION = 1;
 
     public static final String PREF_KEY_GETFIX_MINELAPSED = "getFix_minElapsed";
@@ -126,7 +129,7 @@ public class GetFixHelper
 
         if (!hasPermission)
         {
-            ActivityCompat.requestPermissions(activity, new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, requestID);
+            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, requestID);
         }
 
         return hasPermission;
@@ -216,6 +219,23 @@ public class GetFixHelper
                 }
                 break;
         }
+    }
+
+    public void loadSettings( Bundle bundle )
+    {
+        Log.d("DEBUG", "GetFixHelper loadSettings (bundle)");
+        boolean wasGettingFix = bundle.getBoolean(KEY_LOCATION_GETTINGFIX);
+        if (wasGettingFix)
+        {
+            Log.d("DEBUG", "GetFixHelper loadSettings ... was previously getting fix");
+            //getFix();
+        }
+    }
+
+    public void saveSettings( Bundle bundle )
+    {
+        Log.d("DEBUG", "GetFixHelper saveSettings (bundle)");
+        bundle.putBoolean(KEY_LOCATION_GETTINGFIX, gettingFix);
     }
 
 }

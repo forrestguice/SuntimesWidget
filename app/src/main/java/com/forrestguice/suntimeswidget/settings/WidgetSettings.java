@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.settings;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
@@ -284,12 +285,12 @@ public class WidgetSettings
 
         public Location( String label, String latitude, String longitude )
         {
-            this.label = label;
+            this.label = (label == null) ? "" : label;
             this.latitude = latitude;
             this.longitude = longitude;
         }
 
-        public Location( String label, android.location.Location location )
+        public Location( String label, @NonNull android.location.Location location )
         {
             this.label = label;
             this.latitude = location.getLatitude() + "";

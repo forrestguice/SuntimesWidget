@@ -29,6 +29,7 @@ import android.graphics.Typeface;
 import android.location.Location;
 import android.os.Bundle;
 
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -72,6 +73,12 @@ import java.util.HashMap;
 
 public class SuntimesActivity extends AppCompatActivity
 {
+    private static final String DIALOGTAG_TIMEZONE = "timezone";
+    private static final String DIALOGTAG_ALARM = "alarm";
+    private static final String DIALOGTAG_ABOUT = "about";
+    private static final String DIALOGTAG_HELP = "help";
+    private static final String DIALOGTAG_LOCATION = "location";
+
     protected static SuntimesUtils utils = new SuntimesUtils();
 
     private ActionBar actionBar;
@@ -200,6 +207,30 @@ public class SuntimesActivity extends AppCompatActivity
     public void onResume()
     {
         super.onResume();
+
+        // restore open dialogs
+        FragmentManager fragments = getSupportFragmentManager();
+        TimeZoneDialog timezoneDialog = (TimeZoneDialog) fragments.findFragmentByTag(DIALOGTAG_TIMEZONE);
+        if (timezoneDialog != null)
+        {
+            timezoneDialog.setOnAcceptedListener(onConfigTimeZone);
+            Log.d("DEBUG", "TimeZoneDialog listeners restored.");
+        }
+
+        AlarmDialog alarmDialog = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_ALARM);
+        if (alarmDialog != null)
+        {
+            alarmDialog.setData(dataset);
+            alarmDialog.setOnAcceptedListener(alarmDialog.scheduleAlarmClickListener);
+            Log.d("DEBUG", "AlarmDialog listeners restored.");
+        }
+
+        LocationConfigDialog locationDialog = (LocationConfigDialog) fragments.findFragmentByTag(DIALOGTAG_LOCATION);
+        if (locationDialog != null)
+        {
+            locationDialog.setOnAcceptedListener( onConfigLocation(locationDialog) );
+            Log.d("DEBUG", "LocationDialog listeners restored.");
+        }
     }
 
     /**
@@ -239,15 +270,19 @@ public class SuntimesActivity extends AppCompatActivity
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
     {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        FragmentManager fragments = getSupportFragmentManager();
+        LocationConfigDialog locationDialog = (LocationConfigDialog) fragments.findFragmentByTag(DIALOGTAG_LOCATION);
+        if (locationDialog != null)
+        {
+            locationDialog.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
         WidgetSettings.LocationMode locationMode = WidgetSettings.loadLocationModePref(this, 0);
         if (locationMode == WidgetSettings.LocationMode.CURRENT_LOCATION)
         {
             getFixHelper.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-
-        if (locationDialog != null)
-        {
-            locationDialog.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 
@@ -678,18 +713,29 @@ public class SuntimesActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Refresh location (current location mode).
+     */
     protected void refreshLocation()
     {
         getFixHelper.getFix();
     }
 
-    private LocationConfigView.LocationConfigDialog locationDialog = null;
-
+    /**
+     * Configure location.
+     */
     protected void configLocation()
     {
-        locationDialog = new LocationConfigView.LocationConfigDialog(this);
-        locationDialog.getLocationConfigView().setHideTitle(true);
-        locationDialog.setOnAcceptedListener(new DialogInterface.OnClickListener()
+        final LocationConfigDialog locationDialog = new LocationConfigDialog();
+        locationDialog.setHideTitle(true);
+        locationDialog.setOnAcceptedListener( onConfigLocation(locationDialog) );
+
+        getFixHelper.cancelGetFix();
+        locationDialog.show(getSupportFragmentManager(), DIALOGTAG_LOCATION);
+    }
+    protected DialogInterface.OnClickListener onConfigLocation( final LocationConfigDialog dialog )
+    {
+        return new DialogInterface.OnClickListener()
         {
             @Override
             public void onClick(DialogInterface dialogInterface, int i)
@@ -698,43 +744,39 @@ public class SuntimesActivity extends AppCompatActivity
                 updateActionBar(SuntimesActivity.this);
                 updateViews(SuntimesActivity.this);
 
-                WidgetSettings.LocationMode locationMode = locationDialog.getLocationConfigView().getLocationMode();
+                WidgetSettings.LocationMode locationMode = dialog.getDialogContent().getLocationMode();
                 if (locationMode == WidgetSettings.LocationMode.CURRENT_LOCATION)
                 {
                     getFixHelper.getFix();
                 }
             }
-        });
-        locationDialog.setOnDismissListener(new DialogInterface.OnDismissListener()
-        {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface)
-            {
-                locationDialog = null;
-            }
-        });
-        AlertDialog locationAlert = locationDialog.toAlertDialog();
-
-        getFixHelper.cancelGetFix();
-        locationAlert.show();
+        };
     }
 
+
+
+    /**
+     * Configure time zone.
+     */
     protected void configTimeZone()
     {
-        TimeZoneDialog timezoneDialog = new TimeZoneDialog(this);
-        timezoneDialog.setOnAcceptedListener(new DialogInterface.OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i)
-            {
-                calculateData(SuntimesActivity.this);
-                updateViews(SuntimesActivity.this);
-            }
-        });
-        AlertDialog timezoneAlert = timezoneDialog.toAlertDialog();
-        timezoneAlert.show();
+        TimeZoneDialog timezoneDialog = new TimeZoneDialog();
+        timezoneDialog.setOnAcceptedListener(onConfigTimeZone);
+        timezoneDialog.show(getSupportFragmentManager(), DIALOGTAG_TIMEZONE);
     }
+    DialogInterface.OnClickListener onConfigTimeZone = new DialogInterface.OnClickListener()
+    {
+        @Override
+        public void onClick(DialogInterface dialogInterface, int i)
+        {
+            calculateData(SuntimesActivity.this);
+            updateViews(SuntimesActivity.this);
+        }
+    };
 
+    /**
+     * Show the location on a map.
+     */
     protected void showMap()
     {
         Intent mapIntent = new Intent(Intent.ACTION_VIEW);
@@ -746,35 +788,62 @@ public class SuntimesActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Show the help dialog.
+     */
     protected void showHelp()
     {
-        HelpDialog helpDialog = new HelpDialog(this);
-        helpDialog.onPrepareDialog(getString(R.string.help_general_timeMode));
-        helpDialog.show();
+        HelpDialog helpDialog = new HelpDialog();
+        helpDialog.setContent(getString(R.string.help_general_timeMode));
+        helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
     }
 
+    /**
+     * Show the about dialog.
+     */
     protected void showAbout()
     {
-        AboutDialog aboutDialog = new AboutDialog(this);
-        aboutDialog.onPrepareDialog();
-        aboutDialog.show();
+        AboutDialog aboutDialog = new AboutDialog();
+        aboutDialog.show(getSupportFragmentManager(), DIALOGTAG_ABOUT);
     }
 
+    /**
+     * Show application settings.
+     */
     protected void showSettings()
     {
         Intent settingsIntent = new Intent(this, SuntimesSettingsActivity.class);
         startActivity(settingsIntent);
     }
 
+    /**
+     * Show the alarm dialog.
+     */
     protected void scheduleAlarm()
     {
-        AlarmDialog.scheduleAlarm(this, dataset);
+        scheduleAlarm(null);
+    }
+    protected void scheduleAlarm( SolarEvents selected )
+    {
+        if (dataset.isCalculated())
+        {
+            AlarmDialog alarmDialog = new AlarmDialog();
+            alarmDialog.setData(dataset);
+            alarmDialog.setChoice(selected);
+            alarmDialog.setOnAcceptedListener(alarmDialog.scheduleAlarmClickListener);
+            alarmDialog.show(getSupportFragmentManager(), DIALOGTAG_ALARM);
+
+        } else {
+            String msg = getString(R.string.schedalarm_dialog_error2);
+            Toast errorMsg = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
+            errorMsg.show();
+        }
     }
 
     protected void scheduleAlarmFromNote()
     {
         //scheduleAlarmFromNote(notes.getNote());
-        AlarmDialog.scheduleAlarm(this, dataset, notes.getNote().noteMode);
+        scheduleAlarm(notes.getNote().noteMode);
     }
 
     protected void scheduleAlarmFromNote(NoteData note)
@@ -785,6 +854,10 @@ public class SuntimesActivity extends AppCompatActivity
         AlarmDialog.scheduleAlarm(this, alarmLabel, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
     }
 
+    /**
+     *
+     * @param context
+     */
     private void initData( Context context )
     {
         SuntimesData data_actualTime = new SuntimesData(context, AppWidgetManager.INVALID_APPWIDGET_ID);
@@ -1218,7 +1291,7 @@ public class SuntimesActivity extends AppCompatActivity
 
             if (action == AppSettings.ClockTapAction.ALARM)
             {
-                AlarmDialog.scheduleAlarm(SuntimesActivity.this, dataset);
+                scheduleAlarm();
                 return;
             }
 

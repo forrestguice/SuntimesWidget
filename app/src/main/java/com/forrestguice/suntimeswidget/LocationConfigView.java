@@ -18,25 +18,18 @@
 package com.forrestguice.suntimeswidget;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.provider.Contacts;
-import android.support.v7.app.AlertDialog;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -59,6 +52,12 @@ import java.math.BigDecimal;
 
 public class LocationConfigView extends LinearLayout
 {
+    public static final String KEY_DIALOGMODE = "dialogmode";
+    public static final String KEY_LOCATION_MODE = "locationMode";
+    public static final String KEY_LOCATION_LATITUDE = "locationLatitude";
+    public static final String KEY_LOCATION_LONGITUDE = "locationLongitude";
+    public static final String KEY_LOCATION_LABEL = "locationLabel";
+
     private Activity myParent;
     private boolean isInitialized = false;
 
@@ -145,13 +144,14 @@ public class LocationConfigView extends LinearLayout
     }
 
     /** Property: mode (auto, select, edit/add) */
-    private LocationDialogMode mode = LocationDialogMode.MODE_CUSTOM_SELECT;
-    public LocationDialogMode getMode()
+    private LocationViewMode mode = LocationViewMode.MODE_CUSTOM_SELECT;
+    public LocationViewMode getMode()
     {
         return mode;
     }
-    public void setMode( LocationDialogMode mode )
+    public void setMode( LocationViewMode mode )
     {
+        Log.d("DEBUG", "LocationViewMode setMode " + mode.name());
         FrameLayout autoButtonLayout = (FrameLayout)findViewById(R.id.appwidget_location_auto_layout);
 
         this.mode = mode;
@@ -215,28 +215,7 @@ public class LocationConfigView extends LinearLayout
         }
     }
 
-    public static enum LocationDialogMode
-    {
-        MODE_AUTO(), MODE_CUSTOM_SELECT(), MODE_CUSTOM_ADD(), MODE_CUSTOM_EDIT();
-        private LocationDialogMode() {}
 
-        public String toString()
-        {
-            return this.name();
-        }
-
-        public int ordinal( LocationDialogMode[] array )
-        {
-            for (int i=0; i<array.length; i++)
-            {
-                if (array[i].name().equals(this.name()))
-                {
-                    return i;
-                }
-            }
-            return -1;
-        }
-    }
 
     private ViewFlipper flipper, flipper2;
 
@@ -268,8 +247,13 @@ public class LocationConfigView extends LinearLayout
     private GetFixHelper getFixHelper;
     private SimpleCursorAdapter getFixAdapter;
 
+    /**
+     *
+     * @param context
+     */
     protected void initViews( Context context )
     {
+        Log.d("DEBUG", "LocationConfigView initViews");
         WidgetSettings.initDisplayStrings(context);
 
         flipper = (ViewFlipper)findViewById(R.id.view_flip);
@@ -286,20 +270,7 @@ public class LocationConfigView extends LinearLayout
 
         spinner_locationMode = (Spinner)findViewById(R.id.appwidget_location_mode);
         spinner_locationMode.setAdapter(spinner_locationModeAdapter);
-        spinner_locationMode.setOnItemSelectedListener(new Spinner.OnItemSelectedListener()
-        {
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
-                getFixHelper.cancelGetFix();
-
-                final WidgetSettings.LocationMode[] locationModes = WidgetSettings.LocationMode.values();
-                WidgetSettings.LocationMode locationMode = locationModes[parent.getSelectedItemPosition()];
-                LocationDialogMode dialogMode = (locationMode == WidgetSettings.LocationMode.CUSTOM_LOCATION) ? LocationDialogMode.MODE_CUSTOM_SELECT : LocationDialogMode.MODE_AUTO;
-                setMode(dialogMode);
-            }
-
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
+        spinner_locationMode.setOnItemSelectedListener(onLocationModeSelected);
 
         layout_locationName = (LinearLayout) findViewById(R.id.appwidget_location_name_layout);
         labl_locationName = (TextView) findViewById(R.id.appwidget_location_name_label);
@@ -312,23 +283,7 @@ public class LocationConfigView extends LinearLayout
 
         spin_locationName = (Spinner)findViewById(R.id.appwidget_location_nameSelect);
         spin_locationName.setAdapter(getFixAdapter);
-        spin_locationName.setOnItemSelectedListener(new Spinner.OnItemSelectedListener()
-        {
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
-                Cursor cursor = getFixAdapter.getCursor();
-                cursor.moveToPosition(position);
-
-                if (cursor.getColumnCount() >= 3)
-                {
-                    updateViews(new WidgetSettings.Location(cursor.getString(1), cursor.getString(2), cursor.getString(3)));
-                }
-            }
-
-            public void onNothingSelected(AdapterView<?> parent)
-            {
-            }
-        });
+        spin_locationName.setOnItemSelectedListener(onCustomLocationSelected);
 
         labl_locationLat = (TextView)findViewById(R.id.appwidget_location_lat_label);
         text_locationLat = (EditText)findViewById(R.id.appwidget_location_lat);
@@ -338,46 +293,11 @@ public class LocationConfigView extends LinearLayout
 
         // custom mode: toggle edit mode
         button_edit = (ImageButton)findViewById(R.id.appwidget_location_edit);
-        button_edit.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                setMode(LocationDialogMode.MODE_CUSTOM_EDIT);
-            }
-        });
+        button_edit.setOnClickListener(onEditButtonClicked);
 
         // custom mode: save location
         button_save = (ImageButton)findViewById(R.id.appwidget_location_save);
-        button_save.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                final boolean validInput = validateInput();
-                if (validInput)
-                {
-                    setMode(LocationDialogMode.MODE_CUSTOM_SELECT);
-                    populateLocationList();
-                }
-
-                final GetFixTask.GetFixTaskListener cancelGetFixListener = new GetFixTask.GetFixTaskListener()
-                {
-                    @Override
-                    public void onCancelled()
-                    {
-                        if (validInput)
-                        {
-                            setMode(LocationDialogMode.MODE_CUSTOM_SELECT);
-                            populateLocationList();
-                        }
-                    }
-                };
-                getFixHelper.removeGetFixTaskListener(cancelGetFixListener);
-                getFixHelper.addGetFixTaskListener(cancelGetFixListener);
-                getFixHelper.cancelGetFix();
-            }
-        });
+        button_save.setOnClickListener(onSaveButtonClicked);
 
         // custom mode: get GPS fix
         progress_getfix = (ProgressBar)findViewById(R.id.appwidget_location_getfixprogress);
@@ -401,15 +321,7 @@ public class LocationConfigView extends LinearLayout
 
         button_auto = (ImageButton)findViewById(R.id.appwidget_location_auto);
         getFixUI_autoMode = new GetFixUI2(text_locationName, text_locationLat, text_locationLon, progress_auto, button_auto);
-
-        button_auto.setOnClickListener(new OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                getFixHelper.getFix(getFixUI_autoMode);
-            }
-        });
+        button_auto.setOnClickListener(onAutoButtonClicked);
 
         getFixHelper = new GetFixHelper(myParent, getFixUI_editMode);
         if (!isInEditMode() && !getFixHelper.isGPSEnabled())
@@ -419,6 +331,9 @@ public class LocationConfigView extends LinearLayout
         }
     }
 
+    /**
+     * @param location
+     */
     private void updateViews(WidgetSettings.Location location)
     {
         text_locationLat.setText(location.getLatitude());
@@ -426,8 +341,13 @@ public class LocationConfigView extends LinearLayout
         text_locationName.setText(location.getLabel());
     }
 
+    /**
+     *
+     */
     protected void loadSettings(Context context)
     {
+        Log.d("DEBUG", "LocationConfigView loadSettings (prefs)");
+
         WidgetSettings.LocationMode locationMode = WidgetSettings.loadLocationModePref(context, appWidgetId);
         spinner_locationMode.setSelection(locationMode.ordinal());
 
@@ -435,10 +355,67 @@ public class LocationConfigView extends LinearLayout
         updateViews(location);
     }
 
+    /**
+     *
+     */
+    protected void loadSettings(Context context, Bundle bundle )
+    {
+        Log.d("DEBUG", "LocationConfigView loadSettings (bundle)");
+
+        // restore LocationMode spinner
+        String modeString = bundle.getString(KEY_LOCATION_MODE);
+        if (modeString != null)
+        {
+            WidgetSettings.LocationMode locationMode;
+            try {
+                locationMode = WidgetSettings.LocationMode.valueOf(modeString);
+            } catch (IllegalArgumentException e) {
+                locationMode = WidgetSettings.PREF_DEF_LOCATION_MODE;
+            }
+            spinner_locationMode.setSelection(locationMode.ordinal());
+
+        } else {
+            spinner_locationMode.setSelection(WidgetSettings.PREF_DEF_LOCATION_MODE.ordinal());
+        }
+
+        // restore location text fields
+        String label = bundle.getString(KEY_LOCATION_LABEL);
+        String longitude = bundle.getString(KEY_LOCATION_LONGITUDE);
+        String latitude = bundle.getString(KEY_LOCATION_LATITUDE);
+        WidgetSettings.Location location;
+        if (longitude != null && latitude != null)
+        {
+            location = new WidgetSettings.Location(label, latitude, longitude);
+
+        } else {
+            Log.w("LocationConfigView", "Bundle contained null lat or lon; falling back to saved prefs.");
+            location = WidgetSettings.loadLocationPref(context, appWidgetId);
+        }
+        updateViews(location);
+
+        // restore dialog (sub)state
+        String viewModeString = bundle.getString(KEY_DIALOGMODE);
+        if (viewModeString != null)
+        {
+            LocationViewMode viewMode;
+            try {
+                viewMode = LocationViewMode.valueOf(viewModeString);
+            } catch (IllegalArgumentException e) {
+                Log.d("DEBUG", "Bundle contained bad viewModeString! " + e.toString());
+                viewMode = LocationViewMode.MODE_CUSTOM_SELECT;
+            }
+            setMode(viewMode);
+        }
+
+        getFixHelper.loadSettings(bundle);
+    }
+
+    /**
+     *
+     */
     protected boolean saveSettings(Context context)
     {
-        //final WidgetSettings.LocationMode[] locationModes = WidgetSettings.LocationMode.values();
-        //WidgetSettings.LocationMode locationMode = locationModes[ spinner_locationMode.getSelectedItemPosition() ];
+        Log.d("DEBUG", "LocationConfigView loadSettings (prefs)");
 
         WidgetSettings.LocationMode locationMode = getLocationMode();
         WidgetSettings.saveLocationModePref(context, appWidgetId, locationMode);
@@ -452,138 +429,62 @@ public class LocationConfigView extends LinearLayout
             WidgetSettings.saveLocationPref(context, appWidgetId, location);
             return true;
         }
-
         return false;
     }
 
+    /**
+     * @param bundle
+     * @return
+     */
+    protected boolean saveSettings(Bundle bundle)
+    {
+        Log.d("DEBUG", "LocationConfigView saveSettings (bundle)");
+
+        WidgetSettings.LocationMode locationMode = getLocationMode();
+        String latitude = text_locationLat.getText().toString();
+        String longitude = text_locationLon.getText().toString();
+        String name = text_locationName.getText().toString();
+
+        bundle.putString(KEY_DIALOGMODE, mode.name());
+        bundle.putString(KEY_LOCATION_MODE, locationMode.name());
+        bundle.putString(KEY_LOCATION_LATITUDE, latitude);
+        bundle.putString(KEY_LOCATION_LONGITUDE, longitude);
+        bundle.putString(KEY_LOCATION_LABEL, name);
+
+        getFixHelper.saveSettings(bundle);
+        return true;
+    }
+
+    /**
+     * Cancel any running getfix tasks.
+     */
     public void cancelGetFix()
     {
         getFixHelper.cancelGetFix();
     }
 
+    /**
+     * Dismiss any "enable GPS" prompts.
+     */
     public void dismissGPSEnabledPrompt() { getFixHelper.dismissGPSEnabledPrompt(); }
 
     /**
-     * A dialog wrapper around the view.
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
      */
-    public static class LocationConfigDialog extends Dialog
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
     {
-        private Activity myParent;
-        private LocationConfigView locationConfigView;
-        public LocationConfigView getLocationConfigView() { return locationConfigView; }
-
-        public LocationConfigDialog(Activity context)
-        {
-            super(context);
-            myParent = context;
-            setTitle(context.getString(R.string.location_dialog_title));
-            setCancelable(true);
-
-            locationConfigView = new LocationConfigView(context);
-            locationConfigView.init(myParent, true);
-            setContentView(locationConfigView);
-        }
-
-        protected DialogInterface.OnClickListener onAccepted = null;
-        public void setOnAcceptedListener( DialogInterface.OnClickListener listener )
-        {
-            onAccepted = listener;
-        }
-
-        protected DialogInterface.OnClickListener onCanceled = null;
-        public void setOnCanceledListener( DialogInterface.OnClickListener listener )
-        {
-            onCanceled = listener;
-        }
-
-        public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
-        {
-            locationConfigView.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-
-        public AlertDialog toAlertDialog()
-        {
-            ViewGroup dialogFrame = (ViewGroup)this.getWindow().getDecorView();
-            View dialogContent = dialogFrame.getChildAt(0);
-            dialogFrame.removeView(dialogContent);
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
-            //builder.setTitle(myParent.getString(R.string.location_dialog_title));
-            builder.setView(dialogContent);
-            final AlertDialog dialog = builder.create();
-
-            dialog.setButton(AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.location_dialog_cancel),
-                    new DialogInterface.OnClickListener()
-                    {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which)
-                        {
-                            locationConfigView.cancelGetFix();
-                            dialog.dismiss();
-
-                            if (onCanceled != null)
-                            {
-                                onCanceled.onClick(dialog, which);
-                            }
-                        }
-                    }
-            );
-
-            dialog.setButton(AlertDialog.BUTTON_POSITIVE, myParent.getString(R.string.location_dialog_ok),
-                    new DialogInterface.OnClickListener()
-                    {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which)
-                        { /* EMPTY */ }
-                    }
-            );
-
-            dialog.setOnShowListener(new Dialog.OnShowListener()
-            {
-                @Override
-                public void onShow(DialogInterface dialogInterface)
-                {
-                    locationConfigView.loadSettings(myParent);
-
-                    Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    okButton.setOnClickListener(new View.OnClickListener()
-                    {
-                        @Override
-                        public void onClick(View view)
-                        {
-                            Log.d("LocationConfigView", "OK");
-                            locationConfigView.cancelGetFix();
-                            if (locationConfigView.saveSettings(myParent))
-                            {
-                                dialog.dismiss();
-                                if (onAccepted != null)
-                                {
-                                    onAccepted.onClick(dialog, 0);
-                                }
-                            }
-                        }
-                    });
-                }
-            });
-
-            dialog.setOnDismissListener(new Dialog.OnDismissListener()
-            {
-                @Override
-                public void onDismiss(DialogInterface dialogInterface)
-                {
-                }
-            });
-
-            return dialog;
-        }
+        getFixHelper.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-
+    /**
+     *
+     */
     protected void populateLocationList()
     {
         new LocationListTask().execute((Object[]) null);
     }
-
     private class LocationListTask extends AsyncTask<Object, Object, Cursor>
     {
         GetFixDatabaseAdapter db = new GetFixDatabaseAdapter(myParent.getApplicationContext());
@@ -599,7 +500,7 @@ public class LocationConfigView extends LinearLayout
             String selectedPlaceLon = selectedLocation.getLongitude();
 
             Cursor result = db.getAllPlaces(0, true);
-            if (db.findPlaceByName(selectedPlaceName, result) == -1)
+            if (GetFixDatabaseAdapter.findPlaceByName(selectedPlaceName, result) == -1)
             {
                 Log.d("populateLocationList", "Place not found, adding it; " + selectedPlaceName + ":" + selectedPlaceLat + "," + selectedPlaceLon);
                 db.addPlace(getLocation());
@@ -690,6 +591,8 @@ public class LocationConfigView extends LinearLayout
         }
     }*/
 
+    /**
+     */
     public boolean validateInput()
     {
         boolean isValid = true;
@@ -714,13 +617,138 @@ public class LocationConfigView extends LinearLayout
     }
 
     /**
-     * @param requestCode
-     * @param permissions
-     * @param grantResults
+     * Enum of possible ui states; auto mode, custom (select), custom (add), custom (edit) modes.
      */
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
+    public static enum LocationViewMode
     {
-        getFixHelper.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        MODE_AUTO(), MODE_CUSTOM_SELECT(), MODE_CUSTOM_ADD(), MODE_CUSTOM_EDIT();
+        private LocationViewMode() {}
+
+        public String toString()
+        {
+            return this.name();
+        }
+
+        public int ordinal( LocationViewMode[] array )
+        {
+            for (int i=0; i<array.length; i++)
+            {
+                if (array[i].name().equals(this.name()))
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
     }
+
+
+    /**
+     * the location mode (auto, custom) has been selected from a spinner.
+     */
+    private Spinner.OnItemSelectedListener onLocationModeSelected = new Spinner.OnItemSelectedListener()
+    {
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+        {
+            getFixHelper.cancelGetFix();
+
+            final WidgetSettings.LocationMode[] locationModes = WidgetSettings.LocationMode.values();
+            WidgetSettings.LocationMode locationMode = locationModes[parent.getSelectedItemPosition()];
+            Log.d("DEBUG", "onLocationModeSelected " + locationMode.name());
+
+            LocationViewMode dialogMode;
+            if (locationMode == WidgetSettings.LocationMode.CUSTOM_LOCATION)
+            {
+                if (mode != LocationViewMode.MODE_CUSTOM_SELECT &&
+                    mode != LocationViewMode.MODE_CUSTOM_ADD &&
+                    mode != LocationViewMode.MODE_CUSTOM_EDIT)
+                {
+                    dialogMode = LocationViewMode.MODE_CUSTOM_SELECT;
+                    setMode(dialogMode);
+                }
+
+            } else {
+                dialogMode = LocationViewMode.MODE_AUTO;
+                setMode(dialogMode);
+            }
+        }
+        public void onNothingSelected(AdapterView<?> parent) {}
+    };
+
+    /**
+     * a custom location has been selected from a spinner.
+     */
+    private Spinner.OnItemSelectedListener onCustomLocationSelected = new Spinner.OnItemSelectedListener()
+    {
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+        {
+            Cursor cursor = getFixAdapter.getCursor();
+            cursor.moveToPosition(position);
+
+            if (cursor.getColumnCount() >= 3)
+            {
+                updateViews(new WidgetSettings.Location(cursor.getString(1), cursor.getString(2), cursor.getString(3)));
+            }
+        }
+        public void onNothingSelected(AdapterView<?> parent) {}
+    };
+
+    /**
+     * the custom location edit button has been clicked.
+     */
+    private View.OnClickListener onEditButtonClicked = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View view)
+        {
+            setMode(LocationViewMode.MODE_CUSTOM_EDIT);
+        }
+    };
+
+    /**
+     * the custom location save button has been clicked.
+     */
+    private View.OnClickListener onSaveButtonClicked = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View view)
+        {
+            final boolean validInput = validateInput();
+            if (validInput)
+            {
+                setMode(LocationViewMode.MODE_CUSTOM_SELECT);
+                populateLocationList();
+            }
+
+            final GetFixTask.GetFixTaskListener cancelGetFixListener = new GetFixTask.GetFixTaskListener()
+            {
+                @Override
+                public void onCancelled()
+                {
+                    if (validInput)
+                    {
+                        setMode(LocationViewMode.MODE_CUSTOM_SELECT);
+                        populateLocationList();
+                    }
+                }
+            };
+            getFixHelper.removeGetFixTaskListener(cancelGetFixListener);
+            getFixHelper.addGetFixTaskListener(cancelGetFixListener);
+            getFixHelper.cancelGetFix();
+        }
+    };
+
+    /**
+     * the auto location button has been clicked.
+     */
+    private View.OnClickListener onAutoButtonClicked = new OnClickListener()
+    {
+        @Override
+        public void onClick(View view)
+        {
+            getFixHelper.getFix(getFixUI_autoMode);
+        }
+    };
+
 
 }
