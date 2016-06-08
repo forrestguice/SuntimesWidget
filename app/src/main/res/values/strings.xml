@@ -114,7 +114,11 @@
     <string name="configLabel_title1">Flippable Widget</string>
 
     <string name="configLabel_widgetList">Active Widgets</string>
-    <string name="configLabel_widgetList_itemTitle">Widget:  %s</string>
+    <string name="configLabel_widgetList_itemTitle">%s</string>
+    <string name="configLabel_widgetList_itemTitlePattern"><![CDATA[%M (%lat, %lon) [%t]]]></string>
+
+    <string name="configLabel_widgetListHelp_title">Help</string>
+    <string name="configLabel_widgetListHelp_summary">Show widget help</string>
 
     <string name="configLabel_action_launch">Activity:</string>
     <string name="configHint_action_launch">com.forrestguice.suntimeswidget.SuntimesActivity</string>
@@ -129,6 +133,18 @@
         <item>light</item>
         <item>dark</item>
         <item>daynight</item>
+    </string-array>
+
+
+    <string-array name="dateTapActions_display">
+        <item>Do nothing</item>
+        <item>Swap cards (today/tomorrow)</item>
+        <item>Show calendar app</item>
+    </string-array>
+    <string-array name="dateTapActions_values">
+        <item>NOTHING</item>
+        <item>SWAP_CARD</item>
+        <item>SHOW_CALENDAR</item>
     </string-array>
 
     <string-array name="clockTapActions_display">
@@ -176,6 +192,7 @@
     <string name="configLabel_action_onTap">On Tap:</string>
     <string name="configLabel_action_onClockTap">On Clock Tap:</string>
     <string name="configLabel_action_onNoteTap">On Note Tap:</string>
+    <string name="configLabel_action_onDateTap">On Date Tap:</string>
 
     <string name="configLabel_appearance">Appearance Settings</string>
     <string name="configLabel_appearance_1x1mode">1x1 Layout:</string>
@@ -232,6 +249,13 @@
     <string name="gps_lastfix_toast_notfound">GPS failed to get location; falling back to last known position.</string>
     <string name="gps_lastfix_toast_cancelled">GPS update cancelled.</string>
 
+
+    <string name="gps_keeptrying_title">No Fix</string>
+    <string name="gps_keeptrying_msg">Unable to get a fix</string>
+    <string name="gps_keeptrying_ok">Keep Trying</string>
+    <string name="gps_keeptrying_cancel">Give Up</string>
+
+
     <string name="timezone_dialog_title">Time Zone</string>
     <string name="timezone_dialog_ok">Set</string>
     <string name="timezone_dialog_cancel">Cancel</string>
@@ -274,9 +298,14 @@
           <b>Astronomical Twilight:</b> The sun is 18 degrees below the horizon. Near darkness of night.<br/>
     ]]></string>
 
-
     <string name="help_action_launch"><![CDATA[
         The fully qualified class name of the Activity to be launched.
+    ]]></string>
+
+    <string name="help_widgetlist"><![CDATA[
+          This app offers multiple home screen widgets.<br/><br/>
+          To <b>add a new widget</b> you must navigate to the home screen.<br/><br/>
+          To <b>reconfigure an existing widget</b> you can select from the following list.<br/>
     ]]></string>
 
 

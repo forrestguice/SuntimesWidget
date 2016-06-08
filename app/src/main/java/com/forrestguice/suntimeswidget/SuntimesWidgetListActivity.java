@@ -28,6 +28,7 @@ import android.content.Intent;
 
 import android.os.Bundle;
 
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,15 +38,19 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.ArrayList;
 
-public class SuntimesWidgetListActivity extends Activity
+public class SuntimesWidgetListActivity extends AppCompatActivity
 {
+    private static final String DIALOGTAG_HELP = "help";
+
     private ListView widgetList;
 
     public SuntimesWidgetListActivity()
@@ -74,6 +79,7 @@ public class SuntimesWidgetListActivity extends Activity
     public void onStart()
     {
         super.onStart();
+        updateViews(this);
     }
 
     /**
@@ -93,7 +99,6 @@ public class SuntimesWidgetListActivity extends Activity
     {
         super.onPause();
     }
-
 
     /**
      * OnStop: the Activity no longer visible
@@ -120,7 +125,6 @@ public class SuntimesWidgetListActivity extends Activity
     protected void initViews(Context context)
     {
         widgetList = (ListView)findViewById(R.id.widgetList);
-        widgetList.setAdapter( WidgetListAdapter.createWidgetListAdapter(context) );
         widgetList.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
@@ -130,6 +134,45 @@ public class SuntimesWidgetListActivity extends Activity
                 reconfigureWidget(widgetItem);
             }
         });
+
+        initHelpItem();
+    }
+
+    protected void updateViews(Context context)
+    {
+        widgetList.setAdapter(WidgetListAdapter.createWidgetListAdapter(context));
+    }
+
+    private void initHelpItem()
+    {
+        RelativeLayout helpItem = (RelativeLayout) findViewById(R.id.itemLayout);
+        if (helpItem != null)
+        {
+            helpItem.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    showHelp();
+                }
+            });
+
+            TextView helpTitle = (TextView) helpItem.findViewById(android.R.id.text1);
+            helpTitle.setText(getString(R.string.configLabel_widgetListHelp_title));
+
+            TextView helpSummary = (TextView) helpItem.findViewById(android.R.id.text2);
+            helpSummary.setText(getString(R.string.configLabel_widgetListHelp_summary));
+        }
+    }
+
+    /**
+     *
+     */
+    protected void showHelp()
+    {
+        HelpDialog helpDialog = new HelpDialog();
+        helpDialog.setContent(getString(R.string.help_widgetlist));
+        helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
     }
 
     /**
@@ -246,11 +289,15 @@ public class SuntimesWidgetListActivity extends Activity
             AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
             ArrayList<WidgetListItem> items = new ArrayList<>();
 
+            final SuntimesUtils utils = new SuntimesUtils();
+            String titlePattern = context.getString(R.string.configLabel_widgetList_itemTitlePattern);
+
             int[] ids0 = widgetManager.getAppWidgetIds(new ComponentName(context, SuntimesWidget.class));
             for (int id : ids0)
             {
                 AppWidgetProviderInfo info = widgetManager.getAppWidgetInfo(id);
-                String title = context.getString(R.string.configLabel_widgetList_itemTitle, id);
+                String widgetTitle = utils.displayStringForTitlePattern(titlePattern, new SuntimesData(context, id));
+                String title = context.getString(R.string.configLabel_widgetList_itemTitle, widgetTitle);
                 String summary = context.getString(R.string.app_name_widget0);
 
                 try {
@@ -264,7 +311,8 @@ public class SuntimesWidgetListActivity extends Activity
             for (int id : ids1)
             {
                 AppWidgetProviderInfo info = widgetManager.getAppWidgetInfo(id);
-                String title = context.getString(R.string.configLabel_widgetList_itemTitle, id);
+                String widgetTitle = utils.displayStringForTitlePattern(titlePattern, new SuntimesData(context, id));
+                String title = context.getString(R.string.configLabel_widgetList_itemTitle, widgetTitle);
                 String summary = context.getString(R.string.app_name_widget1);
 
                 try {
