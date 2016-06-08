@@ -63,7 +63,9 @@ public class TimeZoneDialog extends DialogFragment
         AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
         builder.setView(dialogContent);
         builder.setTitle(myParent.getString(R.string.timezone_dialog_title));
+
         AlertDialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
 
         dialog.setButton(AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.timezone_dialog_cancel),
                 new DialogInterface.OnClickListener()

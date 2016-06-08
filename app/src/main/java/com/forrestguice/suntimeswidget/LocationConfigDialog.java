@@ -23,6 +23,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
@@ -85,6 +86,16 @@ public class LocationConfigDialog extends DialogFragment
         }
     }
 
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        if (dialogContent != null)
+        {
+            dialogContent.onResume();
+        }
+    }
+
     /**
      * @param savedInstanceState
      * @return
@@ -94,7 +105,7 @@ public class LocationConfigDialog extends DialogFragment
     {
         super.onCreateDialog(savedInstanceState);
 
-        final Activity myParent = getActivity();
+        final FragmentActivity myParent = getActivity();
         dialogContent = new com.forrestguice.suntimeswidget.LocationConfigView(myParent);
         dialogContent.init(myParent, true);
         dialogContent.setHideTitle(hideTitle);
@@ -102,7 +113,9 @@ public class LocationConfigDialog extends DialogFragment
         AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
         builder.setTitle(myParent.getString(R.string.location_dialog_title));
         builder.setView(dialogContent);
+
         final AlertDialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
 
         dialog.setButton(AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.location_dialog_cancel),
                 new DialogInterface.OnClickListener()

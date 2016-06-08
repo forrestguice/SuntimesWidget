@@ -22,6 +22,7 @@ import android.app.Dialog;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 public class LocationDialog extends Dialog
 {
-    private Activity myParent;
+    private FragmentActivity myParent;
     private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 
     private Spinner spinner_locationMode;
@@ -121,7 +122,7 @@ public class LocationDialog extends Dialog
         }
     }
 
-    public LocationDialog(Activity c)
+    public LocationDialog(FragmentActivity c)
     {
         super(c);
         myParent = c;
