@@ -23,6 +23,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,7 +60,7 @@ public class LocationConfigView extends LinearLayout
     public static final String KEY_LOCATION_LONGITUDE = "locationLongitude";
     public static final String KEY_LOCATION_LABEL = "locationLabel";
 
-    private Activity myParent;
+    private FragmentActivity myParent;
     private boolean isInitialized = false;
 
     public LocationConfigView(Context context)
@@ -71,7 +73,7 @@ public class LocationConfigView extends LinearLayout
         super(context, attribs);
     }
 
-    public void init(Activity context, boolean asDialog)
+    public void init(FragmentActivity context, boolean asDialog)
     {
         final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate((asDialog ? R.layout.layout_dialog_location2 : R.layout.layout_settings_location2), this);
@@ -324,11 +326,31 @@ public class LocationConfigView extends LinearLayout
         button_auto.setOnClickListener(onAutoButtonClicked);
 
         getFixHelper = new GetFixHelper(myParent, getFixUI_editMode);
-        if (!isInEditMode() && !getFixHelper.isGPSEnabled())
+        updateGPSButtonIcons();
+    }
+
+    public void updateGPSButtonIcons()
+    {
+        int icon = GetFixUI.ICON_GPS_SEARCHING;
+        if (!isInEditMode())
         {
-            button_getfix.setImageResource(GetFixUI.ICON_GPS_DISABLED);
-            button_auto.setImageResource(GetFixUI.ICON_GPS_DISABLED);
+            if (!getFixHelper.isGPSEnabled())
+            {
+                icon = GetFixUI.ICON_GPS_DISABLED;
+
+            } else if (getFixHelper.gotFix) {
+                icon = GetFixUI.ICON_GPS_FOUND;
+            }
         }
+        button_getfix.setImageResource(icon);
+        button_auto.setImageResource(icon);
+    }
+
+    public void onResume()
+    {
+        Log.d("DEBUG", "LocationConfigView onResume");
+        updateGPSButtonIcons();
+        getFixHelper.onResume();
     }
 
     /**
@@ -466,7 +488,7 @@ public class LocationConfigView extends LinearLayout
     /**
      * Dismiss any "enable GPS" prompts.
      */
-    public void dismissGPSEnabledPrompt() { getFixHelper.dismissGPSEnabledPrompt(); }
+    //public void dismissGPSEnabledPrompt() { getFixHelper.dismissGPSEnabledPrompt(); }
 
     /**
      * @param requestCode

@@ -123,7 +123,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
     public void onDestroy()
     {
         locationConfig.cancelGetFix();
-        locationConfig.dismissGPSEnabledPrompt();
+        //locationConfig.dismissGPSEnabledPrompt();
         super.onDestroy();
     }
 
