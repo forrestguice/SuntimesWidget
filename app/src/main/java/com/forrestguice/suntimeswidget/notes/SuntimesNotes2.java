@@ -110,6 +110,12 @@ public class SuntimesNotes2 implements SuntimesNotes
     }
 
     @Override
+    public boolean showNote( SolarEvents.SolarEventField forField )
+    {
+        return false;
+    }
+
+    @Override
     public NoteData getNote()
     {
         if (currentNote != null)

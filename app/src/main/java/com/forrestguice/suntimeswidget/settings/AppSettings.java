@@ -34,12 +34,18 @@ public class AppSettings
     public static final String PREF_KEY_APPEARANCE_THEME = "app_appearance_theme";
     public static final String PREF_DEF_APPEARANCE_THEME = THEME_DARK;
 
+    public static final String PREF_KEY_UI_DATETAPACTION = "app_ui_datetapaction";
+    public static final DateTapAction PREF_DEF_UI_DATETAPACTION = DateTapAction.SWAP_CARD;
+
     public static final String PREF_KEY_UI_CLOCKTAPACTION = "app_ui_clocktapaction";
     public static final ClockTapAction PREF_DEF_UI_CLOCKTAPACTION = ClockTapAction.ALARM;
 
     public static final String PREF_KEY_UI_NOTETAPACTION = "app_ui_notetapaction";
     public static final ClockTapAction PREF_DEF_UI_NOTETAPACTION = ClockTapAction.NEXT_NOTE;
 
+    /**
+     * Actions that can be performed when the clock is clicked.
+     */
     public static enum ClockTapAction
     {
         NOTHING("Do Nothing"),
@@ -80,6 +86,46 @@ public class AppSettings
     }
 
     /**
+     * Actions that can be performed when the date field is clicked.
+     */
+    public static enum DateTapAction
+    {
+        NOTHING("Do Nothing"),
+        SWAP_CARD("Swap Cards"),
+        SHOW_CALENDAR("Show Calendar");
+
+        private String displayString;
+
+        private DateTapAction(String displayString)
+        {
+            this.displayString = displayString;
+        }
+
+        public String toString()
+        {
+            return displayString;
+        }
+
+        public String getDisplayString()
+        {
+            return displayString;
+        }
+
+        public void setDisplayString( String displayString )
+        {
+            this.displayString = displayString;
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            String[] labels = context.getResources().getStringArray(R.array.dateTapActions_display);
+            NOTHING.setDisplayString(labels[0]);
+            SWAP_CARD.setDisplayString(labels[1]);
+            SHOW_CALENDAR.setDisplayString(labels[2]);
+        }
+    }
+
+    /**
      * Preference: the action that is performed when the clock ui is clicked/tapped
      */
     public static ClockTapAction loadClockTapActionPref( Context context )
@@ -93,6 +139,24 @@ public class AppSettings
 
         } catch (IllegalArgumentException e) {
             actionMode = PREF_DEF_UI_CLOCKTAPACTION;
+        }
+        return actionMode;
+    }
+
+    /**
+     * Preference: the action that is performed when the date field is clicked/tapped
+     */
+    public static DateTapAction loadDateTapActionPref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        String modeString = pref.getString(PREF_KEY_UI_DATETAPACTION, PREF_DEF_UI_DATETAPACTION.name());
+
+        DateTapAction actionMode;
+        try {
+            actionMode = DateTapAction.valueOf(modeString);
+
+        } catch (IllegalArgumentException e) {
+            actionMode = PREF_DEF_UI_DATETAPACTION;
         }
         return actionMode;
     }

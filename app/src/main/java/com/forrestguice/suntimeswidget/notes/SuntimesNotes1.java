@@ -93,6 +93,12 @@ public class SuntimesNotes1 implements SuntimesNotes
     }
 
     @Override
+    public boolean showNote( SolarEvents.SolarEventField forField )
+    {
+        return false;
+    }
+
+    @Override
     public NoteData getNote(int noteIndex)
     {
         if (noteIndex >=0 && noteIndex < noteCount())

@@ -195,5 +195,10 @@ public enum SolarEvents
             hash = hash * 37 + (tomorrow ? 0 : 1);
             return hash;
         }
+
+        public String toString()
+        {
+            return event + " " + (tomorrow ? "tomorrow" : "today");
+        }
     }
 }

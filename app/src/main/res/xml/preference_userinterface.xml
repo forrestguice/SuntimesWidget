@@ -28,6 +28,14 @@
             android:entries="@array/noteTapActions_display" android:entryValues="@array/noteTapActions_values"
             android:defaultValue="NEXT_NOTE" />
 
+        <ListPreference
+            android:key="app_ui_datetapaction"
+            android:title="@string/configLabel_action_onDateTap"
+            android:dialogTitle="@string/configLabel_action_onDateTap"
+            android:summary="%s"
+            android:entries="@array/dateTapActions_display" android:entryValues="@array/dateTapActions_values"
+            android:defaultValue="SWAP_CARD" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

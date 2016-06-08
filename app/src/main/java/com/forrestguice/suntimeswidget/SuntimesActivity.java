@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,8 +28,11 @@ import android.content.res.Resources;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.location.Location;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
+import android.provider.CalendarContract;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -207,6 +211,7 @@ public class SuntimesActivity extends AppCompatActivity
     public void onResume()
     {
         super.onResume();
+        getFixHelper.onResume();
 
         // restore open dialogs
         FragmentManager fragments = getSupportFragmentManager();
@@ -473,7 +478,7 @@ public class SuntimesActivity extends AppCompatActivity
         if (viewToday != null)
         {
             txt_date = (TextView) viewToday.findViewById(R.id.text_date);
-            txt_date.setOnClickListener(onNextCardClick);
+            txt_date.setOnClickListener(dateTapClickListener(false));
 
             txt_sunrise_actual = (TextView) viewToday.findViewById(R.id.text_time_sunrise_actual);
             txt_sunset_actual = (TextView) viewToday.findViewById(R.id.text_time_sunset_actual);
@@ -531,7 +536,7 @@ public class SuntimesActivity extends AppCompatActivity
         if (viewTomorrow != null)
         {
             txt_date2 = (TextView) viewTomorrow.findViewById(R.id.text_date);
-            txt_date2.setOnClickListener(onPrevCardClick);
+            txt_date2.setOnClickListener(dateTapClickListener(true));
 
             txt_sunrise2_actual = (TextView) viewTomorrow.findViewById(R.id.text_time_sunrise_actual);
             txt_sunset2_actual = (TextView) viewTomorrow.findViewById(R.id.text_time_sunset_actual);
@@ -571,14 +576,18 @@ public class SuntimesActivity extends AppCompatActivity
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent)
                 {
-                    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN)
+                    {
                         btn_flipperPrev_tomorrow.setColorFilter(ContextCompat.getColor(SuntimesActivity.this, R.color.btn_tint_pressed));
-                    } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    } else if (motionEvent.getAction() == MotionEvent.ACTION_UP)
+                    {
                         btn_flipperPrev_tomorrow.setColorFilter(null);
                     }
                     return false;
                 }
             });
+
+            initTimeFields();
 
         } else {
             Log.w("initCardViews", "Failed to init card layout2; was null!");
@@ -1322,7 +1331,64 @@ public class SuntimesActivity extends AppCompatActivity
         note_flipper.setVisibility( (value ? View.VISIBLE : View.INVISIBLE) );
     }
 
-    public void highlightField( SolarEvents.SolarEventField highlightField )
+    /**
+     * @param tomorrow
+     * @return
+     */
+    private View.OnClickListener dateTapClickListener( final boolean tomorrow )
+    {
+        return new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                AppSettings.DateTapAction action = AppSettings.loadDateTapActionPref(SuntimesActivity.this);
+                switch (action)
+                {
+                    case NOTHING:
+                        break;
+
+                    case SHOW_CALENDAR:
+                        showCalendar();
+                        break;
+
+                    case SWAP_CARD:
+                    default:
+                        if (tomorrow)
+                        {
+                            showPreviousCard();
+                        } else {
+                            showNextCard();
+                        }
+                        break;
+                }
+            }
+        };
+    }
+
+    private void initTimeFields()
+    {
+        for (SolarEvents.SolarEventField key : timeFields.keySet())
+        {
+            TextView field = timeFields.get(key);
+            field.setOnClickListener(createTimeFieldClickListener(key));
+        }
+    }
+
+    private View.OnClickListener createTimeFieldClickListener( final SolarEvents.SolarEventField event )
+    {
+        return new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Log.d("DEBUG", "TimeField clicked: " + event.toString());
+                notes.showNote(event);
+            }
+        };
+    }
+
+    public void highlightTimeField( SolarEvents.SolarEventField highlightField )
     {
         int nextCardOffset = 0;
         int currentCard = this.card_flipper.getDisplayedChild();
@@ -1358,6 +1424,19 @@ public class SuntimesActivity extends AppCompatActivity
 
         } else if (nextCardOffset < 0) {
             showPreviousCard();
+        }
+    }
+
+    private void showCalendar()
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+        {
+            long startMillis = dataset.now().getTimeInMillis();
+            Uri.Builder builder = CalendarContract.CONTENT_URI.buildUpon();
+            builder.appendPath("time");
+            ContentUris.appendId(builder, startMillis);
+            Intent intent = new Intent(Intent.ACTION_VIEW).setData(builder.build());
+            startActivity(intent);
         }
     }
 
@@ -1408,7 +1487,7 @@ public class SuntimesActivity extends AppCompatActivity
             note_flipper.showPrevious();
         }
 
-        highlightField(new SolarEvents.SolarEventField(note.noteMode, note.tomorrow));
+        highlightTimeField(new SolarEvents.SolarEventField(note.noteMode, note.tomorrow));
     }
 
 }

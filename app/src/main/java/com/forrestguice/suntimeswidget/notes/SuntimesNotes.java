@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.notes;
 import android.content.Context;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesDataset;
+import com.forrestguice.suntimeswidget.settings.SolarEvents;
 
 import java.util.Calendar;
 
@@ -43,6 +44,7 @@ public interface SuntimesNotes
 
     public boolean showNextNote();
     public boolean showPrevNote();
+    public boolean showNote( SolarEvents.SolarEventField forField );
 
     public void updateNote(Context context);
     public void updateNote(Context context, Calendar now);

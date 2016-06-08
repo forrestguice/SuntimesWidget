@@ -35,6 +35,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.util.TypedValue;
 import android.widget.Toast;
@@ -313,5 +314,4 @@ public class SuntimesSettingsActivity extends PreferenceActivity
     {
         super.onDestroy();
     }*/
-
 }
