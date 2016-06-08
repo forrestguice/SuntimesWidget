@@ -25,7 +25,11 @@
         android:text="@string/configLabel_widgetList"
         style="?android:attr/listSeparatorTextViewStyle" />
 
+    <include layout="@layout/layout_listitem_widgets" />
+    <View style="@style/SunsetTimeHorizontalRule" />
+
     <ListView android:id="@+id/widgetList"
               android:layout_width="match_parent" android:layout_height="match_parent" />
+
 
 </LinearLayout>
