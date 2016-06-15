@@ -86,6 +86,9 @@ public class WidgetSettings
     public static final String PREF_KEY_LOCATION_LATITUDE = "latitude";
     public static final String PREF_DEF_LOCATION_LATITUDE = "34.54";
 
+    public static final String PREF_KEY_LOCATION_ALTITUDE = "altitude";
+    public static final String PREF_DEF_LOCATION_ALTITUDE = "";
+
     public static final String PREF_KEY_LOCATION_LABEL = "label";
     public static final String PREF_DEF_LOCATION_LABEL = "";
 
@@ -275,19 +278,24 @@ public class WidgetSettings
         private String label;
         private String latitude;
         private String longitude;
+        private String altitude;   // meters
 
         public Location( String latitude, String longitude )
         {
-            this.label = "";
-            this.latitude = latitude;
-            this.longitude = longitude;
+            this(null, latitude, longitude, null);
         }
 
         public Location( String label, String latitude, String longitude )
         {
+            this(label, latitude, longitude, null);
+        }
+
+        public Location( String label, String latitude, String longitude, String altitude )
+        {
             this.label = (label == null) ? "" : label;
             this.latitude = latitude;
             this.longitude = longitude;
+            this.altitude = (altitude == null) ? "" : altitude;
         }
 
         public Location( String label, @NonNull android.location.Location location )
@@ -295,6 +303,7 @@ public class WidgetSettings
             this.label = label;
             this.latitude = location.getLatitude() + "";
             this.longitude = location.getLongitude() + "";
+            this.altitude = location.getAltitude() + "";
         }
 
         public String getLabel()
@@ -312,9 +321,16 @@ public class WidgetSettings
             return longitude;
         }
 
+        public String getAltitude() { return altitude; }
+
         public Uri getUri()
         {
-            return Uri.parse("geo:" + latitude + "," + longitude);
+            String uriString = "geo:" + latitude + "," + longitude;
+            if (!altitude.isEmpty())
+            {
+                uriString += "," + altitude;
+            }
+            return Uri.parse(uriString);
         }
 
         public String toString()
@@ -745,6 +761,7 @@ public class WidgetSettings
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_LOCATION;
+        prefs.putString(prefs_prefix + PREF_KEY_LOCATION_ALTITUDE, location.getAltitude());
         prefs.putString(prefs_prefix + PREF_KEY_LOCATION_LONGITUDE, location.getLongitude());
         prefs.putString(prefs_prefix + PREF_KEY_LOCATION_LATITUDE, location.getLatitude());
         prefs.putString(prefs_prefix + PREF_KEY_LOCATION_LABEL, location.getLabel());
@@ -754,6 +771,7 @@ public class WidgetSettings
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_LOCATION;
+        String altString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_ALTITUDE, PREF_DEF_LOCATION_ALTITUDE);
         String lonString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_LONGITUDE, PREF_DEF_LOCATION_LONGITUDE);
         String latString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_LATITUDE, PREF_DEF_LOCATION_LATITUDE);
         String nameString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_LABEL, PREF_DEF_LOCATION_LABEL);
@@ -764,6 +782,7 @@ public class WidgetSettings
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_LOCATION;
+        prefs.remove(prefs_prefix + PREF_KEY_LOCATION_ALTITUDE);
         prefs.remove(prefs_prefix + PREF_KEY_LOCATION_LONGITUDE);
         prefs.remove(prefs_prefix + PREF_KEY_LOCATION_LATITUDE);
         prefs.remove(prefs_prefix + PREF_KEY_LOCATION_LABEL);

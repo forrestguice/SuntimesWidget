@@ -220,4 +220,5 @@ public class AppSettings
     {
         ClockTapAction.initDisplayStrings(context);
     }
+
 }

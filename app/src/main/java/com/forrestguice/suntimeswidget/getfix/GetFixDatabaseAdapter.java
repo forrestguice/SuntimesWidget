@@ -44,6 +44,9 @@ public class GetFixDatabaseAdapter
     public static final String KEY_PLACE_LONGITUDE = "longitude";
     public static final String DEF_PLACE_LONGITUDE = KEY_PLACE_LONGITUDE + " text not null";
 
+    public static final String KEY_PLACE_ALTITUDE = "altitude";
+    public static final String DEF_PLACE_ALTITUDE = KEY_PLACE_ALTITUDE + " text";
+
     public static final String KEY_PLACE_COMMENT = "comment";
     public static final String DEF_PLACE_COMMENT = KEY_PLACE_COMMENT + " text";
 
@@ -52,11 +55,12 @@ public class GetFixDatabaseAdapter
                                                          + DEF_PLACE_NAME + ", "
                                                          + DEF_PLACE_LATITUDE + ", "
                                                          + DEF_PLACE_LONGITUDE + ", "
+                                                         + DEF_PLACE_ALTITUDE + ", "
                                                          + DEF_PLACE_COMMENT;
     private static final String TABLE_PLACES_CREATE = "create table " + TABLE_PLACES + " (" + TABLE_PLACES_CREATE_COLS + ");";
 
     private static final String[] QUERY_PLACES_MINENTRY = new String[] {KEY_ROWID, KEY_PLACE_NAME};
-    private static final String[] QUERY_PLACES_FULLENTRY = new String[] {KEY_ROWID, KEY_PLACE_NAME, KEY_PLACE_LATITUDE, KEY_PLACE_LONGITUDE, KEY_PLACE_COMMENT};
+    private static final String[] QUERY_PLACES_FULLENTRY = new String[] {KEY_ROWID, KEY_PLACE_NAME, KEY_PLACE_LATITUDE, KEY_PLACE_LONGITUDE, KEY_PLACE_ALTITUDE, KEY_PLACE_COMMENT};
 
     /**
      *
@@ -164,6 +168,7 @@ public class GetFixDatabaseAdapter
         values.put(KEY_PLACE_NAME, place.getLabel());
         values.put(KEY_PLACE_LATITUDE, place.getLatitude());
         values.put(KEY_PLACE_LONGITUDE, place.getLongitude());
+        values.put(KEY_PLACE_ALTITUDE, place.getAltitude());
         values.put(KEY_PLACE_COMMENT, "");
         return database.insert(TABLE_PLACES, null, values);
     }
@@ -174,6 +179,7 @@ public class GetFixDatabaseAdapter
         values.put(KEY_PLACE_NAME, place.getLabel());
         values.put(KEY_PLACE_LATITUDE, place.getLatitude());
         values.put(KEY_PLACE_LONGITUDE, place.getLongitude());
+        values.put(KEY_PLACE_ALTITUDE, place.getAltitude());
         values.put(KEY_PLACE_COMMENT, "");
         database.update(TABLE_PLACES, values,  "name='" + place.getLabel() + "'", null);
     }
@@ -203,6 +209,7 @@ public class GetFixDatabaseAdapter
         String line = KEY_PLACE_NAME + separator +
                 KEY_PLACE_LATITUDE + separator +
                 KEY_PLACE_LONGITUDE + separator +
+                KEY_PLACE_ALTITUDE + separator +
                 KEY_PLACE_COMMENT;
         return line;
     }
@@ -212,6 +219,7 @@ public class GetFixDatabaseAdapter
         String line = place.getAsString(KEY_PLACE_NAME) + separator +
                       place.getAsString(KEY_PLACE_LATITUDE) + separator +
                       place.getAsString(KEY_PLACE_LONGITUDE) + separator +
+                      place.getAsString(KEY_PLACE_ALTITUDE) + separator +
                       place.getAsString(KEY_PLACE_COMMENT);
         return line;
     }
