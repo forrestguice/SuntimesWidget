@@ -119,7 +119,7 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
             } else if (location != null) {
                 if ((location.getTime() - location2.getTime()) > maxAge)
                 {
-                    return true;  // more than 5min since last fix; assume the latest fix is better
+                    return true;  // more than maxAge since last fix; assume the latest fix is better
 
                 } else if (location.getAccuracy() < location2.getAccuracy()) {
                     return true;  // accuracy is a measure of radius of certainty; smaller values are more accurate

@@ -36,11 +36,9 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.TimeZoneDialog;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.ArrayList;
@@ -53,6 +51,7 @@ public class GetFixHelper
 {
     public static final String KEY_LOCATION_GETTINGFIX = "gettingfix";
     public static final String KEY_LOCATION_GOTFIX = "gotfix";
+    public static final String KEY_LOCATION_UIINDEX = "uiindex";
 
     public static final String DIALOGTAG_ENABLEGPS = "enablegps";
     public static final String DIALOGTAG_KEEPTRYING = "keeptrying";
@@ -64,23 +63,20 @@ public class GetFixHelper
     public static final String PREF_KEY_GETFIX_MAXAGE = "getFix_maxAge";
 
     public GetFixTask getFixTask = null;
+    public Location fix = null;
+
     public boolean gettingFix = false;
     public boolean wasGettingFix = false;
     public boolean gotFix = false;
-    public Location fix = null;
 
     private FragmentActivity myParent;
-    private GetFixUI uiObj;
+    private ArrayList<GetFixUI> uiObj = new ArrayList<>();
+    private int uiIndex = 0;
 
     public GetFixHelper(FragmentActivity parent, GetFixUI ui)
     {
         myParent = parent;
-        uiObj = ui;
-    }
-
-    public GetFixUI getUI()
-    {
-        return uiObj;
+        addUI(ui);
     }
 
     /**
@@ -115,22 +111,35 @@ public class GetFixHelper
                         {
                             fix = result;
                             gotFix = (fix != null);
+
+                            if (!getFixTask.isCancelled() && !gotFix)
+                            {
+                                showKeepSearchingPrompt();
+                            }
                         }
                     });
                     getFixTask.execute();
 
                 } else {
+                    Log.w("GetFixHelper", "getFix called while GPS disabled; showing a prompt");
                     showGPSEnabledPrompt();
                 }
+            } else {
+                Log.w("GetFixHelper", "getFix called without GPS permissions! ignored");
             }
+        } else {
+            Log.w("GetFixHelper", "getFix called while already running! ignored");
         }
     }
-    public void getFix( GetFixUI uiObj )
+    public void getFix( int i )
     {
         if (!gettingFix)
         {
-            this.uiObj = uiObj;
+            setUiIndex( i );
             getFix();
+
+        } else {
+            Log.w("GetFixHelper", "getFix called while already running! ignored");
         }
     }
 
@@ -141,6 +150,7 @@ public class GetFixHelper
     {
         if (gettingFix && getFixTask != null)
         {
+            Log.d("GetFixHelper", "Canceling getFix");
             getFixTask.cancel(true);
         }
     }
@@ -164,36 +174,63 @@ public class GetFixHelper
         return gettingFix;
     }
 
-    /**private AlertDialog gpsPrompt = null;
-    public static AlertDialog createGPSEnabledPrompt( final Context context )
+    public GetFixUI getUI()
     {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage(context.getString(R.string.gps_dialog_msg))
-                .setCancelable(false)
-                .setPositiveButton(context.getString(R.string.gps_dialog_ok), new DialogInterface.OnClickListener()
-                {
-                    public void onClick(final DialogInterface dialog, final int id)
-                    {
-                        context.startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                    }
-                })
-                .setNegativeButton(context.getString(R.string.gps_dialog_cancel), new DialogInterface.OnClickListener()
-                {
-                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id)
-                    {
-                        dialog.cancel();
-                    }
-                });
+        return uiObj.get(uiIndex);
+    }
 
-        return builder.create();
-    }*/
-    /**public void dismissGPSEnabledPrompt()
+    /**
+     * @param i
+     * @return
+     */
+    public GetFixUI getUI( int i )
     {
-        if (gpsPrompt != null)
+        if (i >= 0 && i < uiObj.size())
+            return uiObj.get(i);
+        else return uiObj.get(0);
+    }
+
+    /**
+     * @param ui the ui obj to be added to and managed by the helper
+     */
+    public void addUI( GetFixUI ui )
+    {
+        uiObj.add(ui);
+    }
+
+    /**
+     * @return the number of ui objects managed by this helper
+     */
+    public int numUI()
+    {
+        return uiObj.size();
+    }
+
+    /**
+     * @return the index of the ui object currently that is currently set to be used
+     */
+    public int getUiIndex()
+    {
+        return uiIndex;
+    }
+
+    /**
+     * Set the index of the ui object to use when getting a fix.
+     * @param i the ui obj index
+     * @return true the index was set, false failed to set
+     */
+    public boolean setUiIndex(int i)
+    {
+        if (uiIndex >= 0 && uiIndex < uiObj.size())
         {
-            gpsPrompt.dismiss();
+            uiIndex = i;
+            return true;
+
+        } else {
+            Log.w("GetFixHelper", "setUiIndex was called with a negative value! " + i);
+            return false;
         }
-    }*/
+    }
 
     private ArrayList<GetFixTask.GetFixTaskListener> listeners = new ArrayList<>();
     public void addGetFixTaskListener( GetFixTask.GetFixTaskListener listener )
@@ -231,14 +268,13 @@ public class GetFixHelper
 
     public void loadSettings( Bundle bundle )
     {
+        if (bundle == null)
+            return;
+
         Log.d("DEBUG", "GetFixHelper loadSettings (bundle)");
         wasGettingFix = bundle.getBoolean(KEY_LOCATION_GETTINGFIX);
         gotFix = bundle.getBoolean(KEY_LOCATION_GOTFIX);
-
-        /**if (wasGettingFix)
-        {
-            Log.d("DEBUG", "GetFixHelper loadSettings ... was previously getting fix");
-        }*/
+        setUiIndex(bundle.getInt(KEY_LOCATION_UIINDEX));
     }
 
     public void saveSettings( Bundle bundle )
@@ -246,25 +282,31 @@ public class GetFixHelper
         Log.d("DEBUG", "GetFixHelper saveSettings (bundle)");
         bundle.putBoolean(KEY_LOCATION_GETTINGFIX, gettingFix);
         bundle.putBoolean(KEY_LOCATION_GOTFIX, gotFix);
+        bundle.putInt(KEY_LOCATION_UIINDEX, uiIndex);
     }
 
     public void onResume()
     {
         Log.d("DEBUG", "GetFixHelper onResume");
-
         FragmentManager fragments = myParent.getSupportFragmentManager();
+
         KeepTryingDialog keepTryingDialog = (KeepTryingDialog) fragments.findFragmentByTag(DIALOGTAG_KEEPTRYING);
         if (keepTryingDialog != null)
         {
             keepTryingDialog.setHelper(this);
         }
 
-        /**if (wasGettingFix)
+        EnableGPSDialog enableGPSDialog = (EnableGPSDialog) fragments.findFragmentByTag(DIALOGTAG_ENABLEGPS);
+        if (enableGPSDialog != null)
         {
-            Log.d("DEBUG", "GetFixHelper was previously getting fix, so starting getFix...");
-            wasGettingFix = false;
+            enableGPSDialog.setHelper(this);
+        }
+
+        if (wasGettingFix)
+        {
+            Log.d("DEBUG", "GetFixHelper was previously getting fix... restarting");
             getFix();
-        }*/
+        }
     }
 
     /**
@@ -313,6 +355,14 @@ public class GetFixHelper
      */
     public static class EnableGPSDialog extends DialogFragment
     {
+        public EnableGPSDialog() {}
+
+        private GetFixHelper helper;
+        public void setHelper(GetFixHelper helper)
+        {
+            this.helper = helper;
+        }
+
         @NonNull @Override
         public Dialog onCreateDialog(Bundle savedInstanceState)
         {
@@ -351,6 +401,7 @@ public class GetFixHelper
     public void showGPSEnabledPrompt()
     {
         final EnableGPSDialog dialog = new EnableGPSDialog();
+        dialog.setHelper(this);
         dialog.show(myParent.getSupportFragmentManager(), DIALOGTAG_ENABLEGPS);
     }
 

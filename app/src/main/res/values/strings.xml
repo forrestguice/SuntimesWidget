@@ -104,6 +104,7 @@
     <string name="configAction_refreshLocation">Refresh</string>
     <string name="configAction_addLocation">Location</string>
     <string name="configAction_mapLocation">Show Map</string>
+    <string name="configAction_mapLocation_chooser">View location using</string>
     <string name="configAction_setAlarm">Set Alarm</string>
     <string name="configAction_setTimeZone">Use Time Zone</string>
     <string name="configAction_help">Help</string>
@@ -173,6 +174,49 @@
         <item>PREV_NOTE</item>
     </string-array>
 
+    <string name="configLabel_getFix_maxElapse">GPS time limit</string>
+    <string name="configLabel_getFix_maxElapse_summary">Give up after %s</string>
+    <string-array name="getFix_maxElapse_display">
+        <item>15 seconds</item>
+        <item>30 seconds</item>
+        <item>1 minute</item>
+        <item>5 minutes</item>
+        <item>10 minutes</item>
+    </string-array>
+    <string-array name="getFix_maxElapse_values">
+        <item>15000</item>
+        <item>30000</item>
+        <item>60000</item>
+        <item>300000</item>
+        <item>600000</item>
+    </string-array>
+
+    <string name="configLabel_getFix_maxAge">GPS recent max age</string>
+    <string name="configLabel_getFix_maxAge_summary">%s considered recent</string>
+    <string-array name="getFix_maxAge_display">
+        <item>1 minute</item>
+        <item>5 minutes</item>
+        <item>15 minutes</item>
+        <item>1 hour</item>
+        <item>4 hours</item>
+        <item>12 hours</item>
+        <item>one day (24 hours)</item>
+        <item>two days (48 hours)</item>
+        <item>one week (168 hours)</item>
+        <item>one month (672 hours)</item>
+    </string-array>
+    <string-array name="getFix_maxAge_values">
+        <item>60000</item>
+        <item>300000</item>
+        <item>900000</item>
+        <item>3600000</item>
+        <item>14400000</item>
+        <item>43200000</item>
+        <item>86400000</item>
+        <item>172800000</item>
+        <item>604800000</item>
+        <item>2419200000</item>
+    </string-array>
 
     <string name="configLabel_general">General Settings</string>
     <string name="configLabel_general_calculator">Data Source:</string>
@@ -244,6 +288,7 @@
     <string name="gps_dialog_ok">Yes</string>
     <string name="gps_dialog_cancel">No</string>
 
+    <string name="gps_lastfix_title_set">Set Position</string>
     <string name="gps_lastfix_title_found">Last Position</string>
     <string name="gps_lastfix_title_searching">Getting Position</string>
     <string name="gps_lastfix_toast_notfound">GPS failed to get location; falling back to last known position.</string>

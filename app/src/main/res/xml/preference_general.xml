@@ -13,6 +13,22 @@
 
         <Preference android:title="Clear Places" android:key="general_clearplaces" />
 
+        <ListPreference
+            android:key="getFix_maxElapsed"
+            android:title="@string/configLabel_getFix_maxElapse"
+            android:dialogTitle="@string/configLabel_getFix_maxElapse"
+            android:summary="@string/configLabel_getFix_maxElapse_summary"
+            android:entries="@array/getFix_maxElapse_display" android:entryValues="@array/getFix_maxElapse_values"
+            android:defaultValue="60000" />
+
+        <ListPreference
+            android:key="getFix_maxAge"
+            android:title="@string/configLabel_getFix_maxAge"
+            android:dialogTitle="@string/configLabel_getFix_maxAge"
+            android:summary="@string/configLabel_getFix_maxAge_summary"
+            android:entries="@array/getFix_maxAge_display" android:entryValues="@array/getFix_maxAge_values"
+            android:defaultValue="300000" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>
