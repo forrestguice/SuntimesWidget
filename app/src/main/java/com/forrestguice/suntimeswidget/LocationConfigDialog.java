@@ -17,17 +17,15 @@
 */
 package com.forrestguice.suntimeswidget;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 
 public class LocationConfigDialog extends DialogFragment
 {
@@ -72,6 +70,19 @@ public class LocationConfigDialog extends DialogFragment
     public boolean getHideTitle() { return hideTitle; }
 
     /**
+     * @param data
+     */
+    private Uri presetData = null;
+    public void setData(Uri data)
+    {
+        presetData = data;
+        if (dialogContent != null)
+        {
+            dialogContent.loadSettings(getActivity(), presetData);
+        }
+    }
+
+    /**
      * @param requestCode
      * @param permissions
      * @param grantResults
@@ -83,6 +94,16 @@ public class LocationConfigDialog extends DialogFragment
         if (dialogContent != null)
         {
             dialogContent.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        if (dialogContent != null)
+        {
+            dialogContent.cancelGetFix();
         }
     }
 
@@ -156,6 +177,8 @@ public class LocationConfigDialog extends DialogFragment
         if (savedInstanceState != null)
         {
             loadSettings(savedInstanceState);
+        } else if (presetData != null) {
+            dialogContent.loadSettings(myParent, presetData);
         }
         return dialog;
     }

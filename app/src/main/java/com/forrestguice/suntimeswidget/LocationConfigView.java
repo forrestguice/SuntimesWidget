@@ -17,14 +17,13 @@
 */
 package com.forrestguice.suntimeswidget;
 
-import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -51,6 +50,7 @@ import com.forrestguice.suntimeswidget.getfix.GetFixUI2;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.math.BigDecimal;
+import java.util.regex.Pattern;
 
 public class LocationConfigView extends LinearLayout
 {
@@ -145,6 +145,16 @@ public class LocationConfigView extends LinearLayout
         groupTitle.setVisibility( (hideTitle ? View.GONE : View.VISIBLE) );
     }
 
+    /**
+     */
+    //private Uri presetData = null;
+    //public void setData( Uri data )
+    //{
+        //Log.d("DEBUG", "locationConfigView setData: " + data);
+        //presetData = data;
+       //// TODO: do something w/ data
+    //}
+
     /** Property: mode (auto, select, edit/add) */
     private LocationViewMode mode = LocationViewMode.MODE_CUSTOM_SELECT;
     public LocationViewMode getMode()
@@ -155,6 +165,11 @@ public class LocationConfigView extends LinearLayout
     {
         Log.d("DEBUG", "LocationViewMode setMode " + mode.name());
         FrameLayout autoButtonLayout = (FrameLayout)findViewById(R.id.appwidget_location_auto_layout);
+
+        if (this.mode != mode)
+        {
+            getFixHelper.cancelGetFix();
+        }
 
         this.mode = mode;
         switch (mode)
@@ -217,11 +232,7 @@ public class LocationConfigView extends LinearLayout
         }
     }
 
-
-
     private ViewFlipper flipper, flipper2;
-
-
     private Spinner spinner_locationMode;
 
     private TextView labl_locationLat;
@@ -313,7 +324,7 @@ public class LocationConfigView extends LinearLayout
             @Override
             public void onClick(View v)
             {
-                getFixHelper.getFix(getFixUI_editMode);
+                getFixHelper.getFix(0);
             }
         });
 
@@ -325,7 +336,8 @@ public class LocationConfigView extends LinearLayout
         getFixUI_autoMode = new GetFixUI2(text_locationName, text_locationLat, text_locationLon, progress_auto, button_auto);
         button_auto.setOnClickListener(onAutoButtonClicked);
 
-        getFixHelper = new GetFixHelper(myParent, getFixUI_editMode);
+        getFixHelper = new GetFixHelper(myParent, getFixUI_editMode);    // 0; getFixUI_editMode
+        getFixHelper.addUI(getFixUI_autoMode);                           // 1; getFixUI_autoMode
         updateGPSButtonIcons();
     }
 
@@ -433,6 +445,16 @@ public class LocationConfigView extends LinearLayout
     }
 
     /**
+     * @param context
+     * @param data
+     */
+    protected void loadSettings(Context context, Uri data )
+    {
+        Log.d("DEBUG", "LocationConfigView loadSettings (uri)");
+        loadSettings(context, bundleData(data, context.getString(R.string.gps_lastfix_title_set)));
+    }
+
+    /**
      *
      */
     protected boolean saveSettings(Context context)
@@ -475,6 +497,36 @@ public class LocationConfigView extends LinearLayout
 
         getFixHelper.saveSettings(bundle);
         return true;
+    }
+
+    public static Bundle bundleData( Uri data, String label )
+    {
+        String lat = "";
+        String lon = "";
+
+        if (data.getScheme().equals("geo"))
+        {
+            String dataString = data.getSchemeSpecificPart();
+            String[] dataParts = dataString.split(Pattern.quote("?"));
+            if (dataParts.length > 0)
+            {
+                String geoPath = dataParts[0];
+                String[] geoParts = geoPath.split(Pattern.quote(","));
+                if (geoParts.length >= 2)
+                {
+                    lat = geoParts[0];
+                    lon = geoParts[1];
+                }
+            }
+        }
+
+        Bundle bundle = new Bundle();
+        bundle.putString(KEY_DIALOGMODE, LocationViewMode.MODE_CUSTOM_ADD.name());
+        bundle.putString(KEY_LOCATION_MODE, WidgetSettings.LocationMode.CUSTOM_LOCATION.name());
+        bundle.putString(KEY_LOCATION_LATITUDE, lat);
+        bundle.putString(KEY_LOCATION_LONGITUDE, lon);
+        bundle.putString(KEY_LOCATION_LABEL, label);
+        return bundle;
     }
 
     /**
@@ -664,7 +716,6 @@ public class LocationConfigView extends LinearLayout
         }
     }
 
-
     /**
      * the location mode (auto, custom) has been selected from a spinner.
      */
@@ -672,8 +723,6 @@ public class LocationConfigView extends LinearLayout
     {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
         {
-            getFixHelper.cancelGetFix();
-
             final WidgetSettings.LocationMode[] locationModes = WidgetSettings.LocationMode.values();
             WidgetSettings.LocationMode locationMode = locationModes[parent.getSelectedItemPosition()];
             Log.d("DEBUG", "onLocationModeSelected " + locationMode.name());
@@ -768,7 +817,7 @@ public class LocationConfigView extends LinearLayout
         @Override
         public void onClick(View view)
         {
-            getFixHelper.getFix(getFixUI_autoMode);
+            getFixHelper.getFix(1);
         }
     };
 

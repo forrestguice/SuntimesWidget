@@ -24,6 +24,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -32,6 +33,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.os.Parcelable;
 import android.provider.CalendarContract;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
@@ -39,6 +41,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -71,9 +74,11 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import java.lang.reflect.Method;
 import java.text.DateFormat;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 public class SuntimesActivity extends AppCompatActivity
 {
@@ -168,29 +173,36 @@ public class SuntimesActivity extends AppCompatActivity
 
     /**
      * OnCreate: the Activity initially created
-     * @param icicle
+     * @param savedState
      */
     @Override
-    public void onCreate(Bundle icicle)
+    public void onCreate(Bundle savedState)
     {
         Context context = SuntimesActivity.this;
         calculateData(context);
+
         setTheme(AppSettings.loadTheme(this, dataset));
         GetFixUI.themeIcons(this);
 
-        super.onCreate(icicle);
+        super.onCreate(savedState);
         setResult(RESULT_CANCELED);
         setContentView(R.layout.layout_main);
-
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-        //WidgetThemes.initThemes(context);
 
         AppSettings.initDisplayStrings(context);
         WidgetSettings.initDisplayStrings(context);
         initViews(context);
 
+        initGetFix();
+        getFixHelper.loadSettings(savedState);
         notes.resetNoteIndex();
+
+        Intent intent = getIntent();
+        Uri data = intent.getData();
+        if (data != null)
+        {
+            intent.setData(null);
+            configLocation(data);
+        }
     }
 
     /**
@@ -211,6 +223,7 @@ public class SuntimesActivity extends AppCompatActivity
     public void onResume()
     {
         super.onResume();
+        updateActionBar(this);
         getFixHelper.onResume();
 
         // restore open dialogs
@@ -312,7 +325,6 @@ public class SuntimesActivity extends AppCompatActivity
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
         actionBar = getSupportActionBar();
-        initGetFix();
     }
 
     /**
@@ -391,18 +403,22 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private void updateActionBar(Context context)
     {
-        MenuItem refreshItem = actionBarMenu.findItem(R.id.action_location_refresh);
-        if (refreshItem != null)
+        if (actionBarMenu != null)
         {
-            WidgetSettings.LocationMode mode = WidgetSettings.loadLocationModePref(context, 0);
-            if (mode != WidgetSettings.LocationMode.CURRENT_LOCATION)
+            MenuItem refreshItem = actionBarMenu.findItem(R.id.action_location_refresh);
+            if (refreshItem != null)
             {
-                refreshItem.setVisible(false);
+                WidgetSettings.LocationMode mode = WidgetSettings.loadLocationModePref(context, 0);
+                if (mode != WidgetSettings.LocationMode.CURRENT_LOCATION)
+                {
+                    refreshItem.setVisible(false);
 
-            } else {
-                refreshItem.setIcon((getFixHelper.isGPSEnabled() ? GetFixUI.ICON_GPS_FOUND
-                                                                 : GetFixUI.ICON_GPS_DISABLED));
-                refreshItem.setVisible(true);
+                } else
+                {
+                    refreshItem.setIcon((getFixHelper.isGPSEnabled() ? GetFixUI.ICON_GPS_FOUND
+                            : GetFixUI.ICON_GPS_DISABLED));
+                    refreshItem.setVisible(true);
+                }
             }
         }
     }
@@ -735,9 +751,14 @@ public class SuntimesActivity extends AppCompatActivity
      */
     protected void configLocation()
     {
+        configLocation(null);
+    }
+    protected void configLocation( Uri data )
+    {
         final LocationConfigDialog locationDialog = new LocationConfigDialog();
+        locationDialog.setData(data);
         locationDialog.setHideTitle(true);
-        locationDialog.setOnAcceptedListener( onConfigLocation(locationDialog) );
+        locationDialog.setOnAcceptedListener(onConfigLocation(locationDialog));
 
         getFixHelper.cancelGetFix();
         locationDialog.show(getSupportFragmentManager(), DIALOGTAG_LOCATION);
@@ -785,15 +806,38 @@ public class SuntimesActivity extends AppCompatActivity
 
     /**
      * Show the location on a map.
+     * Intent filtering code based off answer by "gumberculese";
+     * http://stackoverflow.com/questions/5734678/custom-filtering-of-intent-chooser-based-on-installed-android-package-name
      */
     protected void showMap()
     {
         Intent mapIntent = new Intent(Intent.ACTION_VIEW);
         mapIntent.setData(location.getUri());
+        //if (mapIntent.resolveActivity(getPackageManager()) != null)
+        //{
+        //    startActivity(mapIntent);
+        //}
 
-        if (mapIntent.resolveActivity(getPackageManager()) != null)
+        String myPackage = "com.forrestguice.suntimeswidget";
+        List<ResolveInfo> info = getPackageManager().queryIntentActivities(mapIntent, 0);
+        if (!info.isEmpty())
         {
-            startActivity(mapIntent);
+            List<Intent> geoIntents = new ArrayList<>();
+            for (ResolveInfo resolveInfo : info)
+            {
+                String packageName = resolveInfo.activityInfo.packageName;
+                if (!TextUtils.equals(packageName, myPackage))
+                {
+                    Intent geoIntent = new Intent(Intent.ACTION_VIEW);
+                    geoIntent.setPackage(packageName);
+                    geoIntent.setData(location.getUri());
+                    geoIntents.add(geoIntent);
+                }
+            }
+
+            Intent chooserIntent = Intent.createChooser(geoIntents.remove(0), getString(R.string.configAction_mapLocation_chooser));
+            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, geoIntents.toArray(new Parcelable[geoIntents.size()]));
+            startActivity(chooserIntent);
         }
     }
 
