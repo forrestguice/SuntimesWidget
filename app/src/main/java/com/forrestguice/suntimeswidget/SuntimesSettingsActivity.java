@@ -21,13 +21,11 @@ package com.forrestguice.suntimeswidget;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.TypedArray;
-import android.database.Cursor;
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -35,13 +33,12 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.util.TypedValue;
-import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
-import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
+import com.forrestguice.suntimeswidget.getfix.ClearPlacesTask;
+import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -134,8 +131,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity
             addPreferencesFromResource(R.xml.preference_general);
             loadGeneral();
 
-            Preference myPref = (Preference)findPreference("general_clearplaces");
-            myPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
+            Preference clearPlacesPref = (Preference)findPreference("general_clearplaces");
+            clearPlacesPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
             {
                 public boolean onPreferenceClick(Preference preference)
                 {
@@ -160,6 +157,45 @@ public class SuntimesSettingsActivity extends PreferenceActivity
                     return false;
                 }
             });
+
+            Preference exportPlacesPref = (Preference)findPreference("general_exportplaces");
+            exportPlacesPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
+            {
+                public boolean onPreferenceClick(Preference preference)
+                {
+                    if (myParent != null)
+                    {
+                        ExportPlacesTask exporter = new ExportPlacesTask(myParent, "SuntimesPlaces", true)
+                        {
+                            @Override
+                            protected void onPostExecute(ExportResult results)
+                            {
+                                dismissProgress();
+
+                                if (results.getResult())
+                                {
+                                    if (usedExternalStorage)
+                                    {
+                                        super.onPostExecute(results);
+                                    }
+
+                                    Intent shareIntent = new Intent();
+                                    shareIntent.setAction(Intent.ACTION_SEND);
+                                    shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(results.getExportFile()));
+                                    shareIntent.setType("text/csv");
+                                    startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.msg_export_to)));
+
+                                } else {
+                                    super.onPostExecute(results);
+                                }
+                            }
+                        };
+                        exporter.execute();
+                        return true;
+                    }
+                    return false;
+                }
+            });
         }
 
         @Override
@@ -174,50 +210,6 @@ public class SuntimesSettingsActivity extends PreferenceActivity
         {
             super.onAttach(activity);
             myParent = activity;
-        }
-
-        public static class ClearPlacesTask extends AsyncTask<Object, Object, Boolean>
-        {
-            private Context myParent;
-            GetFixDatabaseAdapter db;
-            ProgressDialog progress;
-
-            public ClearPlacesTask( Context context )
-            {
-                myParent = context;
-                db = new GetFixDatabaseAdapter(context.getApplicationContext());
-            }
-
-            public static final long MIN_WAIT_TIME = 2000;
-
-            @Override
-            protected Boolean doInBackground(Object... params)
-            {
-                long startTime = System.currentTimeMillis();
-                db.open();
-                boolean cleared = db.clearPlaces();
-                db.close();
-                long endTime = System.currentTimeMillis();
-
-                while ((endTime - startTime) < MIN_WAIT_TIME)
-                {
-                    endTime = System.currentTimeMillis();
-                }
-                return cleared;
-            }
-
-            @Override
-            protected void onPreExecute()
-            {
-                progress = ProgressDialog.show(myParent, myParent.getString(R.string.locationcleared_dialog_title), myParent.getString(R.string.locationcleared_dialog_message), true);
-            }
-
-            @Override
-            protected void onPostExecute(Boolean result)
-            {
-                progress.dismiss();
-                Toast.makeText(myParent, myParent.getString(R.string.locationcleared_toast_success), Toast.LENGTH_LONG).show();
-            }
         }
 
         private void loadGeneral()
