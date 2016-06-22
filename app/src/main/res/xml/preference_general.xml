@@ -11,10 +11,6 @@
             android:summary="%s"
             android:entries="@null" android:entryValues="@null" android:defaultValue="any" />
 
-        <Preference android:title="Clear Places" android:key="general_clearplaces" />
-
-        <Preference android:title="Export Places" android:key="general_exportplaces" />
-
         <ListPreference
             android:key="getFix_maxElapsed"
             android:title="@string/configLabel_getFix_maxElapse"

@@ -18,7 +18,6 @@
 
 package com.forrestguice.suntimeswidget.getfix;
 
-import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -26,14 +25,12 @@ import android.database.DatabaseUtils;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
-import android.widget.Toast;
-
-import com.forrestguice.suntimeswidget.R;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -42,13 +39,27 @@ public class ExportPlacesTask extends AsyncTask<Object, Object, ExportPlacesTask
     public static final long MIN_WAIT_TIME = 2000;
     public static final long CACHE_MAX = 256000;
 
+    private WeakReference<Context> contextRef;
+
     private String exportTarget;
     private File exportFile;
     private int numEntries;
-    private Context context;
     protected boolean usedExternalStorage = false;
     private String newLine = System.getProperty("line.separator");
-    private ProgressDialog progress;
+
+    private boolean isPaused = false;
+    public void pauseTask()
+    {
+        isPaused = true;
+    }
+    public void resumeTask()
+    {
+        isPaused = false;
+    }
+    public boolean isPaused()
+    {
+        return isPaused;
+    }
 
     public ExportPlacesTask(Context context, String exportTarget)
     {
@@ -56,7 +67,7 @@ public class ExportPlacesTask extends AsyncTask<Object, Object, ExportPlacesTask
     }
     public ExportPlacesTask(Context context, String exportTarget, boolean saveToCache)
     {
-        this.context = context;
+        this.contextRef = new WeakReference<Context>(context);
         this.exportTarget = exportTarget;
         this.saveToCache = saveToCache;
     }
@@ -82,7 +93,7 @@ public class ExportPlacesTask extends AsyncTask<Object, Object, ExportPlacesTask
     protected void onPreExecute()
     {
         numEntries = 0;
-        showProgress();
+        signalStarted();
     }
 
     /**
@@ -91,6 +102,13 @@ public class ExportPlacesTask extends AsyncTask<Object, Object, ExportPlacesTask
     @Override
     protected ExportResult doInBackground(Object... params)
     {
+        final Context context = contextRef.get();
+        if (context == null)
+        {
+            Log.w("ExportPlacesTask", "Reference (weak) to context is null at start of doInBackground; cancelling...");
+            return new ExportResult(false, null);
+        }
+
         long startTime = System.currentTimeMillis();
 
         //
@@ -104,7 +122,7 @@ public class ExportPlacesTask extends AsyncTask<Object, Object, ExportPlacesTask
             if (saveToCache)         // save to: external cache
             {
                 try {
-                    cleanupExternalCache();
+                    cleanupExternalCache(context);
                     exportFile = File.createTempFile(exportTarget, ".csv", context.getExternalCacheDir());
                 } catch (IOException e) {
                     Log.w("ExportPlaces", "Canceling export; failed to create external temp file.");
@@ -135,7 +153,7 @@ public class ExportPlacesTask extends AsyncTask<Object, Object, ExportPlacesTask
         } else if (saveToCache) {    // save to: internal cache
 
             try {
-                cleanupInternalCache();
+                cleanupInternalCache(context);
                 exportFile = File.createTempFile(exportTarget, ".csv", context.getCacheDir());
 
             } catch (IOException e) {
@@ -189,7 +207,7 @@ public class ExportPlacesTask extends AsyncTask<Object, Object, ExportPlacesTask
         // Step 4: wait for UI to spin a second, then return
         //
         long endTime = System.currentTimeMillis();
-        while ((endTime - startTime) < MIN_WAIT_TIME)
+        while ((endTime - startTime) < MIN_WAIT_TIME || isPaused)
         {
             endTime = System.currentTimeMillis();
         }
@@ -203,27 +221,7 @@ public class ExportPlacesTask extends AsyncTask<Object, Object, ExportPlacesTask
     @Override
     protected void onPostExecute(ExportResult results)
     {
-        dismissProgress();
-
-        if (results.getResult())
-        {
-            String successMessage = context.getString(R.string.msg_export_success, exportFile.getAbsolutePath());
-            Toast.makeText(context.getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
-
-        } else {
-            String failureMessage = context.getString(R.string.msg_export_failure, exportFile.getAbsolutePath());
-            Toast.makeText(context.getApplicationContext(), failureMessage, Toast.LENGTH_LONG).show();
-        }
-    }
-
-    protected void showProgress()
-    {
-        progress = ProgressDialog.show(context, context.getString(R.string.locationexport_dialog_title), context.getString(R.string.locationexport_dialog_message), true);
-    }
-
-    protected void dismissProgress()
-    {
-        progress.dismiss();
+        signalFinished(results);
     }
 
     /**
@@ -307,7 +305,7 @@ public class ExportPlacesTask extends AsyncTask<Object, Object, ExportPlacesTask
     /**
      * Cleanup the internal cache.
      */
-    private void cleanupInternalCache()
+    private void cleanupInternalCache(Context context)
     {
         File cacheDir = context.getCacheDir();
         cleanupCache(cacheDir, CACHE_MAX);
@@ -316,7 +314,7 @@ public class ExportPlacesTask extends AsyncTask<Object, Object, ExportPlacesTask
     /**
      * Cleanup the external cache.
      */
-    private void cleanupExternalCache()
+    private void cleanupExternalCache(Context context)
     {
         File cacheDir = context.getExternalCacheDir();
         cleanupCache(cacheDir, CACHE_MAX);
@@ -364,5 +362,37 @@ public class ExportPlacesTask extends AsyncTask<Object, Object, ExportPlacesTask
             }
         }
         return result;
+    }
+
+    /**
+     * Task Listener
+     */
+    public static abstract class TaskListener
+    {
+        public void onStarted() {}
+        public void onFinished( ExportResult result ) {}
+    }
+    private TaskListener taskListener = null;
+    public void setTaskListener( TaskListener listener )
+    {
+        taskListener = listener;
+    }
+    public void clearTaskListener()
+    {
+        taskListener = null;
+    }
+    private void signalStarted()
+    {
+        if (taskListener != null)
+        {
+            taskListener.onStarted();
+        }
+    }
+    private void signalFinished( ExportResult result )
+    {
+        if (taskListener != null)
+        {
+            taskListener.onFinished(result);
+        }
     }
 }

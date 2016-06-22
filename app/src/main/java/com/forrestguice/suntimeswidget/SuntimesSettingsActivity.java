@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -35,6 +36,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.TypedValue;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.getfix.ClearPlacesTask;
@@ -53,6 +55,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
     final static String ACTION_PREFS_GENERAL = "com.forrestguice.suntimeswidget.PREFS_GENERAL";
     final static String ACTION_PREFS_UI = "com.forrestguice.suntimeswidget.PREFS_UI";
     final static String ACTION_PREFS_WIDGETLIST = "com.forrestguice.suntimeswidget.PREFS_WIDGETLIST";
+    final static String ACTION_PREFS_PLACES = "com.forrestguice.suntimeswidget.PREFS_PLACES";
 
     private Context context;
 
@@ -78,6 +81,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity
 
         } else if (action != null && action.equals(ACTION_PREFS_UI)) {
             addPreferencesFromResource(R.xml.preference_userinterface);
+
+        } else if (action != null && action.equals(ACTION_PREFS_PLACES)) {
+            addPreferencesFromResource(R.xml.preference_places);
 
         } else if (action != null && action.equals(ACTION_PREFS_WIDGETLIST)) {
             // TODO
@@ -114,13 +120,76 @@ public class SuntimesSettingsActivity extends PreferenceActivity
     }
 
     /**
+     * more fragment related bullshit
+     * @param fragmentName
+     * @return
+     */
+    @Override
+    protected boolean isValidFragment(String fragmentName)
+    {
+        return GeneralPrefsFragment.class.getName().equals(fragmentName) ||
+               UIPrefsFragment.class.getName().equals(fragmentName) ||
+               PlacesPrefsFragment.class.getName().equals(fragmentName);
+    }
+
+    public static final String DIALOGTAG_CLEARPLACES = "clearplaces";
+
+    /**
+     * OnStart: the Activity becomes visible
+     */
+    /**@Override
+    public void onStart()
+    {
+    super.onStart();
+    Context context = SuntimesSettingsActivity.this;
+    }*/
+
+    /**
+     * OnResume: the user is now interacting w/ the Activity (running state)
+     */
+    /**@Override
+    public void onResume()
+    {
+    super.onResume();
+    }*/
+
+    /**
+     * OnPause: the user about to interact w/ another Activity
+     */
+    /**@Override
+    public void onPause()
+    {
+    super.onPause();
+    }*/
+
+
+    /**
+     * OnStop: the Activity no longer visible
+     */
+    /**@Override
+    public void onStop()
+    {
+    super.onStop();
+    }*/
+
+    /**
+     * OnDestroy: the activity destroyed
+     */
+    /**@Override
+    public void onDestroy()
+    {
+    super.onDestroy();
+    }*/
+
+    //////////////////////////////////////////////////
+    //////////////////////////////////////////////////
+
+    /**
      * General Prefs
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class GeneralPrefsFragment extends PreferenceFragment
     {
-        private Context myParent;
-
         @Override
         public void onCreate(Bundle savedInstanceState)
         {
@@ -130,86 +199,6 @@ public class SuntimesSettingsActivity extends PreferenceActivity
             PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_general, false);
             addPreferencesFromResource(R.xml.preference_general);
             loadGeneral();
-
-            Preference clearPlacesPref = (Preference)findPreference("general_clearplaces");
-            clearPlacesPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
-            {
-                public boolean onPreferenceClick(Preference preference)
-                {
-                    if (myParent != null)
-                    {
-                        AlertDialog.Builder confirm = new AlertDialog.Builder(myParent)
-                                .setTitle(myParent.getString(R.string.locationclear_dialog_title))
-                                .setMessage(myParent.getString(R.string.locationclear_dialog_message))
-                                .setIcon(android.R.drawable.ic_dialog_alert)
-                                .setPositiveButton(myParent.getString(R.string.locationclear_dialog_ok), new DialogInterface.OnClickListener()
-                                {
-                                    public void onClick(DialogInterface dialog, int whichButton)
-                                    {
-                                        new ClearPlacesTask(myParent).execute((Object[]) null);
-                                    }
-                                })
-                                .setNegativeButton(myParent.getString(R.string.locationclear_dialog_cancel), null);
-
-                        confirm.show();
-                        return true;
-                    }
-                    return false;
-                }
-            });
-
-            Preference exportPlacesPref = (Preference)findPreference("general_exportplaces");
-            exportPlacesPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
-            {
-                public boolean onPreferenceClick(Preference preference)
-                {
-                    if (myParent != null)
-                    {
-                        ExportPlacesTask exporter = new ExportPlacesTask(myParent, "SuntimesPlaces", true)
-                        {
-                            @Override
-                            protected void onPostExecute(ExportResult results)
-                            {
-                                dismissProgress();
-
-                                if (results.getResult())
-                                {
-                                    if (usedExternalStorage)
-                                    {
-                                        super.onPostExecute(results);
-                                    }
-
-                                    Intent shareIntent = new Intent();
-                                    shareIntent.setAction(Intent.ACTION_SEND);
-                                    shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(results.getExportFile()));
-                                    shareIntent.setType("text/csv");
-                                    startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.msg_export_to)));
-
-                                } else {
-                                    super.onPostExecute(results);
-                                }
-                            }
-                        };
-                        exporter.execute();
-                        return true;
-                    }
-                    return false;
-                }
-            });
-        }
-
-        @Override
-        public void onAttach(Context context)
-        {
-            super.onAttach(context);
-            myParent = context;
-        }
-
-        @Override
-        public void onAttach(Activity activity)
-        {
-            super.onAttach(activity);
-            myParent = activity;
         }
 
         private void loadGeneral()
@@ -231,6 +220,251 @@ public class SuntimesSettingsActivity extends PreferenceActivity
         }
     }
 
+    //////////////////////////////////////////////////
+    //////////////////////////////////////////////////
+
+    /**
+     * Places Prefs
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class PlacesPrefsFragment extends PreferenceFragment
+    {
+        public static final String KEY_ISCLEARING = "isclearing";
+        public static final String KEY_ISEXPORTING = "isexporting";
+
+        private Context myParent;
+        private ProgressDialog progress;
+
+        private ClearPlacesTask clearPlacesTask = null;
+        private boolean isClearing = false;
+
+        private ExportPlacesTask exportPlacesTask = null;
+        private boolean isExporting = false;
+
+        @Override
+        public void onCreate(Bundle savedInstanceState)
+        {
+            super.onCreate(savedInstanceState);
+            Log.i("PlacesPrefsFragment", "Arguments: " + getArguments());
+            setRetainInstance(true);
+
+            PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_places, false);
+            addPreferencesFromResource(R.xml.preference_places);
+
+            Preference clearPlacesPref = (Preference)findPreference("places_clear");
+            clearPlacesPref.setOnPreferenceClickListener(onClickClearPlaces);
+
+            Preference exportPlacesPref = (Preference)findPreference("places_export");
+            exportPlacesPref.setOnPreferenceClickListener(onClickExportPlaces);
+        }
+
+        private void showProgressClearing()
+        {
+            progress = ProgressDialog.show(myParent, getString(R.string.locationcleared_dialog_title),getString(R.string.locationcleared_dialog_message), true);
+        }
+
+        private void showProgressExporting()
+        {
+            progress = ProgressDialog.show(myParent, getString(R.string.locationexport_dialog_title), getString(R.string.locationexport_dialog_message), true);
+        }
+
+        private void dismissProgress()
+        {
+            if (progress != null && progress.isShowing())
+            {
+                progress.dismiss();
+            }
+        }
+
+        /**
+         * Export Places (click handler)
+         */
+        private Preference.OnPreferenceClickListener onClickExportPlaces = new Preference.OnPreferenceClickListener()
+        {
+            public boolean onPreferenceClick(Preference preference)
+            {
+                if (myParent != null)
+                {
+                    exportPlacesTask = new ExportPlacesTask(myParent, "SuntimesPlaces", true);
+                    exportPlacesTask.setTaskListener(exportPlacesListener);
+                    /**{
+                        @Override
+                        protected void onPostExecute(ExportResult results)
+                        {
+                            dismissProgress();
+
+                            if (results.getResult())
+                            {
+                                if (usedExternalStorage)
+                                {
+                                    super.onPostExecute(results);
+                                }
+
+                                Intent shareIntent = new Intent();
+                                shareIntent.setAction(Intent.ACTION_SEND);
+                                shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(results.getExportFile()));
+                                shareIntent.setType("text/csv");
+                                startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.msg_export_to)));
+
+                            } else {
+                                super.onPostExecute(results);
+                            }
+                        }
+                    };*/
+                    exportPlacesTask.execute();
+                    return true;
+                }
+                return false;
+            }
+        };
+
+        /**
+         * Export Places (task handler)
+         */
+        private ExportPlacesTask.TaskListener exportPlacesListener = new ExportPlacesTask.TaskListener()
+        {
+            @Override
+            public void onStarted()
+            {
+                isExporting = true;
+                showProgressExporting();
+            }
+
+            @Override
+            public void onFinished(ExportPlacesTask.ExportResult results)
+            {
+                exportPlacesTask = null;
+                isExporting = false;
+                dismissProgress();
+
+                if (results.getResult())
+                {
+                    String successMessage = getString(R.string.msg_export_success, results.getExportFile().getAbsolutePath());
+                    Toast.makeText(myParent.getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
+
+                    Intent shareIntent = new Intent();
+                    shareIntent.setAction(Intent.ACTION_SEND);
+                    shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(results.getExportFile()));
+                    shareIntent.setType("text/csv");
+                    startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.msg_export_to)));
+
+                } else {
+                    String failureMessage = getString(R.string.msg_export_failure, results.getExportFile().getAbsolutePath());
+                    Toast.makeText(myParent.getApplicationContext(), failureMessage, Toast.LENGTH_LONG).show();
+                }
+            }
+        };
+
+        /**
+         * Clear Places (click handler)
+         */
+        private Preference.OnPreferenceClickListener onClickClearPlaces = new Preference.OnPreferenceClickListener()
+        {
+            public boolean onPreferenceClick(Preference preference)
+            {
+                if (myParent != null)
+                {
+                    AlertDialog.Builder confirm = new AlertDialog.Builder(myParent)
+                            .setTitle(myParent.getString(R.string.locationclear_dialog_title))
+                            .setMessage(myParent.getString(R.string.locationclear_dialog_message))
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton(myParent.getString(R.string.locationclear_dialog_ok), new DialogInterface.OnClickListener()
+                            {
+                                public void onClick(DialogInterface dialog, int whichButton)
+                                {
+                                    clearPlacesTask = new ClearPlacesTask(myParent);
+                                    clearPlacesTask.setTaskListener(clearPlacesListener);
+                                    clearPlacesTask.execute((Object[]) null);
+                                }
+                            })
+                            .setNegativeButton(myParent.getString(R.string.locationclear_dialog_cancel), null);
+
+                    confirm.show();
+                    return true;
+                }
+                return false;
+            }
+        };
+
+        /**
+         * Clear Places (task handler)
+         */
+        private ClearPlacesTask.TaskListener clearPlacesListener = new ClearPlacesTask.TaskListener()
+        {
+            @Override
+            public void onStarted()
+            {
+                isClearing = true;
+                showProgressClearing();
+            }
+
+            @Override
+            public void onFinished(Boolean result)
+            {
+                clearPlacesTask = null;
+                isClearing = false;
+                dismissProgress();
+                Toast.makeText(myParent, getString(R.string.locationcleared_toast_success), Toast.LENGTH_LONG).show();
+            }
+        };
+
+        @Override
+        public void onStop()
+        {
+            super.onStop();
+
+            if (isClearing && clearPlacesTask != null)
+            {
+                clearPlacesTask.pauseTask();
+                clearPlacesTask.clearTaskListener();
+            }
+
+            if (isExporting && exportPlacesTask != null)
+            {
+                exportPlacesTask.pauseTask();
+                exportPlacesTask.clearTaskListener();
+            }
+
+            dismissProgress();
+        }
+
+        @Override
+        public void onResume()
+        {
+            super.onResume();
+            if (isClearing && clearPlacesTask != null && clearPlacesTask.isPaused())
+            {
+                clearPlacesTask.setTaskListener(clearPlacesListener);
+                showProgressClearing();
+                clearPlacesTask.resumeTask();
+            }
+
+            if (isExporting && exportPlacesTask != null)
+            {
+                exportPlacesTask.setTaskListener(exportPlacesListener);
+                showProgressExporting();
+                exportPlacesTask.resumeTask();
+            }
+        }
+
+        @Override
+        public void onAttach(Context context)
+        {
+            super.onAttach(context);
+            myParent = context;
+        }
+
+        @Override
+        public void onAttach(Activity activity)
+        {
+            super.onAttach(activity);
+            myParent = activity;
+        }
+    }
+
+    //////////////////////////////////////////////////
+    //////////////////////////////////////////////////
+
     /**
      * User Interface Prefs
      */
@@ -248,62 +482,4 @@ public class SuntimesSettingsActivity extends PreferenceActivity
         }
     }
 
-    /**
-     *
-     * @param fragmentName
-     * @return
-     */
-    @Override
-    protected boolean isValidFragment(String fragmentName)
-    {
-        return GeneralPrefsFragment.class.getName().equals(fragmentName) ||
-               UIPrefsFragment.class.getName().equals(fragmentName);
-    }
-
-    /**
-     * OnStart: the Activity becomes visible
-     */
-    /**@Override
-    public void onStart()
-    {
-        super.onStart();
-        Context context = SuntimesSettingsActivity.this;
-    }*/
-
-    /**
-     * OnResume: the user is now interacting w/ the Activity (running state)
-     */
-    /**@Override
-    public void onResume()
-    {
-        super.onResume();
-    }*/
-
-    /**
-     * OnPause: the user about to interact w/ another Activity
-     */
-    /**@Override
-    public void onPause()
-    {
-        super.onPause();
-    }*/
-
-
-    /**
-     * OnStop: the Activity no longer visible
-     */
-    /**@Override
-    public void onStop()
-    {
-        super.onStop();
-    }*/
-
-    /**
-     * OnDestroy: the activity destroyed
-     */
-    /**@Override
-    public void onDestroy()
-    {
-        super.onDestroy();
-    }*/
 }

@@ -19,6 +19,12 @@
 
     </header>
 
+    <header android:fragment="com.forrestguice.suntimeswidget.SuntimesSettingsActivity$PlacesPrefsFragment"
+            android:icon="?attr/icActionSettings"
+            android:title="@string/configLabel_places"
+            android:summary="">
+    </header>
+
     <header android:fragment="com.forrestguice.suntimeswidget.SuntimesSettingsActivity$UIPrefsFragment"
             android:icon="?attr/icActionSettings"
             android:title="@string/configLabel_ui"

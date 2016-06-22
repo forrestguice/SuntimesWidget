@@ -222,6 +222,7 @@
     <string name="configLabel_general_calculator">Data Source:</string>
     <string name="configLabel_general_timeMode">Mode:</string>
     <string name="configLabel_general_compareMode">Compare Against:</string>
+    <string name="configLabel_places">Places</string>
 
     <string name="configLabel_location">Location Settings</string>
     <string name="configLabel_location_mode">Mode:</string>
@@ -354,7 +355,6 @@
     ]]></string>
 
     <string name="help_widgetlist"><![CDATA[
-          This app offers multiple home screen widgets.<br/><br/>
           To <b>add a new widget</b> you must navigate to the home screen.<br/><br/>
           To <b>reconfigure an existing widget</b> you can select from the following list.<br/>
     ]]></string>

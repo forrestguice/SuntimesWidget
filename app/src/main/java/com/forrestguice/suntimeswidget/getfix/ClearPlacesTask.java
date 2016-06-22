@@ -18,53 +18,91 @@
 
 package com.forrestguice.suntimeswidget.getfix;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.Toast;
-
-import com.forrestguice.suntimeswidget.R;
+import android.util.Log;
 
 public class ClearPlacesTask extends AsyncTask<Object, Object, Boolean>
 {
-    private Context myParent;
+    public static final long MIN_WAIT_TIME = 2000;
+
     private GetFixDatabaseAdapter db;
-    private ProgressDialog progress;
+
+    private boolean isPaused = false;
+    public void pauseTask()
+    {
+        isPaused = true;
+        Log.d("DEBUG", "ClearPlacesTask paused");
+    }
+    public void resumeTask()
+    {
+        isPaused = false;
+        Log.d("DEBUG", "ClearPlacesTask resumed");
+    }
+    public boolean isPaused()
+    {
+        return isPaused;
+    }
 
     public ClearPlacesTask(Context context)
     {
-        myParent = context;
         db = new GetFixDatabaseAdapter(context.getApplicationContext());
     }
-
-    public static final long MIN_WAIT_TIME = 2000;
 
     @Override
     protected Boolean doInBackground(Object... params)
     {
         long startTime = System.currentTimeMillis();
         db.open();
-        boolean cleared = db.clearPlaces();
+        boolean wasCleared = db.clearPlaces();
         db.close();
         long endTime = System.currentTimeMillis();
 
-        while ((endTime - startTime) < MIN_WAIT_TIME)
+        while ((endTime - startTime) < MIN_WAIT_TIME || isPaused)
         {
             endTime = System.currentTimeMillis();
         }
-        return cleared;
+        return wasCleared;
     }
 
     @Override
     protected void onPreExecute()
     {
-        progress = ProgressDialog.show(myParent, myParent.getString(R.string.locationcleared_dialog_title), myParent.getString(R.string.locationcleared_dialog_message), true);
+        signalStarted();
     }
 
     @Override
     protected void onPostExecute(Boolean result)
     {
-        progress.dismiss();
-        Toast.makeText(myParent, myParent.getString(R.string.locationcleared_toast_success), Toast.LENGTH_LONG).show();
+        signalFinished(result);
+    }
+
+    /**
+     * Event Listener
+     */
+    private TaskListener taskListener = null;
+    public void setTaskListener( TaskListener listener )
+    {
+        taskListener = listener;
+    }
+    public void clearTaskListener()
+    {
+        taskListener = null;
+    }
+    public static abstract class TaskListener
+    {
+        public void onStarted() {}
+        public void onFinished( Boolean result ) {}
+    }
+
+    private void signalStarted()
+    {
+        if (taskListener != null)
+            taskListener.onStarted();
+    }
+    private void signalFinished( Boolean result )
+    {
+        if (taskListener != null)
+            taskListener.onFinished(result);
     }
 }
