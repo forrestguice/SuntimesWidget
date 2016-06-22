@@ -16,7 +16,6 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 package com.forrestguice.suntimeswidget.getfix;
 
 import android.content.Context;
@@ -29,6 +28,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,14 +43,11 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
     public static final int MAX_ELAPSED = 1000 * 60;       // wait at most a minute for a fix
     public static final int MAX_AGE = 1000 * 60 * 5;       // consider fixes over 5min be "too old"
 
-    private GetFixHelper helper;
-    private Context myParent;
-    private GetFixUI uiObj;
+    private WeakReference<GetFixHelper> helperRef;
     public GetFixTask(Context parent, GetFixHelper helper)
     {
-        myParent = parent;
-        this.helper = helper;
-        uiObj = helper.getUI();
+        locationManager = (LocationManager)parent.getSystemService(Context.LOCATION_SERVICE);
+        this.helperRef = new WeakReference<>(helper);
     }
 
     /**
@@ -141,14 +138,21 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
     @Override
     protected void onPreExecute()
     {
-        uiObj.onStart();
-        uiObj.showProgress(true);
-        uiObj.enableUI(false);
+        final GetFixHelper helper = helperRef.get();
+        if (helper != null)
+        {
+            GetFixUI uiObj = helper.getUI();
+            uiObj.onStart();
+            uiObj.showProgress(true);
+            uiObj.enableUI(false);
+        }
 
         signalStarted();
-
+        if (helper != null)
+        {
+            helper.gettingFix = true;
+        }
         bestFix = null;
-        helper.gettingFix = true;
         elapsedTime = 0;
         startTime = stopTime = System.currentTimeMillis();
     }
@@ -156,8 +160,6 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
     @Override
     protected Location doInBackground(String... params)
     {
-        locationManager = (LocationManager)myParent.getSystemService(Context.LOCATION_SERVICE);
-
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable()
         {
@@ -190,31 +192,47 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
     @Override
     protected void onProgressUpdate(Location... locations)
     {
-        uiObj.updateUI(locations);
+        final GetFixHelper helper = helperRef.get();
+        if (helper != null)
+        {
+            GetFixUI uiObj = helper.getUI();
+            uiObj.updateUI(locations);
+        }
     }
 
     @Override
     protected void onPostExecute(Location result)
     {
         locationManager.removeUpdates(locationListener);
-        helper.gettingFix = false;
 
-        uiObj.showProgress(false);
-        uiObj.enableUI(true);
-        uiObj.onResult(result, false);
+        final GetFixHelper helper = helperRef.get();
+        if (helper != null)
+        {
+            helper.gettingFix = false;
+
+            GetFixUI uiObj = helper.getUI();
+            uiObj.showProgress(false);
+            uiObj.enableUI(true);
+            uiObj.onResult(result, false);
+        }
         signalFinished(result);
     }
 
     @Override
     protected void onCancelled(Location result)
     {
-        locationManager = (LocationManager) myParent.getSystemService(Context.LOCATION_SERVICE);
         locationManager.removeUpdates(locationListener);
-        helper.gettingFix = false;
 
-        uiObj.showProgress(false);
-        uiObj.enableUI(true);
-        uiObj.onResult(result, true);
+        GetFixHelper helper = helperRef.get();
+        if (helper != null)
+        {
+            helper.gettingFix = false;
+
+            GetFixUI uiObj = helper.getUI();
+            uiObj.showProgress(false);
+            uiObj.enableUI(true);
+            uiObj.onResult(result, true);
+        }
         signalCancelled();
     }
 

@@ -20,14 +20,17 @@ package com.forrestguice.suntimeswidget;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -47,9 +50,11 @@ import com.forrestguice.suntimeswidget.getfix.GetFixTask;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI1;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI2;
+import com.forrestguice.suntimeswidget.getfix.LocationListTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class LocationConfigView extends LinearLayout
@@ -79,11 +84,7 @@ public class LocationConfigView extends LinearLayout
         inflater.inflate((asDialog ? R.layout.layout_dialog_location2 : R.layout.layout_settings_location2), this);
         myParent = context;
         initViews(context);
-
-        if (!isInEditMode())
-        {
-            loadSettings(context);
-        }
+        loadSettings(context);
 
         setMode(mode);
         populateLocationList();
@@ -146,14 +147,14 @@ public class LocationConfigView extends LinearLayout
     }
 
     /**
+     * Property: auto mode allowed
      */
-    //private Uri presetData = null;
-    //public void setData( Uri data )
-    //{
-        //Log.d("DEBUG", "locationConfigView setData: " + data);
-        //presetData = data;
-       //// TODO: do something w/ data
-    //}
+    private boolean autoAllowed = true;
+    public boolean getAutoAllowed() { return autoAllowed; }
+    public void setAutoAllowed(boolean value)
+    {
+        autoAllowed = value;
+    }
 
     /** Property: mode (auto, select, edit/add) */
     private LocationViewMode mode = LocationViewMode.MODE_CUSTOM_SELECT;
@@ -277,8 +278,7 @@ public class LocationConfigView extends LinearLayout
         flipper2.setInAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in));
         flipper2.setOutAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_out));
 
-        ArrayAdapter<WidgetSettings.LocationMode> spinner_locationModeAdapter;
-        spinner_locationModeAdapter = new ArrayAdapter<>(myParent, R.layout.layout_listitem_oneline, WidgetSettings.LocationMode.values());
+        ArrayAdapter<WidgetSettings.LocationMode> spinner_locationModeAdapter = new LocationModeAdapter(myParent, WidgetSettings.LocationMode.values());
         spinner_locationModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner_locationMode = (Spinner)findViewById(R.id.appwidget_location_mode);
@@ -381,9 +381,16 @@ public class LocationConfigView extends LinearLayout
     protected void loadSettings(Context context)
     {
         Log.d("DEBUG", "LocationConfigView loadSettings (prefs)");
+        if (isInEditMode())
+            return;
 
         WidgetSettings.LocationMode locationMode = WidgetSettings.loadLocationModePref(context, appWidgetId);
-        spinner_locationMode.setSelection(locationMode.ordinal());
+        if (locationMode == WidgetSettings.LocationMode.CURRENT_LOCATION && !autoAllowed)
+        {
+            spinner_locationMode.setSelection(LocationViewMode.MODE_CUSTOM_SELECT.ordinal());
+        } else {
+            spinner_locationMode.setSelection(locationMode.ordinal());
+        }
 
         WidgetSettings.Location location = WidgetSettings.loadLocationPref(context, appWidgetId);
         updateViews(location);
@@ -557,54 +564,17 @@ public class LocationConfigView extends LinearLayout
      */
     protected void populateLocationList()
     {
-        new LocationListTask().execute((Object[]) null);
-    }
-    private class LocationListTask extends AsyncTask<Object, Object, Cursor>
-    {
-        GetFixDatabaseAdapter db = new GetFixDatabaseAdapter(myParent.getApplicationContext());
-
-        @Override
-        protected Cursor doInBackground(Object... params)
+        LocationListTask task = new LocationListTask(myParent, getLocation());
+        task.setTaskListener( new LocationListTask.LocationListTaskListener()
         {
-            db.open();
-
-            WidgetSettings.Location selectedLocation = getLocation();
-            String selectedPlaceName = selectedLocation.getLabel();
-            String selectedPlaceLat = selectedLocation.getLatitude();
-            String selectedPlaceLon = selectedLocation.getLongitude();
-
-            Cursor result = db.getAllPlaces(0, true);
-            if (GetFixDatabaseAdapter.findPlaceByName(selectedPlaceName, result) == -1)
+            @Override
+            public void onLoaded(@NonNull Cursor result, int selectedIndex)
             {
-                Log.d("populateLocationList", "Place not found, adding it; " + selectedPlaceName + ":" + selectedPlaceLat + "," + selectedPlaceLon);
-                db.addPlace(getLocation());
-                result = db.getAllPlaces(0, true);
+                 getFixAdapter.changeCursor(result);
+                 spin_locationName.setSelection(selectedIndex);
             }
-
-            Cursor selectedCursor = db.getPlace(selectedPlaceName, true);
-            String selectedLat = selectedCursor.getString(2);
-            String selectedLon = selectedCursor.getString(3);
-            if (!selectedLat.equals(selectedPlaceLat) || !selectedLon.equals(selectedPlaceLon))
-            {
-                db.updatePlace(getLocation());
-                result = db.getAllPlaces(0, true);
-            }
-
-            return result;
-        }
-
-        @Override
-        protected void onPostExecute(Cursor result)
-        {
-            if (result != null)
-            {
-                getFixAdapter.changeCursor(result);
-                db.close();
-
-                String name = text_locationName.getText().toString();
-                spin_locationName.setSelection(db.findPlaceByName(name, result));
-            }
-        }
+        });
+        task.execute((Object[]) null);
     }
 
     /**
@@ -739,6 +709,12 @@ public class LocationConfigView extends LinearLayout
                 }
 
             } else {
+                if (mode == LocationViewMode.MODE_CUSTOM_ADD ||
+                    mode == LocationViewMode.MODE_CUSTOM_EDIT)
+                {
+                    populateLocationList();  // triggers 'add place'
+                }
+
                 dialogMode = LocationViewMode.MODE_AUTO;
                 setMode(dialogMode);
             }
@@ -821,5 +797,86 @@ public class LocationConfigView extends LinearLayout
         }
     };
 
+    /**
+     *
+     */
+    private class LocationModeAdapter extends ArrayAdapter<WidgetSettings.LocationMode>
+    {
+        private Context context;
+        private ArrayList<WidgetSettings.LocationMode> modes;
+
+        public LocationModeAdapter(Context context, ArrayList<WidgetSettings.LocationMode> modes)
+        {
+            super(context, R.layout.layout_listitem_locations, modes);
+            this.context = context;
+            this.modes = modes;
+        }
+
+        public LocationModeAdapter(Context context, WidgetSettings.LocationMode[] modes)
+        {
+            super(context, R.layout.layout_listitem_locations, modes);
+            this.context = context;
+            this.modes = new ArrayList<>();
+            for (WidgetSettings.LocationMode mode : modes)
+            {
+                this.modes.add(mode);
+            }
+        }
+
+        @Override
+        public boolean areAllItemsEnabled()
+        {
+            if (!autoAllowed)
+                return false;
+            return true;
+        }
+
+        @Override
+        public boolean isEnabled(int position)
+        {
+            if (position == 0 && !autoAllowed)
+                return false;
+            else return true;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent)
+        {
+            return listItemView(position, convertView, parent);
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent)
+        {
+            return listItemView(position, convertView, parent);
+        }
+
+        private View listItemView(int position, View convertView, ViewGroup parent)
+        {
+            WidgetSettings.LocationMode item = modes.get(position);
+
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View view = inflater.inflate(R.layout.layout_listitem_locations, parent, false);
+
+            //ImageView icon = (ImageView) view.findViewById(android.R.id.icon1);
+            //icon.setImageResource(item.getIcon());
+
+            TextView text = (TextView) view.findViewById(android.R.id.text1);
+            text.setText(item.getDisplayString());
+
+            if (item == WidgetSettings.LocationMode.CURRENT_LOCATION && !autoAllowed)
+            {
+                text.setTypeface(text.getTypeface(), Typeface.ITALIC);
+                text.setPaintFlags(text.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                text.setTextColor(text.getHintTextColors());
+                view.setEnabled(false);
+            }
+
+            //TextView text2 = (TextView) view.findViewById(android.R.id.text2);
+            //text2.setText(item.toString());
+
+            return view;
+        }
+    }
 
 }
