@@ -19,6 +19,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -26,6 +27,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.util.TypedValue;
 
 public class LocationConfigDialog extends DialogFragment
 {
@@ -131,9 +133,12 @@ public class LocationConfigDialog extends DialogFragment
         dialogContent.init(myParent, true);
         dialogContent.setHideTitle(hideTitle);
 
+        Resources r = getResources();
+        int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, r.getDisplayMetrics());
+
         AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
         builder.setTitle(myParent.getString(R.string.location_dialog_title));
-        builder.setView(dialogContent);
+        builder.setView(dialogContent, 0, padding, 0, 0);
 
         final AlertDialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
@@ -164,6 +169,16 @@ public class LocationConfigDialog extends DialogFragment
                         dialogContent.cancelGetFix();
                         if (dialogContent.saveSettings(myParent))
                         {
+                            LocationConfigView.LocationViewMode mode = dialogContent.getMode();
+                            switch (mode)
+                            {
+                                case MODE_CUSTOM_ADD:
+                                case MODE_CUSTOM_EDIT:
+                                    dialogContent.setMode(LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT);
+                                    dialogContent.populateLocationList();  // triggers 'add place'
+                                    break;
+                            }
+
                             dialog.dismiss();
                             if (onAccepted != null)
                             {

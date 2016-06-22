@@ -123,7 +123,6 @@ public class SuntimesConfigActivity extends AppCompatActivity
     public void onDestroy()
     {
         locationConfig.cancelGetFix();
-        //locationConfig.dismissGPSEnabledPrompt();
         super.onDestroy();
     }
 
@@ -274,6 +273,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
         // widget: location
         //
         locationConfig = (LocationConfigView)findViewById(R.id.appwidget_location_config);
+        locationConfig.setAutoAllowed(false);
         locationConfig.init(this, false);
         locationConfig.setAppWidgetId(this.appWidgetId);
 
