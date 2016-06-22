@@ -23,7 +23,8 @@
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="?attr/dialogBackground"
-        android:padding="16dp">
+        android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
+        android:paddingTop="10dp" android:paddingBottom="10dp">
 
         <TextView
             android:layout_width="wrap_content"

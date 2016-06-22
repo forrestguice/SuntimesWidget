@@ -44,7 +44,6 @@ public class AboutDialog extends DialogFragment
 
         AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
         builder.setView(dialogContent);
-        builder.setTitle(myParent.getString(R.string.about_dialog_title));
         AlertDialog dialog = builder.create();
 
         initViews(getActivity(), dialogContent);
