@@ -27,7 +27,7 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
-public class LocationListTask extends AsyncTask<Object, Object, Cursor>
+public class LocationListTask extends AsyncTask<Object, Object, LocationListTask.LocationListTaskResult>
 {
     private GetFixDatabaseAdapter db;
     private WidgetSettings.Location selected;
@@ -39,19 +39,19 @@ public class LocationListTask extends AsyncTask<Object, Object, Cursor>
     }
 
     @Override
-    protected Cursor doInBackground(Object... params)
+    protected LocationListTaskResult doInBackground(Object... params)
     {
         String selectedPlaceName = selected.getLabel();
         String selectedPlaceLat = selected.getLatitude();
         String selectedPlaceLon = selected.getLongitude();
 
         db.open();
-        Cursor result = db.getAllPlaces(0, true);
-        if (GetFixDatabaseAdapter.findPlaceByName(selectedPlaceName, result) == -1)
+        Cursor cursor = db.getAllPlaces(0, true);
+        if (GetFixDatabaseAdapter.findPlaceByName(selectedPlaceName, cursor) == -1)
         {
             Log.d("LocationListTask", "Place not found, adding it; " + selectedPlaceName + ":" + selectedPlaceLat + "," + selectedPlaceLon);
             db.addPlace(selected);
-            result = db.getAllPlaces(0, true);
+            cursor = db.getAllPlaces(0, true);
         }
 
         Cursor selectedCursor = db.getPlace(selectedPlaceName, true);
@@ -60,20 +60,25 @@ public class LocationListTask extends AsyncTask<Object, Object, Cursor>
         if (!selectedLat.equals(selectedPlaceLat) || !selectedLon.equals(selectedPlaceLon))
         {
             db.updatePlace(selected);
-            result = db.getAllPlaces(0, true);
+            cursor = db.getAllPlaces(0, true);
         }
 
+        LocationListTaskResult result = null;
+        if (cursor != null)
+        {
+            int selectedIndex = GetFixDatabaseAdapter.findPlaceByName(selected.getLabel(), cursor);
+            result = new LocationListTaskResult(cursor, selectedIndex);
+        }
         db.close();
         return result;
     }
 
     @Override
-    protected void onPostExecute(Cursor result)
+    protected void onPostExecute(LocationListTaskResult result)
     {
         if (result != null)
         {
-            int index = GetFixDatabaseAdapter.findPlaceByName(selected.getLabel(), result);
-            signalOnLoaded(result, index);
+            signalOnLoaded(result);
         }
     }
 
@@ -95,11 +100,29 @@ public class LocationListTask extends AsyncTask<Object, Object, Cursor>
     }
 
     private LocationListTaskListener taskListener;
-    private void signalOnLoaded(Cursor result, int selectedIndex )
+    private void signalOnLoaded( LocationListTaskResult result )
     {
         if (taskListener != null)
         {
-            taskListener.onLoaded(result, selectedIndex);
+            taskListener.onLoaded(result.getCursor(), result.getIndex());
+        }
+    }
+
+    /**
+     *
+     */
+    public static class LocationListTaskResult
+    {
+        private Cursor cursor;
+        public Cursor getCursor() { return cursor; }
+
+        private int index;
+        public int getIndex() { return index; }
+
+        public LocationListTaskResult( Cursor cursor, int index )
+        {
+            this.cursor = cursor;
+            this.index = index;
         }
     }
 
