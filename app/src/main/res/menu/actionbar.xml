@@ -22,6 +22,11 @@
           android:title="@string/configAction_setAlarm"
           app:showAsAction="never" />
 
+    <item android:id="@+id/action_date"
+          android:icon="?attr/icActionTime"
+          android:title="@string/configAction_setDate"
+          app:showAsAction="never" />
+
     <item android:id="@+id/action_timezone"
           android:icon="?attr/icActionTime"
           android:title="@string/configAction_setTimeZone"

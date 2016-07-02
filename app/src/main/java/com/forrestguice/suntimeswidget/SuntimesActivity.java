@@ -18,7 +18,6 @@
 
 package com.forrestguice.suntimeswidget;
 
-import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.ContentUris;
 import android.content.Context;
@@ -35,10 +34,11 @@ import android.os.Bundle;
 
 import android.os.Parcelable;
 import android.provider.CalendarContract;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
+
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -87,6 +87,7 @@ public class SuntimesActivity extends AppCompatActivity
     private static final String DIALOGTAG_ABOUT = "about";
     private static final String DIALOGTAG_HELP = "help";
     private static final String DIALOGTAG_LOCATION = "location";
+    private static final String DIALOGTAG_DATE = "dateselect";
 
     protected static SuntimesUtils utils = new SuntimesUtils();
 
@@ -248,6 +249,13 @@ public class SuntimesActivity extends AppCompatActivity
         {
             locationDialog.setOnAcceptedListener( onConfigLocation(locationDialog) );
             Log.d("DEBUG", "LocationDialog listeners restored.");
+        }
+
+        TimeDateDialog dateDialog = (TimeDateDialog) fragments.findFragmentByTag(DIALOGTAG_DATE);
+        if (dateDialog != null)
+        {
+            // TODO
+            //Log.d("DEBUG", "TimeDateDialog listeners restored.");
         }
     }
 
@@ -729,6 +737,10 @@ public class SuntimesActivity extends AppCompatActivity
                 configTimeZone();
                 return true;
 
+            case R.id.action_date:
+                configDate();
+                return true;
+
             case R.id.action_alarm:
                 scheduleAlarm();
                 return true;
@@ -737,6 +749,26 @@ public class SuntimesActivity extends AppCompatActivity
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    /**
+     * Select a date other than today.
+     */
+    private void configDate()
+    {
+        final TimeDateDialog datePicker = new TimeDateDialog();
+        datePicker.setOnAcceptedListener(onConfigDate);
+        datePicker.show(getSupportFragmentManager(), DIALOGTAG_DATE);
+    }
+    DialogInterface.OnClickListener onConfigDate = new DialogInterface.OnClickListener()
+    {
+        @Override
+        public void onClick(DialogInterface dialogInterface, int i)
+        {
+            calculateData(SuntimesActivity.this);
+            updateViews(SuntimesActivity.this);
+        }
+    };
+
 
     /**
      * Refresh location (current location mode).
@@ -1046,16 +1078,38 @@ public class SuntimesActivity extends AppCompatActivity
         // clock & date
         //
         Date data_date = dataset.dataActual.date();
+        Date data_date2 = dataset.dataActual.dateOther();
+
         //DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());       // 4/11/2016
         DateFormat dateFormat = android.text.format.DateFormat.getMediumDateFormat(getApplicationContext());   // Apr 11, 2016
         //DateFormat dateFormat = android.text.format.DateFormat.getLongDateFormat(getApplicationContext());   // April 11, 2016
-        txt_date.setText(getString(R.string.today) + "\n" + dateFormat.format(data_date));
 
-        Date data_date2 = dataset.dataActual.dateOther();
-        txt_date2.setText(getString(R.string.tomorrow) + "\n" + dateFormat.format(data_date2));
+        String thisString = getString(R.string.today);
+        String otherString = getString(R.string.tomorrow);
 
+        if (dataset.dataActual.todayIsNotToday())
+        {
+            Calendar now = dataset.now();
+            WidgetSettings.DateInfo nowInfo = new WidgetSettings.DateInfo(now);
+            WidgetSettings.DateInfo dataInfo = new WidgetSettings.DateInfo(dataset.dataActual.calendar());
+            if (!nowInfo.equals(dataInfo))
+            {
+                Date time = now.getTime();
+                if (data_date.after(time))
+                {
+                    thisString = getString(R.string.future_today);
+                    otherString = getString(R.string.future_tomorrow);
+
+                } else if (data_date.before(time)) {
+                    thisString = getString(R.string.past_today);
+                    otherString = getString(R.string.past_tomorrow);
+                }
+            }
+        }
+
+        txt_date.setText(thisString + "\n" + dateFormat.format(data_date));
+        txt_date2.setText(otherString + "\n" + dateFormat.format(data_date2));
         txt_timezone.setText(dataset.timezone());
-
 
         showDayLength(dataset.isCalculated());
         showNotes(dataset.isCalculated());
@@ -1392,6 +1446,10 @@ public class SuntimesActivity extends AppCompatActivity
                     case NOTHING:
                         break;
 
+                    case CONFIG_DATE:
+                        configDate();
+                        break;
+
                     case SHOW_CALENDAR:
                         showCalendar();
                         break;
@@ -1412,11 +1470,11 @@ public class SuntimesActivity extends AppCompatActivity
 
     private void initTimeFields()
     {
-        for (SolarEvents.SolarEventField key : timeFields.keySet())
+        /**for (SolarEvents.SolarEventField key : timeFields.keySet())
         {
             TextView field = timeFields.get(key);
             field.setOnClickListener(createTimeFieldClickListener(key));
-        }
+        }*/
     }
 
     private View.OnClickListener createTimeFieldClickListener( final SolarEvents.SolarEventField event )
