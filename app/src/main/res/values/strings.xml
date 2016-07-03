@@ -351,6 +351,8 @@
     <string name="msg_export_failure">Export to %s failed!</string>
     <string name="msg_export_to">Export with</string>
 
+    <string name="dateField">%1$s\n%2$s</string>
+
     <!-- ~~~~~~~~~~~~ -->
     <!-- Help Stuff -->
     <!-- ~~~~~~~~~~~~ -->

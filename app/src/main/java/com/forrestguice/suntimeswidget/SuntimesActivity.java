@@ -1108,8 +1108,8 @@ public class SuntimesActivity extends AppCompatActivity
             }
         }
 
-        txt_date.setText(thisString + "\n" + dateFormat.format(data_date));
-        txt_date2.setText(otherString + "\n" + dateFormat.format(data_date2));
+        txt_date.setText(getString(R.string.dateField, thisString, dateFormat.format(data_date)));
+        txt_date2.setText(getString(R.string.dateField, otherString, dateFormat.format(data_date2)));
         txt_timezone.setText(dataset.timezone());
 
         showDayLength(dataset.isCalculated());
