@@ -27,18 +27,8 @@
     <!-- Widget Text -->
     <!-- ~~~~~~~~~~~ -->
 
-    <string name="past_yesterday">Past (-1)</string>
-    <string name="past_today">Past</string>
-    <string name="past_tomorrow">Past (+1)</string>
-
-    <string name="yesterday">Yesterday</string>
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
-
-    <string name="future_yesterday">Future (-1)</string>
-    <string name="future_today">Future</string>
-    <string name="future_tomorrow">Future (+1)</string>
-
     <string name="sunrise">Sunrise</string>
     <string name="sunrise_short">Rise</string>
     <string name="sunset">Sunset</string>
@@ -88,9 +78,6 @@
     <string name="timezoneMode_current">System</string>
     <string name="timezoneMode_custom">User Defined</string>
 
-    <string name="dateMode_current">Today</string>
-    <string name="dateMode_custom">User Defined</string>
-
     <string name="compareMode_yesterday">Yesterday</string>
     <string name="compareMode_tomorrow">Tomorrow</string>
 
@@ -120,7 +107,6 @@
     <string name="configAction_mapLocation_chooser">View location using</string>
     <string name="configAction_setAlarm">Set Alarm</string>
     <string name="configAction_setTimeZone">Use Time Zone</string>
-    <string name="configAction_setDate">Use Date</string>
     <string name="configAction_help">Help</string>
     <string name="configAction_settings">Settings</string>
     <string name="configAction_aboutWidget">About</string>
@@ -142,7 +128,7 @@
     <string-array name="appThemes_display">
         <item>Light Theme</item>
         <item>Dark Theme</item>
-        <item>Light Theme / Dark Theme (Night Mode)</item>
+        <item>Day Theme / Night Theme (Light / Dark)</item>
     </string-array>
     <string-array name="appThemes_values">
         <item>light</item>
@@ -155,13 +141,11 @@
         <item>Do nothing</item>
         <item>Swap cards (today/tomorrow)</item>
         <item>Show calendar app</item>
-        <item>Set custom date</item>
     </string-array>
     <string-array name="dateTapActions_values">
         <item>NOTHING</item>
         <item>SWAP_CARD</item>
         <item>SHOW_CALENDAR</item>
-        <item>CONFIG_DATE</item>
     </string-array>
 
     <string-array name="clockTapActions_display">
@@ -266,10 +250,6 @@
     <string name="configLabel_timezone_mode">Mode:</string>
     <string name="configLabel_timezone_custom">Time Zone:</string>
 
-    <string name="configLabel_date">Date Settings</string>
-    <string name="configLabel_date_mode">Mode:</string>
-    <string name="configLabel_date_custom">Date:</string>
-
     <string name="configLabel_schedalarm_mode">Schedule an alarm for</string>
     <string name="schedalarm_dialog_title">Set Alarm</string>
     <string name="schedalarm_dialog_ok">Set Alarm</string>
@@ -321,10 +301,6 @@
     <string name="gps_keeptrying_ok">Keep Trying</string>
     <string name="gps_keeptrying_cancel">Give Up</string>
 
-
-    <string name="timedate_dialog_title">Set Date</string>
-    <string name="timedate_dialog_ok">Set</string>
-    <string name="timedate_dialog_cancel">Cancel</string>
 
     <string name="timezone_dialog_title">Time Zone</string>
     <string name="timezone_dialog_ok">Set</string>

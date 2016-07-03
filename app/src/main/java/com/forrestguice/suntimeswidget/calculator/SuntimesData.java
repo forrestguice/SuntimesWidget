@@ -18,8 +18,8 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
+
 import android.content.Context;
-import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -45,7 +45,6 @@ public class SuntimesData
     private Date dateOther = new Date();
     private Calendar todaysCalendar;
     private Calendar otherCalendar;
-    private Calendar todayIs = null;
 
     private Calendar sunriseCalendarToday;
     private Calendar sunsetCalendarToday;
@@ -86,11 +85,6 @@ public class SuntimesData
     {
         return calculated;
     }
-
-    public Calendar todayIs() { return todayIs; }
-    public void setTodayIs(Calendar day) { todayIs = day; }
-    public void setTodayIsToday() { todayIs = null; }
-    public boolean todayIsNotToday() { return todayIs != null; }
 
     public String timezone()
     {
@@ -202,7 +196,6 @@ public class SuntimesData
         this.location = other.location();
         this.timeMode = other.timeMode();
         this.timezone = other.timezone();
-        this.todayIs = other.todayIs();
 
         this.sunriseCalendarToday = other.sunriseCalendarToday();
         this.sunsetCalendarToday = other.sunsetCalendarToday();
@@ -232,6 +225,10 @@ public class SuntimesData
         // from location settings
         location = WidgetSettings.loadLocationPref(context, appWidgetId);
         locationMode = WidgetSettings.loadLocationModePref(context, appWidgetId);
+        //if (locationMode == SuntimesWidgetSettings.LocationMode.CURRENT_LOCATION)
+        //{
+        //    //location = getCurrentLocation(context);
+        //}
 
         // from timezone settings
         timezone = WidgetSettings.loadTimezonePref(context, appWidgetId);
@@ -239,24 +236,6 @@ public class SuntimesData
         if (timezoneMode == WidgetSettings.TimezoneMode.CURRENT_TIMEZONE)
         {
             timezone = TimeZone.getDefault().getID();
-        }
-
-        // from date settings
-        WidgetSettings.DateMode dateMode = WidgetSettings.loadDateModePref(context, appWidgetId);
-        if (dateMode == WidgetSettings.DateMode.CUSTOM_DATE)
-        {
-            Calendar customDate = Calendar.getInstance(TimeZone.getTimeZone(timezone));
-            WidgetSettings.DateInfo dateInfo = WidgetSettings.loadDatePref(context, appWidgetId);
-            if (dateInfo.isSet())
-            {
-                customDate.set(dateInfo.getYear(), dateInfo.getMonth(), dateInfo.getDay());
-            } else {
-                Log.w("SuntimesWidgetData", "Custom dateMode was set but a custom date was not! falling back today.");
-            }
-            setTodayIs(customDate);
-
-        } else {
-            setTodayIsToday();
         }
     }
 
@@ -274,14 +253,9 @@ public class SuntimesData
         SuntimesCalculator calculator = calculatorFactory.createCalculator(location, timezone);
 
         todaysCalendar = Calendar.getInstance(TimeZone.getTimeZone(timezone));
+        date = todaysCalendar.getTime();
+
         otherCalendar = Calendar.getInstance(TimeZone.getTimeZone(timezone));
-
-        if (todayIsNotToday())
-        {
-            todaysCalendar.set(todayIs.get(Calendar.YEAR), todayIs.get(Calendar.MONTH), todayIs.get(Calendar.DAY_OF_MONTH));
-            otherCalendar.set(todayIs.get(Calendar.YEAR), todayIs.get(Calendar.MONTH), todayIs.get(Calendar.DAY_OF_MONTH));
-        }
-
         switch (compareMode)
         {
             case YESTERDAY:
@@ -295,8 +269,6 @@ public class SuntimesData
                 otherCalendar.add(Calendar.DAY_OF_MONTH, 1);
                 break;
         }
-
-        date = todaysCalendar.getTime();
         dateOther = otherCalendar.getTime();
 
         switch (timeMode)

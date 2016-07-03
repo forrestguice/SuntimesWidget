@@ -86,16 +86,6 @@ public class SuntimesDataset
         dataNoon.invalidateCalculation();
     }
 
-    public Calendar todayIs()
-    {
-        return dataActual.todayIs();
-    }
-
-    public boolean todayIsNotToday()
-    {
-        return dataActual.todayIsNotToday();
-    }
-
     public boolean isNight()
     {
         return isNight(this.now().getTime());

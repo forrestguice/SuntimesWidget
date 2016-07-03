@@ -33,8 +33,6 @@ import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_2;
 import com.forrestguice.suntimeswidget.themes.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
-import java.util.Calendar;
-
 public class WidgetSettings
 {
     public static final String PREFS_WIDGET = "com.forrestguice.suntimeswidget";
@@ -44,7 +42,6 @@ public class WidgetSettings
     public static final String PREF_PREFIX_KEY_GENERAL = "_general_";
     public static final String PREF_PREFIX_KEY_LOCATION = "_location_";
     public static final String PREF_PREFIX_KEY_TIMEZONE = "_timezone_";
-    public static final String PREF_PREFIX_KEY_DATE = "_date_";
     public static final String PREF_PREFIX_KEY_ACTION = "_action_";
 
     public static final String PREF_KEY_GENERAL_CALCULATOR = "calculator";
@@ -100,18 +97,6 @@ public class WidgetSettings
 
     public static final String PREF_KEY_TIMEZONE_CUSTOM = "timezone";
     public static final String PREF_DEF_TIMEZONE_CUSTOM = "US/Arizona";
-
-    public static final String PREF_KEY_DATE_MODE = "dateMode";
-    public static final DateMode PREF_DEF_DATE_MODE = DateMode.CURRENT_DATE;
-
-    public static final String PREF_KEY_DATE_YEAR = "dateYear";
-    public static final int PREF_DEF_DATE_YEAR = -1;
-
-    public static final String PREF_KEY_DATE_MONTH = "dateMonth";
-    public static final int PREF_DEF_DATE_MONTH = -1;
-
-    public static final String PREF_KEY_DATE_DAY = "dateDay";
-    public static final int PREF_DEF_DATE_DAY = -1;
 
     /**
      * WidgetOnTap
@@ -211,92 +196,6 @@ public class WidgetSettings
             WIDGETMODE1x1_SUNSET.setDisplayString(context.getString(R.string.widgetMode1x1_sunset));
             WIDGETMODE1x1_BOTH_1.setDisplayString(context.getString(R.string.widgetMode1x1_both_1));
             WIDGETMODE1x1_BOTH_2.setDisplayString(context.getString(R.string.widgetMode1x1_both_2));
-        }
-    }
-
-
-    /**
-     * DateMode
-     */
-    public static enum DateMode
-    {
-        CURRENT_DATE("Today"),
-        CUSTOM_DATE("User Defined");
-
-        private String displayString;
-
-        private DateMode(String displayString)
-        {
-            this.displayString = displayString;
-        }
-
-        public String toString()
-        {
-            return displayString;
-        }
-
-        public String getDisplayString()
-        {
-            return displayString;
-        }
-
-        public void setDisplayString( String displayString )
-        {
-            this.displayString = displayString;
-        }
-
-        public static void initDisplayStrings( Context context )
-        {
-            CURRENT_DATE.setDisplayString(context.getString(R.string.dateMode_current));
-            CUSTOM_DATE.setDisplayString(context.getString(R.string.dateMode_custom));
-        }
-    }
-
-    /**
-     * DateInfo
-     */
-    public static class DateInfo
-    {
-        private int year = -1, month = -1, day = -1;
-
-        public DateInfo(Calendar date)
-        {
-            this(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH));
-        }
-        public DateInfo( int year, int month, int day )
-        {
-            this.year = year;
-            this.month = month;
-            this.day = day;
-        }
-
-        public int getYear() { return year; }
-        public int getMonth() { return month; }
-        public int getDay() { return day; }
-
-        public boolean isSet()
-        {
-            return (year != -1 && month != -1 && day != -1);
-        }
-
-        @Override
-        public boolean equals(Object obj)
-        {
-            if (!(obj instanceof DateInfo))
-            {
-                return false;
-            } else {
-                DateInfo that = (DateInfo)obj;
-                return (this.getYear() == that.getYear()) && (this.getMonth() == that.getMonth()) && (this.getDay() == that.getDay());
-            }
-        }
-
-        public int hashCode()
-        {
-            int hash = Integer.valueOf(year).hashCode();
-            hash = hash * 37 + (Integer.valueOf(month).hashCode());
-            hash = hash * 37 + (Integer.valueOf(day).hashCode());
-            return hash;
         }
     }
 
@@ -826,66 +725,6 @@ public class WidgetSettings
     }
 
 
-    public static void saveDateModePref(Context context, int appWidgetId, WidgetSettings.DateMode mode)
-    {
-        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
-        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_DATE;
-        prefs.putString(prefs_prefix + PREF_KEY_DATE_MODE, mode.name());
-        prefs.commit();
-    }
-    public static WidgetSettings.DateMode loadDateModePref(Context context, int appWidgetId)
-    {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
-        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_DATE;
-        String modeString = prefs.getString(prefs_prefix + PREF_KEY_DATE_MODE, PREF_DEF_DATE_MODE.name());
-
-        DateMode dateMode;
-        try
-        {
-            dateMode = WidgetSettings.DateMode.valueOf(modeString);
-
-        } catch (IllegalArgumentException e) {
-            dateMode = PREF_DEF_DATE_MODE;
-        }
-        return dateMode;
-    }
-    public static void deleteDateModePref(Context context, int appWidgetId)
-    {
-        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
-        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_DATE;
-        prefs.remove(prefs_prefix + PREF_KEY_DATE_MODE);
-        prefs.commit();
-    }
-
-    public static void saveDatePref(Context context, int appWidgetId, DateInfo info )
-    {
-        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
-        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_DATE;
-        prefs.putInt(prefs_prefix + PREF_KEY_DATE_YEAR, info.getYear());
-        prefs.putInt(prefs_prefix + PREF_KEY_DATE_MONTH, info.getMonth());
-        prefs.putInt(prefs_prefix + PREF_KEY_DATE_DAY, info.getDay());
-        prefs.commit();
-    }
-    public static WidgetSettings.DateInfo loadDatePref(Context context, int appWidgetId)
-    {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
-        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_DATE;
-        int year = prefs.getInt(prefs_prefix + PREF_KEY_DATE_YEAR, PREF_DEF_DATE_YEAR);
-        int month = prefs.getInt(prefs_prefix + PREF_KEY_DATE_MONTH, PREF_DEF_DATE_MONTH);
-        int day = prefs.getInt(prefs_prefix + PREF_KEY_DATE_DAY, PREF_DEF_DATE_DAY);
-        return new DateInfo(year, month, day);
-    }
-    public static void deleteDatePref(Context context, int appWidgetId)
-    {
-        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
-        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_DATE;
-        prefs.remove(prefs_prefix + PREF_KEY_DATE_YEAR);
-        prefs.remove(prefs_prefix + PREF_KEY_DATE_MONTH);
-        prefs.remove(prefs_prefix + PREF_KEY_DATE_DAY);
-        prefs.commit();
-    }
-
-
     public static void saveTimezoneModePref(Context context, int appWidgetId, WidgetSettings.TimezoneMode mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
@@ -1092,9 +931,6 @@ public class WidgetSettings
         deleteTimezoneModePref(context, appWidgetId);
         deleteTimezonePref(context, appWidgetId);
 
-        deleteDateModePref(context, appWidgetId);
-        deleteDatePref(context, appWidgetId);
-
         deleteTimeNoteRisePref(context, appWidgetId);
         deleteTimeNoteSetPref(context, appWidgetId);
     }
@@ -1108,6 +944,5 @@ public class WidgetSettings
         TimeMode.initDisplayStrings(context);
         LocationMode.initDisplayStrings(context);
         TimezoneMode.initDisplayStrings(context);
-        DateMode.initDisplayStrings(context);
     }
 }
