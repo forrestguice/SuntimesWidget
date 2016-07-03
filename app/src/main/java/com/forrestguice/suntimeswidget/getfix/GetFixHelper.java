@@ -70,7 +70,7 @@ public class GetFixHelper
     public boolean gotFix = false;
 
     private FragmentActivity myParent;
-    private ArrayList<GetFixUI> uiObj = new ArrayList<>();
+    private ArrayList<GetFixUI> uiObj = new ArrayList<GetFixUI>();
     private int uiIndex = 0;
 
     public GetFixHelper(FragmentActivity parent, GetFixUI ui)
@@ -232,7 +232,7 @@ public class GetFixHelper
         }
     }
 
-    private ArrayList<GetFixTask.GetFixTaskListener> listeners = new ArrayList<>();
+    private ArrayList<GetFixTask.GetFixTaskListener> listeners = new ArrayList<GetFixTask.GetFixTaskListener>();
     public void addGetFixTaskListener( GetFixTask.GetFixTaskListener listener )
     {
         if (!listeners.contains(listener))

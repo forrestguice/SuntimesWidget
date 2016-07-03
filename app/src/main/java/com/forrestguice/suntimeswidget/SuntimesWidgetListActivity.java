@@ -287,7 +287,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         public static WidgetListAdapter createWidgetListAdapter(Context context)
         {
             AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
-            ArrayList<WidgetListItem> items = new ArrayList<>();
+            ArrayList<WidgetListItem> items = new ArrayList<WidgetListItem>();
 
             final SuntimesUtils utils = new SuntimesUtils();
             String titlePattern = context.getString(R.string.configLabel_widgetList_itemTitlePattern);

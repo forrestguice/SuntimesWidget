@@ -47,7 +47,7 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
     public GetFixTask(Context parent, GetFixHelper helper)
     {
         locationManager = (LocationManager)parent.getSystemService(Context.LOCATION_SERVICE);
-        this.helperRef = new WeakReference<>(helper);
+        this.helperRef = new WeakReference<GetFixHelper>(helper);
     }
 
     /**

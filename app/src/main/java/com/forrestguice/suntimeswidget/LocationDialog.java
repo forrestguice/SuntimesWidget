@@ -143,7 +143,7 @@ public class LocationDialog extends Dialog
         groupTitle.setVisibility(View.GONE);
 
         ArrayAdapter<WidgetSettings.LocationMode> spinner_locationModeAdapter;
-        spinner_locationModeAdapter = new ArrayAdapter<>(myParent, R.layout.layout_listitem_oneline, WidgetSettings.LocationMode.values());
+        spinner_locationModeAdapter = new ArrayAdapter<WidgetSettings.LocationMode>(myParent, R.layout.layout_listitem_oneline, WidgetSettings.LocationMode.values());
         spinner_locationModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner_locationMode = (Spinner)findViewById(R.id.appwidget_location_mode);

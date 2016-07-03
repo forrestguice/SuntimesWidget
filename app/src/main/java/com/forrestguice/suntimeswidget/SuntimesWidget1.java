@@ -1,5 +1,6 @@
 package com.forrestguice.suntimeswidget;
 
+import android.annotation.TargetApi;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
@@ -27,6 +28,7 @@ public class SuntimesWidget1 extends SuntimesWidget
     }
 
     @Override
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     protected boolean handleClickAction(Context context, Intent intent)
     {
         String action = intent.getAction();

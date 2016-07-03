@@ -160,7 +160,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
 
     protected ArrayAdapter<WidgetSettings.ActionMode> createAdapter_actionMode()
     {
-        ArrayAdapter<WidgetSettings.ActionMode> adapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, supportedActionModes());
+        ArrayAdapter<WidgetSettings.ActionMode> adapter = new ArrayAdapter<WidgetSettings.ActionMode>(this, R.layout.layout_listitem_oneline, supportedActionModes());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         return adapter;
     }
@@ -206,7 +206,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
         // widget: theme
         //
         ArrayAdapter<ThemeDescriptor> spinner_themeAdapter;
-        spinner_themeAdapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, WidgetThemes.values());
+        spinner_themeAdapter = new ArrayAdapter<ThemeDescriptor>(this, R.layout.layout_listitem_oneline, WidgetThemes.values());
         spinner_themeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner_theme = (Spinner)findViewById(R.id.appwidget_appearance_theme);
@@ -216,7 +216,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
         // widget: source
         //
         ArrayAdapter<SuntimesCalculatorDescriptor> spinner_calculatorModeAdapter;
-        spinner_calculatorModeAdapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, SuntimesCalculatorDescriptor.values());
+        spinner_calculatorModeAdapter = new ArrayAdapter<SuntimesCalculatorDescriptor>(this, R.layout.layout_listitem_oneline, SuntimesCalculatorDescriptor.values());
         spinner_calculatorModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner_calculatorMode = (Spinner)findViewById(R.id.appwidget_general_calculator);
@@ -250,7 +250,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
         // widget: timezone mode
         //
         ArrayAdapter<WidgetSettings.TimezoneMode> spinner_timezoneModeAdapter;
-        spinner_timezoneModeAdapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, WidgetSettings.TimezoneMode.values());
+        spinner_timezoneModeAdapter = new ArrayAdapter<WidgetSettings.TimezoneMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.TimezoneMode.values());
         spinner_timezoneModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner_timezoneMode = (Spinner)findViewById(R.id.appwidget_timezone_mode);
@@ -281,7 +281,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
         // widget: 1x1 widget mode
         //
         ArrayAdapter<WidgetSettings.WidgetMode1x1> spinner_1x1ModeAdapter;
-        spinner_1x1ModeAdapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetMode1x1.values());
+        spinner_1x1ModeAdapter = new ArrayAdapter<WidgetSettings.WidgetMode1x1>(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetMode1x1.values());
         spinner_1x1ModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner_1x1mode = (Spinner)findViewById(R.id.appwidget_appearance_1x1mode);
@@ -315,7 +315,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
         // widget: compare mode
         //
         ArrayAdapter<WidgetSettings.CompareMode> spinner_compareModeAdapter;
-        spinner_compareModeAdapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, WidgetSettings.CompareMode.values());
+        spinner_compareModeAdapter = new ArrayAdapter<WidgetSettings.CompareMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.CompareMode.values());
         spinner_compareModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner_compareMode = (Spinner)findViewById(R.id.appwidget_general_compareMode);

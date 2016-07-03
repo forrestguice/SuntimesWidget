@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.annotation.TargetApi;
 import android.appwidget.AppWidgetManager;
 import android.content.ContentUris;
 import android.content.Context;
@@ -854,7 +855,7 @@ public class SuntimesActivity extends AppCompatActivity
         List<ResolveInfo> info = getPackageManager().queryIntentActivities(mapIntent, 0);
         if (!info.isEmpty())
         {
-            List<Intent> geoIntents = new ArrayList<>();
+            List<Intent> geoIntents = new ArrayList<Intent>();
             for (ResolveInfo resolveInfo : info)
             {
                 String packageName = resolveInfo.activityInfo.packageName;
@@ -1529,6 +1530,7 @@ public class SuntimesActivity extends AppCompatActivity
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     private void showCalendar()
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH)

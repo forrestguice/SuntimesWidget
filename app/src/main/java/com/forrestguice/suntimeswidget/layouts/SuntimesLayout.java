@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.layouts;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.util.TypedValue;
@@ -98,6 +99,7 @@ public abstract class SuntimesLayout
      * @param views the RemoteViews to apply the theme to
      * @param theme the theme object to apply to the views
      */
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         // theme background

@@ -115,7 +115,7 @@ public class TimeDateDialog extends DialogFragment implements DatePicker.OnDateC
     private void initViews(Context context, View dialogContent)
     {
         ArrayAdapter<WidgetSettings.DateMode> spinner_dateModeAdapter;
-        spinner_dateModeAdapter = new ArrayAdapter<>(context, R.layout.layout_listitem_oneline, WidgetSettings.DateMode.values());
+        spinner_dateModeAdapter = new ArrayAdapter<WidgetSettings.DateMode>(context, R.layout.layout_listitem_oneline, WidgetSettings.DateMode.values());
         spinner_dateModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner_dateMode = (Spinner) dialogContent.findViewById(R.id.appwidget_date_mode);

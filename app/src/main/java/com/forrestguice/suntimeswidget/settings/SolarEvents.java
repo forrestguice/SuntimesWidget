@@ -98,7 +98,7 @@ public enum SolarEvents
 
     public static SolarEventsAdapter createAdapter(Context context)
     {
-        ArrayList<SolarEvents> choices = new ArrayList<>();
+        ArrayList<SolarEvents> choices = new ArrayList<SolarEvents>();
         choices.addAll(Arrays.asList(SolarEvents.values()));
         return new SolarEventsAdapter(context, choices);
     }

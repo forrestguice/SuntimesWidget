@@ -75,7 +75,7 @@ public class WidgetThemes
         initialized = true;
     }
 
-    private static ArrayList<ThemeDescriptor> themes = new ArrayList<>();
+    private static ArrayList<ThemeDescriptor> themes = new ArrayList<ThemeDescriptor>();
 
     public static boolean hasValue( ThemeDescriptor theme )
     {

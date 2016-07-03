@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.annotation.TargetApi;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Build;
@@ -44,6 +45,7 @@ public class SuntimesWidget extends AppWidgetProvider
     protected static SuntimesUtils utils = new SuntimesUtils();
 
     @Override
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions)
     {
         super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
@@ -144,6 +146,7 @@ public class SuntimesWidget extends AppWidgetProvider
         super.onDisabled(context);
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     protected SuntimesLayout getWidgetLayout( Context context, AppWidgetManager appWidgetManager, int appWidgetId )
     {
         int[] mustFitWithinDp = {40, 40};

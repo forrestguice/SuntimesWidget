@@ -17,6 +17,7 @@
 */
 package com.forrestguice.suntimeswidget;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.appwidget.AppWidgetManager;
@@ -410,6 +411,7 @@ public class AlarmDialog extends DialogFragment
     /**
      * @param context
      */
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     public static void showAlarms(Activity context)
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)

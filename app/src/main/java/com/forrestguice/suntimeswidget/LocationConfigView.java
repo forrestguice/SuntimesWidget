@@ -816,7 +816,7 @@ public class LocationConfigView extends LinearLayout
         {
             super(context, R.layout.layout_listitem_locations, modes);
             this.context = context;
-            this.modes = new ArrayList<>();
+            this.modes = new ArrayList<WidgetSettings.LocationMode>();
             for (WidgetSettings.LocationMode mode : modes)
             {
                 this.modes.add(mode);

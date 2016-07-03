@@ -97,6 +97,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
     }
 
     @Override
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void onBuildHeaders(List<Header> target)
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
@@ -448,6 +449,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
         }
 
         @Override
+        @TargetApi(23)
         public void onAttach(Context context)
         {
             super.onAttach(context);

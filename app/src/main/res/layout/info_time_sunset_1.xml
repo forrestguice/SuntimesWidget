@@ -17,8 +17,7 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
-    <LinearLayout style="@style/SunsetTimeLayout" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
-        android:orientation="vertical"
+    <LinearLayout style="@style/SunsetTimeLayout" android:orientation="vertical"
         android:layout_gravity="center_horizontal">
 
         <LinearLayout style="@style/SunsetTimeLayout"

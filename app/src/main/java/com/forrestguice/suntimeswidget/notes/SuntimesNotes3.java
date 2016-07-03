@@ -65,7 +65,7 @@ public class SuntimesNotes3 implements SuntimesNotes
         this.context = context;
         this.dataset = dataset;
 
-        notesList = new ArrayList<>();
+        notesList = new ArrayList<NoteData>();
         for (SolarEvents event : SolarEvents.values())
         {
             NoteData note = createNote(event);

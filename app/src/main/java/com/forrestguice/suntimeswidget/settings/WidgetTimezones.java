@@ -34,7 +34,7 @@ import java.util.TimeZone;
 
 public class WidgetTimezones
 {
-    private static ArrayList<TimeZoneItem> timezones = new ArrayList<>();
+    private static ArrayList<TimeZoneItem> timezones = new ArrayList<TimeZoneItem>();
     private static boolean initialized = false;
 
     private static void initTimezoneList()

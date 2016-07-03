@@ -77,7 +77,7 @@ public class SuntimesConfigActivity1 extends SuntimesConfigActivity
     @Override
     protected ArrayAdapter<WidgetSettings.ActionMode> createAdapter_actionMode()
     {
-        ArrayAdapter<WidgetSettings.ActionMode> adapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, WidgetSettings.ActionMode.values());
+        ArrayAdapter<WidgetSettings.ActionMode> adapter = new ArrayAdapter<WidgetSettings.ActionMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.ActionMode.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         return adapter;
     }

@@ -146,7 +146,7 @@ public class TimeZoneDialog extends DialogFragment
         label_timezone = (TextView) dialogContent.findViewById(R.id.appwidget_timezone_custom_label);
 
         ArrayAdapter<WidgetSettings.TimezoneMode> spinner_timezoneModeAdapter;
-        spinner_timezoneModeAdapter = new ArrayAdapter<>(context, R.layout.layout_listitem_oneline, WidgetSettings.TimezoneMode.values());
+        spinner_timezoneModeAdapter = new ArrayAdapter<WidgetSettings.TimezoneMode>(context, R.layout.layout_listitem_oneline, WidgetSettings.TimezoneMode.values());
         spinner_timezoneModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner_timezoneMode = (Spinner) dialogContent.findViewById(R.id.appwidget_timezone_mode);

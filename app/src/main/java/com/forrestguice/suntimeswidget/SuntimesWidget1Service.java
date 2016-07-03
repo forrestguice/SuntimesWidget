@@ -59,7 +59,7 @@ class SuntimesWidget1RemoteViewsFactory implements RemoteViewsService.RemoteView
     private int appWidgetId;
     private int viewCount = 0;
 
-    private ArrayList<SuntimesData> dataset = new ArrayList<>();
+    private ArrayList<SuntimesData> dataset = new ArrayList<SuntimesData>();
     private SuntimesUtils widgetUtils = new SuntimesUtils();
 
     public SuntimesWidget1RemoteViewsFactory(Context context, Intent intent)

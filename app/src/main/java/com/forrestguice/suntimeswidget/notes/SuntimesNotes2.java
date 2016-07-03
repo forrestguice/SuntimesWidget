@@ -66,8 +66,8 @@ public class SuntimesNotes2 implements SuntimesNotes
         this.context = context;
         this.dataset = dataset;
 
-        notesList = new ArrayList<>();
-        notesMap = new HashMap<>();
+        notesList = new ArrayList<NoteData>();
+        notesMap = new HashMap<SolarEvents, NoteData>();
 
         for (SolarEvents event : SolarEvents.values())
         {
