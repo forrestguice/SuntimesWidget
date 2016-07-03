@@ -5,6 +5,18 @@ android
     compileSdkVersion 23
     buildToolsVersion "21.1.2"
 
+    sourceSets {
+        main {
+            manifest.srcFile 'src/main/AndroidManifest.xml'
+            java.srcDirs = ['src/main/java']
+            res.srcDirs = ['src/main/res']
+            assets.srcDirs = ['assets']
+            resources.srcDirs = ['src']
+            aidl.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+        }
+    }
+
     defaultConfig
     {
         applicationId "com.forrestguice.suntimeswidget"
@@ -12,14 +24,6 @@ android
         targetSdkVersion 23
         versionCode 3
         versionName "0.1.0"
-    }
-
-    sourceSets
-    {
-        main
-        {
-            manifest.srcFile "AndroidManifest.xml"
-        }
     }
 
     buildTypes
