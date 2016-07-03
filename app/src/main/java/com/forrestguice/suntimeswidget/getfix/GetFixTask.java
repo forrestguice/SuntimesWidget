@@ -29,6 +29,7 @@ import android.os.Looper;
 import android.util.Log;
 
 import java.lang.ref.WeakReference;
+import java.security.Security;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -165,8 +166,12 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
         {
             public void run()
             {
-                Log.d("GetFixTask", "attached location listener; requesting updates");
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+                try {
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+                    Log.d("GetFixTask", "started location listener; now requesting updates . . .");
+                } catch (SecurityException e) {
+                    Log.e("GetFixTask", "unable to start locationListener ... Permissions! we don't have them... checkPermissions should be called before using this task! " + e);
+                }
             }
         });
 
@@ -203,7 +208,12 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
     @Override
     protected void onPostExecute(Location result)
     {
-        locationManager.removeUpdates(locationListener);
+        try {
+            locationManager.removeUpdates(locationListener);
+            Log.d("GetFixTask", "stopped location listener");
+        } catch (SecurityException e) {
+            Log.e("GetFixTask", "unable to stop locationListener ... Permissions! we don't have them... checkPermissions should be called before using this task! " + e);
+        }
 
         final GetFixHelper helper = helperRef.get();
         if (helper != null)
@@ -221,7 +231,12 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
     @Override
     protected void onCancelled(Location result)
     {
-        locationManager.removeUpdates(locationListener);
+        try {
+            locationManager.removeUpdates(locationListener);
+            Log.d("GetFixTask", "stopped location listener");
+        } catch (SecurityException e) {
+            Log.e("GetFixTask", "unable to stop locationListener ... Permissions! we don't have them... checkPermissions should be called before using this task! " + e);
+        }
 
         GetFixHelper helper = helperRef.get();
         if (helper != null)
