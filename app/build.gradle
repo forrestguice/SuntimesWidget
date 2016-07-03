@@ -13,6 +13,15 @@ android
         versionCode 3
         versionName "0.1.0"
     }
+
+    sourceSets
+    {
+        main
+        {
+            manifest.srcFile "src/main/AndroidManifest.xml"
+        }
+    }
+
     buildTypes
     {
         release
