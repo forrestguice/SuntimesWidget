@@ -35,7 +35,7 @@ public class AppSettings
     public static final String PREF_DEF_APPEARANCE_THEME = THEME_DARK;
 
     public static final String PREF_KEY_UI_DATETAPACTION = "app_ui_datetapaction";
-    public static final DateTapAction PREF_DEF_UI_DATETAPACTION = DateTapAction.SWAP_CARD;
+    public static final DateTapAction PREF_DEF_UI_DATETAPACTION = DateTapAction.CONFIG_DATE;
 
     public static final String PREF_KEY_UI_CLOCKTAPACTION = "app_ui_clocktapaction";
     public static final ClockTapAction PREF_DEF_UI_CLOCKTAPACTION = ClockTapAction.ALARM;
@@ -92,7 +92,8 @@ public class AppSettings
     {
         NOTHING("Do Nothing"),
         SWAP_CARD("Swap Cards"),
-        SHOW_CALENDAR("Show Calendar");
+        SHOW_CALENDAR("Show Calendar"),
+        CONFIG_DATE("Set Custom Date");
 
         private String displayString;
 
@@ -122,6 +123,7 @@ public class AppSettings
             NOTHING.setDisplayString(labels[0]);
             SWAP_CARD.setDisplayString(labels[1]);
             SHOW_CALENDAR.setDisplayString(labels[2]);
+            CONFIG_DATE.setDisplayString(labels[3]);
         }
     }
 
