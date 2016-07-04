@@ -38,6 +38,7 @@ public abstract class GetFixUI
     public static int ICON_GPS_SEARCHING = R.drawable.ic_action_location_searching;
     public static int ICON_GPS_DISABLED = R.drawable.ic_action_location_off;
 
+    @SuppressWarnings("ResourceType")
     public static void themeIcons(Activity context)
     {
         int[] attrs = new int[] { R.attr.icActionGPS, R.attr.icActionGPS_searching, R.attr.icActionGPS_off };
