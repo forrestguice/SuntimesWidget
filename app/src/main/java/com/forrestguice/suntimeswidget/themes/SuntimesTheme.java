@@ -273,13 +273,21 @@ public class SuntimesTheme
         }
 
         @Override
-        public boolean equals(Object another) {
-            ThemeDescriptor other = (ThemeDescriptor)another;
-            return name.equals(other.name());
+        public boolean equals(Object another)
+        {
+            if (!(another instanceof ThemeDescriptor))
+            {
+                return false;
+
+            } else {
+                ThemeDescriptor other = (ThemeDescriptor) another;
+                return name.equals(other.name());
+            }
         }
 
         @Override
-        public int compareTo(Object another) {
+        public int compareTo(Object another)
+        {
             ThemeDescriptor other = (ThemeDescriptor)another;
             return name.compareTo(other.name());
         }

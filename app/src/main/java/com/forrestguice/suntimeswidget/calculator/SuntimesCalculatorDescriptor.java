@@ -166,8 +166,14 @@ public class SuntimesCalculatorDescriptor implements Comparable
     @Override
     public boolean equals(Object other)
     {
-        SuntimesCalculatorDescriptor otherDescriptor = (SuntimesCalculatorDescriptor)other;
-        return this.name().equals(otherDescriptor.name());
+        if (!(other instanceof SuntimesCalculatorDescriptor))
+        {
+            return false;
+
+        } else {
+            SuntimesCalculatorDescriptor otherDescriptor = (SuntimesCalculatorDescriptor) other;
+            return this.name().equals(otherDescriptor.name());
+        }
     }
 
     @Override
