@@ -90,7 +90,7 @@ public class AlarmDialog extends DialogFragment
 
     /**
      * @param savedInstanceState
-     * @return
+     * @return an AlarmDialog ready to be shown
      */
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
@@ -268,7 +268,7 @@ public class AlarmDialog extends DialogFragment
 
     /**
      * Save alarm choice to bundle.
-     * @param bundle
+     * @param bundle state persisted to this bundle
      */
     protected void saveSettings(Bundle bundle)
     {
@@ -294,8 +294,8 @@ public class AlarmDialog extends DialogFragment
     }
 
     /**
-     * @param choice
-     * @param now
+     * @param choice a SolarEvent "alarm choice"
+     * @param now a Calendar representing "right now"
      * @return
      */
     public Calendar getCalendarForAlarmChoice( SolarEvents choice, Calendar now )

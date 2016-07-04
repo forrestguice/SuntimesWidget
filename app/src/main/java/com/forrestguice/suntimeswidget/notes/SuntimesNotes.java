@@ -26,30 +26,30 @@ import java.util.Calendar;
 
 public interface SuntimesNotes
 {
-    public void init(Context context, SuntimesDataset dataset);
-    public boolean isInitialized();
+    void init(Context context, SuntimesDataset dataset);
+    boolean isInitialized();
 
-    public void setOnChangedListener( NoteChangedListener listener );
-    public NoteChangedListener getOnChangedListener();
+    void setOnChangedListener( NoteChangedListener listener );
+    NoteChangedListener getOnChangedListener();
 
-    public int noteCount();
-    public int getNoteIndex();
-    public boolean setNoteIndex( int noteIndex );
-    public NoteData getNote( int noteIndex );
-    public boolean hasNextNote();
-    public boolean hasPrevNote();
+    int noteCount();
+    int getNoteIndex();
+    boolean setNoteIndex( int noteIndex );
+    NoteData getNote( int noteIndex );
+    boolean hasNextNote();
+    boolean hasPrevNote();
 
-    public void resetNoteIndex();
+    void resetNoteIndex();
 
-    public boolean showNextNote();
-    public boolean showPrevNote();
-    public boolean showNote( SolarEvents.SolarEventField forField );
+    boolean showNextNote();
+    boolean showPrevNote();
+    boolean showNote( SolarEvents.SolarEventField forField );
 
-    public void updateNote(Context context);
-    public void updateNote(Context context, Calendar now);
-    public void updateNote(Context context, Calendar now, int transition);
+    void updateNote(Context context);
+    void updateNote(Context context, Calendar now);
+    void updateNote(Context context, Calendar now, int transition);
 
-    public NoteData getNote();
-    public void setNote( NoteData note, int transition );
+    NoteData getNote();
+    void setNote( NoteData note, int transition );
 }
 

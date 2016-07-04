@@ -22,6 +22,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -168,10 +169,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
     {
         WidgetSettings.ActionMode[] allModes = WidgetSettings.ActionMode.values();
         WidgetSettings.ActionMode[] supportedModes = new WidgetSettings.ActionMode[allModes.length - 1];
-        for (int i=0; i<supportedModes.length; i++)
-        {
-            supportedModes[i] = allModes[i];
-        }
+        System.arraycopy(allModes, 0, supportedModes, 0, supportedModes.length);
         return supportedModes;
     }
 
@@ -625,7 +623,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
      * @param grantResults
      */
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults)
     {
         locationConfig.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }

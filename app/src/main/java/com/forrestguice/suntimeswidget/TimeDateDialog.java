@@ -132,7 +132,7 @@ public class TimeDateDialog extends DialogFragment implements DatePicker.OnDateC
     /**
      *
      * @param savedInstanceState
-     * @return
+     * @return a dialog instance ready to be shown
      */
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
@@ -216,7 +216,7 @@ public class TimeDateDialog extends DialogFragment implements DatePicker.OnDateC
 
     /**
      * Restore the dialog state from the provided bundle.
-     * @param bundle
+     * @param bundle state loaded from this Bundle
      */
     protected void loadSettings(Bundle bundle)
     {
@@ -270,7 +270,7 @@ public class TimeDateDialog extends DialogFragment implements DatePicker.OnDateC
 
     /**
      * Save the dialog state to a bundle to be restored at a later time (occurs onSaveInstanceState).
-     * @param bundle
+     * @param bundle state persisted to this Bundle
      */
     protected void saveSettings(Bundle bundle)
     {
@@ -317,10 +317,10 @@ public class TimeDateDialog extends DialogFragment implements DatePicker.OnDateC
     }
 
     /**
-     * @param datePicker
-     * @param year
-     * @param month
-     * @param day
+     * @param datePicker a reference to the DatePicker view
+     * @param year the year (as int)
+     * @param month the month (0-11)
+     * @param day the day of the month
      */
     @Override
     public void onDateChanged(DatePicker datePicker, int year, int month, int day)

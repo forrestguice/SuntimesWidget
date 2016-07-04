@@ -216,7 +216,7 @@ public class ExportPlacesTask extends AsyncTask<Object, Object, ExportPlacesTask
 
     /**
      * Runs after the task completes.
-     * @param results
+     * @param results an ExportResult object wrapping the result
      */
     @Override
     protected void onPostExecute(ExportResult results)
@@ -225,10 +225,10 @@ public class ExportPlacesTask extends AsyncTask<Object, Object, ExportPlacesTask
     }
 
     /**
-     * @param db
-     * @param cursor
-     * @param out
-     * @return
+     * @param db a GetFixDatabaseAdapter helper
+     * @param cursor a database Cursor pointing to records to export
+     * @param out a BufferedOutputStream (open and ready) to export to
+     * @return true export was successful, false otherwise
      * @throws IOException
      */
     private boolean exportDatabase( GetFixDatabaseAdapter db, Cursor cursor, BufferedOutputStream out ) throws IOException

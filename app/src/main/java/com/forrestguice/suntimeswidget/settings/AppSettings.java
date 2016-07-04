@@ -182,8 +182,8 @@ public class AppSettings
     }
 
     /**
-     * @param context
-     * @return
+     * @param context an application context
+     * @return a theme identifier
      */
     public static String loadThemePref(Context context)
     {

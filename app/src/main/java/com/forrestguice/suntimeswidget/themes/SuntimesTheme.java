@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.themes;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 
 public class SuntimesTheme
@@ -127,7 +128,7 @@ public class SuntimesTheme
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_SUNSETCOLOR, this.themeSunsetTextColor);
         themePrefs.putFloat(themePrefix + SuntimesTheme.THEME_TITLESIZE, this.themeTitleSize);
 
-        themePrefs.commit();
+        themePrefs.apply();
 
         ThemeDescriptor themeDescriptor = themeDescriptor();
         return themeDescriptor;
@@ -222,12 +223,9 @@ public class SuntimesTheme
         return (installedVersion >= theme.version());
     }
 
-    public static final String themePrefix(String themeName)
+    public static String themePrefix(String themeName)
     {
-        StringBuilder themePrefix = new StringBuilder(THEME_KEY);
-        themePrefix.append(themeName);
-        themePrefix.append("_");
-        return themePrefix.toString();
+        return THEME_KEY + themeName + "_";
     }
 
     ////////////////////////////////////////////////
@@ -275,7 +273,7 @@ public class SuntimesTheme
         @Override
         public boolean equals(Object another)
         {
-            if (!(another instanceof ThemeDescriptor))
+            if (another == null || !(another instanceof ThemeDescriptor))
             {
                 return false;
 
@@ -286,7 +284,7 @@ public class SuntimesTheme
         }
 
         @Override
-        public int compareTo(Object another)
+        public int compareTo(@NonNull Object another)
         {
             ThemeDescriptor other = (ThemeDescriptor)another;
             return name.compareTo(other.name());

@@ -39,7 +39,7 @@ public class WidgetThemes
     private static SuntimesTheme defaultTheme = null;
     private static boolean initialized = false;
 
-    public static final void initThemes(Context context)
+    public static void initThemes(Context context)
     {
         SharedPreferences themePref = context.getSharedPreferences(PREFS_THEMES, Context.MODE_PRIVATE);
 

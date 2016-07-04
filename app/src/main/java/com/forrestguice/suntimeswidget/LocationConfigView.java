@@ -55,6 +55,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.regex.Pattern;
 
 public class LocationConfigView extends LinearLayout
@@ -824,10 +825,7 @@ public class LocationConfigView extends LinearLayout
             super(context, R.layout.layout_listitem_locations, modes);
             this.context = context;
             this.modes = new ArrayList<WidgetSettings.LocationMode>();
-            for (WidgetSettings.LocationMode mode : modes)
-            {
-                this.modes.add(mode);
-            }
+            Collections.addAll(this.modes, modes);
         }
 
         @Override
@@ -839,6 +837,7 @@ public class LocationConfigView extends LinearLayout
         @Override
         public boolean isEnabled(int position)
         {
+            //noinspection RedundantIfStatement
             if (position == 0 && !autoAllowed)
                 return false;
             else return true;

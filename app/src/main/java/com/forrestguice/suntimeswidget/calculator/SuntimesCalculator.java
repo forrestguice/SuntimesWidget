@@ -28,19 +28,19 @@ import java.util.Calendar;
  */
 public interface SuntimesCalculator
 {
-    public String name();
-    public void init( WidgetSettings.Location location, String timezone );
+    String name();
+    void init( WidgetSettings.Location location, String timezone );
 
-    public Calendar getAstronomicalSunriseCalendarForDate( Calendar date );
-    public Calendar getNauticalSunriseCalendarForDate( Calendar date );
-    public Calendar getCivilSunriseCalendarForDate( Calendar date );
-    public Calendar getOfficialSunriseCalendarForDate( Calendar date );
+    Calendar getAstronomicalSunriseCalendarForDate( Calendar date );
+    Calendar getNauticalSunriseCalendarForDate( Calendar date );
+    Calendar getCivilSunriseCalendarForDate( Calendar date );
+    Calendar getOfficialSunriseCalendarForDate( Calendar date );
 
-    public Calendar getSolarNoonCalendarForDate( Calendar date );
+    Calendar getSolarNoonCalendarForDate( Calendar date );
 
-    public Calendar getOfficialSunsetCalendarForDate( Calendar date );
-    public Calendar getCivilSunsetCalendarForDate( Calendar date );
-    public Calendar getNauticalSunsetCalendarForDate( Calendar date );
-    public Calendar getAstronomicalSunsetCalendarForDate( Calendar date );
+    Calendar getOfficialSunsetCalendarForDate( Calendar date );
+    Calendar getCivilSunsetCalendarForDate( Calendar date );
+    Calendar getNauticalSunsetCalendarForDate( Calendar date );
+    Calendar getAstronomicalSunsetCalendarForDate( Calendar date );
 
 }

@@ -180,8 +180,8 @@ public class GetFixHelper
     }
 
     /**
-     * @param i
-     * @return
+     * @param i the UI index (default 0)
+     * @return a GetFixUI instance
      */
     public GetFixUI getUI( int i )
     {

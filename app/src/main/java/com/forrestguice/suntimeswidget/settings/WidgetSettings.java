@@ -549,7 +549,7 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
         prefs.putString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_1x1, mode.name());
-        prefs.commit();
+        prefs.apply();
     }
     public static WidgetSettings.WidgetMode1x1 load1x1ModePref(Context context, int appWidgetId)
     {
@@ -594,7 +594,7 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
         prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_1x1);
-        prefs.commit();
+        prefs.apply();
     }
 
 
@@ -605,7 +605,7 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
         prefs.putString(prefs_prefix + PREF_KEY_APPEARANCE_THEME, themeName);
-        prefs.commit();
+        prefs.apply();
     }
     public static SuntimesTheme loadThemePref(Context context, int appWidgetId)
     {
@@ -622,7 +622,7 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
         prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_THEME);
-        prefs.commit();
+        prefs.apply();
     }
 
 
@@ -631,7 +631,7 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
         prefs.putString(prefs_prefix + PREF_KEY_GENERAL_CALCULATOR, mode.name());
-        prefs.commit();
+        prefs.apply();
     }
     public static SuntimesCalculatorDescriptor loadCalculatorModePref(Context context, int appWidgetId)
     {
@@ -656,7 +656,7 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
         prefs.remove(prefs_prefix + PREF_KEY_GENERAL_CALCULATOR);
-        prefs.commit();
+        prefs.apply();
     }
 
 
@@ -665,7 +665,7 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
         prefs.putBoolean(prefs_prefix + PREF_KEY_APPEARANCE_SHOWTITLE, showTitle);
-        prefs.commit();
+        prefs.apply();
     }
     public static boolean loadShowTitlePref(Context context, int appWidgetId)
     {
@@ -678,7 +678,7 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
         prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_SHOWTITLE);
-        prefs.commit();
+        prefs.apply();
     }
 
 
@@ -687,7 +687,7 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
         prefs.putString(prefs_prefix + PREF_KEY_APPEARANCE_TITLETEXT, titleText);
-        prefs.commit();
+        prefs.apply();
     }
    public static String loadTitleTextPref(Context context, int appWidgetId)
     {
@@ -700,7 +700,7 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
         prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_TITLETEXT);
-        prefs.commit();
+        prefs.apply();
     }
 
 
@@ -709,7 +709,7 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
         prefs.putString(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE, mode.name());
-        prefs.commit();
+        prefs.apply();
     }
     public static WidgetSettings.TimeMode loadTimeModePref(Context context, int appWidgetId)
     {
@@ -732,7 +732,7 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
         prefs.remove(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE);
-        prefs.commit();
+        prefs.apply();
     }
 
 
@@ -741,7 +741,7 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION;
         prefs.putString(prefs_prefix + PREF_KEY_ACTION_MODE, mode.name());
-        prefs.commit();
+        prefs.apply();
     }
     public static WidgetSettings.ActionMode loadActionModePref(Context context, int appWidgetId)
     {
@@ -764,7 +764,7 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION;
         prefs.remove(prefs_prefix + PREF_KEY_ACTION_MODE);
-        prefs.commit();
+        prefs.apply();
     }
 
 
@@ -773,7 +773,7 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION;
         prefs.putString(prefs_prefix + PREF_KEY_ACTION_LAUNCH, launchString);
-        prefs.commit();
+        prefs.apply();
     }
     public static String loadActionLaunchPref(Context context, int appWidgetId)
     {
@@ -788,7 +788,7 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION;
         prefs.remove(prefs_prefix + PREF_KEY_ACTION_LAUNCH);
-        prefs.commit();
+        prefs.apply();
     }
 
 
@@ -799,7 +799,7 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_LOCATION;
         prefs.putString(prefs_prefix + PREF_KEY_LOCATION_MODE, mode.name());
-        prefs.commit();
+        prefs.apply();
     }
     public static WidgetSettings.LocationMode loadLocationModePref(Context context, int appWidgetId)
     {
@@ -822,7 +822,7 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_LOCATION;
         prefs.remove(prefs_prefix + PREF_KEY_LOCATION_MODE);
-        prefs.commit();
+        prefs.apply();
     }
 
 
@@ -831,7 +831,7 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_DATE;
         prefs.putString(prefs_prefix + PREF_KEY_DATE_MODE, mode.name());
-        prefs.commit();
+        prefs.apply();
     }
     public static WidgetSettings.DateMode loadDateModePref(Context context, int appWidgetId)
     {
@@ -854,7 +854,7 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_DATE;
         prefs.remove(prefs_prefix + PREF_KEY_DATE_MODE);
-        prefs.commit();
+        prefs.apply();
     }
 
     public static void saveDatePref(Context context, int appWidgetId, DateInfo info )
@@ -864,7 +864,7 @@ public class WidgetSettings
         prefs.putInt(prefs_prefix + PREF_KEY_DATE_YEAR, info.getYear());
         prefs.putInt(prefs_prefix + PREF_KEY_DATE_MONTH, info.getMonth());
         prefs.putInt(prefs_prefix + PREF_KEY_DATE_DAY, info.getDay());
-        prefs.commit();
+        prefs.apply();
     }
     public static WidgetSettings.DateInfo loadDatePref(Context context, int appWidgetId)
     {
@@ -882,7 +882,7 @@ public class WidgetSettings
         prefs.remove(prefs_prefix + PREF_KEY_DATE_YEAR);
         prefs.remove(prefs_prefix + PREF_KEY_DATE_MONTH);
         prefs.remove(prefs_prefix + PREF_KEY_DATE_DAY);
-        prefs.commit();
+        prefs.apply();
     }
 
 
@@ -891,7 +891,7 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_TIMEZONE;
         prefs.putString(prefs_prefix + PREF_KEY_TIMEZONE_MODE, mode.name());
-        prefs.commit();
+        prefs.apply();
     }
     public static WidgetSettings.TimezoneMode loadTimezoneModePref(Context context, int appWidgetId)
     {
@@ -914,7 +914,7 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_TIMEZONE;
         prefs.remove(prefs_prefix + PREF_KEY_TIMEZONE_MODE);
-        prefs.commit();
+        prefs.apply();
     }
 
 
@@ -926,7 +926,7 @@ public class WidgetSettings
         prefs.putString(prefs_prefix + PREF_KEY_LOCATION_LONGITUDE, location.getLongitude());
         prefs.putString(prefs_prefix + PREF_KEY_LOCATION_LATITUDE, location.getLatitude());
         prefs.putString(prefs_prefix + PREF_KEY_LOCATION_LABEL, location.getLabel());
-        prefs.commit();
+        prefs.apply();
     }
     public static Location loadLocationPref(Context context, int appWidgetId)
     {
@@ -947,7 +947,7 @@ public class WidgetSettings
         prefs.remove(prefs_prefix + PREF_KEY_LOCATION_LONGITUDE);
         prefs.remove(prefs_prefix + PREF_KEY_LOCATION_LATITUDE);
         prefs.remove(prefs_prefix + PREF_KEY_LOCATION_LABEL);
-        prefs.commit();
+        prefs.apply();
     }
 
 
@@ -956,7 +956,7 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_TIMEZONE;
         prefs.putString(prefs_prefix + PREF_KEY_TIMEZONE_CUSTOM, timezone);
-        prefs.commit();
+        prefs.apply();
     }
     public static String loadTimezonePref(Context context, int appWidgetId)
     {
@@ -969,7 +969,7 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_TIMEZONE;
         prefs.remove(prefs_prefix + PREF_KEY_TIMEZONE_CUSTOM);
-        prefs.commit();
+        prefs.apply();
     }
 
 
@@ -978,7 +978,7 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
         prefs.putString(prefs_prefix + PREF_KEY_GENERAL_COMPAREMODE, mode.name());
-        prefs.commit();
+        prefs.apply();
     }
     public static WidgetSettings.CompareMode loadCompareModePref(Context context, int appWidgetId)
     {
@@ -1001,7 +1001,7 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
         prefs.remove(prefs_prefix + PREF_KEY_GENERAL_COMPAREMODE);
-        prefs.commit();
+        prefs.apply();
     }
 
 
@@ -1011,7 +1011,7 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
         prefs.putString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_RISE, riseChoice.name());
-        prefs.commit();
+        prefs.apply();
     }
     public static SolarEvents loadTimeNoteRisePref(Context context, int appWidgetId)
     {
@@ -1033,7 +1033,7 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
         prefs.remove(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_RISE);
-        prefs.commit();
+        prefs.apply();
     }
 
 
@@ -1043,7 +1043,7 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
         prefs.putString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_SET, setChoice.name());
-        prefs.commit();
+        prefs.apply();
     }
     public static SolarEvents loadTimeNoteSetPref(Context context, int appWidgetId)
     {
@@ -1065,7 +1065,7 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
         prefs.remove(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_SET);
-        prefs.commit();
+        prefs.apply();
     }
 
 

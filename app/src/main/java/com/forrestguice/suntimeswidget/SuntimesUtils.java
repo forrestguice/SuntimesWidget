@@ -124,6 +124,7 @@ public class SuntimesUtils
             if (!units.equals(other.getUnits()))
                 return false;
 
+            //noinspection RedundantIfStatement
             if (!suffix.equals(other.getSuffix()))
                 return false;
 

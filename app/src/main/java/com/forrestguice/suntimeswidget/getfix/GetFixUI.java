@@ -19,14 +19,8 @@
 package com.forrestguice.suntimeswidget.getfix;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.res.TypedArray;
 import android.location.Location;
-import android.util.TypedValue;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ProgressBar;
 
 import com.forrestguice.suntimeswidget.R;
 

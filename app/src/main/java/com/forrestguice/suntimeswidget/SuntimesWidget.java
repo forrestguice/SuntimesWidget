@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.os.Build;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.content.Context;
@@ -53,7 +54,7 @@ public class SuntimesWidget extends AppWidgetProvider
     }
 
     @Override
-    public void onReceive(Context context, Intent intent)
+    public void onReceive(@NonNull Context context, @NonNull Intent intent)
     {
         super.onReceive(context, intent);
         handleClickAction(context, intent);

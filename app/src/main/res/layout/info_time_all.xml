@@ -47,7 +47,8 @@
                 <LinearLayout android:layout_width="75dp" android:layout_height="wrap_content"
                               android:orientation="horizontal" android:gravity="right"
                               android:layout_gravity="bottom|end"
-                              android:paddingTop="3dp" android:paddingBottom="3dp">
+                              android:paddingTop="3dp" android:paddingBottom="3dp"
+                              tools:ignore="RtlHardcoded">
 
                     <TextView style="@style/SunsetTimeTextView"
                               android:textColor="@color/sunIcon_color_rising"
@@ -68,7 +69,8 @@
 
                 <LinearLayout android:layout_height="wrap_content" android:layout_width="75dp"
                               android:orientation="horizontal" android:gravity="right"
-                              android:layout_gravity="bottom|end" >
+                              android:layout_gravity="bottom|end"
+                              tools:ignore="RtlHardcoded">
 
                     <ImageView
                         style="@style/SunsetTimeImageView"
@@ -98,12 +100,14 @@
 
                 <LinearLayout
                     android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:orientation="horizontal" android:gravity="right">
+                    android:orientation="horizontal" android:gravity="right"
+                    tools:ignore="RtlHardcoded">
 
                     <LinearLayout style="@style/SunsetTimeLayout"
                                   android:orientation="horizontal" android:gravity="right"
                                   android:layout_gravity="end" android:layout_width="75dp"
-                                  android:layout_marginRight="10dp" android:layout_marginEnd="10dp">
+                                  android:layout_marginRight="10dp" android:layout_marginEnd="10dp"
+                                  tools:ignore="RtlHardcoded">
 
                         <TextView
                             style="@style/SunsetTimeTextView"
@@ -122,7 +126,8 @@
                     <LinearLayout style="@style/SunsetTimeLayout"
                                   android:orientation="horizontal"
                                   android:layout_gravity="end" android:gravity="right"
-                                  android:layout_width="75dp">
+                                  android:layout_width="75dp"
+                                  tools:ignore="RtlHardcoded">
 
                         <TextView
                             style="@style/SunsetTimeTextView"
@@ -152,12 +157,14 @@
 
                 <LinearLayout
                     android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:orientation="horizontal" android:gravity="right">
+                    android:orientation="horizontal" android:gravity="right"
+                    tools:ignore="RtlHardcoded">
 
                     <LinearLayout style="@style/SunsetTimeLayout"
                                   android:orientation="horizontal" android:gravity="right"
                                   android:layout_gravity="end" android:layout_width="75dp"
-                                  android:layout_marginRight="10dp" android:layout_marginEnd="10dp">
+                                  android:layout_marginRight="10dp" android:layout_marginEnd="10dp"
+                                  tools:ignore="RtlHardcoded">
 
                         <TextView
                             style="@style/SunsetTimeTextView"
@@ -176,7 +183,8 @@
                     <LinearLayout style="@style/SunsetTimeLayout"
                                   android:orientation="horizontal"
                                   android:layout_gravity="end" android:gravity="right"
-                                  android:layout_width="75dp">
+                                  android:layout_width="75dp"
+                                  tools:ignore="RtlHardcoded">
 
                         <TextView
                             style="@style/SunsetTimeTextView"
@@ -205,12 +213,14 @@
 
                 <LinearLayout
                     android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:orientation="horizontal" android:gravity="right">
+                    android:orientation="horizontal" android:gravity="right"
+                    tools:ignore="RtlHardcoded">
 
                     <LinearLayout style="@style/SunsetTimeLayout"
                                   android:orientation="horizontal" android:gravity="right"
                                   android:layout_gravity="end" android:layout_width="75dp"
-                                  android:layout_marginRight="10dp" android:layout_marginEnd="10dp">
+                                  android:layout_marginRight="10dp" android:layout_marginEnd="10dp"
+                                  tools:ignore="RtlHardcoded">
 
                         <TextView
                             style="@style/SunsetTimeTextView"
@@ -229,7 +239,8 @@
                     <LinearLayout style="@style/SunsetTimeLayout"
                                   android:orientation="horizontal"
                                   android:layout_gravity="end" android:gravity="right"
-                                  android:layout_width="75dp">
+                                  android:layout_width="75dp"
+                                  tools:ignore="RtlHardcoded">
 
                         <TextView
                             style="@style/SunsetTimeTextView"
@@ -257,12 +268,14 @@
                           android:text="@string/timeMode_astronomical_short" />
 
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                              android:orientation="horizontal" android:gravity="right">
+                              android:orientation="horizontal" android:gravity="right"
+                              tools:ignore="RtlHardcoded">
 
                     <LinearLayout style="@style/SunsetTimeLayout"
                                   android:orientation="horizontal"
                                   android:gravity="right" android:layout_width="75dp"
-                                  android:layout_marginRight="10dp" android:layout_marginEnd="10dp">
+                                  android:layout_marginRight="10dp" android:layout_marginEnd="10dp"
+                                  tools:ignore="RtlHardcoded">
 
                         <TextView
                             style="@style/SunsetTimeTextView"
@@ -281,7 +294,8 @@
                     <LinearLayout style="@style/SunsetTimeLayout"
                                   android:orientation="horizontal"
                                   android:gravity="right"
-                                  android:layout_width="75dp">
+                                  android:layout_width="75dp"
+                                  tools:ignore="RtlHardcoded">
 
                         <TextView
                             style="@style/SunsetTimeTextView"
@@ -316,7 +330,8 @@
                 <LinearLayout style="@style/SunsetTimeLayout"
                               android:orientation="horizontal"
                               android:layout_width="match_parent"
-                              android:gravity="right">
+                              android:gravity="right"
+                              tools:ignore="RtlHardcoded">
 
                     <TextView
                         style="@style/SunsetTimeTextView"

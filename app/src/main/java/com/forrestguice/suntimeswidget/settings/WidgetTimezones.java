@@ -125,11 +125,7 @@ public class WidgetTimezones
 
         public String toString()
         {
-            StringBuilder retString = new StringBuilder(timeZoneID);
-            retString.append(" (");
-            retString.append(displayString);
-            retString.append(")");
-            return retString.toString();
+            return timeZoneID + " (" + displayString + ")";
         }
     }
 

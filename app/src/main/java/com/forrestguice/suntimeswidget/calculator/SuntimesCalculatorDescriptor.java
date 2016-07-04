@@ -18,6 +18,8 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
+import android.support.annotation.NonNull;
+
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
@@ -166,7 +168,7 @@ public class SuntimesCalculatorDescriptor implements Comparable
     @Override
     public boolean equals(Object other)
     {
-        if (!(other instanceof SuntimesCalculatorDescriptor))
+        if (other == null || !(other instanceof SuntimesCalculatorDescriptor))
         {
             return false;
 
@@ -177,11 +179,8 @@ public class SuntimesCalculatorDescriptor implements Comparable
     }
 
     @Override
-    public int compareTo(Object other)
+    public int compareTo(@NonNull Object other)
     {
-        if (other == null)
-            return 1;
-
         SuntimesCalculatorDescriptor otherDescriptor = (SuntimesCalculatorDescriptor)other;
         return this.name().compareTo(otherDescriptor.name());
     }
