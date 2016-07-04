@@ -60,7 +60,8 @@
                     android:id="@+id/icon_time_sunrise"
                     android:background="@drawable/ic_sunrise"
                     android:layout_gravity="center"
-                    android:layout_margin="5dp" />
+                    android:layout_margin="5dp"
+                    tools:ignore="contentDescription" />
 
             </LinearLayout>
 
@@ -75,7 +76,8 @@
                     android:id="@+id/icon_time_sunset"
                     android:background="@drawable/ic_sunset"
                     android:layout_gravity="center"
-                    android:layout_margin="5dp" />
+                    android:layout_margin="5dp"
+                    tools:ignore="contentDescription" />
 
                 <TextView style="@style/SunsetTimeTextView"
                           android:textColor="@color/sunIcon_color_setting"
@@ -318,7 +320,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:src="?attr/icActionNext"
-                android:background="@drawable/ic_transparent"/>
+                android:background="@drawable/ic_transparent" />
 
         </LinearLayout>
 
