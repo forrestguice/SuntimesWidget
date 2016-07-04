@@ -39,6 +39,9 @@
     <string name="future_today">Future</string>
     <string name="future_tomorrow">Future (+1)</string>
 
+    <string name="nextDay">Next Day</string>
+    <string name="prevDay">Previous Day</string>
+
     <string name="sunrise">Sunrise</string>
     <string name="sunrise_short">Rise</string>
     <string name="sunset">Sunset</string>
@@ -113,6 +116,10 @@
     <string name="configAction_addWidget">Add Widget</string>
     <string name="configAction_reconfigWidget">Reconfigure Widget</string>
     <string name="configAction_reconfigWidget_short">Reconfigure</string>
+
+    <string name="configAction_getFix">Get Location</string>
+    <string name="configAction_editPlace">Edit</string>
+    <string name="configAction_savePlace">Save</string>
 
     <string name="configAction_refreshLocation">Refresh</string>
     <string name="configAction_addLocation">Location</string>

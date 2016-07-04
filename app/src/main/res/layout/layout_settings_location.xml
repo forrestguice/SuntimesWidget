@@ -83,7 +83,8 @@
 
                 <ImageButton android:id="@+id/appwidget_location_getfix"
                              android:layout_width="wrap_content" android:layout_height="wrap_content"
-                             android:src="@drawable/ic_action_location_searching" />
+                             android:src="@drawable/ic_action_location_searching"
+                             android:contentDescription="@string/configAction_getFix" />
 
                 <ProgressBar
                     android:id="@+id/appwidget_location_getfixprogress"

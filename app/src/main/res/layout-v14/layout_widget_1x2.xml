@@ -36,7 +36,8 @@
             android:orientation="horizontal">
 
             <include layout="@layout/info_time_sunrise_0" />
-            <ImageView android:layout_width="@dimen/widget_layout_spacing_small" android:layout_height="@dimen/widget_layout_spacing_small" />
+            <ImageView android:layout_width="@dimen/widget_layout_spacing_small" android:layout_height="@dimen/widget_layout_spacing_small"
+                       tools:ignore="ContentDescription"/>
             <include layout="@layout/info_time_sunset_0" />
 
            <!-- <include layout="@layout/info_delta_sunrise" />

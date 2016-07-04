@@ -44,7 +44,8 @@
                 <ImageView
                     style="@style/SunsetTimeImageView2"
                     android:id="@+id/icon_time_sunset"
-                    android:background="@drawable/ic_sunrise_large" />
+                    android:background="@drawable/ic_sunrise_large"
+                    android:contentDescription="@string/sunrise" />
 
                 <LinearLayout style="@style/SunsetTimeLayout"
                     android:orientation="horizontal">

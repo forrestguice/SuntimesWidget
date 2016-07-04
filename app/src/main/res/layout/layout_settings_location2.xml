@@ -68,7 +68,8 @@
 
                     <ImageButton android:id="@+id/appwidget_location_auto"
                                  android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                 android:src="?attr/icActionGPS" />
+                                 android:src="?attr/icActionGPS"
+                                 android:contentDescription="@string/configAction_getFix" />
 
                     <ProgressBar
                         android:id="@+id/appwidget_location_auto_progress"
@@ -81,13 +82,13 @@
                 <ImageButton android:id="@+id/appwidget_location_edit"
                              android:layout_width="wrap_content" android:layout_height="wrap_content"
                              android:src="?attr/icActionPlace"
-                             />
+                             android:contentDescription="@string/configAction_editPlace" />
 
                 <ImageButton android:id="@+id/appwidget_location_save"
                              android:layout_width="wrap_content" android:layout_height="wrap_content"
                              android:src="?attr/icActionSave"
                              android:visibility="gone"
-                    />
+                             android:contentDescription="@string/configAction_savePlace" />
 
             </LinearLayout>
 
@@ -180,7 +181,8 @@
                         <ImageButton android:id="@+id/appwidget_location_getfix"
                                      android:layout_width="wrap_content" android:layout_height="wrap_content"
                                      android:src="?attr/icActionGPS_searching"
-                                     android:layout_gravity="center" />
+                                     android:layout_gravity="center"
+                                     android:contentDescription="@string/configAction_getFix" />
 
                         <ProgressBar
                             android:id="@+id/appwidget_location_getfixprogress"

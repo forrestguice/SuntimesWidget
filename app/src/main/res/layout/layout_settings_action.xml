@@ -68,7 +68,8 @@
                 android:src="@android:drawable/ic_menu_help"
                 android:scaleType="center"
                 android:cropToPadding="false"
-                android:adjustViewBounds="false" />
+                android:adjustViewBounds="false"
+                android:contentDescription="@string/configAction_help"/>
 
         </LinearLayout>
 
