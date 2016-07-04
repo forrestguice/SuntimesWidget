@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="@string/configLabel_action_launch" />
 
-            <EditText android:id="@+id/appwidget_action_launch" android:layout_width="match_parent"
+            <EditText android:id="@+id/appwidget_action_launch" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:layout_weight="1"
                 android:hint="@string/configHint_action_launch" android:text=""
                 android:textAppearance="?android:attr/textAppearanceSmall" />

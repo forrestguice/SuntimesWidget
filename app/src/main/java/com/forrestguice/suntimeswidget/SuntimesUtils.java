@@ -28,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 public class SuntimesUtils
 {
@@ -161,10 +162,10 @@ public class SuntimesUtils
             retValue = new TimeDisplayText(timeFormat.format(time), "", "");
 
         } else {
-            SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm");
+            SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm", Locale.US);
             timeFormat.setTimeZone(cal.getTimeZone());
 
-            SimpleDateFormat suffixFormat = new SimpleDateFormat("a");
+            SimpleDateFormat suffixFormat = new SimpleDateFormat("a", Locale.US);
             suffixFormat.setTimeZone(cal.getTimeZone());
             retValue = new TimeDisplayText( timeFormat.format(time), "", suffixFormat.format(time) );
         }
