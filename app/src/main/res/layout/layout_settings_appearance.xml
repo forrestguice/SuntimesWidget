@@ -22,7 +22,7 @@
         android:orientation="vertical"
         style="@style/SunsetTimeWidget_dark"
         android:layout_marginBottom="@dimen/settingsGroup_margin"
-        android:paddingLeft="5dp">
+        android:paddingLeft="5dp" android:paddingRight="5dp">
 
         <TextView style="@style/SunsetTimeSettingsGroupTitle"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
             <EditText android:id="@+id/appwidget_appearance_titleText" android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:layout_weight="1"
                 android:hint="@string/configHint_appearance_titleText" android:text=""
-                android:textAppearance="?android:attr/textAppearanceSmallPopupMenu" />
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <ImageButton android:id="@+id/appwidget_appearance_titleText_helpButton"
                 android:layout_height="wrap_content"
