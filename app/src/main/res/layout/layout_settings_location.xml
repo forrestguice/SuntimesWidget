@@ -22,7 +22,7 @@
         android:orientation="vertical"
         style="@style/SunsetTimeWidget_dark"
         android:layout_marginBottom="@dimen/settingsGroup_margin"
-        android:paddingLeft="5dp">
+        android:paddingLeft="5dp" android:paddingRight="5dp">
 
         <TextView style="@style/SunsetTimeSettingsGroupTitle"
             android:id="@+id/appwidget_location_grouptitle"

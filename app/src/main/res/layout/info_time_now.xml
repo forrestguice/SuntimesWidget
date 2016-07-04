@@ -29,11 +29,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_gravity="right">
+                android:layout_gravity="end">
 
                 <TextView style="@style/SunsetTimeTextView"
                           android:id="@+id/text_time"
-                          android:layout_gravity="right"
+                          android:layout_gravity="end"
                           android:text=""
                           android:textSize="56sp"
                           tools:text="4:20"
@@ -41,7 +41,7 @@
 
                 <TextView android:id="@+id/text_time_suffix"
                           style="@style/SunsetTimeTextSuffixView"
-                          android:layout_gravity="center_vertical|bottom|right"
+                          android:layout_gravity="center_vertical|bottom|end"
                           android:textSize="18sp"
                           android:text=""
                           tools:text="PM"
@@ -50,7 +50,7 @@
 
             <TextView style="@style/SunsetTimeTextView"
                       android:id="@+id/text_timezone"
-                      android:layout_gravity="right"
+                      android:layout_gravity="end"
                       tools:text="Arizona Time" />
 
         </LinearLayout>

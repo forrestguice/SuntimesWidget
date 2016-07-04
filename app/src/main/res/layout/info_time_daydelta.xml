@@ -24,28 +24,28 @@
         <TextView
             style="@style/SunsetTimeTextView2"
             android:id="@+id/text_delta_day_prefix"
-            android:gravity="left"
+            android:gravity="start"
             android:layout_weight="0"
             tools:text="Tomorrow will be" />
 
         <TextView
             style="@style/SunsetTimeTextView2"
             android:id="@+id/text_delta_day_value"
-            android:gravity="left"
+            android:gravity="start"
             android:layout_weight="0"
             tools:text="4" />
 
         <TextView
             style="@style/SunsetTimeTextView2"
             android:id="@+id/text_delta_day_units"
-            android:gravity="left"
+            android:gravity="start"
             android:layout_weight="0"
             tools:text="min" />
 
         <TextView
             style="@style/SunsetTimeTextView2"
             android:id="@+id/text_delta_day_suffix"
-            android:gravity="left"
+            android:gravity="start"
             android:layout_weight="1"
             tools:text="shorter" />
 

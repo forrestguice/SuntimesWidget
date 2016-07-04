@@ -23,7 +23,7 @@
         android:orientation="vertical"
         style="@style/SunsetTimeWidget_dark"
         android:layout_marginBottom="@dimen/settingsGroup_margin"
-        android:paddingLeft="5dp">
+        android:paddingLeft="5dp" android:paddingRight="5dp">
 
         <TextView style="@style/SunsetTimeSettingsGroupTitle"
             android:id="@+id/appwidget_location_grouptitle"
@@ -113,7 +113,7 @@
                               android:layout_width="fill_parent" android:layout_height="wrap_content"
                               android:textAppearance="?android:attr/textAppearanceSmall"
                               android:hint="@string/configHint_location_name" android:enabled="false"
-                              android:paddingLeft="5dp"
+                              android:paddingLeft="5dp" android:paddingRight="5dp"
                         android:layout_gravity="center_vertical" />
 
                     <Spinner android:id="@+id/appwidget_location_nameSelect"
