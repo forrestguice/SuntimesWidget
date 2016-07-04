@@ -38,7 +38,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:animateLayoutChanges="true">
+            android:animateLayoutChanges="true"
+            tools:ignore="UnusedAttribute">
 
             <include layout="@layout/info_time_now" />
 
@@ -87,13 +88,15 @@
             android:id="@+id/info_time_flipper"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:elevation="5dp">
+            android:elevation="5dp"
+            tools:ignore="UnusedAttribute">
 
             <LinearLayout
                 style="@style/SunsetTimeCard"
                 android:id="@+id/info_time_all_today"
                 android:layout_width="wrap_content"
-                android:animateLayoutChanges="true">
+                android:animateLayoutChanges="true"
+                tools:ignore="UnusedAttribute">
 
                 <include layout="@layout/info_time_all" />
 
@@ -101,7 +104,8 @@
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:orientation="vertical"
-                    android:animateLayoutChanges="true">
+                    android:animateLayoutChanges="true"
+                    tools:ignore="UnusedAttribute">
 
                     <include layout="@layout/info_time_daylength" />
                 </LinearLayout>
@@ -112,7 +116,8 @@
             <LinearLayout
                 style="@style/SunsetTimeCard"
                 android:id="@+id/info_time_all_tomorrow"
-                android:animateLayoutChanges="true">
+                android:animateLayoutChanges="true"
+                tools:ignore="UnusedAttribute">
 
                 <include layout="@layout/info_time_all" />
 
@@ -120,7 +125,8 @@
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:orientation="vertical"
-                    android:animateLayoutChanges="true">
+                    android:animateLayoutChanges="true"
+                    tools:ignore="UnusedAttribute">
 
                     <include layout="@layout/info_time_daylength" />
 

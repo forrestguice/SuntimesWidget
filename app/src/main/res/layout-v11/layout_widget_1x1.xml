@@ -28,7 +28,7 @@
         android:loopViews="true"
         android:numColumns="1"
         android:autoStart="false"
-        />
+        tools:ignore="InconsistentLayout" />
 
     <TextView
         android:layout_width="match_parent"

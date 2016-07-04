@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    tools:ignore="UnusedAttribute"
 
     android:minWidth="40dp" android:minHeight="40dp"
     android:updatePeriodMillis="86400000"
@@ -9,7 +11,6 @@
     android:widgetCategory="home_screen|keyguard"
     android:previewImage="@drawable/ic_suntimes"
     android:resizeMode="horizontal"
-    android:initialKeyguardLayout="@layout/layout_widget_1x1_0"
-    >
+    android:initialKeyguardLayout="@layout/layout_widget_1x1_0">
 
 </appwidget-provider>

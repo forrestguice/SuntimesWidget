@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+<preference-headers xmlns:tools="http://schemas.android.com/tools"
+                    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <header android:icon="?attr/icActionSettings"
             android:title="@string/configLabel_widgetList"
@@ -13,7 +14,8 @@
     <header android:fragment="com.forrestguice.suntimeswidget.SuntimesSettingsActivity$GeneralPrefsFragment"
             android:icon="?attr/icActionSettings"
             android:title="@string/configLabel_general"
-            android:summary="">
+            android:summary=""
+            tools:ignore="UnusedAttribute">
 
         <extra android:name="someKey" android:value="someHeaderValue" />
 
@@ -22,13 +24,15 @@
     <header android:fragment="com.forrestguice.suntimeswidget.SuntimesSettingsActivity$PlacesPrefsFragment"
             android:icon="?attr/icActionSettings"
             android:title="@string/configLabel_places"
-            android:summary="">
+            android:summary=""
+            tools:ignore="UnusedAttribute">
     </header>
 
     <header android:fragment="com.forrestguice.suntimeswidget.SuntimesSettingsActivity$UIPrefsFragment"
             android:icon="?attr/icActionSettings"
             android:title="@string/configLabel_ui"
-            android:summary="">
+            android:summary=""
+            tools:ignore="UnusedAttribute">
     </header>
 
 </preference-headers>

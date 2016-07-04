@@ -34,7 +34,8 @@
             style="@style/SunsetTimeLayout"
             android:orientation="horizontal"
             android:showDividers="middle"
-            android:divider="@drawable/ic_spacer">
+            android:divider="@drawable/ic_spacer"
+            tools:ignore="UnusedAttribute">
 
             <include layout="@layout/info_time_sunrise_0" />
 
