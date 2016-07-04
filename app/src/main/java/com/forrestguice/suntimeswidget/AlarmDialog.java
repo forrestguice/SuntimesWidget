@@ -17,6 +17,7 @@
 */
 package com.forrestguice.suntimeswidget;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
@@ -98,6 +99,7 @@ public class AlarmDialog extends DialogFragment
 
         final Activity myParent = getActivity();
         LayoutInflater inflater = myParent.getLayoutInflater();
+        @SuppressLint("InflateParams")
         View dialogContent = inflater.inflate(R.layout.layout_dialog_schedalarm, null);
 
         Resources r = getResources();

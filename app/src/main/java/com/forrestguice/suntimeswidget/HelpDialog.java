@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
@@ -62,6 +63,7 @@ public class HelpDialog extends DialogFragment
 
         final Activity myParent = getActivity();
         LayoutInflater inflater = myParent.getLayoutInflater();
+        @SuppressLint("InflateParams")
         View dialogContent = inflater.inflate(R.layout.layout_dialog_help, null);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(myParent);

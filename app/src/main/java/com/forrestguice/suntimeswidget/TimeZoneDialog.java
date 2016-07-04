@@ -17,6 +17,7 @@
 */
 package com.forrestguice.suntimeswidget;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.appwidget.AppWidgetManager;
@@ -60,6 +61,7 @@ public class TimeZoneDialog extends DialogFragment
 
         final Activity myParent = getActivity();
         LayoutInflater inflater = myParent.getLayoutInflater();
+        @SuppressLint("InflateParams")
         View dialogContent = inflater.inflate(R.layout.layout_dialog_timezone, null);
 
         Resources r = getResources();

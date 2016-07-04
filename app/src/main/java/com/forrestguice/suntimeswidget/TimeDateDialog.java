@@ -17,6 +17,7 @@
 */
 package com.forrestguice.suntimeswidget;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
@@ -141,7 +142,9 @@ public class TimeDateDialog extends DialogFragment implements DatePicker.OnDateC
         Resources r = getResources();
 
         LayoutInflater inflater = myParent.getLayoutInflater();
+        @SuppressLint("InflateParams")
         View dialogContent = inflater.inflate(R.layout.layout_dialog_date, null);
+
         int padding = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, r.getDisplayMetrics());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
