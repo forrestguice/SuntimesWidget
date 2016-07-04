@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget.notes;
 
 import android.content.Context;
-import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesDataset;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 

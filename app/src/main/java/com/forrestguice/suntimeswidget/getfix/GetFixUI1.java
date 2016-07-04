@@ -24,8 +24,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
-import com.forrestguice.suntimeswidget.R;
-
 /**
  * A wrapper class around a set of Views composing "get fix/location" UI; the constructor expects
  * references to the individual views; used by GetFixTask when making progress updates and posting

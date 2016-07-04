@@ -29,7 +29,6 @@ import android.os.Looper;
 import android.util.Log;
 
 import java.lang.ref.WeakReference;
-import java.security.Security;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -298,8 +297,8 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
 
     public static abstract class GetFixTaskListener
     {
-        public void onStarted() {};
-        public void onFinished(Location result) {};
-        public void onCancelled() {};
+        public void onStarted() {}
+        public void onFinished(Location result) {}
+        public void onCancelled() {}
     }
 }

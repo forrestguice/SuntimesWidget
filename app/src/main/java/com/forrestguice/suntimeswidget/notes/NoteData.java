@@ -18,8 +18,6 @@
 
 package com.forrestguice.suntimeswidget.notes;
 
-import android.util.Log;
-
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 

@@ -32,7 +32,6 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 
 /**
  * The second implementation of SuntimesNotes; it does the same as the first (but hopefully a little cleaner).

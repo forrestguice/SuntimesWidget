@@ -35,7 +35,6 @@ import android.os.Bundle;
 
 import android.os.Parcelable;
 import android.provider.CalendarContract;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -252,12 +251,11 @@ public class SuntimesActivity extends AppCompatActivity
             Log.d("DEBUG", "LocationDialog listeners restored.");
         }
 
-        TimeDateDialog dateDialog = (TimeDateDialog) fragments.findFragmentByTag(DIALOGTAG_DATE);
-        if (dateDialog != null)
-        {
+        //TimeDateDialog dateDialog = (TimeDateDialog) fragments.findFragmentByTag(DIALOGTAG_DATE);
+        //if (dateDialog != null)
+        //{
             // TODO
-            //Log.d("DEBUG", "TimeDateDialog listeners restored.");
-        }
+        //}
     }
 
     /**
@@ -439,7 +437,10 @@ public class SuntimesActivity extends AppCompatActivity
     private void initNoteViews(Context context)
     {
         note_progress = (ProgressBar) findViewById(R.id.info_note_progress);
-        note_progress.setVisibility(View.GONE);
+        if (note_progress != null)
+        {
+            note_progress.setVisibility(View.GONE);
+        }
 
         note_flipper = (ViewFlipper) findViewById(R.id.info_note_flipper);
         if (note_flipper != null)

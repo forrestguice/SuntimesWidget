@@ -17,7 +17,6 @@
 */
 package com.forrestguice.suntimeswidget;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
