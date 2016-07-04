@@ -179,6 +179,9 @@ public class SuntimesCalculatorDescriptor implements Comparable
     @Override
     public int compareTo(Object other)
     {
+        if (other == null)
+            return 1;
+
         SuntimesCalculatorDescriptor otherDescriptor = (SuntimesCalculatorDescriptor)other;
         return this.name().compareTo(otherDescriptor.name());
     }
