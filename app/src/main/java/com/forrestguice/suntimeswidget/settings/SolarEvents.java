@@ -152,6 +152,7 @@ public enum SolarEvents
             int iconHeight = (int)resources.getDimension(R.dimen.sunIconLarge_height);
             if ( iconResource == R.drawable.ic_noon_large)
             {
+                //noinspection SuspiciousNameCombination
                 iconHeight = iconWidth;
             }
 

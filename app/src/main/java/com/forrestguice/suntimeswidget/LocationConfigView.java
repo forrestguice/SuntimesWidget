@@ -100,7 +100,10 @@ public class LocationConfigView extends LinearLayout
         String longitude = text_locationLon.getText().toString();
 
         try {
+            @SuppressWarnings("UnusedAssignment")
             BigDecimal lat = new BigDecimal(latitude);
+
+            @SuppressWarnings("UnusedAssignment")
             BigDecimal lon = new BigDecimal(longitude);
 
         } catch (NumberFormatException e) {
@@ -643,7 +646,9 @@ public class LocationConfigView extends LinearLayout
 
         String latitude = text_locationLat.getText().toString();
         try {
+            @SuppressWarnings("UnusedAssignment")
             BigDecimal lat = new BigDecimal(latitude);
+
         } catch (NumberFormatException e1) {
             isValid = false;
             text_locationLat.setError(myParent.getString(R.string.location_dialog_error_lat));
@@ -651,7 +656,9 @@ public class LocationConfigView extends LinearLayout
 
         String longitude = text_locationLon.getText().toString();
         try {
+            @SuppressWarnings("UnusedAssignment")
             BigDecimal lon = new BigDecimal(longitude);
+
         } catch (NumberFormatException e2) {
             isValid = false;
             text_locationLon.setError(myParent.getString(R.string.location_dialog_error_lon));
@@ -826,9 +833,7 @@ public class LocationConfigView extends LinearLayout
         @Override
         public boolean areAllItemsEnabled()
         {
-            if (!autoAllowed)
-                return false;
-            return true;
+           return autoAllowed;
         }
 
         @Override
