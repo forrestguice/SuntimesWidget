@@ -35,7 +35,7 @@ The home screen widget is resizable and has layouts for:
 
 **Donations**
 
-If you think there is some value in this software then please feel free to pay whatever you think is fair through <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2">https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2</a>.
+If you think there is some value in this software then <i>please feel free to pay</i> whatever you think is fair through <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2">https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2</a>.
 
 If you are in the giving mood, I also encourage you to give to <a href="http://mikereedell.github.io/sunrisesunsetlib-java/">http://mikereedell.github.io/sunrisesunsetlib-java/</a> as this app would not be possible without this library.
 
