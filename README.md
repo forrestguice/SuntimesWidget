@@ -33,7 +33,7 @@ The home screen widget is resizable and has layouts for:
 <img alt="screenshot2" src='https://cloud.githubusercontent.com/assets/10246147/14938299/ad52bc2e-0ed3-11e6-8916-9b7e75057a62.png' width="280px" />
 
 
-**Show Support**
+**Donate**
 
 If you think there is some value in this software then please feel free to pay whatever you think is fair through <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2">https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2</a>. If your in the giving mood, I also encourage you to give to <a href="http://mikereedell.github.io/sunrisesunsetlib-java/">http://mikereedell.github.io/sunrisesunsetlib-java/</a> as well.
 
