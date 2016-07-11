@@ -32,8 +32,27 @@ import java.util.Locale;
 
 public class SuntimesUtils
 {
-    public SuntimesUtils()
+    private static String strTimeShorter = "shorter";
+    private static String strTimeLonger = "longer";
+    private static String strSpace = " ";
+    private static String strEmpty = "";
+    private static String strDays = "d";
+    private static String strHours = "h";
+    private static String strMinutes = "m";
+    private static String strSeconds = "s";
+    private static String strTimeDeltaFormat = "%1$s" + strEmpty + "%2$s";
+
+    public SuntimesUtils() {}
+
+    public static void initDisplayStrings( Context context )
     {
+        strTimeShorter = context.getString(R.string.delta_day_shorter);
+        strTimeLonger = context.getString(R.string.delta_day_longer);
+        strDays = context.getString(R.string.delta_days);
+        strHours = context.getString(R.string.delta_hours);
+        strMinutes = context.getString(R.string.delta_minutes);
+        strSeconds = context.getString(R.string.delta_seconds);
+        strTimeDeltaFormat = context.getString(R.string.delta_format);
     }
 
     /**
@@ -163,10 +182,10 @@ public class SuntimesUtils
             retValue = new TimeDisplayText(timeFormat.format(time), "", "");
 
         } else {
-            SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm", Locale.US);
+            SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm", Locale.US);   // TODO: fix i18n here
             timeFormat.setTimeZone(cal.getTimeZone());
 
-            SimpleDateFormat suffixFormat = new SimpleDateFormat("a", Locale.US);
+            SimpleDateFormat suffixFormat = new SimpleDateFormat("a", Locale.US);    // TODO: fix i18n here
             suffixFormat.setTimeZone(cal.getTimeZone());
             retValue = new TimeDisplayText( timeFormat.format(time), "", suffixFormat.format(time) );
         }
@@ -207,9 +226,9 @@ public class SuntimesUtils
 
     public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2, boolean showSeconds)
     {
-        String value = " ";  // space
-        String units = "";
-        String suffix = "";
+        String value = strSpace;
+        String units = strEmpty;
+        String suffix = strEmpty;
 
         long timeSpan = timeSpan2 - timeSpan1;
         GregorianCalendar d = new GregorianCalendar();
@@ -217,7 +236,7 @@ public class SuntimesUtils
         long timeInMillis = d.getTimeInMillis();
 
         long numberOfSeconds = timeInMillis / 1000;
-        suffix += ((numberOfSeconds > 0) ? "longer" : "shorter");
+        suffix += ((numberOfSeconds > 0) ? strTimeLonger : strTimeShorter);   // longer : shorter
         numberOfSeconds = Math.abs(numberOfSeconds);
 
         long numberOfMinutes = numberOfSeconds / 60;
@@ -230,22 +249,25 @@ public class SuntimesUtils
 
         boolean showingDays = (numberOfDays > 0);
         if (showingDays)
-            value += numberOfDays + "d";
+            value += String.format(strTimeDeltaFormat, numberOfDays, strDays);
 
         boolean showingHours = (remainingHours > 0);
         if (showingHours)
-            value += (showingDays ? " " : "") + remainingHours + "h";
+            value += (showingDays ? strSpace : strEmpty) +
+                     String.format(strTimeDeltaFormat, remainingHours, strHours);
 
         boolean showingMinutes = (remainingMinutes > 0);
         if (showingMinutes)
-            value += (showingDays || showingHours ? " " : "") + remainingMinutes + "m";
+            value += (showingDays || showingHours ? strSpace : strEmpty) +
+                     String.format(strTimeDeltaFormat, remainingMinutes, strMinutes);
 
         boolean showingSeconds = (showSeconds && !showingHours && !showingDays && (remainingSeconds > 0));
         if (showingSeconds)
-            value += (showingMinutes ? " " : "") + remainingSeconds + "s";
+            value += (showingMinutes ? strSpace : strEmpty) +
+                     String.format(strTimeDeltaFormat, remainingSeconds, strSeconds);
 
         if (!showingSeconds && !showingMinutes && !showingHours && !showingDays)
-            value += "1m";
+            value += String.format(strTimeDeltaFormat, "1", strMinutes);
 
         TimeDisplayText text = new TimeDisplayText(value, units, suffix);
         text.setRawValue(timeSpan);

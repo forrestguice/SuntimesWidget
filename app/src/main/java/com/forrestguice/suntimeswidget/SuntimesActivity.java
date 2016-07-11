@@ -190,6 +190,7 @@ public class SuntimesActivity extends AppCompatActivity
         setResult(RESULT_CANCELED);
         setContentView(R.layout.layout_main);
 
+        SuntimesUtils.initDisplayStrings(context);
         AppSettings.initDisplayStrings(context);
         WidgetSettings.initDisplayStrings(context);
         initViews(context);
