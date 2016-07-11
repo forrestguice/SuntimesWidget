@@ -47,23 +47,27 @@
     <string name="future_tomorrow">Future (+1)</string>
 
     <!-- Field: length of day
-         The hours in the day field(s) that appears below the table (main activity).
-         (layout/info_time_daylength.xml)
+         The hours in the day field(s) that appears below the table (main activity); can be either
+         a prefix or suffix depending on layout (layout/info_time_daylength.xml).
     -->
-    <string name="length_day">in the day</string>
-    <string name="length_light">of usable light</string>
+    <string name="length_day">in the day</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
+    <string name="length_light">of usable light</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
 
-    <!-- Field: today/tomorrow time delta
-         (layout/info_time_daydelta.xml)
+    <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
+         e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
+         The relative order is defined by the layout (layout/info_time_daydelta.xml).
     -->
     <string name="delta_day_tomorrow">Tomorrow will be</string>
     <string name="delta_day_yesterday">Yesterday was</string>
+    <string name="delta_day_shorter">shorter</string>
+    <string name="delta_day_longer">longer</string>
 
     <!-- NotePrefix: since/until/untilEnd
-         The note prefix text (layout/info_time_note.xml)
-         e.g.     4 hr
+         The note prefix text. e.g.
+                  4 hr
                  until
                   sunset
+         The relative order is defined by the layout (layout/info_time_note.xml).
     -->
     <string name="since">since</string>
     <string name="until">until</string>
@@ -344,11 +348,12 @@
     <string name="gps_dialog_ok">Yes</string>
     <string name="gps_dialog_cancel">No</string>
 
-    <string name="gps_lastfix_title_set">Set Position</string>               <!-- toast text -->
-    <string name="gps_lastfix_title_found">Last Position</string>            <!-- may appear in ActionBar title -->
-    <string name="gps_lastfix_title_searching">Getting Position</string>     <!-- may appear in ActionBar title -->
-    <string name="gps_lastfix_toast_notfound">GPS failed to get location; falling back to last known position.</string>
-    <string name="gps_lastfix_toast_cancelled">GPS update cancelled.</string>
+    <!-- gps_lastfix (current location mode) -->
+    <string name="gps_lastfix_title_set">Set Position</string>               <!-- may appear as place name when location set by intent -->
+    <string name="gps_lastfix_title_found">Last Position</string>            <!-- may appear as place name when location set by gps -->
+    <string name="gps_lastfix_title_searching">Getting Position</string>     <!-- may appear in ActionBar title while gps in progress -->
+    <string name="gps_lastfix_toast_notfound">GPS failed to get location; falling back to last known position.</string>  <!-- displayed briefly after gps has failed to get a location -->
+    <string name="gps_lastfix_toast_cancelled">GPS update cancelled.</string> <!-- displayed briefly when gps refresh cancelled -->
 
     <!-- Dialog: KeepTrying GPS? -->
     <string name="gps_keeptrying_title">No Fix</string>
@@ -421,14 +426,25 @@
                 * <b>%M</b> for time mode (long) (e.g. "Civil Twilight") <br/>
                 * <b>%t</b> for time zone (id) (e.g. US/Arizona) <br/>
     ]]></string>
+
+    <string name="help_general">  <!-- general app help; composites a couple help topics together. -->
+        <xliff:g id="help_general_timeMode">%1$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_general_daylength">%2$s</xliff:g>
+    </string>
+
     <string name="help_general_timeMode"><![CDATA[
           <b>Actual Time:</b> The sun is on the horizon; this is the approximate time of sunrise and sunset.<br/><br/>
           <b>Civil Twilight:</b> The sun is 6 degrees below the horizon; the brightest stars are visible. There is enough light for most outdoor activities without requiring a light.<br/><br/>
           <b>Nautical Twilight:</b> The sun is 12 degrees below the horizon; object outlines and the horizon are increasingly indistinct. There isn\'t enough light for most outdoor activities without requiring a light.<br/><br/>
           <b>Astronomical Twilight:</b> The sun is 18 degrees below the horizon. Near darkness of night.<br/>
     ]]></string>
+    <string name="help_general_daylength"><![CDATA[
+        <b>Length of day:</b> the amount of time between sunrise and sunset.<br/><br/>
+        <b>Usable light:</b> the amount of time between morning and evening civil twilight.</br>
+    ]]>
+    </string>
     <string name="help_action_launch"><![CDATA[
-        The fully qualified class name of the Activity to be launched.
+        The fully qualified class name of the Activity to be launched.<br/>
     ]]></string>
     <string name="help_widgetlist"><![CDATA[
           To <b>add a new widget</b> you must navigate to the home screen.<br/><br/>
