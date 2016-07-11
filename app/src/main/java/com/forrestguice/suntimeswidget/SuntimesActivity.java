@@ -190,6 +190,7 @@ public class SuntimesActivity extends AppCompatActivity
         setResult(RESULT_CANCELED);
         setContentView(R.layout.layout_main);
 
+        SuntimesUtils.initDisplayStrings(context);
         AppSettings.initDisplayStrings(context);
         WidgetSettings.initDisplayStrings(context);
         initViews(context);
@@ -881,8 +882,12 @@ public class SuntimesActivity extends AppCompatActivity
      */
     protected void showHelp()
     {
+        String topic1 = getString(R.string.help_general_timeMode);
+        String topic2 = getString(R.string.help_general_daylength);
+        String helpText = getString(R.string.help_general, topic1, topic2);
+
         HelpDialog helpDialog = new HelpDialog();
-        helpDialog.setContent(getString(R.string.help_general_timeMode));
+        helpDialog.setContent(helpText);
         helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
     }
 

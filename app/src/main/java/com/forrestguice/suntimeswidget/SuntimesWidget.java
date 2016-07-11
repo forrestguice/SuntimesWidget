@@ -116,6 +116,7 @@ public class SuntimesWidget extends AppWidgetProvider
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds)
     {
         WidgetThemes.initThemes(context);
+        SuntimesUtils.initDisplayStrings(context);
         WidgetSettings.TimeMode.initDisplayStrings(context);
 
         for (int appWidgetId : appWidgetIds)

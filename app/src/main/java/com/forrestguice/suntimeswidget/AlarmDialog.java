@@ -178,6 +178,7 @@ public class AlarmDialog extends DialogFragment
 
     protected void initViews( final Context context, View dialogContent )
     {
+        SuntimesUtils.initDisplayStrings(context);
         WidgetSettings.initDisplayStrings(context);
         SolarEvents.initDisplayStrings(context);
 

@@ -122,6 +122,8 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
      */
     protected void initViews(Context context)
     {
+        SuntimesUtils.initDisplayStrings(context);
+
         widgetList = (ListView)findViewById(R.id.widgetList);
         widgetList.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {

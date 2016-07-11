@@ -91,13 +91,21 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     @Override
     public Calendar getSolarNoonCalendarForDate(Calendar date)
     {
-        long sunriseTime = getOfficialSunriseCalendarForDate(date).getTimeInMillis();
-        long sunsetTime = getOfficialSunsetCalendarForDate(date).getTimeInMillis();
-        long noonTime = sunriseTime + ((sunsetTime - sunriseTime) / 2L);
+        Calendar sunriseCal = getOfficialSunriseCalendarForDate(date);
+        Calendar sunsetCal = getOfficialSunsetCalendarForDate(date);
+        if (sunriseCal != null && sunsetCal != null)
+        {
+            long sunriseTime = sunriseCal.getTimeInMillis();
+            long sunsetTime = sunsetCal.getTimeInMillis();
+            long noonTime = sunriseTime + ((sunsetTime - sunriseTime) / 2L);
 
-        Calendar noonCalendar = Calendar.getInstance(TimeZone.getTimeZone(timezone));
-        noonCalendar.setTimeInMillis(noonTime);
-        return noonCalendar;
+            Calendar noonCalendar = Calendar.getInstance(TimeZone.getTimeZone(timezone));
+            noonCalendar.setTimeInMillis(noonTime);
+            return noonCalendar;
+
+        } else {
+            return null;
+        }
     }
 
     @Override
