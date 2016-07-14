@@ -1060,7 +1060,7 @@ public class SuntimesActivity extends AppCompatActivity
             txt_lightlength2.setText(lightLengthDisplay2.toString());
 
         } else {
-            String notCalculated = "...";
+            String notCalculated = getString(R.string.time_loading);
             txt_sunrise_actual.setText(notCalculated);
             txt_sunrise_civil.setText(notCalculated);
             txt_sunrise_nautical.setText(notCalculated);

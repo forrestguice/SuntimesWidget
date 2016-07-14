@@ -99,6 +99,10 @@
     <string name="delta_minutes">m</string>  <!-- e.g. 3m -->
     <string name="delta_seconds">s</string>  <!-- e.g. 4s -->
 
+    <!-- misc time values: might be displayed in a timeField in place of an actual time -->
+    <string name="time_none">none</string>  <!-- no time / time does not occur -->
+    <string name="time_loading">…</string>  <!-- calculating / time is loading -->
+
     <!--
          WIDGET CONFIG
     -->

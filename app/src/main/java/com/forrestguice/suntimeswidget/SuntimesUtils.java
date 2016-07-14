@@ -41,6 +41,8 @@ public class SuntimesUtils
     private static String strMinutes = "m";
     private static String strSeconds = "s";
     private static String strTimeDeltaFormat = "%1$s" + strEmpty + "%2$s";
+    private static String strTimeNone = "none";
+    private static String strTimeLoading = "...";
 
     public SuntimesUtils() {}
 
@@ -53,6 +55,8 @@ public class SuntimesUtils
         strMinutes = context.getString(R.string.delta_minutes);
         strSeconds = context.getString(R.string.delta_seconds);
         strTimeDeltaFormat = context.getString(R.string.delta_format);
+        strTimeNone = context.getString(R.string.time_none);
+        strTimeLoading = context.getString(R.string.time_loading);
     }
 
     /**
@@ -68,6 +72,13 @@ public class SuntimesUtils
         public TimeDisplayText()
         {
             this.value = "";
+            this.units = "";
+            this.suffix = "";
+        }
+
+        public TimeDisplayText(String value)
+        {
+            this.value = value;
             this.units = "";
             this.suffix = "";
         }
@@ -169,7 +180,7 @@ public class SuntimesUtils
     {
         if (cal == null)
         {
-            return new TimeDisplayText();
+            return new TimeDisplayText(strTimeNone);
         }
 
         Date time = cal.getTime();
@@ -236,7 +247,7 @@ public class SuntimesUtils
         long timeInMillis = d.getTimeInMillis();
 
         long numberOfSeconds = timeInMillis / 1000;
-        suffix += ((numberOfSeconds > 0) ? strTimeLonger : strTimeShorter);   // longer : shorter
+        suffix += ((numberOfSeconds > 0) ? strTimeLonger : strTimeShorter);
         numberOfSeconds = Math.abs(numberOfSeconds);
 
         long numberOfMinutes = numberOfSeconds / 60;
