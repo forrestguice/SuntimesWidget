@@ -225,10 +225,10 @@
         <item>Dark Theme</item>
         <item>Light Theme / Dark Theme (Night Mode)</item>
     </string-array>
-    <string-array name="appThemes_values">  <!-- config values (one-to-one with appThemes_display) -->
-        <item><xliff:g id="id">light</xliff:g></item>
-        <item><xliff:g id="id">dark</xliff:g></item>
-        <item><xliff:g id="id">daynight</xliff:g></item>
+    <string-array name="appThemes_values" translatable="false">  <!-- config values (one-to-one with appThemes_display) -->
+        <item>light</item>
+        <item>dark</item>
+        <item>daynight</item>
     </string-array>
 
     <!-- App Setting: Date "on tap" action -->
@@ -238,11 +238,11 @@
         <item>Show calendar app</item>
         <item>Set custom date</item>
     </string-array>
-    <string-array name="dateTapActions_values"> <!-- config values (one-to-one with dateTapActions_display) -->
-        <item><xliff:g id="id">NOTHING</xliff:g></item>
-        <item><xliff:g id="id">SWAP_CARD</xliff:g></item>
-        <item><xliff:g id="id">SHOW_CALENDAR</xliff:g></item>
-        <item><xliff:g id="id">CONFIG_DATE</xliff:g></item>
+    <string-array name="dateTapActions_values" translatable="false"> <!-- config values (one-to-one with dateTapActions_display) -->
+        <item>NOTHING</item>
+        <item>SWAP_CARD</item>
+        <item>SHOW_CALENDAR</item>
+        <item>CONFIG_DATE</item>
     </string-array>
 
     <!-- App Setting: Clock UI "on tap" action -->
@@ -252,11 +252,11 @@
         <item>Show next note</item>
         <item>Show previous note</item>
     </string-array>
-    <string-array name="clockTapActions_values">  <!-- config values (one-to-one with clockTapActions_display) -->
-        <item><xliff:g id="id">NOTHING</xliff:g></item>
-        <item><xliff:g id="id">ALARM</xliff:g></item>
-        <item><xliff:g id="id">NEXT_NOTE</xliff:g></item>
-        <item><xliff:g id="id">PREV_NOTE</xliff:g></item>
+    <string-array name="clockTapActions_values" translatable="false">  <!-- config values (one-to-one with clockTapActions_display) -->
+        <item>NOTHING</item>
+        <item>ALARM</item>
+        <item>NEXT_NOTE</item>
+        <item>PREV_NOTE</item>
     </string-array>
 
     <!-- App Setting: Note UI "on tap" action -->
@@ -266,11 +266,11 @@
         <item>Show next note</item>
         <item>Show previous note</item>
     </string-array>
-    <string-array name="noteTapActions_values">   <!-- config values (one-to-one with noteTapActions_display) -->
-        <item><xliff:g id="id">NOTHING</xliff:g></item>
-        <item><xliff:g id="id">ALARM</xliff:g></item>
-        <item><xliff:g id="id">NEXT_NOTE</xliff:g></item>
-        <item><xliff:g id="id">PREV_NOTE</xliff:g></item>
+    <string-array name="noteTapActions_values" translatable="false">   <!-- config values (one-to-one with noteTapActions_display) -->
+        <item>NOTHING</item>
+        <item>ALARM</item>
+        <item>NEXT_NOTE</item>
+        <item>PREV_NOTE</item>
     </string-array>
 
     <!-- App Setting: GPS fix time limit -->
@@ -283,12 +283,12 @@
         <item>5 minutes</item>
         <item>10 minutes</item>
     </string-array>
-    <string-array name="getFix_maxElapse_values">   <!-- config values (one-to-one with getFix_maxElapse_display) -->
-        <item><xliff:g id="msValue">15000</xliff:g></item>
-        <item><xliff:g id="msValue">30000</xliff:g></item>
-        <item><xliff:g id="msValue">60000</xliff:g></item>
-        <item><xliff:g id="msValue">300000</xliff:g></item>
-        <item><xliff:g id="msValue">600000</xliff:g></item>
+    <string-array name="getFix_maxElapse_values" translatable="false">   <!-- ms config values (one-to-one with getFix_maxElapse_display) -->
+        <item>15000</item>
+        <item>30000></item>
+        <item>60000</item>
+        <item>300000</item>
+        <item>600000</item>
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
@@ -306,17 +306,17 @@
         <item>one week (168 hours)</item>
         <item>one month (672 hours)</item>
     </string-array>
-    <string-array name="getFix_maxAge_values">     <!-- config values (one-to-one with getFix_maxAge_display) -->
-        <item><xliff:g id="msValue">60000</xliff:g></item>
-        <item><xliff:g id="msValue">300000</xliff:g></item>
-        <item><xliff:g id="msValue">900000</xliff:g></item>
-        <item><xliff:g id="msValue">3600000</xliff:g></item>
-        <item><xliff:g id="msValue">14400000</xliff:g></item>
-        <item><xliff:g id="msValue">43200000</xliff:g></item>
-        <item><xliff:g id="msValue">86400000</xliff:g></item>
-        <item><xliff:g id="msValue">172800000</xliff:g></item>
-        <item><xliff:g id="msValue">604800000</xliff:g></item>
-        <item><xliff:g id="msValue">2419200000</xliff:g></item>
+    <string-array name="getFix_maxAge_values" translatable="false">     <!-- ms config values (one-to-one with getFix_maxAge_display) -->
+        <item>60000</item>
+        <item>300000</item>
+        <item>900000</item>
+        <item>3600000</item>
+        <item>14400000</item>
+        <item>43200000</item>
+        <item>86400000</item>
+        <item>172800000</item>
+        <item>604800000</item>
+        <item>2419200000</item>
     </string-array>
 
     <!--
