@@ -96,6 +96,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity
         WidgetSettings.initDisplayStrings(context);
     }
 
+    /**
+     * @param target
+     */
     @Override
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void onBuildHeaders(List<Header> target)
@@ -191,6 +194,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class GeneralPrefsFragment extends PreferenceFragment
     {
+        private ListPreference calculatorPref;
+
         @Override
         public void onCreate(Bundle savedInstanceState)
         {
@@ -199,10 +204,10 @@ public class SuntimesSettingsActivity extends PreferenceActivity
 
             PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_general, false);
             addPreferencesFromResource(R.xml.preference_general);
-            loadGeneral();
+            initGeneral();
         }
 
-        private void loadGeneral()
+        private void initGeneral()
         {
             SuntimesCalculatorDescriptor[] calculators = SuntimesCalculatorDescriptor.values();
             String[] calculatorEntries = new String[calculators.length];
@@ -215,9 +220,37 @@ public class SuntimesSettingsActivity extends PreferenceActivity
                 i++;
             }
 
-            ListPreference calculatorPref = (ListPreference)findPreference("appwidget_0_general_calculator");
+            calculatorPref = (ListPreference) findPreference("appwidget_0_general_calculator");
             calculatorPref.setEntries(calculatorEntries);
             calculatorPref.setEntryValues(calculatorValues);
+
+            loadGeneral(getActivity());
+        }
+
+        private void loadGeneral(Context context)
+        {
+            if (context != null && calculatorPref != null)
+            {
+                SuntimesCalculatorDescriptor currentMode = WidgetSettings.loadCalculatorModePref(context, 0);
+                int currentIndex = calculatorPref.findIndexOfValue(currentMode.name());
+                calculatorPref.setValueIndex(currentIndex);
+                //Log.d("SuntimesSettings", "current mode: " + currentMode + " (" + currentIndex + ")");
+            }
+        }
+
+        @Override
+        @TargetApi(23)
+        public void onAttach(Context context)
+        {
+            super.onAttach(context);
+            loadGeneral(context);
+        }
+
+        @Override
+        public void onAttach(Activity activity)
+        {
+            super.onAttach(activity);
+            loadGeneral(activity);
         }
     }
 
