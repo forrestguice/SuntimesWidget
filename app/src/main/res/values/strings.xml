@@ -10,6 +10,7 @@
     <string name="configAction_addLocation">Location</string>
     <string name="configAction_mapLocation">Show Map</string>
     <string name="configAction_mapLocation_chooser">View location using</string>
+    <string name="configAction_mapLocation_noapp">Unable to find map application!</string>
     <string name="configAction_setAlarm">Set Alarm</string>
     <string name="configAction_setTimeZone">Use Time Zone</string>
     <string name="configAction_setDate">Use Date</string>
