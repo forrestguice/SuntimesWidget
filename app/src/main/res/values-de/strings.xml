@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+<resources xmlns:xliff="http://schemas.android.com/tools">
   <!-- German translation, almost complete. Some strings need to be identified,
     understood and translated, identified by: -->
   <!-- todo -->
