@@ -85,11 +85,17 @@ public class LocationConfigView extends LinearLayout
         inflater.inflate((asDialog ? R.layout.layout_dialog_location2 : R.layout.layout_settings_location2), this);
         myParent = context;
         initViews(context);
-        loadSettings(context);
 
+        loadSettings(context);
         setMode(mode);
         populateLocationList();
         isInitialized = true;
+    }
+
+    public void init(FragmentActivity context, boolean asDialog, int appWidgetId)
+    {
+        this.appWidgetId = appWidgetId;
+        init(context, asDialog);
     }
 
     public boolean isInitialized() { return isInitialized; }

@@ -272,8 +272,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
         //
         locationConfig = (LocationConfigView)findViewById(R.id.appwidget_location_config);
         locationConfig.setAutoAllowed(false);
-        locationConfig.init(this, false);
-        locationConfig.setAppWidgetId(this.appWidgetId);
+        locationConfig.init(this, false, this.appWidgetId);
 
         //
         // widget: 1x1 widget mode
