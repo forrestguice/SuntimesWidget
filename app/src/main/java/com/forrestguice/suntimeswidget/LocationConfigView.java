@@ -640,6 +640,9 @@ public class LocationConfigView extends LinearLayout
     }*/
 
     /**
+     * Check text fields for validity; as a side-effect sets an error message on fields with invalid
+     * values.
+     * @return true if all fields valid, false otherwise
      */
     public boolean validateInput()
     {
@@ -647,8 +650,12 @@ public class LocationConfigView extends LinearLayout
 
         String latitude = text_locationLat.getText().toString();
         try {
-            @SuppressWarnings("UnusedAssignment")
             BigDecimal lat = new BigDecimal(latitude);
+            if (lat.intValue() < -90 || lat.intValue() > 90)
+            {
+                isValid = false;
+                text_locationLat.setError(myParent.getString(R.string.location_dialog_error_lat));
+            }
 
         } catch (NumberFormatException e1) {
             isValid = false;
@@ -657,8 +664,12 @@ public class LocationConfigView extends LinearLayout
 
         String longitude = text_locationLon.getText().toString();
         try {
-            @SuppressWarnings("UnusedAssignment")
             BigDecimal lon = new BigDecimal(longitude);
+            if (lon.intValue() < -180 || lon.intValue() > 180)
+            {
+                isValid = false;
+                text_locationLon.setError(myParent.getString(R.string.location_dialog_error_lon));
+            }
 
         } catch (NumberFormatException e2) {
             isValid = false;
