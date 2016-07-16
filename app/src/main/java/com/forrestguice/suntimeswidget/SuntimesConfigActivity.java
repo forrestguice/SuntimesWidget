@@ -590,6 +590,9 @@ public class SuntimesConfigActivity extends AppCompatActivity
         boolean hasValidInput = locationConfig.validateInput();  // todo: && validate other potentially troublesome input values
         if (hasValidInput)
         {
+            locationConfig.setMode(LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT);
+            locationConfig.populateLocationList();  // triggers 'add place'
+
             final Context context = SuntimesConfigActivity.this;
             saveSettings(context);
             updateWidget(context);
