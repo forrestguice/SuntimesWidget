@@ -452,7 +452,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
         // load: theme
         SuntimesTheme theme = WidgetSettings.loadThemePref(context, appWidgetId);
         ThemeDescriptor themeDescriptor = WidgetThemes.valueOf(theme.themeName());
-        spinner_theme.setSelection(themeDescriptor.ordinal(WidgetThemes.values()) );
+        spinner_theme.setSelection(themeDescriptor.ordinal(WidgetThemes.values()));
 
         // load: show title
         boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId);
@@ -587,14 +587,18 @@ public class SuntimesConfigActivity extends AppCompatActivity
 
     protected void addWidget()
     {
-        final Context context = SuntimesConfigActivity.this;
-        saveSettings(context);
-        updateWidget(context);
+        boolean hasValidInput = locationConfig.validateInput();  // todo: && validate other potentially troublesome input values
+        if (hasValidInput)
+        {
+            final Context context = SuntimesConfigActivity.this;
+            saveSettings(context);
+            updateWidget(context);
 
-        Intent resultValue = new Intent();
-        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        setResult(RESULT_OK, resultValue);
-        finish();
+            Intent resultValue = new Intent();
+            resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+            setResult(RESULT_OK, resultValue);
+            finish();
+        }
     }
 
     protected void updateWidget( Context context )
