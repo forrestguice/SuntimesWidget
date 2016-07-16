@@ -18,6 +18,7 @@
 package com.forrestguice.suntimeswidget;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.net.Uri;
@@ -28,6 +29,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.View;
 
 public class LocationConfigDialog extends DialogFragment
 {
@@ -160,11 +162,22 @@ public class LocationConfigDialog extends DialogFragment
                 }
         );
 
-        dialog.setButton(AlertDialog.BUTTON_POSITIVE, myParent.getString(R.string.location_dialog_ok),
-                new DialogInterface.OnClickListener()
+        dialog.setButton(AlertDialog.BUTTON_POSITIVE, myParent.getString(R.string.location_dialog_ok), new DialogInterface.OnClickListener()
+        {
+            @Override public void onClick(DialogInterface dialogInterface, int i) {/** EMPTY */}
+        });
+
+        dialog.setOnShowListener(new DialogInterface.OnShowListener()
+        {
+            @Override
+            public void onShow(DialogInterface dialogInterface)
+            {
+                // set the dialog's onAccept listener /after/ the dialog is shown; explicit call to `dismiss` req.
+                // http://stackoverflow.com/questions/2620444/how-to-prevent-a-dialog-from-closing-when-a-button-is-clicked
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener( new View.OnClickListener()
                 {
                     @Override
-                    public void onClick(DialogInterface dialog, int which)
+                    public void onClick(View view)
                     {
                         dialogContent.cancelGetFix();
                         if (dialogContent.saveSettings(myParent))
@@ -186,8 +199,9 @@ public class LocationConfigDialog extends DialogFragment
                             }
                         }
                     }
-                }
-        );
+                });
+            }
+        });
 
         if (savedInstanceState != null)
         {
