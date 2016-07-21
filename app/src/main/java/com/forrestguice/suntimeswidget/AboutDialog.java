@@ -22,6 +22,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -52,8 +53,22 @@ public class AboutDialog extends DialogFragment
         return dialog;
     }
 
+    public String htmlVersionString()
+    {
+        String versionString = BuildConfig.VERSION_NAME + " <small>(" + BuildConfig.GIT_HASH + "@" + BuildConfig.BUILD_TIME.getTime() + ")</small>";
+        if (BuildConfig.DEBUG)
+        {
+            versionString += " <small>[" + BuildConfig.BUILD_TYPE + "]</small>";
+        }
+        return getString(R.string.app_version, versionString);
+    }
+
     public void initViews(Context context, View dialogContent)
     {
+        TextView versionView = (TextView) dialogContent.findViewById(R.id.txt_about_version);
+        versionView.setMovementMethod(LinkMovementMethod.getInstance());
+        versionView.setText(Html.fromHtml(htmlVersionString()));
+
         TextView urlView = (TextView) dialogContent.findViewById(R.id.txt_about_url);
         urlView.setMovementMethod(LinkMovementMethod.getInstance());
         urlView.setText(Html.fromHtml(context.getString(R.string.app_url)));
@@ -62,8 +77,12 @@ public class AboutDialog extends DialogFragment
         supportView.setMovementMethod(LinkMovementMethod.getInstance());
         supportView.setText(Html.fromHtml(context.getString(R.string.app_support_url)));
 
-        TextView legalView = (TextView) dialogContent.findViewById(R.id.txt_about_legal);
-        legalView.setMovementMethod(LinkMovementMethod.getInstance());
-        legalView.setText(Html.fromHtml(context.getString(R.string.app_legal)));
+        TextView legalView1 = (TextView) dialogContent.findViewById(R.id.txt_about_legal1);
+        legalView1.setMovementMethod(LinkMovementMethod.getInstance());
+        legalView1.setText(Html.fromHtml(context.getString(R.string.app_legal1)));
+
+        TextView legalView2 = (TextView) dialogContent.findViewById(R.id.txt_about_legal2);
+        legalView2.setMovementMethod(LinkMovementMethod.getInstance());
+        legalView2.setText(Html.fromHtml(context.getString(R.string.app_legal2)));
     }
 }

@@ -77,10 +77,10 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
-            android:id="@+id/txt_about_legal"
+            android:id="@+id/txt_about_legal1"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="@string/app_legal"
+            android:text="@string/app_legal1"
             android:autoLink="web" />
 
         <TextView
@@ -92,6 +92,17 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="@string/app_url"
+            android:autoLink="web" />
+
+        <TextView
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:id="@+id/txt_about_legal2"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/app_legal2"
             android:autoLink="web" />
 
     </LinearLayout>

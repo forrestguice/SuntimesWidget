@@ -373,7 +373,7 @@
   <string name="app_name">Suntimes</string>
   <string name="app_name_widget0">Suntimes Widget</string>
   <string name="app_name_widget1">Suntimes Widget (umschaltbar)</string>
-  <string name="app_version"><b>Version:</b> <i><xliff:g id="versionString">0.1.0</xliff:g></i></string>
+  <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
   <string name="app_shortdesc">Eine App, die Sonnenauf- und -untergangszeiten anzeigt.</string>
   <string name="app_support_url"><![CDATA[
       <b>Support:</b> visit the
@@ -382,9 +382,11 @@
   <string name="app_url"><xliff:g id="url"><![CDATA[
       <a href="https://github.com/forrestguice/SuntimesWidget">github.com/forrestguice/SuntimesWidget</a>
   ]]></xliff:g></string>
-  <string name="app_legal"><![CDATA[
+  <string name="app_legal1"><![CDATA[
       Copyright &#169 2014 Forrest Guice <br />
       Source code available under GPLv3.
+  ]]></string>
+  <string name="app_legal2"><![CDATA[
       Deutsche Übersetzung von Henrik "HerHde" Hüttemann.
   ]]></string>
 
