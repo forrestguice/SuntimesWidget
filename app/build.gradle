@@ -5,8 +5,10 @@ android
     compileSdkVersion 23
     buildToolsVersion "21.1.2"
 
-    sourceSets {
-        main {
+    sourceSets
+    {
+        main
+        {
             manifest.srcFile 'src/main/AndroidManifest.xml'
             java.srcDirs = ['src/main/java']
             res.srcDirs = ['src/main/res']
@@ -34,6 +36,11 @@ android
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    lintOptions
+    {
+        disable 'MissingTranslation'
     }
 }
 
