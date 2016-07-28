@@ -104,7 +104,7 @@
   <string name="delta_seconds">s</string>  <!-- e.g. 4s -->
 
   <!-- misc time values: might be displayed in a timeField in place of an actual time -->
-  <string name="time_none">none</string>  <!-- no time / time does not occur -->
+  <string name="time_none">keine</string>  <!-- no time / time does not occur -->
   <string name="time_loading">…</string>  <!-- calculating / time is loading -->
 
   <!--
@@ -266,7 +266,7 @@
 
   <!-- App Setting: GPS fix max age -->
   <string name="configLabel_getFix_maxAge">GPS - Aktueller Standort</string>
-  <string name="configLabel_getFix_maxAge_summary">Maximal <xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> gilt als aktuell</string>
+  <string name="configLabel_getFix_maxAge_summary">Maximal vor <xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> ermittelter Standort gilt als aktuell</string>
   <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
       <item>1 Minute</item>
       <item>5 Minuten</item>
