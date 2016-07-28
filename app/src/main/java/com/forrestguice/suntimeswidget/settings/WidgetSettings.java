@@ -402,8 +402,8 @@ public class WidgetSettings
         public Location( String label, @NonNull android.location.Location location )
         {
             this.label = label;
-            this.latitude = location.getLatitude() + "";
-            this.longitude = location.getLongitude() + "";
+            this.latitude = String.format("%.5f", location.getLatitude());
+            this.longitude = String.format("%.5f", location.getLongitude());
             this.altitude = location.getAltitude() + "";
         }
 

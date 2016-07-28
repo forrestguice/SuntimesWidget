@@ -58,8 +58,8 @@ public class GetFixUI1 extends GetFixUI
     @Override
     public void updateUI(Location... locations)
     {
-        locationLatUI.setText(locations[0].getLatitude() + "");
-        locationLonUI.setText(locations[0].getLongitude() + "");
+        locationLatUI.setText(String.format("%.5f", locations[0].getLatitude()));
+        locationLonUI.setText(String.format("%.5f", locations[0].getLongitude()));
     }
 
     @Override

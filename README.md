@@ -1,12 +1,14 @@
 # SuntimesWidget
 An Android app (and home screen widget) that displays sunrise, sunset, civil/nautical/astronomical twilight times for a given location.
 
+
 The app:
 * displays the current time, and notes the time until next sunrise, sunset, or civil/nautical/astronomical twilight.
 * can set an alarm for next sunrise, sunset, or civil/nautical/astronomical twilight.
 * can display the configured location on a map (requires a map application).
 * *does not* require GPS. The location is manually specified by default (and optionally obtained from GPS).
 * *does not* require network connectivity. Calculations are performed locally on the device (does not rely on third-party weather services). The app currently uses [sunrisesunsetlib-java](http://mikereedell.github.io/sunrisesunsetlib-java/) to calculate times.
+
 
 **Widget Features**
 
@@ -35,12 +37,18 @@ The home screen widget is resizable and has layouts for:
 
 **Donations**
 
-If you think there is some value in this software then please feel free to <b><i>pay whatever you think is fair</i></b> through <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2">https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2</a>.
+If you think there is some value in this software then please feel free to pay whatever you think is fair through <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2">https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2</a>.
 
 If you are in the giving mood, I also encourage you to give to <a href="http://mikereedell.github.io/sunrisesunsetlib-java/">http://mikereedell.github.io/sunrisesunsetlib-java/</a> as this app would not be possible without this library.
 
 Any money given will indirectly go towards future software development; I will spend it on personal expenses, feel good knowing my code is worth something to someone, and (theoretically) feel a sense of obligation to continue supporting the app into the future. It is not technically a donation (as I am obligated to report anything given to me as earned income on my taxes).
 
+
 **Legal Stuff**
 
 The goal of this project is an app that is free and open-source (FOSS). Get the source code (under GPLv3) at: https://github.com/forrestguice/SuntimesWidget
+
+
+**Project Contributors**
+
+German translation provided by <u>Henrik "HerHde" Hüttemann</u>.

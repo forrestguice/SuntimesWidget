@@ -5,8 +5,10 @@ android
     compileSdkVersion 23
     buildToolsVersion "21.1.2"
 
-    sourceSets {
-        main {
+    sourceSets
+    {
+        main
+        {
             manifest.srcFile 'src/main/AndroidManifest.xml'
             java.srcDirs = ['src/main/java']
             res.srcDirs = ['src/main/res']
@@ -19,8 +21,11 @@ android
         applicationId "com.forrestguice.suntimeswidget"
         minSdkVersion 10
         targetSdkVersion 23
-        versionCode 3
-        versionName "0.1.0"
+        versionCode 4
+        versionName "0.1.1"
+
+        buildConfigField "java.util.Date", "BUILD_TIME", "new java.util.Date(" + getDateAsMillis() + "L)"
+        buildConfigField "String", "GIT_HASH", "\"${getGitHash()}\""
     }
 
     buildTypes
@@ -32,10 +37,31 @@ android
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    lintOptions
+    {
+        disable 'MissingTranslation'
+    }
 }
 
 dependencies
 {
     compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'com.luckycatlabs:SunriseSunsetCalculator:1.2'
+}
+
+def getDateAsMillis()
+{
+    def Calendar cal = Calendar.getInstance();
+    return cal.getTimeInMillis().toString()
+}
+
+def getGitHash()
+{
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-parse', '--short', 'HEAD'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
 }

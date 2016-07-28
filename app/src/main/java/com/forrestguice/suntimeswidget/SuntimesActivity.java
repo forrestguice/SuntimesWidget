@@ -856,9 +856,10 @@ public class SuntimesActivity extends AppCompatActivity
 
         String myPackage = "com.forrestguice.suntimeswidget";
         List<ResolveInfo> info = getPackageManager().queryIntentActivities(mapIntent, 0);
+        List<Intent> geoIntents = new ArrayList<Intent>();
+
         if (!info.isEmpty())
         {
-            List<Intent> geoIntents = new ArrayList<Intent>();
             for (ResolveInfo resolveInfo : info)
             {
                 String packageName = resolveInfo.activityInfo.packageName;
@@ -870,10 +871,17 @@ public class SuntimesActivity extends AppCompatActivity
                     geoIntents.add(geoIntent);
                 }
             }
+        }
 
+        if (geoIntents.size() > 0)
+        {
             Intent chooserIntent = Intent.createChooser(geoIntents.remove(0), getString(R.string.configAction_mapLocation_chooser));
             chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, geoIntents.toArray(new Parcelable[geoIntents.size()]));
             startActivity(chooserIntent);
+
+        } else {
+            Toast noAppError = Toast.makeText(this, getString(R.string.configAction_mapLocation_noapp), Toast.LENGTH_LONG);
+            noAppError.show();
         }
     }
 
@@ -1060,7 +1068,7 @@ public class SuntimesActivity extends AppCompatActivity
             txt_lightlength2.setText(lightLengthDisplay2.toString());
 
         } else {
-            String notCalculated = "...";
+            String notCalculated = getString(R.string.time_loading);
             txt_sunrise_actual.setText(notCalculated);
             txt_sunrise_civil.setText(notCalculated);
             txt_sunrise_nautical.setText(notCalculated);

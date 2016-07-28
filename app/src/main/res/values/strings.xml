@@ -10,6 +10,7 @@
     <string name="configAction_addLocation">Location</string>
     <string name="configAction_mapLocation">Show Map</string>
     <string name="configAction_mapLocation_chooser">View location using</string>
+    <string name="configAction_mapLocation_noapp">Unable to find map application!</string>
     <string name="configAction_setAlarm">Set Alarm</string>
     <string name="configAction_setTimeZone">Use Time Zone</string>
     <string name="configAction_setDate">Use Date</string>
@@ -94,10 +95,16 @@
 
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
     <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
+    <string name="delta_years">y</string>    <!-- e.g. 1y -->
     <string name="delta_days">d</string>     <!-- e.g. 1d -->
     <string name="delta_hours">h</string>    <!-- e.g. 2h -->
     <string name="delta_minutes">m</string>  <!-- e.g. 3m -->
     <string name="delta_seconds">s</string>  <!-- e.g. 4s -->
+
+    <!-- misc time values: might be displayed in a timeField in place of an actual time -->
+    <string name="time_none">none</string>  <!-- no time / time does not occur -->
+    <string name="time_loading">…</string>  <!-- calculating / time is loading -->
+    <string name="time_format_12hr_veryshort"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- shortest 12hr time format; should omit am/pm -->
 
     <!--
          WIDGET CONFIG
@@ -220,10 +227,10 @@
         <item>Dark Theme</item>
         <item>Light Theme / Dark Theme (Night Mode)</item>
     </string-array>
-    <string-array name="appThemes_values">  <!-- config values (one-to-one with appThemes_display) -->
-        <item><xliff:g id="id">light</xliff:g></item>
-        <item><xliff:g id="id">dark</xliff:g></item>
-        <item><xliff:g id="id">daynight</xliff:g></item>
+    <string-array name="appThemes_values" translatable="false">  <!-- config values (one-to-one with appThemes_display) -->
+        <item>light</item>
+        <item>dark</item>
+        <item>daynight</item>
     </string-array>
 
     <!-- App Setting: Date "on tap" action -->
@@ -233,11 +240,11 @@
         <item>Show calendar app</item>
         <item>Set custom date</item>
     </string-array>
-    <string-array name="dateTapActions_values"> <!-- config values (one-to-one with dateTapActions_display) -->
-        <item><xliff:g id="id">NOTHING</xliff:g></item>
-        <item><xliff:g id="id">SWAP_CARD</xliff:g></item>
-        <item><xliff:g id="id">SHOW_CALENDAR</xliff:g></item>
-        <item><xliff:g id="id">CONFIG_DATE</xliff:g></item>
+    <string-array name="dateTapActions_values" translatable="false"> <!-- config values (one-to-one with dateTapActions_display) -->
+        <item>NOTHING</item>
+        <item>SWAP_CARD</item>
+        <item>SHOW_CALENDAR</item>
+        <item>CONFIG_DATE</item>
     </string-array>
 
     <!-- App Setting: Clock UI "on tap" action -->
@@ -247,11 +254,11 @@
         <item>Show next note</item>
         <item>Show previous note</item>
     </string-array>
-    <string-array name="clockTapActions_values">  <!-- config values (one-to-one with clockTapActions_display) -->
-        <item><xliff:g id="id">NOTHING</xliff:g></item>
-        <item><xliff:g id="id">ALARM</xliff:g></item>
-        <item><xliff:g id="id">NEXT_NOTE</xliff:g></item>
-        <item><xliff:g id="id">PREV_NOTE</xliff:g></item>
+    <string-array name="clockTapActions_values" translatable="false">  <!-- config values (one-to-one with clockTapActions_display) -->
+        <item>NOTHING</item>
+        <item>ALARM</item>
+        <item>NEXT_NOTE</item>
+        <item>PREV_NOTE</item>
     </string-array>
 
     <!-- App Setting: Note UI "on tap" action -->
@@ -261,11 +268,11 @@
         <item>Show next note</item>
         <item>Show previous note</item>
     </string-array>
-    <string-array name="noteTapActions_values">   <!-- config values (one-to-one with noteTapActions_display) -->
-        <item><xliff:g id="id">NOTHING</xliff:g></item>
-        <item><xliff:g id="id">ALARM</xliff:g></item>
-        <item><xliff:g id="id">NEXT_NOTE</xliff:g></item>
-        <item><xliff:g id="id">PREV_NOTE</xliff:g></item>
+    <string-array name="noteTapActions_values" translatable="false">   <!-- config values (one-to-one with noteTapActions_display) -->
+        <item>NOTHING</item>
+        <item>ALARM</item>
+        <item>NEXT_NOTE</item>
+        <item>PREV_NOTE</item>
     </string-array>
 
     <!-- App Setting: GPS fix time limit -->
@@ -278,12 +285,12 @@
         <item>5 minutes</item>
         <item>10 minutes</item>
     </string-array>
-    <string-array name="getFix_maxElapse_values">   <!-- config values (one-to-one with getFix_maxElapse_display) -->
-        <item><xliff:g id="msValue">15000</xliff:g></item>
-        <item><xliff:g id="msValue">30000</xliff:g></item>
-        <item><xliff:g id="msValue">60000</xliff:g></item>
-        <item><xliff:g id="msValue">300000</xliff:g></item>
-        <item><xliff:g id="msValue">600000</xliff:g></item>
+    <string-array name="getFix_maxElapse_values" translatable="false">   <!-- ms config values (one-to-one with getFix_maxElapse_display) -->
+        <item>15000</item>
+        <item>30000></item>
+        <item>60000</item>
+        <item>300000</item>
+        <item>600000</item>
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
@@ -301,17 +308,17 @@
         <item>one week (168 hours)</item>
         <item>one month (672 hours)</item>
     </string-array>
-    <string-array name="getFix_maxAge_values">     <!-- config values (one-to-one with getFix_maxAge_display) -->
-        <item><xliff:g id="msValue">60000</xliff:g></item>
-        <item><xliff:g id="msValue">300000</xliff:g></item>
-        <item><xliff:g id="msValue">900000</xliff:g></item>
-        <item><xliff:g id="msValue">3600000</xliff:g></item>
-        <item><xliff:g id="msValue">14400000</xliff:g></item>
-        <item><xliff:g id="msValue">43200000</xliff:g></item>
-        <item><xliff:g id="msValue">86400000</xliff:g></item>
-        <item><xliff:g id="msValue">172800000</xliff:g></item>
-        <item><xliff:g id="msValue">604800000</xliff:g></item>
-        <item><xliff:g id="msValue">2419200000</xliff:g></item>
+    <string-array name="getFix_maxAge_values" translatable="false">     <!-- ms config values (one-to-one with getFix_maxAge_display) -->
+        <item>60000</item>
+        <item>300000</item>
+        <item>900000</item>
+        <item>3600000</item>
+        <item>14400000</item>
+        <item>43200000</item>
+        <item>86400000</item>
+        <item>172800000</item>
+        <item>604800000</item>
+        <item>2419200000</item>
     </string-array>
 
     <!--
@@ -408,8 +415,8 @@
     <string name="app_name">Suntimes</string>
     <string name="app_name_widget0">Suntimes Widget</string>
     <string name="app_name_widget1">Suntimes Widget (flippable)</string>
-    <string name="app_version"><b>Version:</b> <i><xliff:g id="versionString">0.1.0</xliff:g></i></string>
-    <string name="app_shortdesc">An app that displays sunrise and sunset times.</string>
+    <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
+    <string name="app_shortdesc">Displays sunrise, sunset, and twilight times.</string>
     <string name="app_support_url"><![CDATA[
         <b>Support:</b> visit the
         <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a> to submit a request.
@@ -417,9 +424,12 @@
     <string name="app_url"><xliff:g id="url"><![CDATA[
         <a href="https://github.com/forrestguice/SuntimesWidget">github.com/forrestguice/SuntimesWidget</a>
     ]]></xliff:g></string>
-    <string name="app_legal"><![CDATA[
+    <string name="app_legal1"><![CDATA[
         Copyright &#169 2014 Forrest Guice <br />
         Source code available under GPLv3.
+    ]]></string>
+    <string name="app_legal2"><![CDATA[
+        German translation by Henrik "HerHde" Hüttemann.
     ]]></string>
 
     <!-- Dialog: Help -->

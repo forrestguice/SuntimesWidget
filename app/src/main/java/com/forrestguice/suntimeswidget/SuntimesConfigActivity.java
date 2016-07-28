@@ -272,8 +272,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
         //
         locationConfig = (LocationConfigView)findViewById(R.id.appwidget_location_config);
         locationConfig.setAutoAllowed(false);
-        locationConfig.init(this, false);
-        locationConfig.setAppWidgetId(this.appWidgetId);
+        locationConfig.init(this, false, this.appWidgetId);
 
         //
         // widget: 1x1 widget mode
@@ -452,7 +451,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
         // load: theme
         SuntimesTheme theme = WidgetSettings.loadThemePref(context, appWidgetId);
         ThemeDescriptor themeDescriptor = WidgetThemes.valueOf(theme.themeName());
-        spinner_theme.setSelection(themeDescriptor.ordinal(WidgetThemes.values()) );
+        spinner_theme.setSelection(themeDescriptor.ordinal(WidgetThemes.values()));
 
         // load: show title
         boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId);
@@ -587,14 +586,21 @@ public class SuntimesConfigActivity extends AppCompatActivity
 
     protected void addWidget()
     {
-        final Context context = SuntimesConfigActivity.this;
-        saveSettings(context);
-        updateWidget(context);
+        boolean hasValidInput = locationConfig.validateInput();  // todo: && validate other potentially troublesome input values
+        if (hasValidInput)
+        {
+            locationConfig.setMode(LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT);
+            locationConfig.populateLocationList();  // triggers 'add place'
 
-        Intent resultValue = new Intent();
-        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        setResult(RESULT_OK, resultValue);
-        finish();
+            final Context context = SuntimesConfigActivity.this;
+            saveSettings(context);
+            updateWidget(context);
+
+            Intent resultValue = new Intent();
+            resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+            setResult(RESULT_OK, resultValue);
+            finish();
+        }
     }
 
     protected void updateWidget( Context context )

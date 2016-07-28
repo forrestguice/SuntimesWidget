@@ -19,6 +19,9 @@
 package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.util.Log;
+
 import java.text.DateFormat;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
@@ -36,11 +39,16 @@ public class SuntimesUtils
     private static String strTimeLonger = "longer";
     private static String strSpace = " ";
     private static String strEmpty = "";
+    private static String strYears = "y";
     private static String strDays = "d";
     private static String strHours = "h";
     private static String strMinutes = "m";
     private static String strSeconds = "s";
     private static String strTimeDeltaFormat = "%1$s" + strEmpty + "%2$s";
+    private static String strTimeVeryShortFormat = "h:mm";
+    private static String strTimeSuffixFormat = "a";
+    private static String strTimeNone = "none";
+    private static String strTimeLoading = "...";
 
     public SuntimesUtils() {}
 
@@ -48,11 +56,15 @@ public class SuntimesUtils
     {
         strTimeShorter = context.getString(R.string.delta_day_shorter);
         strTimeLonger = context.getString(R.string.delta_day_longer);
+        strYears = context.getString(R.string.delta_years);
         strDays = context.getString(R.string.delta_days);
         strHours = context.getString(R.string.delta_hours);
         strMinutes = context.getString(R.string.delta_minutes);
         strSeconds = context.getString(R.string.delta_seconds);
         strTimeDeltaFormat = context.getString(R.string.delta_format);
+        strTimeVeryShortFormat = context.getString(R.string.time_format_12hr_veryshort);
+        strTimeNone = context.getString(R.string.time_none);
+        strTimeLoading = context.getString(R.string.time_loading);
     }
 
     /**
@@ -68,6 +80,13 @@ public class SuntimesUtils
         public TimeDisplayText()
         {
             this.value = "";
+            this.units = "";
+            this.suffix = "";
+        }
+
+        public TimeDisplayText(String value)
+        {
+            this.value = value;
             this.units = "";
             this.suffix = "";
         }
@@ -169,7 +188,7 @@ public class SuntimesUtils
     {
         if (cal == null)
         {
-            return new TimeDisplayText();
+            return new TimeDisplayText(strTimeNone);
         }
 
         Date time = cal.getTime();
@@ -178,15 +197,51 @@ public class SuntimesUtils
         boolean is24 = android.text.format.DateFormat.is24HourFormat(context);
         if (is24)
         {
+            // most locales seem to use 24 hour time
             DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(context);
             retValue = new TimeDisplayText(timeFormat.format(time), "", "");
 
         } else {
-            SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm", Locale.US);   // TODO: fix i18n here
+            // other locales use (or optionally allow) 12 hr time;
+            //
+            // `getTimeFormat` produces a localized timestring but we want the time part (6:47)
+            // separate from the suffix (AM/PM) in order to let the layout define the presentation.
+            //
+            // a. The ICU4j `getPatternInstance` method seems to be the ideal solution (using the
+            // HOURS_MINUTES pattern), but is a recent addition to android (api 24).
+            //
+            // b. Using toLocalizedPattern on an existing SimpleDateFormat
+            // may be another solution, but leaves the problem of separating the time from the suffix
+            // in a consistent way for all locales.
+            //
+            // c. Java 8 may introduce methods that address this, but the project currently compiles
+            // using older versions of java (and it would suck to break that).
+            //
+            // d. A third party lib might address this, which could be added if its source is available
+            // and easily included in the build from official maven repos.
+            //
+            // For now the work around is to define a "veryShortFormat" in strings.xml for those locales
+            // that use something other than the usual "h:mm" pattern. A better solution would get this
+            // from the system somehow without requiring additional translation.
+
+            // a variety 12 hour time formats from around the world...
+            //
+            //   english (us):       6:47 AM        11:46 PM           (en)
+            //   afrikaans:          6:47 vm.       11:46 nm.
+            //   isiZulu:            6:47 Ekuseni   11:46 Ntambama
+            //   bahasa (melayu):    6:47 PG        11:46 PTG
+            //   bahasa (indonesia): 6.47 AM        11.46 PM           (in)
+            //   dansk               6.47 AM        11.46 PM           (da)
+            //   norsk bokmal        6.47 a.m.      11.46 p.m.         (nb)
+
+            Locale locale = Resources.getSystem().getConfiguration().locale;
+
+            SimpleDateFormat timeFormat = new SimpleDateFormat(strTimeVeryShortFormat, locale); // h:mm
             timeFormat.setTimeZone(cal.getTimeZone());
 
-            SimpleDateFormat suffixFormat = new SimpleDateFormat("a", Locale.US);    // TODO: fix i18n here
+            SimpleDateFormat suffixFormat = new SimpleDateFormat(strTimeSuffixFormat, locale);  // a
             suffixFormat.setTimeZone(cal.getTimeZone());
+
             retValue = new TimeDisplayText( timeFormat.format(time), "", suffixFormat.format(time) );
         }
 
@@ -236,37 +291,44 @@ public class SuntimesUtils
         long timeInMillis = d.getTimeInMillis();
 
         long numberOfSeconds = timeInMillis / 1000;
-        suffix += ((numberOfSeconds > 0) ? strTimeLonger : strTimeShorter);   // longer : shorter
+        suffix += ((numberOfSeconds > 0) ? strTimeLonger : strTimeShorter);
         numberOfSeconds = Math.abs(numberOfSeconds);
 
         long numberOfMinutes = numberOfSeconds / 60;
         long numberOfHours = numberOfMinutes / 60;
         long numberOfDays = numberOfHours / 24;
+        long numberOfYears = numberOfDays / 365;
 
+        long remainingDays = numberOfDays % 365;
         long remainingHours = numberOfHours % 24;
         long remainingMinutes = numberOfMinutes % 60;
         long remainingSeconds = numberOfSeconds % 60;
 
-        boolean showingDays = (numberOfDays > 0);
+        boolean showingYears = (numberOfYears > 0);
+        if (showingYears)
+            value += String.format(strTimeDeltaFormat, numberOfYears, strYears);
+
+        boolean showingDays = (remainingDays > 0);
         if (showingDays)
-            value += String.format(strTimeDeltaFormat, numberOfDays, strDays);
+            value += (showingYears ? strSpace : strEmpty) +
+                     String.format(strTimeDeltaFormat, remainingDays, strDays);
 
         boolean showingHours = (remainingHours > 0);
         if (showingHours)
-            value += (showingDays ? strSpace : strEmpty) +
+            value += (showingYears || showingDays ? strSpace : strEmpty) +
                      String.format(strTimeDeltaFormat, remainingHours, strHours);
 
         boolean showingMinutes = (remainingMinutes > 0);
         if (showingMinutes)
-            value += (showingDays || showingHours ? strSpace : strEmpty) +
+            value += (showingYears || showingDays || showingHours ? strSpace : strEmpty) +
                      String.format(strTimeDeltaFormat, remainingMinutes, strMinutes);
 
-        boolean showingSeconds = (showSeconds && !showingHours && !showingDays && (remainingSeconds > 0));
+        boolean showingSeconds = (showSeconds && !showingHours && !showingDays && !showingYears && (remainingSeconds > 0));
         if (showingSeconds)
             value += (showingMinutes ? strSpace : strEmpty) +
                      String.format(strTimeDeltaFormat, remainingSeconds, strSeconds);
 
-        if (!showingSeconds && !showingMinutes && !showingHours && !showingDays)
+        if (!showingSeconds && !showingMinutes && !showingHours && !showingDays && !showingYears)
             value += String.format(strTimeDeltaFormat, "1", strMinutes);
 
         TimeDisplayText text = new TimeDisplayText(value, units, suffix);
