@@ -4,9 +4,9 @@
     <PreferenceCategory
         android:title="@string/configLabel_places">
 
-        <Preference android:title="Export Places" android:key="places_export" />
+        <Preference android:title="@string/configLabel_places_export" android:key="places_export" />
 
-        <Preference android:title="Clear Places" android:key="places_clear" />
+        <Preference android:title="@string/configLabel_places_clear" android:key="places_clear" />
 
     </PreferenceCategory>
 
