@@ -125,7 +125,7 @@
 
   <!-- Widget Setting: appearance -->
   <string name="configLabel_appearance">Darstellung</string>           <!-- group title -->
-  <string name="configLabel_appearance_theme">Thema:</string>                  <!-- spinner label -->
+  <string name="configLabel_appearance_theme">Theme:</string>                  <!-- spinner label -->
   <string name="configLabel_appearance_showTitle">Titel anzeigen</string>          <!-- checkbox label -->
   <string name="configLabel_appearance_titleText">Titel:</string>              <!-- edittext label -->
   <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
@@ -220,6 +220,8 @@
 
   <!-- App Setting: Places -->
   <string name="configLabel_places">Orte</string>                           <!-- group title -->
+  <string name="configLabel_places_export">Exportiere Orte</string>
+  <string name="configLabel_places_clear">Lösche Orte</string>
 
   <!-- App Setting: UI Theme -->
   <string name="configLabel_ui">Benutzeroberfläche</string>                       <!-- group title -->
@@ -387,7 +389,7 @@
       Source code available under GPLv3.
   ]]></string>
   <string name="app_legal2"><![CDATA[
-      Deutsche Übersetzung von Henrik "HerHde" Hüttemann.
+      Deutsche Übersetzung von Henrik &quot;HerHde&quot; Hüttemann.
   ]]></string>
 
   <!-- Dialog: Help -->
