@@ -43,4 +43,8 @@ public interface SuntimesCalculator
     Calendar getNauticalSunsetCalendarForDate( Calendar date );
     Calendar getAstronomicalSunsetCalendarForDate( Calendar date );
 
+    Calendar getVernalEquinoxForYear( Calendar date );
+    Calendar getSummerSolsticeForYear( Calendar date );
+    Calendar getAutumnalEquinoxForYear( Calendar date );
+    Calendar getWinterSolsticeForYear( Calendar date );
 }
