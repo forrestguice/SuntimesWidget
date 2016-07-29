@@ -250,6 +250,16 @@ public class SuntimesUtils
     }
 
     /**
+     * @param context
+     * @param cal
+     * @return
+     */
+    public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal)
+    {
+        return calendarTimeShortDisplayString(context, cal);  // TODO
+    }
+
+    /**
      * @param c1
      * @param c2
      * @return
