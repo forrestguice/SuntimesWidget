@@ -136,6 +136,20 @@
 
         </ViewFlipper>
 
+
+        <LinearLayout
+            style="@style/SunsetTimeCard"
+            android:id="@+id/info_date_solsticequinox"
+            android:layout_width="match_parent"
+            android:animateLayoutChanges="true"
+            android:layout_marginTop="10dp" android:elevation="5dp"
+            tools:ignore="UnusedAttribute">
+
+            <include layout="@layout/info_time_solsticequinox" />
+
+        </LinearLayout>
+
+
     </LinearLayout>
 
 </LinearLayout>
