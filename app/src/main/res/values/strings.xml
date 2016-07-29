@@ -140,6 +140,14 @@
     <string name="timeMode_nautical">Nautical Twilight</string>         <!-- setting -->
     <string name="timeMode_astronomical_short">Astronomical</string>    <!-- setting -->
     <string name="timeMode_astronomical">Astronomical Twilight</string> <!-- setting -->
+    <string name="timeMode_equinox_vernal">Vernal Equinox</string>      <!-- setting -->
+    <string name="timeMode_equinox_vernal_short">Equinox</string>       <!-- setting -->
+    <string name="timeMode_equinox_autumnal">Autumnal Equinox</string>  <!-- setting -->
+    <string name="timeMode_equinox_autumnal_short">Equinox</string>     <!-- setting -->
+    <string name="timeMode_solstice_summer">Summer Solstice</string>    <!-- setting -->
+    <string name="timeMode_solstice_summer_short">Solstice</string>     <!-- setting -->
+    <string name="timeMode_solstice_winter">Winter Solstice</string>    <!-- setting -->
+    <string name="timeMode_solstice_winter_short">Solstice</string>     <!-- setting -->
 
     <string name="configLabel_general_timeMode">Mode:</string>          <!-- spinner label -->
 

@@ -142,6 +142,15 @@
   <string name="timeMode_astronomical_short">Astronomisch</string>    <!-- setting -->
   <string name="timeMode_astronomical">Astronomische Dämmerung</string> <!-- setting -->
 
+    <string name="timeMode_equinox_vernal">Vernal Equinox</string>      <!-- setting --> <!-- TODO -->
+    <string name="timeMode_equinox_vernal_short">Equinox</string>       <!-- setting --> <!-- TODO -->
+    <string name="timeMode_equinox_autumnal">Autumnal Equinox</string>  <!-- setting --> <!-- TODO -->
+    <string name="timeMode_equinox_autumnal_short">Equinox</string>     <!-- setting --> <!-- TODO -->
+    <string name="timeMode_solstice_summer">Summer Solstice</string>    <!-- setting --> <!-- TODO -->
+    <string name="timeMode_solstice_summer_short">Solstice</string>     <!-- setting --> <!-- TODO -->
+    <string name="timeMode_solstice_winter">Winter Solstice</string>    <!-- setting --> <!-- TODO -->
+    <string name="timeMode_solstice_winter_short">Solstice</string>     <!-- setting --> <!-- TODO -->
+
   <string name="configLabel_general_timeMode">Modus:</string>          <!-- spinner label -->
 
   <!-- Widget Setting: layout mode -->
