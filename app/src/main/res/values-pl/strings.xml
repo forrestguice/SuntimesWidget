@@ -308,7 +308,7 @@
         <item>dzień (24 godziny)</item>
         <item>dwa dni (48 godzin)</item>
         <item>tydzień (168 godzin)</item>
-        <item>miesiąc (672 godzin)</item>
+        <item>miesiąc (672 godziny)</item>
     </string-array>
     <string-array name="getFix_maxAge_values" translatable="false">     <!-- ms config values (one-to-one with getFix_maxAge_display) -->
         <item>60000</item>
