@@ -53,6 +53,7 @@ import java.util.List;
 public class SuntimesSettingsActivity extends PreferenceActivity
 {
     final static String ACTION_PREFS_GENERAL = "com.forrestguice.suntimeswidget.PREFS_GENERAL";
+    final static String ACTION_PREFS_LOCALE = "com.forrestguice.suntimeswidget.PREFS_LOCALE";
     final static String ACTION_PREFS_UI = "com.forrestguice.suntimeswidget.PREFS_UI";
     final static String ACTION_PREFS_WIDGETLIST = "com.forrestguice.suntimeswidget.PREFS_WIDGETLIST";
     final static String ACTION_PREFS_PLACES = "com.forrestguice.suntimeswidget.PREFS_PLACES";
@@ -78,6 +79,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity
         if (action != null && action.equals(ACTION_PREFS_GENERAL))
         {
             addPreferencesFromResource(R.xml.preference_general);
+
+        } else if (action != null && action.equals(ACTION_PREFS_LOCALE)) {
+            addPreferencesFromResource(R.xml.preference_locale);
 
         } else if (action != null && action.equals(ACTION_PREFS_UI)) {
             addPreferencesFromResource(R.xml.preference_userinterface);
@@ -132,6 +136,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
     protected boolean isValidFragment(String fragmentName)
     {
         return GeneralPrefsFragment.class.getName().equals(fragmentName) ||
+               LocalePrefsFragment.class.getName().equals(fragmentName) ||
                UIPrefsFragment.class.getName().equals(fragmentName) ||
                PlacesPrefsFragment.class.getName().equals(fragmentName);
     }
@@ -251,6 +256,26 @@ public class SuntimesSettingsActivity extends PreferenceActivity
         {
             super.onAttach(activity);
             loadGeneral(activity);
+        }
+    }
+
+    //////////////////////////////////////////////////
+    //////////////////////////////////////////////////
+
+    /**
+     * Locale Prefs
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class LocalePrefsFragment extends PreferenceFragment
+    {
+        @Override
+        public void onCreate(Bundle savedInstanceState)
+        {
+            super.onCreate(savedInstanceState);
+            Log.i("LocalePrefsFragment", "Arguments: " + getArguments());
+
+            PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_locale, false);
+            addPreferencesFromResource(R.xml.preference_locale);
         }
     }
 

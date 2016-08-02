@@ -21,6 +21,13 @@
 
     </header>
 
+    <header android:fragment="com.forrestguice.suntimeswidget.SuntimesSettingsActivity$LocalePrefsFragment"
+            android:icon="?attr/icActionSettings"
+            android:title="@string/configLabel_locale"
+            android:summary=""
+            tools:ignore="UnusedAttribute">
+    </header>
+
     <header android:fragment="com.forrestguice.suntimeswidget.SuntimesSettingsActivity$PlacesPrefsFragment"
             android:icon="?attr/icActionSettings"
             android:title="@string/configLabel_places"

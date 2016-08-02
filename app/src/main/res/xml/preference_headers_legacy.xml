@@ -20,6 +20,15 @@
     </Preference>
 
     <Preference
+        android:title="@string/configLabel_locale"
+        android:summary=""  >
+        <intent
+            android:targetPackage="com.forrestguice.suntimeswidget"
+            android:targetClass="com.forrestguice.suntimeswidget.SuntimesSettingsActivity"
+            android:action="com.forrestguice.suntimeswidget.PREFS_LOCALE" />
+    </Preference>
+
+    <Preference
         android:title="@string/configLabel_places"
         android:summary=""  >
         <intent

@@ -323,6 +323,34 @@
         <item>2419200000</item>
     </string-array>
 
+    <!-- App Setting: locale mode -->
+    <string name="configLabel_locale">Language Settings</string>   <!-- group title -->
+
+    <string name="configLabel_localeMode">Mode</string>
+    <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
+    <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
+        <item>System</item>
+        <item>Custom</item>
+    </string-array>
+    <string-array name="localeMode_values" translatable="false">  <!-- one-to-one with localeMode_display -->
+        <item>CURRENT_LOCALE</item>
+        <item>CUSTOM_LOCALE</item>
+    </string-array>
+
+    <!-- App Setting: custom Locale -->
+    <string name="configLabel_localeSelect">Language</string>
+    <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
+    <string-array name="locale_display">                      <!-- one-to-one with locale_values -->
+        <item>English</item>
+        <item>German</item>
+        <item>Polish</item>
+    </string-array>
+    <string-array name="locale_values" translatable="false">  <!-- one-to-one with locale_display -->
+        <item>en</item>
+        <item>de</item>
+        <item>pl</item>
+    </string-array>
+
     <!--
          DIALOGS
     -->
