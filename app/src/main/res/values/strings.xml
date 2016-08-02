@@ -227,6 +227,8 @@
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">Places</string>                           <!-- group title -->
+    <string name="configLabel_places_export">Export Places</string>
+    <string name="configLabel_places_clear">Clear Places</string>
 
     <!-- App Setting: UI Theme -->
     <string name="configLabel_ui">User Interface</string>                       <!-- group title -->
