@@ -18,12 +18,17 @@
 
 package com.forrestguice.suntimeswidget.settings;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.preference.PreferenceManager;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesDataset;
+
+import java.util.Locale;
 
 public class AppSettings
 {
@@ -34,6 +39,12 @@ public class AppSettings
     public static final String PREF_KEY_APPEARANCE_THEME = "app_appearance_theme";
     public static final String PREF_DEF_APPEARANCE_THEME = THEME_DARK;
 
+    public static final String PREF_KEY_LOCALE_MODE = "app_locale_mode";
+    public static final LocaleMode PREF_DEF_LOCALE_MODE = LocaleMode.SYSTEM_LOCALE;
+
+    public static final String PREF_KEY_LOCALE = "app_locale";
+    public static final String PREF_DEF_LOCALE = "en";
+
     public static final String PREF_KEY_UI_DATETAPACTION = "app_ui_datetapaction";
     public static final DateTapAction PREF_DEF_UI_DATETAPACTION = DateTapAction.CONFIG_DATE;
 
@@ -42,6 +53,85 @@ public class AppSettings
 
     public static final String PREF_KEY_UI_NOTETAPACTION = "app_ui_notetapaction";
     public static final ClockTapAction PREF_DEF_UI_NOTETAPACTION = ClockTapAction.NEXT_NOTE;
+
+    /**
+     * Language modes (system, user defined)
+     */
+    public static enum LocaleMode
+    {
+        SYSTEM_LOCALE("System Locale"),
+        CUSTOM_LOCALE("Custom Locale");
+
+        private String displayString;
+
+        private LocaleMode( String displayString )
+        {
+            this.displayString = displayString;
+        }
+
+        public String getDisplayString()
+        {
+            return displayString;
+        }
+
+        public void setDisplayString( String displayString )
+        {
+            this.displayString = displayString;
+        }
+        public static void initDisplayStrings( Context context )
+        {
+            String[] labels = context.getResources().getStringArray(R.array.localeMode_display);
+            SYSTEM_LOCALE.setDisplayString(labels[0]);
+            CUSTOM_LOCALE.setDisplayString(labels[1]);
+        }
+    }
+
+    /**
+     * Preference: locale mode
+     */
+    public static LocaleMode loadLocaleModePref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        String modeString = pref.getString(PREF_KEY_LOCALE_MODE, PREF_DEF_LOCALE_MODE.name());
+
+        LocaleMode localeMode;
+        try {
+            localeMode = LocaleMode.valueOf(modeString);
+
+        } catch (IllegalArgumentException e) {
+            localeMode = PREF_DEF_LOCALE_MODE;
+        }
+        return localeMode;
+    }
+
+    /**
+     * Preference: custom locale
+     */
+    public static String loadLocalePref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getString(PREF_KEY_LOCALE, PREF_DEF_LOCALE);
+    }
+
+    public static void initLocale( Activity activity )
+    {
+        AppSettings.LocaleMode localeMode = AppSettings.loadLocaleModePref(activity);
+        if (localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE)
+        {
+            AppSettings.loadLocale(activity, AppSettings.loadLocalePref(activity));
+        }
+    }
+
+    public static void loadLocale( Activity activity, String localeCode )
+    {
+        Resources resources = activity.getBaseContext().getResources();
+        Configuration config = resources.getConfiguration();
+
+        Locale locale = new Locale(localeCode);
+        Locale.setDefault(locale);
+        config.locale = locale;
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
+    }
 
     /**
      * Actions that can be performed when the clock is clicked.
@@ -220,6 +310,7 @@ public class AppSettings
 
     public static void initDisplayStrings( Context context )
     {
+        LocaleMode.initDisplayStrings(context);
         ClockTapAction.initDisplayStrings(context);
     }
 

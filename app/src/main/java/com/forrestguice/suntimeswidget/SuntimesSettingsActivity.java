@@ -25,6 +25,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Build;
@@ -45,6 +47,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A preferences activity for the main app;
@@ -95,8 +98,20 @@ public class SuntimesSettingsActivity extends PreferenceActivity
         } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
             addPreferencesFromResource(R.xml.preference_headers_legacy);
         }
+    }
 
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        AppSettings.initLocale(this);
+        initDisplayStrings();
+    }
+
+    private void initDisplayStrings()
+    {
         context = SuntimesSettingsActivity.this;
+        AppSettings.initDisplayStrings(context);
         WidgetSettings.initDisplayStrings(context);
     }
 
