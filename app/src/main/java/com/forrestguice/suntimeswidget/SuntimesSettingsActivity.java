@@ -107,6 +107,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     public void onResume()
     {
         super.onResume();
+        initLocale();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         prefs.registerOnSharedPreferenceChangeListener(this);
     }
