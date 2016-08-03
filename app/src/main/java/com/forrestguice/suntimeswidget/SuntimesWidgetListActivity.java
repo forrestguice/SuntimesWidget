@@ -65,6 +65,8 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     {
         setTheme(AppSettings.loadTheme(this));
         super.onCreate(icicle);
+        AppSettings.initLocale(this);
+
         setResult(RESULT_CANCELED);
         setContentView(R.layout.layout_widgetlist);
         initViews(this);
