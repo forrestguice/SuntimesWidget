@@ -24,6 +24,9 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
+import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesDataset;
@@ -92,6 +95,11 @@ public class AppSettings
     public static LocaleMode loadLocaleModePref( Context context )
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return loadLocaleModePref(pref);
+    }
+
+    public static LocaleMode loadLocaleModePref( SharedPreferences pref )
+    {
         String modeString = pref.getString(PREF_KEY_LOCALE_MODE, PREF_DEF_LOCALE_MODE.name());
 
         LocaleMode localeMode;
@@ -113,24 +121,62 @@ public class AppSettings
         return pref.getString(PREF_KEY_LOCALE, PREF_DEF_LOCALE);
     }
 
-    public static void initLocale( Activity activity )
+    /**
+     * @return true if locale was changed by init, false otherwise
+     */
+    public static boolean initLocale( Activity activity )
     {
         AppSettings.LocaleMode localeMode = AppSettings.loadLocaleModePref(activity);
         if (localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE)
         {
-            AppSettings.loadLocale(activity, AppSettings.loadLocalePref(activity));
+            return AppSettings.loadLocale(activity, AppSettings.loadLocalePref(activity));
+
+        } else {
+            return resetLocale(activity);
         }
     }
 
-    public static void loadLocale( Activity activity, String localeCode )
+    /**
+     * @return true if the locale was changed by reset, false otherwise
+     */
+    public static boolean resetLocale( Activity activity )
+    {
+        if (systemLocale != null)
+        {
+            Log.d("resetLocale", "locale reset to " + systemLocale);
+            return loadLocale(activity, systemLocale);
+        }
+        return false;
+    }
+
+    private static String systemLocale = null;  // null until locale is overridden w/ loadLocale
+    public static String getSystemLocale()
+    {
+        if (systemLocale == null)
+        {
+            systemLocale = Locale.getDefault().getLanguage();
+        }
+        return systemLocale;
+    }
+
+    public static boolean loadLocale( Activity activity, String localeCode )
     {
         Resources resources = activity.getBaseContext().getResources();
         Configuration config = resources.getConfiguration();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
 
-        Locale locale = new Locale(localeCode);
-        Locale.setDefault(locale);
-        config.locale = locale;
-        resources.updateConfiguration(config, resources.getDisplayMetrics());
+        if (systemLocale == null)
+        {
+            systemLocale = Locale.getDefault().getLanguage();
+        }
+        Locale customLocale = new Locale(localeCode);
+
+        Locale.setDefault(customLocale);
+        config.locale = customLocale;
+        resources.updateConfiguration(config, metrics);
+
+        Log.d("loadLocale", "locale loaded " + localeCode);
+        return true;
     }
 
     /**
