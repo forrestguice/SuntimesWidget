@@ -330,7 +330,7 @@
     <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
     <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
         <item>System</item>
-        <item>Custom</item>
+        <item>User Defined</item>
     </string-array>
     <string-array name="localeMode_values" translatable="false">  <!-- one-to-one with localeMode_display -->
         <item>SYSTEM_LOCALE</item>
