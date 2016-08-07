@@ -433,7 +433,7 @@
                 * <b>%lon</b> jako długość geo. <br/>
                 * <b>%m</b> jako rodzaj zdarzenia (krótki) (np. "Cywilny") <br/>
                 * <b>%M</b> jako rodzaj zdarzenia (długi) (np. "Cywilny świt/zmierzch") <br/>
-                * <b>%t</b> jako strefa czasowa (id) (np. "Europa/Warszawa") <br/>
+                * <b>%t</b> jako strefa czasowa (id) (np. Europa/Warszawa) <br/>
     ]]></string>
 
     <string name="help_general">  <!-- general app help; composites a couple help topics together. -->
