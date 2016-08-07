@@ -69,7 +69,13 @@ public class SuntimesWidget extends AppWidgetProvider
     public void onReceive(@NonNull Context context, @NonNull Intent intent)
     {
         super.onReceive(context, intent);
-        handleClickAction(context, intent);
+        initLocale(context);
+
+        String action = intent.getAction();
+        if (!action.equals(AppWidgetManager.ACTION_APPWIDGET_OPTIONS_CHANGED))
+        {
+            handleClickAction(context, intent);
+        }
     }
 
     /**
@@ -120,7 +126,7 @@ public class SuntimesWidget extends AppWidgetProvider
             return true;
         }
 
-        Log.w("SuntimesWidget", "Unsupported click action: " + action + " (" + appWidgetId + ")");
+        //Log.w("SuntimesWidget", "Unsupported click action: " + action + " (" + appWidgetId + ")");
         return false;
     }
 
@@ -151,11 +157,11 @@ public class SuntimesWidget extends AppWidgetProvider
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
 
-    protected void initLocale(Context context)
+    public static void initLocale(Context context)
     {
         AppSettings.initLocale(context);
-        WidgetSettings.TimeMode.initDisplayStrings(context);
         SuntimesUtils.initDisplayStrings(context);
+        WidgetSettings.TimeMode.initDisplayStrings(context);
     }
 
     /**

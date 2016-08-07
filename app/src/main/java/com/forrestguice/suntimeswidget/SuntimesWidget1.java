@@ -59,7 +59,8 @@ public class SuntimesWidget1 extends SuntimesWidget
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, appWidgetId, intent, 0);
         views.setOnClickPendingIntent(R.id.widgetframe_outer_1x1, pendingIntent);
 
-        appWidgetManager.updateAppWidget(appWidgetId, views);
+        appWidgetManager.updateAppWidget(appWidgetId, null);   // null on this line to discard previously cached RemoveViews
+        appWidgetManager.updateAppWidget(appWidgetId, views);  // so this next line actually updates...
     }
 
     protected void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
