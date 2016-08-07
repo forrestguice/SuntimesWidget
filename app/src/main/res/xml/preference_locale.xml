@@ -10,7 +10,7 @@
             android:dialogTitle="@string/configLabel_localeMode"
             android:summary="@string/configLabel_localeMode_summary"
             android:entries="@array/localeMode_display" android:entryValues="@array/localeMode_values"
-            android:defaultValue="CURRENT_LOCALE" />
+            android:defaultValue="SYSTEM_LOCALE" />
 
         <ListPreference
             android:key="app_locale"
