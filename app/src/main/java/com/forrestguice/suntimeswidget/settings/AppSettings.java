@@ -124,27 +124,27 @@ public class AppSettings
     /**
      * @return true if locale was changed by init, false otherwise
      */
-    public static boolean initLocale( Activity activity )
+    public static boolean initLocale( Context context )
     {
-        AppSettings.LocaleMode localeMode = AppSettings.loadLocaleModePref(activity);
+        AppSettings.LocaleMode localeMode = AppSettings.loadLocaleModePref(context);
         if (localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE)
         {
-            return AppSettings.loadLocale(activity, AppSettings.loadLocalePref(activity));
+            return AppSettings.loadLocale(context, AppSettings.loadLocalePref(context));
 
         } else {
-            return resetLocale(activity);
+            return resetLocale(context);
         }
     }
 
     /**
      * @return true if the locale was changed by reset, false otherwise
      */
-    public static boolean resetLocale( Activity activity )
+    public static boolean resetLocale( Context context )
     {
         if (systemLocale != null)
         {
             Log.d("resetLocale", "locale reset to " + systemLocale);
-            return loadLocale(activity, systemLocale);
+            return loadLocale(context, systemLocale);
         }
         return false;
     }
@@ -158,10 +158,14 @@ public class AppSettings
         }
         return systemLocale;
     }
-
-    public static boolean loadLocale( Activity activity, String localeCode )
+    public static Locale getLocale()
     {
-        Resources resources = activity.getBaseContext().getResources();
+        return Locale.getDefault();
+    }
+
+    public static boolean loadLocale( Context context, String localeCode )
+    {
+        Resources resources = context.getApplicationContext().getResources();
         Configuration config = resources.getConfiguration();
         DisplayMetrics metrics = resources.getDisplayMetrics();
 
