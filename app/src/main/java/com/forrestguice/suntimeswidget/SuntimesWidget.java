@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.annotation.TargetApi;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Build;
 
@@ -270,6 +271,21 @@ public class SuntimesWidget extends AppWidgetProvider
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
+    public static void updateWidgets(Context context)
+    {
+        updateWidgets(context, SuntimesWidget.class);
+    }
+
+    public static void updateWidgets( Context context, Class widgetClass )
+    {
+        AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
+        int[] ids = widgetManager.getAppWidgetIds(new ComponentName(context, widgetClass));
+
+        Intent updateIntent = new Intent(context, widgetClass);
+        updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+        context.sendBroadcast(updateIntent);
+    }
 
 }
 

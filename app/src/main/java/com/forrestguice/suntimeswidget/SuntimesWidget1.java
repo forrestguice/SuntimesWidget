@@ -26,6 +26,11 @@ public class SuntimesWidget1 extends SuntimesWidget
         return SuntimesConfigActivity1.class;
     }
 
+    public static void updateWidgets(Context context)
+    {
+        updateWidgets(context, SuntimesWidget1.class);
+    }
+
     @Override
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     protected boolean handleClickAction(Context context, Intent intent)

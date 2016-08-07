@@ -22,6 +22,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -173,8 +174,6 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                PlacesPrefsFragment.class.getName().equals(fragmentName);
     }
 
-    public static final String DIALOGTAG_CLEARPLACES = "clearplaces";
-
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
     {
@@ -182,6 +181,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         {
             Log.d("SettingsActivity", "Locale change detected; restarting activity");
             AppSettings.initLocale(this);
+            SuntimesWidget.updateWidgets(this);
+            SuntimesWidget1.updateWidgets(this);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
             {
