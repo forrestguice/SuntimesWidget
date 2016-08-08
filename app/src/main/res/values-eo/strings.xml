@@ -358,6 +358,21 @@
         <item>naŭtikan sunsubiron</item>
         <item>astronomian sunsubiron</item>
     </string-array>
+    
+  <!-- App Setting: locale mode -->
+  <!-- TODO -->
+  <string name="configLabel_locale">Agordoj de lingvo</string>   <!-- group title -->
+
+  <string name="configLabel_localeMode">Reĝimo</string>
+  <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
+  <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
+      <item>Sistema</item>
+      <item>Propra</item>
+  </string-array>
+  <string-array name="localeMode_values" translatable="false">  <!-- one-to-one with localeMode_display -->
+      <item>SYSTEM_LOCALE</item>
+      <item>CUSTOM_LOCALE</item>
+  </string-array>
 
     <!-- App Setting: custom Locale -->
     <!-- TODO -->
