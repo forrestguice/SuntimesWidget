@@ -123,7 +123,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
     private void initLocale()
     {
         AppSettings.initLocale(this);
-        initDisplayStrings(this);
+        WidgetSettings.initDisplayStrings(this);
     }
 
     @Override
@@ -131,11 +131,6 @@ public class SuntimesConfigActivity extends AppCompatActivity
     {
         locationConfig.cancelGetFix();
         super.onDestroy();
-    }
-
-    protected void initDisplayStrings( Context context )
-    {
-        WidgetSettings.initDisplayStrings(context);
     }
 
     /**
