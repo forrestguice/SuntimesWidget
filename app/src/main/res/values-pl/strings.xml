@@ -325,13 +325,13 @@
 
     <!-- App Setting: locale mode -->
     <!-- TODO -->
-    <string name="configLabel_locale">Language Settings (pl)</string>   <!-- group title -->
+    <string name="configLabel_locale">Ustawienia języka (pl)</string>   <!-- group title -->
 
-    <string name="configLabel_localeMode">Mode</string>
+    <string name="configLabel_localeMode">Język</string>
     <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
     <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
-        <item>System</item>
-        <item>User Defined</item>
+        <item>Systemowy</item>
+        <item>Własny użytkownika</item>
     </string-array>
     <string-array name="localeMode_values" translatable="false">  <!-- one-to-one with localeMode_display -->
         <item>SYSTEM_LOCALE</item>
@@ -340,13 +340,13 @@
 
     <!-- App Setting: custom Locale -->
     <!-- TODO -->
-    <string name="configLabel_localeSelect">Language</string>
+    <string name="configLabel_localeSelect">Język</string>
     <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
     <string-array name="locale_display">                      <!-- one-to-one with locale_values -->
-        <item>English</item>
+        <item>Angielski</item>
         <item>Esperanto</item>
-        <item>German</item>
-        <item>Polish</item>
+        <item>Niemiecki</item>
+        <item>Polski</item>
     </string-array>
     <string-array name="locale_values" translatable="false">  <!-- one-to-one with locale_display -->
         <item>en</item>
