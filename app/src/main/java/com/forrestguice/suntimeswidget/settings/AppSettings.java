@@ -20,10 +20,16 @@ package com.forrestguice.suntimeswidget.settings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.preference.PreferenceManager;
+import android.util.DisplayMetrics;
+import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesDataset;
+
+import java.util.Locale;
 
 public class AppSettings
 {
@@ -34,6 +40,12 @@ public class AppSettings
     public static final String PREF_KEY_APPEARANCE_THEME = "app_appearance_theme";
     public static final String PREF_DEF_APPEARANCE_THEME = THEME_DARK;
 
+    public static final String PREF_KEY_LOCALE_MODE = "app_locale_mode";
+    public static final LocaleMode PREF_DEF_LOCALE_MODE = LocaleMode.SYSTEM_LOCALE;
+
+    public static final String PREF_KEY_LOCALE = "app_locale";
+    public static final String PREF_DEF_LOCALE = "en";
+
     public static final String PREF_KEY_UI_DATETAPACTION = "app_ui_datetapaction";
     public static final DateTapAction PREF_DEF_UI_DATETAPACTION = DateTapAction.CONFIG_DATE;
 
@@ -42,6 +54,132 @@ public class AppSettings
 
     public static final String PREF_KEY_UI_NOTETAPACTION = "app_ui_notetapaction";
     public static final ClockTapAction PREF_DEF_UI_NOTETAPACTION = ClockTapAction.NEXT_NOTE;
+
+    /**
+     * Language modes (system, user defined)
+     */
+    public static enum LocaleMode
+    {
+        SYSTEM_LOCALE("System Locale"),
+        CUSTOM_LOCALE("Custom Locale");
+
+        private String displayString;
+
+        private LocaleMode( String displayString )
+        {
+            this.displayString = displayString;
+        }
+
+        public String getDisplayString()
+        {
+            return displayString;
+        }
+
+        public void setDisplayString( String displayString )
+        {
+            this.displayString = displayString;
+        }
+        public static void initDisplayStrings( Context context )
+        {
+            String[] labels = context.getResources().getStringArray(R.array.localeMode_display);
+            SYSTEM_LOCALE.setDisplayString(labels[0]);
+            CUSTOM_LOCALE.setDisplayString(labels[1]);
+        }
+    }
+
+    /**
+     * Preference: locale mode
+     */
+    public static LocaleMode loadLocaleModePref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return loadLocaleModePref(pref);
+    }
+
+    public static LocaleMode loadLocaleModePref( SharedPreferences pref )
+    {
+        String modeString = pref.getString(PREF_KEY_LOCALE_MODE, PREF_DEF_LOCALE_MODE.name());
+
+        LocaleMode localeMode;
+        try {
+            localeMode = LocaleMode.valueOf(modeString);
+
+        } catch (IllegalArgumentException e) {
+            localeMode = PREF_DEF_LOCALE_MODE;
+        }
+        return localeMode;
+    }
+
+    /**
+     * Preference: custom locale
+     */
+    public static String loadLocalePref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getString(PREF_KEY_LOCALE, PREF_DEF_LOCALE);
+    }
+
+    /**
+     * @return true if locale was changed by init, false otherwise
+     */
+    public static boolean initLocale( Context context )
+    {
+        AppSettings.LocaleMode localeMode = AppSettings.loadLocaleModePref(context);
+        if (localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE)
+        {
+            return AppSettings.loadLocale(context, AppSettings.loadLocalePref(context));
+
+        } else {
+            return resetLocale(context);
+        }
+    }
+
+    /**
+     * @return true if the locale was changed by reset, false otherwise
+     */
+    public static boolean resetLocale( Context context )
+    {
+        if (systemLocale != null)
+        {
+            Log.d("resetLocale", "locale reset to " + systemLocale);
+            return loadLocale(context, systemLocale);
+        }
+        return false;
+    }
+
+    private static String systemLocale = null;  // null until locale is overridden w/ loadLocale
+    public static String getSystemLocale()
+    {
+        if (systemLocale == null)
+        {
+            systemLocale = Locale.getDefault().getLanguage();
+        }
+        return systemLocale;
+    }
+    public static Locale getLocale()
+    {
+        return Locale.getDefault();
+    }
+
+    public static boolean loadLocale( Context context, String localeCode )
+    {
+        Resources resources = context.getApplicationContext().getResources();
+        Configuration config = resources.getConfiguration();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+
+        if (systemLocale == null)
+        {
+            systemLocale = Locale.getDefault().getLanguage();
+        }
+        Locale customLocale = new Locale(localeCode);
+
+        Locale.setDefault(customLocale);
+        config.locale = customLocale;
+        resources.updateConfiguration(config, metrics);
+
+        Log.d("loadLocale", "locale loaded " + localeCode);
+        return true;
+    }
 
     /**
      * Actions that can be performed when the clock is clicked.
@@ -220,6 +358,7 @@ public class AppSettings
 
     public static void initDisplayStrings( Context context )
     {
+        LocaleMode.initDisplayStrings(context);
         ClockTapAction.initDisplayStrings(context);
     }
 

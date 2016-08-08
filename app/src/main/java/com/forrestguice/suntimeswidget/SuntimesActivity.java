@@ -188,11 +188,9 @@ public class SuntimesActivity extends AppCompatActivity
 
         super.onCreate(savedState);
         setResult(RESULT_CANCELED);
-        setContentView(R.layout.layout_main);
 
-        SuntimesUtils.initDisplayStrings(context);
-        AppSettings.initDisplayStrings(context);
-        WidgetSettings.initDisplayStrings(context);
+        initLocale(this);  // must follow super.onCreate or locale is reverted
+        setContentView(R.layout.layout_main);
         initViews(context);
 
         initGetFix();
@@ -206,6 +204,14 @@ public class SuntimesActivity extends AppCompatActivity
             intent.setData(null);
             configLocation(data);
         }
+    }
+
+    private void initLocale( Context context )
+    {
+        AppSettings.initLocale(this);
+        SuntimesUtils.initDisplayStrings(context);
+        AppSettings.initDisplayStrings(context);
+        WidgetSettings.initDisplayStrings(context);
     }
 
     /**

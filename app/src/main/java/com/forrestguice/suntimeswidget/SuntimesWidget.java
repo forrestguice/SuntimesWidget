@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.annotation.TargetApi;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Build;
 
@@ -35,6 +36,7 @@ import android.appwidget.AppWidgetProvider;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x3_0;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 
@@ -45,21 +47,43 @@ public class SuntimesWidget extends AppWidgetProvider
 {
     protected static SuntimesUtils utils = new SuntimesUtils();
 
+    /**
+     * @param context
+     * @param appWidgetManager
+     * @param appWidgetId
+     * @param newOptions
+     */
     @Override
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions)
     {
         super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
+        initLocale(context);
         updateAppWidget(context, appWidgetManager, appWidgetId);
     }
 
+    /**
+     * @param context
+     * @param intent
+     */
     @Override
     public void onReceive(@NonNull Context context, @NonNull Intent intent)
     {
         super.onReceive(context, intent);
-        handleClickAction(context, intent);
+        initLocale(context);
+
+        String action = intent.getAction();
+        if (!action.equals(AppWidgetManager.ACTION_APPWIDGET_OPTIONS_CHANGED))
+        {
+            handleClickAction(context, intent);
+        }
     }
 
+    /**
+     * @param context
+     * @param intent
+     * @return
+     */
     protected boolean handleClickAction(Context context, Intent intent)
     {
         String action = intent.getAction();
@@ -103,21 +127,28 @@ public class SuntimesWidget extends AppWidgetProvider
             return true;
         }
 
-        Log.w("SuntimeWidget", "Unsupported click action: " + action + " (" + appWidgetId + ")");
+        //Log.w("SuntimesWidget", "Unsupported click action: " + action + " (" + appWidgetId + ")");
         return false;
     }
 
+    /**
+     * @return the activity (class) to be used when configuring this widget
+     */
     protected Class getConfigClass()
     {
         return SuntimesConfigActivity.class;
     }
 
+    /**
+     * @param context
+     * @param appWidgetManager
+     * @param appWidgetIds
+     */
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds)
     {
+        initLocale(context);
         WidgetThemes.initThemes(context);
-        SuntimesUtils.initDisplayStrings(context);
-        WidgetSettings.TimeMode.initDisplayStrings(context);
 
         for (int appWidgetId : appWidgetIds)
         {
@@ -127,6 +158,17 @@ public class SuntimesWidget extends AppWidgetProvider
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
 
+    public static void initLocale(Context context)
+    {
+        AppSettings.initLocale(context);
+        SuntimesUtils.initDisplayStrings(context);
+        WidgetSettings.TimeMode.initDisplayStrings(context);
+    }
+
+    /**
+     * @param context
+     * @param appWidgetIds
+     */
     @Override
     public void onDeleted(Context context, int[] appWidgetIds)
     {
@@ -136,18 +178,30 @@ public class SuntimesWidget extends AppWidgetProvider
         }
     }
 
+    /**
+     * @param context
+     */
     @Override
     public void onEnabled(Context context)
     {
         super.onEnabled(context);
     }
 
+    /**
+     * @param context
+     */
     @Override
     public void onDisabled(Context context)
     {
         super.onDisabled(context);
     }
 
+    /**
+     * @param context
+     * @param appWidgetManager
+     * @param appWidgetId
+     * @return
+     */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     protected SuntimesLayout getWidgetLayout( Context context, AppWidgetManager appWidgetManager, int appWidgetId )
     {
@@ -184,28 +238,16 @@ public class SuntimesWidget extends AppWidgetProvider
      */
     protected void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
-        //Log.d("updateAppWidget", "start: ");
-
-        /**SuntimesLayout layout = getWidgetLayout(context, appWidgetManager, appWidgetId);
-        RemoteViews views = layout.getViews(context);
-
-        boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId);
-        views.setViewVisibility(R.id.text_title, showTitle ? View.VISIBLE : View.GONE);
-
-        layout.themeViews(context, views, appWidgetId);
-
-        SuntimesWidgetData data = new SuntimesWidgetData(context, appWidgetId); // constructor inits data from widget settings
-        data.calculate();
-
-        layout.updateViews(context, appWidgetId, views, data);
-        appWidgetManager.updateAppWidget(appWidgetId, views);*/
-
         SuntimesLayout layout = getWidgetLayout(context, appWidgetManager, appWidgetId);
         updateAppWidget(context, appWidgetManager, appWidgetId, layout);
-
-        //Log.d("updateAppWidget", "end: ");
     }
 
+    /**
+     * @param context
+     * @param appWidgetManager
+     * @param appWidgetId
+     * @param layout
+     */
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SuntimesLayout layout)
     {
         RemoteViews views = layout.getViews(context);
@@ -229,6 +271,21 @@ public class SuntimesWidget extends AppWidgetProvider
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
+    public static void updateWidgets(Context context)
+    {
+        updateWidgets(context, SuntimesWidget.class);
+    }
+
+    public static void updateWidgets( Context context, Class widgetClass )
+    {
+        AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
+        int[] ids = widgetManager.getAppWidgetIds(new ComponentName(context, widgetClass));
+
+        Intent updateIntent = new Intent(context, widgetClass);
+        updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+        context.sendBroadcast(updateIntent);
+    }
 
 }
 

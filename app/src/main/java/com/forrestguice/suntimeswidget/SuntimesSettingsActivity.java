@@ -22,9 +22,13 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Build;
@@ -45,14 +49,16 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A preferences activity for the main app;
  * @see SuntimesConfigActivity for widget configuration.
  */
-public class SuntimesSettingsActivity extends PreferenceActivity
+public class SuntimesSettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener
 {
     final static String ACTION_PREFS_GENERAL = "com.forrestguice.suntimeswidget.PREFS_GENERAL";
+    final static String ACTION_PREFS_LOCALE = "com.forrestguice.suntimeswidget.PREFS_LOCALE";
     final static String ACTION_PREFS_UI = "com.forrestguice.suntimeswidget.PREFS_UI";
     final static String ACTION_PREFS_WIDGETLIST = "com.forrestguice.suntimeswidget.PREFS_WIDGETLIST";
     final static String ACTION_PREFS_PLACES = "com.forrestguice.suntimeswidget.PREFS_PLACES";
@@ -71,13 +77,18 @@ public class SuntimesSettingsActivity extends PreferenceActivity
     @Override
     public void onCreate(Bundle icicle)
     {
+        context = SuntimesSettingsActivity.this;
         setTheme(AppSettings.loadTheme(this));
         super.onCreate(icicle);
+        initLocale();
 
         String action = getIntent().getAction();
         if (action != null && action.equals(ACTION_PREFS_GENERAL))
         {
             addPreferencesFromResource(R.xml.preference_general);
+
+        } else if (action != null && action.equals(ACTION_PREFS_LOCALE)) {
+            addPreferencesFromResource(R.xml.preference_locale);
 
         } else if (action != null && action.equals(ACTION_PREFS_UI)) {
             addPreferencesFromResource(R.xml.preference_userinterface);
@@ -91,9 +102,35 @@ public class SuntimesSettingsActivity extends PreferenceActivity
         } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
             addPreferencesFromResource(R.xml.preference_headers_legacy);
         }
+    }
 
-        context = SuntimesSettingsActivity.this;
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        initLocale();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefs.registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onPause()
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefs.unregisterOnSharedPreferenceChangeListener(this);
+        super.onPause();
+    }
+
+    private void initLocale()
+    {
+        boolean localeChanged = AppSettings.initLocale(this);
+        AppSettings.initDisplayStrings(context);
         WidgetSettings.initDisplayStrings(context);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB && localeChanged)
+        {
+            invalidateHeaders();
+        }
     }
 
     /**
@@ -132,58 +169,32 @@ public class SuntimesSettingsActivity extends PreferenceActivity
     protected boolean isValidFragment(String fragmentName)
     {
         return GeneralPrefsFragment.class.getName().equals(fragmentName) ||
+               LocalePrefsFragment.class.getName().equals(fragmentName) ||
                UIPrefsFragment.class.getName().equals(fragmentName) ||
                PlacesPrefsFragment.class.getName().equals(fragmentName);
     }
 
-    public static final String DIALOGTAG_CLEARPLACES = "clearplaces";
-
-    /**
-     * OnStart: the Activity becomes visible
-     */
-    /**@Override
-    public void onStart()
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
     {
-    super.onStart();
-    Context context = SuntimesSettingsActivity.this;
-    }*/
+        if (key.equals(AppSettings.PREF_KEY_LOCALE) || key.equals(AppSettings.PREF_KEY_LOCALE_MODE))
+        {
+            Log.d("SettingsActivity", "Locale change detected; restarting activity");
+            AppSettings.initLocale(this);
+            SuntimesWidget.updateWidgets(this);
+            SuntimesWidget1.updateWidgets(this);
 
-    /**
-     * OnResume: the user is now interacting w/ the Activity (running state)
-     */
-    /**@Override
-    public void onResume()
-    {
-    super.onResume();
-    }*/
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+            {
+                invalidateHeaders();
+                recreate();
 
-    /**
-     * OnPause: the user about to interact w/ another Activity
-     */
-    /**@Override
-    public void onPause()
-    {
-    super.onPause();
-    }*/
-
-
-    /**
-     * OnStop: the Activity no longer visible
-     */
-    /**@Override
-    public void onStop()
-    {
-    super.onStop();
-    }*/
-
-    /**
-     * OnDestroy: the activity destroyed
-     */
-    /**@Override
-    public void onDestroy()
-    {
-    super.onDestroy();
-    }*/
+            } else {
+                finish();
+                startActivity(getIntent());
+            }
+        }
+    }
 
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////
@@ -200,6 +211,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
         public void onCreate(Bundle savedInstanceState)
         {
             super.onCreate(savedInstanceState);
+            AppSettings.initLocale(getActivity());
             Log.i("GeneralPrefsFragment", "Arguments: " + getArguments());
 
             PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_general, false);
@@ -258,6 +270,31 @@ public class SuntimesSettingsActivity extends PreferenceActivity
     //////////////////////////////////////////////////
 
     /**
+     * Locale Prefs
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class LocalePrefsFragment extends PreferenceFragment
+    {
+        @Override
+        public void onCreate(Bundle savedInstanceState)
+        {
+            super.onCreate(savedInstanceState);
+            AppSettings.initLocale(getActivity());
+            Log.i("LocalePrefsFragment", "Arguments: " + getArguments());
+
+            PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_locale, false);
+            addPreferencesFromResource(R.xml.preference_locale);
+
+            AppSettings.LocaleMode localeMode = AppSettings.loadLocaleModePref(getActivity());
+            Preference localePref = (Preference)findPreference(AppSettings.PREF_KEY_LOCALE);
+            localePref.setEnabled(localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE);
+        }
+    }
+
+    //////////////////////////////////////////////////
+    //////////////////////////////////////////////////
+
+    /**
      * Places Prefs
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -279,6 +316,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
         public void onCreate(Bundle savedInstanceState)
         {
             super.onCreate(savedInstanceState);
+            AppSettings.initLocale(getActivity());
             Log.i("PlacesPrefsFragment", "Arguments: " + getArguments());
             setRetainInstance(true);
 
@@ -510,6 +548,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
         public void onCreate(Bundle savedInstanceState)
         {
             super.onCreate(savedInstanceState);
+            AppSettings.initLocale(getActivity());
             Log.i("UIPrefsFragment", "Arguments: " + getArguments());
 
             PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_userinterface, false);

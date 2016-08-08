@@ -93,6 +93,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
         GetFixUI.themeIcons(this);
 
         super.onCreate(icicle);
+        initLocale();
         setResult(RESULT_CANCELED);  // causes widget host to cancel if user presses back
         setContentView(R.layout.layout_settings);
 
@@ -115,9 +116,14 @@ public class SuntimesConfigActivity extends AppCompatActivity
 
         WidgetThemes.initThemes(context);
 
-        initDisplayStrings(context);
         initViews(context);
         loadSettings(context);
+    }
+
+    private void initLocale()
+    {
+        AppSettings.initLocale(this);
+        WidgetSettings.initDisplayStrings(this);
     }
 
     @Override
@@ -125,11 +131,6 @@ public class SuntimesConfigActivity extends AppCompatActivity
     {
         locationConfig.cancelGetFix();
         super.onDestroy();
-    }
-
-    protected void initDisplayStrings( Context context )
-    {
-        WidgetSettings.initDisplayStrings(context);
     }
 
     /**
