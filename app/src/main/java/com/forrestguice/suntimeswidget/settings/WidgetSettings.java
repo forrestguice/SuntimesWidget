@@ -382,6 +382,8 @@ public class WidgetSettings
      */
     public static class Location
     {
+        public static String pattern_latLon = "#.#####";
+
         private String label;
         private String latitude;
         private String longitude;
@@ -430,8 +432,7 @@ public class WidgetSettings
             double rawLongitude = location.getLongitude();
             double rawAltitude = location.getAltitude();
 
-            DecimalFormat formatter = (DecimalFormat)(NumberFormat.getNumberInstance(Locale.US));
-            formatter.applyPattern("#.#####");
+            DecimalFormat formatter = decimalDegreesFormatter();
 
             this.label = label;
             this.latitude = formatter.format(rawLatitude);
@@ -484,6 +485,13 @@ public class WidgetSettings
         public String toString()
         {
             return latitude + ", " + longitude;
+        }
+
+        public static DecimalFormat decimalDegreesFormatter()
+        {
+            DecimalFormat formatter = (DecimalFormat)(NumberFormat.getNumberInstance(Locale.US));
+            formatter.applyLocalizedPattern(pattern_latLon);
+            return formatter;
         }
     }
 
