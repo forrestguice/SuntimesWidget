@@ -229,11 +229,6 @@
         <item>Malhela etoso</item>
         <item>Hela (tage) / malhela (nokte)</item>
     </string-array>
-    <string-array name="appThemes_values" translatable="false">  <!-- config values (one-to-one with appThemes_display) -->
-        <item>light</item>
-        <item>dark</item>
-        <item>daynight</item>
-    </string-array>
 
     <!-- App Setting: Date "on tap" action -->
     <string-array name="dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
@@ -241,12 +236,6 @@
         <item>Baskuli langetojn (hodiaŭ/morgaŭ)</item>
         <item>Montri aplikaĵon Kalendaro</item>
         <item>Agordi propran daton</item>
-    </string-array>
-    <string-array name="dateTapActions_values" translatable="false"> <!-- config values (one-to-one with dateTapActions_display) -->
-        <item>NOTHING</item>
-        <item>SWAP_CARD</item>
-        <item>SHOW_CALENDAR</item>
-        <item>CONFIG_DATE</item>
     </string-array>
 
     <!-- App Setting: Clock UI "on tap" action -->
@@ -256,12 +245,6 @@
         <item>Montri sekvan noton</item>
         <item>Montri antaŭan noton</item>
     </string-array>
-    <string-array name="clockTapActions_values" translatable="false">  <!-- config values (one-to-one with clockTapActions_display) -->
-        <item>NOTHING</item>
-        <item>ALARM</item>
-        <item>NEXT_NOTE</item>
-        <item>PREV_NOTE</item>
-    </string-array>
 
     <!-- App Setting: Note UI "on tap" action -->
     <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
@@ -269,12 +252,6 @@
         <item>Agordi averton pri noto</item>
         <item>Montri sekvan noton</item>
         <item>Montri antaŭan noton</item>
-    </string-array>
-    <string-array name="noteTapActions_values" translatable="false">   <!-- config values (one-to-one with noteTapActions_display) -->
-        <item>NOTHING</item>
-        <item>ALARM</item>
-        <item>NEXT_NOTE</item>
-        <item>PREV_NOTE</item>
     </string-array>
 
     <!-- App Setting: GPS fix time limit -->
@@ -286,13 +263,6 @@
         <item>1 minuto</item>
         <item>5 minutoj</item>
         <item>10 minutoj</item>
-    </string-array>
-    <string-array name="getFix_maxElapse_values" translatable="false">   <!-- ms config values (one-to-one with getFix_maxElapse_display) -->
-        <item>15000</item>
-        <item>30000></item>
-        <item>60000</item>
-        <item>300000</item>
-        <item>600000</item>
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
@@ -309,18 +279,6 @@
         <item>du tagoj (48 horoj)</item>
         <item>unu semajno (168 horoj)</item>
         <item>unu monato (672 horoj)</item>
-    </string-array>
-    <string-array name="getFix_maxAge_values" translatable="false">     <!-- ms config values (one-to-one with getFix_maxAge_display) -->
-        <item>60000</item>
-        <item>300000</item>
-        <item>900000</item>
-        <item>3600000</item>
-        <item>14400000</item>
-        <item>43200000</item>
-        <item>86400000</item>
-        <item>172800000</item>
-        <item>604800000</item>
-        <item>2419200000</item>
     </string-array>
 
     <!--
@@ -369,10 +327,6 @@
       <item>Sistema</item>
       <item>Propra</item>
   </string-array>
-  <string-array name="localeMode_values" translatable="false">  <!-- one-to-one with localeMode_display -->
-      <item>SYSTEM_LOCALE</item>
-      <item>CUSTOM_LOCALE</item>
-  </string-array>
 
     <!-- App Setting: custom Locale -->
     <!-- TODO -->
@@ -383,12 +337,6 @@
         <item>Esperanto</item>
         <item>Germana</item>
         <item>Pola</item>
-    </string-array>
-    <string-array name="locale_values" translatable="false">  <!-- one-to-one with locale_display -->
-        <item>en</item>
-        <item>eo</item>
-        <item>de</item>
-        <item>pl</item>
     </string-array>
 
     <!-- Dialog: Enable GPS? -->

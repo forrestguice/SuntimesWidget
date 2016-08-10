@@ -173,7 +173,7 @@
   <string name="configLabel_location_lat">Breitengrad (Lat.):</string>                  <!-- edittext label -->
   <string name="configHint_location_lat">34.54</string>                       <!-- edittext hint -->
   <string name="configLabel_location_lon">Längengrad (Lon.):</string>                 <!-- edittext label -->
-  <string name="configHint_location_lon">-112.4677778</string>                <!-- edittext hint -->
+  <string name="configHint_location_lon">-112.46777</string>                <!-- edittext hint -->
   <string name="configLabel_location_name">Name:</string>                     <!-- edittext label -->
   <string name="configHint_location_name">(optional)</string>                 <!-- edittext hint -->
 
@@ -292,10 +292,6 @@
       <item>System</item>
       <item>User Defined</item>
   </string-array>
-  <string-array name="localeMode_values" translatable="false">  <!-- one-to-one with localeMode_display -->
-      <item>SYSTEM_LOCALE</item>
-      <item>CUSTOM_LOCALE</item>
-  </string-array>
 
   <!-- App Setting: custom Locale -->
   <!-- TODO -->
@@ -306,12 +302,6 @@
       <item>Esperanto</item>
       <item>German</item>
       <item>Polish</item>
-  </string-array>
-  <string-array name="locale_values" translatable="false">  <!-- one-to-one with locale_display -->
-      <item>en</item>
-      <item>eo</item>
-      <item>de</item>
-      <item>pl</item>
   </string-array>
 
   <!--
