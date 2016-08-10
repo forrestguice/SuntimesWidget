@@ -199,6 +199,7 @@ public class SuntimesUtils
         {
             // most locales seem to use 24 hour time
             DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(context);
+            timeFormat.setTimeZone(cal.getTimeZone());
             retValue = new TimeDisplayText(timeFormat.format(time), "", "");
 
         } else {
