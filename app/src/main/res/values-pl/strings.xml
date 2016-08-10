@@ -282,8 +282,7 @@
     </string-array>
 
     <!-- App Setting: locale mode -->
-    <!-- TODO -->
-    <string name="configLabel_locale">Ustawienia języka (pl)</string>   <!-- group title -->
+    <string name="configLabel_locale">Ustawienia języka</string>   <!-- group title -->
 
     <string name="configLabel_localeMode">Język</string>
     <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
@@ -293,7 +292,6 @@
     </string-array>
 
     <!-- App Setting: custom Locale -->
-    <!-- TODO -->
     <string name="configLabel_localeSelect">Język</string>
     <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
     <string-array name="locale_display">                      <!-- one-to-one with locale_values -->

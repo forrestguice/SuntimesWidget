@@ -318,7 +318,6 @@
     </string-array>
     
   <!-- App Setting: locale mode -->
-  <!-- TODO -->
   <string name="configLabel_locale">Agordoj de lingvo</string>   <!-- group title -->
 
   <string name="configLabel_localeMode">Reĝimo</string>
@@ -329,7 +328,6 @@
   </string-array>
 
     <!-- App Setting: custom Locale -->
-    <!-- TODO -->
     <string name="configLabel_localeSelect">Lingvo</string>
     <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
     <string-array name="locale_display">                      <!-- one-to-one with locale_values -->

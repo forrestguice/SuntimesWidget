@@ -283,25 +283,25 @@
   </string-array>
 
   <!-- App Setting: locale mode -->
-  <!-- TODO -->
-  <string name="configLabel_locale">Language Settings (de)</string>   <!-- group title -->
+  <!-- TODO: verify translation / fix -->
+  <string name="configLabel_locale">Spracheinstellungen</string>   <!-- group title -->
 
-  <string name="configLabel_localeMode">Mode</string>
+  <string name="configLabel_localeMode">Modus:</string>
   <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
   <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
       <item>System</item>
-      <item>User Defined</item>
+      <item>Benutzerdefiniert</item>
   </string-array>
 
   <!-- App Setting: custom Locale -->
-  <!-- TODO -->
-  <string name="configLabel_localeSelect">Language</string>
+  <!-- TODO: verify translation / fix -->
+  <string name="configLabel_localeSelect">Sprache</string>
   <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
   <string-array name="locale_display">                      <!-- one-to-one with locale_values -->
-      <item>English</item>
+      <item>Englisch</item>
       <item>Esperanto</item>
-      <item>German</item>
-      <item>Polish</item>
+      <item>Deutsche</item>
+      <item>Polieren</item>
   </string-array>
 
   <!--
