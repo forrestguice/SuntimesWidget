@@ -59,9 +59,9 @@ Please report inaccurate times to the upstream project (https://github.com/miker
 
 When reporting an inaccurate time, please include the following information:
 
-Date sunrise/set calculation was being run for.
-Latitude/longitute sunrise/set calculation was being run for.
-Timezone (either "America/New_York" or GMT-0500)
+* Date sunrise/set calculation was being run for.
+* Latitude/longitute sunrise/set calculation was being run for.
+* Timezone (either "America/New_York" or GMT-0500)
 
 
 
