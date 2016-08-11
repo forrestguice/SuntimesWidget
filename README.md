@@ -52,3 +52,18 @@ The goal of this project is an app that is free and open-source (FOSS). Get the 
 **Project Contributors**
 
 German translation provided by <u>Henrik "HerHde" Hüttemann</u>.
+
+**Bug Reports**
+
+Please report inaccurate times to the upstream project (https://github.com/mikereedell/sunrisesunsetlib-java). Also be aware that times are approximate and may differ from official sources (up to 10 minutes).
+
+When reporting an inaccurate time, please include the following information:
+
+* Date sunrise/set calculation was being run for.
+* Latitude/longitute sunrise/set calculation was being run for.
+* Timezone (either "America/New_York" or GMT-0500)
+
+
+
+
+

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="http://schemas.android.com/tools">
 
+    <string name="default_location_label">Prescott, AZ</string>
+    <string name="default_location_latitude">34.5409</string>      <!-- degree decimals -->
+    <string name="default_location_longitude">-112.4691</string>   <!-- degree decimals -->
+
     <!-- MAIN ACTIVITY -->
 
     <!-- Action Bar
@@ -331,6 +335,36 @@
         <item>2419200000</item>
     </string-array>
 
+    <!-- App Setting: locale mode -->
+    <string name="configLabel_locale">Language Settings</string>   <!-- group title -->
+
+    <string name="configLabel_localeMode">Mode</string>
+    <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
+    <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
+        <item>System</item>
+        <item>User Defined</item>
+    </string-array>
+    <string-array name="localeMode_values" translatable="false">  <!-- one-to-one with localeMode_display -->
+        <item>SYSTEM_LOCALE</item>
+        <item>CUSTOM_LOCALE</item>
+    </string-array>
+
+    <!-- App Setting: custom Locale -->
+    <string name="configLabel_localeSelect">Language</string>
+    <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
+    <string-array name="locale_display">                      <!-- one-to-one with locale_values -->
+        <item>English</item>
+        <item>Esperanto</item>
+        <item>German</item>
+        <item>Polish</item>
+    </string-array>
+    <string-array name="locale_values" translatable="false">  <!-- one-to-one with locale_display -->
+        <item>en</item>
+        <item>eo</item>
+        <item>de</item>
+        <item>pl</item>
+    </string-array>
+
     <!--
          DIALOGS
     -->
@@ -439,7 +473,8 @@
         Source code available under GPLv3.
     ]]></string>
     <string name="app_legal2"><![CDATA[
-        German translation by Henrik "HerHde" Hüttemann.
+        German translation by Henrik "HerHde" Hüttemann. <br />
+        Polish and Esperanto translation by verdulo.
     ]]></string>
 
     <!-- Dialog: Help -->

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="http://schemas.android.com/tools">
 
+    <string name="default_location_label">Warsaw</string>
+    <string name="default_location_latitude">52.2319</string>    <!-- degree decimals -->
+    <string name="default_location_longitude">21.0067</string>   <!-- degree decimals -->
+
     <!-- MAIN ACTIVITY -->
 
     <!-- Action Bar
@@ -323,6 +327,38 @@
         <item>2419200000</item>
     </string-array>
 
+    <!-- App Setting: locale mode -->
+    <!-- TODO -->
+    <string name="configLabel_locale">Ustawienia języka (pl)</string>   <!-- group title -->
+
+    <string name="configLabel_localeMode">Język</string>
+    <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
+    <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
+        <item>Systemowy</item>
+        <item>Własny użytkownika</item>
+    </string-array>
+    <string-array name="localeMode_values" translatable="false">  <!-- one-to-one with localeMode_display -->
+        <item>SYSTEM_LOCALE</item>
+        <item>CUSTOM_LOCALE</item>
+    </string-array>
+
+    <!-- App Setting: custom Locale -->
+    <!-- TODO -->
+    <string name="configLabel_localeSelect">Język</string>
+    <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
+    <string-array name="locale_display">                      <!-- one-to-one with locale_values -->
+        <item>Angielski</item>
+        <item>Esperanto</item>
+        <item>Niemiecki</item>
+        <item>Polski</item>
+    </string-array>
+    <string-array name="locale_values" translatable="false">  <!-- one-to-one with locale_display -->
+        <item>en</item>
+        <item>eo</item>
+        <item>de</item>
+        <item>pl</item>
+    </string-array>
+
     <!--
          DIALOGS
     -->
@@ -422,7 +458,7 @@
     <string name="app_support_url"><![CDATA[<b>Wsparcie:</b> odwiedź <a href="https://github.com/forrestguice/SuntimesWidget/issues">stronę trackera błędów</a> aby zgłosić błąd/sugestię.]]></string>
     <string name="app_url"><xliff:g id="url"><![CDATA[<a href="https://github.com/forrestguice/SuntimesWidget">github.com/forrestguice/SuntimesWidget</a>]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[Prawo autorskie &#169 2014 Forrest Guice <br />Kod źródłowy dostępny na licencji GPLv3.]]></string>
-    <string name="app_legal2"><![CDATA[Niemieckie tłumaczenie: Henrik "HerHde" Hüttemann.]]></string>
+    <string name="app_legal2"><![CDATA[Niemieckie tłumaczenie: Henrik "HerHde" Hüttemann. <br />Esperanckie i Polskie tłumaczenie: verdulo.]]></string>
 
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Pomoc</string>
@@ -433,7 +469,7 @@
                 * <b>%lon</b> jako długość geo. <br/>
                 * <b>%m</b> jako rodzaj zdarzenia (krótki) (np. "Cywilny") <br/>
                 * <b>%M</b> jako rodzaj zdarzenia (długi) (np. "Cywilny świt/zmierzch") <br/>
-                * <b>%t</b> jako strefa czasowa (id) (np. "Europa/Warszawa") <br/>
+                * <b>%t</b> jako strefa czasowa (id) (np. Europa/Warszawa) <br/>
     ]]></string>
 
     <string name="help_general">  <!-- general app help; composites a couple help topics together. -->

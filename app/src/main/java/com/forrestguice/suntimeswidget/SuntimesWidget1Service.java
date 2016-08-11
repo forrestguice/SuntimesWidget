@@ -22,6 +22,7 @@ import android.annotation.TargetApi;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
@@ -43,9 +44,9 @@ public class SuntimesWidget1Service extends RemoteViewsService
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent)
     {
-        return new SuntimesWidget1RemoteViewsFactory(this.getApplicationContext(), intent);
+        Context context = this.getApplicationContext();
+        return new SuntimesWidget1RemoteViewsFactory(context, intent);
     }
-
 }
 
 /**
@@ -59,7 +60,6 @@ class SuntimesWidget1RemoteViewsFactory implements RemoteViewsService.RemoteView
     private int viewCount = 0;
 
     private ArrayList<SuntimesData> dataset = new ArrayList<SuntimesData>();
-    private SuntimesUtils widgetUtils = new SuntimesUtils();
 
     public SuntimesWidget1RemoteViewsFactory(Context context, Intent intent)
     {
@@ -151,4 +151,5 @@ class SuntimesWidget1RemoteViewsFactory implements RemoteViewsService.RemoteView
     {
         return false;
     }
+
 }

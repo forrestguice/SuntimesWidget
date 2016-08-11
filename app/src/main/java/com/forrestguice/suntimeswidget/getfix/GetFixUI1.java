@@ -19,10 +19,17 @@
 package com.forrestguice.suntimeswidget.getfix;
 
 import android.location.Location;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 /**
  * A wrapper class around a set of Views composing "get fix/location" UI; the constructor expects
@@ -58,8 +65,9 @@ public class GetFixUI1 extends GetFixUI
     @Override
     public void updateUI(Location... locations)
     {
-        locationLatUI.setText(String.format("%.5f", locations[0].getLatitude()));
-        locationLonUI.setText(String.format("%.5f", locations[0].getLongitude()));
+        DecimalFormat formatter = WidgetSettings.Location.decimalDegreesFormatter();
+        locationLatUI.setText( formatter.format(locations[0].getLatitude()) );
+        locationLonUI.setText( formatter.format(locations[0].getLongitude()) );
     }
 
     @Override

@@ -33,7 +33,10 @@ import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_2;
 import com.forrestguice.suntimeswidget.themes.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class WidgetSettings
 {
@@ -84,16 +87,16 @@ public class WidgetSettings
     public static final LocationMode PREF_DEF_LOCATION_MODE = LocationMode.CUSTOM_LOCATION;
 
     public static final String PREF_KEY_LOCATION_LONGITUDE = "longitude";
-    public static final String PREF_DEF_LOCATION_LONGITUDE = "-112.4677778";
+    public static String PREF_DEF_LOCATION_LONGITUDE = "-112.4691";      // reassigned later by initDefaults
 
     public static final String PREF_KEY_LOCATION_LATITUDE = "latitude";
-    public static final String PREF_DEF_LOCATION_LATITUDE = "34.54";
+    public static String PREF_DEF_LOCATION_LATITUDE = "34.5409";         // reassigned later by initDefaults
 
     public static final String PREF_KEY_LOCATION_ALTITUDE = "altitude";
-    public static final String PREF_DEF_LOCATION_ALTITUDE = "";
+    public static String PREF_DEF_LOCATION_ALTITUDE = "";
 
     public static final String PREF_KEY_LOCATION_LABEL = "label";
-    public static final String PREF_DEF_LOCATION_LABEL = "";
+    public static String PREF_DEF_LOCATION_LABEL = "Prescott, AZ";
 
     public static final String PREF_KEY_TIMEZONE_MODE = "timezoneMode";
     public static final TimezoneMode PREF_DEF_TIMEZONE_MODE = TimezoneMode.CURRENT_TIMEZONE;
@@ -374,23 +377,43 @@ public class WidgetSettings
         }
     }
 
+    /**
+     * Location
+     */
     public static class Location
     {
+        public static String pattern_latLon = "#.#####";
+
         private String label;
         private String latitude;
         private String longitude;
         private String altitude;   // meters
 
+        /**
+         * @param latitude decimal degrees (DD) string
+         * @param longitude decimal degrees (DD) string
+         */
         public Location( String latitude, String longitude )
         {
             this(null, latitude, longitude, null);
         }
 
+        /**
+         * @param label display name
+         * @param latitude decimal degrees (DD) string
+         * @param longitude decimal degrees (DD) string
+         */
         public Location( String label, String latitude, String longitude )
         {
             this(label, latitude, longitude, null);
         }
 
+        /**
+         * @param label display name
+         * @param latitude decimal degrees (DD) string
+         * @param longitude decimal degrees (DD) string
+         * @param altitude a placeholder for altitude & not currently used anywhere. The number format is ambiguous / should be fixed if used.
+         */
         public Location( String label, String latitude, String longitude, String altitude )
         {
             this.label = (label == null) ? "" : label;
@@ -399,24 +422,43 @@ public class WidgetSettings
             this.altitude = (altitude == null) ? "" : altitude;
         }
 
+        /**
+         * @param label display name
+         * @param location an android.location.Location object (that might obtained via GPS or otherwise)
+         */
         public Location( String label, @NonNull android.location.Location location )
         {
+            double rawLatitude = location.getLatitude();
+            double rawLongitude = location.getLongitude();
+            double rawAltitude = location.getAltitude();
+
+            DecimalFormat formatter = decimalDegreesFormatter();
+
             this.label = label;
-            this.latitude = String.format("%.5f", location.getLatitude());
-            this.longitude = String.format("%.5f", location.getLongitude());
-            this.altitude = location.getAltitude() + "";
+            this.latitude = formatter.format(rawLatitude);
+            this.longitude = formatter.format(rawLongitude);
+            this.altitude = rawAltitude + "";
         }
 
+        /**
+         * @return a user-defined display label / location name
+         */
         public String getLabel()
         {
             return label;
         }
 
+        /**
+         * @return latitude in decimal degrees (DD)
+         */
         public String getLatitude()
         {
             return latitude;
         }
 
+        /**
+         * @return longitude in decimal degrees (DD)
+         */
         public String getLongitude()
         {
             return longitude;
@@ -424,6 +466,9 @@ public class WidgetSettings
 
         public String getAltitude() { return altitude; }
 
+        /**
+         * @return a "geo" URI describing this Location
+         */
         public Uri getUri()
         {
             String uriString = "geo:" + latitude + "," + longitude;
@@ -434,12 +479,25 @@ public class WidgetSettings
             return Uri.parse(uriString);
         }
 
+        /**
+         * @return a decimal degrees string "latitude, longitude" describing this location
+         */
         public String toString()
         {
             return latitude + ", " + longitude;
         }
+
+        public static DecimalFormat decimalDegreesFormatter()
+        {
+            DecimalFormat formatter = (DecimalFormat)(NumberFormat.getNumberInstance(Locale.US));
+            formatter.applyLocalizedPattern(pattern_latLon);
+            return formatter;
+        }
     }
 
+    /**
+     * CompareMode
+     */
     public static enum CompareMode
     {
         YESTERDAY("Yesterday"),
@@ -1099,6 +1157,12 @@ public class WidgetSettings
         deleteTimeNoteSetPref(context, appWidgetId);
     }
 
+    public static void initDefaults( Context context )
+    {
+        PREF_DEF_LOCATION_LABEL = context.getString(R.string.default_location_label);
+        PREF_DEF_LOCATION_LATITUDE = context.getString(R.string.default_location_latitude);
+        PREF_DEF_LOCATION_LONGITUDE = context.getString(R.string.default_location_longitude);
+    }
 
     public static void initDisplayStrings( Context context )
     {
