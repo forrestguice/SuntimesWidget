@@ -2,7 +2,7 @@
 <resources xmlns:xliff="http://schemas.android.com/tools">
 
     <string name="default_location_label">Lhasa</string>
-    <string name="default_location_latitude">29.6487</string>      <!-- degree decimals -->
-    <string name="default_location_longitude">91.0052</string>   <!-- degree decimals -->
+    <string name="default_location_latitude">29.6487</string>      <!-- decimal degrees (DD) -->
+    <string name="default_location_longitude">91.0052</string>   <!-- decimal degrees (DD) -->
 
 </resources>

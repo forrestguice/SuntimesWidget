@@ -2,7 +2,7 @@
 <resources xmlns:xliff="http://schemas.android.com/tools">
 
     <string name="default_location_label">Chur</string>
-    <string name="default_location_latitude">46.8531</string>    <!-- degree decimals -->
-    <string name="default_location_longitude">9.4978</string>   <!-- degree decimals -->
+    <string name="default_location_latitude">46.8531</string>    <!-- decimal degrees (DD) -->
+    <string name="default_location_longitude">9.4978</string>   <!-- decimal degrees (DD) -->
 
 </resources>
