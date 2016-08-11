@@ -15,7 +15,7 @@
    * If the folder doesn't exist, create it and copy from `/res/values/strings.xml` as a starting template.
    * If the folder/file already exists, copy-and-paste values (shadow them) from `/res/values/strings.xml`.
  
- 3. Translate the strings values.
+ 3. Translate the string values.
    * Do not add new values that don't already appear in the default `/res/values/strings.xml`. The app will crash if it accidentally tries to use any value that isn't in the default.
    * Do not translate values that have the attribute `translatable="false"` (remove these definitions, they should only exist in the default `/res/values/strings.xml`)
    * Do not translate the values that fall between `<xliff:g>` tags; these are either parameters or constant values that must remain the same. You may translate the text that appears around these tags.
