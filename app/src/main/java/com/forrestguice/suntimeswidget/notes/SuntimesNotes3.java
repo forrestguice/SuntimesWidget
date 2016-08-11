@@ -300,6 +300,49 @@ public class SuntimesNotes3 implements SuntimesNotes
         return new NoteData(event, timeString, untilString, noteString, noteIcon, noteColor);
     }
 
+    private String prefixString(SolarEvents event, boolean useSince)
+    {
+        String prefix;
+        if (useSince)
+        {
+            prefix = context.getString(R.string.since);
+
+        } else {
+            switch (event)
+            {
+                case MORNING_ASTRONOMICAL:
+                    prefix = context.getString(R.string.until);
+                    break;
+                case MORNING_NAUTICAL:
+                    prefix = context.getString(R.string.until);
+                    break;
+                case MORNING_CIVIL:
+                    prefix = context.getString(R.string.until);
+                    break;
+                case SUNRISE:
+                    prefix = context.getString(R.string.until);
+                    break;
+                case NOON:
+                    prefix = context.getString(R.string.until);
+                    break;
+                case SUNSET:
+                    prefix = context.getString(R.string.until);
+                    break;
+                case EVENING_CIVIL:
+                    prefix = context.getString(R.string.until_end);
+                    break;
+                case EVENING_NAUTICAL:
+                    prefix = context.getString(R.string.until_end);
+                    break;
+                case EVENING_ASTRONOMICAL:
+                default:
+                    prefix = context.getString(R.string.until_end);
+                    break;
+            }
+        }
+        return prefix;
+    }
+
     /**
      * Update a note with respect to given time 'now'.
      * @param note the note object to be updated
@@ -367,6 +410,7 @@ public class SuntimesNotes3 implements SuntimesNotes
 
         note.tomorrow = afterToday;
         note.timeText = utils.timeDeltaDisplayString(time, eventTime);
+        note.prefixText = prefixString(note.noteMode, (note.timeText.getRawValue() < 0));
         note.time = eventTime;
     }
 

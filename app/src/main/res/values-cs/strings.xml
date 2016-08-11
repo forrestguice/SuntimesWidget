@@ -2,7 +2,7 @@
 <resources xmlns:xliff="http://schemas.android.com/tools">
 
     <string name="default_location_label">Prague</string>
-    <string name="default_location_latitude">50.0595</string>    <!-- degree decimals -->
-    <string name="default_location_longitude">14.3255</string>   <!-- degree decimals -->
+    <string name="default_location_latitude">50.0595</string>    <!-- decimal degrees (DD) -->
+    <string name="default_location_longitude">14.3255</string>   <!-- decimal degrees (DD) -->
 
 </resources>
