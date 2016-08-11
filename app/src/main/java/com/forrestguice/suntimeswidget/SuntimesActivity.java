@@ -209,6 +209,8 @@ public class SuntimesActivity extends AppCompatActivity
     private void initLocale( Context context )
     {
         AppSettings.initLocale(this);
+        WidgetSettings.initDefaults(context);
+
         SuntimesUtils.initDisplayStrings(context);
         AppSettings.initDisplayStrings(context);
         WidgetSettings.initDisplayStrings(context);
