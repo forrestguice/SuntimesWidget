@@ -87,16 +87,16 @@ public class WidgetSettings
     public static final LocationMode PREF_DEF_LOCATION_MODE = LocationMode.CUSTOM_LOCATION;
 
     public static final String PREF_KEY_LOCATION_LONGITUDE = "longitude";
-    public static final String PREF_DEF_LOCATION_LONGITUDE = "-112.46777";
+    public static String PREF_DEF_LOCATION_LONGITUDE = "-112.4691";      // reassigned later by initDefaults
 
     public static final String PREF_KEY_LOCATION_LATITUDE = "latitude";
-    public static final String PREF_DEF_LOCATION_LATITUDE = "34.54";
+    public static String PREF_DEF_LOCATION_LATITUDE = "34.5409";         // reassigned later by initDefaults
 
     public static final String PREF_KEY_LOCATION_ALTITUDE = "altitude";
-    public static final String PREF_DEF_LOCATION_ALTITUDE = "";
+    public static String PREF_DEF_LOCATION_ALTITUDE = "";
 
     public static final String PREF_KEY_LOCATION_LABEL = "label";
-    public static final String PREF_DEF_LOCATION_LABEL = "";
+    public static String PREF_DEF_LOCATION_LABEL = "Prescott, AZ";
 
     public static final String PREF_KEY_TIMEZONE_MODE = "timezoneMode";
     public static final TimezoneMode PREF_DEF_TIMEZONE_MODE = TimezoneMode.CURRENT_TIMEZONE;
@@ -1157,6 +1157,12 @@ public class WidgetSettings
         deleteTimeNoteSetPref(context, appWidgetId);
     }
 
+    public static void initDefaults( Context context )
+    {
+        PREF_DEF_LOCATION_LABEL = context.getString(R.string.default_location_label);
+        PREF_DEF_LOCATION_LATITUDE = context.getString(R.string.default_location_latitude);
+        PREF_DEF_LOCATION_LONGITUDE = context.getString(R.string.default_location_longitude);
+    }
 
     public static void initDisplayStrings( Context context )
     {

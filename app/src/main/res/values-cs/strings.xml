@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="http://schemas.android.com/tools">
+
+    <string name="default_location_label">Prague</string>
+    <string name="default_location_latitude">50.0595</string>    <!-- degree decimals -->
+    <string name="default_location_longitude">14.3255</string>   <!-- degree decimals -->
+
+</resources>

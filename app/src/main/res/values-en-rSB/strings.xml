@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="http://schemas.android.com/tools">
+
+    <string name="default_location_label">Honiara</string>
+    <string name="default_location_latitude">-9.4351</string>    <!-- degree decimals -->
+    <string name="default_location_longitude">159.9382</string>  <!-- degree decimals -->
+
+</resources>

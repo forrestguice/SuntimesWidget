@@ -123,6 +123,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
     private void initLocale()
     {
         AppSettings.initLocale(this);
+        WidgetSettings.initDefaults(this);
         WidgetSettings.initDisplayStrings(this);
     }
 
