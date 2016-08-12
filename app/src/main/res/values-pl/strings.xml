@@ -174,9 +174,9 @@
     <string name="configLabel_location">Ustawienia lokalizacji</string>              <!-- group title -->
     <string name="configLabel_location_mode">Tryb:</string>                     <!-- spinner label -->
     <string name="configLabel_location_lat">Szerokość:</string>                  <!-- edittext label -->
-    <string name="configHint_location_lat">52.2319</string>                       <!-- edittext hint -->
+    <string name="configHint_location_lat">52,2319</string>                       <!-- edittext hint -->
     <string name="configLabel_location_lon">Długość:</string>                 <!-- edittext label -->
-    <string name="configHint_location_lon">21.0067</string>                <!-- edittext hint -->
+    <string name="configHint_location_lon">21,0067</string>                <!-- edittext hint -->
     <string name="configLabel_location_name">Nazwa:</string>                     <!-- edittext label -->
     <string name="configHint_location_name">(opcjonalne)</string>                 <!-- edittext hint -->
 
