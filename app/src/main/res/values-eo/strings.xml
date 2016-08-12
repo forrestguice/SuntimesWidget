@@ -174,9 +174,9 @@
     <string name="configLabel_location">Agordoj de loko</string>              <!-- group title -->
     <string name="configLabel_location_mode">Reĝimo:</string>                     <!-- spinner label -->
     <string name="configLabel_location_lat">Latitudo:</string>                  <!-- edittext label -->
-    <string name="configHint_location_lat">53.1324</string>                       <!-- edittext hint -->
+    <string name="configHint_location_lat">53,1324</string>                       <!-- edittext hint -->
     <string name="configLabel_location_lon">Longitudo:</string>                 <!-- edittext label -->
-    <string name="configHint_location_lon">23.1592</string>                <!-- edittext hint -->
+    <string name="configHint_location_lon">23,1592</string>                <!-- edittext hint -->
     <string name="configLabel_location_name">Nomo:</string>                     <!-- edittext label -->
     <string name="configHint_location_name">(malnepra)</string>                 <!-- edittext hint -->
 
@@ -468,7 +468,7 @@
     ]]></string>
     <string name="app_legal2"><![CDATA[
         Germana traduko de Henrik "HerHde" Hüttemann. </br>
-        Pola kaj Esperanta traduko de verdulo.
+        Pola kaj Esperanta tradukoj de verdulo.
     ]]></string>
 
     <!-- Dialog: Help -->
