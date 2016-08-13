@@ -171,14 +171,14 @@
     <string name="locationMode_current">Current (last known)</string>  <!-- setting -->
     <string name="locationMode_custom">User Defined</string>           <!-- setting -->
 
-    <string name="configLabel_location">Location Settings</string>              <!-- group title -->
-    <string name="configLabel_location_mode">Mode:</string>                     <!-- spinner label -->
-    <string name="configLabel_location_lat">Latitude:</string>                  <!-- edittext label -->
-    <string name="configHint_location_lat">34.54</string>                       <!-- edittext hint -->
-    <string name="configLabel_location_lon">Longitude:</string>                 <!-- edittext label -->
-    <string name="configHint_location_lon">-112.4677778</string>                <!-- edittext hint -->
-    <string name="configLabel_location_name">Name:</string>                     <!-- edittext label -->
-    <string name="configHint_location_name">(optional)</string>                 <!-- edittext hint -->
+    <string name="configLabel_location">Location Settings</string>               <!-- group title -->
+    <string name="configLabel_location_mode">Mode:</string>                      <!-- spinner label -->
+    <string name="configLabel_location_lat">Latitude:</string>                   <!-- edittext label -->
+    <string name="configHint_location_lat">decimal degrees</string>      <!-- edittext hint -->
+    <string name="configLabel_location_lon">Longitude:</string>                          <!-- edittext label -->
+    <string name="configHint_location_lon">decimal degrees</string> <!-- edittext hint -->
+    <string name="configLabel_location_name">Name:</string>                      <!-- edittext label -->
+    <string name="configHint_location_name">(optional)</string>                  <!-- edittext hint -->
 
     <string name="configAction_getFix">Get Location</string>    <!-- button (contentDescription) -->
     <string name="configAction_editPlace">Edit</string>         <!-- button (contentDescription) -->
