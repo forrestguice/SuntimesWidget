@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="http://schemas.android.com/tools">
+
+    <string name="default_location_label">Tallinn</string>
+    <string name="default_location_latitude">59.4248</string>    <!-- decimal degrees (DD) -->
+    <string name="default_location_longitude">24.5981</string>   <!-- decimal degrees (DD) -->
+
+</resources>

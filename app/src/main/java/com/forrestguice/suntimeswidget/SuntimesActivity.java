@@ -83,6 +83,9 @@ import java.util.List;
 
 public class SuntimesActivity extends AppCompatActivity
 {
+    public static final String KEY_UI_CARDISTOMORROW = "cardIsTomorrow";
+    public static final String KEY_UI_USERSWAPPEDCARD = "userSwappedCard";
+
     private static final String DIALOGTAG_TIMEZONE = "timezone";
     private static final String DIALOGTAG_ALARM = "alarm";
     private static final String DIALOGTAG_ABOUT = "about";
@@ -166,6 +169,7 @@ public class SuntimesActivity extends AppCompatActivity
     private TextView txt_daylength2;
     private TextView txt_lightlength2;
 
+    private boolean userSwappedCard = false;
     private HashMap<SolarEvents.SolarEventField, TextView> timeFields;
 
     private TextView txt_equinox_vernal;
@@ -282,6 +286,21 @@ public class SuntimesActivity extends AppCompatActivity
     public void onPause()
     {
         super.onPause();
+    }
+
+    @Override
+    public void onSaveInstanceState( Bundle outState )
+    {
+        outState.putBoolean(KEY_UI_USERSWAPPEDCARD, userSwappedCard);
+        outState.putBoolean(KEY_UI_CARDISTOMORROW, (card_flipper.getDisplayedChild() != 0));
+    }
+
+    @Override
+    public void onRestoreInstanceState(@NonNull Bundle savedInstanceState)
+    {
+        userSwappedCard = savedInstanceState.getBoolean(KEY_UI_USERSWAPPEDCARD, false);
+        boolean cardIsTomorrow = savedInstanceState.getBoolean(KEY_UI_CARDISTOMORROW, false);
+        card_flipper.setDisplayedChild((cardIsTomorrow ? 1 : 0));
     }
 
     /**
@@ -1253,9 +1272,11 @@ public class SuntimesActivity extends AppCompatActivity
                     secondTouchX = event.getX();
                     if ((firstTouchX - secondTouchX) >= FLING_SENSITIVITY)
                     {
+                        userSwappedCard = false;
                         notes.showNextNote();    // swipe right: next
 
                     } else if ((secondTouchX - firstTouchX) > FLING_SENSITIVITY) {
+                        userSwappedCard = false;
                         notes.showPrevNote();   // swipe left: prev
 
                     } else {                    // click: user defined
@@ -1270,11 +1291,13 @@ public class SuntimesActivity extends AppCompatActivity
                                 break;
 
                             case PREV_NOTE:
+                                userSwappedCard = false;
                                 notes.showPrevNote();
                                 break;
 
                             case NEXT_NOTE:
                             default:
+                                userSwappedCard = false;
                                 notes.showNextNote();
                                 break;
                         }
@@ -1316,11 +1339,11 @@ public class SuntimesActivity extends AppCompatActivity
                     secondTouchX = event.getX();
                     if ((secondTouchX - firstTouchX) > FLING_SENSITIVITY)
                     {   // swipe right; back to previous view
-                        showPreviousCard();
+                        userSwappedCard = showPreviousCard();
 
                     } else if (firstTouchX - secondTouchX > FLING_SENSITIVITY) {
                         // swipe left; advance to next view
-                        showNextCard();
+                        userSwappedCard = showNextCard();
 
                     } else {
                         // swipe cancel; reset current view
@@ -1411,7 +1434,7 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public void onClick(View view)
         {
-            showNextCard();
+            userSwappedCard = showNextCard();
         }
     };
 
@@ -1420,7 +1443,7 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public void onClick(View view)
         {
-            showPreviousCard();
+            userSwappedCard = showPreviousCard();
         }
     };
 
@@ -1429,6 +1452,7 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public void onClick(View view)
         {
+            userSwappedCard = false;
             notes.showNextNote();
         }
     };
@@ -1438,6 +1462,7 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public void onClick(View view)
         {
+            userSwappedCard = false;
             notes.showPrevNote();
         }
     };
@@ -1461,12 +1486,14 @@ public class SuntimesActivity extends AppCompatActivity
 
             if (action == AppSettings.ClockTapAction.NEXT_NOTE)
             {
+                userSwappedCard = false;
                 notes.showNextNote();
                 return;
             }
 
             if (action == AppSettings.ClockTapAction.PREV_NOTE)
             {
+                userSwappedCard = false;
                 notes.showPrevNote();
                 return;
             }
@@ -1515,9 +1542,9 @@ public class SuntimesActivity extends AppCompatActivity
                     default:
                         if (tomorrow)
                         {
-                            showPreviousCard();
+                            userSwappedCard = showPreviousCard();
                         } else {
-                            showNextCard();
+                            userSwappedCard = showNextCard();
                         }
                         break;
                 }
@@ -1577,12 +1604,15 @@ public class SuntimesActivity extends AppCompatActivity
             }
         }
 
-        if (nextCardOffset > 0)
+        if (!userSwappedCard)
         {
-            showNextCard();
+            if (nextCardOffset > 0)
+            {
+                showNextCard();
 
-        } else if (nextCardOffset < 0) {
-            showPreviousCard();
+            } else if (nextCardOffset < 0) {
+                showPreviousCard();
+            }
         }
     }
 

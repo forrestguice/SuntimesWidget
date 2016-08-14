@@ -48,20 +48,24 @@ Any money given will indirectly go towards future software development; I will s
 
 The goal of this project is an app that is free and open-source (FOSS). Get the source code (under GPLv3) at: https://github.com/forrestguice/SuntimesWidget
 
-
-**Project Contributors**
-
-German translation provided by <u>Henrik "HerHde" Hüttemann</u>.
-
 **Bug Reports**
 
-Please report inaccurate times to the upstream project (https://github.com/mikereedell/sunrisesunsetlib-java). Also be aware that times are approximate and may differ from official sources (up to 10 minutes).
+Report bugs using the issue tracker. Please be aware that times are approximate and may differ from official sources (up to 10 minutes). If you are getting wildly inaccurate times (and its determined that its not caused by a bug in the app), please consider submitting a report to the upstream project (https://github.com/mikereedell/sunrisesunsetlib-java). 
 
 When reporting an inaccurate time, please include the following information:
-
+```
 * Date sunrise/set calculation was being run for.
 * Latitude/longitute sunrise/set calculation was being run for.
 * Timezone (either "America/New_York" or GMT-0500)
+```
+
+
+**Project Contributions**
+
+German translation by <u>Henrik "HerHde" Hüttemann</u>.<br/>
+Polish and Esperanto translations by <u>verdulo</u>.
+
+
 
 
 

@@ -23,24 +23,88 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import java.util.Calendar;
 
 /**
- * An interface used by the widget when calculating/displaying sunrise and sunset times. Instances
+ * An interface used when calculating sunrise and sunset times. Implementations
  * of this interface are intended to be thin wrappers around third party code.
+ *
+ * @version 1.0.0
  */
 public interface SuntimesCalculator
 {
+    /**
+     * @return the identifier for the given implementation of SuntimesCalculator
+     * @since 1.0.0
+     */
     String name();
+
+    /**
+     * Initialize the calculator with a given location and timezone.
+     * @param location a WidgetSettings.Location object
+     * @param timezone a timezone identifier
+     * @since 1.0.0
+     */
     void init( WidgetSettings.Location location, String timezone );
 
+    /**
+     * @param date a Calendar representing a given date
+     * @return a Calendar for astronomical sunrise for the given date
+     * @since 1.0.0
+     */
     Calendar getAstronomicalSunriseCalendarForDate( Calendar date );
+
+    /**
+     * @param date a Calendar representing a given date
+     * @return a Calendar for nautical sunrise for the given date
+     * @since 1.0.0
+     */
     Calendar getNauticalSunriseCalendarForDate( Calendar date );
+
+    /**
+     * @param date a Calendar representing a given date
+     * @return a Calendar for civil sunrise for the given date
+     * @since 1.0.0
+     */
     Calendar getCivilSunriseCalendarForDate( Calendar date );
+
+    /**
+     * @param date a Calendar representing a given date
+     * @return a Calendar for the official sunrise for the given date
+     * @since 1.0.0
+     */
     Calendar getOfficialSunriseCalendarForDate( Calendar date );
 
+    /**
+     * @param date a Calendar representing a given date
+     * @return a Calendar for solar noon for the given date
+     * @since 1.0.0
+     */
     Calendar getSolarNoonCalendarForDate( Calendar date );
 
+    /**
+     * @param date a Calendar representing a given date
+     * @return a Calendar for the official sunset for the given date
+     * @since 1.0.0
+     */
     Calendar getOfficialSunsetCalendarForDate( Calendar date );
+
+    /**
+     * @param date a Calendar representing a given date
+     * @return a Calendar for civil sunset for the given date
+     * @since 1.0.0
+     */
     Calendar getCivilSunsetCalendarForDate( Calendar date );
+
+    /**
+     * @param date a Calendar representing a given date
+     * @return a Calendar for nautical sunset for the given date
+     * @since 1.0.0
+     */
     Calendar getNauticalSunsetCalendarForDate( Calendar date );
+
+    /**
+     * @param date a Calendar representing a given date
+     * @return a Calendar for astronomical sunset for the given date
+     * @since 1.0.0
+     */
     Calendar getAstronomicalSunsetCalendarForDate( Calendar date );
 
     Calendar getVernalEquinoxForYear( Calendar date );

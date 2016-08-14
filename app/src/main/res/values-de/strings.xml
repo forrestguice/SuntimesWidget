@@ -5,8 +5,8 @@
   <!-- todo -->
 
   <string name="default_location_label">Berlin</string>
-  <string name="default_location_latitude">52.5243</string>    <!-- degree decimals -->
-  <string name="default_location_longitude">13.4105</string>   <!-- degree decimals -->
+  <string name="default_location_latitude">52.5243</string>    <!-- decimal degrees (DD) -->
+  <string name="default_location_longitude">13.4105</string>   <!-- decimal degrees (DD) -->
 
   <!-- MAIN ACTIVITY -->
 
@@ -186,7 +186,7 @@
   <string name="configLabel_location_lat">Breitengrad (Lat.):</string>                  <!-- edittext label -->
   <string name="configHint_location_lat">34.54</string>                       <!-- edittext hint -->
   <string name="configLabel_location_lon">Längengrad (Lon.):</string>                 <!-- edittext label -->
-  <string name="configHint_location_lon">-112.4677778</string>                <!-- edittext hint -->
+  <string name="configHint_location_lon">-112.46777</string>                <!-- edittext hint -->
   <string name="configLabel_location_name">Name:</string>                     <!-- edittext label -->
   <string name="configHint_location_name">(optional)</string>                 <!-- edittext hint -->
 
@@ -296,35 +296,25 @@
   </string-array>
 
   <!-- App Setting: locale mode -->
-  <!-- TODO -->
-  <string name="configLabel_locale">Language Settings (de)</string>   <!-- group title -->
+  <!-- TODO: verify translation / fix -->
+  <string name="configLabel_locale">Spracheinstellungen</string>   <!-- group title -->
 
-  <string name="configLabel_localeMode">Mode</string>
+  <string name="configLabel_localeMode">Modus:</string>
   <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
   <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
       <item>System</item>
-      <item>User Defined</item>
-  </string-array>
-  <string-array name="localeMode_values" translatable="false">  <!-- one-to-one with localeMode_display -->
-      <item>SYSTEM_LOCALE</item>
-      <item>CUSTOM_LOCALE</item>
+      <item>Benutzerdefiniert</item>
   </string-array>
 
   <!-- App Setting: custom Locale -->
-  <!-- TODO -->
-  <string name="configLabel_localeSelect">Language</string>
+  <!-- TODO: verify translation / fix -->
+  <string name="configLabel_localeSelect">Sprache</string>
   <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
   <string-array name="locale_display">                      <!-- one-to-one with locale_values -->
-      <item>English</item>
+      <item>Englisch</item>
       <item>Esperanto</item>
-      <item>German</item>
-      <item>Polish</item>
-  </string-array>
-  <string-array name="locale_values" translatable="false">  <!-- one-to-one with locale_display -->
-      <item>en</item>
-      <item>eo</item>
-      <item>de</item>
-      <item>pl</item>
+      <item>Deutsche</item>
+      <item>Polieren</item>
   </string-array>
 
   <!--

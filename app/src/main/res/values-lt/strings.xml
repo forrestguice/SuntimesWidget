@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="http://schemas.android.com/tools">
+
+    <string name="default_location_label">Vilnius</string>
+    <string name="default_location_latitude">54.7000</string>   <!-- decimal degrees (DD) -->
+    <string name="default_location_longitude">25.1128</string>  <!-- decimal degrees (DD) -->
+
+</resources>
