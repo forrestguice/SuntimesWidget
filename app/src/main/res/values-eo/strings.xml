@@ -92,7 +92,7 @@
     <string name="untilEnd_astroTwilight">astronomia sunsubiro</string>
 
     <!-- Table -->
-    <string name="sunrise">Sunleviĝo</string>              re               <!-- contentDescription -->
+    <string name="sunrise">Sunleviĝo</string>                             <!-- contentDescription -->
     <string name="sunrise_short">Lev.</string>                          <!-- table title -->
     <string name="sunset">Sunsubiro</string>                               <!-- contentDescription -->
     <string name="sunset_short">Sub.</string>                            <!-- table title -->
