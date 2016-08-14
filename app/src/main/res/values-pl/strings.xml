@@ -74,28 +74,28 @@
                   sunset
          The relative order is defined by the layout (layout/info_time_note.xml).
     -->
-    <string name="since">przed</string>
+    <string name="since">do</string>
     <string name="until">do</string>
-    <string name="until_end">przed</string>
+    <string name="until_end">do</string>
 
     <!-- NoteBody: sunset/sunrise/twilight string
          The note body text; appears next to the prefix (layout/info_time_note.xml)
     -->
-    <string name="until_astroTwilight">świtem astronomicznym</string>
-    <string name="until_civilTwilight">świtem cywilnym</string>
-    <string name="until_nauticalTwilight">świtem żeglarskim</string>
+    <string name="until_astroTwilight">świtu astronomicznego</string>
+    <string name="until_civilTwilight">świtu cywilnego</string>
+    <string name="until_nauticalTwilight">świtu żeglarskiego</string>
     <string name="until_sunrise">wschodu Słońca</string>
     <string name="until_noon">kulminacji Słońca</string>
     <string name="until_sunset">zachodu Słońca</string>
-    <string name="untilEnd_civilTwilight">zmierzchem cywilnym</string>
-    <string name="untilEnd_nauticalTwilight">zmierzchem żeglarskim</string>
-    <string name="untilEnd_astroTwilight">zmierzchem astronomicznym</string>
+    <string name="untilEnd_civilTwilight">zmierzchu cywilnego</string>
+    <string name="untilEnd_nauticalTwilight">zmierzchu żeglarskiego</string>
+    <string name="untilEnd_astroTwilight">zmierzchu astronomicznego</string>
 
     <!-- Table -->
     <string name="sunrise">Wschód Słońca</string>                             <!-- contentDescription -->
-    <string name="sunrise_short">Wschód</string>                          <!-- table title -->
+    <string name="sunrise_short">Wsch.</string>                          <!-- table title -->
     <string name="sunset">Zachód Słońca</string>                               <!-- contentDescription -->
-    <string name="sunset_short">Zachód</string>                            <!-- table title -->
+    <string name="sunset_short">Zach.</string>                            <!-- table title -->
 
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
     <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
