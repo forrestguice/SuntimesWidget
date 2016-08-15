@@ -22,12 +22,11 @@ import android.annotation.TargetApi;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_1;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_2;
@@ -59,7 +58,7 @@ class SuntimesWidget1RemoteViewsFactory implements RemoteViewsService.RemoteView
     private int appWidgetId;
     private int viewCount = 0;
 
-    private ArrayList<SuntimesData> dataset = new ArrayList<SuntimesData>();
+    private ArrayList<SuntimesRiseSetData> dataset = new ArrayList<SuntimesRiseSetData>();
 
     public SuntimesWidget1RemoteViewsFactory(Context context, Intent intent)
     {
@@ -76,13 +75,13 @@ class SuntimesWidget1RemoteViewsFactory implements RemoteViewsService.RemoteView
     @Override
     public void onDataSetChanged()
     {
-        SuntimesData data = new SuntimesData(context, appWidgetId);
+        SuntimesRiseSetData data = new SuntimesRiseSetData(context, appWidgetId);
         data.calculate();
 
         dataset.clear();
         //dataset.add(new SuntimesWidgetData(data, R.layout.layout_widget_1x1_0i));
-        dataset.add(new SuntimesData(data, R.layout.layout_widget_1x1_1i));
-        dataset.add(new SuntimesData(data, R.layout.layout_widget_1x1_2i));
+        dataset.add(new SuntimesRiseSetData(data, R.layout.layout_widget_1x1_1i));
+        dataset.add(new SuntimesRiseSetData(data, R.layout.layout_widget_1x1_2i));
         viewCount = 3;
     }
 
@@ -100,7 +99,7 @@ class SuntimesWidget1RemoteViewsFactory implements RemoteViewsService.RemoteView
     @Override
     public RemoteViews getViewAt(int position)
     {
-        SuntimesData data = dataset.get(position);
+        SuntimesRiseSetData data = dataset.get(position);
 
         SuntimesLayout layout;
         switch(data.layoutID())

@@ -18,19 +18,43 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
+import android.appwidget.AppWidgetManager;
+import android.content.Context;
+
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-public class SuntimesDataset
+public class SuntimesRiseSetDataset
 {
-    public SuntimesData dataActual;
-    public SuntimesData dataCivil;
-    public SuntimesData dataNautical;
-    public SuntimesData dataAstro;
-    public SuntimesData dataNoon;
+    public SuntimesRiseSetData dataActual;
+    public SuntimesRiseSetData dataCivil;
+    public SuntimesRiseSetData dataNautical;
+    public SuntimesRiseSetData dataAstro;
+    public SuntimesRiseSetData dataNoon;
 
-    public SuntimesDataset( SuntimesData dataActual, SuntimesData dataCivil, SuntimesData dataNautical, SuntimesData dataAstro, SuntimesData dataNoon )
+    public SuntimesRiseSetDataset(Context context)
+    {
+        dataActual = new SuntimesRiseSetData(context, AppWidgetManager.INVALID_APPWIDGET_ID);
+        dataActual.setCompareMode(WidgetSettings.CompareMode.TOMORROW);
+        dataActual.setTimeMode(WidgetSettings.TimeMode.OFFICIAL);
+
+        dataCivil = new SuntimesRiseSetData(dataActual);
+        dataCivil.setTimeMode(WidgetSettings.TimeMode.CIVIL);
+
+        dataNautical = new SuntimesRiseSetData(dataActual);
+        dataNautical.setTimeMode(WidgetSettings.TimeMode.NAUTICAL);
+
+        dataAstro = new SuntimesRiseSetData(dataActual);
+        dataAstro.setTimeMode(WidgetSettings.TimeMode.ASTRONOMICAL);
+
+        dataNoon = new SuntimesRiseSetData(dataActual);
+        dataNoon.setTimeMode(WidgetSettings.TimeMode.NOON);
+    }
+
+    public SuntimesRiseSetDataset(SuntimesRiseSetData dataActual, SuntimesRiseSetData dataCivil, SuntimesRiseSetData dataNautical, SuntimesRiseSetData dataAstro, SuntimesRiseSetData dataNoon)
     {
         this.dataActual = dataActual;
         if (dataActual == null)

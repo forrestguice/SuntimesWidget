@@ -60,8 +60,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesData;
-import com.forrestguice.suntimeswidget.calculator.SuntimesDataset;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 import com.forrestguice.suntimeswidget.notes.NoteChangedListener;
@@ -102,7 +102,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     private WidgetSettings.Location location;
     private SuntimesNotes notes;
-    private SuntimesDataset dataset;
+    private SuntimesRiseSetDataset dataset;
 
     // clock views
     private TextView txt_time;
@@ -171,11 +171,6 @@ public class SuntimesActivity extends AppCompatActivity
 
     private boolean userSwappedCard = false;
     private HashMap<SolarEvents.SolarEventField, TextView> timeFields;
-
-    private TextView txt_equinox_vernal;
-    private TextView txt_solstice_summer;
-    private TextView txt_equinox_autumnal;
-    private TextView txt_solstice_winter;
 
     /**
      */
@@ -527,10 +522,10 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private void initEquinoxViews(Context context)
     {
-        txt_equinox_vernal = (TextView)findViewById(R.id.text_date_equinox_vernal);
-        txt_solstice_summer = (TextView)findViewById(R.id.text_date_solstice_summer);
-        txt_equinox_autumnal = (TextView)findViewById(R.id.text_date_equinox_autumnal);
-        txt_solstice_winter = (TextView)findViewById(R.id.text_date_solstice_winter);
+        //txt_equinox_vernal = (TextView)findViewById(R.id.text_date_equinox_vernal);
+        //txt_solstice_summer = (TextView)findViewById(R.id.text_date_solstice_summer);
+        //t/xt_equinox_autumnal = (TextView)findViewById(R.id.text_date_equinox_autumnal);
+        //txt_solstice_winter = (TextView)findViewById(R.id.text_date_solstice_winter);
     }
 
     /**
@@ -1008,23 +1003,7 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private void initData( Context context )
     {
-        SuntimesData data_actualTime = new SuntimesData(context, AppWidgetManager.INVALID_APPWIDGET_ID);
-        data_actualTime.setCompareMode(WidgetSettings.CompareMode.TOMORROW);
-        data_actualTime.setTimeMode(WidgetSettings.TimeMode.OFFICIAL);
-
-        SuntimesData data_civilTime = new SuntimesData(data_actualTime);
-        data_civilTime.setTimeMode(WidgetSettings.TimeMode.CIVIL);
-
-        SuntimesData data_nauticalTime = new SuntimesData(data_actualTime);
-        data_nauticalTime.setTimeMode(WidgetSettings.TimeMode.NAUTICAL);
-
-        SuntimesData data_astroTime = new SuntimesData(data_actualTime);
-        data_astroTime.setTimeMode(WidgetSettings.TimeMode.ASTRONOMICAL);
-
-        SuntimesData data_noon = new SuntimesData(data_actualTime);
-        data_noon.setTimeMode(WidgetSettings.TimeMode.NOON);
-
-        dataset = new SuntimesDataset(data_actualTime, data_civilTime, data_nauticalTime, data_astroTime, data_noon);
+        dataset = new SuntimesRiseSetDataset(context);
     }
 
     protected void calculateData( Context context )
@@ -1145,10 +1124,10 @@ public class SuntimesActivity extends AppCompatActivity
         SuntimesUtils.TimeDisplayText solsticString_summer = utils.calendarDateTimeDisplayString(context, null);
         SuntimesUtils.TimeDisplayText solsticString_winter = utils.calendarDateTimeDisplayString(context, null);
 
-        txt_equinox_vernal.setText(equinoxString_vernal.toString());
-        txt_solstice_summer.setText(solsticString_summer.toString());
-        txt_equinox_autumnal.setText(equinoxString_autumnal.toString());
-        txt_solstice_winter.setText(solsticString_winter.toString());
+        //txt_equinox_vernal.setText(equinoxString_vernal.toString());
+        //txt_solstice_summer.setText(solsticString_summer.toString());
+        //txt_equinox_autumnal.setText(equinoxString_autumnal.toString());
+        //txt_solstice_winter.setText(solsticString_winter.toString());
 
         //
         // clock & date

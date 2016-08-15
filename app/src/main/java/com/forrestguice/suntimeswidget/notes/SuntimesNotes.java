@@ -19,14 +19,14 @@
 package com.forrestguice.suntimeswidget.notes;
 
 import android.content.Context;
-import com.forrestguice.suntimeswidget.calculator.SuntimesDataset;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 
 import java.util.Calendar;
 
 public interface SuntimesNotes
 {
-    void init(Context context, SuntimesDataset dataset);
+    void init(Context context, SuntimesRiseSetDataset dataset);
     boolean isInitialized();
 
     void setOnChangedListener( NoteChangedListener listener );

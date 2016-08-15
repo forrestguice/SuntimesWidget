@@ -43,7 +43,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesDataset;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -67,9 +67,9 @@ public class AlarmDialog extends DialogFragment
     /**
      * The supporting dataset.
      */
-    private SuntimesDataset dataset;
-    public SuntimesDataset getData() { return dataset; }
-    public void setData( SuntimesDataset dataset) { this.dataset = dataset; }
+    private SuntimesRiseSetDataset dataset;
+    public SuntimesRiseSetDataset getData() { return dataset; }
+    public void setData( SuntimesRiseSetDataset dataset) { this.dataset = dataset; }
 
     /**
      * The user's alarm choice.

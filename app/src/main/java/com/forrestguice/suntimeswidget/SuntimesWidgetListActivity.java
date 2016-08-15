@@ -39,7 +39,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -304,7 +304,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             for (int id : ids0)
             {
                 AppWidgetProviderInfo info = widgetManager.getAppWidgetInfo(id);
-                String widgetTitle = utils.displayStringForTitlePattern(titlePattern, new SuntimesData(context, id));
+                String widgetTitle = utils.displayStringForTitlePattern(titlePattern, new SuntimesRiseSetData(context, id));
                 String title = context.getString(R.string.configLabel_widgetList_itemTitle, widgetTitle);
                 String summary = context.getString(R.string.app_name_widget0);
 
@@ -319,7 +319,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             for (int id : ids1)
             {
                 AppWidgetProviderInfo info = widgetManager.getAppWidgetInfo(id);
-                String widgetTitle = utils.displayStringForTitlePattern(titlePattern, new SuntimesData(context, id));
+                String widgetTitle = utils.displayStringForTitlePattern(titlePattern, new SuntimesRiseSetData(context, id));
                 String title = context.getString(R.string.configLabel_widgetList_itemTitle, widgetTitle);
                 String summary = context.getString(R.string.app_name_widget1);
 
