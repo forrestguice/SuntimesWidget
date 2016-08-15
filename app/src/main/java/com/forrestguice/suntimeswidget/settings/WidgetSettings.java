@@ -528,7 +528,68 @@ public class WidgetSettings
         public static void initDisplayStrings( Context context )
         {
             YESTERDAY.setDisplayString( context.getString(R.string.compareMode_yesterday) );
-            TOMORROW.setDisplayString( context.getString(R.string.compareMode_tomorrow) );
+            TOMORROW.setDisplayString(context.getString(R.string.compareMode_tomorrow));
+        }
+    }
+
+
+    /**
+     * SolsticeEquinoxMode
+     */
+    public static enum SolsticeEquinoxMode
+    {
+        EQUINOX_VERNAL("Equinox", "Vernal Equinox"),
+        SOLSTICE_SUMMER("Solstice", "Summer Solstice"),
+        EQUINOX_AUTUMNAL("Equinox", "Autumnal Equinox"),
+        SOLSTICE_WINTER("Solstice", "Winter Solstice");
+
+        public static boolean shortDisplayStrings = false;
+
+        private String shortDisplayString;
+        private String longDisplayString;
+
+        private SolsticeEquinoxMode(String shortDisplayString, String longDisplayString)
+        {
+            this.shortDisplayString = shortDisplayString;
+            this.longDisplayString = longDisplayString;
+        }
+
+        public String toString()
+        {
+            if (shortDisplayStrings)
+                return shortDisplayString;
+            else return longDisplayString;
+        }
+
+        public String getShortDisplayString()
+        {
+            return shortDisplayString;
+        }
+
+        public String getLongDisplayString()
+        {
+            return longDisplayString;
+        }
+
+        public void setDisplayStrings(String shortDisplayString, String longDisplayString)
+        {
+            this.shortDisplayString = shortDisplayString;
+            this.longDisplayString = longDisplayString;
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            EQUINOX_VERNAL.setDisplayStrings(context.getString(R.string.timeMode_official_short),
+                    context.getString(R.string.timeMode_official));
+
+            SOLSTICE_SUMMER.setDisplayStrings( context.getString(R.string.timeMode_nautical_short),
+                    context.getString(R.string.timeMode_nautical));
+
+            EQUINOX_AUTUMNAL.setDisplayStrings( context.getString(R.string.timeMode_civil_short),
+                    context.getString(R.string.timeMode_civil) );
+
+            SOLSTICE_WINTER.setDisplayStrings(context.getString(R.string.timeMode_astronomical_short),
+                    context.getString(R.string.timeMode_astronomical));
         }
     }
 
@@ -1170,6 +1231,7 @@ public class WidgetSettings
         WidgetMode1x1.initDisplayStrings(context);
         CompareMode.initDisplayStrings(context);
         TimeMode.initDisplayStrings(context);
+        SolsticeEquinoxMode.initDisplayStrings(context);
         LocationMode.initDisplayStrings(context);
         TimezoneMode.initDisplayStrings(context);
         DateMode.initDisplayStrings(context);

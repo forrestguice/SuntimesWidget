@@ -144,6 +144,7 @@
     <string name="timeMode_nautical">Nautical Twilight</string>         <!-- setting -->
     <string name="timeMode_astronomical_short">Astronomical</string>    <!-- setting -->
     <string name="timeMode_astronomical">Astronomical Twilight</string> <!-- setting -->
+
     <string name="timeMode_equinox_vernal">Vernal Equinox</string>      <!-- setting -->
     <string name="timeMode_equinox_vernal_short">Equinox</string>       <!-- setting -->
     <string name="timeMode_equinox_autumnal">Autumnal Equinox</string>  <!-- setting -->
