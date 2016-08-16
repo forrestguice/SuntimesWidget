@@ -190,6 +190,7 @@ public class LocationConfigView extends LinearLayout
                 text_locationLon.setEnabled(false);
                 labl_locationLat.setEnabled(false);
                 text_locationLat.setEnabled(false);
+                inputOverlay.setVisibility(View.VISIBLE);
 
                 labl_locationName.setEnabled(false);
                 text_locationName.setEnabled(false);
@@ -210,6 +211,7 @@ public class LocationConfigView extends LinearLayout
                 text_locationLon.setEnabled(true);
                 labl_locationLat.setEnabled(true);
                 text_locationLat.setEnabled(true);
+                inputOverlay.setVisibility(View.GONE);
 
                 labl_locationName.setEnabled(true);
                 text_locationName.setEnabled(true);
@@ -229,6 +231,7 @@ public class LocationConfigView extends LinearLayout
                 text_locationLon.setEnabled(false);
                 labl_locationLat.setEnabled(false);
                 text_locationLat.setEnabled(false);
+                inputOverlay.setVisibility(View.VISIBLE);
 
                 labl_locationName.setEnabled(true);
                 text_locationName.setEnabled(false);
@@ -256,6 +259,7 @@ public class LocationConfigView extends LinearLayout
     private TextView labl_locationName;
     private Spinner spin_locationName;
     private EditText text_locationName;
+    private View inputOverlay;
 
     private ImageButton button_edit;
     private ImageButton button_save;
@@ -310,6 +314,20 @@ public class LocationConfigView extends LinearLayout
 
         labl_locationLat = (TextView)findViewById(R.id.appwidget_location_lat_label);
         text_locationLat = (EditText)findViewById(R.id.appwidget_location_lat);
+
+        inputOverlay = findViewById(R.id.appwidget_location_latlon_overlay);
+        inputOverlay.setVisibility(View.GONE);
+        inputOverlay.setOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                if (mode == LocationViewMode.MODE_CUSTOM_SELECT)
+                {
+                    setMode(LocationViewMode.MODE_CUSTOM_EDIT);
+                }
+            }
+        });
 
         labl_locationLon = (TextView)findViewById(R.id.appwidget_location_lon_label);
         text_locationLon = (EditText)findViewById(R.id.appwidget_location_lon);
