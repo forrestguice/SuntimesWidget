@@ -376,6 +376,8 @@
     <string name="location_dialog_error_lat">Nieprawidłowa szerokość geograficzna.</string>
     <string name="location_dialog_error_lon">Nieprawidłowa długość geograficzna.</string>
 
+    <string name="location_dialog_toast_copied">Copied to clipboard<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string> <!-- todo -->
+
     <!-- Dialog: Clear Places -->
     <string name="locationclear_dialog_title">Usunąć miejsca?</string>
     <string name="locationclear_dialog_message">Czy na pewno chcesz wyczyścić bazę danych miejsc?</string>

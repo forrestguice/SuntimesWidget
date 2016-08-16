@@ -18,14 +18,18 @@
 package com.forrestguice.suntimeswidget;
 
 import android.appwidget.AppWidgetManager;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
+import android.text.Html;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,6 +46,7 @@ import android.widget.ProgressBar;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
@@ -726,6 +731,36 @@ public class LocationConfigView extends LinearLayout
                 }
             }
             return -1;
+        }
+    }
+
+    /**
+     * Copy the location in decimal degrees (DD) to clipboard (locale invariant `lat, lon`)
+     */
+    public void copyLocationToClipboard(Context context)
+    {
+        copyLocationToClipboard(context, false);
+    }
+    public void copyLocationToClipboard(Context context, boolean silent)
+    {
+        WidgetSettings.Location location = getLocation();
+        String clipboardText = location.toString();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+        {
+            ClipboardManager clipboard = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("lat, lon", clipboardText);
+            clipboard.setPrimaryClip(clip);
+
+        } else {
+            android.text.ClipboardManager clipboard = (android.text.ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
+            clipboard.setText(clipboardText);
+        }
+
+        if (!silent)
+        {
+            Toast copiedMsg = Toast.makeText(context, Html.fromHtml(context.getString(R.string.location_dialog_toast_copied, clipboardText)), Toast.LENGTH_LONG);
+            copiedMsg.show();
         }
     }
 

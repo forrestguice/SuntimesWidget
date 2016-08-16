@@ -378,6 +378,8 @@
   <string name="location_dialog_error_lat">Dies ist kein gültiger Breitengrad.</string>
   <string name="location_dialog_error_lon">Dies ist kein gültiger Längengrad.</string>
 
+  <string name="location_dialog_toast_copied">Copied to clipboard<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>  <!-- TODO -->
+
   <!-- Dialog: Clear Places -->
   <string name="locationclear_dialog_title">Orte löschen?</string>
   <string name="locationclear_dialog_message">Wirklich die Datenbank mit Orten und Koordinaten zurücksetzen?</string>
