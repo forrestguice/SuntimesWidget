@@ -25,68 +25,26 @@
             android:columnCount="6"
             android:useDefaultMargins="true">
 
+            <!-- Table Head (Date) -->
             <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-                          android:minWidth="125dp"
-                          android:layout_row="0"
-                          android:layout_column="0">
-
-                <TextView
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:id="@+id/text_date"
-                    tools:text="Today\nApril 1, 2016"
-
-                    android:textStyle="bold"
-                    android:layout_gravity="bottom"
-                    android:textSize="16sp"
-                    android:textColor="@drawable/btn_datetxt" />
-
+                          android:layout_row="0" android:layout_column="0"
+                          android:layout_gravity="bottom">
+                <include layout="@layout/table_colhead_date" />
             </LinearLayout>
 
+            <!-- Table Head (Rise) -->
             <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-                          android:orientation="horizontal"
-                          android:layout_gravity="bottom|end"
-                          android:layout_row="0"
-                          android:layout_column="1">
-
-                <TextView style="@style/SunsetTimeTextView"
-                          android:textColor="@color/sunIcon_color_rising"
-                          android:text="@string/sunrise_short"
-                          android:layout_height="wrap_content"
-                          android:textSize="16sp"
-                          android:textStyle="bold"/>
-
-                <ImageView
-                    style="@style/SunsetTimeImageView"
-                    android:id="@+id/icon_time_sunrise"
-                    android:background="@drawable/ic_sunrise"
-                    android:layout_gravity="center"
-                    android:layout_margin="5dp"
-                    tools:ignore="contentDescription" />
-
+                          android:layout_row="0" android:layout_column="1"
+                          android:layout_gravity="bottom|end">
+                <include layout="@layout/table_colhead_rise"/>
             </LinearLayout>
 
+            <!-- Table Head (Set) -->
             <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-                          android:orientation="horizontal"
-                          android:layout_gravity="bottom|end"
-                          android:layout_row="0"
-                          android:layout_column="2">
-
-                <ImageView
-                    style="@style/SunsetTimeImageView"
-                    android:id="@+id/icon_time_sunset"
-                    android:background="@drawable/ic_sunset"
-                    android:layout_gravity="center"
-                    android:layout_margin="5dp"
-                    tools:ignore="contentDescription" />
-
-                <TextView style="@style/SunsetTimeTextView"
-                          android:textColor="@color/sunIcon_color_setting"
-                          android:text="@string/sunset_short"
-                          android:textSize="16sp"
-                          android:textStyle="bold"/>
-
+                          android:layout_row="0" android:layout_column="2"
+                          android:layout_gravity="bottom|end">
+                <include layout="@layout/table_colhead_set"/>
             </LinearLayout>
-
 
 
             <TextView style="@style/SunsetTimeTextView"

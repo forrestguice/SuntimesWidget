@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:tools="http://schemas.android.com/tools"
+       xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:id="@+id/text_date"
+            tools:text="Today\nApril 1, 2016"
+            android:ellipsize="end" android:minEms="@integer/table_heading_date_maxems" android:maxEms="@integer/table_heading_date_maxems" android:maxLength="@integer/table_heading_date_maxlength"
+            android:textStyle="bold" android:textSize="@dimen/table_heading_date_fontsize" android:textColor="@drawable/btn_datetxt"
+            android:layout_gravity="bottom" />
+
+    </LinearLayout>
+
+</merge>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Table Heading: Date Field (col 0) -->
+    <dimen name="table_heading_date_fontsize">16sp</dimen>
+    <integer name="table_heading_date_maxems">8</integer>
+    <integer name="table_heading_date_maxlength">32</integer>
+
+    <!-- Table heading: Rise/Sete Field (col 1,2) -->
+    <dimen name="table_heading_label_fontsize">16sp</dimen>
+    <integer name="table_heading_label_maxems">2</integer>
+    <integer name="table_heading_label_maxlength">10</integer>
+    <integer name="table_heading_label_maxlines">1</integer>
+
+</resources>
