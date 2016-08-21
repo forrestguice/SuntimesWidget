@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout style="@style/SunsetTimeCard" android:layout_width="match_parent" android:layout_height="wrap_content">
+
+        <LinearLayout android:id="@+id/cardContent"
+            style="@style/SunsetTimeCard" android:layout_width="match_parent">
+
+            <!-- rise/set table -->
+            <include layout="@layout/info_time_all"/>
+
+            <!-- day length -->
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" android:animateLayoutChanges="true">
+                <include layout="@layout/info_time_daylength"/>
+            </LinearLayout>
+
+            <!-- next/prev buttons -->
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/cardContent" android:layout_alignRight="@id/cardContent">
+            <include layout="@layout/info_time_nextprev" />
+        </FrameLayout>
+
+
+    </RelativeLayout>
+</merge>

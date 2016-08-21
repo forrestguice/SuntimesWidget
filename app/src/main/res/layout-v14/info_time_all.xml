@@ -22,7 +22,7 @@
         <GridLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:columnCount="6"
+            android:columnCount="3"
             android:useDefaultMargins="true">
 
             <!-- Table Head (Date) -->
@@ -225,7 +225,7 @@
 
             <LinearLayout style="@style/SunsetTimeLayout"
                           android:layout_row="5" android:layout_column="0" android:layout_columnSpan="3">
-                <View android:layout_width="260dp" style="@style/SunsetTimeHorizontalRule" />
+                <View android:layout_width="240dp" style="@style/SunsetTimeHorizontalRule" />
             </LinearLayout>
 
 
@@ -254,35 +254,6 @@
             </LinearLayout>
 
         </GridLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:paddingTop="10dp">
-
-            <View
-                android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1" />
-
-            <ImageButton
-                android:id="@+id/info_time_prevbtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:src="?attr/icActionPrevious"
-                android:background="@drawable/ic_transparent"
-                android:contentDescription="@string/prevDay" />
-
-            <ImageButton
-                android:id="@+id/info_time_nextbtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:src="?attr/icActionNext"
-                android:background="@drawable/ic_transparent"
-                android:contentDescription="@string/nextDay" />
-
-        </LinearLayout>
 
     </LinearLayout>
 </merge>

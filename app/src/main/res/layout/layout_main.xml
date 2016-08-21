@@ -22,6 +22,7 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <!-- Action Bar -->
     <android.support.v7.widget.Toolbar
         android:id="@+id/app_menubar"
         android:layout_width="match_parent"
@@ -41,8 +42,10 @@
             android:animateLayoutChanges="true"
             tools:ignore="UnusedAttribute">
 
+            <!-- Clock -->
             <include layout="@layout/info_time_now" />
 
+            <!-- Flipper: Note -->
             <FrameLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
 
                 <ViewFlipper
@@ -84,54 +87,28 @@
 
         </LinearLayout>
 
+        <!-- Flipper: Time Card -->
         <ViewFlipper
             android:id="@+id/info_time_flipper"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_width="fill_parent" android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:elevation="5dp"
             tools:ignore="UnusedAttribute">
 
+            <!-- Times for Today -->
             <LinearLayout
-                style="@style/SunsetTimeCard"
                 android:id="@+id/info_time_all_today"
-                android:layout_width="wrap_content"
-                android:animateLayoutChanges="true"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
                 tools:ignore="UnusedAttribute">
-
-                <include layout="@layout/info_time_all" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical"
-                    android:animateLayoutChanges="true"
-                    tools:ignore="UnusedAttribute">
-
-                    <include layout="@layout/info_time_daylength" />
-                </LinearLayout>
-
+                <include layout="@layout/info_time_card"/>
             </LinearLayout>
 
-
+            <!-- Times for Tomorrow -->
             <LinearLayout
-                style="@style/SunsetTimeCard"
                 android:id="@+id/info_time_all_tomorrow"
-                android:animateLayoutChanges="true"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
                 tools:ignore="UnusedAttribute">
-
-                <include layout="@layout/info_time_all" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical"
-                    android:animateLayoutChanges="true"
-                    tools:ignore="UnusedAttribute">
-
-                    <include layout="@layout/info_time_daylength" />
-
-                </LinearLayout>
-
+                <include layout="@layout/info_time_card"/>
             </LinearLayout>
 
         </ViewFlipper>

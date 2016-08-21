@@ -83,46 +83,23 @@
 
         <ViewFlipper
             android:id="@+id/info_time_flipper"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_width="fill_parent" android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="15dp" android:layout_marginStart="15dp"
             android:elevation="5dp"
             tools:ignore="UnusedAttribute">
 
-
             <LinearLayout
-                style="@style/SunsetTimeCard"
-                android:id="@+id/info_time_all_today"  android:layout_width="wrap_content">
-
-                <include layout="@layout/info_time_all" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical">
-
-                    <include layout="@layout/info_time_daylength" />
-                </LinearLayout>
-
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:id="@+id/info_time_all_today">
+                <include layout="@layout/info_time_card"/>
             </LinearLayout>
 
-
             <LinearLayout
-                style="@style/SunsetTimeCard"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:id="@+id/info_time_all_tomorrow">
-
-                <include layout="@layout/info_time_all" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical">
-
-                    <include layout="@layout/info_time_daylength" />
-                </LinearLayout>
-
+                <include layout="@layout/info_time_card"/>
             </LinearLayout>
-
 
         </ViewFlipper>
 
