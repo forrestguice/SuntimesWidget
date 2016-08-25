@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- values\table_res.xml :: typical sized phone (width <= 320dp) -->
 <resources>
     <!-- table heading: date field (col 0) -->
     <dimen name="table_heading_date_fontsize">14sp</dimen>
