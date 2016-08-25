@@ -4,23 +4,28 @@
 
     <RelativeLayout style="@style/SunsetTimeCard" android:layout_width="match_parent" android:layout_height="wrap_content">
 
-        <LinearLayout android:id="@+id/cardContent"
-            style="@style/SunsetTimeCard" android:layout_width="match_parent">
+         <com.forrestguice.suntimeswidget.SuntimesCardScroll android:id="@+id/cardContent"
+            android:layout_width="match_parent" android:layout_height="wrap_content">
 
-            <!-- rise/set table -->
-            <include layout="@layout/info_time_all"/>
+            <LinearLayout style="@style/SunsetTimeCard"
+                          android:layout_width="wrap_content">
 
-            <!-- day length -->
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" android:animateLayoutChanges="true">
-                <include layout="@layout/info_time_daylength"/>
+                <!-- rise/set table -->
+                <include layout="@layout/info_time_all"/>
+
+                <!-- day length -->
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp" android:animateLayoutChanges="true">
+                    <include layout="@layout/info_time_daylength"/>
+                </LinearLayout>
+
+                <!-- next/prev buttons -->
+
             </LinearLayout>
 
-            <!-- next/prev buttons -->
-
-        </LinearLayout>
+        </com.forrestguice.suntimeswidget.SuntimesCardScroll>
 
         <FrameLayout
             android:layout_width="wrap_content" android:layout_height="wrap_content"
