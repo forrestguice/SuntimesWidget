@@ -24,6 +24,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ScrollView;
 
+/**
+ * A custom ScrollView that passes its touch events to its parent when unable to scroll (child view is
+ * smaller than parent), or when flag allowScroll is set to false.
+ */
 public class SuntimesCardScroll extends ScrollView
 {
     public SuntimesCardScroll(Context context)
@@ -57,7 +61,7 @@ public class SuntimesCardScroll extends ScrollView
     @Override
     public boolean dispatchTouchEvent( MotionEvent e )
     {
-        if (allowScroll && ableToScroll())
+        if (allowScroll && ableToScrollVertical())
         {
             return super.dispatchTouchEvent(e);
         }
@@ -68,7 +72,7 @@ public class SuntimesCardScroll extends ScrollView
      * see http://stackoverflow.com/questions/18572790/check-if-scrollview-is-higher-than-screen-scrollable/18574328#18574328
      * @return true view can scroll since content is larger than view, false content smaller than view
      */
-    private boolean ableToScroll()
+    private boolean ableToScrollVertical()
     {
         View childView = getChildAt(0);
         if (childView != null)

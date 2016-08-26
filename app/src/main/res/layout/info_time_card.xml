@@ -4,6 +4,7 @@
 
     <RelativeLayout style="@style/SunsetTimeCard" android:layout_width="match_parent" android:layout_height="wrap_content">
 
+        <!-- card scroller -->
          <com.forrestguice.suntimeswidget.SuntimesCardScroll android:id="@+id/cardContent"
             android:layout_width="match_parent" android:layout_height="wrap_content">
 
@@ -21,18 +22,17 @@
                     <include layout="@layout/info_time_daylength"/>
                 </LinearLayout>
 
-                <!-- next/prev buttons -->
-
             </LinearLayout>
 
         </com.forrestguice.suntimeswidget.SuntimesCardScroll>
 
+        <!-- next/prev buttons -->
         <FrameLayout
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/cardContent" android:layout_alignRight="@id/cardContent">
+            android:layout_alignBottom="@id/cardContent"
+            android:layout_alignRight="@id/cardContent" android:layout_alignEnd="@id/cardContent">
             <include layout="@layout/info_time_nextprev" />
         </FrameLayout>
-
 
     </RelativeLayout>
 </merge>
