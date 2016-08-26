@@ -17,7 +17,8 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
-    <LinearLayout style="@style/SunsetTimeLayout" android:orientation="horizontal">
+    <LinearLayout android:id="@+id/table"
+                  style="@style/SunsetTimeLayout" android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -48,6 +49,7 @@
             </LinearLayout>
 
 
+            <!-- field: sunrise/sunset -->
             <LinearLayout
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="horizontal" android:gravity="end"
@@ -105,6 +107,7 @@
             </LinearLayout>
 
 
+            <!-- field: civil twilight -->
             <LinearLayout
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="horizontal" android:gravity="end"
@@ -162,6 +165,7 @@
             </LinearLayout>
 
 
+            <!-- field: nautical twilight -->
             <LinearLayout
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="horizontal" android:paddingTop="3dp" android:paddingBottom="3dp">
@@ -218,6 +222,7 @@
             </LinearLayout>
 
 
+            <!-- field: astronomical twilight -->
             <LinearLayout
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="horizontal" android:paddingTop="3dp" android:paddingBottom="3dp">
@@ -273,10 +278,13 @@
             </LinearLayout>
 
 
-            <View android:layout_width="275dp" style="@style/SunsetTimeHorizontalRule"
+            <!-- horizontal rule -->
+            <View android:id="@+id/table_rule"
+                  android:layout_width="260dp" style="@style/SunsetTimeHorizontalRule"
                   android:paddingTop="3dp" android:paddingBottom="3dp" />
 
 
+            <!-- field: solar noon -->
             <LinearLayout
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:paddingTop="3dp" android:paddingBottom="3dp"

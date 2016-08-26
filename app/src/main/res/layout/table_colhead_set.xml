@@ -21,7 +21,7 @@
 
     <LinearLayout
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal" android:id="@+id/table_head_set">
 
         <ImageView style="@style/TableHeadImageView"
             android:id="@+id/icon_time_sunset" android:background="@drawable/ic_sunset"

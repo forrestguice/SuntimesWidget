@@ -21,7 +21,7 @@
 
     <LinearLayout
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal" android:id="@+id/table_head_rise">
 
         <TextView style="@style/TableHeadTextView"
             android:text="@string/sunrise_short" android:textColor="@color/sunIcon_color_rising" />

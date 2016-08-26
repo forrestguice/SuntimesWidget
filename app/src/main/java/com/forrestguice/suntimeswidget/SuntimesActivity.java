@@ -647,6 +647,8 @@ public class SuntimesActivity extends AppCompatActivity
         } else {
             Log.w("initCardViews", "Failed to init card layout2; was null!");
         }
+
+        stretchTableRule();
     }
 
     /**
@@ -1645,6 +1647,43 @@ public class SuntimesActivity extends AppCompatActivity
         }
 
         highlightTimeField(new SolarEvents.SolarEventField(note.noteMode, note.tomorrow));
+    }
+
+
+    /**
+     * Stretch the horizontal rule to match the actual table width.. this is a hack to work around
+     * unwanted stretching of the GridLayout columns when setting the hr to match_parent or fill_parent.
+     */
+    private void stretchTableRule()
+    {
+        LinearLayout[] cards = new LinearLayout[2];
+        cards[0] = (LinearLayout)findViewById(R.id.info_time_all_today);
+        cards[1] = (LinearLayout)findViewById(R.id.info_time_all_tomorrow);
+        for (LinearLayout card : cards)                                        // for each card
+        {
+            View tableRule = card.findViewById(R.id.table_rule);
+            if (tableRule != null)
+            {
+                LinearLayout[] cols = new LinearLayout[3];
+                cols[0] = (LinearLayout) card.findViewById(R.id.table_head_date);
+                cols[1] = (LinearLayout) card.findViewById(R.id.table_head_rise);
+                cols[2] = (LinearLayout) card.findViewById(R.id.table_head_set);
+
+                int tableWidth = 0;
+                for (LinearLayout col : cols)                   // add up the measured column widths
+                {
+                    if (col != null)
+                    {
+                        col.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        tableWidth += col.getMeasuredWidth();
+                    }
+                }
+
+                ViewGroup.LayoutParams tableRuleParams = tableRule.getLayoutParams();
+                tableRuleParams.width = tableWidth;
+                tableRule.setLayoutParams(tableRuleParams);    // and adjust the horizontal rule width
+            }
+        }
     }
 
 }
