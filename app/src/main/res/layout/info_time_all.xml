@@ -17,79 +17,39 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
-    <LinearLayout style="@style/SunsetTimeLayout" android:orientation="horizontal">
+    <LinearLayout android:id="@+id/table"
+                  style="@style/SunsetTimeLayout" android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingTop="3dp" android:paddingBottom="3dp">
 
+                <!-- Table Head (Date) -->
                 <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-                              android:minWidth="125dp">
-
-                    <TextView
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:id="@+id/text_date"
-                        tools:text="Today\nApril 1, 2016"
-
-                        android:textStyle="bold"
-                        android:layout_gravity="bottom"
-                        android:textSize="16sp"
-                        android:textColor="@drawable/btn_datetxt" />
-
+                              android:layout_gravity="bottom">
+                    <include layout="@layout/table_colhead_date" />
                 </LinearLayout>
 
-                <LinearLayout android:layout_width="75dp" android:layout_height="wrap_content"
-                              android:orientation="horizontal" android:gravity="right"
-                              android:layout_gravity="bottom|end"
-                              android:paddingTop="3dp" android:paddingBottom="3dp"
-                              tools:ignore="RtlHardcoded">
-
-                    <TextView style="@style/SunsetTimeTextView"
-                              android:textColor="@color/sunIcon_color_rising"
-                              android:text="@string/sunrise_short"
-                              android:layout_height="wrap_content"
-                              android:textSize="16sp"
-                              android:textStyle="bold"/>
-
-                    <ImageView
-                        style="@style/SunsetTimeImageView"
-                        android:id="@+id/icon_time_sunrise"
-                        android:background="@drawable/ic_sunrise"
-                        android:layout_gravity="center"
-                        android:layout_margin="5dp"
-                        tools:ignore="contentDescription" />
-
+                <!-- Table Head (Rise) -->
+                <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                              android:layout_gravity="bottom">
+                    <include layout="@layout/table_colhead_rise"/>
                 </LinearLayout>
 
-                <LinearLayout android:layout_height="wrap_content" android:layout_width="75dp"
-                              android:orientation="horizontal" android:gravity="right"
-                              android:layout_gravity="bottom|end"
-                              tools:ignore="RtlHardcoded">
-
-                    <ImageView
-                        style="@style/SunsetTimeImageView"
-                        android:id="@+id/icon_time_sunset"
-                        android:background="@drawable/ic_sunset"
-                        android:layout_gravity="center"
-                        android:layout_margin="5dp"
-                        tools:ignore="contentDescription" />
-
-                    <TextView style="@style/SunsetTimeTextView"
-                              android:textColor="@color/sunIcon_color_setting"
-                              android:text="@string/sunset_short"
-                              android:textSize="16sp"
-                              android:textStyle="bold"/>
-
+                <!-- Table Head (Set) -->
+                <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                              android:layout_gravity="bottom">
+                    <include layout="@layout/table_colhead_set"/>
                 </LinearLayout>
             </LinearLayout>
 
 
+            <!-- field: sunrise/sunset -->
             <LinearLayout
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="horizontal" android:gravity="end"
@@ -147,6 +107,7 @@
             </LinearLayout>
 
 
+            <!-- field: civil twilight -->
             <LinearLayout
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="horizontal" android:gravity="end"
@@ -204,6 +165,7 @@
             </LinearLayout>
 
 
+            <!-- field: nautical twilight -->
             <LinearLayout
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="horizontal" android:paddingTop="3dp" android:paddingBottom="3dp">
@@ -260,6 +222,7 @@
             </LinearLayout>
 
 
+            <!-- field: astronomical twilight -->
             <LinearLayout
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="horizontal" android:paddingTop="3dp" android:paddingBottom="3dp">
@@ -315,10 +278,13 @@
             </LinearLayout>
 
 
-            <View android:layout_width="275dp" style="@style/SunsetTimeHorizontalRule"
+            <!-- horizontal rule -->
+            <View android:id="@+id/table_rule"
+                  android:layout_width="260dp" style="@style/SunsetTimeHorizontalRule"
                   android:paddingTop="3dp" android:paddingBottom="3dp" />
 
 
+            <!-- field: solar noon -->
             <LinearLayout
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:paddingTop="3dp" android:paddingBottom="3dp"
@@ -353,34 +319,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:paddingTop="10dp">
-
-            <View
-                android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1" />
-
-            <ImageButton
-                android:id="@+id/info_time_prevbtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:src="?attr/icActionPrevious"
-                android:background="@drawable/ic_transparent"
-                android:contentDescription="@string/prevDay" />
-
-            <ImageButton
-                android:id="@+id/info_time_nextbtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:src="?attr/icActionNext"
-                android:background="@drawable/ic_transparent"
-                android:contentDescription="@string/nextDay" />
-
-        </LinearLayout>
 
     </LinearLayout>
 </merge>

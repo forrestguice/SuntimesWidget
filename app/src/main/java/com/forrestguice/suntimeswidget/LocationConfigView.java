@@ -18,14 +18,18 @@
 package com.forrestguice.suntimeswidget;
 
 import android.appwidget.AppWidgetManager;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
+import android.text.Html;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,6 +46,7 @@ import android.widget.ProgressBar;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
@@ -190,6 +195,7 @@ public class LocationConfigView extends LinearLayout
                 text_locationLon.setEnabled(false);
                 labl_locationLat.setEnabled(false);
                 text_locationLat.setEnabled(false);
+                inputOverlay.setVisibility(View.VISIBLE);
 
                 labl_locationName.setEnabled(false);
                 text_locationName.setEnabled(false);
@@ -210,6 +216,7 @@ public class LocationConfigView extends LinearLayout
                 text_locationLon.setEnabled(true);
                 labl_locationLat.setEnabled(true);
                 text_locationLat.setEnabled(true);
+                inputOverlay.setVisibility(View.GONE);
 
                 labl_locationName.setEnabled(true);
                 text_locationName.setEnabled(true);
@@ -229,6 +236,7 @@ public class LocationConfigView extends LinearLayout
                 text_locationLon.setEnabled(false);
                 labl_locationLat.setEnabled(false);
                 text_locationLat.setEnabled(false);
+                inputOverlay.setVisibility(View.VISIBLE);
 
                 labl_locationName.setEnabled(true);
                 text_locationName.setEnabled(false);
@@ -256,6 +264,7 @@ public class LocationConfigView extends LinearLayout
     private TextView labl_locationName;
     private Spinner spin_locationName;
     private EditText text_locationName;
+    private View inputOverlay;
 
     private ImageButton button_edit;
     private ImageButton button_save;
@@ -310,6 +319,20 @@ public class LocationConfigView extends LinearLayout
 
         labl_locationLat = (TextView)findViewById(R.id.appwidget_location_lat_label);
         text_locationLat = (EditText)findViewById(R.id.appwidget_location_lat);
+
+        inputOverlay = findViewById(R.id.appwidget_location_latlon_overlay);
+        inputOverlay.setVisibility(View.GONE);
+        inputOverlay.setOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                if (mode == LocationViewMode.MODE_CUSTOM_SELECT)
+                {
+                    setMode(LocationViewMode.MODE_CUSTOM_EDIT);
+                }
+            }
+        });
 
         labl_locationLon = (TextView)findViewById(R.id.appwidget_location_lon_label);
         text_locationLon = (EditText)findViewById(R.id.appwidget_location_lon);
@@ -708,6 +731,36 @@ public class LocationConfigView extends LinearLayout
                 }
             }
             return -1;
+        }
+    }
+
+    /**
+     * Copy the location in decimal degrees (DD) to clipboard (locale invariant `lat, lon`)
+     */
+    public void copyLocationToClipboard(Context context)
+    {
+        copyLocationToClipboard(context, false);
+    }
+    public void copyLocationToClipboard(Context context, boolean silent)
+    {
+        WidgetSettings.Location location = getLocation();
+        String clipboardText = location.toString();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+        {
+            ClipboardManager clipboard = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("lat, lon", clipboardText);
+            clipboard.setPrimaryClip(clip);
+
+        } else {
+            android.text.ClipboardManager clipboard = (android.text.ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
+            clipboard.setText(clipboardText);
+        }
+
+        if (!silent)
+        {
+            Toast copiedMsg = Toast.makeText(context, Html.fromHtml(context.getString(R.string.location_dialog_toast_copied, clipboardText)), Toast.LENGTH_LONG);
+            copiedMsg.show();
         }
     }
 

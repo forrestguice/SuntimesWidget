@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- values-sw600dp\table_res.xml :: 10" tablets and larger -->
+<resources>
+    <dimen name="table_heading_date_fontsize">18sp</dimen>
+    <integer name="table_heading_date_maxems">10</integer>
+    <dimen name="table_heading_label_fontsize">18sp</dimen>
+    <integer name="table_heading_label_maxems">5</integer>
+    <integer name="table_heading_label_maxlines">1</integer>
+</resources>

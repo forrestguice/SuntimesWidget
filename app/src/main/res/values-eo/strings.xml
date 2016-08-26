@@ -93,9 +93,9 @@
 
     <!-- Table -->
     <string name="sunrise">Sunleviĝo</string>                             <!-- contentDescription -->
-    <string name="sunrise_short">Sunleviĝo</string>                          <!-- table title -->
+    <string name="sunrise_short">Leviĝo</string>                          <!-- table title -->
     <string name="sunset">Sunsubiro</string>                               <!-- contentDescription -->
-    <string name="sunset_short">Sunsubiro</string>                            <!-- table title -->
+    <string name="sunset_short">Subiro</string>                            <!-- table title -->
 
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
     <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
@@ -145,7 +145,7 @@
     <string name="timeMode_astronomical_short">Astronomia</string>    <!-- setting -->
     <string name="timeMode_astronomical">Astronomia krepusko</string> <!-- setting -->
 
-    <string name="configLabel_general_timeMode">Reĝimo:</string>          <!-- spinner label -->
+    <string name="configLabel_general_timeMode">Lingvo:</string>          <!-- spinner label -->
 
     <!-- Widget Setting: layout mode -->
     <string name="widgetMode1x1_sunrise">Nur sunleviĝo</string>             <!-- setting -->
@@ -299,26 +299,26 @@
     <string name="schedalarm_dialog_note">post <xliff:g id="timetext" example="6h 30m">%s</xliff:g> de nun.</string>
     <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="nautical twilight">%s</xliff:g> ne okazos.</string>
     <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
-        <item>astronomian sunleviĝon</item>
-        <item>naŭtikan sunleviĝon</item>
-        <item>civilan sunleviĝon</item>
-        <item>sunleviĝon</item>
-        <item>tagmezon veran</item>
-        <item>sunsubiron</item>
-        <item>civilan sunsubiron</item>
-        <item>naŭtikan sunsubiron</item>
-        <item>astronomian sunsubiron</item>
+        <item>astronomia sunleviĝo</item>
+        <item>naŭtika sunleviĝo</item>
+        <item>civila sunleviĝo</item>
+        <item>sunleviĝo</item>
+        <item>tagmezo vera</item>
+        <item>sunsubiro</item>
+        <item>civila sunsubiro</item>
+        <item>naŭtika sunsubiro</item>
+        <item>astronomia sunsubiro</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
-        <item>astronomian sunleviĝon</item>
-        <item>naŭtikan sunleviĝon</item>
-        <item>civilan sunleviĝon</item>
-        <item>sunleviĝon</item>
-        <item>tagmezon veran (kulminadon)</item>
-        <item>sunsubiron</item>
-        <item>civilan sunsubiron</item>
-        <item>naŭtikan sunsubiron</item>
-        <item>astronomian sunsubiron</item>
+        <item>astronomia sunleviĝo</item>
+        <item>naŭtika sunleviĝo</item>
+        <item>civila sunleviĝo</item>
+        <item>sunleviĝo</item>
+        <item>tagmezo vera (kulminado)</item>
+        <item>sunsubiro</item>
+        <item>civila sunsubiro</item>
+        <item>naŭtika sunsubiro</item>
+        <item>astronomia sunsubiro</item>
     </string-array>
     
   <!-- App Setting: locale mode -->
@@ -375,6 +375,8 @@
     <string name="location_dialog_cancel">Nuligu</string>
     <string name="location_dialog_error_lat">Latitudo malkorektas.</string>
     <string name="location_dialog_error_lon">Longitudo malkorektas.</string>
+
+    <string name="location_dialog_toast_copied">Enpoŝigita<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string> <!-- todo -->
 
     <!-- Dialog: Clear Places -->
     <string name="locationclear_dialog_title">Ĉu forigi lokojn?</string>

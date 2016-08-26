@@ -133,39 +133,56 @@
             android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
 
 
-            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-                              android:orientation="horizontal">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-                    <TextView android:id="@+id/appwidget_location_lat_label"
-                              android:layout_width="wrap_content" android:layout_height="wrap_content"
-                              android:layout_gravity="end|center_vertical"
-                              android:text="@string/configLabel_location_lat" android:enabled="false" />
+                <LinearLayout
+                    android:id="@+id/appwidget_location_latlon"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                  android:orientation="horizontal">
 
-                    <EditText android:id="@+id/appwidget_location_lat"
-                              android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_vertical"
-                              android:inputType="numberDecimal|numberSigned"
-                              android:textAppearance="?android:attr/textAppearanceSmall"
-                              android:hint="@string/configHint_location_lat" android:enabled="false" />
+                        <TextView android:id="@+id/appwidget_location_lat_label"
+                                  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                  android:layout_gravity="end|center_vertical"
+                                  android:text="@string/configLabel_location_lat" android:enabled="false" />
+
+                        <EditText android:id="@+id/appwidget_location_lat"
+                                  android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_vertical"
+                                  android:inputType="numberDecimal|numberSigned"
+                                  android:textAppearance="?android:attr/textAppearanceSmall"
+                                  android:hint="@string/configHint_location_lat" android:enabled="false" />
+                    </LinearLayout>
+
+                    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                  android:orientation="horizontal">
+
+                        <TextView android:id="@+id/appwidget_location_lon_label"
+                                  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                  android:layout_gravity="end|center_vertical"
+                                  android:text="@string/configLabel_location_lon" android:enabled="false" />
+
+                        <EditText android:id="@+id/appwidget_location_lon"
+                                  android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_vertical"
+                                  android:inputType="numberDecimal|numberSigned"
+                                  android:textAppearance="?android:attr/textAppearanceSmall"
+                                  android:hint="@string/configHint_location_lon" android:enabled="false" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
-                <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-                              android:orientation="horizontal">
+                <View
+                    android:id="@+id/appwidget_location_latlon_overlay"
+                    android:layout_width="50dp" android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_alignLeft="@id/appwidget_location_latlon"
+                    android:layout_alignRight="@id/appwidget_location_latlon"
+                    android:layout_alignBottom="@id/appwidget_location_latlon"
+                    android:layout_alignTop="@id/appwidget_location_latlon"/>
 
-                    <TextView android:id="@+id/appwidget_location_lon_label"
-                              android:layout_width="wrap_content" android:layout_height="wrap_content"
-                              android:layout_gravity="end|center_vertical"
-                              android:text="@string/configLabel_location_lon" android:enabled="false" />
-
-                    <EditText android:id="@+id/appwidget_location_lon"
-                              android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_vertical"
-                              android:inputType="numberDecimal|numberSigned"
-                              android:textAppearance="?android:attr/textAppearanceSmall"
-                              android:hint="@string/configHint_location_lon" android:enabled="false" />
-                </LinearLayout>
-
-            </LinearLayout>
+            </RelativeLayout>
 
             <LinearLayout android:layout_width="fill_parent"
                           android:layout_height="fill_parent"
