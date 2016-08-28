@@ -20,7 +20,6 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.util.Log;
 
 import java.text.DateFormat;
 
