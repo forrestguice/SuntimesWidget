@@ -43,12 +43,22 @@ public class SuntimesConfigActivity1 extends SuntimesConfigActivity
 
         // title text
         TextView activityTitle = (TextView)findViewById(R.id.activity_title);
-        activityTitle.setText( getString(R.string.configLabel_title1) );
+        if (activityTitle != null)
+        {
+            activityTitle.setText(getString(R.string.configLabel_title1));
+        }
 
         // hide/disable mode selector
         TextView label_1x1mode = (TextView)findViewById(R.id.appwidget_appearance_1x1mode_label);
-        label_1x1mode.setVisibility(View.GONE);
-        spinner_1x1mode.setVisibility(View.GONE);
+        if (label_1x1mode != null)
+        {
+            label_1x1mode.setVisibility(View.GONE);
+        }
+
+        if (spinner_1x1mode != null)
+        {
+            spinner_1x1mode.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -56,15 +66,21 @@ public class SuntimesConfigActivity1 extends SuntimesConfigActivity
     {
         super.loadAppearanceSettings(context);
 
-        WidgetSettings.WidgetMode1x1 widgetMode = WidgetSettings.WidgetMode1x1.WIDGETMODE1x1_SUNSET;
-        spinner_1x1mode.setSelection(widgetMode.ordinal());
+        if (spinner_1x1mode != null)
+        {
+            WidgetSettings.WidgetMode1x1 widgetMode = WidgetSettings.WidgetMode1x1.WIDGETMODE1x1_SUNSET;
+            spinner_1x1mode.setSelection(widgetMode.ordinal());
+        }
     }
 
     @Override
     protected void loadActionSettings(Context context)
     {
-        WidgetSettings.ActionMode actionMode = WidgetSettings.ActionMode.ONTAP_FLIPTO_NEXTITEM;
-        spinner_onTap.setSelection(actionMode.ordinal());
+        if (spinner_onTap != null)
+        {
+            WidgetSettings.ActionMode actionMode = WidgetSettings.ActionMode.ONTAP_FLIPTO_NEXTITEM;
+            spinner_onTap.setSelection(actionMode.ordinal());
+        }
     }
 
     @Override

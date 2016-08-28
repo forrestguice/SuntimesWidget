@@ -191,100 +191,119 @@ public class SuntimesConfigActivity extends AppCompatActivity
         text_launchActivity = (EditText)findViewById(R.id.appwidget_action_launch);
 
         ImageButton button_launchAppHelp = (ImageButton)findViewById(R.id.appwidget_action_launch_helpButton);
-        button_launchAppHelp.setOnClickListener(new View.OnClickListener()
+        if (button_launchAppHelp != null)
         {
-            @Override
-            public void onClick(View v)
+            button_launchAppHelp.setOnClickListener(new View.OnClickListener()
             {
-                HelpDialog helpDialog = new HelpDialog();
-                helpDialog.setContent(getString(R.string.help_action_launch));
-                helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
-            }
-        });
+                @Override
+                public void onClick(View v)
+                {
+                    HelpDialog helpDialog = new HelpDialog();
+                    helpDialog.setContent(getString(R.string.help_action_launch));
+                    helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
+                }
+            });
+        }
 
         //
         // widget: theme
         //
-        ArrayAdapter<ThemeDescriptor> spinner_themeAdapter;
-        spinner_themeAdapter = new ArrayAdapter<ThemeDescriptor>(this, R.layout.layout_listitem_oneline, WidgetThemes.values());
-        spinner_themeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         spinner_theme = (Spinner)findViewById(R.id.appwidget_appearance_theme);
-        spinner_theme.setAdapter(spinner_themeAdapter);
+        if (spinner_theme != null)
+        {
+            ArrayAdapter<ThemeDescriptor> spinner_themeAdapter;
+            spinner_themeAdapter = new ArrayAdapter<ThemeDescriptor>(this, R.layout.layout_listitem_oneline, WidgetThemes.values());
+            spinner_themeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner_theme.setAdapter(spinner_themeAdapter);
+        }
 
         //
         // widget: source
         //
-        ArrayAdapter<SuntimesCalculatorDescriptor> spinner_calculatorModeAdapter;
-        spinner_calculatorModeAdapter = new ArrayAdapter<SuntimesCalculatorDescriptor>(this, R.layout.layout_listitem_oneline, SuntimesCalculatorDescriptor.values());
-        spinner_calculatorModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         spinner_calculatorMode = (Spinner)findViewById(R.id.appwidget_general_calculator);
-        spinner_calculatorMode.setAdapter(spinner_calculatorModeAdapter);
+        if (spinner_calculatorMode != null)
+        {
+            ArrayAdapter<SuntimesCalculatorDescriptor> spinner_calculatorModeAdapter;
+            spinner_calculatorModeAdapter = new ArrayAdapter<SuntimesCalculatorDescriptor>(this, R.layout.layout_listitem_oneline, SuntimesCalculatorDescriptor.values());
+            spinner_calculatorModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner_calculatorMode.setAdapter(spinner_calculatorModeAdapter);
+        }
 
         //
         // widget: time mode
         //
-        ArrayAdapter<WidgetSettings.TimeMode> spinner_timeModeAdapter;
-        spinner_timeModeAdapter = new ArrayAdapter<WidgetSettings.TimeMode>(this,
-                R.layout.layout_listitem_oneline,
-                WidgetSettings.TimeMode.values());
-        spinner_timeModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         spinner_timeMode = (Spinner)findViewById(R.id.appwidget_general_timeMode);
-        spinner_timeMode.setAdapter(spinner_timeModeAdapter);
+        if (spinner_timeMode != null)
+        {
+            ArrayAdapter<WidgetSettings.TimeMode> spinner_timeModeAdapter;
+            spinner_timeModeAdapter = new ArrayAdapter<WidgetSettings.TimeMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.TimeMode.values());
+            spinner_timeModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner_timeMode.setAdapter(spinner_timeModeAdapter);
+        }
 
         ImageButton button_timeModeHelp = (ImageButton)findViewById(R.id.appwidget_generale_timeMode_helpButton);
-        button_timeModeHelp.setOnClickListener(new View.OnClickListener()
+        if (button_timeModeHelp != null)
         {
-            @Override
-            public void onClick(View v)
+            button_timeModeHelp.setOnClickListener(new View.OnClickListener()
             {
-                HelpDialog helpDialog = new HelpDialog();
-                helpDialog.setContent(getString(R.string.help_general_timeMode));
-                helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
-            }
-        });
+                @Override
+                public void onClick(View v)
+                {
+                    HelpDialog helpDialog = new HelpDialog();
+                    helpDialog.setContent(getString(R.string.help_general_timeMode));
+                    helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
+                }
+            });
+        }
 
         //
         // widget: timezone mode
         //
-        ArrayAdapter<WidgetSettings.TimezoneMode> spinner_timezoneModeAdapter;
-        spinner_timezoneModeAdapter = new ArrayAdapter<WidgetSettings.TimezoneMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.TimezoneMode.values());
-        spinner_timezoneModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         spinner_timezoneMode = (Spinner)findViewById(R.id.appwidget_timezone_mode);
-        spinner_timezoneMode.setAdapter(spinner_timezoneModeAdapter);
-        spinner_timezoneMode.setOnItemSelectedListener(onTimezoneModeListener);
+        if (spinner_timezoneMode != null)
+        {
+            ArrayAdapter<WidgetSettings.TimezoneMode> spinner_timezoneModeAdapter;
+            spinner_timezoneModeAdapter = new ArrayAdapter<WidgetSettings.TimezoneMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.TimezoneMode.values());
+            spinner_timezoneModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner_timezoneMode.setAdapter(spinner_timezoneModeAdapter);
+            spinner_timezoneMode.setOnItemSelectedListener(onTimezoneModeListener);
+        }
 
         //
         // widget: timezone
         //
         label_timezone = (TextView)findViewById(R.id.appwidget_timezone_custom_label);
 
-        WidgetTimezones.TimeZoneItemAdapter spinner_timezoneAdapter;
-        spinner_timezoneAdapter = new WidgetTimezones.TimeZoneItemAdapter(this,
-                R.layout.layout_listitem_twoline, WidgetTimezones.getValues() );
-
         spinner_timezone = (Spinner)findViewById(R.id.appwidget_timezone_custom);
-        spinner_timezone.setAdapter(spinner_timezoneAdapter);
+        if (spinner_timezone != null)
+        {
+            WidgetTimezones.TimeZoneItemAdapter spinner_timezoneAdapter;
+            spinner_timezoneAdapter = new WidgetTimezones.TimeZoneItemAdapter(this,
+                    R.layout.layout_listitem_twoline, WidgetTimezones.getValues() );
+            spinner_timezone.setAdapter(spinner_timezoneAdapter);
+        }
 
         //
         // widget: location
         //
         locationConfig = (LocationConfigView)findViewById(R.id.appwidget_location_config);
-        locationConfig.setAutoAllowed(false);
-        locationConfig.init(this, false, this.appWidgetId);
+        if (locationConfig != null)
+        {
+            locationConfig.setAutoAllowed(false);
+            locationConfig.init(this, false, this.appWidgetId);
+        }
 
         //
         // widget: 1x1 widget mode
         //
-        ArrayAdapter<WidgetSettings.WidgetMode1x1> spinner_1x1ModeAdapter;
-        spinner_1x1ModeAdapter = new ArrayAdapter<WidgetSettings.WidgetMode1x1>(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetMode1x1.values());
-        spinner_1x1ModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         spinner_1x1mode = (Spinner)findViewById(R.id.appwidget_appearance_1x1mode);
-        spinner_1x1mode.setAdapter(spinner_1x1ModeAdapter);
+        if (spinner_1x1mode != null)
+        {
+            ArrayAdapter<WidgetSettings.WidgetMode1x1> spinner_1x1ModeAdapter;
+            spinner_1x1ModeAdapter = new ArrayAdapter<WidgetSettings.WidgetMode1x1>(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetMode1x1.values());
+            spinner_1x1ModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner_1x1mode.setAdapter(spinner_1x1ModeAdapter);
+        }
 
         //
         // widget: title text
@@ -293,52 +312,79 @@ public class SuntimesConfigActivity extends AppCompatActivity
         text_titleText = (EditText)findViewById(R.id.appwidget_appearance_titleText);
 
         ImageButton button_titleText = (ImageButton)findViewById(R.id.appwidget_appearance_titleText_helpButton);
-        button_titleText.setOnClickListener(new View.OnClickListener()
+        if (button_titleText != null)
         {
-            @Override
-            public void onClick(View v)
+            button_titleText.setOnClickListener(new View.OnClickListener()
             {
-                HelpDialog helpDialog = new HelpDialog();
-                helpDialog.setContent(getString(R.string.help_appearance_title));
-                helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
-            }
-        });
+                @Override
+                public void onClick(View v)
+                {
+                    HelpDialog helpDialog = new HelpDialog();
+                    helpDialog.setContent(getString(R.string.help_appearance_title));
+                    helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
+                }
+            });
+        }
 
         //
         // widget: show title
         //
         checkbox_showTitle = (CheckBox)findViewById(R.id.appwidget_appearance_showTitle);
-        checkbox_showTitle.setOnCheckedChangeListener(onShowTitleListener);
+        if (checkbox_showTitle != null)
+        {
+            checkbox_showTitle.setOnCheckedChangeListener(onShowTitleListener);
+        }
 
         //
         // widget: compare mode
         //
-        ArrayAdapter<WidgetSettings.CompareMode> spinner_compareModeAdapter;
-        spinner_compareModeAdapter = new ArrayAdapter<WidgetSettings.CompareMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.CompareMode.values());
-        spinner_compareModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         spinner_compareMode = (Spinner)findViewById(R.id.appwidget_general_compareMode);
-        spinner_compareMode.setAdapter(spinner_compareModeAdapter);
+        if (spinner_compareMode != null)
+        {
+            ArrayAdapter<WidgetSettings.CompareMode> spinner_compareModeAdapter;
+            spinner_compareModeAdapter = new ArrayAdapter<WidgetSettings.CompareMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.CompareMode.values());
+            spinner_compareModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner_compareMode.setAdapter(spinner_compareModeAdapter);
+        }
 
         //
         // widget: add button
         //
-        Button button_addWidget = (Button)findViewById(R.id.add_button);
-        button_addWidget.setOnClickListener(onAddButtonClickListener);
+        button_addWidget = (Button)findViewById(R.id.add_button);
+        if (button_addWidget != null)
+        {
+            button_addWidget.setOnClickListener(onAddButtonClickListener);
+        }
 
         if (reconfigure)
         {
-            button_addWidget.setText(getString(R.string.configAction_reconfigWidget_short));
+            setActionButtonText(getString(R.string.configAction_reconfigWidget_short));
 
             TextView activityTitle = (TextView) findViewById(R.id.activity_title);
-            activityTitle.setText(getString(R.string.configAction_reconfigWidget));
+            if (activityTitle != null)
+            {
+                activityTitle.setText(getString(R.string.configAction_reconfigWidget));
+            }
         }
 
         //
         // widget: about button
         //
         Button button_aboutWidget = (Button)findViewById(R.id.about_button);
-        button_aboutWidget.setOnClickListener(onAboutButtonClickListener);
+        if (button_aboutWidget != null)
+        {
+            button_aboutWidget.setOnClickListener(onAboutButtonClickListener);
+        }
+    }
+
+    private Button button_addWidget;
+
+    private void setActionButtonText( String text )
+    {
+        if (button_addWidget != null)
+        {
+            button_addWidget.setText(text);
+        }
     }
 
     private void setTitleTextEnabled( boolean value )
@@ -395,16 +441,20 @@ public class SuntimesConfigActivity extends AppCompatActivity
             final WidgetSettings.ActionMode[] actionModes = WidgetSettings.ActionMode.values();
             WidgetSettings.ActionMode actionMode = actionModes[ parent.getSelectedItemPosition() ];
 
-            switch (actionMode)
+            View launchActionView = findViewById(R.id.applayout_action_launch);
+            if (launchActionView != null)
             {
-                case ONTAP_LAUNCH_ACTIVITY:
-                    findViewById(R.id.applayout_action_launch).setVisibility(View.VISIBLE);
-                    break;
+                switch (actionMode)
+                {
+                    case ONTAP_LAUNCH_ACTIVITY:
+                        launchActionView.setVisibility(View.VISIBLE);
+                        break;
 
-                case ONTAP_DONOTHING:
-                default:
-                    findViewById(R.id.applayout_action_launch).setVisibility(View.GONE);
-                    break;
+                    case ONTAP_DONOTHING:
+                    default:
+                        launchActionView.setVisibility(View.GONE);
+                        break;
+                }
             }
         }
 

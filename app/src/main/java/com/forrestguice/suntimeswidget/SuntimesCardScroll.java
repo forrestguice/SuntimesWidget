@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -59,7 +60,7 @@ public class SuntimesCardScroll extends ScrollView
      * @return false touch event not consumed (pass it on), true touch was handled by view
      */
     @Override
-    public boolean dispatchTouchEvent( MotionEvent e )
+    public boolean dispatchTouchEvent( @NonNull MotionEvent e )
     {
         if (allowScroll && ableToScrollVertical())
         {
