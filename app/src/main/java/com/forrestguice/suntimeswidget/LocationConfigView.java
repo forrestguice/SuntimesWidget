@@ -753,6 +753,7 @@ public class LocationConfigView extends LinearLayout
             clipboard.setPrimaryClip(clip);
 
         } else {
+            @SuppressWarnings("deprecation")
             android.text.ClipboardManager clipboard = (android.text.ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
             clipboard.setText(clipboardText);
         }
