@@ -376,7 +376,7 @@
     <string name="location_dialog_error_lat">Latitudo malkorektas.</string>
     <string name="location_dialog_error_lon">Longitudo malkorektas.</string>
 
-    <string name="location_dialog_toast_copied">Enpoŝigita<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string> <!-- todo -->
+    <string name="location_dialog_toast_copied">Enpoŝigita<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
 
     <!-- Dialog: Clear Places -->
     <string name="locationclear_dialog_title">Ĉu forigi lokojn?</string>
