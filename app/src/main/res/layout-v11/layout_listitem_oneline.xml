@@ -22,7 +22,7 @@
     android:textAppearance="?android:attr/textAppearanceSmallPopupMenu"
     android:singleLine="true"
     android:textStyle="bold"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:duplicateParentState="true"
     tools:text="Primary" />

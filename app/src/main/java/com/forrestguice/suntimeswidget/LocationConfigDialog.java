@@ -18,7 +18,6 @@
 package com.forrestguice.suntimeswidget;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.net.Uri;

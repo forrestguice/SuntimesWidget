@@ -32,7 +32,7 @@
         android:textAppearance="?android:attr/textAppearanceSmallPopupMenu"
         android:singleLine="true" android:textStyle="bold" android:duplicateParentState="true"
         tools:text="text"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@android:id/icon1" android:layout_toEndOf="@android:id/icon1" />
 

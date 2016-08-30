@@ -310,7 +310,7 @@ public class LocationConfigView extends LinearLayout
 
         String[] from = new String[] {"name"};
         int[] to = new int[] {android.R.id.text1};
-        getFixAdapter = new SimpleCursorAdapter(myParent, android.R.layout.simple_spinner_item, null, from, to);
+        getFixAdapter = new SimpleCursorAdapter(myParent, R.layout.layout_listitem_locations, null, from, to);
         getFixAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spin_locationName = (Spinner)findViewById(R.id.appwidget_location_nameSelect);
@@ -753,6 +753,7 @@ public class LocationConfigView extends LinearLayout
             clipboard.setPrimaryClip(clip);
 
         } else {
+            @SuppressWarnings("deprecation")
             android.text.ClipboardManager clipboard = (android.text.ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
             clipboard.setText(clipboardText);
         }

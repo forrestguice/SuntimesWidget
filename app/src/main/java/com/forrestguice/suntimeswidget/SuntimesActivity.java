@@ -729,11 +729,17 @@ public class SuntimesActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    protected boolean onPrepareOptionsPanel(View view, Menu menu)
+    {
+        forceActionBarIcons(menu);
+        return super.onPrepareOptionsPanel(view, menu);
+    }
+
     /**
      * from http://stackoverflow.com/questions/18374183/how-to-show-icons-in-overflow-menu-in-actionbar
      */
-    @Override
-    protected boolean onPrepareOptionsPanel(View view, Menu menu)
+    private void forceActionBarIcons(Menu menu)
     {
         if (menu != null)
         {
@@ -749,7 +755,6 @@ public class SuntimesActivity extends AppCompatActivity
                 }
             }
         }
-        return super.onPrepareOptionsPanel(view, menu);
     }
 
     @Override
