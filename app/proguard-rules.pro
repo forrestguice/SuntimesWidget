@@ -1,6 +1,5 @@
 # Add project specific ProGuard rules here.
-# By default, the flags in this file are appended to flags specified
-# in C:\Users\Forrest\AppData\Local\Android\sdk/tools/proguard/proguard-android.txt
+#
 # You can edit the include path and order by changing the proguardFiles
 # directive in build.gradle.
 #
@@ -14,3 +13,8 @@
 # of screwing up functionality that uses reflection (loading plugins from class
 # name, etc) - to enable obfuscation these classes must be identified and exempted.
 -dontobfuscate
+
+# keep MenuBuilder .. reflection used in SuntimesActivity.forceActionBarIcons
+-keepclassmembers class **.MenuBuilder {
+    void setOptionalIconsVisible(boolean);
+}

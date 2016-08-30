@@ -27,8 +27,6 @@ import android.widget.ProgressBar;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Locale;
 
 /**
  * A wrapper class around a set of Views composing "get fix/location" UI; the constructor expects

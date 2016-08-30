@@ -17,8 +17,8 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
-    <LinearLayout style="@style/SunsetTimeLayout" android:orientation="horizontal"
-        android:id="@+id/table">
+    <LinearLayout style="@style/SunsetTimeLayout" android:id="@+id/table"
+                  android:orientation="horizontal" android:layout_gravity="start">
 
         <GridLayout
             android:layout_width="wrap_content" android:layout_height="wrap_content"

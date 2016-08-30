@@ -22,13 +22,10 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Build;
@@ -49,7 +46,6 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.List;
-import java.util.Locale;
 
 /**
  * A preferences activity for the main app;
@@ -85,21 +81,26 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         String action = getIntent().getAction();
         if (action != null && action.equals(ACTION_PREFS_GENERAL))
         {
+            //noinspection deprecation
             addPreferencesFromResource(R.xml.preference_general);
 
         } else if (action != null && action.equals(ACTION_PREFS_LOCALE)) {
+            //noinspection deprecation
             addPreferencesFromResource(R.xml.preference_locale);
 
         } else if (action != null && action.equals(ACTION_PREFS_UI)) {
+            //noinspection deprecation
             addPreferencesFromResource(R.xml.preference_userinterface);
 
         } else if (action != null && action.equals(ACTION_PREFS_PLACES)) {
+            //noinspection deprecation
             addPreferencesFromResource(R.xml.preference_places);
 
         } else if (action != null && action.equals(ACTION_PREFS_WIDGETLIST)) {
             // TODO
 
         } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+            //noinspection deprecation
             addPreferencesFromResource(R.xml.preference_headers_legacy);
         }
     }
