@@ -64,8 +64,11 @@ public class SuntimesCardScroll extends ScrollView
         if (allowScroll && ableToScrollVertical())
         {
             return super.dispatchTouchEvent(e);
+
+        } else {
+            View childView = getChildAt(0);
+            return ((childView != null) && childView.dispatchTouchEvent(e));
         }
-        return false;
     }
 
     /**
