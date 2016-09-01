@@ -169,6 +169,7 @@ public class SuntimesActivity extends AppCompatActivity
     private TextView txt_daylength2;
     private TextView txt_lightlength2;
 
+    private boolean isRtl = false;
     private boolean userSwappedCard = false;
     private HashMap<SolarEvents.SolarEventField, TextView> timeFields;
 
@@ -213,11 +214,15 @@ public class SuntimesActivity extends AppCompatActivity
     private void initLocale( Context context )
     {
         AppSettings.initLocale(this);
-        WidgetSettings.initDefaults(context);
+        isRtl = AppSettings.isLocaleRtl(this);
 
-        SuntimesUtils.initDisplayStrings(context);
+        WidgetSettings.initDefaults(context);        // locale specific defaults
+
+        SuntimesUtils.initDisplayStrings(context);   // locale specific strings
         AppSettings.initDisplayStrings(context);
         WidgetSettings.initDisplayStrings(context);
+
+        initAnimations(context);                     // locale specific animations
     }
 
     /**
@@ -347,7 +352,6 @@ public class SuntimesActivity extends AppCompatActivity
     protected void initViews(Context context)
     {
         initActionBar(context);
-        initAnimations(context);
         initClockViews(context);
         initNoteViews(context);
         initCardViews(context);
@@ -683,8 +687,9 @@ public class SuntimesActivity extends AppCompatActivity
 
         anim_card_inPrev = AnimationUtils.loadAnimation(this, R.anim.fade_in);
         anim_card_inNext = AnimationUtils.loadAnimation(this, R.anim.fade_in);
-        anim_card_outPrev = AnimationUtils.loadAnimation(this, R.anim.slide_out_right);
-        anim_card_outNext = AnimationUtils.loadAnimation(this, R.anim.slide_out_left);
+
+        anim_card_outPrev = AnimationUtils.loadAnimation(this, (isRtl ? R.anim.slide_out_left : R.anim.slide_out_right));
+        anim_card_outNext = AnimationUtils.loadAnimation(this, (isRtl ? R.anim.slide_out_right : R.anim.slide_out_left));
     }
 
     /**
@@ -1247,11 +1252,15 @@ public class SuntimesActivity extends AppCompatActivity
                     if ((firstTouchX - secondTouchX) >= FLING_SENSITIVITY)
                     {
                         userSwappedCard = false;
-                        notes.showNextNote();    // swipe right: next
+                        if (isRtl)
+                            notes.showPrevNote();
+                        else notes.showNextNote();    // swipe right: next
 
                     } else if ((secondTouchX - firstTouchX) > FLING_SENSITIVITY) {
                         userSwappedCard = false;
-                        notes.showPrevNote();   // swipe left: prev
+                        if (isRtl)
+                            notes.showNextNote();
+                        else notes.showPrevNote();   // swipe left: prev
 
                     } else {                    // click: user defined
                         AppSettings.ClockTapAction action = AppSettings.loadNoteTapActionPref(SuntimesActivity.this);
@@ -1280,7 +1289,7 @@ public class SuntimesActivity extends AppCompatActivity
 
                 case MotionEvent.ACTION_MOVE:
                     final View currentView = note_flipper.getCurrentView();
-                    int moveDeltaX = (int)(event.getX() - firstTouchX);
+                    int moveDeltaX = (isRtl ? (int)(firstTouchX - event.getX()) : (int)(event.getX() - firstTouchX));
                     if (Math.abs(moveDeltaX) < MOVE_SENSITIVITY)
                     {
                         currentView.layout(moveDeltaX, currentView.getTop(), currentView.getWidth(), currentView.getBottom());
@@ -1313,11 +1322,11 @@ public class SuntimesActivity extends AppCompatActivity
                     secondTouchX = event.getX();
                     if ((secondTouchX - firstTouchX) > FLING_SENSITIVITY)
                     {   // swipe right; back to previous view
-                        userSwappedCard = showPreviousCard();
+                        userSwappedCard = (isRtl ? showNextCard() : showPreviousCard());
 
                     } else if (firstTouchX - secondTouchX > FLING_SENSITIVITY) {
                         // swipe left; advance to next view
-                        userSwappedCard = showNextCard();
+                        userSwappedCard = (isRtl ? showPreviousCard() : showNextCard());
 
                     } else {
                         // swipe cancel; reset current view
@@ -1333,8 +1342,15 @@ public class SuntimesActivity extends AppCompatActivity
 
                     final View currentView = card_flipper.getCurrentView();
                     int currentIndex = card_flipper.getDisplayedChild();
-                    int otherIndex = (isSwipeRight ? currentIndex - 1
-                            : currentIndex + 1);
+
+                    int otherIndex;
+                    if (isRtl)
+                    {
+                        otherIndex = (isSwipeRight ? currentIndex + 1 : currentIndex - 1);
+                    } else {
+                        otherIndex = (isSwipeRight ? currentIndex - 1 : currentIndex + 1);
+                    }
+
                     if (otherIndex >= 0 && otherIndex < card_flipper.getChildCount())
                     {
                         // in-between child views; flip between them
