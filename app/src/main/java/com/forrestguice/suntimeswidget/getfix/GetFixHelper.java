@@ -87,7 +87,7 @@ public class GetFixHelper
         {
             if (hasGPSPermissions(myParent, REQUEST_GETFIX_LOCATION))
             {
-                if (isGPSEnabled())
+                if (isLocationEnabled())
                 {
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(myParent);
                     getFixTask = new GetFixTask(myParent, this);
@@ -390,7 +390,7 @@ public class GetFixHelper
         }
     }
 
-    public boolean isGPSEnabled()
+    public boolean isLocationEnabled()
     {
         return isGPSEnabled(myParent);
     }

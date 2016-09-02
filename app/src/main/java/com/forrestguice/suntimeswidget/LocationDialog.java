@@ -188,7 +188,7 @@ public class LocationDialog extends Dialog
         getFixUI = new GetFixUI1(text_locationName, text_locationLat, text_locationLon, progress_getfix, button_getfix);
         getFixHelper = new GetFixHelper(myParent, getFixUI);
 
-        if (!getFixHelper.isGPSEnabled())
+        if (!getFixHelper.isLocationEnabled())
         {
             button_getfix.setImageResource(GetFixUI.ICON_GPS_DISABLED);
         }
