@@ -126,6 +126,11 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
             }
         }
 
+        /**
+         * @param location the first location
+         * @param location2 the second location
+         * @return true if the first location is better than the second, false if the second location is worse, is null, or the first location is also no good.
+         */
         private boolean isBetterFix(Location location, Location location2)
         {
             if (location2 == null)
@@ -154,6 +159,9 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
         public void onProviderDisabled(String provider) { }
     };
 
+    /**
+     * Prepares UI objects, signals onStarted listeners, and (re)sets flags in preparation for getting a location.
+     */
     @Override
     protected void onPreExecute()
     {
@@ -176,6 +184,13 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
         startTime = stopTime = System.currentTimeMillis();
     }
 
+    /**
+     * 1. Checks each LocationProvider (gps, net, passive) and gets lastPosition from each.
+     * 2. Starts listening for location updates on providers (based on availability).
+     * 3. Busy spin (if necessary) so the task always consumes at least minElapsed time.
+     * @param params unused
+     * @return the "best fix" we were able to obtain (potentially null)
+     */
     @Override
     protected Location doInBackground(String... params)
     {
@@ -249,6 +264,9 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
         return bestFix;
     }
 
+    /**
+     * @param locations
+     */
     @Override
     protected void onProgressUpdate(Location... locations)
     {
@@ -260,6 +278,10 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
         }
     }
 
+    /**
+     * Stops location updates, triggers a final progress update, resets ui, and signals onFinished listeners.
+     * @param result the "best fix" that could be obtained (potentially null)
+     */
     @Override
     protected void onPostExecute(Location result)
     {
@@ -283,6 +305,10 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
         signalFinished(result);
     }
 
+    /**
+     * Same as onPostExecute except onCancelled is signalled instead of onFinished.
+     * @param result the "best fix" that could be obtained (potentially null)
+     */
     @Override
     protected void onCancelled(Location result)
     {
