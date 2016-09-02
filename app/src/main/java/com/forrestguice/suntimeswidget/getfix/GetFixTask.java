@@ -97,13 +97,32 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
         @Override
         public void onLocationChanged(Location location)
         {
-            Log.d("GetFixTask", "onLocationChanged: " + location.toString());
-
-            lastFix = location;
-            if (isBetterFix(lastFix, bestFix))
+            if (location != null)
             {
-                bestFix = lastFix;
-                onProgressUpdate(bestFix);
+                Log.d("GetFixTask", "onLocationChanged [" + location.getProvider() + "]: " + location.toString());
+                lastFix = location;
+                if (isBetterFix(lastFix, bestFix))
+                {
+                    bestFix = lastFix;
+                    onProgressUpdate(bestFix);
+                }
+            }
+        }
+
+        /**
+         * @param location
+         * @return true if location is not null and less than equal maxAge, false otherwise
+         */
+        private boolean isGoodFix(Location location)
+        {
+            if (location == null)
+            {
+                return false;
+
+            } else {
+                long locationAge = System.currentTimeMillis() - location.getTime();
+                Log.d("isGoodFix", "age is " + locationAge + " [" + maxAge + "]");
+                return (locationAge <= maxAge);
             }
         }
 
@@ -111,7 +130,7 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
         {
             if (location2 == null)
             {
-                return true;
+                return isGoodFix(location);
 
             } else if (location != null) {
                 if ((location.getTime() - location2.getTime()) > maxAge)
@@ -167,8 +186,17 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
             {
                 try {
                     boolean gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+                    Location gpsLastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    locationListener.onLocationChanged(gpsLastLocation);
+
                     boolean netEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+                    Location netLastLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    locationListener.onLocationChanged(netLastLocation);
+
                     boolean passiveEnabled = locationManager.isProviderEnabled(LocationManager.PASSIVE_PROVIDER);
+                    Location passiveLastLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+                    locationListener.onLocationChanged(passiveLastLocation);
+
                     if (!gpsEnabled && netEnabled)
                     {
                         // network provider only
