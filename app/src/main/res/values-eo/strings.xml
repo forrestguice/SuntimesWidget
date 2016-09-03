@@ -145,7 +145,7 @@
     <string name="timeMode_astronomical_short">Astronomia</string>    <!-- setting -->
     <string name="timeMode_astronomical">Astronomia krepusko</string> <!-- setting -->
 
-    <string name="configLabel_general_timeMode">Lingvo:</string>          <!-- spinner label -->
+    <string name="configLabel_general_timeMode">Reĝimo:</string>          <!-- spinner label -->
 
     <!-- Widget Setting: layout mode -->
     <string name="widgetMode1x1_sunrise">Nur sunleviĝo</string>             <!-- setting -->
