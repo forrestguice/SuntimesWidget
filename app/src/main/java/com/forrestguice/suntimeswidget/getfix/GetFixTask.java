@@ -121,8 +121,9 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
 
             } else {
                 long locationAge = System.currentTimeMillis() - location.getTime();
-                Log.d("isGoodFix", "age is " + locationAge + " [" + maxAge + "]");
-                return (locationAge <= maxAge);
+                boolean isGood = (locationAge <= maxAge);
+                Log.d("isGoodFix", isGood + ": age is " + locationAge + " [max " + maxAge + "] [" + location.getProvider() + ": +-" + location.getAccuracy() + "]");
+                return isGood;
             }
         }
 
@@ -215,32 +216,32 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
                     if (!gpsEnabled && netEnabled)
                     {
                         // network provider only
+                        Log.d("GetFixTask", "starting location listener; now requesting updates from NETWORK_PROVIDER...");
                         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-                        Log.d("GetFixTask", "started location listener; now requesting updates from NETWORK_PROVIDER...");
 
                     } else if (gpsEnabled && !netEnabled) {
                         // gps provider only
+                        Log.d("GetFixTask", "starting location listener; now requesting updates from GPS_PROVIDER...");
                         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-                        Log.d("GetFixTask", "started location listener; now requesting updates from GPS_PROVIDER...");
 
                     } else if (gpsEnabled && netEnabled) {
                         // gps + network provider
+                        Log.d("GetFixTask", "starting location listener; now requesting updates from GPS_PROVIDER && NETWORK_PROVIDER...");
                         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
                         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-                        Log.d("GetFixTask", "started location listener; now requesting updates from GPS_PROVIDER && NETWORK_PROVIDER...");
 
                     } else if (passiveEnabled) {
                         // fallback to passive provider
+                        Log.d("GetFixTask", "starting location listener; now requesting updates from PASSIVE_PROVIDER...");
                         locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 0, 0, locationListener);
-                        Log.d("GetFixTask", "started location listener; now requesting updates from PASSIVE_PROVIDER...");
 
                     } else {
                         // err: no providers at all!
-                        Log.e("GetFixTask", "no usable LocationProvider found; a provider should be enabled before starting this task.");
+                        Log.e("GetFixTask", "unable to start locationListener ... No usable LocationProvider found! a provider should be enabled before starting this task.");
                     }
 
                 } catch (SecurityException e) {
-                    Log.e("GetFixTask", "unable to start locationListener ... Permissions! we don't have them... checkPermissions should be called before using this task! " + e);
+                    Log.e("GetFixTask", "unable to start locationListener ... Permissions! we don't have them.. checkPermissions should be called before starting this task. " + e);
                 }
             }
         });
