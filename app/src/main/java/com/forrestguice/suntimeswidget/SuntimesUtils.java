@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.text.format.DateUtils;
 
 import java.text.DateFormat;
 
@@ -256,7 +257,18 @@ public class SuntimesUtils
      */
     public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal)
     {
-        return calendarTimeShortDisplayString(context, cal);  // TODO
+        if (cal == null)
+        {
+            return new TimeDisplayText(strTimeNone);
+        }
+        Date time = cal.getTime();
+        TimeDisplayText retValue;
+
+        /**DateFormat dateFormat = android.text.format.DateFormat.getLongDateFormat(context);
+        dateFormat.setTimeZone(cal.getTimeZone());*/
+        //retValue = new TimeDisplayText(dateFormat.format(time), "", "");
+        retValue = new TimeDisplayText(DateUtils.formatDateTime(context, time.getTime(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_YEAR), "", "");
+        return retValue;
     }
 
     /**
