@@ -129,25 +129,33 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     @Override
     public Calendar getVernalEquinoxForYear(Calendar date)
     {
-        return null;   // TODO
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(date.get(Calendar.YEAR), Calendar.MARCH, 20);   // TODO: implement, these lines are "debug stuff"
+        return calendar;
     }
 
     @Override
     public Calendar getSummerSolsticeForYear(Calendar date)
     {
-        return null;   // TODO
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(date.get(Calendar.YEAR), Calendar.JUNE, 20);   // TODO: implement, these lines are "debug stuff"
+        return calendar;
     }
 
     @Override
     public Calendar getAutumnalEquinoxForYear(Calendar date)
     {
-        return null;   // TODO
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(date.get(Calendar.YEAR), Calendar.SEPTEMBER, 22);   // TODO: implement, these lines are "debug stuff"
+        return calendar;
     }
 
     @Override
     public Calendar getWinterSolsticeForYear(Calendar date)
     {
-        return null;   // TODO
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(date.get(Calendar.YEAR), Calendar.DECEMBER, 21);   // TODO: implement, these lines are "debug stuff"
+        return calendar;
     }
 
     @Override
