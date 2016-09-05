@@ -60,7 +60,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
@@ -103,6 +103,7 @@ public class SuntimesActivity extends AppCompatActivity
     private WidgetSettings.Location location;
     private SuntimesNotes notes;
     private SuntimesRiseSetDataset dataset;
+    private SuntimesEquinoxSolsticeDataset dataset2;
 
     // clock views
     private TextView txt_time;
@@ -168,6 +169,8 @@ public class SuntimesActivity extends AppCompatActivity
     private LinearLayout layout_daylength2;
     private TextView txt_daylength2;
     private TextView txt_lightlength2;
+
+    private EquinoxView card_equinoxSolstice;
 
     private boolean isRtl = false;
     private boolean userSwappedCard = false;
@@ -293,6 +296,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         outState.putBoolean(KEY_UI_USERSWAPPEDCARD, userSwappedCard);
         outState.putBoolean(KEY_UI_CARDISTOMORROW, (card_flipper.getDisplayedChild() != 0));
+        card_equinoxSolstice.saveState(outState);
     }
 
     @Override
@@ -301,6 +305,7 @@ public class SuntimesActivity extends AppCompatActivity
         userSwappedCard = savedInstanceState.getBoolean(KEY_UI_USERSWAPPEDCARD, false);
         boolean cardIsTomorrow = savedInstanceState.getBoolean(KEY_UI_CARDISTOMORROW, false);
         card_flipper.setDisplayedChild((cardIsTomorrow ? 1 : 0));
+        card_equinoxSolstice.loadState(savedInstanceState);
     }
 
     /**
@@ -526,10 +531,7 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private void initEquinoxViews(Context context)
     {
-        //txt_equinox_vernal = (TextView)findViewById(R.id.text_date_equinox_vernal);
-        //txt_solstice_summer = (TextView)findViewById(R.id.text_date_solstice_summer);
-        //t/xt_equinox_autumnal = (TextView)findViewById(R.id.text_date_equinox_autumnal);
-        //txt_solstice_winter = (TextView)findViewById(R.id.text_date_solstice_winter);
+        card_equinoxSolstice = (EquinoxView) findViewById(R.id.info_date_solsticequinox);
     }
 
     /**
@@ -1016,18 +1018,22 @@ public class SuntimesActivity extends AppCompatActivity
     private void initData( Context context )
     {
         dataset = new SuntimesRiseSetDataset(context);
+        dataset2 = new SuntimesEquinoxSolsticeDataset(context);
     }
 
     protected void calculateData( Context context )
     {
         initData(context);
         dataset.calculateData();
+        dataset2.calculateData();
+
         initNotes();
     }
 
     protected void invalidateData( Context context )
     {
         dataset.invalidateCalculation();
+        dataset2.invalidateCalculation();
         updateViews(context);
     }
 
@@ -1131,15 +1137,7 @@ public class SuntimesActivity extends AppCompatActivity
         //
         // equinox and solstice
         //
-        SuntimesUtils.TimeDisplayText equinoxString_vernal = utils.calendarDateTimeDisplayString(context, null);         // TODO: from data
-        SuntimesUtils.TimeDisplayText equinoxString_autumnal = utils.calendarDateTimeDisplayString(context, null);
-        SuntimesUtils.TimeDisplayText solsticString_summer = utils.calendarDateTimeDisplayString(context, null);
-        SuntimesUtils.TimeDisplayText solsticString_winter = utils.calendarDateTimeDisplayString(context, null);
-
-        //txt_equinox_vernal.setText(equinoxString_vernal.toString());
-        //txt_solstice_summer.setText(solsticString_summer.toString());
-        //txt_equinox_autumnal.setText(equinoxString_autumnal.toString());
-        //txt_solstice_winter.setText(solsticString_winter.toString());
+        card_equinoxSolstice.updateViews(SuntimesActivity.this, dataset2);
 
         //
         // clock & date
