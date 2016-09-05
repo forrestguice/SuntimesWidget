@@ -19,15 +19,19 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 
 public class EquinoxView extends LinearLayout
 {
@@ -36,6 +40,7 @@ public class EquinoxView extends LinearLayout
 
     private SuntimesUtils utils = new SuntimesUtils();
     private boolean userSwappedCard = false;
+    private boolean isRtl = false;
 
     private ViewFlipper flipper;           // flip between
 
@@ -49,6 +54,8 @@ public class EquinoxView extends LinearLayout
     private TextView txt_equinox_autumnal2;
     private TextView txt_solstice_winter2;
 
+    private Animation anim_card_outNext, anim_card_inNext, anim_card_outPrev, anim_card_inPrev;
+
     public EquinoxView(Context context)
     {
         super(context);
@@ -61,13 +68,19 @@ public class EquinoxView extends LinearLayout
         init(context);
     }
 
+    public EquinoxView(Context context, AttributeSet attrs, int defStyle)
+    {
+        super(context, attrs, defStyle);
+        init(context);
+    }
+
     private void init(Context context)
     {
-        inflate(context, R.layout.layout_view_equinox, this);
+        initLocale(context);
+        LayoutInflater.from(context).inflate(R.layout.layout_view_equinox, this, true);
 
         flipper = (ViewFlipper)findViewById(R.id.info_equinoxsolstice_flipper);
-        flipper.setInAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in));
-        flipper.setOutAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_out));
+        flipper.setOnTouchListener(cardTouchListener);
 
         LinearLayout thisYear = (LinearLayout)findViewById(R.id.info_equinoxsolstice_thisyear);
         if (thisYear != null)
@@ -88,55 +101,193 @@ public class EquinoxView extends LinearLayout
         }
     }
 
+    public void initLocale(Context context)
+    {
+        isRtl = AppSettings.isLocaleRtl(context);
+        initAnimations(context);
+    }
+
+    private void initAnimations(Context context)
+    {
+        anim_card_inNext = AnimationUtils.loadAnimation(context, R.anim.fade_in);
+        anim_card_inPrev = AnimationUtils.loadAnimation(context, R.anim.fade_in);
+
+        anim_card_outNext = AnimationUtils.loadAnimation(context, R.anim.fade_out);
+        anim_card_outPrev = AnimationUtils.loadAnimation(context, R.anim.fade_out);
+    }
+
     protected void updateViews( Context context, SuntimesEquinoxSolsticeDataset data )
     {
-        SuntimesUtils.TimeDisplayText equinoxString_vernal = utils.calendarDateTimeDisplayString(context, data.dataEquinoxVernal.eventCalendarThisYear());
-        SuntimesUtils.TimeDisplayText equinoxString_autumnal = utils.calendarDateTimeDisplayString(context, data.dataEquinoxAutumnal.eventCalendarThisYear());
-        SuntimesUtils.TimeDisplayText solsticeString_summer = utils.calendarDateTimeDisplayString(context, data.dataSolsticeSummer.eventCalendarThisYear());
-        SuntimesUtils.TimeDisplayText solsticeString_winter = utils.calendarDateTimeDisplayString(context, data.dataSolsticeWinter.eventCalendarThisYear());
+        if (data != null && data.isCalculated())
+        {
+            SuntimesUtils.TimeDisplayText equinoxString_vernal = utils.calendarDateTimeDisplayString(context, data.dataEquinoxVernal.eventCalendarThisYear());
+            SuntimesUtils.TimeDisplayText equinoxString_autumnal = utils.calendarDateTimeDisplayString(context, data.dataEquinoxAutumnal.eventCalendarThisYear());
+            SuntimesUtils.TimeDisplayText solsticeString_summer = utils.calendarDateTimeDisplayString(context, data.dataSolsticeSummer.eventCalendarThisYear());
+            SuntimesUtils.TimeDisplayText solsticeString_winter = utils.calendarDateTimeDisplayString(context, data.dataSolsticeWinter.eventCalendarThisYear());
 
-        txt_equinox_vernal.setText(equinoxString_vernal.toString());
-        txt_solstice_summer.setText(solsticeString_summer.toString());
-        txt_equinox_autumnal.setText(equinoxString_autumnal.toString());
-        txt_solstice_winter.setText(solsticeString_winter.toString());
+            txt_equinox_vernal.setText(equinoxString_vernal.toString());
+            txt_solstice_summer.setText(solsticeString_summer.toString());
+            txt_equinox_autumnal.setText(equinoxString_autumnal.toString());
+            txt_solstice_winter.setText(solsticeString_winter.toString());
 
-        SuntimesUtils.TimeDisplayText equinoxString_vernal2 = utils.calendarDateTimeDisplayString(context, data.dataEquinoxVernal.eventCalendarOtherYear());
-        SuntimesUtils.TimeDisplayText equinoxString_autumnal2 = utils.calendarDateTimeDisplayString(context, data.dataEquinoxAutumnal.eventCalendarOtherYear());
-        SuntimesUtils.TimeDisplayText solsticeString_summer2 = utils.calendarDateTimeDisplayString(context, data.dataSolsticeSummer.eventCalendarOtherYear());
-        SuntimesUtils.TimeDisplayText solsticeString_winter2 = utils.calendarDateTimeDisplayString(context, data.dataSolsticeWinter.eventCalendarOtherYear());
+            SuntimesUtils.TimeDisplayText equinoxString_vernal2 = utils.calendarDateTimeDisplayString(context, data.dataEquinoxVernal.eventCalendarOtherYear());
+            SuntimesUtils.TimeDisplayText equinoxString_autumnal2 = utils.calendarDateTimeDisplayString(context, data.dataEquinoxAutumnal.eventCalendarOtherYear());
+            SuntimesUtils.TimeDisplayText solsticeString_summer2 = utils.calendarDateTimeDisplayString(context, data.dataSolsticeSummer.eventCalendarOtherYear());
+            SuntimesUtils.TimeDisplayText solsticeString_winter2 = utils.calendarDateTimeDisplayString(context, data.dataSolsticeWinter.eventCalendarOtherYear());
 
-        txt_equinox_vernal2.setText(equinoxString_vernal2.toString());
-        txt_solstice_summer2.setText(solsticeString_summer2.toString());
-        txt_equinox_autumnal2.setText(equinoxString_autumnal2.toString());
-        txt_solstice_winter2.setText(solsticeString_winter2.toString());
+            txt_equinox_vernal2.setText(equinoxString_vernal2.toString());
+            txt_solstice_summer2.setText(solsticeString_summer2.toString());
+            txt_equinox_autumnal2.setText(equinoxString_autumnal2.toString());
+            txt_solstice_winter2.setText(solsticeString_winter2.toString());
+
+        } else {
+            String notCalculated = context.getString(R.string.time_loading);
+            txt_equinox_vernal.setText(notCalculated);
+            txt_solstice_summer.setText(notCalculated);
+            txt_equinox_autumnal.setText(notCalculated);
+            txt_solstice_winter.setText(notCalculated);
+
+            txt_equinox_vernal2.setText(notCalculated);
+            txt_solstice_summer2.setText(notCalculated);
+            txt_equinox_autumnal2.setText(notCalculated);
+            txt_solstice_winter2.setText(notCalculated);
+        }
     }
 
-    @Override
-    public Parcelable onSaveInstanceState( )
+    public boolean saveState(Bundle bundle)
     {
         boolean cardIsNextYear = (flipper.getDisplayedChild() != 0);
-        Log.d("DEBUG", "EquinoxView onSaveInstanceState");
-
-        Bundle bundle = new Bundle();
+        Log.d("DEBUG", "EquinoxView saveState");
         bundle.putBoolean(EquinoxView.KEY_UI_CARDISNEXTYEAR, cardIsNextYear);
         bundle.putBoolean(EquinoxView.KEY_UI_USERSWAPPEDCARD, userSwappedCard);
-        return bundle;
+        return true;
     }
 
-    @Override
-    public void onRestoreInstanceState( Parcelable state )
+    public void loadState(Bundle bundle)
     {
-        Log.d("DEBUG", "EquinoxView onRestoreInstanceState");
-        if (state instanceof Bundle)
-        {
-            Bundle bundle = (Bundle) state;
-
-            boolean cardIsNextYear = bundle.getBoolean(EquinoxView.KEY_UI_CARDISNEXTYEAR, false);
-            flipper.setDisplayedChild((cardIsNextYear ? 1 : 0));
-
-            userSwappedCard = bundle.getBoolean(KEY_UI_USERSWAPPEDCARD, false);
-        }
-        super.onRestoreInstanceState(state);
+        Log.d("DEBUG", "EquinoxView loadState");
+        boolean cardIsNextYear = bundle.getBoolean(EquinoxView.KEY_UI_CARDISNEXTYEAR, false);
+        flipper.setDisplayedChild((cardIsNextYear ? 1 : 0));
+        userSwappedCard = bundle.getBoolean(KEY_UI_USERSWAPPEDCARD, false);
     }
 
+    /**
+     * @return
+     */
+    public boolean showNextCard()
+    {
+        if (hasNextCard())
+        {
+            flipper.setOutAnimation(anim_card_outNext);
+            flipper.setInAnimation(anim_card_inNext);
+            flipper.showNext();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean hasNextCard()
+    {
+        int current = flipper.getDisplayedChild();
+        return ((current + 1) < flipper.getChildCount());
+    }
+
+
+    /**
+     * @return
+     */
+    public boolean showPreviousCard()
+    {
+        if (hasPreviousCard())
+        {
+            flipper.setOutAnimation(anim_card_outPrev);
+            flipper.setInAnimation(anim_card_inPrev);
+            flipper.showPrevious();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean hasPreviousCard()
+    {
+        int current = flipper.getDisplayedChild();
+        int prev = current - 1;
+        return (prev >= 0);
+    }
+
+    /**
+     *
+     */
+    private View.OnTouchListener cardTouchListener = new View.OnTouchListener()
+    {
+        public int MOVE_SENSITIVITY = 150;
+        public int FLING_SENSITIVITY = 25;
+        public float firstTouchX, secondTouchX;
+
+        @Override
+        public boolean onTouch(View view, MotionEvent event)
+        {
+            switch (event.getAction())
+            {
+                case MotionEvent.ACTION_DOWN:
+                    firstTouchX = event.getX();
+                    break;
+
+                case MotionEvent.ACTION_UP:
+                    secondTouchX = event.getX();
+                    if ((secondTouchX - firstTouchX) > FLING_SENSITIVITY)
+                    {   // swipe right; back to previous view
+                        userSwappedCard = (isRtl ? showNextCard() : showPreviousCard());
+
+                    } else if (firstTouchX - secondTouchX > FLING_SENSITIVITY) {
+                        // swipe left; advance to next view
+                        userSwappedCard = (isRtl ? showPreviousCard() : showNextCard());
+
+                    } else {
+                        // swipe cancel; reset current view
+                        final View currentView = flipper.getCurrentView();
+                        currentView.layout(0, currentView.getTop(), currentView.getWidth(), currentView.getBottom());
+                    }
+                    break;
+
+                case MotionEvent.ACTION_MOVE:
+                    float currentTouchX = event.getX();
+                    int moveDelta = (int)(currentTouchX - firstTouchX);
+                    boolean isSwipeRight = (moveDelta > 0);
+
+                    final View currentView = flipper.getCurrentView();
+                    int currentIndex = flipper.getDisplayedChild();
+
+                    int otherIndex;
+                    if (isRtl)
+                    {
+                        otherIndex = (isSwipeRight ? currentIndex + 1 : currentIndex - 1);
+                    } else {
+                        otherIndex = (isSwipeRight ? currentIndex - 1 : currentIndex + 1);
+                    }
+
+                    if (otherIndex >= 0 && otherIndex < flipper.getChildCount())
+                    {
+                        // in-between child views; flip between them
+                        currentView.layout( moveDelta, currentView.getTop(),
+                                moveDelta + currentView.getWidth(), currentView.getBottom() );
+
+                        // extended movement; manually trigger swipe/fling
+                        if (moveDelta > MOVE_SENSITIVITY || moveDelta < MOVE_SENSITIVITY * -1)
+                        {
+                            event.setAction(MotionEvent.ACTION_UP);
+                            return onTouch(view, event);
+                        }
+
+                    } else {
+                        // at-a-boundary (the first/last view);
+                        // TODO: animate somehow to let user know there aren't additional views
+                    }
+
+                    break;
+            }
+
+            return true;
+        }
+    };
 }
