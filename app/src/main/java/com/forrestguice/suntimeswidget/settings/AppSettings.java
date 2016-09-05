@@ -182,6 +182,16 @@ public class AppSettings
     }
 
     /**
+     * Is the current locale right-to-left?
+     * @param context
+     * @return true the locale is right-to-left, false the locale is left-to-right
+     */
+    public static boolean isLocaleRtl(Context context)
+    {
+        return context.getResources().getBoolean(R.bool.is_rtl);
+    }
+
+    /**
      * Actions that can be performed when the clock is clicked.
      */
     public static enum ClockTapAction

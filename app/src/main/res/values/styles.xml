@@ -1,9 +1,11 @@
 <resources>
 
+    <!-- themes -->
     <style name="AppTheme" parent="AppTheme.Dark">
     </style>
 
-    <style name="AppTheme.Light" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <!-- Theme: Light (left-to-right) -->
+    <style name="AppThemeBase.Light" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="dialogBackground">@color/background_material_light</item>
         <item name="settingsCardBackground">@drawable/bg_widget</item>
         <item name="timeCardBackground">@color/background_floating_material_light</item>
@@ -21,12 +23,15 @@
         <item name="icActionAbout">@drawable/ic_action_about_light</item>
         <item name="icActionSettings">@drawable/ic_action_settings_light</item>
         <item name="icActionHelp">@drawable/ic_action_help_light</item>
-        <item name="icActionNext">@drawable/ic_action_next_item_light</item>
-        <item name="icActionPrevious">@drawable/ic_action_previous_item_light</item>
         <item name="icActionSave">@drawable/ic_action_save_light</item>
     </style>
-    
-    <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppTheme.Light" parent="AppThemeBase.Light">
+        <item name="icActionNext">@drawable/ic_action_next_item_light</item>
+        <item name="icActionPrevious">@drawable/ic_action_previous_item_light</item>
+    </style>
+
+    <!-- Theme: Dark (left-to-right) -->
+    <style name="AppThemeBase.Dark" parent="Theme.AppCompat.NoActionBar">
         <item name="dialogBackground">@color/background_material_dark</item>
         <item name="settingsCardBackground">@drawable/bg_widget_dark</item>
         <item name="timeCardBackground">@color/background_floating_material_dark</item>
@@ -44,10 +49,14 @@
         <item name="icActionAbout">@drawable/ic_action_about</item>
         <item name="icActionSettings">@drawable/ic_action_settings</item>
         <item name="icActionHelp">@drawable/ic_action_help</item>
-        <item name="icActionNext">@drawable/ic_action_next_item</item>
-        <item name="icActionPrevious">@drawable/ic_action_previous_item</item>
         <item name="icActionSave">@drawable/ic_action_save</item>
     </style>
+    <style name="AppTheme.Dark" parent="AppThemeBase.Dark">
+        <item name="icActionNext">@drawable/ic_action_next_item</item>
+        <item name="icActionPrevious">@drawable/ic_action_previous_item</item>
+    </style>
+
+    <!-- view styles -->
 
     <!-- main activity card items -->
     <style name="SunsetTimeCard">

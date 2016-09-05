@@ -16,9 +16,10 @@
     <attr name="icActionAbout" format="reference" />
     <attr name="icActionSettings" format="reference" />
     <attr name="icActionHelp" format="reference" />
+    <attr name="icActionSave" format="reference" />
+
     <attr name="icActionNext" format="reference" />
     <attr name="icActionPrevious" format="reference" />
-    <attr name="icActionSave" format="reference" />
 
     <attr name="icActionGPS" format="reference" />
     <attr name="icActionGPS_off" format="reference" />
