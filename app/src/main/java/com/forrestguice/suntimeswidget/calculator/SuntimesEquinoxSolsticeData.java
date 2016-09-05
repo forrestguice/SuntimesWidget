@@ -59,7 +59,7 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
      */
     private void initFromOther( SuntimesEquinoxSolsticeData other )
     {
-        initFromOther(other);
+        super.initFromOther(other);
         this.timeMode = other.timeMode();
     }
 
