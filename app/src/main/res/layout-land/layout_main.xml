@@ -83,7 +83,7 @@
 
         <ViewFlipper
             android:id="@+id/info_time_flipper"
-            android:layout_width="fill_parent" android:layout_height="wrap_content"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="15dp" android:layout_marginStart="15dp"
             android:elevation="5dp"
@@ -104,5 +104,12 @@
         </ViewFlipper>
 
     </LinearLayout>
+
+
+    <com.forrestguice.suntimeswidget.EquinoxView
+        android:id="@+id/info_date_solsticequinox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 
 </LinearLayout>
