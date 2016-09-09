@@ -2,8 +2,8 @@
 
 1. [Submit a bug report / feature request](#bugReport)
 2. [Add a translation](#addTranslation)
-3. [Add a default location](addDefaultLocation)
-4. [Add a "data source"](addDataSource)
+3. [Add a default location](#addDefaultLocation)
+4. [Add a "data source"](#addDataSource)
 5. [Other](#other)
 
 ##Submit a Bug Report or Feature Request
