@@ -46,7 +46,7 @@ Note: in this context "enhancements" are easy additions/modifications that will 
 ##Add a default location
 <a name="addDefaultLocation" />
 
-1. Follow the instructions for adding a new translation, except only shadowing a small subset of values.
+1. Follow the guidelines for adding a new translation, except only shadowing a small subset of values.
 2. In your `res/<values-folder>/strings.xml` file add/modify the follow definitions with your locale specific values:
 
 ```
@@ -57,9 +57,9 @@ Note: in this context "enhancements" are easy additions/modifications that will 
 note: The lat/lon should use `.` as the decimal separator and include 4 decimal places.
 
 
-##Add a new "Data Source"
+##Add a "data source"
 <a name="addDataSource" />
-The app uses an interface (suntimeswidget.calculator.SuntimesCalculator) to perform the actual calculations (the default implementation uses sunrisesunsetlib-java). TODO: describe how to add alternative implementations
+The app uses an interface (`suntimeswidget.calculator.SuntimesCalculator`) to perform the actual calculations (the default implementation uses `sunrisesunsetlib-java`). TODO: describe how to add alternative implementations.
 
 ##Other
 <a name="other" />
