@@ -8,9 +8,11 @@
 
 ##Submit a Bug Report or Feature Request
 <a name="bugReport" />
-Use the issue tracker to submit a bug report or a feature request. 
+Use the issue tracker to submit a bug report or a feature request.
 
 Issues will be tagged **bug**, **feature**, or **enhancement** as they are recognized, and later added to specific **milestones** as they are fixed.
+
+When submitting a bug **please be detailed and specific**. What did you expect the app to do, what did you actually observe? Bugs that can't be reproduced won't get fixed. If reporting inaccurate times include the lat/lon, timezone, and the date. Other useful information includes Android OS version and your specific device model.
 
 Note: in this context "enhancements" are easy additions/modifications that will bump the minor or patch version, while "features" are larger changes that will bump the major version number.
 
