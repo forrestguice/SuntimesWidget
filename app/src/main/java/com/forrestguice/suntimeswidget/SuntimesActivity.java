@@ -73,6 +73,7 @@ import com.forrestguice.suntimeswidget.notes.SuntimesNotes3;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import java.lang.reflect.Method;
 import java.text.DateFormat;
@@ -82,6 +83,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TimeZone;
 
 public class SuntimesActivity extends AppCompatActivity
 {
@@ -1143,7 +1145,7 @@ public class SuntimesActivity extends AppCompatActivity
 
         String thisString = getString(R.string.today);
         String otherString = getString(R.string.tomorrow);
-        boolean showWarning = false;
+        boolean showDateWarning = false;
 
         if (dataset.dataActual.todayIsNotToday())
         {
@@ -1161,22 +1163,28 @@ public class SuntimesActivity extends AppCompatActivity
                 } else if (data_date.before(time)) {
                     thisString = getString(R.string.past_today);
                     otherString = getString(R.string.past_tomorrow);
-                    showWarning = true;
+                    showDateWarning = true;
                 }
             }
         }
 
-        ImageSpan dateWarning = (showWarning) ? utils.createWarningSpan(this, txt_date.getTextSize()) : null;
+        // date fields
+        ImageSpan dateWarning = (showDateWarning) ? SuntimesUtils.createWarningSpan(this, txt_date.getTextSize()) : null;
 
         String dateString = getString(R.string.dateField, thisString, dateFormat.format(data_date));
-        SpannableStringBuilder dateSpan = utils.createDateSpan(dateString, dateWarning);
+        SpannableStringBuilder dateSpan = SuntimesUtils.createSpan(dateString, dateWarning);
+        txt_date.setText(dateSpan);
 
         String date2String = getString(R.string.dateField, otherString, dateFormat.format(data_date2));
-        SpannableStringBuilder date2Span = utils.createDateSpan(date2String, dateWarning);
-
-        txt_date.setText(dateSpan);
+        SpannableStringBuilder date2Span = SuntimesUtils.createSpan(date2String, dateWarning);
         txt_date2.setText(date2Span);
-        txt_timezone.setText(dataset.timezone());
+
+        // timezone field
+        boolean showTimezoneWarning = (!dataset.timezone().equals(TimeZone.getDefault().getID()));
+        ImageSpan timezoneWarning = (showTimezoneWarning) ? SuntimesUtils.createWarningSpan(this, txt_timezone.getTextSize()) : null;
+        String timezoneString = getString(R.string.timezoneField, dataset.timezone());
+        SpannableStringBuilder timezoneSpan = SuntimesUtils.createSpan(timezoneString, timezoneWarning);
+        txt_timezone.setText(timezoneSpan);
 
         showDayLength(dataset.isCalculated());
         showNotes(dataset.isCalculated());

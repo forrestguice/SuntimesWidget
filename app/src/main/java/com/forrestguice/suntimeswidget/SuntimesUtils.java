@@ -386,14 +386,14 @@ public class SuntimesUtils
     }
 
     /**
-     * @param dateString a pre-formatted datestring
+     * @param text a pre-formatted datestring
      * @param warningSpan an ImageSpan to be substituted in place of all [w] tags (or null to remove tag).
      * @return a SpannableStringBuilder with tags replaced with appropriate ImageSpans
      */
-    public static SpannableStringBuilder createDateSpan(String dateString, ImageSpan warningSpan)
+    public static SpannableStringBuilder createSpan(String text, ImageSpan warningSpan)
     {
-        SpannableStringBuilder dateSpan = new SpannableStringBuilder(dateString);
-        int tagPos_warning = dateString.indexOf(SPANTAG_WARNING);
+        SpannableStringBuilder dateSpan = new SpannableStringBuilder(text);
+        int tagPos_warning = text.indexOf(SPANTAG_WARNING);
         if (tagPos_warning >= 0)
         {
             if (warningSpan != null)

@@ -18,6 +18,8 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
@@ -131,6 +133,11 @@ public class SuntimesDataset
     public String timezone()
     {
         return dataActual.timezone();
+    }
+
+    public WidgetSettings.TimezoneMode timezoneMode()
+    {
+        return dataActual.timezoneMode();
     }
 
     public Calendar now()

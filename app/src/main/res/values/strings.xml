@@ -28,6 +28,11 @@
     <string name="nextDay">Next Day</string>
     <string name="prevDay">Previous Day</string>
 
+    <!-- Field: timezone
+         The timezone field that appears below the clock (main activity).
+    -->
+    <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
+
     <!-- Field: date
          The date field that appears above the table (main activity).
          e.g. [dateDesc] \n [date]
