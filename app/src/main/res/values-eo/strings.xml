@@ -34,7 +34,7 @@
              where [dateDesc] is a yesterday/today/tomorrow, past_, or future_ string.
              where [date] is a dateString formatted by app using user's locale
     -->
-    <string name="dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g></string>
+    <!-- line commented to use default: <string name="dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string> -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
     <string name="past_yesterday">Pasinteco (-1)</string>
