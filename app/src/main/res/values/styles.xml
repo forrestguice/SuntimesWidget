@@ -21,6 +21,8 @@
         <item name="icActionTime">@drawable/ic_action_time_light</item>
         <item name="icActionAlarm">@drawable/ic_action_alarms_light</item>
         <item name="icActionAbout">@drawable/ic_action_about_light</item>
+        <item name="icActionWarning">@drawable/ic_action_warning_light</item>
+        <item name="icActionError">@drawable/ic_action_error_light</item>
         <item name="icActionSettings">@drawable/ic_action_settings_light</item>
         <item name="icActionHelp">@drawable/ic_action_help_light</item>
         <item name="icActionSave">@drawable/ic_action_save_light</item>
@@ -47,6 +49,8 @@
         <item name="icActionTime">@drawable/ic_action_time</item>
         <item name="icActionAlarm">@drawable/ic_action_alarms</item>
         <item name="icActionAbout">@drawable/ic_action_about</item>
+        <item name="icActionWarning">@drawable/ic_action_warning</item>
+        <item name="icActionError">@drawable/ic_action_error</item>
         <item name="icActionSettings">@drawable/ic_action_settings</item>
         <item name="icActionHelp">@drawable/ic_action_help</item>
         <item name="icActionSave">@drawable/ic_action_save</item>
