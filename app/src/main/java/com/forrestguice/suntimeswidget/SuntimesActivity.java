@@ -42,7 +42,9 @@ import android.support.v7.app.ActionBar;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -1141,6 +1143,7 @@ public class SuntimesActivity extends AppCompatActivity
 
         String thisString = getString(R.string.today);
         String otherString = getString(R.string.tomorrow);
+        boolean showWarning = false;
 
         if (dataset.dataActual.todayIsNotToday())
         {
@@ -1158,12 +1161,21 @@ public class SuntimesActivity extends AppCompatActivity
                 } else if (data_date.before(time)) {
                     thisString = getString(R.string.past_today);
                     otherString = getString(R.string.past_tomorrow);
+                    showWarning = true;
                 }
             }
         }
 
-        txt_date.setText(getString(R.string.dateField, thisString, dateFormat.format(data_date)));
-        txt_date2.setText(getString(R.string.dateField, otherString, dateFormat.format(data_date2)));
+        ImageSpan dateWarning = (showWarning) ? utils.createWarningSpan(this, txt_date.getTextSize()) : null;
+
+        String dateString = getString(R.string.dateField, thisString, dateFormat.format(data_date));
+        SpannableStringBuilder dateSpan = utils.createDateSpan(dateString, dateWarning);
+
+        String date2String = getString(R.string.dateField, otherString, dateFormat.format(data_date2));
+        SpannableStringBuilder date2Span = utils.createDateSpan(date2String, dateWarning);
+
+        txt_date.setText(dateSpan);
+        txt_date2.setText(date2Span);
         txt_timezone.setText(dataset.timezone());
 
         showDayLength(dataset.isCalculated());
