@@ -30,6 +30,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
@@ -39,6 +40,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.ArrayList;
@@ -57,10 +59,6 @@ public class GetFixHelper
     public static final String DIALOGTAG_KEEPTRYING = "keeptrying";
 
     public static final int REQUEST_GETFIX_LOCATION = 1;
-
-    public static final String PREF_KEY_GETFIX_MINELAPSED = "getFix_minElapsed";
-    public static final String PREF_KEY_GETFIX_MAXELAPSED = "getFix_maxElapsed";
-    public static final String PREF_KEY_GETFIX_MAXAGE = "getFix_maxAge";
 
     public GetFixTask getFixTask = null;
     public Location fix = null;
@@ -89,19 +87,23 @@ public class GetFixHelper
         {
             if (hasGPSPermissions(myParent, REQUEST_GETFIX_LOCATION))
             {
-                if (isGPSEnabled())
+                if (isLocationEnabled())
                 {
-                    SharedPreferences prefs = myParent.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(myParent);
                     getFixTask = new GetFixTask(myParent, this);
 
-                    int minElapsed = prefs.getInt(PREF_KEY_GETFIX_MINELAPSED, GetFixTask.MIN_ELAPSED);
+                    int minElapsed = AppSettings.loadPrefGpsMinElapsed(prefs, GetFixTask.MIN_ELAPSED);
                     getFixTask.setMinElapsed(minElapsed);
 
-                    int maxElapsed = prefs.getInt(PREF_KEY_GETFIX_MAXELAPSED, GetFixTask.MAX_ELAPSED);
+                    int maxElapsed = AppSettings.loadPrefGpsMaxElapsed(prefs, GetFixTask.MAX_ELAPSED);
                     getFixTask.setMaxElapsed(maxElapsed);
 
-                    int maxAge = prefs.getInt(PREF_KEY_GETFIX_MAXAGE, GetFixTask.MAX_AGE);
+                    int maxAge = AppSettings.loadPrefGpsMaxAge(prefs, GetFixTask.MAX_AGE);
                     getFixTask.setMaxAge(maxAge);
+
+                    Log.d("GetFixHelper", "MinElapsed: " + minElapsed);
+                    Log.d("GetFixHelper", "MaxElapsed: " + maxElapsed);
+                    Log.d("GetFixHelper", "MaxAge: " + maxAge);
 
                     getFixTask.addGetFixTaskListeners(listeners);
                     getFixTask.addGetFixTaskListener( new GetFixTask.GetFixTaskListener()
@@ -388,14 +390,25 @@ public class GetFixHelper
         }
     }
 
-    public boolean isGPSEnabled()
+    public boolean isLocationEnabled()
     {
-        return isGPSEnabled(myParent);
+        return isNetProviderEnabled(myParent) || isGPSProviderEnabled(myParent) || isPassiveProviderEnabled(myParent);
     }
-    public static boolean isGPSEnabled(Context context)
+
+    public static boolean isGPSProviderEnabled(Context context)
     {
         LocationManager locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    }
+    public static boolean isNetProviderEnabled(Context context)
+    {
+        LocationManager locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
+    public static boolean isPassiveProviderEnabled(Context context)
+    {
+        LocationManager locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.PASSIVE_PROVIDER);
     }
 
     public void showGPSEnabledPrompt()

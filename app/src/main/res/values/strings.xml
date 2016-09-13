@@ -407,7 +407,7 @@
 
     <!-- Dialog: KeepTrying GPS? -->
     <string name="gps_keeptrying_title">No Fix</string>
-    <string name="gps_keeptrying_msg">Unable to get a fix</string>
+    <string name="gps_keeptrying_msg">Unable to get a fix.</string>
     <string name="gps_keeptrying_ok">Keep Trying</string>
     <string name="gps_keeptrying_cancel">Give Up</string>
 

@@ -97,21 +97,46 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
         @Override
         public void onLocationChanged(Location location)
         {
-            Log.d("GetFixTask", "onLocationChanged: " + location.toString());
-
-            lastFix = location;
-            if (isBetterFix(lastFix, bestFix))
+            if (location != null)
             {
-                bestFix = lastFix;
-                onProgressUpdate(bestFix);
+                Log.d("GetFixTask", "onLocationChanged [" + location.getProvider() + "]: " + location.toString());
+                lastFix = location;
+                if (isBetterFix(lastFix, bestFix))
+                {
+                    bestFix = lastFix;
+                    onProgressUpdate(bestFix);
+                }
             }
         }
 
+        /**
+         * @param location
+         * @return true if location is not null and less than equal maxAge, false otherwise
+         */
+        private boolean isGoodFix(Location location)
+        {
+            if (location == null)
+            {
+                return false;
+
+            } else {
+                long locationAge = System.currentTimeMillis() - location.getTime();
+                boolean isGood = (locationAge <= maxAge);
+                Log.d("isGoodFix", isGood + ": age is " + locationAge + " [max " + maxAge + "] [" + location.getProvider() + ": +-" + location.getAccuracy() + "]");
+                return isGood;
+            }
+        }
+
+        /**
+         * @param location the first location
+         * @param location2 the second location
+         * @return true if the first location is better than the second, false if the second location is worse, is null, or the first location is also no good.
+         */
         private boolean isBetterFix(Location location, Location location2)
         {
             if (location2 == null)
             {
-                return true;
+                return isGoodFix(location);
 
             } else if (location != null) {
                 if ((location.getTime() - location2.getTime()) > maxAge)
@@ -135,6 +160,9 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
         public void onProviderDisabled(String provider) { }
     };
 
+    /**
+     * Prepares UI objects, signals onStarted listeners, and (re)sets flags in preparation for getting a location.
+     */
     @Override
     protected void onPreExecute()
     {
@@ -157,6 +185,13 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
         startTime = stopTime = System.currentTimeMillis();
     }
 
+    /**
+     * 1. Checks each LocationProvider (gps, net, passive) and gets lastPosition from each.
+     * 2. Starts listening for location updates on providers (based on availability).
+     * 3. Busy spin (if necessary) so the task always consumes at least minElapsed time.
+     * @param params unused
+     * @return the "best fix" we were able to obtain (potentially null)
+     */
     @Override
     protected Location doInBackground(String... params)
     {
@@ -166,10 +201,47 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
             public void run()
             {
                 try {
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-                    Log.d("GetFixTask", "started location listener; now requesting updates . . .");
+                    boolean gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+                    Location gpsLastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    locationListener.onLocationChanged(gpsLastLocation);
+
+                    boolean netEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+                    Location netLastLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    locationListener.onLocationChanged(netLastLocation);
+
+                    boolean passiveEnabled = locationManager.isProviderEnabled(LocationManager.PASSIVE_PROVIDER);
+                    Location passiveLastLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+                    locationListener.onLocationChanged(passiveLastLocation);
+
+                    if (!gpsEnabled && netEnabled)
+                    {
+                        // network provider only
+                        Log.d("GetFixTask", "starting location listener; now requesting updates from NETWORK_PROVIDER...");
+                        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+
+                    } else if (gpsEnabled && !netEnabled) {
+                        // gps provider only
+                        Log.d("GetFixTask", "starting location listener; now requesting updates from GPS_PROVIDER...");
+                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+
+                    } else if (gpsEnabled && netEnabled) {
+                        // gps + network provider
+                        Log.d("GetFixTask", "starting location listener; now requesting updates from GPS_PROVIDER && NETWORK_PROVIDER...");
+                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+                        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+
+                    } else if (passiveEnabled) {
+                        // fallback to passive provider
+                        Log.d("GetFixTask", "starting location listener; now requesting updates from PASSIVE_PROVIDER...");
+                        locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 0, 0, locationListener);
+
+                    } else {
+                        // err: no providers at all!
+                        Log.e("GetFixTask", "unable to start locationListener ... No usable LocationProvider found! a provider should be enabled before starting this task.");
+                    }
+
                 } catch (SecurityException e) {
-                    Log.e("GetFixTask", "unable to start locationListener ... Permissions! we don't have them... checkPermissions should be called before using this task! " + e);
+                    Log.e("GetFixTask", "unable to start locationListener ... Permissions! we don't have them.. checkPermissions should be called before starting this task. " + e);
                 }
             }
         });
@@ -193,6 +265,9 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
         return bestFix;
     }
 
+    /**
+     * @param locations
+     */
     @Override
     protected void onProgressUpdate(Location... locations)
     {
@@ -204,6 +279,10 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
         }
     }
 
+    /**
+     * Stops location updates, triggers a final progress update, resets ui, and signals onFinished listeners.
+     * @param result the "best fix" that could be obtained (potentially null)
+     */
     @Override
     protected void onPostExecute(Location result)
     {
@@ -227,6 +306,10 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
         signalFinished(result);
     }
 
+    /**
+     * Same as onPostExecute except onCancelled is signalled instead of onFinished.
+     * @param result the "best fix" that could be obtained (potentially null)
+     */
     @Override
     protected void onCancelled(Location result)
     {
