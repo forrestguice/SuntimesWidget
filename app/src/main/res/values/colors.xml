@@ -6,6 +6,9 @@
     <color name="accent">#ffcc00</color>
     <color name="text_primary">#cccccc</color>
 
+    <color name="warning">#ff9900</color>
+    <color name="error">#FF5252</color>
+
     <color name="widget_title">#000000</color>
     <color name="sunIcon_color_rising">#ffcc00</color>
     <color name="sunIcon_color_setting">#ff9900</color>
