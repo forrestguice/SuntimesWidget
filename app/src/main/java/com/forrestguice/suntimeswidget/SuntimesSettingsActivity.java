@@ -83,6 +83,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         {
             //noinspection deprecation
             addPreferencesFromResource(R.xml.preference_general);
+            initPref_general(this);
 
         } else if (action != null && action.equals(ACTION_PREFS_LOCALE)) {
             //noinspection deprecation
@@ -222,38 +223,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
             PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_general, false);
             addPreferencesFromResource(R.xml.preference_general);
-            initGeneral();
-        }
-
-        private void initGeneral()
-        {
-            SuntimesCalculatorDescriptor[] calculators = SuntimesCalculatorDescriptor.values();
-            String[] calculatorEntries = new String[calculators.length];
-            String[] calculatorValues = new String[calculators.length];
-
-            int i = 0;
-            for (SuntimesCalculatorDescriptor calculator : calculators)
-            {
-                calculatorEntries[i] = calculatorValues[i] = calculator.name();
-                i++;
-            }
 
             calculatorPref = (ListPreference) findPreference("appwidget_0_general_calculator");
-            calculatorPref.setEntries(calculatorEntries);
-            calculatorPref.setEntryValues(calculatorValues);
-
-            loadGeneral(getActivity());
-        }
-
-        private void loadGeneral(Context context)
-        {
-            if (context != null && calculatorPref != null)
-            {
-                SuntimesCalculatorDescriptor currentMode = WidgetSettings.loadCalculatorModePref(context, 0);
-                int currentIndex = calculatorPref.findIndexOfValue(currentMode.name());
-                calculatorPref.setValueIndex(currentIndex);
-                //Log.d("SuntimesSettings", "current mode: " + currentMode + " (" + currentIndex + ")");
-            }
+            initPref_general(GeneralPrefsFragment.this);
         }
 
         @Override
@@ -261,14 +233,53 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         public void onAttach(Context context)
         {
             super.onAttach(context);
-            loadGeneral(context);
+            loadPref_general(context, calculatorPref);
         }
 
         @Override
         public void onAttach(Activity activity)
         {
             super.onAttach(activity);
-            loadGeneral(activity);
+            loadPref_general(activity, calculatorPref);
+        }
+    }
+
+    private static void initPref_general(PreferenceActivity activity)
+    {
+        ListPreference calculatorPref = (ListPreference) activity.findPreference("appwidget_0_general_calculator");
+        initPref_general(calculatorPref);
+        loadPref_general(activity, calculatorPref);
+    }
+    private static void initPref_general(PreferenceFragment fragment)
+    {
+        ListPreference calculatorPref = (ListPreference) fragment.findPreference("appwidget_0_general_calculator");
+        initPref_general(calculatorPref);
+        loadPref_general(fragment.getActivity(), calculatorPref);
+    }
+    private static void initPref_general(ListPreference calculatorPref)
+    {
+        SuntimesCalculatorDescriptor[] calculators = SuntimesCalculatorDescriptor.values();
+        String[] calculatorEntries = new String[calculators.length];
+        String[] calculatorValues = new String[calculators.length];
+
+        int i = 0;
+        for (SuntimesCalculatorDescriptor calculator : calculators)
+        {
+            calculatorEntries[i] = calculatorValues[i] = calculator.name();
+            i++;
+        }
+
+        calculatorPref.setEntries(calculatorEntries);
+        calculatorPref.setEntryValues(calculatorValues);
+    }
+    private static void loadPref_general(Context context, ListPreference calculatorPref)
+    {
+        if (context != null && calculatorPref != null)
+        {
+            SuntimesCalculatorDescriptor currentMode = WidgetSettings.loadCalculatorModePref(context, 0);
+            int currentIndex = calculatorPref.findIndexOfValue(currentMode.name());
+            calculatorPref.setValueIndex(currentIndex);
+            //Log.d("SuntimesSettings", "current mode: " + currentMode + " (" + currentIndex + ")");
         }
     }
 
