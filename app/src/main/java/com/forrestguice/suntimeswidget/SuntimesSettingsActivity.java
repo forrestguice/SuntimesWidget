@@ -87,6 +87,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         } else if (action != null && action.equals(ACTION_PREFS_LOCALE)) {
             //noinspection deprecation
             addPreferencesFromResource(R.xml.preference_locale);
+            initPref_locale(this);
 
         } else if (action != null && action.equals(ACTION_PREFS_UI)) {
             //noinspection deprecation
@@ -290,10 +291,24 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_locale, false);
             addPreferencesFromResource(R.xml.preference_locale);
 
-            AppSettings.LocaleMode localeMode = AppSettings.loadLocaleModePref(getActivity());
-            Preference localePref = (Preference)findPreference(AppSettings.PREF_KEY_LOCALE);
-            localePref.setEnabled(localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE);
+            initPref_locale(LocalePrefsFragment.this);
         }
+    }
+
+    private static void initPref_locale(PreferenceActivity activity)
+    {
+        Preference localePref = (Preference)activity.findPreference(AppSettings.PREF_KEY_LOCALE);
+        initPref_locale(activity, localePref);
+    }
+    private static void initPref_locale(PreferenceFragment fragment)
+    {
+        Preference localePref = (Preference)fragment.findPreference(AppSettings.PREF_KEY_LOCALE);
+        initPref_locale(fragment.getActivity(), localePref);
+    }
+    private static void initPref_locale(Activity activity, Preference localeModePref)
+    {
+        AppSettings.LocaleMode localeMode = AppSettings.loadLocaleModePref(activity);
+        localeModePref.setEnabled(localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE);
     }
 
     //////////////////////////////////////////////////
