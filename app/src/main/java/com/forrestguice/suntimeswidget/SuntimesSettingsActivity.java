@@ -60,6 +60,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     final static String ACTION_PREFS_PLACES = "com.forrestguice.suntimeswidget.PREFS_PLACES";
 
     private Context context;
+    private PlacesPrefsBase placesPrefBase = null;
 
     public SuntimesSettingsActivity()
     {
@@ -97,6 +98,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         } else if (action != null && action.equals(ACTION_PREFS_PLACES)) {
             //noinspection deprecation
             addPreferencesFromResource(R.xml.preference_places);
+            Preference clearPlacesPref = (Preference)findPreference("places_clear");
+            Preference exportPlacesPref = (Preference)findPreference("places_export");
+            placesPrefBase = new PlacesPrefsBase(this, clearPlacesPref, exportPlacesPref);
 
         } else if (action != null && action.equals(ACTION_PREFS_WIDGETLIST)) {
             Intent intent = new Intent(this, SuntimesWidgetListActivity.class);
@@ -116,6 +120,11 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         initLocale();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         prefs.registerOnSharedPreferenceChangeListener(this);
+
+        if (placesPrefBase != null)
+        {
+            placesPrefBase.onResume();
+        }
     }
 
     @Override
@@ -124,6 +133,16 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         prefs.unregisterOnSharedPreferenceChangeListener(this);
         super.onPause();
+    }
+
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        if (placesPrefBase != null)
+        {
+            placesPrefBase.onStop();
+        }
     }
 
     private void initLocale()
@@ -331,17 +350,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class PlacesPrefsFragment extends PreferenceFragment
     {
-        public static final String KEY_ISCLEARING = "isclearing";
-        public static final String KEY_ISEXPORTING = "isexporting";
-
-        private Context myParent;
-        private ProgressDialog progress;
-
-        private ClearPlacesTask clearPlacesTask = null;
-        private boolean isClearing = false;
-
-        private ExportPlacesTask exportPlacesTask = null;
-        private boolean isExporting = false;
+        private PlacesPrefsBase base;
 
         @Override
         public void onCreate(Bundle savedInstanceState)
@@ -355,23 +364,86 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             addPreferencesFromResource(R.xml.preference_places);
 
             Preference clearPlacesPref = (Preference)findPreference("places_clear");
-            clearPlacesPref.setOnPreferenceClickListener(onClickClearPlaces);
-
             Preference exportPlacesPref = (Preference)findPreference("places_export");
-            exportPlacesPref.setOnPreferenceClickListener(onClickExportPlaces);
+            base = new PlacesPrefsBase(getActivity(), clearPlacesPref, exportPlacesPref);
         }
 
-        private void showProgressClearing()
+        @Override
+        public void onStop()
         {
-            progress = ProgressDialog.show(myParent, getString(R.string.locationcleared_dialog_title),getString(R.string.locationcleared_dialog_message), true);
+            super.onStop();
+            base.onStop();
         }
 
-        private void showProgressExporting()
+        @Override
+        public void onResume()
         {
-            progress = ProgressDialog.show(myParent, getString(R.string.locationexport_dialog_title), getString(R.string.locationexport_dialog_message), true);
+            super.onResume();
+            base.onResume();
         }
 
-        private void dismissProgress()
+        @Override
+        @TargetApi(23)
+        public void onAttach(Context context)
+        {
+            super.onAttach(context);
+            if (base != null)
+            {
+                base.setParent(context);
+            }
+        }
+
+        @Override
+        public void onAttach(Activity activity)
+        {
+            super.onAttach(activity);
+            if (base != null)
+            {
+                base.setParent(activity);
+            }
+        }
+    }
+
+    /**
+     * Places Prefs - Base
+     */
+    private static class PlacesPrefsBase
+    {
+        public static final String KEY_ISCLEARING = "isclearing";
+        public static final String KEY_ISEXPORTING = "isexporting";
+
+        private Context myParent;
+        private ProgressDialog progress;
+
+        private ClearPlacesTask clearPlacesTask = null;
+        private boolean isClearing = false;
+
+        private ExportPlacesTask exportPlacesTask = null;
+        private boolean isExporting = false;
+
+        public PlacesPrefsBase(Context context, Preference clearPref, Preference exportPref)
+        {
+            myParent = context;
+            clearPref.setOnPreferenceClickListener(onClickClearPlaces);
+            exportPref.setOnPreferenceClickListener(onClickExportPlaces);
+        }
+
+        public void setParent( Context context )
+        {
+            myParent = context;
+        }
+
+        public void showProgressClearing()
+        {
+            progress = ProgressDialog.show(myParent, myParent.getString(R.string.locationcleared_dialog_title), myParent.getString(R.string.locationcleared_dialog_message), true);
+        }
+
+        public void showProgressExporting()
+        {
+            progress = ProgressDialog.show(myParent, myParent.getString(R.string.locationexport_dialog_title), myParent.getString(R.string.locationexport_dialog_message), true);
+        }
+
+        public void dismissProgress()
         {
             if (progress != null && progress.isShowing())
             {
@@ -390,30 +462,6 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 {
                     exportPlacesTask = new ExportPlacesTask(myParent, "SuntimesPlaces", true);
                     exportPlacesTask.setTaskListener(exportPlacesListener);
-                    /**{
-                        @Override
-                        protected void onPostExecute(ExportResult results)
-                        {
-                            dismissProgress();
-
-                            if (results.getResult())
-                            {
-                                if (usedExternalStorage)
-                                {
-                                    super.onPostExecute(results);
-                                }
-
-                                Intent shareIntent = new Intent();
-                                shareIntent.setAction(Intent.ACTION_SEND);
-                                shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(results.getExportFile()));
-                                shareIntent.setType("text/csv");
-                                startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.msg_export_to)));
-
-                            } else {
-                                super.onPostExecute(results);
-                            }
-                        }
-                    };*/
                     exportPlacesTask.execute();
                     return true;
                 }
@@ -442,17 +490,17 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
                 if (results.getResult())
                 {
-                    String successMessage = getString(R.string.msg_export_success, results.getExportFile().getAbsolutePath());
+                    String successMessage = myParent.getString(R.string.msg_export_success, results.getExportFile().getAbsolutePath());
                     Toast.makeText(myParent.getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
 
                     Intent shareIntent = new Intent();
                     shareIntent.setAction(Intent.ACTION_SEND);
                     shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(results.getExportFile()));
                     shareIntent.setType("text/csv");
-                    startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.msg_export_to)));
+                    myParent.startActivity(Intent.createChooser(shareIntent, myParent.getResources().getText(R.string.msg_export_to)));
 
                 } else {
-                    String failureMessage = getString(R.string.msg_export_failure, results.getExportFile().getAbsolutePath());
+                    String failureMessage = myParent.getString(R.string.msg_export_failure, results.getExportFile().getAbsolutePath());
                     Toast.makeText(myParent.getApplicationContext(), failureMessage, Toast.LENGTH_LONG).show();
                 }
             }
@@ -507,15 +555,12 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 clearPlacesTask = null;
                 isClearing = false;
                 dismissProgress();
-                Toast.makeText(myParent, getString(R.string.locationcleared_toast_success), Toast.LENGTH_LONG).show();
+                Toast.makeText(myParent, myParent.getString(R.string.locationcleared_toast_success), Toast.LENGTH_LONG).show();
             }
         };
 
-        @Override
-        public void onStop()
+        private void onStop()
         {
-            super.onStop();
-
             if (isClearing && clearPlacesTask != null)
             {
                 clearPlacesTask.pauseTask();
@@ -531,10 +576,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             dismissProgress();
         }
 
-        @Override
-        public void onResume()
+        private void onResume()
         {
-            super.onResume();
+
             if (isClearing && clearPlacesTask != null && clearPlacesTask.isPaused())
             {
                 clearPlacesTask.setTaskListener(clearPlacesListener);
@@ -548,21 +592,6 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 showProgressExporting();
                 exportPlacesTask.resumeTask();
             }
-        }
-
-        @Override
-        @TargetApi(23)
-        public void onAttach(Context context)
-        {
-            super.onAttach(context);
-            myParent = context;
-        }
-
-        @Override
-        public void onAttach(Activity activity)
-        {
-            super.onAttach(activity);
-            myParent = activity;
         }
     }
 
