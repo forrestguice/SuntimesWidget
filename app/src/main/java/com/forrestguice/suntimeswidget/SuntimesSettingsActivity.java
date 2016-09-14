@@ -97,7 +97,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             addPreferencesFromResource(R.xml.preference_places);
 
         } else if (action != null && action.equals(ACTION_PREFS_WIDGETLIST)) {
-            // TODO
+            Intent intent = new Intent(this, SuntimesWidgetListActivity.class);
+            startActivity(intent);
+            finish();
 
         } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
             //noinspection deprecation
