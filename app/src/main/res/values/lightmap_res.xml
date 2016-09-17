@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="graph_width">288dp</dimen>
+    <dimen name="graph_height">16dp</dimen>
+
+    <color name="graph_day">#ffffff</color>
+    <color name="graph_civil">#ffcc00</color>
+    <color name="graph_nautical">#003366</color>
+    <color name="graph_astro">#000066</color>
+    <color name="graph_night">#000000</color>
+
+</resources>
