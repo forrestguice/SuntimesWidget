@@ -169,6 +169,8 @@ public class SuntimesActivity extends AppCompatActivity
     private TextView txt_daylength2;
     private TextView txt_lightlength2;
 
+    private LightMapView lightmap;
+
     private boolean isRtl = false;
     private boolean userSwappedCard = false;
     private HashMap<SolarEvents.SolarEventField, TextView> timeFields;
@@ -355,6 +357,7 @@ public class SuntimesActivity extends AppCompatActivity
         initClockViews(context);
         initNoteViews(context);
         initCardViews(context);
+        initLightMap(context);
     }
 
     /**
@@ -365,6 +368,11 @@ public class SuntimesActivity extends AppCompatActivity
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
         actionBar = getSupportActionBar();
+    }
+
+    private void initLightMap(Context context)
+    {
+        lightmap = (LightMapView) findViewById(R.id.info_time_lightmap);
     }
 
     /**
@@ -1164,6 +1172,8 @@ public class SuntimesActivity extends AppCompatActivity
         txt_date.setText(getString(R.string.dateField, thisString, dateFormat.format(data_date)));
         txt_date2.setText(getString(R.string.dateField, otherString, dateFormat.format(data_date2)));
         txt_timezone.setText(dataset.timezone());
+
+        lightmap.updateViews(dataset);
 
         showDayLength(dataset.isCalculated());
         showNotes(dataset.isCalculated());
