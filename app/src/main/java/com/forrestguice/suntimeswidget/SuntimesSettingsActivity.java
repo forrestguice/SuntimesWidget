@@ -98,7 +98,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         } else if (action != null && action.equals(ACTION_PREFS_PLACES)) {
             //noinspection deprecation
             addPreferencesFromResource(R.xml.preference_places);
+            //noinspection deprecation
             Preference clearPlacesPref = (Preference)findPreference("places_clear");
+            //noinspection deprecation
             Preference exportPlacesPref = (Preference)findPreference("places_export");
             placesPrefBase = new PlacesPrefsBase(this, clearPlacesPref, exportPlacesPref);
 
@@ -265,6 +267,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
     private static void initPref_general(PreferenceActivity activity)
     {
+        //noinspection deprecation
         ListPreference calculatorPref = (ListPreference) activity.findPreference("appwidget_0_general_calculator");
         initPref_general(calculatorPref);
         loadPref_general(activity, calculatorPref);
@@ -327,6 +330,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
     private static void initPref_locale(PreferenceActivity activity)
     {
+        //noinspection deprecation
         Preference localePref = (Preference)activity.findPreference(AppSettings.PREF_KEY_LOCALE);
         initPref_locale(activity, localePref);
     }
