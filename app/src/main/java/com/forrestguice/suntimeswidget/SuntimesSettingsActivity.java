@@ -22,6 +22,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -35,6 +36,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.util.TypedValue;
 import android.widget.Toast;
@@ -45,6 +47,8 @@ import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -67,10 +71,6 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         super();
     }
 
-    /**
-     * OnCreate: the Activity initially created
-     * @param icicle
-     */
     @Override
     public void onCreate(Bundle icicle)
     {
@@ -78,40 +78,72 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         setTheme(AppSettings.loadTheme(this));
         super.onCreate(icicle);
         initLocale();
+        initLegacyPrefs();
+    }
+
+    private HashMap<String, LegacyListPref> legacyPrefs;
+
+    /**
+     * legacy pref api used for pre honeycomb devices, while honeycomb+ uses the fragment based api.
+     */
+    private void initLegacyPrefs()
+    {
+        legacyPrefs = new HashMap<String, LegacyListPref>();
 
         String action = getIntent().getAction();
-        if (action != null && action.equals(ACTION_PREFS_GENERAL))
+        if (action != null)
         {
-            //noinspection deprecation
-            addPreferencesFromResource(R.xml.preference_general);
-            initPref_general(this);
+            if (action.equals(ACTION_PREFS_GENERAL))
+            {
+                //noinspection deprecation
+                addPreferencesFromResource(R.xml.preference_general);
+                initPref_general();
 
-        } else if (action != null && action.equals(ACTION_PREFS_LOCALE)) {
-            //noinspection deprecation
-            addPreferencesFromResource(R.xml.preference_locale);
-            initPref_locale(this);
+            } else if (action.equals(ACTION_PREFS_LOCALE)) {
+                //noinspection deprecation
+                addPreferencesFromResource(R.xml.preference_locale);
+                initPref_locale();
 
-        } else if (action != null && action.equals(ACTION_PREFS_UI)) {
-            //noinspection deprecation
-            addPreferencesFromResource(R.xml.preference_userinterface);
+            } else if (action.equals(ACTION_PREFS_UI)) {
+                //noinspection deprecation
+                addPreferencesFromResource(R.xml.preference_userinterface);
+                initPref_ui();
 
-        } else if (action != null && action.equals(ACTION_PREFS_PLACES)) {
-            //noinspection deprecation
-            addPreferencesFromResource(R.xml.preference_places);
-            //noinspection deprecation
-            Preference clearPlacesPref = (Preference)findPreference("places_clear");
-            //noinspection deprecation
-            Preference exportPlacesPref = (Preference)findPreference("places_export");
-            placesPrefBase = new PlacesPrefsBase(this, clearPlacesPref, exportPlacesPref);
+            } else if (action.equals(ACTION_PREFS_PLACES)) {
+                //noinspection deprecation
+                addPreferencesFromResource(R.xml.preference_places);
+                initPref_places();
 
-        } else if (action != null && action.equals(ACTION_PREFS_WIDGETLIST)) {
-            Intent intent = new Intent(this, SuntimesWidgetListActivity.class);
-            startActivity(intent);
-            finish();
+            } else if (action.equals(ACTION_PREFS_WIDGETLIST)) {
+                Intent intent = new Intent(this, SuntimesWidgetListActivity.class);
+                startActivity(intent);
+                finish();
+
+            } else {
+                Log.w("initLegacyPrefs", "unhandled action: " + action);
+            }
 
         } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
             //noinspection deprecation
             addPreferencesFromResource(R.xml.preference_headers_legacy);
+        }
+    }
+
+    private static class LegacyListPref
+    {
+        private ListPreference listPref;
+        private String summary;
+
+        public LegacyListPref( @NonNull ListPreference pref )
+        {
+            listPref = pref;
+            summary = listPref.getSummary().toString();
+            updateSummary();
+        }
+
+        public void updateSummary()
+        {
+            listPref.setSummary(String.format(summary, listPref.getEntry()));
         }
     }
 
@@ -222,6 +254,13 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 startActivity(getIntent());
             }
         }
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB
+                && legacyPrefs.containsKey(key))
+        {
+            LegacyListPref legacyPref = legacyPrefs.get(key);
+            legacyPref.updateSummary();
+        }
     }
 
     //////////////////////////////////////////////////
@@ -265,18 +304,46 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         }
     }
 
-    private static void initPref_general(PreferenceActivity activity)
+    /**
+     * init legacy prefs
+     */
+    private void initPref_general()
     {
+        String key = AppSettings.PREF_KEY_GETFIX_MAXAGE;
         //noinspection deprecation
-        ListPreference calculatorPref = (ListPreference) activity.findPreference("appwidget_0_general_calculator");
-        initPref_general(calculatorPref);
-        loadPref_general(activity, calculatorPref);
+        ListPreference gpsMaxAgePref = (ListPreference)findPreference(key);
+        if (gpsMaxAgePref != null)
+        {
+            legacyPrefs.put(key, new LegacyListPref(gpsMaxAgePref));
+        }
+
+        key = AppSettings.PREF_KEY_GETFIX_MAXELAPSED;
+        //noinspection deprecation
+        ListPreference gpsMaxElapsedPref = (ListPreference)findPreference(key);
+        if (gpsMaxElapsedPref != null)
+        {
+            legacyPrefs.put(key, new LegacyListPref(gpsMaxElapsedPref));
+        }
+
+        key = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_GENERAL + WidgetSettings.PREF_KEY_GENERAL_CALCULATOR;
+        //noinspection deprecation
+        ListPreference calculatorPref = (ListPreference)findPreference(key);
+        if (calculatorPref != null)
+        {
+            initPref_general(calculatorPref);
+            loadPref_general(this, calculatorPref);
+            legacyPrefs.put(key, new LegacyListPref(calculatorPref));
+        }
     }
     private static void initPref_general(PreferenceFragment fragment)
     {
-        ListPreference calculatorPref = (ListPreference) fragment.findPreference("appwidget_0_general_calculator");
-        initPref_general(calculatorPref);
-        loadPref_general(fragment.getActivity(), calculatorPref);
+        String key = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_GENERAL + WidgetSettings.PREF_KEY_GENERAL_CALCULATOR;
+        ListPreference calculatorPref = (ListPreference) fragment.findPreference(key);
+        if (calculatorPref != null)
+        {
+            initPref_general(calculatorPref);
+            loadPref_general(fragment.getActivity(), calculatorPref);
+        }
     }
     private static void initPref_general(ListPreference calculatorPref)
     {
@@ -328,21 +395,32 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         }
     }
 
-    private static void initPref_locale(PreferenceActivity activity)
+    /**
+     * init legacy prefs
+     */
+    private void initPref_locale()
     {
+        String key = AppSettings.PREF_KEY_LOCALE_MODE;
         //noinspection deprecation
-        Preference localePref = (Preference)activity.findPreference(AppSettings.PREF_KEY_LOCALE);
-        initPref_locale(activity, localePref);
+        ListPreference modePref = (ListPreference)findPreference(key);
+        legacyPrefs.put(key, new LegacyListPref(modePref));
+
+        key = AppSettings.PREF_KEY_LOCALE;
+        //noinspection deprecation
+        ListPreference localePref = (ListPreference)findPreference(key);
+        legacyPrefs.put(key, new LegacyListPref(localePref));
+
+        initPref_locale(this, localePref);
     }
     private static void initPref_locale(PreferenceFragment fragment)
     {
         Preference localePref = (Preference)fragment.findPreference(AppSettings.PREF_KEY_LOCALE);
         initPref_locale(fragment.getActivity(), localePref);
     }
-    private static void initPref_locale(Activity activity, Preference localeModePref)
+    private static void initPref_locale(Activity activity, Preference localePref)
     {
         AppSettings.LocaleMode localeMode = AppSettings.loadLocaleModePref(activity);
-        localeModePref.setEnabled(localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE);
+        localePref.setEnabled(localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE);
     }
 
     //////////////////////////////////////////////////
@@ -599,6 +677,18 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         }
     }
 
+    /**
+     * init legacy prefs
+     */
+    private void initPref_places()
+    {
+        //noinspection deprecation
+        Preference clearPlacesPref = (Preference)findPreference("places_clear");
+        //noinspection deprecation
+        Preference exportPlacesPref = (Preference)findPreference("places_export");
+        placesPrefBase = new PlacesPrefsBase(this, clearPlacesPref, exportPlacesPref);
+    }
+
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////
 
@@ -617,6 +707,40 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
             PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_userinterface, false);
             addPreferencesFromResource(R.xml.preference_userinterface);
+        }
+    }
+
+    /**
+     * init legacy prefs
+     */
+    private void initPref_ui()
+    {
+        String key = AppSettings.PREF_KEY_APPEARANCE_THEME;
+        ListPreference themePref = (ListPreference)findPreference(key);
+        if (themePref != null)
+        {
+            legacyPrefs.put(key, new LegacyListPref(themePref));
+        }
+
+        key = AppSettings.PREF_KEY_UI_CLOCKTAPACTION;
+        ListPreference clockTapPref = (ListPreference)findPreference(key);
+        if (clockTapPref != null)
+        {
+            legacyPrefs.put(key, new LegacyListPref(clockTapPref));
+        }
+
+        key = AppSettings.PREF_KEY_UI_DATETAPACTION;
+        ListPreference dateTapPref = (ListPreference)findPreference(key);
+        if (dateTapPref != null)
+        {
+            legacyPrefs.put(key, new LegacyListPref(dateTapPref));
+        }
+
+        key = AppSettings.PREF_KEY_UI_NOTETAPACTION;
+        ListPreference noteTapPref = (ListPreference)findPreference(key);
+        if (noteTapPref != null)
+        {
+            legacyPrefs.put(key, new LegacyListPref(noteTapPref));
         }
     }
 
