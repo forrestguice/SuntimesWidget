@@ -47,6 +47,7 @@ import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -537,7 +538,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             {
                 if (myParent != null)
                 {
-                    exportPlacesTask = new ExportPlacesTask(myParent, "SuntimesPlaces", true);
+                    exportPlacesTask = new ExportPlacesTask(myParent, "SuntimesPlaces", true, true);  // export to external cache
                     exportPlacesTask.setTaskListener(exportPlacesListener);
                     exportPlacesTask.execute();
                     return true;
@@ -577,7 +578,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                     myParent.startActivity(Intent.createChooser(shareIntent, myParent.getResources().getText(R.string.msg_export_to)));
 
                 } else {
-                    String failureMessage = myParent.getString(R.string.msg_export_failure, results.getExportFile().getAbsolutePath());
+                    File file = results.getExportFile();
+                    String path = ((file != null) ? file.getAbsolutePath() : "<path>");
+                    String failureMessage = myParent.getString(R.string.msg_export_failure, path);
                     Toast.makeText(myParent.getApplicationContext(), failureMessage, Toast.LENGTH_LONG).show();
                 }
             }
