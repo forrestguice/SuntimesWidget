@@ -287,7 +287,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         }
 
         @Override
-        @TargetApi(23)
+        @TargetApi(Build.VERSION_CODES.M)
         public void onAttach(Context context)
         {
             super.onAttach(context);
@@ -333,6 +333,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             legacyPrefs.put(key, new LegacyListPref(calculatorPref));
         }
     }
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private static void initPref_general(PreferenceFragment fragment)
     {
         String key = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_GENERAL + WidgetSettings.PREF_KEY_GENERAL_CALCULATOR;
@@ -410,6 +411,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
         initPref_locale(this, localePref);
     }
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private static void initPref_locale(PreferenceFragment fragment)
     {
         Preference localePref = (Preference)fragment.findPreference(AppSettings.PREF_KEY_LOCALE);
@@ -463,7 +465,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         }
 
         @Override
-        @TargetApi(23)
+        @TargetApi(Build.VERSION_CODES.M)
         public void onAttach(Context context)
         {
             super.onAttach(context);
