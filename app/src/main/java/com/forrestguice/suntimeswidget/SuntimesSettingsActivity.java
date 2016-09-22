@@ -22,7 +22,6 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,7 +35,6 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.util.TypedValue;
 import android.widget.Toast;
@@ -48,8 +46,6 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -82,15 +78,11 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         initLegacyPrefs();
     }
 
-    private HashMap<String, LegacyListPref> legacyPrefs;
-
     /**
      * legacy pref api used for pre honeycomb devices, while honeycomb+ uses the fragment based api.
      */
     private void initLegacyPrefs()
     {
-        legacyPrefs = new HashMap<String, LegacyListPref>();
-
         String action = getIntent().getAction();
         if (action != null)
         {
@@ -127,24 +119,6 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
             //noinspection deprecation
             addPreferencesFromResource(R.xml.preference_headers_legacy);
-        }
-    }
-
-    private static class LegacyListPref
-    {
-        private ListPreference listPref;
-        private String summary;
-
-        public LegacyListPref( @NonNull ListPreference pref )
-        {
-            listPref = pref;
-            summary = listPref.getSummary().toString();
-            updateSummary();
-        }
-
-        public void updateSummary()
-        {
-            listPref.setSummary(String.format(summary, listPref.getEntry()));
         }
     }
 
@@ -222,7 +196,6 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     }
 
     /**
-     * more fragment related bullshit
      * @param fragmentName
      * @return
      */
@@ -254,13 +227,6 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 finish();
                 startActivity(getIntent());
             }
-        }
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB
-                && legacyPrefs.containsKey(key))
-        {
-            LegacyListPref legacyPref = legacyPrefs.get(key);
-            legacyPref.updateSummary();
         }
     }
 
@@ -310,27 +276,18 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
      */
     private void initPref_general()
     {
-        String key = AppSettings.PREF_KEY_GETFIX_MAXAGE;
-        ListPreference gpsMaxAgePref = (ListPreference)findPreference(key);
-        if (gpsMaxAgePref != null)
-        {
-            legacyPrefs.put(key, new LegacyListPref(gpsMaxAgePref));
-        }
+        //String key = AppSettings.PREF_KEY_GETFIX_MAXAGE;
+        //ListPreference gpsMaxAgePref = (ListPreference)findPreference(key);
 
-        key = AppSettings.PREF_KEY_GETFIX_MAXELAPSED;
-        ListPreference gpsMaxElapsedPref = (ListPreference)findPreference(key);
-        if (gpsMaxElapsedPref != null)
-        {
-            legacyPrefs.put(key, new LegacyListPref(gpsMaxElapsedPref));
-        }
+        //key = AppSettings.PREF_KEY_GETFIX_MAXELAPSED;
+        //ListPreference gpsMaxElapsedPref = (ListPreference)findPreference(key);
 
-        key = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_GENERAL + WidgetSettings.PREF_KEY_GENERAL_CALCULATOR;
+        String key = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_GENERAL + WidgetSettings.PREF_KEY_GENERAL_CALCULATOR;
         ListPreference calculatorPref = (ListPreference)findPreference(key);
         if (calculatorPref != null)
         {
             initPref_general(calculatorPref);
             loadPref_general(this, calculatorPref);
-            legacyPrefs.put(key, new LegacyListPref(calculatorPref));
         }
     }
     private static void initPref_general(PreferenceFragment fragment)
@@ -398,13 +355,13 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
      */
     private void initPref_locale()
     {
-        String key = AppSettings.PREF_KEY_LOCALE_MODE;
-        ListPreference modePref = (ListPreference)findPreference(key);
-        legacyPrefs.put(key, new LegacyListPref(modePref));
+        //String key = AppSettings.PREF_KEY_LOCALE_MODE;
+        //ListPreference modePref = (ListPreference)findPreference(key);
+        //legacyPrefs.put(key, new LegacyListPref(modePref));
 
-        key = AppSettings.PREF_KEY_LOCALE;
+        String key = AppSettings.PREF_KEY_LOCALE;
         ListPreference localePref = (ListPreference)findPreference(key);
-        legacyPrefs.put(key, new LegacyListPref(localePref));
+        //legacyPrefs.put(key, new LegacyListPref(localePref));
 
         initPref_locale(this, localePref);
     }
@@ -711,33 +668,17 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
      */
     private void initPref_ui()
     {
-        String key = AppSettings.PREF_KEY_APPEARANCE_THEME;
-        ListPreference themePref = (ListPreference)findPreference(key);
-        if (themePref != null)
-        {
-            legacyPrefs.put(key, new LegacyListPref(themePref));
-        }
+        //String key = AppSettings.PREF_KEY_APPEARANCE_THEME;
+        //ListPreference themePref = (ListPreference)findPreference(key);
 
-        key = AppSettings.PREF_KEY_UI_CLOCKTAPACTION;
-        ListPreference clockTapPref = (ListPreference)findPreference(key);
-        if (clockTapPref != null)
-        {
-            legacyPrefs.put(key, new LegacyListPref(clockTapPref));
-        }
+        //key = AppSettings.PREF_KEY_UI_CLOCKTAPACTION;
+        //ListPreference clockTapPref = (ListPreference)findPreference(key);
 
-        key = AppSettings.PREF_KEY_UI_DATETAPACTION;
-        ListPreference dateTapPref = (ListPreference)findPreference(key);
-        if (dateTapPref != null)
-        {
-            legacyPrefs.put(key, new LegacyListPref(dateTapPref));
-        }
+        //key = AppSettings.PREF_KEY_UI_DATETAPACTION;
+        //ListPreference dateTapPref = (ListPreference)findPreference(key);
 
-        key = AppSettings.PREF_KEY_UI_NOTETAPACTION;
-        ListPreference noteTapPref = (ListPreference)findPreference(key);
-        if (noteTapPref != null)
-        {
-            legacyPrefs.put(key, new LegacyListPref(noteTapPref));
-        }
+        //key = AppSettings.PREF_KEY_UI_NOTETAPACTION;
+        //ListPreference noteTapPref = (ListPreference)findPreference(key);
     }
 
 }

@@ -4,14 +4,14 @@
     <PreferenceCategory
         android:title="@string/configLabel_general">
 
-        <ListPreference
+        <com.forrestguice.suntimeswidget.settings.ListPreference
             android:key="appwidget_0_general_calculator"
             android:title="@string/configLabel_general_calculator"
             android:dialogTitle="@string/configLabel_general_calculator"
             android:summary="%s"
             android:entries="@null" android:entryValues="@null" android:defaultValue="any" />
 
-        <ListPreference
+        <com.forrestguice.suntimeswidget.settings.ListPreference
             android:key="getFix_maxElapsed"
             android:title="@string/configLabel_getFix_maxElapse"
             android:dialogTitle="@string/configLabel_getFix_maxElapse"
@@ -19,7 +19,7 @@
             android:entries="@array/getFix_maxElapse_display" android:entryValues="@array/getFix_maxElapse_values"
             android:defaultValue="60000" />
 
-        <ListPreference
+        <com.forrestguice.suntimeswidget.settings.ListPreference
             android:key="getFix_maxAge"
             android:title="@string/configLabel_getFix_maxAge"
             android:dialogTitle="@string/configLabel_getFix_maxAge"
