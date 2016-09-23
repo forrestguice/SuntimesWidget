@@ -4,7 +4,7 @@
     <PreferenceCategory
         android:title="@string/configLabel_ui">
 
-        <ListPreference
+        <com.forrestguice.suntimeswidget.settings.ListPreference
             android:key="app_appearance_theme"
             android:title="@string/configLabel_appearance_theme"
             android:dialogTitle="@string/configLabel_appearance_theme"
@@ -12,7 +12,7 @@
             android:entries="@array/appThemes_display" android:entryValues="@array/appThemes_values"
             android:defaultValue="dark" />
 
-        <ListPreference
+        <com.forrestguice.suntimeswidget.settings.ListPreference
             android:key="app_ui_clocktapaction"
             android:title="@string/configLabel_action_onClockTap"
             android:dialogTitle="@string/configLabel_action_onClockTap"
@@ -20,7 +20,7 @@
             android:entries="@array/clockTapActions_display" android:entryValues="@array/clockTapActions_values"
             android:defaultValue="ALARM" />
 
-        <ListPreference
+        <com.forrestguice.suntimeswidget.settings.ListPreference
             android:key="app_ui_notetapaction"
             android:title="@string/configLabel_action_onNoteTap"
             android:dialogTitle="@string/configLabel_action_onNoteTap"
@@ -28,7 +28,7 @@
             android:entries="@array/noteTapActions_display" android:entryValues="@array/noteTapActions_values"
             android:defaultValue="NEXT_NOTE" />
 
-        <ListPreference
+        <com.forrestguice.suntimeswidget.settings.ListPreference
             android:key="app_ui_datetapaction"
             android:title="@string/configLabel_action_onDateTap"
             android:dialogTitle="@string/configLabel_action_onDateTap"

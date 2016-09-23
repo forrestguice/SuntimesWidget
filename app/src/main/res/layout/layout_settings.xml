@@ -18,7 +18,7 @@
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:orientation="vertical" android:padding="8dp">
+    android:orientation="vertical" android:padding="@dimen/widgetActivity_padding">
 
     <TextView android:id="@+id/activity_title"
         android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -44,7 +44,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/scrollView"
-        android:layout_gravity="center_horizontal" >
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/widgetActivity_padding_inner">
 
         <LinearLayout
             android:orientation="vertical"

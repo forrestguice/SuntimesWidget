@@ -5,4 +5,7 @@
     <dimen name="widget_size_percell">74px</dimen>
     <dimen name="widget_size_less">2px</dimen>
 
+    <dimen name="widgetActivity_padding">8dp</dimen>
+    <dimen name="widgetActivity_padding_inner">0dp</dimen>
+
 </resources>
