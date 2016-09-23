@@ -426,8 +426,8 @@ public class SuntimesActivity extends AppCompatActivity
                 if (refreshItem != null)
                 {
                     refreshItem.setIcon((result != null) ? ICON_GPS_FOUND :
-                            (getFixHelper.isGPSEnabled() ? ICON_GPS_FOUND
-                                                         : ICON_GPS_DISABLED));
+                            (getFixHelper.isLocationEnabled() ? ICON_GPS_FOUND
+                                                              : ICON_GPS_DISABLED));
 
                     if (result != null)
                     {
@@ -463,8 +463,7 @@ public class SuntimesActivity extends AppCompatActivity
 
                 } else
                 {
-                    refreshItem.setIcon((getFixHelper.isGPSEnabled() ? GetFixUI.ICON_GPS_FOUND
-                            : GetFixUI.ICON_GPS_DISABLED));
+                    refreshItem.setIcon((getFixHelper.isLocationEnabled() ? GetFixUI.ICON_GPS_FOUND : GetFixUI.ICON_GPS_DISABLED));
                     refreshItem.setVisible(true);
                 }
             }

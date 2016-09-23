@@ -55,6 +55,10 @@ public class AppSettings
     public static final String PREF_KEY_UI_NOTETAPACTION = "app_ui_notetapaction";
     public static final ClockTapAction PREF_DEF_UI_NOTETAPACTION = ClockTapAction.NEXT_NOTE;
 
+    public static final String PREF_KEY_GETFIX_MINELAPSED = "getFix_minElapsed";
+    public static final String PREF_KEY_GETFIX_MAXELAPSED = "getFix_maxElapsed";
+    public static final String PREF_KEY_GETFIX_MAXAGE = "getFix_maxAge";
+
     /**
      * Language modes (system, user defined)
      */
@@ -366,6 +370,63 @@ public class AppSettings
         return styleID;
     }
 
+    /**
+     * @param prefs
+     * @param defaultValue
+     * @return
+     */
+    public static int loadPrefGpsMaxAge(SharedPreferences prefs, int defaultValue)
+    {
+        int retValue = defaultValue;
+        try {
+            String maxAgeString = prefs.getString(PREF_KEY_GETFIX_MAXAGE, defaultValue+"");
+            retValue = Integer.parseInt(maxAgeString);
+        } catch (NumberFormatException e) {
+            Log.e("loadPrefGPSMaxAge", "Bad setting! " + e);
+            retValue = defaultValue;
+        }
+        return retValue;
+    }
+
+    /**
+     * @param prefs
+     * @param defaultValue
+     * @return
+     */
+    public static int loadPrefGpsMinElapsed(SharedPreferences prefs, int defaultValue)
+    {
+        int retValue = defaultValue;
+        try {
+            String minAgeString = prefs.getString(PREF_KEY_GETFIX_MINELAPSED, defaultValue+"");
+            retValue = Integer.parseInt(minAgeString);
+        } catch (NumberFormatException e) {
+            Log.e("loadPrefGPSMinElapsed", "Bad setting! " + e);
+            retValue = defaultValue;
+        }
+        return retValue;
+    }
+
+    /**
+     * @param prefs
+     * @param defaultValue
+     * @return
+     */
+    public static int loadPrefGpsMaxElapsed(SharedPreferences prefs, int defaultValue)
+    {
+        int retValue = defaultValue;
+        try {
+            String maxElapsedString = prefs.getString(PREF_KEY_GETFIX_MAXELAPSED, defaultValue+"");
+            retValue = Integer.parseInt(maxElapsedString);
+        } catch (NumberFormatException e) {
+            Log.e("loadPrefGPSMaxElapsed", "Bad setting! " + e);
+            retValue = defaultValue;
+        }
+        return retValue;
+    }
+
+    /**
+     * @param context
+     */
     public static void initDisplayStrings( Context context )
     {
         LocaleMode.initDisplayStrings(context);

@@ -44,7 +44,6 @@ public class ExportPlacesTask extends AsyncTask<Object, Object, ExportPlacesTask
     private String exportTarget;
     private File exportFile;
     private int numEntries;
-    protected boolean usedExternalStorage = false;
     private String newLine = System.getProperty("line.separator");
 
     private boolean isPaused = false;
@@ -63,13 +62,23 @@ public class ExportPlacesTask extends AsyncTask<Object, Object, ExportPlacesTask
 
     public ExportPlacesTask(Context context, String exportTarget)
     {
-        this(context, exportTarget, false);
+        this(context, exportTarget, false, false);
     }
-    public ExportPlacesTask(Context context, String exportTarget, boolean saveToCache)
+    public ExportPlacesTask(Context context, String exportTarget, boolean useExternalStorage, boolean saveToCache)
     {
         this.contextRef = new WeakReference<Context>(context);
         this.exportTarget = exportTarget;
         this.saveToCache = saveToCache;
+        this.useExternalStorage = useExternalStorage;
+    }
+
+    /**
+     * Property: use external storage
+     */
+    private boolean useExternalStorage = false;
+    public boolean willUseExternalStorage()
+    {
+        return useExternalStorage;
     }
 
     /**
@@ -116,21 +125,23 @@ public class ExportPlacesTask extends AsyncTask<Object, Object, ExportPlacesTask
         // (from the external cache, external dl dir, or internal cache)
         //
         String storageState = Environment.getExternalStorageState();
-        usedExternalStorage = storageState.equals(Environment.MEDIA_MOUNTED);
-        if (usedExternalStorage)
+        boolean tryExternalStorage = useExternalStorage && storageState.equals(Environment.MEDIA_MOUNTED);
+        if (tryExternalStorage)
         {
             if (saveToCache)         // save to: external cache
             {
+                Log.d("Export", "saving to external cache");
                 try {
                     cleanupExternalCache(context);
                     exportFile = File.createTempFile(exportTarget, ".csv", context.getExternalCacheDir());
+
                 } catch (IOException e) {
                     Log.w("ExportPlaces", "Canceling export; failed to create external temp file.");
                     return new ExportResult(false, null);
                 }
 
             } else {                 // save to: external download dir
-
+                Log.d("Export", "saving to external download dir");
                 File exportPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
                 exportFile = new File(exportPath, exportTarget);
 
@@ -151,7 +162,7 @@ public class ExportPlacesTask extends AsyncTask<Object, Object, ExportPlacesTask
             }
 
         } else if (saveToCache) {    // save to: internal cache
-
+            Log.d("Export", "saving to internal cache");
             try {
                 cleanupInternalCache(context);
                 exportFile = File.createTempFile(exportTarget, ".csv", context.getCacheDir());
@@ -353,7 +364,7 @@ public class ExportPlacesTask extends AsyncTask<Object, Object, ExportPlacesTask
     private static long cacheSize(File dir)
     {
         long result = 0;
-        if (dir.exists())
+        if (dir != null && dir.exists())
         {
             for (File file : dir.listFiles())
             {

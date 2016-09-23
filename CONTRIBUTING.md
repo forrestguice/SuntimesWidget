@@ -1,6 +1,23 @@
 #Contributing
 
-##Add a Translation
+1. [Submit a bug report / feature request](#bugReport)
+2. [Add a translation](#addTranslation)
+3. [Add a default location](#addDefaultLocation)
+4. [Add a "data source"](#addDataSource)
+5. [Other](#other)
+
+##Submit a Bug Report or Feature Request
+<a name="bugReport" />
+Use the issue tracker to submit a bug report or a feature request.
+
+Issues will be tagged **bug**, **feature**, or **enhancement** as they are recognized, and later added to specific **milestones** as they are fixed.
+
+When submitting a bug **please be detailed and specific**. What did you expect the app to do, what did you actually observe? Bugs that can't be reproduced won't get fixed. If reporting inaccurate times include the lat/lon, timezone, and the date. Other useful information includes Android OS version and your specific device model.
+
+Note: in this context "enhancements" are easy additions/modifications that will bump the minor or patch version, while "features" are larger changes that will bump the major version number.
+
+##Add a Translation 
+<a name="addTranslation" />
 
 **To add a new translation first..**
  1. Learn how android supports translation through resources; see https://developer.android.com/training/basics/supporting-devices/languages.html
@@ -28,9 +45,10 @@
  
  6. Submit a pull request.
 
-##Add default locations
+##Add a default location
+<a name="addDefaultLocation" />
 
-1. Follow the instructions for adding a new translation, except only shadowing a small subset of values.
+1. Follow the guidelines for adding a new translation, except only shadowing a small subset of values.
 2. In your `res/<values-folder>/strings.xml` file add/modify the follow definitions with your locale specific values:
 
 ```
@@ -39,3 +57,12 @@
 <string name="default_location_longitude">-112.4691</string>   <!-- decimal degrees (DD) -->
 ```
 note: The lat/lon should use `.` as the decimal separator and include 4 decimal places.
+
+
+##Add a "data source"
+<a name="addDataSource" />
+The app uses an interface (`suntimeswidget.calculator.SuntimesCalculator`) to perform the actual calculations (the default implementation uses `sunrisesunsetlib-java`). TODO: describe how to add alternative implementations.
+
+##Other
+<a name="other" />
+Use the issue tracker to start a discussion and get started. Your participation in the project in other ways is also welcome.
