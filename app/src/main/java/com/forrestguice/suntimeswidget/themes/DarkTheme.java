@@ -19,7 +19,7 @@
 package com.forrestguice.suntimeswidget.themes;
 
 import android.content.Context;
-import android.content.res.Resources;
+import android.support.v4.content.ContextCompat;
 
 import com.forrestguice.suntimeswidget.R;
 
@@ -44,7 +44,6 @@ public class DarkTheme extends SuntimesTheme
     public DarkTheme(Context context)
     {
         super();
-        Resources resources = context.getResources();
 
         this.themeVersion = THEMEDEF_VERSION;
         this.themeName = THEMEDEF_NAME;
@@ -54,12 +53,12 @@ public class DarkTheme extends SuntimesTheme
         this.themePadding = THEMEDEF_PADDING;
 
         this.themeTitleSize = THEMEDEF_TITLESIZE;
-        this.themeTitleColor = resources.getColor(THEMEDEF_TITLECOLOR_ID);
+        this.themeTitleColor = ContextCompat.getColor(context, THEMEDEF_TITLECOLOR_ID);
 
-        this.themeTextColor = resources.getColor(THEMEDEF_TEXTCOLOR_ID);
-        this.themeSunriseTextColor = resources.getColor(THEMEDEF_SUNRISECOLOR_ID);
-        this.themeSunsetTextColor = resources.getColor(THEMEDEF_SUNSETCOLOR_ID);
-        this.themeTimeSuffixColor = resources.getColor(THEMEDEF_TIMESUFFIXCOLOR_ID);
+        this.themeTextColor = ContextCompat.getColor(context, THEMEDEF_TEXTCOLOR_ID);
+        this.themeSunriseTextColor = ContextCompat.getColor(context, THEMEDEF_SUNRISECOLOR_ID);
+        this.themeSunsetTextColor = ContextCompat.getColor(context, THEMEDEF_SUNSETCOLOR_ID);
+        this.themeTimeSuffixColor = ContextCompat.getColor(context, THEMEDEF_TIMESUFFIXCOLOR_ID);
     }
 
     public ThemeDescriptor themeDescriptor()
