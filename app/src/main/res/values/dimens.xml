@@ -43,4 +43,7 @@
     <fraction name="anim_slideout_move_left_toDelta">-110%</fraction>
     <fraction name="anim_slideout_move_right_toDelta">110%</fraction>
 
+    <dimen name="widgetActivity_padding">0dp</dimen>  <!-- padding around activity title + content -->
+    <dimen name="widgetActivity_padding_inner">8dp</dimen> <!-- padding around activity content -->
+
 </resources>

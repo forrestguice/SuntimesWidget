@@ -45,6 +45,7 @@ import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -60,16 +61,13 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     final static String ACTION_PREFS_PLACES = "com.forrestguice.suntimeswidget.PREFS_PLACES";
 
     private Context context;
+    private PlacesPrefsBase placesPrefBase = null;
 
     public SuntimesSettingsActivity()
     {
         super();
     }
 
-    /**
-     * OnCreate: the Activity initially created
-     * @param icicle
-     */
     @Override
     public void onCreate(Bundle icicle)
     {
@@ -77,27 +75,46 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         setTheme(AppSettings.loadTheme(this));
         super.onCreate(icicle);
         initLocale();
+        initLegacyPrefs();
+    }
 
+    /**
+     * legacy pref api used for pre honeycomb devices, while honeycomb+ uses the fragment based api.
+     */
+    private void initLegacyPrefs()
+    {
         String action = getIntent().getAction();
-        if (action != null && action.equals(ACTION_PREFS_GENERAL))
+        if (action != null)
         {
-            //noinspection deprecation
-            addPreferencesFromResource(R.xml.preference_general);
+            if (action.equals(ACTION_PREFS_GENERAL))
+            {
+                //noinspection deprecation
+                addPreferencesFromResource(R.xml.preference_general);
+                initPref_general();
 
-        } else if (action != null && action.equals(ACTION_PREFS_LOCALE)) {
-            //noinspection deprecation
-            addPreferencesFromResource(R.xml.preference_locale);
+            } else if (action.equals(ACTION_PREFS_LOCALE)) {
+                //noinspection deprecation
+                addPreferencesFromResource(R.xml.preference_locale);
+                initPref_locale();
 
-        } else if (action != null && action.equals(ACTION_PREFS_UI)) {
-            //noinspection deprecation
-            addPreferencesFromResource(R.xml.preference_userinterface);
+            } else if (action.equals(ACTION_PREFS_UI)) {
+                //noinspection deprecation
+                addPreferencesFromResource(R.xml.preference_userinterface);
+                initPref_ui();
 
-        } else if (action != null && action.equals(ACTION_PREFS_PLACES)) {
-            //noinspection deprecation
-            addPreferencesFromResource(R.xml.preference_places);
+            } else if (action.equals(ACTION_PREFS_PLACES)) {
+                //noinspection deprecation
+                addPreferencesFromResource(R.xml.preference_places);
+                initPref_places();
 
-        } else if (action != null && action.equals(ACTION_PREFS_WIDGETLIST)) {
-            // TODO
+            } else if (action.equals(ACTION_PREFS_WIDGETLIST)) {
+                Intent intent = new Intent(this, SuntimesWidgetListActivity.class);
+                startActivity(intent);
+                finish();
+
+            } else {
+                Log.w("initLegacyPrefs", "unhandled action: " + action);
+            }
 
         } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
             //noinspection deprecation
@@ -112,6 +129,11 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         initLocale();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         prefs.registerOnSharedPreferenceChangeListener(this);
+
+        if (placesPrefBase != null)
+        {
+            placesPrefBase.onResume();
+        }
     }
 
     @Override
@@ -120,6 +142,16 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         prefs.unregisterOnSharedPreferenceChangeListener(this);
         super.onPause();
+    }
+
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        if (placesPrefBase != null)
+        {
+            placesPrefBase.onStop();
+        }
     }
 
     private void initLocale()
@@ -164,7 +196,6 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     }
 
     /**
-     * more fragment related bullshit
      * @param fragmentName
      * @return
      */
@@ -219,38 +250,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
             PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_general, false);
             addPreferencesFromResource(R.xml.preference_general);
-            initGeneral();
-        }
-
-        private void initGeneral()
-        {
-            SuntimesCalculatorDescriptor[] calculators = SuntimesCalculatorDescriptor.values();
-            String[] calculatorEntries = new String[calculators.length];
-            String[] calculatorValues = new String[calculators.length];
-
-            int i = 0;
-            for (SuntimesCalculatorDescriptor calculator : calculators)
-            {
-                calculatorEntries[i] = calculatorValues[i] = calculator.name();
-                i++;
-            }
 
             calculatorPref = (ListPreference) findPreference("appwidget_0_general_calculator");
-            calculatorPref.setEntries(calculatorEntries);
-            calculatorPref.setEntryValues(calculatorValues);
-
-            loadGeneral(getActivity());
-        }
-
-        private void loadGeneral(Context context)
-        {
-            if (context != null && calculatorPref != null)
-            {
-                SuntimesCalculatorDescriptor currentMode = WidgetSettings.loadCalculatorModePref(context, 0);
-                int currentIndex = calculatorPref.findIndexOfValue(currentMode.name());
-                calculatorPref.setValueIndex(currentIndex);
-                //Log.d("SuntimesSettings", "current mode: " + currentMode + " (" + currentIndex + ")");
-            }
+            initPref_general(GeneralPrefsFragment.this);
         }
 
         @Override
@@ -258,14 +260,70 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         public void onAttach(Context context)
         {
             super.onAttach(context);
-            loadGeneral(context);
+            loadPref_general(context, calculatorPref);
         }
 
         @Override
         public void onAttach(Activity activity)
         {
             super.onAttach(activity);
-            loadGeneral(activity);
+            loadPref_general(activity, calculatorPref);
+        }
+    }
+
+    /**
+     * init legacy prefs
+     */
+    private void initPref_general()
+    {
+        //String key = AppSettings.PREF_KEY_GETFIX_MAXAGE;
+        //ListPreference gpsMaxAgePref = (ListPreference)findPreference(key);
+
+        //key = AppSettings.PREF_KEY_GETFIX_MAXELAPSED;
+        //ListPreference gpsMaxElapsedPref = (ListPreference)findPreference(key);
+
+        String key = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_GENERAL + WidgetSettings.PREF_KEY_GENERAL_CALCULATOR;
+        ListPreference calculatorPref = (ListPreference)findPreference(key);
+        if (calculatorPref != null)
+        {
+            initPref_general(calculatorPref);
+            loadPref_general(this, calculatorPref);
+        }
+    }
+    private static void initPref_general(PreferenceFragment fragment)
+    {
+        String key = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_GENERAL + WidgetSettings.PREF_KEY_GENERAL_CALCULATOR;
+        ListPreference calculatorPref = (ListPreference) fragment.findPreference(key);
+        if (calculatorPref != null)
+        {
+            initPref_general(calculatorPref);
+            loadPref_general(fragment.getActivity(), calculatorPref);
+        }
+    }
+    private static void initPref_general(ListPreference calculatorPref)
+    {
+        SuntimesCalculatorDescriptor[] calculators = SuntimesCalculatorDescriptor.values();
+        String[] calculatorEntries = new String[calculators.length];
+        String[] calculatorValues = new String[calculators.length];
+
+        int i = 0;
+        for (SuntimesCalculatorDescriptor calculator : calculators)
+        {
+            calculatorEntries[i] = calculatorValues[i] = calculator.name();
+            i++;
+        }
+
+        calculatorPref.setEntries(calculatorEntries);
+        calculatorPref.setEntryValues(calculatorValues);
+    }
+    private static void loadPref_general(Context context, ListPreference calculatorPref)
+    {
+        if (context != null && calculatorPref != null)
+        {
+            SuntimesCalculatorDescriptor currentMode = WidgetSettings.loadCalculatorModePref(context, 0);
+            int currentIndex = calculatorPref.findIndexOfValue(currentMode.name());
+            calculatorPref.setValueIndex(currentIndex);
+            //Log.d("SuntimesSettings", "current mode: " + currentMode + " (" + currentIndex + ")");
         }
     }
 
@@ -288,10 +346,34 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_locale, false);
             addPreferencesFromResource(R.xml.preference_locale);
 
-            AppSettings.LocaleMode localeMode = AppSettings.loadLocaleModePref(getActivity());
-            Preference localePref = (Preference)findPreference(AppSettings.PREF_KEY_LOCALE);
-            localePref.setEnabled(localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE);
+            initPref_locale(LocalePrefsFragment.this);
         }
+    }
+
+    /**
+     * init legacy prefs
+     */
+    private void initPref_locale()
+    {
+        //String key = AppSettings.PREF_KEY_LOCALE_MODE;
+        //ListPreference modePref = (ListPreference)findPreference(key);
+        //legacyPrefs.put(key, new LegacyListPref(modePref));
+
+        String key = AppSettings.PREF_KEY_LOCALE;
+        ListPreference localePref = (ListPreference)findPreference(key);
+        //legacyPrefs.put(key, new LegacyListPref(localePref));
+
+        initPref_locale(this, localePref);
+    }
+    private static void initPref_locale(PreferenceFragment fragment)
+    {
+        Preference localePref = (Preference)fragment.findPreference(AppSettings.PREF_KEY_LOCALE);
+        initPref_locale(fragment.getActivity(), localePref);
+    }
+    private static void initPref_locale(Activity activity, Preference localePref)
+    {
+        AppSettings.LocaleMode localeMode = AppSettings.loadLocaleModePref(activity);
+        localePref.setEnabled(localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE);
     }
 
     //////////////////////////////////////////////////
@@ -303,17 +385,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class PlacesPrefsFragment extends PreferenceFragment
     {
-        public static final String KEY_ISCLEARING = "isclearing";
-        public static final String KEY_ISEXPORTING = "isexporting";
-
-        private Context myParent;
-        private ProgressDialog progress;
-
-        private ClearPlacesTask clearPlacesTask = null;
-        private boolean isClearing = false;
-
-        private ExportPlacesTask exportPlacesTask = null;
-        private boolean isExporting = false;
+        private PlacesPrefsBase base;
 
         @Override
         public void onCreate(Bundle savedInstanceState)
@@ -327,23 +399,86 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             addPreferencesFromResource(R.xml.preference_places);
 
             Preference clearPlacesPref = (Preference)findPreference("places_clear");
-            clearPlacesPref.setOnPreferenceClickListener(onClickClearPlaces);
-
             Preference exportPlacesPref = (Preference)findPreference("places_export");
-            exportPlacesPref.setOnPreferenceClickListener(onClickExportPlaces);
+            base = new PlacesPrefsBase(getActivity(), clearPlacesPref, exportPlacesPref);
         }
 
-        private void showProgressClearing()
+        @Override
+        public void onStop()
         {
-            progress = ProgressDialog.show(myParent, getString(R.string.locationcleared_dialog_title),getString(R.string.locationcleared_dialog_message), true);
+            super.onStop();
+            base.onStop();
         }
 
-        private void showProgressExporting()
+        @Override
+        public void onResume()
         {
-            progress = ProgressDialog.show(myParent, getString(R.string.locationexport_dialog_title), getString(R.string.locationexport_dialog_message), true);
+            super.onResume();
+            base.onResume();
         }
 
-        private void dismissProgress()
+        @Override
+        @TargetApi(23)
+        public void onAttach(Context context)
+        {
+            super.onAttach(context);
+            if (base != null)
+            {
+                base.setParent(context);
+            }
+        }
+
+        @Override
+        public void onAttach(Activity activity)
+        {
+            super.onAttach(activity);
+            if (base != null)
+            {
+                base.setParent(activity);
+            }
+        }
+    }
+
+    /**
+     * Places Prefs - Base
+     */
+    private static class PlacesPrefsBase
+    {
+        public static final String KEY_ISCLEARING = "isclearing";
+        public static final String KEY_ISEXPORTING = "isexporting";
+
+        private Context myParent;
+        private ProgressDialog progress;
+
+        private ClearPlacesTask clearPlacesTask = null;
+        private boolean isClearing = false;
+
+        private ExportPlacesTask exportPlacesTask = null;
+        private boolean isExporting = false;
+
+        public PlacesPrefsBase(Context context, Preference clearPref, Preference exportPref)
+        {
+            myParent = context;
+            clearPref.setOnPreferenceClickListener(onClickClearPlaces);
+            exportPref.setOnPreferenceClickListener(onClickExportPlaces);
+        }
+
+        public void setParent( Context context )
+        {
+            myParent = context;
+        }
+
+        public void showProgressClearing()
+        {
+            progress = ProgressDialog.show(myParent, myParent.getString(R.string.locationcleared_dialog_title), myParent.getString(R.string.locationcleared_dialog_message), true);
+        }
+
+        public void showProgressExporting()
+        {
+            progress = ProgressDialog.show(myParent, myParent.getString(R.string.locationexport_dialog_title), myParent.getString(R.string.locationexport_dialog_message), true);
+        }
+
+        public void dismissProgress()
         {
             if (progress != null && progress.isShowing())
             {
@@ -360,32 +495,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             {
                 if (myParent != null)
                 {
-                    exportPlacesTask = new ExportPlacesTask(myParent, "SuntimesPlaces", true);
+                    exportPlacesTask = new ExportPlacesTask(myParent, "SuntimesPlaces", true, true);  // export to external cache
                     exportPlacesTask.setTaskListener(exportPlacesListener);
-                    /**{
-                        @Override
-                        protected void onPostExecute(ExportResult results)
-                        {
-                            dismissProgress();
-
-                            if (results.getResult())
-                            {
-                                if (usedExternalStorage)
-                                {
-                                    super.onPostExecute(results);
-                                }
-
-                                Intent shareIntent = new Intent();
-                                shareIntent.setAction(Intent.ACTION_SEND);
-                                shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(results.getExportFile()));
-                                shareIntent.setType("text/csv");
-                                startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.msg_export_to)));
-
-                            } else {
-                                super.onPostExecute(results);
-                            }
-                        }
-                    };*/
                     exportPlacesTask.execute();
                     return true;
                 }
@@ -414,17 +525,19 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
                 if (results.getResult())
                 {
-                    String successMessage = getString(R.string.msg_export_success, results.getExportFile().getAbsolutePath());
+                    String successMessage = myParent.getString(R.string.msg_export_success, results.getExportFile().getAbsolutePath());
                     Toast.makeText(myParent.getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
 
                     Intent shareIntent = new Intent();
                     shareIntent.setAction(Intent.ACTION_SEND);
                     shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(results.getExportFile()));
                     shareIntent.setType("text/csv");
-                    startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.msg_export_to)));
+                    myParent.startActivity(Intent.createChooser(shareIntent, myParent.getResources().getText(R.string.msg_export_to)));
 
                 } else {
-                    String failureMessage = getString(R.string.msg_export_failure, results.getExportFile().getAbsolutePath());
+                    File file = results.getExportFile();
+                    String path = ((file != null) ? file.getAbsolutePath() : "<path>");
+                    String failureMessage = myParent.getString(R.string.msg_export_failure, path);
                     Toast.makeText(myParent.getApplicationContext(), failureMessage, Toast.LENGTH_LONG).show();
                 }
             }
@@ -479,15 +592,12 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 clearPlacesTask = null;
                 isClearing = false;
                 dismissProgress();
-                Toast.makeText(myParent, getString(R.string.locationcleared_toast_success), Toast.LENGTH_LONG).show();
+                Toast.makeText(myParent, myParent.getString(R.string.locationcleared_toast_success), Toast.LENGTH_LONG).show();
             }
         };
 
-        @Override
-        public void onStop()
+        private void onStop()
         {
-            super.onStop();
-
             if (isClearing && clearPlacesTask != null)
             {
                 clearPlacesTask.pauseTask();
@@ -503,10 +613,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             dismissProgress();
         }
 
-        @Override
-        public void onResume()
+        private void onResume()
         {
-            super.onResume();
+
             if (isClearing && clearPlacesTask != null && clearPlacesTask.isPaused())
             {
                 clearPlacesTask.setTaskListener(clearPlacesListener);
@@ -521,21 +630,16 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 exportPlacesTask.resumeTask();
             }
         }
+    }
 
-        @Override
-        @TargetApi(23)
-        public void onAttach(Context context)
-        {
-            super.onAttach(context);
-            myParent = context;
-        }
-
-        @Override
-        public void onAttach(Activity activity)
-        {
-            super.onAttach(activity);
-            myParent = activity;
-        }
+    /**
+     * init legacy prefs
+     */
+    private void initPref_places()
+    {
+        Preference clearPlacesPref = (Preference)findPreference("places_clear");
+        Preference exportPlacesPref = (Preference)findPreference("places_export");
+        placesPrefBase = new PlacesPrefsBase(this, clearPlacesPref, exportPlacesPref);
     }
 
     //////////////////////////////////////////////////
@@ -557,6 +661,24 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_userinterface, false);
             addPreferencesFromResource(R.xml.preference_userinterface);
         }
+    }
+
+    /**
+     * init legacy prefs
+     */
+    private void initPref_ui()
+    {
+        //String key = AppSettings.PREF_KEY_APPEARANCE_THEME;
+        //ListPreference themePref = (ListPreference)findPreference(key);
+
+        //key = AppSettings.PREF_KEY_UI_CLOCKTAPACTION;
+        //ListPreference clockTapPref = (ListPreference)findPreference(key);
+
+        //key = AppSettings.PREF_KEY_UI_DATETAPACTION;
+        //ListPreference dateTapPref = (ListPreference)findPreference(key);
+
+        //key = AppSettings.PREF_KEY_UI_NOTETAPACTION;
+        //ListPreference noteTapPref = (ListPreference)findPreference(key);
     }
 
 }
