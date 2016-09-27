@@ -36,6 +36,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -175,6 +176,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     private boolean isRtl = false;
     private boolean userSwappedCard = false;
+    private boolean showDateWarning = false, showTimezoneWarning = false;
     private HashMap<SolarEvents.SolarEventField, TextView> timeFields;
 
     public SuntimesActivity()
@@ -1144,7 +1146,7 @@ public class SuntimesActivity extends AppCompatActivity
 
         String thisString = getString(R.string.today);
         String otherString = getString(R.string.tomorrow);
-        boolean showDateWarning = false;
+        showDateWarning = false;
 
         if (dataset.dataActual.todayIsNotToday())
         {
@@ -1182,12 +1184,12 @@ public class SuntimesActivity extends AppCompatActivity
         TimeZone timezone = TimeZone.getTimeZone(dataset.timezone());
         int actualOffset = timezone.getOffset(dataset.date().getTime()) / (1000 * 60);                // actual timezone offset in minutes
         int roughOffset = (int)Math.round(dataset.location().getLongitudeAsDouble() * 24 * 60 / 360); // projected offset offset in minutes
-        int offsetTolerance = 2 * 60;    // tolerance of 120min (2hrs)
+        int offsetTolerance = 2 * 60;    // tolerance in minutes
         int offsetDiff = Math.abs(roughOffset - actualOffset);
         Log.d("DEBUG", "offsets: " + actualOffset + ", " + roughOffset );
         Log.d("DEBUG", "timezone offset difference: " +  offsetDiff +" [" + offsetTolerance + "]");
 
-        boolean showTimezoneWarning = (offsetDiff > offsetTolerance);
+        showTimezoneWarning = (offsetDiff > offsetTolerance);
         //boolean showTimezoneWarning = (!dataset.timezone().equals(TimeZone.getDefault().getID()));
 
         ImageSpan timezoneWarning = (showTimezoneWarning) ? SuntimesUtils.createWarningSpan(this, txt_timezone.getTextSize()) : null;
@@ -1197,7 +1199,54 @@ public class SuntimesActivity extends AppCompatActivity
 
         showDayLength(dataset.isCalculated());
         showNotes(dataset.isCalculated());
+        showSnackWarnings();
+
         startTimeTask();
+    }
+
+    private void showSnackWarnings()
+    {
+        if (showTimezoneWarning)
+        {
+            Snackbar warningBar = createSnackTimezoneWarning();
+            warningBar.show();
+
+        } else if (showDateWarning) {
+            Snackbar warningBar = createSnackDateWarning();
+            warningBar.show();
+        }
+    }
+
+    private Snackbar createSnackDateWarning()
+    {
+        String message = getString(R.string.dateWarning);
+        Snackbar warningBar = Snackbar.make(card_flipper, message, Snackbar.LENGTH_INDEFINITE);
+
+        warningBar.setAction(getString(R.string.configAction_setDate), new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                configDate();
+            }
+        });
+        return warningBar;
+    }
+
+    private Snackbar createSnackTimezoneWarning()
+    {
+        String message = getString(R.string.timezoneWarning);
+        Snackbar warningBar = Snackbar.make(card_flipper, message, Snackbar.LENGTH_INDEFINITE);
+
+        warningBar.setAction(getString(R.string.configAction_setTimeZone), new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                configTimeZone();
+            }
+        });
+        return warningBar;
     }
 
     /**
