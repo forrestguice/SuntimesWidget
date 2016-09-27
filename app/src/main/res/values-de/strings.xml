@@ -227,8 +227,14 @@
   <string name="configLabel_places_export">Exportiere Orte</string>
   <string name="configLabel_places_clear">Lösche Orte</string>
 
-  <!-- App Setting: UI Theme -->
+  <!-- App Setting: UI -->
   <string name="configLabel_ui">Benutzeroberfläche</string>                       <!-- group title -->
+
+  <!-- App Setting: UI Warnings -->
+  <string name="configLabel_ui_showWarnings">Enable warnings</string>                               <!-- TODO -->
+  <string name="configLabel_ui_showWarnings_summary">Show configuration warning messages</string>   <!-- TODO -->
+
+  <!-- App Setting: UI Theme -->
   <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
       <item>Helles Theme</item>
       <item>Dunkles Theme</item>

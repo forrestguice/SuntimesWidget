@@ -176,8 +176,11 @@ public class SuntimesActivity extends AppCompatActivity
 
     private boolean isRtl = false;
     private boolean userSwappedCard = false;
-    private boolean showDateWarning = false, showTimezoneWarning = false;
     private HashMap<SolarEvents.SolarEventField, TextView> timeFields;
+
+    private boolean showWarnings = false;
+    private boolean showDateWarning = false, showTimezoneWarning = false;
+    private Snackbar timezoneWarning = null, dateWarning = null;
 
     public SuntimesActivity()
     {
@@ -1041,6 +1044,10 @@ public class SuntimesActivity extends AppCompatActivity
     {
         stopTimeTask();
 
+        showWarnings = AppSettings.loadShowWarningsPref(this);
+        showDateWarning = false;
+        showTimezoneWarning = false;
+
         location = WidgetSettings.loadLocationPref(context, AppWidgetManager.INVALID_APPWIDGET_ID);
         String locationTitle = location.getLabel();
         String locationSubtitle = location.toString();
@@ -1146,7 +1153,6 @@ public class SuntimesActivity extends AppCompatActivity
 
         String thisString = getString(R.string.today);
         String otherString = getString(R.string.tomorrow);
-        showDateWarning = false;
 
         if (dataset.dataActual.todayIsNotToday())
         {
@@ -1170,8 +1176,7 @@ public class SuntimesActivity extends AppCompatActivity
         }
 
         // date fields
-        ImageSpan dateWarning = (showDateWarning) ? SuntimesUtils.createWarningSpan(this, txt_date.getTextSize()) : null;
-
+        ImageSpan dateWarning = (showWarnings && showDateWarning) ? SuntimesUtils.createWarningSpan(this, txt_date.getTextSize()) : null;
         String dateString = getString(R.string.dateField, thisString, dateFormat.format(data_date));
         SpannableStringBuilder dateSpan = SuntimesUtils.createSpan(dateString, dateWarning);
         txt_date.setText(dateSpan);
@@ -1192,7 +1197,7 @@ public class SuntimesActivity extends AppCompatActivity
         showTimezoneWarning = (offsetDiff > offsetTolerance);
         //boolean showTimezoneWarning = (!dataset.timezone().equals(TimeZone.getDefault().getID()));
 
-        ImageSpan timezoneWarning = (showTimezoneWarning) ? SuntimesUtils.createWarningSpan(this, txt_timezone.getTextSize()) : null;
+        ImageSpan timezoneWarning = (showWarnings && showTimezoneWarning) ? SuntimesUtils.createWarningSpan(this, txt_timezone.getTextSize()) : null;
         String timezoneString = getString(R.string.timezoneField, dataset.timezone());
         SpannableStringBuilder timezoneSpan = SuntimesUtils.createSpan(timezoneString, timezoneWarning);
         txt_timezone.setText(timezoneSpan);
@@ -1206,20 +1211,37 @@ public class SuntimesActivity extends AppCompatActivity
 
     private void showSnackWarnings()
     {
-        if (showTimezoneWarning)
+        if (showWarnings && showTimezoneWarning)
         {
-            Snackbar warningBar = createSnackTimezoneWarning();
-            warningBar.show();
+            timezoneWarning = createSnackTimezoneWarning();
+            timezoneWarning.show();
+            return;
+        }
 
-        } else if (showDateWarning) {
-            Snackbar warningBar = createSnackDateWarning();
-            warningBar.show();
+        if (showWarnings && showDateWarning)
+        {
+            dateWarning = createSnackDateWarning();
+            dateWarning.show();
+            return;
+        }
+
+        // no warnings shown; clear previous (stale) messages
+        if (timezoneWarning != null && timezoneWarning.isShown())
+        {
+            timezoneWarning.dismiss();
+            timezoneWarning = null;
+        }
+        if (dateWarning != null && dateWarning.isShown())
+        {
+            dateWarning.dismiss();
+            dateWarning = null;
         }
     }
 
     private Snackbar createSnackDateWarning()
     {
-        String message = getString(R.string.dateWarning);
+        ImageSpan warningIcon = SuntimesUtils.createWarningSpan(this, txt_date.getTextSize());
+        SpannableStringBuilder message = SuntimesUtils.createSpan(getString(R.string.dateWarning), warningIcon);
         Snackbar warningBar = Snackbar.make(card_flipper, message, Snackbar.LENGTH_INDEFINITE);
 
         warningBar.setAction(getString(R.string.configAction_setDate), new View.OnClickListener()
@@ -1235,7 +1257,8 @@ public class SuntimesActivity extends AppCompatActivity
 
     private Snackbar createSnackTimezoneWarning()
     {
-        String message = getString(R.string.timezoneWarning);
+        ImageSpan warningIcon = SuntimesUtils.createWarningSpan(this, txt_date.getTextSize());
+        SpannableStringBuilder message = SuntimesUtils.createSpan(getString(R.string.timezoneWarning), warningIcon);
         Snackbar warningBar = Snackbar.make(card_flipper, message, Snackbar.LENGTH_INDEFINITE);
 
         warningBar.setAction(getString(R.string.configAction_setTimeZone), new View.OnClickListener()

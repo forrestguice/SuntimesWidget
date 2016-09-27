@@ -55,6 +55,9 @@ public class AppSettings
     public static final String PREF_KEY_UI_NOTETAPACTION = "app_ui_notetapaction";
     public static final ClockTapAction PREF_DEF_UI_NOTETAPACTION = ClockTapAction.NEXT_NOTE;
 
+    public static final String PREF_KEY_UI_SHOWWARNINGS = "app_ui_showwarnings";
+    public static final boolean PREF_DEF_UI_SHOWWARNINGS = true;
+
     public static final String PREF_KEY_GETFIX_MINELAPSED = "getFix_minElapsed";
     public static final String PREF_KEY_GETFIX_MAXELAPSED = "getFix_maxElapsed";
     public static final String PREF_KEY_GETFIX_MAXAGE = "getFix_maxAge";
@@ -277,6 +280,12 @@ public class AppSettings
             SHOW_CALENDAR.setDisplayString(labels[2]);
             CONFIG_DATE.setDisplayString(labels[3]);
         }
+    }
+
+    public static boolean loadShowWarningsPref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_UI_SHOWWARNINGS, PREF_DEF_UI_SHOWWARNINGS);
     }
 
     /**
