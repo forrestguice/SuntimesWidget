@@ -266,6 +266,7 @@ public class SuntimesActivity extends AppCompatActivity
         if (timezoneDialog != null)
         {
             timezoneDialog.setOnAcceptedListener(onConfigTimeZone);
+            timezoneDialog.setOnCanceledListener(onCancelTimeZone);
             Log.d("DEBUG", "TimeZoneDialog listeners restored.");
         }
 
@@ -288,6 +289,7 @@ public class SuntimesActivity extends AppCompatActivity
         if (dateDialog != null)
         {
             dateDialog.setOnAcceptedListener(onConfigDate);
+            dateDialog.setOnCanceledListener(onCancelDate);
             Log.d("DEBUG", "TimeDateDialog listeners restored.");
         }
     }
