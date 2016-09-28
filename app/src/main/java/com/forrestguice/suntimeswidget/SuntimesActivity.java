@@ -297,6 +297,7 @@ public class SuntimesActivity extends AppCompatActivity
     @Override
     public void onRestoreInstanceState(@NonNull Bundle savedInstanceState)
     {
+        super.onRestoreInstanceState(savedInstanceState);
         userSwappedCard = savedInstanceState.getBoolean(KEY_UI_USERSWAPPEDCARD, false);
         boolean cardIsTomorrow = savedInstanceState.getBoolean(KEY_UI_CARDISTOMORROW, false);
         card_flipper.setDisplayedChild((cardIsTomorrow ? 1 : 0));
