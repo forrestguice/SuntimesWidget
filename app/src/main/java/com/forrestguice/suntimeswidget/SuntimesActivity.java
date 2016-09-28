@@ -74,7 +74,6 @@ import com.forrestguice.suntimeswidget.notes.SuntimesNotes3;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import java.lang.reflect.Method;
 import java.text.DateFormat;
@@ -90,6 +89,9 @@ public class SuntimesActivity extends AppCompatActivity
 {
     public static final String KEY_UI_CARDISTOMORROW = "cardIsTomorrow";
     public static final String KEY_UI_USERSWAPPEDCARD = "userSwappedCard";
+
+    public static final String WARNINGID_DATE = "Date";
+    public static final String WARNINGID_TIMEZONE = "Timezone";
 
     private static final String DIALOGTAG_TIMEZONE = "timezone";
     private static final String DIALOGTAG_ALARM = "alarm";
@@ -179,8 +181,9 @@ public class SuntimesActivity extends AppCompatActivity
     private HashMap<SolarEvents.SolarEventField, TextView> timeFields;
 
     private boolean showWarnings = false;
-    private boolean showDateWarning = false, showTimezoneWarning = false;
-    private Snackbar timezoneWarning = null, dateWarning = null;
+    private SuntimesWarning timezoneWarning;
+    private SuntimesWarning dateWarning;
+    private List<SuntimesWarning> warnings;
 
     public SuntimesActivity()
     {
@@ -206,6 +209,8 @@ public class SuntimesActivity extends AppCompatActivity
         initLocale(this);  // must follow super.onCreate or locale is reverted
         setContentView(R.layout.layout_main);
         initViews(context);
+
+        initWarnings(context, savedState);
 
         initGetFix();
         getFixHelper.loadSettings(savedState);
@@ -298,6 +303,8 @@ public class SuntimesActivity extends AppCompatActivity
     @Override
     public void onSaveInstanceState( Bundle outState )
     {
+        super.onSaveInstanceState(outState);
+        saveWarnings(outState);
         outState.putBoolean(KEY_UI_USERSWAPPEDCARD, userSwappedCard);
         outState.putBoolean(KEY_UI_CARDISTOMORROW, (card_flipper.getDisplayedChild() != 0));
     }
@@ -305,6 +312,7 @@ public class SuntimesActivity extends AppCompatActivity
     @Override
     public void onRestoreInstanceState(@NonNull Bundle savedInstanceState)
     {
+        restoreWarnings(savedInstanceState);
         userSwappedCard = savedInstanceState.getBoolean(KEY_UI_USERSWAPPEDCARD, false);
         boolean cardIsTomorrow = savedInstanceState.getBoolean(KEY_UI_CARDISTOMORROW, false);
         card_flipper.setDisplayedChild((cardIsTomorrow ? 1 : 0));
@@ -364,6 +372,21 @@ public class SuntimesActivity extends AppCompatActivity
         initClockViews(context);
         initNoteViews(context);
         initCardViews(context);
+    }
+
+    /**
+     * initialize warning snackbar
+     */
+    private void initWarnings(Context context, Bundle savedState)
+    {
+        timezoneWarning = new SuntimesWarning(WARNINGID_TIMEZONE);
+        dateWarning = new SuntimesWarning(WARNINGID_DATE);
+
+        warnings = new ArrayList<SuntimesWarning>();
+        warnings.add(timezoneWarning);
+        warnings.add(dateWarning);
+
+        restoreWarnings(savedState);
     }
 
     /**
@@ -808,6 +831,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         final TimeDateDialog datePicker = new TimeDateDialog();
         datePicker.setOnAcceptedListener(onConfigDate);
+        datePicker.setOnCanceledListener(onCancelDate);
         datePicker.show(getSupportFragmentManager(), DIALOGTAG_DATE);
     }
     DialogInterface.OnClickListener onConfigDate = new DialogInterface.OnClickListener()
@@ -815,11 +839,19 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public void onClick(DialogInterface dialogInterface, int i)
         {
+            dateWarning.reset();
             calculateData(SuntimesActivity.this);
             updateViews(SuntimesActivity.this);
         }
     };
-
+    DialogInterface.OnClickListener onCancelDate = new DialogInterface.OnClickListener()
+    {
+        @Override
+        public void onClick(DialogInterface dialogInterface, int i)
+        {
+            showWarnings();
+        }
+    };
 
     /**
      * Refresh location (current location mode).
@@ -875,6 +907,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         TimeZoneDialog timezoneDialog = new TimeZoneDialog();
         timezoneDialog.setOnAcceptedListener(onConfigTimeZone);
+        timezoneDialog.setOnCanceledListener(onCancelTimeZone);
         timezoneDialog.show(getSupportFragmentManager(), DIALOGTAG_TIMEZONE);
     }
     DialogInterface.OnClickListener onConfigTimeZone = new DialogInterface.OnClickListener()
@@ -882,8 +915,17 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public void onClick(DialogInterface dialogInterface, int i)
         {
+            timezoneWarning.reset();
             calculateData(SuntimesActivity.this);
             updateViews(SuntimesActivity.this);
+        }
+    };
+    DialogInterface.OnClickListener onCancelTimeZone = new DialogInterface.OnClickListener()
+    {
+        @Override
+        public void onClick(DialogInterface dialogInterface, int i)
+        {
+            showWarnings();
         }
     };
 
@@ -1045,8 +1087,8 @@ public class SuntimesActivity extends AppCompatActivity
         stopTimeTask();
 
         showWarnings = AppSettings.loadShowWarningsPref(this);
-        showDateWarning = false;
-        showTimezoneWarning = false;
+        dateWarning.shouldShow = false;
+        timezoneWarning.shouldShow = false;
 
         location = WidgetSettings.loadLocationPref(context, AppWidgetManager.INVALID_APPWIDGET_ID);
         String locationTitle = location.getLabel();
@@ -1170,19 +1212,19 @@ public class SuntimesActivity extends AppCompatActivity
                 } else if (data_date.before(time)) {
                     thisString = getString(R.string.past_today);
                     otherString = getString(R.string.past_tomorrow);
-                    showDateWarning = true;
+                    dateWarning.shouldShow = true;
                 }
             }
         }
 
         // date fields
-        ImageSpan dateWarning = (showWarnings && showDateWarning) ? SuntimesUtils.createWarningSpan(this, txt_date.getTextSize()) : null;
+        ImageSpan dateWarningIcon = (showWarnings && dateWarning.shouldShow) ? SuntimesUtils.createWarningSpan(this, txt_date.getTextSize()) : null;
         String dateString = getString(R.string.dateField, thisString, dateFormat.format(data_date));
-        SpannableStringBuilder dateSpan = SuntimesUtils.createSpan(dateString, dateWarning);
+        SpannableStringBuilder dateSpan = SuntimesUtils.createSpan(dateString, dateWarningIcon);
         txt_date.setText(dateSpan);
 
         String date2String = getString(R.string.dateField, otherString, dateFormat.format(data_date2));
-        SpannableStringBuilder date2Span = SuntimesUtils.createSpan(date2String, dateWarning);
+        SpannableStringBuilder date2Span = SuntimesUtils.createSpan(date2String, dateWarningIcon);
         txt_date2.setText(date2Span);
 
         // timezone field
@@ -1194,82 +1236,56 @@ public class SuntimesActivity extends AppCompatActivity
         Log.d("DEBUG", "offsets: " + actualOffset + ", " + roughOffset );
         Log.d("DEBUG", "timezone offset difference: " +  offsetDiff +" [" + offsetTolerance + "]");
 
-        showTimezoneWarning = (offsetDiff > offsetTolerance);
+        timezoneWarning.shouldShow = (offsetDiff > offsetTolerance);
         //boolean showTimezoneWarning = (!dataset.timezone().equals(TimeZone.getDefault().getID()));
 
-        ImageSpan timezoneWarning = (showWarnings && showTimezoneWarning) ? SuntimesUtils.createWarningSpan(this, txt_timezone.getTextSize()) : null;
+        ImageSpan timezoneWarningIcon = (showWarnings && timezoneWarning.shouldShow) ? SuntimesUtils.createWarningSpan(this, txt_timezone.getTextSize()) : null;
         String timezoneString = getString(R.string.timezoneField, dataset.timezone());
-        SpannableStringBuilder timezoneSpan = SuntimesUtils.createSpan(timezoneString, timezoneWarning);
+        SpannableStringBuilder timezoneSpan = SuntimesUtils.createSpan(timezoneString, timezoneWarningIcon);
         txt_timezone.setText(timezoneSpan);
 
         showDayLength(dataset.isCalculated());
         showNotes(dataset.isCalculated());
-        showSnackWarnings();
+        showWarnings();
 
         startTimeTask();
     }
 
-    private void showSnackWarnings()
+    private void showWarnings()
     {
-        if (showWarnings && showTimezoneWarning)
+        if (showWarnings && timezoneWarning.shouldShow && !timezoneWarning.wasDismissed)
         {
-            timezoneWarning = createSnackTimezoneWarning();
+            timezoneWarning.initWarning(this, getString(R.string.timezoneWarning));
+            timezoneWarning.snackbar.setAction(getString(R.string.configAction_setTimeZone), new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    configTimeZone();
+                }
+            });
             timezoneWarning.show();
             return;
         }
 
-        if (showWarnings && showDateWarning)
+        if (showWarnings && dateWarning.shouldShow && !dateWarning.wasDismissed)
         {
-            dateWarning = createSnackDateWarning();
+            dateWarning.initWarning(this, getString(R.string.dateWarning));
+            dateWarning.snackbar.setAction(getString(R.string.configAction_setDate), new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    configDate();
+                }
+            });
             dateWarning.show();
             return;
         }
 
         // no warnings shown; clear previous (stale) messages
-        if (timezoneWarning != null && timezoneWarning.isShown())
-        {
-            timezoneWarning.dismiss();
-            timezoneWarning = null;
-        }
-        if (dateWarning != null && dateWarning.isShown())
-        {
-            dateWarning.dismiss();
-            dateWarning = null;
-        }
-    }
-
-    private Snackbar createSnackDateWarning()
-    {
-        ImageSpan warningIcon = SuntimesUtils.createWarningSpan(this, txt_date.getTextSize());
-        SpannableStringBuilder message = SuntimesUtils.createSpan(getString(R.string.dateWarning), warningIcon);
-        Snackbar warningBar = Snackbar.make(card_flipper, message, Snackbar.LENGTH_INDEFINITE);
-
-        warningBar.setAction(getString(R.string.configAction_setDate), new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                configDate();
-            }
-        });
-        return warningBar;
-    }
-
-    private Snackbar createSnackTimezoneWarning()
-    {
-        ImageSpan warningIcon = SuntimesUtils.createWarningSpan(this, txt_date.getTextSize());
-        SpannableStringBuilder message = SuntimesUtils.createSpan(getString(R.string.timezoneWarning), warningIcon);
-        Snackbar warningBar = Snackbar.make(card_flipper, message, Snackbar.LENGTH_INDEFINITE);
-
-        warningBar.setAction(getString(R.string.configAction_setTimeZone), new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                configTimeZone();
-            }
-        });
-        return warningBar;
+        timezoneWarning.dismiss();
+        dateWarning.dismiss();
     }
 
     /**
@@ -1805,6 +1821,116 @@ public class SuntimesActivity extends AppCompatActivity
                 tableRuleParams.width = tableWidth;
                 tableRule.setLayoutParams(tableRuleParams);    // and adjust the horizontal rule width
             }
+        }
+    }
+
+    /**
+     * SuntimesWarning; wraps a Snackbar and some flags.
+     */
+    private class SuntimesWarning
+    {
+        public static final String KEY_WASDISMISSED = "userDismissedWarning";
+
+        public SuntimesWarning(String id) { this.id = id; }
+        protected String id = "";
+        protected Snackbar snackbar = null;
+        protected boolean shouldShow = false;
+        protected boolean wasDismissed = false;
+
+        public void initWarning(Context context, String msg)
+        {
+            ImageSpan warningIcon = SuntimesUtils.createWarningSpan(context, txt_date.getTextSize());
+            SpannableStringBuilder message = SuntimesUtils.createSpan(msg, warningIcon);
+
+            wasDismissed = false;
+            snackbar = Snackbar.make(card_flipper, message, Snackbar.LENGTH_INDEFINITE);
+            snackbar.setCallback(new Snackbar.Callback()
+            {
+                @Override
+                public void onDismissed(Snackbar snackbar, int event)
+                {
+                    super.onDismissed(snackbar, event);
+                    switch (event)
+                    {
+                        case DISMISS_EVENT_SWIPE:
+                            wasDismissed = true;
+                            showNextWarning();
+                            break;
+                    }
+                }
+            });
+        }
+
+        private void showNextWarning()
+        {
+            showWarnings();
+        }
+
+        public boolean isShown()
+        {
+            return (snackbar != null && snackbar.isShown());
+        }
+
+        public void show()
+        {
+            if (snackbar != null)
+            {
+                snackbar.show();
+            }
+        }
+
+        public void dismiss()
+        {
+            if (isShown())
+            {
+                snackbar.dismiss();
+            }
+        }
+
+        public void reset()
+        {
+            wasDismissed = false;
+            shouldShow = false;
+        }
+
+        public void save( Bundle outState )
+        {
+            if (outState != null)
+            {
+                outState.putBoolean(KEY_WASDISMISSED + id, wasDismissed);
+            }
+        }
+
+        public void restore( Bundle savedState )
+        {
+            if (savedState != null)
+            {
+                wasDismissed = savedState.getBoolean(KEY_WASDISMISSED + id, false);
+            }
+        }
+    }
+
+    /**
+     * save the state of warning objects to outState
+     * @param outState
+     */
+    private void saveWarnings( Bundle outState )
+    {
+        for (SuntimesWarning warning : warnings)
+        {
+            warning.save(outState);
+        }
+    }
+
+    /**
+     * restore the state of warning objects from savedState
+     * @param savedState
+     */
+    private void restoreWarnings(Bundle savedState)
+    {
+        for (SuntimesWarning warning : warnings)
+        {
+            warning.restore(savedState);
         }
     }
 
