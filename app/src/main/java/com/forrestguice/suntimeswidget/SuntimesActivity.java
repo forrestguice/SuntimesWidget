@@ -270,11 +270,12 @@ public class SuntimesActivity extends AppCompatActivity
             Log.d("DEBUG", "LocationDialog listeners restored.");
         }
 
-        //TimeDateDialog dateDialog = (TimeDateDialog) fragments.findFragmentByTag(DIALOGTAG_DATE);
-        //if (dateDialog != null)
-        //{
-            // TODO
-        //}
+        TimeDateDialog dateDialog = (TimeDateDialog) fragments.findFragmentByTag(DIALOGTAG_DATE);
+        if (dateDialog != null)
+        {
+            dateDialog.setOnAcceptedListener(onConfigDate);
+            Log.d("DEBUG", "TimeDateDialog listeners restored.");
+        }
     }
 
     /**
