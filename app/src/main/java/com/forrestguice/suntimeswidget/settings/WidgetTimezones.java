@@ -29,6 +29,7 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.R;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -97,6 +98,29 @@ public class WidgetTimezones
         }
 
         return timezones;
+    }
+
+    /**
+     * Perform a rough check of the timezone/location on the given date; this function should catch
+     * gross mismatches (but in many cases may be completely inaccurate).
+     * @param timezoneID a timezone
+     * @param atLocation a location
+     * @param onDate a date
+     * @return true if the timezone/location/date combination seems unreasonable (timezone is probably not local)
+     */
+    public static boolean isProbablyNotLocal( String timezoneID, WidgetSettings.Location atLocation, Date onDate )
+    {
+        double offsetTolerance = 2;    // tolerance in hrs
+        TimeZone timezone = TimeZone.getTimeZone(timezoneID);
+
+        double zoneOffset = timezone.getOffset(onDate.getTime()) / (1000 * 60 * 60);   // timezone offset in hrs
+        double lonOffset = atLocation.getLongitudeAsDouble() * 24 / 360;               // longitude offset in hrs
+
+        double offsetDiff = Math.abs(lonOffset - zoneOffset);
+        Log.d("DEBUG", "offsets: " + zoneOffset + ", " + lonOffset);
+        Log.d("DEBUG", "timezone offset difference: " +  offsetDiff +" [" + offsetTolerance + "]");
+
+        return (offsetDiff > offsetTolerance);
     }
 
     ///////////////////////////////////////

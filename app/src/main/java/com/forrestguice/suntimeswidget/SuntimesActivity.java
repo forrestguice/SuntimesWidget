@@ -74,6 +74,7 @@ import com.forrestguice.suntimeswidget.notes.SuntimesNotes3;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import java.lang.reflect.Method;
 import java.text.DateFormat;
@@ -1040,13 +1041,13 @@ public class SuntimesActivity extends AppCompatActivity
         scheduleAlarm(notes.getNote().noteMode);
     }
 
-    protected void scheduleAlarmFromNote(NoteData note)
+    /**protected void scheduleAlarmFromNote(NoteData note)
     {
         String alarmLabel = note.noteText;
         Calendar calendar = dataset.now();
         calendar.setTimeInMillis(note.time.getTime());
         AlarmDialog.scheduleAlarm(this, alarmLabel, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
-    }
+    }*/
 
     /**
      *
@@ -1233,17 +1234,7 @@ public class SuntimesActivity extends AppCompatActivity
         txt_date2.setText(date2Span);
 
         // timezone field
-        TimeZone timezone = TimeZone.getTimeZone(dataset.timezone());
-        int actualOffset = timezone.getOffset(dataset.date().getTime()) / (1000 * 60);                // actual timezone offset in minutes
-        int roughOffset = (int)Math.round(dataset.location().getLongitudeAsDouble() * 24 * 60 / 360); // projected offset offset in minutes
-        int offsetTolerance = 2 * 60;    // tolerance in minutes
-        int offsetDiff = Math.abs(roughOffset - actualOffset);
-        Log.d("DEBUG", "offsets: " + actualOffset + ", " + roughOffset );
-        Log.d("DEBUG", "timezone offset difference: " +  offsetDiff +" [" + offsetTolerance + "]");
-
-        timezoneWarning.shouldShow = (offsetDiff > offsetTolerance);
-        //boolean showTimezoneWarning = (!dataset.timezone().equals(TimeZone.getDefault().getID()));
-
+        timezoneWarning.shouldShow = WidgetTimezones.isProbablyNotLocal(dataset.timezone(), dataset.location(), dataset.date());
         ImageSpan timezoneWarningIcon = (showWarnings && timezoneWarning.shouldShow) ? SuntimesUtils.createWarningSpan(this, txt_timezone.getTextSize()) : null;
         String timezoneString = getString(R.string.timezoneField, dataset.timezone());
         SpannableStringBuilder timezoneSpan = SuntimesUtils.createSpan(timezoneString, timezoneWarningIcon);
