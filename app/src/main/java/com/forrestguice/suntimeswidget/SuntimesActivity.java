@@ -275,11 +275,12 @@ public class SuntimesActivity extends AppCompatActivity
             Log.d("DEBUG", "LocationDialog listeners restored.");
         }
 
-        //TimeDateDialog dateDialog = (TimeDateDialog) fragments.findFragmentByTag(DIALOGTAG_DATE);
-        //if (dateDialog != null)
-        //{
-            // TODO
-        //}
+        TimeDateDialog dateDialog = (TimeDateDialog) fragments.findFragmentByTag(DIALOGTAG_DATE);
+        if (dateDialog != null)
+        {
+            dateDialog.setOnAcceptedListener(onConfigDate);
+            Log.d("DEBUG", "TimeDateDialog listeners restored.");
+        }
     }
 
     /**
@@ -294,6 +295,7 @@ public class SuntimesActivity extends AppCompatActivity
     @Override
     public void onSaveInstanceState( Bundle outState )
     {
+        super.onSaveInstanceState(outState);
         outState.putBoolean(KEY_UI_USERSWAPPEDCARD, userSwappedCard);
         outState.putBoolean(KEY_UI_CARDISTOMORROW, (card_flipper.getDisplayedChild() != 0));
         card_equinoxSolstice.saveState(outState);
@@ -302,6 +304,7 @@ public class SuntimesActivity extends AppCompatActivity
     @Override
     public void onRestoreInstanceState(@NonNull Bundle savedInstanceState)
     {
+        super.onRestoreInstanceState(savedInstanceState);
         userSwappedCard = savedInstanceState.getBoolean(KEY_UI_USERSWAPPEDCARD, false);
         boolean cardIsTomorrow = savedInstanceState.getBoolean(KEY_UI_CARDISTOMORROW, false);
         card_flipper.setDisplayedChild((cardIsTomorrow ? 1 : 0));
@@ -998,16 +1001,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     protected void scheduleAlarmFromNote()
     {
-        //scheduleAlarmFromNote(notes.getNote());
         scheduleAlarm(notes.getNote().noteMode);
-    }
-
-    protected void scheduleAlarmFromNote(NoteData note)
-    {
-        String alarmLabel = note.noteText;
-        Calendar calendar = dataset.now();
-        calendar.setTimeInMillis(note.time.getTime());
-        AlarmDialog.scheduleAlarm(this, alarmLabel, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
     }
 
     /**

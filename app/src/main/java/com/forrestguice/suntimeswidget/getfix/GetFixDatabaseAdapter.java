@@ -259,6 +259,7 @@ public class GetFixDatabaseAdapter
         {
             switch (DATABASE_VERSION)
             {
+                //noinspection ConstantConditions
                 case 0:
                 default:
                     db.execSQL(TABLE_PLACES_CREATE);
