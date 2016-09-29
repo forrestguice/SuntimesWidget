@@ -97,8 +97,10 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
         {
             long sunriseTime = sunriseCal.getTimeInMillis();
             long sunsetTime = sunsetCal.getTimeInMillis();
-            long noonTime = sunriseTime + ((sunsetTime - sunriseTime) / 2L);
+            if (sunsetTime < sunriseTime)
+                sunsetTime += (24 * 60 * 60 * 1000);  // bug workaround (sunset calendar set to wrong day; 24hrs off)
 
+            long noonTime = sunriseTime + ((sunsetTime - sunriseTime) / 2L);
             Calendar noonCalendar = Calendar.getInstance(TimeZone.getTimeZone(timezone));
             noonCalendar.setTimeInMillis(noonTime);
             return noonCalendar;
