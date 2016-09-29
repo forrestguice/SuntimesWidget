@@ -43,12 +43,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesDataset;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 public class AlarmDialog extends DialogFragment
 {
@@ -67,9 +69,9 @@ public class AlarmDialog extends DialogFragment
     /**
      * The supporting dataset.
      */
-    private SuntimesDataset dataset;
-    public SuntimesDataset getData() { return dataset; }
-    public void setData( SuntimesDataset dataset) { this.dataset = dataset; }
+    private SuntimesRiseSetDataset dataset;
+    public SuntimesRiseSetDataset getData() { return dataset; }
+    public void setData( SuntimesRiseSetDataset dataset) { this.dataset = dataset; }
 
     /**
      * The user's alarm choice.
@@ -387,7 +389,7 @@ public class AlarmDialog extends DialogFragment
             Calendar calendar = getCalendarForAlarmChoice(choice, now);
             if (calendar != null)
             {
-                AlarmDialog.scheduleAlarm(getActivity(), alarmLabel, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
+                AlarmDialog.scheduleAlarm(getActivity(), alarmLabel, calendar);
 
             } else {
                 String alarmErrorTxt = getString(R.string.schedalarm_dialog_error) + "\n" + getString(R.string.schedalarm_dialog_note2, choice.getLongDisplayString());
@@ -397,8 +399,16 @@ public class AlarmDialog extends DialogFragment
         }
     };
 
-    public static void scheduleAlarm(Activity context, String label, int hour, int minutes)
+    public static void scheduleAlarm(Activity context, String label, Calendar calendar)
     {
+        if (calendar == null)
+            return;
+
+        Calendar alarm = new GregorianCalendar(TimeZone.getDefault());
+        alarm.setTimeInMillis(calendar.getTimeInMillis());
+        int hour = alarm.get(Calendar.HOUR_OF_DAY);
+        int minutes = alarm.get(Calendar.MINUTE);
+
         Intent alarmIntent = new Intent(AlarmClock.ACTION_SET_ALARM);
         alarmIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         alarmIntent.putExtra(AlarmClock.EXTRA_MESSAGE, label);

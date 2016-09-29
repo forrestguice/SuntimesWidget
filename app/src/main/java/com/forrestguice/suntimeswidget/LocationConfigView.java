@@ -310,7 +310,11 @@ public class LocationConfigView extends LinearLayout
 
         String[] from = new String[] {"name"};
         int[] to = new int[] {android.R.id.text1};
-        getFixAdapter = new SimpleCursorAdapter(myParent, R.layout.layout_listitem_locations, null, from, to);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+            getFixAdapter = new SimpleCursorAdapter(myParent, R.layout.layout_listitem_locations, null, from, to, 0);
+        else getFixAdapter = new SimpleCursorAdapter(myParent, R.layout.layout_listitem_locations, null, from, to);
+
         getFixAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spin_locationName = (Spinner)findViewById(R.id.appwidget_location_nameSelect);

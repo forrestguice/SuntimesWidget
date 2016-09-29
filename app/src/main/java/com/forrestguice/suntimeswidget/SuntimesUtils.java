@@ -23,7 +23,7 @@ import android.content.res.Resources;
 
 import java.text.DateFormat;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.text.SimpleDateFormat;
@@ -351,7 +351,7 @@ public class SuntimesUtils
      * @param titlePattern a pattern string (simple substitutions)
      * @return a display string suitable for display as a widget title
      */
-    public String displayStringForTitlePattern(String titlePattern, SuntimesData data)
+    public String displayStringForTitlePattern(String titlePattern, SuntimesRiseSetData data)
     {
         String modePattern = "%M";
         String modePatternShort = "%m";

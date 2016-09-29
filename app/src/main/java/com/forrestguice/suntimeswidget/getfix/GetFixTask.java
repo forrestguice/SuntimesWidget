@@ -224,7 +224,8 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
                         Log.d("GetFixTask", "starting location listener; now requesting updates from GPS_PROVIDER...");
                         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
-                    } else if (gpsEnabled && netEnabled) {
+                    } else //noinspection ConstantConditions
+                        if (gpsEnabled && netEnabled) {
                         // gps + network provider
                         Log.d("GetFixTask", "starting location listener; now requesting updates from GPS_PROVIDER && NETWORK_PROVIDER...");
                         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);

@@ -256,7 +256,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         }
 
         @Override
-        @TargetApi(23)
+        @TargetApi(Build.VERSION_CODES.M)
         public void onAttach(Context context)
         {
             super.onAttach(context);
@@ -283,6 +283,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         //ListPreference gpsMaxElapsedPref = (ListPreference)findPreference(key);
 
         String key = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_GENERAL + WidgetSettings.PREF_KEY_GENERAL_CALCULATOR;
+        //noinspection deprecation
         ListPreference calculatorPref = (ListPreference)findPreference(key);
         if (calculatorPref != null)
         {
@@ -290,6 +291,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             loadPref_general(this, calculatorPref);
         }
     }
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private static void initPref_general(PreferenceFragment fragment)
     {
         String key = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_GENERAL + WidgetSettings.PREF_KEY_GENERAL_CALCULATOR;
@@ -360,11 +362,13 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         //legacyPrefs.put(key, new LegacyListPref(modePref));
 
         String key = AppSettings.PREF_KEY_LOCALE;
+        //noinspection deprecation
         ListPreference localePref = (ListPreference)findPreference(key);
         //legacyPrefs.put(key, new LegacyListPref(localePref));
 
         initPref_locale(this, localePref);
     }
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private static void initPref_locale(PreferenceFragment fragment)
     {
         Preference localePref = (Preference)fragment.findPreference(AppSettings.PREF_KEY_LOCALE);
@@ -418,7 +422,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         }
 
         @Override
-        @TargetApi(23)
+        @TargetApi(Build.VERSION_CODES.M)
         public void onAttach(Context context)
         {
             super.onAttach(context);
@@ -637,7 +641,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
      */
     private void initPref_places()
     {
+        //noinspection deprecation
         Preference clearPlacesPref = (Preference)findPreference("places_clear");
+        //noinspection deprecation
         Preference exportPlacesPref = (Preference)findPreference("places_export");
         placesPrefBase = new PlacesPrefsBase(this, clearPlacesPref, exportPlacesPref);
     }
