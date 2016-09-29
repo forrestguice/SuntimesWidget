@@ -31,6 +31,12 @@
   <string name="nextDay">Nächster Tag</string>
   <string name="prevDay">Vorheriger Tag</string>
 
+  <!-- Field: timezone
+       The time zone field that appears below the clock (main activity).
+  -->
+  <!-- line commented to use default: <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string> -->
+  <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> The time zone may be wrong for this location (not local).</string>  <!-- snackbar message --> <!-- TODO -->
+
   <!-- Field: date
        The date field that appears above the table (main activity).
        e.g. [dateDesc] \n [date]
@@ -38,6 +44,7 @@
            where [date] is a dateString formatted by app using user's locale
   -->
   <!-- line commented to use default: <string name="dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string> -->
+  <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> The date is set to a day other than today.</string>  <!-- snackbar message -->  <!-- TODO -->
 
   <!-- DateDesc: some day in the past (appears in dateField) -->
   <string name="past_yesterday">Vergangenheit (-1)</string>
