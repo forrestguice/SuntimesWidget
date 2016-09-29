@@ -984,16 +984,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     protected void scheduleAlarmFromNote()
     {
-        //scheduleAlarmFromNote(notes.getNote());
         scheduleAlarm(notes.getNote().noteMode);
-    }
-
-    protected void scheduleAlarmFromNote(NoteData note)
-    {
-        String alarmLabel = note.noteText;
-        Calendar calendar = dataset.now();
-        calendar.setTimeInMillis(note.time.getTime());
-        AlarmDialog.scheduleAlarm(this, alarmLabel, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
     }
 
     /**
