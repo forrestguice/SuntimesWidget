@@ -25,7 +25,7 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.calculator.SuntimesDataset;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -49,7 +49,7 @@ public class SuntimesNotes2 implements SuntimesNotes
     private NoteData currentNote = null;
 
     private Context context;
-    private SuntimesDataset dataset;
+    private SuntimesRiseSetDataset dataset;
 
     public SuntimesNotes2()
     {
@@ -61,7 +61,7 @@ public class SuntimesNotes2 implements SuntimesNotes
     }
 
     @Override
-    public void init(Context context, SuntimesDataset dataset)
+    public void init(Context context, SuntimesRiseSetDataset dataset)
     {
         this.context = context;
         this.dataset = dataset;
