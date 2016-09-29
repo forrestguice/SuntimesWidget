@@ -61,6 +61,7 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
