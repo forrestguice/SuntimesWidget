@@ -60,8 +60,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesData;
-import com.forrestguice.suntimeswidget.calculator.SuntimesDataset;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 import com.forrestguice.suntimeswidget.notes.NoteChangedListener;
@@ -102,7 +102,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     private WidgetSettings.Location location;
     private SuntimesNotes notes;
-    private SuntimesDataset dataset;
+    private SuntimesRiseSetDataset dataset;
 
     // clock views
     private TextView txt_time;
@@ -993,23 +993,7 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private void initData( Context context )
     {
-        SuntimesData data_actualTime = new SuntimesData(context, AppWidgetManager.INVALID_APPWIDGET_ID);
-        data_actualTime.setCompareMode(WidgetSettings.CompareMode.TOMORROW);
-        data_actualTime.setTimeMode(WidgetSettings.TimeMode.OFFICIAL);
-
-        SuntimesData data_civilTime = new SuntimesData(data_actualTime);
-        data_civilTime.setTimeMode(WidgetSettings.TimeMode.CIVIL);
-
-        SuntimesData data_nauticalTime = new SuntimesData(data_actualTime);
-        data_nauticalTime.setTimeMode(WidgetSettings.TimeMode.NAUTICAL);
-
-        SuntimesData data_astroTime = new SuntimesData(data_actualTime);
-        data_astroTime.setTimeMode(WidgetSettings.TimeMode.ASTRONOMICAL);
-
-        SuntimesData data_noon = new SuntimesData(data_actualTime);
-        data_noon.setTimeMode(WidgetSettings.TimeMode.NOON);
-
-        dataset = new SuntimesDataset(data_actualTime, data_civilTime, data_nauticalTime, data_astroTime, data_noon);
+        dataset = new SuntimesRiseSetDataset(context);
     }
 
     protected void calculateData( Context context )

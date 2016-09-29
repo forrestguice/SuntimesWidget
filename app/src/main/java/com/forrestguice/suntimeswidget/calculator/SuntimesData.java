@@ -30,204 +30,136 @@ import java.util.TimeZone;
 
 public class SuntimesData
 {
-    private boolean calculated = false;
+    /**
+     * Property: date ("today" ..but not really, @see todayIs)
+     */
+    protected Date date = new Date();
+    public Date date() { return date; }
 
-    private Context context;
+    /**
+     * Property: calendar ("today" ..but not really, @see todayIs)
+     */
+    protected Calendar todaysCalendar;
+    public Calendar calendar() { return todaysCalendar; }
 
-    private SuntimesCalculatorDescriptor calculatorMode;
-    private WidgetSettings.LocationMode locationMode;
-    private WidgetSettings.TimezoneMode timezoneMode;
-    private WidgetSettings.CompareMode compareMode;
-    private WidgetSettings.Location location;
-    private WidgetSettings.TimeMode timeMode;
-    private String timezone;
-    private Date date = new Date();
-    private Date dateOther = new Date();
-    private Calendar todaysCalendar;
-    private Calendar otherCalendar;
-    private Calendar todayIs = null;
+    /**
+     * Property: date ("other")
+     */
+    protected Date dateOther = new Date();
+    public Date dateOther() { return dateOther; }
 
-    private Calendar sunriseCalendarToday;
-    private Calendar sunsetCalendarToday;
-    private Calendar sunriseCalendarOther;
-    private Calendar sunsetCalendarOther;
-    private long dayLengthToday;
-    private long dayLengthOther;
-    private String dayDeltaPrefix;
+    /**
+     * Property: calendar ("other")
+     */
+    protected Calendar otherCalendar;
+    public Calendar getOtherCalendar() { return otherCalendar; }
 
-    private int layoutID = R.layout.layout_widget_1x1_0i;
-
-    public SuntimesData(Context context, int appWidgetId)
-    {
-        this.context = context;
-        initFromSettings(context, appWidgetId);
-    }
-    public SuntimesData(SuntimesData other)
-    {
-        this.context = other.context;
-        initFromOther(other, other.layoutID);
-    }
-    public SuntimesData(SuntimesData other, int layoutID)
-    {
-        this.context = other.context;
-        initFromOther(other, layoutID);
-    }
-
-    public int layoutID()
-    {
-        return layoutID;
-    }
-    public void setLayoutID( int id )
-    {
-        layoutID = id;
-    }
-
-    public boolean isCalculated()
-    {
-        return calculated;
-    }
-
+    /**
+     * Property: todayIs; the date to run the calculation on, if null then "now"
+     */
+    protected Calendar todayIs = null;
     public Calendar todayIs() { return todayIs; }
     public void setTodayIs(Calendar day) { todayIs = day; }
     public void setTodayIsToday() { todayIs = null; }
     public boolean todayIsNotToday() { return todayIs != null; }
 
+    /**
+     * Property: timezone
+     */
+    protected String timezone;
     public String timezone()
     {
         return timezone;
     }
 
-    public Date date() { return date; }
-    public Date dateOther() { return dateOther; }
-
-    public Calendar calendar() { return todaysCalendar; }
-    public Calendar getOtherCalendar() { return otherCalendar; }
-
-    public WidgetSettings.TimeMode timeMode()
-    {
-        return timeMode;
-    }
-    public void setTimeMode( WidgetSettings.TimeMode mode )
-    {
-        timeMode = mode;
-    }
-
+    /**
+     * Property: location
+     */
+    protected WidgetSettings.Location location;
     public WidgetSettings.Location location()
     {
         return location;
     }
 
+    /**
+     * Property: calculator
+     */
+    protected SuntimesCalculatorDescriptor calculatorMode;
     public SuntimesCalculatorDescriptor calculatorMode()
     {
         return calculatorMode;
     }
 
+    /**
+     * Property: location mode
+     */
+    protected WidgetSettings.LocationMode locationMode;
     public WidgetSettings.LocationMode locationMode()
     {
         return locationMode;
     }
 
+    /**
+     * Property: timezone mode
+     */
+    protected WidgetSettings.TimezoneMode timezoneMode;
     public WidgetSettings.TimezoneMode timezoneMode()
     {
         return timezoneMode;
     }
 
-    public WidgetSettings.CompareMode compareMode()
+    /**
+     * Property: isCalculated
+     */
+    protected boolean calculated = false;
+    public boolean isCalculated()
     {
-        return compareMode;
-    }
-    public void setCompareMode( WidgetSettings.CompareMode mode )
-    {
-        compareMode = mode;
-    }
-
-    public boolean hasSunriseTimeToday()
-    {
-        return (sunriseCalendarToday != null);
-    }
-    public Calendar sunriseCalendarToday()
-    {
-        return sunriseCalendarToday;
+        return calculated;
     }
 
-    public boolean hasSunsetTimeToday()
+    /**
+     * perform calculation on the data
+     */
+    public void calculate()
     {
-        return (sunsetCalendarToday != null);
-    }
-    public Calendar sunsetCalendarToday()
-    {
-        return sunsetCalendarToday;
-    }
-
-    public boolean hasSunriseTimeOther()
-    {
-        return (sunriseCalendarOther != null);
-    }
-    public Calendar sunriseCalendarOther()
-    {
-        return sunriseCalendarOther;
+        this.calculated = true;
     }
 
-    public boolean hasSunsetTimeOther()
-    {
-        return (sunsetCalendarOther != null);
-    }
-    public Calendar sunsetCalendarOther()
-    {
-        return sunsetCalendarOther;
-    }
-
-    public String dayDeltaPrefix()
-    {
-        return dayDeltaPrefix;
-    }
-
-    public long dayLengthToday()
-    {
-        return dayLengthToday;
-    }
-    public long dayLengthOther()
-    {
-        return dayLengthOther;
-    }
-
-    private void initFromOther( SuntimesData other, int layoutID )
-    {
-        this.layoutID = layoutID;
-
-        this.calculatorMode = other.calculatorMode();
-        this.locationMode = other.locationMode();
-        this.timezoneMode = other.timezoneMode();
-        this.compareMode = other.compareMode();
-        this.location = other.location();
-        this.timeMode = other.timeMode();
-        this.timezone = other.timezone();
-        this.todayIs = other.todayIs();
-
-        this.sunriseCalendarToday = other.sunriseCalendarToday();
-        this.sunsetCalendarToday = other.sunsetCalendarToday();
-        this.sunriseCalendarOther = other.sunriseCalendarOther();
-        this.sunsetCalendarOther = other.sunsetCalendarOther();
-        this.dayLengthToday = other.dayLengthToday();
-        this.dayLengthOther = other.dayLengthOther();
-        this.dayDeltaPrefix = other.dayDeltaPrefix();
-
-        this.calculated = other.isCalculated();
-    }
-
+    /**
+     * invalidate the calculation
+     */
     public void invalidateCalculation()
     {
         this.calculated = false;
     }
 
-    public void initFromSettings(Context context, int appWidgetId)
+    /**
+     * init from another SuntimesData object
+     * @param other
+     */
+    protected void initFromOther( SuntimesData other )
+    {
+        this.calculatorMode = other.calculatorMode();
+        this.locationMode = other.locationMode();
+        this.timezoneMode = other.timezoneMode();
+        this.location = other.location();
+        this.timezone = other.timezone();
+        this.todayIs = other.todayIs();
+
+        this.calculated = other.isCalculated();
+    }
+
+    /**
+     * init from shared preferences
+     * @param context
+     * @param appWidgetId
+     */
+    protected void initFromSettings(Context context, int appWidgetId)
     {
         calculated = false;
 
         // from general settings
         calculatorMode = WidgetSettings.loadCalculatorModePref(context, appWidgetId);
-        timeMode = WidgetSettings.loadTimeModePref(context, appWidgetId);
-        compareMode = WidgetSettings.loadCompareModePref(context, appWidgetId);
 
         // from location settings
         location = WidgetSettings.loadLocationPref(context, appWidgetId);
@@ -260,96 +192,8 @@ public class SuntimesData
         }
     }
 
-    public void calculate()
-    {
-        //Log.v("SuntimesWidgetData", "time mode: " + timeMode);
-        //Log.v("SuntimesWidgetData", "location_mode: " + locationMode.name());
-        //Log.v("SuntimesWidgetData", "latitude: " + location.getLatitude());
-        //Log.v("SuntimesWidgetData", "longitude: " + location.getLongitude());
-        //Log.v("SuntimesWidgetData", "timezone_mode: " + timezoneMode.name());
-        //Log.v("SuntimesWidgetData", "timezone: " + timezone);
-        //Log.v("SuntimesWidgetData", "compare mode: " + compareMode.name());
 
-        SuntimesCalculatorFactory calculatorFactory = new SuntimesCalculatorFactory(context, calculatorMode);
-        SuntimesCalculator calculator = calculatorFactory.createCalculator(location, timezone);
 
-        todaysCalendar = Calendar.getInstance(TimeZone.getTimeZone(timezone));
-        otherCalendar = Calendar.getInstance(TimeZone.getTimeZone(timezone));
-
-        if (todayIsNotToday())
-        {
-            todaysCalendar.set(todayIs.get(Calendar.YEAR), todayIs.get(Calendar.MONTH), todayIs.get(Calendar.DAY_OF_MONTH));
-            otherCalendar.set(todayIs.get(Calendar.YEAR), todayIs.get(Calendar.MONTH), todayIs.get(Calendar.DAY_OF_MONTH));
-        }
-
-        switch (compareMode)
-        {
-            case YESTERDAY:
-                dayDeltaPrefix = context.getString(R.string.delta_day_yesterday);
-                otherCalendar.add(Calendar.DAY_OF_MONTH, -1);
-                break;
-
-            case TOMORROW:
-            default:
-                dayDeltaPrefix = context.getString(R.string.delta_day_tomorrow);
-                otherCalendar.add(Calendar.DAY_OF_MONTH, 1);
-                break;
-        }
-
-        date = todaysCalendar.getTime();
-        dateOther = otherCalendar.getTime();
-
-        switch (timeMode)
-        {
-            case NOON:
-                sunriseCalendarToday = sunsetCalendarToday = calculator.getSolarNoonCalendarForDate(todaysCalendar);
-                sunriseCalendarOther = sunsetCalendarOther = calculator.getSolarNoonCalendarForDate(otherCalendar);
-                break;
-
-            case CIVIL:
-                sunriseCalendarToday = calculator.getCivilSunriseCalendarForDate(todaysCalendar);
-                sunsetCalendarToday = calculator.getCivilSunsetCalendarForDate(todaysCalendar);
-                sunriseCalendarOther = calculator.getCivilSunriseCalendarForDate(otherCalendar);
-                sunsetCalendarOther = calculator.getCivilSunsetCalendarForDate(otherCalendar);
-                break;
-
-            case NAUTICAL:
-                sunriseCalendarToday = calculator.getNauticalSunriseCalendarForDate(todaysCalendar);
-                sunsetCalendarToday = calculator.getNauticalSunsetCalendarForDate(todaysCalendar);
-                sunriseCalendarOther = calculator.getNauticalSunriseCalendarForDate(otherCalendar);
-                sunsetCalendarOther = calculator.getNauticalSunsetCalendarForDate(otherCalendar);
-                break;
-
-            case ASTRONOMICAL:
-                sunriseCalendarToday = calculator.getAstronomicalSunriseCalendarForDate(todaysCalendar);
-                sunsetCalendarToday = calculator.getAstronomicalSunsetCalendarForDate(todaysCalendar);
-                sunriseCalendarOther = calculator.getAstronomicalSunriseCalendarForDate(otherCalendar);
-                sunsetCalendarOther = calculator.getAstronomicalSunsetCalendarForDate(otherCalendar);
-                break;
-
-            case OFFICIAL:
-            default:
-                sunriseCalendarToday = calculator.getOfficialSunriseCalendarForDate(todaysCalendar);
-                sunsetCalendarToday = calculator.getOfficialSunsetCalendarForDate(todaysCalendar);
-                sunriseCalendarOther = calculator.getOfficialSunriseCalendarForDate(otherCalendar);
-                sunsetCalendarOther = calculator.getOfficialSunsetCalendarForDate(otherCalendar);
-                break;
-        }
-
-        if (sunsetCalendarToday != null && sunriseCalendarToday != null)
-        {
-            dayLengthToday = sunsetCalendarToday.getTimeInMillis() - sunriseCalendarToday.getTimeInMillis();
-            long sunriseOther = sunriseCalendarOther.getTime().getTime();
-            long sunsetOther = sunsetCalendarOther.getTime().getTime();
-            dayLengthOther = sunsetOther - sunriseOther;
-
-        } else {
-            dayLengthToday = dayLengthOther = -1;
-        }
-
-        //Log.d("sunset: ", sunsetCalendarToday.toString() + " (" + sunsetCalendarOther.getTimeZone().getID() + ")");
-        calculated = true;
-    }
 }
 
 

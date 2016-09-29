@@ -33,7 +33,7 @@ import android.widget.RemoteViews;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x3_0;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -257,7 +257,7 @@ public class SuntimesWidget extends AppWidgetProvider
 
         layout.themeViews(context, views, appWidgetId);
 
-        SuntimesData data = new SuntimesData(context, appWidgetId); // constructor inits data from widget settings
+        SuntimesRiseSetData data = new SuntimesRiseSetData(context, appWidgetId); // constructor inits data from widget settings
         data.calculate();
 
         WidgetSettings.ActionMode actionMode = WidgetSettings.loadActionModePref(context, appWidgetId);
