@@ -1212,6 +1212,7 @@ public class SuntimesActivity extends AppCompatActivity
                 {
                     thisString = getString(R.string.future_today);
                     otherString = getString(R.string.future_tomorrow);
+                    dateWarning.shouldShow = true;
 
                 } else if (data_date.before(time)) {
                     thisString = getString(R.string.past_today);
