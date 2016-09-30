@@ -1141,7 +1141,7 @@ public class SuntimesActivity extends AppCompatActivity
 
         txt_date.setText(getString(R.string.dateField, thisString, dateFormat.format(data_date)));
         txt_date2.setText(getString(R.string.dateField, otherString, dateFormat.format(data_date2)));
-        txt_timezone.setText(dataset.timezone());
+        txt_timezone.setText(dataset.timezone().getID());
 
         showDayLength(dataset.isCalculated());
         showNotes(dataset.isCalculated());
@@ -1189,6 +1189,7 @@ public class SuntimesActivity extends AppCompatActivity
     protected void updateTimeViews(Context context)
     {
         Calendar now = dataset.now();
+        Log.d("DEBUG", "" + now.getTimeZone());
         SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(this, now);
         txt_time.setText(timeText.getValue());
         txt_time_suffix.setText(timeText.getSuffix());

@@ -152,14 +152,14 @@ public class SuntimesRiseSetDataset
         return (time.after(sunrise) && time.before(sunset));
     }
 
-    public String timezone()
+    public TimeZone timezone()
     {
         return dataActual.timezone();
     }
 
     public Calendar now()
     {
-        return Calendar.getInstance(TimeZone.getTimeZone(timezone()));
+        return Calendar.getInstance(timezone());
     }
 }
 
