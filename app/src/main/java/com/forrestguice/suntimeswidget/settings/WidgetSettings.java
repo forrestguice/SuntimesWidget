@@ -308,8 +308,9 @@ public class WidgetSettings
      */
     public static enum TimezoneMode
     {
-        CURRENT_TIMEZONE("Current Timezone"),
-        CUSTOM_TIMEZONE("Custom Timezone");
+        SOLAR_TIME("Solar"),
+        CURRENT_TIMEZONE("Current"),
+        CUSTOM_TIMEZONE("Custom");
 
         private String displayString;
 
@@ -335,6 +336,7 @@ public class WidgetSettings
 
         public static void initDisplayStrings( Context context )
         {
+            SOLAR_TIME.setDisplayString(context.getString(R.string.timezoneMode_solar));
             CURRENT_TIMEZONE.setDisplayString(context.getString(R.string.timezoneMode_current));
             CUSTOM_TIMEZONE.setDisplayString(context.getString(R.string.timezoneMode_custom));
         }

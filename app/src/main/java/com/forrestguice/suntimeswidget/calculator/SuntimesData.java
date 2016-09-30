@@ -21,8 +21,8 @@ package com.forrestguice.suntimeswidget.calculator;
 import android.content.Context;
 import android.util.Log;
 
-import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -171,7 +171,6 @@ public class SuntimesData
 
         switch (timezoneMode)
         {
-            timezone = TimeZone.getDefault().getID();
             case CUSTOM_TIMEZONE:
                 // empty; use preset timezone value
                 break;
@@ -180,6 +179,10 @@ public class SuntimesData
                 timezone = TimeZone.getDefault();
                 break;
 
+            case SOLAR_TIME:
+                //timezone = WidgetTimezones.localMeanTime(context, location);
+                timezone = WidgetTimezones.apparentSolarTime(context, location);
+                break;
         }
 
         // from date settings
