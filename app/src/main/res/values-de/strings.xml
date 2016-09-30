@@ -186,8 +186,12 @@
   <string name="configAction_savePlace">speichern</string>         <!-- button (contentDescription) -->
 
   <!-- Widget Setting: timezone -->
+  <string name="timezoneMode_solar">Solar Time</string>                       <!-- setting -->  <!-- TODO -->
   <string name="timezoneMode_current">System</string>                         <!-- setting -->
   <string name="timezoneMode_custom">Benutzerdefiniert</string>                    <!-- setting -->
+
+  <string name="solartime_localMean">Local Mean Time</string>                 <!-- setting / custom timezone id --> <!-- TODO -->
+  <string name="solartime_apparent">Apparent Solar Time</string>              <!-- setting / custom timezone id --> <!-- TODO -->
 
   <string name="configLabel_timezone">Zeitzone</string>             <!-- group title -->
   <string name="configLabel_timezone_mode">Modus:</string>                     <!-- spinner label -->
