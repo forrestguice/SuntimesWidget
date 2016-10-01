@@ -195,6 +195,7 @@
     <string name="configLabel_timezone">Agordoj pri horzono</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Reĝimo:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Horzono:</string>              <!-- spinner label -->
+    <string name="configLabel_solartime">Solar Time:</string>                   <!-- spinner label -->  <!-- TODO -->
 
     <!-- Widget Setting: date mode -->
     <string name="dateMode_current">Hodiaŭ</string>                  <!-- setting -->

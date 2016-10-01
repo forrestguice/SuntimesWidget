@@ -195,6 +195,7 @@
     <string name="configLabel_timezone">Time Zone Settings</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Mode:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Time Zone:</string>              <!-- spinner label -->
+    <string name="configLabel_solartime">Solar Time:</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: date mode -->
     <string name="dateMode_current">Today</string>                  <!-- setting -->
