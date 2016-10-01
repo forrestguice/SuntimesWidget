@@ -33,7 +33,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.SimpleTimeZone;
 import java.util.TimeZone;
 
 public class WidgetTimezones
@@ -297,7 +296,13 @@ public class WidgetTimezones
         @Override
         public boolean inDaylightTime(Date date)
         {
-            return false;
+            return true;
+        }
+
+        @Override
+        public int getDSTSavings()
+        {
+            return 1;
         }
     }
 

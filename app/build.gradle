@@ -50,6 +50,10 @@ dependencies
     compile 'com.github.forrestguice:sunrisesunsetlib-java:master-SNAPSHOT'
 }
 
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
 def getDateAsMillis()
 {
     def Calendar cal = Calendar.getInstance();
