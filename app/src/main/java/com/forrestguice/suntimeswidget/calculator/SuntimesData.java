@@ -180,8 +180,17 @@ public class SuntimesData
                 break;
 
             case SOLAR_TIME:
-                //timezone = WidgetTimezones.localMeanTime(context, location);
-                timezone = WidgetTimezones.apparentSolarTime(context, location);
+                WidgetSettings.SolarTimeMode solarMode = WidgetSettings.loadSolarTimeModePref(context, appWidgetId);
+                switch (solarMode)
+                {
+                    case APPARENT_SOLAR_TIME:
+                        timezone = WidgetTimezones.apparentSolarTime(context, location);
+                        break;
+
+                    default:
+                        timezone = WidgetTimezones.localMeanTime(context, location);
+                        break;
+                }
                 break;
         }
 

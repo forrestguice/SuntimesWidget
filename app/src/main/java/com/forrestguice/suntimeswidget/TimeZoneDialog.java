@@ -34,6 +34,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -46,13 +47,20 @@ public class TimeZoneDialog extends DialogFragment
 {
     public static final String KEY_TIMEZONE_MODE = "timezoneMode";
     public static final String KEY_TIMEZONE_ID = "timezoneID";
+    public static final String KEY_SOLARTIME_MODE = "solartimeMode";
 
     private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     private String customTimezoneID;
 
     private Spinner spinner_timezoneMode;
+
+    private LinearLayout layout_timezone;
     private TextView label_timezone;
     private Spinner spinner_timezone;
+
+    private LinearLayout layout_solartime;
+    private TextView label_solartime;
+    private Spinner spinner_solartime;
 
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
@@ -145,6 +153,7 @@ public class TimeZoneDialog extends DialogFragment
     {
         WidgetSettings.initDisplayStrings(context);
 
+        layout_timezone = (LinearLayout) dialogContent.findViewById(R.id.appwidget_timezone_custom_layout);
         label_timezone = (TextView) dialogContent.findViewById(R.id.appwidget_timezone_custom_label);
 
         ArrayAdapter<WidgetSettings.TimezoneMode> spinner_timezoneModeAdapter;
@@ -160,6 +169,7 @@ public class TimeZoneDialog extends DialogFragment
                                                                final WidgetSettings.TimezoneMode[] timezoneModes = WidgetSettings.TimezoneMode.values();
                                                                WidgetSettings.TimezoneMode timezoneMode = timezoneModes[parent.getSelectedItemPosition()];
                                                                setUseCustomTimezone((timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE));
+                                                               setUseSolarTime((timezoneMode == WidgetSettings.TimezoneMode.SOLAR_TIME));
                                                            }
 
                                                            public void onNothingSelected(AdapterView<?> parent)
@@ -173,13 +183,30 @@ public class TimeZoneDialog extends DialogFragment
 
         spinner_timezone = (Spinner) dialogContent.findViewById(R.id.appwidget_timezone_custom);
         spinner_timezone.setAdapter(spinner_timezoneAdapter);
+
+        layout_solartime = (LinearLayout) dialogContent.findViewById(R.id.appwidget_solartime_layout);
+        label_solartime = (TextView) dialogContent.findViewById(R.id.appwidget_solartime_label);
+
+        ArrayAdapter<WidgetSettings.SolarTimeMode> spinner_solartimeAdapter;
+        spinner_solartimeAdapter = new ArrayAdapter<WidgetSettings.SolarTimeMode>(context, R.layout.layout_listitem_oneline, WidgetSettings.SolarTimeMode.values());
+        spinner_solartimeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner_solartime = (Spinner) dialogContent.findViewById(R.id.appwidget_solartime);
+        spinner_solartime.setAdapter(spinner_solartimeAdapter);
+    }
+
+    private void setUseSolarTime( boolean value )
+    {
+        label_solartime.setEnabled(value);
+        spinner_solartime.setEnabled(value);
+        layout_solartime.setVisibility((value ? View.VISIBLE : View.GONE));
+        layout_timezone.setVisibility((value ? View.GONE : View.VISIBLE));
     }
 
     private void setUseCustomTimezone( boolean value )
     {
         String timezoneID = (value ? customTimezoneID : TimeZone.getDefault().getID());
         spinner_timezone.setSelection(WidgetTimezones.ordinal(timezoneID), true);
-
         label_timezone.setEnabled(value);
         spinner_timezone.setEnabled(value);
     }
@@ -216,6 +243,9 @@ public class TimeZoneDialog extends DialogFragment
             spinner_timezone.setSelection(0);
             Log.w("loadTimezoneSettings", "unable to find timezone " + customTimezoneID + " in the list! Setting selection to 0.");
         }
+
+        WidgetSettings.SolarTimeMode solartimeMode = WidgetSettings.loadSolarTimeModePref(context, appWidgetId);
+        spinner_solartime.setSelection(solartimeMode.ordinal());
     }
 
     /**
@@ -244,6 +274,13 @@ public class TimeZoneDialog extends DialogFragment
                 Log.w("loadTimezoneSettings", "unable to find timezone " + customTimezoneID + " in the list! Setting selection to 0.");
             }
         }
+
+        String solarModeString = bundle.getString(KEY_SOLARTIME_MODE);
+        if (solarModeString != null)
+        {
+            WidgetSettings.SolarTimeMode solartimeMode = WidgetSettings.SolarTimeMode.valueOf(solarModeString);
+            spinner_solartime.setSelection(solartimeMode.ordinal());
+        }
     }
 
     /**
@@ -259,6 +296,11 @@ public class TimeZoneDialog extends DialogFragment
         // save: custom timezone
         WidgetTimezones.TimeZoneItem customTimezone = (WidgetTimezones.TimeZoneItem) spinner_timezone.getSelectedItem();
         WidgetSettings.saveTimezonePref(context, appWidgetId, customTimezone.getID());
+
+        // save: solar timemode
+        WidgetSettings.SolarTimeMode[] solarTimeModes = WidgetSettings.SolarTimeMode.values();
+        WidgetSettings.SolarTimeMode solarTimeMode = solarTimeModes[spinner_solartime.getSelectedItemPosition()];
+        WidgetSettings.saveSolarTimeModePref(context, appWidgetId, solarTimeMode);
     }
 
     /**
@@ -275,6 +317,11 @@ public class TimeZoneDialog extends DialogFragment
         // save: custom timezone
         WidgetTimezones.TimeZoneItem customTimezone = (WidgetTimezones.TimeZoneItem) spinner_timezone.getSelectedItem();
         bundle.putString(KEY_TIMEZONE_ID, customTimezone.getID());
+
+        // save: solar timemode
+        WidgetSettings.SolarTimeMode[] solarTimeModes = WidgetSettings.SolarTimeMode.values();
+        WidgetSettings.SolarTimeMode solarTimeMode = solarTimeModes[spinner_solartime.getSelectedItemPosition()];
+        bundle.putString(KEY_SOLARTIME_MODE, solarTimeMode.name());
     }
 
     /**
