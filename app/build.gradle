@@ -47,7 +47,7 @@ android
 dependencies
 {
     compile 'com.android.support:appcompat-v7:23.2.1'
-    compile 'com.luckycatlabs:SunriseSunsetCalculator:1.2'
+    compile 'com.github.forrestguice:sunrisesunsetlib-java:master-SNAPSHOT'
 }
 
 def getDateAsMillis()
