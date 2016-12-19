@@ -30,6 +30,8 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.util.TypedValue;
+
+import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -37,6 +39,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
@@ -54,6 +57,9 @@ public class TimeZoneDialog extends DialogFragment
     private TextView label_timezone;
     private Spinner spinner_timezone;
 
+    private ActionMode actionMode = null;
+
+    private ActionMode.Callback spinner_timezone_actionMode;
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
@@ -119,6 +125,29 @@ public class TimeZoneDialog extends DialogFragment
         });*/
 
         initViews(myParent, dialogContent);
+        spinner_timezone_actionMode = new WidgetTimezones.TimeZoneSpinnerSortAction(myParent, spinner_timezone)
+        {
+            @Override
+            public void onSortTimeZones(WidgetTimezones.TimeZoneItemAdapter result, WidgetTimezones.TimeZoneSort sortMode)
+            {
+                super.onSortTimeZones(result, sortMode);
+            }
+
+            @Override
+            public void onSaveSortMode( WidgetTimezones.TimeZoneSort sortMode )
+            {
+                super.onSaveSortMode(sortMode);
+                AppSettings.setTimeZoneSortPref(getContext(), sortMode);
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode)
+            {
+                super.onDestroyActionMode(mode);
+                actionMode = null;
+            }
+        };
+
         if (savedInstanceState != null)
         {
             // saved dialog state; restore it
@@ -144,8 +173,7 @@ public class TimeZoneDialog extends DialogFragment
     protected void initViews( Context context, View dialogContent )
     {
         WidgetSettings.initDisplayStrings(context);
-
-        label_timezone = (TextView) dialogContent.findViewById(R.id.appwidget_timezone_custom_label);
+        WidgetTimezones.TimeZoneSort.initDisplayStrings(context);
 
         ArrayAdapter<WidgetSettings.TimezoneMode> spinner_timezoneModeAdapter;
         spinner_timezoneModeAdapter = new ArrayAdapter<WidgetSettings.TimezoneMode>(context, R.layout.layout_listitem_oneline, WidgetSettings.TimezoneMode.values());
@@ -174,6 +202,14 @@ public class TimeZoneDialog extends DialogFragment
         label_timezone = (TextView) dialogContent.findViewById(R.id.appwidget_timezone_custom_label);
         spinner_timezone = (Spinner) dialogContent.findViewById(R.id.appwidget_timezone_custom);
         spinner_timezone.setAdapter(spinner_timezoneAdapter);
+        spinner_timezone.setOnLongClickListener(new View.OnLongClickListener()
+        {
+            @Override
+            public boolean onLongClick(View view)
+            {
+                return triggerTimeZoneActionMode(view);
+            }
+        });
         label_timezone.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -194,7 +230,20 @@ public class TimeZoneDialog extends DialogFragment
 
     private boolean triggerTimeZoneActionMode(View view)
     {
+        if (actionMode != null)
+            return false;
 
+        Dialog dialog = getDialog();
+        if (dialog == null)
+            return false;
+
+        View v = dialog.getWindow().getDecorView();
+        if (v == null)
+            return false;
+
+        actionMode = v.startActionMode(spinner_timezone_actionMode);
+        actionMode.setTitle(getString(R.string.timezone_sort_contextAction));
+        view.setSelected(true);
         return true;
     }
 

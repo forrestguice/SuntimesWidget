@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.app.Dialog;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
@@ -25,6 +26,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -80,6 +82,10 @@ public class SuntimesConfigActivity extends AppCompatActivity
     private TextView label_timezone;
     private Spinner spinner_timezone;
     private String customTimezoneID;
+    private ActionMode.Callback spinner_timezone_actionMode;
+    private WidgetTimezones.TimeZoneItemAdapter spinner_timezone_adapter;
+
+    private ActionMode actionMode = null;
 
     public SuntimesConfigActivity()
     {
@@ -125,6 +131,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
         AppSettings.initLocale(this);
         WidgetSettings.initDefaults(this);
         WidgetSettings.initDisplayStrings(this);
+        WidgetTimezones.TimeZoneSort.initDisplayStrings(this);
     }
 
     @Override
@@ -273,7 +280,6 @@ public class SuntimesConfigActivity extends AppCompatActivity
         // widget: timezone
         //
         label_timezone = (TextView)findViewById(R.id.appwidget_timezone_custom_label);
-
         spinner_timezone = (Spinner)findViewById(R.id.appwidget_timezone_custom);
 
         if (label_timezone != null)
@@ -303,6 +309,29 @@ public class SuntimesConfigActivity extends AppCompatActivity
                     R.layout.layout_listitem_twoline, WidgetTimezones.getValues() );
             spinner_timezone.setAdapter(spinner_timezoneAdapter);
         }
+
+        spinner_timezone_actionMode = new WidgetTimezones.TimeZoneSpinnerSortAction(context, spinner_timezone)
+        {
+            @Override
+            public void onSortTimeZones(WidgetTimezones.TimeZoneItemAdapter result, WidgetTimezones.TimeZoneSort sortMode)
+            {
+                super.onSortTimeZones(result, sortMode);
+            }
+
+            @Override
+            public void onSaveSortMode( WidgetTimezones.TimeZoneSort sortMode )
+            {
+                super.onSaveSortMode(sortMode);
+                AppSettings.setTimeZoneSortPref(SuntimesConfigActivity.this, sortMode);
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode)
+            {
+                super.onDestroyActionMode(mode);
+                actionMode = null;
+            }
+        };
 
         //
         // widget: location
@@ -425,6 +454,12 @@ public class SuntimesConfigActivity extends AppCompatActivity
 
     private boolean triggerTimeZoneActionMode(View view)
     {
+        if (actionMode == null)
+        {
+            actionMode = startActionMode(spinner_timezone_actionMode);
+            actionMode.setTitle(getString(R.string.timezone_sort_contextAction));
+            return true;
+        }
         return false;
     }
 
