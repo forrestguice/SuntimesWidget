@@ -171,15 +171,35 @@ public class TimeZoneDialog extends DialogFragment
         WidgetTimezones.TimeZoneItemAdapter spinner_timezoneAdapter;
         spinner_timezoneAdapter = new WidgetTimezones.TimeZoneItemAdapter(context, R.layout.layout_listitem_twoline, WidgetTimezones.getValues() );
 
+        label_timezone = (TextView) dialogContent.findViewById(R.id.appwidget_timezone_custom_label);
         spinner_timezone = (Spinner) dialogContent.findViewById(R.id.appwidget_timezone_custom);
         spinner_timezone.setAdapter(spinner_timezoneAdapter);
+        label_timezone.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                triggerTimeZoneActionMode(view);
+            }
+        });
+        label_timezone.setOnLongClickListener(new View.OnLongClickListener()
+        {
+            @Override
+            public boolean onLongClick(View view)
+            {
+                return triggerTimeZoneActionMode(view);
+            }
+        });
+    }
+
+    private boolean triggerTimeZoneActionMode(View view)
+    {
+
+        return true;
     }
 
     private void setUseCustomTimezone( boolean value )
     {
-        String timezoneID = (value ? customTimezoneID : TimeZone.getDefault().getID());
-        spinner_timezone.setSelection(WidgetTimezones.ordinal(timezoneID), true);
-
         label_timezone.setEnabled(value);
         spinner_timezone.setEnabled(value);
     }

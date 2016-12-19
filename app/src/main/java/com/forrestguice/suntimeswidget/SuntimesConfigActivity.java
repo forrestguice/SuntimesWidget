@@ -275,6 +275,27 @@ public class SuntimesConfigActivity extends AppCompatActivity
         label_timezone = (TextView)findViewById(R.id.appwidget_timezone_custom_label);
 
         spinner_timezone = (Spinner)findViewById(R.id.appwidget_timezone_custom);
+
+        if (label_timezone != null)
+        {
+            label_timezone.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    triggerTimeZoneActionMode(view);
+                }
+            });
+            label_timezone.setOnLongClickListener(new View.OnLongClickListener()
+            {
+                @Override
+                public boolean onLongClick(View view)
+                {
+                    return triggerTimeZoneActionMode(view);
+                }
+            });
+        }
+
         if (spinner_timezone != null)
         {
             WidgetTimezones.TimeZoneItemAdapter spinner_timezoneAdapter;
@@ -400,6 +421,11 @@ public class SuntimesConfigActivity extends AppCompatActivity
 
         label_timezone.setEnabled(value);
         spinner_timezone.setEnabled(value);
+    }
+
+    private boolean triggerTimeZoneActionMode(View view)
+    {
+        return false;
     }
 
     /**
