@@ -158,20 +158,68 @@ public class WidgetTimezones
 
     public static class TimeZoneItemAdapter extends ArrayAdapter<TimeZoneItem>
     {
-        public TimeZoneItemAdapter(Context context, int textViewResourceId)
+        private int[] colors;
+        private TimeZoneSort sortBy = null;
+        private String line1, line2;
+        private List<TimeZoneItem> items;
+
+        public TimeZoneItemAdapter(Context context, int resource)
         {
-            super(context, textViewResourceId);
+            super(context, resource);
+            init(context);
         }
 
         public TimeZoneItemAdapter(Context context, int resource, List<TimeZoneItem> items)
         {
             super(context, resource, items);
+            this.items = items;
+            init(context);
         }
 
-        private View getItemView(int position, View convertView, ViewGroup parent)
+        public TimeZoneItemAdapter(Context context, int resource, List<TimeZoneItem> items, TimeZoneSort sortBy)
+        {
+            super(context, resource, items);
+            this.items = items;
+            this.sortBy = sortBy;
+            init(context);
+            sort();
+        }
+
+        private void init(Context context)
+        {
+            colors = context.getResources().getIntArray(R.array.utcOffsetColors);
+            line1 = context.getString(R.string.timezoneCustom_line1);
+            line2 = context.getString(R.string.timezoneCustom_line2);
+        }
+
+        public int getColorForTimeZoneOffset( double utcHour )
+        {
+            int offset = (int)Math.round(utcHour);
+            while (offset < 0)
+            {
+                offset += 12;
+            }
+            return colors[offset % colors.length];
+        }
+
+        public TimeZoneSort getSort()
+        {
+            return sortBy;
+        }
+
+        private void sort()
+        {
+            if (sortBy != null)
+            {
+                Collections.sort(items, sortBy.getComparator());
+                notifyDataSetChanged();
+            }
+        }
+
+        private View getItemView(int position, View convertView, ViewGroup parent, boolean colorize)
         {
             LayoutInflater layoutInflater = LayoutInflater.from(getContext());
-            View view = layoutInflater.inflate(R.layout.layout_listitem_twoline, parent, false);
+            View view = layoutInflater.inflate(R.layout.layout_listitem_timezone, parent, false);
 
             TimeZoneItem timezone = getItem(position);
             if (timezone == null)
@@ -181,12 +229,27 @@ public class WidgetTimezones
             }
 
             TextView primaryText = (TextView)view.findViewById(android.R.id.text1);
-            primaryText.setText( timezone.getID() );
+            primaryText.setText(String.format(line1, timezone.getID()));
 
             TextView secondaryText = (TextView)view.findViewById(android.R.id.text2);
             if (secondaryText != null)
             {
-                secondaryText.setText( timezone.getDisplayString() );
+                secondaryText.setText(String.format(line2, timezone.getOffsetString(), timezone.getDisplayString()));
+            }
+
+            ImageView icon = (ImageView) view.findViewById(android.R.id.icon);
+            if (icon != null)
+            {
+                if (colorize)
+                {
+                    GradientDrawable d = (GradientDrawable) icon.getBackground().mutate();
+                    d.setColor(getColorForTimeZoneOffset(timezone.getOffsetHr()));
+                    d.invalidateSelf();
+                    icon.setVisibility(View.VISIBLE);
+
+                } else {
+                    icon.setVisibility(View.GONE);
+                }
             }
 
             return view;
@@ -195,14 +258,51 @@ public class WidgetTimezones
         @Override
         public View getDropDownView(int position, View convertView, ViewGroup parent)
         {
-            return getItemView(position, convertView, parent);
+            return getItemView(position, convertView, parent, true);
         }
 
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent)
         {
-            return getItemView(position, convertView, parent);
+            return getItemView(position, convertView, parent, false);
+        }
+
+
+        public int ordinal( String timezoneID )
+        {
+            timezoneID = timezoneID.trim();
+
+            int ord = -1;
+            for (int i=0; i<items.size(); i++)
+            {
+                String otherID = items.get(i).getID().trim();
+                if (timezoneID.equals(otherID))
+                {
+                    ord = i;
+                    break;
+                }
+            }
+            return ord;
+        }
+
+        public TimeZoneItem[] values()
+        {
+            int numTimeZones = items.size();
+            TimeZoneItem[] retArray = new TimeZoneItem[numTimeZones];
+            for (int i=0; i<numTimeZones; i++)
+            {
+                retArray[i] = items.get(i);
+            }
+            return retArray;
+        }
+
+        public List<TimeZoneItem> getValues()
+        {
+            return items;
+        }
+    }
+
     ///////////////////////////////////////
     ///////////////////////////////////////
 
