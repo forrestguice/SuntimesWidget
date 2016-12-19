@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.settings;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -130,11 +131,13 @@ public class WidgetTimezones
     {
         private String timeZoneID;
         private String displayString;
+        private double offsetHr;
 
-        public TimeZoneItem(String timeZoneID, String displayString)
+        public TimeZoneItem(String timeZoneID, String displayString, double offsetHr)
         {
             this.timeZoneID = timeZoneID;
             this.displayString = displayString;
+            this.offsetHr = offsetHr;
         }
 
         public String getID()
@@ -147,9 +150,19 @@ public class WidgetTimezones
             return displayString;
         }
 
+        public double getOffsetHr()
+        {
+            return offsetHr;
+        }
+
+        public String getOffsetString()
+        {
+            return offsetHr + "";
+        }
+
         public String toString()
         {
-            return timeZoneID + " (" + displayString + ")";
+            return timeZoneID + " (" + getOffsetString() + " " + displayString + ")";
         }
     }
 
@@ -384,4 +397,56 @@ public class WidgetTimezones
             return c;
         }
     }
+    ///////////////////////////////////////
+    ///////////////////////////////////////
+
+    public static class TimeZonesLoadTask extends AsyncTask<TimeZoneSort, Object, TimeZoneItemAdapter>
+    {
+        private Context context;
+
+        public TimeZonesLoadTask(Context context)
+        {
+            this.context = context;
+        }
+
+        @Override
+        protected void onPreExecute() {}
+
+        @Override
+        protected TimeZoneItemAdapter doInBackground(TimeZoneSort... sorts)
+        {
+            TimeZoneSort sortBy = null;
+            if (sorts != null && sorts.length > 0)
+            {
+                sortBy = sorts[0];
+            }
+
+            ArrayList<TimeZoneItem> timezones = new ArrayList<TimeZoneItem>();
+            String[] allTimezoneValues = TimeZone.getAvailableIDs();
+            for (int i = 0; i < allTimezoneValues.length; i++)
+            {
+                TimeZone timezone = TimeZone.getTimeZone(allTimezoneValues[i]);
+                double offsetHr = timezone.getRawOffset() / (1000 * 60 * 60);
+                timezones.add(new TimeZoneItem(timezone.getID(), timezone.getDisplayName(), offsetHr));
+            }
+
+            if (sortBy != null)
+            {
+                Collections.sort(timezones, sortBy.getComparator());
+            }
+
+            return new WidgetTimezones.TimeZoneItemAdapter(context, 0, timezones, sortBy);
+        }
+
+        @Override
+        protected void onProgressUpdate(Object... progress)
+        {
+        }
+
+        @Override
+        protected void onPostExecute(TimeZoneItemAdapter result)
+        {
+        }
+    }
+
 }
