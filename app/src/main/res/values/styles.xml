@@ -11,6 +11,8 @@
         <item name="timeCardBackground">@color/background_floating_material_light</item>
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
         <item name="hrColor">@color/ripple_material_light</item>
+        <item name="text_accentColor">@color/accent_material_light</item>
+        <item name="text_disabledColor">@color/primary_text_disabled_material_light</item>
 
         <item name="icActionGPS">@drawable/ic_action_location_found_light</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off_light</item>
@@ -39,6 +41,8 @@
         <item name="timeCardBackground">@color/background_floating_material_dark</item>
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
         <item name="hrColor">@color/ripple_material_dark</item>
+        <item name="text_accentColor">@color/accent_material_dark</item>
+        <item name="text_disabledColor">@color/primary_text_disabled_material_dark</item>
 
         <item name="icActionGPS">@drawable/ic_action_location_found</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off</item>
