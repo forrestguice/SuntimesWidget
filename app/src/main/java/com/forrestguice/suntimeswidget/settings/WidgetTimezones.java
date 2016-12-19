@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.settings;
 
+import com.forrestguice.suntimeswidget.R;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -31,9 +32,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
-
-import com.forrestguice.suntimeswidget.R;
+import android.widget.Toast;
+import android.graphics.drawable.GradientDrawable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -44,92 +47,43 @@ import java.util.TimeZone;
 
 public class WidgetTimezones
 {
-    private static ArrayList<TimeZoneItem> timezones = new ArrayList<TimeZoneItem>();
-    private static boolean initialized = false;
-
-    private static void initTimezoneList()
-    {
-        timezones.clear();
-
-        String[] allTimezoneValues = TimeZone.getAvailableIDs();
-        for (int i = 0; i < allTimezoneValues.length; i++)
-        {
-            TimeZone timezone = TimeZone.getTimeZone(allTimezoneValues[i]);
-            timezones.add(new TimeZoneItem(timezone.getID(), timezone.getDisplayName()));
-        }
-
-        initialized = true;
-    }
-
-    public static int ordinal( String timezoneID )
-    {
-        if (!initialized)
-        {
-            initTimezoneList();
-        }
-
-        timezoneID = timezoneID.trim();
-
-        int ord = -1;
-        for (int i=0; i<timezones.size(); i++)
-        {
-            String otherID = timezones.get(i).getID().trim();
-            if (timezoneID.equals(otherID))
-            {
-                ord = i;
-                break;
-            }
-        }
-        return ord;
-    }
-
-    public static TimeZoneItem[] values()
-    {
-        if (!initialized)
-        {
-            initTimezoneList();
-        }
-
-        int numTimeZones = timezones.size();
-        TimeZoneItem[] retArray = new TimeZoneItem[numTimeZones];
-        for (int i=0; i<numTimeZones; i++)
-        {
-            retArray[i] = timezones.get(i);
-        }
-        return retArray;
-    }
-
-    public static List<TimeZoneItem> getValues()
-    {
-        if (!initialized)
-        {
-            initTimezoneList();
-        }
-
-        return timezones;
-    }
-
-    /**
-     * Perform a rough check of the timezone/location on the given date; this function should catch
-     * gross mismatches (but in many cases may be completely inaccurate).
-     * @param timezoneID a timezone
-     * @param atLocation a location
-     * @param onDate a date
-     * @return true if the timezone/location/date combination seems unreasonable (timezone is probably not local)
-     */
     public static boolean isProbablyNotLocal( String timezoneID, WidgetSettings.Location atLocation, Date onDate )
     {
-        double offsetTolerance = 2;    // tolerance in hrs
-        TimeZone timezone = TimeZone.getTimeZone(timezoneID);
-
+        return isProbablyNotLocal(TimeZone.getTimeZone(timezoneID), atLocation, onDate);
+    }
+    public static boolean isProbablyNotLocal( TimeZone timezone, WidgetSettings.Location atLocation, Date onDate )
+    {
         double zoneOffset = timezone.getOffset(onDate.getTime()) / (1000 * 60 * 60);   // timezone offset in hrs
         double lonOffset = atLocation.getLongitudeAsDouble() * 24 / 360;               // longitude offset in hrs
-
         double offsetDiff = Math.abs(lonOffset - zoneOffset);
-        Log.d("DEBUG", "offsets: " + zoneOffset + ", " + lonOffset);
-        Log.d("DEBUG", "timezone offset difference: " +  offsetDiff +" [" + offsetTolerance + "]");
 
-        return (offsetDiff > offsetTolerance);
+        double offsetTolerance = 3;    // tolerance in hrs
+        boolean isProbablyNotLocal = (offsetDiff > offsetTolerance);
+        Log.d("DEBUG", "offsets: " + zoneOffset + ", " + lonOffset);
+        Log.d("DEBUG", "offset delta: " +  offsetDiff +" [" + offsetTolerance + "] (" + isProbablyNotLocal + ")");
+
+        return isProbablyNotLocal;
+    }
+
+    ///////////////////////////////////////
+    ///////////////////////////////////////
+
+    public static void selectTimeZone( Spinner spinner, TimeZoneItemAdapter adapter, String timezoneID )
+    {
+        if (spinner == null || adapter == null || timezoneID == null)
+            return;
+
+        int i = adapter.ordinal(timezoneID);
+        int n = adapter.values().length;
+
+        if (i >= 0 && i < n)
+        {
+            spinner.setSelection(i, false);
+
+        } else {
+            spinner.setSelection(0);
+            Log.w("selectTimeZone", "unable to find timezone " + timezoneID + " in the list! Setting selection to 0.");
+        }
     }
 
     ///////////////////////////////////////
