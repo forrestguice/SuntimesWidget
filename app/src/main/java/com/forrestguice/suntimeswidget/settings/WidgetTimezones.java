@@ -21,15 +21,23 @@ package com.forrestguice.suntimeswidget.settings;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
@@ -397,6 +405,90 @@ public class WidgetTimezones
             return c;
         }
     }
+
+    ///////////////////////////////////////
+    ///////////////////////////////////////
+
+    /**
+     * ActionMode for sorting time zone spinners.
+     */
+    public static class TimeZoneSpinnerSortAction implements ActionMode.Callback
+    {
+        private Context context;
+        private Spinner spinner;
+
+        public TimeZoneSpinnerSortAction(Context context, Spinner spinner)
+        {
+            this.context = context;
+            this.spinner = spinner;
+        }
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu)
+        {
+            MenuInflater inflater = mode.getMenuInflater();
+            inflater.inflate(R.menu.timezonesort, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu)
+        {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item)
+        {
+            switch (item.getItemId())
+            {
+                case R.id.sortById:
+                    sortTimeZones(WidgetTimezones.TimeZoneSort.SORT_BY_ID);
+                    mode.finish();
+                    return true;
+
+                case R.id.sortByOffset:
+                    sortTimeZones(WidgetTimezones.TimeZoneSort.SORT_BY_OFFSET);
+                    mode.finish();
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode actionMode) {}
+
+        protected void sortTimeZones( final WidgetTimezones.TimeZoneSort sortMode )
+        {
+            onSaveSortMode(sortMode);
+
+            //WidgetTimezones.TimeZoneItemAdapter spinnerAdapter = new WidgetTimezones.TimeZoneItemAdapter(context, 0, WidgetTimezones.getValues(), sortMode);
+            //spinner.setAdapter(spinnerAdapter);
+
+            WidgetTimezones.TimeZonesLoadTask loadTask = new WidgetTimezones.TimeZonesLoadTask(context)
+            {
+                @Override
+                protected void onPostExecute(WidgetTimezones.TimeZoneItemAdapter result)
+                {
+                    spinner.setAdapter(result);
+                    onSortTimeZones(result, sortMode);
+                }
+            };
+            loadTask.execute(sortMode);
+        }
+
+        public void onSaveSortMode( WidgetTimezones.TimeZoneSort sortMode ) {}
+
+        public void onSortTimeZones( TimeZoneItemAdapter adapter, WidgetTimezones.TimeZoneSort sortMode)
+        {
+            String msg = context.getString(R.string.timezone_sort_msg, sortMode.getDisplayString());
+            Toast toast = Toast.makeText(context, msg, Toast.LENGTH_LONG);
+            toast.show();
+        }
+    }
+
     ///////////////////////////////////////
     ///////////////////////////////////////
 
