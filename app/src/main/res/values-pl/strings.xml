@@ -271,6 +271,13 @@
         <item>Pokaż poprzednią notatkę</item>
     </string-array>
 
+    <!-- App Setting: time zone sort -->
+    <string name="timezone_sort_byOffset">by offset</string>    <!-- TODO -->
+    <string name="timezone_sort_byId">by id</string>            <!-- TODO -->
+    <string name="timezone_sort_byName">by name</string>  <!-- TODO -->
+    <string name="timezone_sort_contextAction">Sort zones</string>           <!-- action bar title --> <!-- TODO -->
+    <string name="timezone_sort_msg">Time zones sorted (%1$s).</string>      <!-- toast msg --> <!-- TODO -->
+
     <!-- App Setting: GPS fix time limit -->
     <string name="configLabel_getFix_maxElapse">Limit czasu GPS</string>
     <string name="configLabel_getFix_maxElapse_summary">Zrezygnuj po <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>

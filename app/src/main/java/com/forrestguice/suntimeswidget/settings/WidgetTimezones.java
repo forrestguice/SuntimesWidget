@@ -203,6 +203,85 @@ public class WidgetTimezones
         public View getView(int position, View convertView, ViewGroup parent)
         {
             return getItemView(position, convertView, parent);
+    ///////////////////////////////////////
+    ///////////////////////////////////////
+
+    public enum TimeZoneSort
+    {
+        SORT_BY_OFFSET("offset"), SORT_BY_ID("id"), SORT_BY_DISPLAYNAME("name");
+
+        private String displayString;
+
+        private TimeZoneSort( String displayString )
+        {
+            this.displayString = displayString;
+        }
+
+        public void setDisplayString(String displayString)
+        {
+            this.displayString = displayString;
+        }
+
+        public String getDisplayString()
+        {
+            return displayString;
+        }
+
+        public String toString()
+        {
+            return getDisplayString();
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            String[] labels = context.getResources().getStringArray( R.array.timezoneSort_display );
+            SORT_BY_OFFSET.setDisplayString(labels[0]);
+            SORT_BY_ID.setDisplayString(labels[1]);
+            SORT_BY_DISPLAYNAME.setDisplayString(labels[1]);
+        }
+
+        public Comparator<TimeZoneItem> getComparator()
+        {
+            Comparator<TimeZoneItem> c;
+            switch (this)
+            {
+                case SORT_BY_OFFSET:
+                    c = new Comparator<TimeZoneItem>()
+                    {
+                        @Override
+                        public int compare(TimeZoneItem t1, TimeZoneItem t2)
+                        {
+                            Double offset1 = t1.getOffsetHr();
+                            Double offset2 = t2.getOffsetHr();
+                            return offset1.compareTo(offset2);
+                        }
+                    };
+                    break;
+
+                case SORT_BY_DISPLAYNAME:
+                    c = new Comparator<TimeZoneItem>()
+                    {
+                        @Override
+                        public int compare(TimeZoneItem t1, TimeZoneItem t2)
+                        {
+                            return t1.getDisplayString().compareTo(t2.getDisplayString());
+                        }
+                    };
+                    break;
+
+                case SORT_BY_ID:
+                default:
+                    c = new Comparator<TimeZoneItem>()
+                    {
+                        @Override
+                        public int compare(TimeZoneItem t1, TimeZoneItem t2)
+                        {
+                            return t1.getID().compareTo(t2.getID());
+                        }
+                    };
+                    break;
+            }
+            return c;
         }
     }
 }
