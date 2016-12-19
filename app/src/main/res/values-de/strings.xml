@@ -408,7 +408,7 @@
 
   <!-- Dialog: Clear Places (progress) -->
   <string name="locationcleared_dialog_title">Orte löschen</string>
-  <string name="locationcleared_dialog_message">Datenbank wird gelöscht...</string>
+  <string name="locationcleared_dialog_message">Datenbank wird gelöscht…</string>
   <string name="locationcleared_toast_success">Die Ortsdatenbank wurde zurückgesetzt.</string>
 
   <!-- Dialog: Export Places -->

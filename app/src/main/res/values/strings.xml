@@ -32,7 +32,7 @@
          The time zone field that appears below the clock (main activity).
     -->
     <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
-    <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> The time zone may be wrong for this location (not local).</string>  <!-- snackbar message -->
+    <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> The time zone may be wrong for this location.</string>  <!-- snackbar message -->
 
     <!-- Field: date
          The date field that appears above the table (main activity).
@@ -237,7 +237,7 @@
     <string name="configLabel_ui">User Interface</string>                       <!-- group title -->
 
     <!-- App Setting: UI Warnings -->
-    <string name="configLabel_ui_showWarnings">Enable warnings</string>
+    <string name="configLabel_ui_showWarnings">Show warnings</string>
     <string name="configLabel_ui_showWarnings_summary">Show configuration warning messages</string>
 
     <!-- App Setting: UI Theme -->
