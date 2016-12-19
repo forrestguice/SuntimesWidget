@@ -18,4 +18,13 @@
     <color name="btn_tint_pressed">#ff9900</color>
 
     <drawable name="transparent_color">#00000000</drawable>
+
+    <array name="utcOffsetColors">
+        <item>#fc8d59</item>
+        <item>#fee090</item>
+        <item>#a8d696</item>
+        <item>#7dbdd1</item>
+        <item>#ab8ac1</item>
+        <item>#ee6362</item>
+    </array>
 </resources>
