@@ -18,15 +18,13 @@
 
 package com.forrestguice.suntimeswidget;
 
-import android.app.Dialog;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+
 import android.util.Log;
-import android.view.ActionMode;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -37,6 +35,9 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
@@ -328,7 +329,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
             loadTask.execute(sortZonesBy);
         }
 
-        spinner_timezone_actionMode = new WidgetTimezones.TimeZoneSpinnerSortAction(context, spinner_timezone)
+        spinner_timezone_actionMode = new WidgetTimezones.TimeZoneSpinnerSortActionCompat(context, spinner_timezone)
         {
             @Override
             public void onSortTimeZones(WidgetTimezones.TimeZoneItemAdapter result, WidgetTimezones.TimeZoneSort sortMode)
@@ -479,7 +480,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
     {
         if (actionMode == null)
         {
-            actionMode = startActionMode(spinner_timezone_actionMode);
+            actionMode = startSupportActionMode(spinner_timezone_actionMode);
             actionMode.setTitle(getString(R.string.timezone_sort_contextAction));
             return true;
         }

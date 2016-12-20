@@ -364,17 +364,69 @@ public class WidgetTimezones
     ///////////////////////////////////////
 
     /**
-     * ActionMode for sorting time zone spinners.
+     * ActionMode (base) for sorting time zone spinners.
      */
-    public static class TimeZoneSpinnerSortAction implements ActionMode.Callback
+    public abstract static class TimeZoneSpinnerSortActionBase
     {
-        private Context context;
-        private Spinner spinner;
+        protected Context context;
+        protected Spinner spinner;
 
-        public TimeZoneSpinnerSortAction(Context context, Spinner spinner)
+        public void init(Context context, Spinner spinner)
         {
             this.context = context;
             this.spinner = spinner;
+        }
+
+        public void onSaveSortMode( WidgetTimezones.TimeZoneSort sortMode ) {}
+
+        public void onSortTimeZones( TimeZoneItemAdapter adapter, WidgetTimezones.TimeZoneSort sortMode )
+        {
+            String msg = context.getString(R.string.timezone_sort_msg, sortMode.getDisplayString());
+            Toast toast = Toast.makeText(context, msg, Toast.LENGTH_LONG);
+            toast.show();
+        }
+
+        protected void sortTimeZones( final WidgetTimezones.TimeZoneSort sortMode )
+        {
+            onSaveSortMode(sortMode);
+            WidgetTimezones.TimeZonesLoadTask loadTask = new WidgetTimezones.TimeZonesLoadTask(context)
+            {
+                @Override
+                protected void onPostExecute(WidgetTimezones.TimeZoneItemAdapter result)
+                {
+                    spinner.setAdapter(result);
+                    onSortTimeZones(result, sortMode);
+                }
+            };
+            loadTask.execute(sortMode);
+        }
+
+        public boolean onActionItemClicked(int action)
+        {
+            switch (action)
+            {
+                case R.id.sortById:
+                    sortTimeZones(WidgetTimezones.TimeZoneSort.SORT_BY_ID);
+                    return true;
+
+                case R.id.sortByOffset:
+                    sortTimeZones(WidgetTimezones.TimeZoneSort.SORT_BY_OFFSET);
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+    }
+
+    /**
+     * ActionMode for sorting time zone spinners.
+     */
+    public static class TimeZoneSpinnerSortAction extends TimeZoneSpinnerSortActionBase implements ActionMode.Callback
+    {
+        public TimeZoneSpinnerSortAction(Context context, Spinner spinner)
+        {
+            init(context, spinner);
         }
 
         @Override
@@ -392,54 +444,56 @@ public class WidgetTimezones
         }
 
         @Override
+        public void onDestroyActionMode(ActionMode actionMode) {}
+
+        @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item)
         {
-            switch (item.getItemId())
+            if (onActionItemClicked(item.getItemId()))
             {
-                case R.id.sortById:
-                    sortTimeZones(WidgetTimezones.TimeZoneSort.SORT_BY_ID);
-                    mode.finish();
-                    return true;
-
-                case R.id.sortByOffset:
-                    sortTimeZones(WidgetTimezones.TimeZoneSort.SORT_BY_OFFSET);
-                    mode.finish();
-                    return true;
-
-                default:
-                    return false;
+                mode.finish();
+                return true;
             }
+            return false;
+        }
+    }
+
+    /**
+     * ActionMode for sorting time zone spinners (support mode version).
+     */
+    public static class TimeZoneSpinnerSortActionCompat extends TimeZoneSpinnerSortActionBase implements android.support.v7.view.ActionMode.Callback
+    {
+        public TimeZoneSpinnerSortActionCompat(Context context, Spinner spinner)
+        {
+            init(context, spinner);
         }
 
         @Override
-        public void onDestroyActionMode(ActionMode actionMode) {}
-
-        protected void sortTimeZones( final WidgetTimezones.TimeZoneSort sortMode )
+        public boolean onCreateActionMode(android.support.v7.view.ActionMode mode, Menu menu)
         {
-            onSaveSortMode(sortMode);
-
-            //WidgetTimezones.TimeZoneItemAdapter spinnerAdapter = new WidgetTimezones.TimeZoneItemAdapter(context, 0, WidgetTimezones.getValues(), sortMode);
-            //spinner.setAdapter(spinnerAdapter);
-
-            WidgetTimezones.TimeZonesLoadTask loadTask = new WidgetTimezones.TimeZonesLoadTask(context)
-            {
-                @Override
-                protected void onPostExecute(WidgetTimezones.TimeZoneItemAdapter result)
-                {
-                    spinner.setAdapter(result);
-                    onSortTimeZones(result, sortMode);
-                }
-            };
-            loadTask.execute(sortMode);
+            MenuInflater inflater = mode.getMenuInflater();
+            inflater.inflate(R.menu.timezonesort, menu);
+            return true;
         }
 
-        public void onSaveSortMode( WidgetTimezones.TimeZoneSort sortMode ) {}
-
-        public void onSortTimeZones( TimeZoneItemAdapter adapter, WidgetTimezones.TimeZoneSort sortMode)
+        @Override
+        public boolean onPrepareActionMode(android.support.v7.view.ActionMode mode, Menu menu)
         {
-            String msg = context.getString(R.string.timezone_sort_msg, sortMode.getDisplayString());
-            Toast toast = Toast.makeText(context, msg, Toast.LENGTH_LONG);
-            toast.show();
+            return false;
+        }
+
+        @Override
+        public void onDestroyActionMode(android.support.v7.view.ActionMode actionMode) {}
+
+        @Override
+        public boolean onActionItemClicked(android.support.v7.view.ActionMode mode, MenuItem item)
+        {
+            if (onActionItemClicked(item.getItemId()))
+            {
+                mode.finish();
+                return true;
+            }
+            return false;
         }
     }
 

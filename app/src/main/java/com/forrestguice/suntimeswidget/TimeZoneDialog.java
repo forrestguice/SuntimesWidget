@@ -24,12 +24,17 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
+
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDialogFragment;
+import android.util.Log;
+import android.util.TypedValue;
+
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
-import android.util.TypedValue;
 
 import android.view.ActionMode;
 import android.view.LayoutInflater;
@@ -57,9 +62,8 @@ public class TimeZoneDialog extends DialogFragment
     private TextView label_timezone;
     private Spinner spinner_timezone;
 
-    private ActionMode actionMode = null;
+    private Object actionMode = null;
 
-    private ActionMode.Callback spinner_timezone_actionMode;
     private WidgetTimezones.TimeZoneItemAdapter spinner_timezone_adapter;
     private boolean loading = false;
 
@@ -147,30 +151,6 @@ public class TimeZoneDialog extends DialogFragment
                 WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
             }
         };
-        spinner_timezone_actionMode = new WidgetTimezones.TimeZoneSpinnerSortAction(myParent, spinner_timezone)
-        {
-            @Override
-            public void onSortTimeZones(WidgetTimezones.TimeZoneItemAdapter result, WidgetTimezones.TimeZoneSort sortMode)
-            {
-                super.onSortTimeZones(result, sortMode);
-                spinner_timezone_adapter = result;
-                WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
-            }
-
-            @Override
-            public void onSaveSortMode( WidgetTimezones.TimeZoneSort sortMode )
-            {
-                super.onSaveSortMode(sortMode);
-                AppSettings.setTimeZoneSortPref(getContext(), sortMode);
-            }
-
-            @Override
-            public void onDestroyActionMode(ActionMode mode)
-            {
-                super.onDestroyActionMode(mode);
-                actionMode = null;
-            }
-        };
 
         if (savedInstanceState != null)
         {
@@ -253,21 +233,87 @@ public class TimeZoneDialog extends DialogFragment
         });
     }
 
+    /**
+     * trigger the time zone ActionMode
+     * @param view
+     * @return true ActionMode started, false otherwise
+     */
     private boolean triggerTimeZoneActionMode(View view)
     {
-        if (actionMode != null)
+        if (this.actionMode != null)
             return false;
 
-        Dialog dialog = getDialog();
-        if (dialog == null)
-            return false;
+        // ActionMode for HONEYCOMB (11) and above
+        if (Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB)
+        {
+            Dialog dialog = getDialog();
+            if (dialog == null)
+                return false;
 
-        View v = dialog.getWindow().getDecorView();
-        if (v == null)
-            return false;
+            View v = dialog.getWindow().getDecorView();
+            if (v == null)
+                return false;
 
-        actionMode = v.startActionMode(spinner_timezone_actionMode);
-        actionMode.setTitle(getString(R.string.timezone_sort_contextAction));
+            ActionMode actionMode = v.startActionMode(new WidgetTimezones.TimeZoneSpinnerSortAction(getContext(), spinner_timezone)
+            {
+                @Override
+                public void onSortTimeZones(WidgetTimezones.TimeZoneItemAdapter result, WidgetTimezones.TimeZoneSort sortMode)
+                {
+                    super.onSortTimeZones(result, sortMode);
+                    spinner_timezone_adapter = result;
+                    WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
+                }
+
+                @Override
+                public void onSaveSortMode( WidgetTimezones.TimeZoneSort sortMode )
+                {
+                    super.onSaveSortMode(sortMode);
+                    AppSettings.setTimeZoneSortPref(getContext(), sortMode);
+                }
+
+                @Override
+                public void onDestroyActionMode(ActionMode mode)
+                {
+                    super.onDestroyActionMode(mode);
+                    TimeZoneDialog.this.actionMode = null;
+                }
+            });
+            this.actionMode = actionMode;
+            actionMode.setTitle(getString(R.string.timezone_sort_contextAction));
+
+        } else {
+            // LEGACY; ActionMode for pre HONEYCOMB
+            AppCompatActivity activity = (AppCompatActivity)getActivity();
+            android.support.v7.view.ActionMode actionMode = activity.startSupportActionMode(new WidgetTimezones.TimeZoneSpinnerSortActionCompat(getContext(), spinner_timezone)
+            {
+                @Override
+                public void onSortTimeZones(WidgetTimezones.TimeZoneItemAdapter result, WidgetTimezones.TimeZoneSort sortMode)
+                {
+                    super.onSortTimeZones(result, sortMode);
+                    spinner_timezone_adapter = result;
+                    WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
+                }
+
+                @Override
+                public void onSaveSortMode( WidgetTimezones.TimeZoneSort sortMode )
+                {
+                    super.onSaveSortMode(sortMode);
+                    AppSettings.setTimeZoneSortPref(context, sortMode);
+                }
+
+                @Override
+                public void onDestroyActionMode(android.support.v7.view.ActionMode mode)
+                {
+                    super.onDestroyActionMode(mode);
+                    TimeZoneDialog.this.actionMode = null;
+                }
+            });
+            if (actionMode != null)
+            {
+                actionMode.setTitle(getString(R.string.timezone_sort_contextAction));
+            }
+        }
+
         view.setSelected(true);
         return true;
     }
