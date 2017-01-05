@@ -16,103 +16,109 @@
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content" android:layout_height="match_parent"
-    android:orientation="vertical" >
 
-    <!-- Action Bar -->
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/app_menubar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:theme="?attr/toolbarTheme"
-        app:popupTheme="?attr/actionBarPopupTheme" />
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content" android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="8dp">
+        android:layout_width="wrap_content" android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <!-- Action Bar -->
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/app_menubar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="?attr/toolbarTheme"
+            app:popupTheme="?attr/actionBarPopupTheme" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:animateLayoutChanges="true"
-            tools:ignore="UnusedAttribute">
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
 
-            <!-- Clock -->
-            <include layout="@layout/info_time_now" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
+                tools:ignore="UnusedAttribute">
 
-            <!-- Flipper: Note -->
-            <FrameLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
+                <!-- Clock -->
+                <include layout="@layout/info_time_now" />
 
-                <ViewFlipper
-                    android:id="@+id/info_note_flipper"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:background="?attr/selectableItemBackground"
-                    android:layout_marginLeft="5dp" android:layout_marginStart="5dp">
+                <!-- Flipper: Note -->
+                <FrameLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
 
-                    <LinearLayout
-                        android:id="@+id/info_time_note1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical">
+                    <ViewFlipper
+                        android:id="@+id/info_note_flipper"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="?attr/selectableItemBackground"
+                        android:layout_marginLeft="5dp" android:layout_marginStart="5dp">
 
-                        <include layout="@layout/info_time_note" />
+                        <LinearLayout
+                            android:id="@+id/info_time_note1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical">
 
-                    </LinearLayout>
+                            <include layout="@layout/info_time_note" />
 
-                    <LinearLayout
-                        android:id="@+id/info_time_note2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical">
+                        </LinearLayout>
 
-                        <include layout="@layout/info_time_note" />
+                        <LinearLayout
+                            android:id="@+id/info_time_note2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical">
 
-                    </LinearLayout>
+                            <include layout="@layout/info_time_note" />
 
-                </ViewFlipper>
+                        </LinearLayout>
 
-                <ProgressBar
-                    android:id="@+id/info_note_progress"
-                    style="?android:attr/progressBarStyle"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_gravity="center" />
+                    </ViewFlipper>
 
-            </FrameLayout>
+                    <ProgressBar
+                        android:id="@+id/info_note_progress"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_gravity="center" />
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <!-- Flipper: Time Card -->
+            <ViewFlipper
+                android:id="@+id/info_time_flipper"
+                android:layout_width="fill_parent" android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:elevation="5dp"
+                tools:ignore="UnusedAttribute">
+
+                <!-- Times for Today -->
+                <LinearLayout
+                    android:id="@+id/info_time_all_today"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    tools:ignore="UnusedAttribute">
+                    <include layout="@layout/info_time_card"/>
+                </LinearLayout>
+
+                <!-- Times for Tomorrow -->
+                <LinearLayout
+                    android:id="@+id/info_time_all_tomorrow"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    tools:ignore="UnusedAttribute">
+                    <include layout="@layout/info_time_card"/>
+                </LinearLayout>
+
+            </ViewFlipper>
 
         </LinearLayout>
 
-        <!-- Flipper: Time Card -->
-        <ViewFlipper
-            android:id="@+id/info_time_flipper"
-            android:layout_width="fill_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:elevation="5dp"
-            tools:ignore="UnusedAttribute">
-
-            <!-- Times for Today -->
-            <LinearLayout
-                android:id="@+id/info_time_all_today"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                tools:ignore="UnusedAttribute">
-                <include layout="@layout/info_time_card"/>
-            </LinearLayout>
-
-            <!-- Times for Tomorrow -->
-            <LinearLayout
-                android:id="@+id/info_time_all_tomorrow"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                tools:ignore="UnusedAttribute">
-                <include layout="@layout/info_time_card"/>
-            </LinearLayout>
-
-        </ViewFlipper>
-
     </LinearLayout>
-
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

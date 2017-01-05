@@ -10,14 +10,14 @@
     <!-- Action Bar
          The text that appears in the overflow menu / menuItem contentDescription.
     -->
-    <string name="configAction_refreshLocation">Aktualigu</string>
+    <string name="configAction_refreshLocation">Aktualigi</string>
     <string name="configAction_addLocation">Loko</string>
-    <string name="configAction_mapLocation">Montru mapon</string>
-    <string name="configAction_mapLocation_chooser">Montru lokon per</string>
+    <string name="configAction_mapLocation">Montri mapon</string>
+    <string name="configAction_mapLocation_chooser">Montri lokon per</string>
     <string name="configAction_mapLocation_noapp">Ne povas trovi map-aplikaĵon!</string>
-    <string name="configAction_setAlarm">Agordu averton</string>
-    <string name="configAction_setTimeZone">Elektu horzonon</string>
-    <string name="configAction_setDate">Elektu daton</string>
+    <string name="configAction_setAlarm">Agordi averton</string>
+    <string name="configAction_setTimeZone">Elekti horzonon</string>
+    <string name="configAction_setDate">Elekti daton</string>
     <string name="configAction_help">Helpo</string>
     <string name="configAction_settings">Agordoj</string>
     <string name="configAction_aboutWidget">Pri</string>
@@ -28,13 +28,20 @@
     <string name="nextDay">Sekva tago</string>
     <string name="prevDay">Eksa tago</string>
 
+    <!-- Field: timezone
+         The time zone field that appears below the clock (main activity).
+    -->
+    <!-- line commented to use default: <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string> -->
+    <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> The time zone may be wrong for this location (not local).</string>  <!-- snackbar message --> <!-- TODO -->
+
     <!-- Field: date
          The date field that appears above the table (main activity).
          e.g. [dateDesc] \n [date]
              where [dateDesc] is a yesterday/today/tomorrow, past_, or future_ string.
              where [date] is a dateString formatted by app using user's locale
     -->
-    <string name="dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g></string>
+    <!-- line commented to use default: <string name="dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string> -->
+    <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> The date is set to a day other than today.</string>  <!-- snackbar message --> <!-- TODO -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
     <string name="past_yesterday">Pasinteco (-1)</string>
@@ -115,9 +122,9 @@
     -->
 
     <!-- WidgetConfig Activity -->
-    <string name="configAction_addWidget">Aldonu fenestraĵon</string>                   <!-- Button: Add -->
-    <string name="configAction_reconfigWidget_short">Reagordu</string>       <!-- Button: Reconfigure -->
-    <string name="configAction_reconfigWidget">Reagordu fenestraĵon</string>      <!-- used as title when reconfiguring -->
+    <string name="configAction_addWidget">Aldoni fenestraĵon</string>                   <!-- Button: Add -->
+    <string name="configAction_reconfigWidget_short">Reagordi</string>       <!-- Button: Reconfigure -->
+    <string name="configAction_reconfigWidget">Reagordi fenestraĵon</string>      <!-- used as title when reconfiguring -->
     <string name="configLabel_title0">Suntempoj fenestraĵo</string>                  <!-- used as title when adding -->
     <string name="configLabel_title1">Baskulebla fenestraĵo </string>                 <!-- used as title when adding -->
 
@@ -167,6 +174,13 @@
     <string name="configLabel_action_onNoteTap">Dum tuŝeto sur noto:</string>           <!-- spinner label -->
     <string name="configLabel_action_onDateTap">Dum tuŝeto sur dato:</string>           <!-- spinner label -->
 
+    <!-- App Setting: time zone sort -->
+    <string name="timezone_sort_byOffset">by offset</string>    <!-- TODO -->
+    <string name="timezone_sort_byId">by id</string>            <!-- TODO -->
+    <string name="timezone_sort_byName">by name</string>  <!-- TODO -->
+    <string name="timezone_sort_contextAction">Sort zones</string>           <!-- action bar title --> <!-- TODO -->
+    <string name="timezone_sort_msg">Time zones sorted (%1$s).</string>      <!-- toast msg --> <!-- TODO -->
+
     <!-- Widget Setting: location -->
     <string name="locationMode_current">Aktuala (laste konita)</string>  <!-- setting -->
     <string name="locationMode_custom">Propra</string>           <!-- setting -->
@@ -180,9 +194,9 @@
     <string name="configLabel_location_name">Nomo:</string>                     <!-- edittext label -->
     <string name="configHint_location_name">(malnepra)</string>                 <!-- edittext hint -->
 
-    <string name="configAction_getFix">Determinu pozicion</string>    <!-- button (contentDescription) -->
-    <string name="configAction_editPlace">Redaktu</string>         <!-- button (contentDescription) -->
-    <string name="configAction_savePlace">Konservu</string>         <!-- button (contentDescription) -->
+    <string name="configAction_getFix">Determini pozicion</string>    <!-- button (contentDescription) -->
+    <string name="configAction_editPlace">Redakti</string>         <!-- button (contentDescription) -->
+    <string name="configAction_savePlace">Konservi</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
     <string name="timezoneMode_solar">Solar Time</string>                       <!-- setting -->  <!-- TODO -->
@@ -191,6 +205,8 @@
 
     <string name="solartime_localMean">Local Mean Time</string>                 <!-- setting / custom timezone id --> <!-- TODO -->
     <string name="solartime_apparent">Apparent Solar Time</string>              <!-- setting / custom timezone id --> <!-- TODO -->
+    <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
+    <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
     <string name="configLabel_timezone">Agordoj pri horzono</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Reĝimo:</string>                     <!-- spinner label -->
@@ -209,7 +225,7 @@
     <string name="compareMode_yesterday">Hieraŭ</string>                     <!-- setting -->
     <string name="compareMode_tomorrow">Morgaŭ</string>                       <!-- setting -->
 
-    <string name="configLabel_general_compareMode">Komparu kun:</string>    <!-- spinner label -->
+    <string name="configLabel_general_compareMode">Kompari kun:</string>    <!-- spinner label -->
 
     <!-- Widget Setting: Launch App -->
     <string name="configLabel_action_launch">Agado:</string>                 <!-- edittext label -->
@@ -228,11 +244,17 @@
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">Lokoj</string>                           <!-- group title -->
-    <string name="configLabel_places_export">Elportu lokojn</string>
-    <string name="configLabel_places_clear">Vakigu lokojn</string>
+    <string name="configLabel_places_export">Elporti lokojn</string>
+    <string name="configLabel_places_clear">Vakigi lokojn</string>
+
+    <!-- App Setting: UI -->
+    <string name="configLabel_ui">Fasado</string>                       <!-- group title -->
+
+    <!-- App Setting: UI Warnings -->
+    <string name="configLabel_ui_showWarnings">Enable warnings</string>                               <!-- TODO -->
+    <string name="configLabel_ui_showWarnings_summary">Show configuration warning messages</string>   <!-- TODO -->
 
     <!-- App Setting: UI Theme -->
-    <string name="configLabel_ui">Fasado</string>                       <!-- group title -->
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
         <item>Hela etoso</item>
         <item>Malhela etoso</item>
@@ -297,8 +319,8 @@
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Plani averton por</string>
     <string name="schedalarm_dialog_title">Plani averton</string>
-    <string name="schedalarm_dialog_ok">Planu averton</string>
-    <string name="schedalarm_dialog_cancel">Rezignu</string>
+    <string name="schedalarm_dialog_ok">Plani averton</string>
+    <string name="schedalarm_dialog_cancel">Rezigni</string>
     <string name="schedalarm_dialog_error">Averto ne agordita…</string>
     <string name="schedalarm_dialog_error2">Ne povis agordi averton…</string>
     <string name="schedalarm_dialog_note">post <xliff:g id="timetext" example="6h 30m">%s</xliff:g> de nun.</string>
@@ -354,30 +376,30 @@
     <!-- gps_lastfix (current location mode) -->
     <string name="gps_lastfix_title_set">Pozicio agordita</string>               <!-- may appear as place name when location set by intent -->
     <string name="gps_lastfix_title_found">Pozicio determinita</string>            <!-- may appear as place name when location set by gps -->
-    <string name="gps_lastfix_title_searching">Determinanta pozicion</string>     <!-- may appear in ActionBar title while gps in progress -->
+    <string name="gps_lastfix_title_searching">Determinado de pozicio</string>     <!-- may appear in ActionBar title while gps in progress -->
     <string name="gps_lastfix_toast_notfound">GPS ne povis trovi pozicion, reiranta lastan scian pozicion.</string>  <!-- displayed briefly after gps has failed to get a location -->
     <string name="gps_lastfix_toast_cancelled">Aktualigo de GPS ĉesigita.</string> <!-- displayed briefly when gps refresh cancelled -->
 
     <!-- Dialog: KeepTrying GPS? -->
     <string name="gps_keeptrying_title">Pozicio nekonata</string>
     <string name="gps_keeptrying_msg">Ne povas determini la pozicion</string>
-    <string name="gps_keeptrying_ok">Reprovu</string>
-    <string name="gps_keeptrying_cancel">Rezignu</string>
+    <string name="gps_keeptrying_ok">Reprovi</string>
+    <string name="gps_keeptrying_cancel">Rezigni</string>
 
     <!-- Dialog: Use Date -->
     <string name="timedate_dialog_title">Agordi daton</string>
-    <string name="timedate_dialog_ok">Agordu</string>
-    <string name="timedate_dialog_cancel">Nuligu</string>
+    <string name="timedate_dialog_ok">Agordi</string>
+    <string name="timedate_dialog_cancel">Nuligi</string>
 
     <!-- Dialog: Use Timezone -->
     <string name="timezone_dialog_title">Horzono</string>
-    <string name="timezone_dialog_ok">Agordu</string>
-    <string name="timezone_dialog_cancel">Nuligu</string>
+    <string name="timezone_dialog_ok">Agordi</string>
+    <string name="timezone_dialog_cancel">Nuligi</string>
 
     <!-- Dialog: Set Location -->
     <string name="location_dialog_title">Loko</string>
-    <string name="location_dialog_ok">Aktualigu</string>
-    <string name="location_dialog_cancel">Nuligu</string>
+    <string name="location_dialog_ok">Aktualigi</string>
+    <string name="location_dialog_cancel">Nuligi</string>
     <string name="location_dialog_error_lat">Latitudo malkorektas.</string>
     <string name="location_dialog_error_lon">Longitudo malkorektas.</string>
 
@@ -386,20 +408,20 @@
     <!-- Dialog: Clear Places -->
     <string name="locationclear_dialog_title">Ĉu forigi lokojn?</string>
     <string name="locationclear_dialog_message">Ĉu vi certe volas vakigi la datumbazon de lokoj?</string>
-    <string name="locationclear_dialog_ok">Vakigu</string>
-    <string name="locationclear_dialog_cancel">Nuligu</string>
+    <string name="locationclear_dialog_ok">Vakigi</string>
+    <string name="locationclear_dialog_cancel">Nuligi</string>
 
     <!-- Dialog: Clear Places (progress) -->
     <string name="locationcleared_dialog_title">Forigi lokojn</string>
-    <string name="locationcleared_dialog_message">Vakiganta la datumbazon . . .</string>
+    <string name="locationcleared_dialog_message">Vakigado de la datumbazo . . .</string>
     <string name="locationcleared_toast_success">La datumbazo de lokoj estas vakigita.</string>
 
     <!-- Dialog: Export Places -->
     <string name="locationexport_dialog_title">Elporti lokojn</string>
-    <string name="locationexport_dialog_message">Elportanta la datumbazon al csv-dosiero.</string>
+    <string name="locationexport_dialog_message">Elportado de la datumbazo al csv-dosiero.</string>
     <string name="msg_export_success">Provizore kopiita al <xliff:g id="filepath">%s</xliff:g></string>
     <string name="msg_export_failure">Elportado al <xliff:g id="filepath">%s</xliff:g> malsukcesis!</string>
-    <string name="msg_export_to">Elportu per</string>  <!-- title displayed over "share action" chooser -->
+    <string name="msg_export_to">Elporti per</string>  <!-- title displayed over "share action" chooser -->
 
     <!-- Dialog: About -->
     <string name="about_dialog_title">Pri</string>
@@ -421,7 +443,7 @@
     ]]></string>
     <string name="app_legal2"><![CDATA[
         Germana traduko de Henrik "HerHde" Hüttemann. </br>
-        Pola kaj Esperanta tradukoj de verdulo.
+        Pola kaj Esperanta tradukoj de Verdulo.
     ]]></string>
 
     <!-- Dialog: Help -->
@@ -456,7 +478,7 @@
         La plene unusignifa nome de klaso de Ago por lanĉi.<br/>
     ]]></string>
     <string name="help_widgetlist"><![CDATA[
-          Por <b>aldoni novan fenestraĵon</b>, iru al la ĉefekrano.To <b>add a new widget</b> you must navigate to the home screen.<br/><br/>
+          Por <b>aldoni novan fenestraĵon</b>, iru al la ĉefekrano.<br/><br/>
           Por <b>reagordi ekzistan fenestraĵon</b>, elektu ĝin de la jena listo.<br/>
     ]]></string>
 

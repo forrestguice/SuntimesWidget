@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android
 {
     compileSdkVersion 23
-    buildToolsVersion "21.1.2"
+    buildToolsVersion "23.0.1"
 
     sourceSets
     {
@@ -21,8 +21,8 @@ android
         applicationId "com.forrestguice.suntimeswidget"
         minSdkVersion 10
         targetSdkVersion 23
-        versionCode 7
-        versionName "0.2.2"
+        versionCode 8
+        versionName "0.2.3"
 
         buildConfigField "java.util.Date", "BUILD_TIME", "new java.util.Date(" + getDateAsMillis() + "L)"
         buildConfigField "String", "GIT_HASH", "\"${getGitHash()}\""
@@ -46,6 +46,7 @@ android
 
 dependencies
 {
+    compile 'com.android.support:design:24.2.1'
     compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'com.github.forrestguice:sunrisesunsetlib-java:master-SNAPSHOT'
 }

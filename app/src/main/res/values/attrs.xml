@@ -7,6 +7,8 @@
     <attr name="settingsCardBackground" format="reference" />
     <attr name="timeCardBackground" format="reference" />
     <attr name="hrColor" format="reference" />
+    <attr name="text_accentColor" format="reference" />
+    <attr name="text_disabledColor" format="reference" />
 
     <attr name="toolbarTheme" format="reference" />
     <attr name="icActionPlace" format="reference" />
@@ -14,6 +16,8 @@
     <attr name="icActionTime" format="reference" />
     <attr name="icActionAlarm" format="reference" />
     <attr name="icActionAbout" format="reference" />
+    <attr name="icActionWarning" format="reference" />
+    <attr name="icActionError" format="reference" />
     <attr name="icActionSettings" format="reference" />
     <attr name="icActionHelp" format="reference" />
     <attr name="icActionSave" format="reference" />

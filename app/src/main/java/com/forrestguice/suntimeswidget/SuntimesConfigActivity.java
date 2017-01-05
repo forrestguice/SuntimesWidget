@@ -23,7 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -36,6 +36,9 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
@@ -88,6 +91,10 @@ public class SuntimesConfigActivity extends AppCompatActivity
     private Spinner spinner_solartime;
 
     private String customTimezoneID;
+    private ActionMode.Callback spinner_timezone_actionMode;
+    private WidgetTimezones.TimeZoneItemAdapter spinner_timezone_adapter;
+
+    private ActionMode actionMode = null;
 
     public SuntimesConfigActivity()
     {
@@ -133,6 +140,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
         AppSettings.initLocale(this);
         WidgetSettings.initDefaults(this);
         WidgetSettings.initDisplayStrings(this);
+        WidgetTimezones.TimeZoneSort.initDisplayStrings(this);
     }
 
     @Override
@@ -283,12 +291,51 @@ public class SuntimesConfigActivity extends AppCompatActivity
         layout_timezone = (LinearLayout)findViewById(R.id.appwidget_timezone_custom_layout);
         label_timezone = (TextView)findViewById(R.id.appwidget_timezone_custom_label);
         spinner_timezone = (Spinner)findViewById(R.id.appwidget_timezone_custom);
+
+        if (label_timezone != null)
+        {
+            label_timezone.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    triggerTimeZoneActionMode(view);
+                }
+            });
+            label_timezone.setOnLongClickListener(new View.OnLongClickListener()
+            {
+                @Override
+                public boolean onLongClick(View view)
+                {
+                    return triggerTimeZoneActionMode(view);
+                }
+            });
+        }
+
         if (spinner_timezone != null)
         {
-            WidgetTimezones.TimeZoneItemAdapter spinner_timezoneAdapter;
-            spinner_timezoneAdapter = new WidgetTimezones.TimeZoneItemAdapter(this,
-                    R.layout.layout_listitem_twoline, WidgetTimezones.getValues() );
-            spinner_timezone.setAdapter(spinner_timezoneAdapter);
+            View spinner_timezone_empty = findViewById(R.id.appwidget_timezone_custom_empty);
+            spinner_timezone.setEmptyView(spinner_timezone_empty);
+
+            WidgetTimezones.TimeZoneSort sortZonesBy = AppSettings.loadTimeZoneSortPref(context);
+            WidgetTimezones.TimeZonesLoadTask loadTask = new WidgetTimezones.TimeZonesLoadTask(context)
+            {
+                @Override
+                protected void onPreExecute()
+                {
+                    super.onPreExecute();
+                    spinner_timezone.setAdapter(new WidgetTimezones.TimeZoneItemAdapter(SuntimesConfigActivity.this, R.layout.layout_listitem_timezone));
+                }
+
+                @Override
+                protected void onPostExecute(WidgetTimezones.TimeZoneItemAdapter result)
+                {
+                    spinner_timezone_adapter = result;
+                    spinner_timezone.setAdapter(spinner_timezone_adapter);
+                    WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
+                }
+            };
+            loadTask.execute(sortZonesBy);
         }
 
         layout_solartime = (LinearLayout)findViewById(R.id.appwidget_solartime_layout);
@@ -301,6 +348,31 @@ public class SuntimesConfigActivity extends AppCompatActivity
             spinner_solartimeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner_solartime.setAdapter(spinner_solartimeAdapter);
         }
+
+        spinner_timezone_actionMode = new WidgetTimezones.TimeZoneSpinnerSortActionCompat(context, spinner_timezone)
+        {
+            @Override
+            public void onSortTimeZones(WidgetTimezones.TimeZoneItemAdapter result, WidgetTimezones.TimeZoneSort sortMode)
+            {
+                super.onSortTimeZones(result, sortMode);
+                spinner_timezone_adapter = result;
+                WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
+            }
+
+            @Override
+            public void onSaveSortMode( WidgetTimezones.TimeZoneSort sortMode )
+            {
+                super.onSaveSortMode(sortMode);
+                AppSettings.setTimeZoneSortPref(SuntimesConfigActivity.this, sortMode);
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode)
+            {
+                super.onDestroyActionMode(mode);
+                actionMode = null;
+            }
+        };
 
         //
         // widget: location
@@ -423,9 +495,25 @@ public class SuntimesConfigActivity extends AppCompatActivity
     private void setCustomTimezoneEnabled( boolean value )
     {
         String timezoneID = (value ? customTimezoneID : TimeZone.getDefault().getID());
-        spinner_timezone.setSelection(WidgetTimezones.ordinal(timezoneID), true);
+
+        if (spinner_timezone_adapter != null)
+        {
+            spinner_timezone.setSelection(spinner_timezone_adapter.ordinal(timezoneID), true);
+        }
+
         label_timezone.setEnabled(value);
         spinner_timezone.setEnabled(value);
+    }
+
+    private boolean triggerTimeZoneActionMode(View view)
+    {
+        if (actionMode == null)
+        {
+            actionMode = startSupportActionMode(spinner_timezone_actionMode);
+            actionMode.setTitle(getString(R.string.timezone_sort_contextAction));
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -613,23 +701,14 @@ public class SuntimesConfigActivity extends AppCompatActivity
         WidgetSettings.TimezoneMode timezoneMode = WidgetSettings.loadTimezoneModePref(context, appWidgetId);
         spinner_timezoneMode.setSelection(timezoneMode.ordinal());
 
-        customTimezoneID = WidgetSettings.loadTimezonePref(context, appWidgetId);
-        int timezonePos = WidgetTimezones.ordinal(customTimezoneID);
-        int numTimeZones = WidgetTimezones.values().length;
-
-        if (timezonePos >= 0 && timezonePos < numTimeZones)
-        {
-            spinner_timezone.setSelection(timezonePos);
-        } else {
-            spinner_timezone.setSelection(0);
-            Log.w("loadTimezoneSettings", "unable to find timezone " + customTimezoneID + " in the list! Setting selection to 0." );
-        }
-
         WidgetSettings.SolarTimeMode solartimeMode = WidgetSettings.loadSolarTimeModePref(context, appWidgetId);
         spinner_solartime.setSelection(solartimeMode.ordinal());
 
         setCustomTimezoneEnabled(timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE);
         setUseSolarTime(timezoneMode == WidgetSettings.TimezoneMode.SOLAR_TIME);
+
+        customTimezoneID = WidgetSettings.loadTimezonePref(context, appWidgetId);
+        WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
     }
 
     /**

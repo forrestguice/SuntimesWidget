@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2016 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -23,14 +23,16 @@
     android:gravity="center_vertical"
     android:baselineAligned="false">
 
-    <TwoLineListItem
-        android:paddingTop="4dip"
-        android:paddingBottom="4dip"
-        android:layout_width="0dip"
-        android:layout_weight="1"
+    <ImageView
+        android:id="@android:id/icon" android:background="@drawable/ic_colortab"
+        android:layout_width="8dp" android:layout_height="match_parent"
+        tools:ignore="ContentDescription"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:mode="twoLine"
-        android:duplicateParentState="true" >
+        android:orientation="vertical">
 
         <TextView
             style="?android:attr/dropDownItemStyle"
@@ -41,7 +43,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:duplicateParentState="true"
-            tools:text="Primary" />
+            android:paddingTop="0dp" android:paddingBottom="0dp"
+            tools:text="Primary"
+            android:text="@string/time_loading" />
 
         <TextView
             style="?android:attr/dropDownItemStyle"
@@ -51,12 +55,12 @@
             android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@android:id/text1"
-            android:layout_alignLeft="@android:id/text1"
-            android:layout_alignStart="@android:id/text1"
             android:duplicateParentState="true"
-            tools:text="Secondary"/>
+            android:paddingTop="0dp"
+            android:paddingBottom="2dp"
+            tools:text="Secondary"
+            android:text="@string/time_loading" />
 
-    </TwoLineListItem>
+    </LinearLayout>
 
 </LinearLayout>
