@@ -152,9 +152,24 @@ public class SuntimesRiseSetDataset
         return (time.after(sunrise) && time.before(sunset));
     }
 
+    public WidgetSettings.Location location()
+    {
+        return dataActual.location();
+    }
+
     public String timezone()
     {
         return dataActual.timezone();
+    }
+
+    public Date date()
+    {
+        return dataActual.date();
+    }
+
+    public WidgetSettings.TimezoneMode timezoneMode()
+    {
+        return dataActual.timezoneMode();
     }
 
     public Calendar now()

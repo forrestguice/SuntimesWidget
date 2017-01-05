@@ -55,6 +55,12 @@ public class AppSettings
     public static final String PREF_KEY_UI_NOTETAPACTION = "app_ui_notetapaction";
     public static final ClockTapAction PREF_DEF_UI_NOTETAPACTION = ClockTapAction.NEXT_NOTE;
 
+    public static final String PREF_KEY_UI_SHOWWARNINGS = "app_ui_showwarnings";
+    public static final boolean PREF_DEF_UI_SHOWWARNINGS = true;
+
+    public static final String PREF_KEY_UI_TIMEZONESORT = "app_ui_timezonesort";
+    public static final WidgetTimezones.TimeZoneSort PREF_DEF_UI_TIMEZONESORT = WidgetTimezones.TimeZoneSort.SORT_BY_ID;
+
     public static final String PREF_KEY_GETFIX_MINELAPSED = "getFix_minElapsed";
     public static final String PREF_KEY_GETFIX_MAXELAPSED = "getFix_maxElapsed";
     public static final String PREF_KEY_GETFIX_MAXAGE = "getFix_maxAge";
@@ -277,6 +283,34 @@ public class AppSettings
             SHOW_CALENDAR.setDisplayString(labels[2]);
             CONFIG_DATE.setDisplayString(labels[3]);
         }
+    }
+
+    public static void setTimeZoneSortPref( Context context, WidgetTimezones.TimeZoneSort sortMode )
+    {
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        pref.putString(PREF_KEY_UI_TIMEZONESORT, sortMode.name());
+        pref.apply();
+    }
+
+    public static WidgetTimezones.TimeZoneSort loadTimeZoneSortPref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        String modeString = pref.getString(PREF_KEY_UI_TIMEZONESORT, PREF_DEF_UI_TIMEZONESORT.name());
+
+        WidgetTimezones.TimeZoneSort sortMode;
+        try {
+            sortMode = WidgetTimezones.TimeZoneSort.valueOf(modeString);
+
+        } catch (IllegalArgumentException e) {
+            sortMode = PREF_DEF_UI_TIMEZONESORT;
+        }
+        return sortMode;
+    }
+
+    public static boolean loadShowWarningsPref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_UI_SHOWWARNINGS, PREF_DEF_UI_SHOWWARNINGS);
     }
 
     /**

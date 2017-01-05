@@ -456,12 +456,22 @@ public class WidgetSettings
             return latitude;
         }
 
+        public Double getLatitudeAsDouble()
+        {
+            return Double.parseDouble(latitude);
+        }
+
         /**
          * @return longitude in decimal degrees (DD)
          */
         public String getLongitude()
         {
             return longitude;
+        }
+
+        public Double getLongitudeAsDouble()
+        {
+            return Double.parseDouble(longitude);
         }
 
         public String getAltitude() { return altitude; }

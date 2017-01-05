@@ -16,8 +16,8 @@
     <string name="configAction_mapLocation_chooser">View location using</string>
     <string name="configAction_mapLocation_noapp">Unable to find map application!</string>
     <string name="configAction_setAlarm">Set Alarm</string>
-    <string name="configAction_setTimeZone">Use Time Zone</string>
-    <string name="configAction_setDate">Use Date</string>
+    <string name="configAction_setTimeZone">Set Time Zone</string>
+    <string name="configAction_setDate">Set Date</string>
     <string name="configAction_help">Help</string>
     <string name="configAction_settings">Settings</string>
     <string name="configAction_aboutWidget">About</string>
@@ -28,13 +28,20 @@
     <string name="nextDay">Next Day</string>
     <string name="prevDay">Previous Day</string>
 
+    <!-- Field: timezone
+         The time zone field that appears below the clock (main activity).
+    -->
+    <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
+    <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> The time zone may be wrong for this location.</string>  <!-- snackbar message -->
+
     <!-- Field: date
          The date field that appears above the table (main activity).
          e.g. [dateDesc] \n [date]
              where [dateDesc] is a yesterday/today/tomorrow, past_, or future_ string.
              where [date] is a dateString formatted by app using user's locale
     -->
-    <string name="dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g></string>
+    <string name="dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
+    <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> The date is set to a day other than today.</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
     <string name="past_yesterday">Past (-1)</string>
@@ -197,6 +204,9 @@
     <string name="timezoneMode_current">System</string>                         <!-- setting -->
     <string name="timezoneMode_custom">User Defined</string>                    <!-- setting -->
 
+    <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
+    <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
+
     <string name="configLabel_timezone">Time Zone Settings</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Mode:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Time Zone:</string>              <!-- spinner label -->
@@ -235,8 +245,14 @@
     <string name="configLabel_places_export">Export Places</string>
     <string name="configLabel_places_clear">Clear Places</string>
 
-    <!-- App Setting: UI Theme -->
+    <!-- App Setting: UI -->
     <string name="configLabel_ui">User Interface</string>                       <!-- group title -->
+
+    <!-- App Setting: UI Warnings -->
+    <string name="configLabel_ui_showWarnings">Show warnings</string>
+    <string name="configLabel_ui_showWarnings_summary">Show configuration warning messages</string>
+
+    <!-- App Setting: UI Theme -->
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
         <item>Light Theme</item>
         <item>Dark Theme</item>
@@ -289,6 +305,25 @@
         <item>NEXT_NOTE</item>
         <item>PREV_NOTE</item>
     </string-array>
+
+    <!-- App Setting: time zone sort modes -->
+    <string name="timezone_sort_byOffset">by offset</string>
+    <string name="timezone_sort_byId">by id</string>
+    <string name="timezone_sort_byName">by name</string>
+
+    <string-array name="timezoneSort_display">  <!-- display values (one-to-one with timezoneSort_values) -->
+        <item>@string/timezone_sort_byOffset</item>
+        <item>@string/timezone_sort_byId</item>
+        <item>@string/timezone_sort_byName</item>
+    </string-array>
+    <string-array name="timezoneSort_values" translatable="false">   <!-- config values (one-to-one with timezoneSort_display) -->
+        <item>SORT_BY_OFFSET</item>
+        <item>SORT_BY_ID</item>
+        <item>SORT_BY_DISPLAYNAME</item>
+    </string-array>
+
+    <string name="timezone_sort_contextAction">Sort zones</string>           <!-- action bar title -->
+    <string name="timezone_sort_msg">Time zones sorted (%1$s).</string>      <!-- toast msg -->
 
     <!-- App Setting: GPS fix time limit -->
     <string name="configLabel_getFix_maxElapse">GPS time limit</string>

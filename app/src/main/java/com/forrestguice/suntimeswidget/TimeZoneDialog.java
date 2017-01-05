@@ -24,12 +24,19 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
+
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDialogFragment;
+import android.util.Log;
+import android.util.TypedValue;
+
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
-import android.util.TypedValue;
+
+import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -37,6 +44,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
@@ -54,8 +62,13 @@ public class TimeZoneDialog extends DialogFragment
     private TextView label_timezone;
     private Spinner spinner_timezone;
 
+    private Object actionMode = null;
+
+    private WidgetTimezones.TimeZoneItemAdapter spinner_timezone_adapter;
+    private boolean loading = false;
+
     @NonNull @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState)
+    public Dialog onCreateDialog(final Bundle savedInstanceState)
     {
         super.onCreateDialog(savedInstanceState);
 
@@ -119,6 +132,26 @@ public class TimeZoneDialog extends DialogFragment
         });*/
 
         initViews(myParent, dialogContent);
+        WidgetTimezones.TimeZoneSort sortZonesBy = AppSettings.loadTimeZoneSortPref(myParent);
+        WidgetTimezones.TimeZonesLoadTask loadTask = new WidgetTimezones.TimeZonesLoadTask(myParent)
+        {
+            @Override
+            protected void onPreExecute()
+            {
+                super.onPreExecute();
+                spinner_timezone.setAdapter(new WidgetTimezones.TimeZoneItemAdapter(myParent, R.layout.layout_listitem_timezone));
+            }
+
+            @Override
+            protected void onPostExecute(WidgetTimezones.TimeZoneItemAdapter result)
+            {
+                super.onPostExecute(result);
+                spinner_timezone_adapter = result;
+                spinner_timezone.setAdapter(spinner_timezone_adapter);
+                WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
+            }
+        };
+
         if (savedInstanceState != null)
         {
             // saved dialog state; restore it
@@ -130,11 +163,12 @@ public class TimeZoneDialog extends DialogFragment
             Log.d("DEBUG", "TimeZoneDialog onCreate (newState)");
             loadSettings(myParent);
         }
+        loadTask.execute(sortZonesBy);
         return dialog;
     }
 
     @Override
-    public void onSaveInstanceState( Bundle outState )
+    public void onSaveInstanceState(Bundle outState)
     {
         Log.d("DEBUG", "TimeZoneDialog onSaveInstanceState");
         saveSettings(outState);
@@ -144,8 +178,7 @@ public class TimeZoneDialog extends DialogFragment
     protected void initViews( Context context, View dialogContent )
     {
         WidgetSettings.initDisplayStrings(context);
-
-        label_timezone = (TextView) dialogContent.findViewById(R.id.appwidget_timezone_custom_label);
+        WidgetTimezones.TimeZoneSort.initDisplayStrings(context);
 
         ArrayAdapter<WidgetSettings.TimezoneMode> spinner_timezoneModeAdapter;
         spinner_timezoneModeAdapter = new ArrayAdapter<WidgetSettings.TimezoneMode>(context, R.layout.layout_listitem_oneline, WidgetSettings.TimezoneMode.values());
@@ -168,18 +201,130 @@ public class TimeZoneDialog extends DialogFragment
                                                        }
         );
 
-        WidgetTimezones.TimeZoneItemAdapter spinner_timezoneAdapter;
-        spinner_timezoneAdapter = new WidgetTimezones.TimeZoneItemAdapter(context, R.layout.layout_listitem_twoline, WidgetTimezones.getValues() );
-
+        label_timezone = (TextView) dialogContent.findViewById(R.id.appwidget_timezone_custom_label);
         spinner_timezone = (Spinner) dialogContent.findViewById(R.id.appwidget_timezone_custom);
-        spinner_timezone.setAdapter(spinner_timezoneAdapter);
+
+        View spinner_timezone_empty = dialogContent.findViewById(R.id.appwidget_timezone_custom_empty);
+        spinner_timezone.setEmptyView(spinner_timezone_empty);
+
+        spinner_timezone.setOnLongClickListener(new View.OnLongClickListener()
+        {
+            @Override
+            public boolean onLongClick(View view)
+            {
+                return triggerTimeZoneActionMode(view);
+            }
+        });
+        label_timezone.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                triggerTimeZoneActionMode(view);
+            }
+        });
+        label_timezone.setOnLongClickListener(new View.OnLongClickListener()
+        {
+            @Override
+            public boolean onLongClick(View view)
+            {
+                return triggerTimeZoneActionMode(view);
+            }
+        });
+    }
+
+    /**
+     * trigger the time zone ActionMode
+     * @param view
+     * @return true ActionMode started, false otherwise
+     */
+    private boolean triggerTimeZoneActionMode(View view)
+    {
+        if (this.actionMode != null)
+            return false;
+
+        // ActionMode for HONEYCOMB (11) and above
+        if (Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB)
+        {
+            Dialog dialog = getDialog();
+            if (dialog == null)
+                return false;
+
+            View v = dialog.getWindow().getDecorView();
+            if (v == null)
+                return false;
+
+            ActionMode actionMode = v.startActionMode(new WidgetTimezones.TimeZoneSpinnerSortAction(getContext(), spinner_timezone)
+            {
+                @Override
+                public void onSortTimeZones(WidgetTimezones.TimeZoneItemAdapter result, WidgetTimezones.TimeZoneSort sortMode)
+                {
+                    super.onSortTimeZones(result, sortMode);
+                    spinner_timezone_adapter = result;
+                    WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
+                }
+
+                @Override
+                public void onSaveSortMode( WidgetTimezones.TimeZoneSort sortMode )
+                {
+                    super.onSaveSortMode(sortMode);
+                    AppSettings.setTimeZoneSortPref(getContext(), sortMode);
+                }
+
+                @Override
+                public void onDestroyActionMode(ActionMode mode)
+                {
+                    super.onDestroyActionMode(mode);
+                    TimeZoneDialog.this.actionMode = null;
+                }
+            });
+            this.actionMode = actionMode;
+            actionMode.setTitle(getString(R.string.timezone_sort_contextAction));
+
+        } else {
+            // LEGACY; ActionMode for pre HONEYCOMB
+            AppCompatActivity activity = (AppCompatActivity)getActivity();
+            android.support.v7.view.ActionMode actionMode = activity.startSupportActionMode(new WidgetTimezones.TimeZoneSpinnerSortActionCompat(getContext(), spinner_timezone)
+            {
+                @Override
+                public void onSortTimeZones(WidgetTimezones.TimeZoneItemAdapter result, WidgetTimezones.TimeZoneSort sortMode)
+                {
+                    super.onSortTimeZones(result, sortMode);
+                    spinner_timezone_adapter = result;
+                    WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
+                }
+
+                @Override
+                public void onSaveSortMode( WidgetTimezones.TimeZoneSort sortMode )
+                {
+                    super.onSaveSortMode(sortMode);
+                    AppSettings.setTimeZoneSortPref(context, sortMode);
+                }
+
+                @Override
+                public void onDestroyActionMode(android.support.v7.view.ActionMode mode)
+                {
+                    super.onDestroyActionMode(mode);
+                    TimeZoneDialog.this.actionMode = null;
+                }
+            });
+            if (actionMode != null)
+            {
+                actionMode.setTitle(getString(R.string.timezone_sort_contextAction));
+            }
+        }
+
+        view.setSelected(true);
+        return true;
     }
 
     private void setUseCustomTimezone( boolean value )
     {
-        String timezoneID = (value ? customTimezoneID : TimeZone.getDefault().getID());
-        spinner_timezone.setSelection(WidgetTimezones.ordinal(timezoneID), true);
-
+        if (spinner_timezone_adapter != null)
+        {
+            String timezoneID = (value ? customTimezoneID : TimeZone.getDefault().getID());
+            spinner_timezone.setSelection(spinner_timezone_adapter.ordinal(timezoneID), true);
+        }
         label_timezone.setEnabled(value);
         spinner_timezone.setEnabled(value);
     }
@@ -206,16 +351,7 @@ public class TimeZoneDialog extends DialogFragment
         spinner_timezoneMode.setSelection(timezoneMode.ordinal());
 
         customTimezoneID = WidgetSettings.loadTimezonePref(context, appWidgetId);
-        int timezonePos = WidgetTimezones.ordinal(customTimezoneID);
-        int numTimeZones = WidgetTimezones.values().length;
-
-        if (timezonePos >= 0 && timezonePos < numTimeZones)
-        {
-            spinner_timezone.setSelection(timezonePos);
-        } else {
-            spinner_timezone.setSelection(0);
-            Log.w("loadTimezoneSettings", "unable to find timezone " + customTimezoneID + " in the list! Setting selection to 0.");
-        }
+        WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
     }
 
     /**
@@ -232,18 +368,7 @@ public class TimeZoneDialog extends DialogFragment
         }
 
         customTimezoneID = bundle.getString(KEY_TIMEZONE_ID);
-        if (customTimezoneID != null)
-        {
-            int timezonePos = WidgetTimezones.ordinal(customTimezoneID);
-            int numTimeZones = WidgetTimezones.values().length;
-            if (timezonePos >= 0 && timezonePos < numTimeZones)
-            {
-                spinner_timezone.setSelection(timezonePos);
-            } else {
-                spinner_timezone.setSelection(0);
-                Log.w("loadTimezoneSettings", "unable to find timezone " + customTimezoneID + " in the list! Setting selection to 0.");
-            }
-        }
+        WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
     }
 
     /**
