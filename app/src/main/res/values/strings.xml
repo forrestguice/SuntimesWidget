@@ -515,6 +515,7 @@
                 * <b>%lon</b> for longitude <br/>
                 * <b>%m</b> for time mode (short) (e.g. "Civil") <br/>
                 * <b>%M</b> for time mode (long) (e.g. "Civil Twilight") <br/>
+                * <b>%s</b> for data source (e.g. sunrisesunsetlib) <br/>
                 * <b>%t</b> for time zone (id) (e.g. US/Arizona) <br/>
     ]]></string>
 

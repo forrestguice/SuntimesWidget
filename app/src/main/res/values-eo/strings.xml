@@ -452,7 +452,7 @@
                 * <b>%m</b> por temp-reĝimo (mallonge) (ekz. "Civila") <br/>
                 * <b>%M</b> por temp-reĝimo (longe) (ekz. "Civila krepusko") <br/>
                 * <b>%t</b> por horzono (ekz. Usono/Arizono) <br/>
-    ]]></string>
+    ]]></string>  <!-- TODO: add line for %s -->
 
     <string name="help_general">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_general_timeMode">%1$s</xliff:g><![CDATA[<br />]]>
