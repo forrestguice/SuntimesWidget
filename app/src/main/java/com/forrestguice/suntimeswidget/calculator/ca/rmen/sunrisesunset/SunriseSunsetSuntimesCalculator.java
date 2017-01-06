@@ -104,6 +104,30 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     }
 
     @Override
+    public Calendar[] getMorningBlueHourForDate(Calendar date)
+    {
+        return null;
+    }
+
+    @Override
+    public Calendar[] getEveningBlueHourForDate(Calendar date)
+    {
+        return null;
+    }
+
+    @Override
+    public Calendar[] getMorningGoldenHourForDate(Calendar date)
+    {
+        return null;
+    }
+
+    @Override
+    public Calendar[] getEveningGoldenHourForDate(Calendar date)
+    {
+        return null;
+    }
+
+    @Override
     public Calendar getOfficialSunsetCalendarForDate( Calendar date )
     {
         Calendar[] riseset = SunriseSunset.getSunriseSunset(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble());
