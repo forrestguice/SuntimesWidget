@@ -26,7 +26,7 @@ import java.util.Calendar;
  * An interface used when calculating sunrise and sunset times. Implementations
  * of this interface are intended to be thin wrappers around third party code.
  *
- * @version 1.0.0
+ * @version 1.1.0
  */
 public interface SuntimesCalculator
 {
@@ -45,6 +45,7 @@ public interface SuntimesCalculator
     void init( WidgetSettings.Location location, String timezone );
 
     /**
+     * Morning Astronomical Twilight
      * @param date a Calendar representing a given date
      * @return a Calendar for astronomical sunrise for the given date
      * @since 1.0.0
@@ -52,6 +53,7 @@ public interface SuntimesCalculator
     Calendar getAstronomicalSunriseCalendarForDate( Calendar date );
 
     /**
+     * Morning Nautical Twilight
      * @param date a Calendar representing a given date
      * @return a Calendar for nautical sunrise for the given date
      * @since 1.0.0
@@ -59,6 +61,7 @@ public interface SuntimesCalculator
     Calendar getNauticalSunriseCalendarForDate( Calendar date );
 
     /**
+     * Morning Civil Twilight
      * @param date a Calendar representing a given date
      * @return a Calendar for civil sunrise for the given date
      * @since 1.0.0
@@ -66,6 +69,7 @@ public interface SuntimesCalculator
     Calendar getCivilSunriseCalendarForDate( Calendar date );
 
     /**
+     * Sunrise
      * @param date a Calendar representing a given date
      * @return a Calendar for the official sunrise for the given date
      * @since 1.0.0
@@ -73,6 +77,7 @@ public interface SuntimesCalculator
     Calendar getOfficialSunriseCalendarForDate( Calendar date );
 
     /**
+     * Solar Noon
      * @param date a Calendar representing a given date
      * @return a Calendar for solar noon for the given date
      * @since 1.0.0
@@ -80,6 +85,7 @@ public interface SuntimesCalculator
     Calendar getSolarNoonCalendarForDate( Calendar date );
 
     /**
+     * Sunset
      * @param date a Calendar representing a given date
      * @return a Calendar for the official sunset for the given date
      * @since 1.0.0
@@ -87,6 +93,7 @@ public interface SuntimesCalculator
     Calendar getOfficialSunsetCalendarForDate( Calendar date );
 
     /**
+     * Evening Civil Twilight
      * @param date a Calendar representing a given date
      * @return a Calendar for civil sunset for the given date
      * @since 1.0.0
@@ -94,6 +101,7 @@ public interface SuntimesCalculator
     Calendar getCivilSunsetCalendarForDate( Calendar date );
 
     /**
+     * Evening Nautical Twilight
      * @param date a Calendar representing a given date
      * @return a Calendar for nautical sunset for the given date
      * @since 1.0.0
@@ -101,10 +109,42 @@ public interface SuntimesCalculator
     Calendar getNauticalSunsetCalendarForDate( Calendar date );
 
     /**
+     * Evening Astronomical Twilight
      * @param date a Calendar representing a given date
      * @return a Calendar for astronomical sunset for the given date
      * @since 1.0.0
      */
     Calendar getAstronomicalSunsetCalendarForDate( Calendar date );
 
+    /**
+     * Morning Blue Hour
+     * @param date a Calendar representing a given date
+     * @return a [Calendar,Calendar] pair for [start,end] of the morning blue hour
+     * @since 1.1.0
+     */
+    Calendar[] getMorningBlueHourForDate( Calendar date );
+
+    /**
+     * Evening Blue Hour
+     * @param date a Calendar representing a given date
+     * @return a [Calendar,Calendar] pair for [start,end] of the evening blue hour
+     * @since 1.1.0
+     */
+    Calendar[] getEveningBlueHourForDate( Calendar date );
+
+    /**
+     * Morning Golden Hour
+     * @param date a Calendar representing a given date
+     * @return a [Calendar,Calendar] pair for [start,end] of the morning golden hour
+     * @since 1.1.0
+     */
+    Calendar[] getMorningGoldenHourForDate( Calendar date );
+
+    /**
+     * Evening Golden Hour
+     * @param date a Calendar representing a given date
+     * @return a [Calendar,Calendar] pair for [start,end] of the evening golden hour
+     * @since 1.1.0
+     */
+    Calendar[] getEveningGoldenHourForDate( Calendar date );
 }

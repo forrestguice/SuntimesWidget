@@ -20,6 +20,12 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.ImageSpan;
 
 import java.text.DateFormat;
 
@@ -34,6 +40,8 @@ import java.util.Locale;
 
 public class SuntimesUtils
 {
+    public static final String SPANTAG_WARNING = "[w]";
+
     private static String strTimeShorter = "shorter";
     private static String strTimeLonger = "longer";
     private static String strSpace = " ";
@@ -347,6 +355,7 @@ public class SuntimesUtils
      *   %loc .. the location (label/name)
      *   %lat .. the location (latitude)
      *   %lon .. the location (longitude)
+     *   %s .. the data source
      *
      * @param titlePattern a pattern string (simple substitutions)
      * @return a display string suitable for display as a widget title
@@ -359,11 +368,13 @@ public class SuntimesUtils
         String latPattern = "%lat";
         String lonPattern = "%lon";
         String timezoneIDPattern = "%t";
+        String datasourcePattern = "%s";
         String percentPattern = "%%";
 
         WidgetSettings.TimeMode timeMode = data.timeMode();
         WidgetSettings.Location location = data.location();
         String timezoneID = data.timezone();
+        String datasource = data.calculatorMode().getDisplayString();
 
         String displayString = titlePattern;
         displayString = displayString.replaceAll(modePatternShort, timeMode.getShortDisplayString());
@@ -372,8 +383,69 @@ public class SuntimesUtils
         displayString = displayString.replaceAll(latPattern, location.getLatitude());
         displayString = displayString.replaceAll(lonPattern, location.getLongitude());
         displayString = displayString.replaceAll(timezoneIDPattern, timezoneID);
+        displayString = displayString.replaceAll(datasourcePattern, datasource);
         displayString = displayString.replaceAll(percentPattern, "%");
 
         return displayString;
     }
+
+    /**
+     * @param text a pre-formatted datestring
+     * @param warningSpan an ImageSpan to be substituted in place of all [w] tags (or null to remove tag).
+     * @return a SpannableStringBuilder with tags replaced with appropriate ImageSpans
+     */
+    public static SpannableStringBuilder createSpan(String text, ImageSpan warningSpan)
+    {
+        SpannableStringBuilder dateSpan = new SpannableStringBuilder(text);
+        int tagPos_warning = text.indexOf(SPANTAG_WARNING);
+        if (tagPos_warning >= 0)
+        {
+            if (warningSpan != null)
+            {
+                dateSpan.setSpan(warningSpan, tagPos_warning, tagPos_warning + SPANTAG_WARNING.length(), ImageSpan.ALIGN_BASELINE);
+            } else {
+                dateSpan.replace(tagPos_warning, tagPos_warning + SPANTAG_WARNING.length(), new SpannableString(""));
+            }
+        }
+        return dateSpan;
+    }
+
+    public static ImageSpan createWarningSpan(Context context, int height)
+    {
+        return createWarningSpan(context, height, height);
+    }
+    public static ImageSpan createWarningSpan(Context context, float height)
+    {
+        return createWarningSpan(context, (int)Math.ceil(height));
+    }
+    public static ImageSpan createWarningSpan(Context context, int width, int height)
+    {
+        TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.icActionWarning});
+        int drawableID = a.getResourceId(0, R.drawable.ic_action_warning);
+        a.recycle();
+        int warningTint = context.getResources().getColor(R.color.warning);
+        return createImageSpan(context, drawableID, width, height, warningTint);
+    }
+    public static ImageSpan createErrorSpan(Context context, int width, int height)
+    {
+        TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.icActionError});
+        int drawableID = a.getResourceId(0, R.drawable.ic_action_error);
+        a.recycle();
+        int errorTint = context.getResources().getColor(R.color.error);
+        return createImageSpan(context, drawableID, width, height, errorTint);
+    }
+    public static ImageSpan createImageSpan(Context context, int drawableID, int width, int height, int tint)
+    {
+        Drawable drawable = context.getResources().getDrawable(drawableID);
+        if (drawable != null)
+        {
+            if (width > 0 && height > 0)
+            {
+                drawable.setBounds(0, 0, width, height);
+            }
+            drawable.setColorFilter(tint, PorterDuff.Mode.SRC_ATOP);
+        }
+        return new ImageSpan(drawable);
+    }
+
 }

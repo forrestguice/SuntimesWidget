@@ -22,7 +22,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator;
 
 /**
  * A factory class that creates instances of SuntimesCalculator. The specific implementation returned
@@ -50,7 +49,8 @@ public class SuntimesCalculatorFactory
     protected static boolean initialized = false;
     public static void initCalculators()
     {
-        SuntimesCalculatorDescriptor.addValue(SunriseSunsetSuntimesCalculator.getDescriptor());
+        SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.getDescriptor());
+        SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator.getDescriptor());
         initialized = true;
         Log.d("CalculatorFactory", "Initialized suntimes calculator list.");
     }
@@ -92,7 +92,7 @@ public class SuntimesCalculatorFactory
             Log.d("createCalculator", "using .oO( " + calculator.name() + " ): " + timezone);
 
         } catch (Exception e1) {
-            calculator = new SunriseSunsetSuntimesCalculator();
+            calculator = new com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator();
             Log.e("createCalculator", "fail! .oO( " + current.getReference() + "), so instantiating default: " + calculator.getClass().getName() + " :: " + timezone);
         }
 

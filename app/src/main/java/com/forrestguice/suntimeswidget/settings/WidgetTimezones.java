@@ -18,85 +18,72 @@
 
 package com.forrestguice.suntimeswidget.settings;
 
+import com.forrestguice.suntimeswidget.R;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.Log;
+
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
-import com.forrestguice.suntimeswidget.R;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.graphics.drawable.GradientDrawable;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
 public class WidgetTimezones
 {
-    private static ArrayList<TimeZoneItem> timezones = new ArrayList<TimeZoneItem>();
-    private static boolean initialized = false;
-
-    private static void initTimezoneList()
+    public static boolean isProbablyNotLocal( String timezoneID, WidgetSettings.Location atLocation, Date onDate )
     {
-        timezones.clear();
+        return isProbablyNotLocal(TimeZone.getTimeZone(timezoneID), atLocation, onDate);
+    }
+    public static boolean isProbablyNotLocal( TimeZone timezone, WidgetSettings.Location atLocation, Date onDate )
+    {
+        double zoneOffset = timezone.getOffset(onDate.getTime()) / (1000 * 60 * 60);   // timezone offset in hrs
+        double lonOffset = atLocation.getLongitudeAsDouble() * 24 / 360;               // longitude offset in hrs
+        double offsetDiff = Math.abs(lonOffset - zoneOffset);
 
-        String[] allTimezoneValues = TimeZone.getAvailableIDs();
-        for (int i = 0; i < allTimezoneValues.length; i++)
-        {
-            TimeZone timezone = TimeZone.getTimeZone(allTimezoneValues[i]);
-            timezones.add(new TimeZoneItem(timezone.getID(), timezone.getDisplayName()));
-        }
+        double offsetTolerance = 3;    // tolerance in hrs
+        boolean isProbablyNotLocal = (offsetDiff > offsetTolerance);
+        Log.d("DEBUG", "offsets: " + zoneOffset + ", " + lonOffset);
+        Log.d("DEBUG", "offset delta: " +  offsetDiff +" [" + offsetTolerance + "] (" + isProbablyNotLocal + ")");
 
-        initialized = true;
+        return isProbablyNotLocal;
     }
 
-    public static int ordinal( String timezoneID )
+    ///////////////////////////////////////
+    ///////////////////////////////////////
+
+    public static void selectTimeZone( Spinner spinner, TimeZoneItemAdapter adapter, String timezoneID )
     {
-        if (!initialized)
+        if (spinner == null || adapter == null || timezoneID == null)
+            return;
+
+        int i = adapter.ordinal(timezoneID);
+        int n = adapter.values().length;
+
+        if (i >= 0 && i < n)
         {
-            initTimezoneList();
+            spinner.setSelection(i, false);
+
+        } else {
+            spinner.setSelection(0);
+            Log.w("selectTimeZone", "unable to find timezone " + timezoneID + " in the list! Setting selection to 0.");
         }
-
-        timezoneID = timezoneID.trim();
-
-        int ord = -1;
-        for (int i=0; i<timezones.size(); i++)
-        {
-            String otherID = timezones.get(i).getID().trim();
-            if (timezoneID.equals(otherID))
-            {
-                ord = i;
-                break;
-            }
-        }
-        return ord;
-    }
-
-    public static TimeZoneItem[] values()
-    {
-        if (!initialized)
-        {
-            initTimezoneList();
-        }
-
-        int numTimeZones = timezones.size();
-        TimeZoneItem[] retArray = new TimeZoneItem[numTimeZones];
-        for (int i=0; i<numTimeZones; i++)
-        {
-            retArray[i] = timezones.get(i);
-        }
-        return retArray;
-    }
-
-    public static List<TimeZoneItem> getValues()
-    {
-        if (!initialized)
-        {
-            initTimezoneList();
-        }
-
-        return timezones;
     }
 
     ///////////////////////////////////////
@@ -106,11 +93,13 @@ public class WidgetTimezones
     {
         private String timeZoneID;
         private String displayString;
+        private double offsetHr;
 
-        public TimeZoneItem(String timeZoneID, String displayString)
+        public TimeZoneItem(String timeZoneID, String displayString, double offsetHr)
         {
             this.timeZoneID = timeZoneID;
             this.displayString = displayString;
+            this.offsetHr = offsetHr;
         }
 
         public String getID()
@@ -123,9 +112,19 @@ public class WidgetTimezones
             return displayString;
         }
 
+        public double getOffsetHr()
+        {
+            return offsetHr;
+        }
+
+        public String getOffsetString()
+        {
+            return offsetHr + "";
+        }
+
         public String toString()
         {
-            return timeZoneID + " (" + displayString + ")";
+            return timeZoneID + " (" + getOffsetString() + " " + displayString + ")";
         }
     }
 
@@ -134,20 +133,68 @@ public class WidgetTimezones
 
     public static class TimeZoneItemAdapter extends ArrayAdapter<TimeZoneItem>
     {
-        public TimeZoneItemAdapter(Context context, int textViewResourceId)
+        private int[] colors;
+        private TimeZoneSort sortBy = null;
+        private String line1, line2;
+        private List<TimeZoneItem> items;
+
+        public TimeZoneItemAdapter(Context context, int resource)
         {
-            super(context, textViewResourceId);
+            super(context, resource);
+            init(context);
         }
 
         public TimeZoneItemAdapter(Context context, int resource, List<TimeZoneItem> items)
         {
             super(context, resource, items);
+            this.items = items;
+            init(context);
         }
 
-        private View getItemView(int position, View convertView, ViewGroup parent)
+        public TimeZoneItemAdapter(Context context, int resource, List<TimeZoneItem> items, TimeZoneSort sortBy)
+        {
+            super(context, resource, items);
+            this.items = items;
+            this.sortBy = sortBy;
+            init(context);
+            sort();
+        }
+
+        private void init(Context context)
+        {
+            colors = context.getResources().getIntArray(R.array.utcOffsetColors);
+            line1 = context.getString(R.string.timezoneCustom_line1);
+            line2 = context.getString(R.string.timezoneCustom_line2);
+        }
+
+        public int getColorForTimeZoneOffset( double utcHour )
+        {
+            int offset = (int)Math.round(utcHour);
+            while (offset < 0)
+            {
+                offset += 12;
+            }
+            return colors[offset % colors.length];
+        }
+
+        public TimeZoneSort getSort()
+        {
+            return sortBy;
+        }
+
+        private void sort()
+        {
+            if (sortBy != null)
+            {
+                Collections.sort(items, sortBy.getComparator());
+                notifyDataSetChanged();
+            }
+        }
+
+        private View getItemView(int position, View convertView, ViewGroup parent, boolean colorize)
         {
             LayoutInflater layoutInflater = LayoutInflater.from(getContext());
-            View view = layoutInflater.inflate(R.layout.layout_listitem_twoline, parent, false);
+            View view = layoutInflater.inflate(R.layout.layout_listitem_timezone, parent, false);
 
             TimeZoneItem timezone = getItem(position);
             if (timezone == null)
@@ -157,12 +204,27 @@ public class WidgetTimezones
             }
 
             TextView primaryText = (TextView)view.findViewById(android.R.id.text1);
-            primaryText.setText( timezone.getID() );
+            primaryText.setText(String.format(line1, timezone.getID()));
 
             TextView secondaryText = (TextView)view.findViewById(android.R.id.text2);
             if (secondaryText != null)
             {
-                secondaryText.setText( timezone.getDisplayString() );
+                secondaryText.setText(String.format(line2, timezone.getOffsetString(), timezone.getDisplayString()));
+            }
+
+            ImageView icon = (ImageView) view.findViewById(android.R.id.icon);
+            if (icon != null)
+            {
+                if (colorize)
+                {
+                    GradientDrawable d = (GradientDrawable) icon.getBackground().mutate();
+                    d.setColor(getColorForTimeZoneOffset(timezone.getOffsetHr()));
+                    d.invalidateSelf();
+                    icon.setVisibility(View.VISIBLE);
+
+                } else {
+                    icon.setVisibility(View.GONE);
+                }
             }
 
             return view;
@@ -171,14 +233,320 @@ public class WidgetTimezones
         @Override
         public View getDropDownView(int position, View convertView, ViewGroup parent)
         {
-            return getItemView(position, convertView, parent);
+            return getItemView(position, convertView, parent, true);
         }
 
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent)
         {
-            return getItemView(position, convertView, parent);
+            return getItemView(position, convertView, parent, false);
+        }
+
+
+        public int ordinal( String timezoneID )
+        {
+            timezoneID = timezoneID.trim();
+
+            int ord = -1;
+            for (int i=0; i<items.size(); i++)
+            {
+                String otherID = items.get(i).getID().trim();
+                if (timezoneID.equals(otherID))
+                {
+                    ord = i;
+                    break;
+                }
+            }
+            return ord;
+        }
+
+        public TimeZoneItem[] values()
+        {
+            int numTimeZones = items.size();
+            TimeZoneItem[] retArray = new TimeZoneItem[numTimeZones];
+            for (int i=0; i<numTimeZones; i++)
+            {
+                retArray[i] = items.get(i);
+            }
+            return retArray;
+        }
+
+        public List<TimeZoneItem> getValues()
+        {
+            return items;
         }
     }
+
+    ///////////////////////////////////////
+    ///////////////////////////////////////
+
+    public enum TimeZoneSort
+    {
+        SORT_BY_OFFSET("offset"), SORT_BY_ID("id"), SORT_BY_DISPLAYNAME("name");
+
+        private String displayString;
+
+        private TimeZoneSort( String displayString )
+        {
+            this.displayString = displayString;
+        }
+
+        public void setDisplayString(String displayString)
+        {
+            this.displayString = displayString;
+        }
+
+        public String getDisplayString()
+        {
+            return displayString;
+        }
+
+        public String toString()
+        {
+            return getDisplayString();
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            String[] labels = context.getResources().getStringArray( R.array.timezoneSort_display );
+            SORT_BY_OFFSET.setDisplayString(labels[0]);
+            SORT_BY_ID.setDisplayString(labels[1]);
+            SORT_BY_DISPLAYNAME.setDisplayString(labels[1]);
+        }
+
+        public Comparator<TimeZoneItem> getComparator()
+        {
+            Comparator<TimeZoneItem> c;
+            switch (this)
+            {
+                case SORT_BY_OFFSET:
+                    c = new Comparator<TimeZoneItem>()
+                    {
+                        @Override
+                        public int compare(TimeZoneItem t1, TimeZoneItem t2)
+                        {
+                            Double offset1 = t1.getOffsetHr();
+                            Double offset2 = t2.getOffsetHr();
+                            return offset1.compareTo(offset2);
+                        }
+                    };
+                    break;
+
+                case SORT_BY_DISPLAYNAME:
+                    c = new Comparator<TimeZoneItem>()
+                    {
+                        @Override
+                        public int compare(TimeZoneItem t1, TimeZoneItem t2)
+                        {
+                            return t1.getDisplayString().compareTo(t2.getDisplayString());
+                        }
+                    };
+                    break;
+
+                case SORT_BY_ID:
+                default:
+                    c = new Comparator<TimeZoneItem>()
+                    {
+                        @Override
+                        public int compare(TimeZoneItem t1, TimeZoneItem t2)
+                        {
+                            return t1.getID().compareTo(t2.getID());
+                        }
+                    };
+                    break;
+            }
+            return c;
+        }
+    }
+
+    ///////////////////////////////////////
+    ///////////////////////////////////////
+
+    /**
+     * ActionMode (base) for sorting time zone spinners.
+     */
+    public abstract static class TimeZoneSpinnerSortActionBase
+    {
+        protected Context context;
+        protected Spinner spinner;
+
+        public void init(Context context, Spinner spinner)
+        {
+            this.context = context;
+            this.spinner = spinner;
+        }
+
+        public void onSaveSortMode( WidgetTimezones.TimeZoneSort sortMode ) {}
+
+        public void onSortTimeZones( TimeZoneItemAdapter adapter, WidgetTimezones.TimeZoneSort sortMode )
+        {
+            String msg = context.getString(R.string.timezone_sort_msg, sortMode.getDisplayString());
+            Toast toast = Toast.makeText(context, msg, Toast.LENGTH_LONG);
+            toast.show();
+        }
+
+        protected void sortTimeZones( final WidgetTimezones.TimeZoneSort sortMode )
+        {
+            onSaveSortMode(sortMode);
+            WidgetTimezones.TimeZonesLoadTask loadTask = new WidgetTimezones.TimeZonesLoadTask(context)
+            {
+                @Override
+                protected void onPostExecute(WidgetTimezones.TimeZoneItemAdapter result)
+                {
+                    spinner.setAdapter(result);
+                    onSortTimeZones(result, sortMode);
+                }
+            };
+            loadTask.execute(sortMode);
+        }
+
+        public boolean onActionItemClicked(int action)
+        {
+            switch (action)
+            {
+                case R.id.sortById:
+                    sortTimeZones(WidgetTimezones.TimeZoneSort.SORT_BY_ID);
+                    return true;
+
+                case R.id.sortByOffset:
+                    sortTimeZones(WidgetTimezones.TimeZoneSort.SORT_BY_OFFSET);
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+    }
+
+    /**
+     * ActionMode for sorting time zone spinners.
+     */
+    public static class TimeZoneSpinnerSortAction extends TimeZoneSpinnerSortActionBase implements ActionMode.Callback
+    {
+        public TimeZoneSpinnerSortAction(Context context, Spinner spinner)
+        {
+            init(context, spinner);
+        }
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu)
+        {
+            MenuInflater inflater = mode.getMenuInflater();
+            inflater.inflate(R.menu.timezonesort, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu)
+        {
+            return false;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode actionMode) {}
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item)
+        {
+            if (onActionItemClicked(item.getItemId()))
+            {
+                mode.finish();
+                return true;
+            }
+            return false;
+        }
+    }
+
+    /**
+     * ActionMode for sorting time zone spinners (support mode version).
+     */
+    public static class TimeZoneSpinnerSortActionCompat extends TimeZoneSpinnerSortActionBase implements android.support.v7.view.ActionMode.Callback
+    {
+        public TimeZoneSpinnerSortActionCompat(Context context, Spinner spinner)
+        {
+            init(context, spinner);
+        }
+
+        @Override
+        public boolean onCreateActionMode(android.support.v7.view.ActionMode mode, Menu menu)
+        {
+            MenuInflater inflater = mode.getMenuInflater();
+            inflater.inflate(R.menu.timezonesort, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(android.support.v7.view.ActionMode mode, Menu menu)
+        {
+            return false;
+        }
+
+        @Override
+        public void onDestroyActionMode(android.support.v7.view.ActionMode actionMode) {}
+
+        @Override
+        public boolean onActionItemClicked(android.support.v7.view.ActionMode mode, MenuItem item)
+        {
+            if (onActionItemClicked(item.getItemId()))
+            {
+                mode.finish();
+                return true;
+            }
+            return false;
+        }
+    }
+
+    ///////////////////////////////////////
+    ///////////////////////////////////////
+
+    public static class TimeZonesLoadTask extends AsyncTask<TimeZoneSort, Object, TimeZoneItemAdapter>
+    {
+        private Context context;
+
+        public TimeZonesLoadTask(Context context)
+        {
+            this.context = context;
+        }
+
+        @Override
+        protected void onPreExecute() {}
+
+        @Override
+        protected TimeZoneItemAdapter doInBackground(TimeZoneSort... sorts)
+        {
+            TimeZoneSort sortBy = null;
+            if (sorts != null && sorts.length > 0)
+            {
+                sortBy = sorts[0];
+            }
+
+            ArrayList<TimeZoneItem> timezones = new ArrayList<TimeZoneItem>();
+            String[] allTimezoneValues = TimeZone.getAvailableIDs();
+            for (int i = 0; i < allTimezoneValues.length; i++)
+            {
+                TimeZone timezone = TimeZone.getTimeZone(allTimezoneValues[i]);
+                double offsetHr = timezone.getRawOffset() / (1000 * 60 * 60);
+                timezones.add(new TimeZoneItem(timezone.getID(), timezone.getDisplayName(), offsetHr));
+            }
+
+            if (sortBy != null)
+            {
+                Collections.sort(timezones, sortBy.getComparator());
+            }
+
+            return new WidgetTimezones.TimeZoneItemAdapter(context, 0, timezones, sortBy);
+        }
+
+        @Override
+        protected void onProgressUpdate(Object... progress)
+        {
+        }
+
+        @Override
+        protected void onPostExecute(TimeZoneItemAdapter result)
+        {
+        }
+    }
+
 }

@@ -40,10 +40,22 @@
             <TextView android:id="@+id/appwidget_timezone_custom_label"
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="@string/configLabel_timezone_custom" />
+                android:layout_height="wrap_content" android:text="@string/configLabel_timezone_custom"
+                android:textColor="@drawable/btn_labeltxt" android:clickable="true"
+                android:enabled="false" />
 
             <Spinner android:id="@+id/appwidget_timezone_custom" android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:id="@+id/appwidget_timezone_custom_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <include layout="@layout/layout_listitem_timezone" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

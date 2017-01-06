@@ -28,13 +28,20 @@
     <string name="nextDay">Następny dzień</string>
     <string name="prevDay">Poprzedni dzień</string>
 
+    <!-- Field: timezone
+         The time zone field that appears below the clock (main activity).
+    -->
+    <!-- line commented to use default: <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string> -->
+    <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> The time zone may be wrong for this location (not local).</string>  <!-- snackbar message --> <!-- TODO -->
+
     <!-- Field: date
          The date field that appears above the table (main activity).
          e.g. [dateDesc] \n [date]
              where [dateDesc] is a yesterday/today/tomorrow, past_, or future_ string.
              where [date] is a dateString formatted by app using user's locale
     -->
-    <string name="dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g></string>
+    <!-- line commented to use default: <string name="dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string> -->
+    <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> The date is set to a day other than today.</string>  <!-- snackbar message --> <!-- TODO -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
     <string name="past_yesterday">Przeszłość (-1)</string>
@@ -188,6 +195,9 @@
     <string name="timezoneMode_current">Systemowa</string>                         <!-- setting -->
     <string name="timezoneMode_custom">Użytkownika</string>                    <!-- setting -->
 
+    <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
+    <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
+
     <string name="configLabel_timezone">Ustawienia strefy czasowej</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Tryb:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Strefa czasowa:</string>              <!-- spinner label -->
@@ -217,7 +227,7 @@
     <!--App Setting: WidgetList -->
     <string name="configLabel_widgetList">Aktywne widżety</string>               <!-- group title -->
     <string name="configLabel_widgetList_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
-    <string name="configLabel_widgetList_itemTitlePattern"><xliff:g id="titlePattern"><![CDATA[%M (%lat, %lon) [%t]]]></xliff:g></string> <!-- the pattern used when generating widget titles for display in the list -->
+    <!--<string name="configLabel_widgetList_itemTitlePattern"><xliff:g id="titlePattern"><![CDATA[%M (%lat, %lon) [%t]]]></xliff:g></string> --> <!-- the pattern used when generating widget titles for display in the list -->
     <string name="configLabel_widgetListHelp_title">Pomoc</string>               <!-- always the first item in the widgetList -->
     <string name="configLabel_widgetListHelp_summary">Pokaż pomoc dot. widżetów</string>
 
@@ -226,8 +236,14 @@
     <string name="configLabel_places_export">Eksportuj miejsca</string>
     <string name="configLabel_places_clear">Czyść miejsca</string>
 
-    <!-- App Setting: UI Theme -->
+    <!-- App Setting: UI -->
     <string name="configLabel_ui">Interfejs użytkownika</string>                       <!-- group title -->
+
+    <!-- App Setting: UI Warnings -->
+    <string name="configLabel_ui_showWarnings">Enable warnings</string>                               <!-- TODO -->
+    <string name="configLabel_ui_showWarnings_summary">Show configuration warning messages</string>   <!-- TODO -->
+
+    <!-- App Setting: UI Theme -->
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
         <item>Jasna skórka</item>
         <item>Ciemna skórka</item>
@@ -257,6 +273,13 @@
         <item>Pokaż następną notatkę</item>
         <item>Pokaż poprzednią notatkę</item>
     </string-array>
+
+    <!-- App Setting: time zone sort -->
+    <string name="timezone_sort_byOffset">by offset</string>    <!-- TODO -->
+    <string name="timezone_sort_byId">by id</string>            <!-- TODO -->
+    <string name="timezone_sort_byName">by name</string>  <!-- TODO -->
+    <string name="timezone_sort_contextAction">Sort zones</string>           <!-- action bar title --> <!-- TODO -->
+    <string name="timezone_sort_msg">Time zones sorted (%1$s).</string>      <!-- toast msg --> <!-- TODO -->
 
     <!-- App Setting: GPS fix time limit -->
     <string name="configLabel_getFix_maxElapse">Limit czasu GPS</string>
@@ -418,7 +441,7 @@
                 * <b>%m</b> jako rodzaj zdarzenia (krótki) (np. "Cywilny") <br/>
                 * <b>%M</b> jako rodzaj zdarzenia (długi) (np. "Cywilny świt/zmierzch") <br/>
                 * <b>%t</b> jako strefa czasowa (id) (np. Europa/Warszawa) <br/>
-    ]]></string>
+    ]]></string>  <!-- TODO: add line for %s -->
 
     <string name="help_general">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_general_timeMode">%1$s</xliff:g><![CDATA[<br />]]>

@@ -83,5 +83,9 @@ public class AboutDialog extends DialogFragment
         TextView legalView2 = (TextView) dialogContent.findViewById(R.id.txt_about_legal2);
         legalView2.setMovementMethod(LinkMovementMethod.getInstance());
         legalView2.setText(Html.fromHtml(context.getString(R.string.app_legal2)));
+
+        TextView legalView3 = (TextView) dialogContent.findViewById(R.id.txt_about_legal3);
+        legalView3.setMovementMethod(LinkMovementMethod.getInstance());
+        legalView3.setText(Html.fromHtml(context.getString(R.string.app_legal3)));
     }
 }

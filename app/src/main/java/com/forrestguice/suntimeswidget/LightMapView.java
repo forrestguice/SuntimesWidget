@@ -18,18 +18,15 @@
 package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesDataset;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 
 /**
  * LightMapView .. a stacked bar graph over the duration of a day showing relative duration of
@@ -88,7 +85,7 @@ public class LightMapView extends LinearLayout
     /**
      * @param data
      */
-    public void updateViews(SuntimesDataset data)
+    public void updateViews(SuntimesRiseSetDataset data)
     {
         if (mainView != null)
         {
