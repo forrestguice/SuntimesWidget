@@ -234,7 +234,7 @@
     <!--App Setting: WidgetList -->
     <string name="configLabel_widgetList">Aktivaj fenestraĵoj</string>               <!-- group title -->
     <string name="configLabel_widgetList_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
-    <string name="configLabel_widgetList_itemTitlePattern"><xliff:g id="titlePattern"><![CDATA[%M (%lat, %lon) [%t]]]></xliff:g></string> <!-- the pattern used when generating widget titles for display in the list -->
+    <!--<string name="configLabel_widgetList_itemTitlePattern"><xliff:g id="titlePattern"><![CDATA[%M (%lat, %lon) [%t]]]></xliff:g></string>--> <!-- the pattern used when generating widget titles for display in the list -->
     <string name="configLabel_widgetListHelp_title">Helpo</string>               <!-- always the first item in the widgetList -->
     <string name="configLabel_widgetListHelp_summary">Montras helpon pri fenestraĵon</string>
 
@@ -452,7 +452,7 @@
                 * <b>%m</b> por temp-reĝimo (mallonge) (ekz. "Civila") <br/>
                 * <b>%M</b> por temp-reĝimo (longe) (ekz. "Civila krepusko") <br/>
                 * <b>%t</b> por horzono (ekz. Usono/Arizono) <br/>
-    ]]></string>
+    ]]></string>  <!-- TODO: add line for %s -->
 
     <string name="help_general">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_general_timeMode">%1$s</xliff:g><![CDATA[<br />]]>

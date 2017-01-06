@@ -49,6 +49,7 @@ dependencies
     compile 'com.android.support:design:24.2.1'
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.luckycatlabs:SunriseSunsetCalculator:1.2'
+    compile 'com.github.caarmen.SunriseSunset:lib-sunrise-sunset:1.1.0'
 }
 
 def getDateAsMillis()

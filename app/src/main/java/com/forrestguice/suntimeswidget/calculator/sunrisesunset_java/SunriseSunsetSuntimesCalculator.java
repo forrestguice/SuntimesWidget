@@ -138,5 +138,30 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     {
         return new SuntimesCalculatorDescriptor(SunriseSunsetSuntimesCalculator.NAME, SunriseSunsetSuntimesCalculator.NAME, SunriseSunsetSuntimesCalculator.REF);
     }
+
+    @Override
+    public Calendar[] getMorningBlueHourForDate(Calendar date)
+    {
+        return null;
+    }
+
+    @Override
+    public Calendar[] getEveningBlueHourForDate(Calendar date)
+    {
+        return null;
+    }
+
+    @Override
+    public Calendar[] getMorningGoldenHourForDate(Calendar date)
+    {
+        return null;
+    }
+
+    @Override
+    public Calendar[] getEveningGoldenHourForDate(Calendar date)
+    {
+        return null;
+    }
+
 }
 
