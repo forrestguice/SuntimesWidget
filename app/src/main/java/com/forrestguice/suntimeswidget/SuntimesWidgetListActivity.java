@@ -304,9 +304,12 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             for (int id : ids0)
             {
                 AppWidgetProviderInfo info = widgetManager.getAppWidgetInfo(id);
-                String widgetTitle = utils.displayStringForTitlePattern(titlePattern, new SuntimesRiseSetData(context, id));
+                SuntimesRiseSetData data =  new SuntimesRiseSetData(context, id);
+                String widgetTitle = utils.displayStringForTitlePattern(titlePattern, data);
                 String title = context.getString(R.string.configLabel_widgetList_itemTitle, widgetTitle);
-                String summary = context.getString(R.string.app_name_widget0);
+                String type = context.getString(R.string.app_name_widget0);
+                String source = data.calculatorMode().getDisplayString();
+                String summary = context.getString(R.string.configLabel_widgetList_itemSummaryPattern, type, source);
 
                 try {
                     items.add(new WidgetListItem(id, info.icon, title, summary, Class.forName(info.configure.getClassName()) ));
@@ -319,9 +322,12 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             for (int id : ids1)
             {
                 AppWidgetProviderInfo info = widgetManager.getAppWidgetInfo(id);
-                String widgetTitle = utils.displayStringForTitlePattern(titlePattern, new SuntimesRiseSetData(context, id));
+                SuntimesRiseSetData data = new SuntimesRiseSetData(context, id);
+                String widgetTitle = utils.displayStringForTitlePattern(titlePattern, data);
                 String title = context.getString(R.string.configLabel_widgetList_itemTitle, widgetTitle);
-                String summary = context.getString(R.string.app_name_widget1);
+                String type = context.getString(R.string.app_name_widget1);
+                String source = data.calculatorMode().getDisplayString();
+                String summary = context.getString(R.string.configLabel_widgetList_itemSummaryPattern, type, source);
 
                 try {
                     items.add(new WidgetListItem(id, info.icon, title, summary, Class.forName(info.configure.getClassName()) ));
