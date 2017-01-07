@@ -32,7 +32,7 @@
          The time zone field that appears below the clock (main activity).
     -->
     <!-- line commented to use default: <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string> -->
-    <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> The time zone may be wrong for this location (not local).</string>  <!-- snackbar message --> <!-- TODO -->
+    <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> Strefa czasowa może być niepoprawna dla tego miejsca (nie lokalna).</string>  <!-- snackbar message --> <!-- TODO -->
 
     <!-- Field: date
          The date field that appears above the table (main activity).
@@ -41,7 +41,7 @@
              where [date] is a dateString formatted by app using user's locale
     -->
     <!-- line commented to use default: <string name="dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string> -->
-    <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> The date is set to a day other than today.</string>  <!-- snackbar message --> <!-- TODO -->
+    <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> Data jest ustawiona na inny dzień niż dzisiaj.</string>  <!-- snackbar message --> <!-- TODO -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
     <string name="past_yesterday">Przeszłość (-1)</string>
@@ -240,8 +240,8 @@
     <string name="configLabel_ui">Interfejs użytkownika</string>                       <!-- group title -->
 
     <!-- App Setting: UI Warnings -->
-    <string name="configLabel_ui_showWarnings">Enable warnings</string>                               <!-- TODO -->
-    <string name="configLabel_ui_showWarnings_summary">Show configuration warning messages</string>   <!-- TODO -->
+    <string name="configLabel_ui_showWarnings">Włącz powiadomienia</string>                               <!-- TODO -->
+    <string name="configLabel_ui_showWarnings_summary">Pokazuje konfigurację wiadomości powiadomień</string>   <!-- TODO -->
 
     <!-- App Setting: UI Theme -->
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
@@ -275,11 +275,11 @@
     </string-array>
 
     <!-- App Setting: time zone sort -->
-    <string name="timezone_sort_byOffset">by offset</string>    <!-- TODO -->
-    <string name="timezone_sort_byId">by id</string>            <!-- TODO -->
-    <string name="timezone_sort_byName">by name</string>  <!-- TODO -->
-    <string name="timezone_sort_contextAction">Sort zones</string>           <!-- action bar title --> <!-- TODO -->
-    <string name="timezone_sort_msg">Time zones sorted (%1$s).</string>      <!-- toast msg --> <!-- TODO -->
+    <string name="timezone_sort_byOffset">wg przesunięcia</string>    <!-- TODO -->
+    <string name="timezone_sort_byId">wg id</string>            <!-- TODO -->
+    <string name="timezone_sort_byName">wg nazwy</string>  <!-- TODO -->
+    <string name="timezone_sort_contextAction">Uszereguj strefy</string>           <!-- action bar title --> <!-- TODO -->
+    <string name="timezone_sort_msg">Strefy czasowe posortowane (%1$s).</string>      <!-- toast msg --> <!-- TODO -->
 
     <!-- App Setting: GPS fix time limit -->
     <string name="configLabel_getFix_maxElapse">Limit czasu GPS</string>
@@ -429,7 +429,7 @@
     <string name="app_support_url"><![CDATA[<b>Wsparcie:</b> odwiedź <a href="https://github.com/forrestguice/SuntimesWidget/issues">stronę trackera błędów</a> aby zgłosić błąd/sugestię.]]></string>
     <string name="app_url"><xliff:g id="url"><![CDATA[<a href="https://github.com/forrestguice/SuntimesWidget">github.com/forrestguice/SuntimesWidget</a>]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[Prawo autorskie &#169 2014 Forrest Guice <br />Kod źródłowy dostępny na licencji GPLv3.]]></string>
-    <string name="app_legal2"><![CDATA[Niemieckie tłumaczenie: Henrik "HerHde" Hüttemann. <br />Esperanckie i Polskie tłumaczenie: verdulo.]]></string>
+    <string name="app_legal2"><![CDATA[Niemieckie tłumaczenie: Henrik "HerHde" Hüttemann. <br />Esperanckie i Polskie tłumaczenie: Verdulo.]]></string>
 
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Pomoc</string>
