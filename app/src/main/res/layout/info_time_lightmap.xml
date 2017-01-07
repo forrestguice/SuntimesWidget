@@ -7,8 +7,7 @@
 
     <ImageView
         android:id="@+id/lightmap_view"
-        android:layout_width="288dp" android:layout_height="wrap_content"
-        android:src="@drawable/lightmap"
+        android:layout_width="288dp" android:layout_height="16dp"
         android:layout_marginLeft="8dp" android:layout_marginStart="8dp" />
 
 </LinearLayout>

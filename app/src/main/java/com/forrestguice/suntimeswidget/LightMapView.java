@@ -18,15 +18,23 @@
 package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
-import android.graphics.drawable.LayerDrawable;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.TimeUtils;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+
+import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
 /**
  * LightMapView .. a stacked bar graph over the duration of a day showing relative duration of
@@ -34,8 +42,12 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
  */
 public class LightMapView extends LinearLayout
 {
-   // private FragmentActivity myParent;
-    //private boolean isInitialized = false;
+    public static final int DEFAULT_WIDTH = 288;
+    public static final int DEFAULT_HEIGHT = 16;
+
+    private int imgWidth = DEFAULT_WIDTH, imgHeight = DEFAULT_HEIGHT;
+    private int colorNight, colorAstro, colorNautical, colorCivil, colorDay;
+
     private ImageView mainView;
 
     public LightMapView(Context context)
@@ -65,22 +77,20 @@ public class LightMapView extends LinearLayout
     protected void initViews( Context context )
     {
         Log.d("DEBUG", "LightMapView initViews");
-        //WidgetSettings.initDisplayStrings(context);
 
         mainView = (ImageView) findViewById(R.id.lightmap_view);
+
+        colorNight = ContextCompat.getColor(context, R.color.graph_night);
+        colorAstro = ContextCompat.getColor(context, R.color.graph_astro);
+        colorNautical = ContextCompat.getColor(context, R.color.graph_nautical);
+        colorCivil = ContextCompat.getColor(context, R.color.graph_civil);
+        colorDay = ContextCompat.getColor(context, R.color.graph_day);
     }
 
     public void onResume()
     {
         Log.d("DEBUG", "LightMapView onResume");
     }
-
-    private static final int LAYER_NIGHT = 0;
-    private static final int LAYER_ASTRO = 1;
-    private static final int LAYER_NAUTICAL = 2;
-    private static final int LAYER_CIVIL = 3;
-    private static final int LAYER_DAY = 4;
-
 
     /**
      * @param data
@@ -89,28 +99,56 @@ public class LightMapView extends LinearLayout
     {
         if (mainView != null)
         {
-            LayerDrawable d = (LayerDrawable) getContext().getResources().getDrawable(R.drawable.lightmap);
+            int w = imgWidth, h = imgHeight;
 
-            int offT = 0, offB = 0;
-            int offL_astro = 0, offR_astro = 0;
-            int offL_nautical = 0, offR_nautical = 0;
-            int offL_civil = 0, offR_civil = 0;
-            int offL_day = 0, offR_day = 0;
+            Bitmap b = Bitmap.createBitmap(w, h, Bitmap.Config.RGB_565);
+            Canvas c = new Canvas(b);
+            Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-            int w = (int)getContext().getResources().getDimensionPixelSize(R.dimen.graph_width);
-            Log.d("DEBUG", "lightmap width is " + w);
-            offL_day = offR_day = w/2;
+            // draw background (night)
+            p.setColor(colorNight);
+            c.drawRect(0, 0, w, h, p);
 
-            d.setLayerInset(LAYER_ASTRO, offL_astro, offT, offR_astro, offB);
-            d.setLayerInset(LAYER_NAUTICAL, offL_nautical, offT, offR_nautical, offB);
-            d.setLayerInset(LAYER_CIVIL, offL_civil, offT, offR_civil, offB);
-            d.setLayerInset(LAYER_DAY, offL_day, offT, offR_day, offB);
+            // draw astro twilight
+            p.setColor(colorAstro);
+            drawRect(data.dataAstro, c, p);
 
-            mainView.setImageDrawable(d);
+            // draw nautical twilight
+            p.setColor(colorNautical);
+            drawRect(data.dataNautical, c, p);
+
+            // draw civil twilight
+            p.setColor(colorCivil);
+            drawRect(data.dataCivil, c, p);
+
+            // draw foreground (day)
+            p.setColor(colorDay);
+            drawRect(data.dataActual, c, p);
+
+            mainView.setImageBitmap(b);
             Log.d("updateViews", "lightmap updated");
         }
     }
 
+    private static final double MINUTES_IN_DAY = 24 * 60;
+
+    private void drawRect( SuntimesRiseSetData data, Canvas c, Paint p )
+    {
+        int w = c.getWidth();
+        int h = c.getHeight();
+
+        Calendar riseTime = data.sunriseCalendarToday();
+        double riseMinute = riseTime.get(Calendar.HOUR_OF_DAY) * 60 + riseTime.get(Calendar.MINUTE);
+        double riseR = riseMinute / MINUTES_IN_DAY;
+        int left = (int)Math.round(riseR * w);
+
+        Calendar setTime = data.sunsetCalendarToday();
+        double setMinute = setTime.get(Calendar.HOUR_OF_DAY) * 60 + setTime.get(Calendar.MINUTE);
+        double setR = setMinute / MINUTES_IN_DAY;
+        int right = (int)Math.round(setR * w);
+
+        c.drawRect(left, 0, right, h, p);
+    }
     /**
      *
      */
