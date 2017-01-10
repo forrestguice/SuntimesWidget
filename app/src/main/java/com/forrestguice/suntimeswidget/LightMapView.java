@@ -41,12 +41,17 @@ import java.util.Calendar;
  */
 public class LightMapView extends LinearLayout
 {
+    private static final double MINUTES_IN_DAY = 24 * 60;
+
     public static final int DEFAULT_MAX_UPDATE_RATE = 15 * 1000;  // ms value; once every 15s
+    public static final int DEFAULT_POINT_RADIUS = 3;
+    public static final int DEFAULT_STROKE_WIDTH = 2;
     public static final int DEFAULT_WIDTH = 288;
     public static final int DEFAULT_HEIGHT = 16;
 
-    private int imgWidth = DEFAULT_WIDTH, imgHeight = DEFAULT_HEIGHT;
     private int maxUpdateRate = DEFAULT_MAX_UPDATE_RATE;
+    private int pointRadius = DEFAULT_POINT_RADIUS;
+    private int pointStrokeWidth = DEFAULT_STROKE_WIDTH;
     private int colorNight, colorAstro, colorNautical, colorCivil, colorDay, colorPointFill, colorPointStroke;
 
     private ImageView mainView;
@@ -125,6 +130,18 @@ public class LightMapView extends LinearLayout
     }
 
     /**
+     * @param w
+     * @param h
+     * @param oldw
+     * @param oldh
+     */
+    @Override
+    public void onSizeChanged (int w, int h, int oldw, int oldh)
+    {
+        super.onSizeChanged(w, h, oldw, oldh);
+        updateViews(true);
+    }
+
     /**
      * throttled update method
      */
@@ -137,6 +154,7 @@ public class LightMapView extends LinearLayout
         }
     }
 
+    /**
      * @param data
      */
     public void updateViews(SuntimesRiseSetDataset data)
