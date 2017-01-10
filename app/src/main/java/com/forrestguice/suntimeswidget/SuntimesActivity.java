@@ -176,6 +176,7 @@ public class SuntimesActivity extends AppCompatActivity
     private TextView txt_lightlength2;
 
     private LightMapView lightmap;
+    private View lightmapLayout;
 
     private boolean isRtl = false;
     private boolean userSwappedCard = false;
@@ -408,6 +409,7 @@ public class SuntimesActivity extends AppCompatActivity
     private void initLightMap(Context context)
     {
         lightmap = (LightMapView) findViewById(R.id.info_time_lightmap);
+        lightmapLayout = findViewById(R.id.info_time_lightmap_layout);
     }
 
     /**
@@ -1221,7 +1223,10 @@ public class SuntimesActivity extends AppCompatActivity
         SpannableStringBuilder timezoneSpan = SuntimesUtils.createSpan(timezoneString, timezoneWarningIcon);
         txt_timezone.setText(timezoneSpan);
 
-        lightmap.updateViews(dataset);
+        // "light map"
+        boolean enableLightMap = AppSettings.loadShowLightmapPref(this);
+        showLightmap(enableLightMap);
+        lightmap.updateViews(enableLightMap ? dataset : null);
 
         showDayLength(dataset.isCalculated());
         showNotes(dataset.isCalculated());
@@ -1597,6 +1602,11 @@ public class SuntimesActivity extends AppCompatActivity
     protected void showNotes( boolean value )
     {
         note_flipper.setVisibility( (value ? View.VISIBLE : View.INVISIBLE) );
+    }
+
+    protected void showLightmap( boolean value )
+    {
+        lightmapLayout.setVisibility((value ? View.VISIBLE : View.GONE));
     }
 
     /**

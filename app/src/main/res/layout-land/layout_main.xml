@@ -108,9 +108,16 @@
 
         </LinearLayout>
 
-        <com.forrestguice.suntimeswidget.LightMapView
-            android:id="@+id/info_time_lightmap"
-            android:layout_width="match_parent" android:layout_height="wrap_content" />
+        <LinearLayout
+            android:id="@+id/info_time_lightmap_layout"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="6dp" android:layout_marginBottom="2dp">
+
+            <com.forrestguice.suntimeswidget.LightMapView
+                android:id="@+id/info_time_lightmap"
+                android:layout_width="match_parent" android:layout_height="8dp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
