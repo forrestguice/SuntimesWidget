@@ -17,8 +17,6 @@
 
     <color name="btn_tint_pressed">#ff9900</color>
 
-    <drawable name="transparent_color">#00000000</drawable>
-
     <array name="utcOffsetColors">
         <item>#fc8d59</item>
         <item>#fee090</item>
@@ -27,4 +25,18 @@
         <item>#ab8ac1</item>
         <item>#ee6362</item>
     </array>
+
+    <color name="color_transparent">#00000000</color>
+
+    <color name="graphColor_day_dark">#ffffcc00</color>
+    <color name="graphColor_civil_dark">#ff7ba3ff</color>
+    <color name="graphColor_nautical_dark">#003366</color>
+    <color name="graphColor_astronomical_dark">#000066</color>
+    <color name="graphColor_night_dark">#ff424242</color>
+
+    <color name="graphColor_day_light">#ffffcc00</color>
+    <color name="graphColor_civil_light">#ff7ba3ff</color>
+    <color name="graphColor_nautical_light">#ff007bff</color>
+    <color name="graphColor_astronomical_light">#ff0000ff</color>
+    <color name="graphColor_night_light">#ff757575</color>
 </resources>

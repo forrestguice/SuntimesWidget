@@ -18,6 +18,7 @@
 package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -25,7 +26,6 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.util.TimeUtils;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -34,7 +34,6 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 
 import java.util.Calendar;
-import java.util.concurrent.TimeUnit;
 
 /**
  * LightMapView .. a stacked bar graph over the duration of a day showing relative duration of
@@ -46,7 +45,7 @@ public class LightMapView extends LinearLayout
     public static final int DEFAULT_HEIGHT = 16;
 
     private int imgWidth = DEFAULT_WIDTH, imgHeight = DEFAULT_HEIGHT;
-    private int colorNight, colorAstro, colorNautical, colorCivil, colorDay;
+    private int colorNight, colorAstro, colorNautical, colorCivil, colorDay, colorPointFill, colorPointStroke;
 
     private ImageView mainView;
 
@@ -79,12 +78,35 @@ public class LightMapView extends LinearLayout
         Log.d("DEBUG", "LightMapView initViews");
 
         mainView = (ImageView) findViewById(R.id.lightmap_view);
+        initColors(context);
+    }
 
-        colorNight = ContextCompat.getColor(context, R.color.graph_night);
-        colorAstro = ContextCompat.getColor(context, R.color.graph_astro);
-        colorNautical = ContextCompat.getColor(context, R.color.graph_nautical);
-        colorCivil = ContextCompat.getColor(context, R.color.graph_civil);
-        colorDay = ContextCompat.getColor(context, R.color.graph_day);
+    /**
+     * @param context
+     */
+    private void initColors(Context context)
+    {
+        int[] colorAttrs = { R.attr.graphColor_night,   // 0
+                R.attr.graphColor_astronomical,         // 1
+                R.attr.graphColor_nautical,             // 2
+                R.attr.graphColor_civil,                // 3
+                R.attr.graphColor_day,                  // 4
+                R.attr.graphColor_pointFill,            // 5
+                R.attr.graphColor_pointStroke };        // 6
+        TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+        int def = R.color.color_transparent;
+
+        colorNight = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
+        colorAstro = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
+        colorNautical = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
+        colorCivil = ContextCompat.getColor(context, typedArray.getResourceId(3, def));
+        colorDay = ContextCompat.getColor(context, typedArray.getResourceId(4, def));
+        colorPointFill = ContextCompat.getColor(context, typedArray.getResourceId(5, def));
+        colorPointStroke = ContextCompat.getColor(context, typedArray.getResourceId(6, def));
+
+        typedArray.recycle();
+    }
+
     }
 
     public void onResume()
