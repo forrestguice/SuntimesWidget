@@ -277,16 +277,11 @@ public class SuntimesRiseSetData extends SuntimesData
                 break;
         }
 
-        if (sunsetCalendarToday != null && sunriseCalendarToday != null)
-        {
-            dayLengthToday = sunsetCalendarToday.getTimeInMillis() - sunriseCalendarToday.getTimeInMillis();
-            long sunriseOther = sunriseCalendarOther.getTime().getTime();
-            long sunsetOther = sunsetCalendarOther.getTime().getTime();
-            dayLengthOther = sunsetOther - sunriseOther;
+        dayLengthToday = (sunsetCalendarToday == null || sunriseCalendarToday == null)
+                ? -1 : sunsetCalendarToday.getTimeInMillis() - sunriseCalendarToday.getTimeInMillis();
 
-        } else {
-            dayLengthToday = dayLengthOther = -1;
-        }
+        dayLengthOther = ((sunriseCalendarOther == null || sunsetCalendarOther == null))
+                ? -1 : sunsetCalendarOther.getTimeInMillis() - sunriseCalendarOther.getTimeInMillis();
 
         super.calculate();
     }
