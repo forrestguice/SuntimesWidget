@@ -51,28 +51,36 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     public Calendar getCivilSunriseCalendarForDate( Calendar date )
     {
         Calendar[] civilTwilight = SunriseSunset.getCivilTwilight(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble());
-        return civilTwilight[0];
+        if (civilTwilight == null)
+            return null;
+        else return civilTwilight[0];
     }
 
     @Override
     public Calendar getNauticalSunriseCalendarForDate( Calendar date )
     {
         Calendar[] nauticalTwilight = SunriseSunset.getNauticalTwilight(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble());
-        return nauticalTwilight[0];
+        if (nauticalTwilight == null)
+            return null;
+        else return nauticalTwilight[0];
     }
 
     @Override
     public Calendar getAstronomicalSunriseCalendarForDate( Calendar date )
     {
         Calendar[] astroTwilight = SunriseSunset.getAstronomicalTwilight(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble());
-        return astroTwilight[0];
+        if (astroTwilight == null)
+            return null;
+        else return astroTwilight[0];
     }
 
     @Override
     public Calendar getOfficialSunriseCalendarForDate( Calendar date )
     {
         Calendar[] riseset = SunriseSunset.getSunriseSunset(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble());
-        return riseset[0];
+        if (riseset == null)
+            return null;
+        else return riseset[0];
     }
 
     @Override
@@ -86,21 +94,27 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     public Calendar getCivilSunsetCalendarForDate( Calendar date )
     {
         Calendar[] civilTwilight = SunriseSunset.getCivilTwilight(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble());
-        return civilTwilight[1];
+        if (civilTwilight == null)
+            return null;
+        else return civilTwilight[1];
     }
 
     @Override
     public Calendar getNauticalSunsetCalendarForDate( Calendar date )
     {
         Calendar[] nauticalTwilight = SunriseSunset.getNauticalTwilight(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble());
-        return nauticalTwilight[1];
+        if (nauticalTwilight == null)
+            return null;
+        else return nauticalTwilight[1];
     }
 
     @Override
     public Calendar getAstronomicalSunsetCalendarForDate( Calendar date )
     {
         Calendar[] astroTwilight = SunriseSunset.getAstronomicalTwilight(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble());
-        return astroTwilight[1];
+        if (astroTwilight == null)
+            return null;
+        else return astroTwilight[1];
     }
 
     @Override
@@ -131,7 +145,9 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     public Calendar getOfficialSunsetCalendarForDate( Calendar date )
     {
         Calendar[] riseset = SunriseSunset.getSunriseSunset(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble());
-        return riseset[1];
+        if (riseset == null)
+            return null;
+        else return riseset[1];
     }
 
     public static SuntimesCalculatorDescriptor getDescriptor()
