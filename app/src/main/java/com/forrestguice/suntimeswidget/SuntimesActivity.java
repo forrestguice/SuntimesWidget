@@ -1291,7 +1291,7 @@ public class SuntimesActivity extends AppCompatActivity
     /**
      * Clock ui update rate; once every few seconds.
      */
-    public static int UPDATE_RATE = 3000;
+    public static int UPDATE_RATE = 3000;     // primary update rate: 3s
 
     /**
      * Update the clock ui at regular intervals to reflect current time (and note).
@@ -1317,6 +1317,8 @@ public class SuntimesActivity extends AppCompatActivity
         txt_time.setText(timeText.getValue());
         txt_time_suffix.setText(timeText.getSuffix());
         notes.updateNote(context, now);
+        lightmap.updateViews(false);
+        Log.d("DEBUG", "updateTimeViews");
     }
 
     /**
