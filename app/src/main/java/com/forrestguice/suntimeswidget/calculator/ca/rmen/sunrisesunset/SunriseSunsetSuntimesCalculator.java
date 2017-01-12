@@ -142,6 +142,12 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     }
 
     @Override
+    public boolean isDay(Calendar dateTime)
+    {
+        return SunriseSunset.isDay(dateTime, location.getLatitudeAsDouble(), location.getLongitudeAsDouble());
+    }
+
+    @Override
     public Calendar getOfficialSunsetCalendarForDate( Calendar date )
     {
         Calendar[] riseset = SunriseSunset.getSunriseSunset(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble());

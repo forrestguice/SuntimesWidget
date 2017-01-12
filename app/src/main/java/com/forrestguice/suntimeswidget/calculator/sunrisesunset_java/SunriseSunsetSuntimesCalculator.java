@@ -26,6 +26,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.luckycatlabs.sunrisesunset.dto.Location;
 import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.TimeZone;
 
 /**
@@ -161,6 +162,23 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     public Calendar[] getEveningGoldenHourForDate(Calendar date)
     {
         return null;
+    }
+
+    @Override
+    public boolean isDay(Calendar dateTime)
+    {
+        Calendar sunsetCal = getOfficialSunriseCalendarForDate(dateTime);
+        if (sunsetCal == null)    // no sunset time, must be day
+            return true;
+
+        Calendar sunriseCal = getOfficialSunsetCalendarForDate(dateTime);
+        if (sunriseCal == null)   // no sunrise time, must be night
+            return false;
+
+        Date time = dateTime.getTime();
+        Date sunrise = sunriseCal.getTime();
+        Date sunset = sunsetCal.getTime();
+        return (time.after(sunrise) && time.before(sunset));
     }
 
 }

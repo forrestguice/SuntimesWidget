@@ -147,4 +147,12 @@ public interface SuntimesCalculator
      * @since 1.1.0
      */
     Calendar[] getEveningGoldenHourForDate( Calendar date );
+
+    /**
+     * @param dateTime a Calendar representing a given date and time
+     * @return true day time, false is either twilight or night
+     * @since 1.1.0
+     */
+    boolean isDay( Calendar dateTime );
+
 }
