@@ -171,27 +171,54 @@ public class LightMapView extends LinearLayout
             Canvas c = new Canvas(b);
             Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
 
+            boolean layer_astro, layer_nautical, layer_civil;
+
             // draw background (night)
             p.setColor(colorNight);
-            c.drawRect(0, 0, w, h, p);
+            drawRect(c, p);
 
             if (data != null)
             {
                 // draw astro twilight
                 p.setColor(colorAstro);
-                boolean wasDrawn = drawRect(data.dataAstro, c, p, false);
+                if (!(layer_astro = drawRect(data.dataAstro, c, p)))
+                {
+                    if (data.dataNautical.hasSunriseTimeToday() || data.dataNautical.hasSunsetTimeToday())
+                    {
+                        drawRect(c, p);
+                    }
+                }
 
                 // draw nautical twilight
                 p.setColor(colorNautical);
-                wasDrawn |= drawRect(data.dataNautical, c, p, wasDrawn);
+                if (!(layer_nautical = drawRect(data.dataNautical, c, p)))
+                {
+                    if (data.dataCivil.hasSunriseTimeToday() || data.dataCivil.hasSunsetTimeToday())
+                    {
+                        drawRect(c, p);
+                    }
+                }
 
                 // draw civil twilight
                 p.setColor(colorCivil);
-                wasDrawn |= drawRect(data.dataCivil, c, p, wasDrawn);
+                if (!(layer_civil = drawRect(data.dataCivil, c, p)))
+                {
+                    if (data.dataActual.hasSunriseTimeToday() || data.dataActual.hasSunsetTimeToday())
+                    {
+                        drawRect(c, p);
+                    }
+                }
 
                 // draw foreground (day)
                 p.setColor(colorDay);
-                wasDrawn |= drawRect(data.dataActual, c, p, wasDrawn);
+                if (!drawRect(data.dataActual, c, p))
+                {
+                    boolean noLayers = !layer_astro && !layer_nautical && !layer_civil;
+                    if (noLayers && data.isDay())
+                    {
+                        drawRect(c, p);
+                    }
+                }
 
                 // draw now marker
                 drawPoint(data.now(), pointRadius, c, p);
@@ -202,6 +229,53 @@ public class LightMapView extends LinearLayout
             Log.d("DEBUG", "updateViews " + w + ", " + h + ", " + mainView);
             Log.d("DEBUG", "lightmap updated in " + (lastUpdate - bench_start) + "ms");
         }
+    }
+
+    private void drawRect(Canvas c, Paint p)
+    {
+        int w = c.getWidth();
+        int h = c.getHeight();
+        c.drawRect(0, 0, w, h, p);
+    }
+
+    private boolean drawRect( SuntimesRiseSetData data, Canvas c, Paint p )
+    {
+        Calendar riseTime = data.sunriseCalendarToday();
+        Calendar setTime = data.sunsetCalendarToday();
+        if (riseTime == null && setTime == null)
+        {
+            return false;
+        }
+
+        int w = c.getWidth();
+        int h = c.getHeight();
+
+        int left = 0;
+        if (riseTime != null)
+        {
+            double riseMinute = riseTime.get(Calendar.HOUR_OF_DAY) * 60 + riseTime.get(Calendar.MINUTE);
+            double riseR = riseMinute / MINUTES_IN_DAY;
+            left = (int) Math.round(riseR * w);
+        }
+
+        int right = w;
+        if (setTime != null)
+        {
+            double setMinute = setTime.get(Calendar.HOUR_OF_DAY) * 60 + setTime.get(Calendar.MINUTE);
+            double setR = setMinute / MINUTES_IN_DAY;
+            right = (int) Math.round(setR * w);
+        }
+
+        boolean setTimeBeforeRiseTime = (riseTime != null && setTime != null && setTime.getTime().before(riseTime.getTime()));
+        if (setTimeBeforeRiseTime)
+        {
+            c.drawRect(0, 0, right, h, p);
+            c.drawRect(left, 0, w, h, p);
+
+        } else {
+            c.drawRect(left, 0, right, h, p);
+        }
+        return true;
     }
 
     private void drawPoint( Calendar calendar, int radius, Canvas c, Paint p )
@@ -224,46 +298,6 @@ public class LightMapView extends LinearLayout
             p.setColor(colorPointStroke);
             c.drawCircle(x, y, radius, p);
         }
-    }
-
-    /**
-     * @param data draw rise/set period of data
-     * @param c the canvas to draw to
-     * @param p the paint object to use
-     * @param isFloatingLayer true if this rect is supposed to be layered onto another layer, false if this is the base layer
-     * @return
-     */
-    private boolean drawRect( SuntimesRiseSetData data, Canvas c, Paint p, boolean isFloatingLayer)
-    {
-        Calendar riseTime = data.sunriseCalendarToday();
-        Calendar setTime = data.sunsetCalendarToday();
-        if (riseTime == null && setTime == null && isFloatingLayer)
-        {
-            Log.d("DEBUG", "floating layer with no rise/set.. return false:");
-            return false;
-        }
-
-        int w = c.getWidth();
-        int h = c.getHeight();
-        int left = 0;
-        int right = w;
-
-        if (riseTime != null)
-        {
-            double riseMinute = riseTime.get(Calendar.HOUR_OF_DAY) * 60 + riseTime.get(Calendar.MINUTE);
-            double riseR = riseMinute / MINUTES_IN_DAY;
-            left = (int) Math.round(riseR * w);
-        }
-
-        if (setTime != null)
-        {
-            double setMinute = setTime.get(Calendar.HOUR_OF_DAY) * 60 + setTime.get(Calendar.MINUTE);
-            double setR = setMinute / MINUTES_IN_DAY;
-            right = (int) Math.round(setR * w);
-        }
-
-        c.drawRect(left, 0, right, h, p);
-        return true;
     }
 
     /**
