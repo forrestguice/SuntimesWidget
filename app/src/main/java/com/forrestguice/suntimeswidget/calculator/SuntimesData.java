@@ -81,12 +81,21 @@ public class SuntimesData
     }
 
     /**
-     * Property: calculator
+     * Property: calculator (plugin descriptor)
      */
     protected SuntimesCalculatorDescriptor calculatorMode;
     public SuntimesCalculatorDescriptor calculatorMode()
     {
         return calculatorMode;
+    }
+
+    /**
+     * Property: calculator (cached from calculate, potentially null)
+     */
+    protected SuntimesCalculator calculator = null;
+    public SuntimesCalculator calculator()
+    {
+        return calculator;
     }
 
     /**

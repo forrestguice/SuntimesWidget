@@ -212,7 +212,7 @@ public class SuntimesRiseSetData extends SuntimesData
         //Log.v("SuntimesWidgetData", "compare mode: " + compareMode.name());
 
         SuntimesCalculatorFactory calculatorFactory = new SuntimesCalculatorFactory(context, calculatorMode);
-        SuntimesCalculator calculator = calculatorFactory.createCalculator(location, timezone);
+        this.calculator = calculatorFactory.createCalculator(location, timezone);
 
         todaysCalendar = Calendar.getInstance(TimeZone.getTimeZone(timezone));
         otherCalendar = Calendar.getInstance(TimeZone.getTimeZone(timezone));
