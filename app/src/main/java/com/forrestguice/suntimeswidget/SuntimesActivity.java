@@ -1318,7 +1318,6 @@ public class SuntimesActivity extends AppCompatActivity
         txt_time_suffix.setText(timeText.getSuffix());
         notes.updateNote(context, now);
         lightmap.updateViews(false);
-        Log.d("DEBUG", "updateTimeViews");
     }
 
     /**

@@ -165,8 +165,7 @@ public class LightMapView extends LinearLayout
 
         if (mainView != null && w > 0 && h > 0)
         {
-            long bench_start = System.currentTimeMillis();
-
+            //long bench_start = System.currentTimeMillis();
             Bitmap b = Bitmap.createBitmap(w, h, Bitmap.Config.RGB_565);
             Canvas c = new Canvas(b);
             Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -226,8 +225,7 @@ public class LightMapView extends LinearLayout
 
             mainView.setImageBitmap(b);
             lastUpdate = System.currentTimeMillis();
-            Log.d("DEBUG", "updateViews " + w + ", " + h + ", " + mainView);
-            Log.d("DEBUG", "lightmap updated in " + (lastUpdate - bench_start) + "ms");
+            //Log.d("DEBUG", "lightmap updated in " + (lastUpdate - bench_start) + "ms :: " + w + "," + h + "hasView: " + (mainView != null));
         }
     }
 
