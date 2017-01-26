@@ -14,6 +14,7 @@
         <item name="text_accentColor">@color/accent_material_light</item>
         <item name="text_disabledColor">@color/primary_text_disabled_material_light</item>
 
+        <item name="graphColor_background">@color/background_material_light</item>
         <item name="graphColor_day">@color/graphColor_day_light</item>
         <item name="graphColor_night">@color/graphColor_night_light</item>
         <item name="graphColor_civil">@color/graphColor_civil_light</item>
@@ -52,6 +53,7 @@
         <item name="text_accentColor">@color/accent_material_dark</item>
         <item name="text_disabledColor">@color/primary_text_disabled_material_dark</item>
 
+        <item name="graphColor_background">@color/background_material_dark</item>
         <item name="graphColor_day">@color/graphColor_day_dark</item>
         <item name="graphColor_night">@color/graphColor_night_dark</item>
         <item name="graphColor_civil">@color/graphColor_civil_dark</item>

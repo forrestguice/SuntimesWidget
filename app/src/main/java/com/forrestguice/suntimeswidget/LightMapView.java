@@ -24,9 +24,11 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
+
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -57,6 +59,7 @@ public class LightMapView extends LinearLayout
     private ImageView mainView;
     private SuntimesRiseSetDataset data = null;
     private long lastUpdate = 0;
+    private boolean resizable = true;
 
     public LightMapView(Context context)
     {
@@ -121,6 +124,11 @@ public class LightMapView extends LinearLayout
         return maxUpdateRate;
     }
 
+    public void setResizable( boolean value )
+    {
+        resizable = value;
+    }
+
     /**
      *
      */
@@ -139,7 +147,10 @@ public class LightMapView extends LinearLayout
     public void onSizeChanged (int w, int h, int oldw, int oldh)
     {
         super.onSizeChanged(w, h, oldw, oldh);
-        updateViews(true);
+        if (resizable)
+        {
+            updateViews(true);
+        }
     }
 
     /**
@@ -165,7 +176,7 @@ public class LightMapView extends LinearLayout
 
         if (mainView != null && w > 0 && h > 0)
         {
-            //long bench_start = System.currentTimeMillis();
+            long bench_start = System.currentTimeMillis();
             Bitmap b = Bitmap.createBitmap(w, h, Bitmap.Config.RGB_565);
             Canvas c = new Canvas(b);
             Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -225,7 +236,7 @@ public class LightMapView extends LinearLayout
 
             mainView.setImageBitmap(b);
             lastUpdate = System.currentTimeMillis();
-            //Log.d("DEBUG", "lightmap updated in " + (lastUpdate - bench_start) + "ms :: " + w + "," + h + "hasView: " + (mainView != null));
+            Log.d("DEBUG", "lightmap updated in " + (lastUpdate - bench_start) + "ms :: " + w + "," + h + " :: hasView: " + (mainView != null) + " :: hasData " + (data != null));
         }
     }
 
