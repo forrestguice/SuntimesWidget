@@ -19,6 +19,8 @@
 package com.forrestguice.suntimeswidget.settings;
 
 import com.forrestguice.suntimeswidget.R;
+
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -422,6 +424,7 @@ public class WidgetTimezones
     /**
      * ActionMode for sorting time zone spinners.
      */
+    @TargetApi(11)
     public static class TimeZoneSpinnerSortAction extends TimeZoneSpinnerSortActionBase implements ActionMode.Callback
     {
         public TimeZoneSpinnerSortAction(Context context, Spinner spinner)
