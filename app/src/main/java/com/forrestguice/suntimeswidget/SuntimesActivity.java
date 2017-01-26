@@ -98,6 +98,7 @@ public class SuntimesActivity extends AppCompatActivity
     private static final String DIALOGTAG_HELP = "help";
     private static final String DIALOGTAG_LOCATION = "location";
     private static final String DIALOGTAG_DATE = "dateselect";
+    private static final String DIALOGTAG_LIGHTMAP = "lightmap";
 
     protected static SuntimesUtils utils = new SuntimesUtils();
 
@@ -294,6 +295,14 @@ public class SuntimesActivity extends AppCompatActivity
             dateDialog.setOnCanceledListener(onCancelDate);
             Log.d("DEBUG", "TimeDateDialog listeners restored.");
         }
+
+        LightMapDialog lightMapDialog = (LightMapDialog) fragments.findFragmentByTag(DIALOGTAG_LIGHTMAP);
+        if (lightMapDialog != null)
+        {
+            lightMapDialog.setData(dataset);
+            lightMapDialog.updateViews(dataset);
+            Log.d("DEBUG", "LightMapDialog updated on restore.");
+        }
     }
 
     /**
@@ -410,6 +419,25 @@ public class SuntimesActivity extends AppCompatActivity
     {
         lightmap = (LightMapView) findViewById(R.id.info_time_lightmap);
         lightmapLayout = findViewById(R.id.info_time_lightmap_layout);
+
+        lightmapLayout.setClickable(true);
+        lightmapLayout.setOnClickListener( new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                showLightMapDialog();
+            }
+        });
+        lightmapLayout.setOnLongClickListener( new View.OnLongClickListener()
+        {
+            @Override
+            public boolean onLongClick(View view)
+            {
+                showLightMapDialog();
+                return true;
+            }
+        });
     }
 
     /**
@@ -1225,7 +1253,7 @@ public class SuntimesActivity extends AppCompatActivity
 
         // "light map"
         boolean enableLightMap = AppSettings.loadShowLightmapPref(this);
-        showLightmap(enableLightMap);
+        showLightMap(enableLightMap);
         lightmap.updateViews(enableLightMap ? dataset : null);
 
         showDayLength(dataset.isCalculated());
@@ -1605,9 +1633,16 @@ public class SuntimesActivity extends AppCompatActivity
         note_flipper.setVisibility( (value ? View.VISIBLE : View.INVISIBLE) );
     }
 
-    protected void showLightmap( boolean value )
+    protected void showLightMap( boolean value )
     {
         lightmapLayout.setVisibility((value ? View.VISIBLE : View.GONE));
+    }
+
+    protected void showLightMapDialog()
+    {
+        LightMapDialog lightMapDialog = new LightMapDialog();
+        lightMapDialog.setData(dataset);
+        lightMapDialog.show(getSupportFragmentManager(), DIALOGTAG_LIGHTMAP);
     }
 
     /**
