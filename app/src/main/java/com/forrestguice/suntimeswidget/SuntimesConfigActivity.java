@@ -72,6 +72,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
 
     protected Spinner spinner_1x1mode;
     private Spinner spinner_theme;
+    private CheckBox checkbox_allowResize;
     private CheckBox checkbox_showTitle;
 
     private TextView label_titleText;
@@ -430,6 +431,11 @@ public class SuntimesConfigActivity extends AppCompatActivity
         }
 
         //
+        // widget: allow resize
+        //
+        checkbox_allowResize = (CheckBox)findViewById(R.id.appwidget_appearance_allowResize);
+
+        //
         // widget: compare mode
         //
         spinner_compareMode = (Spinner)findViewById(R.id.appwidget_general_compareMode);
@@ -569,6 +575,10 @@ public class SuntimesConfigActivity extends AppCompatActivity
         WidgetSettings.saveThemePref(context, appWidgetId, theme.name());
         Log.d("DEBUG", "Saved theme: " + theme.name());
 
+        // save: allow resize
+        boolean allowResize = checkbox_allowResize.isChecked();
+        WidgetSettings.saveAllowResizePref(context, appWidgetId, allowResize);
+
         // save: show title
         boolean showTitle = checkbox_showTitle.isChecked();
         WidgetSettings.saveShowTitlePref(context, appWidgetId, showTitle);
@@ -592,6 +602,10 @@ public class SuntimesConfigActivity extends AppCompatActivity
         SuntimesTheme theme = WidgetSettings.loadThemePref(context, appWidgetId);
         ThemeDescriptor themeDescriptor = WidgetThemes.valueOf(theme.themeName());
         spinner_theme.setSelection(themeDescriptor.ordinal(WidgetThemes.values()));
+
+        // load: allow resize
+        boolean allowResize = WidgetSettings.loadAllowResizePref(context, appWidgetId);
+        checkbox_allowResize.setChecked(allowResize);
 
         // load: show title
         boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId);
