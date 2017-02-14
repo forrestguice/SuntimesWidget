@@ -68,7 +68,7 @@ public class SuntimesWidget1 extends SuntimesWidget
         appWidgetManager.updateAppWidget(appWidgetId, views);  // so this next line actually updates...
     }
 
-    protected void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
+    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
         SuntimesWidget1.updateAppWidget(context, appWidgetManager, appWidgetId, null);
     }

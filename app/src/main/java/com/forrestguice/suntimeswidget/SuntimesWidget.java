@@ -203,7 +203,7 @@ public class SuntimesWidget extends AppWidgetProvider
      * @return
      */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    protected SuntimesLayout getWidgetLayout( Context context, AppWidgetManager appWidgetManager, int appWidgetId )
+    protected static SuntimesLayout getWidgetLayout( Context context, AppWidgetManager appWidgetManager, int appWidgetId )
     {
         int minWidth = context.getResources().getInteger(R.integer.widget_size_minWidthDp);
         int minHeight = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
@@ -246,7 +246,7 @@ public class SuntimesWidget extends AppWidgetProvider
      * @param appWidgetManager widget manager
      * @param appWidgetId id of widget to be updated
      */
-    protected void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
+    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
         SuntimesLayout layout = getWidgetLayout(context, appWidgetManager, appWidgetId);
         updateAppWidget(context, appWidgetManager, appWidgetId, layout);

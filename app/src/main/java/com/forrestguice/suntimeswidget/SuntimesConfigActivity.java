@@ -756,8 +756,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
     protected void updateWidget( Context context )
     {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        SuntimesLayout layout = WidgetSettings.load1x1ModePref_asLayout(context, appWidgetId);
-        SuntimesWidget.updateAppWidget(context, appWidgetManager, appWidgetId, layout);
+        SuntimesWidget.updateAppWidget(context, appWidgetManager, appWidgetId);
     }
 
     /**
