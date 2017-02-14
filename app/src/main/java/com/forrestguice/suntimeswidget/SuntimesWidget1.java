@@ -95,8 +95,9 @@ public class SuntimesWidget1 extends SuntimesWidget
             }*/
 
             RemoteViews views;
-            views = ((110 <= mustFitWithinDp[1]) ? new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x1)   // TODO: 1x3 also flippable
-                                                 : new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x1) );
+            /*views = ((mustFitWithinDp[0] >= maxWidth1x1) ? new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x1)   // TODO: make 1x3 also flippable
+                                                         : new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x1) );*/
+            views = new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x1);
 
             Intent intent = new Intent(context, SuntimesWidget1Service.class);
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
@@ -107,7 +108,7 @@ public class SuntimesWidget1 extends SuntimesWidget
             return views;
 
         } else {
-            Log.w("getWidgetViews", "Version less than " + Build.VERSION_CODES.ICE_CREAM_SANDWICH + "!! Calling the default implementation.");
+            Log.w("getWidgetViews1", "Version less than " + Build.VERSION_CODES.ICE_CREAM_SANDWICH + "!! Calling the default implementation.");
             SuntimesLayout layout = new SuntimesLayout_1x1_0();
             return layout.getViews(context);
         }
