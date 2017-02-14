@@ -228,8 +228,15 @@ public class SuntimesWidget extends AppWidgetProvider
             Log.d("getWidgetLayout", "1: must fit:  [" + mustFitWithinDp[0] + ", " + mustFitWithinDp[1] + "]");
         }
 
-        SuntimesLayout layout = ((110 <= mustFitWithinDp[0]) ? new SuntimesLayout_1x3_0()
-                                                             : WidgetSettings.load1x1ModePref_asLayout(context, appWidgetId));
+        SuntimesLayout layout;
+        if (WidgetSettings.loadAllowResizePref(context, appWidgetId))
+        {
+            int minWidth1x3 = context.getResources().getInteger(R.integer.widget_size_minWidthDp1x3);
+            layout = ((mustFitWithinDp[0] >= minWidth1x3) ? new SuntimesLayout_1x3_0()
+                                                          : WidgetSettings.load1x1ModePref_asLayout(context, appWidgetId));
+        } else {
+            layout = WidgetSettings.load1x1ModePref_asLayout(context, appWidgetId);
+        }
         Log.d("getWidgetLayout", "layout is: " + layout);
         return layout;
     }
