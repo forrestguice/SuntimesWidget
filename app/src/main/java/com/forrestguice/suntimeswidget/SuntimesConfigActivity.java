@@ -187,6 +187,27 @@ public class SuntimesConfigActivity extends AppCompatActivity
     protected void initViews( Context context )
     {
         //
+        // widget: add button
+        //
+        button_addWidget = (Button)findViewById(R.id.add_button);
+        button_addWidget.setEnabled(false);   // enabled later after timezones fully loaded
+        if (button_addWidget != null)
+        {
+            button_addWidget.setOnClickListener(onAddButtonClickListener);
+        }
+
+        if (reconfigure)
+        {
+            setActionButtonText(getString(R.string.configAction_reconfigWidget_short));
+
+            TextView activityTitle = (TextView) findViewById(R.id.activity_title);
+            if (activityTitle != null)
+            {
+                activityTitle.setText(getString(R.string.configAction_reconfigWidget));
+            }
+        }
+
+        //
         // widget: onTap
         //
         spinner_onTap = (Spinner)findViewById(R.id.appwidget_action_onTap);
@@ -316,6 +337,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
                 {
                     super.onPreExecute();
                     spinner_timezone.setAdapter(new WidgetTimezones.TimeZoneItemAdapter(SuntimesConfigActivity.this, R.layout.layout_listitem_timezone));
+                    button_addWidget.setEnabled(false);
                 }
 
                 @Override
@@ -324,6 +346,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
                     spinner_timezone_adapter = result;
                     spinner_timezone.setAdapter(spinner_timezone_adapter);
                     WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
+                    button_addWidget.setEnabled(true);
                 }
             };
             loadTask.execute(sortZonesBy);
@@ -416,26 +439,6 @@ public class SuntimesConfigActivity extends AppCompatActivity
             spinner_compareModeAdapter = new ArrayAdapter<WidgetSettings.CompareMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.CompareMode.values());
             spinner_compareModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner_compareMode.setAdapter(spinner_compareModeAdapter);
-        }
-
-        //
-        // widget: add button
-        //
-        button_addWidget = (Button)findViewById(R.id.add_button);
-        if (button_addWidget != null)
-        {
-            button_addWidget.setOnClickListener(onAddButtonClickListener);
-        }
-
-        if (reconfigure)
-        {
-            setActionButtonText(getString(R.string.configAction_reconfigWidget_short));
-
-            TextView activityTitle = (TextView) findViewById(R.id.activity_title);
-            if (activityTitle != null)
-            {
-                activityTitle.setText(getString(R.string.configAction_reconfigWidget));
-            }
         }
 
         //
@@ -654,7 +657,12 @@ public class SuntimesConfigActivity extends AppCompatActivity
 
         // save: custom timezone
         WidgetTimezones.TimeZoneItem customTimezone = (WidgetTimezones.TimeZoneItem)spinner_timezone.getSelectedItem();
-        WidgetSettings.saveTimezonePref(context, appWidgetId, customTimezone.getID());
+        if (customTimezone != null)
+        {
+            WidgetSettings.saveTimezonePref(context, appWidgetId, customTimezone.getID());
+        } else {
+            Log.e("saveTimezoneSettings", "Failed to save timezone; none selected (was null). The timezone selector may not have been fully loaded..");
+        }
     }
 
     /**
