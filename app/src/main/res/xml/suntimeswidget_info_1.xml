@@ -8,8 +8,8 @@
     android:resizeMode="horizontal"
     android:initialKeyguardLayout="@layout/layout_widget_1x1_2"
 
-    android:minWidth="40dp" android:minHeight="40dp"
-    android:updatePeriodMillis="86400000"
+    android:minWidth="@dimen/widget_size_minWidth" android:minHeight="@dimen/widget_size_minHeight"
+    android:updatePeriodMillis="@integer/widget_updateInterval"
     android:initialLayout="@layout/layout_widget_1x1_2"
     android:configure="com.forrestguice.suntimeswidget.SuntimesConfigActivity1">
 

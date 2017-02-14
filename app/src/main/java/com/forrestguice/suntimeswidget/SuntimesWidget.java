@@ -205,12 +205,15 @@ public class SuntimesWidget extends AppWidgetProvider
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     protected SuntimesLayout getWidgetLayout( Context context, AppWidgetManager appWidgetManager, int appWidgetId )
     {
-        int[] mustFitWithinDp = {40, 40};
+        int minWidth = context.getResources().getInteger(R.integer.widget_size_minWidthDp);
+        int minHeight = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
+        int[] mustFitWithinDp = {minWidth, minHeight};
+        Log.d("getWidgetLayout", "0: must fit:  [" + mustFitWithinDp[0] + ", " + mustFitWithinDp[1] + "]");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
             Bundle widgetOptions = appWidgetManager.getAppWidgetOptions(appWidgetId);
-            int[]  sizePortrait = { widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH),
+            int[]  sizePortrait = { widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH),   // dp values
                                     widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT) };
             int[]  sizeLandscape = { widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH),
                                      widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT) };
@@ -222,7 +225,7 @@ public class SuntimesWidget extends AppWidgetProvider
 
             mustFitWithinDp[0] = Math.min( sizePortrait[0], sizeLandscape[0] );
             mustFitWithinDp[1] = Math.min( sizePortrait[1], sizeLandscape[1] );
-            Log.d("updateAppWidget", "must fit:  [" + mustFitWithinDp[0] + ", " + mustFitWithinDp[1] + "]");
+            Log.d("getWidgetLayout", "1: must fit:  [" + mustFitWithinDp[0] + ", " + mustFitWithinDp[1] + "]");
         }
 
         SuntimesLayout layout = ((110 <= mustFitWithinDp[0]) ? new SuntimesLayout_1x3_0()

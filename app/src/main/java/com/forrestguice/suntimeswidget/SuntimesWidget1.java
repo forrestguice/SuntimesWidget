@@ -75,7 +75,10 @@ public class SuntimesWidget1 extends SuntimesWidget
 
     protected static RemoteViews getWidgetViews(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
-        int[] mustFitWithinDp = {40, 40};
+        int minWidth = context.getResources().getInteger(R.integer.widget_size_minWidthDp);
+        int minHeight = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
+        int[] mustFitWithinDp = {minWidth, minHeight};
+        Log.d("getWidgetViews1", "0: must fit:  [" + mustFitWithinDp[0] + ", " + mustFitWithinDp[1] + "]");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH)
         {
