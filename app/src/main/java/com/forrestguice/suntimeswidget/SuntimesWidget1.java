@@ -68,14 +68,17 @@ public class SuntimesWidget1 extends SuntimesWidget
         appWidgetManager.updateAppWidget(appWidgetId, views);  // so this next line actually updates...
     }
 
-    protected void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
+    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
         SuntimesWidget1.updateAppWidget(context, appWidgetManager, appWidgetId, null);
     }
 
     protected static RemoteViews getWidgetViews(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
-        int[] mustFitWithinDp = {40, 40};
+        int minWidth = context.getResources().getInteger(R.integer.widget_size_minWidthDp);
+        int minHeight = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
+        int[] mustFitWithinDp = {minWidth, minHeight};
+        Log.d("getWidgetViews1", "0: must fit:  [" + mustFitWithinDp[0] + ", " + mustFitWithinDp[1] + "]");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH)
         {
@@ -92,8 +95,9 @@ public class SuntimesWidget1 extends SuntimesWidget
             }*/
 
             RemoteViews views;
-            views = ((110 <= mustFitWithinDp[1]) ? new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x1)   // TODO: 1x3 also flippable
-                                                 : new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x1) );
+            /*views = ((mustFitWithinDp[0] >= maxWidth1x1) ? new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x1)   // TODO: make 1x3 also flippable
+                                                         : new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x1) );*/
+            views = new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x1);
 
             Intent intent = new Intent(context, SuntimesWidget1Service.class);
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
@@ -104,7 +108,7 @@ public class SuntimesWidget1 extends SuntimesWidget
             return views;
 
         } else {
-            Log.w("getWidgetViews", "Version less than " + Build.VERSION_CODES.ICE_CREAM_SANDWICH + "!! Calling the default implementation.");
+            Log.w("getWidgetViews1", "Version less than " + Build.VERSION_CODES.ICE_CREAM_SANDWICH + "!! Calling the default implementation.");
             SuntimesLayout layout = new SuntimesLayout_1x1_0();
             return layout.getViews(context);
         }

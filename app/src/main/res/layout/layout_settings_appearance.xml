@@ -57,6 +57,10 @@
 
         </LinearLayout>
 
+        <CheckBox android:id="@+id/appwidget_appearance_allowResize" android:layout_width="match_parent"
+                  android:paddingTop="@dimen/settingsGroup_padding"
+                  android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+                  android:layout_height="wrap_content" android:text="@string/configLabel_appearance_allowResize" />
 
         <CheckBox android:id="@+id/appwidget_appearance_showTitle" android:layout_width="match_parent"
             android:paddingTop="@dimen/settingsGroup_padding"

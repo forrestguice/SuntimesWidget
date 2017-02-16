@@ -123,7 +123,6 @@ public class TimeDateDialog extends DialogFragment implements DatePicker.OnDateC
         spinner_dateMode.setOnItemSelectedListener(dateModeSelectedListener);
 
         picker = (DatePicker) dialogContent.findViewById(R.id.appwidget_date_custom);
-        picker.init(year, month, day, this);
 
         scroll = (ScrollView) dialogContent.findViewById(R.id.appwidget_date_scroll);
         scroll.scrollTo(0, 0);

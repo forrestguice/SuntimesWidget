@@ -72,6 +72,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
 
     protected Spinner spinner_1x1mode;
     private Spinner spinner_theme;
+    private CheckBox checkbox_allowResize;
     private CheckBox checkbox_showTitle;
 
     private TextView label_titleText;
@@ -186,6 +187,27 @@ public class SuntimesConfigActivity extends AppCompatActivity
 
     protected void initViews( Context context )
     {
+        //
+        // widget: add button
+        //
+        button_addWidget = (Button)findViewById(R.id.add_button);
+        button_addWidget.setEnabled(false);   // enabled later after timezones fully loaded
+        if (button_addWidget != null)
+        {
+            button_addWidget.setOnClickListener(onAddButtonClickListener);
+        }
+
+        if (reconfigure)
+        {
+            setActionButtonText(getString(R.string.configAction_reconfigWidget_short));
+
+            TextView activityTitle = (TextView) findViewById(R.id.activity_title);
+            if (activityTitle != null)
+            {
+                activityTitle.setText(getString(R.string.configAction_reconfigWidget));
+            }
+        }
+
         //
         // widget: onTap
         //
@@ -316,6 +338,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
                 {
                     super.onPreExecute();
                     spinner_timezone.setAdapter(new WidgetTimezones.TimeZoneItemAdapter(SuntimesConfigActivity.this, R.layout.layout_listitem_timezone));
+                    button_addWidget.setEnabled(false);
                 }
 
                 @Override
@@ -324,6 +347,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
                     spinner_timezone_adapter = result;
                     spinner_timezone.setAdapter(spinner_timezone_adapter);
                     WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
+                    button_addWidget.setEnabled(true);
                 }
             };
             loadTask.execute(sortZonesBy);
@@ -407,6 +431,11 @@ public class SuntimesConfigActivity extends AppCompatActivity
         }
 
         //
+        // widget: allow resize
+        //
+        checkbox_allowResize = (CheckBox)findViewById(R.id.appwidget_appearance_allowResize);
+
+        //
         // widget: compare mode
         //
         spinner_compareMode = (Spinner)findViewById(R.id.appwidget_general_compareMode);
@@ -416,26 +445,6 @@ public class SuntimesConfigActivity extends AppCompatActivity
             spinner_compareModeAdapter = new ArrayAdapter<WidgetSettings.CompareMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.CompareMode.values());
             spinner_compareModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner_compareMode.setAdapter(spinner_compareModeAdapter);
-        }
-
-        //
-        // widget: add button
-        //
-        button_addWidget = (Button)findViewById(R.id.add_button);
-        if (button_addWidget != null)
-        {
-            button_addWidget.setOnClickListener(onAddButtonClickListener);
-        }
-
-        if (reconfigure)
-        {
-            setActionButtonText(getString(R.string.configAction_reconfigWidget_short));
-
-            TextView activityTitle = (TextView) findViewById(R.id.activity_title);
-            if (activityTitle != null)
-            {
-                activityTitle.setText(getString(R.string.configAction_reconfigWidget));
-            }
         }
 
         //
@@ -566,6 +575,10 @@ public class SuntimesConfigActivity extends AppCompatActivity
         WidgetSettings.saveThemePref(context, appWidgetId, theme.name());
         Log.d("DEBUG", "Saved theme: " + theme.name());
 
+        // save: allow resize
+        boolean allowResize = checkbox_allowResize.isChecked();
+        WidgetSettings.saveAllowResizePref(context, appWidgetId, allowResize);
+
         // save: show title
         boolean showTitle = checkbox_showTitle.isChecked();
         WidgetSettings.saveShowTitlePref(context, appWidgetId, showTitle);
@@ -589,6 +602,10 @@ public class SuntimesConfigActivity extends AppCompatActivity
         SuntimesTheme theme = WidgetSettings.loadThemePref(context, appWidgetId);
         ThemeDescriptor themeDescriptor = WidgetThemes.valueOf(theme.themeName());
         spinner_theme.setSelection(themeDescriptor.ordinal(WidgetThemes.values()));
+
+        // load: allow resize
+        boolean allowResize = WidgetSettings.loadAllowResizePref(context, appWidgetId);
+        checkbox_allowResize.setChecked(allowResize);
 
         // load: show title
         boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId);
@@ -654,7 +671,12 @@ public class SuntimesConfigActivity extends AppCompatActivity
 
         // save: custom timezone
         WidgetTimezones.TimeZoneItem customTimezone = (WidgetTimezones.TimeZoneItem)spinner_timezone.getSelectedItem();
-        WidgetSettings.saveTimezonePref(context, appWidgetId, customTimezone.getID());
+        if (customTimezone != null)
+        {
+            WidgetSettings.saveTimezonePref(context, appWidgetId, customTimezone.getID());
+        } else {
+            Log.e("saveTimezoneSettings", "Failed to save timezone; none selected (was null). The timezone selector may not have been fully loaded..");
+        }
     }
 
     /**
@@ -734,8 +756,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
     protected void updateWidget( Context context )
     {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        SuntimesLayout layout = WidgetSettings.load1x1ModePref_asLayout(context, appWidgetId);
-        SuntimesWidget.updateAppWidget(context, appWidgetManager, appWidgetId, layout);
+        SuntimesWidget.updateAppWidget(context, appWidgetManager, appWidgetId);
     }
 
     /**
