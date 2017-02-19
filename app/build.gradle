@@ -48,7 +48,7 @@ dependencies
 {
     compile 'com.android.support:design:24.2.1'
     compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.github.forrestguice:sunrisesunsetlib-java:master-SNAPSHOT'
+    compile 'com.github.forrestguice:sunrisesunsetlib-java:SunriseSunsetCalculator-1.2-p0-fixdst'
     compile 'com.github.caarmen.SunriseSunset:lib-sunrise-sunset:1.1.0'
 }
 
