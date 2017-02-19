@@ -38,19 +38,8 @@
             android:gravity="center"
             android:drawableStart="@drawable/ic_suntimes"
             android:drawableLeft="@drawable/ic_suntimes"
+            android:drawablePadding="10dp"
             android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <TextView
-            android:id="@+id/txt_about_version"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="5dp"
-            android:layout_gravity="start"
-            android:text="@string/app_version"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
 
         <TextView
             android:id="@+id/txt_about_desc"
@@ -63,9 +52,21 @@
             android:text="@string/app_shortdesc" />
 
         <TextView
+            android:id="@+id/txt_about_version"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:layout_gravity="start"
+            android:text="@string/app_version"
+            android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+        <TextView
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
             android:id="@+id/txt_about_support"
             android:layout_height="wrap_content"
@@ -75,8 +76,8 @@
         <TextView
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
+            android:layout_marginBottom="0dp"
             android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
             android:id="@+id/txt_about_legal1"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
@@ -84,25 +85,36 @@
             android:autoLink="web" />
 
         <TextView
+            android:id="@+id/txt_about_url"
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
-            android:id="@+id/txt_about_url"
+            android:layout_marginTop="0dp"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="@string/app_url"
             android:autoLink="web" />
 
         <TextView
+            android:id="@+id/txt_about_legal2"
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
-            android:id="@+id/txt_about_legal2"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="@string/app_legal2"
+            android:autoLink="web" />
+
+        <TextView
+            android:id="@+id/txt_about_legal3"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/app_legal3"
             android:autoLink="web" />
 
     </LinearLayout>

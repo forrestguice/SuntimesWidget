@@ -137,6 +137,7 @@
   <!-- Widget Setting: appearance -->
   <string name="configLabel_appearance">Darstellung</string>           <!-- group title -->
   <string name="configLabel_appearance_theme">Theme:</string>                  <!-- spinner label -->
+  <string name="configLabel_appearance_allowResize">Grow with available space (resizeable)</string>  <!-- checkbox label --> <!-- TODO -->
   <string name="configLabel_appearance_showTitle">Titel anzeigen</string>          <!-- checkbox label -->
   <string name="configLabel_appearance_titleText">Titel:</string>              <!-- edittext label -->
   <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
@@ -232,7 +233,7 @@
   <!--App Setting: WidgetList -->
   <string name="configLabel_widgetList">Aktive Widgets</string>               <!-- group title -->
   <string name="configLabel_widgetList_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
-  <string name="configLabel_widgetList_itemTitlePattern"><xliff:g id="titlePattern"><![CDATA[%M (%lat, %lon) [%t]]]></xliff:g></string> <!-- the pattern used when generating widget titles for display in the list -->
+  <!--<string name="configLabel_widgetList_itemTitlePattern"><xliff:g id="titlePattern"><![CDATA[%M (%lat, %lon) [%t]]]></xliff:g></string>--> <!-- the pattern used when generating widget titles for display in the list -->
   <string name="configLabel_widgetListHelp_title">Hilfe</string>               <!-- always the first item in the widgetList -->
   <string name="configLabel_widgetListHelp_summary">Hilfe des Widgets</string>
 
@@ -457,7 +458,7 @@
               * <b>%m</b> für den Zeitmodus (Kurzform) (z.B. "Astron. Abend") <br/>
               * <b>%M</b> für den Zeitmodus (Langform) (z.B. "Astronomische Abenddämmerung (Ende)") <br/>
               * <b>%t</b> Die Zeitzone (id) (z.B. "Europe/Berlin") <br/>
-  ]]></string>
+  ]]></string>  <!-- TODO: add line for %s -->
   <string name="help_general_timeMode"><![CDATA[
         <b>Tatsächlicher Sonnenauf-/Untergang:</b> Die Sonnenscheibe steht ungefähr mittig am Horizont.<br/><br/>
         <b>Bürgerliche Dämmerung:</b> Die Sonne steht 6 Grad unter dem Horizont; Nur die hellsten Himmelskörper sind erkennbar. Unter freiem Himmel ist es hell genug für die meisten Aktivitäten, wie beispielsweise Lesen ohne Beleuchtung. (Auch zivile Dämmerung genannt.)<br/><br/>

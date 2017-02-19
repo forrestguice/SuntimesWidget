@@ -355,6 +355,7 @@ public class SuntimesUtils
      *   %loc .. the location (label/name)
      *   %lat .. the location (latitude)
      *   %lon .. the location (longitude)
+     *   %s .. the data source
      *
      * @param titlePattern a pattern string (simple substitutions)
      * @return a display string suitable for display as a widget title
@@ -367,11 +368,13 @@ public class SuntimesUtils
         String latPattern = "%lat";
         String lonPattern = "%lon";
         String timezoneIDPattern = "%t";
+        String datasourcePattern = "%s";
         String percentPattern = "%%";
 
         WidgetSettings.TimeMode timeMode = data.timeMode();
         WidgetSettings.Location location = data.location();
         String timezoneID = data.timezone().getID();
+        String datasource = data.calculatorMode().getDisplayString();
 
         String displayString = titlePattern;
         displayString = displayString.replaceAll(modePatternShort, timeMode.getShortDisplayString());
@@ -380,6 +383,7 @@ public class SuntimesUtils
         displayString = displayString.replaceAll(latPattern, location.getLatitude());
         displayString = displayString.replaceAll(lonPattern, location.getLongitude());
         displayString = displayString.replaceAll(timezoneIDPattern, timezoneID);
+        displayString = displayString.replaceAll(datasourcePattern, datasource);
         displayString = displayString.replaceAll(percentPattern, "%");
 
         return displayString;

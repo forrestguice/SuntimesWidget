@@ -98,6 +98,7 @@ public class SuntimesActivity extends AppCompatActivity
     private static final String DIALOGTAG_HELP = "help";
     private static final String DIALOGTAG_LOCATION = "location";
     private static final String DIALOGTAG_DATE = "dateselect";
+    private static final String DIALOGTAG_LIGHTMAP = "lightmap";
 
     protected static SuntimesUtils utils = new SuntimesUtils();
 
@@ -174,6 +175,9 @@ public class SuntimesActivity extends AppCompatActivity
     private LinearLayout layout_daylength2;
     private TextView txt_daylength2;
     private TextView txt_lightlength2;
+
+    private LightMapView lightmap;
+    private View lightmapLayout;
 
     private boolean isRtl = false;
     private boolean userSwappedCard = false;
@@ -291,6 +295,14 @@ public class SuntimesActivity extends AppCompatActivity
             dateDialog.setOnCanceledListener(onCancelDate);
             Log.d("DEBUG", "TimeDateDialog listeners restored.");
         }
+
+        LightMapDialog lightMapDialog = (LightMapDialog) fragments.findFragmentByTag(DIALOGTAG_LIGHTMAP);
+        if (lightMapDialog != null)
+        {
+            lightMapDialog.setData(dataset);
+            lightMapDialog.updateViews(dataset);
+            Log.d("DEBUG", "LightMapDialog updated on restore.");
+        }
     }
 
     /**
@@ -375,6 +387,7 @@ public class SuntimesActivity extends AppCompatActivity
         initClockViews(context);
         initNoteViews(context);
         initCardViews(context);
+        initLightMap(context);
     }
 
     /**
@@ -400,6 +413,31 @@ public class SuntimesActivity extends AppCompatActivity
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
         actionBar = getSupportActionBar();
+    }
+
+    private void initLightMap(Context context)
+    {
+        lightmap = (LightMapView) findViewById(R.id.info_time_lightmap);
+        lightmapLayout = findViewById(R.id.info_time_lightmap_layout);
+
+        lightmapLayout.setClickable(true);
+        lightmapLayout.setOnClickListener( new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                showLightMapDialog();
+            }
+        });
+        lightmapLayout.setOnLongClickListener( new View.OnLongClickListener()
+        {
+            @Override
+            public boolean onLongClick(View view)
+            {
+                showLightMapDialog();
+                return true;
+            }
+        });
     }
 
     /**
@@ -1213,6 +1251,11 @@ public class SuntimesActivity extends AppCompatActivity
         SpannableStringBuilder timezoneSpan = SuntimesUtils.createSpan(timezoneString, timezoneWarningIcon);
         txt_timezone.setText(timezoneSpan);
 
+        // "light map"
+        boolean enableLightMap = AppSettings.loadShowLightmapPref(this);
+        showLightMap(enableLightMap);
+        lightmap.updateViews(enableLightMap ? dataset : null);
+
         showDayLength(dataset.isCalculated());
         showNotes(dataset.isCalculated());
         showWarnings();
@@ -1276,7 +1319,7 @@ public class SuntimesActivity extends AppCompatActivity
     /**
      * Clock ui update rate; once every few seconds.
      */
-    public static int UPDATE_RATE = 3000;
+    public static int UPDATE_RATE = 3000;     // primary update rate: 3s
 
     /**
      * Update the clock ui at regular intervals to reflect current time (and note).
@@ -1303,6 +1346,7 @@ public class SuntimesActivity extends AppCompatActivity
         txt_time.setText(timeText.getValue());
         txt_time_suffix.setText(timeText.getSuffix());
         notes.updateNote(context, now);
+        lightmap.updateViews(false);
     }
 
     /**
@@ -1588,6 +1632,18 @@ public class SuntimesActivity extends AppCompatActivity
     protected void showNotes( boolean value )
     {
         note_flipper.setVisibility( (value ? View.VISIBLE : View.INVISIBLE) );
+    }
+
+    protected void showLightMap( boolean value )
+    {
+        lightmapLayout.setVisibility((value ? View.VISIBLE : View.GONE));
+    }
+
+    protected void showLightMapDialog()
+    {
+        LightMapDialog lightMapDialog = new LightMapDialog();
+        lightMapDialog.setData(dataset);
+        lightMapDialog.show(getSupportFragmentManager(), DIALOGTAG_LIGHTMAP);
     }
 
     /**

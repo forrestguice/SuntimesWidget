@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="widget_margin">8dp</dimen>
-    <dimen name="widget_size_percell">70px</dimen>
-    <dimen name="widget_size_less">30px</dimen>
+
+    <integer name="widget_size_minWidthDp1x3">110</integer>
+    <integer name="widget_size_minWidthDp">40</integer>
+    <integer name="widget_size_minHeightDp">40</integer>
+    <dimen name="widget_size_minWidth">40dp</dimen>  <!-- should match int values defined above -->
+    <dimen name="widget_size_minHeight">40dp</dimen>
 
     <dimen name="widget_padding_left">2dp</dimen>
     <dimen name="widget_padding_right">4dp</dimen>
@@ -45,5 +49,7 @@
 
     <dimen name="widgetActivity_padding">0dp</dimen>  <!-- padding around activity title + content -->
     <dimen name="widgetActivity_padding_inner">8dp</dimen> <!-- padding around activity content -->
+
+    <integer name="widget_updateInterval">1800000</integer> <!-- ms value: default 86400000 (24hr) -->
 
 </resources>

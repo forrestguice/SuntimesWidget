@@ -227,6 +227,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 finish();
                 startActivity(getIntent());
             }
+            return;
+        }
+
+        if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_CALCULATOR))
+        {
+            // bug here.. without explicit call to save (below) the ListPreference isn't persisted for some reason..
+            WidgetSettings.saveCalculatorModePref(this, 0, SuntimesCalculatorDescriptor.valueOf(sharedPreferences.getString(key, "missing")));
+            return;
         }
     }
 
@@ -302,7 +310,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             loadPref_general(fragment.getActivity(), calculatorPref);
         }
     }
-    private static void initPref_general(ListPreference calculatorPref)
+    private static void initPref_general(final ListPreference calculatorPref)
     {
         SuntimesCalculatorDescriptor[] calculators = SuntimesCalculatorDescriptor.values();
         String[] calculatorEntries = new String[calculators.length];

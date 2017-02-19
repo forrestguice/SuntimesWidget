@@ -349,6 +349,7 @@ public class TimeZoneDialog extends DialogFragment
             });
             if (actionMode != null)
             {
+                this.actionMode = actionMode;
                 actionMode.setTitle(getString(R.string.timezone_sort_contextAction));
             }
         }

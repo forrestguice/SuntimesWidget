@@ -65,6 +65,9 @@ public class WidgetSettings
     private static final String PREF_KEY_APPEARANCE_WIDGETMODE_1x1 = "widgetmode_1x1";
     private static final WidgetMode1x1 PREF_DEF_APPEARANCE_WIDGETMODE_1x1 = WidgetMode1x1.WIDGETMODE1x1_BOTH_1;
 
+    public static final String PREF_KEY_APPEARANCE_ALLOWRESIZE = "allowresize";
+    public static final boolean PREF_DEF_APPEARANCE_ALLOWRESIZE = true;
+
     public static final String PREF_KEY_GENERAL_TIMEMODE = "timemode";
     public static final TimeMode PREF_DEF_GENERAL_TIMEMODE = TimeMode.OFFICIAL;
 
@@ -652,7 +655,26 @@ public class WidgetSettings
         }
     }
 
-
+    public static void saveAllowResizePref(Context context, int appWidgetId, boolean allowResize)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.putBoolean(prefs_prefix + PREF_KEY_APPEARANCE_ALLOWRESIZE, allowResize);
+        prefs.apply();
+    }
+    public static boolean loadAllowResizePref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        return prefs.getBoolean(prefs_prefix + PREF_KEY_APPEARANCE_ALLOWRESIZE, PREF_DEF_APPEARANCE_ALLOWRESIZE);
+    }
+    public static void deleteAllowResizePref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_ALLOWRESIZE);
+        prefs.apply();
+    }
 
     public static void save1x1ModePref(Context context, int appWidgetId, WidgetSettings.WidgetMode1x1 mode)
     {
@@ -1218,6 +1240,7 @@ public class WidgetSettings
         deleteActionLaunchPref(context, appWidgetId);
 
         delete1x1ModePref(context, appWidgetId);
+        deleteAllowResizePref(context, appWidgetId);
 
         deleteThemePref(context, appWidgetId);
         deleteShowTitlePref(context, appWidgetId);
