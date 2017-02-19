@@ -22,6 +22,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -65,8 +66,8 @@ public class SuntimesData
     /**
      * Property: timezone
      */
-    protected String timezone;
-    public String timezone()
+    protected TimeZone timezone;
+    public TimeZone timezone()
     {
         return timezone;
     }
@@ -174,18 +175,39 @@ public class SuntimesData
         locationMode = WidgetSettings.loadLocationModePref(context, appWidgetId);
 
         // from timezone settings
-        timezone = WidgetSettings.loadTimezonePref(context, appWidgetId);
+        timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, appWidgetId));
         timezoneMode = WidgetSettings.loadTimezoneModePref(context, appWidgetId);
-        if (timezoneMode == WidgetSettings.TimezoneMode.CURRENT_TIMEZONE)
+
+        switch (timezoneMode)
         {
-            timezone = TimeZone.getDefault().getID();
+            case CUSTOM_TIMEZONE:
+                // empty; use preset timezone value
+                break;
+
+            case CURRENT_TIMEZONE:
+                timezone = TimeZone.getDefault();
+                break;
+
+            case SOLAR_TIME:
+                WidgetSettings.SolarTimeMode solarMode = WidgetSettings.loadSolarTimeModePref(context, appWidgetId);
+                switch (solarMode)
+                {
+                    case APPARENT_SOLAR_TIME:
+                        timezone = WidgetTimezones.apparentSolarTime(context, location);
+                        break;
+
+                    default:
+                        timezone = WidgetTimezones.localMeanTime(context, location);
+                        break;
+                }
+                break;
         }
 
         // from date settings
         WidgetSettings.DateMode dateMode = WidgetSettings.loadDateModePref(context, appWidgetId);
         if (dateMode == WidgetSettings.DateMode.CUSTOM_DATE)
         {
-            Calendar customDate = Calendar.getInstance(TimeZone.getTimeZone(timezone));
+            Calendar customDate = Calendar.getInstance(timezone);
             WidgetSettings.DateInfo dateInfo = WidgetSettings.loadDatePref(context, appWidgetId);
             if (dateInfo.isSet())
             {

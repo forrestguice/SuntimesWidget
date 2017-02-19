@@ -373,7 +373,7 @@ public class SuntimesUtils
 
         WidgetSettings.TimeMode timeMode = data.timeMode();
         WidgetSettings.Location location = data.location();
-        String timezoneID = data.timezone();
+        String timezoneID = data.timezone().getID();
         String datasource = data.calculatorMode().getDisplayString();
 
         String displayString = titlePattern;

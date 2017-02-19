@@ -22,6 +22,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 import ca.rmen.sunrisesunset.SunriseSunset;
 
@@ -38,6 +39,13 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     public void init(WidgetSettings.Location locationSetting, String timezone)
     {
         this.location = locationSetting;
+        //this.timezone =  // not used; ca.rmen.sunrisesunset obtains the timezone from Calendar obj
+    }
+
+    @Override
+    public void init(WidgetSettings.Location location, TimeZone timezone)
+    {
+        this.location = location;
         //this.timezone =  // not used; ca.rmen.sunrisesunset obtains the timezone from Calendar obj
     }
 

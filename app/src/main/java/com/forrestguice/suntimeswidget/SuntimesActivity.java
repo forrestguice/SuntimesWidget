@@ -1247,7 +1247,7 @@ public class SuntimesActivity extends AppCompatActivity
         // timezone field
         timezoneWarning.shouldShow = WidgetTimezones.isProbablyNotLocal(dataset.timezone(), dataset.location(), dataset.date());
         ImageSpan timezoneWarningIcon = (showWarnings && timezoneWarning.shouldShow) ? SuntimesUtils.createWarningSpan(this, txt_timezone.getTextSize()) : null;
-        String timezoneString = getString(R.string.timezoneField, dataset.timezone());
+        String timezoneString = getString(R.string.timezoneField, dataset.timezone().getID());
         SpannableStringBuilder timezoneSpan = SuntimesUtils.createSpan(timezoneString, timezoneWarningIcon);
         txt_timezone.setText(timezoneSpan);
 
@@ -1341,6 +1341,7 @@ public class SuntimesActivity extends AppCompatActivity
     protected void updateTimeViews(Context context)
     {
         Calendar now = dataset.now();
+        Log.d("DEBUG", "" + now.getTimeZone());
         SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(this, now);
         txt_time.setText(timeText.getValue());
         txt_time_suffix.setText(timeText.getSuffix());

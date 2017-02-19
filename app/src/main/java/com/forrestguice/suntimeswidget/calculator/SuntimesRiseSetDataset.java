@@ -164,7 +164,7 @@ public class SuntimesRiseSetDataset
         return dataActual.location();
     }
 
-    public String timezone()
+    public TimeZone timezone()
     {
         return dataActual.timezone();
     }
@@ -181,7 +181,7 @@ public class SuntimesRiseSetDataset
 
     public Calendar now()
     {
-        return Calendar.getInstance(TimeZone.getTimeZone(timezone()));
+        return Calendar.getInstance(timezone());
     }
 }
 
