@@ -48,6 +48,7 @@ import java.util.Calendar;
  */
 public class SuntimesWidget extends AppWidgetProvider
 {
+    public static String SUNTIMES_WIDGET_UPDATE = "SUNTIMES_WIDGET_UPDATE";
     private static final int UPDATEALARM_ID = 0;
 
     protected static SuntimesUtils utils = new SuntimesUtils();
@@ -78,8 +79,13 @@ public class SuntimesWidget extends AppWidgetProvider
         initLocale(context);
 
         String action = intent.getAction();
-        if (!action.equals(AppWidgetManager.ACTION_APPWIDGET_OPTIONS_CHANGED))
+        if (action.equals(SUNTIMES_WIDGET_UPDATE))
         {
+            AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
+            int[] widgetIds = widgetManager.getAppWidgetIds(new ComponentName(context, getClass()));
+            onUpdate(context, widgetManager, widgetIds);
+
+        } else if (!action.equals(AppWidgetManager.ACTION_APPWIDGET_OPTIONS_CHANGED)) {
             handleClickAction(context, intent);
         }
     }
@@ -157,7 +163,7 @@ public class SuntimesWidget extends AppWidgetProvider
 
         for (int appWidgetId : appWidgetIds)
         {
-            updateAppWidget(context, appWidgetManager, appWidgetId);
+            updateWidget(context, appWidgetManager, appWidgetId);
         }
 
         super.onUpdate(context, appWidgetManager, appWidgetIds);
@@ -206,20 +212,18 @@ public class SuntimesWidget extends AppWidgetProvider
     protected void setUpdateAlarm( Context context )
     {
         long updateTime = getUpdateTimeMillis();
-        Intent updateIntent = getUpdateIntent(context);
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, UPDATEALARM_ID, updateIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-        AlarmManager alarmManager = (AlarmManager)context.getSystemService(android.content.Context.ALARM_SERVICE);
+        PendingIntent alarmIntent = getUpdateIntent(context);
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.setInexactRepeating(AlarmManager.RTC, updateTime, AlarmManager.INTERVAL_DAY, alarmIntent);
-        Log.d("DEBUG", "update alarm set: " + updateTime + " --> " + updateIntent);
+        Log.d("DEBUG", "set update alarm: " + updateTime + " --> " + alarmIntent);
     }
 
     protected void unsetUpdateAlarm( Context context )
     {
-        Intent updateIntent = getUpdateIntent(context);
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, UPDATEALARM_ID, updateIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent alarmIntent = getUpdateIntent(context);
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(alarmIntent);
-        Log.d("DEBUG", "update alarm unset --> " + updateIntent);
+        Log.d("DEBUG", "unset update alarm --> " + alarmIntent);
     }
 
     protected long getUpdateTimeMillis()
@@ -233,11 +237,13 @@ public class SuntimesWidget extends AppWidgetProvider
         return updateTime.getTimeInMillis();
     }
 
-    protected Intent getUpdateIntent(Context context)
+    protected PendingIntent getUpdateIntent(Context context)
     {
-        Intent updateIntent = new Intent(context, getClass());
-        updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        return updateIntent;
+        return PendingIntent.getBroadcast(context, getUpdateAlarmId(), new Intent(SUNTIMES_WIDGET_UPDATE), PendingIntent.FLAG_CANCEL_CURRENT);
+    }
+    protected int getUpdateAlarmId()
+    {
+        return SuntimesWidget.UPDATEALARM_ID;
     }
 
     /**
@@ -323,6 +329,11 @@ public class SuntimesWidget extends AppWidgetProvider
 
         layout.updateViews(context, appWidgetId, views, data);
         appWidgetManager.updateAppWidget(appWidgetId, views);
+    }
+
+    protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
+    {
+        SuntimesWidget.updateAppWidget(context, appWidgetManager, appWidgetId);
     }
 
     public static void updateWidgets(Context context)

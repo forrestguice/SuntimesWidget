@@ -20,10 +20,24 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
  */
 public class SuntimesWidget1 extends SuntimesWidget
 {
+    private static final int UPDATEALARM_ID = 1;
+
     @Override
     protected Class getConfigClass()
     {
         return SuntimesConfigActivity1.class;
+    }
+
+    @Override
+    protected int getUpdateAlarmId()
+    {
+        return SuntimesWidget1.UPDATEALARM_ID;
+    }
+
+    @Override
+    protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
+    {
+        SuntimesWidget1.updateAppWidget(context, appWidgetManager, appWidgetId);
     }
 
     public static void updateWidgets(Context context)
