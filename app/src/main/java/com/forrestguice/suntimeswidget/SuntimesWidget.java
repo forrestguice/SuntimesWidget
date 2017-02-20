@@ -65,7 +65,7 @@ public class SuntimesWidget extends AppWidgetProvider
     {
         super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
         initLocale(context);
-        updateAppWidget(context, appWidgetManager, appWidgetId);
+        updateWidget(context, appWidgetManager, appWidgetId);
     }
 
     /**
