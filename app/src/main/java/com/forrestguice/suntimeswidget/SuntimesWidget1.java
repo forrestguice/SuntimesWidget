@@ -28,6 +28,9 @@ public class SuntimesWidget1 extends SuntimesWidget
         return SuntimesConfigActivity1.class;
     }
 
+    /**
+     * @return an update alarm identifier for this class (SuntimesWidget1: 1)
+     */
     @Override
     protected int getUpdateAlarmId()
     {
@@ -38,11 +41,6 @@ public class SuntimesWidget1 extends SuntimesWidget
     protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
         SuntimesWidget1.updateAppWidget(context, appWidgetManager, appWidgetId);
-    }
-
-    public static void updateWidgets(Context context)
-    {
-        updateWidgets(context, SuntimesWidget1.class);
     }
 
     @Override

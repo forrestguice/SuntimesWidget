@@ -49,7 +49,7 @@ import java.util.Calendar;
 public class SuntimesWidget extends AppWidgetProvider
 {
     public static String SUNTIMES_WIDGET_UPDATE = "SUNTIMES_WIDGET_UPDATE";
-    private static final int UPDATEALARM_ID = 0;
+    public static final int UPDATEALARM_ID = 0;
 
     protected static SuntimesUtils utils = new SuntimesUtils();
 
@@ -169,6 +169,11 @@ public class SuntimesWidget extends AppWidgetProvider
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
 
+    protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
+    {
+        SuntimesWidget.updateAppWidget(context, appWidgetManager, appWidgetId);
+    }
+
     public static void initLocale(Context context)
     {
         AppSettings.initLocale(context);
@@ -207,43 +212,6 @@ public class SuntimesWidget extends AppWidgetProvider
     {
         super.onDisabled(context);
         unsetUpdateAlarm(context);
-    }
-
-    protected void setUpdateAlarm( Context context )
-    {
-        long updateTime = getUpdateTimeMillis();
-        PendingIntent alarmIntent = getUpdateIntent(context);
-        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setInexactRepeating(AlarmManager.RTC, updateTime, AlarmManager.INTERVAL_DAY, alarmIntent);
-        Log.d("DEBUG", "set update alarm: " + updateTime + " --> " + alarmIntent);
-    }
-
-    protected void unsetUpdateAlarm( Context context )
-    {
-        PendingIntent alarmIntent = getUpdateIntent(context);
-        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.cancel(alarmIntent);
-        Log.d("DEBUG", "unset update alarm --> " + alarmIntent);
-    }
-
-    protected long getUpdateTimeMillis()
-    {
-        Calendar updateTime = Calendar.getInstance();
-        updateTime.set(Calendar.MILLISECOND, 0);
-        updateTime.set(Calendar.MINUTE, 0);
-        updateTime.set(Calendar.SECOND, 0);
-        updateTime.set(Calendar.HOUR_OF_DAY, 0);   // next update is at midnight
-        updateTime.add(Calendar.DAY_OF_MONTH, 1);  // the start of tomorrow
-        return updateTime.getTimeInMillis();
-    }
-
-    protected PendingIntent getUpdateIntent(Context context)
-    {
-        return PendingIntent.getBroadcast(context, getUpdateAlarmId(), new Intent(SUNTIMES_WIDGET_UPDATE), PendingIntent.FLAG_CANCEL_CURRENT);
-    }
-    protected int getUpdateAlarmId()
-    {
-        return SuntimesWidget.UPDATEALARM_ID;
     }
 
     /**
@@ -331,17 +299,14 @@ public class SuntimesWidget extends AppWidgetProvider
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
-    protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
-    {
-        SuntimesWidget.updateAppWidget(context, appWidgetManager, appWidgetId);
-    }
-
-    public static void updateWidgets(Context context)
-    {
-        updateWidgets(context, SuntimesWidget.class);
-    }
-
-    public static void updateWidgets( Context context, Class widgetClass )
+    /**
+     * A static method for triggering an update of all widgets using ACTION_APPWIDGET_UPDATE intent;
+     * triggers the onUpdate method.
+     *
+     * @param context
+     * @param widgetClass the widget class (SuntimesWidget.class, SuntimesWidget1.class)
+     */
+    public static void triggerWidgetUpdate(Context context, Class widgetClass)
     {
         AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
         int[] ids = widgetManager.getAppWidgetIds(new ComponentName(context, widgetClass));
@@ -350,6 +315,62 @@ public class SuntimesWidget extends AppWidgetProvider
         updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
         context.sendBroadcast(updateIntent);
+    }
+
+    /**
+     * Start widget updates; register a daily alarm (inexactRepeating) that does not wake the device.
+     * @param context
+     */
+    protected void setUpdateAlarm( Context context )
+    {
+        long updateTime = getUpdateTimeMillis();
+        PendingIntent alarmIntent = getUpdateIntent(context);
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setInexactRepeating(AlarmManager.RTC, updateTime, AlarmManager.INTERVAL_DAY, alarmIntent);
+        Log.d("DEBUG", "set update alarm: " + updateTime + " --> " + alarmIntent);
+    }
+
+    /**
+     * Stop widget updates; unregisters the update alarm.
+     * @param context
+     */
+    protected void unsetUpdateAlarm( Context context )
+    {
+        PendingIntent alarmIntent = getUpdateIntent(context);
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.cancel(alarmIntent);
+        Log.d("DEBUG", "unset update alarm --> " + alarmIntent);
+    }
+
+    /**
+     * @return time of update event (in millis); next midnight
+     */
+    protected long getUpdateTimeMillis()
+    {
+        Calendar updateTime = Calendar.getInstance();
+        updateTime.set(Calendar.MILLISECOND, 0);
+        updateTime.set(Calendar.MINUTE, 0);
+        updateTime.set(Calendar.SECOND, 0);
+        updateTime.set(Calendar.HOUR_OF_DAY, 0);
+        updateTime.add(Calendar.DAY_OF_MONTH, 1);
+        return updateTime.getTimeInMillis();
+    }
+
+    /**
+     * @param context
+     * @return a SUNTIMES_WIDGET_UPDATE broadcast intent for widget alarmId (@see getUpdateAlarmId)
+     */
+    protected PendingIntent getUpdateIntent(Context context)
+    {
+        return PendingIntent.getBroadcast(context, getUpdateAlarmId(), new Intent(SUNTIMES_WIDGET_UPDATE), PendingIntent.FLAG_CANCEL_CURRENT);
+    }
+
+    /**
+     * @return an update alarm identifier for this class (SuntimesWidget: 0)
+     */
+    protected int getUpdateAlarmId()
+    {
+        return SuntimesWidget.UPDATEALARM_ID;
     }
 
 }
