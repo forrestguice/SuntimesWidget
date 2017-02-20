@@ -72,6 +72,8 @@ public class SuntimesWidget1 extends SuntimesWidget
 
         appWidgetManager.updateAppWidget(appWidgetId, null);   // null on this line to discard previously cached RemoveViews
         appWidgetManager.updateAppWidget(appWidgetId, views);  // so this next line actually updates...
+
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.view_flip);
     }
 
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
