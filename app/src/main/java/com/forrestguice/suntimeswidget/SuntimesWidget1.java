@@ -68,13 +68,7 @@ public class SuntimesWidget1 extends SuntimesWidget
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SuntimesLayout layout)
     {
         RemoteViews views = getWidgetViews(context, appWidgetManager, appWidgetId);
-
-        WidgetSettings.ActionMode actionMode = WidgetSettings.loadActionModePref(context, appWidgetId);
-        Intent intent = new Intent(context, SuntimesWidget1.class);
-        intent.setAction(actionMode.name());
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, appWidgetId, intent, 0);
-        views.setOnClickPendingIntent(R.id.widgetframe_outer_1x1, pendingIntent);
+        views.setOnClickPendingIntent(R.id.widgetframe_outer_1x1, SuntimesWidget.clickActionIntent(context, appWidgetId, SuntimesWidget1.class));
 
         appWidgetManager.updateAppWidget(appWidgetId, null);   // null on this line to discard previously cached RemoveViews
         appWidgetManager.updateAppWidget(appWidgetId, views);  // so this next line actually updates...

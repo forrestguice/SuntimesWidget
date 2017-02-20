@@ -288,13 +288,7 @@ public class SuntimesWidget extends AppWidgetProvider
         SuntimesRiseSetData data = new SuntimesRiseSetData(context, appWidgetId); // constructor inits data from widget settings
         data.calculate();
 
-        WidgetSettings.ActionMode actionMode = WidgetSettings.loadActionModePref(context, appWidgetId);
-        Intent intent = new Intent(context, SuntimesWidget.class);
-        intent.setAction(actionMode.name());
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, appWidgetId, intent, 0);
-        views.setOnClickPendingIntent(R.id.widgetframe_inner, pendingIntent);
-
+        views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget.clickActionIntent(context, appWidgetId, SuntimesWidget.class));
         layout.updateViews(context, appWidgetId, views, data);
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
@@ -371,6 +365,21 @@ public class SuntimesWidget extends AppWidgetProvider
     protected int getUpdateAlarmId()
     {
         return SuntimesWidget.UPDATEALARM_ID;
+    }
+
+    /**
+     * @param context
+     * @param appWidgetId
+     * @param widgetClass
+     * @return
+     */
+    public static PendingIntent clickActionIntent(Context context, int appWidgetId, Class widgetClass)
+    {
+        WidgetSettings.ActionMode actionMode = WidgetSettings.loadActionModePref(context, appWidgetId);
+        Intent actionIntent = new Intent(context, widgetClass);
+        actionIntent.setAction(actionMode.name());
+        actionIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        return PendingIntent.getBroadcast(context, appWidgetId, actionIntent, 0);
     }
 
 }
