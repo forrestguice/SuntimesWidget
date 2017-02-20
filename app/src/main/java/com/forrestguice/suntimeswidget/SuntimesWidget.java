@@ -203,23 +203,41 @@ public class SuntimesWidget extends AppWidgetProvider
         unsetUpdateAlarm(context);
     }
 
-    private void setUpdateAlarm( Context context )
+    protected void setUpdateAlarm( Context context )
     {
-        Calendar updateTime = Calendar.getInstance();
-        //calendar.add(Calendar.MILLISECOND, INTERVAL_MILLIS);  // TODO
-
-        Intent alarmIntent = null; // TODO
-        PendingIntent updateIntent = PendingIntent.getBroadcast(context, UPDATEALARM_ID, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        long updateTime = getUpdateTimeMillis();
+        Intent updateIntent = getUpdateIntent(context);
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, UPDATEALARM_ID, updateIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(android.content.Context.ALARM_SERVICE);
-        alarmManager.setInexactRepeating(AlarmManager.RTC, updateTime.getTimeInMillis(), AlarmManager.INTERVAL_DAY, updateIntent);
+        alarmManager.setInexactRepeating(AlarmManager.RTC, updateTime, AlarmManager.INTERVAL_DAY, alarmIntent);
+        Log.d("DEBUG", "update alarm set: " + updateTime + " --> " + updateIntent);
     }
 
-    private void unsetUpdateAlarm( Context context )
+    protected void unsetUpdateAlarm( Context context )
     {
-        Intent alarmIntent = null;  // TODO
-        PendingIntent updateIntent = PendingIntent.getBroadcast(context, UPDATEALARM_ID, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        Intent updateIntent = getUpdateIntent(context);
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, UPDATEALARM_ID, updateIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.cancel(updateIntent);
+        alarmManager.cancel(alarmIntent);
+        Log.d("DEBUG", "update alarm unset --> " + updateIntent);
+    }
+
+    protected long getUpdateTimeMillis()
+    {
+        Calendar updateTime = Calendar.getInstance();
+        updateTime.set(Calendar.MILLISECOND, 0);
+        updateTime.set(Calendar.MINUTE, 0);
+        updateTime.set(Calendar.SECOND, 0);
+        updateTime.set(Calendar.HOUR_OF_DAY, 0);   // next update is at midnight
+        updateTime.add(Calendar.DAY_OF_MONTH, 1);  // the start of tomorrow
+        return updateTime.getTimeInMillis();
+    }
+
+    protected Intent getUpdateIntent(Context context)
+    {
+        Intent updateIntent = new Intent(context, getClass());
+        updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        return updateIntent;
     }
 
     /**
