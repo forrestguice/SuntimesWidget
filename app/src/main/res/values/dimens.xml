@@ -50,6 +50,6 @@
     <dimen name="widgetActivity_padding">0dp</dimen>  <!-- padding around activity title + content -->
     <dimen name="widgetActivity_padding_inner">8dp</dimen> <!-- padding around activity content -->
 
-    <integer name="widget_updateInterval">1800000</integer> <!-- ms value: default 86400000 (24hr) -->
+    <integer name="widget_updateInterval">0</integer> <!-- ms value: 86400000 (24hr) .. 0 disabled -->
 
 </resources>

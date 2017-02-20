@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget;
 
 import android.annotation.TargetApi;
+import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Intent;
@@ -40,11 +41,15 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 
+import java.util.Calendar;
+
 /**
  * Main widget
  */
 public class SuntimesWidget extends AppWidgetProvider
 {
+    private static final int UPDATEALARM_ID = 0;
+
     protected static SuntimesUtils utils = new SuntimesUtils();
 
     /**
@@ -185,6 +190,7 @@ public class SuntimesWidget extends AppWidgetProvider
     public void onEnabled(Context context)
     {
         super.onEnabled(context);
+        setUpdateAlarm(context);
     }
 
     /**
@@ -194,6 +200,26 @@ public class SuntimesWidget extends AppWidgetProvider
     public void onDisabled(Context context)
     {
         super.onDisabled(context);
+        unsetUpdateAlarm(context);
+    }
+
+    private void setUpdateAlarm( Context context )
+    {
+        Calendar updateTime = Calendar.getInstance();
+        //calendar.add(Calendar.MILLISECOND, INTERVAL_MILLIS);  // TODO
+
+        Intent alarmIntent = null; // TODO
+        PendingIntent updateIntent = PendingIntent.getBroadcast(context, UPDATEALARM_ID, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(android.content.Context.ALARM_SERVICE);
+        alarmManager.setInexactRepeating(AlarmManager.RTC, updateTime.getTimeInMillis(), AlarmManager.INTERVAL_DAY, updateIntent);
+    }
+
+    private void unsetUpdateAlarm( Context context )
+    {
+        Intent alarmIntent = null;  // TODO
+        PendingIntent updateIntent = PendingIntent.getBroadcast(context, UPDATEALARM_ID, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.cancel(updateIntent);
     }
 
     /**
