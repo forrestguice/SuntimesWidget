@@ -20,15 +20,27 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
  */
 public class SuntimesWidget1 extends SuntimesWidget
 {
+    private static final int UPDATEALARM_ID = 1;
+
     @Override
     protected Class getConfigClass()
     {
         return SuntimesConfigActivity1.class;
     }
 
-    public static void updateWidgets(Context context)
+    /**
+     * @return an update alarm identifier for this class (SuntimesWidget1: 1)
+     */
+    @Override
+    protected int getUpdateAlarmId()
     {
-        updateWidgets(context, SuntimesWidget1.class);
+        return SuntimesWidget1.UPDATEALARM_ID;
+    }
+
+    @Override
+    protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
+    {
+        SuntimesWidget1.updateAppWidget(context, appWidgetManager, appWidgetId);
     }
 
     @Override
@@ -56,16 +68,12 @@ public class SuntimesWidget1 extends SuntimesWidget
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SuntimesLayout layout)
     {
         RemoteViews views = getWidgetViews(context, appWidgetManager, appWidgetId);
-
-        WidgetSettings.ActionMode actionMode = WidgetSettings.loadActionModePref(context, appWidgetId);
-        Intent intent = new Intent(context, SuntimesWidget1.class);
-        intent.setAction(actionMode.name());
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, appWidgetId, intent, 0);
-        views.setOnClickPendingIntent(R.id.widgetframe_outer_1x1, pendingIntent);
+        views.setOnClickPendingIntent(R.id.widgetframe_outer_1x1, SuntimesWidget.clickActionIntent(context, appWidgetId, SuntimesWidget1.class));
 
         appWidgetManager.updateAppWidget(appWidgetId, null);   // null on this line to discard previously cached RemoveViews
         appWidgetManager.updateAppWidget(appWidgetId, views);  // so this next line actually updates...
+
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.view_flip);
     }
 
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)

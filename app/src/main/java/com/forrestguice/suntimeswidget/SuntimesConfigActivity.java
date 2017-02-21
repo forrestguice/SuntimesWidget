@@ -73,7 +73,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
 
     protected Spinner spinner_1x1mode;
     private Spinner spinner_theme;
-    private CheckBox checkbox_allowResize;
+    protected CheckBox checkbox_allowResize;
     private CheckBox checkbox_showTitle;
 
     private TextView label_titleText;
