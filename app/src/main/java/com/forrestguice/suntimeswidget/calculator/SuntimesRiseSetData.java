@@ -214,8 +214,8 @@ public class SuntimesRiseSetData extends SuntimesData
         SuntimesCalculatorFactory calculatorFactory = new SuntimesCalculatorFactory(context, calculatorMode);
         this.calculator = calculatorFactory.createCalculator(location, timezone);
 
-        todaysCalendar = Calendar.getInstance(TimeZone.getTimeZone(timezone));
-        otherCalendar = Calendar.getInstance(TimeZone.getTimeZone(timezone));
+        todaysCalendar = Calendar.getInstance(timezone);
+        otherCalendar = Calendar.getInstance(timezone);
 
         if (todayIsNotToday())
         {

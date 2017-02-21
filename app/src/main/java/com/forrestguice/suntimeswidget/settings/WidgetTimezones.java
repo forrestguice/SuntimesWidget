@@ -41,9 +41,12 @@ import android.widget.Toast;
 import android.graphics.drawable.GradientDrawable;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
+
 import java.util.List;
 import java.util.TimeZone;
 
@@ -85,6 +88,210 @@ public class WidgetTimezones
         } else {
             spinner.setSelection(0);
             Log.w("selectTimeZone", "unable to find timezone " + timezoneID + " in the list! Setting selection to 0.");
+        }
+    }
+
+    ///////////////////////////////////////
+    ///////////////////////////////////////
+
+    public static TimeZone localMeanTime( Context context, WidgetSettings.Location location )
+    {
+        return new LocalMeanTime(location.getLongitude(), context.getString(R.string.solartime_localMean));
+    }
+
+    public static TimeZone apparentSolarTime( Context context, WidgetSettings.Location location )
+    {
+        return new ApparentSolarTime(location.getLongitude(), context.getString(R.string.solartime_apparent));
+    }
+
+    /**
+     * LocalMeanTime : TimeZone
+     */
+    public static class LocalMeanTime extends TimeZone
+    {
+        public static final String TIMEZONEID = "Local Mean Time";
+
+        private int rawOffset = 0;
+
+        public LocalMeanTime(String longitude)
+        {
+            super();
+            setID(TIMEZONEID);
+            setRawOffset(findOffset(Double.parseDouble(longitude)));
+        }
+
+        public LocalMeanTime(double longitude)
+        {
+            super();
+            setID(TIMEZONEID);
+            setRawOffset(findOffset(longitude));
+        }
+
+        public LocalMeanTime(String longitude, String name)
+        {
+            super();
+            setID(name);
+            setRawOffset(findOffset(Double.parseDouble(longitude)));
+        }
+
+        public LocalMeanTime(double longitude, String name)
+        {
+            super();
+            setID(name);
+            setRawOffset(findOffset(longitude));
+        }
+
+        /**
+         * @param longitude a longitude value; degrees [-180, 180]
+         * @return the offset of this longitude from utc (in miliseconds)
+         */
+        public int findOffset( double longitude )
+        {
+            double offsetHrs = longitude * 24 / 360;           // offset from gmt in hrs
+            int offsetMs = (int)(offsetHrs * 60 * 60 * 1000);  // hrs * 60min in a day * 60s in a min * 1000ms in a second
+            //Log.d("DEBUG", "offset: " + offsetHrs + " (" + offsetMs + ")");
+            return offsetMs;
+        }
+
+        @Override
+        public int getOffset(int era, int year, int month, int day, int dayOfWeek, int milliseconds)
+        {
+            return getRawOffset();
+        }
+
+        @Override
+        public int getOffset( long date )
+        {
+            return getRawOffset();
+        }
+
+        @Override
+        public int getRawOffset()
+        {
+            return rawOffset;
+        }
+
+        @Override
+        public void setRawOffset(int offset)
+        {
+            rawOffset = offset;
+        }
+
+        @Override
+        public boolean inDaylightTime(Date date)
+        {
+            return false;
+        }
+
+        @Override
+        public boolean useDaylightTime()
+        {
+            return false;
+        }
+
+        @Override
+        public String toString()
+        {
+            return "id: " + getID() + ", offset: " + getRawOffset() + ", useDaylight: " + useDaylightTime();
+        }
+    }
+
+    /**
+     * ApparentSolarTime : TimeZone
+     */
+    public static class ApparentSolarTime extends LocalMeanTime
+    {
+        public static final String TIMEZONEID = "Apparent Solar Time";
+
+        public ApparentSolarTime(String longitude)
+        {
+            super(longitude, TIMEZONEID);
+        }
+
+        public ApparentSolarTime(double longitude)
+        {
+            super(longitude, TIMEZONEID);
+        }
+
+        public ApparentSolarTime(String longitude, String name)
+        {
+            super(longitude, name);
+        }
+
+        public ApparentSolarTime(double longitude, String name)
+        {
+            super(longitude, name);
+        }
+
+        @Override
+        public int getOffset(int era, int year, int month, int day, int dayOfWeek, int milliseconds)
+        {
+            Calendar calendar = new GregorianCalendar();
+            calendar.set(year, month, day);
+            return getOffset(calendar.getTimeInMillis());
+        }
+
+        /**
+         * @param date a given date
+         * @return ms offset with "equation of time" correction applied for the given date
+         */
+        @Override
+        public int getOffset( long date )
+        {
+            Calendar calendar = new GregorianCalendar();
+            calendar.setTimeInMillis(date);
+            double equationOfTimeOffset = equationOfTimeOffset(calendar.get(Calendar.DAY_OF_YEAR));  // equation of time correction (minutes)
+            Log.d("DEBUG", "eot: " + equationOfTimeOffset);
+
+            int localMeanOffsetMs = getRawOffset();
+            int equationOfTimeOffsetMs = (int)(equationOfTimeOffset * 60 * 1000);
+            return localMeanOffsetMs + equationOfTimeOffsetMs;
+        }
+
+        /**
+         * http://www.esrl.noaa.gov/gmd/grad/solcalc/solareqns.PDF
+         * @param n day of year (n=1 is january 1)
+         * @return equation of time correction in decimal minutes
+         */
+        private double equationOfTimeOffset(int n)
+        {
+            while (n <= 0)    // n in range [1, 365]
+            {
+                n += 365;
+            }
+            while (n > 365)
+            {
+                n -= 365;
+            }
+
+            double d = (2 * Math.PI / 365.24) * (n - 1);   // fractional year (radians)
+            return 229.18 * (0.000075
+                    + 0.001868 * Math.cos(d)
+                    - 0.032077 * Math.sin(d)
+                    - 0.014615 * Math.cos(2*d)
+                    - 0.040849 * Math.sin(2*d));   // .oO(a truly magical return statement)
+        }
+
+        @Override
+        public boolean useDaylightTime()
+        {
+            return true;
+        }
+        public boolean observesDaylightTime()
+        {
+            return useDaylightTime();
+        }
+
+        @Override
+        public boolean inDaylightTime(Date date)
+        {
+            return true;
+        }
+
+        @Override
+        public int getDSTSavings()
+        {
+            return 1;
         }
     }
 

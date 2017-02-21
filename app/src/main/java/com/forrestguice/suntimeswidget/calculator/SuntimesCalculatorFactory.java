@@ -23,6 +23,8 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import java.util.TimeZone;
+
 /**
  * A factory class that creates instances of SuntimesCalculator. The specific implementation returned
  * by the factory's createCalculator method is controlled by the SuntimesCalculatorDescriptor arg
@@ -81,7 +83,7 @@ public class SuntimesCalculatorFactory
      * @param timezone a timezone string
      * @return a calculator object that implements SuntimesCalculator
      */
-    public SuntimesCalculator createCalculator(WidgetSettings.Location location, String timezone)
+    public SuntimesCalculator createCalculator(WidgetSettings.Location location, TimeZone timezone)
     {
         SuntimesCalculator calculator;
         try {

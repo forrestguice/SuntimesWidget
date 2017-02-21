@@ -136,7 +136,7 @@
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Agordoj de aspekto</string>           <!-- group title -->
     <string name="configLabel_appearance_theme">Etoso:</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">Grow with available space (resizeable)</string>  <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_appearance_allowResize">Etendigi al disponebla spaco (regrandigebla)</string>  <!-- checkbox label --> <!-- TODO -->
     <string name="configLabel_appearance_showTitle">Montri titolon</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Titolo:</string>              <!-- edittext label -->
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
@@ -200,15 +200,19 @@
     <string name="configAction_savePlace">Konservi</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
+    <string name="timezoneMode_solar">Solar Time</string>                       <!-- setting -->  <!-- TODO -->
     <string name="timezoneMode_current">Sistema</string>                         <!-- setting -->
     <string name="timezoneMode_custom">Propra</string>                    <!-- setting -->
 
+    <string name="solartime_localMean">Local Mean Time</string>                 <!-- setting / custom timezone id --> <!-- TODO -->
+    <string name="solartime_apparent">Apparent Solar Time</string>              <!-- setting / custom timezone id --> <!-- TODO -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
     <string name="configLabel_timezone">Agordoj pri horzono</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Reĝimo:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Horzono:</string>              <!-- spinner label -->
+    <string name="configLabel_solartime">Solar Time:</string>                   <!-- spinner label -->  <!-- TODO -->
 
     <!-- Widget Setting: date mode -->
     <string name="dateMode_current">Hodiaŭ</string>                  <!-- setting -->
@@ -435,8 +439,8 @@
         <a href="https://github.com/forrestguice/SuntimesWidget">github.com/forrestguice/SuntimesWidget</a>
     ]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[
-        Kopirajto &#169 2014 Forrest Guice <br />
-        Fontkodo disponebla laŭ permesilo GPLv3.
+        Kopirajto &#169 2014 Forrest GUICE <br />
+        Fontkodo disponebla laŭ la permesilo GPLv3.
     ]]></string>
     <string name="app_legal2"><![CDATA[
         Germana traduko de Henrik "HerHde" Hüttemann. </br>

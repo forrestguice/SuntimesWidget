@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.calculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Calendar;
+import java.util.TimeZone;
 
 /**
  * An interface used when calculating sunrise and sunset times. Implementations
@@ -43,6 +44,14 @@ public interface SuntimesCalculator
      * @since 1.0.0
      */
     void init( WidgetSettings.Location location, String timezone );
+
+    /**
+     * Initialize the calculator with a given location and timezone.
+     * @param location a WidgetSettings.Location object
+     * @param timezone a timezone identifier
+     * @since 1.1.0
+     */
+    void init( WidgetSettings.Location location, TimeZone timezone );
 
     /**
      * Morning Astronomical Twilight
