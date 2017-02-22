@@ -96,6 +96,7 @@ public class LightMapView extends LinearLayout
     /**
      * @param context
      */
+    @SuppressWarnings("ResourceType")
     private void initColors(Context context)
     {
         int[] colorAttrs = { R.attr.graphColor_night,   // 0
