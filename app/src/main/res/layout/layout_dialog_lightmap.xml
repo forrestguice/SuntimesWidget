@@ -41,7 +41,8 @@
             <ImageView android:layout_gravity="center_vertical"
                 android:id="@+id/info_time_lightmap_key_night_icon"
                 android:layout_width="16dp" android:layout_height="16dp"
-                android:background="@drawable/ic_colortab"/>
+                android:background="@drawable/ic_colortab"
+                android:contentDescription="@string/timeMode_night" />
 
             <TextView android:layout_gravity="center_vertical"
                 android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
@@ -58,7 +59,8 @@
             <ImageView android:layout_gravity="center_vertical"
                 android:id="@+id/info_time_lightmap_key_astro_icon"
                 android:layout_width="16dp" android:layout_height="16dp"
-                android:background="@drawable/ic_colortab"/>
+                android:background="@drawable/ic_colortab"
+                android:contentDescription="@string/timeMode_astronomical" />
 
             <TextView android:layout_gravity="center_vertical"
                 android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
@@ -75,7 +77,8 @@
             <ImageView android:layout_gravity="center_vertical"
                 android:id="@+id/info_time_lightmap_key_nautical_icon"
                 android:layout_width="16dp" android:layout_height="16dp"
-                android:background="@drawable/ic_colortab"/>
+                android:background="@drawable/ic_colortab"
+                android:contentDescription="@string/timeMode_nautical" />
 
             <TextView android:layout_gravity="center_vertical"
                 android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
@@ -92,7 +95,8 @@
             <ImageView android:layout_gravity="center_vertical"
                 android:id="@+id/info_time_lightmap_key_civil_icon"
                 android:layout_width="16dp" android:layout_height="16dp"
-                android:background="@drawable/ic_colortab"/>
+                android:background="@drawable/ic_colortab"
+                android:contentDescription="@string/timeMode_civil" />
 
             <TextView android:layout_gravity="center_vertical"
                 android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
@@ -109,7 +113,8 @@
             <ImageView android:layout_gravity="center_vertical"
                 android:id="@+id/info_time_lightmap_key_day_icon"
                 android:layout_width="16dp" android:layout_height="16dp"
-                android:background="@drawable/ic_colortab"/>
+                android:background="@drawable/ic_colortab"
+                android:contentDescription="@string/timeMode_day" />
 
             <TextView android:layout_gravity="center_vertical"
                 android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
