@@ -317,8 +317,7 @@
   </string-array>
 
   <!-- App Setting: locale mode -->
-  <!-- TODO: verify translation / fix -->
-  <string name="configLabel_locale">Spracheinstellungen</string>   <!-- group title -->
+  <string name="configLabel_locale">Spracheinstellungen</string>   <!-- group title --> <!-- TODO: verify translation / fix -->
 
   <string name="configLabel_localeMode">Modus:</string>
   <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
@@ -328,8 +327,7 @@
   </string-array>
 
   <!-- App Setting: custom Locale -->
-  <!-- TODO: verify translation / fix -->
-  <string name="configLabel_localeSelect">Sprache</string>
+  <string name="configLabel_localeSelect">Sprache</string> <!-- TODO: verify translation / fix -->
   <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
   <string-array name="locale_display">                      <!-- one-to-one with locale_values -->
       <item>Englisch</item>
