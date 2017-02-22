@@ -412,6 +412,7 @@ public class SuntimesUtils
 
     public static ImageSpan createWarningSpan(Context context, int height)
     {
+        //noinspection SuspiciousNameCombination
         return createWarningSpan(context, height, height);
     }
     public static ImageSpan createWarningSpan(Context context, float height)

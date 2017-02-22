@@ -420,7 +420,7 @@ public class AppSettings
      */
     public static int loadPrefGpsMaxAge(SharedPreferences prefs, int defaultValue)
     {
-        int retValue = defaultValue;
+        int retValue;
         try {
             String maxAgeString = prefs.getString(PREF_KEY_GETFIX_MAXAGE, defaultValue+"");
             retValue = Integer.parseInt(maxAgeString);
@@ -438,7 +438,7 @@ public class AppSettings
      */
     public static int loadPrefGpsMinElapsed(SharedPreferences prefs, int defaultValue)
     {
-        int retValue = defaultValue;
+        int retValue;
         try {
             String minAgeString = prefs.getString(PREF_KEY_GETFIX_MINELAPSED, defaultValue+"");
             retValue = Integer.parseInt(minAgeString);
@@ -456,7 +456,7 @@ public class AppSettings
      */
     public static int loadPrefGpsMaxElapsed(SharedPreferences prefs, int defaultValue)
     {
-        int retValue = defaultValue;
+        int retValue;
         try {
             String maxElapsedString = prefs.getString(PREF_KEY_GETFIX_MAXELAPSED, defaultValue+"");
             retValue = Integer.parseInt(maxElapsedString);
