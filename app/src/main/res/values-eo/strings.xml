@@ -152,6 +152,8 @@
     <string name="timeMode_nautical">Naŭtika krepusko</string>         <!-- setting -->
     <string name="timeMode_astronomical_short">Astronomia</string>    <!-- setting -->
     <string name="timeMode_astronomical">Astronomia krepusko</string> <!-- setting -->
+    <string name="timeMode_night">Nokto</string>                <!-- a label (not an actual timeMode setting) -->     <!-- TODO: confirm this is right / fix -->
+    <string name="timeMode_day">Tago</string>                   <!-- a label (not an actual timeMode setting) -->     <!-- TODO: confirm this is right / fix -->
 
     <string name="configLabel_general_timeMode">Reĝimo:</string>          <!-- spinner label -->
 

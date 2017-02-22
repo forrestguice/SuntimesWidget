@@ -153,6 +153,8 @@
   <string name="timeMode_nautical">Nautische Dämmerung</string>         <!-- setting -->
   <string name="timeMode_astronomical_short">Astronomisch</string>    <!-- setting -->
   <string name="timeMode_astronomical">Astronomische Dämmerung</string> <!-- setting -->
+  <string name="timeMode_night">Nacht</string>                   <!-- a label (not an actual timeMode setting) --> <!-- TODO: confirm this is right / fix -->
+  <string name="timeMode_day">Tag</string>                       <!-- a label (not an actual timeMode setting) --> <!-- TODO: confirm this is right / fix -->
 
   <string name="configLabel_general_timeMode">Modus:</string>          <!-- spinner label -->
 

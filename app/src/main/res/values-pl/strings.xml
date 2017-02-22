@@ -152,6 +152,8 @@
     <string name="timeMode_nautical">Żeglarski świt/zmierzch</string>         <!-- setting -->
     <string name="timeMode_astronomical_short">Astronomiczny</string>    <!-- setting -->
     <string name="timeMode_astronomical">Astronomiczny świt/zmierzch</string> <!-- setting -->
+    <string name="timeMode_night">Noc</string>                   <!-- a label (not an actual timeMode setting) -->     <!-- TODO: confirm this is right / fix -->
+    <string name="timeMode_day">Dzień</string>                   <!-- a label (not an actual timeMode setting) -->     <!-- TODO: confirm this is right / fix -->
 
     <string name="configLabel_general_timeMode">Tryb:</string>          <!-- spinner label -->
 

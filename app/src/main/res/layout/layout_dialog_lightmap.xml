@@ -46,7 +46,7 @@
             <TextView android:layout_gravity="center_vertical"
                 android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Night" />
+                android:text="@string/timeMode_night" />
 
         </LinearLayout>
 
@@ -63,7 +63,7 @@
             <TextView android:layout_gravity="center_vertical"
                 android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Astronomical Twilight" />
+                android:text="@string/timeMode_astronomical" />
 
         </LinearLayout>
 
@@ -80,7 +80,7 @@
             <TextView android:layout_gravity="center_vertical"
                 android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Nautical Twilight" />
+                android:text="@string/timeMode_nautical" />
 
         </LinearLayout>
 
@@ -97,7 +97,7 @@
             <TextView android:layout_gravity="center_vertical"
                 android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Civil Twilight" />
+                android:text="@string/timeMode_civil" />
 
         </LinearLayout>
 
@@ -114,7 +114,7 @@
             <TextView android:layout_gravity="center_vertical"
                 android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Day" />
+                android:text="@string/timeMode_day" />
 
         </LinearLayout>
 
