@@ -150,11 +150,11 @@ public class AlarmDialog extends DialogFragment
         initViews(myParent, dialogContent);
         if (savedInstanceState != null)
         {
-            Log.d("DEBUG", "AlarmDialog onCreate (restoreState)");
+            //Log.d("DEBUG", "AlarmDialog onCreate (restoreState)");
             loadSettings(savedInstanceState);
 
         } else {
-            Log.d("DEBUG", "AlarmDialog onCreate (newState)");
+            //Log.d("DEBUG", "AlarmDialog onCreate (newState)");
             loadSettings(myParent);
         }
         return dialog;
@@ -166,7 +166,7 @@ public class AlarmDialog extends DialogFragment
     @Override
     public void onSaveInstanceState( Bundle outState )
     {
-        Log.d("DEBUG", "AlarmDialog onSaveInstanceState");
+        //Log.d("DEBUG", "AlarmDialog onSaveInstanceState");
         saveSettings(outState);
         super.onSaveInstanceState(outState);
     }

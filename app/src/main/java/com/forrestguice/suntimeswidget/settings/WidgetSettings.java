@@ -746,7 +746,7 @@ public class WidgetSettings
         String themeName = prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_THEME, PREF_DEF_APPEARANCE_THEME);
 
         SuntimesTheme theme = WidgetThemes.loadTheme(context, themeName);
-        Log.d("loadThemePref", "theme is " + theme.themeName());
+        //Log.d("loadThemePref", "theme is " + theme.themeName());
         return theme;
     }
     public static void deleteThemePref(Context context, int appWidgetId)

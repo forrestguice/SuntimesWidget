@@ -154,7 +154,7 @@ public class AppSettings
     {
         if (systemLocale != null)
         {
-            Log.d("resetLocale", "locale reset to " + systemLocale);
+            //Log.d("resetLocale", "locale reset to " + systemLocale);
             return loadLocale(context, systemLocale);
         }
         return false;
@@ -190,7 +190,7 @@ public class AppSettings
         config.locale = customLocale;
         resources.updateConfiguration(config, metrics);
 
-        Log.d("loadLocale", "locale loaded " + localeCode);
+        //Log.d("loadLocale", "locale loaded " + localeCode);
         return true;
     }
 

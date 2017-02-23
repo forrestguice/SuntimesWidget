@@ -597,13 +597,13 @@ public class SuntimesConfigActivity extends AppCompatActivity
         final WidgetSettings.WidgetMode1x1[] modes = WidgetSettings.WidgetMode1x1.values();
         WidgetSettings.WidgetMode1x1 mode = modes[ spinner_1x1mode.getSelectedItemPosition() ];
         WidgetSettings.save1x1ModePref(context, appWidgetId, mode);
-        Log.d("DEBUG", "Saved mode: " + mode.name());
+        //Log.d("DEBUG", "Saved mode: " + mode.name());
 
         // save: theme
         final ThemeDescriptor[] themes = WidgetThemes.values();
         ThemeDescriptor theme = themes[ spinner_theme.getSelectedItemPosition() ];
         WidgetSettings.saveThemePref(context, appWidgetId, theme.name());
-        Log.d("DEBUG", "Saved theme: " + theme.name());
+        //Log.d("DEBUG", "Saved theme: " + theme.name());
 
         // save: allow resize
         boolean allowResize = checkbox_allowResize.isChecked();

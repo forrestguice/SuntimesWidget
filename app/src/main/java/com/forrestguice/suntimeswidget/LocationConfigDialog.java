@@ -217,7 +217,7 @@ public class LocationConfigDialog extends DialogFragment
     @Override
     public void onSaveInstanceState( Bundle outState )
     {
-        Log.d("DEBUG", "LocationConfigDialog onSaveInstanceState");
+        //Log.d("DEBUG", "LocationConfigDialog onSaveInstanceState");
         saveSettings(outState);
         super.onSaveInstanceState(outState);
     }
@@ -227,7 +227,7 @@ public class LocationConfigDialog extends DialogFragment
      */
     protected void saveSettings(Bundle bundle)
     {
-        Log.d("DEBUG", "LocationConfigDialog saveSettings (bundle)");
+        //Log.d("DEBUG", "LocationConfigDialog saveSettings (bundle)");
         bundle.putBoolean(KEY_LOCATION_HIDETITLE, hideTitle);
         if (dialogContent != null)
         {
@@ -240,7 +240,7 @@ public class LocationConfigDialog extends DialogFragment
      */
     protected void loadSettings(Bundle bundle)
     {
-        Log.d("DEBUG", "LocationConfigDialog loadSettings (bundle)");
+        //Log.d("DEBUG", "LocationConfigDialog loadSettings (bundle)");
         hideTitle = bundle.getBoolean(KEY_LOCATION_HIDETITLE);
         setHideTitle(hideTitle);
 

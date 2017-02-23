@@ -315,7 +315,7 @@ public class LightMapView extends LinearLayout
      */
     protected void loadSettings(Context context)
     {
-        Log.d("DEBUG", "LightMapView loadSettings (prefs)");
+        //Log.d("DEBUG", "LightMapView loadSettings (prefs)");
         if (isInEditMode())
             return;
     }
@@ -325,7 +325,7 @@ public class LightMapView extends LinearLayout
      */
     protected void loadSettings(Context context, Bundle bundle )
     {
-        Log.d("DEBUG", "LightMapView loadSettings (bundle)");
+        //Log.d("DEBUG", "LightMapView loadSettings (bundle)");
     }
 
     /**
@@ -333,7 +333,7 @@ public class LightMapView extends LinearLayout
      */
     protected boolean saveSettings(Context context)
     {
-        Log.d("DEBUG", "LightMap loadSettings (prefs)");
+        //Log.d("DEBUG", "LightMap loadSettings (prefs)");
         return false;
     }
 
@@ -343,7 +343,7 @@ public class LightMapView extends LinearLayout
      */
     protected boolean saveSettings(Bundle bundle)
     {
-        Log.d("DEBUG", "LightMapView saveSettings (bundle)");
+        //Log.d("DEBUG", "LightMapView saveSettings (bundle)");
         return true;
     }
 
