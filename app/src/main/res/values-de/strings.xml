@@ -137,6 +137,7 @@
   <!-- Widget Setting: appearance -->
   <string name="configLabel_appearance">Darstellung</string>           <!-- group title -->
   <string name="configLabel_appearance_theme">Theme:</string>                  <!-- spinner label -->
+  <string name="configLabel_appearance_allowResize">Grow with available space (resizeable)</string>  <!-- checkbox label --> <!-- TODO -->
   <string name="configLabel_appearance_showTitle">Titel anzeigen</string>          <!-- checkbox label -->
   <string name="configLabel_appearance_titleText">Titel:</string>              <!-- edittext label -->
   <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
@@ -152,6 +153,8 @@
   <string name="timeMode_nautical">Nautische Dämmerung</string>         <!-- setting -->
   <string name="timeMode_astronomical_short">Astronomisch</string>    <!-- setting -->
   <string name="timeMode_astronomical">Astronomische Dämmerung</string> <!-- setting -->
+  <string name="timeMode_night">Nacht</string>                   <!-- a label (not an actual timeMode setting) --> <!-- TODO: confirm this is right / fix -->
+  <string name="timeMode_day">Tag</string>                       <!-- a label (not an actual timeMode setting) --> <!-- TODO: confirm this is right / fix -->
 
     <string name="timeMode_equinox_vernal">Vernal Equinox</string>      <!-- setting --> <!-- TODO -->
     <string name="timeMode_equinox_vernal_short">Equinox</string>       <!-- setting --> <!-- TODO -->
@@ -202,15 +205,19 @@
   <string name="configAction_savePlace">speichern</string>         <!-- button (contentDescription) -->
 
   <!-- Widget Setting: timezone -->
+  <string name="timezoneMode_solar">Solar Time</string>                       <!-- setting -->  <!-- TODO -->
   <string name="timezoneMode_current">System</string>                         <!-- setting -->
   <string name="timezoneMode_custom">Benutzerdefiniert</string>                    <!-- setting -->
 
+  <string name="solartime_localMean">Local Mean Time</string>                 <!-- setting / custom timezone id --> <!-- TODO -->
+  <string name="solartime_apparent">Apparent Solar Time</string>              <!-- setting / custom timezone id --> <!-- TODO -->
   <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
   <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
   <string name="configLabel_timezone">Zeitzone</string>             <!-- group title -->
   <string name="configLabel_timezone_mode">Modus:</string>                     <!-- spinner label -->
   <string name="configLabel_timezone_custom">Zeitzone:</string>              <!-- spinner label -->
+  <string name="configLabel_solartime">Solar Time:</string>                   <!-- spinner label -->  <!-- TODO -->
 
   <!-- Widget Setting: date mode -->
   <string name="dateMode_current">Heute</string>                  <!-- setting -->
@@ -237,7 +244,7 @@
   <!--App Setting: WidgetList -->
   <string name="configLabel_widgetList">Aktive Widgets</string>               <!-- group title -->
   <string name="configLabel_widgetList_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
-  <string name="configLabel_widgetList_itemTitlePattern"><xliff:g id="titlePattern"><![CDATA[%M (%lat, %lon) [%t]]]></xliff:g></string> <!-- the pattern used when generating widget titles for display in the list -->
+  <!--<string name="configLabel_widgetList_itemTitlePattern"><xliff:g id="titlePattern"><![CDATA[%M (%lat, %lon) [%t]]]></xliff:g></string>--> <!-- the pattern used when generating widget titles for display in the list -->
   <string name="configLabel_widgetListHelp_title">Hilfe</string>               <!-- always the first item in the widgetList -->
   <string name="configLabel_widgetListHelp_summary">Hilfe des Widgets</string>
 
@@ -319,8 +326,7 @@
   </string-array>
 
   <!-- App Setting: locale mode -->
-  <!-- TODO: verify translation / fix -->
-  <string name="configLabel_locale">Spracheinstellungen</string>   <!-- group title -->
+  <string name="configLabel_locale">Spracheinstellungen</string>   <!-- group title --> <!-- TODO: verify translation / fix -->
 
   <string name="configLabel_localeMode">Modus:</string>
   <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
@@ -330,8 +336,7 @@
   </string-array>
 
   <!-- App Setting: custom Locale -->
-  <!-- TODO: verify translation / fix -->
-  <string name="configLabel_localeSelect">Sprache</string>
+  <string name="configLabel_localeSelect">Sprache</string> <!-- TODO: verify translation / fix -->
   <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
   <string-array name="locale_display">                      <!-- one-to-one with locale_values -->
       <item>Englisch</item>
@@ -461,8 +466,9 @@
               * <b>%lon</b> für den Längengrad <br/>
               * <b>%m</b> für den Zeitmodus (Kurzform) (z.B. "Astron. Abend") <br/>
               * <b>%M</b> für den Zeitmodus (Langform) (z.B. "Astronomische Abenddämmerung (Ende)") <br/>
+              * <b>%s</b> für den Datenquelle (z.B. "sunrisesunsetlib") <br/>
               * <b>%t</b> Die Zeitzone (id) (z.B. "Europe/Berlin") <br/>
-  ]]></string>
+  ]]></string>  <!-- TODO: confirm translation for %s / fix  -->
   <string name="help_general_timeMode"><![CDATA[
         <b>Tatsächlicher Sonnenauf-/Untergang:</b> Die Sonnenscheibe steht ungefähr mittig am Horizont.<br/><br/>
         <b>Bürgerliche Dämmerung:</b> Die Sonne steht 6 Grad unter dem Horizont; Nur die hellsten Himmelskörper sind erkennbar. Unter freiem Himmel ist es hell genug für die meisten Aktivitäten, wie beispielsweise Lesen ohne Beleuchtung. (Auch zivile Dämmerung genannt.)<br/><br/>

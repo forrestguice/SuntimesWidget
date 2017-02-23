@@ -100,6 +100,7 @@ public class SuntimesActivity extends AppCompatActivity
     private static final String DIALOGTAG_HELP = "help";
     private static final String DIALOGTAG_LOCATION = "location";
     private static final String DIALOGTAG_DATE = "dateselect";
+    private static final String DIALOGTAG_LIGHTMAP = "lightmap";
 
     protected static SuntimesUtils utils = new SuntimesUtils();
 
@@ -179,6 +180,8 @@ public class SuntimesActivity extends AppCompatActivity
     private TextView txt_lightlength2;
 
     private EquinoxView card_equinoxSolstice;
+    private LightMapView lightmap;
+    private View lightmapLayout;
 
     private boolean isRtl = false;
     private boolean userSwappedCard = false;
@@ -271,7 +274,7 @@ public class SuntimesActivity extends AppCompatActivity
         {
             timezoneDialog.setOnAcceptedListener(onConfigTimeZone);
             timezoneDialog.setOnCanceledListener(onCancelTimeZone);
-            Log.d("DEBUG", "TimeZoneDialog listeners restored.");
+            //Log.d("DEBUG", "TimeZoneDialog listeners restored.");
         }
 
         AlarmDialog alarmDialog = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_ALARM);
@@ -279,14 +282,14 @@ public class SuntimesActivity extends AppCompatActivity
         {
             alarmDialog.setData(dataset);
             alarmDialog.setOnAcceptedListener(alarmDialog.scheduleAlarmClickListener);
-            Log.d("DEBUG", "AlarmDialog listeners restored.");
+            //Log.d("DEBUG", "AlarmDialog listeners restored.");
         }
 
         LocationConfigDialog locationDialog = (LocationConfigDialog) fragments.findFragmentByTag(DIALOGTAG_LOCATION);
         if (locationDialog != null)
         {
             locationDialog.setOnAcceptedListener( onConfigLocation(locationDialog) );
-            Log.d("DEBUG", "LocationDialog listeners restored.");
+            //Log.d("DEBUG", "LocationDialog listeners restored.");
         }
 
         TimeDateDialog dateDialog = (TimeDateDialog) fragments.findFragmentByTag(DIALOGTAG_DATE);
@@ -294,7 +297,15 @@ public class SuntimesActivity extends AppCompatActivity
         {
             dateDialog.setOnAcceptedListener(onConfigDate);
             dateDialog.setOnCanceledListener(onCancelDate);
-            Log.d("DEBUG", "TimeDateDialog listeners restored.");
+            //Log.d("DEBUG", "TimeDateDialog listeners restored.");
+        }
+
+        LightMapDialog lightMapDialog = (LightMapDialog) fragments.findFragmentByTag(DIALOGTAG_LIGHTMAP);
+        if (lightMapDialog != null)
+        {
+            lightMapDialog.setData(dataset);
+            lightMapDialog.updateViews(dataset);
+            //Log.d("DEBUG", "LightMapDialog updated on restore.");
         }
     }
 
@@ -383,6 +394,7 @@ public class SuntimesActivity extends AppCompatActivity
         initNoteViews(context);
         initCardViews(context);
         initEquinoxViews(context);
+        initLightMap(context);
     }
 
     /**
@@ -408,6 +420,31 @@ public class SuntimesActivity extends AppCompatActivity
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
         actionBar = getSupportActionBar();
+    }
+
+    private void initLightMap(Context context)
+    {
+        lightmap = (LightMapView) findViewById(R.id.info_time_lightmap);
+        lightmapLayout = findViewById(R.id.info_time_lightmap_layout);
+
+        lightmapLayout.setClickable(true);
+        lightmapLayout.setOnClickListener( new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                showLightMapDialog();
+            }
+        });
+        lightmapLayout.setOnLongClickListener( new View.OnLongClickListener()
+        {
+            @Override
+            public boolean onLongClick(View view)
+            {
+                showLightMapDialog();
+                return true;
+            }
+        });
     }
 
     /**
@@ -1235,9 +1272,14 @@ public class SuntimesActivity extends AppCompatActivity
         // timezone field
         timezoneWarning.shouldShow = WidgetTimezones.isProbablyNotLocal(dataset.timezone(), dataset.location(), dataset.date());
         ImageSpan timezoneWarningIcon = (showWarnings && timezoneWarning.shouldShow) ? SuntimesUtils.createWarningSpan(this, txt_timezone.getTextSize()) : null;
-        String timezoneString = getString(R.string.timezoneField, dataset.timezone());
+        String timezoneString = getString(R.string.timezoneField, dataset.timezone().getID());
         SpannableStringBuilder timezoneSpan = SuntimesUtils.createSpan(timezoneString, timezoneWarningIcon);
         txt_timezone.setText(timezoneSpan);
+
+        // "light map"
+        boolean enableLightMap = AppSettings.loadShowLightmapPref(this);
+        showLightMap(enableLightMap);
+        lightmap.updateViews(enableLightMap ? dataset : null);
 
         showDayLength(dataset.isCalculated());
         showNotes(dataset.isCalculated());
@@ -1302,7 +1344,7 @@ public class SuntimesActivity extends AppCompatActivity
     /**
      * Clock ui update rate; once every few seconds.
      */
-    public static int UPDATE_RATE = 3000;
+    public static int UPDATE_RATE = 3000;     // primary update rate: 3s
 
     /**
      * Update the clock ui at regular intervals to reflect current time (and note).
@@ -1324,10 +1366,12 @@ public class SuntimesActivity extends AppCompatActivity
     protected void updateTimeViews(Context context)
     {
         Calendar now = dataset.now();
+        //Log.d("DEBUG", "" + now.getTimeZone());
         SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(this, now);
         txt_time.setText(timeText.getValue());
         txt_time_suffix.setText(timeText.getSuffix());
         notes.updateNote(context, now);
+        lightmap.updateViews(false);
     }
 
     /**
@@ -1615,6 +1659,18 @@ public class SuntimesActivity extends AppCompatActivity
         note_flipper.setVisibility( (value ? View.VISIBLE : View.INVISIBLE) );
     }
 
+    protected void showLightMap( boolean value )
+    {
+        lightmapLayout.setVisibility((value ? View.VISIBLE : View.GONE));
+    }
+
+    protected void showLightMapDialog()
+    {
+        LightMapDialog lightMapDialog = new LightMapDialog();
+        lightMapDialog.setData(dataset);
+        lightMapDialog.show(getSupportFragmentManager(), DIALOGTAG_LIGHTMAP);
+    }
+
     /**
      * @param tomorrow
      * @return
@@ -1670,7 +1726,7 @@ public class SuntimesActivity extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                Log.d("DEBUG", "TimeField clicked: " + event.toString());
+                //Log.d("DEBUG", "TimeField clicked: " + event.toString());
                 notes.showNote(event);
             }
         };

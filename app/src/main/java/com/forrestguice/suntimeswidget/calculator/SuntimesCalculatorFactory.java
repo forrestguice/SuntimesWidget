@@ -22,7 +22,8 @@ import android.content.Context;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator;
+
+import java.util.TimeZone;
 
 /**
  * A factory class that creates instances of SuntimesCalculator. The specific implementation returned
@@ -50,9 +51,10 @@ public class SuntimesCalculatorFactory
     protected static boolean initialized = false;
     public static void initCalculators()
     {
-        SuntimesCalculatorDescriptor.addValue(SunriseSunsetSuntimesCalculator.getDescriptor());
+        SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.getDescriptor());
+        SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator.getDescriptor());
         initialized = true;
-        Log.d("CalculatorFactory", "Initialized suntimes calculator list.");
+        //Log.d("CalculatorFactory", "Initialized suntimes calculator list.");
     }
 
     private SuntimesCalculatorDescriptor current;
@@ -81,7 +83,7 @@ public class SuntimesCalculatorFactory
      * @param timezone a timezone string
      * @return a calculator object that implements SuntimesCalculator
      */
-    public SuntimesCalculator createCalculator(WidgetSettings.Location location, String timezone)
+    public SuntimesCalculator createCalculator(WidgetSettings.Location location, TimeZone timezone)
     {
         SuntimesCalculator calculator;
         try {
@@ -92,7 +94,7 @@ public class SuntimesCalculatorFactory
             Log.d("createCalculator", "using .oO( " + calculator.name() + " ): " + timezone);
 
         } catch (Exception e1) {
-            calculator = new SunriseSunsetSuntimesCalculator();
+            calculator = new com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator();
             Log.e("createCalculator", "fail! .oO( " + current.getReference() + "), so instantiating default: " + calculator.getClass().getName() + " :: " + timezone);
         }
 

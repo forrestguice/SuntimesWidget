@@ -213,10 +213,10 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     {
         if (key.equals(AppSettings.PREF_KEY_LOCALE) || key.equals(AppSettings.PREF_KEY_LOCALE_MODE))
         {
-            Log.d("SettingsActivity", "Locale change detected; restarting activity");
+            //Log.d("SettingsActivity", "Locale change detected; restarting activity");
             AppSettings.initLocale(this);
-            SuntimesWidget.updateWidgets(this);
-            SuntimesWidget1.updateWidgets(this);
+            SuntimesWidget.triggerWidgetUpdate(this, SuntimesWidget.class);
+            SuntimesWidget.triggerWidgetUpdate(this, SuntimesWidget1.class);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
             {
@@ -227,6 +227,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 finish();
                 startActivity(getIntent());
             }
+            return;
+        }
+
+        if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_CALCULATOR))
+        {
+            // bug here.. without explicit call to save (below) the ListPreference isn't persisted for some reason..
+            WidgetSettings.saveCalculatorModePref(this, 0, SuntimesCalculatorDescriptor.valueOf(sharedPreferences.getString(key, "missing")));
+            return;
         }
     }
 
@@ -302,7 +310,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             loadPref_general(fragment.getActivity(), calculatorPref);
         }
     }
-    private static void initPref_general(ListPreference calculatorPref)
+    private static void initPref_general(final ListPreference calculatorPref)
     {
         SuntimesCalculatorDescriptor[] calculators = SuntimesCalculatorDescriptor.values();
         String[] calculatorEntries = new String[calculators.length];

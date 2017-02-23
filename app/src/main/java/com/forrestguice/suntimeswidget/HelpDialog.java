@@ -73,7 +73,7 @@ public class HelpDialog extends DialogFragment
         initViews(dialogContent);
         if (savedInstanceState != null)
         {
-            Log.d("DEBUG", "HelpDialog onCreate (restoreState)");
+            //Log.d("DEBUG", "HelpDialog onCreate (restoreState)");
             rawContent = savedInstanceState.getString(KEY_HELPTEXT);
         }
         setContent(rawContent);
@@ -92,7 +92,7 @@ public class HelpDialog extends DialogFragment
     @Override
     public void onSaveInstanceState( Bundle outState )
     {
-        Log.d("DEBUG", "HelpDialog onSaveInstanceState");
+        //Log.d("DEBUG", "HelpDialog onSaveInstanceState");
         outState.putString(KEY_HELPTEXT, rawContent);
         super.onSaveInstanceState(outState);
     }

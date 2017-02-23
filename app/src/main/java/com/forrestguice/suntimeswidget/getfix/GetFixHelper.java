@@ -100,9 +100,9 @@ public class GetFixHelper
                     int maxAge = AppSettings.loadPrefGpsMaxAge(prefs, GetFixTask.MAX_AGE);
                     getFixTask.setMaxAge(maxAge);
 
-                    Log.d("GetFixHelper", "MinElapsed: " + minElapsed);
-                    Log.d("GetFixHelper", "MaxElapsed: " + maxElapsed);
-                    Log.d("GetFixHelper", "MaxAge: " + maxAge);
+                    //Log.d("GetFixHelper", "MinElapsed: " + minElapsed);
+                    //Log.d("GetFixHelper", "MaxElapsed: " + maxElapsed);
+                    //Log.d("GetFixHelper", "MaxAge: " + maxAge);
 
                     getFixTask.addGetFixTaskListeners(listeners);
                     getFixTask.addGetFixTaskListener( new GetFixTask.GetFixTaskListener()
@@ -151,7 +151,7 @@ public class GetFixHelper
     {
         if (gettingFix && getFixTask != null)
         {
-            Log.d("GetFixHelper", "Canceling getFix");
+            //Log.d("GetFixHelper", "Canceling getFix");
             getFixTask.cancel(true);
         }
     }
@@ -160,7 +160,7 @@ public class GetFixHelper
     {
         int permission = ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION);
         boolean hasPermission = (permission == PackageManager.PERMISSION_GRANTED);
-        Log.d("hasGPSPermissions", "" + hasPermission);
+        //Log.d("hasGPSPermissions", "" + hasPermission);
 
         if (!hasPermission)
         {
@@ -272,7 +272,7 @@ public class GetFixHelper
         if (bundle == null)
             return;
 
-        Log.d("DEBUG", "GetFixHelper loadSettings (bundle)");
+        //Log.d("DEBUG", "GetFixHelper loadSettings (bundle)");
         wasGettingFix = bundle.getBoolean(KEY_LOCATION_GETTINGFIX);
         gotFix = bundle.getBoolean(KEY_LOCATION_GOTFIX);
         setUiIndex(bundle.getInt(KEY_LOCATION_UIINDEX));
@@ -280,7 +280,7 @@ public class GetFixHelper
 
     public void saveSettings( Bundle bundle )
     {
-        Log.d("DEBUG", "GetFixHelper saveSettings (bundle)");
+        //Log.d("DEBUG", "GetFixHelper saveSettings (bundle)");
         bundle.putBoolean(KEY_LOCATION_GETTINGFIX, gettingFix);
         bundle.putBoolean(KEY_LOCATION_GOTFIX, gotFix);
         bundle.putInt(KEY_LOCATION_UIINDEX, uiIndex);
@@ -288,7 +288,7 @@ public class GetFixHelper
 
     public void onResume()
     {
-        Log.d("DEBUG", "GetFixHelper onResume");
+        //Log.d("DEBUG", "GetFixHelper onResume");
         FragmentManager fragments = myParent.getSupportFragmentManager();
 
         KeepTryingDialog keepTryingDialog = (KeepTryingDialog) fragments.findFragmentByTag(DIALOGTAG_KEEPTRYING);
@@ -305,7 +305,7 @@ public class GetFixHelper
 
         if (wasGettingFix)
         {
-            Log.d("DEBUG", "GetFixHelper was previously getting fix... restarting");
+            Log.w("DEBUG", "GetFixHelper was previously getting fix... restarting");
             getFix();
         }
     }

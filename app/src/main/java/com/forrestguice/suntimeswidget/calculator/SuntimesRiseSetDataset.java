@@ -122,11 +122,12 @@ public class SuntimesRiseSetDataset
 
     public boolean isNight()
     {
-        return isNight(this.now().getTime());
+        return isNight(this.now());
     }
 
-    public boolean isNight( Date time )
+    public boolean isNight( Calendar dateTime )
     {
+        Date time = dateTime.getTime();
         Date sunrise = dataActual.sunriseCalendarToday().getTime();
         Date sunsetAstroTwilight = dataAstro.sunsetCalendarToday().getTime();
         return (time.before(sunrise) || time.after(sunsetAstroTwilight));
@@ -134,22 +135,28 @@ public class SuntimesRiseSetDataset
 
     public boolean isDay()
     {
-        return isDay(now().getTime());
+        return isDay(this.now());
     }
-
-    public boolean isDay( Date time )
+    public boolean isDay(Calendar dateTime)
     {
-        Calendar sunsetCal = dataActual.sunsetCalendarToday();
-        if (sunsetCal == null)    // no sunset time, must be day
-            return true;
+        if (dataActual.calculator == null)
+        {
+            Calendar sunsetCal = dataActual.sunsetCalendarToday();
+            if (sunsetCal == null)    // no sunset time, must be day
+                return true;
 
-        Calendar sunriseCal = dataActual.sunriseCalendarToday();
-        if (sunriseCal == null)   // no sunrise time, must be night
-            return false;
+            Calendar sunriseCal = dataActual.sunriseCalendarToday();
+            if (sunriseCal == null)   // no sunrise time, must be night
+                return false;
 
-        Date sunrise = sunriseCal.getTime();
-        Date sunset = sunsetCal.getTime();
-        return (time.after(sunrise) && time.before(sunset));
+            Date time = dateTime.getTime();
+            Date sunrise = sunriseCal.getTime();
+            Date sunset = sunsetCal.getTime();
+            return (time.after(sunrise) && time.before(sunset));
+
+        } else {
+            return dataActual.calculator.isDay(dateTime);
+        }
     }
 
     public WidgetSettings.Location location()
@@ -157,7 +164,7 @@ public class SuntimesRiseSetDataset
         return dataActual.location();
     }
 
-    public String timezone()
+    public TimeZone timezone()
     {
         return dataActual.timezone();
     }
@@ -174,7 +181,7 @@ public class SuntimesRiseSetDataset
 
     public Calendar now()
     {
-        return Calendar.getInstance(TimeZone.getTimeZone(timezone()));
+        return Calendar.getInstance(timezone());
     }
 }
 

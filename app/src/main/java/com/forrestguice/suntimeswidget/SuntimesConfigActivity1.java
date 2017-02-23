@@ -59,6 +59,8 @@ public class SuntimesConfigActivity1 extends SuntimesConfigActivity
         {
             spinner_1x1mode.setVisibility(View.GONE);
         }
+
+        disableOptionAllowResize();
     }
 
     @Override
@@ -70,6 +72,17 @@ public class SuntimesConfigActivity1 extends SuntimesConfigActivity
         {
             WidgetSettings.WidgetMode1x1 widgetMode = WidgetSettings.WidgetMode1x1.WIDGETMODE1x1_SUNSET;
             spinner_1x1mode.setSelection(widgetMode.ordinal());
+        }
+
+        disableOptionAllowResize();
+    }
+
+    private void disableOptionAllowResize()
+    {
+        if (checkbox_allowResize != null)
+        {
+            checkbox_allowResize.setChecked(false);  // option not currently supported by flippable widget
+            checkbox_allowResize.setEnabled(false);
         }
     }
 

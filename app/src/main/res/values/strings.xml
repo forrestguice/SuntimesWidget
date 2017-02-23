@@ -136,6 +136,7 @@
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Appearance Settings</string>           <!-- group title -->
     <string name="configLabel_appearance_theme">Theme:</string>                  <!-- spinner label -->
+    <string name="configLabel_appearance_allowResize">Grow with available space (resizeable)</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_showTitle">Show Title</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Title:</string>              <!-- edittext label -->
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
@@ -151,6 +152,8 @@
     <string name="timeMode_nautical">Nautical Twilight</string>         <!-- setting -->
     <string name="timeMode_astronomical_short">Astronomical</string>    <!-- setting -->
     <string name="timeMode_astronomical">Astronomical Twilight</string> <!-- setting -->
+    <string name="timeMode_night">Night</string>                   <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_day">Day</string>                       <!-- a label (not an actual timeMode setting) -->
 
     <string name="timeMode_equinox_vernal">Vernal Equinox</string>      <!-- setting -->
     <string name="timeMode_equinox_vernal_short">Equinox</string>       <!-- setting -->
@@ -201,15 +204,19 @@
     <string name="configAction_savePlace">Save</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_current">System</string>                         <!-- setting -->
+    <string name="timezoneMode_solar">Solar Time</string>                       <!-- setting -->
+    <string name="timezoneMode_current">System Time Zone</string>               <!-- setting -->
     <string name="timezoneMode_custom">User Defined</string>                    <!-- setting -->
 
+    <string name="solartime_localMean">Local Mean Time</string>                 <!-- setting / custom timezone id -->
+    <string name="solartime_apparent">Apparent Solar Time</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
     <string name="configLabel_timezone">Time Zone Settings</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Mode:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Time Zone:</string>              <!-- spinner label -->
+    <string name="configLabel_solartime">Solar Time:</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: date mode -->
     <string name="dateMode_current">Today</string>                  <!-- setting -->
@@ -237,6 +244,7 @@
     <string name="configLabel_widgetList">Widgets</string>               <!-- group title -->
     <string name="configLabel_widgetList_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
     <string name="configLabel_widgetList_itemTitlePattern"><xliff:g id="titlePattern"><![CDATA[%M (%lat, %lon) [%t]]]></xliff:g></string> <!-- the pattern used when generating widget titles for display in the list -->
+    <string name="configLabel_widgetList_itemSummaryPattern"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
     <string name="configLabel_widgetListHelp_title">Help</string>               <!-- always the first item in the widgetList -->
     <string name="configLabel_widgetListHelp_summary">Show widget help</string>
 
@@ -251,6 +259,10 @@
     <!-- App Setting: UI Warnings -->
     <string name="configLabel_ui_showWarnings">Show warnings</string>
     <string name="configLabel_ui_showWarnings_summary">Show configuration warning messages</string>
+
+    <!-- App Setting: Show Lightmap -->
+    <string name="configLabel_ui_showLightmap">Show Light Map</string>
+    <string name="configLabel_ui_showLightmap_summary">Show a stacked bar chart of day, night, and twilight periods.</string>
 
     <!-- App Setting: UI Theme -->
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
@@ -507,13 +519,19 @@
         <a href="https://github.com/forrestguice/SuntimesWidget">github.com/forrestguice/SuntimesWidget</a>
     ]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[
+        <b>Source Code:</b><br />
         Copyright &#169 2014 Forrest Guice <br />
         Source code available under GPLv3.
     ]]></string>
     <string name="app_legal2"><![CDATA[
+        <b>Translations:</b><br/>
         German translation by Henrik "HerHde" Hüttemann. <br />
         Polish and Esperanto translation by verdulo.
     ]]></string>
+    <string name="app_legal3"><![CDATA[ <b>Libraries:</b><br/> ]]>
+    <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>
+    <![CDATA[ github.com/caarmen/SunriseSunset ]]>
+    </string>
 
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Help</string>
@@ -524,6 +542,7 @@
                 * <b>%lon</b> for longitude <br/>
                 * <b>%m</b> for time mode (short) (e.g. "Civil") <br/>
                 * <b>%M</b> for time mode (long) (e.g. "Civil Twilight") <br/>
+                * <b>%s</b> for data source (e.g. sunrisesunsetlib) <br/>
                 * <b>%t</b> for time zone (id) (e.g. US/Arizona) <br/>
     ]]></string>
 

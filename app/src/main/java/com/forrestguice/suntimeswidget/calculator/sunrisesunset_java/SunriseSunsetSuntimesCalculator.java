@@ -26,6 +26,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.luckycatlabs.sunrisesunset.dto.Location;
 import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.TimeZone;
 
 /**
@@ -37,13 +38,19 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     public static final String NAME = "sunrisesunsetlib";
     public static final String REF = "com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator";
     SunriseSunsetCalculator calculator = null;
-    String timezone;
+    TimeZone timezone;
     Location location;
 
     public SunriseSunsetSuntimesCalculator() { /* EMPTY */ }
 
     @Override
     public void init(WidgetSettings.Location locationSetting, String timezone)
+    {
+        init(locationSetting, TimeZone.getTimeZone(timezone));
+    }
+
+    @Override
+    public void init(WidgetSettings.Location locationSetting, TimeZone timezone)
     {
         try
         {
@@ -101,7 +108,7 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
                 sunsetTime += (24 * 60 * 60 * 1000);  // bug workaround (sunset calendar set to wrong day; 24hrs off)
 
             long noonTime = sunriseTime + ((sunsetTime - sunriseTime) / 2L);
-            Calendar noonCalendar = Calendar.getInstance(TimeZone.getTimeZone(timezone));
+            Calendar noonCalendar = Calendar.getInstance(timezone);
             noonCalendar.setTimeInMillis(noonTime);
             return noonCalendar;
 
@@ -170,5 +177,47 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     {
         return new SuntimesCalculatorDescriptor(SunriseSunsetSuntimesCalculator.NAME, SunriseSunsetSuntimesCalculator.NAME, SunriseSunsetSuntimesCalculator.REF);
     }
+
+    @Override
+    public Calendar[] getMorningBlueHourForDate(Calendar date)
+    {
+        return null;
+    }
+
+    @Override
+    public Calendar[] getEveningBlueHourForDate(Calendar date)
+    {
+        return null;
+    }
+
+    @Override
+    public Calendar[] getMorningGoldenHourForDate(Calendar date)
+    {
+        return null;
+    }
+
+    @Override
+    public Calendar[] getEveningGoldenHourForDate(Calendar date)
+    {
+        return null;
+    }
+
+    @Override
+    public boolean isDay(Calendar dateTime)
+    {
+        Calendar sunsetCal = getOfficialSunriseCalendarForDate(dateTime);
+        if (sunsetCal == null)    // no sunset time, must be day
+            return true;
+
+        Calendar sunriseCal = getOfficialSunsetCalendarForDate(dateTime);
+        if (sunriseCal == null)   // no sunrise time, must be night
+            return false;
+
+        Date time = dateTime.getTime();
+        Date sunrise = sunriseCal.getTime();
+        Date sunset = sunsetCal.getTime();
+        return (time.after(sunrise) && time.before(sunset));
+    }
+
 }
 

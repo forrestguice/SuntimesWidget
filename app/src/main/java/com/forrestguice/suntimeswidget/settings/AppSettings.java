@@ -58,6 +58,9 @@ public class AppSettings
     public static final String PREF_KEY_UI_SHOWWARNINGS = "app_ui_showwarnings";
     public static final boolean PREF_DEF_UI_SHOWWARNINGS = true;
 
+    public static final String PREF_KEY_UI_SHOWLIGHTMAP = "app_ui_showlightmap";
+    public static final boolean PREF_DEF_UI_SHOWLIGHTMAP = true;
+
     public static final String PREF_KEY_UI_TIMEZONESORT = "app_ui_timezonesort";
     public static final WidgetTimezones.TimeZoneSort PREF_DEF_UI_TIMEZONESORT = WidgetTimezones.TimeZoneSort.SORT_BY_ID;
 
@@ -151,7 +154,7 @@ public class AppSettings
     {
         if (systemLocale != null)
         {
-            Log.d("resetLocale", "locale reset to " + systemLocale);
+            //Log.d("resetLocale", "locale reset to " + systemLocale);
             return loadLocale(context, systemLocale);
         }
         return false;
@@ -187,7 +190,7 @@ public class AppSettings
         config.locale = customLocale;
         resources.updateConfiguration(config, metrics);
 
-        Log.d("loadLocale", "locale loaded " + localeCode);
+        //Log.d("loadLocale", "locale loaded " + localeCode);
         return true;
     }
 
@@ -313,6 +316,12 @@ public class AppSettings
         return pref.getBoolean(PREF_KEY_UI_SHOWWARNINGS, PREF_DEF_UI_SHOWWARNINGS);
     }
 
+    public static boolean loadShowLightmapPref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_UI_SHOWLIGHTMAP, PREF_DEF_UI_SHOWLIGHTMAP);
+    }
+
     /**
      * Preference: the action that is performed when the clock ui is clicked/tapped
      */
@@ -411,7 +420,7 @@ public class AppSettings
      */
     public static int loadPrefGpsMaxAge(SharedPreferences prefs, int defaultValue)
     {
-        int retValue = defaultValue;
+        int retValue;
         try {
             String maxAgeString = prefs.getString(PREF_KEY_GETFIX_MAXAGE, defaultValue+"");
             retValue = Integer.parseInt(maxAgeString);
@@ -429,7 +438,7 @@ public class AppSettings
      */
     public static int loadPrefGpsMinElapsed(SharedPreferences prefs, int defaultValue)
     {
-        int retValue = defaultValue;
+        int retValue;
         try {
             String minAgeString = prefs.getString(PREF_KEY_GETFIX_MINELAPSED, defaultValue+"");
             retValue = Integer.parseInt(minAgeString);
@@ -447,7 +456,7 @@ public class AppSettings
      */
     public static int loadPrefGpsMaxElapsed(SharedPreferences prefs, int defaultValue)
     {
-        int retValue = defaultValue;
+        int retValue;
         try {
             String maxElapsedString = prefs.getString(PREF_KEY_GETFIX_MAXELAPSED, defaultValue+"");
             retValue = Integer.parseInt(maxElapsedString);

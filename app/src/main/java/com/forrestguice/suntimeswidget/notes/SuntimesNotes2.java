@@ -151,9 +151,8 @@ public class SuntimesNotes2 implements SuntimesNotes
             SolarEvents nextNoteMode;
 
             Calendar now = dataset.now();
-            Date time = now.getTime();
 
-            if (dataset.isNight(time))
+            if (dataset.isNight(now))
             {
                 // show next "rising" note
                 SolarEvents currentNoteMode = WidgetSettings.loadTimeNoteRisePref(context, 0);
@@ -179,7 +178,7 @@ public class SuntimesNotes2 implements SuntimesNotes
                 WidgetSettings.saveTimeNoteSetPref(context, 0, nextNoteMode);
             }
 
-            Log.d(tag, "... current = " + currentNote + ", next = " + nextNote + ", mode = " + nextNoteMode.name());
+            //Log.d(tag, "... current = " + currentNote + ", next = " + nextNote + ", mode = " + nextNoteMode.name());
             updateNote(context, now, NoteChangedListener.TRANSITION_NEXT);
             return true;
 
@@ -199,9 +198,8 @@ public class SuntimesNotes2 implements SuntimesNotes
         if (dataset.isCalculated())
         {
             Calendar now = dataset.now();
-            Date time = now.getTime();
 
-            if (dataset.isNight(time))
+            if (dataset.isNight(now))
             {
                 // show previous "rising" note
                 SolarEvents currentNoteMode = WidgetSettings.loadTimeNoteRisePref(context, AppWidgetManager.INVALID_APPWIDGET_ID);

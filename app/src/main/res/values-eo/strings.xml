@@ -26,13 +26,13 @@
          The next/prev button contentDescription (accessibility).
     -->
     <string name="nextDay">Sekva tago</string>
-    <string name="prevDay">Eksa tago</string>
+    <string name="prevDay">Antaŭa tago</string>
 
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
     -->
     <!-- line commented to use default: <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string> -->
-    <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> The time zone may be wrong for this location (not local).</string>  <!-- snackbar message --> <!-- TODO -->
+    <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> La horzono povas esti erara por tiu ĉi loko (ne ĉi-tiea).</string>  <!-- snackbar message -->
 
     <!-- Field: date
          The date field that appears above the table (main activity).
@@ -41,7 +41,7 @@
              where [date] is a dateString formatted by app using user's locale
     -->
     <!-- line commented to use default: <string name="dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string> -->
-    <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> The date is set to a day other than today.</string>  <!-- snackbar message --> <!-- TODO -->
+    <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> La dato estas agordita al alia tago ol hodiaŭ.</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
     <string name="past_yesterday">Pasinteco (-1)</string>
@@ -136,6 +136,7 @@
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Agordoj de aspekto</string>           <!-- group title -->
     <string name="configLabel_appearance_theme">Etoso:</string>                  <!-- spinner label -->
+    <string name="configLabel_appearance_allowResize">Etendigi al disponebla spaco (regrandigebla)</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_showTitle">Montri titolon</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Titolo:</string>              <!-- edittext label -->
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
@@ -151,6 +152,8 @@
     <string name="timeMode_nautical">Naŭtika krepusko</string>         <!-- setting -->
     <string name="timeMode_astronomical_short">Astronomia</string>    <!-- setting -->
     <string name="timeMode_astronomical">Astronomia krepusko</string> <!-- setting -->
+    <string name="timeMode_night">Nokto</string>                <!-- a label (not an actual timeMode setting) -->     <!-- TODO: confirm this is right / fix -->
+    <string name="timeMode_day">Tago</string>                   <!-- a label (not an actual timeMode setting) -->     <!-- TODO: confirm this is right / fix -->
 
     <string name="configLabel_general_timeMode">Reĝimo:</string>          <!-- spinner label -->
 
@@ -165,24 +168,24 @@
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Fari nenion</string>           <!-- setting -->
     <string name="actionMode_config">Reagordi fenestraĵon</string>      <!-- setting -->
-    <string name="actionMode_launchActivity">Eki aplikaĵon</string>      <!-- setting -->
+    <string name="actionMode_launchActivity">Ekigi aplikaĵon</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Baskuli vidon</string>      <!-- setting -->
 
-    <string name="configLabel_action">Agordoj de agadoj</string>                  <!-- group title -->
+    <string name="configLabel_action">Agordoj de agoj</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">Dum tuŝeto:</string>                    <!-- spinner label -->
     <string name="configLabel_action_onClockTap">Dum tuŝeto sur horloĝo:</string>         <!-- spinner label -->
     <string name="configLabel_action_onNoteTap">Dum tuŝeto sur noto:</string>           <!-- spinner label -->
     <string name="configLabel_action_onDateTap">Dum tuŝeto sur dato:</string>           <!-- spinner label -->
 
     <!-- App Setting: time zone sort -->
-    <string name="timezone_sort_byOffset">by offset</string>    <!-- TODO -->
-    <string name="timezone_sort_byId">by id</string>            <!-- TODO -->
-    <string name="timezone_sort_byName">by name</string>  <!-- TODO -->
-    <string name="timezone_sort_contextAction">Sort zones</string>           <!-- action bar title --> <!-- TODO -->
-    <string name="timezone_sort_msg">Time zones sorted (%1$s).</string>      <!-- toast msg --> <!-- TODO -->
+    <string name="timezone_sort_byOffset">laŭ deŝovo</string>
+    <string name="timezone_sort_byId">laŭ identigilo</string>
+    <string name="timezone_sort_byName">laŭ nomo</string>
+    <string name="timezone_sort_contextAction">Ordigi zonojn</string>           <!-- action bar title -->
+    <string name="timezone_sort_msg">Horzonoj ordigitaj (%1$s).</string>      <!-- toast msg -->
 
     <!-- Widget Setting: location -->
-    <string name="locationMode_current">Aktuala (laste konita)</string>  <!-- setting -->
+    <string name="locationMode_current">Aktuala (laste konata)</string>  <!-- setting -->
     <string name="locationMode_custom">Propra</string>           <!-- setting -->
 
     <string name="configLabel_location">Agordoj de loko</string>              <!-- group title -->
@@ -199,15 +202,19 @@
     <string name="configAction_savePlace">Konservi</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
+    <string name="timezoneMode_solar">Suntempo</string>                       <!-- setting -->
     <string name="timezoneMode_current">Sistema</string>                         <!-- setting -->
     <string name="timezoneMode_custom">Propra</string>                    <!-- setting -->
 
+    <string name="solartime_localMean">Loka mezuma suntempo</string>                 <!-- setting / custom timezone id -->
+    <string name="solartime_apparent">Ŝajna suntempo</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
     <string name="configLabel_timezone">Agordoj pri horzono</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Reĝimo:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Horzono:</string>              <!-- spinner label -->
+    <string name="configLabel_solartime">Suntempo:</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: date mode -->
     <string name="dateMode_current">Hodiaŭ</string>                  <!-- setting -->
@@ -224,7 +231,7 @@
     <string name="configLabel_general_compareMode">Kompari kun:</string>    <!-- spinner label -->
 
     <!-- Widget Setting: Launch App -->
-    <string name="configLabel_action_launch">Agado:</string>                 <!-- edittext label -->
+    <string name="configLabel_action_launch">Ago:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch"><xliff:g id="uri">com.forrestguice.suntimeswidget.SuntimesActivity</xliff:g></string> <!-- editText hint (and default) -->
 
     <!--
@@ -234,9 +241,9 @@
     <!--App Setting: WidgetList -->
     <string name="configLabel_widgetList">Aktivaj fenestraĵoj</string>               <!-- group title -->
     <string name="configLabel_widgetList_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
-    <string name="configLabel_widgetList_itemTitlePattern"><xliff:g id="titlePattern"><![CDATA[%M (%lat, %lon) [%t]]]></xliff:g></string> <!-- the pattern used when generating widget titles for display in the list -->
+    <!--<string name="configLabel_widgetList_itemTitlePattern"><xliff:g id="titlePattern"><![CDATA[%M (%lat, %lon) [%t]]]></xliff:g></string>--> <!-- the pattern used when generating widget titles for display in the list -->
     <string name="configLabel_widgetListHelp_title">Helpo</string>               <!-- always the first item in the widgetList -->
-    <string name="configLabel_widgetListHelp_summary">Montras helpon pri fenestraĵon</string>
+    <string name="configLabel_widgetListHelp_summary">Montras helpon pri fenestraĵoj</string>
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">Lokoj</string>                           <!-- group title -->
@@ -247,8 +254,8 @@
     <string name="configLabel_ui">Fasado</string>                       <!-- group title -->
 
     <!-- App Setting: UI Warnings -->
-    <string name="configLabel_ui_showWarnings">Enable warnings</string>                               <!-- TODO -->
-    <string name="configLabel_ui_showWarnings_summary">Show configuration warning messages</string>   <!-- TODO -->
+    <string name="configLabel_ui_showWarnings">Aktivigi avertojn</string>
+    <string name="configLabel_ui_showWarnings_summary">Montras agordojn de avertaj mesaĝoj</string>
 
     <!-- App Setting: UI Theme -->
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
@@ -396,8 +403,8 @@
     <string name="location_dialog_title">Loko</string>
     <string name="location_dialog_ok">Aktualigi</string>
     <string name="location_dialog_cancel">Nuligi</string>
-    <string name="location_dialog_error_lat">Latitudo malkorektas.</string>
-    <string name="location_dialog_error_lon">Longitudo malkorektas.</string>
+    <string name="location_dialog_error_lat">Latitudo erara.</string>
+    <string name="location_dialog_error_lon">Longitudo erara.</string>
 
     <string name="location_dialog_toast_copied">Enpoŝigita<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
 
@@ -434,8 +441,8 @@
         <a href="https://github.com/forrestguice/SuntimesWidget">github.com/forrestguice/SuntimesWidget</a>
     ]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[
-        Kopirajto &#169 2014 Forrest Guice <br />
-        Fontkodo disponebla laŭ permesilo GPLv3.
+        Kopirajto &#169 2014 Forrest GUICE <br />
+        Fontkodo disponebla laŭ la permesilo GPLv3.
     ]]></string>
     <string name="app_legal2"><![CDATA[
         Germana traduko de Henrik "HerHde" Hüttemann. </br>
@@ -451,8 +458,9 @@
                 * <b>%lon</b> por longitudo <br/>
                 * <b>%m</b> por temp-reĝimo (mallonge) (ekz. "Civila") <br/>
                 * <b>%M</b> por temp-reĝimo (longe) (ekz. "Civila krepusko") <br/>
+                * <b>%s</b> por fonto de datumoj (ekz. "sunrisesunsetlib") <br/>
                 * <b>%t</b> por horzono (ekz. Usono/Arizono) <br/>
-    ]]></string>
+    ]]></string>  <!-- TODO: verify translation for %s / fix -->
 
     <string name="help_general">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_general_timeMode">%1$s</xliff:g><![CDATA[<br />]]>
@@ -460,10 +468,10 @@
     </string>
 
     <string name="help_general_timeMode"><![CDATA[
-          <b>Reala sunleviĝo/sunsubiro:</b> La Suno estas sur la horizonto, tio ĉi estas proksimuma tempo de sunleviĝo aŭ sunsubiro.<br/><br/>
-          <b>Civila krepusko:</b> La Suno estas 6 gradoj sub la horizonto, la plej helaj steloj estas videblaj. Estas sufiĉe da lumo por fari plejparte da agadoj eksterdome sen artefarita prilumado.<br/><br/>
-          <b>Naŭtika krepusko:</b> La Suno estas 12 gradoj sub la horizonto, konturoj de objektoj kaj la horizonto estas kvazaŭ nevideblaj. Lumo mankas por plejparte da agadoj eksterdome sen artefarita prilumado.<br/><br/>
-          <b>Astronomia krepusko:</b> La Suno estas 18 gradoj sub la horizonto. Preskaŭ nigra nokto.<br/>
+          <b>Reala sunleviĝo/sunsubiro:</b> la Suno estas sur la horizonto, tio ĉi estas proksimuma tempo de sunleviĝo aŭ sunsubiro.<br/><br/>
+          <b>Civila krepusko:</b> la Suno estas 6 gradoj sub la horizonto, la plej helaj steloj estas videblaj. Estas sufiĉe da lumo por fari plejparte da agadoj eksterdome sen artefarita prilumado.<br/><br/>
+          <b>Naŭtika krepusko:</b> la Suno estas 12 gradoj sub la horizonto, konturoj de objektoj kaj la horizonto estas kvazaŭ nevideblaj. Lumo mankas por plejparte da agadoj eksterdome sen artefarita prilumado.<br/><br/>
+          <b>Astronomia krepusko:</b> la Suno estas 18 gradoj sub la horizonto. Preskaŭ nigra nokto.<br/>
     ]]></string>
     <string name="help_general_daylength"><![CDATA[
         <b>Longo de la tago:</b> kvanto da tempo inter sunleviĝo kaj sunsubiro.<br/><br/>
@@ -471,7 +479,7 @@
     ]]>
     </string>
     <string name="help_action_launch"><![CDATA[
-        La plene unusignifa nome de klaso de Ago por lanĉi.<br/>
+        La plene unusignifa nomo de klaso de Ago por lanĉi.<br/>
     ]]></string>
     <string name="help_widgetlist"><![CDATA[
           Por <b>aldoni novan fenestraĵon</b>, iru al la ĉefekrano.<br/><br/>

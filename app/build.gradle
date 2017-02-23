@@ -2,8 +2,8 @@ apply plugin: 'com.android.application'
 
 android
 {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    compileSdkVersion 24
+    buildToolsVersion '24.0.2'
 
     sourceSets
     {
@@ -20,9 +20,9 @@ android
     {
         applicationId "com.forrestguice.suntimeswidget"
         minSdkVersion 10
-        targetSdkVersion 23
-        versionCode 8
-        versionName "0.2.3"
+        targetSdkVersion 24
+        versionCode 9
+        versionName "0.3.0"
 
         buildConfigField "java.util.Date", "BUILD_TIME", "new java.util.Date(" + getDateAsMillis() + "L)"
         buildConfigField "String", "GIT_HASH", "\"${getGitHash()}\""
@@ -48,7 +48,12 @@ dependencies
 {
     compile 'com.android.support:design:24.2.1'
     compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.luckycatlabs:SunriseSunsetCalculator:1.2'
+    compile 'com.github.forrestguice:sunrisesunsetlib-java:SunriseSunsetCalculator-1.2-p0-fixdst'
+    compile 'com.github.caarmen.SunriseSunset:lib-sunrise-sunset:1.1.0'
+}
+
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }
 
 def getDateAsMillis()

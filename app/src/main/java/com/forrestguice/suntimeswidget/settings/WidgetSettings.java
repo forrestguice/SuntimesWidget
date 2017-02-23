@@ -65,6 +65,9 @@ public class WidgetSettings
     private static final String PREF_KEY_APPEARANCE_WIDGETMODE_1x1 = "widgetmode_1x1";
     private static final WidgetMode1x1 PREF_DEF_APPEARANCE_WIDGETMODE_1x1 = WidgetMode1x1.WIDGETMODE1x1_BOTH_1;
 
+    public static final String PREF_KEY_APPEARANCE_ALLOWRESIZE = "allowresize";
+    public static final boolean PREF_DEF_APPEARANCE_ALLOWRESIZE = true;
+
     public static final String PREF_KEY_GENERAL_TIMEMODE = "timemode";
     public static final TimeMode PREF_DEF_GENERAL_TIMEMODE = TimeMode.OFFICIAL;
 
@@ -103,6 +106,9 @@ public class WidgetSettings
 
     public static final String PREF_KEY_TIMEZONE_CUSTOM = "timezone";
     public static final String PREF_DEF_TIMEZONE_CUSTOM = "US/Arizona";
+
+    public static final String PREF_KEY_TIMEZONE_SOLARMODE = "solarmode";
+    public static final SolarTimeMode PREF_DEF_TIMEZONE_SOLARMODE = SolarTimeMode.LOCAL_MEAN_TIME;
 
     public static final String PREF_KEY_DATE_MODE = "dateMode";
     public static final DateMode PREF_DEF_DATE_MODE = DateMode.CURRENT_DATE;
@@ -308,8 +314,9 @@ public class WidgetSettings
      */
     public static enum TimezoneMode
     {
-        CURRENT_TIMEZONE("Current Timezone"),
-        CUSTOM_TIMEZONE("Custom Timezone");
+        SOLAR_TIME("Solar"),
+        CURRENT_TIMEZONE("Current"),
+        CUSTOM_TIMEZONE("Custom");
 
         private String displayString;
 
@@ -335,8 +342,46 @@ public class WidgetSettings
 
         public static void initDisplayStrings( Context context )
         {
+            SOLAR_TIME.setDisplayString(context.getString(R.string.timezoneMode_solar));
             CURRENT_TIMEZONE.setDisplayString(context.getString(R.string.timezoneMode_current));
             CUSTOM_TIMEZONE.setDisplayString(context.getString(R.string.timezoneMode_custom));
+        }
+    }
+
+    /**
+     * SolarTimeMode
+     */
+    public static enum SolarTimeMode
+    {
+        APPARENT_SOLAR_TIME("Current"),
+        LOCAL_MEAN_TIME("Solar");
+
+        private String displayString;
+
+        private SolarTimeMode(String displayString)
+        {
+            this.displayString = displayString;
+        }
+
+        public String toString()
+        {
+            return displayString;
+        }
+
+        public String getDisplayString()
+        {
+            return displayString;
+        }
+
+        public void setDisplayString( String displayString )
+        {
+            this.displayString = displayString;
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            LOCAL_MEAN_TIME.setDisplayString(context.getString(R.string.solartime_localMean));
+            APPARENT_SOLAR_TIME.setDisplayString(context.getString(R.string.solartime_apparent));
         }
     }
 
@@ -671,7 +716,26 @@ public class WidgetSettings
         }
     }
 
-
+    public static void saveAllowResizePref(Context context, int appWidgetId, boolean allowResize)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.putBoolean(prefs_prefix + PREF_KEY_APPEARANCE_ALLOWRESIZE, allowResize);
+        prefs.apply();
+    }
+    public static boolean loadAllowResizePref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        return prefs.getBoolean(prefs_prefix + PREF_KEY_APPEARANCE_ALLOWRESIZE, PREF_DEF_APPEARANCE_ALLOWRESIZE);
+    }
+    public static void deleteAllowResizePref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_ALLOWRESIZE);
+        prefs.apply();
+    }
 
     public static void save1x1ModePref(Context context, int appWidgetId, WidgetSettings.WidgetMode1x1 mode)
     {
@@ -743,7 +807,7 @@ public class WidgetSettings
         String themeName = prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_THEME, PREF_DEF_APPEARANCE_THEME);
 
         SuntimesTheme theme = WidgetThemes.loadTheme(context, themeName);
-        Log.d("loadThemePref", "theme is " + theme.themeName());
+        //Log.d("loadThemePref", "theme is " + theme.themeName());
         return theme;
     }
     public static void deleteThemePref(Context context, int appWidgetId)
@@ -861,6 +925,37 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
         prefs.remove(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE);
+        prefs.apply();
+    }
+
+    public static void saveSolarTimeModePref(Context context, int appWidgetId, WidgetSettings.SolarTimeMode mode)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putString(prefs_prefix + PREF_KEY_TIMEZONE_SOLARMODE, mode.name());
+        prefs.apply();
+    }
+    public static WidgetSettings.SolarTimeMode loadSolarTimeModePref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_TIMEZONE_SOLARMODE, PREF_DEF_TIMEZONE_SOLARMODE.name());
+
+        SolarTimeMode timeMode;
+        try
+        {
+            timeMode = WidgetSettings.SolarTimeMode.valueOf(modeString);
+
+        } catch (IllegalArgumentException e) {
+            timeMode = PREF_DEF_TIMEZONE_SOLARMODE;
+        }
+        return timeMode;
+    }
+    public static void deleteSolarTimeModePref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_TIMEZONE_SOLARMODE);
         prefs.apply();
     }
 
@@ -1206,6 +1301,7 @@ public class WidgetSettings
         deleteActionLaunchPref(context, appWidgetId);
 
         delete1x1ModePref(context, appWidgetId);
+        deleteAllowResizePref(context, appWidgetId);
 
         deleteThemePref(context, appWidgetId);
         deleteShowTitlePref(context, appWidgetId);
@@ -1219,6 +1315,7 @@ public class WidgetSettings
         deleteLocationPref(context, appWidgetId);
 
         deleteTimezoneModePref(context, appWidgetId);
+        deleteSolarTimeModePref(context, appWidgetId);
         deleteTimezonePref(context, appWidgetId);
 
         deleteDateModePref(context, appWidgetId);
@@ -1244,6 +1341,7 @@ public class WidgetSettings
         SolsticeEquinoxMode.initDisplayStrings(context);
         LocationMode.initDisplayStrings(context);
         TimezoneMode.initDisplayStrings(context);
+        SolarTimeMode.initDisplayStrings(context);
         DateMode.initDisplayStrings(context);
     }
 }

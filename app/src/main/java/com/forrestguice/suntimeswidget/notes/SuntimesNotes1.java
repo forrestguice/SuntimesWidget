@@ -119,9 +119,8 @@ public class SuntimesNotes1 implements SuntimesNotes
         if (dataset.isCalculated())
         {
             Calendar now = dataset.now();
-            Date time = now.getTime();
 
-            if (dataset.isNight(time))
+            if (dataset.isNight(now))
             {
                 // show next "rising" note
                 SolarEvents currentNoteMode = WidgetSettings.loadTimeNoteRisePref(context, AppWidgetManager.INVALID_APPWIDGET_ID);
@@ -136,7 +135,7 @@ public class SuntimesNotes1 implements SuntimesNotes
                 SolarEvents nextNoteMode = SolarEvents.values()[nextNote];
                 WidgetSettings.saveTimeNoteRisePref(context, AppWidgetManager.INVALID_APPWIDGET_ID, nextNoteMode);
 
-                Log.d("showNextRiseNote", "... current = " + currentNote + ", next = " + nextNote + ", mode = " + nextNoteMode.name());
+                //Log.d("showNextRiseNote", "... current = " + currentNote + ", next = " + nextNote + ", mode = " + nextNoteMode.name());
 
             } else {
                 // show next "setting" note
@@ -152,7 +151,7 @@ public class SuntimesNotes1 implements SuntimesNotes
                SolarEvents nextNoteMode = SolarEvents.values()[nextNote];
                 WidgetSettings.saveTimeNoteSetPref(context, AppWidgetManager.INVALID_APPWIDGET_ID, nextNoteMode);
 
-                Log.d("showNextSetNote", "... current = " + currentNote + ", next = " + nextNote + ", mode = " + nextNoteMode.name());
+                //Log.d("showNextSetNote", "... current = " + currentNote + ", next = " + nextNote + ", mode = " + nextNoteMode.name());
             }
 
             updateNote(context, now, NoteChangedListener.TRANSITION_NEXT);
@@ -174,9 +173,8 @@ public class SuntimesNotes1 implements SuntimesNotes
         if (dataset.isCalculated())
         {
             Calendar now = dataset.now();
-            Date time = now.getTime();
 
-            if (dataset.isNight(time))
+            if (dataset.isNight(now))
             {
                 // show previous "rising" note
                 SolarEvents currentNoteMode = WidgetSettings.loadTimeNoteRisePref(context, AppWidgetManager.INVALID_APPWIDGET_ID);

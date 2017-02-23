@@ -22,6 +22,7 @@ import android.annotation.TargetApi;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
@@ -83,6 +84,7 @@ class SuntimesWidget1RemoteViewsFactory implements RemoteViewsService.RemoteView
         dataset.add(new SuntimesRiseSetData(data, R.layout.layout_widget_1x1_1i));
         dataset.add(new SuntimesRiseSetData(data, R.layout.layout_widget_1x1_2i));
         viewCount = 3;
+        Log.d("DEBUG", "onDataSetChanged");
     }
 
     @Override

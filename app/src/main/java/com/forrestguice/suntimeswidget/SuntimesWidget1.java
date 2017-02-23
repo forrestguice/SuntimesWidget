@@ -1,7 +1,7 @@
 package com.forrestguice.suntimeswidget;
 
 import android.annotation.TargetApi;
-import android.app.PendingIntent;
+
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
@@ -20,15 +20,27 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
  */
 public class SuntimesWidget1 extends SuntimesWidget
 {
+    private static final int UPDATEALARM_ID = 1;
+
     @Override
     protected Class getConfigClass()
     {
         return SuntimesConfigActivity1.class;
     }
 
-    public static void updateWidgets(Context context)
+    /**
+     * @return an update alarm identifier for this class (SuntimesWidget1: 1)
+     */
+    @Override
+    protected int getUpdateAlarmId()
     {
-        updateWidgets(context, SuntimesWidget1.class);
+        return SuntimesWidget1.UPDATEALARM_ID;
+    }
+
+    @Override
+    protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
+    {
+        SuntimesWidget1.updateAppWidget(context, appWidgetManager, appWidgetId);
     }
 
     @Override
@@ -56,26 +68,28 @@ public class SuntimesWidget1 extends SuntimesWidget
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SuntimesLayout layout)
     {
         RemoteViews views = getWidgetViews(context, appWidgetManager, appWidgetId);
-
-        WidgetSettings.ActionMode actionMode = WidgetSettings.loadActionModePref(context, appWidgetId);
-        Intent intent = new Intent(context, SuntimesWidget1.class);
-        intent.setAction(actionMode.name());
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, appWidgetId, intent, 0);
-        views.setOnClickPendingIntent(R.id.widgetframe_outer_1x1, pendingIntent);
+        views.setOnClickPendingIntent(R.id.widgetframe_outer_1x1, SuntimesWidget.clickActionIntent(context, appWidgetId, SuntimesWidget1.class));
 
         appWidgetManager.updateAppWidget(appWidgetId, null);   // null on this line to discard previously cached RemoveViews
         appWidgetManager.updateAppWidget(appWidgetId, views);  // so this next line actually updates...
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+        {
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.view_flip);
+        }
     }
 
-    protected void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
+    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
         SuntimesWidget1.updateAppWidget(context, appWidgetManager, appWidgetId, null);
     }
 
     protected static RemoteViews getWidgetViews(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
-        int[] mustFitWithinDp = {40, 40};
+        int minWidth = context.getResources().getInteger(R.integer.widget_size_minWidthDp);
+        int minHeight = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
+        int[] mustFitWithinDp = {minWidth, minHeight};
+        Log.d("getWidgetViews1", "0: must fit:  [" + mustFitWithinDp[0] + ", " + mustFitWithinDp[1] + "]");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH)
         {
@@ -92,8 +106,9 @@ public class SuntimesWidget1 extends SuntimesWidget
             }*/
 
             RemoteViews views;
-            views = ((110 <= mustFitWithinDp[1]) ? new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x1)   // TODO: 1x3 also flippable
-                                                 : new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x1) );
+            /*views = ((mustFitWithinDp[0] >= maxWidth1x1) ? new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x1)   // TODO: make 1x3 also flippable
+                                                         : new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x1) );*/
+            views = new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x1);
 
             Intent intent = new Intent(context, SuntimesWidget1Service.class);
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
@@ -104,7 +119,7 @@ public class SuntimesWidget1 extends SuntimesWidget
             return views;
 
         } else {
-            Log.w("getWidgetViews", "Version less than " + Build.VERSION_CODES.ICE_CREAM_SANDWICH + "!! Calling the default implementation.");
+            Log.w("getWidgetViews1", "Version less than " + Build.VERSION_CODES.ICE_CREAM_SANDWICH + "!! Calling the default implementation.");
             SuntimesLayout layout = new SuntimesLayout_1x1_0();
             return layout.getViews(context);
         }

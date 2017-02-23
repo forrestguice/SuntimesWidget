@@ -22,6 +22,7 @@ import android.support.annotation.NonNull;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * An instance of SuntimesCalculatorDescriptor specifies a calculator's name (see name()),
@@ -74,7 +75,7 @@ public class SuntimesCalculatorDescriptor implements Comparable
         }
 
         SuntimesCalculatorDescriptor descriptor = null;
-        value = value.trim().toLowerCase();
+        value = value.trim().toLowerCase(Locale.US);
         SuntimesCalculatorDescriptor[] values = SuntimesCalculatorDescriptor.values();
         for (int i=0; i<values.length; i++)
         {

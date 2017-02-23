@@ -35,7 +35,7 @@
 
         <LinearLayout
             android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:padding="8dp">
+            android:paddingTop="6dp" android:paddingBottom="8dp" android:paddingLeft="8dp" android:paddingRight="8dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -112,7 +112,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <LinearLayout
+            android:id="@+id/info_time_lightmap_layout"
+            android:layout_width="match_parent" android:layout_height="16dp"
+            android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingBottom="2dp" android:paddingTop="0dp"
+            android:background="?attr/selectableItemBackground" android:clickable="true">
+
+            <com.forrestguice.suntimeswidget.LightMapView
+                android:id="@+id/info_time_lightmap"
+                android:layout_width="match_parent" android:layout_height="12dp"
+                android:layout_gravity="top" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
-

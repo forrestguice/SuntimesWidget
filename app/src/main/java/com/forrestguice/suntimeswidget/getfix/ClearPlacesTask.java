@@ -32,12 +32,12 @@ public class ClearPlacesTask extends AsyncTask<Object, Object, Boolean>
     public void pauseTask()
     {
         isPaused = true;
-        Log.d("DEBUG", "ClearPlacesTask paused");
+        //Log.d("DEBUG", "ClearPlacesTask paused");
     }
     public void resumeTask()
     {
         isPaused = false;
-        Log.d("DEBUG", "ClearPlacesTask resumed");
+        //Log.d("DEBUG", "ClearPlacesTask resumed");
     }
     public boolean isPaused()
     {
