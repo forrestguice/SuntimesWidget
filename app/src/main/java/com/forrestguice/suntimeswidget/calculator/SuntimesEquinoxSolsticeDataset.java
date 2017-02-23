@@ -112,7 +112,7 @@ public class SuntimesEquinoxSolsticeDataset
 
     public String timezone()
     {
-        return dataEquinoxVernal.timezone();
+        return dataEquinoxVernal.timezone().getID();
     }
 
     public Calendar now()
