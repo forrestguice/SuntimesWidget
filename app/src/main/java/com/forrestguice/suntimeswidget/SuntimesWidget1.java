@@ -1,7 +1,7 @@
 package com.forrestguice.suntimeswidget;
 
 import android.annotation.TargetApi;
-import android.app.PendingIntent;
+
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
@@ -73,7 +73,10 @@ public class SuntimesWidget1 extends SuntimesWidget
         appWidgetManager.updateAppWidget(appWidgetId, null);   // null on this line to discard previously cached RemoveViews
         appWidgetManager.updateAppWidget(appWidgetId, views);  // so this next line actually updates...
 
-        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.view_flip);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+        {
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.view_flip);
+        }
     }
 
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)

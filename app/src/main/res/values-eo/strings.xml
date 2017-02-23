@@ -136,7 +136,7 @@
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Agordoj de aspekto</string>           <!-- group title -->
     <string name="configLabel_appearance_theme">Etoso:</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">Etendigi al disponebla spaco (regrandigebla)</string>  <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_appearance_allowResize">Etendigi al disponebla spaco (regrandigebla)</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_showTitle">Montri titolon</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Titolo:</string>              <!-- edittext label -->
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
@@ -152,6 +152,8 @@
     <string name="timeMode_nautical">Naŭtika krepusko</string>         <!-- setting -->
     <string name="timeMode_astronomical_short">Astronomia</string>    <!-- setting -->
     <string name="timeMode_astronomical">Astronomia krepusko</string> <!-- setting -->
+    <string name="timeMode_night">Nokto</string>                <!-- a label (not an actual timeMode setting) -->     <!-- TODO: confirm this is right / fix -->
+    <string name="timeMode_day">Tago</string>                   <!-- a label (not an actual timeMode setting) -->     <!-- TODO: confirm this is right / fix -->
 
     <string name="configLabel_general_timeMode">Reĝimo:</string>          <!-- spinner label -->
 
@@ -200,19 +202,19 @@
     <string name="configAction_savePlace">Konservi</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_solar">Suntempo</string>                       <!-- setting -->  <!-- TODO -->
+    <string name="timezoneMode_solar">Suntempo</string>                       <!-- setting -->
     <string name="timezoneMode_current">Sistema</string>                         <!-- setting -->
     <string name="timezoneMode_custom">Propra</string>                    <!-- setting -->
 
-    <string name="solartime_localMean">Loka mezuma suntempo</string>                 <!-- setting / custom timezone id --> <!-- TODO -->
-    <string name="solartime_apparent">Ŝajna suntempo</string>              <!-- setting / custom timezone id --> <!-- TODO -->
+    <string name="solartime_localMean">Loka mezuma suntempo</string>                 <!-- setting / custom timezone id -->
+    <string name="solartime_apparent">Ŝajna suntempo</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
     <string name="configLabel_timezone">Agordoj pri horzono</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Reĝimo:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Horzono:</string>              <!-- spinner label -->
-    <string name="configLabel_solartime">Suntempo:</string>                   <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_solartime">Suntempo:</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: date mode -->
     <string name="dateMode_current">Hodiaŭ</string>                  <!-- setting -->
@@ -456,8 +458,9 @@
                 * <b>%lon</b> por longitudo <br/>
                 * <b>%m</b> por temp-reĝimo (mallonge) (ekz. "Civila") <br/>
                 * <b>%M</b> por temp-reĝimo (longe) (ekz. "Civila krepusko") <br/>
+                * <b>%s</b> por fonto de datumoj (ekz. "sunrisesunsetlib") <br/>
                 * <b>%t</b> por horzono (ekz. Usono/Arizono) <br/>
-    ]]></string>  <!-- TODO: add line for %s -->
+    ]]></string>  <!-- TODO: verify translation for %s / fix -->
 
     <string name="help_general">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_general_timeMode">%1$s</xliff:g><![CDATA[<br />]]>

@@ -152,6 +152,8 @@
     <string name="timeMode_nautical">Nautical Twilight</string>         <!-- setting -->
     <string name="timeMode_astronomical_short">Astronomical</string>    <!-- setting -->
     <string name="timeMode_astronomical">Astronomical Twilight</string> <!-- setting -->
+    <string name="timeMode_night">Night</string>                   <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_day">Day</string>                       <!-- a label (not an actual timeMode setting) -->
 
     <string name="configLabel_general_timeMode">Mode:</string>          <!-- spinner label -->
 

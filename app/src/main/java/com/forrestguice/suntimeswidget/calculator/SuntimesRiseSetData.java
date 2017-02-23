@@ -24,7 +24,6 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Calendar;
-import java.util.TimeZone;
 
 public class SuntimesRiseSetData extends SuntimesData
 {

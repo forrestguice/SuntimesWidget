@@ -153,6 +153,8 @@
   <string name="timeMode_nautical">Nautische Dämmerung</string>         <!-- setting -->
   <string name="timeMode_astronomical_short">Astronomisch</string>    <!-- setting -->
   <string name="timeMode_astronomical">Astronomische Dämmerung</string> <!-- setting -->
+  <string name="timeMode_night">Nacht</string>                   <!-- a label (not an actual timeMode setting) --> <!-- TODO: confirm this is right / fix -->
+  <string name="timeMode_day">Tag</string>                       <!-- a label (not an actual timeMode setting) --> <!-- TODO: confirm this is right / fix -->
 
   <string name="configLabel_general_timeMode">Modus:</string>          <!-- spinner label -->
 
@@ -315,8 +317,7 @@
   </string-array>
 
   <!-- App Setting: locale mode -->
-  <!-- TODO: verify translation / fix -->
-  <string name="configLabel_locale">Spracheinstellungen</string>   <!-- group title -->
+  <string name="configLabel_locale">Spracheinstellungen</string>   <!-- group title --> <!-- TODO: verify translation / fix -->
 
   <string name="configLabel_localeMode">Modus:</string>
   <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
@@ -326,8 +327,7 @@
   </string-array>
 
   <!-- App Setting: custom Locale -->
-  <!-- TODO: verify translation / fix -->
-  <string name="configLabel_localeSelect">Sprache</string>
+  <string name="configLabel_localeSelect">Sprache</string> <!-- TODO: verify translation / fix -->
   <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
   <string-array name="locale_display">                      <!-- one-to-one with locale_values -->
       <item>Englisch</item>
@@ -457,8 +457,9 @@
               * <b>%lon</b> für den Längengrad <br/>
               * <b>%m</b> für den Zeitmodus (Kurzform) (z.B. "Astron. Abend") <br/>
               * <b>%M</b> für den Zeitmodus (Langform) (z.B. "Astronomische Abenddämmerung (Ende)") <br/>
+              * <b>%s</b> für den Datenquelle (z.B. "sunrisesunsetlib") <br/>
               * <b>%t</b> Die Zeitzone (id) (z.B. "Europe/Berlin") <br/>
-  ]]></string>  <!-- TODO: add line for %s -->
+  ]]></string>  <!-- TODO: confirm translation for %s / fix  -->
   <string name="help_general_timeMode"><![CDATA[
         <b>Tatsächlicher Sonnenauf-/Untergang:</b> Die Sonnenscheibe steht ungefähr mittig am Horizont.<br/><br/>
         <b>Bürgerliche Dämmerung:</b> Die Sonne steht 6 Grad unter dem Horizont; Nur die hellsten Himmelskörper sind erkennbar. Unter freiem Himmel ist es hell genug für die meisten Aktivitäten, wie beispielsweise Lesen ohne Beleuchtung. (Auch zivile Dämmerung genannt.)<br/><br/>

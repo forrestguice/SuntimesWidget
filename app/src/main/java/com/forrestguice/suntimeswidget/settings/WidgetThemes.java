@@ -23,6 +23,7 @@ import android.content.SharedPreferences;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
@@ -107,7 +108,7 @@ public class WidgetThemes
 
     public static ThemeDescriptor valueOf(String value)
     {
-        value = value.trim().toLowerCase();
+        value = value.trim().toLowerCase(Locale.US);
         ThemeDescriptor[] values = WidgetThemes.values();
         for (int i=0; i<values.length; i++)
         {

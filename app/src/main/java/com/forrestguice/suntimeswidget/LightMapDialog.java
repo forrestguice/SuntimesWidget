@@ -26,6 +26,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.StyleableRes;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -90,6 +91,7 @@ public class LightMapDialog extends DialogFragment
         ic_day = (ImageView)dialogView.findViewById(R.id.info_time_lightmap_key_day_icon);
     }
 
+    @SuppressWarnings("ResourceType")
     public void themeViews(Context context)
     {
         int[] colorAttrs = { R.attr.graphColor_night,   // 0

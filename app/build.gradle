@@ -2,8 +2,8 @@ apply plugin: 'com.android.application'
 
 android
 {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    compileSdkVersion 24
+    buildToolsVersion '24.0.2'
 
     sourceSets
     {
@@ -20,7 +20,7 @@ android
     {
         applicationId "com.forrestguice.suntimeswidget"
         minSdkVersion 10
-        targetSdkVersion 23
+        targetSdkVersion 24
         versionCode 9
         versionName "0.3.0"
 
