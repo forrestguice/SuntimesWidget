@@ -270,7 +270,7 @@ public class SuntimesActivity extends AppCompatActivity
         {
             timezoneDialog.setOnAcceptedListener(onConfigTimeZone);
             timezoneDialog.setOnCanceledListener(onCancelTimeZone);
-            Log.d("DEBUG", "TimeZoneDialog listeners restored.");
+            //Log.d("DEBUG", "TimeZoneDialog listeners restored.");
         }
 
         AlarmDialog alarmDialog = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_ALARM);
@@ -278,14 +278,14 @@ public class SuntimesActivity extends AppCompatActivity
         {
             alarmDialog.setData(dataset);
             alarmDialog.setOnAcceptedListener(alarmDialog.scheduleAlarmClickListener);
-            Log.d("DEBUG", "AlarmDialog listeners restored.");
+            //Log.d("DEBUG", "AlarmDialog listeners restored.");
         }
 
         LocationConfigDialog locationDialog = (LocationConfigDialog) fragments.findFragmentByTag(DIALOGTAG_LOCATION);
         if (locationDialog != null)
         {
             locationDialog.setOnAcceptedListener( onConfigLocation(locationDialog) );
-            Log.d("DEBUG", "LocationDialog listeners restored.");
+            //Log.d("DEBUG", "LocationDialog listeners restored.");
         }
 
         TimeDateDialog dateDialog = (TimeDateDialog) fragments.findFragmentByTag(DIALOGTAG_DATE);
@@ -293,7 +293,7 @@ public class SuntimesActivity extends AppCompatActivity
         {
             dateDialog.setOnAcceptedListener(onConfigDate);
             dateDialog.setOnCanceledListener(onCancelDate);
-            Log.d("DEBUG", "TimeDateDialog listeners restored.");
+            //Log.d("DEBUG", "TimeDateDialog listeners restored.");
         }
 
         LightMapDialog lightMapDialog = (LightMapDialog) fragments.findFragmentByTag(DIALOGTAG_LIGHTMAP);
@@ -301,7 +301,7 @@ public class SuntimesActivity extends AppCompatActivity
         {
             lightMapDialog.setData(dataset);
             lightMapDialog.updateViews(dataset);
-            Log.d("DEBUG", "LightMapDialog updated on restore.");
+            //Log.d("DEBUG", "LightMapDialog updated on restore.");
         }
     }
 
@@ -1341,7 +1341,7 @@ public class SuntimesActivity extends AppCompatActivity
     protected void updateTimeViews(Context context)
     {
         Calendar now = dataset.now();
-        Log.d("DEBUG", "" + now.getTimeZone());
+        //Log.d("DEBUG", "" + now.getTimeZone());
         SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(this, now);
         txt_time.setText(timeText.getValue());
         txt_time_suffix.setText(timeText.getSuffix());
@@ -1701,7 +1701,7 @@ public class SuntimesActivity extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                Log.d("DEBUG", "TimeField clicked: " + event.toString());
+                //Log.d("DEBUG", "TimeField clicked: " + event.toString());
                 notes.showNote(event);
             }
         };

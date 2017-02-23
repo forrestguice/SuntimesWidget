@@ -54,7 +54,7 @@ public class SuntimesCalculatorFactory
         SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.getDescriptor());
         SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator.getDescriptor());
         initialized = true;
-        Log.d("CalculatorFactory", "Initialized suntimes calculator list.");
+        //Log.d("CalculatorFactory", "Initialized suntimes calculator list.");
     }
 
     private SuntimesCalculatorDescriptor current;

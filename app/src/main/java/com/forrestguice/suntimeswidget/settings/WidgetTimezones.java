@@ -64,8 +64,8 @@ public class WidgetTimezones
 
         double offsetTolerance = 3;    // tolerance in hrs
         boolean isProbablyNotLocal = (offsetDiff > offsetTolerance);
-        Log.d("DEBUG", "offsets: " + zoneOffset + ", " + lonOffset);
-        Log.d("DEBUG", "offset delta: " +  offsetDiff +" [" + offsetTolerance + "] (" + isProbablyNotLocal + ")");
+        //Log.d("DEBUG", "offsets: " + zoneOffset + ", " + lonOffset);
+        //Log.d("DEBUG", "offset delta: " +  offsetDiff +" [" + offsetTolerance + "] (" + isProbablyNotLocal + ")");
 
         return isProbablyNotLocal;
     }
@@ -241,7 +241,7 @@ public class WidgetTimezones
             Calendar calendar = new GregorianCalendar();
             calendar.setTimeInMillis(date);
             double equationOfTimeOffset = equationOfTimeOffset(calendar.get(Calendar.DAY_OF_YEAR));  // equation of time correction (minutes)
-            Log.d("DEBUG", "eot: " + equationOfTimeOffset);
+            //Log.d("DEBUG", "eot: " + equationOfTimeOffset);
 
             int localMeanOffsetMs = getRawOffset();
             int equationOfTimeOffsetMs = (int)(equationOfTimeOffset * 60 * 1000);

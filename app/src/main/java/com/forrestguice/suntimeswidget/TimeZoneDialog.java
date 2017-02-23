@@ -161,12 +161,12 @@ public class TimeZoneDialog extends DialogFragment
         if (savedInstanceState != null)
         {
             // saved dialog state; restore it
-            Log.d("DEBUG", "TimeZoneDialog onCreate (restoreState)");
+            //Log.d("DEBUG", "TimeZoneDialog onCreate (restoreState)");
             loadSettings(savedInstanceState);
 
         } else {
             // no saved dialog state; load from preferences
-            Log.d("DEBUG", "TimeZoneDialog onCreate (newState)");
+            //Log.d("DEBUG", "TimeZoneDialog onCreate (newState)");
             loadSettings(myParent);
         }
         loadTask.execute(sortZonesBy);
@@ -176,7 +176,7 @@ public class TimeZoneDialog extends DialogFragment
     @Override
     public void onSaveInstanceState(Bundle outState)
     {
-        Log.d("DEBUG", "TimeZoneDialog onSaveInstanceState");
+        //Log.d("DEBUG", "TimeZoneDialog onSaveInstanceState");
         saveSettings(outState);
         super.onSaveInstanceState(outState);
     }

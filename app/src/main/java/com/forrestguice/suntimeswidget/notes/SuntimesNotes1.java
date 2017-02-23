@@ -135,7 +135,7 @@ public class SuntimesNotes1 implements SuntimesNotes
                 SolarEvents nextNoteMode = SolarEvents.values()[nextNote];
                 WidgetSettings.saveTimeNoteRisePref(context, AppWidgetManager.INVALID_APPWIDGET_ID, nextNoteMode);
 
-                Log.d("showNextRiseNote", "... current = " + currentNote + ", next = " + nextNote + ", mode = " + nextNoteMode.name());
+                //Log.d("showNextRiseNote", "... current = " + currentNote + ", next = " + nextNote + ", mode = " + nextNoteMode.name());
 
             } else {
                 // show next "setting" note
@@ -151,7 +151,7 @@ public class SuntimesNotes1 implements SuntimesNotes
                SolarEvents nextNoteMode = SolarEvents.values()[nextNote];
                 WidgetSettings.saveTimeNoteSetPref(context, AppWidgetManager.INVALID_APPWIDGET_ID, nextNoteMode);
 
-                Log.d("showNextSetNote", "... current = " + currentNote + ", next = " + nextNote + ", mode = " + nextNoteMode.name());
+                //Log.d("showNextSetNote", "... current = " + currentNote + ", next = " + nextNote + ", mode = " + nextNoteMode.name());
             }
 
             updateNote(context, now, NoteChangedListener.TRANSITION_NEXT);

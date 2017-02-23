@@ -188,12 +188,12 @@ public class TimeDateDialog extends DialogFragment implements DatePicker.OnDateC
         initViews(myParent, dialogContent);
         if (savedInstanceState != null)
         {
-            Log.d("DEBUG", "TimeDateDialog onCreate (restoreState)");
+            //Log.d("DEBUG", "TimeDateDialog onCreate (restoreState)");
             loadSettings(savedInstanceState);
 
         } else {
             // no saved dialog state; load from preferences
-            Log.d("DEBUG", "TimeDateDialog onCreate (newState)");
+            //Log.d("DEBUG", "TimeDateDialog onCreate (newState)");
             loadSettings(myParent);
         }
 
@@ -208,7 +208,7 @@ public class TimeDateDialog extends DialogFragment implements DatePicker.OnDateC
     @Override
     public void onSaveInstanceState( Bundle outState )
     {
-        Log.d("DEBUG", "TimeDateDialog onSaveInstanceState");
+        //Log.d("DEBUG", "TimeDateDialog onSaveInstanceState");
         saveSettings(outState);
         super.onSaveInstanceState(outState);
     }

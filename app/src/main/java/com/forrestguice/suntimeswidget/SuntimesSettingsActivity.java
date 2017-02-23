@@ -213,7 +213,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     {
         if (key.equals(AppSettings.PREF_KEY_LOCALE) || key.equals(AppSettings.PREF_KEY_LOCALE_MODE))
         {
-            Log.d("SettingsActivity", "Locale change detected; restarting activity");
+            //Log.d("SettingsActivity", "Locale change detected; restarting activity");
             AppSettings.initLocale(this);
             SuntimesWidget.triggerWidgetUpdate(this, SuntimesWidget.class);
             SuntimesWidget.triggerWidgetUpdate(this, SuntimesWidget1.class);

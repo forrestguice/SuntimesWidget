@@ -178,7 +178,7 @@ public class SuntimesNotes2 implements SuntimesNotes
                 WidgetSettings.saveTimeNoteSetPref(context, 0, nextNoteMode);
             }
 
-            Log.d(tag, "... current = " + currentNote + ", next = " + nextNote + ", mode = " + nextNoteMode.name());
+            //Log.d(tag, "... current = " + currentNote + ", next = " + nextNote + ", mode = " + nextNoteMode.name());
             updateNote(context, now, NoteChangedListener.TRANSITION_NEXT);
             return true;
 

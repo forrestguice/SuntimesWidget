@@ -179,7 +179,7 @@ public class LocationConfigView extends LinearLayout
     }
     public void setMode( LocationViewMode mode )
     {
-        Log.d("DEBUG", "LocationViewMode setMode " + mode.name());
+        //Log.d("DEBUG", "LocationViewMode setMode " + mode.name());
         FrameLayout autoButtonLayout = (FrameLayout)findViewById(R.id.appwidget_location_auto_layout);
 
         if (this.mode != mode)
@@ -286,7 +286,7 @@ public class LocationConfigView extends LinearLayout
      */
     protected void initViews( Context context )
     {
-        Log.d("DEBUG", "LocationConfigView initViews");
+        //Log.d("DEBUG", "LocationConfigView initViews");
         WidgetSettings.initDisplayStrings(context);
 
         flipper = (ViewFlipper)findViewById(R.id.view_flip);
@@ -397,7 +397,7 @@ public class LocationConfigView extends LinearLayout
 
     public void onResume()
     {
-        Log.d("DEBUG", "LocationConfigView onResume");
+        //Log.d("DEBUG", "LocationConfigView onResume");
         updateGPSButtonIcons();
         getFixHelper.onResume();
     }
@@ -417,7 +417,7 @@ public class LocationConfigView extends LinearLayout
      */
     protected void loadSettings(Context context)
     {
-        Log.d("DEBUG", "LocationConfigView loadSettings (prefs)");
+        //Log.d("DEBUG", "LocationConfigView loadSettings (prefs)");
         if (isInEditMode())
             return;
 
@@ -438,7 +438,7 @@ public class LocationConfigView extends LinearLayout
      */
     protected void loadSettings(Context context, Bundle bundle )
     {
-        Log.d("DEBUG", "LocationConfigView loadSettings (bundle)");
+        //Log.d("DEBUG", "LocationConfigView loadSettings (bundle)");
 
         // restore LocationMode spinner
         String modeString = bundle.getString(KEY_LOCATION_MODE);
@@ -479,7 +479,7 @@ public class LocationConfigView extends LinearLayout
             try {
                 viewMode = LocationViewMode.valueOf(viewModeString);
             } catch (IllegalArgumentException e) {
-                Log.d("DEBUG", "Bundle contained bad viewModeString! " + e.toString());
+                Log.w("DEBUG", "Bundle contained bad viewModeString! " + e.toString());
                 viewMode = LocationViewMode.MODE_CUSTOM_SELECT;
             }
             setMode(viewMode);
@@ -494,7 +494,7 @@ public class LocationConfigView extends LinearLayout
      */
     protected void loadSettings(Context context, Uri data )
     {
-        Log.d("DEBUG", "LocationConfigView loadSettings (uri)");
+        //Log.d("DEBUG", "LocationConfigView loadSettings (uri)");
         loadSettings(context, bundleData(data, context.getString(R.string.gps_lastfix_title_set)));
     }
 
@@ -503,7 +503,7 @@ public class LocationConfigView extends LinearLayout
      */
     protected boolean saveSettings(Context context)
     {
-        Log.d("DEBUG", "LocationConfigView loadSettings (prefs)");
+        //Log.d("DEBUG", "LocationConfigView loadSettings (prefs)");
 
         WidgetSettings.LocationMode locationMode = getLocationMode();
         WidgetSettings.saveLocationModePref(context, appWidgetId, locationMode);
@@ -526,7 +526,7 @@ public class LocationConfigView extends LinearLayout
      */
     protected boolean saveSettings(Bundle bundle)
     {
-        Log.d("DEBUG", "LocationConfigView saveSettings (bundle)");
+        //Log.d("DEBUG", "LocationConfigView saveSettings (bundle)");
 
         WidgetSettings.LocationMode locationMode = getLocationMode();
         String latitude = text_locationLat.getText().toString();
@@ -778,7 +778,7 @@ public class LocationConfigView extends LinearLayout
         {
             final WidgetSettings.LocationMode[] locationModes = WidgetSettings.LocationMode.values();
             WidgetSettings.LocationMode locationMode = locationModes[parent.getSelectedItemPosition()];
-            Log.d("DEBUG", "onLocationModeSelected " + locationMode.name());
+            //Log.d("DEBUG", "onLocationModeSelected " + locationMode.name());
 
             LocationViewMode dialogMode;
             if (locationMode == WidgetSettings.LocationMode.CUSTOM_LOCATION)
