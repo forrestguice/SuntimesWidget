@@ -126,6 +126,30 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     }
 
     @Override
+    public Calendar getVernalEquinoxForYear(Calendar date)
+    {
+        return null;  // TODO
+    }
+
+    @Override
+    public Calendar getSummerSolsticeForYear(Calendar date)
+    {
+        return null;  // TODO
+    }
+
+    @Override
+    public Calendar getAutumnalEquinoxForYear(Calendar date)
+    {
+        return null;  // TODO
+    }
+
+    @Override
+    public Calendar getWinterSolsticeForYear(Calendar date)
+    {
+        return null;  // TODO
+    }
+
+    @Override
     public Calendar[] getMorningBlueHourForDate(Calendar date)
     {
         return null;

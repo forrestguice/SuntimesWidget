@@ -27,7 +27,7 @@ import java.util.TimeZone;
  * An interface used when calculating sunrise and sunset times. Implementations
  * of this interface are intended to be thin wrappers around third party code.
  *
- * @version 1.1.0
+ * @version 1.2.0
  */
 public interface SuntimesCalculator
 {
@@ -130,36 +130,40 @@ public interface SuntimesCalculator
     Calendar getAstronomicalSunsetCalendarForDate( Calendar date );
 
     //
-    // 1.1.0, equinox/solstice dates
+    // 1.2.0, equinox/solstice dates
     //
 
     /**
      * @param date a Calendar representing a given date
      * @return a Calendar for vernal equinox for the year of the given date
-     * @since 1.1.0
+     * @since 1.2.0
      */
     Calendar getVernalEquinoxForYear( Calendar date );
 
     /**
      * @param date a Calendar representing a given date
      * @return a Calendar for summer solstice for the year of the given date
-     * @since 1.1.0
+     * @since 1.2.0
      */
     Calendar getSummerSolsticeForYear( Calendar date );
 
     /**
      * @param date a Calendar representing a given date
      * @return a Calendar for autumnal equinox for the year of the given date
-     * @since 1.1.0
+     * @since 1.2.0
      */
     Calendar getAutumnalEquinoxForYear( Calendar date );
 
     /**
      * @param date a Calendar representing a given date
      * @return a Calendar for winter soltice for the year of the given date
-     * @since 1.1.0
+     * @since 1.2.0
      */
     Calendar getWinterSolsticeForYear( Calendar date );
+
+    //
+    // 1.1.0, blue hour, golden hour, isDay
+    //
 
     /**
      * Morning Blue Hour
