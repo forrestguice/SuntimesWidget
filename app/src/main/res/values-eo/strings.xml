@@ -256,6 +256,10 @@
     <!-- App Setting: UI Warnings -->
     <string name="configLabel_ui_showWarnings">Aktivigi avertojn</string>
     <string name="configLabel_ui_showWarnings_summary">Montras agordojn de avertaj mesaĝoj</string>
+    
+    <!-- App Setting: Show Lightmap -->
+    <string name="configLabel_ui_showLightmap">Montri lum-mapon</string>
+    <string name="configLabel_ui_showLightmap_summary">Montras bastonan diagramon de periodoj de tago, nokto kaj krepusko.</string>    
 
     <!-- App Setting: UI Theme -->
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
@@ -432,7 +436,7 @@
     <string name="app_name_widget0">Suntempoj Fenestraĵo</string>
     <string name="app_name_widget1">Suntempoj Fenestraĵo (baskulebla)</string>
     <string name="app_version"><![CDATA[<b>Versio:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
-    <string name="app_shortdesc">Montras tempojn de sunleviĝoj, sunsubiroj, kaj krepuskoj.</string>
+    <string name="app_shortdesc">Montras tempojn de sunleviĝoj, sunsubiroj kaj krepuskoj.</string>
     <string name="app_support_url"><![CDATA[
         <b>Subteno:</b> vizitu la
         <a href="https://github.com/forrestguice/SuntimesWidget/issues">erar-spurilon</a> por raporti problemon.
@@ -448,8 +452,9 @@
         Germana traduko de Henrik "HerHde" Hüttemann. </br>
         Pola kaj Esperanta tradukoj de Verdulo.
     ]]></string>
-
-    <!-- Dialog: Help -->
+    <string name="app_legal3"><![CDATA[ <b>Bibliotekoj:</b><br/> ]]><![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]><![CDATA[ github.com/caarmen/SunriseSunset ]]></string>
+    
+    <!-- Dialog: Help -->  
     <string name="help_dialog_title">Helpo</string>
     <string name="help_appearance_title"><![CDATA[
         La jenaj mallongigoj estas disponeblaj: <br />
