@@ -101,6 +101,7 @@ public class SuntimesActivity extends AppCompatActivity
     private static final String DIALOGTAG_LOCATION = "location";
     private static final String DIALOGTAG_DATE = "dateselect";
     private static final String DIALOGTAG_LIGHTMAP = "lightmap";
+    private static final String DIALOGTAG_EQUINOX = "equinox";
 
     protected static SuntimesUtils utils = new SuntimesUtils();
 
@@ -306,6 +307,14 @@ public class SuntimesActivity extends AppCompatActivity
             lightMapDialog.setData(dataset);
             lightMapDialog.updateViews(dataset);
             //Log.d("DEBUG", "LightMapDialog updated on restore.");
+        }
+
+        EquinoxDialog equinoxDialog = (EquinoxDialog) fragments.findFragmentByTag(DIALOGTAG_EQUINOX);
+        if (equinoxDialog != null)
+        {
+            equinoxDialog.setData(dataset2);
+            equinoxDialog.updateViews(dataset2);
+            //Log.d("DEBUG", "EquinoxDialog updated on restore.");
         }
     }
 
@@ -874,6 +883,10 @@ public class SuntimesActivity extends AppCompatActivity
 
             case R.id.action_alarm:
                 scheduleAlarm();
+                return true;
+
+            case R.id.action_equinox:
+                showEquinoxDialog();
                 return true;
 
             default:
@@ -1669,6 +1682,13 @@ public class SuntimesActivity extends AppCompatActivity
         LightMapDialog lightMapDialog = new LightMapDialog();
         lightMapDialog.setData(dataset);
         lightMapDialog.show(getSupportFragmentManager(), DIALOGTAG_LIGHTMAP);
+    }
+
+    protected void showEquinoxDialog()
+    {
+        EquinoxDialog equinoxDialog = new EquinoxDialog();
+        equinoxDialog.setData(dataset2);
+        equinoxDialog.show(getSupportFragmentManager(), DIALOGTAG_EQUINOX);
     }
 
     /**
