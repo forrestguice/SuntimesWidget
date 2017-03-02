@@ -612,6 +612,15 @@ public class SuntimesActivity extends AppCompatActivity
     private void initEquinoxViews(Context context)
     {
         card_equinoxSolstice = (EquinoxView) findViewById(R.id.info_date_solsticequinox);
+        card_equinoxSolstice.setMinimized(true);
+        card_equinoxSolstice.setOnClickListener( new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                showEquinoxDialog();
+            }
+        });
     }
 
     /**
