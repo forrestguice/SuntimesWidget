@@ -21,14 +21,14 @@
               xmlns:tools="http://schemas.android.com/tools">
 
     <ViewFlipper android:id="@+id/info_equinoxsolstice_flipper"
-                 android:layout_width="wrap_content" android:layout_height="wrap_content"
+                 android:layout_width="match_parent" android:layout_height="wrap_content"
                  android:layout_marginTop="5dp" android:elevation="5dp"
                  tools:ignore="UnusedAttribute">
 
         <LinearLayout
             style="@style/SunsetTimeCard"
             android:id="@+id/info_equinoxsolstice_thisyear"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:animateLayoutChanges="true"
             tools:ignore="UnusedAttribute">
 
@@ -39,6 +39,7 @@
         <LinearLayout
             style="@style/SunsetTimeCard"
             android:id="@+id/info_equinoxsolstice_nextyear"
+            android:layout_width="match_parent"
             android:animateLayoutChanges="true"
             tools:ignore="UnusedAttribute">
 

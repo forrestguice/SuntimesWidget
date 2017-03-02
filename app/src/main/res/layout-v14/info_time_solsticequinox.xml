@@ -26,14 +26,13 @@
 
             <!-- Row 0 (vernal equinox) -->
             <TextView style="@style/SunsetTimeTextView"
+                      android:id="@+id/text_date_equinox_vernal_label"
                       android:text="@string/timeMode_equinox_vernal"
                       android:layout_row="0" android:layout_column="0"
-                      android:layout_width="125dp" android:gravity="start" />
+                      android:layout_width="125dp" android:gravity="start|top" android:layout_gravity="top" />
             <LinearLayout style="@style/SunsetTimeLayout"
-                          android:orientation="vertical"
-                          android:layout_row="0" android:layout_column="1" android:layout_gravity="start"
-                          android:layout_marginRight="10dp" android:layout_marginEnd="10dp"
-                          android:layout_marginLeft="10dp" android:layout_marginStart="10dp">
+                          android:orientation="vertical" android:layout_margin="0dp"
+                          android:layout_row="0" android:layout_column="1" android:layout_gravity="start|top">
 
                 <TextView
                     style="@style/SunsetTimeTextView"
@@ -50,13 +49,12 @@
             <!-- Row 1 (summer solstice) -->
             <TextView style="@style/SunsetTimeTextView"
                       android:text="@string/timeMode_solstice_summer"
+                      android:id="@+id/text_date_solstice_summer_label"
                       android:layout_row="1" android:layout_column="0"
-                      android:layout_width="125dp" android:gravity="start"/>
+                      android:layout_width="125dp" android:gravity="start|top" android:layout_gravity="top" />
             <LinearLayout style="@style/SunsetTimeLayout"
-                          android:orientation="vertical"
-                          android:layout_row="1" android:layout_column="1" android:layout_gravity="start"
-                          android:layout_marginRight="10dp" android:layout_marginEnd="10dp"
-                          android:layout_marginLeft="10dp" android:layout_marginStart="10dp">
+                          android:orientation="vertical" android:layout_margin="0dp"
+                          android:layout_row="1" android:layout_column="1" android:layout_gravity="start|top">
                 <TextView
                     style="@style/SunsetTimeTextView"
                     android:id="@+id/text_date_solstice_summer"
@@ -71,13 +69,12 @@
             <!-- Row 2 (autumnal equinox) -->
             <TextView style="@style/SunsetTimeTextView"
                       android:text="@string/timeMode_equinox_autumnal"
+                      android:id="@+id/text_date_equinox_autumnal_label"
                       android:layout_row="2" android:layout_column="0"
-                      android:layout_width="125dp" android:gravity="start"/>
+                      android:layout_width="125dp" android:gravity="start|top" android:layout_gravity="top" />
             <LinearLayout style="@style/SunsetTimeLayout"
-                          android:orientation="vertical"
-                          android:layout_row="2" android:layout_column="1" android:layout_gravity="start"
-                          android:layout_marginRight="10dp" android:layout_marginEnd="10dp"
-                          android:layout_marginLeft="10dp" android:layout_marginStart="10dp">
+                          android:orientation="vertical" android:layout_margin="0dp"
+                          android:layout_row="2" android:layout_column="1" android:layout_gravity="start|top">
                 <TextView
                     style="@style/SunsetTimeTextView"
                     android:id="@+id/text_date_equinox_autumnal"
@@ -92,13 +89,12 @@
             <!-- Row 3 (winter solstice) -->
             <TextView style="@style/SunsetTimeTextView"
                       android:text="@string/timeMode_solstice_winter"
+                      android:id="@+id/text_date_solstice_winter_label"
                       android:layout_row="3" android:layout_column="0"
-                      android:layout_width="125dp" android:gravity="start"/>
+                      android:layout_width="125dp" android:gravity="start|top" android:layout_gravity="top" />
             <LinearLayout style="@style/SunsetTimeLayout"
-                          android:orientation="vertical"
-                          android:layout_row="3" android:layout_column="1" android:layout_gravity="start"
-                          android:layout_marginRight="10dp" android:layout_marginEnd="10dp"
-                          android:layout_marginLeft="10dp" android:layout_marginStart="10dp">
+                          android:orientation="vertical" android:layout_margin="0dp"
+                          android:layout_row="3" android:layout_column="1" android:layout_gravity="start|top">
                 <TextView
                     style="@style/SunsetTimeTextView"
                     android:id="@+id/text_date_solstice_winter"
