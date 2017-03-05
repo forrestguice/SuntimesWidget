@@ -119,6 +119,7 @@
             </ViewFlipper>
 
             <LinearLayout
+                android:id="@+id/info_time_equinox_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?attr/timeCardBackground"

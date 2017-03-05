@@ -181,6 +181,8 @@ public class SuntimesActivity extends AppCompatActivity
     private TextView txt_lightlength2;
 
     private EquinoxView card_equinoxSolstice;
+    private View equinoxLayout;
+
     private LightMapView lightmap;
     private View lightmapLayout;
 
@@ -611,6 +613,8 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private void initEquinoxViews(Context context)
     {
+        equinoxLayout = findViewById(R.id.info_time_equinox_layout);
+
         card_equinoxSolstice = (EquinoxView) findViewById(R.id.info_date_solsticequinox);
         card_equinoxSolstice.setMinimized(true);
         card_equinoxSolstice.setOnClickListener( new View.OnClickListener()
@@ -1253,6 +1257,8 @@ public class SuntimesActivity extends AppCompatActivity
         //
         // equinox and solstice
         //
+        boolean enableEquinox = AppSettings.loadShowEquinoxPref(this);
+        showEquinoxView(enableEquinox);
         card_equinoxSolstice.updateViews(SuntimesActivity.this, dataset2);
 
         //
@@ -1700,6 +1706,11 @@ public class SuntimesActivity extends AppCompatActivity
         LightMapDialog lightMapDialog = new LightMapDialog();
         lightMapDialog.setData(dataset);
         lightMapDialog.show(getSupportFragmentManager(), DIALOGTAG_LIGHTMAP);
+    }
+
+    protected void showEquinoxView( boolean value )
+    {
+        equinoxLayout.setVisibility((value ? View.VISIBLE : View.GONE ));
     }
 
     protected void showEquinoxDialog()

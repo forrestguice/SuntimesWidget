@@ -61,6 +61,9 @@ public class AppSettings
     public static final String PREF_KEY_UI_SHOWLIGHTMAP = "app_ui_showlightmap";
     public static final boolean PREF_DEF_UI_SHOWLIGHTMAP = true;
 
+    public static final String PREF_KEY_UI_SHOWEQUINOX = "app_ui_showequinox";
+    public static final boolean PREF_DEF_UI_SHOWEQUINOX = true;
+
     public static final String PREF_KEY_UI_TIMEZONESORT = "app_ui_timezonesort";
     public static final WidgetTimezones.TimeZoneSort PREF_DEF_UI_TIMEZONESORT = WidgetTimezones.TimeZoneSort.SORT_BY_ID;
 
@@ -320,6 +323,12 @@ public class AppSettings
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getBoolean(PREF_KEY_UI_SHOWLIGHTMAP, PREF_DEF_UI_SHOWLIGHTMAP);
+    }
+
+    public static boolean loadShowEquinoxPref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_UI_SHOWEQUINOX, PREF_DEF_UI_SHOWEQUINOX);
     }
 
     /**

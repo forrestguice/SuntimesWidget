@@ -262,11 +262,15 @@
 
     <!-- App Setting: UI Warnings -->
     <string name="configLabel_ui_showWarnings">Show warnings</string>
-    <string name="configLabel_ui_showWarnings_summary">Show configuration warning messages</string>
+    <string name="configLabel_ui_showWarnings_summary">Show configuration warning messages.</string>
 
     <!-- App Setting: Show Lightmap -->
     <string name="configLabel_ui_showLightmap">Show Light Map</string>
     <string name="configLabel_ui_showLightmap_summary">Show a stacked bar chart of day, night, and twilight periods.</string>
+
+    <!-- App Setting: Show Equinox / Solstice -->
+    <string name="configLabel_ui_showEquinox">Show Solstice / Equinox</string>
+    <string name="configLabel_ui_showEquinox_summary">Show time until next solstice or equinox.</string>
 
     <!-- App Setting: UI Theme -->
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
