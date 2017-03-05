@@ -28,6 +28,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 
@@ -75,6 +76,7 @@ public class EquinoxDialog extends DialogFragment
 
     public void initViews(View dialogView)
     {
+
         equinoxView = (EquinoxView) dialogView.findViewById(R.id.info_time_equinox);
     }
 

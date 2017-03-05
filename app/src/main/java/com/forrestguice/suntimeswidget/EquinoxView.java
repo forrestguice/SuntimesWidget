@@ -18,9 +18,15 @@
 package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -52,6 +58,8 @@ public class EquinoxView extends LinearLayout
     private ViewFlipper flipper;           // flip between
     private Animation anim_card_outNext, anim_card_inNext, anim_card_outPrev, anim_card_inPrev;
 
+    private TextView titleThisYear, titleNextYear;
+
     private EquinoxNote note_equinox_vernal, note_solstice_summer, note_equinox_autumnal, note_solstice_winter;  // this year
     private EquinoxNote note_equinox_vernal2, note_solstice_summer2, note_equinox_autumnal2, note_solstice_winter2;  // and next year
     private ArrayList<EquinoxNote> notes;
@@ -77,6 +85,7 @@ public class EquinoxView extends LinearLayout
     private void init(Context context)
     {
         initLocale(context);
+        initColors(context);
         LayoutInflater.from(context).inflate(R.layout.layout_view_equinox, this, true);
 
         flipper = (ViewFlipper)findViewById(R.id.info_equinoxsolstice_flipper);
@@ -87,6 +96,8 @@ public class EquinoxView extends LinearLayout
         LinearLayout thisYear = (LinearLayout)findViewById(R.id.info_equinoxsolstice_thisyear);
         if (thisYear != null)
         {
+            titleThisYear = (TextView) thisYear.findViewById(R.id.text_title);
+
             TextView txt_equinox_vernal_label = (TextView) thisYear.findViewById(R.id.text_date_equinox_vernal_label);
             TextView txt_equinox_vernal = (TextView) thisYear.findViewById(R.id.text_date_equinox_vernal);
             TextView txt_equinox_vernal_note = (TextView) thisYear.findViewById(R.id.text_date_equinox_vernal_note);
@@ -111,6 +122,8 @@ public class EquinoxView extends LinearLayout
         LinearLayout nextYear = (LinearLayout)findViewById(R.id.info_equinoxsolstice_nextyear);
         if (nextYear != null)
         {
+            titleNextYear = (TextView) nextYear.findViewById(R.id.text_title);
+
             TextView txt_equinox_vernal2_label = (TextView) nextYear.findViewById(R.id.text_date_equinox_vernal_label);
             TextView txt_equinox_vernal2 = (TextView) nextYear.findViewById(R.id.text_date_equinox_vernal);
             TextView txt_equinox_vernal2_note = (TextView) nextYear.findViewById(R.id.text_date_equinox_vernal_note);
@@ -131,6 +144,21 @@ public class EquinoxView extends LinearLayout
             TextView txt_solstice_winter2_note = (TextView) nextYear.findViewById(R.id.text_date_solstice_winter_note);
             note_solstice_winter2 = addNote(txt_solstice_winter2_label, txt_solstice_winter2, txt_solstice_winter2_note);
         }
+    }
+
+    private int noteColor, springColor, summerColor, fallColor, winterColor;
+
+    private void initColors(Context context)
+    {
+        int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.springColor, R.attr.summerColor, R.attr.fallColor, R.attr.winterColor };
+        TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+        int def = R.color.color_transparent;
+        noteColor = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
+        springColor = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
+        summerColor = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
+        fallColor = ContextCompat.getColor(context, typedArray.getResourceId(3, def));
+        winterColor = ContextCompat.getColor(context, typedArray.getResourceId(4, def));
+        typedArray.recycle();
     }
 
     public void initLocale(Context context)
@@ -189,6 +217,14 @@ public class EquinoxView extends LinearLayout
     {
         if (data != null && data.isCalculated())
         {
+            SuntimesUtils.TimeDisplayText thisYear = utils.calendarDateYearDisplayString(context, data.dataEquinoxVernal.eventCalendarThisYear());
+            titleThisYear.setVisibility(minimized ? View.GONE : View.VISIBLE);
+            titleThisYear.setText(thisYear.toString());
+
+            SuntimesUtils.TimeDisplayText nextYear = utils.calendarDateYearDisplayString(context, data.dataEquinoxVernal.eventCalendarOtherYear());
+            titleNextYear.setVisibility( minimized ? View.GONE : View.VISIBLE);
+            titleNextYear.setText(nextYear.toString());
+
             note_equinox_vernal.updateTime(context, data.dataEquinoxVernal.eventCalendarThisYear());
             note_equinox_autumnal.updateTime(context, data.dataEquinoxAutumnal.eventCalendarThisYear());
             note_solstice_summer.updateTime(context, data.dataSolsticeSummer.eventCalendarThisYear());
@@ -201,7 +237,7 @@ public class EquinoxView extends LinearLayout
 
             for (EquinoxNote note : notes)
             {
-                note.updateNote(data.now());
+                note.updateNote(context, data.now());
                 note.setVisible(!minimized);
             }
 
@@ -221,7 +257,7 @@ public class EquinoxView extends LinearLayout
             for (EquinoxNote note : notes)
             {
                 note.updateTime(context, null);
-                note.updateNote(null);
+                note.updateNote(context, null);
 
                 if (minimized)
                 {
@@ -287,10 +323,14 @@ public class EquinoxView extends LinearLayout
         return (prev >= 0);
     }
 
-    private View.OnClickListener onClickListener;
     public void setOnClickListener( View.OnClickListener listener )
     {
-        onClickListener = listener;
+        flipper.setOnClickListener(listener);
+    }
+
+    public void setOnLongClickListener( View.OnLongClickListener listener)
+    {
+        flipper.setOnLongClickListener(listener);
     }
 
     /**
@@ -305,6 +345,9 @@ public class EquinoxView extends LinearLayout
         @Override
         public boolean onTouch(View view, MotionEvent event)
         {
+            if (minimized)
+                return false;
+
             switch (event.getAction())
             {
                 case MotionEvent.ACTION_DOWN:
@@ -313,71 +356,59 @@ public class EquinoxView extends LinearLayout
 
                 case MotionEvent.ACTION_UP:
                     secondTouchX = event.getX();
-                    if (minimized)
+                    if ((secondTouchX - firstTouchX) > FLING_SENSITIVITY)
+                    {   // swipe right; back to previous view
+                        userSwappedCard = (isRtl ? showNextCard() : showPreviousCard());
+
+                    } else if (firstTouchX - secondTouchX > FLING_SENSITIVITY) {
+                        // swipe left; advance to next view
+                        userSwappedCard = (isRtl ? showPreviousCard() : showNextCard());
+
+                    } else {
+                        // swipe cancel; reset current view
+                        final View currentView = flipper.getCurrentView();
+                        currentView.layout(0, currentView.getTop(), currentView.getWidth(), currentView.getBottom());
+                    }
+                    break;
+
+                case MotionEvent.ACTION_MOVE:
+                    float currentTouchX = event.getX();
+                    int moveDelta = (int) (currentTouchX - firstTouchX);
+                    boolean isSwipeRight = (moveDelta > 0);
+
+                    final View currentView = flipper.getCurrentView();
+                    int currentIndex = flipper.getDisplayedChild();
+
+                    int otherIndex;
+                    if (isRtl)
                     {
-                        if (onClickListener != null)
+                        otherIndex = (isSwipeRight ? currentIndex + 1 : currentIndex - 1);
+                    } else
+                    {
+                        otherIndex = (isSwipeRight ? currentIndex - 1 : currentIndex + 1);
+                    }
+
+                    if (otherIndex >= 0 && otherIndex < flipper.getChildCount())
+                    {
+                        // in-between child views; flip between them
+                        currentView.layout(moveDelta, currentView.getTop(),
+                                moveDelta + currentView.getWidth(), currentView.getBottom());
+
+                        // extended movement; manually trigger swipe/fling
+                        if (moveDelta > MOVE_SENSITIVITY || moveDelta < MOVE_SENSITIVITY * -1)
                         {
-                            onClickListener.onClick(view);
+                            event.setAction(MotionEvent.ACTION_UP);
+                            return onTouch(view, event);
                         }
 
                     } else {
-                        if ((secondTouchX - firstTouchX) > FLING_SENSITIVITY)
-                        {   // swipe right; back to previous view
-                            userSwappedCard = (isRtl ? showNextCard() : showPreviousCard());
-
-                        } else if (firstTouchX - secondTouchX > FLING_SENSITIVITY) {
-                            // swipe left; advance to next view
-                            userSwappedCard = (isRtl ? showPreviousCard() : showNextCard());
-
-                        } else {
-                            // swipe cancel; reset current view
-                            final View currentView = flipper.getCurrentView();
-                            currentView.layout(0, currentView.getTop(), currentView.getWidth(), currentView.getBottom());
-                        }
-                        break;
-                    }
-
-                case MotionEvent.ACTION_MOVE:
-                    if (!minimized)
-                    {
-                        float currentTouchX = event.getX();
-                        int moveDelta = (int) (currentTouchX - firstTouchX);
-                        boolean isSwipeRight = (moveDelta > 0);
-
-                        final View currentView = flipper.getCurrentView();
-                        int currentIndex = flipper.getDisplayedChild();
-
-                        int otherIndex;
-                        if (isRtl)
-                        {
-                            otherIndex = (isSwipeRight ? currentIndex + 1 : currentIndex - 1);
-                        } else
-                        {
-                            otherIndex = (isSwipeRight ? currentIndex - 1 : currentIndex + 1);
-                        }
-
-                        if (otherIndex >= 0 && otherIndex < flipper.getChildCount())
-                        {
-                            // in-between child views; flip between them
-                            currentView.layout(moveDelta, currentView.getTop(),
-                                    moveDelta + currentView.getWidth(), currentView.getBottom());
-
-                            // extended movement; manually trigger swipe/fling
-                            if (moveDelta > MOVE_SENSITIVITY || moveDelta < MOVE_SENSITIVITY * -1)
-                            {
-                                event.setAction(MotionEvent.ACTION_UP);
-                                return onTouch(view, event);
-                            }
-
-                        } else {
-                            // at-a-boundary (the first/last view);
-                            // TODO: animate somehow to let user know there aren't additional views
-                        }
+                        // at-a-boundary (the first/last view);
+                        // TODO: animate somehow to let user know there aren't additional views
                     }
                     break;
             }
 
-            return true;
+            return false;
         }
     };
 
@@ -411,16 +442,26 @@ public class EquinoxView extends LinearLayout
             }
         }
 
-        public void updateNote( Calendar now )
+        public void updateNote( Context context, Calendar now )
         {
             this.now = now;
             if (noteView != null)
             {
                 if (now != null && time != null)
                 {
-                    SuntimesUtils.TimeDisplayText noteText = utils.timeDeltaDisplayString(now.getTime(), time.getTime());
-                    noteView.setText(noteText.toString());
+                    String noteText = utils.timeDeltaDisplayString(now.getTime(), time.getTime()).toString();
 
+                    if (time.before(Calendar.getInstance()))
+                    {
+                        String noteString = context.getString(R.string.ago, noteText);
+                        SpannableString noteSpan = SuntimesUtils.createBoldColorSpan(noteString, noteText, noteColor);
+                        noteView.setText(noteSpan);
+
+                    } else {
+                        String noteString = context.getString(R.string.hence, noteText);
+                        SpannableString noteSpan = SuntimesUtils.createBoldColorSpan(noteString, noteText, noteColor);
+                        noteView.setText(noteSpan);
+                    }
                 } else {
                     noteView.setText("");
                 }
@@ -430,7 +471,7 @@ public class EquinoxView extends LinearLayout
         public void setHighlighted( boolean highlighted )
         {
             this.highlighted = highlighted;
-            highlight(labelView, highlighted);
+            //highlight(labelView, highlighted);
             highlight(timeView, highlighted);
         }
 
