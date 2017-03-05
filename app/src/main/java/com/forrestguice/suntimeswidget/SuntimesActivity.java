@@ -621,6 +621,15 @@ public class SuntimesActivity extends AppCompatActivity
                 showEquinoxDialog();
             }
         });
+        card_equinoxSolstice.setOnLongClickListener( new View.OnLongClickListener()
+        {
+            @Override
+            public boolean onLongClick(View view)
+            {
+                showEquinoxDialog();
+                return true;
+            }
+        });
     }
 
     /**

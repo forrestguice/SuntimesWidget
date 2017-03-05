@@ -21,16 +21,20 @@
               xmlns:tools="http://schemas.android.com/tools">
 
     <ViewFlipper android:id="@+id/info_equinoxsolstice_flipper"
+                 android:background="?attr/selectableItemBackground"
                  android:layout_width="match_parent" android:layout_height="wrap_content"
-                 android:layout_marginTop="5dp" android:elevation="5dp"
+                 android:elevation="5dp" android:clickable="true"
                  tools:ignore="UnusedAttribute">
 
         <LinearLayout
             style="@style/SunsetTimeCard"
+            android:background="@color/color_transparent"
             android:id="@+id/info_equinoxsolstice_thisyear"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:animateLayoutChanges="true"
-            tools:ignore="UnusedAttribute">
+            tools:ignore="UnusedAttribute"
+            android:paddingTop="4dp" android:paddingBottom="5dp"
+            android:paddingLeft="10dp" android:paddingRight="10dp">
 
             <include layout="@layout/info_time_solsticequinox" />
 
@@ -39,9 +43,12 @@
         <LinearLayout
             style="@style/SunsetTimeCard"
             android:id="@+id/info_equinoxsolstice_nextyear"
-            android:layout_width="match_parent"
+            android:background="@color/color_transparent"
+            android:layout_width="wrap_content"
             android:animateLayoutChanges="true"
-            tools:ignore="UnusedAttribute">
+            tools:ignore="UnusedAttribute"
+            android:paddingTop="4dp" android:paddingBottom="5dp"
+            android:paddingLeft="10dp" android:paddingRight="10dp">
 
             <include layout="@layout/info_time_solsticequinox" />
 
