@@ -363,7 +363,7 @@ public class SuntimesUtils
         if (!showingSeconds && !showingMinutes && !showingHours && !showingDays && !showingYears)
             value += String.format(strTimeDeltaFormat, "1", strMinutes);
 
-        TimeDisplayText text = new TimeDisplayText(value, units, suffix);
+        TimeDisplayText text = new TimeDisplayText(value.trim(), units, suffix);
         text.setRawValue(timeSpan);
         return text;
     }
