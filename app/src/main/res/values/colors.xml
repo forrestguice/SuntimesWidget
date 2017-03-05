@@ -39,4 +39,15 @@
     <color name="graphColor_nautical_light">#ff007bff</color>
     <color name="graphColor_astronomical_light">#ff0000ff</color>
     <color name="graphColor_night_light">#ff757575</color>
+
+    <color name="springColor_dark">#8BC34A</color>
+    <color name="summerColor_dark">#ffffcc00</color>
+    <color name="fallColor_dark">#FF5722</color>
+    <color name="winterColor_dark">#03A9F4</color>
+
+    <color name="springColor_light">#8BC34A</color>
+    <color name="summerColor_light">#FFC107</color>
+    <color name="fallColor_light">#FF5722</color>
+    <color name="winterColor_light">#03A9F4</color>
+
 </resources>

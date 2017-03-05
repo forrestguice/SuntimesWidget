@@ -23,6 +23,11 @@
         <item name="graphColor_pointFill">@color/sunIcon_color_setting</item>
         <item name="graphColor_pointStroke">@color/material_grey_800</item>
 
+        <item name="springColor">@color/springColor_light</item>
+        <item name="summerColor">@color/summerColor_light</item>
+        <item name="fallColor">@color/fallColor_light</item>
+        <item name="winterColor">@color/winterColor_light</item>
+
         <item name="icActionGPS">@drawable/ic_action_location_found_light</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off_light</item>
         <item name="icActionGPS_searching">@drawable/ic_action_location_searching_light</item>
@@ -61,6 +66,11 @@
         <item name="graphColor_astronomical">@color/graphColor_astronomical_dark</item>
         <item name="graphColor_pointFill">@color/sunIcon_color_setting</item>
         <item name="graphColor_pointStroke">@color/material_grey_800</item>
+
+        <item name="springColor">@color/springColor_dark</item>
+        <item name="summerColor">@color/summerColor_dark</item>
+        <item name="fallColor">@color/fallColor_dark</item>
+        <item name="winterColor">@color/winterColor_dark</item>
 
         <item name="icActionGPS">@drawable/ic_action_location_found</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off</item>
@@ -145,9 +155,9 @@
     </style>
     <style name="SunsetTimeTextView" parent="SunsetTimeTextViewBase">
         <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center_vertical</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_gravity">center_vertical</item>
         <item name="android:layout_marginLeft">2dp</item>
         <item name="android:layout_marginRight">0dp</item>
         <item name="android:layout_marginTop">2dp</item>
