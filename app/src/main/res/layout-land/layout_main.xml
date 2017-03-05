@@ -107,10 +107,18 @@
 
         </LinearLayout>
 
-        <com.forrestguice.suntimeswidget.EquinoxView
-            android:id="@+id/info_date_solsticequinox"
+        <LinearLayout
+            android:id="@+id/info_time_equinox_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="?attr/timeCardBackground"
+            android:layout_marginTop="6dp">
+
+            <com.forrestguice.suntimeswidget.EquinoxView
+                android:id="@+id/info_date_solsticequinox"
+                android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/info_time_lightmap_layout"
