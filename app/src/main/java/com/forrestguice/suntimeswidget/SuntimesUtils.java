@@ -269,18 +269,36 @@ public class SuntimesUtils
      */
     public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal)
     {
+        Calendar now = Calendar.getInstance();
+        return calendarDateTimeDisplayString(context, cal, (cal.get(Calendar.YEAR) != now.get(Calendar.YEAR)));
+    }
+    public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showYear)
+    {
         if (cal == null)
         {
             return new TimeDisplayText(strTimeNone);
         }
-        Date time = cal.getTime();
-        TimeDisplayText retValue;
 
-        /**DateFormat dateFormat = android.text.format.DateFormat.getLongDateFormat(context);
-        dateFormat.setTimeZone(cal.getTimeZone());*/
-        //retValue = new TimeDisplayText(dateFormat.format(time), "", "");
-        retValue = new TimeDisplayText(DateUtils.formatDateTime(context, time.getTime(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_YEAR), "", "");
-        return retValue;
+        int formatFlags = DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME;
+        formatFlags = (showYear ? (formatFlags | DateUtils.FORMAT_SHOW_YEAR)
+                                : (formatFlags | DateUtils.FORMAT_NO_YEAR));
+        return new TimeDisplayText(DateUtils.formatDateTime(context, cal.getTimeInMillis(), formatFlags), "", "");
+    }
+
+    /**
+     * @param context
+     * @param cal
+     * @return
+     */
+    public TimeDisplayText calendarDateYearDisplayString(Context context, Calendar cal)
+    {
+        if (cal == null)
+        {
+            return new TimeDisplayText(strTimeNone);
+        }
+        Locale locale = Resources.getSystem().getConfiguration().locale;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy", locale);
+        return new TimeDisplayText(dateFormat.format(cal.getTime()), "", "");
     }
 
     /**
@@ -352,7 +370,7 @@ public class SuntimesUtils
             value += (showingYears || showingDays ? strSpace : strEmpty) +
                      String.format(strTimeDeltaFormat, remainingHours, strHours);
 
-        boolean showingMinutes = (remainingMinutes > 0);
+        boolean showingMinutes = (!showingDays && !showingYears && remainingMinutes > 0);
         if (showingMinutes)
             value += (showingYears || showingDays || showingHours ? strSpace : strEmpty) +
                      String.format(strTimeDeltaFormat, remainingMinutes, strMinutes);
