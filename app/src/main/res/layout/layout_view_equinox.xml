@@ -40,9 +40,9 @@
 
             <!-- next/prev buttons -->
             <FrameLayout
-                android:layout_width="32dp" android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@id/card_content" android:layout_toEndOf="@id/card_content">
+                android:layout_width="48dp" android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/card_content"
+                android:layout_toRightOf="@id/card_content">
                 <include layout="@layout/info_time_nextprev" />
             </FrameLayout>
 
@@ -62,9 +62,9 @@
 
             <!-- next/prev buttons -->
             <FrameLayout
-                android:layout_width="32dp" android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@id/card_content" android:layout_toEndOf="@id/card_content">
+                android:layout_width="48dp" android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/card_content"
+                android:layout_toRightOf="@id/card_content">
                 <include layout="@layout/info_time_nextprev" />
             </FrameLayout>
 

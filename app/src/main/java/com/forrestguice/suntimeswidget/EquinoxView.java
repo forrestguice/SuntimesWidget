@@ -29,11 +29,14 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -57,6 +60,7 @@ public class EquinoxView extends LinearLayout
     private boolean userSwappedCard = false;
     private boolean isRtl = false;
     private boolean minimized = false;
+    private boolean centered = false;
 
     private ViewFlipper flipper;           // flip between
     private Animation anim_card_outNext, anim_card_inNext, anim_card_outPrev, anim_card_inPrev;
@@ -72,26 +76,32 @@ public class EquinoxView extends LinearLayout
     public EquinoxView(Context context)
     {
         super(context);
-        init(context);
+        init(context, null);
     }
 
-    public EquinoxView(Context context, AttributeSet attribs)
+    public EquinoxView(Context context, AttributeSet attrs)
     {
-        super(context, attribs);
-        init(context);
+        super(context, attrs);
+        init(context, attrs);
     }
 
     public EquinoxView(Context context, AttributeSet attrs, int defStyle)
     {
         super(context, attrs, defStyle);
-        init(context);
+        init(context, attrs);
     }
 
-    private void init(Context context)
+    private void init(Context context, AttributeSet attrs)
     {
         initLocale(context);
         initColors(context);
         LayoutInflater.from(context).inflate(R.layout.layout_view_equinox, this, true);
+
+        if (attrs != null)
+        {
+            LinearLayout.LayoutParams lp = generateLayoutParams(attrs);
+            centered = ((lp.gravity == Gravity.CENTER) || (lp.gravity == Gravity.CENTER_HORIZONTAL));
+        }
 
         flipper = (ViewFlipper)findViewById(R.id.info_equinoxsolstice_flipper);
         flipper.setOnTouchListener(cardTouchListener);
@@ -141,6 +151,13 @@ public class EquinoxView extends LinearLayout
             TextView txt_solstice_winter = (TextView) thisYear.findViewById(R.id.text_date_solstice_winter);
             TextView txt_solstice_winter_note = (TextView) thisYear.findViewById(R.id.text_date_solstice_winter_note);
             note_solstice_winter = addNote(txt_solstice_winter_label, txt_solstice_winter, txt_solstice_winter_note);
+
+            if (centered)
+            {
+                FrameLayout.LayoutParams lpThisYear = (FrameLayout.LayoutParams)thisYear.getLayoutParams();
+                lpThisYear.gravity = Gravity.CENTER_HORIZONTAL;
+                thisYear.setLayoutParams(lpThisYear);
+            }
         }
 
         RelativeLayout nextYear = (RelativeLayout)findViewById(R.id.info_equinoxsolstice_nextyear);
@@ -186,6 +203,13 @@ public class EquinoxView extends LinearLayout
             TextView txt_solstice_winter2 = (TextView) nextYear.findViewById(R.id.text_date_solstice_winter);
             TextView txt_solstice_winter2_note = (TextView) nextYear.findViewById(R.id.text_date_solstice_winter_note);
             note_solstice_winter2 = addNote(txt_solstice_winter2_label, txt_solstice_winter2, txt_solstice_winter2_note);
+
+            if (centered)
+            {
+                FrameLayout.LayoutParams lpNextYear = (FrameLayout.LayoutParams)nextYear.getLayoutParams();
+                lpNextYear.gravity = Gravity.CENTER_HORIZONTAL;
+                nextYear.setLayoutParams(lpNextYear);
+            }
         }
     }
 
