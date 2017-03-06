@@ -274,7 +274,7 @@ public class SuntimesUtils
     }
     public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showYear)
     {
-        if (cal == null)
+        if (cal == null || context == null)
         {
             return new TimeDisplayText(strTimeNone);
         }
