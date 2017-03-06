@@ -26,7 +26,7 @@
                  android:elevation="5dp" android:clickable="true"
                  tools:ignore="UnusedAttribute">
 
-        <LinearLayout
+        <RelativeLayout
             style="@style/SunsetTimeCard"
             android:background="@color/color_transparent"
             android:id="@+id/info_equinoxsolstice_thisyear"
@@ -38,9 +38,17 @@
 
             <include layout="@layout/info_time_solsticequinox" />
 
-        </LinearLayout>
+            <!-- next/prev buttons -->
+            <FrameLayout
+                android:layout_width="32dp" android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@id/card_content" android:layout_toEndOf="@id/card_content">
+                <include layout="@layout/info_time_nextprev" />
+            </FrameLayout>
 
-        <LinearLayout
+        </RelativeLayout>
+
+        <RelativeLayout
             style="@style/SunsetTimeCard"
             android:id="@+id/info_equinoxsolstice_nextyear"
             android:background="@color/color_transparent"
@@ -52,7 +60,15 @@
 
             <include layout="@layout/info_time_solsticequinox" />
 
-        </LinearLayout>
+            <!-- next/prev buttons -->
+            <FrameLayout
+                android:layout_width="32dp" android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@id/card_content" android:layout_toEndOf="@id/card_content">
+                <include layout="@layout/info_time_nextprev" />
+            </FrameLayout>
+
+        </RelativeLayout>
 
     </ViewFlipper>
 

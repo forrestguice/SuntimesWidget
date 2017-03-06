@@ -34,7 +34,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
@@ -57,6 +60,8 @@ public class EquinoxView extends LinearLayout
 
     private ViewFlipper flipper;           // flip between
     private Animation anim_card_outNext, anim_card_inNext, anim_card_outPrev, anim_card_inPrev;
+    private ImageView btn_flipperNext_thisYear, btn_flipperPrev_thisYear;
+    private ImageView btn_flipperNext_nextYear, btn_flipperPrev_nextYear;
 
     private TextView titleThisYear, titleNextYear;
 
@@ -93,9 +98,28 @@ public class EquinoxView extends LinearLayout
 
         notes = new ArrayList<EquinoxNote>();
 
-        LinearLayout thisYear = (LinearLayout)findViewById(R.id.info_equinoxsolstice_thisyear);
+        RelativeLayout thisYear = (RelativeLayout)findViewById(R.id.info_equinoxsolstice_thisyear);
         if (thisYear != null)
         {
+            btn_flipperNext_thisYear = (ImageButton)thisYear.findViewById(R.id.info_time_nextbtn);
+            btn_flipperNext_thisYear.setOnClickListener(onNextCardClick);
+            btn_flipperNext_thisYear.setOnTouchListener(new View.OnTouchListener()
+            {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent)
+                {
+                    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                        btn_flipperNext_thisYear.setColorFilter(ContextCompat.getColor(getContext(), R.color.btn_tint_pressed));
+                    } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                        btn_flipperNext_thisYear.setColorFilter(null);
+                    }
+                    return false;
+                }
+            });
+
+            btn_flipperPrev_thisYear = (ImageButton)thisYear.findViewById(R.id.info_time_prevbtn);
+            btn_flipperPrev_thisYear.setVisibility(View.GONE);
+
             titleThisYear = (TextView) thisYear.findViewById(R.id.text_title);
 
             TextView txt_equinox_vernal_label = (TextView) thisYear.findViewById(R.id.text_date_equinox_vernal_label);
@@ -119,9 +143,28 @@ public class EquinoxView extends LinearLayout
             note_solstice_winter = addNote(txt_solstice_winter_label, txt_solstice_winter, txt_solstice_winter_note);
         }
 
-        LinearLayout nextYear = (LinearLayout)findViewById(R.id.info_equinoxsolstice_nextyear);
+        RelativeLayout nextYear = (RelativeLayout)findViewById(R.id.info_equinoxsolstice_nextyear);
         if (nextYear != null)
         {
+            btn_flipperNext_nextYear = (ImageButton)nextYear.findViewById(R.id.info_time_nextbtn);
+            btn_flipperNext_nextYear.setVisibility(View.GONE);
+
+            btn_flipperPrev_nextYear = (ImageButton)nextYear.findViewById(R.id.info_time_prevbtn);
+            btn_flipperPrev_nextYear.setOnClickListener(onPrevCardClick);
+            btn_flipperPrev_nextYear.setOnTouchListener(new View.OnTouchListener()
+            {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent)
+                {
+                    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                        btn_flipperPrev_nextYear.setColorFilter(ContextCompat.getColor(getContext(), R.color.btn_tint_pressed));
+                    } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                        btn_flipperPrev_nextYear.setColorFilter(null);
+                    }
+                    return false;
+                }
+            });
+
             titleNextYear = (TextView) nextYear.findViewById(R.id.text_title);
 
             TextView txt_equinox_vernal2_label = (TextView) nextYear.findViewById(R.id.text_date_equinox_vernal_label);
@@ -213,8 +256,27 @@ public class EquinoxView extends LinearLayout
         return soonest;
     }
 
+    private void showNextPrevButtons( boolean show )
+    {
+        if (show)
+        {
+            btn_flipperNext_thisYear.setVisibility(View.VISIBLE);
+            btn_flipperPrev_thisYear.setVisibility(View.GONE);
+            btn_flipperNext_nextYear.setVisibility(View.GONE);
+            btn_flipperPrev_nextYear.setVisibility(View.VISIBLE);
+
+        } else {
+            btn_flipperNext_thisYear.setVisibility(View.GONE);
+            btn_flipperPrev_thisYear.setVisibility(View.GONE);
+            btn_flipperNext_nextYear.setVisibility(View.GONE);
+            btn_flipperPrev_nextYear.setVisibility(View.GONE);
+        }
+    }
+
     protected void updateViews( Context context, SuntimesEquinoxSolsticeDataset data )
     {
+        showNextPrevButtons(!minimized);
+
         if (data != null && data.isCalculated())
         {
             SuntimesUtils.TimeDisplayText thisYear = utils.calendarDateYearDisplayString(context, data.dataEquinoxVernal.eventCalendarThisYear());
@@ -254,6 +316,7 @@ public class EquinoxView extends LinearLayout
             }
 
         } else {
+            // no data
             for (EquinoxNote note : notes)
             {
                 note.updateTime(context, null);
@@ -332,6 +395,25 @@ public class EquinoxView extends LinearLayout
     {
         flipper.setOnLongClickListener(listener);
     }
+
+    private View.OnClickListener onNextCardClick = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View view)
+        {
+            userSwappedCard = showNextCard();
+        }
+    };
+
+    private View.OnClickListener onPrevCardClick = new View.OnClickListener()
+    {
+
+        @Override
+        public void onClick(View view)
+        {
+            userSwappedCard = showPreviousCard();
+        }
+    };
 
     /**
      *
