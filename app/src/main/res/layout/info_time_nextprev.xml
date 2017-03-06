@@ -11,7 +11,7 @@
         <ImageButton
             android:id="@+id/info_time_prevbtn"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_gravity="end"
+            android:layout_gravity="end" android:padding="2dp"
             android:src="?attr/icActionPrevious"
             android:background="@drawable/ic_transparent"
             android:contentDescription="@string/prevDay"/>
@@ -19,7 +19,7 @@
         <ImageButton
             android:id="@+id/info_time_nextbtn"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_gravity="end"
+            android:layout_gravity="end" android:padding="2dp"
             android:src="?attr/icActionNext"
             android:background="@drawable/ic_transparent"
             android:contentDescription="@string/nextDay"/>
