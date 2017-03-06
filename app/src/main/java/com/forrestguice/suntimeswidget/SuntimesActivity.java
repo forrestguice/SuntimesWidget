@@ -26,6 +26,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.location.Location;
@@ -110,6 +112,8 @@ public class SuntimesActivity extends AppCompatActivity
     private WidgetSettings.Location location;
     private SuntimesNotes notes;
     private SuntimesRiseSetDataset dataset;
+
+    private int color_textTimeDelta;
 
     // clock views
     private TextView txt_time;
@@ -240,6 +244,7 @@ public class SuntimesActivity extends AppCompatActivity
         WidgetSettings.initDisplayStrings(context);
 
         initAnimations(context);                     // locale specific animations
+        initColors(context);                         // locale specific colors
     }
 
     /**
@@ -762,6 +767,20 @@ public class SuntimesActivity extends AppCompatActivity
 
         anim_card_outPrev = AnimationUtils.loadAnimation(this, (isRtl ? R.anim.slide_out_left : R.anim.slide_out_right));
         anim_card_outNext = AnimationUtils.loadAnimation(this, (isRtl ? R.anim.slide_out_right : R.anim.slide_out_left));
+    }
+
+    /**
+     * @param context
+     */
+    private void initColors(Context context)
+    {
+        int[] colorAttrs = { android.R.attr.textColorPrimary };
+        TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+        int def = Color.WHITE;
+
+        color_textTimeDelta = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
+
+        typedArray.recycle();
     }
 
     /**
