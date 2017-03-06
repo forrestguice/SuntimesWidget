@@ -77,15 +77,6 @@ public class SuntimesConfigActivity1 extends SuntimesConfigActivity
         disableOptionAllowResize();
     }
 
-    private void disableOptionAllowResize()
-    {
-        if (checkbox_allowResize != null)
-        {
-            checkbox_allowResize.setChecked(false);  // option not currently supported by flippable widget
-            checkbox_allowResize.setEnabled(false);
-        }
-    }
-
     @Override
     protected void loadActionSettings(Context context)
     {
