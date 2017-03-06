@@ -27,11 +27,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.AlarmClock;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.util.TypedValue;
@@ -180,6 +183,7 @@ public class AlarmDialog extends DialogFragment
 
     protected void initViews( final Context context, View dialogContent )
     {
+        initColors(context);
         SuntimesUtils.initDisplayStrings(context);
         WidgetSettings.initDisplayStrings(context);
         SolarEvents.initDisplayStrings(context);
@@ -206,12 +210,15 @@ public class AlarmDialog extends DialogFragment
 
                         if (alarmCalendar != null)
                         {
-                            SuntimesUtils.TimeDisplayText timeString = utils.timeDeltaDisplayString(now.getTime(), alarmCalendar.getTime());
-                            txt_note.setText(context.getString(R.string.schedalarm_dialog_note, timeString.getValue()));
+                            String timeString =" " + utils.timeDeltaDisplayString(now.getTime(), alarmCalendar.getTime()).getValue() + " ";
+                            String noteString = context.getString(R.string.schedalarm_dialog_note, timeString);
+                            txt_note.setText(SuntimesUtils.createBoldColorSpan(noteString, timeString, color_textTimeDelta));
                             icon_note.setVisibility(View.GONE);
-                        } else
-                        {
-                            txt_note.setText(context.getString(R.string.schedalarm_dialog_note2, choice.getLongDisplayString()));
+
+                        } else {
+                            String timeString = " " + choice.getLongDisplayString() + " ";
+                            String noteString = context.getString(R.string.schedalarm_dialog_note2, timeString);
+                            txt_note.setText(SuntimesUtils.createBoldColorSpan(noteString, timeString, color_textTimeDelta));
                             icon_note.setVisibility(View.VISIBLE);
                         }
                     }
@@ -221,6 +228,18 @@ public class AlarmDialog extends DialogFragment
                     }
                 }
         );
+    }
+
+    private int color_textTimeDelta;
+    private void initColors(Context context)
+    {
+        int[] colorAttrs = { android.R.attr.textColorPrimary };
+        TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+        int def = Color.WHITE;
+
+        color_textTimeDelta = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
+
+        typedArray.recycle();
     }
 
     protected void loadSettings(Context context)
