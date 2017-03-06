@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             
-            <TextView style="@style/SunsetTimeTextView"
+            <TextView style="@style/SunsetTextView"
                       android:id="@+id/text_daylength"
                       android:text=""
                       tools:text="12h"
@@ -44,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <TextView style="@style/SunsetTimeTextView"
+            <TextView style="@style/SunsetTextView"
                       android:id="@+id/text_lightlength"
                       android:text=""
                       tools:text="12h 35m"
