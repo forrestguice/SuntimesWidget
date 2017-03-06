@@ -1181,19 +1181,27 @@ public class SuntimesActivity extends AppCompatActivity
 
             SuntimesUtils.TimeDisplayText dayLengthDisplay = utils.timeDeltaLongDisplayString(0, dataset.dataActual.dayLengthToday());
             dayLengthDisplay.setSuffix("");
-            txt_daylength.setText(dayLengthDisplay.toString());
-
-            SuntimesUtils.TimeDisplayText lightLengthDisplay = utils.timeDeltaLongDisplayString(0, dataset.dataCivil.dayLengthToday());
-            lightLengthDisplay.setSuffix("");
-            txt_lightlength.setText(lightLengthDisplay.toString());
+            String dayLength = dayLengthDisplay.toString();
+            String dayLength_label = getString(R.string.length_day, dayLength);
+            txt_daylength.setText(SuntimesUtils.createBoldColorSpan(dayLength_label, dayLength, color_textTimeDelta));
 
             SuntimesUtils.TimeDisplayText dayLengthDisplay2 = utils.timeDeltaLongDisplayString(0, dataset.dataActual.dayLengthOther());
             dayLengthDisplay2.setSuffix("");
-            txt_daylength2.setText(dayLengthDisplay2.toString());
+            String dayLength2 = dayLengthDisplay2.toString();
+            String dayLength2_label = getString(R.string.length_day, dayLength2);
+            txt_daylength2.setText(SuntimesUtils.createBoldColorSpan(dayLength2_label, dayLength2, color_textTimeDelta));
+
+            SuntimesUtils.TimeDisplayText lightLengthDisplay = utils.timeDeltaLongDisplayString(0, dataset.dataCivil.dayLengthToday());
+            lightLengthDisplay.setSuffix("");
+            String lightLength = lightLengthDisplay.toString();
+            String lightLength_label = getString(R.string.length_light, lightLength);
+            txt_lightlength.setText(SuntimesUtils.createBoldColorSpan(lightLength_label, lightLength, color_textTimeDelta));
 
             SuntimesUtils.TimeDisplayText lightLengthDisplay2 = utils.timeDeltaLongDisplayString(0, dataset.dataCivil.dayLengthOther());
             lightLengthDisplay2.setSuffix("");
-            txt_lightlength2.setText(lightLengthDisplay2.toString());
+            String lightLength2 = lightLengthDisplay2.toString();
+            String lightLength2_label = getString(R.string.length_light, lightLength2);
+            txt_lightlength2.setText(SuntimesUtils.createBoldColorSpan(lightLength2_label, lightLength2, color_textTimeDelta));
 
         } else {
             String notCalculated = getString(R.string.time_loading);

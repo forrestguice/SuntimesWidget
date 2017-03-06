@@ -62,8 +62,8 @@
          The hours in the day field(s) that appears below the table (main activity); can be either
          a prefix or suffix depending on layout (layout/info_time_daylength.xml).
     -->
-    <string name="length_day">in the day</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
-    <string name="length_light">of usable light</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
+    <string name="length_day"><xliff:g id="timeSpan" example="12h">%1$s</xliff:g> in the day</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
+    <string name="length_light"><xliff:g id="timeSpan" example="12h 50m">%1$s</xliff:g> of usable light</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
          e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'

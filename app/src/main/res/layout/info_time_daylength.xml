@@ -30,14 +30,13 @@
                       android:text=""
                       tools:text="12h"
                       android:paddingLeft="0dp"
-                      android:paddingRight="5dp" android:paddingEnd="5dp"
-                      android:textStyle="bold"/>
+                      android:paddingRight="5dp" android:paddingEnd="5dp" />
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:id="@+id/text_daylength_label"
                       android:text="@string/length_day"
                       android:paddingLeft="0dp"
-                      android:paddingRight="5dp" android:paddingEnd="5dp" />
+                      android:paddingRight="5dp" android:paddingEnd="5dp" android:visibility="gone" />
 
         </LinearLayout>
 
@@ -50,14 +49,13 @@
                       android:text=""
                       tools:text="12h 35m"
                       android:paddingLeft="0dp"
-                      android:paddingRight="5dp" android:paddingEnd="5dp"
-                      android:textStyle="bold"/>
+                      android:paddingRight="5dp" android:paddingEnd="5dp" />
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:id="@+id/text_lightlength_label"
                       android:text="@string/length_light"
                       android:paddingLeft="0dp"
-                      android:paddingRight="5dp" android:paddingEnd="5dp" />
+                      android:paddingRight="5dp" android:paddingEnd="5dp" android:visibility="gone" />
 
         </LinearLayout>
 
