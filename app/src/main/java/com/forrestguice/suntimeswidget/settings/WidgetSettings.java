@@ -71,6 +71,9 @@ public class WidgetSettings
     public static final String PREF_KEY_GENERAL_TIMEMODE = "timemode";
     public static final TimeMode PREF_DEF_GENERAL_TIMEMODE = TimeMode.OFFICIAL;
 
+    public static final String PREF_KEY_GENERAL_TIMEMODE2 = "timemode2";
+    public static final SolsticeEquinoxMode PREF_DEF_GENERAL_TIMEMODE2 = SolsticeEquinoxMode.EQUINOX_VERNAL;
+
     public static final String PREF_KEY_GENERAL_TIMENOTE_RISE = "timenoterise";
     public static final SolarEvents PREF_DEF_GENERAL_TIMENOTE_RISE = SolarEvents.SUNRISE;
 
@@ -928,6 +931,41 @@ public class WidgetSettings
         prefs.apply();
     }
 
+
+    public static void saveTimeMode2Pref(Context context, int appWidgetId, SolsticeEquinoxMode mode)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putString(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE2, mode.name());
+        prefs.apply();
+    }
+    public static WidgetSettings.SolsticeEquinoxMode loadTimeMode2Pref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE2, PREF_DEF_GENERAL_TIMEMODE2.name());
+
+        SolsticeEquinoxMode timeMode;
+        try
+        {
+            timeMode = WidgetSettings.SolsticeEquinoxMode.valueOf(modeString);
+
+        } catch (IllegalArgumentException e) {
+            timeMode = PREF_DEF_GENERAL_TIMEMODE2;
+        }
+        return timeMode;
+    }
+    public static void deleteTimeMode2Pref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE2);
+        prefs.apply();
+    }
+
+
+
+
     public static void saveSolarTimeModePref(Context context, int appWidgetId, WidgetSettings.SolarTimeMode mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
@@ -1309,6 +1347,7 @@ public class WidgetSettings
 
         deleteCalculatorModePref(context, appWidgetId);
         deleteTimeModePref(context, appWidgetId);
+        deleteTimeMode2Pref(context, appWidgetId);
         deleteCompareModePref(context, appWidgetId);
 
         deleteLocationModePref(context, appWidgetId);
