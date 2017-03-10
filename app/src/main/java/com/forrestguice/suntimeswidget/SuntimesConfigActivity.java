@@ -209,12 +209,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
         if (reconfigure)
         {
             setActionButtonText(getString(R.string.configAction_reconfigWidget_short));
-
-            TextView activityTitle = (TextView) findViewById(R.id.activity_title);
-            if (activityTitle != null)
-            {
-                activityTitle.setText(getString(R.string.configAction_reconfigWidget));
-            }
+            setConfigActivityTitle(getString(R.string.configAction_reconfigWidget));
         }
 
         //
@@ -272,28 +267,8 @@ public class SuntimesConfigActivity extends AppCompatActivity
         // widget: time mode
         //
         spinner_timeMode = (Spinner)findViewById(R.id.appwidget_general_timeMode);
-        if (spinner_timeMode != null)
-        {
-            ArrayAdapter<WidgetSettings.TimeMode> spinner_timeModeAdapter;
-            spinner_timeModeAdapter = new ArrayAdapter<WidgetSettings.TimeMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.TimeMode.values());
-            spinner_timeModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner_timeMode.setAdapter(spinner_timeModeAdapter);
-        }
-
-        ImageButton button_timeModeHelp = (ImageButton)findViewById(R.id.appwidget_generale_timeMode_helpButton);
-        if (button_timeModeHelp != null)
-        {
-            button_timeModeHelp.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    HelpDialog helpDialog = new HelpDialog();
-                    helpDialog.setContent(getString(R.string.help_general_timeMode));
-                    helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
-                }
-            });
-        }
+        button_timeModeHelp = (ImageButton)findViewById(R.id.appwidget_generale_timeMode_helpButton);
+        initTimeMode(context);
 
         //
         // widget: timezone mode
@@ -478,6 +453,53 @@ public class SuntimesConfigActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * @param context
+     */
+    protected void initTimeMode( Context context )
+    {
+        if (spinner_timeMode != null)
+        {
+            ArrayAdapter<WidgetSettings.TimeMode> spinner_timeModeAdapter;
+            spinner_timeModeAdapter = new ArrayAdapter<WidgetSettings.TimeMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.TimeMode.values());
+            spinner_timeModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner_timeMode.setAdapter(spinner_timeModeAdapter);
+        }
+
+        if (button_timeModeHelp != null)
+        {
+            button_timeModeHelp.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    HelpDialog helpDialog = new HelpDialog();
+                    helpDialog.setContent(getString(R.string.help_general_timeMode));
+                    helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
+                }
+            });
+        }
+    }
+
+    /**
+     * @param context
+     */
+    protected void loadTimeMode(Context context)
+    {
+        WidgetSettings.TimeMode timeMode = WidgetSettings.loadTimeModePref(context, appWidgetId);
+        spinner_timeMode.setSelection(timeMode.ordinal());
+    }
+
+    /**
+     * @param context
+     */
+    protected void saveTimeMode(Context context)
+    {
+        final WidgetSettings.TimeMode[] timeModes = WidgetSettings.TimeMode.values();
+        WidgetSettings.TimeMode timeMode = timeModes[ spinner_timeMode.getSelectedItemPosition()];
+        WidgetSettings.saveTimeModePref(context, appWidgetId, timeMode);
+    }
+
     private Button button_addWidget;
 
     private void setActionButtonText( String text )
@@ -659,15 +681,13 @@ public class SuntimesConfigActivity extends AppCompatActivity
         SuntimesCalculatorDescriptor calculator = calculators[ spinner_calculatorMode.getSelectedItemPosition() ];
         WidgetSettings.saveCalculatorModePref(context, appWidgetId, calculator);
 
-        // save: time mode
-        final WidgetSettings.TimeMode[] timeModes = WidgetSettings.TimeMode.values();
-        WidgetSettings.TimeMode timeMode = timeModes[ spinner_timeMode.getSelectedItemPosition()];
-        WidgetSettings.saveTimeModePref(context, appWidgetId, timeMode);
-
         // save: compare mode
         final WidgetSettings.CompareMode[] compareModes = WidgetSettings.CompareMode.values();
         WidgetSettings.CompareMode compareMode = compareModes[ spinner_compareMode.getSelectedItemPosition()];
         WidgetSettings.saveCompareModePref(context, appWidgetId, compareMode);
+
+        // save: time mode
+        saveTimeMode(context);
     }
 
     /**
@@ -680,13 +700,12 @@ public class SuntimesConfigActivity extends AppCompatActivity
         SuntimesCalculatorDescriptor calculatorMode = WidgetSettings.loadCalculatorModePref(context, appWidgetId);
         spinner_calculatorMode.setSelection(calculatorMode.ordinal());
 
-        // load: time mode
+        // load: compare mode
         WidgetSettings.CompareMode compareMode = WidgetSettings.loadCompareModePref(context, appWidgetId);
         spinner_compareMode.setSelection(compareMode.ordinal());
 
-        // load: compare mode
-        WidgetSettings.TimeMode timeMode = WidgetSettings.loadTimeModePref(context, appWidgetId);
-        spinner_timeMode.setSelection(timeMode.ordinal());
+        // load: time mode
+        loadTimeMode(context);
     }
 
     /**
@@ -823,6 +842,54 @@ public class SuntimesConfigActivity extends AppCompatActivity
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults)
     {
         locationConfig.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    /**
+     *
+     */
+    protected void disableOptionAllowResize()
+    {
+        if (checkbox_allowResize != null)
+        {
+            checkbox_allowResize.setChecked(false);  // option not currently supported by flippable widget
+            checkbox_allowResize.setEnabled(false);
+        }
+    }
+
+    /**
+     *
+     */
+    protected void hideOptionCompareAgainst()
+    {
+        View layout_compareMode = findViewById(R.id.appwidget_general_compareMode_layout);
+        if (layout_compareMode != null)
+        {
+            layout_compareMode.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     *
+     */
+    protected void hideOptionLayoutMode()
+    {
+        View layout_1x1mode = findViewById(R.id.appwidget_appearance_1x1mode_layout);
+        if (layout_1x1mode != null)
+        {
+            layout_1x1mode.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * @param text activity title text
+     */
+    protected void setConfigActivityTitle(String text)
+    {
+        TextView activityTitle = (TextView) findViewById(R.id.activity_title);
+        if (activityTitle != null)
+        {
+            activityTitle.setText(text);
+        }
     }
 
 }
