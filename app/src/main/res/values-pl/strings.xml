@@ -127,6 +127,7 @@
     <string name="configAction_reconfigWidget">Edytuj widżet</string>      <!-- used as title when reconfiguring -->
     <string name="configLabel_title0">Zmierzchy i Świty Widżet</string>                  <!-- used as title when adding -->
     <string name="configLabel_title1">Przełączalny widżet</string>                 <!-- used as title when adding -->
+    <string name="configLabel_title2">Solstice Widget</string>                  <!-- used as title when adding -->  <!-- TODO -->
 
     <!-- Widget Setting: general -->
     <string name="configLabel_general">Ustawienia ogólne</string>                <!-- group title -->
@@ -431,6 +432,7 @@
     <string name="app_name">Zmierzchy i Świty</string>
     <string name="app_name_widget0">Zmierzchy/Świty Widżet</string>
     <string name="app_name_widget1">Zmierzchy/Świty Widżet (przełączalny)</string>
+    <string name="app_name_widget2">Suntimes Solstice Widget</string>  <!-- TODO -->
     <string name="app_version"><![CDATA[<b>Wersja:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Wyświetla czasy wschodu i zachodu Słońca, oraz świtu i zmierzchu.</string>
     <string name="app_support_url"><![CDATA[<b>Wsparcie:</b> odwiedź <a href="https://github.com/forrestguice/SuntimesWidget/issues">stronę trackera błędów</a> aby zgłosić błąd/sugestię.]]></string>

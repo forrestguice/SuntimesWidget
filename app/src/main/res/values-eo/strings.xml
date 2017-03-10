@@ -127,6 +127,7 @@
     <string name="configAction_reconfigWidget">Reagordi fenestraĵon</string>      <!-- used as title when reconfiguring -->
     <string name="configLabel_title0">Suntempoj fenestraĵo</string>                  <!-- used as title when adding -->
     <string name="configLabel_title1">Baskulebla fenestraĵo </string>                 <!-- used as title when adding -->
+    <string name="configLabel_title2">Solstice Widget</string>                  <!-- used as title when adding -->  <!-- TODO -->
 
     <!-- Widget Setting: general -->
     <string name="configLabel_general">Agordoj ĝeneralaj</string>                <!-- group title -->
@@ -431,6 +432,7 @@
     <string name="app_name">Suntempoj</string>
     <string name="app_name_widget0">Suntempoj Fenestraĵo</string>
     <string name="app_name_widget1">Suntempoj Fenestraĵo (baskulebla)</string>
+    <string name="app_name_widget2">Suntimes Solstice Widget</string>  <!-- TODO -->
     <string name="app_version"><![CDATA[<b>Versio:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Montras tempojn de sunleviĝoj, sunsubiroj, kaj krepuskoj.</string>
     <string name="app_support_url"><![CDATA[

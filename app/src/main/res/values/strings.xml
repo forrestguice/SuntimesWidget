@@ -131,6 +131,7 @@
     <string name="configAction_reconfigWidget">Reconfigure Widget</string>      <!-- used as title when reconfiguring -->
     <string name="configLabel_title0">Suntimes Widget</string>                  <!-- used as title when adding -->
     <string name="configLabel_title1">Flippable Widget</string>                 <!-- used as title when adding -->
+    <string name="configLabel_title2">Solstice Widget</string>                  <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
     <string name="configLabel_general">General Settings</string>                <!-- group title -->
@@ -517,6 +518,7 @@
     <string name="app_name">Suntimes</string>
     <string name="app_name_widget0">Suntimes Widget</string>
     <string name="app_name_widget1">Suntimes Widget (flippable)</string>
+    <string name="app_name_widget2">Suntimes Solstice Widget</string>
     <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Displays sunrise, sunset, and twilight times.</string>
     <string name="app_support_url"><![CDATA[
@@ -564,6 +566,12 @@
           <b>Civil Twilight:</b> The sun is 6 degrees below the horizon; the brightest stars are visible. There is enough light for most outdoor activities without requiring a light.<br/><br/>
           <b>Nautical Twilight:</b> The sun is 12 degrees below the horizon; object outlines and the horizon are increasingly indistinct. There isn\'t enough light for most outdoor activities without requiring a light.<br/><br/>
           <b>Astronomical Twilight:</b> The sun is 18 degrees below the horizon. Near darkness of night.<br/>
+    ]]></string>
+    <string name="help_general_timeMode2"><![CDATA[
+          <b>Spring Equinox:</b> TODO.<br/><br/>
+          <b>Summer Solstice:</b> TODO.<br/><br/>
+          <b>Fall Equinox:</b> TODO.<br/><br/>
+          <b>Winter Solstice:</b> TODO.<br/>
     ]]></string>
     <string name="help_general_daylength"><![CDATA[
         <b>Length of day:</b> the amount of time between sunrise and sunset.<br/><br/>
