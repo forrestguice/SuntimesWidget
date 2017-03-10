@@ -36,6 +36,7 @@ public class SuntimesTheme
     public static final String THEME_PADDING_BOTTOM = "padding_bottom";
     public static final String THEME_TEXTCOLOR = "textcolor";
     public static final String THEME_TITLECOLOR = "titlecolor";
+    public static final String THEME_TIMECOLOR = "timecolor";
     public static final String THEME_TIMESUFFIXCOLOR = "timesuffixcolor";
     public static final String THEME_SUNRISECOLOR = "sunrisecolor";
     public static final String THEME_SUNSETCOLOR = "sunsetcolor";
@@ -53,6 +54,7 @@ public class SuntimesTheme
     protected int themeTitleColor;
     protected float themeTitleSize;
     protected int themeTextColor;
+    protected int themeTimeColor;
     protected int themeSunriseTextColor;
     protected int themeSunsetTextColor;
     protected int themeTimeSuffixColor;
@@ -75,6 +77,7 @@ public class SuntimesTheme
 
         this.themeTextColor = otherTheme.themeTextColor;
         this.themeTitleColor = otherTheme.themeTitleColor;
+        this.themeTimeColor = otherTheme.themeTimeColor;
         this.themeTimeSuffixColor = otherTheme.themeTimeSuffixColor;
         this.themeSunriseTextColor = otherTheme.themeSunriseTextColor;
         this.themeSunsetTextColor = otherTheme.themeSunsetTextColor;
@@ -89,19 +92,20 @@ public class SuntimesTheme
         this.themeVersion = themes.getInt( theme + THEME_VERSION, defaultTheme.themeVersion );
         this.themeName = themes.getString( theme + THEME_NAME, defaultTheme.themeName );
         this.themeDisplayString = themes.getString( theme + THEME_DISPLAYSTRING, defaultTheme.themeDisplayString );
-        this.themeBackground = themes.getInt( theme + THEME_BACKGROUND, defaultTheme.themeBackground);
+        this.themeBackground = themes.getInt( theme + THEME_BACKGROUND, defaultTheme.themeBackground );
 
-        this.themePadding[0] = themes.getInt( theme + THEME_PADDING_LEFT, defaultTheme.themePadding[0]);
-        this.themePadding[1] = themes.getInt( theme + THEME_PADDING_TOP, defaultTheme.themePadding[1]);
-        this.themePadding[2] = themes.getInt( theme + THEME_PADDING_RIGHT, defaultTheme.themePadding[2]);
-        this.themePadding[3] = themes.getInt( theme + THEME_PADDING_BOTTOM, defaultTheme.themePadding[3]);
+        this.themePadding[0] = themes.getInt( theme + THEME_PADDING_LEFT, defaultTheme.themePadding[0] );
+        this.themePadding[1] = themes.getInt( theme + THEME_PADDING_TOP, defaultTheme.themePadding[1] );
+        this.themePadding[2] = themes.getInt( theme + THEME_PADDING_RIGHT, defaultTheme.themePadding[2] );
+        this.themePadding[3] = themes.getInt( theme + THEME_PADDING_BOTTOM, defaultTheme.themePadding[3] );
 
-        this.themeTextColor = themes.getInt( theme + THEME_TEXTCOLOR, defaultTheme.themeTextColor);
-        this.themeTitleColor = themes.getInt( theme + THEME_TITLECOLOR, defaultTheme.themeTitleColor);
-        this.themeTimeSuffixColor = themes.getInt(theme + THEME_TIMESUFFIXCOLOR, defaultTheme.themeTimeSuffixColor);
-        this.themeSunriseTextColor = themes.getInt(theme + THEME_SUNRISECOLOR, defaultTheme.themeSunriseTextColor);
-        this.themeSunsetTextColor = themes.getInt(theme + THEME_SUNSETCOLOR, defaultTheme.themeSunsetTextColor);
-        this.themeTitleSize = themes.getFloat(theme + THEME_TITLESIZE, defaultTheme.themeTitleSize);
+        this.themeTextColor = themes.getInt( theme + THEME_TEXTCOLOR, defaultTheme.themeTextColor );
+        this.themeTitleColor = themes.getInt( theme + THEME_TITLECOLOR, defaultTheme.themeTitleColor );
+        this.themeTimeColor = themes.getInt( theme + THEME_TIMECOLOR, defaultTheme.themeTimeColor );
+        this.themeTimeSuffixColor = themes.getInt( theme + THEME_TIMESUFFIXCOLOR, defaultTheme.themeTimeSuffixColor );
+        this.themeSunriseTextColor = themes.getInt( theme + THEME_SUNRISECOLOR, defaultTheme.themeSunriseTextColor );
+        this.themeSunsetTextColor = themes.getInt( theme + THEME_SUNSETCOLOR, defaultTheme.themeSunsetTextColor );
+        this.themeTitleSize = themes.getFloat( theme + THEME_TITLESIZE, defaultTheme.themeTitleSize );
 
         return true;
     }
@@ -123,6 +127,7 @@ public class SuntimesTheme
 
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_TEXTCOLOR, this.themeTextColor);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_TITLECOLOR, this.themeTitleColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_TIMECOLOR, this.themeTimeColor);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_TIMESUFFIXCOLOR, this.themeTimeSuffixColor);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_SUNRISECOLOR, this.themeSunriseTextColor);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_SUNSETCOLOR, this.themeSunsetTextColor);
@@ -171,6 +176,11 @@ public class SuntimesTheme
     public int getTextColor()
     {
         return themeTextColor;
+    }
+
+    public int getTimeColor()
+    {
+        return themeTimeColor;
     }
 
     public int getTimeSuffixColor()
