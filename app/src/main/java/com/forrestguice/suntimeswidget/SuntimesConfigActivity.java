@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
@@ -430,6 +431,10 @@ public class SuntimesConfigActivity extends AppCompatActivity
         // widget: allow resize
         //
         checkbox_allowResize = (CheckBox)findViewById(R.id.appwidget_appearance_allowResize);
+        if (checkbox_allowResize != null && Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
+        {
+            disableOptionAllowResize();  // resizable widgets require api16+
+        }
 
         //
         // widget: compare mode
@@ -657,8 +662,13 @@ public class SuntimesConfigActivity extends AppCompatActivity
         spinner_theme.setSelection(themeDescriptor.ordinal(WidgetThemes.values()));
 
         // load: allow resize
-        boolean allowResize = WidgetSettings.loadAllowResizePref(context, appWidgetId);
-        checkbox_allowResize.setChecked(allowResize);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        {
+            boolean allowResize = WidgetSettings.loadAllowResizePref(context, appWidgetId);
+            checkbox_allowResize.setChecked(allowResize);
+        } else {
+            disableOptionAllowResize();
+        }
 
         // load: show title
         boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId);
@@ -851,7 +861,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
     {
         if (checkbox_allowResize != null)
         {
-            checkbox_allowResize.setChecked(false);  // option not currently supported by flippable widget
+            checkbox_allowResize.setChecked(false);
             checkbox_allowResize.setEnabled(false);
         }
     }
@@ -891,5 +901,4 @@ public class SuntimesConfigActivity extends AppCompatActivity
             activityTitle.setText(text);
         }
     }
-
 }

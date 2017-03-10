@@ -26,6 +26,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.location.Location;
@@ -114,6 +116,8 @@ public class SuntimesActivity extends AppCompatActivity
     private SuntimesNotes notes;
     private SuntimesRiseSetDataset dataset;
     private SuntimesEquinoxSolsticeDataset dataset2;
+
+    private int color_textTimeDelta;
 
     // clock views
     private TextView txt_time;
@@ -247,6 +251,7 @@ public class SuntimesActivity extends AppCompatActivity
         WidgetSettings.initDisplayStrings(context);
 
         initAnimations(context);                     // locale specific animations
+        initColors(context);                         // locale specific colors
     }
 
     /**
@@ -344,7 +349,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         super.onRestoreInstanceState(savedInstanceState);
         restoreWarnings(savedInstanceState);
-        userSwappedCard = savedInstanceState.getBoolean(KEY_UI_USERSWAPPEDCARD, false);
+        setUserSwappedCard(savedInstanceState.getBoolean(KEY_UI_USERSWAPPEDCARD, false), "onRestoreInstanceState");
         boolean cardIsTomorrow = savedInstanceState.getBoolean(KEY_UI_CARDISTOMORROW, false);
         card_flipper.setDisplayedChild((cardIsTomorrow ? 1 : 0));
         card_equinoxSolstice.loadState(savedInstanceState);
@@ -439,7 +444,7 @@ public class SuntimesActivity extends AppCompatActivity
         lightmapLayout = findViewById(R.id.info_time_lightmap_layout);
 
         lightmapLayout.setClickable(true);
-        lightmapLayout.setOnClickListener( new View.OnClickListener()
+        lightmapLayout.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
@@ -809,6 +814,20 @@ public class SuntimesActivity extends AppCompatActivity
 
         anim_card_outPrev = AnimationUtils.loadAnimation(this, (isRtl ? R.anim.slide_out_left : R.anim.slide_out_right));
         anim_card_outNext = AnimationUtils.loadAnimation(this, (isRtl ? R.anim.slide_out_right : R.anim.slide_out_left));
+    }
+
+    /**
+     * @param context
+     */
+    private void initColors(Context context)
+    {
+        int[] colorAttrs = { android.R.attr.textColorPrimary };
+        TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+        int def = Color.WHITE;
+
+        color_textTimeDelta = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
+
+        typedArray.recycle();
     }
 
     /**
@@ -1217,19 +1236,27 @@ public class SuntimesActivity extends AppCompatActivity
 
             SuntimesUtils.TimeDisplayText dayLengthDisplay = utils.timeDeltaLongDisplayString(0, dataset.dataActual.dayLengthToday());
             dayLengthDisplay.setSuffix("");
-            txt_daylength.setText(dayLengthDisplay.toString());
-
-            SuntimesUtils.TimeDisplayText lightLengthDisplay = utils.timeDeltaLongDisplayString(0, dataset.dataCivil.dayLengthToday());
-            lightLengthDisplay.setSuffix("");
-            txt_lightlength.setText(lightLengthDisplay.toString());
+            String dayLength = dayLengthDisplay.toString();
+            String dayLength_label = getString(R.string.length_day, dayLength);
+            txt_daylength.setText(SuntimesUtils.createBoldColorSpan(dayLength_label, dayLength, color_textTimeDelta));
 
             SuntimesUtils.TimeDisplayText dayLengthDisplay2 = utils.timeDeltaLongDisplayString(0, dataset.dataActual.dayLengthOther());
             dayLengthDisplay2.setSuffix("");
-            txt_daylength2.setText(dayLengthDisplay2.toString());
+            String dayLength2 = dayLengthDisplay2.toString();
+            String dayLength2_label = getString(R.string.length_day, dayLength2);
+            txt_daylength2.setText(SuntimesUtils.createBoldColorSpan(dayLength2_label, dayLength2, color_textTimeDelta));
+
+            SuntimesUtils.TimeDisplayText lightLengthDisplay = utils.timeDeltaLongDisplayString(0, dataset.dataCivil.dayLengthToday());
+            lightLengthDisplay.setSuffix("");
+            String lightLength = lightLengthDisplay.toString();
+            String lightLength_label = getString(R.string.length_light, lightLength);
+            txt_lightlength.setText(SuntimesUtils.createBoldColorSpan(lightLength_label, lightLength, color_textTimeDelta));
 
             SuntimesUtils.TimeDisplayText lightLengthDisplay2 = utils.timeDeltaLongDisplayString(0, dataset.dataCivil.dayLengthOther());
             lightLengthDisplay2.setSuffix("");
-            txt_lightlength2.setText(lightLengthDisplay2.toString());
+            String lightLength2 = lightLengthDisplay2.toString();
+            String lightLength2_label = getString(R.string.length_light, lightLength2);
+            txt_lightlength2.setText(SuntimesUtils.createBoldColorSpan(lightLength2_label, lightLength2, color_textTimeDelta));
 
         } else {
             String notCalculated = getString(R.string.time_loading);
@@ -1444,13 +1471,13 @@ public class SuntimesActivity extends AppCompatActivity
                     secondTouchX = event.getX();
                     if ((firstTouchX - secondTouchX) >= FLING_SENSITIVITY)
                     {
-                        userSwappedCard = false;
+                        setUserSwappedCard(false, "noteTouchListener (fling next)");
                         if (isRtl)
                             notes.showPrevNote();
                         else notes.showNextNote();    // swipe right: next
 
                     } else if ((secondTouchX - firstTouchX) > FLING_SENSITIVITY) {
-                        userSwappedCard = false;
+                        setUserSwappedCard(false, "noteTouchListener (fling prev)");
                         if (isRtl)
                             notes.showNextNote();
                         else notes.showPrevNote();   // swipe left: prev
@@ -1467,13 +1494,13 @@ public class SuntimesActivity extends AppCompatActivity
                                 break;
 
                             case PREV_NOTE:
-                                userSwappedCard = false;
+                                setUserSwappedCard(false, "noteTouchListener (tap prev)");
                                 notes.showPrevNote();
                                 break;
 
                             case NEXT_NOTE:
                             default:
-                                userSwappedCard = false;
+                                setUserSwappedCard(false, "noteTouchListener (tap next)");
                                 notes.showNextNote();
                                 break;
                         }
@@ -1515,11 +1542,11 @@ public class SuntimesActivity extends AppCompatActivity
                     secondTouchX = event.getX();
                     if ((secondTouchX - firstTouchX) > FLING_SENSITIVITY)
                     {   // swipe right; back to previous view
-                        userSwappedCard = (isRtl ? showNextCard() : showPreviousCard());
+                        setUserSwappedCard( (isRtl ? showNextCard() : showPreviousCard()), "timeCardTouchListener (fling prev)" );
 
                     } else if (firstTouchX - secondTouchX > FLING_SENSITIVITY) {
                         // swipe left; advance to next view
-                        userSwappedCard = (isRtl ? showPreviousCard() : showNextCard());
+                        setUserSwappedCard( (isRtl ? showPreviousCard() : showNextCard()), "timeCardTouchListener (fling next)" );
 
                     } else {
                         // swipe cancel; reset current view
@@ -1617,7 +1644,7 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public void onClick(View view)
         {
-            userSwappedCard = showNextCard();
+            setUserSwappedCard( showNextCard(), "onNextCardClick" );
         }
     };
 
@@ -1626,7 +1653,7 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public void onClick(View view)
         {
-            userSwappedCard = showPreviousCard();
+            setUserSwappedCard( showPreviousCard(), "onPrevCardClick" );
         }
     };
 
@@ -1635,7 +1662,7 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public void onClick(View view)
         {
-            userSwappedCard = false;
+            setUserSwappedCard( false, "onNextNoteClick" );
             notes.showNextNote();
         }
     };
@@ -1645,7 +1672,7 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public void onClick(View view)
         {
-            userSwappedCard = false;
+            setUserSwappedCard( false, "onPrevNoteClick" );
             notes.showPrevNote();
         }
     };
@@ -1669,14 +1696,14 @@ public class SuntimesActivity extends AppCompatActivity
 
             if (action == AppSettings.ClockTapAction.NEXT_NOTE)
             {
-                userSwappedCard = false;
+                setUserSwappedCard( false, "onClockClick (nextNote)" );
                 notes.showNextNote();
                 return;
             }
 
             if (action == AppSettings.ClockTapAction.PREV_NOTE)
             {
-                userSwappedCard = false;
+                setUserSwappedCard( false, "onClockClick (prevNote)" );
                 notes.showPrevNote();
                 return;
             }
@@ -1749,9 +1776,9 @@ public class SuntimesActivity extends AppCompatActivity
                     default:
                         if (tomorrow)
                         {
-                            userSwappedCard = showPreviousCard();
+                            setUserSwappedCard( showPreviousCard(), "onDateTapClick (prevCard)" );
                         } else {
-                            userSwappedCard = showNextCard();
+                            setUserSwappedCard( showNextCard(), "onDateTapClick (nextCard)" );
                         }
                         break;
                 }
@@ -1813,6 +1840,7 @@ public class SuntimesActivity extends AppCompatActivity
 
         if (!userSwappedCard)
         {
+            Log.d("DEBUG", "Swapping card to show highlighted :: userSwappedCard " + userSwappedCard);
             if (nextCardOffset > 0)
             {
                 showNextCard();
@@ -2032,6 +2060,12 @@ public class SuntimesActivity extends AppCompatActivity
         {
             warning.restore(savedState);
         }
+    }
+    
+    private void setUserSwappedCard( boolean value, String tag )
+    {
+        userSwappedCard = value;
+        Log.d("DEBUG", "userSwappedCard set " + value + " (" + tag + " )");
     }
 
 }

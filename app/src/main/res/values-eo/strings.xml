@@ -62,8 +62,8 @@
          The hours in the day field(s) that appears below the table (main activity); can be either
          a prefix or suffix depending on layout (layout/info_time_daylength.xml).
     -->
-    <string name="length_day">da tago</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
-    <string name="length_light">da uzebla lumo</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
+    <string name="length_day"><xliff:g id="timeSpan" example="12h">%1$s</xliff:g> da tago</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
+    <string name="length_light"><xliff:g id="timeSpan" example="12h 50m">%1$s</xliff:g> da uzebla lumo</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
          e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
@@ -257,6 +257,10 @@
     <!-- App Setting: UI Warnings -->
     <string name="configLabel_ui_showWarnings">Aktivigi avertojn</string>
     <string name="configLabel_ui_showWarnings_summary">Montras agordojn de avertaj mesaĝoj</string>
+    
+    <!-- App Setting: Show Lightmap -->
+    <string name="configLabel_ui_showLightmap">Montri lum-mapon</string>
+    <string name="configLabel_ui_showLightmap_summary">Montras bastonan diagramon de periodoj de tago, nokto kaj krepusko.</string>    
 
     <!-- App Setting: UI Theme -->
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
@@ -434,7 +438,7 @@
     <string name="app_name_widget1">Suntempoj Fenestraĵo (baskulebla)</string>
     <string name="app_name_widget2">Suntimes Solstice Widget</string>  <!-- TODO -->
     <string name="app_version"><![CDATA[<b>Versio:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
-    <string name="app_shortdesc">Montras tempojn de sunleviĝoj, sunsubiroj, kaj krepuskoj.</string>
+    <string name="app_shortdesc">Montras tempojn de sunleviĝoj, sunsubiroj kaj krepuskoj.</string>
     <string name="app_support_url"><![CDATA[
         <b>Subteno:</b> vizitu la
         <a href="https://github.com/forrestguice/SuntimesWidget/issues">erar-spurilon</a> por raporti problemon.
@@ -450,8 +454,9 @@
         Germana traduko de Henrik "HerHde" Hüttemann. </br>
         Pola kaj Esperanta tradukoj de Verdulo.
     ]]></string>
-
-    <!-- Dialog: Help -->
+    <string name="app_legal3"><![CDATA[ <b>Bibliotekoj:</b><br/> ]]><![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]><![CDATA[ github.com/caarmen/SunriseSunset ]]></string>
+    
+    <!-- Dialog: Help -->  
     <string name="help_dialog_title">Helpo</string>
     <string name="help_appearance_title"><![CDATA[
         La jenaj mallongigoj estas disponeblaj: <br />
