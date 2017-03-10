@@ -173,7 +173,7 @@ public class SuntimesTheme
         return themeTextColor;
     }
 
-    public int getThemeTimeSuffixColor()
+    public int getTimeSuffixColor()
     {
         return themeTimeSuffixColor;
     }

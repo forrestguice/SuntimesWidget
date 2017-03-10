@@ -79,7 +79,7 @@ public class SuntimesLayout_1x3_0 extends SuntimesLayout
 
         int sunriseColor = theme.getSunriseTextColor();
         int sunsetColor = theme.getSunsetTextColor();
-        int suffixColor = theme.getThemeTimeSuffixColor();
+        int suffixColor = theme.getTimeSuffixColor();
         //int titleColor = theme.getTitleColor();
         //int textColor = theme.getTextColor();
 
