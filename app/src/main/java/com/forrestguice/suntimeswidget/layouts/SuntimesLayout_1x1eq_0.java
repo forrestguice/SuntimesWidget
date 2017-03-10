@@ -78,7 +78,7 @@ public class SuntimesLayout_1x1eq_0 extends SuntimesLayoutEq
 
             String noteTime = utils.timeDeltaDisplayString(now.getTime(), event.getTime()).toString();
             String noteString = context.getString(noteStringId, noteTime);
-            SpannableString noteSpan = SuntimesUtils.createBoldColorSpan(noteString, noteTime, noteColor);
+            SpannableString noteSpan = SuntimesUtils.createBoldColorSpan(noteString, noteTime, timeColor);
             views.setTextViewText(R.id.text_time_event_note, noteSpan);
 
         } else {
@@ -87,16 +87,18 @@ public class SuntimesLayout_1x1eq_0 extends SuntimesLayoutEq
         }
     }
 
-    private int noteColor = Color.WHITE;
-    private int eventColor = Color.GREEN;
+    private int timeColor = Color.WHITE;
 
     @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         super.themeViews(context, views, theme);
 
-        noteColor = Color.RED;  // TODO: from theme
-        eventColor = Color.GREEN;  // TODO: from theme
+        timeColor = theme.getTimeColor();
+        int textColor = theme.getTextColor();
+        int eventColor = Color.GREEN;  // TODO: from theme
+
+        views.setTextColor(R.id.text_time_event_note, textColor);
         views.setTextColor(R.id.text_time_event, eventColor);
     }
 }
