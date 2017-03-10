@@ -49,14 +49,6 @@ public class SuntimesLayout_1x3_0 extends SuntimesLayout
         views.setTextViewText(R.id.text_time_sunset, sunsetString.getValue());
         views.setTextViewText(R.id.text_time_sunset_suffix, sunsetString.getSuffix());
 
-        // update sunrise delta
-        //String sunriseDeltaString = calendarDeltaShortDisplayString(sunriseCalendarToday, sunriseCalendarTomorrow);
-        //views.setTextViewText(R.id.text_delta_sunrise, sunriseDeltaString);
-
-        // update sunset delta
-        //String sunsetDeltaString = calendarDeltaShortDisplayString(sunsetCalendarToday, sunsetCalendarTomorrow);
-        //views.setTextViewText(R.id.text_delta_sunset, sunsetDeltaString);
-
         // update day delta
         TimeDisplayText dayDeltaDisplay = utils.timeDeltaLongDisplayString(data.dayLengthToday(), data.dayLengthOther());
         String dayDeltaValue = dayDeltaDisplay.getValue();
@@ -67,9 +59,6 @@ public class SuntimesLayout_1x3_0 extends SuntimesLayout
         views.setTextViewText(R.id.text_delta_day_value, dayDeltaValue);
         views.setTextViewText(R.id.text_delta_day_units, dayDeltaUnits);
         views.setTextViewText(R.id.text_delta_day_suffix, dayDeltaSuffix);
-
-        //views.setViewVisibility(R.id.text_delta_day_units, (dayDeltaUnits.trim().equals("") ? View.GONE : View.VISIBLE));
-        //views.setViewVisibility(R.id.text_delta_day_suffix, (dayDeltaSuffix.trim().equals("") ? View.GONE : View.VISIBLE));
     }
 
     @Override
@@ -80,8 +69,8 @@ public class SuntimesLayout_1x3_0 extends SuntimesLayout
         int sunriseColor = theme.getSunriseTextColor();
         int sunsetColor = theme.getSunsetTextColor();
         int suffixColor = theme.getTimeSuffixColor();
-        //int titleColor = theme.getTitleColor();
-        //int textColor = theme.getTextColor();
+        int timeColor = theme.getTimeColor();
+        int textColor = theme.getTextColor();
 
         // theme sunrise text
         views.setTextColor(R.id.text_time_sunrise_suffix, suffixColor);
@@ -91,12 +80,10 @@ public class SuntimesLayout_1x3_0 extends SuntimesLayout
         views.setTextColor(R.id.text_time_sunset_suffix, suffixColor);
         views.setTextColor(R.id.text_time_sunset, sunsetColor);
 
-        //views.setTextColor(R.id.text_delta_sunrise, sunriseColor);
-        //views.setTextColor(R.id.text_delta_sunset, sunsetColor);
-
-        //views.setTextColor(R.id.text_delta_day_prefix, textColor);
-        //views.setTextColor(R.id.text_delta_day_value, sunsetColor);
-        //views.setTextColor(R.id.text_delta_day_units, textColor);
-        //views.setTextColor(R.id.text_delta_day_suffix, suffixColor);
+        // theme note
+        views.setTextColor(R.id.text_delta_day_prefix, textColor);
+        views.setTextColor(R.id.text_delta_day_value, timeColor);
+        views.setTextColor(R.id.text_delta_day_units, textColor);
+        views.setTextColor(R.id.text_delta_day_suffix, textColor);
     }
 }

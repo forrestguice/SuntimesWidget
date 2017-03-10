@@ -36,11 +36,11 @@ public class LightTheme extends SuntimesTheme
     public static final float THEMEDEF_TITLESIZE = 10;
     public static final int THEMEDEF_TITLECOLOR_ID = android.R.color.secondary_text_light;
 
-    public static final int THEMEDEF_TIMECOLOR_ID = android.R.color.primary_text_light;
     public static final int THEMEDEF_TEXTCOLOR_ID = android.R.color.tertiary_text_light;
+    public static final int THEMEDEF_SUNRISECOLOR_ID = R.color.sunIcon_color_rising_light;
+    public static final int THEMEDEF_TIMECOLOR_ID = android.R.color.primary_text_light;
+    public static final int THEMEDEF_SUNSETCOLOR_ID = R.color.sunIcon_color_setting_light;
     public static final int THEMEDEF_TIMESUFFIXCOLOR_ID = android.R.color.tertiary_text_light;
-    public static final int THEMEDEF_SUNRISECOLOR_ID = R.color.sunIcon_color_rising;
-    public static final int THEMEDEF_SUNSETCOLOR_ID = R.color.sunIcon_color_setting;
 
     public LightTheme(Context context)
     {

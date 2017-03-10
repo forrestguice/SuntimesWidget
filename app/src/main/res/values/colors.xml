@@ -9,11 +9,20 @@
     <color name="warning">#ff9900</color>
     <color name="error">#FF5252</color>
 
-    <color name="widget_title">#000000</color>
-    <color name="sunIcon_color_rising">#ffcc00</color>
-    <color name="sunIcon_color_setting">#ff9900</color>
-    <color name="sunIcon_color_risingBorder">#ff9900</color>
-    <color name="sunIcon_color_settingBorder">#ffcc00</color>
+    <color name="sunIcon_color_rising">@color/sunIcon_color_rising_dark</color>
+    <color name="sunIcon_color_setting">@color/sunIcon_color_setting_dark</color>
+    <color name="sunIcon_color_risingBorder">@color/sunIcon_color_risingBorder_dark</color>
+    <color name="sunIcon_color_settingBorder">@color/sunIcon_color_settingBorder_dark</color>
+
+    <color name="sunIcon_color_rising_dark">#ffcc00</color>
+    <color name="sunIcon_color_risingBorder_dark">#ff9900</color>
+    <color name="sunIcon_color_setting_dark">#ff9900</color>
+    <color name="sunIcon_color_settingBorder_dark">#ffcc00</color>
+
+    <color name="sunIcon_color_rising_light">#ffcc00</color>
+    <color name="sunIcon_color_risingBorder_light">#ff9900</color>
+    <color name="sunIcon_color_setting_light">#ff9900</color>
+    <color name="sunIcon_color_settingBorder_light">#ffcc00</color>
 
     <color name="btn_tint_pressed">#ff9900</color>
 
