@@ -34,6 +34,7 @@ import android.text.style.ImageSpan;
 
 import java.text.DateFormat;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -416,6 +417,41 @@ public class SuntimesUtils
         String percentPattern = "%%";
 
         WidgetSettings.TimeMode timeMode = data.timeMode();
+        WidgetSettings.Location location = data.location();
+        String timezoneID = data.timezone().getID();
+        String datasource = data.calculatorMode().getDisplayString();
+
+        String displayString = titlePattern;
+        displayString = displayString.replaceAll(modePatternShort, timeMode.getShortDisplayString());
+        displayString = displayString.replaceAll(modePattern, timeMode.getLongDisplayString());
+        displayString = displayString.replaceAll(locPattern, location.getLabel());
+        displayString = displayString.replaceAll(latPattern, location.getLatitude());
+        displayString = displayString.replaceAll(lonPattern, location.getLongitude());
+        displayString = displayString.replaceAll(timezoneIDPattern, timezoneID);
+        displayString = displayString.replaceAll(datasourcePattern, datasource);
+        displayString = displayString.replaceAll(percentPattern, "%");
+
+        return displayString;
+    }
+
+    /**
+     *
+     * @param titlePattern
+     * @param data
+     * @return
+     */
+    public String displayStringForTitlePattern(String titlePattern, SuntimesEquinoxSolsticeData data)
+    {
+        String modePattern = "%M";
+        String modePatternShort = "%m";
+        String locPattern = "%loc";
+        String latPattern = "%lat";
+        String lonPattern = "%lon";
+        String timezoneIDPattern = "%t";
+        String datasourcePattern = "%s";
+        String percentPattern = "%%";
+
+        WidgetSettings.SolsticeEquinoxMode timeMode = data.timeMode();
         WidgetSettings.Location location = data.location();
         String timezoneID = data.timezone().getID();
         String datasource = data.calculatorMode().getDisplayString();
