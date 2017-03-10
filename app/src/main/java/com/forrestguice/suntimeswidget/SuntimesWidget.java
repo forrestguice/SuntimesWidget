@@ -267,7 +267,7 @@ public class SuntimesWidget extends AppWidgetProvider
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
         SuntimesLayout layout = getWidgetLayout(context, appWidgetManager, appWidgetId);
-        updateAppWidget(context, appWidgetManager, appWidgetId, layout);
+        SuntimesWidget.updateAppWidget(context, appWidgetManager, appWidgetId, layout);
     }
 
     /**
