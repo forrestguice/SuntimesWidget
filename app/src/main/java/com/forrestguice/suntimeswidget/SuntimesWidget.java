@@ -174,7 +174,7 @@ public class SuntimesWidget extends AppWidgetProvider
         SuntimesWidget.updateAppWidget(context, appWidgetManager, appWidgetId);
     }
 
-    public static void initLocale(Context context)
+    public void initLocale(Context context)
     {
         AppSettings.initLocale(context);
         SuntimesUtils.initDisplayStrings(context);
