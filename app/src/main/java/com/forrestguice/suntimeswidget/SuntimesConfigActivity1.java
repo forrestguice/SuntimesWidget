@@ -40,26 +40,8 @@ public class SuntimesConfigActivity1 extends SuntimesConfigActivity
     protected void initViews( Context context )
     {
         super.initViews(context);
-
-        // title text
-        TextView activityTitle = (TextView)findViewById(R.id.activity_title);
-        if (activityTitle != null)
-        {
-            activityTitle.setText(getString(R.string.configLabel_title1));
-        }
-
-        // hide/disable mode selector
-        TextView label_1x1mode = (TextView)findViewById(R.id.appwidget_appearance_1x1mode_label);
-        if (label_1x1mode != null)
-        {
-            label_1x1mode.setVisibility(View.GONE);
-        }
-
-        if (spinner_1x1mode != null)
-        {
-            spinner_1x1mode.setVisibility(View.GONE);
-        }
-
+        setConfigActivityTitle(getString(R.string.configLabel_title1));
+        hideOptionLayoutMode();
         disableOptionAllowResize();
     }
 
