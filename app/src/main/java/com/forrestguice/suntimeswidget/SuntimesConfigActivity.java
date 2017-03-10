@@ -58,44 +58,45 @@ import java.util.TimeZone;
  */
 public class SuntimesConfigActivity extends AppCompatActivity
 {
-    private static final String DIALOGTAG_ABOUT = "about";
-    private static final String DIALOGTAG_HELP = "help";
+    protected static final String DIALOGTAG_ABOUT = "about";
+    protected static final String DIALOGTAG_HELP = "help";
 
     protected int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
-    private boolean reconfigure = false;
+    protected boolean reconfigure = false;
 
-    private Spinner spinner_calculatorMode;
-    private Spinner spinner_timeMode;
-    private Spinner spinner_compareMode;
+    protected Spinner spinner_calculatorMode;
+    protected Spinner spinner_timeMode;
+    protected ImageButton button_timeModeHelp;
+    protected Spinner spinner_compareMode;
 
     protected Spinner spinner_onTap;
     protected EditText text_launchActivity;
 
     protected Spinner spinner_1x1mode;
-    private Spinner spinner_theme;
+    protected Spinner spinner_theme;
     protected CheckBox checkbox_allowResize;
-    private CheckBox checkbox_showTitle;
+    protected CheckBox checkbox_showTitle;
 
-    private TextView label_titleText;
-    private EditText text_titleText;
+    protected TextView label_titleText;
+    protected EditText text_titleText;
 
-    private LocationConfigView locationConfig;
+    protected LocationConfigView locationConfig;
 
-    private Spinner spinner_timezoneMode;
+    protected Spinner spinner_timezoneMode;
 
-    private LinearLayout layout_timezone;
-    private TextView label_timezone;
-    private Spinner spinner_timezone;
+    protected LinearLayout layout_timezone;
+    protected TextView label_timezone;
+    protected Spinner spinner_timezone;
 
-    private LinearLayout layout_solartime;
-    private TextView label_solartime;
-    private Spinner spinner_solartime;
+    protected LinearLayout layout_solartime;
+    protected TextView label_solartime;
+    protected Spinner spinner_solartime;
 
-    private String customTimezoneID;
-    private ActionMode.Callback spinner_timezone_actionMode;
-    private WidgetTimezones.TimeZoneItemAdapter spinner_timezone_adapter;
+    protected String customTimezoneID;
+    protected ActionMode.Callback spinner_timezone_actionMode;
+    protected WidgetTimezones.TimeZoneItemAdapter spinner_timezone_adapter;
 
-    private ActionMode actionMode = null;
+    protected ActionMode actionMode = null;
 
     public SuntimesConfigActivity()
     {
