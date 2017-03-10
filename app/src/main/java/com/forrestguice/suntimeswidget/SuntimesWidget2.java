@@ -31,6 +31,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayoutEq;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1eq_0;
 
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 /**
@@ -142,6 +143,14 @@ public class SuntimesWidget2 extends SuntimesWidget
 
         Log.d("getWidgetLayout2", "layout is: " + layout);
         return layout;
+    }
+
+    @Override
+    public void initLocale(Context context)
+    {
+        AppSettings.initLocale(context);
+        SuntimesUtils.initDisplayStrings(context);
+        WidgetSettings.SolsticeEquinoxMode.initDisplayStrings(context);
     }
 
 }

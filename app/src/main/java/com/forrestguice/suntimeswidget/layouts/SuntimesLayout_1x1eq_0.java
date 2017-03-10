@@ -19,16 +19,21 @@
 package com.forrestguice.suntimeswidget.layouts;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.text.SpannableString;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.SuntimesUtils.TimeDisplayText;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
+import java.util.Calendar;
+
 /**
- * A 1x1 layout that displays a solstice or equinox datetime.
+ * A 1x1 layout that displays either a solstice or equinox datetime.
  */
 public class SuntimesLayout_1x1eq_0 extends SuntimesLayoutEq
 {
@@ -49,41 +54,49 @@ public class SuntimesLayout_1x1eq_0 extends SuntimesLayoutEq
     }
 
     @Override
-    public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesRiseSetData data)
-    {
-        super.updateViews(context, appWidgetId, views, data);
-
-        // update sunrise time
-        //TimeDisplayText sunriseString = utils.calendarTimeShortDisplayString(context, data.sunriseCalendarToday());
-        //views.setTextViewText(R.id.text_time_sunrise, sunriseString.getValue());
-        //views.setTextViewText(R.id.text_time_sunrise_suffix, sunriseString.getSuffix());
-
-        // update sunset time
-        //TimeDisplayText sunsetString = utils.calendarTimeShortDisplayString(context, data.sunsetCalendarToday());
-        //views.setTextViewText(R.id.text_time_sunset, sunsetString.getValue());
-        //views.setTextViewText(R.id.text_time_sunset_suffix, sunsetString.getSuffix());
-    }
-
-    @Override
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesEquinoxSolsticeData data)
     {
         super.updateViews(context, appWidgetId, views, data);
+
+        if (data != null && data.isCalculated())
+        {
+            Calendar now = data.calendar();
+            Calendar event = data.eventCalendarThisYear();
+            if (now.after(event))
+            {
+                event = data.eventCalendarOtherYear();
+            }
+
+            TimeDisplayText eventString = utils.calendarDateTimeDisplayString(context, event);
+            views.setTextViewText(R.id.text_time_event, eventString.getValue());
+
+            int noteStringId = R.string.hence;
+            if (event.before(now))
+            {
+                noteStringId = R.string.ago;
+            }
+
+            String noteTime = utils.timeDeltaDisplayString(now.getTime(), event.getTime()).toString();
+            String noteString = context.getString(noteStringId, noteTime);
+            SpannableString noteSpan = SuntimesUtils.createBoldColorSpan(noteString, noteTime, noteColor);
+            views.setTextViewText(R.id.text_time_event_note, noteSpan);
+
+        } else {
+            views.setTextViewText(R.id.text_time_event, "");
+            views.setTextViewText(R.id.text_time_event_note, "");
+        }
     }
+
+    private int noteColor = Color.WHITE;
+    private int eventColor = Color.GREEN;
 
     @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         super.themeViews(context, views, theme);
 
-        // theme sunrise text
-        //int sunriseColor = theme.getSunriseTextColor();
-        //int suffixColor = theme.getThemeTimeSuffixColor();
-        //views.setTextColor(R.id.text_time_sunrise_suffix, suffixColor);
-        //views.setTextColor(R.id.text_time_sunrise, sunriseColor);
-
-        // theme sunset text
-        //int sunsetColor = theme.getSunsetTextColor();
-        //views.setTextColor(R.id.text_time_sunset_suffix, suffixColor);
-        //views.setTextColor(R.id.text_time_sunset, sunsetColor);
+        noteColor = Color.RED;  // TODO: from theme
+        eventColor = Color.GREEN;  // TODO: from theme
+        views.setTextColor(R.id.text_time_event, eventColor);
     }
 }

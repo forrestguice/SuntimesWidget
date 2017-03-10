@@ -72,8 +72,7 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
     public void initFromSettings(Context context, int appWidgetId)
     {
         super.initFromSettings(context, appWidgetId);
-        timeMode = WidgetSettings.SolsticeEquinoxMode.EQUINOX_VERNAL;  // TODO
-        //timeMode = WidgetSettings.loadTimeModePref(context, appWidgetId);
+        timeMode = WidgetSettings.loadTimeMode2Pref(context, appWidgetId);
     }
 
     /**
