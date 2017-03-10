@@ -39,6 +39,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -326,6 +327,24 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                 String widgetTitle = utils.displayStringForTitlePattern(titlePattern, data);
                 String title = context.getString(R.string.configLabel_widgetList_itemTitle, widgetTitle);
                 String type = context.getString(R.string.app_name_widget1);
+                String source = data.calculatorMode().getDisplayString();
+                String summary = context.getString(R.string.configLabel_widgetList_itemSummaryPattern, type, source);
+
+                try {
+                    items.add(new WidgetListItem(id, info.icon, title, summary, Class.forName(info.configure.getClassName()) ));
+                } catch (ClassNotFoundException e) {
+                    Log.e("WidgetListActivity", "configuration class for widget " + id + " missing.");
+                }
+            }
+
+            int[] ids2 = widgetManager.getAppWidgetIds(new ComponentName(context, SuntimesWidget2.class));
+            for (int id : ids2)
+            {
+                AppWidgetProviderInfo info = widgetManager.getAppWidgetInfo(id);
+                SuntimesEquinoxSolsticeData data = new SuntimesEquinoxSolsticeData(context, id);
+                String widgetTitle = utils.displayStringForTitlePattern(titlePattern, data);
+                String title = context.getString(R.string.configLabel_widgetList_itemTitle, widgetTitle);
+                String type = context.getString(R.string.app_name_widget2);
                 String source = data.calculatorMode().getDisplayString();
                 String summary = context.getString(R.string.configLabel_widgetList_itemSummaryPattern, type, source);
 
