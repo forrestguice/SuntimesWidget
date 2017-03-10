@@ -634,17 +634,17 @@ public class WidgetSettings
 
         public static void initDisplayStrings( Context context )
         {
-            EQUINOX_VERNAL.setDisplayStrings(context.getString(R.string.timeMode_official_short),
-                    context.getString(R.string.timeMode_official));
+            EQUINOX_VERNAL.setDisplayStrings(context.getString(R.string.timeMode_equinox_vernal_short),
+                    context.getString(R.string.timeMode_equinox_vernal));
 
-            SOLSTICE_SUMMER.setDisplayStrings( context.getString(R.string.timeMode_nautical_short),
-                    context.getString(R.string.timeMode_nautical));
+            SOLSTICE_SUMMER.setDisplayStrings( context.getString(R.string.timeMode_solstice_summer_short),
+                    context.getString(R.string.timeMode_solstice_summer));
 
-            EQUINOX_AUTUMNAL.setDisplayStrings( context.getString(R.string.timeMode_civil_short),
-                    context.getString(R.string.timeMode_civil) );
+            EQUINOX_AUTUMNAL.setDisplayStrings( context.getString(R.string.timeMode_equinox_autumnal_short),
+                    context.getString(R.string.timeMode_equinox_autumnal) );
 
-            SOLSTICE_WINTER.setDisplayStrings(context.getString(R.string.timeMode_astronomical_short),
-                    context.getString(R.string.timeMode_astronomical));
+            SOLSTICE_WINTER.setDisplayStrings(context.getString(R.string.timeMode_solstice_winter_short),
+                    context.getString(R.string.timeMode_solstice_winter));
         }
     }
 
