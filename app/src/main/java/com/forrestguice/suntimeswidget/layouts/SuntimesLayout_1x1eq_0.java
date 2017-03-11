@@ -60,12 +60,8 @@ public class SuntimesLayout_1x1eq_0 extends SuntimesLayoutEq
 
         if (data != null && data.isCalculated())
         {
-            Calendar now = data.calendar();
-            Calendar event = data.eventCalendarThisYear();
-            if (now.after(event))
-            {
-                event = data.eventCalendarOtherYear();
-            }
+            Calendar now = Calendar.getInstance();
+            Calendar event = data.eventCalendarUpcoming();
 
             TimeDisplayText eventString = utils.calendarDateTimeDisplayString(context, event);
             views.setTextViewText(R.id.text_time_event, eventString.getValue());

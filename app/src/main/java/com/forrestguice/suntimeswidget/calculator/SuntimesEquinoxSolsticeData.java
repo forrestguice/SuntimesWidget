@@ -76,6 +76,30 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
     }
 
     /**
+     * result: eventCalendarUpcoming
+     */
+    public Calendar eventCalendarUpcoming()
+    {
+        Calendar now = Calendar.getInstance();
+        Calendar event = eventCalendarThisYear();
+        if (now.after(event))
+        {
+            event = eventCalendarOtherYear();
+        }
+        return event;
+    }
+
+    /**
+     * @return true data is stale (upcoming event is in the past)
+     */
+    public boolean isStale()
+    {
+        Calendar now = Calendar.getInstance();
+        Calendar event = eventCalendarUpcoming();
+        return now.after(event);
+    }
+
+    /**
      * result: eventCalendarThisYear
      */
     private Calendar eventCalendarThisYear;
