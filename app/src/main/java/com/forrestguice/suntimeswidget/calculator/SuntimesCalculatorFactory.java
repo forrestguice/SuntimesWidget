@@ -45,6 +45,9 @@ import java.util.TimeZone;
  *   * sunrisesunsetlib
  *     :: com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.class
  *
+ *   * ca.rmen.sunrisesunset
+ *     :: com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator.class
+ *
  */
 public class SuntimesCalculatorFactory
 {
@@ -85,6 +88,8 @@ public class SuntimesCalculatorFactory
      */
     public SuntimesCalculator createCalculator(WidgetSettings.Location location, TimeZone timezone)
     {
+        long bench_start = System.nanoTime();
+
         SuntimesCalculator calculator;
         try {
             Log.d("createCalculator", "trying .oO( " + current.getReference() + " )");
@@ -97,8 +102,10 @@ public class SuntimesCalculatorFactory
             calculator = new com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator();
             Log.e("createCalculator", "fail! .oO( " + current.getReference() + "), so instantiating default: " + calculator.getClass().getName() + " :: " + timezone);
         }
-
         calculator.init(location, timezone);
+
+        long bench_end = System.nanoTime();
+        Log.d("DEBUG", "created " + calculator.name() + " :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
         return calculator;
     }
 }
