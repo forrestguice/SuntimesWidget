@@ -317,11 +317,12 @@ public class SuntimesWidget extends AppWidgetProvider
      */
     protected void setUpdateAlarm( Context context )
     {
+        long updateInterval = getUpdateInterval();
         long updateTime = getUpdateTimeMillis();
         PendingIntent alarmIntent = getUpdateIntent(context);
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setInexactRepeating(AlarmManager.RTC, updateTime, AlarmManager.INTERVAL_DAY, alarmIntent);
-        Log.d("DEBUG", "set update alarm: " + updateTime + " --> " + alarmIntent);
+        alarmManager.setInexactRepeating(AlarmManager.RTC, updateTime, updateInterval, alarmIntent);
+        Log.d("DEBUG", "set update alarm: " + updateTime + "(" + updateInterval + ") --> " + alarmIntent);
     }
 
     /**
@@ -336,6 +337,12 @@ public class SuntimesWidget extends AppWidgetProvider
         Log.d("DEBUG", "unset update alarm --> " + alarmIntent);
     }
 
+    protected void resetUpdateAlarm( Context context )
+    {
+        unsetUpdateAlarm(context);
+        setUpdateAlarm(context);
+    }
+
     /**
      * @return time of update event (in millis); next midnight
      */
@@ -348,6 +355,14 @@ public class SuntimesWidget extends AppWidgetProvider
         updateTime.set(Calendar.HOUR_OF_DAY, 0);
         updateTime.add(Calendar.DAY_OF_MONTH, 1);
         return updateTime.getTimeInMillis();
+    }
+
+    /**
+     * @return an AlarmManager interval; e.g. AlarmManager.INTERVAL_DAY
+     */
+    protected long getUpdateInterval()
+    {
+        return AlarmManager.INTERVAL_DAY;
     }
 
     /**
