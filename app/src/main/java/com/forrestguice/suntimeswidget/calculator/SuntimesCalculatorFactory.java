@@ -23,6 +23,7 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import java.util.HashMap;
 import java.util.TimeZone;
 
 /**
@@ -88,15 +89,14 @@ public class SuntimesCalculatorFactory
      */
     public SuntimesCalculator createCalculator(WidgetSettings.Location location, TimeZone timezone)
     {
-        long bench_start = System.nanoTime();
-
+        //long bench_start = System.nanoTime();
         SuntimesCalculator calculator;
         try {
-            Log.d("createCalculator", "trying .oO( " + current.getReference() + " )");
+            //Log.d("createCalculator", "trying .oO( " + current.getReference() + " )");
             Class calculatorClass = Class.forName(current.getReference());  // may fail if using proguard without exempting key classes
-            Log.d("createCalculator", "found class " + calculatorClass.getName());
+            //Log.d("createCalculator", "found class " + calculatorClass.getName());
             calculator = (SuntimesCalculator)calculatorClass.newInstance();
-            Log.d("createCalculator", "using .oO( " + calculator.name() + " ): " + timezone);
+            //Log.d("createCalculator", "using .oO( " + calculator.name() + " ): " + timezone);
 
         } catch (Exception e1) {
             calculator = new com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator();
@@ -104,8 +104,8 @@ public class SuntimesCalculatorFactory
         }
         calculator.init(location, timezone);
 
-        long bench_end = System.nanoTime();
-        Log.d("DEBUG", "created " + calculator.name() + " :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
+        //long bench_end = System.nanoTime();
+        //Log.d("DEBUG", "created " + calculator.name() + " :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
         return calculator;
     }
 }
