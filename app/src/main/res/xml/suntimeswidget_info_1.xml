@@ -4,7 +4,7 @@
                     tools:ignore="UnusedAttribute"
 
     android:widgetCategory="home_screen|keyguard"
-    android:previewImage="@drawable/ic_suntimes"
+    android:previewImage="@drawable/widget1_preview"
     android:resizeMode="horizontal"
     android:initialKeyguardLayout="@layout/layout_widget_1x1_2"
 

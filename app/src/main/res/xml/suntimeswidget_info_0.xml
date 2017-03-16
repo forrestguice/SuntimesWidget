@@ -9,7 +9,7 @@
     android:configure="com.forrestguice.suntimeswidget.SuntimesConfigActivity"
 
     android:widgetCategory="home_screen|keyguard"
-    android:previewImage="@drawable/ic_suntimes"
+    android:previewImage="@drawable/widget0_preview"
     android:resizeMode="horizontal"
     android:initialKeyguardLayout="@layout/layout_widget_1x1_0">
 
