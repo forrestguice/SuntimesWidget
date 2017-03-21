@@ -18,6 +18,8 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.content.pm.ActivityInfo;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.IdlingPolicies;
 import android.support.test.espresso.IdlingResource;
 import android.support.test.espresso.ViewAssertion;
@@ -34,6 +36,7 @@ import org.junit.runner.RunWith;
 import java.util.concurrent.TimeUnit;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static android.support.test.espresso.Espresso.registerIdlingResources;
 import static android.support.test.espresso.Espresso.unregisterIdlingResources;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -42,6 +45,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.allOf;
 
 @LargeTest
@@ -51,12 +55,44 @@ public class SuntimesActivityTest
     @Rule
     public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
 
+    /**
+     * userRotatedDevice_fromHelpDialog
+     *
+     * Test dialog state after rotating the device; dialogs should not be dismissed after rotation.
+     * Reproduces the bug from issue #63.
+     */
     @Test
-    public void userSwappedCard_withNextButton()
+    public void userRotatedDevice_fromHelpDialog()
+    {
+        String actionHelpText = activityRule.getActivity().getString(R.string.configAction_help);
+        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
+        onView(withText(actionHelpText)).perform(click());     // open the help dialog
+
+        Matcher<View> helpContent = withId(R.id.txt_help_content);  // should now be displayed
+        onView(helpContent).check(matches(isDisplayed()));
+
+        rotateDevice();   // should still be displayed after rotation
+        onView(helpContent).check(matches(isDisplayed()));
+    }
+
+    private void rotateDevice()
+    {
+        activityRule.getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        activityRule.getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
+
+    /***
+     * userSwappedCard_withNextButton, userSwappedCard_withSwipe
+     *
+     * Test the userSwappedCard flag; when the user swaps the time card (today/tomorrow) that
+     * selection should not be reverted by later ui updates. Reproduces the bug from issue #20.
+     */
+
+    @Test
+    public void userSwappedCard_withButton()
     {
         userSwappedCard(false);
     }
-
     @Test
     public void userSwappedCard_withSwipe()
     {
@@ -76,7 +112,7 @@ public class SuntimesActivityTest
         // pre-click checks
         onView(cardFlipper).check(assertIsDisplayed);   // flipper should be visible
         onView(todayCard).check(assertIsDisplayed);     // and should display today
-        onView(nextButton).check(assertIsDisplayed);    // "next" should be visible
+        onView(nextButton).check(assertIsDisplayed);    // and "next" should be visible
 
         // click the next button
         if (useSwipe)
@@ -92,15 +128,16 @@ public class SuntimesActivityTest
 
         // wait a minute (and check again)
         long waitTime = 60 * 1000;
+        IdlingResource waitForResource = new ElapsedTimeIdlingResource(waitTime);
         IdlingPolicies.setMasterPolicyTimeout(waitTime * 2, TimeUnit.MILLISECONDS);
         IdlingPolicies.setIdlingResourceTimeout(waitTime * 2, TimeUnit.MILLISECONDS);
 
-        IdlingResource waitForResource = new ElapsedTimeIdlingResource(waitTime);
-        registerIdlingResources(waitForResource);
+        // during that minute
+        // the app will update the clock and note area at least once
 
+        registerIdlingResources(waitForResource);       // afterward...
         onView(tomorrowCard).check(assertIsDisplayed);  // should still display tomorrow
         onView(prevButton).check(assertIsDisplayed);    // and "prev" should still be visible
-
         unregisterIdlingResources(waitForResource);
     }
 
