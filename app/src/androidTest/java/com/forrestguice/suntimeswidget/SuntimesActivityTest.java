@@ -18,13 +18,9 @@
 
 package com.forrestguice.suntimeswidget;
 
-import android.support.annotation.Nullable;
 import android.support.test.espresso.IdlingPolicies;
 import android.support.test.espresso.IdlingResource;
-import android.support.test.espresso.UiController;
-import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.ViewAssertion;
-import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -36,7 +32,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.registerIdlingResources;
@@ -46,8 +41,6 @@ import static android.support.test.espresso.action.ViewActions.swipeLeft;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
-import static android.support.test.espresso.matcher.ViewMatchers.withChild;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.CoreMatchers.allOf;
 
@@ -61,43 +54,17 @@ public class SuntimesActivityTest
     @Test
     public void userSwappedCard_withNextButton()
     {
-        Matcher<View> cardFlipper = withId(R.id.info_time_flipper);
-        Matcher<View> todayCard = withId(R.id.info_time_all_today);
-        Matcher<View> tomorrowCard = withId(R.id.info_time_all_tomorrow);
-        Matcher<View> nextButton = allOf(withId(R.id.info_time_nextbtn), isDescendantOfA(todayCard));
-        Matcher<View> prevButton = allOf(withId(R.id.info_time_prevbtn), isDescendantOfA(tomorrowCard));
-
-        ViewAssertion assertIsDisplayed = matches(isDisplayed());
-
-        // pre-click checks
-        onView(cardFlipper).check(assertIsDisplayed);   // flipper should be visible
-        onView(todayCard).check(assertIsDisplayed);     // and should display today
-        onView(nextButton).check(assertIsDisplayed);    // "next" should be visible
-
-        // click the next button
-        onView(nextButton).perform(click());
-
-        // post-click checks
-        onView(tomorrowCard).check(assertIsDisplayed);  // flipper should now display tomorrow
-        onView(prevButton).check(assertIsDisplayed);    // "prev" should be visible
-
-        // wait a minute (and check again)
-        long waitTime = 60 * 1000;
-        IdlingPolicies.setMasterPolicyTimeout(waitTime * 2, TimeUnit.MILLISECONDS);
-        IdlingPolicies.setIdlingResourceTimeout(waitTime * 2, TimeUnit.MILLISECONDS);
-
-        IdlingResource waitForResource = new ElapsedTimeIdlingResource(waitTime);
-        registerIdlingResources(waitForResource);
-
-        onView(tomorrowCard).check(assertIsDisplayed);  // should still display tomorrow
-        onView(prevButton).check(assertIsDisplayed);    // and "prev" should still be visible
-
-        unregisterIdlingResources(waitForResource);
+        userSwappedCard(false);
     }
 
     @Test
     public void userSwappedCard_withSwipe()
     {
+        userSwappedCard(true);
+    }
+
+    private void userSwappedCard(boolean useSwipe)
+    {
         Matcher<View> cardFlipper = withId(R.id.info_time_flipper);
         Matcher<View> todayCard = withId(R.id.info_time_all_today);
         Matcher<View> tomorrowCard = withId(R.id.info_time_all_tomorrow);
@@ -112,7 +79,12 @@ public class SuntimesActivityTest
         onView(nextButton).check(assertIsDisplayed);    // "next" should be visible
 
         // click the next button
-        onView(cardFlipper).perform(swipeLeft());
+        if (useSwipe)
+        {
+            onView(cardFlipper).perform(swipeLeft());
+        } else {
+            onView(nextButton).perform(click());
+        }
 
         // post-click checks
         onView(tomorrowCard).check(assertIsDisplayed);  // flipper should now display tomorrow
@@ -130,38 +102,6 @@ public class SuntimesActivityTest
         onView(prevButton).check(assertIsDisplayed);    // and "prev" should still be visible
 
         unregisterIdlingResources(waitForResource);
-    }
-
-    public class ElapsedTimeIdlingResource implements IdlingResource
-    {
-        private final long startTime;
-        private final long waitingTime;
-        private ResourceCallback resourceCallback;
-
-        public ElapsedTimeIdlingResource(long waitingTime) {
-            this.startTime = System.currentTimeMillis();
-            this.waitingTime = waitingTime;
-        }
-
-        @Override
-        public String getName() {
-            return ElapsedTimeIdlingResource.class.getName() + ":" + waitingTime;
-        }
-
-        @Override
-        public boolean isIdleNow() {
-            long elapsed = System.currentTimeMillis() - startTime;
-            boolean idle = (elapsed >= waitingTime);
-            if (idle) {
-                resourceCallback.onTransitionToIdle();
-            }
-            return idle;
-        }
-
-        @Override
-        public void registerIdleTransitionCallback(ResourceCallback resourceCallback) {
-            this.resourceCallback = resourceCallback;
-        }
     }
 
 }
