@@ -1,6 +1,8 @@
 # SuntimesWidget
 An Android app (and home screen widget) that displays sunrise, sunset, civil/nautical/astronomical twilight times for a given location.
 
+<a href="https://f-droid.org/repository/browse/?fdid=com.forrestguice.suntimeswidget" target="_blank">
+<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="80"/></a>
 
 The app:
 * displays the current time, and notes the time until next sunrise, sunset, or civil/nautical/astronomical twilight.
