@@ -18,67 +18,182 @@
 
 package com.forrestguice.suntimeswidget;
 
-import android.content.pm.ActivityInfo;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.IdlingPolicies;
 import android.support.test.espresso.IdlingResource;
 import android.support.test.espresso.ViewAssertion;
 import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
+
 import android.support.test.runner.AndroidJUnit4;
 import android.view.View;
 
+import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+
 import org.hamcrest.Matcher;
-import org.junit.Rule;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static android.support.test.espresso.Espresso.registerIdlingResources;
 import static android.support.test.espresso.Espresso.unregisterIdlingResources;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.longClick;
+import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.action.ViewActions.swipeLeft;
+import static android.support.test.espresso.action.ViewActions.swipeRight;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.forrestguice.suntimeswidget.DialogTest.applyDateDialog;
+import static com.forrestguice.suntimeswidget.DialogTest.cancelAlarmDialog;
+import static com.forrestguice.suntimeswidget.DialogTest.cancelLightmapDialog;
+import static com.forrestguice.suntimeswidget.DialogTest.showDateDialog;
+import static com.forrestguice.suntimeswidget.DialogTest.showLightmapDialog;
+import static com.forrestguice.suntimeswidget.DialogTest.verifyAlarmDialog;
+import static com.forrestguice.suntimeswidget.DialogTest.verifyLightmapDialog;
+import static com.forrestguice.suntimeswidget.LocationDialogTest.applyLocationDialog;
+import static com.forrestguice.suntimeswidget.LocationDialogTest.showLocationDialog;
 import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.CoreMatchers.not;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class SuntimesActivityTest
+public class SuntimesActivityTest extends SuntimesActivityTestBase
 {
-    @Rule
-    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
-
-    /**
-     * userRotatedDevice_fromHelpDialog
-     *
-     * Test dialog state after rotating the device; dialogs should not be dismissed after rotation.
-     * Reproduces the bug from issue #63.
-     */
     @Test
-    public void userRotatedDevice_fromHelpDialog()
+    public void test_activity()
     {
-        String actionHelpText = activityRule.getActivity().getString(R.string.configAction_help);
-        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
-        onView(withText(actionHelpText)).perform(click());     // open the help dialog
+        verifyActivity();
+        captureScreenshot("suntimes-activity-main0");
 
-        Matcher<View> helpContent = withId(R.id.txt_help_content);  // should now be displayed
-        onView(helpContent).check(matches(isDisplayed()));
-
-        rotateDevice();   // should still be displayed after rotation
-        onView(helpContent).check(matches(isDisplayed()));
+        rotateDevice();
+        verifyActivity();
     }
 
-    private void rotateDevice()
+    public void verifyActivity()
     {
-        activityRule.getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        activityRule.getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        verifyClock();
+        verifyNote();
+        verifyCard();
+        verifyLightmap();
+    }
+
+    public void verifyClock()
+    {
+        Calendar now = Calendar.getInstance();
+        SuntimesUtils.TimeDisplayText timeText = SuntimesActivity.utils.calendarTimeShortDisplayString(activityRule.getActivity(), now);
+        String timezoneString = WidgetSettings.loadTimezonePref(activityRule.getActivity(), 0) + " ";
+
+        onView(withId(R.id.text_time)).check(assertShown);
+        onView(withId(R.id.text_time)).check(matches(withText(timeText.getValue())));
+
+        onView(withId(R.id.text_time_suffix)).check(assertShown);
+        onView(withId(R.id.text_time_suffix)).check(matches(withText(timeText.getSuffix())));
+
+        onView(withId(R.id.text_timezone)).check(assertShown);
+        onView(withId(R.id.text_timezone)).check(matches(withText(timezoneString)));
+    }
+
+    public void verifyNote()
+    {
+        onView(withId(R.id.info_note_flipper)).check(assertShown);
+    }
+
+    public void verifyCard()
+    {
+        onView(withId(R.id.info_time_flipper)).check(assertShown);
+    }
+
+    public void verifyLightmap()
+    {
+        if (AppSettings.loadShowLightmapPref(activityRule.getActivity()))
+        {
+            onView(withId(R.id.info_time_lightmap)).check(assertShown);
+        } else {
+            onView(withId(R.id.info_time_lightmap)).check(matches(not(isDisplayed())));
+        }
+    }
+
+    @Test
+    public void test_onLightmapClick()
+    {
+        if (AppSettings.loadShowLightmapPref(activityRule.getActivity()))
+        {
+            showLightmapDialog(activityRule.getActivity());
+            cancelLightmapDialog();
+
+            onView(withId(R.id.info_time_lightmap)).perform(longClick());
+            verifyLightmapDialog();
+            cancelLightmapDialog();
+
+            onView(withId(R.id.info_time_lightmap)).perform(swipeRight());
+            verifyLightmapDialog();
+            cancelLightmapDialog();
+
+        } else {
+            onView(withId(R.id.info_time_lightmap)).check(matches(not(isDisplayed())));
+        }
+    }
+
+    @Test
+    public void test_onClockClick()
+    {
+        onView(withId(R.id.layout_clock)).perform(click());
+
+        AppSettings.ClockTapAction tapAction = AppSettings.loadClockTapActionPref(activityRule.getActivity());
+        if (tapAction == AppSettings.ClockTapAction.ALARM)
+        {
+            verifyAlarmDialog();
+            cancelAlarmDialog();
+
+        } else if (tapAction == AppSettings.ClockTapAction.PREV_NOTE) {
+            // TODO
+        } else if (tapAction == AppSettings.ClockTapAction.NEXT_NOTE) {
+            // TODO
+        } else {
+            // TODO
+        }
+    }
+
+    /**
+     * appCrash74
+     *
+     * Test app crash (latitude edge case) described in issue #74.
+     */
+    @Test
+    public void test_appCrash74()
+    {
+        showLocationDialog();
+
+        onView(withId(R.id.appwidget_location_edit)).perform(click());
+        String label = "Test Location";
+        String latitude = "83.124";
+        String longitude = "23.1592";
+        onView(withId(R.id.appwidget_location_name)).perform(replaceText(label));
+        onView(withId(R.id.appwidget_location_lat)).perform(replaceText(latitude));
+        onView(withId(R.id.appwidget_location_lon)).perform(replaceText(longitude));
+
+        applyLocationDialog(activityRule.getActivity());
+
+        // open the date dialog (from overflow menu)
+        showDateDialog(activityRule.getActivity());
+        onView(withId(R.id.appwidget_date_mode)).perform(click());
+        //String customDateModeString = activityRule.getActivity().getString(R.string.dateMode_custom);
+        //onData(allOf(is(instanceOf(WidgetSettings.DateMode.class)), withMyValue(customDateModeString))).perform(click());
+
+        //int year = 2017;
+        //int month = 1;
+        //int day = 19;
+        //onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(year, month + 1, day));
+
+        applyDateDialog(activityRule.getActivity());
     }
 
     /***
@@ -89,12 +204,12 @@ public class SuntimesActivityTest
      */
 
     @Test
-    public void userSwappedCard_withButton()
+    public void test_userSwappedCard_withButton()
     {
         userSwappedCard(false);
     }
     @Test
-    public void userSwappedCard_withSwipe()
+    public void test_userSwappedCard_withSwipe()
     {
         userSwappedCard(true);
     }
@@ -140,5 +255,4 @@ public class SuntimesActivityTest
         onView(prevButton).check(assertIsDisplayed);    // and "prev" should still be visible
         unregisterIdlingResources(waitForResource);
     }
-
 }
