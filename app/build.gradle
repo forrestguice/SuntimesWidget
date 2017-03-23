@@ -53,6 +53,7 @@ dependencies
     compile 'com.github.forrestguice:sunrisesunsetlib-java:SunriseSunsetCalculator-1.2-p0-fixdst'
     compile 'com.github.caarmen.SunriseSunset:lib-sunrise-sunset:1.1.0'
 
+    androidTestCompile 'com.jraska:falcon:1.0.4'
     androidTestCompile 'com.android.support:support-annotations:24.2.1'
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile 'com.android.support.test:rules:0.5'
