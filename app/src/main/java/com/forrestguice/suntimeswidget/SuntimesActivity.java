@@ -110,8 +110,8 @@ public class SuntimesActivity extends AppCompatActivity
     private GetFixHelper getFixHelper;
 
     private WidgetSettings.Location location;
-    private SuntimesNotes notes;
-    private SuntimesRiseSetDataset dataset;
+    protected SuntimesNotes notes;
+    protected SuntimesRiseSetDataset dataset;
 
     private int color_textTimeDelta;
 
