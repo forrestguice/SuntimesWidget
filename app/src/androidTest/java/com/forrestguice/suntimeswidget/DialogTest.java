@@ -45,6 +45,8 @@ import static org.hamcrest.CoreMatchers.not;
 public class DialogTest extends SuntimesActivityTestBase
 {
     /**
+     * UI Test
+     *
      * Show, rotate, and dismiss the lightmap dialog.
      */
     @Test
@@ -83,107 +85,8 @@ public class DialogTest extends SuntimesActivityTestBase
     }
 
     /**
-     * Show, rotate, and dismiss the date dialog.
-     */
-    @Test
-    public void test_showDateDialog()
-    {
-        showDateDialog(activityRule.getActivity());
-        captureScreenshot("suntimes-dialog-date0");
-
-        rotateDevice();
-        verifyDateDialog();
-        cancelDateDialog();
-    }
-
-    public static void showDateDialog(Context context)
-    {
-        String actionDateText = context.getString(R.string.configAction_setDate);
-        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
-        onView(withText(actionDateText)).perform(click());
-        verifyDateDialog();
-    }
-
-    public static void verifyDateDialog()
-    {
-        onView(withId(R.id.appwidget_date_mode)).check(assertEnabled);
-        onView(withId(R.id.appwidget_date_custom)).check(assertShown);
-    }
-
-    public static void applyDateDialog(Context context)
-    {
-        String setDateText = context.getString(R.string.timedate_dialog_ok);
-        onView(withText(setDateText)).perform(click());
-    }
-
-    public static void cancelDateDialog()
-    {
-        onView(withId(R.id.appwidget_date_mode)).perform(pressBack());
-        onView(withId(R.id.appwidget_date_mode)).check(doesNotExist());
-    }
-
-    /**
-     * Show, rotate, and dismiss the timezone dialog.
-     */
-    @Test
-    public void test_showTimezoneDialog()
-    {
-        String actionTimezoneText = activityRule.getActivity().getString(R.string.configAction_setTimeZone);
-        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
-        onView(withText(actionTimezoneText)).perform(click());
-        verifyTimezoneDialog();
-        captureScreenshot("suntimes-dialog-timezone0");
-
-        rotateDevice();
-        verifyTimezoneDialog();
-        cancelTimezoneDialog();
-    }
-
-    public static void verifyTimezoneDialog()
-    {
-        // TODO
-    }
-
-    public static void cancelTimezoneDialog()
-    {
-        // TODO
-    }
-
-    /**
-     * Show, rotate, and dismiss the alarm dialog.
-     */
-    @Test
-    public void test_showAlarmDialog()
-    {
-        showAlarmDialog(activityRule.getActivity());
-        captureScreenshot("suntimes-dialog-alarm0");
-
-        rotateDevice();
-        verifyAlarmDialog();
-        cancelAlarmDialog();
-    }
-
-    public static void showAlarmDialog(Context context)
-    {
-        String actionAboutText = context.getString(R.string.configAction_setAlarm);
-        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
-        onView(withText(actionAboutText)).perform(click());
-        verifyAlarmDialog();
-    }
-
-    public static void verifyAlarmDialog()
-    {
-        onView(withId(R.id.appwidget_schedalarm_mode)).check(assertShown);
-        onView(withId(R.id.appwidget_schedalarm_note)).check(assertShown);
-    }
-
-    public static void cancelAlarmDialog()
-    {
-        onView(withId(R.id.appwidget_schedalarm_note)).perform(pressBack());
-        onView(withId(R.id.appwidget_schedalarm_note)).check(doesNotExist());
-    }
-
-    /**
+     *  UI Test
+     *
      *  Show, rotate, and dismiss the help dialog.
      */
     @Test
@@ -217,6 +120,8 @@ public class DialogTest extends SuntimesActivityTestBase
     }
 
     /**
+     * UI Test
+     *
      * Show, rotate, and dismiss the about dialog.
      */
     @Test

@@ -20,9 +20,10 @@ package com.forrestguice.suntimeswidget;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
-import android.graphics.Bitmap;
+
 import android.media.MediaScannerConnection;
 import android.os.Environment;
+import android.support.test.espresso.FailureHandler;
 import android.support.test.espresso.ViewAssertion;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
@@ -35,43 +36,42 @@ import com.jraska.falcon.Falcon;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 
+import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
+import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayingAtLeast;
 import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
+import static android.support.test.espresso.matcher.ViewMatchers.isSelected;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.IsNot.not;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class SuntimesActivityTestBase
+public abstract class SuntimesActivityTestBase
 {
     public static final String SCREENSHOT_DIR = "test-screenshots";
 
     protected static ViewAssertion assertShown = matches(isDisplayed());
+    protected static ViewAssertion assertShownCompletely = matches(isDisplayingAtLeast(90));
     protected static ViewAssertion assertHidden = matches(not(isDisplayed()));
     protected static ViewAssertion assertEnabled = matches(allOf(isEnabled(), isDisplayed()));
     protected static ViewAssertion assertDisabled = matches(allOf(not(isEnabled()), isDisplayed()));
     protected static ViewAssertion assertFocused = matches(allOf(isEnabled(), isDisplayed(), hasFocus()));
+    protected static ViewAssertion assertClickable = matches(isClickable());
+    protected static ViewAssertion assertSelected = matches(isSelected());
 
     @Rule
     public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
-
-    @Before
-    public void initTestBase()
-    {
-    }
 
     /**
      * Rotate the device to landscape and back.
@@ -135,18 +135,11 @@ public class SuntimesActivityTestBase
      */
     public static void captureScreenshot(Activity activity, String name)
     {
-        View view = activity.getWindow().getDecorView().getRootView();
-        view.setDrawingCacheEnabled(true);
-        Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
-        view.setDrawingCacheEnabled(false);
-
         String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + SCREENSHOT_DIR;
         File dir = new File(dirPath);
         dir.mkdirs();
 
         String path = dirPath + "/" + name + ".png";
-        Log.d("DEBUG", "screenshot path: " + path);
-
         File file = new File(path);
         if (file.exists())
         {
@@ -160,6 +153,42 @@ public class SuntimesActivityTestBase
         } catch (Exception e1) {
             Log.e("captureScreenshot", "Failed to write file! " + e1);
         }
+    }
+
+    /**
+     * @param viewId
+     */
+    public static boolean viewIsDisplayed(int viewId)
+    {
+        final boolean[] isDisplayed = {true};
+        onView(withId(viewId)).withFailureHandler(new FailureHandler()
+        {
+            @Override
+            public void handle(Throwable error, Matcher<View> viewMatcher)
+            {
+                isDisplayed[0] = false;
+            }
+        }).check(matches(isDisplayed()));
+        return isDisplayed[0];
+    }
+
+    /**
+     * @param spinnerId
+     * @param text
+     * @return
+     */
+    public static boolean spinnerDisplaysText(int spinnerId, String text)
+    {
+        final boolean[] displaysText = {true};
+        onView(withId(spinnerId)).withFailureHandler(new FailureHandler()
+        {
+            @Override
+            public void handle(Throwable error, Matcher<View> viewMatcher)
+            {
+                displaysText[0] = false;
+            }
+        }).check(matches(withSpinnerText(text)));
+        return displaysText[0];
     }
 
 }
