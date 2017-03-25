@@ -265,7 +265,10 @@ public class TimeZoneDialog extends DialogFragment
         if (spinner_timezone_adapter != null)
         {
             String timezoneID = (value ? customTimezoneID : TimeZone.getDefault().getID());
-            spinner_timezone.setSelection(spinner_timezone_adapter.ordinal(timezoneID), true);
+            if (timezoneID != null)
+            {
+                spinner_timezone.setSelection(spinner_timezone_adapter.ordinal(timezoneID), true);
+            }
         }
         label_timezone.setEnabled(value);
         spinner_timezone.setEnabled(value);
@@ -445,12 +448,18 @@ public class TimeZoneDialog extends DialogFragment
 
         // save: custom timezone
         WidgetTimezones.TimeZoneItem customTimezone = (WidgetTimezones.TimeZoneItem) spinner_timezone.getSelectedItem();
-        bundle.putString(KEY_TIMEZONE_ID, customTimezone.getID());
+        if (customTimezone != null)
+        {
+            bundle.putString(KEY_TIMEZONE_ID, customTimezone.getID());
+        }
 
         // save: solar timemode
         WidgetSettings.SolarTimeMode[] solarTimeModes = WidgetSettings.SolarTimeMode.values();
         WidgetSettings.SolarTimeMode solarTimeMode = solarTimeModes[spinner_solartime.getSelectedItemPosition()];
-        bundle.putString(KEY_SOLARTIME_MODE, solarTimeMode.name());
+        if (solarTimeMode != null)
+        {
+            bundle.putString(KEY_SOLARTIME_MODE, solarTimeMode.name());
+        }
     }
 
     /**
