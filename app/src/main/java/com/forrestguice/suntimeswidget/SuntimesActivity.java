@@ -1994,4 +1994,21 @@ public class SuntimesActivity extends AppCompatActivity
         Log.d("DEBUG", "userSwappedCard set " + value + " (" + tag + " )");
     }
 
+    /**
+     * @return
+     */
+    public int getThemeId()
+    {
+        try {
+            Method method = Context.class.getMethod("getThemeResId");
+            method.setAccessible(true);
+            return (Integer) method.invoke(this);
+
+        } catch (Exception e) {
+            Log.e("getThemeId", "Failed to get theme ID");
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 }
