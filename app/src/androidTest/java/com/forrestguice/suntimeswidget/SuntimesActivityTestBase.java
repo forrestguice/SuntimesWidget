@@ -23,13 +23,19 @@ import android.content.pm.ActivityInfo;
 
 import android.media.MediaScannerConnection;
 import android.os.Environment;
+import android.support.test.espresso.DataInteraction;
 import android.support.test.espresso.FailureHandler;
+import android.support.test.espresso.UiController;
+import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.ViewAssertion;
+import android.support.test.espresso.ViewInteraction;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.v7.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.View;
+import android.widget.Checkable;
 
 import com.jraska.falcon.Falcon;
 
@@ -40,19 +46,24 @@ import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
+import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayingAtLeast;
 import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
+import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isSelected;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.isA;
 import static org.hamcrest.core.IsNot.not;
 
 @LargeTest
@@ -69,6 +80,8 @@ public abstract class SuntimesActivityTestBase
     protected static ViewAssertion assertFocused = matches(allOf(isEnabled(), isDisplayed(), hasFocus()));
     protected static ViewAssertion assertClickable = matches(isClickable());
     protected static ViewAssertion assertSelected = matches(isSelected());
+    protected static ViewAssertion assertChecked = matches(isChecked());
+    protected static ViewAssertion assertNotChecked = matches(isNotChecked());
 
     @Rule
     public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
@@ -170,6 +183,25 @@ public abstract class SuntimesActivityTestBase
             }
         }).check(matches(isDisplayed()));
         return isDisplayed[0];
+    }
+
+
+    /**
+     * @param viewInteraction
+     * @return
+     */
+    public static boolean viewIsChecked(ViewInteraction viewInteraction)
+    {
+        final boolean[] isChecked = {true};
+        viewInteraction.withFailureHandler(new FailureHandler()
+        {
+            @Override
+            public void handle(Throwable error, Matcher<View> viewMatcher)
+            {
+                isChecked[0] = false;
+            }
+        }).check(matches(isChecked()));
+        return isChecked[0];
     }
 
     /**
