@@ -18,11 +18,14 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.app.Activity;
+import android.content.Context;
 import android.support.test.espresso.IdlingPolicies;
 import android.support.test.espresso.IdlingResource;
 import android.support.test.filters.LargeTest;
 
 import android.support.test.runner.AndroidJUnit4;
+import android.support.v7.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.View;
 
@@ -36,7 +39,10 @@ import org.hamcrest.Matcher;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -97,11 +103,34 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
 
     public void verifyActivity()
     {
+        verifyTheme(activityRule.getActivity());
+        verifyLocale(activityRule.getActivity());
         verifyActionBar();
         verifyClock();
         verifyNote(activityRule.getActivity());
         verifyTimeCard();
-        verifyLightmap();
+        verifyLightmap(activityRule.getActivity());
+    }
+
+    public static void verifyTheme(SuntimesActivity activity)
+    {
+        String themeName = AppSettings.loadThemePref(activity);
+        int themeId = AppSettings.themePrefToStyleId(themeName, activity.dataset);
+        int loadedStyleId = activity.getThemeId();
+        Log.d("TEST", "themeId = " + themeId + " (" + themeName + "), loaded = " + loadedStyleId );
+        assertTrue(loadedStyleId == themeId);
+    }
+
+    public static void verifyLocale(SuntimesActivity activity)
+    {
+        AppSettings.LocaleMode mode = AppSettings.loadLocaleModePref(activity);
+        if (mode == AppSettings.LocaleMode.CUSTOM_LOCALE)
+        {
+            String customLocale = AppSettings.loadLocalePref(activity);
+            String loadedLocale = Locale.getDefault().getLanguage();
+            Log.d("TEST", "customLocale = " + customLocale + " , loaded = " + loadedLocale);
+            assertTrue(loadedLocale.equals(customLocale));
+        }
     }
 
     public void verifyActionBar()
@@ -147,9 +176,9 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         onView(allOf(withId(R.id.text_timenote3), isDisplayed())).check(matches(withText(containsString(note.noteText))));
     }
 
-    public void verifyLightmap()
+    public static void verifyLightmap(Context context)
     {
-        if (AppSettings.loadShowLightmapPref(activityRule.getActivity()))
+        if (AppSettings.loadShowLightmapPref(context))
         {
             onView(withId(R.id.info_time_lightmap)).check(assertShown);
         } else {
