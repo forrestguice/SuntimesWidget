@@ -200,11 +200,11 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
      */
     public static class WidgetListItem
     {
-        private int appWidgetId;
-        private int icon;
-        private String title;
-        private String summary;
-        private Class configClass;
+        private final int appWidgetId;
+        private final int icon;
+        private final String title;
+        private final String summary;
+        private final Class configClass;
 
         public WidgetListItem( int appWidgetId, int icon, String title, String summary, Class configClass )
         {

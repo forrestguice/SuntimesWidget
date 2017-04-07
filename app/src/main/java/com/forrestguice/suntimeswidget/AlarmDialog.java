@@ -60,7 +60,7 @@ public class AlarmDialog extends DialogFragment
     public static final String PREF_KEY_ALARM_LASTCHOICE = "alarmdialog_lastchoice";
     public static final SolarEvents PREF_DEF_ALARM_LASTCHOICE = SolarEvents.SUNRISE;
 
-    protected static SuntimesUtils utils = new SuntimesUtils();
+    protected static final SuntimesUtils utils = new SuntimesUtils();
 
     /**
      * The appWidgetID used when saving/loading choice to prefs (main app uses 0).

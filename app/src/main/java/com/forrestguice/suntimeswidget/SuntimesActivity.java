@@ -102,7 +102,7 @@ public class SuntimesActivity extends AppCompatActivity
     private static final String DIALOGTAG_DATE = "dateselect";
     private static final String DIALOGTAG_LIGHTMAP = "lightmap";
 
-    protected static SuntimesUtils utils = new SuntimesUtils();
+    protected static final SuntimesUtils utils = new SuntimesUtils();
 
     private ActionBar actionBar;
     private Menu actionBarMenu;
@@ -1346,7 +1346,7 @@ public class SuntimesActivity extends AppCompatActivity
     /**
      * Clock ui update rate; once every few seconds.
      */
-    public static int UPDATE_RATE = 3000;     // primary update rate: 3s
+    public static final int UPDATE_RATE = 3000;     // primary update rate: 3s
 
     /**
      * Update the clock ui at regular intervals to reflect current time (and note).
@@ -2005,7 +2005,7 @@ public class SuntimesActivity extends AppCompatActivity
     private void setUserSwappedCard( boolean value, String tag )
     {
         userSwappedCard = value;
-        Log.d("DEBUG", "userSwappedCard set " + value + " (" + tag + " )");
+        //Log.d("DEBUG", "userSwappedCard set " + value + " (" + tag + " )");
     }
 
     /**

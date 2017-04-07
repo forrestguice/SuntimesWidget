@@ -300,9 +300,9 @@ public class WidgetTimezones
 
     public static class TimeZoneItem
     {
-        private String timeZoneID;
-        private String displayString;
-        private double offsetHr;
+        private final String timeZoneID;
+        private final String displayString;
+        private final double offsetHr;
 
         public TimeZoneItem(String timeZoneID, String displayString, double offsetHr)
         {

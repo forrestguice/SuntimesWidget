@@ -185,7 +185,7 @@ public class WidgetSettings
         WIDGETMODE1x1_BOTH_1("Sunrise & Sunset (1)", R.layout.layout_widget_1x1_0),
         WIDGETMODE1x1_BOTH_2("Sunrise & Sunset (2)", R.layout.layout_widget_1x1_3);
 
-        private int layoutID;
+        private final int layoutID;
         private String displayString;
 
         private WidgetMode1x1(String displayString, int layoutID)

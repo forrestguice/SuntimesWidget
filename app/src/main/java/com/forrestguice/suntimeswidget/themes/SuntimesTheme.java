@@ -243,9 +243,9 @@ public class SuntimesTheme
 
     public static class ThemeDescriptor implements Comparable
     {
-        private String name;
-        private String displayString;
-        private int version;
+        private final String name;
+        private final String displayString;
+        private final int version;
 
         public ThemeDescriptor(String name, String displayString, int version) {
             this.name = name;

@@ -48,7 +48,7 @@ import java.util.Calendar;
  */
 public class SuntimesWidget extends AppWidgetProvider
 {
-    public static String SUNTIMES_WIDGET_UPDATE = "SUNTIMES_WIDGET_UPDATE";
+    public static final String SUNTIMES_WIDGET_UPDATE = "SUNTIMES_WIDGET_UPDATE";
     public static final int UPDATEALARM_ID = 0;
 
     protected static SuntimesUtils utils = new SuntimesUtils();
@@ -246,7 +246,7 @@ public class SuntimesWidget extends AppWidgetProvider
 
             mustFitWithinDp[0] = Math.min( sizePortrait[0], sizeLandscape[0] );
             mustFitWithinDp[1] = Math.min( sizePortrait[1], sizeLandscape[1] );
-            Log.d("getWidgetLayout", "1: must fit:  [" + mustFitWithinDp[0] + ", " + mustFitWithinDp[1] + "]");
+            //Log.d("getWidgetLayout", "1: must fit:  [" + mustFitWithinDp[0] + ", " + mustFitWithinDp[1] + "]");
         }
 
         SuntimesLayout layout;
@@ -258,7 +258,7 @@ public class SuntimesWidget extends AppWidgetProvider
         } else {
             layout = WidgetSettings.load1x1ModePref_asLayout(context, appWidgetId);
         }
-        Log.d("getWidgetLayout", "layout is: " + layout);
+        //Log.d("getWidgetLayout", "layout is: " + layout);
         return layout;
     }
 
