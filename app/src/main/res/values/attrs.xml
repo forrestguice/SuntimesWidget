@@ -23,6 +23,7 @@
     <attr name="icActionPlace" format="reference" />
     <attr name="icActionMap" format="reference" />
     <attr name="icActionTime" format="reference" />
+    <attr name="icActionDst" format="reference" />
     <attr name="icActionAlarm" format="reference" />
     <attr name="icActionAbout" format="reference" />
     <attr name="icActionWarning" format="reference" />
