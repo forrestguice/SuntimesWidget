@@ -1480,11 +1480,13 @@ public class SuntimesActivity extends AppCompatActivity
                     secondTouchX = event.getX();
                     if ((secondTouchX - firstTouchX) > FLING_SENSITIVITY)
                     {   // swipe right; back to previous view
-                        setUserSwappedCard( (isRtl ? showNextCard() : showPreviousCard()), "timeCardTouchListener (fling prev)" );
+                        boolean flipResult = (isRtl ? showNextCard() : showPreviousCard());
+                        setUserSwappedCard(userSwappedCard || flipResult, "timeCardTouchListener (fling prev)");
 
                     } else if (firstTouchX - secondTouchX > FLING_SENSITIVITY) {
                         // swipe left; advance to next view
-                        setUserSwappedCard( (isRtl ? showPreviousCard() : showNextCard()), "timeCardTouchListener (fling next)" );
+                        boolean flipResult = (isRtl ? showPreviousCard() : showNextCard());
+                        setUserSwappedCard(userSwappedCard || flipResult, "timeCardTouchListener (fling next)");
 
                     } else {
                         // swipe cancel; reset current view
@@ -1526,10 +1528,8 @@ public class SuntimesActivity extends AppCompatActivity
                         // at-a-boundary (the first/last view);
                         // TODO: animate somehow to let user know there aren't additional views
                     }
-
                     break;
             }
-
             return true;
         }
     };
