@@ -23,19 +23,14 @@ import android.content.pm.ActivityInfo;
 
 import android.media.MediaScannerConnection;
 import android.os.Environment;
-import android.support.test.espresso.DataInteraction;
 import android.support.test.espresso.FailureHandler;
-import android.support.test.espresso.UiController;
-import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.ViewAssertion;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.v7.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.View;
-import android.widget.Checkable;
 
 import com.jraska.falcon.Falcon;
 
@@ -46,8 +41,6 @@ import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -63,7 +56,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.isA;
 import static org.hamcrest.core.IsNot.not;
 
 @LargeTest

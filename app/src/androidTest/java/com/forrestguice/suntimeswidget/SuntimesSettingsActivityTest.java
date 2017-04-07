@@ -21,23 +21,16 @@ package com.forrestguice.suntimeswidget;
 
 import android.app.Activity;
 import android.content.Context;
-import android.preference.CheckBoxPreference;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
-import android.preference.PreferenceFragment;
 import android.support.test.InstrumentationRegistry;
 
 import android.support.test.espresso.DataInteraction;
 import android.support.test.espresso.ViewInteraction;
-import android.support.test.espresso.matcher.PreferenceMatchers;
 import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.v7.view.ContextThemeWrapper;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
@@ -45,50 +38,25 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
-
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.longClick;
 import static android.support.test.espresso.action.ViewActions.pressBack;
-import static android.support.test.espresso.action.ViewActions.replaceText;
-import static android.support.test.espresso.action.ViewActions.swipeLeft;
-import static android.support.test.espresso.action.ViewActions.swipeRight;
-import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.PreferenceMatchers.withKey;
-import static android.support.test.espresso.matcher.PreferenceMatchers.withTitle;
 import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
-import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
-import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withParent;
-import static android.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static com.forrestguice.suntimeswidget.DialogTest.cancelLightmapDialog;
-import static com.forrestguice.suntimeswidget.DialogTest.showLightmapDialog;
-import static com.forrestguice.suntimeswidget.DialogTest.verifyLightmapDialog;
-import static com.forrestguice.suntimeswidget.LocationDialogTest.applyLocationDialog;
-import static com.forrestguice.suntimeswidget.LocationDialogTest.showLocationDialog;
+
 import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.allOf;
-import static org.hamcrest.CoreMatchers.any;
-import static org.hamcrest.CoreMatchers.anything;
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)

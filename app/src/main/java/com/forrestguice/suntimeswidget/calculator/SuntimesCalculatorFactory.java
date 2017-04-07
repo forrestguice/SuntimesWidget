@@ -23,7 +23,6 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
-import java.util.HashMap;
 import java.util.TimeZone;
 
 /**

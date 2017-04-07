@@ -20,7 +20,6 @@ package com.forrestguice.suntimeswidget.getfix;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 public class ClearPlacesTask extends AsyncTask<Object, Object, Boolean>
 {

@@ -22,7 +22,6 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import android.text.Spannable;
-import android.text.format.DateUtils;
 
 import android.content.res.TypedArray;
 import android.graphics.PorterDuff;

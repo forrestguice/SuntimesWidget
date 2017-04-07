@@ -27,7 +27,6 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 
 import java.util.Locale;
