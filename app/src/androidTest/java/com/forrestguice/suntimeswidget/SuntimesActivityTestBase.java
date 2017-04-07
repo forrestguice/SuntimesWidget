@@ -70,6 +70,19 @@ import static org.hamcrest.core.IsNot.not;
 @RunWith(AndroidJUnit4.class)
 public abstract class SuntimesActivityTestBase
 {
+    public static final String TESTLOC_0_LABEL = "Test Location 0";
+    public static final String TESTLOC_0_LAT = "35";
+    public static final String TESTLOC_0_LON = "-112";
+
+    public static final String TESTLOC_1_LABEL = "Test Location 1";
+    public static final String TESTLOC_1_LAT = "83.124";
+    public static final String TESTLOC_1_LON = "23.1592";
+
+    public static final int TESTDATE_0_YEAR = 2017;
+    public static final int TESTDATE_0_MONTH = 1;    // feb 19, 2017
+    public static final int TESTDATE_0_DAY = 19;
+
+
     public static final String SCREENSHOT_DIR = "test-screenshots";
 
     protected static ViewAssertion assertShown = matches(isDisplayed());

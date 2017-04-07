@@ -377,27 +377,19 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     @Test
     public void test_appCrash74()
     {
-        String label = "Test Location";
-        String latitude = "83.124";
-        String longitude = "23.1592";
-
-        int year = 2017;
-        int month = 1;
-        int day = 19;
-
         // open the location dialog, and set test location
         showLocationDialog();
         inputLocationDialog_mode(WidgetSettings.LocationMode.CUSTOM_LOCATION);
         onView(withId(R.id.appwidget_location_edit)).perform(click());
-        onView(withId(R.id.appwidget_location_name)).perform(replaceText(label));
-        onView(withId(R.id.appwidget_location_lat)).perform(replaceText(latitude));
-        onView(withId(R.id.appwidget_location_lon)).perform(replaceText(longitude));
+        onView(withId(R.id.appwidget_location_name)).perform(replaceText(TESTLOC_1_LABEL));
+        onView(withId(R.id.appwidget_location_lat)).perform(replaceText(TESTLOC_1_LAT));
+        onView(withId(R.id.appwidget_location_lon)).perform(replaceText(TESTLOC_1_LON));
         applyLocationDialog(activityRule.getActivity());
 
         // open the date dialog, and set to "custom date"
         showDateDialog(activityRule.getActivity());
         inputDateDialog_mode(WidgetSettings.DateMode.CUSTOM_DATE);
-        inputDateDialog_date(year, month, day);
+        inputDateDialog_date(TESTDATE_0_YEAR, TESTDATE_0_MONTH, TESTDATE_0_DAY);
         applyDateDialog(activityRule.getActivity());
 
         verifyActivity();
@@ -414,11 +406,27 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     @Test
     public void test_userSwappedCard_withButton()
     {
+        showLocationDialog();
+        inputLocationDialog_mode(WidgetSettings.LocationMode.CUSTOM_LOCATION);
+        onView(withId(R.id.appwidget_location_edit)).perform(click());
+        onView(withId(R.id.appwidget_location_name)).perform(replaceText(TESTLOC_0_LABEL));
+        onView(withId(R.id.appwidget_location_lat)).perform(replaceText(TESTLOC_0_LAT));
+        onView(withId(R.id.appwidget_location_lon)).perform(replaceText(TESTLOC_0_LON));
+        applyLocationDialog(activityRule.getActivity());
+
         userSwappedCard(false);
     }
     @Test
     public void test_userSwappedCard_withSwipe()
     {
+        showLocationDialog();
+        inputLocationDialog_mode(WidgetSettings.LocationMode.CUSTOM_LOCATION);
+        onView(withId(R.id.appwidget_location_edit)).perform(click());
+        onView(withId(R.id.appwidget_location_name)).perform(replaceText(TESTLOC_0_LABEL));
+        onView(withId(R.id.appwidget_location_lat)).perform(replaceText(TESTLOC_0_LAT));
+        onView(withId(R.id.appwidget_location_lon)).perform(replaceText(TESTLOC_0_LON));
+        applyLocationDialog(activityRule.getActivity());
+
         userSwappedCard(true);
     }
 

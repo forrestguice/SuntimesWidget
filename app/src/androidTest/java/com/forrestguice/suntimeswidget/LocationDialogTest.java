@@ -55,9 +55,9 @@ public class LocationDialogTest extends SuntimesActivityTestBase
     @Test
     public void test_setLocation()
     {
-        String name[] = {"Test Place", "Prescott"};
-        String lat[]  = {"82",         "34.5555" };
-        String lon[]  = {"22",         "-112.6321"};
+        String name[] = {TESTLOC_0_LABEL, TESTLOC_1_LABEL};
+        String lat[]  = {TESTLOC_0_LAT, TESTLOC_1_LAT };
+        String lon[]  = {TESTLOC_0_LON, TESTLOC_1_LON };
 
         int n = name.length;
         int i = new Random().nextInt(n);
