@@ -54,10 +54,10 @@ public class SuntimesWidget extends AppWidgetProvider
     protected static SuntimesUtils utils = new SuntimesUtils();
 
     /**
-     * @param context
-     * @param appWidgetManager
-     * @param appWidgetId
-     * @param newOptions
+     * @param context the context
+     * @param appWidgetManager widget manager
+     * @param appWidgetId the widgetID
+     * @param newOptions a Bundle containing the new widget options
      */
     @Override
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -69,8 +69,8 @@ public class SuntimesWidget extends AppWidgetProvider
     }
 
     /**
-     * @param context
-     * @param intent
+     * @param context the context
+     * @param intent the intent that was received
      */
     @Override
     public void onReceive(@NonNull Context context, @NonNull Intent intent)
@@ -91,9 +91,9 @@ public class SuntimesWidget extends AppWidgetProvider
     }
 
     /**
-     * @param context
-     * @param intent
-     * @return
+     * @param context the context
+     * @param intent the click intent
+     * @return true click handled, false otherwise
      */
     protected boolean handleClickAction(Context context, Intent intent)
     {
@@ -151,9 +151,9 @@ public class SuntimesWidget extends AppWidgetProvider
     }
 
     /**
-     * @param context
-     * @param appWidgetManager
-     * @param appWidgetIds
+     * @param context the context
+     * @param appWidgetManager widget manager
+     * @param appWidgetIds the widgetIDs that need to be updated
      */
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds)
@@ -182,8 +182,9 @@ public class SuntimesWidget extends AppWidgetProvider
     }
 
     /**
-     * @param context
-     * @param appWidgetIds
+     * One or more widgets were deleted; cleanup after them.
+     * @param context the context
+     * @param appWidgetIds the widget ids that were deleted
      */
     @Override
     public void onDeleted(Context context, int[] appWidgetIds)
@@ -195,7 +196,8 @@ public class SuntimesWidget extends AppWidgetProvider
     }
 
     /**
-     * @param context
+     * Widget was enabled (called when the first widget is created); register alarm for updates.
+     * @param context the context
      */
     @Override
     public void onEnabled(Context context)
@@ -205,7 +207,8 @@ public class SuntimesWidget extends AppWidgetProvider
     }
 
     /**
-     * @param context
+     * Widget was disabled (called after the last widget is deleted); unregister update alarm.
+     * @param context the context
      */
     @Override
     public void onDisabled(Context context)
@@ -215,10 +218,10 @@ public class SuntimesWidget extends AppWidgetProvider
     }
 
     /**
-     * @param context
-     * @param appWidgetManager
-     * @param appWidgetId
-     * @return
+     * @param context the context
+     * @param appWidgetManager a reference to the AppWidgetManager
+     * @param appWidgetId the widgetID
+     * @return a SuntimesLayout that is appropriate for available space.
      */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     protected static SuntimesLayout getWidgetLayout( Context context, AppWidgetManager appWidgetManager, int appWidgetId )
@@ -271,10 +274,10 @@ public class SuntimesWidget extends AppWidgetProvider
     }
 
     /**
-     * @param context
-     * @param appWidgetManager
-     * @param appWidgetId
-     * @param layout
+     * @param context the context
+     * @param appWidgetManager widget manager
+     * @param appWidgetId id of the widget to be updated
+     * @param layout a SuntimesLayout managing the views to be updated
      */
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SuntimesLayout layout)
     {
@@ -297,7 +300,7 @@ public class SuntimesWidget extends AppWidgetProvider
      * A static method for triggering an update of all widgets using ACTION_APPWIDGET_UPDATE intent;
      * triggers the onUpdate method.
      *
-     * @param context
+     * @param context the context
      * @param widgetClass the widget class (SuntimesWidget.class, SuntimesWidget1.class)
      */
     public static void triggerWidgetUpdate(Context context, Class widgetClass)
@@ -313,7 +316,7 @@ public class SuntimesWidget extends AppWidgetProvider
 
     /**
      * Start widget updates; register a daily alarm (inexactRepeating) that does not wake the device.
-     * @param context
+     * @param context the context
      */
     protected void setUpdateAlarm( Context context )
     {
@@ -326,7 +329,7 @@ public class SuntimesWidget extends AppWidgetProvider
 
     /**
      * Stop widget updates; unregisters the update alarm.
-     * @param context
+     * @param context the context
      */
     protected void unsetUpdateAlarm( Context context )
     {
@@ -351,7 +354,7 @@ public class SuntimesWidget extends AppWidgetProvider
     }
 
     /**
-     * @param context
+     * @param context the context
      * @return a SUNTIMES_WIDGET_UPDATE broadcast intent for widget alarmId (@see getUpdateAlarmId)
      */
     protected PendingIntent getUpdateIntent(Context context)
@@ -368,10 +371,10 @@ public class SuntimesWidget extends AppWidgetProvider
     }
 
     /**
-     * @param context
-     * @param appWidgetId
-     * @param widgetClass
-     * @return
+     * @param context the context
+     * @param appWidgetId a widgetID
+     * @param widgetClass the widget class (e.g. SuntimesWidget.class, SuntimesWidget1.class)
+     * @return a PendingIntent for the widget (to be triggered when widget is clicked)
      */
     public static PendingIntent clickActionIntent(Context context, int appWidgetId, Class widgetClass)
     {

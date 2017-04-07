@@ -143,7 +143,7 @@ public class WidgetTimezones
 
         /**
          * @param longitude a longitude value; degrees [-180, 180]
-         * @return the offset of this longitude from utc (in miliseconds)
+         * @return the offset of this longitude from utc (in milliseconds)
          */
         public int findOffset( double longitude )
         {

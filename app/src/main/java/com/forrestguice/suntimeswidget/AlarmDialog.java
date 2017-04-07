@@ -94,7 +94,7 @@ public class AlarmDialog extends DialogFragment
     public SolarEvents getChoice() { return choice; }
 
     /**
-     * @param savedInstanceState
+     * @param savedInstanceState a Bundle containing dialog state
      * @return an AlarmDialog ready to be shown
      */
     @NonNull @Override
@@ -164,7 +164,7 @@ public class AlarmDialog extends DialogFragment
     }
 
     /**
-     * @param outState
+     * @param outState a Bundle used to save state
      */
     @Override
     public void onSaveInstanceState( Bundle outState )
@@ -279,7 +279,7 @@ public class AlarmDialog extends DialogFragment
 
     /**
      * Save alarm choice to prefs.
-     * @param context
+     * @param context a context used to access shared prefs
      */
     protected void saveSettings(Context context)
     {
@@ -318,7 +318,7 @@ public class AlarmDialog extends DialogFragment
     /**
      * @param choice a SolarEvent "alarm choice"
      * @param now a Calendar representing "right now"
-     * @return
+     * @return a Calendar representing the alarm selection
      */
     public Calendar getCalendarForAlarmChoice( SolarEvents choice, Calendar now )
     {
@@ -441,7 +441,7 @@ public class AlarmDialog extends DialogFragment
     }
 
     /**
-     * @param context
+     * @param context a context used to start the "show alarm" intent
      */
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public static void showAlarms(Activity context)

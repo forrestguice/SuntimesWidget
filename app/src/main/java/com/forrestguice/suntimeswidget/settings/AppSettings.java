@@ -196,7 +196,7 @@ public class AppSettings
 
     /**
      * Is the current locale right-to-left?
-     * @param context
+     * @param context a context used to access resources
      * @return true the locale is right-to-left, false the locale is left-to-right
      */
     public static boolean isLocaleRtl(Context context)
@@ -422,9 +422,9 @@ public class AppSettings
     }
 
     /**
-     * @param prefs
-     * @param defaultValue
-     * @return
+     * @param prefs an instance of SharedPreferences
+     * @param defaultValue the default max age value if pref can't be loaded
+     * @return the gps max age value (milliseconds)
      */
     public static int loadPrefGpsMaxAge(SharedPreferences prefs, int defaultValue)
     {
@@ -440,9 +440,9 @@ public class AppSettings
     }
 
     /**
-     * @param prefs
-     * @param defaultValue
-     * @return
+     * @param prefs an instance of SharedPreferences
+     * @param defaultValue the default min elapsed value if pref can't be loaded
+     * @return the gps min elapsed value (milliseconds)
      */
     public static int loadPrefGpsMinElapsed(SharedPreferences prefs, int defaultValue)
     {
@@ -458,9 +458,9 @@ public class AppSettings
     }
 
     /**
-     * @param prefs
-     * @param defaultValue
-     * @return
+     * @param prefs an instance of SharedPreferences
+     * @param defaultValue the default max elapsed value if pref can't be loaded
+     * @return the gps max elapsed value (milliseconds)
      */
     public static int loadPrefGpsMaxElapsed(SharedPreferences prefs, int defaultValue)
     {
@@ -476,7 +476,7 @@ public class AppSettings
     }
 
     /**
-     * @param context
+     * @param context a context used to access resources
      */
     public static void initDisplayStrings( Context context )
     {

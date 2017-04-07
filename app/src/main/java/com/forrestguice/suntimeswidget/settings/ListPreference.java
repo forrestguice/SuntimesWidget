@@ -57,7 +57,7 @@ public class ListPreference extends android.preference.ListPreference
      * this solution based on answer provided by "Dreaming in Code" @stackoverflow
      * :: from http://stackoverflow.com/a/21642401/4721910
      * :: based on https://android.googlesource.com/platform/frameworks/base/+/94c02a1a1a6d7e6900e5a459e9cc699b9510e5a2
-     * @param value
+     * @param value the list preference value
      */
     @Override
     public void setValue(String value)
@@ -79,7 +79,7 @@ public class ListPreference extends android.preference.ListPreference
 
     /**
      * the bug: listpref doesn't format %s summary values (pre api 11)
-     * @return
+     * @return summary text w/ properly formatted %s values
      */
     @Override
     public CharSequence getSummary()

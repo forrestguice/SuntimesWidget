@@ -276,7 +276,7 @@ public class TimeZoneDialog extends DialogFragment
 
     /**
      * trigger the time zone ActionMode
-     * @param view
+     * @param view the view that is triggering the ActionMode
      * @return true ActionMode started, false otherwise
      */
     private boolean triggerTimeZoneActionMode(View view)
@@ -374,7 +374,7 @@ public class TimeZoneDialog extends DialogFragment
 
     /**
      * Restore the dialog state from saved preferences currently used by the app.
-     * @param context
+     * @param context a context used to access shared prefs
      */
     protected void loadSettings(Context context)
     {
@@ -390,7 +390,7 @@ public class TimeZoneDialog extends DialogFragment
 
     /**
      * Restore the dialog state from the provided bundle.
-     * @param bundle
+     * @param bundle a Bundle containing the dialog state
      */
     protected void loadSettings(Bundle bundle)
     {
@@ -417,7 +417,7 @@ public class TimeZoneDialog extends DialogFragment
 
     /**
      * Save the dialog state to preferences to be used by the app (occurs on dialog accept).
-     * @param context
+     * @param context a context used to access shared prefs
      */
     protected void saveSettings(Context context)
     {
@@ -437,7 +437,7 @@ public class TimeZoneDialog extends DialogFragment
 
     /**
      * Save the dialog state to a bundle to be restored at a later time (occurs onSaveInstanceState).
-     * @param bundle
+     * @param bundle a bundle containing the dialog state
      */
     protected void saveSettings(Bundle bundle)
     {

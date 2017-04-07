@@ -282,7 +282,7 @@ public class LocationConfigView extends LinearLayout
 
     /**
      *
-     * @param context
+     * @param context a context used to access resources
      */
     protected void initViews( Context context )
     {
@@ -403,7 +403,7 @@ public class LocationConfigView extends LinearLayout
     }
 
     /**
-     * @param location
+     * @param location a WidgetSettings.Location instance to update from
      */
     private void updateViews(WidgetSettings.Location location)
     {
@@ -413,7 +413,7 @@ public class LocationConfigView extends LinearLayout
     }
 
     /**
-     *
+     * @param context a context used to access shared prefs
      */
     protected void loadSettings(Context context)
     {
@@ -434,7 +434,8 @@ public class LocationConfigView extends LinearLayout
     }
 
     /**
-     *
+     * @param context a context used to access shared prefs
+     * @param bundle a Bundle containing saved state
      */
     protected void loadSettings(Context context, Bundle bundle )
     {
@@ -489,8 +490,8 @@ public class LocationConfigView extends LinearLayout
     }
 
     /**
-     * @param context
-     * @param data
+     * @param context a context used to access shared prefs
+     * @param data a Uri with geo location data
      */
     protected void loadSettings(Context context, Uri data )
     {
@@ -521,8 +522,8 @@ public class LocationConfigView extends LinearLayout
     }
 
     /**
-     * @param bundle
-     * @return
+     * @param bundle a Bundle to save to
+     * @return true settings were saved
      */
     protected boolean saveSettings(Bundle bundle)
     {
@@ -587,9 +588,9 @@ public class LocationConfigView extends LinearLayout
     //public void dismissGPSEnabledPrompt() { getFixHelper.dismissGPSEnabledPrompt(); }
 
     /**
-     * @param requestCode
-     * @param permissions
-     * @param grantResults
+     * @param requestCode the request code that was passed to requestPermissions
+     * @param permissions the requested permissions
+     * @param grantResults either PERMISSION_GRANTED or PERMISSION_DENIED for each of the requested permissions
      */
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
     {

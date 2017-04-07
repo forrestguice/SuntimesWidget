@@ -73,7 +73,7 @@ public class LocationConfigDialog extends DialogFragment
     public boolean getHideTitle() { return hideTitle; }
 
     /**
-     * @param data
+     * Preset data (in the form of a geo URI)
      */
     private Uri presetData = null;
     public void setData(Uri data)
@@ -86,9 +86,9 @@ public class LocationConfigDialog extends DialogFragment
     }
 
     /**
-     * @param requestCode
-     * @param permissions
-     * @param grantResults
+     * @param requestCode the request code that was passed to requestPermissions
+     * @param permissions the requested permissions
+     * @param grantResults either PERMISSION_GRANTED or PERMISSION_DENIED for each of the requested permissions
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults)
@@ -121,8 +121,8 @@ public class LocationConfigDialog extends DialogFragment
     }
 
     /**
-     * @param savedInstanceState
-     * @return
+     * @param savedInstanceState a Bundle containing previously saved dialog state
+     * @return an AlertDialog ready for display
      */
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
@@ -212,7 +212,7 @@ public class LocationConfigDialog extends DialogFragment
     }
 
     /**
-     * @param outState
+     * @param outState a Bundle used to save state
      */
     @Override
     public void onSaveInstanceState( Bundle outState )
@@ -223,7 +223,7 @@ public class LocationConfigDialog extends DialogFragment
     }
 
     /**
-     * @param bundle
+     * @param bundle a Bundle used to save state
      */
     protected void saveSettings(Bundle bundle)
     {
@@ -236,7 +236,7 @@ public class LocationConfigDialog extends DialogFragment
     }
 
     /**
-     * @param bundle
+     * @param bundle a Bundle used to load state
      */
     protected void loadSettings(Bundle bundle)
     {

@@ -76,7 +76,7 @@ public class LightMapView extends LinearLayout
     }
 
     /**
-     * @param context
+     * @param context a context used to access resources
      */
     private void initLayout(Context context)
     {
@@ -85,7 +85,7 @@ public class LightMapView extends LinearLayout
     }
 
     /**
-     * @param context
+     * @param context a context used to access resources
      */
     protected void initViews( Context context )
     {
@@ -94,7 +94,7 @@ public class LightMapView extends LinearLayout
     }
 
     /**
-     * @param context
+     * @param context a context used to access resources
      */
     @SuppressWarnings("ResourceType")
     private void initColors(Context context)
@@ -139,10 +139,10 @@ public class LightMapView extends LinearLayout
     }
 
     /**
-     * @param w
-     * @param h
-     * @param oldw
-     * @param oldh
+     * @param w the changed width
+     * @param h the changed height
+     * @param oldw the previous width
+     * @param oldh the previous height
      */
     @Override
     public void onSizeChanged (int w, int h, int oldw, int oldh)
@@ -167,7 +167,7 @@ public class LightMapView extends LinearLayout
     }
 
     /**
-     * @param data
+     * @param data an instance of SuntimesRiseSetDataset
      */
     public void updateViews(SuntimesRiseSetDataset data)
     {
@@ -312,7 +312,7 @@ public class LightMapView extends LinearLayout
     }
 
     /**
-     *
+     * @param context a context used to access shared prefs
      */
     protected void loadSettings(Context context)
     {
@@ -322,25 +322,28 @@ public class LightMapView extends LinearLayout
     }
 
     /**
-     *
+     * @param context a context used to access resources
+     * @param bundle a Bundle used to load state
      */
     protected void loadSettings(Context context, Bundle bundle )
     {
         //Log.d("DEBUG", "LightMapView loadSettings (bundle)");
     }
 
+
     /**
-     *
+     * @param context a context used to access shared prefs
+     * @return true settings were saved
      */
     protected boolean saveSettings(Context context)
     {
         //Log.d("DEBUG", "LightMap loadSettings (prefs)");
-        return false;
+        return true;
     }
 
     /**
-     * @param bundle
-     * @return
+     * @param bundle a Bundle used to save state
+     * @return true settings were saved
      */
     protected boolean saveSettings(Bundle bundle)
     {

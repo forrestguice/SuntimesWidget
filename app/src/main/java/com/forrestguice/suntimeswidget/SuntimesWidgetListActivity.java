@@ -58,7 +58,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
 
     /**
      * OnCreate: the Activity initially created
-     * @param icicle
+     * @param icicle a Bundle containing saved state
      */
     @Override
     public void onCreate(Bundle icicle)
@@ -126,7 +126,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
 
     /**
      * initialize ui/views
-     * @param context
+     * @param context a context used to access resources
      */
     protected void initViews(Context context)
     {
@@ -184,7 +184,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     }
 
     /**
-     * @param widget
+     * @param widget a WidgetListItem (referencing some widget id)
      */
     protected void reconfigureWidget(WidgetListItem widget)
     {

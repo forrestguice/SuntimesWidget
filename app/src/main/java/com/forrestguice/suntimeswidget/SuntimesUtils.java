@@ -193,9 +193,9 @@ public class SuntimesUtils
     }
 
     /**
-     * @param context
-     * @param cal
-     * @return
+     * @param context a context used to access time/date settings
+     * @param cal a Calendar representing some point in time
+     * @return a display string that describes the time (short format)
      */
     public TimeDisplayText calendarTimeShortDisplayString(Context context, Calendar cal)
     {
@@ -264,9 +264,9 @@ public class SuntimesUtils
     }
 
     /**
-     * @param c1
-     * @param c2
-     * @return
+     * @param c1 a Calendar representing some point in time
+     * @param c2 another Calendar representing another point in time
+     * @return a display string that describes the span between the two calendars
      */
     public TimeDisplayText timeDeltaDisplayString(Date c1, Date c2)
     {
@@ -286,7 +286,7 @@ public class SuntimesUtils
     /**
      * @param timeSpan1 first event
      * @param timeSpan2 second event
-     * @return a TimeDisplayText object that describes difference between the two spans
+     * @return a display string that describes difference between the two spans
      */
     public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2)
     {

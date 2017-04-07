@@ -169,7 +169,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     }
 
     /**
-     * @param target
+     * @param target the target list to place headers into
      */
     @Override
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -196,8 +196,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     }
 
     /**
-     * @param fragmentName
-     * @return
+     * @param fragmentName reference to some fragment (by name)
+     * @return true is a PreferenceFragment allowed by this activity
      */
     @Override
     protected boolean isValidFragment(String fragmentName)

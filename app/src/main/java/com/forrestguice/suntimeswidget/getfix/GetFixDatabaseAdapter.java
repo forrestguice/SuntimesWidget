@@ -113,9 +113,9 @@ public class GetFixDatabaseAdapter
     }
 
     /**
-     * Get a Cursor over all places in the database.
-     * @param n
-     * @param fullEntry true get all place data, false get name only
+     * Get a Cursor over places in the database.
+     * @param n get first n results (n <= 0 for complete list)
+     * @param fullEntry true get all place data, false get display name only
      * @return a Cursor into the database
      */
     public Cursor getAllPlaces(int n, boolean fullEntry)
