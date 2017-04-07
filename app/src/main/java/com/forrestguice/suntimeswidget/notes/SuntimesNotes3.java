@@ -88,6 +88,10 @@ public class SuntimesNotes3 implements SuntimesNotes
     @Override
     public int getNoteIndex()
     {
+        if (currentNote != null)
+        {
+            return notesList.indexOf(currentNote);
+        }
         return noteIndex;
     }
 

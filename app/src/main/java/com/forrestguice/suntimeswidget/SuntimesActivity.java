@@ -110,8 +110,8 @@ public class SuntimesActivity extends AppCompatActivity
     private GetFixHelper getFixHelper;
 
     private WidgetSettings.Location location;
-    private SuntimesNotes notes;
-    private SuntimesRiseSetDataset dataset;
+    protected SuntimesNotes notes;
+    protected SuntimesRiseSetDataset dataset;
 
     private int color_textTimeDelta;
 
@@ -1992,6 +1992,23 @@ public class SuntimesActivity extends AppCompatActivity
     {
         userSwappedCard = value;
         Log.d("DEBUG", "userSwappedCard set " + value + " (" + tag + " )");
+    }
+
+    /**
+     * @return
+     */
+    public int getThemeId()
+    {
+        try {
+            Method method = Context.class.getMethod("getThemeResId");
+            method.setAccessible(true);
+            return (Integer) method.invoke(this);
+
+        } catch (Exception e) {
+            Log.e("getThemeId", "Failed to get theme ID");
+            e.printStackTrace();
+        }
+        return 0;
     }
 
 }
