@@ -379,7 +379,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private static void initPref_locale(PreferenceFragment fragment)
     {
-        Preference localePref = (Preference)fragment.findPreference(AppSettings.PREF_KEY_LOCALE);
+        Preference localePref = fragment.findPreference(AppSettings.PREF_KEY_LOCALE);
         initPref_locale(fragment.getActivity(), localePref);
     }
     private static void initPref_locale(Activity activity, Preference localePref)
@@ -410,8 +410,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_places, false);
             addPreferencesFromResource(R.xml.preference_places);
 
-            Preference clearPlacesPref = (Preference)findPreference("places_clear");
-            Preference exportPlacesPref = (Preference)findPreference("places_export");
+            Preference clearPlacesPref = findPreference("places_clear");
+            Preference exportPlacesPref = findPreference("places_export");
             base = new PlacesPrefsBase(getActivity(), clearPlacesPref, exportPlacesPref);
         }
 
@@ -650,9 +650,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     private void initPref_places()
     {
         //noinspection deprecation
-        Preference clearPlacesPref = (Preference)findPreference("places_clear");
+        Preference clearPlacesPref = findPreference("places_clear");
         //noinspection deprecation
-        Preference exportPlacesPref = (Preference)findPreference("places_export");
+        Preference exportPlacesPref = findPreference("places_export");
         placesPrefBase = new PlacesPrefsBase(this, clearPlacesPref, exportPlacesPref);
     }
 
