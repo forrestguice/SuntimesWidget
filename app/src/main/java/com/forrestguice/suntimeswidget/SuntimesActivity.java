@@ -1229,6 +1229,7 @@ public class SuntimesActivity extends AppCompatActivity
         //
         // clock & date
         //
+        Calendar now = dataset.now();
         Date data_date = dataset.dataActual.date();
         Date data_date2 = dataset.dataActual.dateOther();
 
@@ -1264,11 +1265,11 @@ public class SuntimesActivity extends AppCompatActivity
         // date fields
         ImageSpan dateWarningIcon = (showWarnings && dateWarning.shouldShow) ? SuntimesUtils.createWarningSpan(this, txt_date.getTextSize()) : null;
         String dateString = getString(R.string.dateField, thisString, dateFormat.format(data_date));
-        SpannableStringBuilder dateSpan = SuntimesUtils.createSpan(dateString, dateWarningIcon);
+        SpannableStringBuilder dateSpan = SuntimesUtils.createSpan(this, dateString, SuntimesUtils.SPANTAG_WARNING, dateWarningIcon);
         txt_date.setText(dateSpan);
 
         String date2String = getString(R.string.dateField, otherString, dateFormat.format(data_date2));
-        SpannableStringBuilder date2Span = SuntimesUtils.createSpan(date2String, dateWarningIcon);
+        SpannableStringBuilder date2Span = SuntimesUtils.createSpan(this, date2String, SuntimesUtils.SPANTAG_WARNING, dateWarningIcon);
         txt_date2.setText(date2Span);
 
         // timezone field
@@ -1894,7 +1895,7 @@ public class SuntimesActivity extends AppCompatActivity
         public void initWarning(Context context, String msg)
         {
             ImageSpan warningIcon = SuntimesUtils.createWarningSpan(context, txt_date.getTextSize());
-            SpannableStringBuilder message = SuntimesUtils.createSpan(msg, warningIcon);
+            SpannableStringBuilder message = SuntimesUtils.createSpan(SuntimesActivity.this, msg, SuntimesUtils.SPANTAG_WARNING, warningIcon);
 
             wasDismissed = false;
             snackbar = Snackbar.make(card_flipper, message, Snackbar.LENGTH_INDEFINITE);
