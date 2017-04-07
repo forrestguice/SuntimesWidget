@@ -85,6 +85,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TimeZone;
 
 public class SuntimesActivity extends AppCompatActivity
 {
@@ -1242,7 +1243,6 @@ public class SuntimesActivity extends AppCompatActivity
 
         if (dataset.dataActual.todayIsNotToday())
         {
-            Calendar now = dataset.now();
             WidgetSettings.DateInfo nowInfo = new WidgetSettings.DateInfo(now);
             WidgetSettings.DateInfo dataInfo = new WidgetSettings.DateInfo(dataset.dataActual.calendar());
             if (!nowInfo.equals(dataInfo))
@@ -1273,10 +1273,22 @@ public class SuntimesActivity extends AppCompatActivity
         txt_date2.setText(date2Span);
 
         // timezone field
-        timezoneWarning.shouldShow = WidgetTimezones.isProbablyNotLocal(dataset.timezone(), dataset.location(), dataset.date());
+        TimeZone timezone = dataset.timezone();
+        timezoneWarning.shouldShow = WidgetTimezones.isProbablyNotLocal(timezone, dataset.location(), dataset.date());
         ImageSpan timezoneWarningIcon = (showWarnings && timezoneWarning.shouldShow) ? SuntimesUtils.createWarningSpan(this, txt_timezone.getTextSize()) : null;
-        String timezoneString = getString(R.string.timezoneField, dataset.timezone().getID());
-        SpannableStringBuilder timezoneSpan = SuntimesUtils.createSpan(timezoneString, timezoneWarningIcon);
+
+        boolean useDST = (Build.VERSION.SDK_INT < 24 ? timezone.useDaylightTime()
+                : timezone.observesDaylightTime());
+        boolean inDST = useDST && timezone.inDaylightTime(now.getTime());
+        ImageSpan dstWarningIcon = (inDST) ? SuntimesUtils.createDstSpan(this, txt_timezone.getTextSize()) : null;
+
+        SuntimesUtils.ImageSpanTag[] timezoneTags = {
+                new SuntimesUtils.ImageSpanTag(SuntimesUtils.SPANTAG_WARNING, timezoneWarningIcon),
+                new SuntimesUtils.ImageSpanTag(SuntimesUtils.SPANTAG_DST, dstWarningIcon)
+        };
+
+        String timezoneString = getString(R.string.timezoneField, timezone.getID());
+        SpannableStringBuilder timezoneSpan = SuntimesUtils.createSpan(this, timezoneString, timezoneTags);
         txt_timezone.setText(timezoneSpan);
 
         // "light map"

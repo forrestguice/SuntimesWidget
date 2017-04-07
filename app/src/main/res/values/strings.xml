@@ -31,7 +31,7 @@
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
     -->
-    <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
+    <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> The time zone may be wrong for this location.</string>  <!-- snackbar message -->
 
     <!-- Field: date

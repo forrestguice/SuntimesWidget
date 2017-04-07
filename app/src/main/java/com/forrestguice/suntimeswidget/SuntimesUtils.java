@@ -48,6 +48,7 @@ import java.util.Locale;
 
 public class SuntimesUtils
 {
+    public static final String SPANTAG_DST = "[d]";
     public static final String SPANTAG_WARNING = "[w]";
 
     private static String strTimeShorter = "shorter";
@@ -497,6 +498,20 @@ public class SuntimesUtils
         int errorTint = context.getResources().getColor(R.color.error);
         return createImageSpan(context, drawableID, width, height, errorTint);
     }
+
+    public static ImageSpan createDstSpan(Context context, float height)
+    {
+        return createDstSpan(context, (int) Math.ceil(height), (int) Math.ceil(height));
+    }
+    public static ImageSpan createDstSpan(Context context, int width, int height)
+    {
+        TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.icActionDst});
+        int drawableID = a.getResourceId(0, R.drawable.ic_action_brightness_high);
+        a.recycle();
+        int dstTint = context.getResources().getColor(R.color.sunIcon_color_rising);
+        return createImageSpan(context, drawableID, width, height, dstTint);
+    }
+
     public static ImageSpan createImageSpan(Context context, int drawableID, int width, int height, int tint)
     {
         Drawable drawable = null;
