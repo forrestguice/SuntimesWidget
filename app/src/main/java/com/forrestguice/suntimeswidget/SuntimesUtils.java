@@ -32,6 +32,7 @@ import android.text.SpannableStringBuilder;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.util.TypedValue;
 
 import java.text.DateFormat;
@@ -396,25 +397,33 @@ public class SuntimesUtils
         return displayString;
     }
 
-    /**
-     * @param text a pre-formatted datestring
-     * @param warningSpan an ImageSpan to be substituted in place of all [w] tags (or null to remove tag).
-     * @return a SpannableStringBuilder with tags replaced with appropriate ImageSpans
-     */
-    public static SpannableStringBuilder createSpan(String text, ImageSpan warningSpan)
+    public static SpannableStringBuilder createSpan(Context context, String text, String spanTag, ImageSpan imageSpan)
     {
-        SpannableStringBuilder dateSpan = new SpannableStringBuilder(text);
-        int tagPos_warning = text.indexOf(SPANTAG_WARNING);
-        if (tagPos_warning >= 0)
+        ImageSpanTag[] tags = { new ImageSpanTag(spanTag, imageSpan) };
+        return createSpan(context, text, tags);
+    }
+
+    public static SpannableStringBuilder createSpan(Context context, String text, ImageSpanTag[] tags)
+    {
+        SpannableStringBuilder span = new SpannableStringBuilder(text);
+        ImageSpan blank = createImageSpan(context, R.drawable.ic_transparent, 0, 0, R.color.color_transparent);
+
+        for (ImageSpanTag tag : tags)
         {
-            if (warningSpan != null)
+            String spanTag = tag.getTag();
+            ImageSpan imageSpan = (tag.getSpan() == null) ? blank : tag.getSpan();
+
+            int tagPos;
+            while ((tagPos = text.indexOf(spanTag)) >= 0)
             {
-                dateSpan.setSpan(warningSpan, tagPos_warning, tagPos_warning + SPANTAG_WARNING.length(), ImageSpan.ALIGN_BASELINE);
-            } else {
-                dateSpan.replace(tagPos_warning, tagPos_warning + SPANTAG_WARNING.length(), new SpannableString(""));
+                int tagEnd = tagPos + spanTag.length();
+                //Log.d("DEBUG", "tag=" + spanTag + ", tagPos=" + tagPos + ", " + tagEnd + ", text=" + text);
+
+                span.setSpan(createImageSpan(imageSpan), tagPos, tagEnd, ImageSpan.ALIGN_BASELINE);
+                text = text.substring(0, tagPos) + tag.getBlank() + text.substring(tagEnd);
             }
         }
-        return dateSpan;
+        return span;
     }
 
     public static SpannableString createColorSpan(String text, String toColorize, int color)
@@ -466,9 +475,10 @@ public class SuntimesUtils
         //noinspection SuspiciousNameCombination
         return createWarningSpan(context, height, height);
     }
+
     public static ImageSpan createWarningSpan(Context context, float height)
     {
-        return createWarningSpan(context, (int)Math.ceil(height));
+        return createWarningSpan(context, (int) Math.ceil(height));
     }
     public static ImageSpan createWarningSpan(Context context, int width, int height)
     {
@@ -478,6 +488,7 @@ public class SuntimesUtils
         int warningTint = context.getResources().getColor(R.color.warning);
         return createImageSpan(context, drawableID, width, height, warningTint);
     }
+
     public static ImageSpan createErrorSpan(Context context, int width, int height)
     {
         TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.icActionError});
@@ -488,7 +499,13 @@ public class SuntimesUtils
     }
     public static ImageSpan createImageSpan(Context context, int drawableID, int width, int height, int tint)
     {
-        Drawable drawable = context.getResources().getDrawable(drawableID);
+        Drawable drawable = null;
+        try {
+            drawable = context.getResources().getDrawable(drawableID);
+        } catch (Exception e) {
+            Log.e("createImageSpan", "invalid drawableID " + drawableID + "! ...set to null.");
+        }
+
         if (drawable != null)
         {
             if (width > 0 && height > 0)
@@ -498,6 +515,54 @@ public class SuntimesUtils
             drawable.setColorFilter(tint, PorterDuff.Mode.SRC_ATOP);
         }
         return new ImageSpan(drawable);
+    }
+
+    public static ImageSpan createImageSpan(ImageSpan other)
+    {
+        Drawable drawable = null;
+        if (other != null)
+            drawable = other.getDrawable();
+
+        return new ImageSpan(drawable);
+    }
+
+    /**
+     * utility class; [Tag, ImageSpan] tuple
+     */
+    public static class ImageSpanTag
+    {
+        private String tag;       // the tag, e.g. [w]
+        private ImageSpan span;   // an ImageSpan that should be substituted for the tag
+        private String blank;     // a "blank" string the same length as the tag
+
+        public ImageSpanTag(String tag, ImageSpan span)
+        {
+            this.tag = tag;
+            this.span = span;
+            buildBlankTag();
+        }
+
+        private void buildBlankTag()
+        {
+            blank = "";
+            for (int i=0; i<tag.length(); i++)
+            {    blank += " ";    }
+        }
+
+        public String getTag()
+        {
+            return tag;
+        }
+
+        public ImageSpan getSpan()
+        {
+            return span;
+        }
+
+        public String getBlank()
+        {
+            return blank;
+        }
     }
 
 }
