@@ -63,6 +63,7 @@ public class WidgetTimezones
         double offsetDiff = Math.abs(lonOffset - zoneOffset);
 
         double offsetTolerance = 3;    // tolerance in hrs
+        //noinspection UnnecessaryLocalVariable
         boolean isProbablyNotLocal = (offsetDiff > offsetTolerance);
         //Log.d("DEBUG", "offsets: " + zoneOffset + ", " + lonOffset);
         //Log.d("DEBUG", "offset delta: " +  offsetDiff +" [" + offsetTolerance + "] (" + isProbablyNotLocal + ")");
@@ -148,6 +149,7 @@ public class WidgetTimezones
         public int findOffset( double longitude )
         {
             double offsetHrs = longitude * 24 / 360;           // offset from gmt in hrs
+            //noinspection UnnecessaryLocalVariable
             int offsetMs = (int)(offsetHrs * 60 * 60 * 1000);  // hrs * 60min in a day * 60s in a min * 1000ms in a second
             //Log.d("DEBUG", "offset: " + offsetHrs + " (" + offsetMs + ")");
             return offsetMs;

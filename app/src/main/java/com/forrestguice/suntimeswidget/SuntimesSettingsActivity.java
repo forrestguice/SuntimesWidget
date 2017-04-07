@@ -208,6 +208,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                PlacesPrefsFragment.class.getName().equals(fragmentName);
     }
 
+    @SuppressWarnings("UnnecessaryReturnStatement")
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
     {

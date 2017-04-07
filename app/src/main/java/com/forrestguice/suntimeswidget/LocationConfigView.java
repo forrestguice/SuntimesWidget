@@ -131,6 +131,7 @@ public class LocationConfigView extends LinearLayout
     public WidgetSettings.LocationMode getLocationMode()
     {
         final WidgetSettings.LocationMode[] locationModes = WidgetSettings.LocationMode.values();
+        //noinspection UnnecessaryLocalVariable
         WidgetSettings.LocationMode locationMode = locationModes[ spinner_locationMode.getSelectedItemPosition() ];
         return locationMode;
     }

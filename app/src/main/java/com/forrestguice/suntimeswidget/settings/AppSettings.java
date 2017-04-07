@@ -152,6 +152,7 @@ public class AppSettings
      */
     public static boolean resetLocale( Context context )
     {
+        //noinspection SimplifiableIfStatement
         if (systemLocale != null)
         {
             //Log.d("resetLocale", "locale reset to " + systemLocale);

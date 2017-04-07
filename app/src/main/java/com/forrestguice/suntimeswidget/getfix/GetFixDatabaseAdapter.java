@@ -206,6 +206,7 @@ public class GetFixDatabaseAdapter
     public String addPlaceCSV_header()
     {
         String separator = ", ";
+        //noinspection UnnecessaryLocalVariable
         String line = KEY_PLACE_NAME + separator +
                 KEY_PLACE_LATITUDE + separator +
                 KEY_PLACE_LONGITUDE + separator +
@@ -216,6 +217,7 @@ public class GetFixDatabaseAdapter
     public String addPlaceCSV_row( ContentValues place )
     {
         String separator = ", ";
+        //noinspection UnnecessaryLocalVariable
         String line = place.getAsString(KEY_PLACE_NAME) + separator +
                       place.getAsString(KEY_PLACE_LATITUDE) + separator +
                       place.getAsString(KEY_PLACE_LONGITUDE) + separator +

@@ -379,6 +379,7 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
         }
     }
 
+    @SuppressWarnings("EmptyMethod")
     public static abstract class GetFixTaskListener
     {
         public void onStarted() {}

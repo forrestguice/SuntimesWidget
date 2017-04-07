@@ -249,6 +249,7 @@ public class LightMapView extends LinearLayout
         c.drawRect(0, 0, w, h, p);
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private boolean drawRect( SuntimesRiseSetData data, Canvas c, Paint p )
     {
         Calendar riseTime = data.sunriseCalendarToday();
@@ -318,7 +319,10 @@ public class LightMapView extends LinearLayout
     {
         //Log.d("DEBUG", "LightMapView loadSettings (prefs)");
         if (isInEditMode())
+        {
+            //noinspection UnnecessaryReturnStatement
             return;
+        }
     }
 
     /**

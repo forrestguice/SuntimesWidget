@@ -135,6 +135,7 @@ public class SuntimesTheme
 
         themePrefs.apply();
 
+        //noinspection UnnecessaryLocalVariable
         ThemeDescriptor themeDescriptor = themeDescriptor();
         return themeDescriptor;
     }

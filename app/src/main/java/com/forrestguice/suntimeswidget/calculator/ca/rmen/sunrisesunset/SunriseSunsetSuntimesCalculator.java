@@ -94,6 +94,7 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     @Override
     public Calendar getSolarNoonCalendarForDate(Calendar date)
     {
+        //noinspection UnnecessaryLocalVariable
         Calendar noon = SunriseSunset.getSolarNoon(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble());
         return noon;
     }

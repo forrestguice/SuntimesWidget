@@ -1524,10 +1524,10 @@ public class SuntimesActivity extends AppCompatActivity
                             return onTouch(view, event);
                         }
 
-                    } else {
+                    } //else {
                         // at-a-boundary (the first/last view);
                         // TODO: animate somehow to let user know there aren't additional views
-                    }
+                    //}
                     break;
             }
             return true;
