@@ -155,6 +155,7 @@ public class AppSettings
      */
     public static boolean resetLocale( Context context )
     {
+        //noinspection SimplifiableIfStatement
         if (systemLocale != null)
         {
             //Log.d("resetLocale", "locale reset to " + systemLocale);
@@ -199,7 +200,7 @@ public class AppSettings
 
     /**
      * Is the current locale right-to-left?
-     * @param context
+     * @param context a context used to access resources
      * @return true the locale is right-to-left, false the locale is left-to-right
      */
     public static boolean isLocaleRtl(Context context)
@@ -401,8 +402,16 @@ public class AppSettings
     }
     public static int loadTheme(Context context, SuntimesRiseSetDataset dataset)
     {
+        return themePrefToStyleId(loadThemePref(context), dataset);
+    }
+
+    public static int themePrefToStyleId( String themeName )
+    {
+        return themePrefToStyleId(themeName, null);
+    }
+    public static int themePrefToStyleId( String themeName, SuntimesRiseSetDataset dataset )
+    {
         int styleID = R.style.AppTheme_Dark;
-        String themeName = loadThemePref(context);
         if (themeName != null)
         {
             if (themeName.equals(THEME_LIGHT))
@@ -423,9 +432,9 @@ public class AppSettings
     }
 
     /**
-     * @param prefs
-     * @param defaultValue
-     * @return
+     * @param prefs an instance of SharedPreferences
+     * @param defaultValue the default max age value if pref can't be loaded
+     * @return the gps max age value (milliseconds)
      */
     public static int loadPrefGpsMaxAge(SharedPreferences prefs, int defaultValue)
     {
@@ -441,9 +450,9 @@ public class AppSettings
     }
 
     /**
-     * @param prefs
-     * @param defaultValue
-     * @return
+     * @param prefs an instance of SharedPreferences
+     * @param defaultValue the default min elapsed value if pref can't be loaded
+     * @return the gps min elapsed value (milliseconds)
      */
     public static int loadPrefGpsMinElapsed(SharedPreferences prefs, int defaultValue)
     {
@@ -459,9 +468,9 @@ public class AppSettings
     }
 
     /**
-     * @param prefs
-     * @param defaultValue
-     * @return
+     * @param prefs an instance of SharedPreferences
+     * @param defaultValue the default max elapsed value if pref can't be loaded
+     * @return the gps max elapsed value (milliseconds)
      */
     public static int loadPrefGpsMaxElapsed(SharedPreferences prefs, int defaultValue)
     {
@@ -477,7 +486,7 @@ public class AppSettings
     }
 
     /**
-     * @param context
+     * @param context a context used to access resources
      */
     public static void initDisplayStrings( Context context )
     {

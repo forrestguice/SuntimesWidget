@@ -95,9 +95,9 @@ public class SuntimesCalculatorDescriptor implements Comparable
         }
     }
 
-    private String name;
-    private String displayString;
-    private String calculatorRef;
+    private final String name;
+    private final String displayString;
+    private final String calculatorRef;
 
     /**
      * Create a SuntimesCalculatorDescriptor object.

@@ -105,7 +105,7 @@ public class SuntimesActivity extends AppCompatActivity
     private static final String DIALOGTAG_LIGHTMAP = "lightmap";
     private static final String DIALOGTAG_EQUINOX = "equinox";
 
-    protected static SuntimesUtils utils = new SuntimesUtils();
+    protected static final SuntimesUtils utils = new SuntimesUtils();
 
     private ActionBar actionBar;
     private Menu actionBarMenu;
@@ -113,9 +113,9 @@ public class SuntimesActivity extends AppCompatActivity
     private GetFixHelper getFixHelper;
 
     private WidgetSettings.Location location;
-    private SuntimesNotes notes;
-    private SuntimesRiseSetDataset dataset;
-    private SuntimesEquinoxSolsticeDataset dataset2;
+    protected SuntimesNotes notes;
+    protected SuntimesRiseSetDataset dataset;
+    protected SuntimesEquinoxSolsticeDataset dataset2;
 
     private int color_textTimeDelta;
 
@@ -206,7 +206,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     /**
      * OnCreate: the Activity initially created
-     * @param savedState
+     * @param savedState a Bundle containing previously saved application state
      */
     @Override
     public void onCreate(Bundle savedState)
@@ -376,9 +376,9 @@ public class SuntimesActivity extends AppCompatActivity
     }
 
     /**
-     * @param requestCode
-     * @param permissions
-     * @param grantResults
+     * @param requestCode the request code that was passed to requestPermissions
+     * @param permissions the requested permissions
+     * @param grantResults either PERMISSION_GRANTED or PERMISSION_DENIED for each of the requested permissions
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults)
@@ -401,7 +401,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     /**
      * initialize ui/views
-     * @param context
+     * @param context a context used to access resources
      */
     protected void initViews(Context context)
     {
@@ -560,7 +560,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     /**
      * initialize the note flipper and associated views
-     * @param context
+     * @param context a context used to access resources
      */
     private void initNoteViews(Context context)
     {
@@ -643,7 +643,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     /**
      * initialize the card flipper and associated views
-     * @param context
+     * @param context a context used to access resources
      */
     private void initCardViews(Context context)
     {
@@ -781,7 +781,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     /**
      * initialize the clock ui
-     * @param context
+     * @param context a context used to access resources
      */
     private void initClockViews(Context context)
     {
@@ -798,7 +798,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     /**
      * initialize view animations
-     * @param context
+     * @param context a context used to access resources
      */
     private void initAnimations(Context context)
     {
@@ -817,7 +817,7 @@ public class SuntimesActivity extends AppCompatActivity
     }
 
     /**
-     * @param context
+     * @param context a context used to access resources
      */
     private void initColors(Context context)
     {
@@ -1148,7 +1148,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     /**
      *
-     * @param context
+     * @param context a context used to access shared prefs
      */
     private void initData( Context context )
     {
@@ -1408,7 +1408,7 @@ public class SuntimesActivity extends AppCompatActivity
     /**
      * Clock ui update rate; once every few seconds.
      */
-    public static int UPDATE_RATE = 3000;     // primary update rate: 3s
+    public static final int UPDATE_RATE = 3000;     // primary update rate: 3s
 
     /**
      * Update the clock ui at regular intervals to reflect current time (and note).
@@ -1440,8 +1440,8 @@ public class SuntimesActivity extends AppCompatActivity
 
     /**
      * onTouch swipe between the prev/next items in the view_flipper
-     * @param event
-     * @return
+     * @param event the touch MotionEvent
+     * @return true continue gesture (propagate event), false end gesture (consume event)
      */
     @Override
     public boolean onTouchEvent(MotionEvent event)
@@ -1542,11 +1542,13 @@ public class SuntimesActivity extends AppCompatActivity
                     secondTouchX = event.getX();
                     if ((secondTouchX - firstTouchX) > FLING_SENSITIVITY)
                     {   // swipe right; back to previous view
-                        setUserSwappedCard( (isRtl ? showNextCard() : showPreviousCard()), "timeCardTouchListener (fling prev)" );
+                        boolean flipResult = (isRtl ? showNextCard() : showPreviousCard());
+                        setUserSwappedCard(userSwappedCard || flipResult, "timeCardTouchListener (fling prev)");
 
                     } else if (firstTouchX - secondTouchX > FLING_SENSITIVITY) {
                         // swipe left; advance to next view
-                        setUserSwappedCard( (isRtl ? showPreviousCard() : showNextCard()), "timeCardTouchListener (fling next)" );
+                        boolean flipResult = (isRtl ? showPreviousCard() : showNextCard());
+                        setUserSwappedCard(userSwappedCard || flipResult, "timeCardTouchListener (fling next)");
 
                     } else {
                         // swipe cancel; reset current view
@@ -1584,14 +1586,12 @@ public class SuntimesActivity extends AppCompatActivity
                             return onTouch(view, event);
                         }
 
-                    } else {
+                    } //else {
                         // at-a-boundary (the first/last view);
                         // TODO: animate somehow to let user know there aren't additional views
-                    }
-
+                    //}
                     break;
             }
-
             return true;
         }
     };
@@ -1712,22 +1712,37 @@ public class SuntimesActivity extends AppCompatActivity
         }
     };
 
+    /**
+     * Toggle day length visibility.
+     * @param value true show daylength ui, false hide daylength ui
+     */
     protected void showDayLength( boolean value )
     {
         layout_daylength.setVisibility( (value ? View.VISIBLE : View.INVISIBLE) );
         layout_daylength2.setVisibility( (value ? View.VISIBLE : View.INVISIBLE) );
     }
 
+    /**
+     * Toggle note flipper visibility.
+     * @param value true show note ui, false hide note ui
+     */
     protected void showNotes( boolean value )
     {
         note_flipper.setVisibility( (value ? View.VISIBLE : View.INVISIBLE) );
     }
 
+    /**
+     * Toggle lightmap visibility.
+     * @param value true show lightmap ui, false hide lightmap ui
+     */
     protected void showLightMap( boolean value )
     {
         lightmapLayout.setVisibility((value ? View.VISIBLE : View.GONE));
     }
 
+    /**
+     * Show the lightmap dialog.
+     */
     protected void showLightMapDialog()
     {
         LightMapDialog lightMapDialog = new LightMapDialog();
@@ -1748,8 +1763,8 @@ public class SuntimesActivity extends AppCompatActivity
     }
 
     /**
-     * @param tomorrow
-     * @return
+     * @param tomorrow true is "tomorrow" date field, false is "today" date field
+     * @return an OnClickListener for the specified date field
      */
     private View.OnClickListener dateTapClickListener( final boolean tomorrow )
     {
@@ -1840,7 +1855,7 @@ public class SuntimesActivity extends AppCompatActivity
 
         if (!userSwappedCard)
         {
-            Log.d("DEBUG", "Swapping card to show highlighted :: userSwappedCard " + userSwappedCard);
+            //Log.d("DEBUG", "Swapping card to show highlighted :: userSwappedCard " + userSwappedCard);
             if (nextCardOffset > 0)
             {
                 showNextCard();
@@ -1914,7 +1929,6 @@ public class SuntimesActivity extends AppCompatActivity
 
         highlightTimeField(new SolarEvents.SolarEventField(note.noteMode, note.tomorrow));
     }
-
 
     /**
      * Stretch the horizontal rule to match the actual table width.. this is a hack to work around
@@ -2039,8 +2053,8 @@ public class SuntimesActivity extends AppCompatActivity
     }
 
     /**
-     * save the state of warning objects to outState
-     * @param outState
+     * Save the state of warning objects to Bundle.
+     * @param outState a Bundle to save state to
      */
     private void saveWarnings( Bundle outState )
     {
@@ -2051,8 +2065,8 @@ public class SuntimesActivity extends AppCompatActivity
     }
 
     /**
-     * restore the state of warning objects from savedState
-     * @param savedState
+     * Restore the state of warning objects from Bundle.
+     * @param savedState a Bundle containing saved state
      */
     private void restoreWarnings(Bundle savedState)
     {
@@ -2065,7 +2079,25 @@ public class SuntimesActivity extends AppCompatActivity
     private void setUserSwappedCard( boolean value, String tag )
     {
         userSwappedCard = value;
-        Log.d("DEBUG", "userSwappedCard set " + value + " (" + tag + " )");
+        //Log.d("DEBUG", "userSwappedCard set " + value + " (" + tag + " )");
+    }
+
+    /**
+     * Get the current theme's resource id (used by test verification).
+     * @return the resource id of the current theme/style (or 0 if getTHemeResId failed)
+     */
+    public int getThemeId()
+    {
+        try {
+            Method method = Context.class.getMethod("getThemeResId");
+            method.setAccessible(true);
+            return (Integer) method.invoke(this);
+
+        } catch (Exception e) {
+            Log.e("getThemeId", "Failed to get theme ID");
+            e.printStackTrace();
+        }
+        return 0;
     }
 
 }

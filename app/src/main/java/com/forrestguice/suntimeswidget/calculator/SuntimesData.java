@@ -144,7 +144,7 @@ public class SuntimesData
 
     /**
      * init from another SuntimesData object
-     * @param other
+     * @param other another instance of SuntimesData
      */
     protected void initFromOther( SuntimesData other )
     {
@@ -160,8 +160,8 @@ public class SuntimesData
 
     /**
      * init from shared preferences
-     * @param context
-     * @param appWidgetId
+     * @param context a context used to access shared prefs
+     * @param appWidgetId the widgetID to load settings from (0 for app)
      */
     protected void initFromSettings(Context context, int appWidgetId)
     {

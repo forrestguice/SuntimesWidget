@@ -20,9 +20,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 

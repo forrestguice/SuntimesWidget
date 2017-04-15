@@ -28,7 +28,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+
 import android.util.TypedValue;
 
 import android.support.annotation.NonNull;
@@ -265,7 +265,10 @@ public class TimeZoneDialog extends DialogFragment
         if (spinner_timezone_adapter != null)
         {
             String timezoneID = (value ? customTimezoneID : TimeZone.getDefault().getID());
-            spinner_timezone.setSelection(spinner_timezone_adapter.ordinal(timezoneID), true);
+            if (timezoneID != null)
+            {
+                spinner_timezone.setSelection(spinner_timezone_adapter.ordinal(timezoneID), true);
+            }
         }
         label_timezone.setEnabled(value);
         spinner_timezone.setEnabled(value);
@@ -273,7 +276,7 @@ public class TimeZoneDialog extends DialogFragment
 
     /**
      * trigger the time zone ActionMode
-     * @param view
+     * @param view the view that is triggering the ActionMode
      * @return true ActionMode started, false otherwise
      */
     private boolean triggerTimeZoneActionMode(View view)
@@ -371,7 +374,7 @@ public class TimeZoneDialog extends DialogFragment
 
     /**
      * Restore the dialog state from saved preferences currently used by the app.
-     * @param context
+     * @param context a context used to access shared prefs
      */
     protected void loadSettings(Context context)
     {
@@ -387,7 +390,7 @@ public class TimeZoneDialog extends DialogFragment
 
     /**
      * Restore the dialog state from the provided bundle.
-     * @param bundle
+     * @param bundle a Bundle containing the dialog state
      */
     protected void loadSettings(Bundle bundle)
     {
@@ -414,7 +417,7 @@ public class TimeZoneDialog extends DialogFragment
 
     /**
      * Save the dialog state to preferences to be used by the app (occurs on dialog accept).
-     * @param context
+     * @param context a context used to access shared prefs
      */
     protected void saveSettings(Context context)
     {
@@ -434,7 +437,7 @@ public class TimeZoneDialog extends DialogFragment
 
     /**
      * Save the dialog state to a bundle to be restored at a later time (occurs onSaveInstanceState).
-     * @param bundle
+     * @param bundle a bundle containing the dialog state
      */
     protected void saveSettings(Bundle bundle)
     {
@@ -445,12 +448,18 @@ public class TimeZoneDialog extends DialogFragment
 
         // save: custom timezone
         WidgetTimezones.TimeZoneItem customTimezone = (WidgetTimezones.TimeZoneItem) spinner_timezone.getSelectedItem();
-        bundle.putString(KEY_TIMEZONE_ID, customTimezone.getID());
+        if (customTimezone != null)
+        {
+            bundle.putString(KEY_TIMEZONE_ID, customTimezone.getID());
+        }
 
         // save: solar timemode
         WidgetSettings.SolarTimeMode[] solarTimeModes = WidgetSettings.SolarTimeMode.values();
         WidgetSettings.SolarTimeMode solarTimeMode = solarTimeModes[spinner_solartime.getSelectedItemPosition()];
-        bundle.putString(KEY_SOLARTIME_MODE, solarTimeMode.name());
+        if (solarTimeMode != null)
+        {
+            bundle.putString(KEY_SOLARTIME_MODE, solarTimeMode.name());
+        }
     }
 
     /**

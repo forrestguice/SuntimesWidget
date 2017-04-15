@@ -76,7 +76,7 @@ public class LightMapView extends LinearLayout
     }
 
     /**
-     * @param context
+     * @param context a context used to access resources
      */
     private void initLayout(Context context)
     {
@@ -85,7 +85,7 @@ public class LightMapView extends LinearLayout
     }
 
     /**
-     * @param context
+     * @param context a context used to access resources
      */
     protected void initViews( Context context )
     {
@@ -94,7 +94,7 @@ public class LightMapView extends LinearLayout
     }
 
     /**
-     * @param context
+     * @param context a context used to access resources
      */
     @SuppressWarnings("ResourceType")
     private void initColors(Context context)
@@ -139,10 +139,10 @@ public class LightMapView extends LinearLayout
     }
 
     /**
-     * @param w
-     * @param h
-     * @param oldw
-     * @param oldh
+     * @param w the changed width
+     * @param h the changed height
+     * @param oldw the previous width
+     * @param oldh the previous height
      */
     @Override
     public void onSizeChanged (int w, int h, int oldw, int oldh)
@@ -167,7 +167,7 @@ public class LightMapView extends LinearLayout
     }
 
     /**
-     * @param data
+     * @param data an instance of SuntimesRiseSetDataset
      */
     public void updateViews(SuntimesRiseSetDataset data)
     {
@@ -177,7 +177,7 @@ public class LightMapView extends LinearLayout
 
         if (mainView != null && w > 0 && h > 0)
         {
-            long bench_start = System.currentTimeMillis();
+            long bench_start = System.nanoTime();
             Bitmap b = Bitmap.createBitmap(w, h, Bitmap.Config.RGB_565);
             Canvas c = new Canvas(b);
             Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -237,7 +237,8 @@ public class LightMapView extends LinearLayout
 
             mainView.setImageBitmap(b);
             lastUpdate = System.currentTimeMillis();
-            Log.d("DEBUG", "lightmap updated in " + (lastUpdate - bench_start) + "ms :: " + w + "," + h + " :: hasView: " + (mainView != null) + " :: hasData " + (data != null));
+            long bench_end = System.nanoTime();
+            Log.d("DEBUG", "lightmap updated in " + ((bench_end - bench_start) / 1000000.0) + "ms :: " + w + "," + h + " :: hasView: " + (mainView != null) + " :: hasData " + (data != null));
         }
     }
 
@@ -248,6 +249,7 @@ public class LightMapView extends LinearLayout
         c.drawRect(0, 0, w, h, p);
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private boolean drawRect( SuntimesRiseSetData data, Canvas c, Paint p )
     {
         Calendar riseTime = data.sunriseCalendarToday();
@@ -311,35 +313,41 @@ public class LightMapView extends LinearLayout
     }
 
     /**
-     *
+     * @param context a context used to access shared prefs
      */
     protected void loadSettings(Context context)
     {
         //Log.d("DEBUG", "LightMapView loadSettings (prefs)");
         if (isInEditMode())
+        {
+            //noinspection UnnecessaryReturnStatement
             return;
+        }
     }
 
     /**
-     *
+     * @param context a context used to access resources
+     * @param bundle a Bundle used to load state
      */
     protected void loadSettings(Context context, Bundle bundle )
     {
         //Log.d("DEBUG", "LightMapView loadSettings (bundle)");
     }
 
+
     /**
-     *
+     * @param context a context used to access shared prefs
+     * @return true settings were saved
      */
     protected boolean saveSettings(Context context)
     {
         //Log.d("DEBUG", "LightMap loadSettings (prefs)");
-        return false;
+        return true;
     }
 
     /**
-     * @param bundle
-     * @return
+     * @param bundle a Bundle used to save state
+     * @return true settings were saved
      */
     protected boolean saveSettings(Bundle bundle)
     {

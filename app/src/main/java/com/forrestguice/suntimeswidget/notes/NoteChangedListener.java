@@ -20,9 +20,9 @@ package com.forrestguice.suntimeswidget.notes;
 
 public abstract class NoteChangedListener
 {
-    public static int TRANSITION_NONE = 0;
-    public static int TRANSITION_NEXT = 1;
-    public static int TRANSITION_PREV = 2;
+    public static final int TRANSITION_NONE = 0;
+    public static final int TRANSITION_NEXT = 1;
+    public static final int TRANSITION_PREV = 2;
 
     public abstract void onNoteChanged( NoteData note, int transition );
 }

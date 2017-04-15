@@ -38,7 +38,7 @@ import java.util.Date;
  */
 public class SuntimesNotes3 implements SuntimesNotes
 {
-    protected static SuntimesUtils utils = new SuntimesUtils();
+    protected static final SuntimesUtils utils = new SuntimesUtils();
 
     private ArrayList<NoteData> notesList;
 
@@ -88,6 +88,10 @@ public class SuntimesNotes3 implements SuntimesNotes
     @Override
     public int getNoteIndex()
     {
+        if (currentNote != null)
+        {
+            return notesList.indexOf(currentNote);
+        }
         return noteIndex;
     }
 
