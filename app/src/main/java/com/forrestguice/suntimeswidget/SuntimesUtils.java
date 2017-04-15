@@ -28,6 +28,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
+import android.text.format.DateUtils;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
@@ -272,7 +273,7 @@ public class SuntimesUtils
     public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal)
     {
         Calendar now = Calendar.getInstance();
-        return calendarDateTimeDisplayString(context, cal, (cal.get(Calendar.YEAR) != now.get(Calendar.YEAR)));
+        return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != now.get(Calendar.YEAR))));
     }
     public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showYear)
     {
