@@ -386,6 +386,42 @@ public class WidgetSettings
     }
 
     /**
+     * TimeFormatMode
+     */
+    public static enum TimeFormatMode
+    {
+        MODE_SYSTEM("System"),
+        MODE_12HR("12 hr"),
+        MODE_24HR("24 hr");
+
+        private String displayString;
+
+        private TimeFormatMode( String displayString )
+        {
+            this.displayString = displayString;
+        }
+
+        public String getDisplayString()
+        {
+            return displayString;
+
+        }
+
+        public void setDisplayString( String displayString )
+        {
+            this.displayString = displayString;
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            MODE_SYSTEM.setDisplayString(context.getString(R.string.timeFormatMode_system));
+            MODE_12HR.setDisplayString(context.getString(R.string.timeFormatMode_12hr));
+            MODE_24HR.setDisplayString(context.getString(R.string.timeFormatMode_24hr));
+
+        }
+    }
+
+    /**
      * LocationMode
      */
     public static enum LocationMode
@@ -1283,5 +1319,6 @@ public class WidgetSettings
         TimezoneMode.initDisplayStrings(context);
         SolarTimeMode.initDisplayStrings(context);
         DateMode.initDisplayStrings(context);
+        TimeFormatMode.initDisplayStrings(context);
     }
 }
