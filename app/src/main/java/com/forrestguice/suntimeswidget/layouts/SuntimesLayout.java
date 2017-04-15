@@ -32,7 +32,7 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 public abstract class SuntimesLayout
 {
-    protected static SuntimesUtils utils = new SuntimesUtils();
+    protected static final SuntimesUtils utils = new SuntimesUtils();
 
     protected int layoutID;
 

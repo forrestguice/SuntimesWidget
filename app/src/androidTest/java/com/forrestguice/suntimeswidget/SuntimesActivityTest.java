@@ -18,14 +18,12 @@
 
 package com.forrestguice.suntimeswidget;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.test.espresso.IdlingPolicies;
 import android.support.test.espresso.IdlingResource;
 import android.support.test.filters.LargeTest;
 
 import android.support.test.runner.AndroidJUnit4;
-import android.support.v7.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.View;
 
@@ -39,8 +37,6 @@ import org.hamcrest.Matcher;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;

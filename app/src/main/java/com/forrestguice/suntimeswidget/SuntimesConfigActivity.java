@@ -168,7 +168,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
 
     /**
      * Load settings (update the state of the config UI).
-     * @param context
+     * @param context a context used to access shared prefs
      */
     protected void loadSettings( Context context )
     {
@@ -459,7 +459,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
     }
 
     /**
-     * @param context
+     * @param context a context used to access resources
      */
     protected void initTimeMode( Context context )
     {
@@ -487,7 +487,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
     }
 
     /**
-     * @param context
+     * @param context a context used to access shared prefs
      */
     protected void loadTimeMode(Context context)
     {
@@ -496,7 +496,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
     }
 
     /**
-     * @param context
+     * @param context a context used to access shared prefs
      */
     protected void saveTimeMode(Context context)
     {
@@ -844,9 +844,9 @@ public class SuntimesConfigActivity extends AppCompatActivity
     };
 
     /**
-     * @param requestCode
-     * @param permissions
-     * @param grantResults
+     * @param requestCode the request code that was passed to requestPermissions
+     * @param permissions the requested permissions
+     * @param grantResults either PERMISSION_GRANTED or PERMISSION_DENIED for each of the requested permissions
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults)

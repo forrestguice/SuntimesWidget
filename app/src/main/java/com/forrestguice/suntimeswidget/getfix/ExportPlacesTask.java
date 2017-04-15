@@ -44,7 +44,7 @@ public class ExportPlacesTask extends AsyncTask<Object, Object, ExportPlacesTask
     private String exportTarget;
     private File exportFile;
     private int numEntries;
-    private String newLine = System.getProperty("line.separator");
+    private final String newLine = System.getProperty("line.separator");
 
     private boolean isPaused = false;
     public void pauseTask()
@@ -284,10 +284,10 @@ public class ExportPlacesTask extends AsyncTask<Object, Object, ExportPlacesTask
             this.exportFile = exportFile;
         }
 
-        private boolean result;
+        private final boolean result;
         public boolean getResult() { return result; }
 
-        private File exportFile;
+        private final File exportFile;
         public File getExportFile() { return exportFile; }
     }
 
@@ -303,13 +303,13 @@ public class ExportPlacesTask extends AsyncTask<Object, Object, ExportPlacesTask
             progressMsg = msg;
         }
 
-        private int progressNow;
+        private final int progressNow;
         public int getProgress() { return progressNow; }
 
-        private int progressMax;
+        private final int progressMax;
         public int getProgressMax() { return progressMax; }
 
-        private String progressMsg;
+        private final String progressMsg;
         public String getProgressMsg() { return progressMsg; }
     }
 

@@ -110,7 +110,7 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
         }
 
         /**
-         * @param location
+         * @param location an android.location.Location obtained from some location provider
          * @return true if location is not null and less than equal maxAge, false otherwise
          */
         private boolean isGoodFix(Location location)
@@ -267,7 +267,7 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
     }
 
     /**
-     * @param locations
+     * @param locations a list of android.location.Location to be displayed during progress update
      */
     @Override
     protected void onProgressUpdate(Location... locations)
@@ -379,6 +379,7 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
         }
     }
 
+    @SuppressWarnings("EmptyMethod")
     public static abstract class GetFixTaskListener
     {
         public void onStarted() {}

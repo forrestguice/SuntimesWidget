@@ -113,10 +113,10 @@ public class LocationListTask extends AsyncTask<Object, Object, LocationListTask
      */
     public static class LocationListTaskResult
     {
-        private Cursor cursor;
+        private final Cursor cursor;
         public Cursor getCursor() { return cursor; }
 
-        private int index;
+        private final int index;
         public int getIndex() { return index; }
 
         public LocationListTaskResult( Cursor cursor, int index )

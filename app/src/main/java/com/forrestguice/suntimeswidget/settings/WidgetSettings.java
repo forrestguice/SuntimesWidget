@@ -185,7 +185,7 @@ public class WidgetSettings
         WIDGETMODE1x1_BOTH_1("Sunrise & Sunset (1)", R.layout.layout_widget_1x1_0),
         WIDGETMODE1x1_BOTH_2("Sunrise & Sunset (2)", R.layout.layout_widget_1x1_3);
 
-        private int layoutID;
+        private final int layoutID;
         private String displayString;
 
         private WidgetMode1x1(String displayString, int layoutID)
@@ -745,6 +745,7 @@ public class WidgetSettings
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
         String themeName = prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_THEME, PREF_DEF_APPEARANCE_THEME);
 
+        //noinspection UnnecessaryLocalVariable
         SuntimesTheme theme = WidgetThemes.loadTheme(context, themeName);
         //Log.d("loadThemePref", "theme is " + theme.themeName());
         return theme;
@@ -942,6 +943,7 @@ public class WidgetSettings
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION;
+        //noinspection UnnecessaryLocalVariable
         String launchString = prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH, PREF_DEF_ACTION_LAUNCH);
         return launchString;
 

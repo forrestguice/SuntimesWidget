@@ -36,7 +36,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
+
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,7 +60,7 @@ public class AlarmDialog extends DialogFragment
     public static final String PREF_KEY_ALARM_LASTCHOICE = "alarmdialog_lastchoice";
     public static final SolarEvents PREF_DEF_ALARM_LASTCHOICE = SolarEvents.SUNRISE;
 
-    protected static SuntimesUtils utils = new SuntimesUtils();
+    protected static final SuntimesUtils utils = new SuntimesUtils();
 
     /**
      * The appWidgetID used when saving/loading choice to prefs (main app uses 0).
@@ -94,7 +94,7 @@ public class AlarmDialog extends DialogFragment
     public SolarEvents getChoice() { return choice; }
 
     /**
-     * @param savedInstanceState
+     * @param savedInstanceState a Bundle containing dialog state
      * @return an AlarmDialog ready to be shown
      */
     @NonNull @Override
@@ -164,7 +164,7 @@ public class AlarmDialog extends DialogFragment
     }
 
     /**
-     * @param outState
+     * @param outState a Bundle used to save state
      */
     @Override
     public void onSaveInstanceState( Bundle outState )
@@ -279,7 +279,7 @@ public class AlarmDialog extends DialogFragment
 
     /**
      * Save alarm choice to prefs.
-     * @param context
+     * @param context a context used to access shared prefs
      */
     protected void saveSettings(Context context)
     {
@@ -318,7 +318,7 @@ public class AlarmDialog extends DialogFragment
     /**
      * @param choice a SolarEvent "alarm choice"
      * @param now a Calendar representing "right now"
-     * @return
+     * @return a Calendar representing the alarm selection
      */
     public Calendar getCalendarForAlarmChoice( SolarEvents choice, Calendar now )
     {
@@ -441,7 +441,7 @@ public class AlarmDialog extends DialogFragment
     }
 
     /**
-     * @param context
+     * @param context a context used to start the "show alarm" intent
      */
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public static void showAlarms(Activity context)

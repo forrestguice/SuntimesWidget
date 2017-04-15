@@ -37,7 +37,7 @@ import java.util.Date;
  */
 public class SuntimesNotes1 implements SuntimesNotes
 {
-    protected static SuntimesUtils utils = new SuntimesUtils();
+    protected static final SuntimesUtils utils = new SuntimesUtils();
 
     private int noteIndex = 0;
     private NoteChangedListener changedListener;

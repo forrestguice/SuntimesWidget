@@ -164,8 +164,8 @@ public class SuntimesRiseSetData extends SuntimesData
     }
 
     /**
-     * @param other
-     * @param layoutID
+     * @param other another instance of SuntimesRiseSetData
+     * @param layoutID an R.layout.someLayoutID to be associated w/ this data
      */
     protected void initFromOther( SuntimesRiseSetData other, int layoutID )
     {
@@ -185,8 +185,8 @@ public class SuntimesRiseSetData extends SuntimesData
     }
 
     /**
-     * @param context
-     * @param appWidgetId
+     * @param context a context used to access shared prefs
+     * @param appWidgetId the widgetID to load settings from (0 for app)
      */
     @Override
     protected void initFromSettings(Context context, int appWidgetId)

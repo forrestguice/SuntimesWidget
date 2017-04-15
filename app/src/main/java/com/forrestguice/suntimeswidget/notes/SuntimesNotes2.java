@@ -39,7 +39,7 @@ import java.util.HashMap;
  */
 public class SuntimesNotes2 implements SuntimesNotes
 {
-    protected static SuntimesUtils utils = new SuntimesUtils();
+    protected static final SuntimesUtils utils = new SuntimesUtils();
 
     private ArrayList<NoteData> notesList;
     private HashMap<SolarEvents, NoteData> notesMap;
@@ -146,7 +146,7 @@ public class SuntimesNotes2 implements SuntimesNotes
     {
         if (dataset.isCalculated())
         {
-            String tag;
+            //String tag;
             int nextNote, currentNote;
             SolarEvents nextNoteMode;
 
@@ -161,7 +161,7 @@ public class SuntimesNotes2 implements SuntimesNotes
                 if (hasNextRiseNote(currentNote))
                     nextNote = currentNote + 1;
 
-                tag = "showNextRiseNote";
+                //tag = "showNextRiseNote";
                 nextNoteMode = SolarEvents.values()[nextNote];
                 WidgetSettings.saveTimeNoteRisePref(context, AppWidgetManager.INVALID_APPWIDGET_ID, nextNoteMode);
 
@@ -173,7 +173,7 @@ public class SuntimesNotes2 implements SuntimesNotes
                 if (hasNextSetNote(currentNote))
                     nextNote = currentNote + 1;
 
-                tag = "showNextSetNote";
+                //tag = "showNextSetNote";
                 nextNoteMode = SolarEvents.values()[nextNote];
                 WidgetSettings.saveTimeNoteSetPref(context, 0, nextNoteMode);
             }

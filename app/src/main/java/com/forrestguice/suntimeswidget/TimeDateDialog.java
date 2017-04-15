@@ -28,7 +28,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
+
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -108,9 +108,8 @@ public class TimeDateDialog extends DialogFragment implements DatePicker.OnDateC
     };
 
     /**
-     *
-     * @param context
-     * @param dialogContent
+     * @param context a context used to access resources
+     * @param dialogContent an inflated layout containing the dialog's other views
      */
     private void initViews(Context context, View dialogContent)
     {
@@ -130,7 +129,7 @@ public class TimeDateDialog extends DialogFragment implements DatePicker.OnDateC
 
     /**
      *
-     * @param savedInstanceState
+     * @param savedInstanceState a bundle containing previously saved dialog state
      * @return a dialog instance ready to be shown
      */
     @NonNull @Override
@@ -236,7 +235,7 @@ public class TimeDateDialog extends DialogFragment implements DatePicker.OnDateC
 
     /**
      * Restore the dialog state from saved preferences currently used by the app.
-     * @param context
+     * @param context a context used to access shared prefs
      */
     protected void loadSettings(Context context)
     {
@@ -255,7 +254,7 @@ public class TimeDateDialog extends DialogFragment implements DatePicker.OnDateC
     }
 
     /**
-     * @param context
+     * @param context a context used to access shared prefs
      */
     protected void saveSettings(Context context)
     {
