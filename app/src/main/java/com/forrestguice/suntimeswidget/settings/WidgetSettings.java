@@ -68,6 +68,9 @@ public class WidgetSettings
     public static final String PREF_KEY_APPEARANCE_ALLOWRESIZE = "allowresize";
     public static final boolean PREF_DEF_APPEARANCE_ALLOWRESIZE = true;
 
+    public static final String PREF_KEY_APPEARANCE_TIMEFORMATMODE = "timeformatmode";
+    public static final TimeFormatMode PREF_DEF_APPEARANCE_TIMEFORMATMODE = TimeFormatMode.MODE_SYSTEM;
+
     public static final String PREF_KEY_GENERAL_TIMEMODE = "timemode";
     public static final TimeMode PREF_DEF_GENERAL_TIMEMODE = TimeMode.OFFICIAL;
 
@@ -936,6 +939,38 @@ public class WidgetSettings
     }
 
 
+    public static void saveTimeFormatModePref(Context context, int appWidgetId, WidgetSettings.TimeFormatMode mode)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.putString(prefs_prefix + PREF_KEY_APPEARANCE_TIMEFORMATMODE, mode.name());
+        prefs.apply();
+    }
+    public static WidgetSettings.TimeFormatMode loadTimeFormatModePref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_TIMEFORMATMODE, PREF_DEF_APPEARANCE_TIMEFORMATMODE.name());
+
+        TimeFormatMode formatMode;
+        try
+        {
+            formatMode = WidgetSettings.TimeFormatMode.valueOf(modeString);
+
+        } catch (IllegalArgumentException e) {
+            formatMode = PREF_DEF_APPEARANCE_TIMEFORMATMODE;
+        }
+        return formatMode;
+    }
+    public static void deleteTimeFormatModePref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_TIMEFORMATMODE);
+        prefs.apply();
+    }
+
+
     public static void saveActionModePref(Context context, int appWidgetId, WidgetSettings.ActionMode mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
@@ -1269,9 +1304,6 @@ public class WidgetSettings
         prefs.apply();
     }
 
-
-
-
     public static void deletePrefs(Context context, int appWidgetId)
     {
         deleteActionModePref(context, appWidgetId);
@@ -1283,6 +1315,7 @@ public class WidgetSettings
         deleteThemePref(context, appWidgetId);
         deleteShowTitlePref(context, appWidgetId);
         deleteTitleTextPref(context, appWidgetId);
+        deleteTimeFormatModePref(context, appWidgetId);
 
         deleteCalculatorModePref(context, appWidgetId);
         deleteTimeModePref(context, appWidgetId);
