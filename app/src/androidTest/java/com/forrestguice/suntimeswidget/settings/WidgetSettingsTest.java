@@ -31,4 +31,109 @@ import static junit.framework.Assert.assertTrue;
 @RunWith(AndroidJUnit4.class)
 public class WidgetSettingsTest extends SuntimesActivityTestBase
 {
+    @Test
+    public void test_calculatorModePref()
+    {
+        assertTrue("STUB", true == false);  // TODO
+    }
+
+    @Test
+    public void test_timeModePref()
+    {
+        assertTrue("STUB", true == false);  // TODO
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+
+    @Test
+    public void test_datePref()
+    {
+        assertTrue("STUB", true == false);  // TODO
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+
+    @Test
+    public void test_timezoneModePref()
+    {
+        assertTrue("STUB", true == false);  // TODO
+    }
+
+    @Test
+    public void test_timezonePref()
+    {
+        assertTrue("STUB", true == false);  // TODO
+    }
+
+    @Test
+    public void test_solarTimeModePref()
+    {
+        assertTrue("STUB", true == false);  // TODO
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+
+    @Test
+    public void test_locationModePref()
+    {
+        assertTrue("STUB", true == false);  // TODO
+    }
+
+    @Test public void test_locationPref()
+    {
+        assertTrue("STUB", true == false);  // TODO
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+
+    @Test
+    public void test_actionModePref()
+    {
+        assertTrue("STUB", true == false);  // TODO
+    }
+
+    @Test
+    public void test_actionLaunchPref()
+    {
+        assertTrue("STUB", true == false);  // TODO
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+
+    @Test
+    public void test_themePref()
+    {
+        assertTrue("STUB", true == false);  // TODO
+    }
+
+    @Test
+    public void test_showTitlePref()
+    {
+        assertTrue("STUB", true == false);  // TODO
+    }
+
+    @Test
+    public void test_titleTextPref()
+    {
+        assertTrue("STUB", true == false);  // TODO
+    }
+
+    @Test
+    public void test_allowResizePref()
+    {
+        assertTrue("STUB", true == false);  // TODO
+    }
+
+    @Test
+    public void test_1x1ModePref()
+    {
+        assertTrue("STUB", true == false);  // TODO
+    }
+
+    @Test
+    public void test_compareModePref()
+    {
+        assertTrue("STUB", true == false);  // TODO
+    }
+
 }
