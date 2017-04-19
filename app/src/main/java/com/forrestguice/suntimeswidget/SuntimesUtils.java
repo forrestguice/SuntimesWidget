@@ -61,7 +61,8 @@ public class SuntimesUtils
     private static String strMinutes = "m";
     private static String strSeconds = "s";
     private static String strTimeDeltaFormat = "%1$s" + strEmpty + "%2$s";
-    private static String strTimeVeryShortFormat = "h:mm";
+    private static String strTimeVeryShortFormat12 = "h:mm";
+    private static String strTimeVeryShortFormat24 = "HH:mm";
     private static String strTimeSuffixFormat = "a";
     private static String strTimeNone = "none";
     private static String strTimeLoading = "...";
@@ -79,7 +80,8 @@ public class SuntimesUtils
         strMinutes = context.getString(R.string.delta_minutes);
         strSeconds = context.getString(R.string.delta_seconds);
         strTimeDeltaFormat = context.getString(R.string.delta_format);
-        strTimeVeryShortFormat = context.getString(R.string.time_format_12hr_veryshort);
+        strTimeVeryShortFormat12 = context.getString(R.string.time_format_12hr_veryshort);
+        strTimeVeryShortFormat24 = context.getString(R.string.time_format_24hr_veryshort);
         strTimeNone = context.getString(R.string.time_none);
         strTimeLoading = context.getString(R.string.time_loading);
 
@@ -240,8 +242,13 @@ public class SuntimesUtils
      */
     public TimeDisplayText calendarTime24HrDisplayString(Context context, @NonNull Calendar cal)
     {
-        return new TimeDisplayText(DateUtils.formatDateTime(context, cal.getTimeInMillis(),
-                DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_24HOUR), "", "");
+        Locale locale = Resources.getSystem().getConfiguration().locale;
+        SimpleDateFormat timeFormat = new SimpleDateFormat(strTimeVeryShortFormat24, locale); // HH:mm
+        timeFormat.setTimeZone(cal.getTimeZone());
+
+        TimeDisplayText retValue = new TimeDisplayText(timeFormat.format(cal.getTime()), "", "");
+        retValue.setRawValue(cal.getTimeInMillis());
+        return retValue;
     }
 
     /**
@@ -286,7 +293,7 @@ public class SuntimesUtils
 
         Locale locale = Resources.getSystem().getConfiguration().locale;
 
-        SimpleDateFormat timeFormat = new SimpleDateFormat(strTimeVeryShortFormat, locale); // h:mm
+        SimpleDateFormat timeFormat = new SimpleDateFormat(strTimeVeryShortFormat12, locale); // h:mm
         timeFormat.setTimeZone(cal.getTimeZone());
 
         SimpleDateFormat suffixFormat = new SimpleDateFormat(strTimeSuffixFormat, locale);  // a
