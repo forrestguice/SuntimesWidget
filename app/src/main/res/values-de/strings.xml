@@ -210,6 +210,11 @@
   <string name="configLabel_timezone_custom">Zeitzone:</string>              <!-- spinner label -->
   <string name="configLabel_solartime">Solar Time:</string>                   <!-- spinner label -->  <!-- TODO -->
 
+  <!-- Widget Setting: timeFormat mode -->
+  <string name="timeFormatMode_system">System format</string>          <!-- setting -->  <!-- TODO -->
+  <string name="timeFormatMode_12hr">12-hour</string>                  <!-- setting -->  <!-- TODO -->
+  <string name="timeFormatMode_24hr">24-hour</string>                  <!-- setting -->  <!-- TODO -->
+
   <!-- Widget Setting: date mode -->
   <string name="dateMode_current">Heute</string>                  <!-- setting -->
   <string name="dateMode_custom">Benutzerdefiniert</string>            <!-- setting -->
