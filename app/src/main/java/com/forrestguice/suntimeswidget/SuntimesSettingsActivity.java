@@ -731,7 +731,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         });
     }
 
-    private static String timeFormatPrefSummary(WidgetSettings.TimeFormatMode mode, Context context)
+    public static String timeFormatPrefSummary(WidgetSettings.TimeFormatMode mode, Context context)
     {
         String summary = "%s";
         if (mode == WidgetSettings.TimeFormatMode.MODE_SYSTEM)
