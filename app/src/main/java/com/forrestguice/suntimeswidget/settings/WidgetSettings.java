@@ -63,11 +63,11 @@ public class WidgetSettings
     public static final String PREF_KEY_APPEARANCE_SHOWTITLE = "showtitle";
     public static final boolean PREF_DEF_APPEARANCE_SHOWTITLE = false;
 
-    private static final String PREF_KEY_APPEARANCE_TITLETEXT = "titletext";
-    private static final String PREF_DEF_APPEARANCE_TITLETEXT = "";
+    public static final String PREF_KEY_APPEARANCE_TITLETEXT = "titletext";
+    public static final String PREF_DEF_APPEARANCE_TITLETEXT = "";
 
-    private static final String PREF_KEY_APPEARANCE_WIDGETMODE_1x1 = "widgetmode_1x1";
-    private static final WidgetMode1x1 PREF_DEF_APPEARANCE_WIDGETMODE_1x1 = WidgetMode1x1.WIDGETMODE1x1_BOTH_1;
+    public static final String PREF_KEY_APPEARANCE_WIDGETMODE_1x1 = "widgetmode_1x1";
+    public static final WidgetMode1x1 PREF_DEF_APPEARANCE_WIDGETMODE_1x1 = WidgetMode1x1.WIDGETMODE1x1_BOTH_1;
 
     public static final String PREF_KEY_APPEARANCE_ALLOWRESIZE = "allowresize";
     public static final boolean PREF_DEF_APPEARANCE_ALLOWRESIZE = true;
