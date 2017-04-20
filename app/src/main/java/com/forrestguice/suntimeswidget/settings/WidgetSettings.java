@@ -38,6 +38,10 @@ import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+/**
+ * Shared preferences used by individual widgets; uses getSharedPreferences (stored in com.forrestguice.suntimeswidget.xml).
+ * Each pref takes an appWidgetId; the app uses these prefs by supplying 0 (AppWidgetManager.INVALID_APPWIDGET_ID).
+ */
 public class WidgetSettings
 {
     public static final String PREFS_WIDGET = "com.forrestguice.suntimeswidget";
