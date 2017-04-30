@@ -332,6 +332,7 @@
   <string-array name="locale_display">                      <!-- one-to-one with locale_values -->
       <item>Englisch</item>
       <item>Esperanto</item>
+      <item>Französisch</item>
       <item>Deutsche</item>
       <item>Polieren</item>
   </string-array>
@@ -445,7 +446,8 @@
       Source code available under GPLv3.
   ]]></string>
   <string name="app_legal2"><![CDATA[
-      Deutsche Übersetzung von Henrik &quot;HerHde&quot; Hüttemann.
+      Deutsche Übersetzung von Henrik &quot;HerHde&quot; Hüttemann. <br/>
+      Französisch Übersetzung von Jej.
   ]]></string>
 
   <!-- Dialog: Help -->
