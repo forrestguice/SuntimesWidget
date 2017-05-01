@@ -371,6 +371,7 @@
     <string-array name="locale_display">                      <!-- one-to-one with locale_values -->
         <item>Angla</item>
         <item>Esperanto</item>
+        <item>Franca</item>
         <item>Germana</item>
         <item>Pola</item>
     </string-array>
@@ -450,6 +451,7 @@
     ]]></string>
     <string name="app_legal2"><![CDATA[
         Germana traduko de Henrik "HerHde" Hüttemann. </br>
+        Franca traduko de Jej. </br>
         Pola kaj Esperanta tradukoj de Verdulo.
     ]]></string>
     <string name="app_legal3"><![CDATA[ <b>Bibliotekoj:</b><br/> ]]><![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]><![CDATA[ github.com/caarmen/SunriseSunset ]]></string>
