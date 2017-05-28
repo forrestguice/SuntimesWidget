@@ -59,8 +59,7 @@
     <string name="future_tomorrow">Futur (+1)</string>
 
     <!-- Field: length of day
-         The hours in the day field(s) that appears below the table (main activity); can be either
-         a prefix or suffix depending on layout (layout/info_time_daylength.xml).
+         The hours in the day field(s) that appears below the table (main activity).
     -->
     <string name="length_day"><xliff:g example="12h" id="timeSpan">%1$s</xliff:g> de longueur du jour</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
     <string name="length_light"><xliff:g example="12h 50m" id="timeSpan">%1$s</xliff:g> de lumière utile</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
@@ -100,9 +99,9 @@
 
     <!-- Table -->
     <string name="sunrise">Lever du soleil</string>                             <!-- contentDescription -->
-    <string name="sunrise_short">Lev.</string>                          <!-- table title -->
+    <string name="sunrise_short">Lever</string>                          <!-- table title -->
     <string name="sunset">Coucher du soleil</string>                               <!-- contentDescription -->
-    <string name="sunset_short">Couch.</string>                            <!-- table title -->
+    <string name="sunset_short">Coucher</string>                            <!-- table title -->
 
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
     <string name="delta_format"><xliff:g example="3" id="value">%1$s</xliff:g><xliff:g example="m" id="units">%2$s</xliff:g></string>

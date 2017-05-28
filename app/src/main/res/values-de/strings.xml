@@ -63,7 +63,6 @@
 
   <!-- Field: length of day
        The hours in the day field(s) that appears below the table (main activity).
-       (layout/info_time_daylength.xml)
   -->
   <string name="length_day"><xliff:g id="timeSpan" example="12h">%1$s</xliff:g> Lichter Tag</string>
   <string name="length_light"><xliff:g id="timeSpan" example="12h 50m">%1$s</xliff:g> nutzbares Licht</string>
