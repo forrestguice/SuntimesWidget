@@ -16,246 +16,208 @@
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
-    <LinearLayout style="@style/SunsetTimeLayout" android:id="@+id/table"
-                  android:orientation="horizontal" android:layout_gravity="start">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:app="http://schemas.android.com/apk/res-auto"
+       xmlns:tools="http://schemas.android.com/tools">
 
-        <GridLayout
+    <LinearLayout
+        android:id="@+id/table"
+        style="@style/SunsetTimeLayout"
+        android:layout_gravity="start"
+        android:orientation="horizontal">
+
+        <android.support.constraint.ConstraintLayout
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:columnCount="3"
-            android:useDefaultMargins="true">
+            android:columnCount="3" android:useDefaultMargins="true"
+            tools:layout_editor_absoluteX="0dp" tools:layout_editor_absoluteY="0dp">
 
-            <!-- Table Head (Date) -->
-            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-                          android:layout_row="0" android:layout_column="0"
-                          android:layout_gravity="bottom|start">
-                <include layout="@layout/table_colhead_date" />
-            </LinearLayout>
-
-            <!-- Table Head (Rise) -->
-            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-                          android:layout_row="0" android:layout_column="1"
-                          android:layout_gravity="bottom|end">
-                <include layout="@layout/table_colhead_rise" />
-            </LinearLayout>
-
-            <!-- Table Head (Set) -->
-            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-                          android:layout_row="0" android:layout_column="2"
-                          android:layout_gravity="bottom|end">
-                <include layout="@layout/table_colhead_set" />
-            </LinearLayout>
-
-            <!-- field: sunrise/sunset -->
-            <TextView style="@style/SunsetTimeTextView"
-                      android:text="@string/timeMode_official_short"
-                      android:layout_row="4"
-                      android:layout_column="0"/>
-            <LinearLayout style="@style/SunsetTimeLayout"
-                          android:orientation="horizontal"
-                          android:layout_row="4" android:layout_column="1" android:layout_gravity="end"
-                          android:layout_marginRight="10dp" android:layout_marginEnd="10dp">
+            <!-- Header: date -->
+            <LinearLayout
+                android:id="@+id/table_head_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toRightOf="parent">
 
                 <TextView
-                    style="@style/SunsetTimeTextView"
-                    android:id="@+id/text_time_sunrise_actual"
-                    android:textColor="@color/sunIcon_color_rising"
-                    tools:text="7:00" />
-
-                <TextView
-                    style="@style/SunsetTimeTextSuffixView"
-                    android:id="@+id/text_time_sunrise_suffix_actual"
-                    android:layout_gravity="bottom"
-                    android:layout_height="match_parent"
-                    tools:text="AM" />
-
-            </LinearLayout>
-            <LinearLayout style="@style/SunsetTimeLayout"
-                          android:orientation="horizontal"
-                          android:layout_row="4"
-                          android:layout_column="2" android:layout_gravity="end">
-
-                <TextView
-                    style="@style/SunsetTimeTextView"
-                    android:id="@+id/text_time_sunset_actual"
-                    android:textColor="@color/sunIcon_color_setting"
-                    tools:text="4:20" />
-
-                <TextView
-                    style="@style/SunsetTimeTextSuffixView"
-                    android:id="@+id/text_time_sunset_suffix_actual"
-                    android:layout_gravity="bottom"
-                    android:layout_height="match_parent"
-                    tools:text="PM" />
+                    android:id="@+id/text_date"
+                    style="@style/TableHeadDateView"
+                    tools:text="Today\nApril 1, 2016"/>
 
             </LinearLayout>
 
-            <!-- field: civil twilight -->
-            <TextView style="@style/SunsetTimeTextView"
-                      android:text="@string/timeMode_civil_short"
-                      android:layout_row="3"
-                      android:layout_column="0"/>
-            <LinearLayout style="@style/SunsetTimeLayout"
-                          android:orientation="horizontal"
-                          android:layout_row="3"
-                          android:layout_column="1" android:layout_gravity="end"
-                          android:layout_marginRight="10dp" android:layout_marginEnd="10dp">
+            <!-- Header: sunrise -->
+            <LinearLayout
+                android:id="@+id/header_time_sunrise"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/table_rise_leftMargin" android:layout_marginStart="@dimen/table_rise_leftMargin"
+                app:layout_constraintBottom_toBottomOf="@+id/table_head_date"
+                app:layout_constraintLeft_toRightOf="@+id/table_head_date">
 
                 <TextView
-                    style="@style/SunsetTimeTextView"
-                    android:id="@+id/text_time_sunrise_civil"
-                    android:textColor="@color/sunIcon_color_rising"
-                    tools:text="10:00" />
+                    android:id="@+id/label_time_sunrise"
+                    style="@style/TableHeadTextView"
+                    android:text="@string/sunrise_short"
+                    android:textColor="@color/sunIcon_color_rising"/>
 
-                <TextView
-                    style="@style/SunsetTimeTextSuffixView"
-                    android:id="@+id/text_time_sunrise_suffix_civil"
-                    android:layout_gravity="bottom"
-                    android:layout_height="match_parent"
-                    tools:text="AM" />
-
-            </LinearLayout>
-            <LinearLayout style="@style/SunsetTimeLayout"
-                          android:orientation="horizontal"
-                          android:layout_row="3"
-                          android:layout_column="2" android:layout_gravity="end">
-
-                <TextView
-                    style="@style/SunsetTimeTextView"
-                    android:id="@+id/text_time_sunset_civil"
-                    android:textColor="@color/sunIcon_color_setting"
-                    tools:text="4:20" />
-
-                <TextView
-                    style="@style/SunsetTimeTextSuffixView"
-                    android:id="@+id/text_time_sunset_suffix_civil"
-                    android:layout_gravity="bottom"
-                    android:layout_height="match_parent"
-                    tools:text="PM" />
-
+                <ImageView
+                    android:id="@+id/icon_time_sunrise"
+                    style="@style/TableHeadImageView"
+                    android:background="@drawable/ic_sunrise"
+                    tools:ignore="contentDescription"/>
             </LinearLayout>
 
-            <!-- field: nautical twilight -->
-            <TextView style="@style/SunsetTimeTextView"
-                      android:text="@string/timeMode_nautical_short"
-                      android:layout_row="2"
-                      android:layout_column="0" />
-            <LinearLayout style="@style/SunsetTimeLayout"
-                          android:orientation="horizontal"
-                          android:layout_row="2"
-                          android:layout_column="1" android:layout_gravity="end"
-                          android:layout_marginRight="10dp" android:layout_marginEnd="10dp">
+            <!-- Header: sunset -->
+            <LinearLayout
+                android:id="@+id/header_time_sunset"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/table_set_leftMargin" android:layout_marginStart="@dimen/table_set_leftMargin"
+                app:layout_constraintBottom_toBottomOf="@+id/table_head_date"
+                app:layout_constraintLeft_toRightOf="@+id/header_time_sunrise">
+
+                <ImageView
+                    android:id="@+id/icon_time_sunset"
+                    style="@style/TableHeadImageView"
+                    android:background="@drawable/ic_sunset"
+                    tools:ignore="contentDescription"/>
 
                 <TextView
-                    style="@style/SunsetTimeTextView"
-                    android:id="@+id/text_time_sunrise_nautical"
-                    android:textColor="@color/sunIcon_color_rising"
-                    tools:text="7:00" />
-
-                <TextView
-                    style="@style/SunsetTimeTextSuffixView"
-                    android:id="@+id/text_time_sunrise_suffix_nautical"
-                    android:layout_gravity="bottom"
-                    android:layout_height="match_parent"
-                    tools:text="PM" />
-
-            </LinearLayout>
-            <LinearLayout style="@style/SunsetTimeLayout"
-                          android:orientation="horizontal"
-                          android:layout_row="2" android:layout_column="2" android:layout_gravity="end">
-
-                <TextView
-                    style="@style/SunsetTimeTextView"
-                    android:id="@+id/text_time_sunset_nautical"
-                    android:textColor="@color/sunIcon_color_setting"
-                    tools:text="4:20" />
-
-                <TextView
-                    style="@style/SunsetTimeTextSuffixView"
-                    android:id="@+id/text_time_sunset_suffix_nautical"
-                    android:layout_gravity="bottom"
-                    android:layout_height="match_parent"
-                    tools:text="PM" />
-
+                    android:id="@+id/label_time_sunset"
+                    style="@style/TableHeadTextView"
+                    android:text="@string/sunset_short"
+                    android:textColor="@color/sunIcon_color_setting"/>
             </LinearLayout>
 
-            <!-- field: astronomical twilight -->
-            <TextView style="@style/SunsetTimeTextView"
-                      android:text="@string/timeMode_astronomical_short"
-                      android:layout_row="1"
-                      android:layout_column="0" />
-            <LinearLayout style="@style/SunsetTimeLayout"
-                          android:orientation="horizontal"
-                          android:layout_row="1"
-                          android:layout_column="1" android:layout_gravity="end"
-                          android:layout_marginRight="10dp" android:layout_marginEnd="10dp">
+            <!-- Astronomical -->
+            <TextView
+                android:id="@+id/text_time_label_astro"
+                style="@style/SunsetTimeTextView"
+                android:text="@string/timeMode_astronomical_short"
+                android:layout_marginTop="@dimen/table_cell_spacing" android:layout_marginBottom="@dimen/table_cell_spacing"
+                app:layout_constraintTop_toBottomOf="@+id/table_head_date"/>
 
-                <TextView
-                    style="@style/SunsetTimeTextView"
-                    android:id="@+id/text_time_sunrise_astro"
-                    android:textColor="@color/sunIcon_color_rising"
-                    tools:text="7:00" />
+            <TextView
+                android:id="@+id/text_time_sunrise_astro"
+                style="@style/SunsetTimeTextView"
+                android:textColor="@color/sunIcon_color_rising"
+                android:layout_marginRight="@dimen/table_rise_rightMargin" android:layout_marginEnd="@dimen/table_rise_rightMargin"
+                app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_astro"
+                app:layout_constraintRight_toRightOf="@+id/header_time_sunrise"
+                tools:text="7:00 AM"/>
 
-                <TextView
-                    style="@style/SunsetTimeTextSuffixView"
-                    android:id="@+id/text_time_sunrise_suffix_astro"
-                    android:layout_gravity="bottom"
-                    android:layout_height="match_parent"
-                    tools:text="AM" />
+            <TextView
+                android:id="@+id/text_time_sunset_astro"
+                style="@style/SunsetTimeTextView"
+                android:textColor="@color/sunIcon_color_setting"
+                android:layout_marginRight="@dimen/table_set_rightMargin" android:layout_marginEnd="@dimen/table_set_rightMargin"
+                app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_astro"
+                app:layout_constraintRight_toRightOf="@+id/header_time_sunset"
+                tools:text="12:20 PM" />
 
-            </LinearLayout>
-            <LinearLayout style="@style/SunsetTimeLayout"
-                          android:orientation="horizontal"
-                          android:layout_row="1" android:layout_column="2" android:layout_gravity="end">
+            <!-- Nautical -->
+            <TextView
+                android:id="@+id/text_time_label_nautical"
+                style="@style/SunsetTimeTextView"
+                android:text="@string/timeMode_nautical_short"
+                android:layout_marginTop="@dimen/table_cell_spacing" android:layout_marginBottom="@dimen/table_cell_spacing"
+                app:layout_constraintTop_toBottomOf="@+id/text_time_label_astro"/>
 
-                <TextView
-                    style="@style/SunsetTimeTextView"
-                    android:id="@+id/text_time_sunset_astro"
-                    android:textColor="@color/sunIcon_color_setting"
-                    tools:text="12:20" />
+            <TextView
+                android:id="@+id/text_time_sunrise_nautical"
+                style="@style/SunsetTimeTextView"
+                android:textColor="@color/sunIcon_color_rising"
+                android:layout_marginRight="@dimen/table_rise_rightMargin" android:layout_marginEnd="@dimen/table_rise_rightMargin"
+                app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_nautical"
+                app:layout_constraintRight_toRightOf="@+id/header_time_sunrise"
+                tools:text="8:00 AM"/>
 
-                <TextView
-                    style="@style/SunsetTimeTextSuffixView"
-                    android:id="@+id/text_time_sunset_suffix_astro"
-                    android:layout_gravity="bottom"
-                    android:layout_height="match_parent"
-                    tools:text="PM" />
+            <TextView
+                android:id="@+id/text_time_sunset_nautical"
+                style="@style/SunsetTimeTextView"
+                android:textColor="@color/sunIcon_color_setting"
+                android:layout_marginRight="@dimen/table_set_rightMargin" android:layout_marginEnd="@dimen/table_set_rightMargin"
+                app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_nautical"
+                app:layout_constraintRight_toRightOf="@+id/header_time_sunset"
+                tools:text="4:20 PM"/>
 
-            </LinearLayout>
+            <!-- Civil -->
+            <TextView
+                android:id="@+id/text_time_label_civil"
+                style="@style/SunsetTimeTextView"
+                android:text="@string/timeMode_civil_short"
+                android:layout_marginTop="@dimen/table_cell_spacing" android:layout_marginBottom="@dimen/table_cell_spacing"
+                app:layout_constraintTop_toBottomOf="@+id/text_time_label_nautical"/>
+
+            <TextView
+                android:id="@+id/text_time_sunrise_civil"
+                style="@style/SunsetTimeTextView"
+                android:textColor="@color/sunIcon_color_rising"
+                android:layout_marginRight="@dimen/table_rise_rightMargin" android:layout_marginEnd="@dimen/table_rise_rightMargin"
+                app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_civil"
+                app:layout_constraintRight_toRightOf="@+id/header_time_sunrise"
+                tools:text="10:00 AM"/>
+
+            <TextView
+                android:id="@+id/text_time_sunset_civil"
+                style="@style/SunsetTimeTextView"
+                android:textColor="@color/sunIcon_color_setting"
+                android:layout_marginRight="@dimen/table_set_rightMargin" android:layout_marginEnd="@dimen/table_set_rightMargin"
+                app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_civil"
+                app:layout_constraintRight_toRightOf="@+id/header_time_sunset"
+                tools:text="4:20 PM"/>
+
+            <!-- Official -->
+            <TextView
+                android:id="@+id/text_time_label_official"
+                style="@style/SunsetTimeTextView"
+                android:text="@string/timeMode_official_short"
+                android:layout_marginTop="@dimen/table_cell_spacing" android:layout_marginBottom="@dimen/table_cell_spacing"
+                app:layout_constraintTop_toBottomOf="@+id/text_time_label_civil"/>
+
+            <TextView
+                android:id="@+id/text_time_sunrise_actual"
+                style="@style/SunsetTimeTextView"
+                android:textColor="@color/sunIcon_color_rising"
+                android:layout_marginRight="@dimen/table_rise_rightMargin" android:layout_marginEnd="@dimen/table_rise_rightMargin"
+                app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_official"
+                app:layout_constraintRight_toRightOf="@+id/header_time_sunrise"
+                tools:text="9:00 AM"/>
+
+            <TextView
+                android:id="@+id/text_time_sunset_actual"
+                style="@style/SunsetTimeTextView"
+                android:textColor="@color/sunIcon_color_setting"
+                android:layout_marginRight="@dimen/table_set_rightMargin" android:layout_marginEnd="@dimen/table_set_rightMargin"
+                app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_official"
+                app:layout_constraintRight_toRightOf="@+id/header_time_sunset"
+                tools:text="4:20 PM"/>
 
             <!-- horizontal rule -->
-            <LinearLayout style="@style/SunsetTimeLayout"
-                          android:layout_row="5" android:layout_column="0" android:layout_columnSpan="3">
-                <View style="@style/SunsetTimeHorizontalRule"
-                      android:id="@+id/table_rule" android:layout_width="260dp" />
-            </LinearLayout>
+            <View
+                android:id="@+id/table_rule"
+                style="@style/SunsetTimeHorizontalRule"
+                android:layout_marginTop="@dimen/table_cell_spacing" android:layout_marginBottom="@dimen/table_cell_spacing"
+                app:layout_constraintLeft_toLeftOf="@+id/table_head_date"
+                app:layout_constraintRight_toRightOf="@+id/header_time_sunset"
+                app:layout_constraintTop_toBottomOf="@+id/text_time_label_official"/>
 
-            <!-- field: solar noon -->
-            <TextView style="@style/SunsetTimeTextView"
-                      android:text="@string/timeMode_noon"
-                      android:layout_row="6"
-                      android:layout_column="0"/>
+            <!-- Solar Noon -->
+            <TextView
+                android:id="@+id/text_time_label_noon"
+                style="@style/SunsetTimeTextView"
+                android:text="@string/timeMode_noon"
+                android:layout_marginTop="@dimen/table_cell_spacing" android:layout_marginBottom="@dimen/table_cell_spacing"
+                app:layout_constraintTop_toBottomOf="@+id/table_rule"/>
 
-            <LinearLayout style="@style/SunsetTimeLayout"
-                          android:orientation="horizontal"
-                          android:layout_row="6" android:layout_column="2" android:layout_gravity="end">
+            <TextView
+                android:id="@+id/text_time_noon"
+                style="@style/SunsetTimeTextView"
+                android:textColor="@color/sunIcon_color_setting"
+                android:layout_marginRight="@dimen/table_set_rightMargin" android:layout_marginEnd="@dimen/table_set_rightMargin"
+                app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_noon"
+                app:layout_constraintRight_toRightOf="@+id/header_time_sunset"
+                tools:text="12:20 PM"/>
 
-                <TextView
-                    style="@style/SunsetTimeTextView"
-                    android:id="@+id/text_time_noon"
-                    android:textColor="@color/sunIcon_color_setting"
-                    tools:text="4:20" />
-
-                <TextView
-                    style="@style/SunsetTimeTextSuffixView"
-                    android:id="@+id/text_time_noon_suffix"
-                    android:layout_gravity="bottom"
-                    android:layout_height="match_parent"
-                    tools:text="PM" />
-
-            </LinearLayout>
-
-        </GridLayout>
+        </android.support.constraint.ConstraintLayout>
 
     </LinearLayout>
 </merge>

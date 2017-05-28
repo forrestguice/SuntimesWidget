@@ -4,6 +4,6 @@
     <dimen name="table_heading_date_fontsize">15sp</dimen>
     <integer name="table_heading_date_maxems">8</integer>
     <dimen name="table_heading_label_fontsize">14sp</dimen>
-    <integer name="table_heading_label_maxems">3</integer>
+    <integer name="table_heading_label_maxems">5</integer>
     <integer name="table_heading_label_maxlines">1</integer>
 </resources>
