@@ -103,7 +103,7 @@ public class WidgetSettings
     public static String PREF_DEF_LOCATION_ALTITUDE = "";
 
     public static final String PREF_KEY_LOCATION_LABEL = "label";
-    public static String PREF_DEF_LOCATION_LABEL = "Prescott, AZ";
+    public static String PREF_DEF_LOCATION_LABEL = "Prescott, AZ";       // reassigned later by initDefaults
 
     public static final String PREF_KEY_TIMEZONE_MODE = "timezoneMode";
     public static final TimezoneMode PREF_DEF_TIMEZONE_MODE = TimezoneMode.CURRENT_TIMEZONE;
@@ -304,6 +304,7 @@ public class WidgetSettings
             }
         }
 
+        @Override
         public int hashCode()
         {
             int hash = Integer.valueOf(year).hashCode();
@@ -473,7 +474,7 @@ public class WidgetSettings
 
         /**
          * @param label display name
-         * @param location an android.location.Location object (that might obtained via GPS or otherwise)
+         * @param location an android.location.Location object (that might be obtained via GPS or otherwise)
          */
         public Location( String label, @NonNull android.location.Location location )
         {
@@ -544,6 +545,25 @@ public class WidgetSettings
         public String toString()
         {
             return latitude + ", " + longitude;
+        }
+
+        /**
+         * @param obj another Location object
+         * @return true the locations are the same (label, lat, lon, and alt), false they are different somehow
+         */
+        @Override
+        public boolean equals(Object obj)
+        {
+            if (!(obj instanceof Location))
+            {
+                return false;
+            } else {
+                Location that = (Location)obj;
+                return (this.getLabel().equals(that.getLabel()))
+                        && (this.getLatitude().equals(that.getLatitude()))
+                        && (this.getLongitude().equals(that.getLongitude()))
+                        && (this.getAltitude().equals(that.getAltitude()));
+            }
         }
 
         public static DecimalFormat decimalDegreesFormatter()
