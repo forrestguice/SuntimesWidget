@@ -36,7 +36,7 @@
                           android:layout_gravity="end"
                           android:text=""
                           android:textSize="56sp"
-                          tools:text="4:20"
+                          tools:text="5:00"
                     />
 
                 <TextView android:id="@+id/text_time_suffix"
