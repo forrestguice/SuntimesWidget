@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- values-sw330dp\table_res.xml :: slightly larger than a typical phone -->
 <resources>
+    <integer name="table_weight0">1</integer>
+    <integer name="table_weight1">1</integer>
+
     <dimen name="table_heading_date_fontsize">15sp</dimen>
     <integer name="table_heading_date_maxems">8</integer>
+
     <dimen name="table_heading_label_fontsize">14sp</dimen>
-    <integer name="table_heading_label_maxems">5</integer>
-    <integer name="table_heading_label_maxlines">1</integer>
+    <integer name="table_heading_label_maxems">7</integer>
+    <dimen name="table_heading_label_maxdim">100dp</dimen>
 </resources>
