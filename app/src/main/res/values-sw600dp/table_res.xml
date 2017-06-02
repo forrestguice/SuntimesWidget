@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- values-sw600dp\table_res.xml :: 7" tablets and larger -->
 <resources>
-    <integer name="table_weight0">2</integer>
-    <integer name="table_weight1">8</integer>
+    <integer name="table_weight0">1</integer>
+    <integer name="table_weight1">4</integer>
 
     <dimen name="table_heading_date_fontsize">16sp</dimen>
     <integer name="table_heading_date_maxems">9</integer>

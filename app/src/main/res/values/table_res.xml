@@ -2,14 +2,14 @@
 <!-- values\table_res.xml :: typical sized phone (width <= 320dp) -->
 <resources>
 
-    <dimen name="table_cell_spacing">8dp</dimen>     <!-- spacing between rows -->
-    <integer name="table_weight0">7</integer>
-    <integer name="table_weight1">3</integer>
+    <dimen name="table_cell_spacing">10dp</dimen>     <!-- spacing between rows -->
+    <integer name="table_weight0">9</integer>
+    <integer name="table_weight1">1</integer>
 
     <dimen name="table_rise_leftMargin">18dp</dimen> <!-- margins: rise column -->
     <dimen name="table_rise_rightMargin">0dp</dimen>
 
-    <dimen name="table_set_leftMargin">18dp</dimen>  <!-- margins: set column -->
+    <dimen name="table_set_leftMargin">28dp</dimen>  <!-- margins: set column -->
     <dimen name="table_set_rightMargin">0dp</dimen>
 
     <!-- table heading: date field (col 0) -->

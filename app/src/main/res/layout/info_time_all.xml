@@ -41,7 +41,6 @@
                 style="@style/TableHeadDateView"
                 tools:text="Today\nApril 1, 2016"
                 android:layout_width="wrap_content"
-                android:layout_marginBottom="@dimen/table_cell_spacing"
 
                 app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toStartOf="parent"
@@ -85,7 +84,7 @@
                 android:layout_marginStart="@dimen/table_set_leftMargin"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/header_time_sunrise"
-                app:layout_constraintEnd_toEndOf="@id/table_stretch2"
+                app:layout_constraintEnd_toEndOf="@+id/table_stretch2"
                 app:layout_constraintBottom_toBottomOf="@+id/text_date">
 
                 <include layout="@layout/table_colhead_set" />
