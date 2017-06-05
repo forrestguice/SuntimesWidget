@@ -610,7 +610,7 @@ public class SuntimesActivity extends AppCompatActivity
         }
 
         // Today's times
-        LinearLayout viewToday = (LinearLayout)findViewById(R.id.info_time_all_today);
+        View viewToday = findViewById(R.id.info_time_all_today);
         if (viewToday != null)
         {
             txt_date = (TextView) viewToday.findViewById(R.id.text_date);
@@ -668,7 +668,7 @@ public class SuntimesActivity extends AppCompatActivity
         }
 
         // Tomorrow's times
-        LinearLayout viewTomorrow = (LinearLayout)findViewById(R.id.info_time_all_tomorrow);
+        View viewTomorrow = findViewById(R.id.info_time_all_tomorrow);
         if (viewTomorrow != null)
         {
             txt_date2 = (TextView) viewTomorrow.findViewById(R.id.text_date);
