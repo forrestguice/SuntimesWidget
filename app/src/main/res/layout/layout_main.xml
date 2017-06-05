@@ -109,24 +109,24 @@
                 tools:ignore="UnusedAttribute">
 
                 <!-- Times for Today -->
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/info_time_all_today"
+                    style="@style/SunsetTimeCard"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:ignore="UnusedAttribute">
+                    android:layout_height="wrap_content">
 
                     <include layout="@layout/info_time_card"/>
-                </LinearLayout>
+                </RelativeLayout>
 
                 <!-- Times for Tomorrow -->
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/info_time_all_tomorrow"
+                    style="@style/SunsetTimeCard"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:ignore="UnusedAttribute">
+                    android:layout_height="wrap_content">
 
                     <include layout="@layout/info_time_card"/>
-                </LinearLayout>
+                </RelativeLayout>
 
             </ViewFlipper>
 

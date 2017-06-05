@@ -92,17 +92,21 @@
                 android:elevation="5dp"
                 tools:ignore="UnusedAttribute">
 
-                <LinearLayout
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:id="@+id/info_time_all_today">
+                <!-- Times for Today -->
+                <RelativeLayout android:id="@+id/info_time_all_today"
+                                style="@style/SunsetTimeCard"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
                     <include layout="@layout/info_time_card"/>
-                </LinearLayout>
+                </RelativeLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:id="@+id/info_time_all_tomorrow">
+                <!-- Times for Tomorrow -->
+                <RelativeLayout android:id="@+id/info_time_all_tomorrow"
+                                style="@style/SunsetTimeCard"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
                     <include layout="@layout/info_time_card"/>
-                </LinearLayout>
+                </RelativeLayout>
 
             </ViewFlipper>
 

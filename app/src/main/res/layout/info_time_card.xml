@@ -2,7 +2,6 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
        xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout style="@style/SunsetTimeCard" android:layout_width="match_parent" android:layout_height="wrap_content">
 
         <!-- card scroller -->
          <com.forrestguice.suntimeswidget.SuntimesCardScroll android:id="@+id/cardContent"
@@ -36,5 +35,4 @@
 
     </LinearLayout>
 
-    </RelativeLayout>
 </merge>
