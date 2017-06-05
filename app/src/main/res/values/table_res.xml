@@ -56,4 +56,8 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <!-- lightmap -->
+    <dimen name="lightmap_height">12dp</dimen>
+    <dimen name="lightmap_clickable_height">16dp</dimen>
+
 </resources>

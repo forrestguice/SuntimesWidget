@@ -41,7 +41,7 @@ import java.util.Calendar;
  * LightMapView .. a stacked bar graph over the duration of a day showing relative duration of
  * night, day, and twilight times.
  */
-public class LightMapView extends LinearLayout
+public class LightMapView extends android.support.v7.widget.AppCompatImageView
 {
     private static final double MINUTES_IN_DAY = 24 * 60;
 
@@ -56,7 +56,6 @@ public class LightMapView extends LinearLayout
     private int pointStrokeWidth = DEFAULT_STROKE_WIDTH;
     private int colorNight, colorAstro, colorNautical, colorCivil, colorDay, colorPointFill, colorPointStroke;
 
-    private ImageView mainView;
     private SuntimesRiseSetDataset data = null;
     private long lastUpdate = 0;
     private boolean resizable = true;
@@ -64,40 +63,20 @@ public class LightMapView extends LinearLayout
     public LightMapView(Context context)
     {
         super(context);
-        initLayout(context);
-        initViews(context);
+        init(context);
     }
 
     public LightMapView(Context context, AttributeSet attribs)
     {
         super(context, attribs);
-        initLayout(context);
-        initViews(context);
-    }
-
-    /**
-     * @param context a context used to access resources
-     */
-    private void initLayout(Context context)
-    {
-        final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.info_time_lightmap, this);
-    }
-
-    /**
-     * @param context a context used to access resources
-     */
-    protected void initViews( Context context )
-    {
-        mainView = (ImageView) findViewById(R.id.lightmap_view);
-        initColors(context);
+        init(context);
     }
 
     /**
      * @param context a context used to access resources
      */
     @SuppressWarnings("ResourceType")
-    private void initColors(Context context)
+    private void init(Context context)
     {
         int[] colorAttrs = { R.attr.graphColor_night,   // 0
                 R.attr.graphColor_astronomical,         // 1
@@ -175,7 +154,7 @@ public class LightMapView extends LinearLayout
         int w = getWidth();
         int h = getHeight();
 
-        if (mainView != null && w > 0 && h > 0)
+        if (w > 0 && h > 0)
         {
             long bench_start = System.nanoTime();
             Bitmap b = Bitmap.createBitmap(w, h, Bitmap.Config.RGB_565);
@@ -235,10 +214,10 @@ public class LightMapView extends LinearLayout
                 drawPoint(data.now(), pointRadius, c, p);
             }
 
-            mainView.setImageBitmap(b);
+            setImageBitmap(b);
             lastUpdate = System.currentTimeMillis();
             long bench_end = System.nanoTime();
-            Log.d("DEBUG", "lightmap updated in " + ((bench_end - bench_start) / 1000000.0) + "ms :: " + w + "," + h + " :: hasView: " + (mainView != null) + " :: hasData " + (data != null));
+            Log.d("DEBUG", "lightmap updated in " + ((bench_end - bench_start) / 1000000.0) + "ms :: " + w + "," + h + " :: hasData " + (data != null));
         }
     }
 
