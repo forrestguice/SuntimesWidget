@@ -8,6 +8,5 @@
     <integer name="table_heading_date_maxems">9</integer>
 
     <dimen name="table_heading_label_fontsize">18sp</dimen>
-    <integer name="table_heading_label_maxems">5</integer>
     <dimen name="table_heading_label_maxdim">200dp</dimen>
 </resources>

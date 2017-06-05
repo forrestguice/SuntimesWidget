@@ -35,12 +35,9 @@
 
     <!-- table heading: rise/set field (col 1,2) -->
     <dimen name="table_heading_label_fontsize">14sp</dimen>
-    <integer name="table_heading_label_maxems">5</integer>
-    <integer name="table_heading_label_maxlength">11</integer>
     <integer name="table_heading_label_maxlines">1</integer>
-
-    <dimen name="table_heading_label_mindim">30dp</dimen>
     <dimen name="table_heading_label_maxdim">84dp</dimen>
+    <dimen name="table_heading_label_mindim">30dp</dimen>
 
     <dimen name="table_heading_iconsize_min">16dp</dimen>
     <dimen name="table_heading_iconsize_max">24dp</dimen>
@@ -55,8 +52,6 @@
         <item name="android:textSize">@dimen/table_heading_label_fontsize</item>
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">@integer/table_heading_label_maxlines</item>
-        <item name="android:maxLength">@integer/table_heading_label_maxlength</item>
-        <item name="android:maxEms">@integer/table_heading_label_maxems</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
