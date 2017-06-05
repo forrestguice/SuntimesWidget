@@ -155,7 +155,10 @@ public class SuntimesData
         this.timezone = other.timezone();
         this.todayIs = other.todayIs();
 
+        this.calculator = other.calculator;
         this.calculated = other.isCalculated();
+        //this.date = other.date();
+        //this.dateOther = other.dateOther();
     }
 
     /**

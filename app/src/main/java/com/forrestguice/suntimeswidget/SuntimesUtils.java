@@ -145,15 +145,20 @@ public class SuntimesUtils
             StringBuilder s = new StringBuilder();
             s.append(value);
 
-            if (!units.isEmpty())
+            boolean valueNotEmpty = !value.isEmpty();
+            boolean unitsNotEmpty = !units.isEmpty();
+
+            if (unitsNotEmpty)
             {
-                s.append(" ");
+                if (valueNotEmpty)
+                    s.append(" ");
                 s.append(units);
             }
 
             if (!suffix.isEmpty())
             {
-                s.append(" ");
+                if (valueNotEmpty || unitsNotEmpty)
+                    s.append(" ");
                 s.append(suffix);
             }
 

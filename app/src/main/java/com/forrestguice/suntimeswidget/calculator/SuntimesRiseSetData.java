@@ -148,7 +148,7 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * Property: day length ("today")
      */
-    private long dayLengthToday;
+    private long dayLengthToday = 0L;
     public long dayLengthToday()
     {
         return dayLengthToday;
@@ -157,7 +157,7 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * Property: day length ("other")
      */
-    private long dayLengthOther;
+    private long dayLengthOther = 0L;
     public long dayLengthOther()
     {
         return dayLengthOther;
