@@ -30,8 +30,6 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:columnCount="3"
-            android:useDefaultMargins="true"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="0dp">
 
@@ -68,8 +66,8 @@
                 android:layout_marginStart="@dimen/table_rise_leftMargin"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="@+id/text_date"
-                app:layout_constraintEnd_toStartOf="@+id/header_time_sunset"
-                app:layout_constraintStart_toEndOf="@+id/table_stretch">
+                app:layout_constraintStart_toEndOf="@+id/table_stretch"
+                app:layout_constraintEnd_toStartOf="@+id/header_time_sunset">
 
                 <include layout="@layout/table_colhead_rise" />
 
@@ -83,9 +81,9 @@
                 android:layout_marginLeft="@dimen/table_set_leftMargin"
                 android:layout_marginStart="@dimen/table_set_leftMargin"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/text_date"
                 app:layout_constraintStart_toEndOf="@+id/header_time_sunrise"
-                app:layout_constraintEnd_toEndOf="@+id/table_stretch2"
-                app:layout_constraintBottom_toBottomOf="@+id/text_date">
+                app:layout_constraintEnd_toStartOf="@+id/table_stretch2">
 
                 <include layout="@layout/table_colhead_set" />
 
