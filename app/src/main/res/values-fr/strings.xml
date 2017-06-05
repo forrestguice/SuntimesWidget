@@ -100,9 +100,9 @@
 
     <!-- Table -->
     <string name="sunrise">Lever du soleil</string>                             <!-- contentDescription -->
-    <string name="sunrise_short">Lev.</string>                          <!-- table title -->
+    <string name="sunrise_short">Lever</string>                          <!-- table title -->
     <string name="sunset">Coucher du soleil</string>                               <!-- contentDescription -->
-    <string name="sunset_short">Couch.</string>                            <!-- table title -->
+    <string name="sunset_short">Coucher</string>                            <!-- table title -->
 
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
     <string name="delta_format"><xliff:g example="3" id="value">%1$s</xliff:g><xliff:g example="m" id="units">%2$s</xliff:g></string>
