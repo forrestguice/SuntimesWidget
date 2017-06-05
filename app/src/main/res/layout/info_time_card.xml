@@ -27,13 +27,15 @@
 
         </com.forrestguice.suntimeswidget.SuntimesCardScroll>
 
-        <!-- next/prev buttons -->
-        <FrameLayout
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/cardContent"
-            android:layout_alignRight="@id/cardContent" android:layout_alignEnd="@id/cardContent">
-            <include layout="@layout/info_time_nextprev" />
-        </FrameLayout>
+    <!-- next/prev buttons -->
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:orientation="horizontal" android:layout_gravity="end"
+                  android:layout_alignBottom="@id/cardContent"
+                  android:layout_alignRight="@id/cardContent" android:layout_alignEnd="@id/cardContent">
+
+        <include layout="@layout/info_time_nextprev" />
+
+    </LinearLayout>
 
     </RelativeLayout>
 </merge>
