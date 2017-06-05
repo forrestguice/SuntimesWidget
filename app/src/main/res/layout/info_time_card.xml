@@ -14,14 +14,13 @@
 
                 <!-- rise/set table -->
                 <include layout="@layout/info_time_all"/>
+            <!-- day length -->
+            <LinearLayout android:id="@+id/layout_daylength"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:orientation="vertical"
+                          android:layout_marginTop="8dp">
 
-                <!-- day length -->
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp" android:animateLayoutChanges="true">
-                    <include layout="@layout/info_time_daylength"/>
-                </LinearLayout>
+                <include layout="@layout/info_time_daylength" />
 
             </LinearLayout>
 
