@@ -209,11 +209,11 @@
     <string name="configLabel_solartime">Czas słoneczny:</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: timeFormat mode -->
-    <string name="timeFormatMode_system">System format</string>          <!-- setting -->  <!-- TODO -->
-    <string name="timeFormatMode_12hr">12-hour</string>                  <!-- setting -->  <!-- TODO -->
-    <string name="timeFormatMode_24hr">24-hour</string>                  <!-- setting -->  <!-- TODO -->
+    <string name="timeFormatMode_system">Systemowy</string>          <!-- setting -->  <!-- TODO -->
+    <string name="timeFormatMode_12hr">12-godzinny</string>                  <!-- setting -->  <!-- TODO -->
+    <string name="timeFormatMode_24hr">24-godzinny</string>                  <!-- setting -->  <!-- TODO -->
 
-    <string name="configLabel_timeFormatMode">Time Format:</string>             <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_timeFormatMode">Format czasu:</string>             <!-- spinner label -->  <!-- TODO -->
     <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
 
     <!-- Widget Setting: date mode -->
