@@ -11,8 +11,8 @@
                       android:paddingTop="4dp">
 
             <!-- rise/set table -->
+            <include layout="@layout/info_time_all" />
 
-                <include layout="@layout/info_time_all"/>
             <!-- day length -->
             <LinearLayout android:id="@+id/layout_daylength"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
