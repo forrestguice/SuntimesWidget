@@ -215,27 +215,46 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         if (key.equals(AppSettings.PREF_KEY_LOCALE) || key.equals(AppSettings.PREF_KEY_LOCALE_MODE))
         {
             //Log.d("SettingsActivity", "Locale change detected; restarting activity");
-            AppSettings.initLocale(this);
-            SuntimesWidget.triggerWidgetUpdate(this, SuntimesWidget.class);
-            SuntimesWidget.triggerWidgetUpdate(this, SuntimesWidget1.class);
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-            {
-                invalidateHeaders();
-                recreate();
-
-            } else {
-                finish();
-                startActivity(getIntent());
-            }
+            updateLocale();
+            rebuildActivity();
             return;
         }
 
         if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_CALCULATOR))
         {
-            // bug here.. without explicit call to save (below) the ListPreference isn't persisted for some reason..
+            // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
+            // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
             WidgetSettings.saveCalculatorModePref(this, 0, SuntimesCalculatorDescriptor.valueOf(sharedPreferences.getString(key, "missing")));
             return;
+        }
+
+        if (key.endsWith(WidgetSettings.PREF_KEY_APPEARANCE_TIMEFORMATMODE))
+        {
+            // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
+            // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
+            WidgetSettings.saveTimeFormatModePref(this, 0, WidgetSettings.TimeFormatMode.valueOf(sharedPreferences.getString(key, "missing")));
+            updateLocale();
+            return;
+        }
+    }
+
+    protected void updateLocale()
+    {
+        AppSettings.initLocale(this);
+        SuntimesWidget.triggerWidgetUpdate(this, SuntimesWidget.class);
+        SuntimesWidget.triggerWidgetUpdate(this, SuntimesWidget1.class);
+    }
+
+    protected void rebuildActivity()
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+        {
+            invalidateHeaders();
+            recreate();
+
+        } else {
+            finish();
+            startActivity(getIntent());
         }
     }
 
@@ -675,6 +694,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
             PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_userinterface, false);
             addPreferencesFromResource(R.xml.preference_userinterface);
+
+            initPref_ui(UIPrefsFragment.this);
         }
     }
 
@@ -683,17 +704,44 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
      */
     private void initPref_ui()
     {
-        //String key = AppSettings.PREF_KEY_APPEARANCE_THEME;
-        //ListPreference themePref = (ListPreference)findPreference(key);
+        String key = "appwidget_0_appearance_timeformatmode";
+        ListPreference timeformatPref = (ListPreference)findPreference(key);
+        initPref_ui(this, timeformatPref);
+    }
 
-        //key = AppSettings.PREF_KEY_UI_CLOCKTAPACTION;
-        //ListPreference clockTapPref = (ListPreference)findPreference(key);
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    private static void initPref_ui(PreferenceFragment fragment)
+    {
+        String key = "appwidget_0_appearance_timeformatmode";
+        Preference timeformatPref = fragment.findPreference(key);
+        initPref_ui(fragment.getActivity(), timeformatPref);
+    }
+    private static void initPref_ui(final Activity context, final Preference timeformatPref)
+    {
+        WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
+        timeformatPref.setSummary(timeFormatPrefSummary(mode, context));
+        timeformatPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
+        {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o)
+            {
+                timeformatPref.setSummary(timeFormatPrefSummary(WidgetSettings.TimeFormatMode.valueOf((String)o), context));
+                return true;
+            }
+        });
+    }
 
-        //key = AppSettings.PREF_KEY_UI_DATETAPACTION;
-        //ListPreference dateTapPref = (ListPreference)findPreference(key);
-
-        //key = AppSettings.PREF_KEY_UI_NOTETAPACTION;
-        //ListPreference noteTapPref = (ListPreference)findPreference(key);
+    public static String timeFormatPrefSummary(WidgetSettings.TimeFormatMode mode, Context context)
+    {
+        String summary = "%s";
+        if (mode == WidgetSettings.TimeFormatMode.MODE_SYSTEM)
+        {
+            String sysPref = android.text.format.DateFormat.is24HourFormat(context)
+                    ? WidgetSettings.TimeFormatMode.MODE_24HR.getDisplayString()
+                    : WidgetSettings.TimeFormatMode.MODE_12HR.getDisplayString();
+            summary = context.getString(R.string.configLabel_timeFormatMode_systemsummary, "%s", sysPref);
+        }
+        return summary;
     }
 
 }

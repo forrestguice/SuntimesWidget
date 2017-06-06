@@ -31,6 +31,9 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 
 import java.util.Locale;
 
+/**
+ * Shared preferences used by the app; uses getDefaultSharedPreferences (stored in com.forrestguice.suntimeswidget_preferences.xml).
+ */
 public class AppSettings
 {
     public static final String THEME_DARK = "dark";

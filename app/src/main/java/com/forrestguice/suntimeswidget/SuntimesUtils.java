@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget;
 import android.content.Context;
 import android.content.res.Resources;
 
+import android.support.annotation.NonNull;
 import android.text.Spannable;
 
 import android.content.res.TypedArray;
@@ -38,6 +39,7 @@ import java.text.DateFormat;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings.TimeFormatMode;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -60,10 +62,12 @@ public class SuntimesUtils
     private static String strMinutes = "m";
     private static String strSeconds = "s";
     private static String strTimeDeltaFormat = "%1$s" + strEmpty + "%2$s";
-    private static String strTimeVeryShortFormat = "h:mm";
+    private static String strTimeVeryShortFormat12 = "h:mm";
+    private static String strTimeVeryShortFormat24 = "HH:mm";
     private static String strTimeSuffixFormat = "a";
     private static String strTimeNone = "none";
     private static String strTimeLoading = "...";
+    private static boolean is24 = true;
 
     public SuntimesUtils() {}
 
@@ -77,9 +81,14 @@ public class SuntimesUtils
         strMinutes = context.getString(R.string.delta_minutes);
         strSeconds = context.getString(R.string.delta_seconds);
         strTimeDeltaFormat = context.getString(R.string.delta_format);
-        strTimeVeryShortFormat = context.getString(R.string.time_format_12hr_veryshort);
+        strTimeVeryShortFormat12 = context.getString(R.string.time_format_12hr_veryshort);
+        strTimeVeryShortFormat24 = context.getString(R.string.time_format_24hr_veryshort);
         strTimeNone = context.getString(R.string.time_none);
         strTimeLoading = context.getString(R.string.time_loading);
+
+        WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
+        is24 = (mode == TimeFormatMode.MODE_SYSTEM) ? android.text.format.DateFormat.is24HourFormat(context)
+                : (mode == TimeFormatMode.MODE_24HR);
     }
 
     /**
@@ -204,63 +213,95 @@ public class SuntimesUtils
         if (cal == null)
         {
             return new TimeDisplayText(strTimeNone);
-        }
-
-        Date time = cal.getTime();
-        TimeDisplayText retValue;
-
-        boolean is24 = android.text.format.DateFormat.is24HourFormat(context);
-        if (is24)
-        {
-            // most locales seem to use 24 hour time
-            DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(context);
-            timeFormat.setTimeZone(cal.getTimeZone());
-            retValue = new TimeDisplayText(timeFormat.format(time), "", "");
 
         } else {
-            // other locales use (or optionally allow) 12 hr time;
-            //
-            // `getTimeFormat` produces a localized timestring but we want the time part (6:47)
-            // separate from the suffix (AM/PM) in order to let the layout define the presentation.
-            //
-            // a. The ICU4j `getPatternInstance` method seems to be the ideal solution (using the
-            // HOURS_MINUTES pattern), but is a recent addition to android (api 24).
-            //
-            // b. Using toLocalizedPattern on an existing SimpleDateFormat
-            // may be another solution, but leaves the problem of separating the time from the suffix
-            // in a consistent way for all locales.
-            //
-            // c. Java 8 may introduce methods that address this, but the project currently compiles
-            // using older versions of java (and it would suck to break that).
-            //
-            // d. A third party lib might address this, which could be added if its source is available
-            // and easily included in the build from official maven repos.
-            //
-            // For now the work around is to define a "veryShortFormat" in strings.xml for those locales
-            // that use something other than the usual "h:mm" pattern. A better solution would get this
-            // from the system somehow without requiring additional translation.
-
-            // a variety 12 hour time formats from around the world...
-            //
-            //   english (us):       6:47 AM        11:46 PM           (en)
-            //   afrikaans:          6:47 vm.       11:46 nm.
-            //   isiZulu:            6:47 Ekuseni   11:46 Ntambama
-            //   bahasa (melayu):    6:47 PG        11:46 PTG
-            //   bahasa (indonesia): 6.47 AM        11.46 PM           (in)
-            //   dansk               6.47 AM        11.46 PM           (da)
-            //   norsk bokmal        6.47 a.m.      11.46 p.m.         (nb)
-
-            Locale locale = Resources.getSystem().getConfiguration().locale;
-
-            SimpleDateFormat timeFormat = new SimpleDateFormat(strTimeVeryShortFormat, locale); // h:mm
-            timeFormat.setTimeZone(cal.getTimeZone());
-
-            SimpleDateFormat suffixFormat = new SimpleDateFormat(strTimeSuffixFormat, locale);  // a
-            suffixFormat.setTimeZone(cal.getTimeZone());
-
-            retValue = new TimeDisplayText( timeFormat.format(time), "", suffixFormat.format(time) );
+            return (is24 ? calendarTime24HrDisplayString(context, cal)
+                    : calendarTime12HrDisplayString(context, cal));
         }
+    }
 
+    /**
+     * formats a time display string (lets the system determine the exact format).
+     * @param context a context
+     * @param cal a Calendar representing some point in time
+     * @return a time display string (short format)
+     */
+    public TimeDisplayText calendarTimeSysDisplayString(Context context, @NonNull Calendar cal)
+    {
+        DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(context);
+        timeFormat.setTimeZone(cal.getTimeZone());
+        TimeDisplayText retValue = new TimeDisplayText(timeFormat.format(cal.getTime()), "", "");
+        retValue.setRawValue(cal.getTimeInMillis());
+        return retValue;
+    }
+
+    /**
+     * formats a 24 hr time display string
+     * @param context a context
+     * @param cal a Calendar representing some point in time
+     * @return a time display string (12 hr) (short format)
+     */
+    public TimeDisplayText calendarTime24HrDisplayString(Context context, @NonNull Calendar cal)
+    {
+        Locale locale = Resources.getSystem().getConfiguration().locale;
+        SimpleDateFormat timeFormat = new SimpleDateFormat(strTimeVeryShortFormat24, locale); // HH:mm
+        timeFormat.setTimeZone(cal.getTimeZone());
+
+        TimeDisplayText retValue = new TimeDisplayText(timeFormat.format(cal.getTime()), "", "");
+        retValue.setRawValue(cal.getTimeInMillis());
+        return retValue;
+    }
+
+    /**
+     * formats a 12hr time display string
+     * @param context a context
+     * @param cal a Calendar representing some point in time
+     * @return a time display string (24 hr) (short format)
+     */
+    public TimeDisplayText calendarTime12HrDisplayString(Context context, @NonNull Calendar cal)
+    {
+        // some locales use (or optionally allow) 12 hr time;
+        //
+        // `getTimeFormat` produces a localized timestring but we want the time part (6:47)
+        // separate from the suffix (AM/PM) in order to let the layout define the presentation.
+        //
+        // a. The ICU4j `getPatternInstance` method seems to be the ideal solution (using the
+        // HOURS_MINUTES pattern), but is a recent addition to android (api 24).
+        //
+        // b. Using toLocalizedPattern on an existing SimpleDateFormat
+        // may be another solution, but leaves the problem of separating the time from the suffix
+        // in a consistent way for all locales.
+        //
+        // c. Java 8 may introduce methods that address this, but the project currently compiles
+        // using older versions of java (and it would suck to break that).
+        //
+        // d. A third party lib might address this, which could be added if its source is available
+        // and easily included in the build from official maven repos.
+        //
+        // For now the work around is to define a "veryShortFormat" in strings.xml for those locales
+        // that use something other than the usual "h:mm" pattern. A better solution would get this
+        // from the system somehow without requiring additional translation.
+
+        // a variety 12 hour time formats from around the world...
+        //
+        //   english (us):       6:47 AM        11:46 PM           (en)
+        //   afrikaans:          6:47 vm.       11:46 nm.
+        //   isiZulu:            6:47 Ekuseni   11:46 Ntambama
+        //   bahasa (melayu):    6:47 PG        11:46 PTG
+        //   bahasa (indonesia): 6.47 AM        11.46 PM           (in)
+        //   dansk               6.47 AM        11.46 PM           (da)
+        //   norsk bokmal        6.47 a.m.      11.46 p.m.         (nb)
+
+        Locale locale = Resources.getSystem().getConfiguration().locale;
+
+        SimpleDateFormat timeFormat = new SimpleDateFormat(strTimeVeryShortFormat12, locale); // h:mm
+        timeFormat.setTimeZone(cal.getTimeZone());
+
+        SimpleDateFormat suffixFormat = new SimpleDateFormat(strTimeSuffixFormat, locale);  // a
+        suffixFormat.setTimeZone(cal.getTimeZone());
+
+        Date time = cal.getTime();
+        TimeDisplayText retValue = new TimeDisplayText(timeFormat.format(time), "", suffixFormat.format(time));
         retValue.setRawValue(cal.getTimeInMillis());
         return retValue;
     }

@@ -48,6 +48,7 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.pressBack;
 import static android.support.test.espresso.matcher.PreferenceMatchers.withKey;
 import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
+import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -284,6 +285,7 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
         verifyUISettings_noteTap(context);
         verifyUISettings_lightmap(context);
         verifyUISettings_uiWarnings(context);
+        verifyUISettings_timeFormatMode(context);
     }
 
     public static void inputUISettings_lightmap(Context context, boolean checked)
@@ -316,7 +318,7 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
 
     public static void verifyUISettings_lightmap(Context context)
     {
-        DataInteraction lightmapPref = onData(allOf( is(instanceOf(Preference.class)), withKey("app_ui_showlightmap"))).inAdapterView(allOf(hasFocus(), is(instanceOf(ListView.class))));
+        DataInteraction lightmapPref = onData(allOf(is(instanceOf(Preference.class)), withKey("app_ui_showlightmap"))).inAdapterView(allOf(hasFocus(), is(instanceOf(ListView.class))));
         lightmapPref.check(assertEnabled);
 
         DataInteraction lightmapPref_checkBox = lightmapPref.onChildView(withClassName(is(CheckBox.class.getName())));
@@ -393,6 +395,17 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
         //DataInteraction clocktapPref_text = clocktapPref.onChildView(allOf(withClassName(is(TextView.class.getName())), withText(containsString(action.getDisplayString()))));
         //clocktapPref_text.check(assertShown);
         // TODO
+    }
+
+    public static void verifyUISettings_timeFormatMode(Context context)
+    {
+        DataInteraction formatPref = onData(allOf( is(instanceOf(Preference.class)), withKey("appwidget_0_appearance_timeformatmode"))).inAdapterView(allOf(hasFocus(), is(instanceOf(ListView.class))));
+        formatPref.check(assertEnabled);
+
+        WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
+        String modeSummary = String.format(SuntimesSettingsActivity.timeFormatPrefSummary(mode, context), mode.getDisplayString());
+        DataInteraction formatPref_text = formatPref.onChildView(allOf(withClassName(is(TextView.class.getName())), withText(modeSummary)));
+        formatPref_text.check(assertShown);
     }
 
     public static void verifyUISettings_theme(Activity activity)
