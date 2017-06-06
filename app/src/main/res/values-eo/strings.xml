@@ -113,7 +113,7 @@
     <string name="delta_seconds">s</string>  <!-- e.g. 4s -->
 
     <!-- misc time values: might be displayed in a timeField in place of an actual time -->
-    <string name="time_none">nenia</string>  <!-- no time / time does not occur -->
+    <string name="time_none">neniam</string>  <!-- no time / time does not occur -->
     <string name="time_loading">…</string>  <!-- calculating / time is loading -->
     <string name="time_format_12hr_veryshort"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- shortest 12hr time format; should omit am/pm -->
 
@@ -248,7 +248,7 @@
     <!-- App Setting: Places -->
     <string name="configLabel_places">Lokoj</string>                           <!-- group title -->
     <string name="configLabel_places_export">Elporti lokojn</string>
-    <string name="configLabel_places_clear">Vakigi lokojn</string>
+    <string name="configLabel_places_clear">Forviŝi lokojn</string>
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Fasado</string>                       <!-- group title -->
@@ -415,14 +415,14 @@
 
     <!-- Dialog: Clear Places -->
     <string name="locationclear_dialog_title">Ĉu forigi lokojn?</string>
-    <string name="locationclear_dialog_message">Ĉu vi certe volas vakigi la datumbazon de lokoj?</string>
-    <string name="locationclear_dialog_ok">Vakigi</string>
+    <string name="locationclear_dialog_message">Ĉu vi certe volas forviŝi la datumbazon de lokoj?</string>
+    <string name="locationclear_dialog_ok">Forviŝi</string>
     <string name="locationclear_dialog_cancel">Nuligi</string>
 
     <!-- Dialog: Clear Places (progress) -->
     <string name="locationcleared_dialog_title">Forigi lokojn</string>
-    <string name="locationcleared_dialog_message">Vakigado de la datumbazo . . .</string>
-    <string name="locationcleared_toast_success">La datumbazo de lokoj estas vakigita.</string>
+    <string name="locationcleared_dialog_message">Forviŝado de la datumbazo…</string>
+    <string name="locationcleared_toast_success">La datumbazo de lokoj estas forviŝita.</string>
 
     <!-- Dialog: Export Places -->
     <string name="locationexport_dialog_title">Elporti lokojn</string>
