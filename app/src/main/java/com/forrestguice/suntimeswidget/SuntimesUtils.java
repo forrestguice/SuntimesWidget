@@ -528,7 +528,7 @@ public class SuntimesUtils
     }
     public static ImageSpan createWarningSpan(Context context, int width, int height)
     {
-        TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.icActionWarning});
+        TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.icActionWarning, R.attr.tagColor_warning});
         int drawableID = a.getResourceId(0, DEF_WARNING_DRAWABLE);
         int colorID = a.getResourceId(1, R.color.warningTag_dark);
         a.recycle();
@@ -537,7 +537,7 @@ public class SuntimesUtils
 
     public static ImageSpan createErrorSpan(Context context, int width, int height)
     {
-        TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.icActionError});
+        TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.icActionError, R.attr.tagColor_error});
         int drawableID = a.getResourceId(0, DEF_ERROR_DRAWABLE);
         int colorID = a.getResourceId(1, R.color.errorTag_dark);
         a.recycle();
