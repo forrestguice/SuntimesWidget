@@ -85,6 +85,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TimeZone;
 
 public class SuntimesActivity extends AppCompatActivity
 {
@@ -1229,6 +1230,7 @@ public class SuntimesActivity extends AppCompatActivity
         //
         // clock & date
         //
+        Calendar now = dataset.now();
         Date data_date = dataset.dataActual.date();
         Date data_date2 = dataset.dataActual.dateOther();
 
@@ -1241,7 +1243,6 @@ public class SuntimesActivity extends AppCompatActivity
 
         if (dataset.dataActual.todayIsNotToday())
         {
-            Calendar now = dataset.now();
             WidgetSettings.DateInfo nowInfo = new WidgetSettings.DateInfo(now);
             WidgetSettings.DateInfo dataInfo = new WidgetSettings.DateInfo(dataset.dataActual.calendar());
             if (!nowInfo.equals(dataInfo))
@@ -1264,18 +1265,30 @@ public class SuntimesActivity extends AppCompatActivity
         // date fields
         ImageSpan dateWarningIcon = (showWarnings && dateWarning.shouldShow) ? SuntimesUtils.createWarningSpan(this, txt_date.getTextSize()) : null;
         String dateString = getString(R.string.dateField, thisString, dateFormat.format(data_date));
-        SpannableStringBuilder dateSpan = SuntimesUtils.createSpan(dateString, dateWarningIcon);
+        SpannableStringBuilder dateSpan = SuntimesUtils.createSpan(this, dateString, SuntimesUtils.SPANTAG_WARNING, dateWarningIcon);
         txt_date.setText(dateSpan);
 
         String date2String = getString(R.string.dateField, otherString, dateFormat.format(data_date2));
-        SpannableStringBuilder date2Span = SuntimesUtils.createSpan(date2String, dateWarningIcon);
+        SpannableStringBuilder date2Span = SuntimesUtils.createSpan(this, date2String, SuntimesUtils.SPANTAG_WARNING, dateWarningIcon);
         txt_date2.setText(date2Span);
 
         // timezone field
-        timezoneWarning.shouldShow = WidgetTimezones.isProbablyNotLocal(dataset.timezone(), dataset.location(), dataset.date());
+        TimeZone timezone = dataset.timezone();
+        timezoneWarning.shouldShow = WidgetTimezones.isProbablyNotLocal(timezone, dataset.location(), dataset.date());
         ImageSpan timezoneWarningIcon = (showWarnings && timezoneWarning.shouldShow) ? SuntimesUtils.createWarningSpan(this, txt_timezone.getTextSize()) : null;
-        String timezoneString = getString(R.string.timezoneField, dataset.timezone().getID());
-        SpannableStringBuilder timezoneSpan = SuntimesUtils.createSpan(timezoneString, timezoneWarningIcon);
+
+        boolean useDST = showWarnings && (Build.VERSION.SDK_INT < 24 ? timezone.useDaylightTime()
+                                                                     : timezone.observesDaylightTime());
+        boolean inDST = useDST && timezone.inDaylightTime(now.getTime());
+        ImageSpan dstWarningIcon = (inDST) ? SuntimesUtils.createDstSpan(this, txt_timezone.getTextSize()) : null;
+
+        SuntimesUtils.ImageSpanTag[] timezoneTags = {
+                new SuntimesUtils.ImageSpanTag(SuntimesUtils.SPANTAG_WARNING, timezoneWarningIcon),
+                new SuntimesUtils.ImageSpanTag(SuntimesUtils.SPANTAG_DST, dstWarningIcon)
+        };
+
+        String timezoneString = getString(R.string.timezoneField, timezone.getID());
+        SpannableStringBuilder timezoneSpan = SuntimesUtils.createSpan(this, timezoneString, timezoneTags);
         txt_timezone.setText(timezoneSpan);
 
         // "light map"
@@ -1908,7 +1921,7 @@ public class SuntimesActivity extends AppCompatActivity
         public void initWarning(Context context, String msg)
         {
             ImageSpan warningIcon = SuntimesUtils.createWarningSpan(context, txt_date.getTextSize());
-            SpannableStringBuilder message = SuntimesUtils.createSpan(msg, warningIcon);
+            SpannableStringBuilder message = SuntimesUtils.createSpan(SuntimesActivity.this, msg, SuntimesUtils.SPANTAG_WARNING, warningIcon);
 
             wasDismissed = false;
             snackbar = Snackbar.make(card_flipper, message, Snackbar.LENGTH_INDEFINITE);

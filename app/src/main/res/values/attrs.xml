@@ -19,10 +19,15 @@
     <attr name="graphColor_pointFill" format="reference" />
     <attr name="graphColor_pointStroke" format="reference" />
 
+    <attr name="tagColor_warning" format="reference" />
+    <attr name="tagColor_error" format="reference" />
+    <attr name="tagColor_dst" format="reference" />
+
     <attr name="toolbarTheme" format="reference" />
     <attr name="icActionPlace" format="reference" />
     <attr name="icActionMap" format="reference" />
     <attr name="icActionTime" format="reference" />
+    <attr name="icActionDst" format="reference" />
     <attr name="icActionAlarm" format="reference" />
     <attr name="icActionAbout" format="reference" />
     <attr name="icActionWarning" format="reference" />
