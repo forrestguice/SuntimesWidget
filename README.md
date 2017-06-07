@@ -39,16 +39,20 @@ The home screen widget is resizable and has layouts for:
 
 **Donations**
 
-If you think there is some value in this software then please feel free to pay whatever you think is fair through <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2">https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2</a>.
+Feel free to pay whatever you think is fair through <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2">https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2</a>.
 
-If you are in the giving mood, I also encourage you to give to <a href="http://mikereedell.github.io/sunrisesunsetlib-java/">http://mikereedell.github.io/sunrisesunsetlib-java/</a> as this app would not be possible without this library.
-
-Any money given will indirectly go towards future software development; I will spend it on personal expenses, feel good knowing my code is worth something to someone, and (theoretically) feel a sense of obligation to continue supporting the app into the future. It is not technically a donation (as I am obligated to report anything given to me as earned income on my taxes).
-
+Any money given will indirectly go towards software development. It is not technically a donation since I am obligated to report anything given to me as earned income (and I will probably apply it toward personal expenses). I want to express my thanks to those who have sent me something. In total it has amounted to lunch and a coffee but its a very meaningful gesture.
 
 **Legal Stuff**
 
-The goal of this project is an app that is free and open-source (FOSS). Get the source code (under GPLv3) at: https://github.com/forrestguice/SuntimesWidget
+The goal of this project is an app that is free and open-source (FOSS). 
+
+The source code is available under *GPLv3* (https://github.com/forrestguice/SuntimesWidget).
+
+Icons borrowed from:
+* "Google Android Design Icons 20131120" [Apache License 2.0]
+* "Google Material Icons" [Apache License 2.0] (https://material.io/icons/)
+* "Material Design Icons" [SIL Open Font License 1.1] (https://materialdesignicons.com)
 
 **Bug Reports**
 
@@ -66,6 +70,7 @@ When reporting an inaccurate time, please include the following information:
 
 German translation by <u>Henrik "HerHde" Hüttemann</u>.<br/>
 Polish and Esperanto translations by <u>verdulo</u>.
+French translation by <u>Jej</u>.
 
 
 
