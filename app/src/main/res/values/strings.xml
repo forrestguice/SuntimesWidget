@@ -32,7 +32,7 @@
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
     -->
-    <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
+    <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> The time zone may be wrong for this location.</string>  <!-- snackbar message -->
 
     <!-- Field: date
@@ -60,8 +60,7 @@
     <string name="future_tomorrow">Future (+1)</string>
 
     <!-- Field: length of day
-         The hours in the day field(s) that appears below the table (main activity); can be either
-         a prefix or suffix depending on layout (layout/info_time_daylength.xml).
+         The hours in the day field(s) that appears below the table (main activity)
     -->
     <string name="length_day"><xliff:g id="timeSpan" example="12h">%1$s</xliff:g> in the day</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
     <string name="length_light"><xliff:g id="timeSpan" example="12h 50m">%1$s</xliff:g> of usable light</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
@@ -120,6 +119,7 @@
     <string name="time_none">none</string>  <!-- no time / time does not occur -->
     <string name="time_loading">…</string>  <!-- calculating / time is loading -->
     <string name="time_format_12hr_veryshort"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- shortest 12hr time format; should omit am/pm -->
+    <string name="time_format_24hr_veryshort"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- 24hr time format -->
 
     <!--
          WIDGET CONFIG
@@ -223,6 +223,14 @@
     <string name="configLabel_timezone_custom">Time Zone:</string>              <!-- spinner label -->
     <string name="configLabel_solartime">Solar Time:</string>                   <!-- spinner label -->
 
+    <!-- Widget Setting: timeFormat mode -->
+    <string name="timeFormatMode_system">System format</string>          <!-- setting -->
+    <string name="timeFormatMode_12hr">12-hour</string>                  <!-- setting -->
+    <string name="timeFormatMode_24hr">24-hour</string>                  <!-- setting -->
+
+    <string name="configLabel_timeFormatMode">Time Format:</string>             <!-- spinner label -->
+    <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
+
     <!-- Widget Setting: date mode -->
     <string name="dateMode_current">Today</string>                  <!-- setting -->
     <string name="dateMode_custom">User Defined</string>            <!-- setting -->
@@ -283,6 +291,18 @@
         <item>light</item>
         <item>dark</item>
         <item>daynight</item>
+    </string-array>
+
+    <!-- App Setting: time format -->
+    <string-array name="timeFormatMode_display">
+        <item>@string/timeFormatMode_system</item>
+        <item>@string/timeFormatMode_12hr</item>
+        <item>@string/timeFormatMode_24hr</item>
+    </string-array>
+    <string-array name="timeFormatMode_values">
+        <item>MODE_SYSTEM</item>
+        <item>MODE_12HR</item>
+        <item>MODE_24HR</item>
     </string-array>
 
     <!-- App Setting: Date "on tap" action -->
@@ -412,12 +432,14 @@
     <string-array name="locale_display">                      <!-- one-to-one with locale_values -->
         <item>English</item>
         <item>Esperanto</item>
+        <item>French</item>
         <item>German</item>
         <item>Polish</item>
     </string-array>
     <string-array name="locale_values" translatable="false">  <!-- one-to-one with locale_display -->
         <item>en</item>
         <item>eo</item>
+        <item>fr</item>
         <item>de</item>
         <item>pl</item>
     </string-array>
@@ -536,7 +558,8 @@
     <string name="app_legal2"><![CDATA[
         <b>Translations:</b><br/>
         German translation by Henrik "HerHde" Hüttemann. <br />
-        Polish and Esperanto translation by verdulo.
+        Polish and Esperanto translation by verdulo. <br />
+        French translation by Jej.
     ]]></string>
     <string name="app_legal3"><![CDATA[ <b>Libraries:</b><br/> ]]>
     <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>

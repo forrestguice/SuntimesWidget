@@ -13,6 +13,14 @@
             android:defaultValue="dark" />
 
         <com.forrestguice.suntimeswidget.settings.ListPreference
+            android:key="appwidget_0_appearance_timeformatmode"
+            android:title="@string/configLabel_timeFormatMode"
+            android:dialogTitle="@string/configLabel_timeFormatMode"
+            android:summary="%s"
+            android:entries="@array/timeFormatMode_display" android:entryValues="@array/timeFormatMode_values"
+            android:defaultValue="MODE_SYSTEM" />
+
+        <com.forrestguice.suntimeswidget.settings.ListPreference
             android:key="app_ui_clocktapaction"
             android:title="@string/configLabel_action_onClockTap"
             android:dialogTitle="@string/configLabel_action_onClockTap"

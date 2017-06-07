@@ -1,8 +1,515 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="http://schemas.android.com/tools">
 
-    <string name="default_location_label">Paris</string>
-    <string name="default_location_latitude">48.8588</string>    <!-- decimal degrees (DD) -->
-    <string name="default_location_longitude">2.2775</string>    <!-- decimal degrees (DD) -->
+    <string name="default_location_label">Paris</string>         <!-- from wikipedia-fr -->
+    <string name="default_location_latitude">48.8566</string>    <!-- decimal degrees (DD) -->
+    <string name="default_location_longitude">2.3518</string>    <!-- decimal degrees (DD) -->
 
+    <!-- MAIN ACTIVITY -->
+
+    <!-- Action Bar
+         The text that appears in the overflow menu / menuItem contentDescription.
+    -->
+    <string name="configAction_refreshLocation">Rafraîchir</string>
+    <string name="configAction_addLocation">Localisation</string>
+    <string name="configAction_mapLocation">Voir la carte</string>
+    <string name="configAction_mapLocation_chooser">Voir la localisation en utilisant</string>
+    <string name="configAction_mapLocation_noapp">Impossible de trouver la carte !</string>
+    <string name="configAction_setAlarm">Régler l\'alarme</string>
+    <string name="configAction_setTimeZone">Choisir le fuseau horaire</string>
+    <string name="configAction_setDate">Choisir la date</string>
+    <string name="configAction_help">Aide</string>
+    <string name="configAction_settings">Paramètres</string>
+    <string name="configAction_aboutWidget">À propos</string>
+
+    <!-- Button: Next/Prev Date
+         The next/prev button contentDescription (accessibility).
+    -->
+    <string name="nextDay">Jour suivant</string>
+    <string name="prevDay">Jour précédent</string>
+
+    <!-- Field: timezone
+         The time zone field that appears below the clock (main activity).
+    -->
+    <!-- line commented to use default: <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string> -->
+    <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> Le fuseau horaire peut être éronné pour cet emplacement.</string>  <!-- snackbar message -->
+
+    <!-- Field: date
+         The date field that appears above the table (main activity).
+         e.g. [dateDesc] \n [date]
+             where [dateDesc] is a yesterday/today/tomorrow, past_, or future_ string.
+             where [date] is a dateString formatted by app using user's locale
+    -->
+    <!-- line commented to use default: <string name="dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string> -->
+    <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> Date réglée manuellement</string>  <!-- snackbar message -->
+
+    <!-- DateDesc: some day in the past (appears in dateField) -->
+    <string name="past_yesterday">Passé (-1)</string>
+    <string name="past_today">Passé</string>
+    <string name="past_tomorrow">Passé (+1)</string>
+
+    <!-- DateDesc: yesterday/today/tomorrow (appears in dateField) -->
+    <string name="yesterday">Hier</string>
+    <string name="today">Aujourd\'hui</string>
+    <string name="tomorrow">Demain</string>
+
+    <!-- DateDesc: some day in the future (appears in dateField) -->
+    <string name="future_yesterday">Futur (-1)</string>
+    <string name="future_today">Futur</string>
+    <string name="future_tomorrow">Futur (+1)</string>
+
+    <!-- Field: length of day
+         The hours in the day field(s) that appears below the table (main activity).
+    -->
+    <string name="length_day"><xliff:g example="12h" id="timeSpan">%1$s</xliff:g> de longueur du jour</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
+    <string name="length_light"><xliff:g example="12h 50m" id="timeSpan">%1$s</xliff:g> de lumière utile</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
+
+    <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
+         e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
+         The relative order is defined by the layout (layout/info_time_daydelta.xml).
+    -->
+    <string name="delta_day_tomorrow">Demain sera</string>
+    <string name="delta_day_yesterday">Hier était</string>
+    <string name="delta_day_shorter">plus court</string>
+    <string name="delta_day_longer">plus long</string>
+
+    <!-- NotePrefix: since/until/untilEnd
+         The note prefix text. e.g.
+                  4 hr
+                 until
+                  sunset
+         The relative order is defined by the layout (layout/info_time_note.xml).
+    -->
+    <string name="since">depuis</string>
+    <string name="until">jusqu\'au</string>
+    <string name="until_end">jusqu\'à fin</string>
+
+    <!-- NoteBody: sunset/sunrise/twilight string
+         The note body text; appears next to the prefix (layout/info_time_note.xml)
+    -->
+    <string name="until_astroTwilight">crépuscule astronomique</string>
+    <string name="until_civilTwilight">crépuscule civil</string>
+    <string name="until_nauticalTwilight">crépuscule nautique</string>
+    <string name="until_sunrise">lever du soleil</string>
+    <string name="until_noon">midi solaire</string>
+    <string name="until_sunset">coucher du soleil</string>
+    <string name="untilEnd_civilTwilight">crépuscule civil</string>
+    <string name="untilEnd_nauticalTwilight">crépuscule nautique</string>
+    <string name="untilEnd_astroTwilight">crépuscule astronomique</string>
+
+    <!-- Table -->
+    <string name="sunrise">Lever du soleil</string>                             <!-- contentDescription -->
+    <string name="sunrise_short">Lever</string>                          <!-- table title -->
+    <string name="sunset">Coucher du soleil</string>                               <!-- contentDescription -->
+    <string name="sunset_short">Coucher</string>                            <!-- table title -->
+
+    <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
+    <string name="delta_format"><xliff:g example="3" id="value">%1$s</xliff:g><xliff:g example="m" id="units">%2$s</xliff:g></string>
+    <string name="delta_years">a</string>    <!-- e.g. 1y -->
+    <string name="delta_days">j</string>     <!-- e.g. 1d -->
+    <string name="delta_hours">h</string>    <!-- e.g. 2h -->
+    <string name="delta_minutes">m</string>  <!-- e.g. 3m -->
+    <string name="delta_seconds">s</string>  <!-- e.g. 4s -->
+
+    <!-- misc time values: might be displayed in a timeField in place of an actual time -->
+    <string name="time_none">aucun</string>  <!-- no time / time does not occur -->
+    <string name="time_loading">…</string>  <!-- calculating / time is loading -->
+    <string name="time_format_12hr_veryshort"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- shortest 12hr time format; should omit am/pm -->
+
+    <!--
+         WIDGET CONFIG
+    -->
+
+    <!-- WidgetConfig Activity -->
+    <string name="configAction_addWidget">Ajouter un widget</string>                   <!-- Button: Add -->
+    <string name="configAction_reconfigWidget_short">Reconfigurer</string>       <!-- Button: Reconfigure -->
+    <string name="configAction_reconfigWidget">Reconfigurer le widget</string>      <!-- used as title when reconfiguring -->
+    <string name="configLabel_title0">Suntimes Widget</string>                  <!-- used as title when adding -->
+    <string name="configLabel_title1">Flippable Widget</string>                 <!-- used as title when adding -->
+
+    <!-- Widget Setting: general -->
+    <string name="configLabel_general">Paramètres généraux</string>                <!-- group title -->
+    <string name="configLabel_general_calculator">Source de données</string>         <!-- spinner label -->
+    <!-- line commented to use default: <string name="calculator_sunrisesunsetlib_name">sunrisesunsetlib-java</string> -->
+
+    <!-- Widget Setting: appearance -->
+    <string name="configLabel_appearance">Apparence</string>           <!-- group title -->
+    <string name="configLabel_appearance_theme">Thème</string>                  <!-- spinner label -->
+    <string name="configLabel_appearance_allowResize">Occupe l\'espace libre (redimensionnable)</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_showTitle">Afficher le titre</string>          <!-- checkbox label -->
+    <string name="configLabel_appearance_titleText">Titre :</string>              <!-- edittext label -->
+    <!-- line commented to use default: <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> --><!-- edittext hint -->
+
+    <!-- Widget Setting: time mode -->
+    <string name="timeMode_noon_short">Midi</string>                    <!-- setting -->
+    <string name="timeMode_noon">Midi solaire</string>                    <!-- setting -->
+    <string name="timeMode_official_short">Réel</string>              <!-- setting -->
+    <string name="timeMode_official">Heure réelle</string>               <!-- setting -->
+    <string name="timeMode_civil_short">Civil</string>                  <!-- setting -->
+    <string name="timeMode_civil">Crépuscule civil</string>               <!-- setting -->
+    <string name="timeMode_nautical_short">Nautique</string>            <!-- setting -->
+    <string name="timeMode_nautical">Crépuscule nautique</string>         <!-- setting -->
+    <string name="timeMode_astronomical_short">Astronomique</string>    <!-- setting -->
+    <string name="timeMode_astronomical">Crépuscule astronomique</string> <!-- setting -->
+    <string name="timeMode_night">Nuit</string>                   <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_day">Jour</string>                       <!-- a label (not an actual timeMode setting) -->
+
+    <string name="configLabel_general_timeMode">Mode :</string>          <!-- spinner label -->
+
+    <!-- Widget Setting: layout mode -->
+    <string name="widgetMode1x1_sunrise">Lever du soleil seulement</string>             <!-- setting -->
+    <string name="widgetMode1x1_sunset">Coucher du soleil seulement</string>               <!-- setting -->
+    <string name="widgetMode1x1_both_1">Lever &amp; Coucher (1)</string>  <!-- setting -->
+    <string name="widgetMode1x1_both_2">Lever &amp; Coucher (2)</string>  <!-- setting -->
+
+    <string name="configLabel_appearance_1x1mode">Taille 1x1 :</string>     <!-- spinner label -->
+
+    <!-- Widget Setting: widget tap action -->
+    <string name="actionMode_doNothing">Ne rien faire</string>           <!-- setting -->
+    <string name="actionMode_config">Reconfigurer le widget</string>      <!-- setting -->
+    <string name="actionMode_launchActivity">Lancer l\'application</string>      <!-- setting -->
+    <string name="actionMode_flipToNextItem">Basculer l\'affichage</string>      <!-- setting -->
+
+    <string name="configLabel_action">Comportement</string>                  <!-- group title -->
+    <string name="configLabel_action_onTap">Sur un appui :</string>                    <!-- spinner label -->
+    <string name="configLabel_action_onClockTap">Appui sur l\'horloge</string>         <!-- spinner label -->
+    <string name="configLabel_action_onNoteTap">Appui sur la fiche</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap">Appui sur la date</string>           <!-- spinner label -->
+
+    <!-- Widget Setting: location -->
+    <string name="locationMode_current">Actuel (dernier connu)</string>  <!-- setting -->
+    <string name="locationMode_custom">Défini par l\'utilisateur</string>           <!-- setting -->
+
+    <string name="configLabel_location">Paramètres de localisation</string>               <!-- group title -->
+    <string name="configLabel_location_mode">Mode :</string>                      <!-- spinner label -->
+    <string name="configLabel_location_lat">Latitude :</string>                   <!-- edittext label -->
+    <string name="configHint_location_lat">Degrés décimaux</string>      <!-- edittext hint -->
+    <string name="configLabel_location_lon">Longitude :</string>                          <!-- edittext label -->
+    <string name="configHint_location_lon">Degrés décimaux</string> <!-- edittext hint -->
+    <string name="configLabel_location_name">Nom :</string>                      <!-- edittext label -->
+    <string name="configHint_location_name">(optionnel)</string>                  <!-- edittext hint -->
+
+    <string name="configAction_getFix">Trouver la localisation</string>    <!-- button (contentDescription) -->
+    <string name="configAction_editPlace">Éditer</string>         <!-- button (contentDescription) -->
+    <string name="configAction_savePlace">Enregistrer</string>         <!-- button (contentDescription) -->
+
+    <!-- Widget Setting: timezone -->
+    <string name="timezoneMode_solar">Heure solaire</string>                       <!-- setting -->
+    <string name="timezoneMode_current">Fuseau horaire du système</string>               <!-- setting -->
+    <string name="timezoneMode_custom">Défini par l\'utilisateur</string>                    <!-- setting -->
+
+    <string name="solartime_localMean">Temps moyen local</string>                 <!-- setting / custom timezone id -->
+    <string name="solartime_apparent">Temps solaire apparent</string>              <!-- setting / custom timezone id -->
+    <string name="timezoneCustom_line1"><xliff:g example="US/Arizona" id="timezoneID">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
+    <string name="timezoneCustom_line2">[<xliff:g example="-7" id="utmOffset">%1$s</xliff:g>] <xliff:g example="Mountain Standard Time" id="timezoneName">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
+
+    <string name="configLabel_timezone">Fuseau horaire</string>             <!-- group title -->
+    <string name="configLabel_timezone_mode">Mode :</string>                     <!-- spinner label -->
+    <string name="configLabel_timezone_custom">Fuseau horaire :</string>              <!-- spinner label -->
+    <string name="configLabel_solartime">Temps solaire :</string>                   <!-- spinner label -->
+
+    <!-- Widget Setting: timeFormat mode -->
+    <string name="timeFormatMode_system">System format</string>          <!-- setting -->  <!-- TODO -->
+    <string name="timeFormatMode_12hr">12-hour</string>                  <!-- setting -->  <!-- TODO -->
+    <string name="timeFormatMode_24hr">24-hour</string>                  <!-- setting -->  <!-- TODO -->
+
+    <string name="configLabel_timeFormatMode">Time Format:</string>             <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
+
+    <!-- Widget Setting: date mode -->
+    <string name="dateMode_current">Aujourd\'hui</string>                  <!-- setting -->
+    <string name="dateMode_custom">Défini par l\'utilisateur</string>            <!-- setting -->
+
+    <string name="configLabel_date">Date</string>                      <!-- group title -->
+    <string name="configLabel_date_mode">Mode :</string>                         <!-- spinner label -->
+    <string name="configLabel_date_custom">Date :</string>                       <!-- dateSelector label -->
+
+    <!-- Widget Setting: compare mode -->
+    <string name="compareMode_yesterday">Hier</string>                     <!-- setting -->
+    <string name="compareMode_tomorrow">Demain</string>                       <!-- setting -->
+
+    <string name="configLabel_general_compareMode">Comparer avec :</string>    <!-- spinner label -->
+
+    <!-- Widget Setting: Launch App -->
+    <string name="configLabel_action_launch">Activité :</string>                 <!-- edittext label -->
+    <!-- line commented to use default: <string name="configHint_action_launch"><xliff:g id="uri">com.forrestguice.suntimeswidget.SuntimesActivity</xliff:g></string>--> <!-- editText hint (and default) -->
+
+    <!--
+         APP SETTINGS
+    -->
+
+    <!--App Setting: WidgetList -->
+    <string name="configLabel_widgetList">Widgets</string>               <!-- group title -->
+    <string name="configLabel_widgetList_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
+    <string name="configLabel_widgetList_itemTitlePattern"><xliff:g id="titlePattern"><![CDATA[%M (%lat, %lon) [%t]]]></xliff:g></string> <!-- the pattern used when generating widget titles for display in the list -->
+    <string name="configLabel_widgetList_itemSummaryPattern"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
+    <string name="configLabel_widgetListHelp_title">Aide</string>               <!-- always the first item in the widgetList -->
+    <string name="configLabel_widgetListHelp_summary">Voir l\'aide du widget</string>
+
+    <!-- App Setting: Places -->
+    <string name="configLabel_places">Emplacements</string>                           <!-- group title -->
+    <string name="configLabel_places_export">Exporter les emplacements</string>
+    <string name="configLabel_places_clear">Effacer les emplacements</string>
+
+    <!-- App Setting: UI -->
+    <string name="configLabel_ui">Interface utilisateur</string>                       <!-- group title -->
+
+    <!-- App Setting: UI Warnings -->
+    <string name="configLabel_ui_showWarnings">Afficher les avertissements</string>
+    <string name="configLabel_ui_showWarnings_summary">Messages d\'avertissement de la configuration</string>
+
+    <!-- App Setting: Show Lightmap -->
+    <string name="configLabel_ui_showLightmap">Visualisation graphique</string>
+    <string name="configLabel_ui_showLightmap_summary">Graphique montrant les périodes de jour, nuit, lever et coucher de soleil.</string>
+
+    <!-- App Setting: UI Theme -->
+    <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
+        <item>Thème clair</item>
+        <item>Thème sombre</item>
+        <item>Automatique (jour/nuit)</item>
+    </string-array>
+
+    <!-- App Setting: Date "on tap" action -->
+    <string-array name="dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
+        <item>Ne rien faire</item>
+        <item>Inverser (aujourd\'hui/demain)</item>
+        <item>Afficher le calendrier</item>
+        <item>Choisir la date</item>
+    </string-array>
+
+    <!-- App Setting: Clock UI "on tap" action -->
+    <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
+        <item>Ne rien faire</item>
+        <item>Régler l\'alarme</item>
+        <item>Affichage suivant</item>
+        <item>Affichage précédent</item>
+    </string-array>
+
+    <!-- App Setting: Note UI "on tap" action -->
+    <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
+        <item>Ne rien faire</item>
+        <item>Régler l\'alarme</item>
+        <item>Affichage suivant</item>
+        <item>Affichage précédent</item>
+    </string-array>
+
+    <!-- App Setting: time zone sort modes -->
+    <string name="timezone_sort_byOffset">par décalage</string>
+    <string name="timezone_sort_byId">par identifiant</string>
+    <string name="timezone_sort_byName">par nom</string>
+
+    <string-array name="timezoneSort_display">  <!-- display values (one-to-one with timezoneSort_values) -->
+        <item>@string/timezone_sort_byOffset</item>
+        <item>@string/timezone_sort_byId</item>
+        <item>@string/timezone_sort_byName</item>
+    </string-array>
+
+    <string name="timezone_sort_contextAction">Trier les fuseaux</string>           <!-- action bar title -->
+    <string name="timezone_sort_msg">Trié par fuseaux horaires (%1$s).</string>      <!-- toast msg -->
+
+    <!-- App Setting: GPS fix time limit -->
+    <string name="configLabel_getFix_maxElapse">Attente du GPS</string>
+    <string name="configLabel_getFix_maxElapse_summary">Abandonner après <xliff:g example="15 seconds" id="maxElapseDisplay">%s</xliff:g></string>
+    <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
+        <item>15 secondes</item>
+        <item>30 secondes</item>
+        <item>1 minute</item>
+        <item>5 minutes</item>
+        <item>10 minutes</item>
+    </string-array>
+
+    <!-- App Setting: GPS fix max age -->
+    <string name="configLabel_getFix_maxAge">Tolérance d\'ancienneté GPS</string>
+    <string name="configLabel_getFix_maxAge_summary"><xliff:g example="1 minute" id="maxAgeDisplay">%s</xliff:g> considéré comme récent</string>
+    <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
+        <item>1 minute</item>
+        <item>5 minutes</item>
+        <item>15 minutes</item>
+        <item>1 heure</item>
+        <item>4 heures</item>
+        <item>12 heures</item>
+        <item>un jour (24 heures)</item>
+        <item>deux jours (48 heures)</item>
+        <item>une semaine (168 heures)</item>
+        <item>un mois (672 heures)</item>
+    </string-array>
+
+    <!-- App Setting: locale mode -->
+    <string name="configLabel_locale">Langue</string>   <!-- group title -->
+
+    <string name="configLabel_localeMode">Mode</string>
+    <string name="configLabel_localeMode_summary"><xliff:g example="System Locale" id="localeMode_display">%s</xliff:g></string>
+    <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
+        <item>Système</item>
+        <item>Défini par l\'utilisateur</item>
+    </string-array>
+
+    <!-- App Setting: custom Locale -->
+    <string name="configLabel_localeSelect">Langue</string>
+    <string name="configLabel_localeSelect_summary"><xliff:g example="English" id="locale_display">%s</xliff:g></string>
+    <string-array name="locale_display">                      <!-- one-to-one with locale_values -->
+        <item>Anglais</item>
+        <item>Espéranto</item>
+        <item>Français</item>
+        <item>Allemand</item>
+        <item>Polonais</item>
+    </string-array>
+
+    <!--
+         DIALOGS
+    -->
+
+    <!-- Dialog: Set Alarm -->
+    <string name="configLabel_schedalarm_mode">Planifier une alarme pour le</string>
+    <string name="schedalarm_dialog_title">Régler l\'alarme</string>
+    <string name="schedalarm_dialog_ok">Ok</string>
+    <string name="schedalarm_dialog_cancel">Annuler</string>
+    <string name="schedalarm_dialog_error">L\'alarme n\'a pas été réglée…</string>
+    <string name="schedalarm_dialog_error2">L\'alarme ne peut pas être réglée…</string>
+    <string name="schedalarm_dialog_note">dans <xliff:g example="6h 30m" id="timetext">%s</xliff:g> environ</string>
+    <string name="schedalarm_dialog_note2"><xliff:g example="nautical twilight" id="solarevent">%s</xliff:g> n\'a pas lieu.</string>
+    <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
+        <item>crépuscule astronomique</item>
+        <item>crépuscule nautique</item>
+        <item>crépuscule civil</item>
+        <item>lever du soleil</item>
+        <item>midi solaire</item>
+        <item>coucher du soleil</item>
+        <item>crépuscule civil</item>
+        <item>crépuscule nautique</item>
+        <item>crépuscule astronomique</item>
+    </string-array>
+    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
+        <item>crépuscule astronomique du matin</item>
+        <item>crépuscule nautique du matin</item>
+        <item>crépuscule civil du matin</item>
+        <item>lever du soleil</item>
+        <item>midi solaire</item>
+        <item>coucher du soleil</item>
+        <item>crépuscule civil du soir</item>
+        <item>crépuscule nautique du soir</item>
+        <item>crépuscule astronomique du soir</item>
+    </string-array>
+
+    <!-- Dialog: Enable GPS? -->
+    <string name="gps_dialog_msg">Le GPS est coupé. L\'activer ?</string>
+    <string name="gps_dialog_ok">Oui</string>
+    <string name="gps_dialog_cancel">Non</string>
+
+    <!-- gps_lastfix (current location mode) -->
+    <string name="gps_lastfix_title_set">Choisir l\'emplacement</string>               <!-- may appear as place name when location set by intent -->
+    <string name="gps_lastfix_title_found">Dernier emplacement</string>            <!-- may appear as place name when location set by gps -->
+    <string name="gps_lastfix_title_searching">Obtenir l\'emplacement</string>     <!-- may appear in ActionBar title while gps in progress -->
+    <string name="gps_lastfix_toast_notfound">Impossible d\'obtenir l\'emplacement par GPS. Repli sur la dernière position connue.</string>  <!-- displayed briefly after gps has failed to get a location -->
+    <string name="gps_lastfix_toast_cancelled">Recherche GPS annulée</string> <!-- displayed briefly when gps refresh cancelled -->
+
+    <!-- Dialog: KeepTrying GPS? -->
+    <string name="gps_keeptrying_title">Pas de signal</string>
+    <string name="gps_keeptrying_msg">Impossible d\'obtenir le signal GPS</string>
+    <string name="gps_keeptrying_ok">Réessayer</string>
+    <string name="gps_keeptrying_cancel">Abandonner</string>
+
+    <!-- Dialog: Use Date -->
+    <string name="timedate_dialog_title">Date à afficher</string>
+    <string name="timedate_dialog_ok">Ok</string>
+    <string name="timedate_dialog_cancel">Annuler</string>
+
+    <!-- Dialog: Use Timezone -->
+    <string name="timezone_dialog_title">Fuseau horaire</string>
+    <string name="timezone_dialog_ok">Ok</string>
+    <string name="timezone_dialog_cancel">Annuler</string>
+
+    <!-- Dialog: Set Location -->
+    <string name="location_dialog_title">Localisation</string>
+    <string name="location_dialog_ok">Mettre à jour</string>
+    <string name="location_dialog_cancel">Annuler</string>
+    <string name="location_dialog_error_lat">La latitude n\'est pas valide.</string>
+    <string name="location_dialog_error_lon">La longitude n\'est pas valide.</string>
+
+    <string name="location_dialog_toast_copied">Copié dans le presse-papier<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
+
+    <!-- Dialog: Clear Places -->
+    <string name="locationclear_dialog_title">Effacer les emplacements</string>
+    <string name="locationclear_dialog_message">Êtes-vous sûr de vouloir effacer la liste des emplacements ?</string>
+    <string name="locationclear_dialog_ok">Effacer</string>
+    <string name="locationclear_dialog_cancel">Annuler</string>
+
+    <!-- Dialog: Clear Places (progress) -->
+    <string name="locationcleared_dialog_title">Effacement des emplacements</string>
+    <string name="locationcleared_dialog_message">Effacement de la liste...</string>
+    <string name="locationcleared_toast_success">La liste des emplacements à été effacée</string>
+
+    <!-- Dialog: Export Places -->
+    <string name="locationexport_dialog_title">Exportation des emplacements</string>
+    <string name="locationexport_dialog_message">Exportation de la liste vers un fichier CSV</string>
+    <string name="msg_export_success">Copie temporaire : <xliff:g id="filepath">%s</xliff:g></string>
+    <string name="msg_export_failure">L\'exportation vers <xliff:g id="filepath">%s</xliff:g> a échoué !</string>
+    <string name="msg_export_to">Exporter vers</string>  <!-- title displayed over "share action" chooser -->
+
+    <!-- Dialog: About -->
+    <string name="about_dialog_title">À propos</string>
+    <string name="app_name">Suntimes</string>
+    <string name="app_name_widget0">Suntimes Widget</string>
+    <string name="app_name_widget1">Suntimes Widget (flippable)</string>
+    <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
+    <string name="app_shortdesc">Affiche les heures de lever et coucher de soleil.</string>
+    <string name="app_support_url"><![CDATA[
+        <b>Support:</b> visit the
+        <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a> to submit a request.
+    ]]></string>
+    <string name="app_url"><xliff:g id="url"><![CDATA[
+        <a href="https://github.com/forrestguice/SuntimesWidget">github.com/forrestguice/SuntimesWidget</a>
+    ]]></xliff:g></string>
+    <string name="app_legal1"><![CDATA[
+        <b>Code source :</b><br />
+        Copyright &#169 2014 Forrest Guice <br />
+        Code source disponible sous licence GPLv3.
+    ]]></string>
+    <string name="app_legal2"><![CDATA[
+        <b>Traductions :</b><br/>
+        Traduction allemande par Henrik "HerHde" Hüttemann. <br />
+        Traduction polonnaise et espéranto par verdulo. <br />
+        Traduction française par Jejc
+    ]]></string>
+    <string name="app_legal3"><![CDATA[ <b>Bibliothèques:</b><br/> ]]>
+    <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>
+    <![CDATA[ github.com/caarmen/SunriseSunset ]]>
+    </string>
+
+    <!-- Dialog: Help -->
+    <string name="help_dialog_title">Aide</string>
+    <string name="help_appearance_title"><![CDATA[
+        Les substitutions suivantes sont reconnues : <br />
+                  <b>%loc</b> pour le libellé <br />
+                  <b>%lat</b> pour la latitude <br />
+                  <b>%lon</b> pour la longitude <br/>
+                  <b>%m</b> pour le mode temporel (court) (ex. "Civil") <br/>
+                  <b>%M</b> pour le mode temporel (long) (ex. "Crépuscule civil") <br/>
+                  <b>%s</b> pour la source de donnée (e.g. sunrisesunsetlib) <br/>
+                  <b>%t</b> pour le fuseau horaire (id) (ex. EU/Paris) <br/>
+    ]]></string>
+
+    <string name="help_general">  <!-- general app help; composites a couple help topics together. -->
+        <xliff:g id="help_general_timeMode">%1$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_general_daylength">%2$s</xliff:g>
+    </string>
+
+    <string name="help_general_timeMode"><![CDATA[
+          <b>Heure réelle :</b> Le soleil est à l\'horizon. C\'est l\'heure (approximative) du lever et du coucher du soleil.<br/><br/>
+          <b>Crépuscule civil :</b> Le soleil est à 6 degrés sous l\'horizon. Les étoiles les plus brillantes sont visibles. Il y a assez de lumière pour la plupart des activités de plein air sans lumière d\'appoint.<br/><br/>
+          <b>Crépuscule nautique :</b> Le soleil est à 12 degrés au-dessous de l\'horizon. Le contour des objets et l\'horizon sont de plus en plus indistincts. Il n\'y a pas assez de lumière pour la plupart des activités de plein air sans avoir recours à une lumière d\'appoint.<br/><br/>
+          <b>Crépuscule astronomique :</b> Le soleil est à 18 degrés au-dessous de l\'horizon. Proche de l\'obscurité nocturne.<br/>
+    ]]></string>
+    <string name="help_general_daylength"><![CDATA[
+        <b>Longueur de jour :</b> espace de temps entre le lever et le coucher du soleil.<br/><br/>
+        <b>Lumière utile :</b> espace de temps entre les crépuscules civils du matin et du soir.</br>
+    ]]>
+    </string>
+    <string name="help_action_launch"><![CDATA[
+        Nom complet de la classe (Activity) à lancer.<br/>
+    ]]></string>
+    <string name="help_widgetlist"><![CDATA[
+          Pour <b>ajouter un nouveau widget</b> vous devez vous rendre sur l\'écran d\'accueil.<br/><br/>
+          Pour <b>reconfigurer un widget existant</b> vous pouvez le sélectionner dans cette liste.<br/>
+    ]]></string>
 </resources>

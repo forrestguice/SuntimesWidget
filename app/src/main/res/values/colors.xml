@@ -6,8 +6,13 @@
     <color name="accent">#ffcc00</color>
     <color name="text_primary">#cccccc</color>
 
-    <color name="warning">#ff9900</color>
-    <color name="error">#FF5252</color>
+    <color name="warningTag_dark">#ff9900</color>
+    <color name="errorTag_dark">#FF5252</color>
+    <color name="dstTag_dark">#ffcc00</color>
+
+    <color name="warningTag_light">#ff9900</color>
+    <color name="errorTag_light">#FF5252</color>
+    <color name="dstTag_light">#ffcc00</color>
 
     <color name="sunIcon_color_rising">@color/sunIcon_color_rising_dark</color>
     <color name="sunIcon_color_setting">@color/sunIcon_color_setting_dark</color>

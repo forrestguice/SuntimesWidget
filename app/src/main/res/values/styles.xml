@@ -28,6 +28,10 @@
         <item name="fallColor">@color/fallColor_light</item>
         <item name="winterColor">@color/winterColor_light</item>
 
+        <item name="tagColor_warning">@color/warningTag_light</item>
+        <item name="tagColor_error">@color/errorTag_light</item>
+        <item name="tagColor_dst">@color/dstTag_light</item>
+
         <item name="icActionGPS">@drawable/ic_action_location_found_light</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off_light</item>
         <item name="icActionGPS_searching">@drawable/ic_action_location_searching_light</item>
@@ -35,6 +39,7 @@
         <item name="icActionPlace">@drawable/ic_action_place_light</item>
         <item name="icActionMap">@drawable/ic_action_map_light</item>
         <item name="icActionTime">@drawable/ic_action_time_light</item>
+        <item name="icActionDst">@drawable/ic_weather_sunny_light</item>
         <item name="icActionAlarm">@drawable/ic_action_alarms_light</item>
         <item name="icActionAbout">@drawable/ic_action_about_light</item>
         <item name="icActionWarning">@drawable/ic_action_warning_light</item>
@@ -72,6 +77,10 @@
         <item name="fallColor">@color/fallColor_dark</item>
         <item name="winterColor">@color/winterColor_dark</item>
 
+        <item name="tagColor_warning">@color/warningTag_dark</item>
+        <item name="tagColor_error">@color/errorTag_dark</item>
+        <item name="tagColor_dst">@color/dstTag_dark</item>
+
         <item name="icActionGPS">@drawable/ic_action_location_found</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off</item>
         <item name="icActionGPS_searching">@drawable/ic_action_location_searching</item>
@@ -79,6 +88,7 @@
         <item name="icActionPlace">@drawable/ic_action_place</item>
         <item name="icActionMap">@drawable/ic_action_map</item>
         <item name="icActionTime">@drawable/ic_action_time</item>
+        <item name="icActionDst">@drawable/ic_weather_sunny</item>
         <item name="icActionAlarm">@drawable/ic_action_alarms</item>
         <item name="icActionAbout">@drawable/ic_action_about</item>
         <item name="icActionWarning">@drawable/ic_action_warning</item>

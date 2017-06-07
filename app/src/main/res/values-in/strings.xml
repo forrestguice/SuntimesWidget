@@ -6,5 +6,6 @@
     <string name="default_location_longitude">106.7594</string>   <!-- decimal degrees (DD) -->
 
     <string name="time_format_12hr_veryshort"><xliff:g id="patternHours">h</xliff:g>.<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- shortest 12hr time format; should omit am/pm -->
+    <string name="time_format_24hr_veryshort"><xliff:g id="patternHours">HH</xliff:g>.<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- 24hr time format -->
 
 </resources>

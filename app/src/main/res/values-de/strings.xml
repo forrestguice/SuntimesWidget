@@ -34,7 +34,7 @@
   <!-- Field: timezone
        The time zone field that appears below the clock (main activity).
   -->
-  <!-- line commented to use default: <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string> -->
+  <!-- line commented to use default: <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string> -->
   <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> The time zone may be wrong for this location (not local).</string>  <!-- snackbar message --> <!-- TODO -->
 
   <!-- Field: date
@@ -63,7 +63,6 @@
 
   <!-- Field: length of day
        The hours in the day field(s) that appears below the table (main activity).
-       (layout/info_time_daylength.xml)
   -->
   <string name="length_day"><xliff:g id="timeSpan" example="12h">%1$s</xliff:g> Lichter Tag</string>
   <string name="length_light"><xliff:g id="timeSpan" example="12h 50m">%1$s</xliff:g> nutzbares Licht</string>
@@ -220,6 +219,14 @@
   <string name="configLabel_timezone_custom">Zeitzone:</string>              <!-- spinner label -->
   <string name="configLabel_solartime">Solar Time:</string>                   <!-- spinner label -->  <!-- TODO -->
 
+  <!-- Widget Setting: timeFormat mode -->
+  <string name="timeFormatMode_system">System format</string>          <!-- setting -->  <!-- TODO -->
+  <string name="timeFormatMode_12hr">12-hour</string>                  <!-- setting -->  <!-- TODO -->
+  <string name="timeFormatMode_24hr">24-hour</string>                  <!-- setting -->  <!-- TODO -->
+
+  <string name="configLabel_timeFormatMode">Time Format:</string>             <!-- spinner label -->  <!-- TODO -->
+  <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
+
   <!-- Widget Setting: date mode -->
   <string name="dateMode_current">Heute</string>                  <!-- setting -->
   <string name="dateMode_custom">Benutzerdefiniert</string>            <!-- setting -->
@@ -342,6 +349,7 @@
   <string-array name="locale_display">                      <!-- one-to-one with locale_values -->
       <item>Englisch</item>
       <item>Esperanto</item>
+      <item>Französisch</item>
       <item>Deutsche</item>
       <item>Polieren</item>
   </string-array>
@@ -456,7 +464,8 @@
       Source code available under GPLv3.
   ]]></string>
   <string name="app_legal2"><![CDATA[
-      Deutsche Übersetzung von Henrik &quot;HerHde&quot; Hüttemann.
+      Deutsche Übersetzung von Henrik &quot;HerHde&quot; Hüttemann. <br/>
+      Französisch Übersetzung von Jej.
   ]]></string>
 
   <!-- Dialog: Help -->
