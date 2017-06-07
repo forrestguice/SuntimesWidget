@@ -1277,8 +1277,8 @@ public class SuntimesActivity extends AppCompatActivity
         timezoneWarning.shouldShow = WidgetTimezones.isProbablyNotLocal(timezone, dataset.location(), dataset.date());
         ImageSpan timezoneWarningIcon = (showWarnings && timezoneWarning.shouldShow) ? SuntimesUtils.createWarningSpan(this, txt_timezone.getTextSize()) : null;
 
-        boolean useDST = (Build.VERSION.SDK_INT < 24 ? timezone.useDaylightTime()
-                : timezone.observesDaylightTime());
+        boolean useDST = showWarnings && (Build.VERSION.SDK_INT < 24 ? timezone.useDaylightTime()
+                                                                     : timezone.observesDaylightTime());
         boolean inDST = useDST && timezone.inDaylightTime(now.getTime());
         ImageSpan dstWarningIcon = (inDST) ? SuntimesUtils.createDstSpan(this, txt_timezone.getTextSize()) : null;
 
