@@ -72,6 +72,9 @@ public class WidgetSettings
     public static final String PREF_KEY_APPEARANCE_ALLOWRESIZE = "allowresize";
     public static final boolean PREF_DEF_APPEARANCE_ALLOWRESIZE = true;
 
+    public static final String PREF_KEY_APPEARANCE_TIMEFORMATMODE = "timeformatmode";
+    public static final TimeFormatMode PREF_DEF_APPEARANCE_TIMEFORMATMODE = TimeFormatMode.MODE_SYSTEM;
+
     public static final String PREF_KEY_GENERAL_TIMEMODE = "timemode";
     public static final TimeMode PREF_DEF_GENERAL_TIMEMODE = TimeMode.OFFICIAL;
 
@@ -103,7 +106,7 @@ public class WidgetSettings
     public static String PREF_DEF_LOCATION_ALTITUDE = "";
 
     public static final String PREF_KEY_LOCATION_LABEL = "label";
-    public static String PREF_DEF_LOCATION_LABEL = "Prescott, AZ";
+    public static String PREF_DEF_LOCATION_LABEL = "Prescott, AZ";       // reassigned later by initDefaults
 
     public static final String PREF_KEY_TIMEZONE_MODE = "timezoneMode";
     public static final TimezoneMode PREF_DEF_TIMEZONE_MODE = TimezoneMode.CURRENT_TIMEZONE;
@@ -304,6 +307,7 @@ public class WidgetSettings
             }
         }
 
+        @Override
         public int hashCode()
         {
             int hash = Integer.valueOf(year).hashCode();
@@ -386,6 +390,42 @@ public class WidgetSettings
         {
             LOCAL_MEAN_TIME.setDisplayString(context.getString(R.string.solartime_localMean));
             APPARENT_SOLAR_TIME.setDisplayString(context.getString(R.string.solartime_apparent));
+        }
+    }
+
+    /**
+     * TimeFormatMode
+     */
+    public static enum TimeFormatMode
+    {
+        MODE_SYSTEM("System"),
+        MODE_12HR("12 hr"),
+        MODE_24HR("24 hr");
+
+        private String displayString;
+
+        private TimeFormatMode( String displayString )
+        {
+            this.displayString = displayString;
+        }
+
+        public String getDisplayString()
+        {
+            return displayString;
+
+        }
+
+        public void setDisplayString( String displayString )
+        {
+            this.displayString = displayString;
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            MODE_SYSTEM.setDisplayString(context.getString(R.string.timeFormatMode_system));
+            MODE_12HR.setDisplayString(context.getString(R.string.timeFormatMode_12hr));
+            MODE_24HR.setDisplayString(context.getString(R.string.timeFormatMode_24hr));
+
         }
     }
 
@@ -473,7 +513,7 @@ public class WidgetSettings
 
         /**
          * @param label display name
-         * @param location an android.location.Location object (that might obtained via GPS or otherwise)
+         * @param location an android.location.Location object (that might be obtained via GPS or otherwise)
          */
         public Location( String label, @NonNull android.location.Location location )
         {
@@ -544,6 +584,25 @@ public class WidgetSettings
         public String toString()
         {
             return latitude + ", " + longitude;
+        }
+
+        /**
+         * @param obj another Location object
+         * @return true the locations are the same (label, lat, lon, and alt), false they are different somehow
+         */
+        @Override
+        public boolean equals(Object obj)
+        {
+            if (!(obj instanceof Location))
+            {
+                return false;
+            } else {
+                Location that = (Location)obj;
+                return (this.getLabel().equals(that.getLabel()))
+                        && (this.getLatitude().equals(that.getLatitude()))
+                        && (this.getLongitude().equals(that.getLongitude()))
+                        && (this.getAltitude().equals(that.getAltitude()));
+            }
         }
 
         public static DecimalFormat decimalDegreesFormatter()
@@ -904,6 +963,38 @@ public class WidgetSettings
     }
 
 
+    public static void saveTimeFormatModePref(Context context, int appWidgetId, WidgetSettings.TimeFormatMode mode)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.putString(prefs_prefix + PREF_KEY_APPEARANCE_TIMEFORMATMODE, mode.name());
+        prefs.apply();
+    }
+    public static WidgetSettings.TimeFormatMode loadTimeFormatModePref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_TIMEFORMATMODE, PREF_DEF_APPEARANCE_TIMEFORMATMODE.name());
+
+        TimeFormatMode formatMode;
+        try
+        {
+            formatMode = WidgetSettings.TimeFormatMode.valueOf(modeString);
+
+        } catch (IllegalArgumentException e) {
+            formatMode = PREF_DEF_APPEARANCE_TIMEFORMATMODE;
+        }
+        return formatMode;
+    }
+    public static void deleteTimeFormatModePref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_TIMEFORMATMODE);
+        prefs.apply();
+    }
+
+
     public static void saveActionModePref(Context context, int appWidgetId, WidgetSettings.ActionMode mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
@@ -1237,9 +1328,6 @@ public class WidgetSettings
         prefs.apply();
     }
 
-
-
-
     public static void deletePrefs(Context context, int appWidgetId)
     {
         deleteActionModePref(context, appWidgetId);
@@ -1251,6 +1339,7 @@ public class WidgetSettings
         deleteThemePref(context, appWidgetId);
         deleteShowTitlePref(context, appWidgetId);
         deleteTitleTextPref(context, appWidgetId);
+        deleteTimeFormatModePref(context, appWidgetId);
 
         deleteCalculatorModePref(context, appWidgetId);
         deleteTimeModePref(context, appWidgetId);
@@ -1287,5 +1376,6 @@ public class WidgetSettings
         TimezoneMode.initDisplayStrings(context);
         SolarTimeMode.initDisplayStrings(context);
         DateMode.initDisplayStrings(context);
+        TimeFormatMode.initDisplayStrings(context);
     }
 }

@@ -31,7 +31,7 @@
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
     -->
-    <!-- line commented to use default: <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string> -->
+    <!-- line commented to use default: <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string> -->
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> Strefa czasowa może być niepoprawna dla tego miejsca (nie lokalna).</string>  <!-- snackbar message -->
 
     <!-- Field: date
@@ -59,8 +59,7 @@
     <string name="future_tomorrow">Przyszłość (+1)</string>
 
     <!-- Field: length of day
-         The hours in the day field(s) that appears below the table (main activity); can be either
-         a prefix or suffix depending on layout (layout/info_time_daylength.xml).
+         The hours in the day field(s) that appears below the table (main activity).
     -->
     <string name="length_day"><xliff:g id="timeSpan" example="12h">%1$s</xliff:g> dnia</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
     <string name="length_light"><xliff:g id="timeSpan" example="12h 50m">%1$s</xliff:g> użytecznego światła</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
@@ -208,6 +207,14 @@
     <string name="configLabel_timezone_mode">Tryb:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Strefa czasowa:</string>              <!-- spinner label -->
     <string name="configLabel_solartime">Czas słoneczny:</string>                   <!-- spinner label -->
+
+    <!-- Widget Setting: timeFormat mode -->
+    <string name="timeFormatMode_system">Systemowy</string>          <!-- setting -->  <!-- TODO -->
+    <string name="timeFormatMode_12hr">12-godzinny</string>                  <!-- setting -->  <!-- TODO -->
+    <string name="timeFormatMode_24hr">24-godzinny</string>                  <!-- setting -->  <!-- TODO -->
+
+    <string name="configLabel_timeFormatMode">Format czasu:</string>             <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
 
     <!-- Widget Setting: date mode -->
     <string name="dateMode_current">Dzisiaj</string>                  <!-- setting -->
@@ -421,7 +428,7 @@
 
     <!-- Dialog: Clear Places (progress) -->
     <string name="locationcleared_dialog_title">Usuwanie miejsc</string>
-    <string name="locationcleared_dialog_message">Czyszczenie bazy danych . . .</string>
+    <string name="locationcleared_dialog_message">Czyszczenie bazy danych…</string>
     <string name="locationcleared_toast_success">Baza danych miejsc została wyczyszczona.</string>
 
     <!-- Dialog: Export Places -->
@@ -441,7 +448,7 @@
     <string name="app_support_url"><![CDATA[<b>Wsparcie:</b> odwiedź <a href="https://github.com/forrestguice/SuntimesWidget/issues">stronę trackera błędów</a> aby zgłosić błąd/sugestię.]]></string>
     <string name="app_url"><xliff:g id="url"><![CDATA[<a href="https://github.com/forrestguice/SuntimesWidget">github.com/forrestguice/SuntimesWidget</a>]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[Prawo autorskie &#169 2014 Forrest Guice <br />Kod źródłowy dostępny na licencji GPLv3.]]></string>
-    <string name="app_legal2"><![CDATA[Niemieckie tłumaczenie: Henrik "HerHde" Hüttemann. <br />Esperanckie i Polskie tłumaczenie: Verdulo.<br />Francuski tłumaczenie: Jej.]]></string>
+    <string name="app_legal2"><![CDATA[Niemieckie tłumaczenie: Henrik "HerHde" Hüttemann. <br />Esperanckie i Polskie tłumaczenie: Verdulo.<br />Francuskie tłumaczenie: Jej.]]></string>
     <string name="app_legal3"><![CDATA[ <b>Biblioteki:</b><br/> ]]><![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]><![CDATA[ github.com/caarmen/SunriseSunset ]]></string>
     
     <!-- Dialog: Help -->
@@ -474,11 +481,11 @@
     ]]>
     </string>
     <string name="help_action_launch"><![CDATA[
-        W pełni jednoznaczna nazwa klasy Czynności do wywołania..<br/>
+        W pełni jednoznaczna nazwa klasy Czynności do wywołania.<br/>
     ]]></string>
     <string name="help_widgetlist"><![CDATA[
-          Przejdź do ekranu głównego aby <b>dodać nowy widżet</b>.<br/><br/>
-          Aby <b>edytować istniejący widżet</b> wybierz go z poniższej listy.<br/>
+          Przejdź do ekranu głównego, aby <b>dodać nowy widżet</b>.<br/><br/>
+          Aby <b>edytować istniejący widżet</b>, wybierz go z poniższej listy.<br/>
     ]]></string>
 
 </resources>

@@ -31,7 +31,7 @@
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
     -->
-    <!-- line commented to use default: <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string> -->
+    <!-- line commented to use default: <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string> -->
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> Le fuseau horaire peut être éronné pour cet emplacement.</string>  <!-- snackbar message -->
 
     <!-- Field: date
@@ -59,8 +59,7 @@
     <string name="future_tomorrow">Futur (+1)</string>
 
     <!-- Field: length of day
-         The hours in the day field(s) that appears below the table (main activity); can be either
-         a prefix or suffix depending on layout (layout/info_time_daylength.xml).
+         The hours in the day field(s) that appears below the table (main activity).
     -->
     <string name="length_day"><xliff:g example="12h" id="timeSpan">%1$s</xliff:g> de longueur du jour</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
     <string name="length_light"><xliff:g example="12h 50m" id="timeSpan">%1$s</xliff:g> de lumière utile</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
@@ -208,6 +207,14 @@
     <string name="configLabel_timezone_mode">Mode :</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Fuseau horaire :</string>              <!-- spinner label -->
     <string name="configLabel_solartime">Temps solaire :</string>                   <!-- spinner label -->
+
+    <!-- Widget Setting: timeFormat mode -->
+    <string name="timeFormatMode_system">System format</string>          <!-- setting -->  <!-- TODO -->
+    <string name="timeFormatMode_12hr">12-hour</string>                  <!-- setting -->  <!-- TODO -->
+    <string name="timeFormatMode_24hr">24-hour</string>                  <!-- setting -->  <!-- TODO -->
+
+    <string name="configLabel_timeFormatMode">Time Format:</string>             <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
 
     <!-- Widget Setting: date mode -->
     <string name="dateMode_current">Aujourd\'hui</string>                  <!-- setting -->

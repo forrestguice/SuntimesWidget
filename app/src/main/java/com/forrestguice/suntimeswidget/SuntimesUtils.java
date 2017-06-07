@@ -21,6 +21,8 @@ package com.forrestguice.suntimeswidget;
 import android.content.Context;
 import android.content.res.Resources;
 
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.text.Spannable;
 
 import android.content.res.TypedArray;
@@ -31,12 +33,14 @@ import android.text.SpannableStringBuilder;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.util.TypedValue;
 
 import java.text.DateFormat;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings.TimeFormatMode;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -46,7 +50,12 @@ import java.util.Locale;
 
 public class SuntimesUtils
 {
+    public static final String SPANTAG_DST = "[d]";
     public static final String SPANTAG_WARNING = "[w]";
+
+    public static final int DEF_WARNING_DRAWABLE = R.drawable.ic_action_warning;
+    public static final int DEF_ERROR_DRAWABLE = R.drawable.ic_action_error;
+    public static final int DEF_DST_DRAWABLE = R.drawable.ic_weather_sunny;
 
     private static String strTimeShorter = "shorter";
     private static String strTimeLonger = "longer";
@@ -58,10 +67,12 @@ public class SuntimesUtils
     private static String strMinutes = "m";
     private static String strSeconds = "s";
     private static String strTimeDeltaFormat = "%1$s" + strEmpty + "%2$s";
-    private static String strTimeVeryShortFormat = "h:mm";
+    private static String strTimeVeryShortFormat12 = "h:mm";
+    private static String strTimeVeryShortFormat24 = "HH:mm";
     private static String strTimeSuffixFormat = "a";
     private static String strTimeNone = "none";
     private static String strTimeLoading = "...";
+    private static boolean is24 = true;
 
     public SuntimesUtils() {}
 
@@ -75,9 +86,14 @@ public class SuntimesUtils
         strMinutes = context.getString(R.string.delta_minutes);
         strSeconds = context.getString(R.string.delta_seconds);
         strTimeDeltaFormat = context.getString(R.string.delta_format);
-        strTimeVeryShortFormat = context.getString(R.string.time_format_12hr_veryshort);
+        strTimeVeryShortFormat12 = context.getString(R.string.time_format_12hr_veryshort);
+        strTimeVeryShortFormat24 = context.getString(R.string.time_format_24hr_veryshort);
         strTimeNone = context.getString(R.string.time_none);
         strTimeLoading = context.getString(R.string.time_loading);
+
+        WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
+        is24 = (mode == TimeFormatMode.MODE_SYSTEM) ? android.text.format.DateFormat.is24HourFormat(context)
+                : (mode == TimeFormatMode.MODE_24HR);
     }
 
     /**
@@ -207,63 +223,95 @@ public class SuntimesUtils
         if (cal == null)
         {
             return new TimeDisplayText(strTimeNone);
-        }
-
-        Date time = cal.getTime();
-        TimeDisplayText retValue;
-
-        boolean is24 = android.text.format.DateFormat.is24HourFormat(context);
-        if (is24)
-        {
-            // most locales seem to use 24 hour time
-            DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(context);
-            timeFormat.setTimeZone(cal.getTimeZone());
-            retValue = new TimeDisplayText(timeFormat.format(time), "", "");
 
         } else {
-            // other locales use (or optionally allow) 12 hr time;
-            //
-            // `getTimeFormat` produces a localized timestring but we want the time part (6:47)
-            // separate from the suffix (AM/PM) in order to let the layout define the presentation.
-            //
-            // a. The ICU4j `getPatternInstance` method seems to be the ideal solution (using the
-            // HOURS_MINUTES pattern), but is a recent addition to android (api 24).
-            //
-            // b. Using toLocalizedPattern on an existing SimpleDateFormat
-            // may be another solution, but leaves the problem of separating the time from the suffix
-            // in a consistent way for all locales.
-            //
-            // c. Java 8 may introduce methods that address this, but the project currently compiles
-            // using older versions of java (and it would suck to break that).
-            //
-            // d. A third party lib might address this, which could be added if its source is available
-            // and easily included in the build from official maven repos.
-            //
-            // For now the work around is to define a "veryShortFormat" in strings.xml for those locales
-            // that use something other than the usual "h:mm" pattern. A better solution would get this
-            // from the system somehow without requiring additional translation.
-
-            // a variety 12 hour time formats from around the world...
-            //
-            //   english (us):       6:47 AM        11:46 PM           (en)
-            //   afrikaans:          6:47 vm.       11:46 nm.
-            //   isiZulu:            6:47 Ekuseni   11:46 Ntambama
-            //   bahasa (melayu):    6:47 PG        11:46 PTG
-            //   bahasa (indonesia): 6.47 AM        11.46 PM           (in)
-            //   dansk               6.47 AM        11.46 PM           (da)
-            //   norsk bokmal        6.47 a.m.      11.46 p.m.         (nb)
-
-            Locale locale = Resources.getSystem().getConfiguration().locale;
-
-            SimpleDateFormat timeFormat = new SimpleDateFormat(strTimeVeryShortFormat, locale); // h:mm
-            timeFormat.setTimeZone(cal.getTimeZone());
-
-            SimpleDateFormat suffixFormat = new SimpleDateFormat(strTimeSuffixFormat, locale);  // a
-            suffixFormat.setTimeZone(cal.getTimeZone());
-
-            retValue = new TimeDisplayText( timeFormat.format(time), "", suffixFormat.format(time) );
+            return (is24 ? calendarTime24HrDisplayString(context, cal)
+                    : calendarTime12HrDisplayString(context, cal));
         }
+    }
 
+    /**
+     * formats a time display string (lets the system determine the exact format).
+     * @param context a context
+     * @param cal a Calendar representing some point in time
+     * @return a time display string (short format)
+     */
+    public TimeDisplayText calendarTimeSysDisplayString(Context context, @NonNull Calendar cal)
+    {
+        DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(context);
+        timeFormat.setTimeZone(cal.getTimeZone());
+        TimeDisplayText retValue = new TimeDisplayText(timeFormat.format(cal.getTime()), "", "");
+        retValue.setRawValue(cal.getTimeInMillis());
+        return retValue;
+    }
+
+    /**
+     * formats a 24 hr time display string
+     * @param context a context
+     * @param cal a Calendar representing some point in time
+     * @return a time display string (12 hr) (short format)
+     */
+    public TimeDisplayText calendarTime24HrDisplayString(Context context, @NonNull Calendar cal)
+    {
+        Locale locale = Resources.getSystem().getConfiguration().locale;
+        SimpleDateFormat timeFormat = new SimpleDateFormat(strTimeVeryShortFormat24, locale); // HH:mm
+        timeFormat.setTimeZone(cal.getTimeZone());
+
+        TimeDisplayText retValue = new TimeDisplayText(timeFormat.format(cal.getTime()), "", "");
+        retValue.setRawValue(cal.getTimeInMillis());
+        return retValue;
+    }
+
+    /**
+     * formats a 12hr time display string
+     * @param context a context
+     * @param cal a Calendar representing some point in time
+     * @return a time display string (24 hr) (short format)
+     */
+    public TimeDisplayText calendarTime12HrDisplayString(Context context, @NonNull Calendar cal)
+    {
+        // some locales use (or optionally allow) 12 hr time;
+        //
+        // `getTimeFormat` produces a localized timestring but we want the time part (6:47)
+        // separate from the suffix (AM/PM) in order to let the layout define the presentation.
+        //
+        // a. The ICU4j `getPatternInstance` method seems to be the ideal solution (using the
+        // HOURS_MINUTES pattern), but is a recent addition to android (api 24).
+        //
+        // b. Using toLocalizedPattern on an existing SimpleDateFormat
+        // may be another solution, but leaves the problem of separating the time from the suffix
+        // in a consistent way for all locales.
+        //
+        // c. Java 8 may introduce methods that address this, but the project currently compiles
+        // using older versions of java (and it would suck to break that).
+        //
+        // d. A third party lib might address this, which could be added if its source is available
+        // and easily included in the build from official maven repos.
+        //
+        // For now the work around is to define a "veryShortFormat" in strings.xml for those locales
+        // that use something other than the usual "h:mm" pattern. A better solution would get this
+        // from the system somehow without requiring additional translation.
+
+        // a variety 12 hour time formats from around the world...
+        //
+        //   english (us):       6:47 AM        11:46 PM           (en)
+        //   afrikaans:          6:47 vm.       11:46 nm.
+        //   isiZulu:            6:47 Ekuseni   11:46 Ntambama
+        //   bahasa (melayu):    6:47 PG        11:46 PTG
+        //   bahasa (indonesia): 6.47 AM        11.46 PM           (in)
+        //   dansk               6.47 AM        11.46 PM           (da)
+        //   norsk bokmal        6.47 a.m.      11.46 p.m.         (nb)
+
+        Locale locale = Resources.getSystem().getConfiguration().locale;
+
+        SimpleDateFormat timeFormat = new SimpleDateFormat(strTimeVeryShortFormat12, locale); // h:mm
+        timeFormat.setTimeZone(cal.getTimeZone());
+
+        SimpleDateFormat suffixFormat = new SimpleDateFormat(strTimeSuffixFormat, locale);  // a
+        suffixFormat.setTimeZone(cal.getTimeZone());
+
+        Date time = cal.getTime();
+        TimeDisplayText retValue = new TimeDisplayText(timeFormat.format(time), "", suffixFormat.format(time));
         retValue.setRawValue(cal.getTimeInMillis());
         return retValue;
     }
@@ -400,25 +448,33 @@ public class SuntimesUtils
         return displayString;
     }
 
-    /**
-     * @param text a pre-formatted datestring
-     * @param warningSpan an ImageSpan to be substituted in place of all [w] tags (or null to remove tag).
-     * @return a SpannableStringBuilder with tags replaced with appropriate ImageSpans
-     */
-    public static SpannableStringBuilder createSpan(String text, ImageSpan warningSpan)
+    public static SpannableStringBuilder createSpan(Context context, String text, String spanTag, ImageSpan imageSpan)
     {
-        SpannableStringBuilder dateSpan = new SpannableStringBuilder(text);
-        int tagPos_warning = text.indexOf(SPANTAG_WARNING);
-        if (tagPos_warning >= 0)
+        ImageSpanTag[] tags = { new ImageSpanTag(spanTag, imageSpan) };
+        return createSpan(context, text, tags);
+    }
+
+    public static SpannableStringBuilder createSpan(Context context, String text, ImageSpanTag[] tags)
+    {
+        SpannableStringBuilder span = new SpannableStringBuilder(text);
+        ImageSpan blank = createImageSpan(context, R.drawable.ic_transparent, 0, 0, R.color.color_transparent);
+
+        for (ImageSpanTag tag : tags)
         {
-            if (warningSpan != null)
+            String spanTag = tag.getTag();
+            ImageSpan imageSpan = (tag.getSpan() == null) ? blank : tag.getSpan();
+
+            int tagPos;
+            while ((tagPos = text.indexOf(spanTag)) >= 0)
             {
-                dateSpan.setSpan(warningSpan, tagPos_warning, tagPos_warning + SPANTAG_WARNING.length(), ImageSpan.ALIGN_BASELINE);
-            } else {
-                dateSpan.replace(tagPos_warning, tagPos_warning + SPANTAG_WARNING.length(), new SpannableString(""));
+                int tagEnd = tagPos + spanTag.length();
+                //Log.d("DEBUG", "tag=" + spanTag + ", tagPos=" + tagPos + ", " + tagEnd + ", text=" + text);
+
+                span.setSpan(createImageSpan(imageSpan), tagPos, tagEnd, ImageSpan.ALIGN_BASELINE);
+                text = text.substring(0, tagPos) + tag.getBlank() + text.substring(tagEnd);
             }
         }
-        return dateSpan;
+        return span;
     }
 
     public static SpannableString createColorSpan(String text, String toColorize, int color)
@@ -470,29 +526,51 @@ public class SuntimesUtils
         //noinspection SuspiciousNameCombination
         return createWarningSpan(context, height, height);
     }
+
     public static ImageSpan createWarningSpan(Context context, float height)
     {
-        return createWarningSpan(context, (int)Math.ceil(height));
+        return createWarningSpan(context, (int) Math.ceil(height));
     }
     public static ImageSpan createWarningSpan(Context context, int width, int height)
     {
-        TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.icActionWarning});
-        int drawableID = a.getResourceId(0, R.drawable.ic_action_warning);
+        TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.icActionWarning, R.attr.tagColor_warning});
+        int drawableID = a.getResourceId(0, DEF_WARNING_DRAWABLE);
+        int colorID = a.getResourceId(1, R.color.warningTag_dark);
         a.recycle();
-        int warningTint = context.getResources().getColor(R.color.warning);
-        return createImageSpan(context, drawableID, width, height, warningTint);
+        return createImageSpan(context, drawableID, width, height, ContextCompat.getColor(context, colorID));
     }
+
     public static ImageSpan createErrorSpan(Context context, int width, int height)
     {
-        TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.icActionError});
-        int drawableID = a.getResourceId(0, R.drawable.ic_action_error);
+        TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.icActionError, R.attr.tagColor_error});
+        int drawableID = a.getResourceId(0, DEF_ERROR_DRAWABLE);
+        int colorID = a.getResourceId(1, R.color.errorTag_dark);
         a.recycle();
-        int errorTint = context.getResources().getColor(R.color.error);
-        return createImageSpan(context, drawableID, width, height, errorTint);
+        return createImageSpan(context, drawableID, width, height, ContextCompat.getColor(context, colorID));
     }
+
+    public static ImageSpan createDstSpan(Context context, float height)
+    {
+        return createDstSpan(context, (int) Math.ceil(height), (int) Math.ceil(height));
+    }
+    public static ImageSpan createDstSpan(Context context, int width, int height)
+    {
+        TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.icActionDst, R.attr.tagColor_dst});
+        int drawableID = a.getResourceId(0, DEF_DST_DRAWABLE);
+        int colorID = a.getResourceId(1, R.color.dstTag_dark);
+        a.recycle();
+        return createImageSpan(context, drawableID, width, height, ContextCompat.getColor(context, colorID));
+    }
+
     public static ImageSpan createImageSpan(Context context, int drawableID, int width, int height, int tint)
     {
-        Drawable drawable = context.getResources().getDrawable(drawableID);
+        Drawable drawable = null;
+        try {
+            drawable = context.getResources().getDrawable(drawableID);
+        } catch (Exception e) {
+            Log.e("createImageSpan", "invalid drawableID " + drawableID + "! ...set to null.");
+        }
+
         if (drawable != null)
         {
             if (width > 0 && height > 0)
@@ -502,6 +580,54 @@ public class SuntimesUtils
             drawable.setColorFilter(tint, PorterDuff.Mode.SRC_ATOP);
         }
         return new ImageSpan(drawable);
+    }
+
+    public static ImageSpan createImageSpan(ImageSpan other)
+    {
+        Drawable drawable = null;
+        if (other != null)
+            drawable = other.getDrawable();
+
+        return new ImageSpan(drawable);
+    }
+
+    /**
+     * utility class; [Tag, ImageSpan] tuple
+     */
+    public static class ImageSpanTag
+    {
+        private String tag;       // the tag, e.g. [w]
+        private ImageSpan span;   // an ImageSpan that should be substituted for the tag
+        private String blank;     // a "blank" string the same length as the tag
+
+        public ImageSpanTag(String tag, ImageSpan span)
+        {
+            this.tag = tag;
+            this.span = span;
+            buildBlankTag();
+        }
+
+        private void buildBlankTag()
+        {
+            blank = "";
+            for (int i=0; i<tag.length(); i++)
+            {    blank += " ";    }
+        }
+
+        public String getTag()
+        {
+            return tag;
+        }
+
+        public ImageSpan getSpan()
+        {
+            return span;
+        }
+
+        public String getBlank()
+        {
+            return blank;
+        }
     }
 
 }
