@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.text.Spannable;
 
 import android.content.res.TypedArray;
@@ -51,6 +52,10 @@ public class SuntimesUtils
 {
     public static final String SPANTAG_DST = "[d]";
     public static final String SPANTAG_WARNING = "[w]";
+
+    public static final int DEF_WARNING_DRAWABLE = R.drawable.ic_action_warning;
+    public static final int DEF_ERROR_DRAWABLE = R.drawable.ic_action_error;
+    public static final int DEF_DST_DRAWABLE = R.drawable.ic_weather_sunny;
 
     private static String strTimeShorter = "shorter";
     private static String strTimeLonger = "longer";
@@ -524,19 +529,19 @@ public class SuntimesUtils
     public static ImageSpan createWarningSpan(Context context, int width, int height)
     {
         TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.icActionWarning});
-        int drawableID = a.getResourceId(0, R.drawable.ic_action_warning);
+        int drawableID = a.getResourceId(0, DEF_WARNING_DRAWABLE);
+        int colorID = a.getResourceId(1, R.color.warningTag_dark);
         a.recycle();
-        int warningTint = context.getResources().getColor(R.color.warning);
-        return createImageSpan(context, drawableID, width, height, warningTint);
+        return createImageSpan(context, drawableID, width, height, ContextCompat.getColor(context, colorID));
     }
 
     public static ImageSpan createErrorSpan(Context context, int width, int height)
     {
         TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.icActionError});
-        int drawableID = a.getResourceId(0, R.drawable.ic_action_error);
+        int drawableID = a.getResourceId(0, DEF_ERROR_DRAWABLE);
+        int colorID = a.getResourceId(1, R.color.errorTag_dark);
         a.recycle();
-        int errorTint = context.getResources().getColor(R.color.error);
-        return createImageSpan(context, drawableID, width, height, errorTint);
+        return createImageSpan(context, drawableID, width, height, ContextCompat.getColor(context, colorID));
     }
 
     public static ImageSpan createDstSpan(Context context, float height)
@@ -545,11 +550,11 @@ public class SuntimesUtils
     }
     public static ImageSpan createDstSpan(Context context, int width, int height)
     {
-        TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.icActionDst});
-        int drawableID = a.getResourceId(0, R.drawable.ic_action_brightness_high);
+        TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.icActionDst, R.attr.tagColor_dst});
+        int drawableID = a.getResourceId(0, DEF_DST_DRAWABLE);
+        int colorID = a.getResourceId(1, R.color.dstTag_dark);
         a.recycle();
-        int dstTint = context.getResources().getColor(R.color.sunIcon_color_rising);
-        return createImageSpan(context, drawableID, width, height, dstTint);
+        return createImageSpan(context, drawableID, width, height, ContextCompat.getColor(context, colorID));
     }
 
     public static ImageSpan createImageSpan(Context context, int drawableID, int width, int height, int tint)
