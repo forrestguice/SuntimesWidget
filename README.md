@@ -36,41 +36,35 @@ The home screen widget is resizable and has layouts for:
 
 <img alt="screenshot2" src='https://cloud.githubusercontent.com/assets/10246147/14938299/ad52bc2e-0ed3-11e6-8916-9b7e75057a62.png' width="280px" />
 
+**Bug Reports**
+
+You can report bugs using the issue tracker. Be aware that times are approximate and may differ from official sources (up to 10 minutes).
+
+When submitting a bug please be detailed and specific. What did you expect the app to do, what did you actually observe? Bugs that can't be reproduced won't get fixed. If reporting inaccurate times include the lat/lon, timezone, and the date. Other useful information includes Android OS version and your specific device model.
 
 **Donations**
 
-Feel free to pay whatever you think is fair through <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2">https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2</a>.
+Feel free to pay whatever you think is fair using [![paypal](https://www.paypalobjects.com/webstatic/en_US/i/btn/png/silver-rect-paypal-26px.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2)
 
 Any money given will indirectly go towards software development. It is not technically a donation since I am obligated to report anything given to me as earned income (and I will probably apply it toward personal expenses). I want to express my thanks to those who have sent me something. In total it has amounted to lunch and a coffee but its a very meaningful gesture.
 
 **Legal Stuff**
 
-The goal of this project is an app that is free and open-source (FOSS). 
-
-The source code is available under *GPLv3* (https://github.com/forrestguice/SuntimesWidget).
+The goal of this project is an app that is free and open-source (FOSS). The source code is available under *GPLv3* (https://github.com/forrestguice/SuntimesWidget).
 
 Icons borrowed from:
 * "Google Android Design Icons 20131120" [Apache License 2.0]
 * "Google Material Icons" [Apache License 2.0] (https://material.io/icons/)
 * "Material Design Icons" [SIL Open Font License 1.1] (https://materialdesignicons.com)
 
-**Bug Reports**
-
-Report bugs using the issue tracker. Please be aware that times are approximate and may differ from official sources (up to 10 minutes). If you are getting wildly inaccurate times (and its determined that its not caused by a bug in the app), please consider submitting a report to the upstream project (https://github.com/mikereedell/sunrisesunsetlib-java). 
-
-When reporting an inaccurate time, please include the following information:
-```
-* Date sunrise/set calculation was being run for.
-* Latitude/longitute sunrise/set calculation was being run for.
-* Timezone (either "America/New_York" or GMT-0500)
-```
-
-
 **Project Contributions**
 
+[Contributions to the project](CONTRIBUTING.md) are welcome.
+
 German translation by <u>Henrik "HerHde" Hüttemann</u>.<br/>
-Polish and Esperanto translations by <u>verdulo</u>.
-French translation by <u>Jej</u>.
+Polish and Esperanto translations by <u>verdulo</u>.<br/>
+French translation by <u>Jej</u>.<br/>
+
 
 
 
