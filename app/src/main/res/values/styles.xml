@@ -23,6 +23,10 @@
         <item name="graphColor_pointFill">@color/sunIcon_color_setting</item>
         <item name="graphColor_pointStroke">@color/material_grey_800</item>
 
+        <item name="tagColor_warning">@color/warningTag_light</item>
+        <item name="tagColor_error">@color/errorTag_light</item>
+        <item name="tagColor_dst">@color/dstTag_light</item>
+
         <item name="icActionGPS">@drawable/ic_action_location_found_light</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off_light</item>
         <item name="icActionGPS_searching">@drawable/ic_action_location_searching_light</item>
@@ -62,6 +66,10 @@
         <item name="graphColor_astronomical">@color/graphColor_astronomical_dark</item>
         <item name="graphColor_pointFill">@color/sunIcon_color_setting</item>
         <item name="graphColor_pointStroke">@color/material_grey_800</item>
+
+        <item name="tagColor_warning">@color/warningTag_dark</item>
+        <item name="tagColor_error">@color/errorTag_dark</item>
+        <item name="tagColor_dst">@color/dstTag_dark</item>
 
         <item name="icActionGPS">@drawable/ic_action_location_found</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off</item>
