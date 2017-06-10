@@ -5,7 +5,21 @@
     <color name="primary_dark">#ff9900</color>
     <color name="accent">#ffcc00</color>
     <color name="text_primary">#cccccc</color>
+    <color name="btn_tint_pressed">#ff9900</color>
 
+    <color name="text_disabled_dark">#4Dffffff</color>
+    <color name="text_accent_dark">@color/deep_teal_200</color>
+    <color name="hr_dark">#33ffffff</color>
+    <color name="dialog_bg_dark">@color/grey_850</color>
+    <color name="card_bg_dark">@color/grey_800</color>
+
+    <color name="text_disabled_light">#39000000</color>
+    <color name="text_accent_light">@color/deep_teal_500</color>
+    <color name="hr_light">#1f000000</color>
+    <color name="dialog_bg_light">@color/grey_50</color>
+    <color name="card_bg_light">@android:color/white</color>
+
+    <!-- tags -->
     <color name="warningTag_dark">#ff9900</color>
     <color name="errorTag_dark">#FF5252</color>
     <color name="dstTag_dark">#ffcc00</color>
@@ -14,6 +28,7 @@
     <color name="errorTag_light">#FF5252</color>
     <color name="dstTag_light">#ffcc00</color>
 
+    <!-- sun icon -->
     <color name="sunIcon_color_rising">@color/sunIcon_color_rising_dark</color>
     <color name="sunIcon_color_setting">@color/sunIcon_color_setting_dark</color>
     <color name="sunIcon_color_risingBorder">@color/sunIcon_color_risingBorder_dark</color>
@@ -29,8 +44,7 @@
     <color name="sunIcon_color_setting_light">#ff9900</color>
     <color name="sunIcon_color_settingBorder_light">#ffcc00</color>
 
-    <color name="btn_tint_pressed">#ff9900</color>
-
+    <!-- timezone colors -->
     <array name="utcOffsetColors">
         <item>#fc8d59</item>
         <item>#fee090</item>
@@ -40,16 +54,27 @@
         <item>#ee6362</item>
     </array>
 
+    <!-- graph colors -->
+    <color name="graphColor_bg_dark">@color/material_grey_850</color>
     <color name="graphColor_day_dark">#ffffcc00</color>
     <color name="graphColor_civil_dark">#ff7ba3ff</color>
     <color name="graphColor_nautical_dark">#003366</color>
     <color name="graphColor_astronomical_dark">#000066</color>
     <color name="graphColor_night_dark">#ff424242</color>
 
+    <color name="graphColor_bg_light">@color/material_grey_50</color>
     <color name="graphColor_day_light">#ffffcc00</color>
     <color name="graphColor_civil_light">#ff7ba3ff</color>
     <color name="graphColor_nautical_light">#ff007bff</color>
     <color name="graphColor_astronomical_light">#ff0000ff</color>
     <color name="graphColor_night_light">#ff757575</color>
+
+    <!-- misc -->
     <color name="transparent">#00000000</color>
+    <color name="grey_50">#fffafafa</color>
+    <color name="grey_100">#fff5f5f5</color>
+    <color name="grey_800">#ff424242</color>
+    <color name="grey_850">#ff303030</color>
+    <color name="deep_teal_200">#ff80cbc4</color>
+    <color name="deep_teal_500">#ff009688</color>
 </resources>
