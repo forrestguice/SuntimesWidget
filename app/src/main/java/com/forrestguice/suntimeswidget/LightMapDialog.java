@@ -100,7 +100,7 @@ public class LightMapDialog extends DialogFragment
                 R.attr.graphColor_day                   // 4
         };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
-        int def = R.color.color_transparent;
+        int def = R.color.transparent;
         int colorNight = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
         int colorAstro = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
         int colorNautical = ContextCompat.getColor(context, typedArray.getResourceId(2, def));

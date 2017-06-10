@@ -70,7 +70,7 @@
             <ImageView
                 android:id="@+id/icon_time_sunrise"
                 style="@style/TableHeadImageView"
-                android:layout_width="@dimen/table_heading_iconsize_max"
+                android:layout_width="@dimen/table_heading_iconsize"
                 android:background="@drawable/ic_sunrise"
                 android:layout_gravity="bottom|center_horizontal"
                 android:layout_margin="0dp"
@@ -99,7 +99,7 @@
             <ImageView
                 android:id="@+id/icon_time_sunset"
                 style="@style/TableHeadImageView"
-                android:layout_width="@dimen/table_heading_iconsize_max"
+                android:layout_width="@dimen/table_heading_iconsize"
                 android:background="@drawable/ic_sunset"
                 android:layout_gravity="bottom|center_horizontal"
                 android:layout_margin="0dp"

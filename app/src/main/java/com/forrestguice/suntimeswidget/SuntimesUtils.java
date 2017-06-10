@@ -457,7 +457,7 @@ public class SuntimesUtils
     public static SpannableStringBuilder createSpan(Context context, String text, ImageSpanTag[] tags)
     {
         SpannableStringBuilder span = new SpannableStringBuilder(text);
-        ImageSpan blank = createImageSpan(context, R.drawable.ic_transparent, 0, 0, R.color.color_transparent);
+        ImageSpan blank = createImageSpan(context, R.drawable.ic_transparent, 0, 0, R.color.transparent);
 
         for (ImageSpanTag tag : tags)
         {

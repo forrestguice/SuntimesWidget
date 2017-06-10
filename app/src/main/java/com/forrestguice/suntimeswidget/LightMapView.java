@@ -28,14 +28,9 @@ import android.support.v4.content.ContextCompat;
 
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.LayoutInflater;
-
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_0;
 
 import java.util.Calendar;
 
@@ -89,7 +84,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 R.attr.graphColor_pointFill,            // 5
                 R.attr.graphColor_pointStroke };        // 6
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
-        int def = R.color.color_transparent;
+        int def = R.color.transparent;
 
         colorNight = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
         colorAstro = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
@@ -220,8 +215,8 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         @Override
         protected Bitmap doInBackground(Object... params)
         {
-            int w = 0, h = 0;
-            SuntimesRiseSetDataset data = null;
+            int w, h;
+            SuntimesRiseSetDataset data;
             try {
                 data = (SuntimesRiseSetDataset)params[0];
                 w = (Integer)params[1];

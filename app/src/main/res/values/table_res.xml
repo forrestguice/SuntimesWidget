@@ -37,10 +37,8 @@
     <dimen name="table_heading_label_fontsize">14sp</dimen>
     <integer name="table_heading_label_maxlines">1</integer>
     <dimen name="table_heading_label_maxdim">84dp</dimen>
-    <dimen name="table_heading_label_mindim">30dp</dimen>
 
-    <dimen name="table_heading_iconsize_min">16dp</dimen>
-    <dimen name="table_heading_iconsize_max">24dp</dimen>
+    <dimen name="table_heading_iconsize">24dp</dimen>
 
     <style name="TableHeadImageView" parent="SunsetTimeImageView">      <!-- rise/set header icons-->
         <item name="android:layout_gravity">center</item>
