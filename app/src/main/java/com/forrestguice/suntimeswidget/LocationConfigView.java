@@ -921,18 +921,19 @@ public class LocationConfigView extends LinearLayout
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent)
+        @NonNull
+        public View getView(int position, View convertView, @NonNull ViewGroup parent)
         {
             return listItemView(position, convertView, parent);
         }
 
         @Override
-        public View getDropDownView(int position, View convertView, ViewGroup parent)
+        public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent)
         {
             return listItemView(position, convertView, parent);
         }
 
-        private View listItemView(int position, View convertView, ViewGroup parent)
+        private View listItemView(int position, View convertView, @NonNull ViewGroup parent)
         {
             WidgetSettings.LocationMode item = modes.get(position);
 
