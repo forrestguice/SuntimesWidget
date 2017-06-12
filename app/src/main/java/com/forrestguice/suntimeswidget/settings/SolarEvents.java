@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.settings;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -119,18 +120,19 @@ public enum SolarEvents
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent)
+        @NonNull
+        public View getView(int position, View convertView, @NonNull ViewGroup parent)
         {
             return alarmItemView(position, convertView, parent);
         }
 
         @Override
-        public View getDropDownView(int position, View convertView, ViewGroup parent)
+        public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent)
         {
             return alarmItemView(position, convertView, parent);
         }
 
-        private View alarmItemView(int position, View convertView, ViewGroup parent)
+        private View alarmItemView(int position, View convertView, @NonNull ViewGroup parent)
         {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View view = inflater.inflate(R.layout.layout_listitem_solarevent, parent, false);

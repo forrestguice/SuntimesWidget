@@ -25,6 +25,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -246,9 +247,14 @@ public class LocationDialog extends Dialog
 
     public AlertDialog toAlertDialog()
     {
-        ViewGroup dialogFrame = (ViewGroup)this.getWindow().getDecorView();
-        View dialogContent = dialogFrame.getChildAt(0);
-        dialogFrame.removeView(dialogContent);
+        View dialogContent = null;
+        Window window = this.getWindow();
+        if (window != null)
+        {
+            ViewGroup dialogFrame = (ViewGroup) window.getDecorView();
+            dialogContent = dialogFrame.getChildAt(0);
+            dialogFrame.removeView(dialogContent);
+        }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
         builder.setView(dialogContent);

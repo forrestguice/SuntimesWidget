@@ -161,15 +161,20 @@ public class SuntimesUtils
             StringBuilder s = new StringBuilder();
             s.append(value);
 
-            if (!units.isEmpty())
+            boolean valueNotEmpty = !value.isEmpty();
+            boolean unitsNotEmpty = !units.isEmpty();
+
+            if (unitsNotEmpty)
             {
-                s.append(" ");
+                if (valueNotEmpty)
+                    s.append(" ");
                 s.append(units);
             }
 
             if (!suffix.isEmpty())
             {
-                s.append(" ");
+                if (valueNotEmpty || unitsNotEmpty)
+                    s.append(" ");
                 s.append(suffix);
             }
 
@@ -452,7 +457,7 @@ public class SuntimesUtils
     public static SpannableStringBuilder createSpan(Context context, String text, ImageSpanTag[] tags)
     {
         SpannableStringBuilder span = new SpannableStringBuilder(text);
-        ImageSpan blank = createImageSpan(context, R.drawable.ic_transparent, 0, 0, R.color.color_transparent);
+        ImageSpan blank = createImageSpan(context, R.drawable.ic_transparent, 0, 0, R.color.transparent);
 
         for (ImageSpanTag tag : tags)
         {

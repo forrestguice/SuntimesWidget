@@ -26,6 +26,7 @@ import android.content.Intent;
 
 import android.os.Bundle;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -262,18 +263,19 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent)
+        @NonNull
+        public View getView(int position, View convertView, @NonNull ViewGroup parent)
         {
             return widgetItemView(position, convertView, parent);
         }
 
         @Override
-        public View getDropDownView(int position, View convertView, ViewGroup parent)
+        public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent)
         {
             return widgetItemView(position, convertView, parent);
         }
 
-        private View widgetItemView(int position, View convertView, ViewGroup parent)
+        private View widgetItemView(int position, View convertView, @NonNull ViewGroup parent)
         {
             WidgetListItem item = widgets.get(position);
 

@@ -38,6 +38,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
@@ -291,7 +292,11 @@ public class TimeZoneDialog extends DialogFragment
             if (dialog == null)
                 return false;
 
-            View v = dialog.getWindow().getDecorView();
+            Window window = dialog.getWindow();
+            if (window == null)
+                return false;
+
+            View v = window.getDecorView();
             if (v == null)
                 return false;
 

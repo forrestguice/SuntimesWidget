@@ -2,37 +2,39 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
        xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout style="@style/SunsetTimeCard" android:layout_width="match_parent" android:layout_height="wrap_content">
+    <!-- card scroller -->
+    <com.forrestguice.suntimeswidget.SuntimesCardScroll android:id="@+id/cardContent"
+                                                        android:layout_width="match_parent" android:layout_height="wrap_content">
 
-        <!-- card scroller -->
-         <com.forrestguice.suntimeswidget.SuntimesCardScroll android:id="@+id/cardContent"
-            android:layout_width="match_parent" android:layout_height="wrap_content">
+        <LinearLayout style="@style/SunsetTimeCard"
+                      android:layout_width="match_parent"
+                      android:paddingTop="4dp">
 
-            <LinearLayout style="@style/SunsetTimeCard"
-                          android:layout_width="wrap_content">
+            <!-- rise/set table -->
+            <include layout="@layout/info_time_all" />
 
-                <!-- rise/set table -->
-                <include layout="@layout/info_time_all"/>
+            <!-- day length -->
+            <LinearLayout android:id="@+id/layout_daylength"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:orientation="vertical"
+                          android:layout_marginTop="8dp">
 
-                <!-- day length -->
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp" android:animateLayoutChanges="true">
-                    <include layout="@layout/info_time_daylength"/>
-                </LinearLayout>
+                <include layout="@layout/info_time_daylength" />
 
             </LinearLayout>
 
-        </com.forrestguice.suntimeswidget.SuntimesCardScroll>
+        </LinearLayout>
 
-        <!-- next/prev buttons -->
-        <FrameLayout
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/cardContent"
-            android:layout_alignRight="@id/cardContent" android:layout_alignEnd="@id/cardContent">
-            <include layout="@layout/info_time_nextprev" />
-        </FrameLayout>
+    </com.forrestguice.suntimeswidget.SuntimesCardScroll>
 
-    </RelativeLayout>
+    <!-- next/prev buttons -->
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:orientation="horizontal" android:layout_gravity="end"
+                  android:layout_alignBottom="@id/cardContent"
+                  android:layout_alignRight="@id/cardContent" android:layout_alignEnd="@id/cardContent">
+
+        <include layout="@layout/info_time_nextprev" />
+
+    </LinearLayout>
+
 </merge>

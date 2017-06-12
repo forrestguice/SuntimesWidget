@@ -6,22 +6,22 @@
 
     <!-- Theme: Light (left-to-right) -->
     <style name="AppThemeBase.Light" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="dialogBackground">@color/background_material_light</item>
+        <item name="dialogBackground">@color/dialog_bg_light</item>
         <item name="settingsCardBackground">@drawable/bg_widget</item>
-        <item name="timeCardBackground">@color/background_floating_material_light</item>
+        <item name="timeCardBackground">@color/card_bg_light</item>
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
-        <item name="hrColor">@color/ripple_material_light</item>
-        <item name="text_accentColor">@color/accent_material_light</item>
-        <item name="text_disabledColor">@color/primary_text_disabled_material_light</item>
+        <item name="hrColor">@color/hr_light</item>
+        <item name="text_accentColor">@color/text_accent_light</item>
+        <item name="text_disabledColor">@color/text_disabled_light</item>
 
-        <item name="graphColor_background">@color/background_material_light</item>
+        <item name="graphColor_background">@color/graphColor_bg_light</item>
         <item name="graphColor_day">@color/graphColor_day_light</item>
         <item name="graphColor_night">@color/graphColor_night_light</item>
         <item name="graphColor_civil">@color/graphColor_civil_light</item>
         <item name="graphColor_nautical">@color/graphColor_nautical_light</item>
         <item name="graphColor_astronomical">@color/graphColor_astronomical_light</item>
         <item name="graphColor_pointFill">@color/sunIcon_color_setting</item>
-        <item name="graphColor_pointStroke">@color/material_grey_800</item>
+        <item name="graphColor_pointStroke">@color/grey_800</item>
 
         <item name="tagColor_warning">@color/warningTag_light</item>
         <item name="tagColor_error">@color/errorTag_light</item>
@@ -50,22 +50,22 @@
 
     <!-- Theme: Dark (left-to-right) -->
     <style name="AppThemeBase.Dark" parent="Theme.AppCompat.NoActionBar">
-        <item name="dialogBackground">@color/background_material_dark</item>
+        <item name="dialogBackground">@color/dialog_bg_dark</item>
         <item name="settingsCardBackground">@drawable/bg_widget_dark</item>
-        <item name="timeCardBackground">@color/background_floating_material_dark</item>
+        <item name="timeCardBackground">@color/card_bg_dark</item>
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
-        <item name="hrColor">@color/ripple_material_dark</item>
-        <item name="text_accentColor">@color/accent_material_dark</item>
-        <item name="text_disabledColor">@color/primary_text_disabled_material_dark</item>
+        <item name="hrColor">@color/hr_dark</item>
+        <item name="text_accentColor">@color/text_accent_dark</item>
+        <item name="text_disabledColor">@color/text_disabled_dark</item>
 
-        <item name="graphColor_background">@color/background_material_dark</item>
+        <item name="graphColor_background">@color/graphColor_bg_dark</item>
         <item name="graphColor_day">@color/graphColor_day_dark</item>
         <item name="graphColor_night">@color/graphColor_night_dark</item>
         <item name="graphColor_civil">@color/graphColor_civil_dark</item>
         <item name="graphColor_nautical">@color/graphColor_nautical_dark</item>
         <item name="graphColor_astronomical">@color/graphColor_astronomical_dark</item>
         <item name="graphColor_pointFill">@color/sunIcon_color_setting</item>
-        <item name="graphColor_pointStroke">@color/material_grey_800</item>
+        <item name="graphColor_pointStroke">@color/grey_800</item>
 
         <item name="tagColor_warning">@color/warningTag_dark</item>
         <item name="tagColor_error">@color/errorTag_dark</item>
@@ -202,7 +202,7 @@
 
     <style name="SunsetTimeHorizontalRule">
         <item name="android:layout_height">2dp</item>
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_width">0dp</item>
         <item name="android:background">?attr/hrColor</item>
     </style>
 

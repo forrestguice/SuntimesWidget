@@ -23,6 +23,7 @@ import com.forrestguice.suntimeswidget.R;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import android.view.ActionMode;
@@ -402,7 +403,7 @@ public class WidgetTimezones
             }
         }
 
-        private View getItemView(int position, View convertView, ViewGroup parent, boolean colorize)
+        private View getItemView(int position, View convertView, @NonNull ViewGroup parent, boolean colorize)
         {
             LayoutInflater layoutInflater = LayoutInflater.from(getContext());
             View view = layoutInflater.inflate(R.layout.layout_listitem_timezone, parent, false);
@@ -442,14 +443,15 @@ public class WidgetTimezones
         }
 
         @Override
-        public View getDropDownView(int position, View convertView, ViewGroup parent)
+        public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent)
         {
             return getItemView(position, convertView, parent, true);
         }
 
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent)
+        @NonNull
+        public View getView(int position, View convertView, @NonNull ViewGroup parent)
         {
             return getItemView(position, convertView, parent, false);
         }
