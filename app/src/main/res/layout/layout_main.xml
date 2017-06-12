@@ -21,11 +21,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="wrap_content" android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <!-- Action Bar -->
         <android.support.v7.widget.Toolbar
@@ -34,10 +36,11 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             android:theme="?attr/toolbarTheme"
-            app:popupTheme="?attr/actionBarPopupTheme" />
+            app:popupTheme="?attr/actionBarPopupTheme"/>
 
         <LinearLayout
-            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="8dp">
 
@@ -48,17 +51,21 @@
                 tools:ignore="UnusedAttribute">
 
                 <!-- Clock -->
-                <include layout="@layout/info_time_now" />
+                <include layout="@layout/info_time_now"/>
 
                 <!-- Flipper: Note -->
-                <FrameLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
                     <ViewFlipper
                         android:id="@+id/info_note_flipper"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:background="?attr/selectableItemBackground"
-                        android:layout_marginLeft="5dp" android:layout_marginStart="5dp">
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
+                        android:background="?attr/selectableItemBackground">
 
                         <LinearLayout
                             android:id="@+id/info_time_note1"
@@ -66,7 +73,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical">
 
-                            <include layout="@layout/info_time_note" />
+                            <include layout="@layout/info_time_note"/>
 
                         </LinearLayout>
 
@@ -76,7 +83,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical">
 
-                            <include layout="@layout/info_time_note" />
+                            <include layout="@layout/info_time_note"/>
 
                         </LinearLayout>
 
@@ -85,8 +92,9 @@
                     <ProgressBar
                         android:id="@+id/info_note_progress"
                         style="?android:attr/progressBarStyle"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:layout_gravity="center" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"/>
 
                 </FrameLayout>
 
@@ -95,29 +103,35 @@
             <!-- Flipper: Time Card -->
             <ViewFlipper
                 android:id="@+id/info_time_flipper"
-                android:layout_width="fill_parent" android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:elevation="5dp"
                 tools:ignore="UnusedAttribute">
 
                 <!-- Times for Today -->
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/info_time_all_today"
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
-                    tools:ignore="UnusedAttribute">
+                    style="@style/SunsetTimeCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
                     <include layout="@layout/info_time_card"/>
-                </LinearLayout>
+                </RelativeLayout>
 
                 <!-- Times for Tomorrow -->
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/info_time_all_tomorrow"
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
-                    tools:ignore="UnusedAttribute">
+                    style="@style/SunsetTimeCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
                     <include layout="@layout/info_time_card"/>
-                </LinearLayout>
+                </RelativeLayout>
 
             </ViewFlipper>
 
+            <!-- Lightmap -->
             <LinearLayout
                 android:id="@+id/info_time_equinox_layout"
                 android:layout_width="match_parent"
@@ -133,14 +147,18 @@
 
             <LinearLayout
                 android:id="@+id/info_time_lightmap_layout"
-                android:layout_width="match_parent" android:layout_height="16dp"
-                android:layout_marginTop="6dp" android:layout_marginBottom="2dp"
-                android:background="?attr/selectableItemBackground" android:clickable="true">
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/lightmap_clickable_height"
+                android:layout_marginBottom="2dp" android:layout_marginTop="6dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true">
 
                 <com.forrestguice.suntimeswidget.LightMapView
                     android:id="@+id/info_time_lightmap"
-                    android:layout_width="match_parent" android:layout_height="12dp"
-                    android:layout_gravity="top" />
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/lightmap_height"
+                    android:layout_gravity="top"
+                    tools:ignore="ContentDescription" />
 
             </LinearLayout>
 

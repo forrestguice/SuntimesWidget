@@ -219,7 +219,7 @@ public class EquinoxView extends LinearLayout
     {
         int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.springColor, R.attr.summerColor, R.attr.fallColor, R.attr.winterColor };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
-        int def = R.color.color_transparent;
+        int def = R.color.transparent;
         noteColor = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
         springColor = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
         summerColor = ContextCompat.getColor(context, typedArray.getResourceId(2, def));

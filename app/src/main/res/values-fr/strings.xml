@@ -436,7 +436,7 @@
 
     <!-- Dialog: Clear Places (progress) -->
     <string name="locationcleared_dialog_title">Effacement des emplacements</string>
-    <string name="locationcleared_dialog_message">Effacement de la liste...</string>
+    <string name="locationcleared_dialog_message">Effacement de la liste…</string>
     <string name="locationcleared_toast_success">La liste des emplacements à été effacée</string>
 
     <!-- Dialog: Export Places -->
