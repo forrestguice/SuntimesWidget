@@ -507,7 +507,7 @@
 
     <!-- Dialog: Clear Places (progress) -->
     <string name="locationcleared_dialog_title">Clearing Places</string>
-    <string name="locationcleared_dialog_message">Clearing the database . . .</string>
+    <string name="locationcleared_dialog_message">Clearing the database…</string>
     <string name="locationcleared_toast_success">The database of places has been cleared.</string>
 
     <!-- Dialog: Export Places -->
