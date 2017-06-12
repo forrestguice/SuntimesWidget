@@ -20,12 +20,10 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
-import android.text.SpannableString;
 import android.text.style.ImageSpan;
 
 import org.junit.Before;
