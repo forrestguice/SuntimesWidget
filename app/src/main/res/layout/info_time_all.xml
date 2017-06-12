@@ -30,40 +30,41 @@
 
         <!-- Header: date -->
         <TextView
-            android:id="@+id/text_date"
-            style="@style/TableHeadDateView"
+            android:id="@+id/text_date" style="@style/TableHeadDateView"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
             tools:text="Today\nApril 1, 2016"
-            android:layout_width="wrap_content"
 
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/table_stretch"
+            app:layout_constraintEnd_toStartOf="@+id/header_gutter0"
 
             app:layout_constraintVertical_chainStyle="spread_inside"
             app:layout_constraintVertical_bias="0"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/text_time_label_astro"/>
+            app:layout_constraintBottom_toTopOf="@+id/text_time_label_astro" />
 
-        <!-- Header: stretch area 0 -->
-        <View
-            android:id="@+id/table_stretch"
-            style="@style/SunsetTimeHorizontalRule"
-            android:layout_height="0dp"
+        <!-- Header: gutter0 -->
+        <LinearLayout
+            android:id="@+id/header_gutter0"
+            android:layout_width="0dp" android:layout_height="wrap_content"
             app:layout_constraintHorizontal_weight="@integer/table_weight0"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/text_date"
             app:layout_constraintStart_toEndOf="@+id/text_date"
-            app:layout_constraintEnd_toStartOf="@+id/header_time_sunrise" />
+            app:layout_constraintEnd_toStartOf="@+id/header_time_sunrise"
+            android:orientation="vertical">
+        </LinearLayout>
 
         <!-- Header: sunrise -->
         <LinearLayout
             android:id="@+id/header_time_sunrise"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/table_rise_leftMargin"
-            android:layout_marginStart="@dimen/table_rise_leftMargin"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/table_rise_leftMargin" android:layout_marginStart="@dimen/table_rise_leftMargin"
             android:layout_marginTop="8dp"
+
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/text_date"
-            app:layout_constraintStart_toEndOf="@+id/table_stretch"
+            app:layout_constraintStart_toEndOf="@+id/header_gutter0"
             app:layout_constraintEnd_toStartOf="@+id/header_time_sunset"
             android:orientation="vertical">
 
@@ -85,15 +86,13 @@
         <!-- Header: sunset -->
         <LinearLayout
             android:id="@+id/header_time_sunset"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/table_set_leftMargin"
-            android:layout_marginStart="@dimen/table_set_leftMargin"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/table_set_leftMargin" android:layout_marginStart="@dimen/table_set_leftMargin"
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/text_date"
-            app:layout_constraintEnd_toStartOf="@+id/table_stretch2"
             app:layout_constraintStart_toEndOf="@+id/header_time_sunrise"
+            app:layout_constraintEnd_toStartOf="@+id/header_gutter1"
             android:orientation="vertical">
 
             <ImageView
@@ -114,14 +113,17 @@
 
         </LinearLayout>
 
-        <!-- Header: stretch area 1 -->
-        <View
-            android:id="@+id/table_stretch2"
-            style="@style/SunsetTimeHorizontalRule"
-            android:layout_height="0dp"
+        <!-- Header: gutter1 -->
+        <LinearLayout
+            android:id="@+id/header_gutter1"
+            android:layout_width="0dp" android:layout_height="wrap_content"
             app:layout_constraintHorizontal_weight="@integer/table_weight1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/text_date"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/header_time_sunset"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:orientation="vertical">
+        </LinearLayout>
 
         <!-- Astronomical -->
         <TextView
