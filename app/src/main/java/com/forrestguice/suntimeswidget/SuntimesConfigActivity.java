@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -73,11 +74,11 @@ public class SuntimesConfigActivity extends AppCompatActivity
     protected Spinner spinner_onTap;
     protected EditText text_launchActivity;
 
+    protected ImageButton button_themeConfig;
     protected Spinner spinner_1x1mode;
     protected Spinner spinner_theme;
     protected CheckBox checkbox_allowResize;
     protected CheckBox checkbox_showTitle;
-
     protected TextView label_titleText;
     protected EditText text_titleText;
 
@@ -194,8 +195,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
         return supportedModes;
     }
 
-
-    protected void initViews( Context context )
+    protected void initViews(final Context context )
     {
         //
         // widget: add button
@@ -250,6 +250,22 @@ public class SuntimesConfigActivity extends AppCompatActivity
             spinner_themeAdapter = new ArrayAdapter<ThemeDescriptor>(this, R.layout.layout_listitem_oneline, WidgetThemes.values());
             spinner_themeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner_theme.setAdapter(spinner_themeAdapter);
+        }
+
+        button_themeConfig = (ImageButton)findViewById(R.id.appwidget_appearance_theme_configbutton);
+        if (button_themeConfig != null)
+        {
+            button_themeConfig.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    Log.d("DEBUG", "config theme clicked");
+                    Intent configThemesIntent = new Intent(Intent.ACTION_PICK,
+                            Uri.parse("content://themes"), context, SuntimesWidgetThemeActivity.class);
+                    startActivityForResult(configThemesIntent, SuntimesWidgetThemeActivity.PICK_THEME_REQUEST);
+                }
+            });
         }
 
         //
@@ -899,6 +915,25 @@ public class SuntimesConfigActivity extends AppCompatActivity
         if (activityTitle != null)
         {
             activityTitle.setText(text);
+        }
+    }
+
+    /**
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == SuntimesWidgetThemeActivity.PICK_THEME_REQUEST)
+        {
+            if (resultCode == RESULT_OK)
+            {
+                String themeName = data.getStringExtra(SuntimesTheme.THEME_NAME);
+                Log.d("DEBUG", "selected theme: " + themeName);
+                // TODO: change spinner to selected theme
+            }
         }
     }
 }
