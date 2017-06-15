@@ -239,6 +239,10 @@
          APP SETTINGS
     -->
 
+    <!-- App Setting: WidgetThemes -->
+    <string name="configLabel_widgetThemeList">Widget Themes</string>
+    <string name="configLabel_widgetThemeList_add">+</string>
+
     <!--App Setting: WidgetList -->
     <string name="configLabel_widgetList">Widgets</string>               <!-- group title -->
     <string name="configLabel_widgetList_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
