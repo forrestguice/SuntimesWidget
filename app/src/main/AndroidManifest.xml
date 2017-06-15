@@ -33,16 +33,23 @@
 
         </activity>
 
-        <!--Settings Activity -->
+        <!-- Settings Activity -->
         <activity
             android:name=".SuntimesSettingsActivity"
             android:label="@string/app_name"
             android:icon="@drawable/ic_suntimes">
         </activity>
 
-        <!--Widget List Activity -->
+        <!-- Widget List Activity -->
         <activity
             android:name=".SuntimesWidgetListActivity"
+            android:label="@string/app_name"
+            android:icon="@drawable/ic_suntimes">
+        </activity>
+
+        <!-- Theme Config Activity -->
+        <activity
+            android:name=".SuntimesWidgetThemeActivity"
             android:label="@string/app_name"
             android:icon="@drawable/ic_suntimes">
         </activity>
