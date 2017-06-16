@@ -55,6 +55,8 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
 
 import java.util.TimeZone;
 
+import static com.forrestguice.suntimeswidget.SuntimesWidgetThemeActivity.PICK_THEME_REQUEST;
+
 /**
  * Main widget config activity.
  */
@@ -246,10 +248,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
         spinner_theme = (Spinner)findViewById(R.id.appwidget_appearance_theme);
         if (spinner_theme != null)
         {
-            ArrayAdapter<ThemeDescriptor> spinner_themeAdapter;
-            spinner_themeAdapter = new ArrayAdapter<ThemeDescriptor>(this, R.layout.layout_listitem_oneline, WidgetThemes.values());
-            spinner_themeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner_theme.setAdapter(spinner_themeAdapter);
+            initThemeAdapter(context);
         }
 
         button_themeConfig = (ImageButton)findViewById(R.id.appwidget_appearance_theme_configbutton);
@@ -260,10 +259,9 @@ public class SuntimesConfigActivity extends AppCompatActivity
                 @Override
                 public void onClick(View v)
                 {
-                    Log.d("DEBUG", "config theme clicked");
                     Intent configThemesIntent = new Intent(Intent.ACTION_PICK,
                             Uri.parse("content://themes"), context, SuntimesWidgetThemeActivity.class);
-                    startActivityForResult(configThemesIntent, SuntimesWidgetThemeActivity.PICK_THEME_REQUEST);
+                    startActivityForResult(configThemesIntent, PICK_THEME_REQUEST);
                 }
             });
         }
@@ -472,6 +470,17 @@ public class SuntimesConfigActivity extends AppCompatActivity
         {
             button_aboutWidget.setOnClickListener(onAboutButtonClickListener);
         }
+    }
+
+    /**
+     * @param context
+     */
+    protected void initThemeAdapter(final Context context)
+    {
+        ArrayAdapter<ThemeDescriptor> spinner_themeAdapter;
+        spinner_themeAdapter = new ArrayAdapter<ThemeDescriptor>(this, R.layout.layout_listitem_oneline, WidgetThemes.values());
+        spinner_themeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_theme.setAdapter(spinner_themeAdapter);
     }
 
     /**
@@ -919,20 +928,53 @@ public class SuntimesConfigActivity extends AppCompatActivity
     }
 
     /**
-     * @param requestCode
-     * @param resultCode
-     * @param data
+     * @param requestCode anticipates PICK_THEME_REQUEST
+     * @param resultCode RESULT_OK, RESULT_CANCELED
+     * @param data an Intent with extra string data
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if (requestCode == SuntimesWidgetThemeActivity.PICK_THEME_REQUEST)
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode)
         {
-            if (resultCode == RESULT_OK)
+            case PICK_THEME_REQUEST:
+                onPickThemeResult(resultCode, data);
+                break;
+        }
+    }
+
+    /**
+     * @param resultCode RESULT_OK a theme was selected, a theme was added, or a theme was removed, and RESULT_CANCELED otherwise.
+     * @param data an Intent with data; "name" extra contains selected themeName if a selection was made, "isModified" is true if list of themes was changed.
+     */
+    protected void onPickThemeResult(int resultCode, Intent data)
+    {
+        if (resultCode == RESULT_OK)
+        {
+            String paramSelection = data.getStringExtra(SuntimesTheme.THEME_NAME);
+            String themeName = (paramSelection != null) ? paramSelection
+                                                        : ((ThemeDescriptor)spinner_theme.getSelectedItem()).name();
+
+            boolean paramReloadAdapter = data.getBooleanExtra(SuntimesWidgetThemeActivity.ADAPTER_MODIFIED, false);
+            if (paramReloadAdapter)
             {
-                String themeName = data.getStringExtra(SuntimesTheme.THEME_NAME);
-                Log.d("DEBUG", "selected theme: " + themeName);
-                // TODO: change spinner to selected theme
+                Log.d("selectTheme", "reloading list of themes...");
+                initThemeAdapter(this);
+            }
+
+            if (themeName != null)
+            {
+                ThemeDescriptor themeDescriptor = WidgetThemes.valueOf(themeName);
+                int position = themeDescriptor.ordinal(WidgetThemes.values());
+                if (position >= 0)
+                {
+                    spinner_theme.setSelection(position, true);
+                    Log.d("selectTheme", "selected theme: " + themeName);
+
+                } else {
+                    Log.w("selectTheme", "RESULT_OK but the position is invalid; unable to find " + themeName + "(" + position + ")");
+                }
             }
         }
     }
