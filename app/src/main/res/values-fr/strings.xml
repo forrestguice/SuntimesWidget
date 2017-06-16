@@ -234,6 +234,13 @@
     <string name="configLabel_action_launch">Activité :</string>                 <!-- edittext label -->
     <!-- line commented to use default: <string name="configHint_action_launch"><xliff:g id="uri">com.forrestguice.suntimeswidget.SuntimesActivity</xliff:g></string>--> <!-- editText hint (and default) -->
 
+    <!-- Widget Setting: Themes -->
+    <string name="configLabel_widgetThemeList">Widget Themes</string>  <!-- TODO -->
+    <string name="configAction_addTheme">Add</string>           <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="configAction_selectTheme">Select</string>     <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="configAction_editTheme">Éditer</string>       <!-- button (contentDescription) -->
+    <string name="configAction_deleteTheme">Delete</string>     <!-- button (contentDescription) --> <!-- TODO -->
+
     <!--
          APP SETTINGS
     -->

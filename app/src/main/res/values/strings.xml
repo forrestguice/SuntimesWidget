@@ -235,13 +235,17 @@
     <string name="configLabel_action_launch">Activity:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch"><xliff:g id="uri">com.forrestguice.suntimeswidget.SuntimesActivity</xliff:g></string> <!-- editText hint (and default) -->
 
+    <!-- App Setting: WidgetThemes -->
+    <string name="configLabel_widgetThemeList">Widget Themes</string>
+    <string name="configAction_addTheme">Add</string>           <!-- button (contentDescription) -->
+    <string name="configAction_selectTheme">Select</string>     <!-- button (contentDescription) -->
+    <string name="configAction_editTheme">Edit</string>         <!-- button (contentDescription) -->
+    <string name="configAction_deleteTheme">Delete</string>     <!-- button (contentDescription) -->
+
+
     <!--
          APP SETTINGS
     -->
-
-    <!-- App Setting: WidgetThemes -->
-    <string name="configLabel_widgetThemeList">Widget Themes</string>
-    <string name="configLabel_widgetThemeList_add">+</string>
 
     <!--App Setting: WidgetList -->
     <string name="configLabel_widgetList">Widgets</string>               <!-- group title -->
