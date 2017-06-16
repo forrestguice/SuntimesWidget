@@ -34,6 +34,7 @@ public class LightThemeTrans extends LightTheme
         super(context);
         this.themeVersion = THEMEDEF_VERSION;
         this.themeName = THEMEDEF_NAME;
+        this.themeIsDefault = true;
         this.themeDisplayString = THEMEDEF_DISPLAYSTRING;
         this.themeBackground = THEMEDEF_BACKGROUND_ID;
     }

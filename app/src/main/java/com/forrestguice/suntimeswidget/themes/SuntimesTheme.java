@@ -28,6 +28,7 @@ public class SuntimesTheme
     public static final String THEME_KEY = "theme_";
     public static final String THEME_NAME = "name";
     public static final String THEME_VERSION = "version";
+    public static final String THEME_ISDEFAULT = "isDefault";
     public static final String THEME_DISPLAYSTRING = "display";
     public static final String THEME_BACKGROUND = "backgroundID";
     public static final String THEME_PADDING_LEFT = "padding_left";
@@ -46,6 +47,7 @@ public class SuntimesTheme
 
     protected String themeName;
     protected int themeVersion;
+    protected boolean themeIsDefault;
     protected String themeDisplayString;
 
     protected int themeBackground;
@@ -67,6 +69,7 @@ public class SuntimesTheme
     {
         this.themeVersion = otherTheme.themeVersion;
         this.themeName = otherTheme.themeName;
+        this.themeIsDefault = otherTheme.themeIsDefault;
         this.themeDisplayString = otherTheme.themeDisplayString;
         this.themeBackground = otherTheme.themeBackground;
 
@@ -91,6 +94,7 @@ public class SuntimesTheme
 
         this.themeVersion = themes.getInt( theme + THEME_VERSION, defaultTheme.themeVersion );
         this.themeName = themes.getString( theme + THEME_NAME, defaultTheme.themeName );
+        this.themeIsDefault = themes.getBoolean( theme + THEME_ISDEFAULT, false );
         this.themeDisplayString = themes.getString( theme + THEME_DISPLAYSTRING, defaultTheme.themeDisplayString );
         this.themeBackground = themes.getInt( theme + THEME_BACKGROUND, defaultTheme.themeBackground );
 
@@ -117,6 +121,7 @@ public class SuntimesTheme
 
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_VERSION, this.themeVersion);
         themePrefs.putString(themePrefix + SuntimesTheme.THEME_NAME, this.themeName);
+        themePrefs.putBoolean(themePrefix + SuntimesTheme.THEME_ISDEFAULT, this.themeIsDefault);
         themePrefs.putString(themePrefix + SuntimesTheme.THEME_DISPLAYSTRING, this.themeDisplayString);
 
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_BACKGROUND, this.themeBackground);
@@ -148,6 +153,11 @@ public class SuntimesTheme
     public int themeVersion()
     {
         return themeVersion;
+    }
+
+    public boolean isDefault()
+    {
+        return themeIsDefault;
     }
 
     public String themeDisplayString()
@@ -248,7 +258,8 @@ public class SuntimesTheme
         private final String displayString;
         private final int version;
 
-        public ThemeDescriptor(String name, String displayString, int version) {
+        public ThemeDescriptor(String name, String displayString, int version)
+        {
             this.name = name;
             this.displayString = displayString;
             this.version = version;

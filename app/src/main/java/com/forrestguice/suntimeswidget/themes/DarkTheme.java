@@ -48,6 +48,7 @@ public class DarkTheme extends SuntimesTheme
 
         this.themeVersion = THEMEDEF_VERSION;
         this.themeName = THEMEDEF_NAME;
+        this.themeIsDefault = true;
         this.themeDisplayString = THEMEDEF_DISPLAYSTRING;
 
         this.themeBackground = THEMEDEF_BACKGROUND_ID;
@@ -67,4 +68,5 @@ public class DarkTheme extends SuntimesTheme
     {
         return DarkTheme.THEMEDEF_DESCRIPTOR;
     }
+
 }
