@@ -77,8 +77,10 @@ public class SuntimesConfigActivity extends AppCompatActivity
     protected EditText text_launchActivity;
 
     protected ImageButton button_themeConfig;
-    protected Spinner spinner_1x1mode;
+    private WidgetThemes.ThemeListAdapter spinner_themeAdapter;
     protected Spinner spinner_theme;
+
+    protected Spinner spinner_1x1mode;
     protected CheckBox checkbox_allowResize;
     protected CheckBox checkbox_showTitle;
     protected TextView label_titleText;
@@ -259,8 +261,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
                 @Override
                 public void onClick(View v)
                 {
-                    Intent configThemesIntent = new Intent(Intent.ACTION_PICK,
-                            Uri.parse("content://themes"), context, SuntimesWidgetThemeActivity.class);
+                    Intent configThemesIntent = new Intent(context, SuntimesWidgetThemeActivity.class);
                     startActivityForResult(configThemesIntent, PICK_THEME_REQUEST);
                 }
             });
@@ -477,9 +478,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
      */
     protected void initThemeAdapter(final Context context)
     {
-        ArrayAdapter<ThemeDescriptor> spinner_themeAdapter;
-        spinner_themeAdapter = new ArrayAdapter<ThemeDescriptor>(this, R.layout.layout_listitem_oneline, WidgetThemes.values());
-        spinner_themeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_themeAdapter = new WidgetThemes.ThemeListAdapter(this, R.layout.layout_listitem_oneline, android.R.layout.simple_spinner_dropdown_item, WidgetThemes.values());
         spinner_theme.setAdapter(spinner_themeAdapter);
     }
 
@@ -966,7 +965,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
             if (themeName != null)
             {
                 ThemeDescriptor themeDescriptor = WidgetThemes.valueOf(themeName);
-                int position = themeDescriptor.ordinal(WidgetThemes.values());
+                int position = themeDescriptor.ordinal(spinner_themeAdapter.values());
                 if (position >= 0)
                 {
                     spinner_theme.setSelection(position, true);
