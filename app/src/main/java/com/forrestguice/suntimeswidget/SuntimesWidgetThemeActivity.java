@@ -21,7 +21,7 @@ package com.forrestguice.suntimeswidget;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
@@ -41,6 +41,9 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+
+import static com.forrestguice.suntimeswidget.SuntimesWidgetThemeConfigActivity.ADD_THEME_REQUEST;
+import static com.forrestguice.suntimeswidget.SuntimesWidgetThemeConfigActivity.EDIT_THEME_REQUEST;
 
 public class SuntimesWidgetThemeActivity extends AppCompatActivity
 {
@@ -65,7 +68,7 @@ public class SuntimesWidgetThemeActivity extends AppCompatActivity
         super.onCreate(icicle);
         initLocale();
         setResult(RESULT_CANCELED);
-        setContentView(R.layout.layout_themeconfig);
+        setContentView(R.layout.layout_themelist);
 
         /**Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -100,7 +103,7 @@ public class SuntimesWidgetThemeActivity extends AppCompatActivity
 
     protected void initThemeAdapter(Context contxt)
     {
-        final ThemeGridAdapter adapter = new ThemeGridAdapter(this, WidgetThemes.values());
+        final WidgetThemes.ThemeGridAdapter adapter = new WidgetThemes.ThemeGridAdapter(this, WidgetThemes.values());
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
@@ -143,7 +146,9 @@ public class SuntimesWidgetThemeActivity extends AppCompatActivity
             actionMode.finish();
         }
 
-        // TODO: add theme ui
+        Intent intent = new Intent(this, SuntimesWidgetThemeConfigActivity.class);
+        intent.putExtra(SuntimesWidgetThemeConfigActivity.PARAM_MODE, SuntimesWidgetThemeConfigActivity.UIMode.ADD_THEME);
+        startActivityForResult(intent, ADD_THEME_REQUEST);
     }
 
     protected void editTheme( SuntimesTheme theme )
@@ -152,8 +157,16 @@ public class SuntimesWidgetThemeActivity extends AppCompatActivity
         {
             // TODO: msg - cant edit default, copy as new
 
+            Intent intent = new Intent(this, SuntimesWidgetThemeConfigActivity.class);
+            intent.putExtra(SuntimesWidgetThemeConfigActivity.PARAM_MODE, SuntimesWidgetThemeConfigActivity.UIMode.ADD_THEME);
+            intent.putExtra(SuntimesTheme.THEME_NAME, theme.themeName());
+            startActivityForResult(intent, ADD_THEME_REQUEST);
+
         } else {
-            // TODO: edit theme ui
+            Intent intent = new Intent(this, SuntimesWidgetThemeConfigActivity.class);
+            intent.putExtra(SuntimesWidgetThemeConfigActivity.PARAM_MODE, SuntimesWidgetThemeConfigActivity.UIMode.EDIT_THEME);
+            intent.putExtra(SuntimesTheme.THEME_NAME, theme.themeName());
+            startActivityForResult(intent, EDIT_THEME_REQUEST);
         }
     }
 
@@ -182,66 +195,6 @@ public class SuntimesWidgetThemeActivity extends AppCompatActivity
         intent.putExtra(ADAPTER_MODIFIED, adapterModified);
         setResult(((adapterModified) ? Activity.RESULT_OK : Activity.RESULT_CANCELED), intent);
         finish();
-    }
-
-    /**
-     * ThemeGridAdapter
-     */
-    public static class ThemeGridAdapter extends BaseAdapter
-    {
-        private final Context context;
-        private final SuntimesTheme.ThemeDescriptor[] themes;
-
-        public ThemeGridAdapter(Context context, SuntimesTheme.ThemeDescriptor[] themes)
-        {
-            this.context = context;
-            this.themes = themes;
-        }
-
-        public int getCount()
-        {
-            return themes.length+1;
-        }
-
-        public Object getItem(int position)
-        {
-            if (position > 0)
-                return themes[position-1];
-            return null;
-        }
-
-        public long getItemId(int position)
-        {
-            return 0;
-        }
-
-        public View getView(int position, View convertView, ViewGroup parent)
-        {
-            View view;
-            if (convertView != null)
-            {
-                return convertView;
-
-            } else {
-                LayoutInflater layoutInflater = LayoutInflater.from(context);
-                if (position > 0)
-                {
-                    view = layoutInflater.inflate(R.layout.layout_griditem_theme, parent, false);
-                    View layout = view.findViewById(R.id.griditem);
-                    TextView textView = (TextView) view.findViewById(android.R.id.text1);
-
-                    SuntimesTheme theme = WidgetThemes.loadTheme(context, themes[position - 1].name());
-                    textView.setText(theme.themeDisplayString());
-                    textView.setTextColor(theme.getTitleColor());
-                    textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, theme.getTitleSizeSp());
-                    layout.setBackgroundResource(theme.getBackgroundId());
-
-                } else {
-                    view = layoutInflater.inflate(R.layout.layout_griditem_addtheme, parent, false);
-                }
-                return view;
-            }
-        }
     }
 
     /**

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2017 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -16,31 +16,159 @@
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical" android:padding="@dimen/widgetActivity_padding">
 
     <TextView
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:text="@string/configLabel_widgetThemeList"
-        style="?android:attr/listSeparatorTextViewStyle" />
+        android:id="@+id/text_title"
+        style="?android:attr/listSeparatorTextViewStyle"
+        android:layout_width="288dp" android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/configLabel_widgetThemeAdd" />
 
-    <Button
-        android:id="@+id/select_button"
-        android:layout_width="wrap_content"
+    <!-- Theme Name (ID) -->
+    <TextView
+        android:id="@+id/editLabel_themeName"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/edit_themeName"
+        android:text="ID:" />
+
+    <EditText
+        android:id="@+id/edit_themeName"
+        android:layout_width="0dp" android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/text_title"
+        app:layout_constraintStart_toEndOf="@+id/editLabel_themeName"
+        app:layout_constraintEnd_toEndOf="@+id/centerLine"
+        android:layout_marginStart="2dp" android:layout_marginLeft="2dp"
+        android:inputType="text"
+        android:hint="themeID"
+        android:text="" />
+
+    <!-- Theme Name (display string) -->
+    <TextView
+        android:id="@+id/editLabel_themeDisplay"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/edit_themeDisplay"
+        android:text="Name:" />
+
+    <EditText
+        android:id="@+id/edit_themeDisplay"
+        android:layout_width="0dp" android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/edit_themeName"
+        app:layout_constraintStart_toEndOf="@+id/editLabel_themeDisplay"
+        app:layout_constraintEnd_toEndOf="@+id/centerLine"
+        android:layout_marginStart="2dp" android:layout_marginLeft="2dp"
+        android:inputType="text"
+        android:hint="Display String"
+        android:text="" />
+
+    <!-- Title Size -->
+    <TextView
+        android:id="@+id/editLabel_titleSize"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/edit_titleSize"
+        android:text="Title Size (sp):" />
+
+    <EditText
+        android:id="@+id/edit_titleSize"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:text="Select" />
+        android:layout_marginLeft="2dp"
+        android:layout_marginStart="2dp"
+        android:inputType="number" android:text=""
+        app:layout_constraintEnd_toEndOf="@+id/centerLine"
+        app:layout_constraintStart_toEndOf="@+id/editLabel_titleSize"
+        app:layout_constraintTop_toBottomOf="@+id/edit_themeDisplay"/>
 
-    <GridView android:id="@+id/themegrid"
-              android:layout_width="match_parent" android:layout_height="match_parent"
-              android:layout_marginTop="8dp"
-              android:columnWidth="90dp" android:numColumns="auto_fit"
-              android:verticalSpacing="10dp" android:horizontalSpacing="10dp"
-              android:stretchMode="columnWidth" android:gravity="center"
-              android:background="?timeCardBackground"
-              android:padding="8dp"
+    <!-- Title Color -->
+    <TextView
+        android:id="@+id/editLabel_titleColor"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/edit_titleColor"
+        android:text="Title Color:" />
 
-        />
 
-</LinearLayout>
+    <EditText
+        android:id="@+id/edit_titleColor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:layout_marginStart="2dp"
+        android:inputType="number" android:text=""
+        app:layout_constraintEnd_toEndOf="@+id/centerLine"
+        app:layout_constraintStart_toEndOf="@+id/editLabel_titleColor"
+        app:layout_constraintTop_toBottomOf="@+id/edit_titleSize" />
+
+    <!-- Sunrise Color -->
+    <TextView
+        android:id="@+id/editLabel_sunriseColor"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/edit_sunriseColor"
+        android:text="Sunrise Color:" />
+
+    <EditText
+        android:id="@+id/edit_sunriseColor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:layout_marginStart="2dp"
+        android:inputType="number" android:text=""
+        app:layout_constraintEnd_toEndOf="@+id/centerLine"
+        app:layout_constraintStart_toEndOf="@+id/editLabel_sunriseColor"
+        app:layout_constraintTop_toBottomOf="@+id/edit_titleColor" />
+
+    <!-- Sunset Color -->
+    <TextView
+        android:id="@+id/editLabel_sunsetColor"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/edit_sunsetColor"
+        android:text="Sunrise Color:" />
+
+    <EditText
+        android:id="@+id/edit_sunsetColor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:layout_marginStart="2dp"
+        android:inputType="number" android:text=""
+        app:layout_constraintEnd_toEndOf="@+id/centerLine"
+        app:layout_constraintStart_toEndOf="@+id/editLabel_sunsetColor"
+        app:layout_constraintTop_toBottomOf="@+id/edit_sunriseColor" />
+
+    <!-- Time Color -->
+    <TextView
+        android:id="@+id/editLabel_timeColor"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/edit_timeColor"
+        android:text="Time Text Color:" />
+
+    <EditText
+        android:id="@+id/edit_timeColor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:layout_marginStart="2dp"
+        android:inputType="number" android:text=""
+        app:layout_constraintEnd_toEndOf="@+id/centerLine"
+        app:layout_constraintStart_toEndOf="@+id/editLabel_timeColor"
+        app:layout_constraintTop_toBottomOf="@+id/edit_sunsetColor" />
+
+    <!-- guidelines -->
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:id="@+id/centerLine" app:layout_constraintGuide_percent="0.6"
+        android:orientation="vertical"/>
+
+
+</android.support.constraint.ConstraintLayout>

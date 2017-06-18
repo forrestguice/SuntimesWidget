@@ -242,6 +242,9 @@
     <string name="configAction_editTheme">Edit</string>         <!-- button (contentDescription) -->
     <string name="configAction_deleteTheme">Delete</string>     <!-- button (contentDescription) -->
 
+    <string name="configLabel_widgetThemeAdd">Add Theme</string>     <!-- title text -->
+    <string name="configLabel_widgetThemeEdit">Edit Theme</string>   <!-- title text -->
+
 
     <!--
          APP SETTINGS
