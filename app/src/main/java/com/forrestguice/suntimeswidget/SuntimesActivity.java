@@ -532,8 +532,7 @@ public class SuntimesActivity extends AppCompatActivity
                 {
                     refreshItem.setVisible(false);
 
-                } else
-                {
+                } else {
                     refreshItem.setIcon((getFixHelper.isLocationEnabled() ? GetFixUI.ICON_GPS_FOUND : GetFixUI.ICON_GPS_DISABLED));
                     refreshItem.setVisible(true);
                 }

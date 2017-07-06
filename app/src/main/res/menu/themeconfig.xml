@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <group android:checkableBehavior="none">
-        <item android:id="@+id/selectTheme"
-              android:title="@string/configAction_selectTheme"
-              android:icon="?attr/icActionAccept" />
-        <item android:id="@+id/editTheme"
-              android:title="@string/configAction_editTheme"
-              android:icon="?attr/icActionEdit" />
-        <item android:id="@+id/deleteTheme"
-              android:title="@string/configAction_deleteTheme"
-              android:icon="?attr/icActionDelete" />
+
+        <item android:id="@+id/saveTheme"
+              android:title="@string/configAction_saveTheme"
+              android:icon="?attr/icActionSave"
+              app:showAsAction="always" />
     </group>
+
 </menu>

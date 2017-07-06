@@ -16,47 +16,52 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */ 
 
-package com.forrestguice.suntimeswidget;
+package com.forrestguice.suntimeswidget.themes;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
+
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
-import android.util.TypedValue;
-import android.view.LayoutInflater;
+import android.support.v7.widget.Toolbar;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
-import android.widget.TextView;
 
+import android.widget.AdapterView;
+
+import android.widget.GridView;
+
+import android.widget.Toast;
+
+import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
-import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
-import static com.forrestguice.suntimeswidget.SuntimesWidgetThemeConfigActivity.ADD_THEME_REQUEST;
-import static com.forrestguice.suntimeswidget.SuntimesWidgetThemeConfigActivity.EDIT_THEME_REQUEST;
+import static com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity.ADD_THEME_REQUEST;
+import static com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity.EDIT_THEME_REQUEST;
 
-public class SuntimesWidgetThemeActivity extends AppCompatActivity
+public class WidgetThemeListActivity extends AppCompatActivity
 {
     public static final int PICK_THEME_REQUEST = 1;
     public static final String ADAPTER_MODIFIED = "isModified";
 
     private boolean adapterModified = false;
     private GridView gridView;
+    private ActionBar actionBar;
 
     protected ActionMode actionMode = null;
     private WidgetThemeActionCompat themeActions;
 
-    public SuntimesWidgetThemeActivity()
+    public WidgetThemeListActivity()
     {
         super();
     }
@@ -95,15 +100,26 @@ public class SuntimesWidgetThemeActivity extends AppCompatActivity
 
     protected void initViews( Context context )
     {
+        Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
+        setSupportActionBar(menuBar);
+        actionBar = getSupportActionBar();
+        if (actionBar != null)
+        {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
         gridView = (GridView)findViewById(R.id.themegrid);
         initThemeAdapter(context);
 
         themeActions = new WidgetThemeActionCompat(context);
     }
 
+    private WidgetThemes.ThemeGridAdapter adapter;
+
     protected void initThemeAdapter(Context contxt)
     {
-        final WidgetThemes.ThemeGridAdapter adapter = new WidgetThemes.ThemeGridAdapter(this, WidgetThemes.values());
+        adapter = new WidgetThemes.ThemeGridAdapter(this, WidgetThemes.values());
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
@@ -125,11 +141,12 @@ public class SuntimesWidgetThemeActivity extends AppCompatActivity
     {
         if (actionMode == null)
         {
-            themeActions.setTheme(this, themeDesc);
-            actionMode = startSupportActionMode(themeActions);
-
-            SuntimesTheme theme = WidgetThemes.loadTheme(this, themeDesc.name());
-            actionMode.setTitle(theme.themeDisplayString());
+            if (themeDesc != null)
+            {
+                themeActions.setTheme(this, themeDesc);
+                actionMode = startSupportActionMode(themeActions);
+                actionMode.setTitle(themeDesc.displayString());
+            }
             return true;
 
         } else {
@@ -146,8 +163,8 @@ public class SuntimesWidgetThemeActivity extends AppCompatActivity
             actionMode.finish();
         }
 
-        Intent intent = new Intent(this, SuntimesWidgetThemeConfigActivity.class);
-        intent.putExtra(SuntimesWidgetThemeConfigActivity.PARAM_MODE, SuntimesWidgetThemeConfigActivity.UIMode.ADD_THEME);
+        Intent intent = new Intent(this, WidgetThemeConfigActivity.class);
+        intent.putExtra(WidgetThemeConfigActivity.PARAM_MODE, WidgetThemeConfigActivity.UIMode.ADD_THEME);
         startActivityForResult(intent, ADD_THEME_REQUEST);
     }
 
@@ -157,25 +174,43 @@ public class SuntimesWidgetThemeActivity extends AppCompatActivity
         {
             // TODO: msg - cant edit default, copy as new
 
-            Intent intent = new Intent(this, SuntimesWidgetThemeConfigActivity.class);
-            intent.putExtra(SuntimesWidgetThemeConfigActivity.PARAM_MODE, SuntimesWidgetThemeConfigActivity.UIMode.ADD_THEME);
+            Intent intent = new Intent(this, WidgetThemeConfigActivity.class);
+            intent.putExtra(WidgetThemeConfigActivity.PARAM_MODE, WidgetThemeConfigActivity.UIMode.ADD_THEME);
             intent.putExtra(SuntimesTheme.THEME_NAME, theme.themeName());
             startActivityForResult(intent, ADD_THEME_REQUEST);
 
         } else {
-            Intent intent = new Intent(this, SuntimesWidgetThemeConfigActivity.class);
-            intent.putExtra(SuntimesWidgetThemeConfigActivity.PARAM_MODE, SuntimesWidgetThemeConfigActivity.UIMode.EDIT_THEME);
+            Intent intent = new Intent(this, WidgetThemeConfigActivity.class);
+            intent.putExtra(WidgetThemeConfigActivity.PARAM_MODE, WidgetThemeConfigActivity.UIMode.EDIT_THEME);
             intent.putExtra(SuntimesTheme.THEME_NAME, theme.themeName());
             startActivityForResult(intent, EDIT_THEME_REQUEST);
         }
     }
 
-    protected  void deleteTheme(SuntimesTheme theme )
+    protected void deleteTheme(final SuntimesTheme theme)
     {
         if (!theme.isDefault())
         {
-            // TODO: delete confirm
-            // TODO: delete theme
+            final Context context = this;
+            AlertDialog.Builder confirm = new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.deletetheme_dialog_title))
+                    .setMessage(getString(R.string.deletetheme_dialog_message, theme.themeName()))
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(getString(R.string.deletetheme_dialog_ok), new DialogInterface.OnClickListener()
+                    {
+                        public void onClick(DialogInterface dialog, int whichButton)
+                        {
+                            if (WidgetThemes.removeValue(context, theme.themeDescriptor()))
+                            {
+                                adapterModified = true;
+                                initThemeAdapter(context);
+                                Toast.makeText(context, context.getString(R.string.deletetheme_toast_success, theme.themeName()), Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    })
+                    .setNegativeButton(getString(R.string.deletetheme_dialog_cancel), null);
+
+            confirm.show();
         }
     }
 
@@ -197,6 +232,20 @@ public class SuntimesWidgetThemeActivity extends AppCompatActivity
         finish();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     /**
      * WidgetThemeActionCompat
      */
@@ -215,7 +264,7 @@ public class SuntimesWidgetThemeActivity extends AppCompatActivity
         public boolean onCreateActionMode(android.support.v7.view.ActionMode mode, Menu menu)
         {
             MenuInflater inflater = mode.getMenuInflater();
-            inflater.inflate(R.menu.themeconfig, menu);
+            inflater.inflate(R.menu.themelist, menu);
             return true;
         }
 
@@ -255,6 +304,60 @@ public class SuntimesWidgetThemeActivity extends AppCompatActivity
                 }
             }
             return false;
+        }
+    }
+
+    /**
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode)
+        {
+            case ADD_THEME_REQUEST:
+                onAddThemeResult(resultCode, data);
+                break;
+
+            case EDIT_THEME_REQUEST:
+                onEditThemeResult(resultCode, data);
+                break;
+        }
+    }
+
+    protected void onAddThemeResult(int resultCode, Intent data)
+    {
+        if (resultCode == RESULT_OK)
+        {
+            adapterModified = true;
+            initThemeAdapter(this);
+
+            if (data != null)
+            {
+                String themeName = data.getStringExtra(SuntimesTheme.THEME_NAME);
+                SuntimesTheme.ThemeDescriptor theme = (SuntimesTheme.ThemeDescriptor) adapter.getItem(adapter.ordinal(themeName));
+                triggerActionMode(null, theme);
+                Toast.makeText(this, getString(R.string.addtheme_toast_success, themeName), Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    protected void onEditThemeResult(int resultCode, Intent data)
+    {
+        if (resultCode == RESULT_OK)
+        {
+            initThemeAdapter(this);
+
+            if (data != null)
+            {
+                String themeName = data.getStringExtra(SuntimesTheme.THEME_NAME);
+                SuntimesTheme.ThemeDescriptor theme = (SuntimesTheme.ThemeDescriptor) adapter.getItem(adapter.ordinal(themeName));
+                triggerActionMode(null, theme);
+                Toast.makeText(this, getString(R.string.edittheme_toast_success, themeName), Toast.LENGTH_LONG).show();
+            }
         }
     }
 

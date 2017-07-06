@@ -47,6 +47,8 @@
         <item name="icActionEdit">@drawable/ic_action_edit_light</item>
         <item name="icActionDelete">@drawable/ic_action_discard_light</item>
         <item name="icActionCopy">@drawable/ic_action_copy_light</item>
+
+        <item name="windowActionModeOverlay">true</item>
     </style>
     <style name="AppTheme.Light" parent="AppThemeBase.Light">
         <item name="icActionNext">@drawable/ic_action_next_item_light</item>
@@ -96,6 +98,8 @@
         <item name="icActionEdit">@drawable/ic_action_edit</item>
         <item name="icActionDelete">@drawable/ic_action_discard</item>
         <item name="icActionCopy">@drawable/ic_action_copy</item>
+
+        <item name="windowActionModeOverlay">true</item>
     </style>
     <style name="AppTheme.Dark" parent="AppThemeBase.Dark">
         <item name="icActionNext">@drawable/ic_action_next_item</item>

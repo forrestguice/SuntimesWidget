@@ -21,7 +21,6 @@ package com.forrestguice.suntimeswidget;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -52,10 +51,11 @@ import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
+import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 
 import java.util.TimeZone;
 
-import static com.forrestguice.suntimeswidget.SuntimesWidgetThemeActivity.PICK_THEME_REQUEST;
+import static com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity.PICK_THEME_REQUEST;
 
 /**
  * Main widget config activity.
@@ -261,7 +261,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
                 @Override
                 public void onClick(View v)
                 {
-                    Intent configThemesIntent = new Intent(context, SuntimesWidgetThemeActivity.class);
+                    Intent configThemesIntent = new Intent(context, WidgetThemeListActivity.class);
                     startActivityForResult(configThemesIntent, PICK_THEME_REQUEST);
                 }
             });
@@ -683,7 +683,12 @@ public class SuntimesConfigActivity extends AppCompatActivity
         // load: theme
         SuntimesTheme theme = WidgetSettings.loadThemePref(context, appWidgetId);
         ThemeDescriptor themeDescriptor = WidgetThemes.valueOf(theme.themeName());
-        spinner_theme.setSelection(themeDescriptor.ordinal(WidgetThemes.values()));
+        if (themeDescriptor != null)
+        {
+            spinner_theme.setSelection(themeDescriptor.ordinal(WidgetThemes.values()));
+        } else {
+            Log.e("loadAppearanceSettings", "theme is not installed! " + theme.themeName());
+        }
 
         // load: allow resize
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
@@ -955,7 +960,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
             String themeName = (paramSelection != null) ? paramSelection
                                                         : ((ThemeDescriptor)spinner_theme.getSelectedItem()).name();
 
-            boolean paramReloadAdapter = data.getBooleanExtra(SuntimesWidgetThemeActivity.ADAPTER_MODIFIED, false);
+            boolean paramReloadAdapter = data.getBooleanExtra(WidgetThemeListActivity.ADAPTER_MODIFIED, false);
             if (paramReloadAdapter)
             {
                 Log.d("selectTheme", "reloading list of themes...");
