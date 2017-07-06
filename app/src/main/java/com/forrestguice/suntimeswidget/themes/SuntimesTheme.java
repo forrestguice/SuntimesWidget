@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
+import android.util.Log;
 
 public class SuntimesTheme
 {
@@ -258,6 +259,24 @@ public class SuntimesTheme
         private final String displayString;
         private final int version;
 
+        public ThemeDescriptor(String name, Context context, String themesPrefix)
+        {
+            SharedPreferences themesPref = context.getSharedPreferences(themesPrefix, Context.MODE_PRIVATE);
+            String themePrefix = SuntimesTheme.themePrefix(name);
+            String themeName = themesPref.getString(themePrefix + THEME_NAME, "");
+            if (themeName.equals(name))
+            {
+                this.name = name;
+                this.displayString = themesPref.getString(themePrefix + THEME_DISPLAYSTRING, "");
+                this.version = themesPref.getInt(themePrefix + THEME_VERSION, -1);
+
+            } else {
+                this.name = "";
+                this.displayString = "";
+                this.version = -1;
+            }
+        }
+
         public ThemeDescriptor(String name, String displayString, int version)
         {
             this.name = name;
@@ -265,8 +284,18 @@ public class SuntimesTheme
             this.version = version;
         }
 
+        public boolean isValid()
+        {
+            return (!name.isEmpty() && !displayString.isEmpty() && version > -1);
+        }
+
         public String name() {
             return name;
+        }
+
+        public String displayString()
+        {
+            return displayString;
         }
 
         public String toString() {

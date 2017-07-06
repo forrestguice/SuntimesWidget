@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.settings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Set;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -46,12 +48,26 @@ public class WidgetThemes
 {
     public static final String PREFS_THEMES = "com.forrestguice.suntimeswidget.themes";
 
+    public static final String THEMES_KEY = "themes_";
+    public static final String THEMES_INSTALLED = "installed";
+
     private static SuntimesTheme defaultTheme = null;
     private static boolean initialized = false;
 
     public static void initThemes(Context context)
     {
         SharedPreferences themePref = context.getSharedPreferences(PREFS_THEMES, Context.MODE_PRIVATE);
+        Set<String> themesToProcess = themePref.getStringSet(THEMES_KEY + THEMES_INSTALLED, themes.keySet());
+        for (String themeName : themesToProcess)
+        {
+            ThemeDescriptor themeDesc = loadDescriptor(context, themeName);
+            if (themeDesc != null)
+            {
+                addValue(context, themeDesc);
+            } else {
+                Log.w("initThemes", themeName + " does not seem to be installed; ignoring...");
+            }
+        }
 
         addValue(LightTheme.THEMEDEF_DESCRIPTOR);
         if (!SuntimesTheme.isInstalled(themePref, LightTheme.THEMEDEF_DESCRIPTOR))
@@ -81,6 +97,7 @@ public class WidgetThemes
             theme.saveTheme(themePref);
         }
 
+        saveInstalledList(context);
         defaultTheme = new DarkTheme(context);
         initialized = true;
     }
@@ -94,15 +111,28 @@ public class WidgetThemes
 
     public static void addValue( ThemeDescriptor theme )
     {
+        addValue(null, theme);
+    }
+    public static void addValue( Context context, ThemeDescriptor theme )
+    {
         if (!themes.containsValue(theme))
         {
             themes.put(theme.name(), theme);
+            if (context != null)
+            {
+                saveInstalledList(context);
+            }
         }
     }
 
-    public static void removeValue( ThemeDescriptor theme )
+    public static boolean removeValue(Context context, ThemeDescriptor theme)
     {
-        themes.remove(theme.name());
+        boolean removed = (themes.remove(theme.name()) != null);
+        if (context != null && removed)
+        {
+            saveInstalledList(context);
+        }
+        return removed;
     }
 
     public static ThemeDescriptor[] values()
@@ -127,6 +157,19 @@ public class WidgetThemes
         return theme;
     }
 
+    public static ThemeDescriptor loadDescriptor(Context context, String themeName)
+    {
+        ThemeDescriptor desc = new ThemeDescriptor(themeName, context, PREFS_THEMES);
+        return (desc.isValid() ? desc : null);
+    }
+
+    public static void saveInstalledList(Context context)
+    {
+        SharedPreferences.Editor themePref = context.getSharedPreferences(PREFS_THEMES, Context.MODE_PRIVATE).edit();
+        themePref.putStringSet(THEMES_KEY + THEMES_INSTALLED, themes.keySet());
+        themePref.apply();
+    }
+
     //////////////////////////////////////////////////////////////////////
 
     /**
@@ -141,6 +184,16 @@ public class WidgetThemes
         {
             this.context = context;
             this.themes = themes;
+        }
+
+        public int ordinal( String themeName )
+        {
+            for (int i=0; i<themes.length; i++)
+            {
+                if (themes[i].name().equals(themeName))
+                    return i+1;
+            }
+            return -1;
         }
 
         @Override
@@ -246,8 +299,7 @@ public class WidgetThemes
                 LayoutInflater layoutInflater = LayoutInflater.from(context);
                 view = layoutInflater.inflate(dropDownLayoutId, parent, false);
                 TextView textView = (TextView) view.findViewById(android.R.id.text1);
-                SuntimesTheme theme = WidgetThemes.loadTheme(context, themes[position].name());
-                textView.setText(theme.themeDisplayString());
+                textView.setText(themes[position].displayString());
                 return view;
             }
         }
@@ -264,8 +316,7 @@ public class WidgetThemes
                 LayoutInflater layoutInflater = LayoutInflater.from(context);
                 view = layoutInflater.inflate(layoutId, parent, false);
                 TextView textView = (TextView) view.findViewById(android.R.id.text1);
-                SuntimesTheme theme = WidgetThemes.loadTheme(context, themes[position].name());
-                textView.setText(theme.themeDisplayString());
+                textView.setText(themes[position].displayString());
                 return view;
             }
         }
