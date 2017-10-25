@@ -29,11 +29,10 @@
     android:baselineAligned="false">
 
     <TextView
-        style="?android:attr/dropDownItemStyle"
+        style="@style/SunsetTimeTextTitleView"
         android:id="@android:id/text1"
-        android:textAppearance="?android:attr/textAppearanceSmall"
         android:maxLines="2"
-        android:textStyle="bold"
+        android:textStyle="normal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxWidth="75dp"

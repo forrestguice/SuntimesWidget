@@ -100,6 +100,14 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
     protected void initViews( Context context )
     {
+        initActionBar(context);
+        gridView = (GridView)findViewById(R.id.themegrid);
+        initThemeAdapter(context);
+        themeActions = new WidgetThemeActionCompat(context);
+    }
+
+    protected void initActionBar( Context context )
+    {
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
         actionBar = getSupportActionBar();
@@ -108,16 +116,11 @@ public class WidgetThemeListActivity extends AppCompatActivity
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
-        gridView = (GridView)findViewById(R.id.themegrid);
-        initThemeAdapter(context);
-
-        themeActions = new WidgetThemeActionCompat(context);
     }
 
     private WidgetThemes.ThemeGridAdapter adapter;
 
-    protected void initThemeAdapter(Context contxt)
+    protected void initThemeAdapter(Context context)
     {
         adapter = new WidgetThemes.ThemeGridAdapter(this, WidgetThemes.values());
         gridView.setAdapter(adapter);
@@ -172,12 +175,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
     {
         if (theme.isDefault())
         {
-            // TODO: msg - cant edit default, copy as new
-
-            Intent intent = new Intent(this, WidgetThemeConfigActivity.class);
-            intent.putExtra(WidgetThemeConfigActivity.PARAM_MODE, WidgetThemeConfigActivity.UIMode.ADD_THEME);
-            intent.putExtra(SuntimesTheme.THEME_NAME, theme.themeName());
-            startActivityForResult(intent, ADD_THEME_REQUEST);
+            copyTheme(theme);
 
         } else {
             Intent intent = new Intent(this, WidgetThemeConfigActivity.class);
@@ -185,6 +183,14 @@ public class WidgetThemeListActivity extends AppCompatActivity
             intent.putExtra(SuntimesTheme.THEME_NAME, theme.themeName());
             startActivityForResult(intent, EDIT_THEME_REQUEST);
         }
+    }
+
+    protected void copyTheme( SuntimesTheme theme )
+    {
+        Intent intent = new Intent(this, WidgetThemeConfigActivity.class);
+        intent.putExtra(WidgetThemeConfigActivity.PARAM_MODE, WidgetThemeConfigActivity.UIMode.ADD_THEME);
+        intent.putExtra(SuntimesTheme.THEME_NAME, theme.themeName());
+        startActivityForResult(intent, ADD_THEME_REQUEST);
     }
 
     protected void deleteTheme(final SuntimesTheme theme)
@@ -223,6 +229,17 @@ public class WidgetThemeListActivity extends AppCompatActivity
         finish();
     }
 
+    protected void importThemes()
+    {
+        Toast.makeText(this, "stub", Toast.LENGTH_SHORT).show(); // TODO
+    }
+
+    protected void exportThemes()
+    {
+        Toast.makeText(this, "stub", Toast.LENGTH_SHORT).show(); // TODO
+    }
+
+
     @Override
     public void onBackPressed()
     {
@@ -233,10 +250,26 @@ public class WidgetThemeListActivity extends AppCompatActivity
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.themelist, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
         switch (item.getItemId())
         {
+            case R.id.importThemes:
+                importThemes();
+                return true;
+
+            case R.id.exportThemes:
+                exportThemes();
+                return true;
+
             case android.R.id.home:
                 onBackPressed();
                 return true;
@@ -264,7 +297,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         public boolean onCreateActionMode(android.support.v7.view.ActionMode mode, Menu menu)
         {
             MenuInflater inflater = mode.getMenuInflater();
-            inflater.inflate(R.menu.themelist, menu);
+            inflater.inflate(R.menu.themecontext, menu);
             return true;
         }
 
@@ -278,7 +311,11 @@ public class WidgetThemeListActivity extends AppCompatActivity
         public boolean onPrepareActionMode(android.support.v7.view.ActionMode mode, Menu menu)
         {
             MenuItem deleteItem = menu.findItem(R.id.deleteTheme);
-            deleteItem.setVisible( !theme.isDefault() );
+            deleteItem.setVisible( !theme.isDefault() );  // not allowed to delete default
+
+            MenuItem editItem = menu.findItem(R.id.editTheme);
+            editItem.setVisible( !theme.isDefault() );    // not allowed to edit default
+
             return false;
         }
 
@@ -296,6 +333,10 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
                     case R.id.editTheme:
                         editTheme(theme);
+                        return true;
+
+                    case R.id.copyTheme:
+                        copyTheme(theme);
                         return true;
 
                     case R.id.deleteTheme:
@@ -349,6 +390,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
     {
         if (resultCode == RESULT_OK)
         {
+            adapterModified = true;
             initThemeAdapter(this);
 
             if (data != null)

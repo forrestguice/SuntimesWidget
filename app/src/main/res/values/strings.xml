@@ -249,6 +249,12 @@
     <string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_copy_<xliff:g id="#">%2$s</xliff:g></string>    <!-- copied theme id -->
     <string name="addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g> (copy)</string>                                    <!-- copied theme name (display string) -->
 
+    <string name="edittheme_error_themeName_empty">ID must be unique (required).</string>        <!-- error hint (themeName empty) -->
+    <string name="edittheme_error_themeName_unique">ID must be unique (already taken).</string>  <!-- error hint (themeName taken) -->
+    <string name="edittheme_error_displaytext">Display string must not be empty.</string>  <!-- error hint (display text is empty) -->
+    <string name="edittheme_error_titlesize_min">Title size must be an integer &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->
+    <string name="edittheme_error_titlesize_max">Title size must be an integer &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->
+
     <string name="addtheme_toast_success">Added <xliff:g id="themeName">%1$s</xliff:g>.</string>          <!-- toast msg -->
     <string name="edittheme_toast_success">Saved <xliff:g id="themeName">%1$s</xliff:g>.</string>         <!-- toast msg -->
     <string name="deletetheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g> was deleted.</string> <!-- toast msg -->
@@ -262,6 +268,11 @@
     <string name="configLabel_widgetThemeEdit">Edit Theme</string>   <!-- title text -->
     <string name="configAction_saveTheme">Save</string>           <!-- button (contentDescription) -->
     <string name="configAction_chooseColor">Choose Color</string> <!-- button (contentDescription) -->
+
+    <string name="configLabel_themeBackgroundId">Background:</string>    <!-- spinner label -->
+    <string name="configLabel_themeBackground_light">Light</string>        <!-- light background -->
+    <string name="configLabel_themeBackground_dark">Dark</string>          <!-- dark background -->
+    <string name="configLabel_themeBackground_trans">Transparent</string>  <!-- transparent background -->
 
     <string name="configLabel_themeColorTitle">Title Color:</string>     <!-- color label -->
     <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->

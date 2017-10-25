@@ -22,9 +22,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -33,29 +31,33 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.ColorChooser;
+import com.forrestguice.suntimeswidget.settings.PaddingChooser;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 
 import java.security.InvalidParameterException;
-import java.util.HashSet;
-import java.util.Locale;
 
 import static com.forrestguice.suntimeswidget.themes.SuntimesTheme.THEME_NAME;
 
 public class WidgetThemeConfigActivity extends AppCompatActivity
 {
     public static final int MIN_TITLE_SIZE = 8;
+    public static final int MAX_TITLE_SIZE = 48;
 
     public static final String PARAM_MODE = "mode";
 
@@ -73,10 +75,17 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private String param_themeName = null;
 
     private ActionBar actionBar;
-    private EditText editName, editDisplay;
-    private EditText editTitleSize;
+    private EditText editDisplay;
+    private TitleSizeChooser chooseTitleSize;
+    private ThemeNameChooser chooseName;
     private PaddingChooser choosePadding;
     private ColorChooser chooseColorRise, chooseColorSet, chooseColorTitle, chooseColorText, chooseColorTime, chooseColorSuffix;
+    private Spinner spinBackground;
+    protected ThemeBackground[] backgrounds;
+
+    private View previewBackground;
+    private TextView previewTitle, previewRise, previewSet, previewRiseSuffix, previewSetSuffix;
+    private TextView previewTimeDeltaPrefix, previewTimeDelta, previewTimeDeltaSuffix;
 
     public WidgetThemeConfigActivity()
     {
@@ -97,8 +106,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         param_themeName = intent.getStringExtra(THEME_NAME);
 
         mode = (param_mode == null) ? UIMode.ADD_THEME : param_mode;
+
         initViews(this);
         loadTheme(param_themeName);
+        updatePreview();
     }
 
     private void initLocale()
@@ -125,67 +136,220 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        editName = (EditText)findViewById(R.id.edit_themeName);
-        // TODO: validate ID after loss of focus
+        initPreview(context);
+
+        backgrounds = new ThemeBackground[3];
+        backgrounds[0] = new ThemeBackground(R.drawable.bg_widget_dark, getString(R.string.configLabel_themeBackground_dark));
+        backgrounds[1] = new ThemeBackground(R.drawable.bg_widget, getString(R.string.configLabel_themeBackground_light));
+        backgrounds[2] = new ThemeBackground(android.R.color.transparent, getString(R.string.configLabel_themeBackground_trans));
+
+        ArrayAdapter<ThemeBackground> spinBackground_adapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, backgrounds);
+        spinBackground_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinBackground = (Spinner)findViewById(R.id.editSpin_background);
+        spinBackground.setAdapter(spinBackground_adapter);
+        spinBackground.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+            {
+                updatePreview();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView)
+            {
+                updatePreview();
+            }
+        });
+
+        EditText editName = (EditText)findViewById(R.id.edit_themeName);
+        chooseName = new ThemeNameChooser(editName);
 
         editDisplay = (EditText)findViewById(R.id.edit_themeDisplay);
-        // TODO: validate name size after loss of focus
+        editDisplay.setOnFocusChangeListener(new View.OnFocusChangeListener()
+        {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus)
+            {
+                if (!hasFocus)
+                {
+                    if (validateThemeDisplayText(WidgetThemeConfigActivity.this, editDisplay, false))
+                    {
+                        updatePreview();
+                    }
+                }
+            }
+        });
 
-        editTitleSize = (EditText)findViewById(R.id.edit_titleSize);
-        // TODO: validate title size after loss of focus
+        EditText editTitleSize = (EditText)findViewById(R.id.edit_titleSize);
+        chooseTitleSize = new TitleSizeChooser(editTitleSize);
 
         EditText editPadding = (EditText)findViewById(R.id.edit_padding);
-        choosePadding = new PaddingChooser(editPadding);
-        // TODO: validate/form padding string on the fly
+        choosePadding = new PaddingChooser(editPadding)
+        {
+            @Override
+            protected void onPaddingChanged( int[] newPadding )
+            {
+                updatePreview();
+            }
+        };
 
         EditText editColorTitle = (EditText)findViewById(R.id.edit_titleColor);
         ImageButton buttonColorTitle = (ImageButton)findViewById(R.id.editButton_titleColor);
-        chooseColorTitle = new ColorChooser(editColorTitle, buttonColorTitle);
-        // TODO: validate/form color string on the fly
+        chooseColorTitle = new ColorChooser(editColorTitle, buttonColorTitle)
+        {
+            @Override
+            protected void onColorChanged( int newColor )
+            {
+                updatePreview();
+            }
+        };
 
         EditText editColorText = (EditText)findViewById(R.id.edit_textColor);
         ImageButton buttonColorText = (ImageButton)findViewById(R.id.editButton_textColor);
-        chooseColorText = new ColorChooser(editColorText, buttonColorText);
-        // TODO: validate/form color string on the fly
+        chooseColorText = new ColorChooser(editColorText, buttonColorText)
+        {
+            @Override
+            protected void onColorChanged( int newColor )
+            {
+                updatePreview();
+            }
+        };
 
         EditText editColorRise = (EditText)findViewById(R.id.edit_sunriseColor);
         ImageButton buttonColorRise = (ImageButton)findViewById(R.id.editButton_sunriseColor);
-        chooseColorRise = new ColorChooser(editColorRise, buttonColorRise);
-        // TODO: validate/form color string on the fly
+        chooseColorRise = new ColorChooser(editColorRise, buttonColorRise)
+        {
+            @Override
+            protected void onColorChanged( int newColor )
+            {
+                updatePreview();
+            }
+        };
 
         EditText editColorSet = (EditText)findViewById(R.id.edit_sunsetColor);
         ImageButton buttonColorSet = (ImageButton)findViewById(R.id.editButton_sunsetColor);
-        chooseColorSet = new ColorChooser(editColorSet, buttonColorSet);
-        // TODO: validate/form color string on the fly
+        chooseColorSet = new ColorChooser(editColorSet, buttonColorSet)
+        {
+            @Override
+            protected void onColorChanged( int newColor )
+            {
+                updatePreview();
+            }
+        };
 
         EditText editColorTime = (EditText)findViewById(R.id.edit_timeColor);
         ImageButton buttonColorTime = (ImageButton)findViewById(R.id.editButton_timeColor);
-        chooseColorTime = new ColorChooser(editColorTime, buttonColorTime);
-        // TODO: validate/form color string on the fly
+        chooseColorTime = new ColorChooser(editColorTime, buttonColorTime)
+        {
+            @Override
+            protected void onColorChanged( int newColor )
+            {
+                updatePreview();
+            }
+        };
 
         EditText editColorSuffix = (EditText)findViewById(R.id.edit_suffixColor);
         ImageButton buttonColorSuffix = (ImageButton)findViewById(R.id.editButton_suffixColor);
-        chooseColorSuffix = new ColorChooser(editColorSuffix, buttonColorSuffix);
-        // TODO: validate/form color string on the fly
+        chooseColorSuffix = new ColorChooser(editColorSuffix, buttonColorSuffix)
+        {
+            @Override
+            protected void onColorChanged( int newColor )
+            {
+                updatePreview();
+            }
+        };
 
         switch (mode)
         {
             case EDIT_THEME:
                 actionBar.setTitle(getString(R.string.configLabel_widgetThemeEdit));
-                //applyButton.setText(getString(R.string.configAction_saveTheme));
                 editName.setEnabled(false);
                 break;
 
             case ADD_THEME:
             default:
                 actionBar.setTitle(getString(R.string.configLabel_widgetThemeAdd));
-                //applyButton.setText(getString(R.string.configAction_addTheme));
                 editName.setEnabled(true);
                 break;
 
         }
     }
 
+    protected void initPreview(Context context)
+    {
+        previewBackground = findViewById(R.id.widgetframe_inner);
+        previewTitle = (TextView)findViewById(R.id.text_title);
+
+        previewRise = (TextView)findViewById(R.id.text_time_sunrise);
+        previewRiseSuffix = (TextView)findViewById(R.id.text_time_sunrise_suffix);
+
+        previewSet = (TextView)findViewById(R.id.text_time_sunset);
+        previewSetSuffix = (TextView)findViewById(R.id.text_time_sunset_suffix);
+
+        previewTimeDelta = (TextView)findViewById(R.id.text_delta_day_value);
+        previewTimeDeltaPrefix = (TextView)findViewById(R.id.text_delta_day_prefix);
+        previewTimeDeltaSuffix = (TextView)findViewById(R.id.text_delta_day_suffix);
+    }
+
+    protected void updatePreview()
+    {
+        if (previewBackground != null)
+        {
+            ThemeBackground background = (ThemeBackground)spinBackground.getSelectedItem();
+            if (background != null)
+            {
+                int[] padding = choosePadding.getPaddingPixels(this);
+                previewBackground.setBackgroundResource(background.getResID());
+                previewBackground.setPadding(padding[0], padding[1], padding[2], padding[3]);
+            }
+        }
+
+        if (previewTitle != null)
+        {
+            previewTitle.setVisibility(View.VISIBLE);
+            previewTitle.setText(chooseName.getThemeName());
+            previewTitle.setTextColor(chooseColorTitle.getColor());
+            previewTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, chooseTitleSize.getTitleSize());
+        }
+
+        if (previewRise != null)
+        {
+            previewRise.setText("7:00");   // TODO
+            previewRise.setTextColor(chooseColorRise.getColor());
+        }
+        if (previewRiseSuffix != null)
+        {
+            previewRiseSuffix.setText("AM");   // TODO
+            previewRiseSuffix.setTextColor(chooseColorSuffix.getColor());
+        }
+
+        if (previewSet != null)
+        {
+            previewSet.setText("7:00");   // TODO
+            previewSet.setTextColor(chooseColorSet.getColor());
+        }
+        if (previewSetSuffix != null)
+        {
+            previewSetSuffix.setText("PM");   // TODO
+            previewSetSuffix.setTextColor(chooseColorSuffix.getColor());
+        }
+
+        if (previewTimeDelta != null)
+        {
+            previewTimeDelta.setText("1m");  // TODO
+            previewTimeDelta.setTextColor(chooseColorTime.getColor());
+        }
+        if (previewTimeDeltaPrefix != null)
+        {
+            previewTimeDeltaPrefix.setText(getString(R.string.delta_day_tomorrow));
+            previewTimeDeltaPrefix.setTextColor(chooseColorText.getColor());
+        }
+        if (previewTimeDeltaSuffix != null)
+        {
+            previewTimeDeltaSuffix.setText(getString(R.string.delta_day_shorter));
+            previewTimeDeltaSuffix.setTextColor(chooseColorText.getColor());
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -236,24 +400,35 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     {
         if (themeName != null)
         {
-            editName.setText((mode == UIMode.ADD_THEME) ? generateThemeName(themeName) : themeName);
-
-            try {
-                SuntimesTheme theme = WidgetThemes.loadTheme(this, themeName);
-                editDisplay.setText((mode == UIMode.ADD_THEME) ? generateThemeDisplayString(theme.themeDisplayString()) : theme.themeDisplayString());
-                editTitleSize.setText(String.format("%s", (int)theme.getTitleSizeSp()));
-                chooseColorTitle.setColor(theme.getTitleColor());
-                chooseColorText.setColor(theme.getTextColor());
-                chooseColorRise.setColor(theme.getSunriseTextColor());
-                chooseColorSet.setColor(theme.getSunsetTextColor());
-                chooseColorTime.setColor(theme.getTimeColor());
-                chooseColorSuffix.setColor(theme.getTimeSuffixColor());
-                choosePadding.setPadding(theme.getPadding());
-
-            } catch (InvalidParameterException e) {
-                Log.e("loadTheme", "unable to load theme: " + e);
-            }
+            chooseName.setThemeName( (mode == UIMode.ADD_THEME) ? generateThemeName(themeName) : themeName );
         }
+
+        try {
+            String themeID = (themeName == null ? WidgetSettings.PREF_DEF_APPEARANCE_THEME : themeName);
+            SuntimesTheme theme = WidgetThemes.loadTheme(this, themeID);
+            if (themeName != null)
+            {
+                editDisplay.setText((mode == UIMode.ADD_THEME) ? generateThemeDisplayString(theme.themeDisplayString()) : theme.themeDisplayString());
+            }
+            chooseTitleSize.setTitleSize((int)theme.getTitleSizeSp());
+            chooseColorTitle.setColor(theme.getTitleColor());
+            chooseColorText.setColor(theme.getTextColor());
+            chooseColorRise.setColor(theme.getSunriseTextColor());
+            chooseColorSet.setColor(theme.getSunsetTextColor());
+            chooseColorTime.setColor(theme.getTimeColor());
+            chooseColorSuffix.setColor(theme.getTimeSuffixColor());
+            choosePadding.setPadding(theme.getPadding());
+            setSelectedBackground(theme.getBackgroundId());
+
+        } catch (InvalidParameterException e) {
+            Log.e("loadTheme", "unable to load theme: " + e);
+        }
+    }
+
+    private void setSelectedBackground(int resId)
+    {
+        int backgroundPos = ThemeBackground.ordinal(backgrounds, resId);
+        spinBackground.setSelection( backgroundPos < 0 ? 0 : backgroundPos );
     }
 
     /**
@@ -265,9 +440,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         {
             private SuntimesTheme init()
             {
-                this.themeName = editName.getText().toString();
+                this.themeName = chooseName.getThemeName();
                 this.themeDisplayString = editDisplay.getText().toString();
-                this.themeTitleSize = Float.parseFloat(editTitleSize.getText().toString());
+                this.themeTitleSize = chooseTitleSize.getTitleSize();
                 this.themeTitleColor = chooseColorTitle.getColor();
                 this.themeTextColor = chooseColorText.getColor();
                 this.themeTimeColor = chooseColorTime.getColor();
@@ -275,6 +450,11 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 this.themeSunriseTextColor = chooseColorRise.getColor();
                 this.themeSunsetTextColor = chooseColorSet.getColor();
                 this.themePadding = choosePadding.getPadding();
+                ThemeBackground backgroundItem = (ThemeBackground)spinBackground.getSelectedItem();
+                if (backgroundItem != null)
+                {
+                    this.themeBackground = backgroundItem.getResID();
+                }
                 return this;
             }
         }.init();
@@ -285,8 +465,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     }
 
     /**
-     * @param suggestedName
-     * @return
+     * @param suggestedName the desired themeName (might not be unique/available)
+     * @return a unique themeName
      */
     protected String generateThemeName( String suggestedName )
     {
@@ -310,60 +490,108 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
      */
     protected boolean validateInput()
     {
+        boolean isValid = validateTitleSize(chooseTitleSize.getField());
+        isValid = isValid && validateThemeDisplayText(editDisplay);
+        isValid = isValid && validateThemeID(chooseName.getField());
+        return isValid;
+    }
+
+    protected boolean validateThemeID( EditText editName )
+    {
+        return validateThemeID(this, editName, true);
+    }
+    protected static boolean validateThemeID(Context context, EditText editName, boolean grabFocus )
+    {
         boolean isValid = true;
+        editName.setError(null);
 
         String themeID = editName.getText().toString().trim();
         if (themeID.isEmpty())
         {
-            editName.setError("ID must be unique (required)."); // todo: i18n
-            isValid = false;
+            isValid = false;       // themeName is required
+            editName.setError(context.getString(R.string.edittheme_error_themeName_empty));
+            if (grabFocus)
+                editName.requestFocus();
         }
-
         if (mode == UIMode.ADD_THEME && WidgetThemes.valueOf(editName.getText().toString()) != null)
         {
-            editName.setError("ID must be unique (already taken)."); // todo: i18n
-            isValid = false;
+            isValid = false;       // themeName is already taken
+            editName.setError(context.getString(R.string.edittheme_error_themeName_unique));
+            if (grabFocus)
+                editName.requestFocus();
         }
+        return isValid;
+    }
+
+    protected boolean validateThemeDisplayText( EditText editDisplay )
+    {
+        return validateThemeDisplayText(this, editDisplay, true);
+    }
+    protected static boolean validateThemeDisplayText(Context context, EditText editDisplay, boolean grabFocus )
+    {
+        boolean isValid = true;
+        editDisplay.setError(null);
 
         if (editDisplay.getText().toString().trim().isEmpty())
         {
-            editDisplay.setError("Display string must not be empty."); // todo: i18n
-            isValid = false;
+            isValid = false;     // display text is empty
+            editDisplay.setError(context.getString(R.string.edittheme_error_displaytext));
+            if (grabFocus)
+                editDisplay.requestFocus();
         }
+        return isValid;
+    }
+
+    protected boolean validateTitleSize( EditText editTitleSize )
+    {
+        return validateTitleSize(this, editTitleSize, true);
+    }
+    protected static boolean validateTitleSize(Context context, EditText editTitleSize, boolean grabFocus )
+    {
+        boolean isValid = true;
+        editTitleSize.setError(null);
 
         try {
             int titleSize = Integer.parseInt(editTitleSize.getText().toString());
             if (titleSize < MIN_TITLE_SIZE)
             {
-                editTitleSize.setError("Title size must be an integer >= " + MIN_TITLE_SIZE + ".");  // todo: i18n
-                isValid = false;
+                isValid = false;       // title too small
+                editTitleSize.setError(context.getString(R.string.edittheme_error_titlesize_min, MIN_TITLE_SIZE+""));
+                if (grabFocus)
+                    editTitleSize.requestFocus();
+            }
+
+            if (titleSize > MAX_TITLE_SIZE)
+            {
+                isValid = false;       // title too large
+                editTitleSize.setError(context.getString(R.string.edittheme_error_titlesize_max, MAX_TITLE_SIZE+""));
+                if (grabFocus)
+                    editTitleSize.requestFocus();
             }
 
         } catch (NumberFormatException e) {
-            editTitleSize.setError("Title size must be an integer >= " + MIN_TITLE_SIZE + ".");  // todo: i18n
-            isValid = false;
+            isValid = false;          // title NaN (too small)
+            editTitleSize.setError(context.getString(R.string.edittheme_error_titlesize_min, MIN_TITLE_SIZE+""));
+            if (grabFocus)
+                editTitleSize.requestFocus();
         }
-
         return isValid;
     }
 
     /**
-     * PaddingChooser
+     * TitleSizeChooser
      */
-    public static class PaddingChooser implements TextWatcher, View.OnFocusChangeListener
+    private class TitleSizeChooser implements TextWatcher, View.OnFocusChangeListener
     {
-        private int[] padding = new int[4];
+        private int titleSize;
         private EditText edit;
 
-        private boolean isRunning = false, isRemoving = false;
-        private char[] brackets = {'[',']'};
-        private char separator = ',';
-
-        public PaddingChooser( EditText editField )
+        public TitleSizeChooser( EditText editField )
         {
-            this.edit = editField;
+            edit = editField;
             edit.setRawInputType(InputType.TYPE_CLASS_NUMBER);
-            this.edit.addTextChangedListener(this);
+            edit.addTextChangedListener(this);
+            edit.setOnFocusChangeListener(this);
         }
 
         public EditText getField()
@@ -371,179 +599,68 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             return edit;
         }
 
-        public int[] getPadding()
+        public int getTitleSize()
         {
-            return padding;
+            return titleSize;
         }
-        public void setPadding( int[] padding )
+
+        public void setTitleSize( int spValue )
         {
-            for (int i=0; i<padding.length && i<this.padding.length; i++)
-            {
-                this.padding[i] = padding[i];
-            }
+            titleSize = spValue;
             updateViews();
         }
-        private void setPadding(int i, int value)
-        {
-            if (i >= 0 && i < padding.length)
-            {
-                padding[i] = value;
-            }
-        }
-        private void setPadding(int i, String value)
-        {
-            try {
-                setPadding(i, Integer.parseInt(value));
 
-            } catch (NumberFormatException e) {
-                setPadding(i, 0);
-            }
-        }
-
-        private void updateViews()
+        public void updateViews()
         {
-            edit.setText(toString());
-        }
-
-        public String toString()
-        {
-            return "" + brackets[0] + padding[0] + separator + padding[1] + separator + padding[2] + separator + padding[3] + brackets[1];
+            edit.setText(""+titleSize);
         }
 
         @Override
-        public void beforeTextChanged(CharSequence charSequence, int start, int count, int after)
-        {
-            isRemoving = count > after;
-        }
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
         @Override
-        public void onTextChanged(CharSequence charSequence, int start, int before, int after) {}
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
         @Override
         public void afterTextChanged(Editable editable)
         {
-            if (isRunning || isRemoving)
-                return;
-            isRunning = true;
-
-            insertStartBracket(editable);
-            int length = editable.length();
-            String text = editable.toString();
-
-            int i0 = -1, i1 = -1, i2 = -1, i3 = -1;
-            if ((i0 = text.indexOf(separator, 0)) != -1)
-            {
-                if ((i1 = text.indexOf(separator, i0 + 1)) != -1)
-                {
-                    if ((i2 = text.indexOf(separator, i1 + 1)) != -1)
-                    {
-                        if ((i3 = text.indexOf(separator, i2 + 1)) != -1)
-                        {
-                            // has four commas (one too many)
-                            editable.delete(i3, length);
-                        }
-
-                        // has 3 commas (the right amount)
-                        appendEndBracket(editable);
-                        length = editable.length();
-                        text = editable.toString();
-
-                        setPadding(0, text.substring(1, i0));
-                        setPadding(1, text.substring(i0+1, i1));
-                        setPadding(2, text.substring(i1+1, i2));
-                        setPadding(3, text.substring(i2+1, length-1));
-
-                    } else {
-                        // has two commas
-                        setPadding(0, text.substring(1, i0));
-                        setPadding(1, text.substring(i0+1, i1));
-                        appendSeparator(editable);
-                    }
-
-                } else {
-                    // has one comma
-                    setPadding(0, text.substring(1, i0));
-                    appendSeparator(editable);
-                }
-            } else {
-                // has no commas
-                if (length > 1)
-                {
-                    setPadding(0, text.substring(1, length));
-                    appendSeparator(editable);
-                }
-            }
-            isRunning = false;
-        }
-
-        private void insertStartBracket(Editable editable)
-        {
-            if (editable.charAt(0) != brackets[0])
-            {
-                editable.insert(0, brackets[0]+"");
-            }
-        }
-
-        private void appendEndBracket(Editable editable)
-        {
-            int i;
-            if ((i = editable.toString().indexOf(brackets[1])) != -1)
-            {
-                editable.delete(i, i+1);
-            }
-            editable.append(brackets[1]);
-        }
-
-        private void appendSeparator(Editable editable)
-        {
-            if (editable.charAt(editable.length() - 1) != separator)
-            {
-                editable.append(separator);
+            String spValue = editable.toString();
+            try {
+                titleSize = Integer.parseInt(spValue);
+            } catch (NumberFormatException e) {
+                Log.w("setTitleSize", "Invalid size! " + spValue + " ignoring...");
+                updateViews();
             }
         }
 
         @Override
-        public void onFocusChange(View view, boolean b)
+        public void onFocusChange(View view, boolean hasFocus)
         {
-            afterTextChanged(edit.getText());
+            if (!hasFocus)
+            {
+                afterTextChanged(edit.getText());
+                if (validateTitleSize(WidgetThemeConfigActivity.this, edit, false))
+                {
+                    updatePreview();
+                }
+            }
         }
     }
 
     /**
-     * ColorChooser
+     * ThemeNameChooser
      */
-    public static class ColorChooser implements TextWatcher, View.OnFocusChangeListener
+    private class ThemeNameChooser implements TextWatcher, View.OnFocusChangeListener
     {
-        public static final int MAX_LENGTH = 8;
+        private EditText edit;
+        private String themeName;
 
-        final private ImageButton button;
-        final private EditText edit;
-
-        private int color;
-        private boolean isRunning = false, isRemoving = false;
-
-        public static final char[] alphabet = {'#', '0', '1', '2', '3', '4', '5', '6', '7','8', '9', 'a', 'A', 'b', 'B', 'c', 'C', 'd', 'D', 'e', 'E', 'f', 'F'};
-        HashSet<Character> inputSet;
-
-        public ColorChooser( EditText editField, ImageButton button )
+        public ThemeNameChooser( EditText editField )
         {
-            this.edit = editField;
-            this.edit.addTextChangedListener(this);
-            this.edit.setOnFocusChangeListener(this);
-
-            /**InputFilter[] filters0 = edit.getFilters();
-            InputFilter[] filters1 = new InputFilter[filters0.length + 1];
-            System.arraycopy(filters0, 0, filters1, 0, filters0.length);
-            filters1[filters1.length] = new InputFilter.AllCaps();
-            edit.setFilters(filters1);*/
-
-            inputSet = new HashSet<>();
-            for (char c : alphabet)
-            {
-                inputSet.add(c);
-            }
-
-            this.button = button;
+            edit = editField;
+            edit.setRawInputType(InputType.TYPE_CLASS_TEXT);
+            edit.addTextChangedListener(this);
+            edit.setOnFocusChangeListener(this);
         }
 
         public EditText getField()
@@ -551,91 +668,84 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             return edit;
         }
 
-        public ImageButton getButton()
+        public String getThemeName()
         {
-            return button;
+            return themeName;
         }
 
-        public void setColor(int color)
+        public void setThemeName( String themeName )
         {
-            this.color = color;
+            this.themeName = themeName;
             updateViews();
         }
 
-        public void setColor(String hexCode)
+        public void updateViews()
         {
-            this.color = Color.parseColor(hexCode);
-            updateViews();
-        }
-
-        public int getColor()
-        {
-            return color;
-        }
-
-        private void updateViews()
-        {
-            edit.setText( String.format("#%08X", color) );
-            Drawable d = button.getDrawable();
-            if (d != null)
-            {
-                GradientDrawable g = (GradientDrawable)d.mutate();
-                g.setColor(color);
-                g.invalidateSelf();
-            }
+            edit.setText(themeName);
         }
 
         @Override
-        public void beforeTextChanged(CharSequence charSequence, int start, int count, int after)
-        {
-            isRemoving = count > after;
-        }
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
         @Override
-        public void onTextChanged(CharSequence charSequence, int start, int before, int after) {}
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
         @Override
         public void afterTextChanged(Editable editable)
         {
-            if (isRunning || isRemoving)
-                return;
-            isRunning = true;
-
-            String text = editable.toString();
-            int i = text.indexOf('#');
-            if (i != -1)
-            {
-                editable.delete(i, i + 1);
-            }
-            editable.insert(0, "#");
-
-            text = editable.toString();
-            if (text.length() > MAX_LENGTH)
-            {
-                editable.delete(MAX_LENGTH + 1, text.length());
-            }
-
-            text = editable.toString();
-            for (int j=text.length()-1; j>=0; j--)
-            {
-                if (!inputSet.contains(text.charAt(j)))
-                {
-                    editable.delete(j, j+1);
-                }
-            }
-
-            text = editable.toString();
-            String toCaps = text.toUpperCase(Locale.US);
-            editable.clear();
-            editable.append(toCaps);
-
-            isRunning = false;
+            themeName = editable.toString();
+            previewTitle.setText(editable);
         }
 
         @Override
-        public void onFocusChange(View view, boolean b)
+        public void onFocusChange(View view, boolean hasFocus)
         {
-            setColor(edit.getText().toString());
+            if (!hasFocus)
+            {
+                afterTextChanged(edit.getText());
+                if (validateThemeID(WidgetThemeConfigActivity.this, edit, false))
+                {
+                    updateViews();
+                }
+            }
+        }
+    }
+
+    /**
+     * ThemeBackground
+     */
+    public static class ThemeBackground
+    {
+        private int resID;
+        private String displayString;
+
+        public ThemeBackground( int resId, String displayString )
+        {
+            this.resID = resId;
+            this.displayString = displayString;
+        }
+
+        public int getResID()
+        {
+            return resID;
+        }
+
+        @Override
+        public String toString()
+        {
+            return displayString;
+        }
+
+        public static int ordinal( ThemeBackground[] backgrounds, int resID)
+        {
+            for (int i=0; i<backgrounds.length; i++)
+            {
+                if (backgrounds[i] != null && backgrounds[i].getResID() == resID)
+                {
+                    return i;
+                }
+            }
+            return -1;
         }
     }
 
