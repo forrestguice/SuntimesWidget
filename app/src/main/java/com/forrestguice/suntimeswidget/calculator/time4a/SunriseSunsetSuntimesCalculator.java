@@ -42,16 +42,14 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
 
     WidgetSettings.Location location;
     SolarTime calculator;
-    String timezone;
+    TimeZone timezone;
 
-    public SunriseSunsetSuntimesCalculator() { /* EMPTY */ }
+    public SunriseSunsetSuntimesCalculator() {}
 
     @Override
     public void init(WidgetSettings.Location locationSetting, String timezone)
     {
-        this.location = locationSetting;
-        this.calculator = SolarTime.ofLocation(this.location.getLatitudeAsDouble(), this.location.getLongitudeAsDouble());
-        this.timezone = timezone;
+        init(locationSetting, TimeZone.getTimeZone(timezone));
     }
 
     @Override
@@ -59,7 +57,7 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     {
         this.location = location;
         this.calculator = SolarTime.ofLocation(this.location.getLatitudeAsDouble(), this.location.getLongitudeAsDouble());
-        this.timezone = timezone.getID();
+        this.timezone = timezone;
     }
 
     @Override
@@ -71,12 +69,15 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     @Override
     public Calendar getCivilSunriseCalendarForDate( Calendar date )
     {
+        TimeZone tz = date.getTimeZone();   // the date is also configured to the timezone (ca.rmen lib needed this).
+                                            // will be same as provided to init()
 
-        PlainDate d = null;   // todo: Calendar w/ timezone to PlainDate
+        // the TimeZone almost always obtained from system (TimeZone.getTimeZone(id)), but it might also
+        // be something weird like suntimeswidget.settings.WidgetTimezones.ApparentSolarTime, or .LocalMeanTime.
+        // this is the reason init() accepts TimeZone in addition to a tzid.
+
         ChronoFunction<CalendarDate, Moment> civilRise = calculator.sunrise(Twilight.CIVIL);
-        Moment moment = d.get(civilRise);
-        PlainTimestamp timeStamp = moment.toZonalTimestamp(timezone);
-        return null;          // todo: conversion back to Calendar?
+        return null;
     }
 
     @Override
