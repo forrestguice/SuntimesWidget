@@ -49,9 +49,11 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
+import com.forrestguice.suntimeswidget.themes.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
 
+import java.security.InvalidParameterException;
 import java.util.TimeZone;
 
 /**
@@ -69,6 +71,8 @@ public class SuntimesConfigActivity extends AppCompatActivity
     protected Spinner spinner_timeMode;
     protected ImageButton button_timeModeHelp;
     protected Spinner spinner_compareMode;
+    protected CheckBox checkbox_showNoon;
+    protected CheckBox checkbox_showCompare;
 
     protected Spinner spinner_onTap;
     protected EditText text_launchActivity;
@@ -449,6 +453,24 @@ public class SuntimesConfigActivity extends AppCompatActivity
         }
 
         //
+        // widget: showNoon
+        //
+        checkbox_showNoon = (CheckBox)findViewById(R.id.appwidget_general_showNoon);
+
+        //
+        // widget: showCompare
+        //
+        checkbox_showCompare = (CheckBox)findViewById(R.id.appwidget_general_showCompare);
+        checkbox_showCompare.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked)
+            {
+                showCompareUI(isChecked);
+            }
+        });
+
+        //
         // widget: about button
         //
         Button button_aboutWidget = (Button)findViewById(R.id.about_button);
@@ -465,10 +487,22 @@ public class SuntimesConfigActivity extends AppCompatActivity
     {
         if (spinner_timeMode != null)
         {
-            ArrayAdapter<WidgetSettings.TimeMode> spinner_timeModeAdapter;
+            final ArrayAdapter<WidgetSettings.TimeMode> spinner_timeModeAdapter;
             spinner_timeModeAdapter = new ArrayAdapter<WidgetSettings.TimeMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.TimeMode.values());
             spinner_timeModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner_timeMode.setAdapter(spinner_timeModeAdapter);
+
+            spinner_timeMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+            {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+                {
+                    showOptionShowNoon(spinner_timeModeAdapter.getItem(i) != WidgetSettings.TimeMode.NOON);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {}
+            });
         }
 
         if (button_timeModeHelp != null)
@@ -696,6 +730,14 @@ public class SuntimesConfigActivity extends AppCompatActivity
         WidgetSettings.CompareMode compareMode = compareModes[ spinner_compareMode.getSelectedItemPosition()];
         WidgetSettings.saveCompareModePref(context, appWidgetId, compareMode);
 
+        // save: showNoon
+        boolean showNoon = checkbox_showNoon.isChecked();
+        WidgetSettings.saveShowNoonPref(context, appWidgetId, showNoon);
+
+        // save: showCompare
+        boolean showCompare = checkbox_showCompare.isChecked();
+        WidgetSettings.saveShowComparePref(context, appWidgetId, showCompare);
+
         // save: time mode
         saveTimeMode(context);
     }
@@ -713,6 +755,15 @@ public class SuntimesConfigActivity extends AppCompatActivity
         // load: compare mode
         WidgetSettings.CompareMode compareMode = WidgetSettings.loadCompareModePref(context, appWidgetId);
         spinner_compareMode.setSelection(compareMode.ordinal());
+
+        // load: showCompare
+        boolean showCompare = WidgetSettings.loadShowComparePref(context, appWidgetId);
+        checkbox_showCompare.setChecked(showCompare);
+        showCompareUI(showCompare);
+
+        // load: showNoon
+        boolean showNoon = WidgetSettings.loadShowNoonPref(context, appWidgetId);
+        checkbox_showNoon.setChecked(showNoon);
 
         // load: time mode
         loadTimeMode(context);
@@ -867,15 +918,38 @@ public class SuntimesConfigActivity extends AppCompatActivity
     }
 
     /**
+     * @param showCompareUI
+     */
+    protected void showCompareUI( boolean showCompareUI )
+    {
+        View compareModeLayout = findViewById(R.id.appwidget_general_compareMode_layout);
+        if (compareModeLayout != null)
+        {
+            compareModeLayout.setVisibility((showCompareUI ? View.VISIBLE : View.GONE));
+        }
+    }
+
+    protected void showOptionShowNoon( boolean showOption )
+    {
+        View layout_showNoon = findViewById(R.id.appwidget_general_showNoon_layout);
+        if (layout_showNoon != null)
+        {
+            layout_showNoon.setVisibility((showOption ? View.VISIBLE : View.GONE));
+        }
+    }
+
+    /**
      *
      */
     protected void hideOptionCompareAgainst()
     {
-        View layout_compareMode = findViewById(R.id.appwidget_general_compareMode_layout);
-        if (layout_compareMode != null)
+        View layout_showCompare = findViewById(R.id.appwidget_general_showCompare_layout);
+        if (layout_showCompare != null)
         {
-            layout_compareMode.setVisibility(View.GONE);
+            layout_showCompare.setVisibility(View.GONE);
+            checkbox_showCompare.setOnCheckedChangeListener(null);
         }
+        showCompareUI(false);
     }
 
     /**
