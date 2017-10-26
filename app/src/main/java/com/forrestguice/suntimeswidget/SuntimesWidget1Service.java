@@ -31,6 +31,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_1;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_2;
+import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_4;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.ArrayList;
@@ -76,14 +77,27 @@ class SuntimesWidget1RemoteViewsFactory implements RemoteViewsService.RemoteView
     @Override
     public void onDataSetChanged()
     {
-        SuntimesRiseSetData data = new SuntimesRiseSetData(context, appWidgetId);
-        data.calculate();
-
         dataset.clear();
-        //dataset.add(new SuntimesWidgetData(data, R.layout.layout_widget_1x1_0i));
-        dataset.add(new SuntimesRiseSetData(data, R.layout.layout_widget_1x1_1i));
-        dataset.add(new SuntimesRiseSetData(data, R.layout.layout_widget_1x1_2i));
-        viewCount = 3;
+        viewCount = 1;
+
+        SuntimesRiseSetData data0 = new SuntimesRiseSetData(context, appWidgetId);
+        data0.calculate();
+        dataset.add(new SuntimesRiseSetData(data0, R.layout.layout_widget_1x1_1i));
+        viewCount++;
+
+        boolean showNoon = WidgetSettings.loadShowNoonPref(context, appWidgetId);
+        if (showNoon)
+        {
+            SuntimesRiseSetData data1 = new SuntimesRiseSetData(data0);
+            data1.setTimeMode(WidgetSettings.TimeMode.NOON);
+            data1.calculate();
+            dataset.add(new SuntimesRiseSetData(data1, R.layout.layout_widget_1x1_4i));
+            viewCount++;
+        }
+
+        dataset.add(new SuntimesRiseSetData(data0, R.layout.layout_widget_1x1_2i));
+        viewCount++;
+
         Log.d("DEBUG", "onDataSetChanged");
     }
 
@@ -109,6 +123,11 @@ class SuntimesWidget1RemoteViewsFactory implements RemoteViewsService.RemoteView
             case R.layout.layout_widget_1x1_1:
             case R.layout.layout_widget_1x1_1i:
                 layout = new SuntimesLayout_1x1_1(R.layout.layout_widget_1x1_1i);
+                break;
+
+            case R.layout.layout_widget_1x1_4:
+            case R.layout.layout_widget_1x1_4i:
+                layout = new SuntimesLayout_1x1_4(R.layout.layout_widget_1x1_4i);
                 break;
 
             case R.layout.layout_widget_1x1_2:
