@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2017 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -48,6 +48,9 @@ import java.util.TimeZone;
  *   * ca.rmen.sunrisesunset
  *     :: com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator.class
  *
+ *   * time4a
+ *     :: com.forrestguice.suntimeswidget.calculator.time4a.SunriseSunsetSuntimesCalculator.class
+ *
  */
 public class SuntimesCalculatorFactory
 {
@@ -56,6 +59,7 @@ public class SuntimesCalculatorFactory
     {
         SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.getDescriptor());
         SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator.getDescriptor());
+        SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.time4a.SunriseSunsetSuntimesCalculator.getDescriptor());
         initialized = true;
         //Log.d("CalculatorFactory", "Initialized suntimes calculator list.");
     }
