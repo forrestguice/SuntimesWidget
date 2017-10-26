@@ -692,7 +692,14 @@ public class SuntimesConfigActivity extends AppCompatActivity
 
         // load: theme
         SuntimesTheme theme = WidgetSettings.loadThemePref(context, appWidgetId);
-        ThemeDescriptor themeDescriptor = WidgetThemes.valueOf(theme.themeName());
+        ThemeDescriptor themeDescriptor;
+        try
+        {
+            themeDescriptor = WidgetThemes.valueOf(theme.themeName());
+        } catch (InvalidParameterException e) {
+            Log.e("loadAppearanceSettings", "Failed to load theme " + theme.themeName());
+            themeDescriptor = DarkTheme.THEMEDEF_DESCRIPTOR;
+        }
         spinner_theme.setSelection(themeDescriptor.ordinal(WidgetThemes.values()));
 
         // load: allow resize
