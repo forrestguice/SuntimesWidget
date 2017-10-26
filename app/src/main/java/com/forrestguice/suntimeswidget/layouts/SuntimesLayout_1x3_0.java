@@ -19,10 +19,12 @@
 package com.forrestguice.suntimeswidget.layouts;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.SuntimesUtils.TimeDisplayText;
 
@@ -50,6 +52,7 @@ public class SuntimesLayout_1x3_0 extends SuntimesLayout
         views.setTextViewText(R.id.text_time_sunset_suffix, sunsetString.getSuffix());
 
         // update day delta
+        boolean showDayDelta = WidgetSettings.loadShowComparePref(context, appWidgetId);
         TimeDisplayText dayDeltaDisplay = utils.timeDeltaLongDisplayString(data.dayLengthToday(), data.dayLengthOther());
         String dayDeltaValue = dayDeltaDisplay.getValue();
         String dayDeltaUnits = dayDeltaDisplay.getUnits();
@@ -59,6 +62,7 @@ public class SuntimesLayout_1x3_0 extends SuntimesLayout
         views.setTextViewText(R.id.text_delta_day_value, dayDeltaValue);
         views.setTextViewText(R.id.text_delta_day_units, dayDeltaUnits);
         views.setTextViewText(R.id.text_delta_day_suffix, dayDeltaSuffix);
+        views.setViewVisibility(R.id.layout_delta_day, (showDayDelta ? View.VISIBLE : View.GONE));
     }
 
     @Override
