@@ -306,4 +306,19 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         assertTrue("mode should be default (TOMORROW) but was " + mode0, mode0 == WidgetSettings.CompareMode.TOMORROW && mode0 == WidgetSettings.PREF_DEF_GENERAL_COMPAREMODE);
     }
 
+    @Test
+    public void test_showComparePref()
+    {
+        WidgetSettings.saveShowComparePref(context, appWidgetId, true);
+        boolean showCompare = WidgetSettings.loadShowComparePref(context, appWidgetId);
+        assertTrue("showCompare should be true but was " + showCompare, showCompare);
+
+        WidgetSettings.saveShowComparePref(context, appWidgetId, false);
+        showCompare = WidgetSettings.loadShowComparePref(context, appWidgetId);
+        assertTrue("showCompare should be false was " + showCompare, !showCompare);
+
+        WidgetSettings.deleteShowComparePref(context, appWidgetId);
+        showCompare = WidgetSettings.loadShowComparePref(context, appWidgetId);
+        assertTrue("showNoon should be default (true) but was " + showCompare, showCompare && showCompare == WidgetSettings.PREF_DEF_GENERAL_SHOWCOMPARE);
+    }
 }
