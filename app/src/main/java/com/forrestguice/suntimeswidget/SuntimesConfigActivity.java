@@ -932,7 +932,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
         View compareModeLayout = findViewById(R.id.appwidget_general_compareMode_layout);
         if (compareModeLayout != null)
         {
-            compareModeLayout.setVisibility((showCompareUI ? View.VISIBLE : View.GONE));
+            compareModeLayout.setVisibility((showCompareUI && !hideCompareAgainst ? View.VISIBLE : View.GONE));
         }
     }
 
@@ -950,14 +950,15 @@ public class SuntimesConfigActivity extends AppCompatActivity
      */
     protected void hideOptionCompareAgainst()
     {
+        hideCompareAgainst = true;
         View layout_showCompare = findViewById(R.id.appwidget_general_showCompare_layout);
         if (layout_showCompare != null)
         {
             layout_showCompare.setVisibility(View.GONE);
-            checkbox_showCompare.setOnCheckedChangeListener(null);
         }
         showCompareUI(false);
     }
+    private boolean hideCompareAgainst = false;
 
     /**
      *
