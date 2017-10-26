@@ -291,6 +291,15 @@ public class SuntimesWidget extends AppWidgetProvider
         SuntimesRiseSetData data = new SuntimesRiseSetData(context, appWidgetId); // constructor inits data from widget settings
         data.calculate();
 
+        boolean showSolarNoon = WidgetSettings.loadShowNoonPref(context, appWidgetId);
+        if (showSolarNoon)
+        {
+            SuntimesRiseSetData noonData = new SuntimesRiseSetData(data);
+            noonData.setTimeMode(WidgetSettings.TimeMode.NOON);
+            noonData.calculate();
+            data.linkData(noonData);
+        }
+
         views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget.clickActionIntent(context, appWidgetId, SuntimesWidget.class));
         layout.updateViews(context, appWidgetId, views, data);
         appWidgetManager.updateAppWidget(appWidgetId, views);
