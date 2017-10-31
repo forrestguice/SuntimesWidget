@@ -1,3 +1,6 @@
+### v0.4.1 (2017-10-31)
+* fixes data source setting not honored (#104).
+
 ### v0.4.0 (2017-06-12)
 * adds French translation (contributed by Jej) (#92).
 * adds time format option (12hr / 24hr time) (#22).
