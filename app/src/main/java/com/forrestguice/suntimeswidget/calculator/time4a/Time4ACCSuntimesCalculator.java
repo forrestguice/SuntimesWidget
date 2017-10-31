@@ -29,6 +29,8 @@ public class Time4ACCSuntimesCalculator extends Time4ASuntimesCalculator impleme
     public static final String NAME = "time4a-cc";
     public static final String REF = "com.forrestguice.suntimeswidget.calculator.time4a.Time4ACCSuntimesCalculator";
 
+    public Time4ACCSuntimesCalculator() { /* EMPTY */ }
+
     @Override
     public String name()
     {

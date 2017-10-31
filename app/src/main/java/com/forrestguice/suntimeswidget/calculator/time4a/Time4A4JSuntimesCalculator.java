@@ -28,6 +28,8 @@ public class Time4A4JSuntimesCalculator extends Time4ASuntimesCalculator impleme
     public static final String NAME = "time4a-time4j";
     public static final String REF = "com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator";
 
+    public Time4A4JSuntimesCalculator() { /* EMPTY */ }
+
     @Override
     public String name()
     {
