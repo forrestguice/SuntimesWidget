@@ -18,3 +18,8 @@
 -keepclassmembers class **.MenuBuilder {
     void setOptionalIconsVisible(boolean);
 }
+
+# keep SuntimesCalculator noarg constructors
+-keepclassmembers class * implements com.forrestguice.suntimeswidget.calculator.SuntimesCalculator {
+   public <init>();
+}
