@@ -131,14 +131,18 @@
 
             </ViewFlipper>
 
+            <View
+                android:layout_width="match_parent" android:layout_height="6dp"
+                android:layout_margin="0dp" />
+
             <!-- Lightmap -->
             <LinearLayout
                 android:id="@+id/info_time_lightmap_layout"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/lightmap_clickable_height"
-                android:layout_marginBottom="2dp" android:layout_marginTop="6dp"
+                android:layout_marginBottom="0dp" android:layout_marginTop="0dp"
                 android:background="?attr/selectableItemBackground"
-                android:clickable="true">
+                android:clickable="true" android:orientation="vertical">
 
                 <com.forrestguice.suntimeswidget.LightMapView
                     android:id="@+id/info_time_lightmap"
@@ -146,6 +150,28 @@
                     android:layout_height="@dimen/lightmap_height"
                     android:layout_gravity="top"
                     tools:ignore="ContentDescription" />
+
+                <View
+                    android:layout_width="match_parent" android:layout_height="6dp"
+                    android:layout_margin="0dp" />
+
+            </LinearLayout>
+
+            <!-- Datasource -->
+            <LinearLayout
+                android:id="@+id/layout_datasource"
+                style="@style/SunsetTimeCard" android:gravity="end"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp" android:layout_marginTop="2dp"
+                android:paddingTop="0dp" android:paddingBottom="0dp"
+                android:clickable="true" android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txt_datasource"
+                    android:gravity="center_vertical"
+                    android:textSize="8sp" android:textStyle="bold"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    tools:text="sunrisesunsetlib" />
 
             </LinearLayout>
 
