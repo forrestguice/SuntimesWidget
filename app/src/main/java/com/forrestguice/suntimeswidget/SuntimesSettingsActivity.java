@@ -351,7 +351,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         if (context != null && calculatorPref != null)
         {
             SuntimesCalculatorDescriptor currentMode = WidgetSettings.loadCalculatorModePref(context, 0);
-            int currentIndex = calculatorPref.findIndexOfValue(currentMode.name());
+            int currentIndex = ((currentMode != null) ? calculatorPref.findIndexOfValue(currentMode.name()) : 0);
             calculatorPref.setValueIndex(currentIndex);
             //Log.d("SuntimesSettings", "current mode: " + currentMode + " (" + currentIndex + ")");
         }
