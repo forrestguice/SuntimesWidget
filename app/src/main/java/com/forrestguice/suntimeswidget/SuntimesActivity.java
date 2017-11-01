@@ -36,6 +36,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import android.os.Parcelable;
+import android.preference.PreferenceActivity;
 import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -453,7 +454,29 @@ public class SuntimesActivity extends AppCompatActivity
     private void initMisc(Context context)
     {
         layout_datasource = findViewById(R.id.layout_datasource);
+
         txt_datasource = (TextView)findViewById(R.id.txt_datasource);
+        if (txt_datasource != null)
+        {
+            txt_datasource.setClickable(true);
+            txt_datasource.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    showGeneralSettings();
+                }
+            });
+            txt_datasource.setOnLongClickListener(new View.OnLongClickListener()
+            {
+                @Override
+                public boolean onLongClick(View view)
+                {
+                    showGeneralSettings();
+                    return true;
+                }
+            });
+        }
     }
 
     /**
@@ -1072,6 +1095,19 @@ public class SuntimesActivity extends AppCompatActivity
     protected void showSettings()
     {
         Intent settingsIntent = new Intent(this, SuntimesSettingsActivity.class);
+        startActivity(settingsIntent);
+    }
+    protected void showGeneralSettings()
+    {
+        Intent settingsIntent = new Intent(this, SuntimesSettingsActivity.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+        {
+            settingsIntent.putExtra( PreferenceActivity.EXTRA_SHOW_FRAGMENT, SuntimesSettingsActivity.GeneralPrefsFragment.class.getName() );
+            settingsIntent.putExtra( PreferenceActivity.EXTRA_NO_HEADERS, true );
+
+        } else {
+            settingsIntent.setAction(SuntimesSettingsActivity.ACTION_PREFS_GENERAL);
+        }
         startActivity(settingsIntent);
     }
 
