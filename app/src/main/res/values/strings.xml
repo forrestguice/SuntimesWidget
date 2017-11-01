@@ -263,6 +263,10 @@
     <string name="configLabel_ui_showLightmap">Show Light Map</string>
     <string name="configLabel_ui_showLightmap_summary">Show a stacked bar chart of day, night, and twilight periods.</string>
 
+    <!-- App Setting: show data source -->
+    <string name="configLabel_ui_showdatasource">Show Data Source</string>
+    <string name="configLabel_ui_showdatasource_summary">Show a label indicating the current configuration.</string>
+
     <!-- App Setting: UI Theme -->
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
         <item>Light Theme</item>
