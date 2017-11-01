@@ -20,7 +20,6 @@ package com.forrestguice.suntimeswidget.calculator.time4a;
 
 import android.content.Context;
 
-import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -33,6 +32,8 @@ import net.time4j.calendar.astro.StdSolarCalculator;
 import net.time4j.calendar.astro.Twilight;
 import net.time4j.engine.CalendarDate;
 import net.time4j.engine.ChronoFunction;
+import net.time4j.tz.TZID;
+import net.time4j.tz.Timezone;
 import net.time4j.tz.ZonalOffset;
 
 import java.math.BigDecimal;
@@ -156,21 +157,28 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     }
 
     @Override
-    public boolean isDay(Calendar dateTime)
-    {
-        PlainDate localDate = calendarToPlainDate(dateTime);
-        Moment moment = TemporalType.JAVA_UTIL_DATE.translate(dateTime.getTime());
-        //TZID tzid = Timezone.of("java.util.TimeZone~" + dateTime.getTimeZone().getID()).getID();
-        //return localDate.get(this.solarTime.sunshine(tzid)).isPresent(moment);
-        return false;
-    }
-
-    @Override
     public Calendar getOfficialSunsetCalendarForDate( Calendar date )
     {
         PlainDate localDate = calendarToPlainDate(date);
         ChronoFunction<CalendarDate, Moment> sunset = this.solarTime.sunset();
         return momentToCalendar(localDate.get(sunset));
+    }
+
+    @Override
+    public boolean isDay(Calendar dateTime)
+    {
+        net.time4j.tz.Timezone tz = toTimezone(dateTime.getTimeZone());
+        PlainDate localDate = calendarToPlainDate(dateTime);
+        Moment moment = TemporalType.JAVA_UTIL_DATE.translate(dateTime.getTime());
+        SolarTime.Sunshine sunshine = localDate.get(this.solarTime.sunshine(tz.getID()));
+        return sunshine.isPresent(moment);
+    }
+
+    protected net.time4j.tz.Timezone toTimezone( java.util.TimeZone input )
+    {
+        String tzString = "java.util.TimeZone~" + input.getID();
+        TZID tzFallback = Timezone.ofSystem().getID();
+        return net.time4j.tz.Timezone.of(tzString, tzFallback);
     }
 
     protected PlainDate calendarToPlainDate(Calendar input)
