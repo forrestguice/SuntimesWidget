@@ -184,6 +184,9 @@ public class SuntimesActivity extends AppCompatActivity
     private LightMapView lightmap;
     private View lightmapLayout;
 
+    private TextView txt_datasource;
+    private View layout_datasource;
+
     private boolean isRtl = false;
     private boolean userSwappedCard = false;
     private HashMap<SolarEvents.SolarEventField, TextView> timeFields;
@@ -394,6 +397,7 @@ public class SuntimesActivity extends AppCompatActivity
         initNoteViews(context);
         initCardViews(context);
         initLightMap(context);
+        initMisc(context);
     }
 
     /**
@@ -444,6 +448,12 @@ public class SuntimesActivity extends AppCompatActivity
                 return true;
             }
         });
+    }
+
+    private void initMisc(Context context)
+    {
+        layout_datasource = findViewById(R.id.layout_datasource);
+        txt_datasource = (TextView)findViewById(R.id.txt_datasource);
     }
 
     /**
@@ -1289,6 +1299,13 @@ public class SuntimesActivity extends AppCompatActivity
         SpannableStringBuilder timezoneSpan = SuntimesUtils.createSpan(this, timezoneString, timezoneTags);
         txt_timezone.setText(timezoneSpan);
 
+        // datasource ui
+        if (txt_datasource != null)
+        {
+            txt_datasource.setText(dataset.dataActual.calculator().name());
+        }
+        showDatasourceUI(AppSettings.loadDatasourceUIPref(this));
+
         // "light map"
         boolean enableLightMap = AppSettings.loadShowLightmapPref(this);
         showLightMap(enableLightMap);
@@ -1697,6 +1714,17 @@ public class SuntimesActivity extends AppCompatActivity
         LightMapDialog lightMapDialog = new LightMapDialog();
         lightMapDialog.setData(dataset);
         lightMapDialog.show(getSupportFragmentManager(), DIALOGTAG_LIGHTMAP);
+    }
+
+    /**
+     * Show data source labels / ui.
+     */
+    protected void showDatasourceUI( boolean value )
+    {
+        if (layout_datasource != null)
+        {
+            layout_datasource.setVisibility((value ? View.VISIBLE : View.GONE));
+        }
     }
 
     /**
