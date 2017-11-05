@@ -37,6 +37,7 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
 {
     public static final String NAME = "sunrisesunsetlib";
     public static final String REF = "com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator";
+    public static final String LINK = "github.com/mikereedell/sunrisesunsetlib-java";
     SunriseSunsetCalculator calculator = null;
     TimeZone timezone;
     Location location;
@@ -143,7 +144,7 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
 
     public static SuntimesCalculatorDescriptor getDescriptor()
     {
-        return new SuntimesCalculatorDescriptor(SunriseSunsetSuntimesCalculator.NAME, SunriseSunsetSuntimesCalculator.NAME, SunriseSunsetSuntimesCalculator.REF);
+        return new SuntimesCalculatorDescriptor(SunriseSunsetSuntimesCalculator.NAME, SunriseSunsetSuntimesCalculator.LINK, SunriseSunsetSuntimesCalculator.REF);
     }
 
     @Override
