@@ -352,6 +352,7 @@
         <item>Espéranto</item>
         <item>Français</item>
         <item>Allemand</item>
+        <item>Hongrois</item>      <!-- TODO: confirm translation -->
         <item>Polonais</item>
     </string-array>
 
@@ -469,7 +470,8 @@
         <b>Traductions :</b><br/>
         Traduction allemande par Henrik "HerHde" Hüttemann. <br />
         Traduction polonnaise et espéranto par verdulo. <br />
-        Traduction française par Jejc
+        Traduction française par Jejc <br />
+        Traduction hongrois par Erci.
     ]]></string>
     <string name="app_legal3"><![CDATA[ <b>Bibliothèques:</b><br/> ]]>
     <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>
