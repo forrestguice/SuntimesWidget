@@ -5,4 +5,582 @@
     <string name="default_location_latitude">47.4811</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">18.9902</string>   <!-- decimal degrees (DD) -->
 
+<!-- MAIN ACTIVITY -->
+
+    <!-- Action Bar
+         The text that appears in the overflow menu / menuItem contentDescription.
+    -->
+    <string name="configAction_refreshLocation">Frissít</string>
+    <string name="configAction_addLocation">Hely</string>
+    <string name="configAction_mapLocation">Mutasd térképen</string>
+    <string name="configAction_mapLocation_chooser">Hely megtekintése a következővel</string>
+    <string name="configAction_mapLocation_noapp">A térképalkalmazás nem található.</string>
+    <string name="configAction_setAlarm">Emlékeztető beállítása</string>
+    <string name="configAction_setTimeZone">Időzóna beállítása</string>
+    <string name="configAction_setDate">Dátum beállítása</string>
+    <string name="configAction_help">Segítség</string>
+    <string name="configAction_settings">Beállítások</string>
+    <string name="configAction_aboutWidget">Rólunk</string>
+
+    <!-- Button: Next/Prev Date
+         The next/prev button contentDescription (accessibility).
+    -->
+    <string name="nextDay">Következő nap</string>
+    <string name="prevDay">Előző nap</string>
+
+    <!-- Field: timezone
+         The time zone field that appears below the clock (main activity).
+    -->
+    <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
+    <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> Az időzóna elképzelhető hogy nem a helynek megfelelő.</string>  <!-- snackbar message -->
+
+    <!-- Field: date
+         The date field that appears above the table (main activity).
+         e.g. [dateDesc] \n [date]
+             where [dateDesc] is a yesterday/today/tomorrow, past_, or future_ string.
+             where [date] is a dateString formatted by app using user's locale
+    -->
+    <string name="dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
+    <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> A beállított dátum és a mai dátum eltérnek.</string>  <!-- snackbar message -->
+
+    <!-- DateDesc: some day in the past (appears in dateField) -->
+    <string name="past_yesterday">Múlt (-1)</string>
+    <string name="past_today">Múlt</string>
+    <string name="past_tomorrow">Múlt (+1)</string>
+
+    <!-- DateDesc: yesterday/today/tomorrow (appears in dateField) -->
+    <string name="yesterday">Tegnap</string>
+    <string name="today">Mai nap</string>
+    <string name="tomorrow">Holnap</string>
+
+    <!-- DateDesc: some day in the future (appears in dateField) -->
+    <string name="future_yesterday">Jövő (-1)</string>
+    <string name="future_today">Jövő</string>
+    <string name="future_tomorrow">Jövő (+1)</string>
+
+    <!-- Field: length of day
+         The hours in the day field(s) that appears below the table (main activity)-->
+    <string name="length_day"><xliff:g id="timeSpan" example="12h">%1$s</xliff:g> napkeltétől napnyugtáig</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
+    <string name="length_light"><xliff:g id="timeSpan" example="12h 50m">%1$s</xliff:g> nappal hossza</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
+
+    <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
+         e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
+         The relative order is defined by the layout (layout/info_time_daydelta.xml).
+    -->
+    <string name="delta_day_tomorrow">A holnap lesz</string>
+    <string name="delta_day_yesterday">A tegnap volt</string>
+    <string name="delta_day_shorter">-el rövidebb</string>
+    <string name="delta_day_longer">-el hosszabb</string>
+
+    <!-- NotePrefix: since/until/untilEnd
+         The note prefix text. e.g.
+                  4 hr
+                 until
+                  sunset
+         The relative order is defined by the layout (layout/info_time_note.xml).
+    -->
+    <string name="since"></string>
+    <string name="until"></string>
+    <string name="until_end"></string>
+
+    <!-- NoteBody: sunset/sunrise/twilight string
+         The note body text; appears next to the prefix (layout/info_time_note.xml)
+    -->
+    <string name="until_astroTwilight">csillagászati szürkületig</string>
+    <string name="until_civilTwilight">civil szürkületig</string>
+    <string name="until_nauticalTwilight">hajózási szürkületig</string>
+    <string name="until_sunrise">napkeltéig</string>
+    <string name="until_noon">nap zenitjéig</string>
+    <string name="until_sunset">napnyugtáig</string>
+    <string name="untilEnd_civilTwilight">civil szürkület végéig</string>
+    <string name="untilEnd_nauticalTwilight">hajózási szürkület végéig</string>
+    <string name="untilEnd_astroTwilight">csillagászati szürkület végéig</string>
+
+    <!-- Table -->
+    <string name="sunrise">Napkelte</string>                             <!-- contentDescription -->
+    <string name="sunrise_short">Napkelte</string>                          <!-- table title -->
+    <string name="sunset">Napnyugta</string>                               <!-- contentDescription -->
+    <string name="sunset_short">Napnyugta</string>                            <!-- table title -->
+
+    <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
+    <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
+    <string name="delta_years">év</string>    <!-- e.g. 1y -->
+    <string name="delta_days">nap</string>     <!-- e.g. 1d -->
+    <string name="delta_hours">óra</string>    <!-- e.g. 2h -->
+    <string name="delta_minutes">perc</string>  <!-- e.g. 3m -->
+    <string name="delta_seconds">mp</string>  <!-- e.g. 4s -->
+
+    <!-- misc time values: might be displayed in a timeField in place of an actual time -->
+    <string name="time_none">nem megjeleníthető</string>  <!-- no time / time does not occur -->
+    <string name="time_loading">…</string>  <!-- calculating / time is loading -->
+    <string name="time_format_12hr_veryshort"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- shortest 12hr time format; should omit am/pm -->
+    <string name="time_format_24hr_veryshort"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- 24hr time format -->
+
+    <!--
+         WIDGET CONFIG
+    -->
+
+    <!-- WidgetConfig Activity -->
+    <string name="configAction_addWidget">Widget hozzáadás</string>                   <!-- Button: Add -->
+    <string name="configAction_reconfigWidget_short">Újrakonfigurál</string>       <!-- Button: Reconfigure -->
+    <string name="configAction_reconfigWidget">Widget újrakonfigurálása</string>      <!-- used as title when reconfiguring -->
+    <string name="configLabel_title0">Suntimes Widget</string>                  <!-- used as title when adding -->
+    <string name="configLabel_title1">Flippable Widget</string>                 <!-- used as title when adding --> 
+    <!-- Widget Setting: general -->
+    <string name="configLabel_general">Általános beállítások</string>                <!-- group title -->
+    <string name="configLabel_general_calculator">Adatok forrása:</string>         <!-- spinner label -->
+    <string name="calculator_sunrisesunsetlib_name">sunrisesunsetlib-java</string>
+
+    <!-- Widget Setting: appearance -->
+    <string name="configLabel_appearance">Megjelenés beállításai</string>           <!-- group title -->
+    <string name="configLabel_appearance_theme">Téma:</string>                  <!-- spinner label -->
+    <string name="configLabel_appearance_allowResize">Kitölti a rendelkezésre álló helyet (átméretezhető)</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_showTitle">Mutassa a címkét</string>          <!-- checkbox label -->
+    <string name="configLabel_appearance_titleText">Címke:</string>              <!-- edittext label -->
+    <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
+
+    <!-- Widget Setting: time mode -->
+    <string name="timeMode_noon_short">Dél</string>                    <!-- setting -->
+    <string name="timeMode_noon">Nap zenitje</string>                    <!-- setting -->
+    <string name="timeMode_official_short">Valós</string>              <!-- setting -->
+    <string name="timeMode_official">Valós idő</string>               <!-- setting -->
+    <string name="timeMode_civil_short">Civil</string>                  <!-- setting -->
+    <string name="timeMode_civil">Civil szürkület</string>               <!-- setting -->
+    <string name="timeMode_nautical_short">Hajózási</string>            <!-- setting -->
+    <string name="timeMode_nautical">Hajózási szürkület</string>         <!-- setting -->
+    <string name="timeMode_astronomical_short">Csillagászati</string>    <!-- setting -->
+    <string name="timeMode_astronomical">Csillagászati szürkület</string> <!-- setting -->
+    <string name="timeMode_night">Éjjel</string>                   <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_day">Nappal</string>                       <!-- a label (not an actual timeMode setting) -->
+
+    <string name="configLabel_general_timeMode">Mód:</string>          <!-- spinner label -->
+
+    <!-- Widget Setting: layout mode -->
+    <string name="widgetMode1x1_sunrise">Csak napkelte</string>             <!-- setting -->
+    <string name="widgetMode1x1_sunset">Csak napnyugta</string>               <!-- setting -->
+    <string name="widgetMode1x1_both_1">Napkelte &amp; napnyugta (1)</string>  <!-- setting -->
+    <string name="widgetMode1x1_both_2">Napkelte &amp; napnyugta (2)</string>  <!-- setting -->
+
+    <string name="configLabel_appearance_1x1mode">1x1 megjelenítés:</string>     <!-- spinner label -->
+
+    <!-- Widget Setting: widget tap action -->
+    <string name="actionMode_doNothing">Ne tegyen semmit</string>           <!-- setting -->
+    <string name="actionMode_config">Újrakonfigurája a Widget-et</string>      <!-- setting -->
+    <string name="actionMode_launchActivity">Indítsa az alkalmazást</string>      <!-- setting -->
+    <string name="actionMode_flipToNextItem">Váltson a nézetek közt</string>      <!-- setting -->
+
+    <string name="configLabel_action">Hozzárendelések</string>                  <!-- group title -->
+    <string name="configLabel_action_onTap">Érintésre:</string>                    <!-- spinner label -->
+    <string name="configLabel_action_onClockTap">Órára kattintva:</string>         <!-- spinner label -->
+    <string name="configLabel_action_onNoteTap">Jegyzetre kattintva:</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap">Dátumra kattintva:</string>           <!-- spinner label -->
+
+    <!-- Widget Setting: location -->
+    <string name="locationMode_current">Jelenlegi (utolsó ismert)</string>  <!-- setting -->
+    <string name="locationMode_custom">Felhasználó által megadott</string>           <!-- setting -->
+
+    <string name="configLabel_location">Hely beállításai</string>               <!-- group title -->
+    <string name="configLabel_location_mode">Mód:</string>                      <!-- spinner label -->
+    <string name="configLabel_location_lat">Szélesség:</string>                   <!-- edittext label -->
+    <string name="configHint_location_lat">decimális fok</string>      <!-- edittext hint -->
+    <string name="configLabel_location_lon">Hosszúság:</string>                          <!-- edittext label -->
+    <string name="configHint_location_lon">decimális fok</string> <!-- edittext hint -->
+    <string name="configLabel_location_name">Név:</string>                      <!-- edittext label -->
+    <string name="configHint_location_name">(opcionális)</string>                  <!-- edittext hint -->
+
+    <string name="configAction_getFix">Mutasd a helyet</string>    <!-- button (contentDescription) -->
+    <string name="configAction_editPlace">Szerkeszt</string>         <!-- button (contentDescription) -->
+    <string name="configAction_savePlace">Ment</string>         <!-- button (contentDescription) -->
+
+    <!-- Widget Setting: timezone -->
+    <string name="timezoneMode_solar">Szoláris idő</string>                       <!-- setting -->
+    <string name="timezoneMode_current">Zónaidő</string>               <!-- setting -->
+    <string name="timezoneMode_custom">Felhasználó által megadott</string>                    <!-- setting -->
+
+    <string name="solartime_localMean">Helyi idő</string>                 <!-- setting / custom timezone id -->
+    <string name="solartime_apparent">Valódi szoláris idő</string>              <!-- setting / custom timezone id -->
+    <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
+    <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
+
+    <string name="configLabel_timezone">Időzóna beállítások:</string>             <!-- group title -->
+    <string name="configLabel_timezone_mode">Mód:</string>                     <!-- spinner label -->
+    <string name="configLabel_timezone_custom">Időzóna:</string>              <!-- spinner label -->
+    <string name="configLabel_solartime">Szoláris idő:</string>                   <!-- spinner label -->
+
+    <!-- Widget Setting: timeFormat mode -->
+    <string name="timeFormatMode_system">Idő megjelenítése</string>          <!-- setting -->
+    <string name="timeFormatMode_12hr">12-órás</string>                  <!-- setting -->
+    <string name="timeFormatMode_24hr">24-órás</string>                  <!-- setting -->
+
+    <string name="configLabel_timeFormatMode">Idő megjelenítése:</string>             <!-- spinner label -->
+    <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
+
+    <!-- Widget Setting: date mode -->
+    <string name="dateMode_current">Mai nap</string>                  <!-- setting -->
+    <string name="dateMode_custom">Felhasználó által megadott</string>            <!-- setting -->
+
+    <string name="configLabel_date">Dátum beállításai</string>                      <!-- group title -->
+    <string name="configLabel_date_mode">Mód:</string>                         <!-- spinner label -->
+    <string name="configLabel_date_custom">Dátum:</string>                       <!-- dateSelector label -->
+
+    <!-- Widget Setting: compare mode -->
+    <string name="compareMode_yesterday">Tegnap</string>                     <!-- setting -->
+    <string name="compareMode_tomorrow">Holnap</string>                       <!-- setting -->
+
+    <string name="configLabel_general_compareMode">Hasonlítsa össze:</string>    <!-- spinner label -->
+
+    <!-- Widget Setting: Launch App -->
+    <string name="configLabel_action_launch">Activity:</string>                 <!-- edittext label -->
+    <string name="configHint_action_launch"><xliff:g id="uri">com.forrestguice.suntimeswidget.SuntimesActivity</xliff:g></string> <!-- editText hint (and default) -->
+
+    <!--
+         APP SETTINGS
+    -->
+
+    <!--App Setting: WidgetList -->
+    <string name="configLabel_widgetList">Widgetek</string>               <!-- group title -->
+    <string name="configLabel_widgetList_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
+    <string name="configLabel_widgetList_itemTitlePattern"><xliff:g id="titlePattern"><![CDATA[%M (%lat, %lon) [%t]]]></xliff:g></string> <!-- the pattern used when generating widget titles for display in the list -->
+    <string name="configLabel_widgetList_itemSummaryPattern"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
+    <string name="configLabel_widgetListHelp_title">Segítség</string>               <!-- always the first item in the widgetList -->
+    <string name="configLabel_widgetListHelp_summary">Mutasd a widget súgóját</string>
+
+    <!-- App Setting: Places -->
+    <string name="configLabel_places">Helyek</string>                           <!-- group title -->
+    <string name="configLabel_places_export">Helyek exportálása</string>
+    <string name="configLabel_places_clear">Helyek törlése</string>
+
+    <!-- App Setting: UI -->
+    <string name="configLabel_ui">Felhasználói felület</string>                       <!-- group title -->
+
+    <!-- App Setting: UI Warnings -->
+    <string name="configLabel_ui_showWarnings">Mutasd a figyelmeztetéseket</string>
+    <string name="configLabel_ui_showWarnings_summary">Mutasd a konfigurációval kapcsolatos figyelmeztetéseket</string>
+
+    <!-- App Setting: Show Lightmap -->
+    <string name="configLabel_ui_showLightmap">Éjszakai fénytérkép megjelenítése</string>
+    <string name="configLabel_ui_showLightmap_summary">Mutasd egy ábrán a napközbeni, éjjeli és szürkeleti időszakokat.</string>
+
+    <!-- App Setting: UI Theme -->
+    <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
+        <item>Világos színtéma</item>
+        <item>Sötét színtéma</item>
+        <item>Világos / Sötét színtéma (Éjszakai mód)</item>
+    </string-array>
+    <string-array name="appThemes_values" translatable="false">  <!-- config values (one-to-one with appThemes_display) -->
+        <item>light</item>
+        <item>dark</item>
+        <item>daynight</item>
+    </string-array>
+
+    <!-- App Setting: time format -->
+    <string-array name="timeFormatMode_display">
+        <item>@string/timeFormatMode_system</item>
+        <item>@string/timeFormatMode_12hr</item>
+        <item>@string/timeFormatMode_24hr</item>
+    </string-array>
+    <string-array name="timeFormatMode_values">
+        <item>MODE_SYSTEM</item>
+        <item>MODE_12HR</item>
+        <item>MODE_24HR</item>
+    </string-array>
+
+    <!-- App Setting: Date "on tap" action -->
+    <string-array name="dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
+        <item>Semmit se tesz</item>
+        <item>Vált (ma/holnap között)</item>
+        <item>Mutassa a naptárat</item>
+        <item>Tetszőleges dátum beállítása</item>
+    </string-array>
+    <string-array name="dateTapActions_values" translatable="false"> <!-- config values (one-to-one with dateTapActions_display) -->
+        <item>NOTHING</item>
+        <item>SWAP_CARD</item>
+        <item>SHOW_CALENDAR</item>
+        <item>CONFIG_DATE</item>
+    </string-array>
+
+    <!-- App Setting: Clock UI "on tap" action -->
+    <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
+        <item>Semmit se tesz</item>
+        <item>Emlékeztető beállítása</item>
+        <item>Mutasd a következő bejegyzést</item>
+        <item>Mutasd az előző bejegyzést</item>
+    </string-array>
+    <string-array name="clockTapActions_values" translatable="false">  <!-- config values (one-to-one with clockTapActions_display) -->
+        <item>NOTHING</item>
+        <item>ALARM</item>
+        <item>NEXT_NOTE</item>
+        <item>PREV_NOTE</item>
+    </string-array>
+
+    <!-- App Setting: Note UI "on tap" action -->
+    <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
+        <item>Semmit se tesz</item>
+        <item>Emlékeztető beállítása a bejegyzéshez</item>
+        <item>Mutasd a következő bejegyzést</item>
+        <item>Mutasd az előző bejegyzést</item>
+    </string-array>
+    <string-array name="noteTapActions_values" translatable="false">   <!-- config values (one-to-one with noteTapActions_display) -->
+        <item>NOTHING</item>
+        <item>ALARM</item>
+        <item>NEXT_NOTE</item>
+        <item>PREV_NOTE</item>
+    </string-array>
+
+    <!-- App Setting: time zone sort modes -->
+    <string name="timezone_sort_byOffset">Időeltolódás szerint</string>
+    <string name="timezone_sort_byId">Időzóna azonosítója szerint</string>
+    <string name="timezone_sort_byName">név szerint</string>
+
+    <string-array name="timezoneSort_display">  <!-- display values (one-to-one with timezoneSort_values) -->
+        <item>@string/timezone_sort_byOffset</item>
+        <item>@string/timezone_sort_byId</item>
+        <item>@string/timezone_sort_byName</item>
+    </string-array>
+    <string-array name="timezoneSort_values" translatable="false">   <!-- config values (one-to-one with timezoneSort_display) -->
+        <item>SORT_BY_OFFSET</item>
+        <item>SORT_BY_ID</item>
+        <item>SORT_BY_DISPLAYNAME</item>
+    </string-array>
+
+    <string name="timezone_sort_contextAction">Időzónák szortírozása</string>           <!-- action bar title -->
+    <string name="timezone_sort_msg">Időzónák szortírozva (%1$s).</string>      <!-- toast msg -->
+
+    <!-- App Setting: GPS fix time limit -->
+    <string name="configLabel_getFix_maxElapse">GPS idő limit</string>
+    <string name="configLabel_getFix_maxElapse_summary">Hagyja abba ennyi idő után: <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
+    <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
+        <item>15 mp</item>
+        <item>30 mp</item>
+        <item>1 perc</item>
+        <item>5 perc</item>
+        <item>10 perc</item>
+    </string-array>
+    <string-array name="getFix_maxElapse_values" translatable="false">   <!-- ms config values (one-to-one with getFix_maxElapse_display) -->
+        <item>15000</item>
+        <item>30000</item>
+        <item>60000</item>
+        <item>300000</item>
+        <item>600000</item>
+    </string-array>
+
+    <!-- App Setting: GPS fix max age -->
+    <string name="configLabel_getFix_maxAge">GPS fix óta eltelt idő </string>
+    <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> megfelelőnek tart</string>
+    <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
+        <item>1 perc</item>
+        <item>5 perc</item>
+        <item>15 perc</item>
+        <item>1 óra</item>
+        <item>4 óra</item>
+        <item>12 óra</item>
+        <item>1 nap (24 óra)</item>
+        <item>2 nap (48 óra)</item>
+        <item>1 hét (168 óra)</item>
+        <item>1 hónap (672 óra)</item>
+    </string-array>
+    <string-array name="getFix_maxAge_values" translatable="false">     <!-- ms config values (one-to-one with getFix_maxAge_display) -->
+        <item>60000</item>
+        <item>300000</item>
+        <item>900000</item>
+        <item>3600000</item>
+        <item>14400000</item>
+        <item>43200000</item>
+        <item>86400000</item>
+        <item>172800000</item>
+        <item>604800000</item>
+        <item>2419200000</item>
+    </string-array>
+
+    <!-- App Setting: locale mode -->
+    <string name="configLabel_locale">Nyelvbeállítások</string>   <!-- group title -->
+
+    <string name="configLabel_localeMode">Mód</string>
+    <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
+    <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
+        <item>Gyári</item>
+        <item>Felhasználó által megadott</item>
+    </string-array>
+    <string-array name="localeMode_values" translatable="false">  <!-- one-to-one with localeMode_display -->
+        <item>SYSTEM_LOCALE</item>
+        <item>CUSTOM_LOCALE</item>
+    </string-array>
+
+    <!-- App Setting: custom Locale -->
+    <string name="configLabel_localeSelect">Nyelv</string>
+    <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
+    <string-array name="locale_display">                      <!-- one-to-one with locale_values -->
+        <item>English</item>
+        <item>Esperanto</item>
+        <item>French</item>
+        <item>German</item>
+        <item>Polish</item>
+    </string-array>
+    <string-array name="locale_values" translatable="false">  <!-- one-to-one with locale_display -->
+        <item>en</item>
+        <item>eo</item>
+        <item>fr</item>
+        <item>de</item>
+        <item>pl</item>
+    </string-array>
+
+    <!--
+         DIALOGS
+    -->
+
+    <!-- Dialog: Set Alarm -->
+    <string name="configLabel_schedalarm_mode">Emlékeztető beállítása:</string>
+    <string name="schedalarm_dialog_title">Állítsd be</string>
+    <string name="schedalarm_dialog_ok">Beállít</string>
+    <string name="schedalarm_dialog_cancel">Mégse</string>
+    <string name="schedalarm_dialog_error">Az emlékeztetőt nem sikerült beállítani</string>
+    <string name="schedalarm_dialog_error2">Az emlékeztetőt nem lehet beállítani...</string>
+    <string name="schedalarm_dialog_note">kb <xliff:g id="timetext" example="6h 30m">%s</xliff:g> a hátralévő idő..</string>
+    <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="nautical twilight">%s</xliff:g> nem lesz.</string>
+    <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
+        <item>csillagászati szürkület</item>
+        <item>hajózási szürkület</item>
+        <item>civil szürkület</item>
+        <item>napkelte</item>
+        <item>szoláris dél</item>
+        <item>napnyugta</item>
+        <item>civil szürkület</item>
+        <item>hajózási szürkület</item>
+        <item>csillagászati szürkület</item>
+    </string-array>
+    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
+        <item>reggel csillagászati szürkület (kezdete)</item>
+        <item>reggel hajózási szürkület (kezdete)</item>
+        <item>reggel civil szürkület (kezdete)</item>
+        <item>napkelte</item>
+        <item>szoláris dél</item>
+        <item>napnyugta</item>
+        <item>este civil szürkület (vége)</item>
+        <item>este hajózási szürkület (vége)</item>
+        <item>este csillagászati szürkület (vége)</item>
+    </string-array>
+
+    <!-- Dialog: Enable GPS? -->
+    <string name="gps_dialog_msg">GPS kikapcsolva. Bekapcsolja?</string>
+    <string name="gps_dialog_ok">Igen</string>
+    <string name="gps_dialog_cancel">Nem</string>
+
+    <!-- gps_lastfix (current location mode) -->
+    <string name="gps_lastfix_title_set">Hely megadása</string>               <!-- may appear as place name when location set by intent -->
+    <string name="gps_lastfix_title_found">Utolsó megadott hely</string>            <!-- may appear as place name when location set by gps -->
+    <string name="gps_lastfix_title_searching">Hely keresése</string>     <!-- may appear in ActionBar title while gps in progress -->
+    <string name="gps_lastfix_toast_notfound">A GPS nem találja a keresett helyet; visszatérés az utolsó ismert helyre.</string>  <!-- displayed briefly after gps has failed to get a location -->
+    <string name="gps_lastfix_toast_cancelled">GPS frissítése megszakadt.</string> <!-- displayed briefly when gps refresh cancelled -->
+
+    <!-- Dialog: KeepTrying GPS? -->
+    <string name="gps_keeptrying_title">Nincs jel</string>
+    <string name="gps_keeptrying_msg">Nem talál jelet</string>
+    <string name="gps_keeptrying_ok">Próbálkozzon tovább</string>
+    <string name="gps_keeptrying_cancel">Hagyja abba</string>
+
+    <!-- Dialog: Use Date -->
+    <string name="timedate_dialog_title">Dátum beállítása</string>
+    <string name="timedate_dialog_ok">OK</string>
+    <string name="timedate_dialog_cancel">Mégse</string>
+
+    <!-- Dialog: Use Timezone -->
+    <string name="timezone_dialog_title">Időzóna</string>
+    <string name="timezone_dialog_ok">OK</string>
+    <string name="timezone_dialog_cancel">Mégse</string>
+
+    <!-- Dialog: Set Location -->
+    <string name="location_dialog_title">Hely</string>
+    <string name="location_dialog_ok">Frissítése</string>
+    <string name="location_dialog_cancel">Mégse</string>
+    <string name="location_dialog_error_lat">Ez nem egy valós szélességi érték.</string>
+    <string name="location_dialog_error_lon">Ez nem egy valós hosszúsági érték.</string>
+
+    <string name="location_dialog_toast_copied">Vágólapra másolva!<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
+
+    <!-- Dialog: Clear Places -->
+    <string name="locationclear_dialog_title">Helyek törlése?</string>
+    <string name="locationclear_dialog_message">Biztos benne, hogy törli a helyek adatbázisát?</string>
+    <string name="locationclear_dialog_ok">Töröl</string>
+    <string name="locationclear_dialog_cancel">Mégse</string>
+
+    <!-- Dialog: Clear Places (progress) -->
+    <string name="locationcleared_dialog_title">Helyek törlése</string>
+    <string name="locationcleared_dialog_message">Adatbázis törlése...</string>
+    <string name="locationcleared_toast_success">Az adatbázist töröltük.</string>
+
+    <!-- Dialog: Export Places -->
+    <string name="locationexport_dialog_title">Hely exportálása</string>
+    <string name="locationexport_dialog_message">Adatbázis csv fájlba exportálása.</string>
+    <string name="msg_export_success">Ideiglenes másolat itt: <xliff:g id="filepath">%s</xliff:g></string>
+    <string name="msg_export_failure">Exportálás ide <xliff:g id="filepath">%s</xliff:g> nem sikerült!</string>
+    <string name="msg_export_to">Exportáld a következővel:</string>  <!-- title displayed over "share action" chooser -->
+
+    <!-- Dialog: About -->
+    <string name="about_dialog_title">Rólunk</string>
+    <string name="app_name">Suntimes</string>
+    <string name="app_name_widget0">Suntimes Widget</string>
+    <string name="app_name_widget1">Suntimes Widget (flippable)</string>
+    <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
+    <string name="app_shortdesc">Megnézheti a napkelte, a napnyugta és a szürkület idejét.</string>
+    <string name="app_support_url"><![CDATA[
+        <b>Support:</b> visit the
+        <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a> to submit a request.
+    ]]></string>
+    <string name="app_url"><xliff:g id="url"><![CDATA[
+        <a href="https://github.com/forrestguice/SuntimesWidget">github.com/forrestguice/SuntimesWidget</a>
+    ]]></xliff:g></string>
+    <string name="app_legal1"><![CDATA[
+        <b>Source Code:</b><br />
+        Copyright &#169 2014 Forrest Guice <br />
+        Source code available under GPLv3.
+    ]]></string>
+    <string name="app_legal2"><![CDATA[
+        <b>Translations:</b><br/>
+        German translation by Henrik "HerHde" Hüttemann. <br />
+        Polish and Esperanto translation by verdulo. <br />
+        French translation by Jej.
+        Hungarian translation by Erci. <br />
+    ]]></string>
+    <string name="app_legal3"><![CDATA[ <b>Libraries:</b><br/> ]]>
+    <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>
+    <![CDATA[ github.com/caarmen/SunriseSunset ]]>
+    </string>
+
+    <!-- Dialog: Help -->
+    <string name="help_dialog_title">Segítség</string>
+    <string name="help_appearance_title"><![CDATA[
+        The following substitutions are supported: <br />
+                * <b>%loc</b> for label <br />
+                * <b>%lat</b> for latitude <br />
+                * <b>%lon</b> for longitude <br/>
+                * <b>%m</b> for time mode (short) (e.g. "Civil") <br/>
+                * <b>%M</b> for time mode (long) (e.g. "Civil Twilight") <br/>
+                * <b>%s</b> for data source (e.g. sunrisesunsetlib) <br/>
+                * <b>%t</b> for time zone (id) (e.g. US/Arizona) <br/>
+    ]]></string>
+
+    <string name="help_general">  <!-- general app help; composites a couple help topics together. -->
+        <xliff:g id="help_general_timeMode">%1$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_general_daylength">%2$s</xliff:g>
+    </string>
+
+    <string name="help_general_timeMode"><![CDATA[
+          <b>Actual Time:</b> The sun is on the horizon; this is the approximate time of sunrise and sunset.<br/><br/>
+          <b>Civil Twilight:</b> The sun is 6 degrees below the horizon; the brightest stars are visible. There is enough light for most outdoor activities without requiring a light.<br/><br/>
+          <b>Nautical Twilight:</b> The sun is 12 degrees below the horizon; object outlines and the horizon are increasingly indistinct. There isn\'t enough light for most outdoor activities without requiring a light.<br/><br/>
+          <b>Astronomical Twilight:</b> The sun is 18 degrees below the horizon. Near darkness of night.<br/>
+    ]]></string>
+    <string name="help_general_daylength"><![CDATA[
+        <b>Length of day:</b> the amount of time between sunrise and sunset.<br/><br/>
+        <b>Usable light:</b> the amount of time between morning and evening civil twilight.</br>
+    ]]>
+    </string>
+    <string name="help_action_launch"><![CDATA[
+        The fully qualified class name of the Activity to be launched.<br/>
+    ]]></string>
+    <string name="help_widgetlist"><![CDATA[
+          To <b>add a new widget</b> you must navigate to the home screen.<br/><br/>
+          To <b>reconfigure an existing widget</b> you can select from the following list.<br/>
+    ]]></string>
+
 </resources>
