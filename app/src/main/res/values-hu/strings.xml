@@ -267,11 +267,6 @@
         <item>Sötét színtéma</item>
         <item>Világos / Sötét színtéma (Éjszakai mód)</item>
     </string-array>
-    <string-array name="appThemes_values" translatable="false">  <!-- config values (one-to-one with appThemes_display) -->
-        <item>light</item>
-        <item>dark</item>
-        <item>daynight</item>
-    </string-array>
 
     <!-- App Setting: time format -->
     <string-array name="timeFormatMode_display">
@@ -292,12 +287,6 @@
         <item>Mutassa a naptárat</item>
         <item>Tetszőleges dátum beállítása</item>
     </string-array>
-    <string-array name="dateTapActions_values" translatable="false"> <!-- config values (one-to-one with dateTapActions_display) -->
-        <item>NOTHING</item>
-        <item>SWAP_CARD</item>
-        <item>SHOW_CALENDAR</item>
-        <item>CONFIG_DATE</item>
-    </string-array>
 
     <!-- App Setting: Clock UI "on tap" action -->
     <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
@@ -306,12 +295,6 @@
         <item>Mutasd a következő bejegyzést</item>
         <item>Mutasd az előző bejegyzést</item>
     </string-array>
-    <string-array name="clockTapActions_values" translatable="false">  <!-- config values (one-to-one with clockTapActions_display) -->
-        <item>NOTHING</item>
-        <item>ALARM</item>
-        <item>NEXT_NOTE</item>
-        <item>PREV_NOTE</item>
-    </string-array>
 
     <!-- App Setting: Note UI "on tap" action -->
     <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
@@ -319,12 +302,6 @@
         <item>Emlékeztető beállítása a bejegyzéshez</item>
         <item>Mutasd a következő bejegyzést</item>
         <item>Mutasd az előző bejegyzést</item>
-    </string-array>
-    <string-array name="noteTapActions_values" translatable="false">   <!-- config values (one-to-one with noteTapActions_display) -->
-        <item>NOTHING</item>
-        <item>ALARM</item>
-        <item>NEXT_NOTE</item>
-        <item>PREV_NOTE</item>
     </string-array>
 
     <!-- App Setting: time zone sort modes -->
@@ -336,11 +313,6 @@
         <item>@string/timezone_sort_byOffset</item>
         <item>@string/timezone_sort_byId</item>
         <item>@string/timezone_sort_byName</item>
-    </string-array>
-    <string-array name="timezoneSort_values" translatable="false">   <!-- config values (one-to-one with timezoneSort_display) -->
-        <item>SORT_BY_OFFSET</item>
-        <item>SORT_BY_ID</item>
-        <item>SORT_BY_DISPLAYNAME</item>
     </string-array>
 
     <string name="timezone_sort_contextAction">Időzónák szortírozása</string>           <!-- action bar title -->
@@ -355,13 +327,6 @@
         <item>1 perc</item>
         <item>5 perc</item>
         <item>10 perc</item>
-    </string-array>
-    <string-array name="getFix_maxElapse_values" translatable="false">   <!-- ms config values (one-to-one with getFix_maxElapse_display) -->
-        <item>15000</item>
-        <item>30000</item>
-        <item>60000</item>
-        <item>300000</item>
-        <item>600000</item>
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
@@ -379,18 +344,6 @@
         <item>1 hét (168 óra)</item>
         <item>1 hónap (672 óra)</item>
     </string-array>
-    <string-array name="getFix_maxAge_values" translatable="false">     <!-- ms config values (one-to-one with getFix_maxAge_display) -->
-        <item>60000</item>
-        <item>300000</item>
-        <item>900000</item>
-        <item>3600000</item>
-        <item>14400000</item>
-        <item>43200000</item>
-        <item>86400000</item>
-        <item>172800000</item>
-        <item>604800000</item>
-        <item>2419200000</item>
-    </string-array>
 
     <!-- App Setting: locale mode -->
     <string name="configLabel_locale">Nyelvbeállítások</string>   <!-- group title -->
@@ -400,10 +353,6 @@
     <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
         <item>Gyári</item>
         <item>Felhasználó által megadott</item>
-    </string-array>
-    <string-array name="localeMode_values" translatable="false">  <!-- one-to-one with localeMode_display -->
-        <item>SYSTEM_LOCALE</item>
-        <item>CUSTOM_LOCALE</item>
     </string-array>
 
     <!-- App Setting: custom Locale -->
@@ -415,13 +364,6 @@
         <item>French</item>
         <item>German</item>
         <item>Polish</item>
-    </string-array>
-    <string-array name="locale_values" translatable="false">  <!-- one-to-one with locale_display -->
-        <item>en</item>
-        <item>eo</item>
-        <item>fr</item>
-        <item>de</item>
-        <item>pl</item>
     </string-array>
 
     <!--
