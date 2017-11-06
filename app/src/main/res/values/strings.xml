@@ -280,12 +280,12 @@
     </string-array>
 
     <!-- App Setting: time format -->
-    <string-array name="timeFormatMode_display">
+    <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
         <item>@string/timeFormatMode_system</item>
         <item>@string/timeFormatMode_12hr</item>
         <item>@string/timeFormatMode_24hr</item>
     </string-array>
-    <string-array name="timeFormatMode_values">
+    <string-array name="timeFormatMode_values" translatable="false">  <!-- one-to-one with timeFormatMode_display -->
         <item>MODE_SYSTEM</item>
         <item>MODE_12HR</item>
         <item>MODE_24HR</item>
