@@ -1,3 +1,6 @@
+### ~
+* adds Hungarian translation (contributed by Erci) (#106).
+
 ### v0.4.1 (2017-10-31)
 * fixes data source setting not honored (#104).
 
@@ -59,7 +62,7 @@
 
 ### v0.1.1 (2016-07-21)
 * adds support for localization.
-* adds translation to german (contributed by Henrik "HerHde" Hüttemann).
+* adds translation to german (contributed by Henrik "HerHde" Hï¿½ttemann).
 * fixes app crash when using Show map without an installed map application.
 * fixes app crash when sunrise or sunset does not occur for a given date/location.
 * fixes "no data source" bug (#14); default value not properly displayed by settings -> general -> dataSource.

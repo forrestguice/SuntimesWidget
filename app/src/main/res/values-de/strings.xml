@@ -349,6 +349,7 @@
       <item>Esperanto</item>
       <item>Französisch</item>
       <item>Deutsche</item>
+      <item>Ungarisch</item>   <!-- TODO: confirm translation -->
       <item>Polieren</item>
   </string-array>
 
@@ -462,7 +463,9 @@
   ]]></string>
   <string name="app_legal2"><![CDATA[
       Deutsche Übersetzung von Henrik &quot;HerHde&quot; Hüttemann. <br/>
-      Französisch Übersetzung von Jej.
+      Polnisch Übersetzung von Verdulo. <br />
+      Französisch Übersetzung von Jej. <br />
+      Ungarische Übersetzung von Erci.
   ]]></string>
 
   <!-- Dialog: Help -->
