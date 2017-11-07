@@ -136,7 +136,6 @@
     <!-- Widget Setting: general -->
     <string name="configLabel_general">General Settings</string>                <!-- group title -->
     <string name="configLabel_general_calculator">Data Source:</string>         <!-- spinner label -->
-    <string name="calculator_sunrisesunsetlib_name">sunrisesunsetlib-java</string>
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Appearance Settings</string>           <!-- group title -->
@@ -281,6 +280,10 @@
     <string name="configLabel_ui_showEquinox">Show Solstice / Equinox</string>
     <string name="configLabel_ui_showEquinox_summary">Show time until next solstice or equinox.</string>
 
+    <!-- App Setting: show data source -->
+    <string name="configLabel_ui_showdatasource">Show Data Source</string>
+    <string name="configLabel_ui_showdatasource_summary">Show a label indicating the current configuration.</string>
+
     <!-- App Setting: UI Theme -->
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
         <item>Light Theme</item>
@@ -294,12 +297,12 @@
     </string-array>
 
     <!-- App Setting: time format -->
-    <string-array name="timeFormatMode_display">
+    <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
         <item>@string/timeFormatMode_system</item>
         <item>@string/timeFormatMode_12hr</item>
         <item>@string/timeFormatMode_24hr</item>
     </string-array>
-    <string-array name="timeFormatMode_values">
+    <string-array name="timeFormatMode_values" translatable="false">  <!-- one-to-one with timeFormatMode_display -->
         <item>MODE_SYSTEM</item>
         <item>MODE_12HR</item>
         <item>MODE_24HR</item>
@@ -434,6 +437,7 @@
         <item>Esperanto</item>
         <item>French</item>
         <item>German</item>
+        <item>Hungarian</item>
         <item>Polish</item>
     </string-array>
     <string-array name="locale_values" translatable="false">  <!-- one-to-one with locale_display -->
@@ -441,6 +445,7 @@
         <item>eo</item>
         <item>fr</item>
         <item>de</item>
+        <item>hu</item>
         <item>pl</item>
     </string-array>
 
@@ -558,8 +563,9 @@
     <string name="app_legal2"><![CDATA[
         <b>Translations:</b><br/>
         German translation by Henrik "HerHde" Hüttemann. <br />
-        Polish and Esperanto translation by verdulo. <br />
-        French translation by Jej.
+        Polish and Esperanto translation by Verdulo. <br />
+        French translation by Jej. <br />
+        Hungarian translation by Erci.
     ]]></string>
     <string name="app_legal3"><![CDATA[ <b>Libraries:</b><br/> ]]>
     <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>
@@ -608,5 +614,9 @@
           To <b>add a new widget</b> you must navigate to the home screen.<br/><br/>
           To <b>reconfigure an existing widget</b> you can select from the following list.<br/>
     ]]></string>
+
+    <!-- calculator implemenations -->
+    <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
+    <string name="calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
 
 </resources>

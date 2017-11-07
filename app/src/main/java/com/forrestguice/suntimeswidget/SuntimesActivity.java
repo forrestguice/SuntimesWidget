@@ -36,6 +36,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import android.os.Parcelable;
+import android.preference.PreferenceActivity;
 import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -190,6 +191,9 @@ public class SuntimesActivity extends AppCompatActivity
 
     private LightMapView lightmap;
     private View lightmapLayout;
+
+    private TextView txt_datasource;
+    private View layout_datasource;
 
     private boolean isRtl = false;
     private boolean userSwappedCard = false;
@@ -412,6 +416,7 @@ public class SuntimesActivity extends AppCompatActivity
         initCardViews(context);
         initEquinoxViews(context);
         initLightMap(context);
+        initMisc(context);
     }
 
     /**
@@ -462,6 +467,34 @@ public class SuntimesActivity extends AppCompatActivity
                 return true;
             }
         });
+    }
+
+    private void initMisc(Context context)
+    {
+        layout_datasource = findViewById(R.id.layout_datasource);
+
+        txt_datasource = (TextView)findViewById(R.id.txt_datasource);
+        if (txt_datasource != null)
+        {
+            txt_datasource.setClickable(true);
+            txt_datasource.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    showGeneralSettings();
+                }
+            });
+            txt_datasource.setOnLongClickListener(new View.OnLongClickListener()
+            {
+                @Override
+                public boolean onLongClick(View view)
+                {
+                    showGeneralSettings();
+                    return true;
+                }
+            });
+        }
     }
 
     /**
@@ -1115,6 +1148,19 @@ public class SuntimesActivity extends AppCompatActivity
         Intent settingsIntent = new Intent(this, SuntimesSettingsActivity.class);
         startActivity(settingsIntent);
     }
+    protected void showGeneralSettings()
+    {
+        Intent settingsIntent = new Intent(this, SuntimesSettingsActivity.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+        {
+            settingsIntent.putExtra( PreferenceActivity.EXTRA_SHOW_FRAGMENT, SuntimesSettingsActivity.GeneralPrefsFragment.class.getName() );
+            settingsIntent.putExtra( PreferenceActivity.EXTRA_NO_HEADERS, true );
+
+        } else {
+            settingsIntent.setAction(SuntimesSettingsActivity.ACTION_PREFS_GENERAL);
+        }
+        startActivity(settingsIntent);
+    }
 
     /**
      * Show the alarm dialog.
@@ -1350,6 +1396,13 @@ public class SuntimesActivity extends AppCompatActivity
         String timezoneString = getString(R.string.timezoneField, timezone.getID());
         SpannableStringBuilder timezoneSpan = SuntimesUtils.createSpan(this, timezoneString, timezoneTags);
         txt_timezone.setText(timezoneSpan);
+
+        // datasource ui
+        if (txt_datasource != null)
+        {
+            txt_datasource.setText(dataset.dataActual.calculator().name());
+        }
+        showDatasourceUI(AppSettings.loadDatasourceUIPref(this));
 
         // "light map"
         boolean enableLightMap = AppSettings.loadShowLightmapPref(this);
@@ -1771,6 +1824,17 @@ public class SuntimesActivity extends AppCompatActivity
         EquinoxDialog equinoxDialog = new EquinoxDialog();
         equinoxDialog.setData(dataset2);
         equinoxDialog.show(getSupportFragmentManager(), DIALOGTAG_EQUINOX);
+    }
+
+    /**
+     * Show data source labels / ui.
+     */
+    protected void showDatasourceUI( boolean value )
+    {
+        if (layout_datasource != null)
+        {
+            layout_datasource.setVisibility((value ? View.VISIBLE : View.GONE));
+        }
     }
 
     /**

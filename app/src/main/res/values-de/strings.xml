@@ -132,7 +132,6 @@
   <!-- Widget Setting: general -->
   <string name="configLabel_general">Allgemeine Einstellungen</string>                <!-- group title -->
   <string name="configLabel_general_calculator">Datenquelle:</string>         <!-- spinner label -->
-  <string name="calculator_sunrisesunsetlib_name">sunrisesunsetlib-java</string>
 
   <!-- Widget Setting: appearance -->
   <string name="configLabel_appearance">Darstellung</string>           <!-- group title -->
@@ -268,6 +267,14 @@
   <string name="configLabel_ui_showWarnings">Enable warnings</string>                               <!-- TODO -->
   <string name="configLabel_ui_showWarnings_summary">Show configuration warning messages</string>   <!-- TODO -->
 
+  <!-- App Setting: Show Lightmap -->
+  <string name="configLabel_ui_showLightmap">Show Light Map</string>  <!-- TODO -->
+  <string name="configLabel_ui_showLightmap_summary">Show a stacked bar chart of day, night, and twilight periods.</string> <!-- TODO -->
+
+  <!-- App Setting: show data source -->
+  <string name="configLabel_ui_showdatasource">Show Data Source</string>  <!-- TODO -->
+  <string name="configLabel_ui_showdatasource_summary">Show a label indicating the current configuration.</string> <!-- TODO -->
+
   <!-- App Setting: UI Theme -->
   <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
       <item>Helles Theme</item>
@@ -351,6 +358,7 @@
       <item>Esperanto</item>
       <item>Französisch</item>
       <item>Deutsche</item>
+      <item>Ungarisch</item>   <!-- TODO: confirm translation -->
       <item>Polieren</item>
   </string-array>
 
@@ -465,7 +473,9 @@
   ]]></string>
   <string name="app_legal2"><![CDATA[
       Deutsche Übersetzung von Henrik &quot;HerHde&quot; Hüttemann. <br/>
-      Französisch Übersetzung von Jej.
+      Polnisch Übersetzung von Verdulo. <br />
+      Französisch Übersetzung von Jej. <br />
+      Ungarische Übersetzung von Erci.
   ]]></string>
 
   <!-- Dialog: Help -->

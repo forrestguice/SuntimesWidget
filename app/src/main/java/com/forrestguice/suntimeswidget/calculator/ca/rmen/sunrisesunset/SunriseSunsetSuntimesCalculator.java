@@ -18,6 +18,9 @@
 
 package com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset;
 
+import android.content.Context;
+
+import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -30,6 +33,7 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
 {
     public static final String NAME = "ca.rmen.sunrisesunset";
     public static final String REF = "com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator";
+    public static final String LINK = "github.com/caarmen/SunriseSunset";
 
     WidgetSettings.Location location;
 
@@ -191,7 +195,8 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
 
     public static SuntimesCalculatorDescriptor getDescriptor()
     {
-        return new SuntimesCalculatorDescriptor(SunriseSunsetSuntimesCalculator.NAME, SunriseSunsetSuntimesCalculator.NAME, SunriseSunsetSuntimesCalculator.REF);
+        return new SuntimesCalculatorDescriptor(SunriseSunsetSuntimesCalculator.NAME, SunriseSunsetSuntimesCalculator.LINK, SunriseSunsetSuntimesCalculator.REF,
+                R.string.calculator_displayString_caarmensunrisesunset);
     }
 }
 

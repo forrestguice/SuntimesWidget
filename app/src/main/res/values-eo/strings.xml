@@ -131,7 +131,6 @@
     <!-- Widget Setting: general -->
     <string name="configLabel_general">Agordoj ĝeneralaj</string>                <!-- group title -->
     <string name="configLabel_general_calculator">Fonto de datumoj:</string>         <!-- spinner label -->
-    <string name="calculator_sunrisesunsetlib_name">sunrisesunsetlib-java</string>
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Agordoj de aspekto</string>           <!-- group title -->
@@ -267,7 +266,11 @@
     
     <!-- App Setting: Show Lightmap -->
     <string name="configLabel_ui_showLightmap">Montri lum-mapon</string>
-    <string name="configLabel_ui_showLightmap_summary">Montras bastonan diagramon de periodoj de tago, nokto kaj krepusko.</string>    
+    <string name="configLabel_ui_showLightmap_summary">Montras bastonan diagramon de periodoj de tago, nokto kaj krepusko.</string>
+
+    <!-- App Setting: show data source -->
+    <string name="configLabel_ui_showdatasource">Show Data Source</string>  <!-- TODO -->
+    <string name="configLabel_ui_showdatasource_summary">Show a label indicating the current configuration.</string> <!-- TODO -->
 
     <!-- App Setting: UI Theme -->
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
@@ -381,6 +384,7 @@
         <item>Esperanto</item>
         <item>Franca</item>
         <item>Germana</item>
+        <item>Hungara</item>   <!-- TODO: confirm translation -->
         <item>Pola</item>
     </string-array>
 
@@ -459,9 +463,10 @@
         Fontkodo disponebla laŭ la permesilo GPLv3.
     ]]></string>
     <string name="app_legal2"><![CDATA[
-        Germana traduko de Henrik "HerHde" Hüttemann. </br>
-        Franca traduko de Jej. </br>
-        Pola kaj Esperanta tradukoj de Verdulo.
+        Germana traduko de Henrik "HerHde" Hüttemann. <br />
+        Pola kaj Esperanta tradukoj de Verdulo. <br />
+        Franca traduko de Jej. <br />
+        Hunga traduko de Erci.
     ]]></string>
     <string name="app_legal3"><![CDATA[ <b>Bibliotekoj:</b><br/> ]]><![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]><![CDATA[ github.com/caarmen/SunriseSunset ]]></string>
     

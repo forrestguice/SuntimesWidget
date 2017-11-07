@@ -311,7 +311,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                 String widgetTitle = utils.displayStringForTitlePattern(titlePattern, data);
                 String title = context.getString(R.string.configLabel_widgetList_itemTitle, widgetTitle);
                 String type = context.getString(R.string.app_name_widget0);
-                String source = data.calculatorMode().getDisplayString();
+                String source = ((data.calculatorMode() == null) ? "def" : data.calculatorMode().name());
                 String summary = context.getString(R.string.configLabel_widgetList_itemSummaryPattern, type, source);
 
                 try {
@@ -329,7 +329,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                 String widgetTitle = utils.displayStringForTitlePattern(titlePattern, data);
                 String title = context.getString(R.string.configLabel_widgetList_itemTitle, widgetTitle);
                 String type = context.getString(R.string.app_name_widget1);
-                String source = data.calculatorMode().getDisplayString();
+                String source = ((data.calculatorMode() == null) ? "def" : data.calculatorMode().name());
                 String summary = context.getString(R.string.configLabel_widgetList_itemSummaryPattern, type, source);
 
                 try {

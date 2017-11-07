@@ -42,7 +42,7 @@ import java.util.TimeZone;
  *
  * This factory knows about the following implementations:
  *
- *   * sunrisesunsetlib
+ *   * sunrisesunsetlib (default)
  *     :: com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.class
  *
  *   * ca.rmen.sunrisesunset
@@ -64,18 +64,40 @@ public class SuntimesCalculatorFactory
     private Context context;
 
     /**
+     * Create a SuntimesCalculatorFactory object with default implementation.
+     * @param context the Android context used by this factory.
+     */
+    public SuntimesCalculatorFactory(Context context)
+    {
+        init(context, null);
+    }
+
+    /**
      * Create a SuntimesCalculatorFactory object.
      * @param context the Android context used by this factory
      * @param calculatorSetting a SuntimesCalculatorDescriptor that specifies the implementation this factory creates
      */
     public SuntimesCalculatorFactory(Context context, SuntimesCalculatorDescriptor calculatorSetting)
     {
-        this.context = context;
-        this.current = calculatorSetting;
+        init(context, calculatorSetting);
+    }
 
+    private void init(Context context, SuntimesCalculatorDescriptor calculatorSetting)
+    {
+        this.context = context;
         if (!initialized)
         {
             SuntimesCalculatorFactory.initCalculators();
+        }
+
+        if (calculatorSetting == null)
+        {
+            SuntimesCalculatorDescriptor defaultDesc = com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.getDescriptor();
+            SuntimesCalculatorDescriptor.addValue(defaultDesc);  // redundant
+            this.current = defaultDesc;
+
+        } else {
+            this.current = calculatorSetting;
         }
     }
 
