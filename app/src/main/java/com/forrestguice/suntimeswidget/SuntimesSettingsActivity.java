@@ -43,6 +43,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.getfix.ClearPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.SummaryListPreference;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.io.File;
@@ -267,7 +268,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class GeneralPrefsFragment extends PreferenceFragment
     {
-        private ListPreference calculatorPref;
+        private SummaryListPreference calculatorPref;
 
         @Override
         public void onCreate(Bundle savedInstanceState)
@@ -279,7 +280,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_general, false);
             addPreferencesFromResource(R.xml.preference_general);
 
-            calculatorPref = (ListPreference) findPreference("appwidget_0_general_calculator");
+            calculatorPref = (SummaryListPreference) findPreference("appwidget_0_general_calculator");
             initPref_general(GeneralPrefsFragment.this);
         }
 
@@ -312,10 +313,10 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
         String key = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_GENERAL + WidgetSettings.PREF_KEY_GENERAL_CALCULATOR;
         //noinspection deprecation
-        ListPreference calculatorPref = (ListPreference)findPreference(key);
+        SummaryListPreference calculatorPref = (SummaryListPreference)findPreference(key);
         if (calculatorPref != null)
         {
-            initPref_general(calculatorPref);
+            initPref_general(this, calculatorPref);
             loadPref_general(this, calculatorPref);
         }
     }
@@ -323,35 +324,40 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     private static void initPref_general(PreferenceFragment fragment)
     {
         String key = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_GENERAL + WidgetSettings.PREF_KEY_GENERAL_CALCULATOR;
-        ListPreference calculatorPref = (ListPreference) fragment.findPreference(key);
+        SummaryListPreference calculatorPref = (SummaryListPreference) fragment.findPreference(key);
         if (calculatorPref != null)
         {
-            initPref_general(calculatorPref);
-            loadPref_general(fragment.getActivity(), calculatorPref);
+            Context context = fragment.getActivity();
+            initPref_general(context, calculatorPref);
+            loadPref_general(context, calculatorPref);
         }
     }
-    private static void initPref_general(final ListPreference calculatorPref)
+    private static void initPref_general(Context context, final SummaryListPreference calculatorPref)
     {
         SuntimesCalculatorDescriptor[] calculators = SuntimesCalculatorDescriptor.values();
         String[] calculatorEntries = new String[calculators.length];
         String[] calculatorValues = new String[calculators.length];
+        String[] calculatorSummaries = new String[calculators.length];
 
         int i = 0;
         for (SuntimesCalculatorDescriptor calculator : calculators)
         {
+            calculator.initDisplayStrings(context);
             calculatorEntries[i] = calculatorValues[i] = calculator.name();
+            calculatorSummaries[i] = calculator.getDisplayString();
             i++;
         }
 
         calculatorPref.setEntries(calculatorEntries);
         calculatorPref.setEntryValues(calculatorValues);
+        calculatorPref.setEntrySummaries(calculatorSummaries);
     }
-    private static void loadPref_general(Context context, ListPreference calculatorPref)
+    private static void loadPref_general(Context context, SummaryListPreference calculatorPref)
     {
         if (context != null && calculatorPref != null)
         {
             SuntimesCalculatorDescriptor currentMode = WidgetSettings.loadCalculatorModePref(context, 0);
-            int currentIndex = calculatorPref.findIndexOfValue(currentMode.name());
+            int currentIndex = ((currentMode != null) ? calculatorPref.findIndexOfValue(currentMode.name()) : 0);
             calculatorPref.setValueIndex(currentIndex);
             //Log.d("SuntimesSettings", "current mode: " + currentMode + " (" + currentIndex + ")");
         }

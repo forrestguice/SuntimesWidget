@@ -133,8 +133,6 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
     public static void verifyGeneralSettings(Context context)
     {
         verifyGeneralSettings_dataSource(context);
-        verifyGeneralSettings_gpsTimeLimit(context);
-        verifyGeneralSettings_gpsMaxAge(context);
     }
 
     public static void verifyGeneralSettings_dataSource(Context context)
@@ -143,11 +141,11 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
         dataSourcePref.check(assertEnabled);
 
         SuntimesCalculatorDescriptor dataSource = WidgetSettings.loadCalculatorModePref(context, 0);
-        DataInteraction dataSourcePref_text = dataSourcePref.onChildView(allOf(withClassName(is(TextView.class.getName())), withText(dataSource.getDisplayString())));
+        DataInteraction dataSourcePref_text = dataSourcePref.onChildView(allOf(withClassName(is(TextView.class.getName())), withText(dataSource.name())));
         dataSourcePref_text.check(assertShown);
     }
 
-    public static void verifyGeneralSettings_gpsTimeLimit(Context context)
+    public static void verifyPlacesSettings_gpsTimeLimit(Context context)
     {
         DataInteraction gpsTimePref = onData(
                 allOf( is(instanceOf(Preference.class)), withKey("getFix_maxElapsed")) )
@@ -156,7 +154,7 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
         // TODO: verify correct setting
     }
 
-    public static void verifyGeneralSettings_gpsMaxAge(Context context)
+    public static void verifyPlacesSettings_gpsMaxAge(Context context)
     {
         DataInteraction gpsAgePref = onData(
                 allOf( is(instanceOf(Preference.class)), withKey("getFix_maxAge")) )
@@ -232,6 +230,8 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
 
     public static void verifyPlacesSettings(Context context)
     {
+        verifyPlacesSettings_gpsTimeLimit(context);
+        verifyPlacesSettings_gpsMaxAge(context);
         onView(withText(context.getString(R.string.configLabel_places_export))).check(assertEnabled);
         onView(withText(context.getString(R.string.configLabel_places_clear))).check(assertEnabled);
     }

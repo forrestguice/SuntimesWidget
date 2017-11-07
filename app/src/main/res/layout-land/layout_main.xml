@@ -39,13 +39,14 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <include layout="@layout/info_time_now" />
 
                 <FrameLayout
-                    android:layout_width="wrap_content" android:layout_height="wrap_content">
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_weight="1">
 
                     <ViewFlipper
                         android:id="@+id/info_note_flipper"
@@ -81,6 +82,18 @@
                         android:layout_gravity="center" />
 
                 </FrameLayout>
+
+                <!-- Datasource -->
+                <LinearLayout
+                    android:id="@+id/layout_datasource"
+                    style="@style/SunsetTimeCard" android:orientation="horizontal" android:gravity="center"
+                    android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_gravity="bottom"
+                    android:layout_marginBottom="0dp" android:layout_marginTop="2dp"
+                    android:paddingTop="0dp" android:paddingBottom="0dp">
+
+                    <include layout="@layout/info_time_datasource" />
+
+                </LinearLayout>
 
             </LinearLayout>
 

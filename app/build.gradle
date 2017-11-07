@@ -21,8 +21,8 @@ android
         applicationId "com.forrestguice.suntimeswidget"
         minSdkVersion 10
         targetSdkVersion 24
-        versionCode 11
-        versionName "0.4.0"
+        versionCode 12
+        versionName "0.4.1"
 
         buildConfigField "java.util.Date", "BUILD_TIME", "new java.util.Date(" + getDateAsMillis() + "L)"
         buildConfigField "String", "GIT_HASH", "\"${getGitHash()}\""

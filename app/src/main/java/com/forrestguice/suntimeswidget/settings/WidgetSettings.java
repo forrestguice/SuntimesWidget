@@ -842,14 +842,12 @@ public class WidgetSettings
         String modeString = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_CALCULATOR, PREF_DEF_GENERAL_CALCULATOR);
 
         SuntimesCalculatorDescriptor calculatorMode = null;
-        try
-        {
+        try {
             calculatorMode = SuntimesCalculatorDescriptor.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
             Log.e("loadCalculatorModePref", e.toString() + " ... It looks like " + modeString + " isn't in our list of calculators.");
-            // TODO: handle this better. right now it allows this function to return a null, which triggers NullPointerExceptions later
-            // ... what is the right course of action? either instantiate a default (that couples us to that third party code) or ...? our widget doesn't currently have an error display state
+            return null;
         }
         return calculatorMode;
     }
