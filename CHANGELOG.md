@@ -1,4 +1,5 @@
 ### ~
+* adds option to show data source label in app UI / misc data source related UI enhancements.
 * adds Hungarian translation (contributed by Erci) (#106).
 
 ### v0.4.1 (2017-10-31)
