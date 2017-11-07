@@ -69,6 +69,30 @@
 
         </LinearLayout>
 
+        <LinearLayout android:id="@+id/appwidget_general_showNoon_layout"
+                      android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:orientation="horizontal"
+                      android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
+
+            <CheckBox
+                android:id="@+id/appwidget_general_showNoon"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Show Solar Noon" />  <!-- TODO: i18n -->
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/appwidget_general_showCompare_layout"
+                      android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:orientation="horizontal"
+                      android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
+
+            <CheckBox
+                android:id="@+id/appwidget_general_showCompare"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Show Comparison" />  <!-- TODO: i18n -->
+
+        </LinearLayout>
+
         <LinearLayout android:id="@+id/appwidget_general_compareMode_layout"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal"
