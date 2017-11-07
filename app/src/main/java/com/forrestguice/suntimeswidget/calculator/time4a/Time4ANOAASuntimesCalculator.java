@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator.time4a;
 
+import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 
@@ -28,6 +29,7 @@ public class Time4ANOAASuntimesCalculator extends Time4ASuntimesCalculator imple
 {
     public static final String NAME = "time4a-noaa";
     public static final String REF = "com.forrestguice.suntimeswidget.calculator.time4a.Time4ANOAASuntimesCalculator";
+    public static final String LINK = "time4j.net";
 
     public Time4ANOAASuntimesCalculator() { /* EMPTY */ }
 
@@ -45,7 +47,7 @@ public class Time4ANOAASuntimesCalculator extends Time4ASuntimesCalculator imple
 
     public static SuntimesCalculatorDescriptor getDescriptor()
     {
-        return new SuntimesCalculatorDescriptor(Time4ANOAASuntimesCalculator.NAME, Time4ANOAASuntimesCalculator.NAME, Time4ANOAASuntimesCalculator.REF);
+        return new SuntimesCalculatorDescriptor(Time4ANOAASuntimesCalculator.NAME, Time4ANOAASuntimesCalculator.LINK, Time4ANOAASuntimesCalculator.REF, R.string.calculator_displayString_time4a_noaa);
     }
 
 }
