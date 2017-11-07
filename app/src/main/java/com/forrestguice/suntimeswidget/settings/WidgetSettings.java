@@ -90,6 +90,12 @@ public class WidgetSettings
     public static final String PREF_KEY_GENERAL_COMPAREMODE = "comparemode";
     public static final CompareMode PREF_DEF_GENERAL_COMPAREMODE = CompareMode.TOMORROW;
 
+    public static final String PREF_KEY_GENERAL_SHOWCOMPARE = "showcompare";
+    public static final boolean PREF_DEF_GENERAL_SHOWCOMPARE = true;
+
+    public static final String PREF_KEY_GENERAL_SHOWNOON = "shownoon";
+    public static final boolean PREF_DEF_GENERAL_SHOWNOON = false;
+
     public static final String PREF_KEY_ACTION_MODE = "action";
     public static final ActionMode PREF_DEF_ACTION_MODE = ActionMode.ONTAP_LAUNCH_CONFIG;
 
@@ -1362,6 +1368,50 @@ public class WidgetSettings
     }
 
 
+    public static void saveShowComparePref(Context context, int appWidgetId, boolean showCompare)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWCOMPARE, showCompare);
+        prefs.apply();
+    }
+    public static boolean loadShowComparePref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        return prefs.getBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWCOMPARE, PREF_DEF_GENERAL_SHOWCOMPARE);
+    }
+    public static void deleteShowComparePref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_SHOWCOMPARE);
+        prefs.apply();
+    }
+
+
+
+    public static void saveShowNoonPref(Context context, int appWidgetId, boolean showNoon)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWNOON, showNoon);
+        prefs.apply();
+    }
+    public static boolean loadShowNoonPref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        return prefs.getBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWNOON, PREF_DEF_GENERAL_SHOWNOON);
+    }
+    public static void deleteShowNoonPref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_SHOWNOON);
+        prefs.apply();
+    }
+
 
     public static void saveTimeNoteRisePref(Context context, int appWidgetId, SolarEvents riseChoice)
     {
@@ -1442,6 +1492,8 @@ public class WidgetSettings
         deleteTimeModePref(context, appWidgetId);
         deleteTimeMode2Pref(context, appWidgetId);
         deleteCompareModePref(context, appWidgetId);
+        deleteShowComparePref(context, appWidgetId);
+        deleteShowNoonPref(context, appWidgetId);
 
         deleteLocationModePref(context, appWidgetId);
         deleteLocationPref(context, appWidgetId);

@@ -19,7 +19,8 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout style="@style/SunsetTimeLayout"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:id="@+id/layout_delta_day">
 
         <TextView
             style="@style/SunsetTimeTextView2"
@@ -33,7 +34,7 @@
             android:id="@+id/text_delta_day_value"
             android:gravity="start"
             android:layout_weight="0"
-            tools:text="4" />
+            tools:text="2" />
 
         <TextView
             style="@style/SunsetTimeTextView2"
