@@ -63,7 +63,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     @Override
     public void init(WidgetSettings.Location location, TimeZone timezone, Context context)
     {
-        ApplicationStarter.initialize(context, true);
+        ApplicationStarter.initialize(context, false);
         this.solarTime = SolarTime.ofLocation(location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), location.getAltitudeAsInteger(), getCalculator());
         this.timezone = timezone;
     }
