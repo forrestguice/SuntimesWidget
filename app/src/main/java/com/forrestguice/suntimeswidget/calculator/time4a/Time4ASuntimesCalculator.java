@@ -177,7 +177,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     protected net.time4j.tz.Timezone toTimezone( java.util.TimeZone input )
     {
         String tzString = "java.util.TimeZone~" + input.getID();
-        TZID tzFallback = Timezone.ofSystem().getID();
+        TZID tzFallback = Timezone.ofPlatform().getID();  // ofSystem().getID();
         return net.time4j.tz.Timezone.of(tzString, tzFallback);
     }
 
