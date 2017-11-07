@@ -164,6 +164,19 @@ public class SuntimesRiseSetData extends SuntimesData
     }
 
     /**
+     * Property: linked data
+     */
+    private SuntimesRiseSetData linked = null;
+    public SuntimesRiseSetData getLinked()
+    {
+        return linked;
+    }
+    public void linkData(SuntimesRiseSetData data)
+    {
+        linked = data;
+    }
+
+    /**
      * @param other another instance of SuntimesRiseSetData
      * @param layoutID an R.layout.someLayoutID to be associated w/ this data
      */
