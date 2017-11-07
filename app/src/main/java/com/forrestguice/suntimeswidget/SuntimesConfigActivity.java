@@ -737,7 +737,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
     {
         // load: calculator mode
         SuntimesCalculatorDescriptor calculatorMode = WidgetSettings.loadCalculatorModePref(context, appWidgetId);
-        spinner_calculatorMode.setSelection(calculatorMode.ordinal());
+        spinner_calculatorMode.setSelection((calculatorMode != null ? calculatorMode.ordinal() : 0));
 
         // load: compare mode
         WidgetSettings.CompareMode compareMode = WidgetSettings.loadCompareModePref(context, appWidgetId);
