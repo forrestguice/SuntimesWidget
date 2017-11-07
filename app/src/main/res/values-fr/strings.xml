@@ -130,7 +130,6 @@
     <!-- Widget Setting: general -->
     <string name="configLabel_general">Paramètres généraux</string>                <!-- group title -->
     <string name="configLabel_general_calculator">Source de données</string>         <!-- spinner label -->
-    <!-- line commented to use default: <string name="calculator_sunrisesunsetlib_name">sunrisesunsetlib-java</string> -->
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Apparence</string>           <!-- group title -->
@@ -261,6 +260,10 @@
     <!-- App Setting: Show Lightmap -->
     <string name="configLabel_ui_showLightmap">Visualisation graphique</string>
     <string name="configLabel_ui_showLightmap_summary">Graphique montrant les périodes de jour, nuit, lever et coucher de soleil.</string>
+
+    <!-- App Setting: show data source -->
+    <string name="configLabel_ui_showdatasource">Show Data Source</string>  <!-- TODO -->
+    <string name="configLabel_ui_showdatasource_summary">Show a label indicating the current configuration.</string> <!-- TODO -->
 
     <!-- App Setting: UI Theme -->
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
