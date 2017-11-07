@@ -19,10 +19,12 @@
 package com.forrestguice.suntimeswidget.layouts;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.SuntimesUtils.TimeDisplayText;
 
@@ -50,6 +52,7 @@ public class SuntimesLayout_1x3_0 extends SuntimesLayout
         views.setTextViewText(R.id.text_time_sunset_suffix, sunsetString.getSuffix());
 
         // update day delta
+        boolean showDayDelta = WidgetSettings.loadShowComparePref(context, appWidgetId);
         TimeDisplayText dayDeltaDisplay = utils.timeDeltaLongDisplayString(data.dayLengthToday(), data.dayLengthOther());
         String dayDeltaValue = dayDeltaDisplay.getValue();
         String dayDeltaUnits = dayDeltaDisplay.getUnits();
@@ -59,6 +62,21 @@ public class SuntimesLayout_1x3_0 extends SuntimesLayout
         views.setTextViewText(R.id.text_delta_day_value, dayDeltaValue);
         views.setTextViewText(R.id.text_delta_day_units, dayDeltaUnits);
         views.setTextViewText(R.id.text_delta_day_suffix, dayDeltaSuffix);
+        views.setViewVisibility(R.id.layout_delta_day, (showDayDelta ? View.VISIBLE : View.GONE));
+
+        // update solar noon
+        SuntimesRiseSetData noonData = data.getLinked();
+        boolean showSolarNoon = WidgetSettings.loadShowNoonPref(context, appWidgetId);
+        if (showSolarNoon && noonData != null)
+        {
+            TimeDisplayText noonString = utils.calendarTimeShortDisplayString(context, noonData.sunsetCalendarToday());
+            views.setTextViewText(R.id.text_time_noon, noonString.getValue());
+            views.setTextViewText(R.id.text_time_noon_suffix, noonString.getSuffix());
+            views.setViewVisibility(R.id.layout_noon, View.VISIBLE);
+
+        } else {
+            views.setViewVisibility(R.id.layout_noon, View.GONE);
+        }
     }
 
     @Override
@@ -68,6 +86,7 @@ public class SuntimesLayout_1x3_0 extends SuntimesLayout
 
         int sunriseColor = theme.getSunriseTextColor();
         int sunsetColor = theme.getSunsetTextColor();
+        int noonColor = theme.getSunsetTextColor();
         int suffixColor = theme.getTimeSuffixColor();
         int timeColor = theme.getTimeColor();
         int textColor = theme.getTextColor();
@@ -85,5 +104,9 @@ public class SuntimesLayout_1x3_0 extends SuntimesLayout
         views.setTextColor(R.id.text_delta_day_value, timeColor);
         views.setTextColor(R.id.text_delta_day_units, textColor);
         views.setTextColor(R.id.text_delta_day_suffix, textColor);
+
+        // theme noon
+        views.setTextColor(R.id.text_time_noon_suffix, suffixColor);
+        views.setTextColor(R.id.text_time_noon, noonColor);
     }
 }

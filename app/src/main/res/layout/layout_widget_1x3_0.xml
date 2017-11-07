@@ -43,7 +43,10 @@
 
         </LinearLayout>
 
+        <include layout="@layout/info_time_noon_2" />
+
         <include layout="@layout/info_time_daydelta" />
+        
         
     </LinearLayout>
 
