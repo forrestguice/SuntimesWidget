@@ -316,7 +316,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         SummaryListPreference calculatorPref = (SummaryListPreference)findPreference(key);
         if (calculatorPref != null)
         {
-            initPref_general(calculatorPref);
+            initPref_general(this, calculatorPref);
             loadPref_general(this, calculatorPref);
         }
     }
@@ -327,11 +327,12 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         SummaryListPreference calculatorPref = (SummaryListPreference) fragment.findPreference(key);
         if (calculatorPref != null)
         {
-            initPref_general(calculatorPref);
-            loadPref_general(fragment.getActivity(), calculatorPref);
+            Context context = fragment.getActivity();
+            initPref_general(context, calculatorPref);
+            loadPref_general(context, calculatorPref);
         }
     }
-    private static void initPref_general(final SummaryListPreference calculatorPref)
+    private static void initPref_general(Context context, final SummaryListPreference calculatorPref)
     {
         SuntimesCalculatorDescriptor[] calculators = SuntimesCalculatorDescriptor.values();
         String[] calculatorEntries = new String[calculators.length];
@@ -341,6 +342,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         int i = 0;
         for (SuntimesCalculatorDescriptor calculator : calculators)
         {
+            calculator.initDisplayStrings(context);
             calculatorEntries[i] = calculatorValues[i] = calculator.name();
             calculatorSummaries[i] = calculator.getDisplayString();
             i++;

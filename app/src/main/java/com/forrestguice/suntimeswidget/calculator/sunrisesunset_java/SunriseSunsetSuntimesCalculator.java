@@ -18,8 +18,10 @@
 
 package com.forrestguice.suntimeswidget.calculator.sunrisesunset_java;
 
+import android.content.Context;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -144,7 +146,8 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
 
     public static SuntimesCalculatorDescriptor getDescriptor()
     {
-        return new SuntimesCalculatorDescriptor(SunriseSunsetSuntimesCalculator.NAME, SunriseSunsetSuntimesCalculator.LINK, SunriseSunsetSuntimesCalculator.REF);
+        return new SuntimesCalculatorDescriptor(SunriseSunsetSuntimesCalculator.NAME, SunriseSunsetSuntimesCalculator.LINK, SunriseSunsetSuntimesCalculator.REF,
+                R.string.calculator_displayString_sunrisesunsetlib);
     }
 
     @Override
