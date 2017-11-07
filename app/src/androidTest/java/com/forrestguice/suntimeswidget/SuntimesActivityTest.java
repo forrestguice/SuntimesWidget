@@ -27,6 +27,7 @@ import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 import android.view.View;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.notes.NoteData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -46,6 +47,7 @@ import static android.support.test.espresso.Espresso.registerIdlingResources;
 import static android.support.test.espresso.Espresso.unregisterIdlingResources;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.longClick;
+import static android.support.test.espresso.action.ViewActions.pressBack;
 import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.action.ViewActions.swipeLeft;
 import static android.support.test.espresso.action.ViewActions.swipeRight;
@@ -53,6 +55,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.doesNotExis
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.forrestguice.suntimeswidget.AlarmDialogTest.cancelAlarmDialog;
@@ -63,6 +66,7 @@ import static com.forrestguice.suntimeswidget.DialogTest.verifyLightmapDialog;
 import static com.forrestguice.suntimeswidget.LocationDialogTest.applyLocationDialog;
 import static com.forrestguice.suntimeswidget.LocationDialogTest.inputLocationDialog_mode;
 import static com.forrestguice.suntimeswidget.LocationDialogTest.showLocationDialog;
+import static com.forrestguice.suntimeswidget.SuntimesSettingsActivityTest.verifyGeneralSettings;
 import static com.forrestguice.suntimeswidget.TimeDateDialogTest.applyDateDialog;
 import static com.forrestguice.suntimeswidget.TimeDateDialogTest.cancelDateDialog;
 import static com.forrestguice.suntimeswidget.TimeDateDialogTest.inputDateDialog_date;
@@ -106,6 +110,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         verifyNote(activityRule.getActivity());
         verifyTimeCard();
         verifyLightmap(activityRule.getActivity());
+        verifyDataSourceUI(activityRule.getActivity());
     }
 
     public static void verifyTheme(SuntimesActivity activity)
@@ -179,6 +184,41 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
             onView(withId(R.id.info_time_lightmap)).check(assertShown);
         } else {
             onView(withId(R.id.info_time_lightmap)).check(matches(not(isDisplayed())));
+        }
+    }
+
+    public static void verifyDataSourceUI(Context context)
+    {
+        if (AppSettings.loadDatasourceUIPref(context))
+        {
+            onView(withId(R.id.txt_datasource)).check(assertShown);
+
+            SuntimesCalculatorDescriptor dataSource = WidgetSettings.loadCalculatorModePref(context, 0);
+            if (dataSource != null)
+            {
+                onView(withId(R.id.txt_datasource)).check(matches(withText(dataSource.name())));
+            }
+            // else { // TODO: test conditions when dataSource==null }
+
+        } else {
+            onView(withId(R.id.txt_datasource)).check(matches(not(isDisplayed())));
+        }
+    }
+
+    /**
+     * UI Test
+     *
+     * Click on the data source label and verify setting activity is displayed.
+     */
+    @Test
+    public void test_onDataSourceUIClick()
+    {
+        verifyDataSourceUI(activityRule.getActivity());
+        if (AppSettings.loadDatasourceUIPref(activityRule.getActivity()))
+        {
+            onView(withId(R.id.txt_datasource)).perform(click());
+            verifyGeneralSettings(activityRule.getActivity());
+            onView(isRoot()).perform(pressBack());
         }
     }
 

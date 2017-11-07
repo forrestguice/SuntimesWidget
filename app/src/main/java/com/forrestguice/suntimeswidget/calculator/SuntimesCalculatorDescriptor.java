@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2017 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
 import java.security.InvalidParameterException;
@@ -96,8 +97,9 @@ public class SuntimesCalculatorDescriptor implements Comparable
     }
 
     private final String name;
-    private final String displayString;
+    private String displayString;
     private final String calculatorRef;
+    private int resID = -1;
 
     /**
      * Create a SuntimesCalculatorDescriptor object.
@@ -110,6 +112,13 @@ public class SuntimesCalculatorDescriptor implements Comparable
         this.name = name;
         this.displayString = displayString;
         this.calculatorRef = classRef;
+    }
+    public SuntimesCalculatorDescriptor(String name, String displayString, String classRef, int resID)
+    {
+        this.name = name;
+        this.displayString = displayString;
+        this.calculatorRef = classRef;
+        this.resID = resID;
     }
 
     /**
@@ -184,5 +193,13 @@ public class SuntimesCalculatorDescriptor implements Comparable
     {
         SuntimesCalculatorDescriptor otherDescriptor = (SuntimesCalculatorDescriptor)other;
         return this.name().compareTo(otherDescriptor.name());
+    }
+
+    public void initDisplayStrings( Context context )
+    {
+        if (resID != -1)
+        {
+            this.displayString = context.getString(resID);
+        }
     }
 }

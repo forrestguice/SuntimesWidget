@@ -45,6 +45,12 @@
             android:defaultValue="SWAP_CARD" />
 
         <CheckBoxPreference
+            android:key="app_ui_showdatasource"
+            android:title="@string/configLabel_ui_showdatasource"
+            android:summary="@string/configLabel_ui_showdatasource_summary"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
             android:key="app_ui_showlightmap"
             android:title="@string/configLabel_ui_showLightmap"
             android:summary="@string/configLabel_ui_showLightmap_summary"
