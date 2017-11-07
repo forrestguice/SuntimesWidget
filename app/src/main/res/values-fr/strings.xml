@@ -130,7 +130,6 @@
     <!-- Widget Setting: general -->
     <string name="configLabel_general">Paramètres généraux</string>                <!-- group title -->
     <string name="configLabel_general_calculator">Source de données</string>         <!-- spinner label -->
-    <!-- line commented to use default: <string name="calculator_sunrisesunsetlib_name">sunrisesunsetlib-java</string> -->
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Apparence</string>           <!-- group title -->

@@ -129,7 +129,6 @@
     <!-- Widget Setting: general -->
     <string name="configLabel_general">Általános beállítások</string>                <!-- group title -->
     <string name="configLabel_general_calculator">Adatok forrása:</string>         <!-- spinner label -->
-    <string name="calculator_sunrisesunsetlib_name">sunrisesunsetlib-java</string>
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Megjelenés beállításai</string>           <!-- group title -->
