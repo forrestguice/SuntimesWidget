@@ -163,7 +163,7 @@ public class SuntimesCalculatorDescriptor implements Comparable
      */
     public String toString()
     {
-        return displayString;
+        return name;
     }
 
     /**
