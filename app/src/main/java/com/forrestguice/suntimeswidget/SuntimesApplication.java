@@ -22,6 +22,7 @@ import android.app.Application;
 import android.util.Log;
 
 import net.time4j.android.ApplicationStarter;
+import net.time4j.tz.spi.TimezoneRepositoryProviderSPI;
 
 public class SuntimesApplication extends Application
 {
@@ -29,7 +30,8 @@ public class SuntimesApplication extends Application
     public void onCreate()
     {
         super.onCreate();
-        ApplicationStarter.initialize(this, false);
-        Log.d("DEBUG", "SuntimesApplication.onCreate");
+        //ApplicationStarter.initialize(this, false);
+        ApplicationStarter.prepareAssets(this, null);
+        Log.d("DEBUG", "SuntimesApplication.onCreate :: " + new TimezoneRepositoryProviderSPI().getVersion());
     }
 }
