@@ -27,12 +27,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.Set;
 
 import com.forrestguice.suntimeswidget.R;
@@ -322,4 +329,24 @@ public class WidgetThemes
         }
     }
 
+    /**
+     * @param context
+     */
+    public static void exportThemes( Context context, File f )
+    {
+        //for (ThemeDescriptor themeDesc : themes.values())
+        //{
+        //    SuntimesTheme theme = WidgetThemes.loadTheme(context, themeDesc.name());
+        //}
+    }
+
+    /**
+     * @param context
+     * @param f
+     */
+    public static void importThemes( Context context, File f )
+    {
+        //SharedPreferences themes = context.getSharedPreferences(PREFS_THEMES, Context.MODE_PRIVATE);
+        // TODO
+    }
 }

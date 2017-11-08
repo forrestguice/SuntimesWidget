@@ -30,6 +30,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -45,6 +46,13 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Properties;
 
 import static com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity.ADD_THEME_REQUEST;
 import static com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity.EDIT_THEME_REQUEST;
@@ -231,14 +239,15 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
     protected void importThemes()
     {
-        Toast.makeText(this, "stub", Toast.LENGTH_SHORT).show(); // TODO
+        File f = new File("test.xml");
+        WidgetThemes.importThemes(this, f);
     }
 
     protected void exportThemes()
     {
-        Toast.makeText(this, "stub", Toast.LENGTH_SHORT).show(); // TODO
+        File f = new File("test.xml");
+        WidgetThemes.exportThemes(this, f);
     }
-
 
     @Override
     public void onBackPressed()
