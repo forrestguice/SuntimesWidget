@@ -150,8 +150,8 @@
     <string name="timeMode_nautical">Żeglarski świt/zmierzch</string>         <!-- setting -->
     <string name="timeMode_astronomical_short">Astronomiczny</string>    <!-- setting -->
     <string name="timeMode_astronomical">Astronomiczny świt/zmierzch</string> <!-- setting -->
-    <string name="timeMode_night">Noc</string>                   <!-- a label (not an actual timeMode setting) -->     <!-- TODO: confirm this is right / fix -->
-    <string name="timeMode_day">Dzień</string>                   <!-- a label (not an actual timeMode setting) -->     <!-- TODO: confirm this is right / fix -->
+    <string name="timeMode_night">Noc</string>                   <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_day">Dzień</string>                   <!-- a label (not an actual timeMode setting) -->
 
     <string name="configLabel_general_timeMode">Tryb:</string>          <!-- spinner label -->
 
@@ -208,11 +208,11 @@
     <string name="configLabel_solartime">Czas słoneczny:</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: timeFormat mode -->
-    <string name="timeFormatMode_system">Systemowy</string>          <!-- setting -->  <!-- TODO -->
-    <string name="timeFormatMode_12hr">12-godzinny</string>                  <!-- setting -->  <!-- TODO -->
-    <string name="timeFormatMode_24hr">24-godzinny</string>                  <!-- setting -->  <!-- TODO -->
+    <string name="timeFormatMode_system">Systemowy</string>
+    <string name="timeFormatMode_12hr">12-godzinny</string>
+    <string name="timeFormatMode_24hr">24-godzinny</string>
 
-    <string name="configLabel_timeFormatMode">Format czasu:</string>             <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_timeFormatMode">Format czasu:</string>             <!-- spinner label -->
     <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
 
     <!-- Widget Setting: date mode -->
@@ -261,8 +261,8 @@
     <string name="configLabel_ui_showLightmap_summary">Wyświetla pasek obrazujący czas dnia, nocy, świtu i zmierzchu.</string>
 
     <!-- App Setting: show data source -->
-    <string name="configLabel_ui_showdatasource">Show Data Source</string>  <!-- TODO -->
-    <string name="configLabel_ui_showdatasource_summary">Show a label indicating the current configuration.</string> <!-- TODO -->
+    <string name="configLabel_ui_showdatasource">Wyświetl źródło danych</string>
+    <string name="configLabel_ui_showdatasource_summary">Pokaż etykietę wyświetlającą obecną konfigurację.</string>
 
     <!-- App Setting: UI Theme -->
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
@@ -347,7 +347,7 @@
         <item>Esperanto</item>
         <item>Francuski</item>
         <item>Niemiecki</item>
-        <item>Hungarian</item>    <!-- TODO: needs translation -->
+        <item>Węgierski</item>
         <item>Polski</item>
     </string-array>
 
@@ -462,11 +462,11 @@
                 * <b>%loc</b> jako etykieta <br />
                 * <b>%lat</b> jako szerokość geo. <br />
                 * <b>%lon</b> jako długość geo. <br/>
-                * <b>%m</b> jako rodzaj zdarzenia (krótki) (np. "Cywilny") <br/>
-                * <b>%M</b> jako rodzaj zdarzenia (długi) (np. "Cywilny świt/zmierzch") <br/>
-                * <b>%s</b> jako źródło danych (np. "sunrisesunsetlib") <br/>
+                * <b>%m</b> jako rodzaj zdarzenia (krótki) (np. „Cywilny”) <br/>
+                * <b>%M</b> jako rodzaj zdarzenia (długi) (np. „Cywilny świt/zmierzch”) <br/>
+                * <b>%s</b> jako źródło danych (np. „sunrisesunsetlib”) <br/>
                 * <b>%t</b> jako strefa czasowa (id) (np. Europa/Warszawa) <br/>
-    ]]></string>  <!-- TODO: verify translation for %s / fix -->
+    ]]></string>
 
     <string name="help_general">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_general_timeMode">%1$s</xliff:g><![CDATA[<br />]]>
