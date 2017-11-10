@@ -41,7 +41,6 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
     protected String exportTarget;
     protected File exportFile;
     protected int numEntries;
-    protected String ext = ".csv";
     public final String newLine = System.getProperty("line.separator");
 
     protected boolean isPaused = false;
@@ -93,6 +92,19 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
     public void setOverwriteFlag(boolean value) { this.overwriteTarget = value; }
 
     /**
+     * Property: file ext
+     */
+    protected String ext = ".csv";
+    public String getExt()
+    {
+        return ext;
+    }
+    public void setExt( String ext )
+    {
+        this.ext = ext;
+    }
+
+    /**
      * onPreExecute
      * Runs before task begins.
      */
@@ -131,7 +143,7 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
                 Log.d("ExportTask", "saving to external cache");
                 try {
                     cleanupExternalCache(context);
-                    exportFile = File.createTempFile(exportTarget, ".csv", context.getExternalCacheDir());
+                    exportFile = File.createTempFile(exportTarget, ext, context.getExternalCacheDir());
 
                 } catch (IOException e) {
                     Log.w("ExportTask", "Canceling export; failed to create external temp file.");
@@ -215,7 +227,7 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
 
     protected abstract boolean export(Context context, BufferedOutputStream out) throws IOException;
 
-    protected abstract void cleanup(Context context);
+    protected void cleanup(Context context) {}
 
     /**
      * Runs after the task completes.
@@ -270,7 +282,7 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
     /**
      * Cleanup the internal cache.
      */
-    private void cleanupInternalCache(Context context)
+    protected void cleanupInternalCache(Context context)
     {
         File cacheDir = context.getCacheDir();
         cleanupCache(cacheDir, CACHE_MAX);
@@ -279,7 +291,7 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
     /**
      * Cleanup the external cache.
      */
-    private void cleanupExternalCache(Context context)
+    protected void cleanupExternalCache(Context context)
     {
         File cacheDir = context.getExternalCacheDir();
         cleanupCache(cacheDir, CACHE_MAX);
@@ -337,7 +349,7 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
         public void onStarted() {}
         public void onFinished( ExportResult result ) {}
     }
-    private TaskListener taskListener = null;
+    protected TaskListener taskListener = null;
     public void setTaskListener( TaskListener listener )
     {
         taskListener = listener;
