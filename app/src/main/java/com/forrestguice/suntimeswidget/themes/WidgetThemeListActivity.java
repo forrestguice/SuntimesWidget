@@ -20,10 +20,12 @@ package com.forrestguice.suntimeswidget.themes;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -42,7 +44,9 @@ import android.widget.GridView;
 
 import android.widget.Toast;
 
+import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
@@ -68,6 +72,10 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
     protected ActionMode actionMode = null;
     private WidgetThemeActionCompat themeActions;
+
+    private ProgressDialog progress;
+    private ExportThemesTask exportTask = null;
+    private boolean isExporting = false;
 
     public WidgetThemeListActivity()
     {
@@ -98,12 +106,6 @@ public class WidgetThemeListActivity extends AppCompatActivity
         AppSettings.initLocale(this);
         WidgetSettings.initDefaults(this);
         WidgetSettings.initDisplayStrings(this);
-    }
-
-    @Override
-    public void onDestroy()
-    {
-        super.onDestroy();
     }
 
     protected void initViews( Context context )
@@ -237,16 +239,77 @@ public class WidgetThemeListActivity extends AppCompatActivity
         finish();
     }
 
-    protected void importThemes()
+    /**
+     * @param context
+     */
+    private boolean exportThemes( Context context )
     {
-        File f = new File("test.xml");
-        WidgetThemes.importThemes(this, f);
+        if (context != null)
+        {
+            exportTask = new ExportThemesTask(context, "SuntimesThemes", true, true);    // export to external cache
+            exportTask.setDescriptors(WidgetThemes.values());
+            exportTask.setTaskListener(exportThemesListener);
+            exportTask.execute();
+            return true;
+        }
+        return false;
     }
 
-    protected void exportThemes()
+    private ExportPlacesTask.TaskListener exportThemesListener = new ExportTask.TaskListener()
     {
-        File f = new File("test.xml");
-        WidgetThemes.exportThemes(this, f);
+        public void onStarted()
+        {
+            isExporting = true;
+            showExportProgress();
+        }
+
+        @Override
+        public void onFinished(ExportPlacesTask.ExportResult results)
+        {
+            exportTask = null;
+            isExporting = false;
+            dismissProgress();
+
+            if (results.getResult())
+            {
+                String successMessage = getString(R.string.msg_export_success, results.getExportFile().getAbsolutePath());
+                Toast.makeText(getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
+
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+                shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(results.getExportFile()));
+                shareIntent.setType("text/plain");
+                startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.msg_export_to)));
+
+            } else {
+                File file = results.getExportFile();
+                String path = ((file != null) ? file.getAbsolutePath() : "<path>");
+                String failureMessage = getString(R.string.msg_export_failure, path);
+                Toast.makeText(getApplicationContext(), failureMessage, Toast.LENGTH_LONG).show();
+            }
+        }
+    };
+
+    private void showExportProgress()
+    {
+        progress = ProgressDialog.show(this, getString(R.string.themesexport_dialog_title), getString(R.string.themesexport_dialog_message), true);
+    }
+
+    private void dismissProgress()
+    {
+        if (progress != null && progress.isShowing())
+        {
+            progress.dismiss();
+        }
+    }
+
+    /**
+     * @param context
+     */
+    private void importThemes( Context context )
+    {
+        //SharedPreferences themes = context.getSharedPreferences(PREFS_THEMES, Context.MODE_PRIVATE);
+        // TODO
     }
 
     @Override
@@ -272,11 +335,11 @@ public class WidgetThemeListActivity extends AppCompatActivity
         switch (item.getItemId())
         {
             case R.id.importThemes:
-                importThemes();
+                importThemes(this);
                 return true;
 
             case R.id.exportThemes:
-                exportThemes();
+                exportThemes(this);
                 return true;
 
             case android.R.id.home:
@@ -412,4 +475,27 @@ public class WidgetThemeListActivity extends AppCompatActivity
         }
     }
 
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        if (isExporting && exportTask != null)
+        {
+            exportTask.pauseTask();
+            exportTask.clearTaskListener();
+        }
+        dismissProgress();
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        if (isExporting && exportTask != null)
+        {
+            exportTask.setTaskListener(exportThemesListener);
+            showExportProgress();
+            exportTask.resumeTask();
+        }
+    }
 }

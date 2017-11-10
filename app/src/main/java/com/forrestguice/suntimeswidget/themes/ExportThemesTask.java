@@ -18,44 +18,55 @@
 
 package com.forrestguice.suntimeswidget.themes;
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.DatabaseUtils;
-import android.os.AsyncTask;
-import android.os.Environment;
-import android.util.Log;
-
 import com.forrestguice.suntimeswidget.ExportTask;
-import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
-
+import com.forrestguice.suntimeswidget.settings.WidgetThemes;
+import android.content.Context;
 import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.ref.WeakReference;
-import java.util.Arrays;
-import java.util.Comparator;
 
 public class ExportThemesTask extends ExportTask
 {
     public ExportThemesTask(Context context, String exportTarget)
     {
         super(context, exportTarget);
+        ext = ".xml";
     }
     public ExportThemesTask(Context context, String exportTarget, boolean useExternalStorage, boolean saveToCache)
     {
         super(context, exportTarget, useExternalStorage, saveToCache);
+        ext = ".xml";
+    }
+
+    private SuntimesTheme.ThemeDescriptor[] descriptors = null;
+    public void setDescriptors( SuntimesTheme.ThemeDescriptor[] values)
+    {
+        descriptors = values;
+    }
+    public SuntimesTheme.ThemeDescriptor[] getDescriptors()
+    {
+        return descriptors;
     }
 
     @Override
     protected boolean export(Context context, BufferedOutputStream out) throws IOException
     {
-        return false;
-    }
+        if (descriptors != null)
+        {
+            numEntries = descriptors.length;
+            SuntimesTheme[] themes = new SuntimesTheme[numEntries];
+            for (int i=0; i<numEntries; i++)
+            {
+                SuntimesTheme.ThemeDescriptor themeDesc = descriptors[i];
+                themes[i] = WidgetThemes.loadTheme(context, themeDesc.name());
 
-    @Override
-    protected void cleanup(Context context)
-    {
+                String msg = themes[i].themeName();
+                ExportProgress progressObj = new ExportProgress(i, numEntries, msg);
+                publishProgress(progressObj);
+            }
+
+            SuntimesThemeIO xml = new SuntimesThemeXML();
+            return xml.write(context, out, themes);
+        }
+        return false;
     }
 }
