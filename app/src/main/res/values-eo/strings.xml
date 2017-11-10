@@ -150,8 +150,8 @@
     <string name="timeMode_nautical">Naŭtika krepusko</string>         <!-- setting -->
     <string name="timeMode_astronomical_short">Astronomia</string>    <!-- setting -->
     <string name="timeMode_astronomical">Astronomia krepusko</string> <!-- setting -->
-    <string name="timeMode_night">Nokto</string>                <!-- a label (not an actual timeMode setting) -->     <!-- TODO: confirm this is right / fix -->
-    <string name="timeMode_day">Tago</string>                   <!-- a label (not an actual timeMode setting) -->     <!-- TODO: confirm this is right / fix -->
+    <string name="timeMode_night">Nokto</string>                <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_day">Tago</string>                   <!-- a label (not an actual timeMode setting) -->
 
     <string name="configLabel_general_timeMode">Reĝimo:</string>          <!-- spinner label -->
 
@@ -215,11 +215,11 @@
     <string name="configLabel_solartime">Suntempo:</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: timeFormat mode -->
-    <string name="timeFormatMode_system">Sistema formo</string>          <!-- setting -->  <!-- TODO -->
-    <string name="timeFormatMode_12hr">12-hora</string>                  <!-- setting -->  <!-- TODO -->
-    <string name="timeFormatMode_24hr">24-hora</string>                  <!-- setting -->  <!-- TODO -->
+    <string name="timeFormatMode_system">Sistema formo</string>          <!-- setting -->
+    <string name="timeFormatMode_12hr">12-hora</string>                  <!-- setting -->
+    <string name="timeFormatMode_24hr">24-hora</string>                  <!-- setting -->
 
-    <string name="configLabel_timeFormatMode">Tempa formo:</string>             <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_timeFormatMode">Tempa formo:</string>             <!-- spinner label -->
     <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
 
     <!-- Widget Setting: date mode -->
@@ -249,7 +249,7 @@
     <string name="configLabel_widgetList_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
     <!--<string name="configLabel_widgetList_itemTitlePattern"><xliff:g id="titlePattern"><![CDATA[%M (%lat, %lon) [%t]]]></xliff:g></string>--> <!-- the pattern used when generating widget titles for display in the list -->
     <string name="configLabel_widgetListHelp_title">Helpo</string>               <!-- always the first item in the widgetList -->
-    <string name="configLabel_widgetListHelp_summary">Montras helpon pri fenestraĵoj</string>
+    <string name="configLabel_widgetListHelp_summary">Montri helpon pri fenestraĵoj</string>
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">Lokoj</string>                           <!-- group title -->
@@ -261,15 +261,15 @@
 
     <!-- App Setting: UI Warnings -->
     <string name="configLabel_ui_showWarnings">Aktivigi avertojn</string>
-    <string name="configLabel_ui_showWarnings_summary">Montras agordojn de avertaj mesaĝoj</string>
+    <string name="configLabel_ui_showWarnings_summary">Montri agordojn de avertaj mesaĝoj</string>
     
     <!-- App Setting: Show Lightmap -->
     <string name="configLabel_ui_showLightmap">Montri lum-mapon</string>
-    <string name="configLabel_ui_showLightmap_summary">Montras bastonan diagramon de periodoj de tago, nokto kaj krepusko.</string>
+    <string name="configLabel_ui_showLightmap_summary">Montri bastonan diagramon de periodoj de tago, nokto kaj krepusko.</string>
 
     <!-- App Setting: show data source -->
-    <string name="configLabel_ui_showdatasource">Show Data Source</string>  <!-- TODO -->
-    <string name="configLabel_ui_showdatasource_summary">Show a label indicating the current configuration.</string> <!-- TODO -->
+    <string name="configLabel_ui_showdatasource">Montri fonton de datumoj</string>
+    <string name="configLabel_ui_showdatasource_summary">Montri etikedon indikantan la nunan agordaron.</string>
 
     <!-- App Setting: UI Theme -->
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
@@ -315,7 +315,7 @@
 
     <!-- App Setting: GPS fix max age -->
     <string name="configLabel_getFix_maxAge">Valido de GPS-lego</string>
-    <string name="configLabel_getFix_maxAge_summary">Senvalidiĝas post <xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g></string>
+    <string name="configLabel_getFix_maxAge_summary">Senvalidiĝi post <xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g></string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>1 minuto</item>
         <item>5 minutoj</item>
@@ -383,7 +383,7 @@
         <item>Esperanto</item>
         <item>Franca</item>
         <item>Germana</item>
-        <item>Hungara</item>   <!-- TODO: confirm translation -->
+        <item>Hungara</item>
         <item>Pola</item>
     </string-array>
 
@@ -475,12 +475,12 @@
                 * <b>%loc</b> por etikedo <br />
                 * <b>%lat</b> por latitudo <br />
                 * <b>%lon</b> por longitudo <br/>
-                * <b>%m</b> por temp-reĝimo (mallonge) (ekz. "Civila") <br/>
-                * <b>%M</b> por temp-reĝimo (longe) (ekz. "Civila krepusko") <br/>
-                * <b>%s</b> por fonto de datumoj (ekz. "sunrisesunsetlib") <br/>
+                * <b>%m</b> por temp-reĝimo (mallonge) (ekz. “Civila”) <br/>
+                * <b>%M</b> por temp-reĝimo (longe) (ekz. “Civila krepusko”) <br/>
+                * <b>%s</b> por fonto de datumoj (ekz. “sunrisesunsetlib”) <br/>
                 * <b>%t</b> por horzono (ekz. Usono/Arizono) <br/>
-    ]]></string>  <!-- TODO: verify translation for %s / fix -->
-
+    ]]></string>
+    
     <string name="help_general">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_general_timeMode">%1$s</xliff:g><![CDATA[<br />]]>
         <xliff:g id="help_general_daylength">%2$s</xliff:g>
