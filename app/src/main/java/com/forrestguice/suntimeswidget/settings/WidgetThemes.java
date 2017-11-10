@@ -19,7 +19,9 @@
 package com.forrestguice.suntimeswidget.settings;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -42,7 +44,10 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.Set;
 
+import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
+import com.forrestguice.suntimeswidget.themes.ExportThemesTask;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
 
@@ -329,24 +334,4 @@ public class WidgetThemes
         }
     }
 
-    /**
-     * @param context
-     */
-    public static void exportThemes( Context context, File f )
-    {
-        //for (ThemeDescriptor themeDesc : themes.values())
-        //{
-        //    SuntimesTheme theme = WidgetThemes.loadTheme(context, themeDesc.name());
-        //}
-    }
-
-    /**
-     * @param context
-     * @param f
-     */
-    public static void importThemes( Context context, File f )
-    {
-        //SharedPreferences themes = context.getSharedPreferences(PREFS_THEMES, Context.MODE_PRIVATE);
-        // TODO
-    }
 }

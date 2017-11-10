@@ -22,7 +22,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -81,7 +80,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private PaddingChooser choosePadding;
     private ColorChooser chooseColorRise, chooseColorSet, chooseColorTitle, chooseColorText, chooseColorTime, chooseColorSuffix;
     private Spinner spinBackground;
-    protected ThemeBackground[] backgrounds;
+    //protected ThemeBackground[] backgrounds;
 
     private View previewBackground;
     private TextView previewTitle, previewRise, previewSet, previewRiseSuffix, previewSetSuffix;
@@ -117,6 +116,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         AppSettings.initLocale(this);
         WidgetSettings.initDefaults(this);
         WidgetSettings.initDisplayStrings(this);
+        ThemeBackground.initDisplayStrings(this);
     }
 
     @Override
@@ -138,12 +138,12 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         initPreview(context);
 
-        backgrounds = new ThemeBackground[3];
-        backgrounds[0] = new ThemeBackground(R.drawable.bg_widget_dark, getString(R.string.configLabel_themeBackground_dark));
-        backgrounds[1] = new ThemeBackground(R.drawable.bg_widget, getString(R.string.configLabel_themeBackground_light));
-        backgrounds[2] = new ThemeBackground(android.R.color.transparent, getString(R.string.configLabel_themeBackground_trans));
+        //backgrounds = new ThemeBackground[3];
+        //backgrounds[0] = new ThemeBackground(R.drawable.bg_widget_dark, getString(R.string.configLabel_themeBackground_dark));
+        //backgrounds[1] = new ThemeBackground(R.drawable.bg_widget, getString(R.string.configLabel_themeBackground_light));
+        //backgrounds[2] = new ThemeBackground(android.R.color.transparent, getString(R.string.configLabel_themeBackground_trans));
 
-        ArrayAdapter<ThemeBackground> spinBackground_adapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, backgrounds);
+        ArrayAdapter<ThemeBackground> spinBackground_adapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, ThemeBackground.values());
         spinBackground_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinBackground = (Spinner)findViewById(R.id.editSpin_background);
         spinBackground.setAdapter(spinBackground_adapter);
@@ -427,7 +427,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
     private void setSelectedBackground(int resId)
     {
-        int backgroundPos = ThemeBackground.ordinal(backgrounds, resId);
+        int backgroundPos = ThemeBackground.ordinal(resId);
         spinBackground.setSelection( backgroundPos < 0 ? 0 : backgroundPos );
     }
 
@@ -708,44 +708,6 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                     updateViews();
                 }
             }
-        }
-    }
-
-    /**
-     * ThemeBackground
-     */
-    public static class ThemeBackground
-    {
-        private int resID;
-        private String displayString;
-
-        public ThemeBackground( int resId, String displayString )
-        {
-            this.resID = resId;
-            this.displayString = displayString;
-        }
-
-        public int getResID()
-        {
-            return resID;
-        }
-
-        @Override
-        public String toString()
-        {
-            return displayString;
-        }
-
-        public static int ordinal( ThemeBackground[] backgrounds, int resID)
-        {
-            for (int i=0; i<backgrounds.length; i++)
-            {
-                if (backgrounds[i] != null && backgrounds[i].getResID() == resID)
-                {
-                    return i;
-                }
-            }
-            return -1;
         }
     }
 
