@@ -1051,17 +1051,33 @@ public class SuntimesConfigActivity extends AppCompatActivity
 
             if (themeName != null)
             {
-                ThemeDescriptor themeDescriptor = WidgetThemes.valueOf(themeName);
-                int position = themeDescriptor.ordinal(spinner_themeAdapter.values());
-                if (position >= 0)
-                {
-                    spinner_theme.setSelection(position, true);
-                    Log.d("selectTheme", "selected theme: " + themeName);
-
-                } else {
-                    Log.w("selectTheme", "RESULT_OK but the position is invalid; unable to find " + themeName + "(" + position + ")");
-                }
+                selectTheme(themeName);
             }
+        }
+    }
+
+    private void selectTheme(String themeName)
+    {
+        ThemeDescriptor themeDescriptor = WidgetThemes.valueOf(themeName);
+        if (themeDescriptor == null)
+        {
+            Log.w("selectTheme", "unable to find " + themeName + " (null descriptor); reverting to default.");
+            themeDescriptor = WidgetThemes.valueOf(WidgetSettings.PREF_DEF_APPEARANCE_THEME);
+            if (themeDescriptor == null)
+            {
+                Log.e("selectTheme", "failed to revert to default! " + WidgetSettings.PREF_DEF_APPEARANCE_THEME + " not found.");
+                return;
+            }
+        }
+
+        int position = themeDescriptor.ordinal(spinner_themeAdapter.values());
+        if (position >= 0)
+        {
+            spinner_theme.setSelection(position, true);
+            Log.d("selectTheme", "selected theme: " + themeDescriptor.name());
+
+        } else {
+            Log.w("selectTheme", "unable to find " + themeDescriptor.name() + " (bad position).");
         }
     }
 }

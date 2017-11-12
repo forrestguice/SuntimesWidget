@@ -146,6 +146,39 @@ public class SuntimesTheme
         return themeDescriptor;
     }
 
+    public void deleteTheme(SharedPreferences themes)
+    {
+        if (themeIsDefault)
+        {
+            Log.w("deleteTheme", themeName + " is flagged default; ignoring request to delete.");
+            return;
+        }
+
+        SharedPreferences.Editor themePrefs = themes.edit();
+        String themePrefix = themePrefix(this.themeName);
+
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_VERSION);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_NAME);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_ISDEFAULT);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_DISPLAYSTRING);
+
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_BACKGROUND);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_PADDING_LEFT);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_PADDING_TOP);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_PADDING_RIGHT);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_PADDING_BOTTOM);
+
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_TEXTCOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_TITLECOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_TIMECOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_TIMESUFFIXCOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_SUNRISECOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_SUNSETCOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_TITLESIZE);
+
+        themePrefs.apply();
+    }
+
     public String themeName()
     {
         return this.themeName;
