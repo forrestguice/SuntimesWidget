@@ -43,6 +43,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.ColorChooser;
 import com.forrestguice.suntimeswidget.settings.PaddingChooser;
@@ -50,6 +51,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 
 import java.security.InvalidParameterException;
+import java.util.Calendar;
 
 import static com.forrestguice.suntimeswidget.themes.SuntimesTheme.THEME_NAME;
 
@@ -83,8 +85,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     //protected ThemeBackground[] backgrounds;
 
     private View previewBackground;
-    private TextView previewTitle, previewRise, previewSet, previewRiseSuffix, previewSetSuffix;
+    private TextView previewTitle, previewNoon, previewRise, previewSet, previewNoonSuffix, previewRiseSuffix, previewSetSuffix;
     private TextView previewTimeDeltaPrefix, previewTimeDelta, previewTimeDeltaSuffix;
+
+    private SuntimesUtils utils = new SuntimesUtils();
 
     public WidgetThemeConfigActivity()
     {
@@ -117,6 +121,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         WidgetSettings.initDefaults(this);
         WidgetSettings.initDisplayStrings(this);
         ThemeBackground.initDisplayStrings(this);
+        SuntimesUtils.initDisplayStrings(this);
     }
 
     @Override
@@ -280,6 +285,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         previewBackground = findViewById(R.id.widgetframe_inner);
         previewTitle = (TextView)findViewById(R.id.text_title);
 
+        previewNoon = (TextView)findViewById(R.id.text_time_noon);
+        previewNoonSuffix = (TextView)findViewById(R.id.text_time_noon_suffix);
+
         previewRise = (TextView)findViewById(R.id.text_time_sunrise);
         previewRiseSuffix = (TextView)findViewById(R.id.text_time_sunrise_suffix);
 
@@ -306,37 +314,66 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         if (previewTitle != null)
         {
+            String displayText = editDisplay.getText().toString().trim();
+            String titleText = (displayText.isEmpty() ? chooseName.getThemeName() : displayText);
+            previewTitle.setText(titleText);
             previewTitle.setVisibility(View.VISIBLE);
-            previewTitle.setText(chooseName.getThemeName());
             previewTitle.setTextColor(chooseColorTitle.getColor());
             previewTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, chooseTitleSize.getTitleSize());
         }
 
+        Calendar c0 = Calendar.getInstance();
+        c0.set(Calendar.HOUR_OF_DAY, 12);
+        c0.set(Calendar.MINUTE, 0);
+        SuntimesUtils.TimeDisplayText noonText = utils.calendarTimeShortDisplayString(this, c0);
+
+        if (previewNoon != null)
+        {
+            previewNoon.setText(noonText.getValue());
+            previewNoon.setTextColor(chooseColorSet.getColor());
+        }
+        if (previewNoonSuffix != null)
+        {
+            previewNoonSuffix.setText(noonText.getSuffix());
+            previewNoonSuffix.setTextColor(chooseColorSuffix.getColor());
+        }
+
+        Calendar c1 = Calendar.getInstance();
+        c1.set(Calendar.HOUR_OF_DAY, 7);
+        c1.set(Calendar.MINUTE, 0);
+        SuntimesUtils.TimeDisplayText riseText = utils.calendarTimeShortDisplayString(this, c1);
+
         if (previewRise != null)
         {
-            previewRise.setText("7:00");   // TODO
+            previewRise.setText(riseText.getValue());
             previewRise.setTextColor(chooseColorRise.getColor());
         }
         if (previewRiseSuffix != null)
         {
-            previewRiseSuffix.setText("AM");   // TODO
+            previewRiseSuffix.setText(riseText.getSuffix());
             previewRiseSuffix.setTextColor(chooseColorSuffix.getColor());
         }
 
+        Calendar c2 = Calendar.getInstance();
+        c2.set(Calendar.HOUR_OF_DAY, 19);
+        c2.set(Calendar.MINUTE, 0);
+        SuntimesUtils.TimeDisplayText setText = utils.calendarTimeShortDisplayString(this, c2);
+
         if (previewSet != null)
         {
-            previewSet.setText("7:00");   // TODO
+            previewSet.setText(setText.getValue());
             previewSet.setTextColor(chooseColorSet.getColor());
         }
         if (previewSetSuffix != null)
         {
-            previewSetSuffix.setText("PM");   // TODO
+            previewSetSuffix.setText(setText.getSuffix());
             previewSetSuffix.setTextColor(chooseColorSuffix.getColor());
         }
 
         if (previewTimeDelta != null)
         {
-            previewTimeDelta.setText("1m");  // TODO
+            int deltaSeconds = 60;
+            previewTimeDelta.setText(utils.timeDeltaLongDisplayString(0, deltaSeconds * 1000).getValue());
             previewTimeDelta.setTextColor(chooseColorTime.getColor());
         }
         if (previewTimeDeltaPrefix != null)
@@ -401,6 +438,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         if (themeName != null)
         {
             chooseName.setThemeName( (mode == UIMode.ADD_THEME) ? generateThemeName(themeName) : themeName );
+
+        } else if (mode == UIMode.ADD_THEME) {
+            chooseName.setThemeName( suggestThemeName() );
+            editDisplay.requestFocus();
         }
 
         try {
@@ -462,6 +503,17 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         SharedPreferences themePref = getSharedPreferences(WidgetThemes.PREFS_THEMES, Context.MODE_PRIVATE);
         theme.saveTheme(themePref);
         return theme;
+    }
+
+    protected String suggestThemeName()
+    {
+        int i = 1;
+        String generatedName;
+        do {
+            generatedName = getString(R.string.addtheme_custname, i+"");
+            i++;
+        } while (WidgetThemes.valueOf(generatedName) != null);
+        return generatedName;
     }
 
     /**
