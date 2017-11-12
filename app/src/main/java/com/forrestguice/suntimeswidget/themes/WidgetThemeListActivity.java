@@ -46,6 +46,7 @@ import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -56,6 +57,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.reflect.Method;
 import java.util.Properties;
 
 import static com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity.ADD_THEME_REQUEST;
@@ -132,7 +134,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
     protected void initThemeAdapter(Context context)
     {
-        adapter = new WidgetThemes.ThemeGridAdapter(this, WidgetThemes.values());
+        adapter = new WidgetThemes.ThemeGridAdapter(context, WidgetThemes.values());
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
@@ -382,6 +384,8 @@ public class WidgetThemeListActivity extends AppCompatActivity
         @Override
         public boolean onPrepareActionMode(android.support.v7.view.ActionMode mode, Menu menu)
         {
+            SuntimesUtils.forceActionBarIcons(menu);
+
             MenuItem deleteItem = menu.findItem(R.id.deleteTheme);
             deleteItem.setVisible( !theme.isDefault() );  // not allowed to delete default
 
@@ -499,4 +503,12 @@ public class WidgetThemeListActivity extends AppCompatActivity
             exportTask.resumeTask();
         }
     }
+
+    @Override
+    protected boolean onPrepareOptionsPanel(View view, Menu menu)
+    {
+        SuntimesUtils.forceActionBarIcons(menu);
+        return super.onPrepareOptionsPanel(view, menu);
+    }
+
 }

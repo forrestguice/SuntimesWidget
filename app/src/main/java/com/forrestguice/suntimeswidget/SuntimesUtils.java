@@ -35,7 +35,9 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Menu;
 
+import java.lang.reflect.Method;
 import java.text.DateFormat;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
@@ -627,6 +629,27 @@ public class SuntimesUtils
         public String getBlank()
         {
             return blank;
+        }
+    }
+
+    /**
+     * from http://stackoverflow.com/questions/18374183/how-to-show-icons-in-overflow-menu-in-actionbar
+     */
+    public static void forceActionBarIcons(Menu menu)
+    {
+        if (menu != null)
+        {
+            if (menu.getClass().getSimpleName().equals("MenuBuilder"))
+            {
+                try {
+                    Method m = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
+                    m.setAccessible(true);
+                    m.invoke(menu, true);
+
+                } catch (Exception e) {
+                    Log.e("SuntimesActivity", "failed to set show overflow icons", e);
+                }
+            }
         }
     }
 
