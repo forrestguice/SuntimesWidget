@@ -37,6 +37,7 @@ public class SuntimesThemeXML implements SuntimesThemeIO
 {
     public static final String KEY_THEMES = "themes";
     public static final String KEY_THEME = "theme";
+    public static final String VERSION = "1.0";
 
     public SuntimesThemeXML() {}
 
@@ -81,6 +82,64 @@ public class SuntimesThemeXML implements SuntimesThemeIO
     }
 
     /**
+     * Property: progress listener
+     */
+    protected ProgressListener listener = null;
+    @Override
+    public void setProgressListener( ProgressListener listener )
+    {
+        this.listener = listener;
+    }
+    @Override
+    public void clearProgressListener()
+    {
+        listener = null;
+    }
+    private void signalExportStarted()
+    {
+        if (listener != null)
+        {
+            listener.onExportStarted();
+        }
+    }
+    private void signalExportProgress(SuntimesTheme theme, int i, int n)
+    {
+        if (listener != null)
+        {
+            listener.onExported(theme, i, n);
+        }
+    }
+    private void signalExportFinished( boolean value )
+    {
+        if (listener != null)
+        {
+            listener.onExportFinished(value);
+        }
+    }
+
+    private void signalImportStarted()
+    {
+        if (listener != null)
+        {
+            listener.onImportStarted();
+        }
+    }
+    private void signalImportProgress(SuntimesTheme theme, int i, int n)
+    {
+        if (listener != null)
+        {
+            listener.onImported(theme, i, n);
+        }
+    }
+    private void signalImportFinished( boolean value )
+    {
+        if (listener != null)
+        {
+            listener.onImportFinished(value);
+        }
+    }
+
+    /**
      * @param context
      * @param out
      * @param themes
@@ -90,6 +149,7 @@ public class SuntimesThemeXML implements SuntimesThemeIO
     @Override
     public boolean write(Context context, BufferedOutputStream out, SuntimesTheme[] themes) throws IOException
     {
+        signalExportStarted();
         if (themes != null)
         {
             XmlSerializer xml = Xml.newSerializer();
@@ -98,27 +158,32 @@ public class SuntimesThemeXML implements SuntimesThemeIO
             xml.startDocument(encoding, true);
 
             xml.startTag(namespace, KEY_THEMES);
+            xml.attribute(namespace, SuntimesTheme.THEME_VERSION, VERSION);
+
+            int i = 0;
+            int n = themes.length;
             for (SuntimesTheme theme : themes)
             {
                 xml.startTag(namespace, KEY_THEME);
                 xml.attribute(namespace, SuntimesTheme.THEME_NAME, theme.themeName());
-                xml.attribute(namespace, SuntimesTheme.THEME_VERSION, theme.themeVersion() + "");
+                xml.attribute(namespace, SuntimesTheme.THEME_VERSION, Integer.toString(theme.themeVersion()));
                 xml.attribute(namespace, SuntimesTheme.THEME_DISPLAYSTRING, theme.themeDisplayString());
+                xml.attribute(namespace, SuntimesTheme.THEME_ISDEFAULT, Boolean.toString(theme.themeIsDefault));
 
                 xml.startTag(namespace, SuntimesTheme.THEME_PADDING_LEFT);
-                xml.text(theme.themePadding[0] + "");
+                xml.text(Integer.toString(theme.themePadding[0]));
                 xml.endTag(namespace, SuntimesTheme.THEME_PADDING_LEFT);
 
                 xml.startTag(namespace, SuntimesTheme.THEME_PADDING_TOP);
-                xml.text(theme.themePadding[1] + "");
+                xml.text(Integer.toString(theme.themePadding[1]));
                 xml.endTag(namespace, SuntimesTheme.THEME_PADDING_TOP);
 
                 xml.startTag(namespace, SuntimesTheme.THEME_PADDING_RIGHT);
-                xml.text(theme.themePadding[2] + "");
+                xml.text(Integer.toString(theme.themePadding[2]));
                 xml.endTag(namespace, SuntimesTheme.THEME_PADDING_RIGHT);
 
                 xml.startTag(namespace, SuntimesTheme.THEME_PADDING_BOTTOM);
-                xml.text(theme.themePadding[3] + "");
+                xml.text(Integer.toString(theme.themePadding[3]));
                 xml.endTag(namespace, SuntimesTheme.THEME_PADDING_BOTTOM);
 
                 xml.startTag(namespace, SuntimesTheme.THEME_BACKGROUND);
@@ -150,17 +215,21 @@ public class SuntimesThemeXML implements SuntimesThemeIO
                 xml.endTag(namespace, SuntimesTheme.THEME_SUNSETCOLOR);
 
                 xml.startTag(namespace, SuntimesTheme.THEME_TITLESIZE);
-                xml.text(theme.getTitleSizeSp() + "");
+                xml.text(Float.toString(theme.getTitleSizeSp()));
                 xml.endTag(namespace, SuntimesTheme.THEME_TITLESIZE);
 
                 xml.endTag(null, KEY_THEME);
+                signalExportProgress(theme, i, n);
+                i++;
             }
             xml.endTag(null, KEY_THEMES);
 
             xml.endDocument();
             xml.flush();
+            signalExportFinished(true);
             return true;
         }
+        signalExportFinished(false);
         return false;
     }
 
@@ -173,7 +242,9 @@ public class SuntimesThemeXML implements SuntimesThemeIO
     @Override
     public SuntimesTheme[] read(Context context, BufferedInputStream in) throws IOException
     {
+        signalImportStarted();
         SuntimesTheme themes[] = new SuntimesTheme[0];
+        boolean noErrors = true;
         try {
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
             factory.setNamespaceAware(true);
@@ -199,15 +270,19 @@ public class SuntimesThemeXML implements SuntimesThemeIO
 
         } catch (XmlPullParserException e1) {
             Log.e("SuntimesThemeXML.read", "Failed to read themes :: " + e1);
+            noErrors = false;
 
         } catch (IOException e2) {
             Log.e("SuntimesThemeXML.read", "Failed to read themes :: " + e2);
+            noErrors = false;
         }
+        signalImportFinished(noErrors && themes != null && themes.length > 0);
         return themes;
     }
 
     private SuntimesTheme[] readThemes(XmlPullParser parser) throws XmlPullParserException, IOException
     {
+        int i = 0, n = 0;
         ArrayList<SuntimesTheme> themes = new ArrayList<SuntimesTheme>();
         int parseEvent = parser.next();
         loop: while (parseEvent != XmlPullParser.END_DOCUMENT)
@@ -220,6 +295,8 @@ public class SuntimesThemeXML implements SuntimesThemeIO
                     {
                         SuntimesTheme theme = readTheme(parser);
                         themes.add(theme);
+                        signalImportProgress(theme, i, n);
+                        n = i = i + 1;
                     }
                     break;
 
@@ -273,30 +350,30 @@ public class SuntimesThemeXML implements SuntimesThemeIO
             {
                 case XmlPullParser.TEXT:
                     String value = parser.getText();
-                    if (value.equalsIgnoreCase(SuntimesTheme.THEME_BACKGROUND))
+                    if (tag.equalsIgnoreCase(SuntimesTheme.THEME_BACKGROUND))
                     {
                         theme.themeBackground = backgroundStringToId(value);
-                    } else if (value.equalsIgnoreCase(SuntimesTheme.THEME_PADDING_LEFT)) {
+                    } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_PADDING_LEFT)) {
                         theme.themePadding[0] = Integer.parseInt(value);
-                    } else if (value.equalsIgnoreCase(SuntimesTheme.THEME_PADDING_TOP)) {
+                    } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_PADDING_TOP)) {
                         theme.themePadding[1] = Integer.parseInt(value);
-                    } else if (value.equalsIgnoreCase(SuntimesTheme.THEME_PADDING_RIGHT)) {
+                    } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_PADDING_RIGHT)) {
                         theme.themePadding[2] = Integer.parseInt(value);
-                    } else if (value.equalsIgnoreCase(SuntimesTheme.THEME_PADDING_BOTTOM)) {
+                    } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_PADDING_BOTTOM)) {
                         theme.themePadding[3] = Integer.parseInt(value);
-                    } else if (value.equalsIgnoreCase(SuntimesTheme.THEME_TITLECOLOR)) {
+                    } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_TITLECOLOR)) {
                         theme.themeTitleColor = colorStringToInt(value);
-                    } else if (value.equalsIgnoreCase(SuntimesTheme.THEME_TEXTCOLOR)) {
+                    } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_TEXTCOLOR)) {
                         theme.themeTextColor = colorStringToInt(value);
-                    } else if (value.equalsIgnoreCase(SuntimesTheme.THEME_TIMECOLOR)) {
+                    } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_TIMECOLOR)) {
                         theme.themeTimeColor = colorStringToInt(value);
-                    } else if (value.equalsIgnoreCase(SuntimesTheme.THEME_TIMESUFFIXCOLOR)) {
+                    } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_TIMESUFFIXCOLOR)) {
                         theme.themeTimeSuffixColor = colorStringToInt(value);
-                    } else if (value.equalsIgnoreCase(SuntimesTheme.THEME_SUNRISECOLOR)) {
+                    } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_SUNRISECOLOR)) {
                         theme.themeSunriseTextColor = colorStringToInt(value);
-                    } else if (value.equalsIgnoreCase(SuntimesTheme.THEME_SUNSETCOLOR)) {
+                    } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_SUNSETCOLOR)) {
                         theme.themeSunsetTextColor = colorStringToInt(value);
-                    } else if (value.equalsIgnoreCase(SuntimesTheme.THEME_TITLESIZE)) {
+                    } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_TITLESIZE)) {
                         theme.themeTitleSize = Float.parseFloat(value);
                     }
                     break;

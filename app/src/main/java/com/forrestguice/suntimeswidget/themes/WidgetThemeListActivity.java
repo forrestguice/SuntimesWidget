@@ -493,6 +493,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         super.onResume();
         if (isExporting && exportTask != null)
         {
+            exportTask.setDescriptors(WidgetThemes.values());
             exportTask.setTaskListener(exportThemesListener);
             showExportProgress();
             exportTask.resumeTask();

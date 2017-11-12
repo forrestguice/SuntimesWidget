@@ -26,6 +26,20 @@ import java.io.IOException;
 
 public interface SuntimesThemeIO
 {
-    public boolean write(Context context, BufferedOutputStream out, SuntimesTheme[] themes) throws IOException;
-    public SuntimesTheme[] read(Context context, BufferedInputStream in) throws IOException;
+    boolean write(Context context, BufferedOutputStream out, SuntimesTheme[] themes) throws IOException;
+    SuntimesTheme[] read(Context context, BufferedInputStream in) throws IOException;
+
+    void setProgressListener( ProgressListener listener );
+    void clearProgressListener();
+
+    abstract class ProgressListener
+    {
+        public void onExportStarted() {}
+        public void onExported( SuntimesTheme theme, int i, int n ) {}
+        public void onExportFinished( boolean retValue ) {}
+
+        public void onImportStarted() {}
+        public void onImported( SuntimesTheme theme, int i, int n ) {}
+        public void onImportFinished( boolean retValue ) {}
+    }
 }

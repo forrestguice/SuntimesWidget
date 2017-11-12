@@ -53,20 +53,27 @@ public class ExportThemesTask extends ExportTask
         if (descriptors != null)
         {
             numEntries = descriptors.length;
-            SuntimesTheme[] themes = new SuntimesTheme[numEntries];
+            final SuntimesTheme[] themes = new SuntimesTheme[numEntries];
             for (int i=0; i<numEntries; i++)
             {
                 SuntimesTheme.ThemeDescriptor themeDesc = descriptors[i];
                 themes[i] = WidgetThemes.loadTheme(context, themeDesc.name());
-
-                String msg = themes[i].themeName();
-                ExportProgress progressObj = new ExportProgress(i, numEntries, msg);
-                publishProgress(progressObj);
             }
 
             SuntimesThemeIO xml = new SuntimesThemeXML();
+            xml.setProgressListener(new SuntimesThemeIO.ProgressListener()
+            {
+                @Override
+                public void onExported(SuntimesTheme theme, int i, int n)
+                {
+                    String msg = themes[i].themeName();
+                    ExportProgress progressObj = new ExportProgress(i, n, msg);
+                    publishProgress(progressObj);
+                }
+            });
             return xml.write(context, out, themes);
         }
         return false;
     }
+
 }
