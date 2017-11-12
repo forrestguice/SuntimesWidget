@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2014 Forrest Guice
+   Copyright (C) 2014-2017 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -19,9 +19,7 @@
 package com.forrestguice.suntimeswidget.settings;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -29,25 +27,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.security.InvalidParameterException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Locale;
-import java.util.Properties;
 import java.util.Set;
 
-import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
-import com.forrestguice.suntimeswidget.themes.ExportThemesTask;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
 
@@ -68,7 +52,7 @@ public class WidgetThemes
 
     public static void initThemes(Context context)
     {
-        SharedPreferences themePref = context.getSharedPreferences(PREFS_THEMES, Context.MODE_PRIVATE);
+        SharedPreferences themePref = getSharedPreferences(context);
         Set<String> themesToProcess = themePref.getStringSet(THEMES_KEY + THEMES_INSTALLED, themes.keySet());
         for (String themeName : themesToProcess)
         {
@@ -177,9 +161,14 @@ public class WidgetThemes
 
     public static void saveInstalledList(Context context)
     {
-        SharedPreferences.Editor themePref = context.getSharedPreferences(PREFS_THEMES, Context.MODE_PRIVATE).edit();
+        SharedPreferences.Editor themePref = getSharedPreferences(context).edit();
         themePref.putStringSet(THEMES_KEY + THEMES_INSTALLED, themes.keySet());
         themePref.apply();
+    }
+
+    public static SharedPreferences getSharedPreferences(Context context)
+    {
+        return context.getSharedPreferences(PREFS_THEMES, Context.MODE_PRIVATE);
     }
 
     //////////////////////////////////////////////////////////////////////

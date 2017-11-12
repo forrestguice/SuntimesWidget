@@ -102,7 +102,7 @@
     <TextView
         android:id="@+id/editLabel_background"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@+id/centerLine"
+        app:layout_constraintStart_toEndOf="@+id/centerLineL"
         app:layout_constraintTop_toTopOf="@+id/editSpin_background"
         app:layout_constraintBottom_toBottomOf="@+id/editSpin_background"
         android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="8dp" android:paddingRight="8dp"
@@ -162,6 +162,7 @@
         android:id="@+id/editButton_titleColor"
         android:layout_width="48dp" android:layout_height="48dp"
         android:src="@drawable/ic_colortab" android:scaleType="fitCenter"
+        android:layout_marginRight="4dp" android:layout_marginEnd="4dp"
 
         app:layout_constraintStart_toEndOf="@+id/edit_titleColor"
         app:layout_constraintEnd_toEndOf="parent"
@@ -195,6 +196,7 @@
         android:id="@+id/editButton_textColor"
         android:layout_width="48dp" android:layout_height="48dp"
         android:src="@drawable/ic_colortab" android:scaleType="fitCenter"
+        android:layout_marginRight="4dp" android:layout_marginEnd="4dp"
 
         app:layout_constraintStart_toEndOf="@+id/edit_textColor"
         app:layout_constraintEnd_toEndOf="parent"
@@ -228,6 +230,7 @@
         android:id="@+id/editButton_sunriseColor"
         android:layout_width="48dp" android:layout_height="48dp"
         android:src="@drawable/ic_colortab" android:scaleType="fitCenter"
+        android:layout_marginRight="4dp" android:layout_marginEnd="4dp"
 
         app:layout_constraintStart_toEndOf="@+id/edit_sunriseColor"
         app:layout_constraintEnd_toEndOf="parent"
@@ -261,6 +264,7 @@
         android:id="@+id/editButton_sunsetColor"
         android:layout_width="48dp" android:layout_height="48dp"
         android:src="@drawable/ic_colortab" android:scaleType="fitCenter"
+        android:layout_marginRight="4dp" android:layout_marginEnd="4dp"
 
         app:layout_constraintStart_toEndOf="@+id/edit_sunsetColor"
         app:layout_constraintEnd_toEndOf="parent"
@@ -294,6 +298,7 @@
         android:id="@+id/editButton_timeColor"
         android:layout_width="48dp" android:layout_height="48dp"
         android:src="@drawable/ic_colortab" android:scaleType="fitCenter"
+        android:layout_marginRight="4dp" android:layout_marginEnd="4dp"
 
         app:layout_constraintStart_toEndOf="@+id/edit_timeColor"
         app:layout_constraintEnd_toEndOf="parent"
@@ -327,6 +332,7 @@
         android:id="@+id/editButton_suffixColor"
         android:layout_width="48dp" android:layout_height="48dp"
         android:src="@drawable/ic_colortab" android:scaleType="fitCenter"
+        android:layout_marginRight="4dp" android:layout_marginEnd="4dp"
 
         app:layout_constraintStart_toEndOf="@+id/edit_suffixColor"
         app:layout_constraintEnd_toEndOf="parent"
@@ -351,6 +357,7 @@
         android:layout_height="wrap_content"
         android:inputType="textNoSuggestions"
         android:text="" android:hint="@string/configHint_themePadding"
+        android:layout_marginRight="4dp" android:layout_marginEnd="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/editLabel_padding"
         app:layout_constraintTop_toBottomOf="@+id/edit_suffixColor" />
@@ -362,5 +369,15 @@
         android:orientation="vertical"
         tools:layout_editor_absoluteY="0dp"
         tools:layout_editor_absoluteX="361dp"/>
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:id="@+id/centerLineL" app:layout_constraintGuide_percent="0.42"
+        android:orientation="vertical" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:id="@+id/centerLineR" app:layout_constraintGuide_percent="0.58"
+        android:orientation="vertical" />
 
 </android.support.constraint.ConstraintLayout>

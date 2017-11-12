@@ -32,7 +32,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
 
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -53,12 +52,6 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.lang.reflect.Method;
-import java.util.Properties;
 
 import static com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity.ADD_THEME_REQUEST;
 import static com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity.EDIT_THEME_REQUEST;
@@ -220,6 +213,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
                         {
                             if (WidgetThemes.removeValue(context, theme.themeDescriptor()))
                             {
+                                theme.deleteTheme(WidgetThemes.getSharedPreferences(context));
                                 adapterModified = true;
                                 initThemeAdapter(context);
                                 Toast.makeText(context, context.getString(R.string.deletetheme_toast_success, theme.themeName()), Toast.LENGTH_LONG).show();
