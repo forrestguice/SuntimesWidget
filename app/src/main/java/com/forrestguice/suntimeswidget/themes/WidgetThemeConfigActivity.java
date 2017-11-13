@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -122,12 +123,6 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         WidgetSettings.initDisplayStrings(this);
         ThemeBackground.initDisplayStrings(this);
         SuntimesUtils.initDisplayStrings(this);
-    }
-
-    @Override
-    public void onDestroy()
-    {
-        super.onDestroy();
     }
 
     protected void initViews( Context context )
@@ -386,6 +381,65 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             previewTimeDeltaSuffix.setText(getString(R.string.delta_day_shorter));
             previewTimeDeltaSuffix.setTextColor(chooseColorText.getColor());
         }
+    }
+
+
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+    }
+
+    @Override
+    public void onSaveInstanceState( Bundle outState )
+    {
+        super.onSaveInstanceState(outState);
+        outState.putString(SuntimesTheme.THEME_NAME, chooseName.getThemeName());
+        outState.putString(SuntimesTheme.THEME_DISPLAYSTRING, editDisplay.getText().toString());
+
+        ThemeBackground background = (ThemeBackground)spinBackground.getSelectedItem();
+        if (background != null)
+        {
+            outState.putInt(SuntimesTheme.THEME_BACKGROUND, background.getResID());
+        }
+
+        outState.putInt(SuntimesTheme.THEME_TITLESIZE, chooseTitleSize.getTitleSize());
+        outState.putInt(SuntimesTheme.THEME_TITLECOLOR, chooseColorTitle.getColor());
+        outState.putInt(SuntimesTheme.THEME_TEXTCOLOR, chooseColorText.getColor());
+        outState.putInt(SuntimesTheme.THEME_SUNRISECOLOR, chooseColorRise.getColor());
+        outState.putInt(SuntimesTheme.THEME_SUNSETCOLOR, chooseColorSet.getColor());
+        outState.putInt(SuntimesTheme.THEME_TIMECOLOR, chooseColorTime.getColor());
+        outState.putInt(SuntimesTheme.THEME_TIMESUFFIXCOLOR, chooseColorSuffix.getColor());
+        outState.putIntArray("padding", choosePadding.getPadding());
+    }
+
+    @Override
+    public void onRestoreInstanceState(@NonNull Bundle savedState)
+    {
+        super.onRestoreInstanceState(savedState);
+        if (mode == UIMode.ADD_THEME)
+        {
+            chooseName.setThemeName(savedState.getString(SuntimesTheme.THEME_NAME, chooseName.getThemeName()));
+        }
+        editDisplay.setText(savedState.getString(SuntimesTheme.THEME_DISPLAYSTRING, editDisplay.getText().toString()));
+
+        ThemeBackground background = (ThemeBackground)spinBackground.getSelectedItem();
+        setSelectedBackground(savedState.getInt(SuntimesTheme.THEME_BACKGROUND, (background != null ? background.getResID() : DarkTheme.THEMEDEF_BACKGROUND_ID)));
+
+        chooseTitleSize.setTitleSize(savedState.getInt(SuntimesTheme.THEME_TITLESIZE, this.chooseTitleSize.getTitleSize()));
+        chooseColorTitle.setColor(savedState.getInt(SuntimesTheme.THEME_TITLECOLOR, chooseColorTitle.getColor()));
+        chooseColorText.setColor(savedState.getInt(SuntimesTheme.THEME_TEXTCOLOR, chooseColorText.getColor()));
+        chooseColorRise.setColor(savedState.getInt(SuntimesTheme.THEME_SUNRISECOLOR, chooseColorRise.getColor()));
+        chooseColorSet.setColor(savedState.getInt(SuntimesTheme.THEME_SUNSETCOLOR, chooseColorSet.getColor()));
+        chooseColorTime.setColor(savedState.getInt(SuntimesTheme.THEME_TIMECOLOR, chooseColorTime.getColor()));
+        chooseColorSuffix.setColor(savedState.getInt(SuntimesTheme.THEME_TIMESUFFIXCOLOR, chooseColorSuffix.getColor()));
+        choosePadding.setPadding(savedState.getIntArray("padding"));
     }
 
     @Override
