@@ -27,7 +27,7 @@ public class DarkTheme extends SuntimesTheme
 {
     public static final String THEMEDEF_NAME = "dark";
     public static final String THEMEDEF_DISPLAYSTRING = "Dark";
-    public static final int THEMEDEF_VERSION = 1;
+    public static final int THEMEDEF_VERSION = 2;
     public static final ThemeDescriptor THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, THEMEDEF_DISPLAYSTRING, THEMEDEF_VERSION);
 
     public static final int THEMEDEF_BACKGROUND_ID = R.drawable.bg_widget_dark;

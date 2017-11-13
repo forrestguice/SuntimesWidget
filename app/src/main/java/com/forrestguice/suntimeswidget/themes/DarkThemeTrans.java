@@ -24,7 +24,7 @@ public class DarkThemeTrans extends DarkTheme
 {
     public static final String THEMEDEF_NAME = "dark_transparent";
     public static final String THEMEDEF_DISPLAYSTRING = "Dark (transparent)";
-    public static final int THEMEDEF_VERSION = 1;
+    public static final int THEMEDEF_VERSION = 2;
     public static final ThemeDescriptor THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, THEMEDEF_DISPLAYSTRING, THEMEDEF_VERSION);
 
     public static final int THEMEDEF_BACKGROUND_ID = android.R.color.transparent;

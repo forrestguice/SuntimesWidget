@@ -23,7 +23,7 @@ import android.content.Context;
 public class LightThemeTrans extends LightTheme
 {
     public static final String THEMEDEF_NAME = "light_transparent";
-    public static final int THEMEDEF_VERSION = 1;
+    public static final int THEMEDEF_VERSION = 2;
     public static final String THEMEDEF_DISPLAYSTRING = "Light (transparent)";
     public static final ThemeDescriptor THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, THEMEDEF_DISPLAYSTRING, THEMEDEF_VERSION);
 
