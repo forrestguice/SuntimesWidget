@@ -289,7 +289,7 @@ public class SuntimesTheme
     public static class ThemeDescriptor implements Comparable
     {
         private final String name;
-        private final String displayString;
+        private String displayString;
         private final int version;
 
         public ThemeDescriptor(String name, Context context, String themesPrefix)
@@ -320,6 +320,13 @@ public class SuntimesTheme
         public boolean isValid()
         {
             return (!name.isEmpty() && !displayString.isEmpty() && version > -1);
+        }
+
+        public void updateDescriptor(Context context, String themesPrefix)
+        {
+            String themePrefix = SuntimesTheme.themePrefix(name);
+            SharedPreferences themesPref = context.getSharedPreferences(themesPrefix, Context.MODE_PRIVATE);
+            this.displayString = themesPref.getString(themePrefix + THEME_DISPLAYSTRING, "");
         }
 
         public String name() {

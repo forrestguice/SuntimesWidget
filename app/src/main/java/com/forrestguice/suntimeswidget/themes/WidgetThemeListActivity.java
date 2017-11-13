@@ -471,6 +471,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
             {
                 String themeName = data.getStringExtra(SuntimesTheme.THEME_NAME);
                 SuntimesTheme.ThemeDescriptor theme = (SuntimesTheme.ThemeDescriptor) adapter.getItem(adapter.ordinal(themeName));
+                theme.updateDescriptor(this, WidgetThemes.PREFS_THEMES);
                 triggerActionMode(null, theme);
                 Toast.makeText(this, getString(R.string.edittheme_toast_success, themeName), Toast.LENGTH_LONG).show();
             }
