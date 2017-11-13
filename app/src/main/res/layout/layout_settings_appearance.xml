@@ -30,7 +30,7 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="@string/configLabel_appearance" />
 
-        <android.support.constraint.ConstraintLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingLeft="16dp" android:paddingRight="8dp"
             android:paddingTop="@dimen/settingsGroup_padding">
@@ -38,33 +38,13 @@
             <TextView
                 android:id="@+id/appwidget_appearance_theme_label"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="@string/configLabel_appearance_theme"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/appwidget_appearance_theme"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                android:text="@string/configLabel_appearance_theme" android:layout_gravity="center_vertical"
+                android:textColor="@drawable/btn_labeltxt" android:clickable="true" />
 
             <Spinner android:id="@+id/appwidget_appearance_theme"
-                     android:layout_width="0dp"
-                     android:layout_height="wrap_content"
-                     app:layout_constraintStart_toEndOf="@+id/appwidget_appearance_theme_label"
-                     app:layout_constraintEnd_toStartOf="@+id/appwidget_appearance_theme_configbutton"
-                     app:layout_constraintTop_toTopOf="parent"
-                     app:layout_constraintBottom_toBottomOf="parent" />
+                     android:layout_width="match_parent" android:layout_height="wrap_content" />
 
-            <ImageButton
-                android:id="@+id/appwidget_appearance_theme_configbutton"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:adjustViewBounds="false"
-                android:contentDescription="@string/configAction_help"
-                android:cropToPadding="false"
-                android:scaleType="center"
-                android:src="?icActionSettings"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/appwidget_appearance_theme" />
-
-        </android.support.constraint.ConstraintLayout>
-
+        </LinearLayout>
 
         <LinearLayout android:id="@+id/appwidget_appearance_1x1mode_layout"
             android:layout_width="match_parent" android:layout_height="wrap_content"

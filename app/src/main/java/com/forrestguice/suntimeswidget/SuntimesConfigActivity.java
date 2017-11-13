@@ -80,7 +80,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
     protected Spinner spinner_onTap;
     protected EditText text_launchActivity;
 
-    protected ImageButton button_themeConfig;
+    protected TextView button_themeConfig;
     private WidgetThemes.ThemeListAdapter spinner_themeAdapter;
     protected Spinner spinner_theme;
 
@@ -257,7 +257,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
             initThemeAdapter(context);
         }
 
-        button_themeConfig = (ImageButton)findViewById(R.id.appwidget_appearance_theme_configbutton);
+        button_themeConfig = (TextView)findViewById(R.id.appwidget_appearance_theme_label);
         if (button_themeConfig != null)
         {
             button_themeConfig.setOnClickListener(new View.OnClickListener()
