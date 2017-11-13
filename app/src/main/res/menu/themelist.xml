@@ -3,15 +3,20 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:checkableBehavior="none">
 
+        <item android:id="@+id/addTheme"
+              android:title="@string/configAction_addTheme"
+              android:icon="?attr/icActionNew"
+              app:showAsAction="always" />
+
         <item android:id="@+id/exportThemes"
               android:title="@string/configAction_exportThemes"
               android:icon="?attr/icActionCopy"
               app:showAsAction="never" />
 
-        <item android:id="@+id/importThemes"
+        <!-- <item android:id="@+id/importThemes"
               android:title="@string/configAction_importThemes"
               android:icon="?attr/icActionSave"
-              app:showAsAction="never" />
+              app:showAsAction="never" /> -->
 
     </group>
 </menu>

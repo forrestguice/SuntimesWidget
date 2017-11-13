@@ -185,6 +185,16 @@ public class WidgetThemes
         {
             this.context = context;
             this.themes = themes;
+        private boolean showAddButton = false;
+        public void showAddButton( boolean value )
+        {
+            showAddButton = value;
+        }
+        public boolean showingAddButton()
+        {
+            return showAddButton;
+        }
+
         }
 
         public int ordinal( String themeName )
@@ -192,7 +202,9 @@ public class WidgetThemes
             for (int i=0; i<themes.length; i++)
             {
                 if (themes[i].name().equals(themeName))
-                    return i+1;
+                {
+                    return (showAddButton ? i + 1 : i);
+                }
             }
             return -1;
         }
@@ -200,14 +212,20 @@ public class WidgetThemes
         @Override
         public int getCount()
         {
-            return themes.length+1;
+            if (showAddButton)
+                return themes.length+1;
+            else return themes.length;
         }
 
         @Override
         public Object getItem(int position)
         {
-            if (position > 0)
-                return themes[position-1];
+            if (showAddButton && position > 0)
+            {
+                return themes[position - 1];
+            } else if (position >= 0) {
+                return themes[position];
+            }
             return null;
         }
 
@@ -227,8 +245,10 @@ public class WidgetThemes
 
             } else {
                 LayoutInflater layoutInflater = LayoutInflater.from(context);
-                if (position > 0)
+                if (position > 0 || !showAddButton)
                 {
+                    int p = (showAddButton ? position - 1 : position);
+                    SuntimesTheme theme = WidgetThemes.loadTheme(context, themes[p].name());
                     view = layoutInflater.inflate(R.layout.layout_griditem_theme, parent, false);
                     View layout = view.findViewById(R.id.griditem);
                     TextView textView = (TextView) view.findViewById(android.R.id.text1);

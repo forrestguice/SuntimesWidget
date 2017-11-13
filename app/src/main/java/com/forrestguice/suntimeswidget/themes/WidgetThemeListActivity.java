@@ -133,7 +133,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id)
             {
-                if (position == 0)
+                if (position == 0 && adapter.showingAddButton())
                 {
                     addTheme();
 
@@ -330,8 +330,12 @@ public class WidgetThemeListActivity extends AppCompatActivity
     {
         switch (item.getItemId())
         {
-            case R.id.importThemes:
-                importThemes(this);
+            //case R.id.importThemes:
+            //    importThemes(this);
+            //    return true;
+
+            case R.id.addTheme:
+                addTheme();
                 return true;
 
             case R.id.exportThemes:
