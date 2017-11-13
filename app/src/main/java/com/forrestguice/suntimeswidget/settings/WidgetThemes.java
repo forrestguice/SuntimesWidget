@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.settings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -297,8 +298,15 @@ public class WidgetThemes
                     setViewSuffix.setText(setText.getSuffix());
 
                     View layout = view.findViewById(R.id.widgetframe_inner);
+                    try {
+                        layout.setBackgroundResource(theme.getBackgroundId());
+                    } catch (Resources.NotFoundException e) {
+                        Log.w("ThemeGridAdapter", "background resource not found! " + theme.getBackgroundId());
+                        // TODO: bug here; happens when resourceIds are changed for whatever reason, making ID stored in the
+                        // theme invalid; can be avoided for default themes by bumping their version (causing reinstall).
+                        // might also be fixed serializing/deserializing the background field to obtain a valid id.
+                    }
                     int[] padding = theme.getPaddingPixels(context);
-                    layout.setBackgroundResource(theme.getBackgroundId());
                     layout.setPadding(padding[0], padding[1], padding[2], padding[3]);
 
                 } else {
