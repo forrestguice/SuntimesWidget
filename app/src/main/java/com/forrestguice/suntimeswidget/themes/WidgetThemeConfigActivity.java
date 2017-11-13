@@ -200,7 +200,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         EditText editColorTitle = (EditText)findViewById(R.id.edit_titleColor);
         ImageButton buttonColorTitle = (ImageButton)findViewById(R.id.editButton_titleColor);
-        chooseColorTitle = new ColorChooser(editColorTitle, buttonColorTitle)
+        chooseColorTitle = new ColorChooser(this, editColorTitle, buttonColorTitle)
         {
             @Override
             protected void onColorChanged( int newColor )
@@ -211,7 +211,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         EditText editColorText = (EditText)findViewById(R.id.edit_textColor);
         ImageButton buttonColorText = (ImageButton)findViewById(R.id.editButton_textColor);
-        chooseColorText = new ColorChooser(editColorText, buttonColorText)
+        chooseColorText = new ColorChooser(this, editColorText, buttonColorText)
         {
             @Override
             protected void onColorChanged( int newColor )
@@ -222,7 +222,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         EditText editColorRise = (EditText)findViewById(R.id.edit_sunriseColor);
         ImageButton buttonColorRise = (ImageButton)findViewById(R.id.editButton_sunriseColor);
-        chooseColorRise = new ColorChooser(editColorRise, buttonColorRise)
+        chooseColorRise = new ColorChooser(this, editColorRise, buttonColorRise)
         {
             @Override
             protected void onColorChanged( int newColor )
@@ -233,7 +233,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         EditText editColorSet = (EditText)findViewById(R.id.edit_sunsetColor);
         ImageButton buttonColorSet = (ImageButton)findViewById(R.id.editButton_sunsetColor);
-        chooseColorSet = new ColorChooser(editColorSet, buttonColorSet)
+        chooseColorSet = new ColorChooser(this, editColorSet, buttonColorSet)
         {
             @Override
             protected void onColorChanged( int newColor )
@@ -244,7 +244,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         EditText editColorTime = (EditText)findViewById(R.id.edit_timeColor);
         ImageButton buttonColorTime = (ImageButton)findViewById(R.id.editButton_timeColor);
-        chooseColorTime = new ColorChooser(editColorTime, buttonColorTime)
+        chooseColorTime = new ColorChooser(this, editColorTime, buttonColorTime)
         {
             @Override
             protected void onColorChanged( int newColor )
@@ -255,7 +255,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         EditText editColorSuffix = (EditText)findViewById(R.id.edit_suffixColor);
         ImageButton buttonColorSuffix = (ImageButton)findViewById(R.id.editButton_suffixColor);
-        chooseColorSuffix = new ColorChooser(editColorSuffix, buttonColorSuffix)
+        chooseColorSuffix = new ColorChooser(this, editColorSuffix, buttonColorSuffix)
         {
             @Override
             protected void onColorChanged( int newColor )

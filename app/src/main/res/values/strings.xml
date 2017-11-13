@@ -598,6 +598,11 @@
     <string name="msg_export_failure">Export to <xliff:g id="filepath">%s</xliff:g> failed!</string>
     <string name="msg_export_to">Export with</string>  <!-- title displayed over "share action" chooser -->
 
+    <!-- Dialog: Color -->
+    <string name="color_dialog_msg">Choose Color</string>
+    <string name="color_dialog_ok">Select</string>
+    <string name="color_dialog_cancel">Cancel</string>
+
     <!-- Dialog: About -->
     <string name="about_dialog_title">About</string>
     <string name="app_name">Suntimes</string>
