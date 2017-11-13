@@ -28,10 +28,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Set;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
 
@@ -185,6 +187,18 @@ public class WidgetThemes
         {
             this.context = context;
             this.themes = themes;
+
+            riseTime = Calendar.getInstance();
+            riseTime.set(Calendar.HOUR_OF_DAY, 7);
+            riseTime.set(Calendar.MINUTE, 0);
+
+            setTime = Calendar.getInstance();
+            setTime.set(Calendar.HOUR_OF_DAY, 19);
+            setTime.set(Calendar.MINUTE, 0);
+
+            setRiseSet(riseTime, setTime);
+        }
+
         private boolean showAddButton = false;
         public void showAddButton( boolean value )
         {
@@ -195,6 +209,16 @@ public class WidgetThemes
             return showAddButton;
         }
 
+        private Calendar riseTime, setTime;
+        private SuntimesUtils.TimeDisplayText riseText, setText;
+        public void setRiseSet(Calendar rise, Calendar set)
+        {
+            riseTime = rise;
+            setTime = set;
+
+            SuntimesUtils utils = new SuntimesUtils();
+            riseText = utils.calendarTimeShortDisplayString(context, riseTime);
+            setText = utils.calendarTimeShortDisplayString(context, setTime);
         }
 
         public int ordinal( String themeName )
@@ -250,14 +274,32 @@ public class WidgetThemes
                     int p = (showAddButton ? position - 1 : position);
                     SuntimesTheme theme = WidgetThemes.loadTheme(context, themes[p].name());
                     view = layoutInflater.inflate(R.layout.layout_griditem_theme, parent, false);
-                    View layout = view.findViewById(R.id.griditem);
-                    TextView textView = (TextView) view.findViewById(android.R.id.text1);
 
-                    SuntimesTheme theme = WidgetThemes.loadTheme(context, themes[position - 1].name());
-                    textView.setText(theme.themeDisplayString());
-                    textView.setTextColor(theme.getTitleColor());
-                    textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, theme.getTitleSizeSp());
+                    TextView titleView = (TextView) view.findViewById(R.id.text_title);
+                    titleView.setText(theme.themeDisplayString());
+                    titleView.setTextColor(theme.getTitleColor());
+                    titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, theme.getTitleSizeSp());
+
+                    TextView riseView = (TextView) view.findViewById(R.id.text_time_sunrise);
+                    riseView.setTextColor(theme.getSunriseTextColor());
+                    riseView.setText(riseText.getValue());
+
+                    TextView riseViewSuffix = (TextView) view.findViewById(R.id.text_time_sunrise_suffix);
+                    riseViewSuffix.setTextColor(theme.getTimeSuffixColor());
+                    riseViewSuffix.setText(riseText.getSuffix());
+
+                    TextView setView = (TextView) view.findViewById(R.id.text_time_sunset);
+                    setView.setTextColor(theme.getSunsetTextColor());
+                    setView.setText(setText.getValue());
+
+                    TextView setViewSuffix = (TextView) view.findViewById(R.id.text_time_sunset_suffix);
+                    setViewSuffix.setTextColor(theme.getTimeSuffixColor());
+                    setViewSuffix.setText(setText.getSuffix());
+
+                    View layout = view.findViewById(R.id.widgetframe_inner);
+                    int[] padding = theme.getPaddingPixels(context);
                     layout.setBackgroundResource(theme.getBackgroundId());
+                    layout.setPadding(padding[0], padding[1], padding[2], padding[3]);
 
                 } else {
                     view = layoutInflater.inflate(R.layout.layout_griditem_addtheme, parent, false);
