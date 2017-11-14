@@ -60,8 +60,8 @@ public class PaddingChooser implements TextWatcher, View.OnFocusChangeListener
     }
 
     /**
-     * @param context
-     * @return
+     * @param context Context obj used to access resources
+     * @return padding pixel values [left, top, right, bottom]
      */
     public int[] getPaddingPixels(Context context)
     {

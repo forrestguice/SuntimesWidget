@@ -140,11 +140,11 @@ public class SuntimesThemeXML implements SuntimesThemeIO
     }
 
     /**
-     * @param context
-     * @param out
-     * @param themes
-     * @return
-     * @throws IOException
+     * @param context a context used to access resources
+     * @param out a BufferedOutputStream (open and ready to be written to)
+     * @param themes an array of themes to be written
+     * @return true themes written, false otherwise
+     * @throws IOException if failed to write to out
      */
     @Override
     public boolean write(Context context, BufferedOutputStream out, SuntimesTheme[] themes) throws IOException
@@ -234,10 +234,10 @@ public class SuntimesThemeXML implements SuntimesThemeIO
     }
 
     /**
-     * @param context
-     * @param in
-     * @return
-     * @throws IOException
+     * @param context a context used to access resources
+     * @param in a BufferedInputStream that is open and ready to be read from
+     * @return an array of SuntimesTheme
+     * @throws IOException if failed to read from in
      */
     @Override
     public SuntimesTheme[] read(Context context, BufferedInputStream in) throws IOException

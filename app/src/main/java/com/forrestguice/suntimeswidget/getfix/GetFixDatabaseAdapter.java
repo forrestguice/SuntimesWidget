@@ -77,7 +77,7 @@ public class GetFixDatabaseAdapter
     /**
      * Open the database
      * @return a reference the (now open) database adapter
-     * @throws SQLException
+     * @throws SQLException if failed to open
      */
     public GetFixDatabaseAdapter open() throws SQLException
     {
@@ -129,7 +129,7 @@ public class GetFixDatabaseAdapter
      * Get a place from the database
      * @param row the rowID to get
      * @return a Cursor into the database
-     * @throws SQLException
+     * @throws SQLException if query failed
      */
     public Cursor getPlace(long row) throws SQLException
     {

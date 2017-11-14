@@ -657,8 +657,8 @@ public class SuntimesUtils
     }
 
     /**
-     * @param htmlString
-     * @return
+     * @param htmlString html markup
+     * @return an html span
      */
     @SuppressWarnings("deprecation")
     public static Spanned fromHtml(String htmlString )

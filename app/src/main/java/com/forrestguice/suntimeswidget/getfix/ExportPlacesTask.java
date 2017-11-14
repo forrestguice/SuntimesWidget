@@ -76,7 +76,7 @@ public class ExportPlacesTask extends ExportTask
      * @param cursor a database Cursor pointing to records to export
      * @param out a BufferedOutputStream (open and ready) to export to
      * @return true export was successful, false otherwise
-     * @throws IOException
+     * @throws IOException if failed to write to out
      */
     private boolean exportDatabase( GetFixDatabaseAdapter db, Cursor cursor, BufferedOutputStream out ) throws IOException
     {

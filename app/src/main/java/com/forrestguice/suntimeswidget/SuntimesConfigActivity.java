@@ -496,7 +496,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
     }
 
     /**
-     * @param context
+     * @param context a context used to access resources
      */
     protected void initThemeAdapter(final Context context)
     {
@@ -954,7 +954,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
     }
 
     /**
-     * @param showCompareUI
+     * @param showCompareUI true: show comparison ui, false: hide comparison ui
      */
     protected void showCompareUI( boolean showCompareUI )
     {
@@ -965,6 +965,9 @@ public class SuntimesConfigActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * @param showOption true: show noon ui, false: hide noon ui
+     */
     protected void showOptionShowNoon( boolean showOption )
     {
         View layout_showNoon = findViewById(R.id.appwidget_general_showNoon_layout);

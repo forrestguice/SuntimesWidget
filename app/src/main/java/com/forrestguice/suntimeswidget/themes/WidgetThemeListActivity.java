@@ -239,7 +239,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
     }
 
     /**
-     * @param context
+     * @param context a context used to access resources
      */
     private boolean exportThemes( Context context )
     {
@@ -303,7 +303,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
     }
 
     /**
-     * @param context
+     * @param context a context used to access resources
      */
     private void importThemes( Context context )
     {
@@ -427,9 +427,9 @@ public class WidgetThemeListActivity extends AppCompatActivity
     }
 
     /**
-     * @param requestCode
-     * @param resultCode
-     * @param data
+     * @param requestCode ADD_THEME_REQUEST or EDIT_THEME_REQUEST
+     * @param resultCode request result
+     * @param data result data (containing: SuntimesTheme.THEME_NAME)
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
