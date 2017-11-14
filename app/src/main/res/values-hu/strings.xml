@@ -79,9 +79,9 @@
                   sunset
          The relative order is defined by the layout (layout/info_time_note.xml).
     -->
-    <string name="since"></string>
-    <string name="until"></string>
-    <string name="until_end"></string>
+    <string name="since" />
+    <string name="until" />
+    <string name="until_end" />
 
     <!-- NoteBody: sunset/sunrise/twilight string
          The note body text; appears next to the prefix (layout/info_time_note.xml)
@@ -448,7 +448,7 @@
     <string name="schedalarm_dialog_ok">Beállít</string>
     <string name="schedalarm_dialog_cancel">Mégse</string>
     <string name="schedalarm_dialog_error">Az emlékeztetőt nem sikerült beállítani</string>
-    <string name="schedalarm_dialog_error2">Az emlékeztetőt nem lehet beállítani...</string>
+    <string name="schedalarm_dialog_error2">Az emlékeztetőt nem lehet beállítani…</string>
     <string name="schedalarm_dialog_note">kb <xliff:g id="timetext" example="6h 30m">%s</xliff:g> a hátralévő idő..</string>
     <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="nautical twilight">%s</xliff:g> nem lesz.</string>
     <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
@@ -519,7 +519,7 @@
 
     <!-- Dialog: Clear Places (progress) -->
     <string name="locationcleared_dialog_title">Helyek törlése</string>
-    <string name="locationcleared_dialog_message">Adatbázis törlése...</string>
+    <string name="locationcleared_dialog_message">Adatbázis törlése…</string>
     <string name="locationcleared_toast_success">Az adatbázist töröltük.</string>
 
     <!-- Dialog: Export Places -->
