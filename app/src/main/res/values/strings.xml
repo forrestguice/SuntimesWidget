@@ -674,7 +674,7 @@
           To <b>reconfigure an existing widget</b> you can select from the following list.<br/>
     ]]></string>
 
-    <!-- calculator implemenations -->
+    <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
     <string name="calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
 
