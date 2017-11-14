@@ -77,7 +77,7 @@
             <CheckBox
                 android:id="@+id/appwidget_general_showNoon"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Show Solar Noon" />  <!-- TODO: i18n -->
+                android:text="@string/configLabel_general_showNoon" />
 
         </LinearLayout>
 
@@ -89,7 +89,7 @@
             <CheckBox
                 android:id="@+id/appwidget_general_showCompare"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Show Comparison" />  <!-- TODO: i18n -->
+                android:text="@string/configLabel_general_showComparison" />
 
         </LinearLayout>
 

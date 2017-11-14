@@ -226,8 +226,11 @@
     <!-- Widget Setting: compare mode -->
     <string name="compareMode_yesterday">Hier</string>                     <!-- setting -->
     <string name="compareMode_tomorrow">Demain</string>                       <!-- setting -->
-
     <string name="configLabel_general_compareMode">Comparer avec :</string>    <!-- spinner label -->
+    <string name="configLabel_general_showComparison">Show Comparison</string>  <!-- checkbox label -->
+
+    <!-- Widget Settings: noon -->
+    <string name="configLabel_general_showNoon">Show Solar Noon</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: Launch App -->
     <string name="configLabel_action_launch">Activité :</string>                 <!-- edittext label -->
