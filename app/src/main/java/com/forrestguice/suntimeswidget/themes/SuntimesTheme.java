@@ -32,6 +32,7 @@ public class SuntimesTheme
     public static final String THEME_ISDEFAULT = "isDefault";
     public static final String THEME_DISPLAYSTRING = "display";
     public static final String THEME_BACKGROUND = "backgroundID";
+    public static final String THEME_PADDING = "padding";
     public static final String THEME_PADDING_LEFT = "padding_left";
     public static final String THEME_PADDING_TOP = "padding_top";
     public static final String THEME_PADDING_RIGHT = "padding_right";

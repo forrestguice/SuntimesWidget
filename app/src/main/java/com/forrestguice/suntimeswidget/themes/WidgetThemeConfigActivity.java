@@ -436,7 +436,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         outState.putInt(SuntimesTheme.THEME_SUNSETCOLOR, chooseColorSet.getColor());
         outState.putInt(SuntimesTheme.THEME_TIMECOLOR, chooseColorTime.getColor());
         outState.putInt(SuntimesTheme.THEME_TIMESUFFIXCOLOR, chooseColorSuffix.getColor());
-        outState.putIntArray("padding", choosePadding.getPadding());
+        outState.putIntArray(SuntimesTheme.THEME_PADDING, choosePadding.getPadding());
     }
 
     @Override
@@ -459,7 +459,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         chooseColorSet.setColor(savedState.getInt(SuntimesTheme.THEME_SUNSETCOLOR, chooseColorSet.getColor()));
         chooseColorTime.setColor(savedState.getInt(SuntimesTheme.THEME_TIMECOLOR, chooseColorTime.getColor()));
         chooseColorSuffix.setColor(savedState.getInt(SuntimesTheme.THEME_TIMESUFFIXCOLOR, chooseColorSuffix.getColor()));
-        choosePadding.setPadding(savedState.getIntArray("padding"));
+        choosePadding.setPadding(savedState.getIntArray(SuntimesTheme.THEME_PADDING));
     }
 
     @Override
