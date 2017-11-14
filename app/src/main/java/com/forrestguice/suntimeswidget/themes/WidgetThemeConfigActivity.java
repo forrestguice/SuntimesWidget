@@ -22,7 +22,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
@@ -55,6 +54,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 import static com.forrestguice.suntimeswidget.themes.SuntimesTheme.THEME_NAME;
 
@@ -738,7 +738,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         public void updateViews()
         {
-            edit.setText(""+titleSize);
+            edit.setText(String.format(Locale.US, "%d", titleSize));
         }
 
         @Override

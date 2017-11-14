@@ -133,6 +133,7 @@ public class GetFixDatabaseAdapter
      */
     public Cursor getPlace(long row) throws SQLException
     {
+        @SuppressWarnings("UnnecessaryLocalVariable")
         String[] QUERY = QUERY_PLACES_FULLENTRY;
         Cursor cursor = database.query( true, TABLE_PLACES, QUERY,
                                         KEY_ROWID + "=" + row, null,

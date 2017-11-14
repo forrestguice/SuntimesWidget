@@ -269,7 +269,7 @@ public class SuntimesThemeXML implements SuntimesThemeIO
             }
 
         } catch (XmlPullParserException e1) {
-            Log.e("SuntimesThemeXML.read", "Failed to read themes :: " + e1);
+            Log.e("SuntimesThemeXML.read", "Failed to parse themes :: " + e1);
             noErrors = false;
 
         } catch (IOException e2) {

@@ -6,7 +6,7 @@
         <item android:id="@+id/addTheme"
               android:title="@string/configAction_addTheme"
               android:icon="?attr/icActionNew"
-              app:showAsAction="always" />
+              app:showAsAction="ifRoom" />
 
         <item android:id="@+id/exportThemes"
               android:title="@string/configAction_exportThemes"
