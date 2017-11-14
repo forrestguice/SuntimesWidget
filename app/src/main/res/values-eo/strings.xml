@@ -508,9 +508,16 @@
     <!-- Dialog: Export Places -->
     <string name="locationexport_dialog_title">Elporti lokojn</string>
     <string name="locationexport_dialog_message">Elportado de la datumbazo al csv-dosiero.</string>
+
+    <!-- Dialog: Export -->
     <string name="msg_export_success">Provizore kopiita al <xliff:g id="filepath">%s</xliff:g></string>
     <string name="msg_export_failure">Elportado al <xliff:g id="filepath">%s</xliff:g> malsukcesis!</string>
     <string name="msg_export_to">Elporti per</string>  <!-- title displayed over "share action" chooser -->
+
+    <!-- Dialog: Color -->
+    <string name="color_dialog_msg">Choose Color</string> <!-- TODO -->
+    <string name="color_dialog_ok">Select</string>        <!-- TODO -->
+    <string name="color_dialog_cancel">Cancel</string>    <!-- TODO -->
 
     <!-- Dialog: About -->
     <string name="about_dialog_title">Pri</string>

@@ -508,9 +508,16 @@
   <!-- Dialog: Export Places -->
   <string name="locationexport_dialog_title">Orte exportieren</string>
   <string name="locationexport_dialog_message">Exportiere die Datenbank als CSV-Datei.</string>
+
+  <!-- Dialog: Export -->
   <string name="msg_export_success">Temporäre Datei liegt hier: <xliff:g id="filepath">%s</xliff:g></string>
   <string name="msg_export_failure">Exportieren nach <xliff:g id="filepath">%s</xliff:g> ist fehlgeschlagen!</string>
   <string name="msg_export_to">Exportiere mit</string>  <!-- title displayed over "share action" chooser -->
+
+  <!-- Dialog: Color -->
+  <string name="color_dialog_msg">Choose Color</string> <!-- TODO -->
+  <string name="color_dialog_ok">Select</string>        <!-- TODO -->
+  <string name="color_dialog_cancel">Cancel</string>    <!-- TODO -->
 
   <!-- Dialog: About -->
   <string name="about_dialog_title">Über</string>

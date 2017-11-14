@@ -508,9 +508,16 @@
     <!-- Dialog: Export Places -->
     <string name="locationexport_dialog_title">Eksport miejsc</string>
     <string name="locationexport_dialog_message">Eksportowanie bazy danych do pliku csv.</string>
+
+    <!-- Dialog: Export -->
     <string name="msg_export_success">Tymczasowo skopiowano do <xliff:g id="filepath">%s</xliff:g></string>
     <string name="msg_export_failure">Eksport do <xliff:g id="filepath">%s</xliff:g> nieudany!</string>
     <string name="msg_export_to">Eksportuj używając</string>  <!-- title displayed over "share action" chooser -->
+
+    <!-- Dialog: Color -->
+    <string name="color_dialog_msg">Choose Color</string> <!-- TODO -->
+    <string name="color_dialog_ok">Select</string>        <!-- TODO -->
+    <string name="color_dialog_cancel">Cancel</string>    <!-- TODO -->
 
     <!-- Dialog: About -->
     <string name="about_dialog_title">O programie</string>

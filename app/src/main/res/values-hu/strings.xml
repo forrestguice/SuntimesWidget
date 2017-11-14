@@ -522,9 +522,16 @@
     <!-- Dialog: Export Places -->
     <string name="locationexport_dialog_title">Hely exportálása</string>
     <string name="locationexport_dialog_message">Adatbázis csv fájlba exportálása.</string>
+
+    <!-- Dialog: Export -->
     <string name="msg_export_success">Ideiglenes másolat itt: <xliff:g id="filepath">%s</xliff:g></string>
     <string name="msg_export_failure">Exportálás ide <xliff:g id="filepath">%s</xliff:g> nem sikerült!</string>
     <string name="msg_export_to">Exportáld a következővel:</string>  <!-- title displayed over "share action" chooser -->
+
+    <!-- Dialog: Color -->
+    <string name="color_dialog_msg">Choose Color</string> <!-- TODO -->
+    <string name="color_dialog_ok">Select</string>        <!-- TODO -->
+    <string name="color_dialog_cancel">Cancel</string>    <!-- TODO -->
 
     <!-- Dialog: About -->
     <string name="about_dialog_title">Rólunk</string>
