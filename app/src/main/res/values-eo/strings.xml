@@ -267,8 +267,8 @@
 
     <string name="deletetheme_dialog_title">Delete Theme</string>        <!-- dialog title --> <!-- TODO -->
     <string name="deletetheme_dialog_message">Are you sure you want to delete <xliff:g id="themeName">%1$s</xliff:g>?</string>   <!-- dialog msg --> <!-- TODO -->
-    <string name="deletetheme_dialog_ok">Delete</string>        <!-- button --> <!-- TODO -->
-    <string name="deletetheme_dialog_cancel">Cancel</string>    <!-- button --> <!-- TODO -->
+    <string name="deletetheme_dialog_ok">Forviŝi</string>        <!-- button -->
+    <string name="deletetheme_dialog_cancel">Nuligi</string>    <!-- button -->
 
     <string name="configLabel_widgetThemeAdd">Add Theme</string>     <!-- title text --> <!-- TODO -->
     <string name="configLabel_widgetThemeEdit">Edit Theme</string>   <!-- title text -->  <!-- TODO -->
@@ -516,8 +516,8 @@
 
     <!-- Dialog: Color -->
     <string name="color_dialog_msg">Choose Color</string> <!-- TODO -->
-    <string name="color_dialog_ok">Select</string>        <!-- TODO -->
-    <string name="color_dialog_cancel">Cancel</string>    <!-- TODO -->
+    <string name="color_dialog_ok">Aktualigi</string>
+    <string name="color_dialog_cancel">Nuligi</string>
 
     <!-- Dialog: About -->
     <string name="about_dialog_title">Pri</string>
