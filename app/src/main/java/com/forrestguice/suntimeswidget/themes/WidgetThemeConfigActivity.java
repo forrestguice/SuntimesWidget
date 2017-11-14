@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
@@ -52,6 +53,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import static com.forrestguice.suntimeswidget.themes.SuntimesTheme.THEME_NAME;
@@ -82,6 +84,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private ThemeNameChooser chooseName;
     private PaddingChooser choosePadding;
     private ColorChooser chooseColorRise, chooseColorSet, chooseColorTitle, chooseColorText, chooseColorTime, chooseColorSuffix;
+    private ArrayList<ColorChooser> colorChoosers;
     private Spinner spinBackground;
     //protected ThemeBackground[] backgrounds;
 
@@ -137,6 +140,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         }
 
         initPreview(context);
+
+        colorChoosers = new ArrayList<>();
 
         //backgrounds = new ThemeBackground[3];
         //backgrounds[0] = new ThemeBackground(R.drawable.bg_widget_dark, getString(R.string.configLabel_themeBackground_dark));
@@ -195,7 +200,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         EditText editColorTitle = (EditText)findViewById(R.id.edit_titleColor);
         ImageButton buttonColorTitle = (ImageButton)findViewById(R.id.editButton_titleColor);
-        chooseColorTitle = new ColorChooser(this, editColorTitle, buttonColorTitle)
+        chooseColorTitle = new ColorChooser(this, editColorTitle, buttonColorTitle, SuntimesTheme.THEME_TITLECOLOR)
         {
             @Override
             protected void onColorChanged( int newColor )
@@ -203,10 +208,11 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 updatePreview();
             }
         };
+        colorChoosers.add(chooseColorTitle);
 
         EditText editColorText = (EditText)findViewById(R.id.edit_textColor);
         ImageButton buttonColorText = (ImageButton)findViewById(R.id.editButton_textColor);
-        chooseColorText = new ColorChooser(this, editColorText, buttonColorText)
+        chooseColorText = new ColorChooser(this, editColorText, buttonColorText, SuntimesTheme.THEME_TEXTCOLOR)
         {
             @Override
             protected void onColorChanged( int newColor )
@@ -214,10 +220,11 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 updatePreview();
             }
         };
+        colorChoosers.add(chooseColorText);
 
         EditText editColorRise = (EditText)findViewById(R.id.edit_sunriseColor);
         ImageButton buttonColorRise = (ImageButton)findViewById(R.id.editButton_sunriseColor);
-        chooseColorRise = new ColorChooser(this, editColorRise, buttonColorRise)
+        chooseColorRise = new ColorChooser(this, editColorRise, buttonColorRise, SuntimesTheme.THEME_SUNRISECOLOR)
         {
             @Override
             protected void onColorChanged( int newColor )
@@ -225,10 +232,11 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 updatePreview();
             }
         };
+        colorChoosers.add(chooseColorRise);
 
         EditText editColorSet = (EditText)findViewById(R.id.edit_sunsetColor);
         ImageButton buttonColorSet = (ImageButton)findViewById(R.id.editButton_sunsetColor);
-        chooseColorSet = new ColorChooser(this, editColorSet, buttonColorSet)
+        chooseColorSet = new ColorChooser(this, editColorSet, buttonColorSet, SuntimesTheme.THEME_SUNSETCOLOR)
         {
             @Override
             protected void onColorChanged( int newColor )
@@ -236,10 +244,11 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 updatePreview();
             }
         };
+        colorChoosers.add(chooseColorSet);
 
         EditText editColorTime = (EditText)findViewById(R.id.edit_timeColor);
         ImageButton buttonColorTime = (ImageButton)findViewById(R.id.editButton_timeColor);
-        chooseColorTime = new ColorChooser(this, editColorTime, buttonColorTime)
+        chooseColorTime = new ColorChooser(this, editColorTime, buttonColorTime, SuntimesTheme.THEME_TIMECOLOR)
         {
             @Override
             protected void onColorChanged( int newColor )
@@ -247,10 +256,11 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 updatePreview();
             }
         };
+        colorChoosers.add(chooseColorTime);
 
         EditText editColorSuffix = (EditText)findViewById(R.id.edit_suffixColor);
         ImageButton buttonColorSuffix = (ImageButton)findViewById(R.id.editButton_suffixColor);
-        chooseColorSuffix = new ColorChooser(this, editColorSuffix, buttonColorSuffix)
+        chooseColorSuffix = new ColorChooser(this, editColorSuffix, buttonColorSuffix, SuntimesTheme.THEME_TIMESUFFIXCOLOR)
         {
             @Override
             protected void onColorChanged( int newColor )
@@ -258,6 +268,12 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 updatePreview();
             }
         };
+        colorChoosers.add(chooseColorSuffix);
+
+        for (ColorChooser chooser : colorChoosers)
+        {
+            chooser.setFragmentManager(getSupportFragmentManager());
+        }
 
         switch (mode)
         {
@@ -394,6 +410,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     public void onResume()
     {
         super.onResume();
+        for (ColorChooser chooser : colorChoosers)
+        {
+            chooser.onResume();
+        }
     }
 
     @Override

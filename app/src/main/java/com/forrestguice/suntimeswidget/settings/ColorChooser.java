@@ -18,33 +18,27 @@
 
 package com.forrestguice.suntimeswidget.settings;
 
+import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
-import android.graphics.LightingColorFilter;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.os.Build;
-import android.support.v7.app.AlertDialog;
+import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
-
-import com.flask.colorpicker.ColorPickerView;
-import com.flask.colorpicker.OnColorSelectedListener;
-import com.flask.colorpicker.builder.ColorPickerClickListener;
-import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
-import com.forrestguice.suntimeswidget.R;
 
 import java.util.HashSet;
 import java.util.Locale;
 
 public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
 {
+    private static final String DIALOGTAG_COLOR = "colorchooser";
+
+    private String chooserID = "0";
     final private ImageButton button;
     final private EditText edit;
 
@@ -54,8 +48,10 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
     public static final char[] alphabet = {'#', '0', '1', '2', '3', '4', '5', '6', '7','8', '9', 'a', 'A', 'b', 'B', 'c', 'C', 'd', 'D', 'e', 'E', 'f', 'F'};
     HashSet<Character> inputSet;
 
-    public ColorChooser(final Context context, EditText editField, ImageButton button)
+    public ColorChooser(final Context context, EditText editField, ImageButton button, String id)
     {
+        chooserID = id;
+
         edit = editField;
         edit.addTextChangedListener(this);
         edit.setOnFocusChangeListener(this);
@@ -72,7 +68,7 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
             @Override
             public void onClick(View v)
             {
-                showColorPicker(context, getColor());
+                showColorPicker(context);
             }
         });
     }
@@ -215,38 +211,47 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
         }
     }
 
-    private void showColorPicker(Context context, int selectedColor)
+    private FragmentManager fragmentManager = null;
+    public void setFragmentManager( FragmentManager manager )
     {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+        fragmentManager = manager;
+    }
+
+    private void showColorPicker(Context context)
+    {
+        ColorDialog colorDialog = new ColorDialog();
+        colorDialog.setColor(getColor());
+        colorDialog.setColorChangeListener(colorDialogChangeListener);
+        if (fragmentManager != null)
         {
-            AlertDialog colorDialog = ColorPickerDialogBuilder.with(context)
-                    .setTitle(context.getString(R.string.color_dialog_msg))
-                    .initialColor(selectedColor)
-                    .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
-                    .density(10)
-                    .lightnessSliderOnly()
-                    .setOnColorSelectedListener(new OnColorSelectedListener()
-                    {
-                        @Override
-                        public void onColorSelected(int selectedColor) {}
-                    })
-                    .setPositiveButton(context.getString(R.string.color_dialog_ok), new ColorPickerClickListener()
-                    {
-                        @Override
-                        public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors)
-                        {
-                            setColor(selectedColor);
-                            onColorChanged(getColor());
-                        }
-                    })
-                    .setNegativeButton(context.getString(R.string.color_dialog_cancel), new DialogInterface.OnClickListener()
-                    {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {}
-                    })
-                    .build();
-            colorDialog.show();
-        } //else { // TODO: implement colorpicker for pre v14 }
+            colorDialog.show(fragmentManager, DIALOGTAG_COLOR + "_" + chooserID);
+        } else {
+            Log.w("showColorPicker", "fragmentManager is null; showing fallback ...");
+            Dialog dialog = colorDialog.getDialog();
+            dialog.show();
+        }
+    }
+
+    private ColorDialog.ColorChangeListener colorDialogChangeListener = new ColorDialog.ColorChangeListener()
+    {
+        @Override
+        public void onColorChanged(int color)
+        {
+            setColor(color);
+            ColorChooser.this.onColorChanged(getColor());
+        }
+    };
+
+    public void onResume()
+    {
+        if (fragmentManager != null)
+        {
+            ColorDialog colorDialog = (ColorDialog) fragmentManager.findFragmentByTag(DIALOGTAG_COLOR + "_" + chooserID);
+            if (colorDialog != null)
+            {
+                colorDialog.setColorChangeListener(colorDialogChangeListener);
+            }
+        }
     }
 
 }
