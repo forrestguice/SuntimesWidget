@@ -276,7 +276,7 @@ public class SuntimesThemeXML implements SuntimesThemeIO
             Log.e("SuntimesThemeXML.read", "Failed to read themes :: " + e2);
             noErrors = false;
         }
-        signalImportFinished(noErrors && themes != null && themes.length > 0);
+        signalImportFinished(noErrors && themes.length > 0);
         return themes;
     }
 

@@ -133,6 +133,7 @@ public class PaddingChooser implements TextWatcher, View.OnFocusChangeListener
         int length = editable.length();
         String text = editable.toString();
 
+        //noinspection UnusedAssignment
         int i0 = -1, i1 = -1, i2 = -1, i3 = -1;
         if ((i0 = text.indexOf(separator, 0)) != -1)
         {

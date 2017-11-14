@@ -20,6 +20,7 @@ android
     {
         applicationId "com.forrestguice.suntimeswidget"
         minSdkVersion 10
+        //noinspection OldTargetApi
         targetSdkVersion 25
         versionCode 12
         versionName "0.4.1"
@@ -67,7 +68,7 @@ configurations.all {
     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }
 
-def getDateAsMillis()
+static def getDateAsMillis()
 {
     def Calendar cal = Calendar.getInstance();
     return cal.getTimeInMillis().toString()
