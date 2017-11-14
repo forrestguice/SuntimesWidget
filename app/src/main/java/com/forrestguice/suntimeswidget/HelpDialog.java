@@ -48,7 +48,7 @@ public class HelpDialog extends DialogFragment
         rawContent = content;
         if (txtView != null)
         {
-            txtView.setText(Html.fromHtml(rawContent));
+            txtView.setText(SuntimesUtils.fromHtml(rawContent));
         }
     }
 

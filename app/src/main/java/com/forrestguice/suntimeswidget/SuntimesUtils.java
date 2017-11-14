@@ -21,8 +21,10 @@ package com.forrestguice.suntimeswidget;
 import android.content.Context;
 import android.content.res.Resources;
 
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.text.Html;
 import android.text.Spannable;
 
 import android.content.res.TypedArray;
@@ -30,6 +32,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
@@ -653,4 +656,15 @@ public class SuntimesUtils
         }
     }
 
+    /**
+     * @param htmlString
+     * @return
+     */
+    @SuppressWarnings("deprecation")
+    public static Spanned fromHtml(String htmlString )
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            return Html.fromHtml(htmlString, Html.FROM_HTML_MODE_LEGACY);
+        else return Html.fromHtml(htmlString);
+    }
 }
