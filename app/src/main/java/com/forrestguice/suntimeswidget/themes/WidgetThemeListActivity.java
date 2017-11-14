@@ -27,6 +27,7 @@ import android.content.Intent;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
@@ -67,6 +68,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
     protected ActionMode actionMode = null;
     private WidgetThemeActionCompat themeActions;
+    private SuntimesTheme.ThemeDescriptor selected = null;
 
     private ProgressDialog progress;
     private ExportThemesTask exportTask = null;
@@ -149,6 +151,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
     {
         if (actionMode == null)
         {
+            selected = themeDesc;
             if (themeDesc != null)
             {
                 themeActions.setTheme(this, themeDesc);
@@ -377,6 +380,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         public void onDestroyActionMode(ActionMode mode)
         {
             actionMode = null;
+            selected = null;
         }
 
         @Override
@@ -488,6 +492,28 @@ public class WidgetThemeListActivity extends AppCompatActivity
             exportTask.clearTaskListener();
         }
         dismissProgress();
+    }
+
+    @Override
+    public void onSaveInstanceState( Bundle outState )
+    {
+        super.onSaveInstanceState(outState);
+        if (selected != null)
+        {
+            outState.putString(SuntimesTheme.THEME_NAME, selected.name());
+        }
+    }
+
+    @Override
+    public void onRestoreInstanceState(@NonNull Bundle savedState)
+    {
+        super.onRestoreInstanceState(savedState);
+        String themeName = savedState.getString(SuntimesTheme.THEME_NAME, null);
+        if (themeName != null)
+        {
+            SuntimesTheme.ThemeDescriptor theme = (SuntimesTheme.ThemeDescriptor) adapter.getItem(adapter.ordinal(themeName));
+            triggerActionMode(null, theme);
+        }
     }
 
     @Override
