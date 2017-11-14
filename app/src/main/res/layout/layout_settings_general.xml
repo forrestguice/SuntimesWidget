@@ -58,7 +58,7 @@
                 android:layout_weight="1" />
 
 
-            <ImageButton android:id="@+id/appwidget_generale_timeMode_helpButton"
+            <ImageButton android:id="@+id/appwidget_general_timeMode_helpButton"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:src="@android:drawable/ic_menu_help"

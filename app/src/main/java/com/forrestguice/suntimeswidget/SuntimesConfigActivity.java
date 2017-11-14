@@ -287,7 +287,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
         // widget: time mode
         //
         spinner_timeMode = (Spinner)findViewById(R.id.appwidget_general_timeMode);
-        button_timeModeHelp = (ImageButton)findViewById(R.id.appwidget_generale_timeMode_helpButton);
+        button_timeModeHelp = (ImageButton)findViewById(R.id.appwidget_general_timeMode_helpButton);
         initTimeMode(context);
 
         //
