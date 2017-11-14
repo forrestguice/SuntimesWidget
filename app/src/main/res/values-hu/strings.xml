@@ -225,8 +225,11 @@
     <!-- Widget Setting: compare mode -->
     <string name="compareMode_yesterday">Tegnap</string>                     <!-- setting -->
     <string name="compareMode_tomorrow">Holnap</string>                       <!-- setting -->
-
     <string name="configLabel_general_compareMode">Hasonlítsa össze:</string>    <!-- spinner label -->
+    <string name="configLabel_general_showComparison">Show Comparison</string>  <!-- checkbox label -->
+
+    <!-- Widget Settings: noon -->
+    <string name="configLabel_general_showNoon">Show Solar Noon</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: Launch App -->
     <string name="configLabel_action_launch">Activity:</string>                 <!-- edittext label -->
