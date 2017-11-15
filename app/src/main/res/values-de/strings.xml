@@ -259,8 +259,8 @@
   <string name="edittheme_error_themeName_empty">ID must be unique (required).</string>        <!-- error hint (themeName empty) -->  <!-- TODO -->
   <string name="edittheme_error_themeName_unique">ID must be unique (already taken).</string>  <!-- error hint (themeName taken) -->  <!-- TODO -->
   <string name="edittheme_error_displaytext">Display string must not be empty.</string>  <!-- error hint (display text is empty) -->  <!-- TODO -->
-  <string name="edittheme_error_titlesize_min">Title size must be an integer &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) --> <!-- TODO -->
-  <string name="edittheme_error_titlesize_max">Title size must be an integer &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->  <!-- TODO -->
+  <string name="edittheme_error_textsize_min">Size must be an integer &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) --> <!-- TODO -->
+  <string name="edittheme_error_textsize_max">Size must be an integer &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->  <!-- TODO -->
 
   <string name="deletetheme_dialog_title">Delete Theme</string>        <!-- dialog title --> <!-- TODO -->
   <string name="deletetheme_dialog_message">Are you sure you want to delete <xliff:g id="themeName">%1$s</xliff:g>?</string>   <!-- dialog msg --> <!-- TODO -->

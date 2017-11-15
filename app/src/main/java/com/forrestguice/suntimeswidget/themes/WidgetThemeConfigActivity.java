@@ -77,7 +77,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
     private ActionBar actionBar;
     private EditText editDisplay;
-    private TextSizeChooser chooseTitleSize;
+    private TextSizeChooser chooseTitleSize, chooseTextSize, chooseTimeSize, chooseSuffixSize;
     private ThemeNameChooser chooseName;
     private PaddingChooser choosePadding;
     private ColorChooser chooseColorRise, chooseColorSet, chooseColorTitle, chooseColorText, chooseColorTime, chooseColorSuffix;
@@ -183,7 +183,16 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         });
 
         EditText editTitleSize = (EditText)findViewById(R.id.edit_titleSize);
-        chooseTitleSize = new TextSizeChooser(editTitleSize);
+        chooseTitleSize = new TextSizeChooser(editTitleSize, SuntimesTheme.THEME_TITLESIZE_MIN, SuntimesTheme.THEME_TITLESIZE_MAX);
+
+        EditText editTextSize = null; //(EditText)findViewById(R.id.edit_textSize);  // TODO
+        chooseTextSize = new TextSizeChooser(editTextSize, SuntimesTheme.THEME_TEXTSIZE_MIN, SuntimesTheme.THEME_TEXTSIZE_MAX);
+
+        EditText editTimeSize = null; //(EditText)findViewById(R.id.edit_timeSize);  // TODO
+        chooseTimeSize = new TextSizeChooser(editTimeSize, SuntimesTheme.THEME_TIMESIZE_MIN, SuntimesTheme.THEME_TIMESIZE_MAX);
+
+        EditText editSuffixSize = null; //(EditText)findViewById(R.id.edit_suffixSize);  // TODO
+        chooseSuffixSize = new TextSizeChooser(editSuffixSize, SuntimesTheme.THEME_TIMESUFFIXSIZE_MIN, SuntimesTheme.THEME_TIMESUFFIXSIZE_MAX);
 
         EditText editPadding = (EditText)findViewById(R.id.edit_padding);
         choosePadding = new PaddingChooser(editPadding)
@@ -427,6 +436,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         }
 
         outState.putInt(SuntimesTheme.THEME_TITLESIZE, chooseTitleSize.getTextSize());
+        outState.putInt(SuntimesTheme.THEME_TEXTSIZE, chooseTextSize.getTextSize());
+        outState.putInt(SuntimesTheme.THEME_TIMESIZE, chooseTimeSize.getTextSize());
+        outState.putInt(SuntimesTheme.THEME_TIMESUFFIXSIZE, chooseSuffixSize.getTextSize());
+
         outState.putInt(SuntimesTheme.THEME_TITLECOLOR, chooseColorTitle.getColor());
         outState.putInt(SuntimesTheme.THEME_TEXTCOLOR, chooseColorText.getColor());
         outState.putInt(SuntimesTheme.THEME_SUNRISECOLOR, chooseColorRise.getColor());
@@ -450,6 +463,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         setSelectedBackground(savedState.getInt(SuntimesTheme.THEME_BACKGROUND, (background != null ? background.getResID() : DarkTheme.THEMEDEF_BACKGROUND_ID)));
 
         chooseTitleSize.setTextSize(savedState.getInt(SuntimesTheme.THEME_TITLESIZE, this.chooseTitleSize.getTextSize()));
+        chooseTextSize.setTextSize(savedState.getInt(SuntimesTheme.THEME_TEXTSIZE, this.chooseTextSize.getTextSize()));
+        chooseTimeSize.setTextSize(savedState.getInt(SuntimesTheme.THEME_TIMESIZE, this.chooseTimeSize.getTextSize()));
+        chooseSuffixSize.setTextSize(savedState.getInt(SuntimesTheme.THEME_TIMESUFFIXSIZE, this.chooseSuffixSize.getTextSize()));
+
         chooseColorTitle.setColor(savedState.getInt(SuntimesTheme.THEME_TITLECOLOR, chooseColorTitle.getColor()));
         chooseColorText.setColor(savedState.getInt(SuntimesTheme.THEME_TEXTCOLOR, chooseColorText.getColor()));
         chooseColorRise.setColor(savedState.getInt(SuntimesTheme.THEME_SUNRISECOLOR, chooseColorRise.getColor()));
@@ -523,6 +540,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 editDisplay.setText((mode == UIMode.ADD_THEME) ? generateThemeDisplayString(theme.themeDisplayString()) : theme.themeDisplayString());
             }
             chooseTitleSize.setTextSize((int)theme.getTitleSizeSp());
+            chooseTextSize.setTextSize((int)theme.getTextSizeSp());
+            chooseTimeSize.setTextSize((int)theme.getTimeSizeSp());
+            chooseSuffixSize.setTextSize((int)theme.getTimeSuffixSizeSp());
             chooseColorTitle.setColor(theme.getTitleColor());
             chooseColorText.setColor(theme.getTextColor());
             chooseColorRise.setColor(theme.getSunriseTextColor());
@@ -555,6 +575,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 this.themeName = chooseName.getThemeName();
                 this.themeDisplayString = editDisplay.getText().toString();
                 this.themeTitleSize = chooseTitleSize.getTextSize();
+                this.themeTextSize = chooseTextSize.getTextSize();
+                this.themeTimeSize = chooseTimeSize.getTextSize();
+                this.themeTimeSuffixSize = chooseSuffixSize.getTextSize();
                 this.themeTitleColor = chooseColorTitle.getColor();
                 this.themeTextColor = chooseColorText.getColor();
                 this.themeTimeColor = chooseColorTime.getColor();
@@ -613,7 +636,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
      */
     protected boolean validateInput()
     {
-        boolean isValid = validateTitleSize(chooseTitleSize.getField());
+        boolean isValid = chooseTitleSize.validateTextSize(this);
+        isValid = isValid && chooseTextSize.validateTextSize(this);
+        isValid = isValid && chooseTimeSize.validateTextSize(this);
+        isValid = isValid && chooseSuffixSize.validateTextSize(this);
         isValid = isValid && validateThemeDisplayText(editDisplay);
         isValid = isValid && validateThemeID(chooseName.getField());
         return isValid;
@@ -665,56 +691,26 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         return isValid;
     }
 
-    protected boolean validateTitleSize( EditText editTitleSize )
-    {
-        return validateTitleSize(this, editTitleSize, true);
-    }
-    protected static boolean validateTitleSize(Context context, EditText editTitleSize, boolean grabFocus )
-    {
-        boolean isValid = true;
-        editTitleSize.setError(null);
-
-        try {
-            int titleSize = Integer.parseInt(editTitleSize.getText().toString());
-            if (titleSize < SuntimesTheme.THEME_TITLESIZE_MIN)
-            {
-                isValid = false;       // title too small
-                editTitleSize.setError(context.getString(R.string.edittheme_error_titlesize_min, SuntimesTheme.THEME_TITLESIZE_MIN+""));
-                if (grabFocus)
-                    editTitleSize.requestFocus();
-            }
-
-            if (titleSize > SuntimesTheme.THEME_TITLESIZE_MAX)
-            {
-                isValid = false;       // title too large
-                editTitleSize.setError(context.getString(R.string.edittheme_error_titlesize_max, SuntimesTheme.THEME_TITLESIZE_MAX+""));
-                if (grabFocus)
-                    editTitleSize.requestFocus();
-            }
-
-        } catch (NumberFormatException e) {
-            isValid = false;          // title NaN (too small)
-            editTitleSize.setError(context.getString(R.string.edittheme_error_titlesize_min, SuntimesTheme.THEME_TITLESIZE_MIN+""));
-            if (grabFocus)
-                editTitleSize.requestFocus();
-        }
-        return isValid;
-    }
-
     /**
      * TextSizeChooser
      */
     private class TextSizeChooser implements TextWatcher, View.OnFocusChangeListener
     {
         private int textSize;
-        private EditText edit;
+        private EditText edit = null;
+        private float minSp, maxSp;
 
-        public TextSizeChooser( EditText editField )
+        public TextSizeChooser( EditText editField, float min, float max )
         {
+            minSp = min;
+            maxSp = max;
             edit = editField;
-            edit.setRawInputType(InputType.TYPE_CLASS_NUMBER);
-            edit.addTextChangedListener(this);
-            edit.setOnFocusChangeListener(this);
+            if (edit != null)
+            {
+                edit.setRawInputType(InputType.TYPE_CLASS_NUMBER);
+                edit.addTextChangedListener(this);
+                edit.setOnFocusChangeListener(this);
+            }
         }
 
         public EditText getField()
@@ -735,7 +731,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         public void updateViews()
         {
-            edit.setText(String.format(Locale.US, "%d", textSize));
+            if (edit != null)
+            {
+                edit.setText(String.format(Locale.US, "%d", textSize));
+            }
         }
 
         @Override
@@ -752,7 +751,6 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 textSize = Integer.parseInt(spValue);
             } catch (NumberFormatException e) {
                 Log.w("setTextSize", "Invalid size! " + spValue + " ignoring...");
-                updateViews();
             }
         }
 
@@ -761,12 +759,55 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         {
             if (!hasFocus)
             {
-                afterTextChanged(edit.getText());
-                if (validateTitleSize(WidgetThemeConfigActivity.this, edit, false))
+                if (edit != null)
+                {
+                    afterTextChanged(edit.getText());
+                }
+                if (validateTextSize(WidgetThemeConfigActivity.this, edit, minSp, maxSp, false))
                 {
                     updatePreview();
                 }
             }
+        }
+
+        protected boolean validateTextSize(Context context)
+        {
+            return validateTextSize(context, edit, minSp, maxSp, true);
+        }
+
+        protected boolean validateTextSize(Context context, EditText editTextSize, float min, float max, boolean grabFocus)
+        {
+            if (editTextSize == null)
+                return true;
+
+            boolean isValid = true;
+            editTextSize.setError(null);
+
+            try {
+                int textSize = Integer.parseInt(editTextSize.getText().toString());
+                if (textSize < min)
+                {
+                    isValid = false;       // title too small
+                    editTextSize.setError(context.getString(R.string.edittheme_error_textsize_min, min+""));
+                    if (grabFocus)
+                        editTextSize.requestFocus();
+                }
+
+                if (textSize > max)
+                {
+                    isValid = false;       // title too large
+                    editTextSize.setError(context.getString(R.string.edittheme_error_textsize_max, max+""));
+                    if (grabFocus)
+                        editTextSize.requestFocus();
+                }
+
+            } catch (NumberFormatException e) {
+                isValid = false;          // title NaN (too small)
+                editTextSize.setError(context.getString(R.string.edittheme_error_textsize_min, min+""));
+                if (grabFocus)
+                    editTextSize.requestFocus();
+            }
+            return isValid;
         }
     }
 
