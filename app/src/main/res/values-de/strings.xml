@@ -295,8 +295,17 @@
   <string name="configLabel_themeColorTime">Text Color2:</string>      <!-- color label --> <!-- TODO -->
   <string name="configHint_themeColorTime">#FFFFFFFF</string>          <!-- color hint --> <!-- TODO -->
 
-  <string name="configLabel_themeSizeTitle">Title Size (sp):</string>  <!-- edit label --> <!-- TODO -->
+  <string name="configLabel_themeSizeTitle">Title Size:</string>  <!-- edit label --> <!-- TODO -->
   <string name="configHint_themeSizeTitle">14</string>                 <!-- edit hint --> <!-- TODO -->
+
+  <string name="configLabel_themeSizeText">Text Size:</string>    <!-- edit label --> <!-- TODO -->
+  <string name="configHint_themeSizeText">10</string>                  <!-- edit hint --> <!-- TODO -->
+
+  <string name="configLabel_themeSizeTime">Time Size:</string>    <!-- edit label --> <!-- TODO -->
+  <string name="configHint_themeSizeTime">12</string>                  <!-- edit hint --> <!-- TODO -->
+
+  <string name="configLabel_themeSizeSuffix">Suffix Size:</string> <!-- edit label --> <!-- TODO -->
+  <string name="configHint_themeSizeSuffix">8</string>                  <!-- edit hint --> <!-- TODO -->
 
   <string name="configLabel_themePadding">Padding:</string>            <!-- edit label --> <!-- TODO -->
   <string name="configHint_themePadding">[left, top, right, bottom]</string> <!-- edit hint --> <!-- TODO -->
