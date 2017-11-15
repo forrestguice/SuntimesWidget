@@ -272,7 +272,7 @@
     <string name="configAction_saveTheme">Save</string>           <!-- button (contentDescription) -->
     <string name="configAction_chooseColor">Choose Color</string> <!-- button (contentDescription) -->
 
-    <string name="configLabel_themeBackgroundId">Background:</string>    <!-- spinner label -->
+    <string name="configLabel_themeBackgroundId">Base:</string>    <!-- spinner label -->
     <string name="configLabel_themeBackground_light">Light</string>        <!-- light background -->
     <string name="configLabel_themeBackground_dark">Dark</string>          <!-- dark background -->
     <string name="configLabel_themeBackground_trans">Transparent</string>  <!-- transparent background -->
