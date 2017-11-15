@@ -284,18 +284,22 @@ public class WidgetThemes
                     TextView riseView = (TextView) view.findViewById(R.id.text_time_sunrise);
                     riseView.setTextColor(theme.getSunriseTextColor());
                     riseView.setText(riseText.getValue());
+                    riseView.setTextSize(TypedValue.COMPLEX_UNIT_SP, theme.getTimeSizeSp());
 
                     TextView riseViewSuffix = (TextView) view.findViewById(R.id.text_time_sunrise_suffix);
                     riseViewSuffix.setTextColor(theme.getTimeSuffixColor());
                     riseViewSuffix.setText(riseText.getSuffix());
+                    riseViewSuffix.setTextSize(TypedValue.COMPLEX_UNIT_SP, theme.getTimeSuffixSizeSp());
 
                     TextView setView = (TextView) view.findViewById(R.id.text_time_sunset);
                     setView.setTextColor(theme.getSunsetTextColor());
                     setView.setText(setText.getValue());
+                    setView.setTextSize(TypedValue.COMPLEX_UNIT_SP, theme.getTimeSizeSp());
 
                     TextView setViewSuffix = (TextView) view.findViewById(R.id.text_time_sunset_suffix);
                     setViewSuffix.setTextColor(theme.getTimeSuffixColor());
                     setViewSuffix.setText(setText.getSuffix());
+                    setViewSuffix.setTextSize(TypedValue.COMPLEX_UNIT_SP, theme.getTimeSuffixSizeSp());
 
                     View layout = view.findViewById(R.id.widgetframe_inner);
                     try {
