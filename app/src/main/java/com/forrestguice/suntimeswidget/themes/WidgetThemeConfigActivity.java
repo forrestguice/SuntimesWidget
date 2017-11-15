@@ -48,13 +48,13 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.ColorChooser;
 import com.forrestguice.suntimeswidget.settings.PaddingChooser;
+import com.forrestguice.suntimeswidget.settings.TextSizeChooser;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Locale;
 
 import static com.forrestguice.suntimeswidget.themes.SuntimesTheme.THEME_NAME;
 
@@ -183,16 +183,16 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         });
 
         EditText editTitleSize = (EditText)findViewById(R.id.edit_titleSize);
-        chooseTitleSize = new TextSizeChooser(editTitleSize, SuntimesTheme.THEME_TITLESIZE_MIN, SuntimesTheme.THEME_TITLESIZE_MAX);
+        chooseTitleSize = new TextSizeChooser(this, editTitleSize, SuntimesTheme.THEME_TITLESIZE_MIN, SuntimesTheme.THEME_TITLESIZE_MAX);
 
         EditText editTextSize = null; //(EditText)findViewById(R.id.edit_textSize);  // TODO
-        chooseTextSize = new TextSizeChooser(editTextSize, SuntimesTheme.THEME_TEXTSIZE_MIN, SuntimesTheme.THEME_TEXTSIZE_MAX);
+        chooseTextSize = new TextSizeChooser(this, editTextSize, SuntimesTheme.THEME_TEXTSIZE_MIN, SuntimesTheme.THEME_TEXTSIZE_MAX);
 
         EditText editTimeSize = null; //(EditText)findViewById(R.id.edit_timeSize);  // TODO
-        chooseTimeSize = new TextSizeChooser(editTimeSize, SuntimesTheme.THEME_TIMESIZE_MIN, SuntimesTheme.THEME_TIMESIZE_MAX);
+        chooseTimeSize = new TextSizeChooser(this, editTimeSize, SuntimesTheme.THEME_TIMESIZE_MIN, SuntimesTheme.THEME_TIMESIZE_MAX);
 
         EditText editSuffixSize = null; //(EditText)findViewById(R.id.edit_suffixSize);  // TODO
-        chooseSuffixSize = new TextSizeChooser(editSuffixSize, SuntimesTheme.THEME_TIMESUFFIXSIZE_MIN, SuntimesTheme.THEME_TIMESUFFIXSIZE_MAX);
+        chooseSuffixSize = new TextSizeChooser(this, editSuffixSize, SuntimesTheme.THEME_TIMESUFFIXSIZE_MIN, SuntimesTheme.THEME_TIMESUFFIXSIZE_MAX);
 
         EditText editPadding = (EditText)findViewById(R.id.edit_padding);
         choosePadding = new PaddingChooser(editPadding)
@@ -689,126 +689,6 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 editDisplay.requestFocus();
         }
         return isValid;
-    }
-
-    /**
-     * TextSizeChooser
-     */
-    private class TextSizeChooser implements TextWatcher, View.OnFocusChangeListener
-    {
-        private int textSize;
-        private EditText edit = null;
-        private float minSp, maxSp;
-
-        public TextSizeChooser( EditText editField, float min, float max )
-        {
-            minSp = min;
-            maxSp = max;
-            edit = editField;
-            if (edit != null)
-            {
-                edit.setRawInputType(InputType.TYPE_CLASS_NUMBER);
-                edit.addTextChangedListener(this);
-                edit.setOnFocusChangeListener(this);
-            }
-        }
-
-        public EditText getField()
-        {
-            return edit;
-        }
-
-        public int getTextSize()
-        {
-            return textSize;
-        }
-
-        public void setTextSize( int spValue )
-        {
-            textSize = spValue;
-            updateViews();
-        }
-
-        public void updateViews()
-        {
-            if (edit != null)
-            {
-                edit.setText(String.format(Locale.US, "%d", textSize));
-            }
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-        @Override
-        public void afterTextChanged(Editable editable)
-        {
-            String spValue = editable.toString();
-            try {
-                textSize = Integer.parseInt(spValue);
-            } catch (NumberFormatException e) {
-                Log.w("setTextSize", "Invalid size! " + spValue + " ignoring...");
-            }
-        }
-
-        @Override
-        public void onFocusChange(View view, boolean hasFocus)
-        {
-            if (!hasFocus)
-            {
-                if (edit != null)
-                {
-                    afterTextChanged(edit.getText());
-                }
-                if (validateTextSize(WidgetThemeConfigActivity.this, edit, minSp, maxSp, false))
-                {
-                    updatePreview();
-                }
-            }
-        }
-
-        protected boolean validateTextSize(Context context)
-        {
-            return validateTextSize(context, edit, minSp, maxSp, true);
-        }
-
-        protected boolean validateTextSize(Context context, EditText editTextSize, float min, float max, boolean grabFocus)
-        {
-            if (editTextSize == null)
-                return true;
-
-            boolean isValid = true;
-            editTextSize.setError(null);
-
-            try {
-                int textSize = Integer.parseInt(editTextSize.getText().toString());
-                if (textSize < min)
-                {
-                    isValid = false;       // title too small
-                    editTextSize.setError(context.getString(R.string.edittheme_error_textsize_min, min+""));
-                    if (grabFocus)
-                        editTextSize.requestFocus();
-                }
-
-                if (textSize > max)
-                {
-                    isValid = false;       // title too large
-                    editTextSize.setError(context.getString(R.string.edittheme_error_textsize_max, max+""));
-                    if (grabFocus)
-                        editTextSize.requestFocus();
-                }
-
-            } catch (NumberFormatException e) {
-                isValid = false;          // title NaN (too small)
-                editTextSize.setError(context.getString(R.string.edittheme_error_textsize_min, min+""));
-                if (grabFocus)
-                    editTextSize.requestFocus();
-            }
-            return isValid;
-        }
     }
 
     /**
