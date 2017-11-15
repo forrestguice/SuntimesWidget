@@ -78,6 +78,16 @@ public class TextSizeChooser implements TextWatcher, View.OnFocusChangeListener
         }
     }
 
+    public float getMinSp()
+    {
+        return minSp;
+    }
+
+    public float getMaxSp()
+    {
+        return maxSp;
+    }
+
     @Override
     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 

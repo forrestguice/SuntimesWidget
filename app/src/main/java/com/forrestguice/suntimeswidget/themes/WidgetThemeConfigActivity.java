@@ -48,7 +48,6 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.ColorChooser;
 import com.forrestguice.suntimeswidget.settings.PaddingChooser;
-import com.forrestguice.suntimeswidget.settings.TextSizeChooser;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 
@@ -88,6 +87,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private View previewBackground;
     private TextView previewTitle, previewNoon, previewRise, previewSet, previewNoonSuffix, previewRiseSuffix, previewSetSuffix;
     private TextView previewTimeDeltaPrefix, previewTimeDelta, previewTimeDeltaSuffix;
+    private Calendar previewRiseTime, previewNoonTime, previewSetTime;
+    private int previewTimeDeltaValue;
 
     private SuntimesUtils utils = new SuntimesUtils();
 
@@ -299,6 +300,20 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
     protected void initPreview(Context context)
     {
+        previewNoonTime = Calendar.getInstance();
+        previewNoonTime.set(Calendar.HOUR_OF_DAY, 12);
+        previewNoonTime.set(Calendar.MINUTE, 0);
+
+        previewRiseTime = Calendar.getInstance();
+        previewRiseTime.set(Calendar.HOUR_OF_DAY, 7);
+        previewRiseTime.set(Calendar.MINUTE, 0);
+
+        previewSetTime = Calendar.getInstance();
+        previewSetTime.set(Calendar.HOUR_OF_DAY, 19);
+        previewSetTime.set(Calendar.MINUTE, 0);
+
+        previewTimeDeltaValue = 60;  // seconds
+
         previewBackground = findViewById(R.id.widgetframe_inner);
         previewTitle = (TextView)findViewById(R.id.text_title);
 
@@ -336,75 +351,79 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             previewTitle.setText(titleText);
             previewTitle.setVisibility(View.VISIBLE);
             previewTitle.setTextColor(chooseColorTitle.getColor());
-            previewTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, chooseTitleSize.getTextSize());
+            updateSizeFromChooser(previewTitle, chooseTitleSize);
         }
 
-        Calendar c0 = Calendar.getInstance();
-        c0.set(Calendar.HOUR_OF_DAY, 12);
-        c0.set(Calendar.MINUTE, 0);
-        SuntimesUtils.TimeDisplayText noonText = utils.calendarTimeShortDisplayString(this, c0);
-
+        SuntimesUtils.TimeDisplayText noonText = utils.calendarTimeShortDisplayString(this, previewNoonTime);
         if (previewNoon != null)
         {
             previewNoon.setText(noonText.getValue());
             previewNoon.setTextColor(chooseColorSet.getColor());
+            updateSizeFromChooser(previewNoon, chooseTimeSize);
         }
         if (previewNoonSuffix != null)
         {
             previewNoonSuffix.setText(noonText.getSuffix());
             previewNoonSuffix.setTextColor(chooseColorSuffix.getColor());
+            updateSizeFromChooser(previewNoonSuffix, chooseSuffixSize);
         }
 
-        Calendar c1 = Calendar.getInstance();
-        c1.set(Calendar.HOUR_OF_DAY, 7);
-        c1.set(Calendar.MINUTE, 0);
-        SuntimesUtils.TimeDisplayText riseText = utils.calendarTimeShortDisplayString(this, c1);
-
+        SuntimesUtils.TimeDisplayText riseText = utils.calendarTimeShortDisplayString(this, previewRiseTime);
         if (previewRise != null)
         {
             previewRise.setText(riseText.getValue());
             previewRise.setTextColor(chooseColorRise.getColor());
+            updateSizeFromChooser(previewRise, chooseTimeSize);
         }
         if (previewRiseSuffix != null)
         {
             previewRiseSuffix.setText(riseText.getSuffix());
             previewRiseSuffix.setTextColor(chooseColorSuffix.getColor());
+            updateSizeFromChooser(previewRiseSuffix, chooseSuffixSize);
         }
 
-        Calendar c2 = Calendar.getInstance();
-        c2.set(Calendar.HOUR_OF_DAY, 19);
-        c2.set(Calendar.MINUTE, 0);
-        SuntimesUtils.TimeDisplayText setText = utils.calendarTimeShortDisplayString(this, c2);
-
+        SuntimesUtils.TimeDisplayText setText = utils.calendarTimeShortDisplayString(this, previewSetTime);
         if (previewSet != null)
         {
             previewSet.setText(setText.getValue());
             previewSet.setTextColor(chooseColorSet.getColor());
+            updateSizeFromChooser(previewSet, chooseTimeSize);
         }
         if (previewSetSuffix != null)
         {
             previewSetSuffix.setText(setText.getSuffix());
             previewSetSuffix.setTextColor(chooseColorSuffix.getColor());
+            updateSizeFromChooser(previewSetSuffix, chooseSuffixSize);
         }
 
         if (previewTimeDelta != null)
         {
-            int deltaSeconds = 60;
-            previewTimeDelta.setText(utils.timeDeltaLongDisplayString(0, deltaSeconds * 1000).getValue());
+            previewTimeDelta.setText(utils.timeDeltaLongDisplayString(0, previewTimeDeltaValue * 1000).getValue());
             previewTimeDelta.setTextColor(chooseColorTime.getColor());
+            updateSizeFromChooser(previewTimeDelta, chooseTextSize);
         }
         if (previewTimeDeltaPrefix != null)
         {
             previewTimeDeltaPrefix.setText(getString(R.string.delta_day_tomorrow));
             previewTimeDeltaPrefix.setTextColor(chooseColorText.getColor());
+            updateSizeFromChooser(previewTimeDeltaPrefix, chooseTextSize);
         }
         if (previewTimeDeltaSuffix != null)
         {
             previewTimeDeltaSuffix.setText(getString(R.string.delta_day_shorter));
             previewTimeDeltaSuffix.setTextColor(chooseColorText.getColor());
+            updateSizeFromChooser(previewTimeDeltaSuffix, chooseTextSize);
         }
     }
 
+    private static void updateSizeFromChooser(TextView text, TextSizeChooser chooser)
+    {
+        float textSize = chooser.getTextSize();
+        if (textSize >= chooser.getMinSp() && textSize <= chooser.getMaxSp())
+        {
+            text.setTextSize(TypedValue.COMPLEX_UNIT_SP, chooser.getTextSize());
+        }
+    }
 
     @Override
     public void onDestroy()
@@ -738,7 +757,6 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         public void afterTextChanged(Editable editable)
         {
             themeName = editable.toString();
-            previewTitle.setText(editable);
         }
 
         @Override
@@ -752,6 +770,23 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                     updateViews();
                 }
             }
+        }
+    }
+
+    /**
+     * TextSizeChooser
+     */
+    private class TextSizeChooser extends com.forrestguice.suntimeswidget.settings.TextSizeChooser
+    {
+        public TextSizeChooser(Context context, EditText editField, float min, float max)
+        {
+            super(context, editField, min, max);
+        }
+
+        @Override
+        public void updatePreview()
+        {
+            WidgetThemeConfigActivity.this.updatePreview();
         }
     }
 
