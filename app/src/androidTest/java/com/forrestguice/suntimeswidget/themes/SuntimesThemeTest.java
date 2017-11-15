@@ -70,12 +70,18 @@ public class SuntimesThemeTest extends SuntimesActivityTestBase
         assertTrue("theme version should match", theme.themeVersion() == truth.themeVersion());
         assertTrue("theme display should match", theme.themeDisplayString().equals(truth.themeDisplayString()));
         assertTrue("theme isDefault should match", theme.isDefault() == truth.isDefault());
+
+        assertTrue("theme backgroundID should match", theme.getBackgroundId() == truth.getBackgroundId());
         assertTrue("theme padding should match [0]", theme.getPadding()[0] == truth.getPadding()[0]);
         assertTrue("theme padding should match [1]", theme.getPadding()[1] == truth.getPadding()[1]);
         assertTrue("theme padding should match [2]", theme.getPadding()[2] == truth.getPadding()[2]);
         assertTrue("theme padding should match [3]", theme.getPadding()[3] == truth.getPadding()[3]);
-        assertTrue("theme backgroundID should match", theme.getBackgroundId() == truth.getBackgroundId());
+
         assertTrue("theme title size should match", theme.getTitleSizeSp() == truth.getTitleSizeSp());
+        assertTrue("theme text size should match", theme.getTextSizeSp() == truth.getTextSizeSp());
+        assertTrue("theme time size should match", theme.getTimeSizeSp() == truth.getTimeSizeSp());
+        assertTrue("theme timeSuffix size should match", theme.getTimeSuffixSizeSp() == truth.getTimeSuffixSizeSp());
+
         assertTrue("theme title color should match", theme.getTitleColor() == truth.getTitleColor());
         assertTrue("theme text color should match", theme.getTextColor() == truth.getTextColor());
         assertTrue("theme time color should match", theme.getTimeColor() == truth.getTimeColor());
@@ -113,6 +119,9 @@ public class SuntimesThemeTest extends SuntimesActivityTestBase
     public static final int TESTDEF_BACKGROUND_ID = R.drawable.bg_widget_dark;
     public static final int[] TESTDEF_PADDING = {1, 2, 3, 4};
     public static final float TESTDEF_TITLESIZE = 10;
+    public static final float TESTDEF_TEXTSIZE = 10;
+    public static final float TESTDEF_TIMESIZE = 12;
+    public static final float TESTDEF_TIMESUFFIXSIZE = 6;
     public static final int TESTDEF_TITLECOLOR_ID = android.R.color.tertiary_text_dark;
     public static final int TESTDEF_TEXTCOLOR_ID = android.R.color.tertiary_text_dark;
     public static final int TESTDEF_SUNRISECOLOR_ID = R.color.sunIcon_color_rising_dark;
@@ -132,6 +141,9 @@ public class SuntimesThemeTest extends SuntimesActivityTestBase
             this.themeBackground = TESTDEF_BACKGROUND_ID;
             this.themePadding = TESTDEF_PADDING;
             this.themeTitleSize = TESTDEF_TITLESIZE;
+            this.themeTextSize = TESTDEF_TEXTSIZE;
+            this.themeTimeSize = TESTDEF_TIMESIZE;
+            this.themeTimeSuffixSize = TESTDEF_TIMESUFFIXSIZE;
             this.themeTitleColor = ContextCompat.getColor(context, TESTDEF_TITLECOLOR_ID);
             this.themeTextColor = ContextCompat.getColor(context, TESTDEF_TEXTCOLOR_ID);
             this.themeSunriseTextColor = ContextCompat.getColor(context, TESTDEF_SUNRISECOLOR_ID);

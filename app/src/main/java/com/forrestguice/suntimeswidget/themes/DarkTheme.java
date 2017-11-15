@@ -35,8 +35,11 @@ public class DarkTheme extends SuntimesTheme
     public static final int[] THEMEDEF_PADDING = {2, 4, 4, 4};
 
     public static final float THEMEDEF_TITLESIZE = 10;
-    public static final int THEMEDEF_TITLECOLOR_ID = android.R.color.tertiary_text_dark;
+    public static final float THEMEDEF_TEXTSIZE = 10;
+    public static final float THEMEDEF_TIMESIZE = 12;
+    public static final float THEMEDEF_TIMESUFFIXSIZE = 6;
 
+    public static final int THEMEDEF_TITLECOLOR_ID = android.R.color.tertiary_text_dark;
     public static final int THEMEDEF_TEXTCOLOR_ID = android.R.color.tertiary_text_dark;
     public static final int THEMEDEF_SUNRISECOLOR_ID = R.color.sunIcon_color_rising_dark;
     public static final int THEMEDEF_SUNSETCOLOR_ID = R.color.sunIcon_color_setting_dark;
@@ -56,8 +59,11 @@ public class DarkTheme extends SuntimesTheme
         this.themePadding = THEMEDEF_PADDING;
 
         this.themeTitleSize = THEMEDEF_TITLESIZE;
-        this.themeTitleColor = ContextCompat.getColor(context, THEMEDEF_TITLECOLOR_ID);
+        this.themeTextSize = THEMEDEF_TEXTSIZE;
+        this.themeTimeSize = THEMEDEF_TIMESIZE;
+        this.themeTimeSuffixSize = THEMEDEF_TIMESUFFIXSIZE;
 
+        this.themeTitleColor = ContextCompat.getColor(context, THEMEDEF_TITLECOLOR_ID);
         this.themeTextColor = ContextCompat.getColor(context, THEMEDEF_TEXTCOLOR_ID);
         this.themeSunriseTextColor = ContextCompat.getColor(context, THEMEDEF_SUNRISECOLOR_ID);
         this.themeSunsetTextColor = ContextCompat.getColor(context, THEMEDEF_SUNSETCOLOR_ID);
