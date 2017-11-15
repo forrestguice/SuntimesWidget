@@ -77,7 +77,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
     private ActionBar actionBar;
     private EditText editDisplay;
-    private TitleSizeChooser chooseTitleSize;
+    private TextSizeChooser chooseTitleSize;
     private ThemeNameChooser chooseName;
     private PaddingChooser choosePadding;
     private ColorChooser chooseColorRise, chooseColorSet, chooseColorTitle, chooseColorText, chooseColorTime, chooseColorSuffix;
@@ -183,7 +183,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         });
 
         EditText editTitleSize = (EditText)findViewById(R.id.edit_titleSize);
-        chooseTitleSize = new TitleSizeChooser(editTitleSize);
+        chooseTitleSize = new TextSizeChooser(editTitleSize);
 
         EditText editPadding = (EditText)findViewById(R.id.edit_padding);
         choosePadding = new PaddingChooser(editPadding)
@@ -327,7 +327,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             previewTitle.setText(titleText);
             previewTitle.setVisibility(View.VISIBLE);
             previewTitle.setTextColor(chooseColorTitle.getColor());
-            previewTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, chooseTitleSize.getTitleSize());
+            previewTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, chooseTitleSize.getTextSize());
         }
 
         Calendar c0 = Calendar.getInstance();
@@ -426,7 +426,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             outState.putInt(SuntimesTheme.THEME_BACKGROUND, background.getResID());
         }
 
-        outState.putInt(SuntimesTheme.THEME_TITLESIZE, chooseTitleSize.getTitleSize());
+        outState.putInt(SuntimesTheme.THEME_TITLESIZE, chooseTitleSize.getTextSize());
         outState.putInt(SuntimesTheme.THEME_TITLECOLOR, chooseColorTitle.getColor());
         outState.putInt(SuntimesTheme.THEME_TEXTCOLOR, chooseColorText.getColor());
         outState.putInt(SuntimesTheme.THEME_SUNRISECOLOR, chooseColorRise.getColor());
@@ -449,7 +449,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         ThemeBackground background = (ThemeBackground)spinBackground.getSelectedItem();
         setSelectedBackground(savedState.getInt(SuntimesTheme.THEME_BACKGROUND, (background != null ? background.getResID() : DarkTheme.THEMEDEF_BACKGROUND_ID)));
 
-        chooseTitleSize.setTitleSize(savedState.getInt(SuntimesTheme.THEME_TITLESIZE, this.chooseTitleSize.getTitleSize()));
+        chooseTitleSize.setTextSize(savedState.getInt(SuntimesTheme.THEME_TITLESIZE, this.chooseTitleSize.getTextSize()));
         chooseColorTitle.setColor(savedState.getInt(SuntimesTheme.THEME_TITLECOLOR, chooseColorTitle.getColor()));
         chooseColorText.setColor(savedState.getInt(SuntimesTheme.THEME_TEXTCOLOR, chooseColorText.getColor()));
         chooseColorRise.setColor(savedState.getInt(SuntimesTheme.THEME_SUNRISECOLOR, chooseColorRise.getColor()));
@@ -522,7 +522,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             {
                 editDisplay.setText((mode == UIMode.ADD_THEME) ? generateThemeDisplayString(theme.themeDisplayString()) : theme.themeDisplayString());
             }
-            chooseTitleSize.setTitleSize((int)theme.getTitleSizeSp());
+            chooseTitleSize.setTextSize((int)theme.getTitleSizeSp());
             chooseColorTitle.setColor(theme.getTitleColor());
             chooseColorText.setColor(theme.getTextColor());
             chooseColorRise.setColor(theme.getSunriseTextColor());
@@ -554,7 +554,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             {
                 this.themeName = chooseName.getThemeName();
                 this.themeDisplayString = editDisplay.getText().toString();
-                this.themeTitleSize = chooseTitleSize.getTitleSize();
+                this.themeTitleSize = chooseTitleSize.getTextSize();
                 this.themeTitleColor = chooseColorTitle.getColor();
                 this.themeTextColor = chooseColorText.getColor();
                 this.themeTimeColor = chooseColorTime.getColor();
@@ -702,14 +702,14 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     }
 
     /**
-     * TitleSizeChooser
+     * TextSizeChooser
      */
-    private class TitleSizeChooser implements TextWatcher, View.OnFocusChangeListener
+    private class TextSizeChooser implements TextWatcher, View.OnFocusChangeListener
     {
-        private int titleSize;
+        private int textSize;
         private EditText edit;
 
-        public TitleSizeChooser( EditText editField )
+        public TextSizeChooser( EditText editField )
         {
             edit = editField;
             edit.setRawInputType(InputType.TYPE_CLASS_NUMBER);
@@ -722,20 +722,20 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             return edit;
         }
 
-        public int getTitleSize()
+        public int getTextSize()
         {
-            return titleSize;
+            return textSize;
         }
 
-        public void setTitleSize( int spValue )
+        public void setTextSize( int spValue )
         {
-            titleSize = spValue;
+            textSize = spValue;
             updateViews();
         }
 
         public void updateViews()
         {
-            edit.setText(String.format(Locale.US, "%d", titleSize));
+            edit.setText(String.format(Locale.US, "%d", textSize));
         }
 
         @Override
@@ -749,9 +749,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         {
             String spValue = editable.toString();
             try {
-                titleSize = Integer.parseInt(spValue);
+                textSize = Integer.parseInt(spValue);
             } catch (NumberFormatException e) {
-                Log.w("setTitleSize", "Invalid size! " + spValue + " ignoring...");
+                Log.w("setTextSize", "Invalid size! " + spValue + " ignoring...");
                 updateViews();
             }
         }
