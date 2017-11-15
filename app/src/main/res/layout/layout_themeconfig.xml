@@ -80,7 +80,8 @@
 
             <!-- preview area -->
             <FrameLayout
-                android:layout_width="150dp" android:layout_height="wrap_content"
+                android:id="@+id/preview_area"
+                android:layout_width="160dp" android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/topRule"
@@ -91,53 +92,33 @@
 
             </FrameLayout>
 
-            <!-- horizontal rule -->
-            <View
-                android:id="@+id/topRule" style="@style/SunsetTimeHorizontalRule"
-                android:layout_width="0dp"
-                android:layout_marginTop="8dp" android:layout_marginBottom="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/edit_themeDisplay"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
             <!-- Background -->
             <TextView
                 android:id="@+id/editLabel_background"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@+id/centerLineL"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/editSpin_background"
                 app:layout_constraintBottom_toBottomOf="@+id/editSpin_background"
-                android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="8dp" android:paddingRight="8dp"
+                android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="0dp" android:paddingRight="0dp"
                 android:text="@string/configLabel_themeBackgroundId" />
 
             <Spinner
                 android:id="@+id/editSpin_background"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_marginTop="8dp" android:layout_marginBottom="8dp"
+                android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
+                android:layout_marginLeft="4dp" android:layout_marginStart="4dp"
                 app:layout_constraintStart_toEndOf="@+id/editLabel_background"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/topRule" />
+                app:layout_constraintTop_toBottomOf="@+id/edit_themeDisplay" />
 
-
-            <!-- Title Size -->
-            <TextView
-                android:id="@+id/editLabel_titleSize"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
+            <!-- horizontal rule -->
+            <View
+                android:id="@+id/topRule" style="@style/SunsetTimeHorizontalRule"
+                android:layout_width="0dp"
+                android:layout_marginTop="8dp" android:layout_marginBottom="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/editSpin_background"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBaseline_toBaselineOf="@+id/edit_titleSize"
-                android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="8dp" android:paddingRight="8dp"
-                android:text="@string/configLabel_themeSizeTitle"
-                tools:layout_editor_absoluteX="0dp"/>
-
-            <EditText
-                android:id="@+id/edit_titleSize"
-                android:layout_width="0dp" android:minEms="2"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:text="" android:hint="@string/configHint_themeSizeTitle" tools:text="14"
-                app:layout_constraintStart_toEndOf="@+id/editLabel_titleSize"
-                app:layout_constraintTop_toBottomOf="@+id/topRule"
-                tools:layout_editor_absoluteX="90dp"/>
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <!-- Title Color -->
             <TextView
@@ -157,7 +138,7 @@
                 android:text="" android:hint="@string/configHint_themeColorTitle"
                 app:layout_constraintEnd_toStartOf="@+id/editButton_titleColor"
                 app:layout_constraintStart_toEndOf="@+id/editLabel_titleColor"
-                app:layout_constraintTop_toBottomOf="@+id/edit_titleSize"
+                app:layout_constraintTop_toBottomOf="@+id/edit_textSize"
                 tools:layout_editor_absoluteX="68dp"/>
 
             <ImageButton
@@ -361,6 +342,7 @@
                 android:inputType="textNoSuggestions"
                 android:text="" android:hint="@string/configHint_themePadding"
                 android:layout_marginRight="4dp" android:layout_marginEnd="4dp"
+                android:layout_marginBottom="100dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/editLabel_padding"
                 app:layout_constraintTop_toBottomOf="@+id/edit_timeColor" />
@@ -382,7 +364,7 @@
                 android:inputType="number"
                 android:text="" android:hint="@string/configHint_themeSizeTime" tools:text="12"
                 app:layout_constraintStart_toEndOf="@+id/editLabel_timeSize"
-                app:layout_constraintTop_toBottomOf="@+id/edit_padding"
+                app:layout_constraintTop_toBottomOf="@+id/topRule"
                 tools:layout_editor_absoluteX="90dp"/>
 
             <!-- Suffix Size -->
@@ -402,14 +384,34 @@
                 android:inputType="number"
                 android:text="" android:hint="@string/configHint_themeSizeSuffix" tools:text="8"
                 app:layout_constraintStart_toEndOf="@+id/editLabel_suffixSize"
-                app:layout_constraintTop_toBottomOf="@+id/edit_padding"
+                app:layout_constraintTop_toBottomOf="@+id/topRule"
+                tools:layout_editor_absoluteX="90dp"/>
+
+            <!-- Title Size -->
+            <TextView
+                android:id="@+id/editLabel_titleSize"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@+id/edit_titleSize"
+                android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="8dp" android:paddingRight="8dp"
+                android:text="@string/configLabel_themeSizeTitle"
+                tools:layout_editor_absoluteX="0dp"/>
+
+            <EditText
+                android:id="@+id/edit_titleSize"
+                android:layout_width="0dp" android:minEms="2"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:text="" android:hint="@string/configHint_themeSizeTitle" tools:text="14"
+                app:layout_constraintStart_toEndOf="@+id/editLabel_titleSize"
+                app:layout_constraintTop_toBottomOf="@+id/edit_suffixSize"
                 tools:layout_editor_absoluteX="90dp"/>
 
             <!-- Text Size -->
             <TextView
                 android:id="@+id/editLabel_textSize"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/edit_titleSize"
                 app:layout_constraintBaseline_toBaselineOf="@+id/edit_textSize"
                 android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="8dp" android:paddingRight="8dp"
                 android:text="@string/configLabel_themeSizeText"
