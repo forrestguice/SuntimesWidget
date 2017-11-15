@@ -109,21 +109,28 @@ public class SuntimesTheme
         SharedPreferences themes = context.getSharedPreferences(themesPrefix, Context.MODE_PRIVATE);
         String theme = themePrefix(themeName);
 
-        this.themeVersion = themes.getInt( theme + THEME_VERSION, defaultTheme.themeVersion );
-        this.themeName = themes.getString( theme + THEME_NAME, defaultTheme.themeName );
-        this.themeIsDefault = themes.getBoolean( theme + THEME_ISDEFAULT, false );
-        this.themeDisplayString = themes.getString( theme + THEME_DISPLAYSTRING, defaultTheme.themeDisplayString );
+        this.themeVersion = themes.getInt(theme + THEME_VERSION, defaultTheme.themeVersion);
+        this.themeName = themes.getString(theme + THEME_NAME, defaultTheme.themeName);
+        this.themeIsDefault = themes.getBoolean(theme + THEME_ISDEFAULT, false);
+        this.themeDisplayString = themes.getString(theme + THEME_DISPLAYSTRING, defaultTheme.themeDisplayString);
 
         this.themeBackground = defaultTheme.themeBackground;
-        String backgroundName = themes.getString( theme + THEME_BACKGROUND, null );
-        if (backgroundName != null)
-        {
-            try {
-                this.themeBackground = ThemeBackground.valueOf(backgroundName).getResID();
-            } catch (IllegalArgumentException e) {
-                Log.w("initTheme", "unable to find theme background " + backgroundName);
-                this.themeBackground = ThemeBackground.DARK.getResID();
+        String backgroundName;
+        try {
+            backgroundName = themes.getString(theme + THEME_BACKGROUND, null);
+            if (backgroundName != null)
+            {
+                try {
+                    this.themeBackground = ThemeBackground.valueOf(backgroundName).getResID();
+                } catch (IllegalArgumentException e) {
+                    Log.w("initTheme", "unable to find theme background " + backgroundName);
+                    this.themeBackground = ThemeBackground.DARK.getResID();
+                }
             }
+        } catch (ClassCastException e) {
+            Log.w("initTheme", "legacy theme: " + themeName);
+            int backgroundID = themes.getInt(theme + THEME_BACKGROUND, 0);
+            this.themeBackground = ThemeBackground.getThemeBackground(backgroundID).getResID();
         }
 
         this.themePadding[0] = themes.getInt( theme + THEME_PADDING_LEFT, defaultTheme.themePadding[0] );
