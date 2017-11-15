@@ -47,9 +47,24 @@ public class SuntimesTheme
     public static final String THEME_SUNSETCOLOR = "sunsetcolor";
 
     public static final String THEME_TITLESIZE = "titlesize";
+    public static final float THEME_TITLESIZE_MIN = 6.0f;
+    public static final float THEME_TITLESIZE_DEF = 10.0f;
+    public static final float THEME_TITLESIZE_MAX = 32.0f;
+
     public static final String THEME_TEXTSIZE = "textsize";
+    public static final float THEME_TEXTSIZE_MIN = 6.0f;
+    public static final float THEME_TEXTSIZE_DEF = 10.0f;
+    public static final float THEME_TEXTSIZE_MAX = 32.0f;
+
     public static final String THEME_TIMESIZE = "timesize";
+    public static final float THEME_TIMESIZE_MIN = 6.0f;
+    public static final float THEME_TIMESIZE_DEF = 12.0f;
+    public static final float THEME_TIMESIZE_MAX = 32.0f;
+
     public static final String THEME_TIMESUFFIXSIZE = "timesuffixsize";
+    public static final float THEME_TIMESUFFIXSIZE_MIN = 4.0f;
+    public static final float THEME_TIMESUFFIXSIZE_DEF = 6.0f;
+    public static final float THEME_TIMESUFFIXSIZE_MAX = 32.0f;
 
     private ThemeDescriptor descriptor;
 
@@ -69,10 +84,10 @@ public class SuntimesTheme
     protected int themeSunsetTextColor;
     protected int themeTimeSuffixColor;
 
-    protected float themeTitleSize;
-    protected float themeTextSize;
-    protected float themeTimeSize;
-    protected float themeTimeSuffixSize;
+    protected float themeTitleSize = THEME_TITLESIZE_DEF;
+    protected float themeTextSize = THEME_TEXTSIZE_DEF;
+    protected float themeTimeSize = THEME_TIMESIZE_DEF;
+    protected float themeTimeSuffixSize = THEME_TIMESUFFIXSIZE_DEF;
 
     public SuntimesTheme()
     {
@@ -286,22 +301,26 @@ public class SuntimesTheme
 
     public float getTitleSizeSp()
     {
-        return themeTitleSize;
+        return (themeTitleSize < THEME_TITLESIZE_MIN) ? THEME_TITLESIZE_DEF :
+                (themeTitleSize > THEME_TITLESIZE_MAX) ? THEME_TITLESIZE_MAX : themeTitleSize;
     }
 
     public float getTextSizeSp()
     {
-        return themeTextSize;
+        return (themeTextSize < THEME_TEXTSIZE_MIN) ? THEME_TEXTSIZE_DEF :
+                (themeTextSize > THEME_TEXTSIZE_MAX) ? THEME_TEXTSIZE_MAX : themeTextSize;
     }
 
     public float getTimeSizeSp()
     {
-        return themeTimeSize;
+        return (themeTimeSize < THEME_TIMESIZE_MIN) ? THEME_TIMESIZE_DEF :
+                (themeTimeSize > THEME_TIMESIZE_MAX) ? THEME_TIMESIZE_MAX : themeTimeSize;
     }
 
     public float getTimeSuffixSizeSp()
     {
-        return themeTimeSuffixSize;
+        return (themeTimeSuffixSize < THEME_TIMESUFFIXSIZE_MIN) ? THEME_TIMESUFFIXSIZE_DEF :
+                (themeTimeSuffixSize > THEME_TIMESUFFIXSIZE_MAX) ? THEME_TIMESUFFIXSIZE_MAX : themeTimeSuffixSize;
     }
 
     public int getBackgroundId()

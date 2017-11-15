@@ -60,9 +60,6 @@ import static com.forrestguice.suntimeswidget.themes.SuntimesTheme.THEME_NAME;
 
 public class WidgetThemeConfigActivity extends AppCompatActivity
 {
-    public static final int MIN_TITLE_SIZE = 8;
-    public static final int MAX_TITLE_SIZE = 48;
-
     public static final String PARAM_MODE = "mode";
 
     public static final int ADD_THEME_REQUEST = 0;
@@ -679,25 +676,25 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         try {
             int titleSize = Integer.parseInt(editTitleSize.getText().toString());
-            if (titleSize < MIN_TITLE_SIZE)
+            if (titleSize < SuntimesTheme.THEME_TITLESIZE_MIN)
             {
                 isValid = false;       // title too small
-                editTitleSize.setError(context.getString(R.string.edittheme_error_titlesize_min, MIN_TITLE_SIZE+""));
+                editTitleSize.setError(context.getString(R.string.edittheme_error_titlesize_min, SuntimesTheme.THEME_TITLESIZE_MIN+""));
                 if (grabFocus)
                     editTitleSize.requestFocus();
             }
 
-            if (titleSize > MAX_TITLE_SIZE)
+            if (titleSize > SuntimesTheme.THEME_TITLESIZE_MAX)
             {
                 isValid = false;       // title too large
-                editTitleSize.setError(context.getString(R.string.edittheme_error_titlesize_max, MAX_TITLE_SIZE+""));
+                editTitleSize.setError(context.getString(R.string.edittheme_error_titlesize_max, SuntimesTheme.THEME_TITLESIZE_MAX+""));
                 if (grabFocus)
                     editTitleSize.requestFocus();
             }
 
         } catch (NumberFormatException e) {
             isValid = false;          // title NaN (too small)
-            editTitleSize.setError(context.getString(R.string.edittheme_error_titlesize_min, MIN_TITLE_SIZE+""));
+            editTitleSize.setError(context.getString(R.string.edittheme_error_titlesize_min, SuntimesTheme.THEME_TITLESIZE_MIN+""));
             if (grabFocus)
                 editTitleSize.requestFocus();
         }
