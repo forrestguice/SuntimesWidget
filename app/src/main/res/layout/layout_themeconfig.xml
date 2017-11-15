@@ -131,7 +131,7 @@
 
             <EditText
                 android:id="@+id/edit_titleSize"
-                android:layout_width="0dp"
+                android:layout_width="0dp" android:minEms="2"
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:text="" android:hint="@string/configHint_themeSizeTitle" tools:text="14"
@@ -173,40 +173,6 @@
                 android:contentDescription="@string/configAction_chooseColor"
                 tools:layout_editor_absoluteX="553dp"/>
 
-            <!-- Text Color -->
-            <TextView
-                android:id="@+id/editLabel_textColor"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBaseline_toBaselineOf="@+id/edit_textColor"
-                android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="8dp" android:paddingRight="8dp"
-                android:text="@string/configLabel_themeColorText"
-                tools:layout_editor_absoluteX="0dp"/>
-
-            <EditText
-                android:id="@+id/edit_textColor"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:inputType="textNoSuggestions"
-                android:text="" android:hint="@string/configHint_themeColorText"
-                app:layout_constraintEnd_toStartOf="@+id/editButton_textColor"
-                app:layout_constraintStart_toEndOf="@+id/editLabel_textColor"
-                app:layout_constraintTop_toBottomOf="@+id/edit_titleColor"
-                tools:layout_editor_absoluteX="69dp"/>
-
-            <ImageButton
-                android:id="@+id/editButton_textColor"
-                android:layout_width="48dp" android:layout_height="48dp"
-                android:src="@drawable/ic_colortab" android:scaleType="fitCenter"
-                android:layout_marginRight="4dp" android:layout_marginEnd="4dp"
-
-                app:layout_constraintStart_toEndOf="@+id/edit_textColor"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/edit_textColor"
-
-                android:contentDescription="@string/configAction_chooseColor"
-                tools:layout_editor_absoluteX="553dp"/>
-
             <!-- Sunrise Color -->
             <TextView
                 android:id="@+id/editLabel_sunriseColor"
@@ -225,7 +191,7 @@
                 android:text="" android:hint="@string/configHint_themeColorSunrise"
                 app:layout_constraintEnd_toStartOf="@+id/editButton_sunriseColor"
                 app:layout_constraintStart_toEndOf="@+id/editLabel_sunriseColor"
-                app:layout_constraintTop_toBottomOf="@+id/edit_textColor"
+                app:layout_constraintTop_toBottomOf="@+id/edit_titleColor"
                 tools:layout_editor_absoluteX="87dp"/>
 
             <ImageButton
@@ -275,39 +241,6 @@
                 android:contentDescription="@string/configAction_chooseColor"
                 tools:layout_editor_absoluteX="553dp"/>
 
-            <!-- Time Color -->
-            <TextView
-                android:id="@+id/editLabel_timeColor"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBaseline_toBaselineOf="@+id/edit_timeColor"
-                android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="8dp" android:paddingRight="8dp"
-                android:text="@string/configLabel_themeColorTime"
-                tools:layout_editor_absoluteX="0dp"/>
-
-            <EditText
-                android:id="@+id/edit_timeColor"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:inputType="textNoSuggestions"
-                android:text="" android:hint="@string/configHint_themeColorTime"
-                app:layout_constraintEnd_toStartOf="@+id/editButton_timeColor"
-                app:layout_constraintStart_toEndOf="@+id/editLabel_timeColor"
-                app:layout_constraintTop_toBottomOf="@+id/edit_sunsetColor"
-                tools:layout_editor_absoluteX="77dp"/>
-
-            <ImageButton
-                android:id="@+id/editButton_timeColor"
-                android:layout_width="48dp" android:layout_height="48dp"
-                android:src="@drawable/ic_colortab" android:scaleType="fitCenter"
-                android:layout_marginRight="4dp" android:layout_marginEnd="4dp"
-
-                app:layout_constraintStart_toEndOf="@+id/edit_timeColor"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/edit_timeColor"
-
-                android:contentDescription="@string/configAction_chooseColor"
-                tools:layout_editor_absoluteX="553dp"/>
 
             <!-- Suffix Color -->
             <TextView
@@ -327,7 +260,7 @@
                 android:text="" android:hint="@string/configHint_themeColorSuffix"
                 app:layout_constraintEnd_toStartOf="@+id/editButton_suffixColor"
                 app:layout_constraintStart_toEndOf="@+id/editLabel_suffixColor"
-                app:layout_constraintTop_toBottomOf="@+id/edit_timeColor"
+                app:layout_constraintTop_toBottomOf="@+id/edit_sunsetColor"
                 tools:layout_editor_absoluteX="77dp"/>
 
             <ImageButton
@@ -339,6 +272,74 @@
                 app:layout_constraintStart_toEndOf="@+id/edit_suffixColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/edit_suffixColor"
+
+                android:contentDescription="@string/configAction_chooseColor"
+                tools:layout_editor_absoluteX="553dp"/>
+
+            <!-- Text Color -->
+            <TextView
+                android:id="@+id/editLabel_textColor"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@+id/edit_textColor"
+                android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="8dp" android:paddingRight="8dp"
+                android:text="@string/configLabel_themeColorText"
+                tools:layout_editor_absoluteX="0dp"/>
+
+            <EditText
+                android:id="@+id/edit_textColor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:inputType="textNoSuggestions"
+                android:text="" android:hint="@string/configHint_themeColorText"
+                app:layout_constraintEnd_toStartOf="@+id/editButton_textColor"
+                app:layout_constraintStart_toEndOf="@+id/editLabel_textColor"
+                app:layout_constraintTop_toBottomOf="@+id/edit_suffixColor"
+                tools:layout_editor_absoluteX="69dp"/>
+
+            <ImageButton
+                android:id="@+id/editButton_textColor"
+                android:layout_width="48dp" android:layout_height="48dp"
+                android:src="@drawable/ic_colortab" android:scaleType="fitCenter"
+                android:layout_marginRight="4dp" android:layout_marginEnd="4dp"
+
+                app:layout_constraintStart_toEndOf="@+id/edit_textColor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/edit_textColor"
+
+                android:contentDescription="@string/configAction_chooseColor"
+                tools:layout_editor_absoluteX="553dp"/>
+
+            <!-- Time Color -->
+            <TextView
+                android:id="@+id/editLabel_timeColor"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@+id/edit_timeColor"
+                android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="8dp" android:paddingRight="8dp"
+                android:text="@string/configLabel_themeColorTime"
+                tools:layout_editor_absoluteX="0dp"/>
+
+            <EditText
+                android:id="@+id/edit_timeColor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:inputType="textNoSuggestions"
+                android:text="" android:hint="@string/configHint_themeColorTime"
+                app:layout_constraintEnd_toStartOf="@+id/editButton_timeColor"
+                app:layout_constraintStart_toEndOf="@+id/editLabel_timeColor"
+                app:layout_constraintTop_toBottomOf="@+id/edit_textColor"
+                tools:layout_editor_absoluteX="77dp"/>
+
+            <ImageButton
+                android:id="@+id/editButton_timeColor"
+                android:layout_width="48dp" android:layout_height="48dp"
+                android:src="@drawable/ic_colortab" android:scaleType="fitCenter"
+                android:layout_marginRight="4dp" android:layout_marginEnd="4dp"
+
+                app:layout_constraintStart_toEndOf="@+id/edit_timeColor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/edit_timeColor"
 
                 android:contentDescription="@string/configAction_chooseColor"
                 tools:layout_editor_absoluteX="553dp"/>
@@ -362,7 +363,67 @@
                 android:layout_marginRight="4dp" android:layout_marginEnd="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/editLabel_padding"
-                app:layout_constraintTop_toBottomOf="@+id/edit_suffixColor" />
+                app:layout_constraintTop_toBottomOf="@+id/edit_timeColor" />
+
+            <!-- Time Size -->
+            <TextView
+                android:id="@+id/editLabel_timeSize"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@+id/edit_timeSize"
+                android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="8dp" android:paddingRight="8dp"
+                android:text="@string/configLabel_themeSizeTime"
+                tools:layout_editor_absoluteX="0dp"/>
+
+            <EditText
+                android:id="@+id/edit_timeSize"
+                android:layout_width="0dp" android:minEms="2"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:text="" android:hint="@string/configHint_themeSizeTime" tools:text="12"
+                app:layout_constraintStart_toEndOf="@+id/editLabel_timeSize"
+                app:layout_constraintTop_toBottomOf="@+id/edit_padding"
+                tools:layout_editor_absoluteX="90dp"/>
+
+            <!-- Suffix Size -->
+            <TextView
+                android:id="@+id/editLabel_suffixSize"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@+id/edit_timeSize"
+                app:layout_constraintBaseline_toBaselineOf="@+id/edit_suffixSize"
+                android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="8dp" android:paddingRight="8dp"
+                android:text="@string/configLabel_themeSizeSuffix"
+                tools:layout_editor_absoluteX="0dp"/>
+
+            <EditText
+                android:id="@+id/edit_suffixSize"
+                android:layout_width="0dp" android:minEms="2"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:text="" android:hint="@string/configHint_themeSizeSuffix" tools:text="8"
+                app:layout_constraintStart_toEndOf="@+id/editLabel_suffixSize"
+                app:layout_constraintTop_toBottomOf="@+id/edit_padding"
+                tools:layout_editor_absoluteX="90dp"/>
+
+            <!-- Text Size -->
+            <TextView
+                android:id="@+id/editLabel_textSize"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@+id/edit_textSize"
+                android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="8dp" android:paddingRight="8dp"
+                android:text="@string/configLabel_themeSizeText"
+                tools:layout_editor_absoluteX="0dp"/>
+
+            <EditText
+                android:id="@+id/edit_textSize"
+                android:layout_width="0dp" android:minEms="2"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:text="" android:hint="@string/configHint_themeSizeText" tools:text="10"
+                app:layout_constraintStart_toEndOf="@+id/editLabel_textSize"
+                app:layout_constraintTop_toBottomOf="@+id/edit_suffixSize"
+                tools:layout_editor_absoluteX="90dp"/>
 
             <!-- guidelines -->
             <android.support.constraint.Guideline

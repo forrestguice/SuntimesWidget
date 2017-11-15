@@ -185,13 +185,13 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         EditText editTitleSize = (EditText)findViewById(R.id.edit_titleSize);
         chooseTitleSize = new TextSizeChooser(this, editTitleSize, SuntimesTheme.THEME_TITLESIZE_MIN, SuntimesTheme.THEME_TITLESIZE_MAX);
 
-        EditText editTextSize = null; //(EditText)findViewById(R.id.edit_textSize);  // TODO
+        EditText editTextSize = (EditText)findViewById(R.id.edit_textSize);
         chooseTextSize = new TextSizeChooser(this, editTextSize, SuntimesTheme.THEME_TEXTSIZE_MIN, SuntimesTheme.THEME_TEXTSIZE_MAX);
 
-        EditText editTimeSize = null; //(EditText)findViewById(R.id.edit_timeSize);  // TODO
+        EditText editTimeSize = (EditText)findViewById(R.id.edit_timeSize);
         chooseTimeSize = new TextSizeChooser(this, editTimeSize, SuntimesTheme.THEME_TIMESIZE_MIN, SuntimesTheme.THEME_TIMESIZE_MAX);
 
-        EditText editSuffixSize = null; //(EditText)findViewById(R.id.edit_suffixSize);  // TODO
+        EditText editSuffixSize = (EditText)findViewById(R.id.edit_suffixSize);
         chooseSuffixSize = new TextSizeChooser(this, editSuffixSize, SuntimesTheme.THEME_TIMESUFFIXSIZE_MIN, SuntimesTheme.THEME_TIMESUFFIXSIZE_MAX);
 
         EditText editPadding = (EditText)findViewById(R.id.edit_padding);
