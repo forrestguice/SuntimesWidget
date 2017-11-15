@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.themes;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.forrestguice.suntimeswidget.R;
 
@@ -83,5 +84,19 @@ public enum ThemeBackground
     {
         ThemeBackground[] backgrounds = ThemeBackground.values();
         return ThemeBackground.ordinal(backgrounds, resID);
+    }
+
+    @NonNull
+    public static ThemeBackground getThemeBackground( int resID )
+    {
+        ThemeBackground[] backgrounds = ThemeBackground.values();
+        for (int i=0; i<backgrounds.length; i++)
+        {
+            if (backgrounds[i] != null && backgrounds[i].getResID() == resID)
+            {
+                return backgrounds[i];
+            }
+        }
+        return ThemeBackground.DARK;
     }
 }

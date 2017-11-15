@@ -114,7 +114,18 @@ public class SuntimesTheme
         this.themeIsDefault = themes.getBoolean( theme + THEME_ISDEFAULT, false );
         this.themeDisplayString = themes.getString( theme + THEME_DISPLAYSTRING, defaultTheme.themeDisplayString );
 
-        this.themeBackground = themes.getInt( theme + THEME_BACKGROUND, defaultTheme.themeBackground );
+        this.themeBackground = defaultTheme.themeBackground;
+        String backgroundName = themes.getString( theme + THEME_BACKGROUND, null );
+        if (backgroundName != null)
+        {
+            try {
+                this.themeBackground = ThemeBackground.valueOf(backgroundName).getResID();
+            } catch (IllegalArgumentException e) {
+                Log.w("initTheme", "unable to find theme background " + backgroundName);
+                this.themeBackground = ThemeBackground.DARK.getResID();
+            }
+        }
+
         this.themePadding[0] = themes.getInt( theme + THEME_PADDING_LEFT, defaultTheme.themePadding[0] );
         this.themePadding[1] = themes.getInt( theme + THEME_PADDING_TOP, defaultTheme.themePadding[1] );
         this.themePadding[2] = themes.getInt( theme + THEME_PADDING_RIGHT, defaultTheme.themePadding[2] );
@@ -145,7 +156,7 @@ public class SuntimesTheme
         themePrefs.putBoolean(themePrefix + SuntimesTheme.THEME_ISDEFAULT, this.themeIsDefault);
         themePrefs.putString(themePrefix + SuntimesTheme.THEME_DISPLAYSTRING, this.themeDisplayString);
 
-        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_BACKGROUND, this.themeBackground);
+        themePrefs.putString(themePrefix + SuntimesTheme.THEME_BACKGROUND, ThemeBackground.getThemeBackground(this.themeBackground).name());
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_PADDING_LEFT, this.themePadding[0]);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_PADDING_TOP, this.themePadding[1]);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_PADDING_RIGHT, this.themePadding[2]);
