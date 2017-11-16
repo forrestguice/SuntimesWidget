@@ -21,21 +21,25 @@ package com.forrestguice.suntimeswidget.themes;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 
+import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.R;
 
 public class LightTheme extends SuntimesTheme
 {
     public static final String THEMEDEF_NAME = "light";
     public static final String THEMEDEF_DISPLAYSTRING = "Light";
-    public static final int THEMEDEF_VERSION = 1;
+    public static final int THEMEDEF_VERSION = BuildConfig.VERSION_CODE;
     public static final ThemeDescriptor THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, THEMEDEF_DISPLAYSTRING, THEMEDEF_VERSION);
 
     public static final int THEMEDEF_BACKGROUND_ID = R.drawable.bg_widget;
     public static final int[] THEMEDEF_PADDING = {2, 4, 4, 4};
 
     public static final float THEMEDEF_TITLESIZE = 10;
-    public static final int THEMEDEF_TITLECOLOR_ID = android.R.color.secondary_text_light;
+    public static final float THEMEDEF_TEXTSIZE = 10;
+    public static final float THEMEDEF_TIMESIZE = 12;
+    public static final float THEMEDEF_TIMESUFFIXSIZE = 6;
 
+    public static final int THEMEDEF_TITLECOLOR_ID = android.R.color.secondary_text_light;
     public static final int THEMEDEF_TEXTCOLOR_ID = android.R.color.tertiary_text_light;
     public static final int THEMEDEF_SUNRISECOLOR_ID = R.color.sunIcon_color_rising_light;
     public static final int THEMEDEF_TIMECOLOR_ID = android.R.color.primary_text_light;
@@ -48,14 +52,18 @@ public class LightTheme extends SuntimesTheme
 
         this.themeVersion = THEMEDEF_VERSION;
         this.themeName = THEMEDEF_NAME;
+        this.themeIsDefault = true;
         this.themeDisplayString = THEMEDEF_DISPLAYSTRING;
 
         this.themeBackground = THEMEDEF_BACKGROUND_ID;
         this.themePadding = THEMEDEF_PADDING;
 
         this.themeTitleSize = THEMEDEF_TITLESIZE;
-        this.themeTitleColor = ContextCompat.getColor(context, THEMEDEF_TITLECOLOR_ID);
+        this.themeTextSize = THEMEDEF_TEXTSIZE;
+        this.themeTimeSize = THEMEDEF_TIMESIZE;
+        this.themeTimeSuffixSize = THEMEDEF_TIMESUFFIXSIZE;
 
+        this.themeTitleColor = ContextCompat.getColor(context, THEMEDEF_TITLECOLOR_ID);
         this.themeTextColor = ContextCompat.getColor(context, THEMEDEF_TEXTCOLOR_ID);
         this.themeSunriseTextColor = ContextCompat.getColor(context, THEMEDEF_SUNRISECOLOR_ID);
         this.themeSunsetTextColor = ContextCompat.getColor(context, THEMEDEF_SUNSETCOLOR_ID);

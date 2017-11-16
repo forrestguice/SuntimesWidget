@@ -441,9 +441,9 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
     }
 
     /**
-     * @param context
-     * @param themeName
-     * @return
+     * @param context  a context used to access resources
+     * @param themeName theme name
+     * @return a localized display string for given theme
      */
     private static String getThemeDisplayString(Context context, String themeName)
     {
@@ -457,9 +457,9 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
     }
 
     /**
-     * @param context
-     * @param localeId
-     * @return
+     * @param context a context used to access resources
+     * @param localeId locale ID
+     * @return a localized display string for given locale
      */
     private static String getLocaleDisplayString(Context context, String localeId)
     {

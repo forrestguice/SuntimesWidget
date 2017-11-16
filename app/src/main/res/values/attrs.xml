@@ -37,9 +37,16 @@
     <attr name="icActionAbout" format="reference" />
     <attr name="icActionWarning" format="reference" />
     <attr name="icActionError" format="reference" />
+
     <attr name="icActionSettings" format="reference" />
     <attr name="icActionHelp" format="reference" />
+
+    <attr name="icActionAccept" format="reference" />
+    <attr name="icActionNew" format="reference" />
     <attr name="icActionSave" format="reference" />
+    <attr name="icActionEdit" format="reference" />
+    <attr name="icActionDelete" format="reference" />
+    <attr name="icActionCopy" format="reference" />
 
     <attr name="icActionNext" format="reference" />
     <attr name="icActionPrevious" format="reference" />

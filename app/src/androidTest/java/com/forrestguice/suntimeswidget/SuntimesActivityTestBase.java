@@ -115,8 +115,8 @@ public abstract class SuntimesActivityTestBase
 
     /**
      * copied from https://groups.google.com/forum/?utm_medium=email&utm_source=footer#!searchin/android-test-kit-discuss/ActionBar/android-test-kit-discuss/mlMbTR30-0U/WljZkKBbdU0J
-     * @param resourceNameMatcher
-     * @return
+     * @param resourceNameMatcher a view matcher
+     * @return a view matcher
      */
     public static Matcher<View> withResourceName(final Matcher<String> resourceNameMatcher)
     {
@@ -140,7 +140,7 @@ public abstract class SuntimesActivityTestBase
     }
 
     /**
-     * @param name
+     * @param name screenshot name
      */
     public void captureScreenshot(String name)
     {
@@ -148,8 +148,8 @@ public abstract class SuntimesActivityTestBase
     }
 
     /**
-     * @param activity
-     * @param name
+     * @param activity Activity context
+     * @param name screenshot name
      */
     public static void captureScreenshot(Activity activity, String name)
     {
@@ -174,7 +174,7 @@ public abstract class SuntimesActivityTestBase
     }
 
     /**
-     * @param viewId
+     * @param viewId view identifier
      */
     public static boolean viewIsDisplayed(int viewId)
     {
@@ -192,8 +192,8 @@ public abstract class SuntimesActivityTestBase
 
 
     /**
-     * @param viewInteraction
-     * @return
+     * @param viewInteraction a ViewInteraction wrapping some view
+     * @return true view is checked, false otherwise
      */
     public static boolean viewIsChecked(ViewInteraction viewInteraction)
     {
@@ -210,9 +210,9 @@ public abstract class SuntimesActivityTestBase
     }
 
     /**
-     * @param spinnerId
-     * @param text
-     * @return
+     * @param spinnerId spinner ID
+     * @param text text
+     * @return true if spinner displays given text
      */
     public static boolean spinnerDisplaysText(int spinnerId, String text)
     {

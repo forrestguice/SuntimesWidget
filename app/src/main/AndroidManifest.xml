@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.forrestguice.suntimeswidget" >
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.forrestguice.suntimeswidget" >
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="18" />
+
+    <uses-sdk tools:overrideLibrary="com.flask.colorpicker" />
 
     <application
         android:allowBackup="false"
@@ -33,16 +36,30 @@
 
         </activity>
 
-        <!--Settings Activity -->
+        <!-- Settings Activity -->
         <activity
             android:name=".SuntimesSettingsActivity"
             android:label="@string/app_name"
             android:icon="@drawable/ic_suntimes">
         </activity>
 
-        <!--Widget List Activity -->
+        <!-- Widget List Activity -->
         <activity
             android:name=".SuntimesWidgetListActivity"
+            android:label="@string/app_name"
+            android:icon="@drawable/ic_suntimes">
+        </activity>
+
+        <!-- Theme List Activity -->
+        <activity
+            android:name=".themes.WidgetThemeListActivity"
+            android:label="@string/app_name"
+            android:icon="@drawable/ic_suntimes">
+        </activity>
+
+        <!-- Theme Config Activity -->
+        <activity
+            android:name=".themes.WidgetThemeConfigActivity"
             android:label="@string/app_name"
             android:icon="@drawable/ic_suntimes">
         </activity>

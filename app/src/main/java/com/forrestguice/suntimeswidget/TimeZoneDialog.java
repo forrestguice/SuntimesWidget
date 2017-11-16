@@ -74,6 +74,7 @@ public class TimeZoneDialog extends DialogFragment
     private WidgetTimezones.TimeZoneItemAdapter spinner_timezone_adapter;
     private boolean loading = false;
 
+    @SuppressWarnings("deprecation")
     @NonNull @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState)
     {
