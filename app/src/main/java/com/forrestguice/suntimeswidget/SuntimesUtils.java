@@ -21,8 +21,10 @@ package com.forrestguice.suntimeswidget;
 import android.content.Context;
 import android.content.res.Resources;
 
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.text.Html;
 import android.text.Spannable;
 
 import android.content.res.TypedArray;
@@ -30,12 +32,15 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Menu;
 
+import java.lang.reflect.Method;
 import java.text.DateFormat;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
@@ -630,4 +635,36 @@ public class SuntimesUtils
         }
     }
 
+    /**
+     * from http://stackoverflow.com/questions/18374183/how-to-show-icons-in-overflow-menu-in-actionbar
+     */
+    public static void forceActionBarIcons(Menu menu)
+    {
+        if (menu != null)
+        {
+            if (menu.getClass().getSimpleName().equals("MenuBuilder"))
+            {
+                try {
+                    Method m = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
+                    m.setAccessible(true);
+                    m.invoke(menu, true);
+
+                } catch (Exception e) {
+                    Log.e("SuntimesActivity", "failed to set show overflow icons", e);
+                }
+            }
+        }
+    }
+
+    /**
+     * @param htmlString html markup
+     * @return an html span
+     */
+    @SuppressWarnings("deprecation")
+    public static Spanned fromHtml(String htmlString )
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            return Html.fromHtml(htmlString, Html.FROM_HTML_MODE_LEGACY);
+        else return Html.fromHtml(htmlString);
+    }
 }

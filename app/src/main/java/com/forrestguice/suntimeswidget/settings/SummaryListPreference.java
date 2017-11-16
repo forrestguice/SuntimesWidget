@@ -94,7 +94,8 @@ public class SummaryListPreference extends com.forrestguice.suntimeswidget.setti
             this.index = i;
         }
 
-        public View getView(int position, View convertView, ViewGroup parent)
+        @NonNull
+        public View getView(int position, View convertView, @NonNull ViewGroup parent)
         {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             View row = inflater.inflate(this.layoutID, parent, false);

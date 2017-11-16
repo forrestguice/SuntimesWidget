@@ -303,7 +303,7 @@ public class SuntimesNotes2 implements SuntimesNotes
     /**
      * Create an empty note for a given SolarEvent.
      * @param event the SolarEvent the note will display
-     * @return a note object with icon, color, untilString, and noteStril set (timestring empty).
+     * @return a note object with icon, color, untilString, and noteString set (timestring empty).
      */
     private NoteData createNote(SolarEvents event)
     {

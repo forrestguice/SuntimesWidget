@@ -52,9 +52,12 @@ import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
+import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 
 import java.security.InvalidParameterException;
 import java.util.TimeZone;
+
+import static com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity.PICK_THEME_REQUEST;
 
 /**
  * Main widget config activity.
@@ -77,11 +80,13 @@ public class SuntimesConfigActivity extends AppCompatActivity
     protected Spinner spinner_onTap;
     protected EditText text_launchActivity;
 
-    protected Spinner spinner_1x1mode;
+    protected TextView button_themeConfig;
+    private WidgetThemes.ThemeListAdapter spinner_themeAdapter;
     protected Spinner spinner_theme;
+
+    protected Spinner spinner_1x1mode;
     protected CheckBox checkbox_allowResize;
     protected CheckBox checkbox_showTitle;
-
     protected TextView label_titleText;
     protected EditText text_titleText;
 
@@ -198,8 +203,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
         return supportedModes;
     }
 
-
-    protected void initViews( Context context )
+    protected void initViews(final Context context )
     {
         //
         // widget: add button
@@ -250,10 +254,21 @@ public class SuntimesConfigActivity extends AppCompatActivity
         spinner_theme = (Spinner)findViewById(R.id.appwidget_appearance_theme);
         if (spinner_theme != null)
         {
-            ArrayAdapter<ThemeDescriptor> spinner_themeAdapter;
-            spinner_themeAdapter = new ArrayAdapter<ThemeDescriptor>(this, R.layout.layout_listitem_oneline, WidgetThemes.values());
-            spinner_themeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner_theme.setAdapter(spinner_themeAdapter);
+            initThemeAdapter(context);
+        }
+
+        button_themeConfig = (TextView)findViewById(R.id.appwidget_appearance_theme_label);
+        if (button_themeConfig != null)
+        {
+            button_themeConfig.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    Intent configThemesIntent = new Intent(context, WidgetThemeListActivity.class);
+                    startActivityForResult(configThemesIntent, PICK_THEME_REQUEST);
+                }
+            });
         }
 
         //
@@ -272,7 +287,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
         // widget: time mode
         //
         spinner_timeMode = (Spinner)findViewById(R.id.appwidget_general_timeMode);
-        button_timeModeHelp = (ImageButton)findViewById(R.id.appwidget_generale_timeMode_helpButton);
+        button_timeModeHelp = (ImageButton)findViewById(R.id.appwidget_general_timeMode_helpButton);
         initTimeMode(context);
 
         //
@@ -478,6 +493,15 @@ public class SuntimesConfigActivity extends AppCompatActivity
         {
             button_aboutWidget.setOnClickListener(onAboutButtonClickListener);
         }
+    }
+
+    /**
+     * @param context a context used to access resources
+     */
+    protected void initThemeAdapter(final Context context)
+    {
+        spinner_themeAdapter = new WidgetThemes.ThemeListAdapter(this, R.layout.layout_listitem_oneline, android.R.layout.simple_spinner_dropdown_item, WidgetThemes.values());
+        spinner_theme.setAdapter(spinner_themeAdapter);
     }
 
     /**
@@ -700,7 +724,12 @@ public class SuntimesConfigActivity extends AppCompatActivity
             Log.e("loadAppearanceSettings", "Failed to load theme " + theme.themeName());
             themeDescriptor = DarkTheme.THEMEDEF_DESCRIPTOR;
         }
-        spinner_theme.setSelection(themeDescriptor.ordinal(WidgetThemes.values()));
+        if (themeDescriptor != null)
+        {
+            spinner_theme.setSelection(themeDescriptor.ordinal(WidgetThemes.values()));
+        } else {
+            Log.e("loadAppearanceSettings", "theme is not installed! " + theme.themeName());
+        }
 
         // load: allow resize
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
@@ -925,7 +954,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
     }
 
     /**
-     * @param showCompareUI
+     * @param showCompareUI true: show comparison ui, false: hide comparison ui
      */
     protected void showCompareUI( boolean showCompareUI )
     {
@@ -936,6 +965,9 @@ public class SuntimesConfigActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * @param showOption true: show noon ui, false: hide noon ui
+     */
     protected void showOptionShowNoon( boolean showOption )
     {
         View layout_showNoon = findViewById(R.id.appwidget_general_showNoon_layout);
@@ -981,6 +1013,74 @@ public class SuntimesConfigActivity extends AppCompatActivity
         if (activityTitle != null)
         {
             activityTitle.setText(text);
+        }
+    }
+
+    /**
+     * @param requestCode anticipates PICK_THEME_REQUEST
+     * @param resultCode RESULT_OK, RESULT_CANCELED
+     * @param data an Intent with extra string data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode)
+        {
+            case PICK_THEME_REQUEST:
+                onPickThemeResult(resultCode, data);
+                break;
+        }
+    }
+
+    /**
+     * @param resultCode RESULT_OK a theme was selected, a theme was added, or a theme was removed, and RESULT_CANCELED otherwise.
+     * @param data an Intent with data; "name" extra contains selected themeName if a selection was made, "isModified" is true if list of themes was changed.
+     */
+    protected void onPickThemeResult(int resultCode, Intent data)
+    {
+        if (resultCode == RESULT_OK)
+        {
+            String paramSelection = data.getStringExtra(SuntimesTheme.THEME_NAME);
+            String themeName = (paramSelection != null) ? paramSelection
+                                                        : ((ThemeDescriptor)spinner_theme.getSelectedItem()).name();
+
+            boolean paramReloadAdapter = data.getBooleanExtra(WidgetThemeListActivity.ADAPTER_MODIFIED, false);
+            if (paramReloadAdapter)
+            {
+                Log.d("selectTheme", "reloading list of themes...");
+                initThemeAdapter(this);
+            }
+
+            if (themeName != null)
+            {
+                selectTheme(themeName);
+            }
+        }
+    }
+
+    private void selectTheme(String themeName)
+    {
+        ThemeDescriptor themeDescriptor = WidgetThemes.valueOf(themeName);
+        if (themeDescriptor == null)
+        {
+            Log.w("selectTheme", "unable to find " + themeName + " (null descriptor); reverting to default.");
+            themeDescriptor = WidgetThemes.valueOf(WidgetSettings.PREF_DEF_APPEARANCE_THEME);
+            if (themeDescriptor == null)
+            {
+                Log.e("selectTheme", "failed to revert to default! " + WidgetSettings.PREF_DEF_APPEARANCE_THEME + " not found.");
+                return;
+            }
+        }
+
+        int position = themeDescriptor.ordinal(spinner_themeAdapter.values());
+        if (position >= 0)
+        {
+            spinner_theme.setSelection(position, true);
+            Log.d("selectTheme", "selected theme: " + themeDescriptor.name());
+
+        } else {
+            Log.w("selectTheme", "unable to find " + themeDescriptor.name() + " (bad position).");
         }
     }
 }

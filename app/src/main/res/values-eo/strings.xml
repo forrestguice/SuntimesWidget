@@ -150,8 +150,8 @@
     <string name="timeMode_nautical">Naŭtika krepusko</string>         <!-- setting -->
     <string name="timeMode_astronomical_short">Astronomia</string>    <!-- setting -->
     <string name="timeMode_astronomical">Astronomia krepusko</string> <!-- setting -->
-    <string name="timeMode_night">Nokto</string>                <!-- a label (not an actual timeMode setting) -->     <!-- TODO: confirm this is right / fix -->
-    <string name="timeMode_day">Tago</string>                   <!-- a label (not an actual timeMode setting) -->     <!-- TODO: confirm this is right / fix -->
+    <string name="timeMode_night">Nokto</string>                <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_day">Tago</string>                   <!-- a label (not an actual timeMode setting) -->
 
     <string name="configLabel_general_timeMode">Reĝimo:</string>          <!-- spinner label -->
 
@@ -215,11 +215,11 @@
     <string name="configLabel_solartime">Suntempo:</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: timeFormat mode -->
-    <string name="timeFormatMode_system">Sistema formo</string>          <!-- setting -->  <!-- TODO -->
-    <string name="timeFormatMode_12hr">12-hora</string>                  <!-- setting -->  <!-- TODO -->
-    <string name="timeFormatMode_24hr">24-hora</string>                  <!-- setting -->  <!-- TODO -->
+    <string name="timeFormatMode_system">Sistema formo</string>          <!-- setting -->
+    <string name="timeFormatMode_12hr">12-hora</string>                  <!-- setting -->
+    <string name="timeFormatMode_24hr">24-hora</string>                  <!-- setting -->
 
-    <string name="configLabel_timeFormatMode">Tempa formo:</string>             <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_timeFormatMode">Tempa formo:</string>             <!-- spinner label -->
     <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
 
     <!-- Widget Setting: date mode -->
@@ -233,12 +233,94 @@
     <!-- Widget Setting: compare mode -->
     <string name="compareMode_yesterday">Hieraŭ</string>                     <!-- setting -->
     <string name="compareMode_tomorrow">Morgaŭ</string>                       <!-- setting -->
-
     <string name="configLabel_general_compareMode">Kompari kun:</string>    <!-- spinner label -->
+    <string name="configLabel_general_showComparison">Show Comparison</string>  <!-- checkbox label -->
+
+    <!-- Widget Settings: noon -->
+    <string name="configLabel_general_showNoon">Show Solar Noon</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: Launch App -->
     <string name="configLabel_action_launch">Ago:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch"><xliff:g id="uri">com.forrestguice.suntimeswidget.SuntimesActivity</xliff:g></string> <!-- editText hint (and default) -->
+
+    <!-- Widget Setting: Themes -->
+    <string name="configLabel_widgetThemeList">Widget Themes</string>
+    <string name="configLabel_widgetThemeListSelect">Select a theme</string>
+    <string name="configAction_addTheme">Add</string>           <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="configAction_selectTheme">Select</string>     <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="configAction_editTheme">Edit</string>         <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="configAction_deleteTheme">Delete</string>     <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="configAction_copyTheme">Copy</string>         <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="configAction_exportThemes">Export</string>    <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="configAction_importThemes">Import</string>    <!-- button (contentDescription) --> <!-- TODO -->
+
+    <!--<string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>-->                                        <!-- suggested new theme id -->
+    <!--<string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_copy<xliff:g id="#">%2$s</xliff:g></string>-->   <!-- copied theme id -->
+    <string name="addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g> (copy)</string>                            <!-- copied theme name (display string) --> <!-- TODO -->
+
+    <string name="addtheme_toast_success">Added <xliff:g id="themeName">%1$s</xliff:g>.</string>          <!-- toast msg -->  <!-- TODO -->
+    <string name="edittheme_toast_success">Saved <xliff:g id="themeName">%1$s</xliff:g>.</string>         <!-- toast msg -->  <!-- TODO -->
+    <string name="deletetheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g> was deleted.</string> <!-- toast msg -->  <!-- TODO -->
+
+    <string name="edittheme_error_themeName_empty">ID must be unique (required).</string>        <!-- error hint (themeName empty) -->  <!-- TODO -->
+    <string name="edittheme_error_themeName_unique">ID must be unique (already taken).</string>  <!-- error hint (themeName taken) -->  <!-- TODO -->
+    <string name="edittheme_error_displaytext">Display string must not be empty.</string>  <!-- error hint (display text is empty) -->  <!-- TODO -->
+    <string name="edittheme_error_textsize_min">Size must be an integer &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) --> <!-- TODO -->
+    <string name="edittheme_error_textsize_max">Size must be an integer &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->  <!-- TODO -->
+
+    <string name="deletetheme_dialog_title">Delete Theme</string>        <!-- dialog title --> <!-- TODO -->
+    <string name="deletetheme_dialog_message">Are you sure you want to delete <xliff:g id="themeName">%1$s</xliff:g>?</string>   <!-- dialog msg --> <!-- TODO -->
+    <string name="deletetheme_dialog_ok">Forviŝi</string>        <!-- button -->
+    <string name="deletetheme_dialog_cancel">Nuligi</string>    <!-- button -->
+
+    <string name="configLabel_widgetThemeAdd">Add Theme</string>     <!-- title text --> <!-- TODO -->
+    <string name="configLabel_widgetThemeEdit">Edit Theme</string>   <!-- title text -->  <!-- TODO -->
+    <string name="configAction_saveTheme">Save</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_chooseColor">Choose Color</string> <!-- button (contentDescription) -->  <!-- TODO -->
+
+    <string name="configLabel_themeBackgroundId">Base:</string>    <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_themeBackground_light">Light</string>        <!-- light background -->  <!-- TODO -->
+    <string name="configLabel_themeBackground_dark">Dark</string>          <!-- dark background -->  <!-- TODO -->
+    <string name="configLabel_themeBackground_trans">Transparent</string>  <!-- transparent background --> <!-- TODO -->
+
+    <string name="configLabel_themeColorTitle">Title Color:</string>     <!-- color label -->  <!-- TODO -->
+    <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->  <!-- TODO -->
+
+    <string name="configLabel_themeColorText">Text Color:</string>       <!-- color label -->  <!-- TODO -->
+    <string name="configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->  <!-- TODO -->
+
+    <string name="configLabel_themeColorSunrise">Sunrise Color:</string> <!-- color label -->  <!-- TODO -->
+    <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->  <!-- TODO -->
+
+    <string name="configLabel_themeColorSunset">Sunset Color:</string>   <!-- color label -->  <!-- TODO -->
+    <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->  <!-- TODO -->
+
+    <string name="configLabel_themeColorSuffix">Suffix Color:</string>   <!-- color label --> <!-- TODO -->
+    <string name="configHint_themeColorSuffix">#FFFFFFFF</string>        <!-- color hint --> <!-- TODO -->
+
+    <string name="configLabel_themeColorTime">Text Color2:</string>      <!-- color label --> <!-- TODO -->
+    <string name="configHint_themeColorTime">#FFFFFFFF</string>          <!-- color hint --> <!-- TODO -->
+
+    <string name="configLabel_themeSizeTitle">Title Size:</string>  <!-- edit label --> <!-- TODO -->
+    <string name="configHint_themeSizeTitle">14</string>                 <!-- edit hint --> <!-- TODO -->
+
+    <string name="configLabel_themeSizeText">Text Size:</string>    <!-- edit label --> <!-- TODO -->
+    <string name="configHint_themeSizeText">10</string>                  <!-- edit hint --> <!-- TODO -->
+
+    <string name="configLabel_themeSizeTime">Time Size:</string>    <!-- edit label --> <!-- TODO -->
+    <string name="configHint_themeSizeTime">12</string>                  <!-- edit hint --> <!-- TODO -->
+
+    <string name="configLabel_themeSizeSuffix">Suffix Size:</string> <!-- edit label --> <!-- TODO -->
+    <string name="configHint_themeSizeSuffix">8</string>                  <!-- edit hint --> <!-- TODO -->
+
+    <string name="configLabel_themePadding">Padding:</string>            <!-- edit label --> <!-- TODO -->
+    <string name="configHint_themePadding">[left, top, right, bottom]</string> <!-- edit hint --> <!-- TODO -->
+
+    <string name="configLabel_themeID">ID:</string>                      <!-- edit label --> <!-- TODO -->
+    <string name="configHint_themeID">Theme ID</string>                  <!-- edit hint --> <!-- TODO -->
+
+    <string name="configLabel_themeName">Display:</string>               <!-- edit label -->  <!-- TODO -->
+    <string name="configHint_themeName">Label</string>                   <!-- edit hint -->  <!-- TODO -->
 
     <!--
          APP SETTINGS
@@ -249,7 +331,7 @@
     <string name="configLabel_widgetList_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
     <!--<string name="configLabel_widgetList_itemTitlePattern"><xliff:g id="titlePattern"><![CDATA[%M (%lat, %lon) [%t]]]></xliff:g></string>--> <!-- the pattern used when generating widget titles for display in the list -->
     <string name="configLabel_widgetListHelp_title">Helpo</string>               <!-- always the first item in the widgetList -->
-    <string name="configLabel_widgetListHelp_summary">Montras helpon pri fenestraĵoj</string>
+    <string name="configLabel_widgetListHelp_summary">Montri helpon pri fenestraĵoj</string>
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">Lokoj</string>                           <!-- group title -->
@@ -261,15 +343,15 @@
 
     <!-- App Setting: UI Warnings -->
     <string name="configLabel_ui_showWarnings">Aktivigi avertojn</string>
-    <string name="configLabel_ui_showWarnings_summary">Montras agordojn de avertaj mesaĝoj</string>
+    <string name="configLabel_ui_showWarnings_summary">Montri agordojn de avertaj mesaĝoj</string>
     
     <!-- App Setting: Show Lightmap -->
     <string name="configLabel_ui_showLightmap">Montri lum-mapon</string>
-    <string name="configLabel_ui_showLightmap_summary">Montras bastonan diagramon de periodoj de tago, nokto kaj krepusko.</string>
+    <string name="configLabel_ui_showLightmap_summary">Montri bastonan diagramon de periodoj de tago, nokto kaj krepusko.</string>
 
     <!-- App Setting: show data source -->
-    <string name="configLabel_ui_showdatasource">Show Data Source</string>  <!-- TODO -->
-    <string name="configLabel_ui_showdatasource_summary">Show a label indicating the current configuration.</string> <!-- TODO -->
+    <string name="configLabel_ui_showdatasource">Montri fonton de datumoj</string>
+    <string name="configLabel_ui_showdatasource_summary">Montri etikedon indikantan la nunan agordaron.</string>
 
     <!-- App Setting: UI Theme -->
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
@@ -315,7 +397,7 @@
 
     <!-- App Setting: GPS fix max age -->
     <string name="configLabel_getFix_maxAge">Valido de GPS-lego</string>
-    <string name="configLabel_getFix_maxAge_summary">Senvalidiĝas post <xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g></string>
+    <string name="configLabel_getFix_maxAge_summary">Senvalidiĝi post <xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g></string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>1 minuto</item>
         <item>5 minutoj</item>
@@ -383,7 +465,7 @@
         <item>Esperanto</item>
         <item>Franca</item>
         <item>Germana</item>
-        <item>Hungara</item>   <!-- TODO: confirm translation -->
+        <item>Hungara</item>
         <item>Pola</item>
     </string-array>
 
@@ -438,9 +520,16 @@
     <!-- Dialog: Export Places -->
     <string name="locationexport_dialog_title">Elporti lokojn</string>
     <string name="locationexport_dialog_message">Elportado de la datumbazo al csv-dosiero.</string>
+
+    <!-- Dialog: Export -->
     <string name="msg_export_success">Provizore kopiita al <xliff:g id="filepath">%s</xliff:g></string>
     <string name="msg_export_failure">Elportado al <xliff:g id="filepath">%s</xliff:g> malsukcesis!</string>
     <string name="msg_export_to">Elporti per</string>  <!-- title displayed over "share action" chooser -->
+
+    <!-- Dialog: Color -->
+    <string name="color_dialog_msg">Choose Color</string> <!-- TODO -->
+    <string name="color_dialog_ok">Aktualigi</string>
+    <string name="color_dialog_cancel">Nuligi</string>
 
     <!-- Dialog: About -->
     <string name="about_dialog_title">Pri</string>
@@ -475,12 +564,12 @@
                 * <b>%loc</b> por etikedo <br />
                 * <b>%lat</b> por latitudo <br />
                 * <b>%lon</b> por longitudo <br/>
-                * <b>%m</b> por temp-reĝimo (mallonge) (ekz. "Civila") <br/>
-                * <b>%M</b> por temp-reĝimo (longe) (ekz. "Civila krepusko") <br/>
-                * <b>%s</b> por fonto de datumoj (ekz. "sunrisesunsetlib") <br/>
+                * <b>%m</b> por temp-reĝimo (mallonge) (ekz. “Civila”) <br/>
+                * <b>%M</b> por temp-reĝimo (longe) (ekz. “Civila krepusko”) <br/>
+                * <b>%s</b> por fonto de datumoj (ekz. “sunrisesunsetlib”) <br/>
                 * <b>%t</b> por horzono (ekz. Usono/Arizono) <br/>
-    ]]></string>  <!-- TODO: verify translation for %s / fix -->
-
+    ]]></string>
+    
     <string name="help_general">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_general_timeMode">%1$s</xliff:g><![CDATA[<br />]]>
         <xliff:g id="help_general_daylength">%2$s</xliff:g>

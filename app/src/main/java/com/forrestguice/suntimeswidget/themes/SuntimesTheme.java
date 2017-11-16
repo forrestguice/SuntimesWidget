@@ -22,42 +22,72 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
+import android.util.Log;
 
 public class SuntimesTheme
 {
     public static final String THEME_KEY = "theme_";
     public static final String THEME_NAME = "name";
     public static final String THEME_VERSION = "version";
+    public static final String THEME_ISDEFAULT = "isDefault";
     public static final String THEME_DISPLAYSTRING = "display";
+
     public static final String THEME_BACKGROUND = "backgroundID";
+    public static final String THEME_PADDING = "padding";
     public static final String THEME_PADDING_LEFT = "padding_left";
     public static final String THEME_PADDING_TOP = "padding_top";
     public static final String THEME_PADDING_RIGHT = "padding_right";
     public static final String THEME_PADDING_BOTTOM = "padding_bottom";
+
     public static final String THEME_TEXTCOLOR = "textcolor";
     public static final String THEME_TITLECOLOR = "titlecolor";
     public static final String THEME_TIMECOLOR = "timecolor";
     public static final String THEME_TIMESUFFIXCOLOR = "timesuffixcolor";
     public static final String THEME_SUNRISECOLOR = "sunrisecolor";
     public static final String THEME_SUNSETCOLOR = "sunsetcolor";
+
     public static final String THEME_TITLESIZE = "titlesize";
+    public static final float THEME_TITLESIZE_MIN = 6.0f;
+    public static final float THEME_TITLESIZE_DEF = 10.0f;
+    public static final float THEME_TITLESIZE_MAX = 32.0f;
+
+    public static final String THEME_TEXTSIZE = "textsize";
+    public static final float THEME_TEXTSIZE_MIN = 6.0f;
+    public static final float THEME_TEXTSIZE_DEF = 10.0f;
+    public static final float THEME_TEXTSIZE_MAX = 32.0f;
+
+    public static final String THEME_TIMESIZE = "timesize";
+    public static final float THEME_TIMESIZE_MIN = 6.0f;
+    public static final float THEME_TIMESIZE_DEF = 12.0f;
+    public static final float THEME_TIMESIZE_MAX = 32.0f;
+
+    public static final String THEME_TIMESUFFIXSIZE = "timesuffixsize";
+    public static final float THEME_TIMESUFFIXSIZE_MIN = 4.0f;
+    public static final float THEME_TIMESUFFIXSIZE_DEF = 6.0f;
+    public static final float THEME_TIMESUFFIXSIZE_MAX = 32.0f;
 
     private ThemeDescriptor descriptor;
 
     protected String themeName;
     protected int themeVersion;
+    protected boolean themeIsDefault;
     protected String themeDisplayString;
 
     protected int themeBackground;
     protected int[] themePadding = {0, 0, 0, 0};
     private int[] themePaddingPixels = {-1, -1, -1, -1};
+
     protected int themeTitleColor;
-    protected float themeTitleSize;
     protected int themeTextColor;
     protected int themeTimeColor;
     protected int themeSunriseTextColor;
     protected int themeSunsetTextColor;
     protected int themeTimeSuffixColor;
+
+    protected float themeTitleSize = THEME_TITLESIZE_DEF;
+    protected float themeTextSize = THEME_TEXTSIZE_DEF;
+    protected float themeTimeSize = THEME_TIMESIZE_DEF;
+    protected float themeTimeSuffixSize = THEME_TIMESUFFIXSIZE_DEF;
 
     public SuntimesTheme()
     {
@@ -67,9 +97,10 @@ public class SuntimesTheme
     {
         this.themeVersion = otherTheme.themeVersion;
         this.themeName = otherTheme.themeName;
+        this.themeIsDefault = otherTheme.themeIsDefault;
         this.themeDisplayString = otherTheme.themeDisplayString;
-        this.themeBackground = otherTheme.themeBackground;
 
+        this.themeBackground = otherTheme.themeBackground;
         this.themePadding[0] = otherTheme.themePadding[0];
         this.themePadding[1] = otherTheme.themePadding[1];
         this.themePadding[2] = otherTheme.themePadding[2];
@@ -81,7 +112,11 @@ public class SuntimesTheme
         this.themeTimeSuffixColor = otherTheme.themeTimeSuffixColor;
         this.themeSunriseTextColor = otherTheme.themeSunriseTextColor;
         this.themeSunsetTextColor = otherTheme.themeSunsetTextColor;
+
         this.themeTitleSize = otherTheme.themeTitleSize;
+        this.themeTextSize = otherTheme.themeTextSize;
+        this.themeTimeSize = otherTheme.themeTimeSize;
+        this.themeTimeSuffixSize = otherTheme.themeTimeSuffixSize;
     }
 
     public boolean initTheme( Context context, String themesPrefix, String themeName, SuntimesTheme defaultTheme )
@@ -89,10 +124,29 @@ public class SuntimesTheme
         SharedPreferences themes = context.getSharedPreferences(themesPrefix, Context.MODE_PRIVATE);
         String theme = themePrefix(themeName);
 
-        this.themeVersion = themes.getInt( theme + THEME_VERSION, defaultTheme.themeVersion );
-        this.themeName = themes.getString( theme + THEME_NAME, defaultTheme.themeName );
-        this.themeDisplayString = themes.getString( theme + THEME_DISPLAYSTRING, defaultTheme.themeDisplayString );
-        this.themeBackground = themes.getInt( theme + THEME_BACKGROUND, defaultTheme.themeBackground );
+        this.themeVersion = themes.getInt(theme + THEME_VERSION, defaultTheme.themeVersion);
+        this.themeName = themes.getString(theme + THEME_NAME, defaultTheme.themeName);
+        this.themeIsDefault = themes.getBoolean(theme + THEME_ISDEFAULT, false);
+        this.themeDisplayString = themes.getString(theme + THEME_DISPLAYSTRING, defaultTheme.themeDisplayString);
+
+        this.themeBackground = defaultTheme.themeBackground;
+        String backgroundName;
+        try {
+            backgroundName = themes.getString(theme + THEME_BACKGROUND, null);
+            if (backgroundName != null)
+            {
+                try {
+                    this.themeBackground = ThemeBackground.valueOf(backgroundName).getResID();
+                } catch (IllegalArgumentException e) {
+                    Log.w("initTheme", "unable to find theme background " + backgroundName);
+                    this.themeBackground = ThemeBackground.DARK.getResID();
+                }
+            }
+        } catch (ClassCastException e) {
+            Log.w("initTheme", "legacy theme: " + themeName);
+            int backgroundID = themes.getInt(theme + THEME_BACKGROUND, 0);
+            this.themeBackground = ThemeBackground.getThemeBackground(backgroundID).getResID();
+        }
 
         this.themePadding[0] = themes.getInt( theme + THEME_PADDING_LEFT, defaultTheme.themePadding[0] );
         this.themePadding[1] = themes.getInt( theme + THEME_PADDING_TOP, defaultTheme.themePadding[1] );
@@ -105,7 +159,11 @@ public class SuntimesTheme
         this.themeTimeSuffixColor = themes.getInt( theme + THEME_TIMESUFFIXCOLOR, defaultTheme.themeTimeSuffixColor );
         this.themeSunriseTextColor = themes.getInt( theme + THEME_SUNRISECOLOR, defaultTheme.themeSunriseTextColor );
         this.themeSunsetTextColor = themes.getInt( theme + THEME_SUNSETCOLOR, defaultTheme.themeSunsetTextColor );
+
         this.themeTitleSize = themes.getFloat( theme + THEME_TITLESIZE, defaultTheme.themeTitleSize );
+        this.themeTextSize = themes.getFloat( theme + THEME_TEXTSIZE, defaultTheme.themeTextSize );
+        this.themeTimeSize = themes.getFloat( theme + THEME_TIMESIZE, defaultTheme.themeTimeSize );
+        this.themeTimeSuffixSize = themes.getFloat( theme + THEME_TIMESUFFIXSIZE, defaultTheme.themeTimeSuffixSize );
 
         return true;
     }
@@ -117,9 +175,10 @@ public class SuntimesTheme
 
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_VERSION, this.themeVersion);
         themePrefs.putString(themePrefix + SuntimesTheme.THEME_NAME, this.themeName);
+        themePrefs.putBoolean(themePrefix + SuntimesTheme.THEME_ISDEFAULT, this.themeIsDefault);
         themePrefs.putString(themePrefix + SuntimesTheme.THEME_DISPLAYSTRING, this.themeDisplayString);
 
-        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_BACKGROUND, this.themeBackground);
+        themePrefs.putString(themePrefix + SuntimesTheme.THEME_BACKGROUND, ThemeBackground.getThemeBackground(this.themeBackground).name());
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_PADDING_LEFT, this.themePadding[0]);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_PADDING_TOP, this.themePadding[1]);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_PADDING_RIGHT, this.themePadding[2]);
@@ -131,13 +190,54 @@ public class SuntimesTheme
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_TIMESUFFIXCOLOR, this.themeTimeSuffixColor);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_SUNRISECOLOR, this.themeSunriseTextColor);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_SUNSETCOLOR, this.themeSunsetTextColor);
+
         themePrefs.putFloat(themePrefix + SuntimesTheme.THEME_TITLESIZE, this.themeTitleSize);
+        themePrefs.putFloat(themePrefix + SuntimesTheme.THEME_TEXTSIZE, this.themeTextSize);
+        themePrefs.putFloat(themePrefix + SuntimesTheme.THEME_TIMESIZE, this.themeTimeSize);
+        themePrefs.putFloat(themePrefix + SuntimesTheme.THEME_TIMESUFFIXSIZE, this.themeTimeSuffixSize);
 
         themePrefs.apply();
 
         //noinspection UnnecessaryLocalVariable
         ThemeDescriptor themeDescriptor = themeDescriptor();
         return themeDescriptor;
+    }
+
+    public void deleteTheme(SharedPreferences themes)
+    {
+        if (themeIsDefault)
+        {
+            Log.w("deleteTheme", themeName + " is flagged default; ignoring request to delete.");
+            return;
+        }
+
+        SharedPreferences.Editor themePrefs = themes.edit();
+        String themePrefix = themePrefix(this.themeName);
+
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_VERSION);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_NAME);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_ISDEFAULT);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_DISPLAYSTRING);
+
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_BACKGROUND);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_PADDING_LEFT);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_PADDING_TOP);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_PADDING_RIGHT);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_PADDING_BOTTOM);
+
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_TEXTCOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_TITLECOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_TIMECOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_TIMESUFFIXCOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_SUNRISECOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_SUNSETCOLOR);
+
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_TITLESIZE);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_TEXTSIZE);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_TIMESIZE);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_TIMESUFFIXSIZE);
+
+        themePrefs.apply();
     }
 
     public String themeName()
@@ -148,6 +248,11 @@ public class SuntimesTheme
     public int themeVersion()
     {
         return themeVersion;
+    }
+
+    public boolean isDefault()
+    {
+        return themeIsDefault;
     }
 
     public String themeDisplayString()
@@ -167,11 +272,6 @@ public class SuntimesTheme
     public int getTitleColor()
     {
         return themeTitleColor;
-    }
-
-    public float getTitleSizeSp()
-    {
-        return themeTitleSize;
     }
 
     public int getTextColor()
@@ -197,6 +297,30 @@ public class SuntimesTheme
     public int getSunsetTextColor()
     {
         return themeSunsetTextColor;
+    }
+
+    public float getTitleSizeSp()
+    {
+        return (themeTitleSize < THEME_TITLESIZE_MIN) ? THEME_TITLESIZE_DEF :
+                (themeTitleSize > THEME_TITLESIZE_MAX) ? THEME_TITLESIZE_MAX : themeTitleSize;
+    }
+
+    public float getTextSizeSp()
+    {
+        return (themeTextSize < THEME_TEXTSIZE_MIN) ? THEME_TEXTSIZE_DEF :
+                (themeTextSize > THEME_TEXTSIZE_MAX) ? THEME_TEXTSIZE_MAX : themeTextSize;
+    }
+
+    public float getTimeSizeSp()
+    {
+        return (themeTimeSize < THEME_TIMESIZE_MIN) ? THEME_TIMESIZE_DEF :
+                (themeTimeSize > THEME_TIMESIZE_MAX) ? THEME_TIMESIZE_MAX : themeTimeSize;
+    }
+
+    public float getTimeSuffixSizeSp()
+    {
+        return (themeTimeSuffixSize < THEME_TIMESUFFIXSIZE_MIN) ? THEME_TIMESUFFIXSIZE_DEF :
+                (themeTimeSuffixSize > THEME_TIMESUFFIXSIZE_MAX) ? THEME_TIMESUFFIXSIZE_MAX : themeTimeSuffixSize;
     }
 
     public int getBackgroundId()
@@ -245,17 +369,53 @@ public class SuntimesTheme
     public static class ThemeDescriptor implements Comparable
     {
         private final String name;
-        private final String displayString;
+        private String displayString;
         private final int version;
 
-        public ThemeDescriptor(String name, String displayString, int version) {
+        public ThemeDescriptor(String name, Context context, String themesPrefix)
+        {
+            SharedPreferences themesPref = context.getSharedPreferences(themesPrefix, Context.MODE_PRIVATE);
+            String themePrefix = SuntimesTheme.themePrefix(name);
+            String themeName = themesPref.getString(themePrefix + THEME_NAME, "");
+            if (themeName.equals(name))
+            {
+                this.name = name;
+                this.displayString = themesPref.getString(themePrefix + THEME_DISPLAYSTRING, "");
+                this.version = themesPref.getInt(themePrefix + THEME_VERSION, -1);
+
+            } else {
+                this.name = "";
+                this.displayString = "";
+                this.version = -1;
+            }
+        }
+
+        public ThemeDescriptor(String name, String displayString, int version)
+        {
             this.name = name;
             this.displayString = displayString;
             this.version = version;
         }
 
+        public boolean isValid()
+        {
+            return (!name.isEmpty() && !displayString.isEmpty() && version > -1);
+        }
+
+        public void updateDescriptor(Context context, String themesPrefix)
+        {
+            String themePrefix = SuntimesTheme.themePrefix(name);
+            SharedPreferences themesPref = context.getSharedPreferences(themesPrefix, Context.MODE_PRIVATE);
+            this.displayString = themesPref.getString(themePrefix + THEME_DISPLAYSTRING, "");
+        }
+
         public String name() {
             return name;
+        }
+
+        public String displayString()
+        {
+            return displayString;
         }
 
         public String toString() {

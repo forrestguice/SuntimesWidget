@@ -2,8 +2,8 @@ apply plugin: 'com.android.application'
 
 android
 {
-    compileSdkVersion 24
-    buildToolsVersion '25.0.0'
+    compileSdkVersion 25
+    buildToolsVersion '26.0.2'
 
     sourceSets
     {
@@ -20,7 +20,8 @@ android
     {
         applicationId "com.forrestguice.suntimeswidget"
         minSdkVersion 10
-        targetSdkVersion 24
+        //noinspection OldTargetApi
+        targetSdkVersion 25
         versionCode 12
         versionName "0.4.1"
 
@@ -48,17 +49,17 @@ android
 
 dependencies
 {
-    compile 'com.android.support:design:24.2.1'
-    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.github.forrestguice:sunrisesunsetlib-java:SunriseSunsetCalculator-1.2-p0-fixdst'
     compile 'com.github.caarmen.SunriseSunset:lib-sunrise-sunset:1.1.0'
     compile group: 'net.time4j', name: 'time4j-android', version: '3.36-2017c'
+    compile 'com.github.QuadFlask:colorpicker:0.0.13'
 
     testCompile 'junit:junit:4.12'
-
     androidTestCompile 'com.jraska:falcon:1.0.4'
-    androidTestCompile 'com.android.support:support-annotations:24.2.1'
+    androidTestCompile 'com.android.support:support-annotations:25.3.1'
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile 'com.android.support.test:rules:0.5'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
@@ -68,7 +69,7 @@ configurations.all {
     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }
 
-def getDateAsMillis()
+static def getDateAsMillis()
 {
     def Calendar cal = Calendar.getInstance();
     return cal.getTimeInMillis().toString()

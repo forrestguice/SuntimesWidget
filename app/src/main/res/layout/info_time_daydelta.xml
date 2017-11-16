@@ -27,6 +27,7 @@
             android:id="@+id/text_delta_day_prefix"
             android:gravity="start"
             android:layout_weight="0"
+            android:maxLines="1"
             tools:text="Tomorrow will be" />
 
         <TextView
@@ -34,6 +35,7 @@
             android:id="@+id/text_delta_day_value"
             android:gravity="start"
             android:layout_weight="0"
+            android:maxLines="1"
             tools:text="2" />
 
         <TextView
@@ -41,6 +43,7 @@
             android:id="@+id/text_delta_day_units"
             android:gravity="start"
             android:layout_weight="0"
+            android:maxLines="1"
             tools:text="min" />
 
         <TextView
@@ -48,6 +51,7 @@
             android:id="@+id/text_delta_day_suffix"
             android:gravity="start"
             android:layout_weight="1"
+            android:maxLines="1" android:ellipsize="end"
             tools:text="shorter" />
 
     </LinearLayout>

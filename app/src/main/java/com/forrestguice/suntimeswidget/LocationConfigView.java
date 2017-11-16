@@ -29,7 +29,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
-import android.text.Html;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -766,7 +765,7 @@ public class LocationConfigView extends LinearLayout
 
         if (!silent)
         {
-            Toast copiedMsg = Toast.makeText(context, Html.fromHtml(context.getString(R.string.location_dialog_toast_copied, clipboardText)), Toast.LENGTH_LONG);
+            Toast copiedMsg = Toast.makeText(context, SuntimesUtils.fromHtml(context.getString(R.string.location_dialog_toast_copied, clipboardText)), Toast.LENGTH_LONG);
             copiedMsg.show();
         }
     }

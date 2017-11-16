@@ -855,6 +855,7 @@ public class WidgetSettings
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
         String modeString = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_CALCULATOR, PREF_DEF_GENERAL_CALCULATOR);
 
+        //noinspection UnusedAssignment
         SuntimesCalculatorDescriptor calculatorMode = null;
         try {
             calculatorMode = SuntimesCalculatorDescriptor.valueOf(modeString);
