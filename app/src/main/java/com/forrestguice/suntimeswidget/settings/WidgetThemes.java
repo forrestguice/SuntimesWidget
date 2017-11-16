@@ -70,41 +70,44 @@ public class WidgetThemes
             ThemeDescriptor themeDesc = loadDescriptor(context, themeName);
             if (themeDesc != null)
             {
-                addValue(context, themeDesc);
+                addValue(context, themeDesc, false);   // build initial list
             } else {
                 Log.w("initThemes", themeName + " does not seem to be installed; ignoring...");
             }
         }
 
-        addValue(LightTheme.THEMEDEF_DESCRIPTOR);
+        boolean added = addValue(LightTheme.THEMEDEF_DESCRIPTOR);         // add default (if missing)
         if (!SuntimesTheme.isInstalled(themePref, LightTheme.THEMEDEF_DESCRIPTOR))
         {
             LightTheme theme = new LightTheme(context);
             theme.saveTheme(themePref);
         }
 
-        addValue(LightThemeTrans.THEMEDEF_DESCRIPTOR);
+        added = added || addValue(LightThemeTrans.THEMEDEF_DESCRIPTOR);   // add default (if missing)
         if (!SuntimesTheme.isInstalled(themePref, LightThemeTrans.THEMEDEF_DESCRIPTOR))
         {
             LightThemeTrans theme = new LightThemeTrans(context);
             theme.saveTheme(themePref);
         }
 
-        addValue(DarkTheme.THEMEDEF_DESCRIPTOR);
+        added = added || addValue(DarkTheme.THEMEDEF_DESCRIPTOR);         // add default (if missing)
         if (!SuntimesTheme.isInstalled(themePref, DarkTheme.THEMEDEF_DESCRIPTOR))
         {
             DarkTheme theme = new DarkTheme(context);
             theme.saveTheme(themePref);
         }
 
-        addValue(DarkThemeTrans.THEMEDEF_DESCRIPTOR);
+        added = added || addValue(DarkThemeTrans.THEMEDEF_DESCRIPTOR);    // add default (if missing)
         if (!SuntimesTheme.isInstalled(themePref, DarkThemeTrans.THEMEDEF_DESCRIPTOR))
         {
             DarkThemeTrans theme = new DarkThemeTrans(context);
             theme.saveTheme(themePref);
         }
 
-        saveInstalledList(context);
+        if (added)
+        {    // defaults were added, save the modified list
+            saveInstalledList(context);
+        }
         defaultTheme = new DarkTheme(context);
         initialized = true;
     }
@@ -116,20 +119,26 @@ public class WidgetThemes
         return themes.containsValue(theme);
     }
 
-    public static void addValue( ThemeDescriptor theme )
+    public static boolean addValue( ThemeDescriptor theme )
     {
-        addValue(null, theme);
+        return addValue(null, theme);
     }
-    public static void addValue( Context context, ThemeDescriptor theme )
+    public static boolean addValue( Context context, ThemeDescriptor theme )
+    {
+        return addValue(context, theme, true);
+    }
+    public static boolean addValue( Context context, ThemeDescriptor theme, boolean saveList )
     {
         if (!themes.containsValue(theme))
         {
             themes.put(theme.name(), theme);
-            if (context != null)
+            if (context != null && saveList)
             {
                 saveInstalledList(context);
             }
+            return true;
         }
+        return false;
     }
 
     public static boolean removeValue(Context context, ThemeDescriptor theme)
