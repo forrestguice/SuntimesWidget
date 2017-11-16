@@ -81,7 +81,7 @@
             <!-- preview area -->
             <FrameLayout
                 android:id="@+id/preview_area"
-                android:layout_width="160dp" android:layout_height="wrap_content"
+                android:layout_width="170dp" android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/topRule"
