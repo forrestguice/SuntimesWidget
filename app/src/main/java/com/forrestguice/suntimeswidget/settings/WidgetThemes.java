@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -31,7 +32,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 import com.forrestguice.suntimeswidget.R;
@@ -43,6 +46,10 @@ import com.forrestguice.suntimeswidget.themes.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.DarkThemeTrans;
 import com.forrestguice.suntimeswidget.themes.LightTheme;
 import com.forrestguice.suntimeswidget.themes.LightThemeTrans;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class WidgetThemes
 {
@@ -57,7 +64,7 @@ public class WidgetThemes
     public static void initThemes(Context context)
     {
         SharedPreferences themePref = getSharedPreferences(context);
-        Set<String> themesToProcess = themePref.getStringSet(THEMES_KEY + THEMES_INSTALLED, themes.keySet());
+        Set<String> themesToProcess = loadInstalledList(themePref);
         for (String themeName : themesToProcess)
         {
             ThemeDescriptor themeDesc = loadDescriptor(context, themeName);
@@ -165,9 +172,60 @@ public class WidgetThemes
 
     public static void saveInstalledList(Context context)
     {
-        SharedPreferences.Editor themePref = getSharedPreferences(context).edit();
-        themePref.putStringSet(THEMES_KEY + THEMES_INSTALLED, themes.keySet());
-        themePref.apply();
+        SharedPreferences.Editor pref = getSharedPreferences(context).edit();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+        {
+            pref.putStringSet(THEMES_KEY + THEMES_INSTALLED, themes.keySet());
+        } else {
+            pref.putString(THEMES_KEY + THEMES_INSTALLED, stringSetToJson(themes.keySet()));
+        }
+        pref.apply();
+    }
+
+    public static Set<String> loadInstalledList(SharedPreferences pref)
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+        {
+            return pref.getStringSet(THEMES_KEY + THEMES_INSTALLED, themes.keySet());
+        } else {
+            return jsonToStringSet(pref.getString(THEMES_KEY + THEMES_INSTALLED, null));
+        }
+    }
+
+    @NonNull
+    private static String stringSetToJson(@NonNull Set<String> set)
+    {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("set", set);
+            String jsonString = json.toString();
+            Log.d("DEBUG", "setToJson :: " + jsonString);
+            return jsonString;
+
+        } catch (JSONException e) {
+            Log.e("setToJson", "Failed to write set to json object :: " + e);
+            return "";
+        }
+    }
+
+    private static Set<String> jsonToStringSet( String jsonString )
+    {
+        Set<String> set = new HashSet<>();
+        if (jsonString != null)
+        {
+            try {
+                JSONObject jsonObj = new JSONObject(jsonString);
+                JSONArray jsonArray = new JSONArray(jsonObj.getString("set"));
+                for (int i=0; i<jsonArray.length(); i++)
+                {
+                    set.add(jsonArray.getString(i));
+                }
+            } catch (JSONException e) {
+                Log.e("jsonToSet", "Failed to read string as json object :: " + e);
+            }
+        }
+        Log.d("DEBUG", "jsonToSet :: " + set);
+        return set;
     }
 
     public static SharedPreferences getSharedPreferences(Context context)
