@@ -237,6 +237,85 @@
     <string name="configLabel_action_launch">Activity:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch"><xliff:g id="uri">com.forrestguice.suntimeswidget.SuntimesActivity</xliff:g></string> <!-- editText hint (and default) -->
 
+    <!-- App Setting: WidgetThemes -->
+    <string name="configLabel_widgetThemeList">Widget Themes</string>
+    <string name="configLabel_widgetThemeListSelect">Select a theme</string>
+    <string name="configAction_addTheme">Add</string>           <!-- button (contentDescription) -->
+    <string name="configAction_selectTheme">Select</string>     <!-- button (contentDescription) -->
+    <string name="configAction_editTheme">Edit</string>         <!-- button (contentDescription) -->
+    <string name="configAction_deleteTheme">Delete</string>     <!-- button (contentDescription) -->
+    <string name="configAction_copyTheme">Copy</string>         <!-- button (contentDescription) -->
+    <string name="configAction_exportThemes">Export</string>    <!-- button (contentDescription) -->
+    <string name="configAction_importThemes">Import</string>    <!-- button (contentDescription) -->
+
+    <string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
+    <string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_copy<xliff:g id="#">%2$s</xliff:g></string>   <!-- copied theme id -->
+    <string name="addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g> (copy)</string>                            <!-- copied theme name (display string) -->
+
+    <string name="addtheme_toast_success">Added <xliff:g id="themeName">%1$s</xliff:g>.</string>          <!-- toast msg -->
+    <string name="edittheme_toast_success">Saved <xliff:g id="themeName">%1$s</xliff:g>.</string>         <!-- toast msg -->
+    <string name="deletetheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g> was deleted.</string> <!-- toast msg -->
+
+    <string name="edittheme_error_themeName_empty">ID must be unique (required).</string>        <!-- error hint (themeName empty) -->
+    <string name="edittheme_error_themeName_unique">ID must be unique (already taken).</string>  <!-- error hint (themeName taken) -->
+    <string name="edittheme_error_displaytext">Display string must not be empty.</string>  <!-- error hint (display text is empty) -->
+    <string name="edittheme_error_textsize_min">Size must be an integer &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->
+    <string name="edittheme_error_textsize_max">Size must be an integer &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->
+
+    <string name="deletetheme_dialog_title">Delete Theme</string>        <!-- dialog title -->
+    <string name="deletetheme_dialog_message">Are you sure you want to delete <xliff:g id="themeName">%1$s</xliff:g>?</string>   <!-- dialog msg -->
+    <string name="deletetheme_dialog_ok">Delete</string>        <!-- button -->
+    <string name="deletetheme_dialog_cancel">Cancel</string>    <!-- button -->
+
+    <string name="configLabel_widgetThemeAdd">Add Theme</string>     <!-- title text -->
+    <string name="configLabel_widgetThemeEdit">Edit Theme</string>   <!-- title text -->
+    <string name="configAction_saveTheme">Save</string>           <!-- button (contentDescription) -->
+    <string name="configAction_chooseColor">Choose Color</string> <!-- button (contentDescription) -->
+
+    <string name="configLabel_themeBackgroundId">Base:</string>    <!-- spinner label -->
+    <string name="configLabel_themeBackground_light">Light</string>        <!-- light background -->
+    <string name="configLabel_themeBackground_dark">Dark</string>          <!-- dark background -->
+    <string name="configLabel_themeBackground_trans">Transparent</string>  <!-- transparent background -->
+
+    <string name="configLabel_themeColorTitle">Title Color:</string>     <!-- color label -->
+    <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->
+
+    <string name="configLabel_themeColorText">Text Color:</string>       <!-- color label -->
+    <string name="configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->
+
+    <string name="configLabel_themeColorSunrise">Sunrise Color:</string> <!-- color label -->
+    <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
+
+    <string name="configLabel_themeColorSunset">Sunset Color:</string>   <!-- color label -->
+    <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
+
+    <string name="configLabel_themeColorSuffix">Suffix Color:</string>   <!-- color label -->
+    <string name="configHint_themeColorSuffix">#FFFFFFFF</string>        <!-- color hint -->
+
+    <string name="configLabel_themeColorTime">Text Color2:</string>      <!-- color label -->
+    <string name="configHint_themeColorTime">#FFFFFFFF</string>          <!-- color hint -->
+
+    <string name="configLabel_themeSizeTitle">Title Size:</string>  <!-- edit label -->
+    <string name="configHint_themeSizeTitle">14</string>                 <!-- edit hint -->
+
+    <string name="configLabel_themeSizeText">Text Size:</string>    <!-- edit label -->
+    <string name="configHint_themeSizeText">10</string>                  <!-- edit hint -->
+
+    <string name="configLabel_themeSizeTime">Time Size:</string>    <!-- edit label -->
+    <string name="configHint_themeSizeTime">12</string>                  <!-- edit hint -->
+
+    <string name="configLabel_themeSizeSuffix">Suffix Size:</string> <!-- edit label -->
+    <string name="configHint_themeSizeSuffix">8</string>                  <!-- edit hint -->
+
+    <string name="configLabel_themePadding">Padding:</string>            <!-- edit label -->
+    <string name="configHint_themePadding">[left, top, right, bottom]</string> <!-- edit hint -->
+
+    <string name="configLabel_themeID">ID:</string>                      <!-- edit label -->
+    <string name="configHint_themeID">Theme ID</string>                  <!-- edit hint -->
+
+    <string name="configLabel_themeName">Display:</string>               <!-- edit label -->
+    <string name="configHint_themeName">Label</string>                   <!-- edit hint -->
+
     <!--
          APP SETTINGS
     -->
@@ -521,9 +600,20 @@
     <!-- Dialog: Export Places -->
     <string name="locationexport_dialog_title">Exporting Places</string>
     <string name="locationexport_dialog_message">Exporting the database to csv file.</string>
+
+    <!-- Dialog: Export Themes -->
+    <string name="themesexport_dialog_title">Exporting Themes</string>
+    <string name="themesexport_dialog_message">Exporting themes to file.</string>
+
+    <!-- Dialog: Export -->
     <string name="msg_export_success">Temporary copy at <xliff:g id="filepath">%s</xliff:g></string>
     <string name="msg_export_failure">Export to <xliff:g id="filepath">%s</xliff:g> failed!</string>
     <string name="msg_export_to">Export with</string>  <!-- title displayed over "share action" chooser -->
+
+    <!-- Dialog: Color -->
+    <string name="color_dialog_msg">Choose Color</string>
+    <string name="color_dialog_ok">Select</string>
+    <string name="color_dialog_cancel">Cancel</string>
 
     <!-- Dialog: About -->
     <string name="about_dialog_title">About</string>
@@ -593,7 +683,7 @@
           To <b>reconfigure an existing widget</b> you can select from the following list.<br/>
     ]]></string>
 
-    <!-- calculator implemenations -->
+    <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
     <string name="calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
 

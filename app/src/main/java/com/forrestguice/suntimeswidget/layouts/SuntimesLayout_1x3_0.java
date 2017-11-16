@@ -19,6 +19,9 @@
 package com.forrestguice.suntimeswidget.layouts;
 
 import android.content.Context;
+import android.os.Build;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -108,5 +111,26 @@ public class SuntimesLayout_1x3_0 extends SuntimesLayout
         // theme noon
         views.setTextColor(R.id.text_time_noon_suffix, suffixColor);
         views.setTextColor(R.id.text_time_noon, noonColor);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        {
+            float textSize = theme.getTextSizeSp();
+            float timeSize = theme.getTimeSizeSp();
+            float suffSize = theme.getTimeSuffixSizeSp();
+
+            views.setTextViewTextSize(R.id.text_time_sunrise_suffix, TypedValue.COMPLEX_UNIT_SP, suffSize);
+            views.setTextViewTextSize(R.id.text_time_sunrise, TypedValue.COMPLEX_UNIT_SP, timeSize);
+
+            views.setTextViewTextSize(R.id.text_time_noon, TypedValue.COMPLEX_UNIT_SP, timeSize);
+            views.setTextViewTextSize(R.id.text_time_noon_suffix, TypedValue.COMPLEX_UNIT_SP, suffSize);
+
+            views.setTextViewTextSize(R.id.text_time_sunset, TypedValue.COMPLEX_UNIT_SP, timeSize);
+            views.setTextViewTextSize(R.id.text_time_sunset_suffix, TypedValue.COMPLEX_UNIT_SP, suffSize);
+
+            views.setTextViewTextSize(R.id.text_delta_day_prefix, TypedValue.COMPLEX_UNIT_SP, textSize);
+            views.setTextViewTextSize(R.id.text_delta_day_value, TypedValue.COMPLEX_UNIT_SP, textSize);
+            views.setTextViewTextSize(R.id.text_delta_day_units, TypedValue.COMPLEX_UNIT_SP, textSize);
+            views.setTextViewTextSize(R.id.text_delta_day_suffix, TypedValue.COMPLEX_UNIT_SP, textSize);
+        }
     }
 }

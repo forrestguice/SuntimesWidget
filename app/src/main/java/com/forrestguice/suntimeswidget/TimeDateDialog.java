@@ -132,6 +132,7 @@ public class TimeDateDialog extends DialogFragment implements DatePicker.OnDateC
      * @param savedInstanceState a bundle containing previously saved dialog state
      * @return a dialog instance ready to be shown
      */
+    @SuppressWarnings("deprecation")
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {

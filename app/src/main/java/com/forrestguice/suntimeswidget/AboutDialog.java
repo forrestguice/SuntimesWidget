@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2017 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -26,7 +26,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
-import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,26 +65,26 @@ public class AboutDialog extends DialogFragment
     {
         TextView versionView = (TextView) dialogContent.findViewById(R.id.txt_about_version);
         versionView.setMovementMethod(LinkMovementMethod.getInstance());
-        versionView.setText(Html.fromHtml(htmlVersionString()));
+        versionView.setText(SuntimesUtils.fromHtml(htmlVersionString()));
 
         TextView urlView = (TextView) dialogContent.findViewById(R.id.txt_about_url);
         urlView.setMovementMethod(LinkMovementMethod.getInstance());
-        urlView.setText(Html.fromHtml(context.getString(R.string.app_url)));
+        urlView.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_url)));
 
         TextView supportView = (TextView) dialogContent.findViewById(R.id.txt_about_support);
         supportView.setMovementMethod(LinkMovementMethod.getInstance());
-        supportView.setText(Html.fromHtml(context.getString(R.string.app_support_url)));
+        supportView.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_support_url)));
 
         TextView legalView1 = (TextView) dialogContent.findViewById(R.id.txt_about_legal1);
         legalView1.setMovementMethod(LinkMovementMethod.getInstance());
-        legalView1.setText(Html.fromHtml(context.getString(R.string.app_legal1)));
+        legalView1.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_legal1)));
 
         TextView legalView2 = (TextView) dialogContent.findViewById(R.id.txt_about_legal2);
         legalView2.setMovementMethod(LinkMovementMethod.getInstance());
-        legalView2.setText(Html.fromHtml(context.getString(R.string.app_legal2)));
+        legalView2.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_legal2)));
 
         TextView legalView3 = (TextView) dialogContent.findViewById(R.id.txt_about_legal3);
         legalView3.setMovementMethod(LinkMovementMethod.getInstance());
-        legalView3.setText(Html.fromHtml(context.getString(R.string.app_legal3)));
+        legalView3.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_legal3)));
     }
 }

@@ -25,7 +25,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
-import android.text.Html;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,7 +47,7 @@ public class HelpDialog extends DialogFragment
         rawContent = content;
         if (txtView != null)
         {
-            txtView.setText(Html.fromHtml(rawContent));
+            txtView.setText(SuntimesUtils.fromHtml(rawContent));
         }
     }
 

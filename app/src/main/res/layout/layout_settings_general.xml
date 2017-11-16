@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2017 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -58,7 +58,7 @@
                 android:layout_weight="1" />
 
 
-            <ImageButton android:id="@+id/appwidget_generale_timeMode_helpButton"
+            <ImageButton android:id="@+id/appwidget_general_timeMode_helpButton"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:src="@android:drawable/ic_menu_help"

@@ -20,10 +20,12 @@ package com.forrestguice.suntimeswidget.themes;
 
 import android.content.Context;
 
+import com.forrestguice.suntimeswidget.BuildConfig;
+
 public class LightThemeTrans extends LightTheme
 {
     public static final String THEMEDEF_NAME = "light_transparent";
-    public static final int THEMEDEF_VERSION = 1;
+    public static final int THEMEDEF_VERSION = BuildConfig.VERSION_CODE;
     public static final String THEMEDEF_DISPLAYSTRING = "Light (transparent)";
     public static final ThemeDescriptor THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, THEMEDEF_DISPLAYSTRING, THEMEDEF_VERSION);
 
@@ -34,6 +36,7 @@ public class LightThemeTrans extends LightTheme
         super(context);
         this.themeVersion = THEMEDEF_VERSION;
         this.themeName = THEMEDEF_NAME;
+        this.themeIsDefault = true;
         this.themeDisplayString = THEMEDEF_DISPLAYSTRING;
         this.themeBackground = THEMEDEF_BACKGROUND_ID;
     }

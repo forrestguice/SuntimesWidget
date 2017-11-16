@@ -19,6 +19,8 @@
 package com.forrestguice.suntimeswidget.layouts;
 
 import android.content.Context;
+import android.os.Build;
+import android.util.TypedValue;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
@@ -69,5 +71,10 @@ public class SuntimesLayout_1x1_4 extends SuntimesLayout
         int suffixColor = theme.getTimeSuffixColor();
         views.setTextColor(R.id.text_time_noon_suffix, suffixColor);
         views.setTextColor(R.id.text_time_noon, noonColor);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        {
+            views.setTextViewTextSize(R.id.text_time_noon_suffix, TypedValue.COMPLEX_UNIT_SP, theme.getTimeSuffixSizeSp());
+            views.setTextViewTextSize(R.id.text_time_noon, TypedValue.COMPLEX_UNIT_SP, theme.getTimeSizeSp());
+        }
     }
 }
