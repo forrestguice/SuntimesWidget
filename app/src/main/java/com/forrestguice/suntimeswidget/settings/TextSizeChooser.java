@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.settings;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -52,6 +53,23 @@ public class TextSizeChooser implements TextWatcher, View.OnFocusChangeListener
             edit.addTextChangedListener(this);
             edit.setOnFocusChangeListener(this);
         }
+    }
+
+    private boolean enabled = true;
+    public void setEnabled(boolean value)
+    {
+        enabled = value;
+        if (edit != null)
+        {
+            edit.setEnabled(enabled);
+            if (!enabled)
+                edit.setPaintFlags(edit.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            else edit.setPaintFlags(edit.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+        }
+    }
+    public boolean isEnabled()
+    {
+        return enabled;
     }
 
     public EditText getField()
