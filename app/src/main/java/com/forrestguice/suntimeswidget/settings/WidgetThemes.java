@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.settings;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.os.Build;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -183,6 +184,8 @@ public class WidgetThemes
     {
         private final Context context;
         private final SuntimesTheme.ThemeDescriptor[] themes;
+        private int selectedResourceID = R.color.deep_teal_200;
+        private int nonselectedResourceID = R.color.transparent;
 
         public ThemeGridAdapter(Context context, SuntimesTheme.ThemeDescriptor[] themes)
         {
@@ -198,6 +201,17 @@ public class WidgetThemes
             setTime.set(Calendar.MINUTE, 0);
 
             setRiseSet(riseTime, setTime);
+        }
+
+        private SuntimesTheme.ThemeDescriptor selected;
+        public void setSelected(ThemeDescriptor descriptor)
+        {
+            selected = descriptor;
+            notifyDataSetChanged();
+        }
+        public ThemeDescriptor getSelected()
+        {
+            return selected;
         }
 
         private boolean showAddButton = false;
@@ -263,61 +277,68 @@ public class WidgetThemes
         @Override
         public View getView(int position, View convertView, ViewGroup parent)
         {
-            View view;
-            if (convertView != null)
+            boolean isNormalView = (position > 0 || !showAddButton);
+            View view = convertView;
+            if (view == null)
             {
-                return convertView;
-
-            } else {
                 LayoutInflater layoutInflater = LayoutInflater.from(context);
-                if (position > 0 || !showAddButton)
+                if (isNormalView)
                 {
-                    int p = (showAddButton ? position - 1 : position);
-                    SuntimesTheme theme = WidgetThemes.loadTheme(context, themes[p].name());
                     view = layoutInflater.inflate(R.layout.layout_griditem_theme, parent, false);
-
-                    TextView titleView = (TextView) view.findViewById(R.id.text_title);
-                    titleView.setText(theme.themeDisplayString());
-                    titleView.setTextColor(theme.getTitleColor());
-                    titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, theme.getTitleSizeSp());
-
-                    TextView riseView = (TextView) view.findViewById(R.id.text_time_sunrise);
-                    riseView.setTextColor(theme.getSunriseTextColor());
-                    riseView.setText(riseText.getValue());
-                    riseView.setTextSize(TypedValue.COMPLEX_UNIT_SP, theme.getTimeSizeSp());
-
-                    TextView riseViewSuffix = (TextView) view.findViewById(R.id.text_time_sunrise_suffix);
-                    riseViewSuffix.setTextColor(theme.getTimeSuffixColor());
-                    riseViewSuffix.setText(riseText.getSuffix());
-                    riseViewSuffix.setTextSize(TypedValue.COMPLEX_UNIT_SP, theme.getTimeSuffixSizeSp());
-
-                    TextView setView = (TextView) view.findViewById(R.id.text_time_sunset);
-                    setView.setTextColor(theme.getSunsetTextColor());
-                    setView.setText(setText.getValue());
-                    setView.setTextSize(TypedValue.COMPLEX_UNIT_SP, theme.getTimeSizeSp());
-
-                    TextView setViewSuffix = (TextView) view.findViewById(R.id.text_time_sunset_suffix);
-                    setViewSuffix.setTextColor(theme.getTimeSuffixColor());
-                    setViewSuffix.setText(setText.getSuffix());
-                    setViewSuffix.setTextSize(TypedValue.COMPLEX_UNIT_SP, theme.getTimeSuffixSizeSp());
-
-                    View layout = view.findViewById(R.id.widgetframe_inner);
-                    try {
-                        layout.setBackgroundResource(theme.getBackgroundId());
-                    } catch (Resources.NotFoundException e) {
-                        Log.w("ThemeGridAdapter", "background resource not found! " + theme.getBackgroundId());
-                        // TODO: bug here; happens when resourceIds are changed for whatever reason, making ID stored in the
-                        // theme invalid; can be avoided for default themes by bumping their version (causing reinstall).
-                        // might also be fixed serializing/deserializing the background field to obtain a valid id.
-                    }
-                    int[] padding = theme.getPaddingPixels(context);
-                    layout.setPadding(padding[0], padding[1], padding[2], padding[3]);
-
                 } else {
                     view = layoutInflater.inflate(R.layout.layout_griditem_addtheme, parent, false);
                 }
-                return view;
             }
+
+            if (isNormalView)
+            {
+                int p = (showAddButton ? position - 1 : position);
+                ThemeDescriptor themeDesc = themes[p];
+                SuntimesTheme theme = WidgetThemes.loadTheme(context, themeDesc.name());
+
+                boolean isSelected = ((selected != null) && themeDesc.name().equals(selected.name()));
+                view.setBackgroundResource((isSelected ? selectedResourceID : nonselectedResourceID));
+
+                TextView titleView = (TextView) view.findViewById(R.id.text_title);
+                titleView.setText(theme.themeDisplayString());
+                titleView.setTextColor(theme.getTitleColor());
+
+                TextView riseView = (TextView) view.findViewById(R.id.text_time_sunrise);
+                riseView.setTextColor(theme.getSunriseTextColor());
+                riseView.setText(riseText.getValue());
+
+                TextView riseViewSuffix = (TextView) view.findViewById(R.id.text_time_sunrise_suffix);
+                riseViewSuffix.setTextColor(theme.getTimeSuffixColor());
+                riseViewSuffix.setText(riseText.getSuffix());
+
+                TextView setView = (TextView) view.findViewById(R.id.text_time_sunset);
+                setView.setTextColor(theme.getSunsetTextColor());
+                setView.setText(setText.getValue());
+
+                TextView setViewSuffix = (TextView) view.findViewById(R.id.text_time_sunset_suffix);
+                setViewSuffix.setTextColor(theme.getTimeSuffixColor());
+                setViewSuffix.setText(setText.getSuffix());
+
+                View layout = view.findViewById(R.id.widgetframe_inner);
+                try {
+                    layout.setBackgroundResource(theme.getBackgroundId());
+                } catch (Resources.NotFoundException e) {
+                    Log.w("ThemeGridAdapter", "background resource not found! " + theme.getBackgroundId());
+                }
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+                {
+                    int[] padding = theme.getPaddingPixels(context);
+                    layout.setPadding(padding[0], padding[1], padding[2], padding[3]);
+
+                    titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, theme.getTitleSizeSp());
+                    riseView.setTextSize(TypedValue.COMPLEX_UNIT_SP, theme.getTimeSizeSp());
+                    riseViewSuffix.setTextSize(TypedValue.COMPLEX_UNIT_SP, theme.getTimeSuffixSizeSp());
+                    setView.setTextSize(TypedValue.COMPLEX_UNIT_SP, theme.getTimeSizeSp());
+                    setViewSuffix.setTextSize(TypedValue.COMPLEX_UNIT_SP, theme.getTimeSuffixSizeSp());
+                }
+            }
+            return view;
         }
     }
 

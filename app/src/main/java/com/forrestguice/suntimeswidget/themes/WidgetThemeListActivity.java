@@ -152,6 +152,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         if (actionMode == null)
         {
             selected = themeDesc;
+            adapter.setSelected(selected);
             if (themeDesc != null)
             {
                 themeActions.setTheme(this, themeDesc);
@@ -381,6 +382,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         {
             actionMode = null;
             selected = null;
+            adapter.setSelected(selected);
         }
 
         @Override
