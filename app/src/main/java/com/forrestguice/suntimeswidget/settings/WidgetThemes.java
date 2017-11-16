@@ -63,6 +63,9 @@ public class WidgetThemes
 
     public static void initThemes(Context context)
     {
+        if (initialized)
+            return;
+
         SharedPreferences themePref = getSharedPreferences(context);
         Set<String> themesToProcess = loadInstalledList(themePref);
         for (String themeName : themesToProcess)
@@ -83,21 +86,21 @@ public class WidgetThemes
             theme.saveTheme(themePref);
         }
 
-        added = added || addValue(LightThemeTrans.THEMEDEF_DESCRIPTOR);   // add default (if missing)
+        added = addValue(LightThemeTrans.THEMEDEF_DESCRIPTOR) || added;   // add default (if missing)
         if (!SuntimesTheme.isInstalled(themePref, LightThemeTrans.THEMEDEF_DESCRIPTOR))
         {
             LightThemeTrans theme = new LightThemeTrans(context);
             theme.saveTheme(themePref);
         }
 
-        added = added || addValue(DarkTheme.THEMEDEF_DESCRIPTOR);         // add default (if missing)
+        added = addValue(DarkTheme.THEMEDEF_DESCRIPTOR) || added;         // add default (if missing)
         if (!SuntimesTheme.isInstalled(themePref, DarkTheme.THEMEDEF_DESCRIPTOR))
         {
             DarkTheme theme = new DarkTheme(context);
             theme.saveTheme(themePref);
         }
 
-        added = added || addValue(DarkThemeTrans.THEMEDEF_DESCRIPTOR);    // add default (if missing)
+        added = addValue(DarkThemeTrans.THEMEDEF_DESCRIPTOR) || added;    // add default (if missing)
         if (!SuntimesTheme.isInstalled(themePref, DarkThemeTrans.THEMEDEF_DESCRIPTOR))
         {
             DarkThemeTrans theme = new DarkThemeTrans(context);
