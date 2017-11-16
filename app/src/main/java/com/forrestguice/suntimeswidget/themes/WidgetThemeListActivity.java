@@ -209,7 +209,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
             final Context context = this;
             AlertDialog.Builder confirm = new AlertDialog.Builder(this)
                     .setTitle(getString(R.string.deletetheme_dialog_title))
-                    .setMessage(getString(R.string.deletetheme_dialog_message, theme.themeName()))
+                    .setMessage(getString(R.string.deletetheme_dialog_message, theme.themeDisplayString()))
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setPositiveButton(getString(R.string.deletetheme_dialog_ok), new DialogInterface.OnClickListener()
                     {
