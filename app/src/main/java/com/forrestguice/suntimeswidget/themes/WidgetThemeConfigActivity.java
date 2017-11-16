@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
@@ -48,6 +49,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.ColorChooser;
 import com.forrestguice.suntimeswidget.settings.PaddingChooser;
+import com.forrestguice.suntimeswidget.settings.TextSizeChooser;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 
@@ -77,6 +79,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private ActionBar actionBar;
     private EditText editDisplay;
     private TextSizeChooser chooseTitleSize, chooseTextSize, chooseTimeSize, chooseSuffixSize;
+    private ArrayList<TextSizeChooser> sizeChoosers;
     private ThemeNameChooser chooseName;
     private PaddingChooser choosePadding;
     private ColorChooser chooseColorRise, chooseColorSet, chooseColorTitle, chooseColorText, chooseColorTime, chooseColorSuffix;
@@ -128,6 +131,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
     protected void initViews( Context context )
     {
+        colorChoosers = new ArrayList<>();
+        sizeChoosers = new ArrayList<>();
+
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
         actionBar = getSupportActionBar();
@@ -138,13 +144,6 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         }
 
         initPreview(context);
-
-        colorChoosers = new ArrayList<>();
-
-        //backgrounds = new ThemeBackground[3];
-        //backgrounds[0] = new ThemeBackground(R.drawable.bg_widget_dark, getString(R.string.configLabel_themeBackground_dark));
-        //backgrounds[1] = new ThemeBackground(R.drawable.bg_widget, getString(R.string.configLabel_themeBackground_light));
-        //backgrounds[2] = new ThemeBackground(android.R.color.transparent, getString(R.string.configLabel_themeBackground_trans));
 
         ArrayAdapter<ThemeBackground> spinBackground_adapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, ThemeBackground.values());
         spinBackground_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -185,15 +184,19 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         EditText editTitleSize = (EditText)findViewById(R.id.edit_titleSize);
         chooseTitleSize = new TextSizeChooser(this, editTitleSize, SuntimesTheme.THEME_TITLESIZE_MIN, SuntimesTheme.THEME_TITLESIZE_MAX);
+        sizeChoosers.add(chooseTitleSize);
 
         EditText editTextSize = (EditText)findViewById(R.id.edit_textSize);
         chooseTextSize = new TextSizeChooser(this, editTextSize, SuntimesTheme.THEME_TEXTSIZE_MIN, SuntimesTheme.THEME_TEXTSIZE_MAX);
+        sizeChoosers.add(chooseTextSize);
 
         EditText editTimeSize = (EditText)findViewById(R.id.edit_timeSize);
         chooseTimeSize = new TextSizeChooser(this, editTimeSize, SuntimesTheme.THEME_TIMESIZE_MIN, SuntimesTheme.THEME_TIMESIZE_MAX);
+        sizeChoosers.add(chooseTimeSize);
 
         EditText editSuffixSize = (EditText)findViewById(R.id.edit_suffixSize);
         chooseSuffixSize = new TextSizeChooser(this, editSuffixSize, SuntimesTheme.THEME_TIMESUFFIXSIZE_MIN, SuntimesTheme.THEME_TIMESUFFIXSIZE_MAX);
+        sizeChoosers.add(chooseSuffixSize);
 
         EditText editPadding = (EditText)findViewById(R.id.edit_padding);
         choosePadding = new PaddingChooser(editPadding)
@@ -280,6 +283,15 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         for (ColorChooser chooser : colorChoosers)
         {
             chooser.setFragmentManager(getSupportFragmentManager());
+        }
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
+        {
+            for (TextSizeChooser chooser : sizeChoosers)
+            {
+                chooser.setEnabled(false);  // changing text size requires api 16+
+            }
+            choosePadding.setEnabled(false);  // changing padding requires api 16+
         }
 
         switch (mode)
@@ -418,10 +430,13 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
     private static void updateSizeFromChooser(TextView text, TextSizeChooser chooser)
     {
-        float textSize = chooser.getTextSize();
-        if (textSize >= chooser.getMinSp() && textSize <= chooser.getMaxSp())
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
-            text.setTextSize(TypedValue.COMPLEX_UNIT_SP, chooser.getTextSize());
+            float textSize = chooser.getTextSize();
+            if (textSize >= chooser.getMinSp() && textSize <= chooser.getMaxSp())
+            {
+                text.setTextSize(TypedValue.COMPLEX_UNIT_SP, chooser.getTextSize());
+            }
         }
     }
 
