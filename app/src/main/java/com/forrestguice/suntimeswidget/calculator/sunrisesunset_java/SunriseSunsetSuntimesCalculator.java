@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator.sunrisesunset_java;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
