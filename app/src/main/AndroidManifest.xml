@@ -65,7 +65,9 @@
             android:icon="@drawable/ic_suntimes">
         </activity>
 
-        <!-- Widget 0: Resizable (falls back to static 1x1 for api less than 16) -->
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <!-- Widget 0_1x1: Resizable (falls back to static 1x1 for api less than 16) -->
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <receiver android:name=".SuntimesWidget"
                   android:label="@string/app_name_widget0">
 
@@ -76,7 +78,7 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/suntimeswidget_info_0" />
+                android:resource="@xml/suntimeswidget_info_0_1x1" />
         </receiver>
 
         <!-- Widget 0 Configuration Activity -->
@@ -88,7 +90,9 @@
         </activity>
 
 
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget 1: Flippable widget (uses RemoteView collections [requires api 14+]) -->
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <receiver
             android:name=".SuntimesWidget1"
             android:enabled="@bool/api_post_14"
