@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator.sunrisesunset_java;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
@@ -53,6 +54,12 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
 
     @Override
     public void init(WidgetSettings.Location locationSetting, TimeZone timezone)
+    {
+        init(locationSetting, timezone, null);
+    }
+
+    @Override
+    public void init(WidgetSettings.Location locationSetting, TimeZone timezone, Context context)
     {
         try
         {

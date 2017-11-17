@@ -510,7 +510,7 @@ public class WidgetSettings
          * @param label display name
          * @param latitude decimal degrees (DD) string
          * @param longitude decimal degrees (DD) string
-         * @param altitude a placeholder for altitude & not currently used anywhere. The number format is ambiguous / should be fixed if used.
+         * @param altitude meters string
          */
         public Location( String label, String latitude, String longitude, String altitude )
         {
@@ -572,7 +572,21 @@ public class WidgetSettings
             return Double.parseDouble(longitude);
         }
 
+        /**
+         * @return altitude in meters
+         */
         public String getAltitude() { return altitude; }
+
+        public Double getAltitudeAsDouble()
+        {
+            if (altitude.isEmpty())
+                return 0.0;
+            else return Double.parseDouble(altitude);
+        }
+        public Integer getAltitudeAsInteger()
+        {
+            return getAltitudeAsDouble().intValue();
+        }
 
         /**
          * @return a "geo" URI describing this Location

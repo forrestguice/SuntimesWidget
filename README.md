@@ -9,8 +9,10 @@ The app:
 * can set an alarm for next sunrise, sunset, or civil/nautical/astronomical twilight.
 * can display the configured location on a map (requires a map application).
 * *does not* require GPS. The location is manually specified by default (and optionally obtained from GPS).
-* *does not* require network connectivity. Calculations are performed locally on the device (does not rely on third-party weather services). The app currently uses [sunrisesunsetlib-java](http://mikereedell.github.io/sunrisesunsetlib-java/) to calculate times.
-
+* *does not* require network connectivity. Calculations are performed locally on the device using: 
+** [Time4A](http://github.com/MenoData/Time4A) 
+** [sunrisesunsetlib-java](http://mikereedell.github.io/sunrisesunsetlib-java/) 
+** [ca.rmen.sunrisesunset](http://github.com/caarmen/SunriseSunset) 
 
 **Widget Features**
 

@@ -18,6 +18,8 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
+import android.content.Context;
+
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Calendar;
@@ -52,10 +54,19 @@ public interface SuntimesCalculator
     /**
      * Initialize the calculator with a given location and timezone.
      * @param location a WidgetSettings.Location object
-     * @param timezone a timezone identifier
+     * @param timezone a timezone object
      * @since 1.1.0
      */
     void init( WidgetSettings.Location location, TimeZone timezone );
+
+    /**
+     * Initialize the calculator with the given location, timezone, and app context.
+     * @param location a WidgetSettings.Location object
+     * @param timezone a timezone object
+     * @param context a context object
+     * @since 1.2.0
+     */
+    void init( WidgetSettings.Location location, TimeZone timezone, Context context );
 
     /**
      * Morning Astronomical Twilight

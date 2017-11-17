@@ -11,11 +11,12 @@
     <uses-sdk tools:overrideLibrary="com.flask.colorpicker" />
 
     <application
-        android:allowBackup="false"
+        android:allowBackup="true"
         android:supportsRtl="true"
         android:icon="@drawable/ic_suntimes"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:name=".SuntimesApplication">
 
         <!-- Main Activity -->
         <activity
