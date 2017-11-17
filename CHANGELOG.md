@@ -1,4 +1,6 @@
 ### ~
+
+### v0.5.0 (2017-11-18)
 * adds support for custom themes; theme editor activity (add / edit), theme selector activity (copy / delete / export) (#7).
 * adds widget option "show noon" (#102); adds noon field to 1x3 widget, adds noon to flippable widget.
 * adds widget option "show comparison" (show/hide comparison field on 1x3 widgets).
