@@ -5,6 +5,7 @@
     <integer name="widget_size_minWidthDp1x3">110</integer>
     <integer name="widget_size_minWidthDp">40</integer>
     <integer name="widget_size_minHeightDp">40</integer>
+    <dimen name="widget_size_minWidth1x3">110dp</dimen>
     <dimen name="widget_size_minWidth">40dp</dimen>  <!-- should match int values defined above -->
     <dimen name="widget_size_minHeight">40dp</dimen>
 
