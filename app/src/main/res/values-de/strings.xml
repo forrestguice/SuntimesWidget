@@ -586,4 +586,13 @@
         Benutze deinen Startbildschirm, um <b>ein neues Widget hinzuzufügen</b>. (Meist antippen und halten, bis ein Menü erscheint.)<br/><br/>
         Um <b>ein bestehendes Widget zu konfigurieren</b>, wähle es aus der folgenden Liste aus.<br/>
   ]]></string>
+
+  <!-- calculator implemenations -->
+  <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
+  <string name="calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
+  <string name="calculator_displayString_time4a_simple">A simple, relatively fast, but imprecise calculator.</string>  <!-- TODO -->
+  <string name="calculator_displayString_time4a_noaa">Follows algorithms published by the National Oceanic and Atmospheric Administration.</string>  <!-- TODO -->
+  <string name="calculator_displayString_time4a_cc">Follows algorithms published by Dershowitz/Reingold in their book "Calendrical Calculations" (third edition).</string>  <!-- TODO -->
+  <string name="calculator_displayString_time4a_4j">Based on astronomical calculations published by Jean Meeus in his book "Astronomical Algorithms" (second edition).</string>  <!-- TODO -->
+
 </resources>

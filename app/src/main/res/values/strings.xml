@@ -631,7 +631,7 @@
     ]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[
         <b>Source Code:</b><br />
-        Copyright &#169 2014 Forrest Guice <br />
+        Copyright &#169 2014-2017 Forrest Guice <br />
         Source code available under GPLv3.
     ]]></string>
     <string name="app_legal2"><![CDATA[
@@ -642,6 +642,7 @@
         Hungarian translation by Erci.
     ]]></string>
     <string name="app_legal3"><![CDATA[ <b>Libraries:</b><br/> ]]>
+    <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
     <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>
     <![CDATA[ github.com/caarmen/SunriseSunset ]]>
     </string>
@@ -686,5 +687,9 @@
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
     <string name="calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
+    <string name="calculator_displayString_time4a_simple">A simple, relatively fast, but imprecise calculator.</string>
+    <string name="calculator_displayString_time4a_noaa">Follows algorithms published by the National Oceanic and Atmospheric Administration.</string>
+    <string name="calculator_displayString_time4a_cc">Follows algorithms published by Dershowitz/Reingold in their book "Calendrical Calculations" (third edition).</string>
+    <string name="calculator_displayString_time4a_4j">Based on astronomical calculations published by Jean Meeus in his book "Astronomical Algorithms" (second edition).</string>
 
 </resources>
