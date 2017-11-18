@@ -539,7 +539,11 @@
     <string name="app_url"><xliff:g id="url"><![CDATA[<a href="https://github.com/forrestguice/SuntimesWidget">github.com/forrestguice/SuntimesWidget</a>]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[Prawo autorskie &#169 2014 Forrest Guice <br />Kod źródłowy dostępny na licencji GPLv3.]]></string>
     <string name="app_legal2"><![CDATA[Niemieckie tłumaczenie: Henrik "HerHde" Hüttemann. <br />Esperanckie i Polskie tłumaczenie: Verdulo.<br />Francuskie tłumaczenie: Jej.]]></string>
-    <string name="app_legal3"><![CDATA[ <b>Biblioteki:</b><br/> ]]><![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]><![CDATA[ github.com/caarmen/SunriseSunset ]]></string>
+    <string name="app_legal3"><![CDATA[ <b>Biblioteki:</b><br/> ]]>
+    <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
+    <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>
+    <![CDATA[ github.com/caarmen/SunriseSunset ]]> <![CDATA[ <br /> ]]>
+    <![CDATA[ github.com/QuadFlask/colorpicker ]]></string>
     
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Pomoc</string>
