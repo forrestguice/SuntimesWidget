@@ -4,7 +4,7 @@ An Android app (and home screen widget) that displays sunrise, sunset, civil/nau
 <a href="https://f-droid.org/repository/browse/?fdid=com.forrestguice.suntimeswidget" target="_blank">
 <img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="80"/></a>
 
-**App Features**
+**App and Widget Features**
 
 The app:
 * displays the current time, and notes the time until next sunrise, sunset, or civil/nautical/astronomical twilight.
@@ -12,11 +12,9 @@ The app:
 * can display the configured location on a map (requires a map application).
 * *does not* require GPS. The location is manually specified by default (and optionally obtained from GPS).
 * *does not* require network connectivity. Calculations are performed locally on the device using: 
-..* Time4A [LGPL-2.1] (http://github.com/MenoData/Time4A) 
-..* ca.rmen.sunrisesunset [LGPL-2.1] (http://github.com/caarmen/SunriseSunset)
-..* sunrisesunsetlib-java [Apache License 2.0] (http://mikereedell.github.io/sunrisesunsetlib-java/) 
-
-**Widget Features**
+  * Time4A [LGPL-2.1] (http://github.com/MenoData/Time4A) 
+  * ca.rmen.sunrisesunset [LGPL-2.1] (http://github.com/caarmen/SunriseSunset)
+  * sunrisesunsetlib-java [Apache License 2.0] (http://mikereedell.github.io/sunrisesunsetlib-java/) 
 
 The widget is themeable and provides:
 * a dark theme (and dark w/ transparent background)
