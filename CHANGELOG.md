@@ -1,4 +1,7 @@
 ### ~
+
+### v0.5.0 (2017-11-18)
+* adds data source; Time4A (time4a-simple, time4a-noaa, time4a-cc, time4a-time4j) (contributions by MenoData) (#103).
 * adds support for custom themes; theme editor activity (add / edit), theme selector activity (copy / delete / export) (#7).
 * adds widget option "show noon" (#102); adds noon field to 1x3 widget, adds noon to flippable widget.
 * adds widget option "show comparison" (show/hide comparison field on 1x3 widgets).

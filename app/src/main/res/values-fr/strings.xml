@@ -566,8 +566,10 @@
         Traduction hongrois par Erci.
     ]]></string>
     <string name="app_legal3"><![CDATA[ <b>Bibliothèques:</b><br/> ]]>
+    <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
     <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>
-    <![CDATA[ github.com/caarmen/SunriseSunset ]]>
+    <![CDATA[ github.com/caarmen/SunriseSunset ]]> <![CDATA[ <br /> ]]>
+    <![CDATA[ github.com/QuadFlask/colorpicker ]]>
     </string>
 
     <!-- Dialog: Help -->
