@@ -260,7 +260,7 @@
 
     <string name="addtheme_toast_success">Aldonis <xliff:g id="themeName">%1$s</xliff:g>.</string>          <!-- toast msg -->
     <string name="edittheme_toast_success">Konservis <xliff:g id="themeName">%1$s</xliff:g>.</string>         <!-- toast msg -->
-    <string name="deletetheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g> estis forigita.</string> <!-- toast msg -->
+    <string name="deletetheme_toast_success">Forigis <xliff:g id="themeName">%1$s</xliff:g>.</string> <!-- toast msg -->
 
     <string name="edittheme_error_themeName_empty">Identigilo estu unika (postulata).</string>        <!-- error hint (themeName empty) -->
     <string name="edittheme_error_themeName_unique">Identigilo estu unika (jam uzata).</string>  <!-- error hint (themeName taken) -->
