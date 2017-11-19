@@ -531,6 +531,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         }
     }
 
+    @SuppressWarnings("RestrictedApi")
     @Override
     protected boolean onPrepareOptionsPanel(View view, Menu menu)
     {
