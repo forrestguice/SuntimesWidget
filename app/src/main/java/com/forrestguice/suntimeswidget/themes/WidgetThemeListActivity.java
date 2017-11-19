@@ -510,7 +510,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
     public void onRestoreInstanceState(@NonNull Bundle savedState)
     {
         super.onRestoreInstanceState(savedState);
-        String themeName = savedState.getString(SuntimesTheme.THEME_NAME, null);
+        String themeName = savedState.getString(SuntimesTheme.THEME_NAME);
         if (themeName != null)
         {
             SuntimesTheme.ThemeDescriptor theme = (SuntimesTheme.ThemeDescriptor) adapter.getItem(adapter.ordinal(themeName));
@@ -537,5 +537,4 @@ public class WidgetThemeListActivity extends AppCompatActivity
         SuntimesUtils.forceActionBarIcons(menu);
         return super.onPrepareOptionsPanel(view, menu);
     }
-
 }
