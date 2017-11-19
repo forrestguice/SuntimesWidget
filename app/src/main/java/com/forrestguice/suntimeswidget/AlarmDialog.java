@@ -97,7 +97,7 @@ public class AlarmDialog extends DialogFragment
      * @param savedInstanceState a Bundle containing dialog state
      * @return an AlarmDialog ready to be shown
      */
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings({"deprecation","RestrictedApi"})
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
