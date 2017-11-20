@@ -489,9 +489,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         super.onRestoreInstanceState(savedState);
         if (mode == UIMode.ADD_THEME)
         {
-            chooseName.setThemeName(savedState.getString(SuntimesTheme.THEME_NAME, chooseName.getThemeName()));
+            chooseName.setThemeName(getString(savedState, SuntimesTheme.THEME_NAME, chooseName.getThemeName()));
         }
-        editDisplay.setText(savedState.getString(SuntimesTheme.THEME_DISPLAYSTRING, editDisplay.getText().toString()));
+        editDisplay.setText(getString(savedState, SuntimesTheme.THEME_DISPLAYSTRING, editDisplay.getText().toString()));
 
         ThemeBackground background = (ThemeBackground)spinBackground.getSelectedItem();
         setSelectedBackground(savedState.getInt(SuntimesTheme.THEME_BACKGROUND, (background != null ? background.getResID() : DarkTheme.THEMEDEF_BACKGROUND_ID)));
@@ -508,6 +508,14 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         chooseColorTime.setColor(savedState.getInt(SuntimesTheme.THEME_TIMECOLOR, chooseColorTime.getColor()));
         chooseColorSuffix.setColor(savedState.getInt(SuntimesTheme.THEME_TIMESUFFIXCOLOR, chooseColorSuffix.getColor()));
         choosePadding.setPadding(savedState.getIntArray(SuntimesTheme.THEME_PADDING));
+    }
+
+    private String getString(Bundle bundle, String key, String defaultValue)
+    {
+        String value = bundle.getString(key);
+        if (value != null)
+            return value;
+        else return defaultValue;
     }
 
     @Override

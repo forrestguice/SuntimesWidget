@@ -234,83 +234,83 @@
     <string name="configHint_action_launch"><xliff:g id="uri">com.forrestguice.suntimeswidget.SuntimesActivity</xliff:g></string> <!-- editText hint (and default) -->
 
     <!-- Widget Setting: Themes -->
-    <string name="configLabel_widgetThemeList">Widget Themes</string>
-    <string name="configLabel_widgetThemeListSelect">Select a theme</string>
-    <string name="configAction_addTheme">Add</string>           <!-- button (contentDescription) --> <!-- TODO -->
-    <string name="configAction_selectTheme">Select</string>     <!-- button (contentDescription) --> <!-- TODO -->
-    <string name="configAction_editTheme">Edit</string>         <!-- button (contentDescription) --> <!-- TODO -->
-    <string name="configAction_deleteTheme">Delete</string>     <!-- button (contentDescription) --> <!-- TODO -->
-    <string name="configAction_copyTheme">Copy</string>         <!-- button (contentDescription) --> <!-- TODO -->
-    <string name="configAction_exportThemes">Export</string>    <!-- button (contentDescription) --> <!-- TODO -->
-    <string name="configAction_importThemes">Import</string>    <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="configLabel_widgetThemeList">Skórki widżetu</string>
+    <string name="configLabel_widgetThemeListSelect">Wybierz skórkę</string>
+    <string name="configAction_addTheme">Dodaj</string>           <!-- button (contentDescription) -->
+    <string name="configAction_selectTheme">Wybierz</string>     <!-- button (contentDescription) -->
+    <string name="configAction_editTheme">Edytuj</string>         <!-- button (contentDescription) -->
+    <string name="configAction_deleteTheme">Usuń</string>     <!-- button (contentDescription) -->
+    <string name="configAction_copyTheme">Kopiuj</string>         <!-- button (contentDescription) -->
+    <string name="configAction_exportThemes">Eksportuj</string>    <!-- button (contentDescription) -->
+    <string name="configAction_importThemes">Importuj</string>    <!-- button (contentDescription) -->
 
     <!--<string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>-->                                        <!-- suggested new theme id -->
     <!--<string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_copy<xliff:g id="#">%2$s</xliff:g></string>-->   <!-- copied theme id -->
-    <string name="addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g> (copy)</string>                            <!-- copied theme name (display string) --> <!-- TODO -->
+    <string name="addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g> (kopia)</string>                            <!-- copied theme name (display string) -->
 
-    <string name="addtheme_toast_success">Added <xliff:g id="themeName">%1$s</xliff:g>.</string>          <!-- toast msg -->  <!-- TODO -->
-    <string name="edittheme_toast_success">Saved <xliff:g id="themeName">%1$s</xliff:g>.</string>         <!-- toast msg -->  <!-- TODO -->
-    <string name="deletetheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g> was deleted.</string> <!-- toast msg -->  <!-- TODO -->
+    <string name="addtheme_toast_success">Dodano <xliff:g id="themeName">%1$s</xliff:g>.</string>          <!-- toast msg -->
+    <string name="edittheme_toast_success">Zapisano <xliff:g id="themeName">%1$s</xliff:g>.</string>         <!-- toast msg -->
+    <string name="deletetheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g> został usunięty.</string> <!-- toast msg -->
 
-    <string name="edittheme_error_themeName_empty">ID must be unique (required).</string>        <!-- error hint (themeName empty) -->  <!-- TODO -->
-    <string name="edittheme_error_themeName_unique">ID must be unique (already taken).</string>  <!-- error hint (themeName taken) -->  <!-- TODO -->
-    <string name="edittheme_error_displaytext">Display string must not be empty.</string>  <!-- error hint (display text is empty) -->  <!-- TODO -->
-    <string name="edittheme_error_textsize_min">Size must be an integer &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) --> <!-- TODO -->
-    <string name="edittheme_error_textsize_max">Size must be an integer &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->  <!-- TODO -->
+    <string name="edittheme_error_themeName_empty">ID musi być unikalne (wymagane).</string>        <!-- error hint (themeName empty) -->
+    <string name="edittheme_error_themeName_unique">ID musi być unikalne (już używane).</string>  <!-- error hint (themeName taken) -->
+    <string name="edittheme_error_displaytext">Wyświetlany tekst nie może być pusty.</string>  <!-- error hint (display text is empty) -->
+    <string name="edittheme_error_textsize_min">Rozmiar musi być liczbą całkowitą &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->
+    <string name="edittheme_error_textsize_max">Rozmiar musi być liczbą całkowitą &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->
 
-    <string name="deletetheme_dialog_title">Delete Theme</string>        <!-- dialog title --> <!-- TODO -->
-    <string name="deletetheme_dialog_message">Are you sure you want to delete <xliff:g id="themeName">%1$s</xliff:g>?</string>   <!-- dialog msg --> <!-- TODO -->
-    <string name="deletetheme_dialog_ok">Delete</string>        <!-- button --> <!-- TODO -->
+    <string name="deletetheme_dialog_title">Usuń skórkę</string>        <!-- dialog title -->
+    <string name="deletetheme_dialog_message">Czy na pewno chcesz usunąć <xliff:g id="themeName">%1$s</xliff:g>?</string>   <!-- dialog msg -->
+    <string name="deletetheme_dialog_ok">Usuń</string>        <!-- button -->
     <string name="deletetheme_dialog_cancel">Anuluj</string>    <!-- button -->
 
-    <string name="configLabel_widgetThemeAdd">Add Theme</string>     <!-- title text --> <!-- TODO -->
-    <string name="configLabel_widgetThemeEdit">Edit Theme</string>   <!-- title text -->  <!-- TODO -->
-    <string name="configAction_saveTheme">Save</string>           <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_chooseColor">Choose Color</string> <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configLabel_widgetThemeAdd">Dodaj skórkę</string>     <!-- title text -->
+    <string name="configLabel_widgetThemeEdit">Edytuj skórkę</string>   <!-- title text -->
+    <string name="configAction_saveTheme">Zapisz</string>           <!-- button (contentDescription) -->
+    <string name="configAction_chooseColor">Wybierz kolor</string> <!-- button (contentDescription) -->
 
-    <string name="configLabel_themeBackgroundId">Base:</string>    <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_themeBackground_light">Light</string>        <!-- light background -->  <!-- TODO -->
-    <string name="configLabel_themeBackground_dark">Dark</string>          <!-- dark background -->  <!-- TODO -->
-    <string name="configLabel_themeBackground_trans">Transparent</string>  <!-- transparent background --> <!-- TODO -->
+    <string name="configLabel_themeBackgroundId">Tło:</string>    <!-- spinner label -->
+    <string name="configLabel_themeBackground_light">Jasne</string>        <!-- light background -->
+    <string name="configLabel_themeBackground_dark">Ciemne</string>          <!-- dark background -->
+    <string name="configLabel_themeBackground_trans">Przezroczyste</string>  <!-- transparent background -->
 
-    <string name="configLabel_themeColorTitle">Title Color:</string>     <!-- color label -->  <!-- TODO -->
-    <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->  <!-- TODO -->
+    <string name="configLabel_themeColorTitle">Kolor tytułu:</string>     <!-- color label -->
+    <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->
 
-    <string name="configLabel_themeColorText">Text Color:</string>       <!-- color label -->  <!-- TODO -->
-    <string name="configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->  <!-- TODO -->
+    <string name="configLabel_themeColorText">Kolor tekstu:</string>       <!-- color label -->
+    <string name="configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->
 
-    <string name="configLabel_themeColorSunrise">Sunrise Color:</string> <!-- color label -->  <!-- TODO -->
-    <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->  <!-- TODO -->
+    <string name="configLabel_themeColorSunrise">Kolor wschodu:</string> <!-- color label -->
+    <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
 
-    <string name="configLabel_themeColorSunset">Sunset Color:</string>   <!-- color label -->  <!-- TODO -->
-    <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->  <!-- TODO -->
+    <string name="configLabel_themeColorSunset">Kolor zachodu:</string>   <!-- color label -->
+    <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorSuffix">Suffix Color:</string>   <!-- color label --> <!-- TODO -->
-    <string name="configHint_themeColorSuffix">#FFFFFFFF</string>        <!-- color hint --> <!-- TODO -->
+    <string name="configLabel_themeColorSuffix">Kolor sufiksu:</string>   <!-- color label -->
+    <string name="configHint_themeColorSuffix">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorTime">Text Color2:</string>      <!-- color label --> <!-- TODO -->
-    <string name="configHint_themeColorTime">#FFFFFFFF</string>          <!-- color hint --> <!-- TODO -->
+    <string name="configLabel_themeColorTime">Kolor tekstu 2:</string>      <!-- color label -->
+    <string name="configHint_themeColorTime">#FFFFFFFF</string>          <!-- color hint -->
 
-    <string name="configLabel_themeSizeTitle">Title Size:</string>  <!-- edit label --> <!-- TODO -->
-    <string name="configHint_themeSizeTitle">14</string>                 <!-- edit hint --> <!-- TODO -->
+    <string name="configLabel_themeSizeTitle">Rozmiar tytułu:</string>  <!-- edit label -->
+    <string name="configHint_themeSizeTitle">14</string>                 <!-- edit hint -->
 
-    <string name="configLabel_themeSizeText">Text Size:</string>    <!-- edit label --> <!-- TODO -->
-    <string name="configHint_themeSizeText">10</string>                  <!-- edit hint --> <!-- TODO -->
+    <string name="configLabel_themeSizeText">Rozmiar tekstu:</string>    <!-- edit label -->
+    <string name="configHint_themeSizeText">10</string>                  <!-- edit hint -->
 
-    <string name="configLabel_themeSizeTime">Time Size:</string>    <!-- edit label --> <!-- TODO -->
-    <string name="configHint_themeSizeTime">12</string>                  <!-- edit hint --> <!-- TODO -->
+    <string name="configLabel_themeSizeTime">Rozmiar czasu:</string>    <!-- edit label -->
+    <string name="configHint_themeSizeTime">12</string>                  <!-- edit hint -->
 
-    <string name="configLabel_themeSizeSuffix">Suffix Size:</string> <!-- edit label --> <!-- TODO -->
-    <string name="configHint_themeSizeSuffix">8</string>                  <!-- edit hint --> <!-- TODO -->
+    <string name="configLabel_themeSizeSuffix">Rozmiar sufiksu:</string> <!-- edit label -->
+    <string name="configHint_themeSizeSuffix">8</string>                  <!-- edit hint -->
 
-    <string name="configLabel_themePadding">Padding:</string>            <!-- edit label --> <!-- TODO -->
-    <string name="configHint_themePadding">[left, top, right, bottom]</string> <!-- edit hint --> <!-- TODO -->
+    <string name="configLabel_themePadding">Wyrównanie:</string>            <!-- edit label -->
+    <string name="configHint_themePadding">[lewo, góra, prawo, dół]</string> <!-- edit hint -->
 
-    <string name="configLabel_themeID">ID:</string>                      <!-- edit label --> <!-- TODO -->
-    <string name="configHint_themeID">Theme ID</string>                  <!-- edit hint --> <!-- TODO -->
+    <string name="configLabel_themeID">ID:</string>                      <!-- edit label -->
+    <string name="configHint_themeID">ID skórki</string>                  <!-- edit hint -->
 
-    <string name="configLabel_themeName">Display:</string>               <!-- edit label -->  <!-- TODO -->
-    <string name="configHint_themeName">Label</string>                   <!-- edit hint -->  <!-- TODO -->
+    <string name="configLabel_themeName">Wyświetl:</string>               <!-- edit label -->
+    <string name="configHint_themeName">Etykieta</string>                   <!-- edit hint -->
 
     <!--
          APP SETTINGS
@@ -524,7 +524,7 @@
     <string name="msg_export_to">Eksportuj używając</string>  <!-- title displayed over "share action" chooser -->
 
     <!-- Dialog: Color -->
-    <string name="color_dialog_msg">Choose Color</string> <!-- TODO -->
+    <string name="color_dialog_msg">Wybierz kolor</string>
     <string name="color_dialog_ok">Ustaw</string>
     <string name="color_dialog_cancel">Anuluj</string>
 
@@ -539,7 +539,11 @@
     <string name="app_url"><xliff:g id="url"><![CDATA[<a href="https://github.com/forrestguice/SuntimesWidget">github.com/forrestguice/SuntimesWidget</a>]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[Prawo autorskie &#169 2014 Forrest Guice <br />Kod źródłowy dostępny na licencji GPLv3.]]></string>
     <string name="app_legal2"><![CDATA[Niemieckie tłumaczenie: Henrik "HerHde" Hüttemann. <br />Esperanckie i Polskie tłumaczenie: Verdulo.<br />Francuskie tłumaczenie: Jej.]]></string>
-    <string name="app_legal3"><![CDATA[ <b>Biblioteki:</b><br/> ]]><![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]><![CDATA[ github.com/caarmen/SunriseSunset ]]></string>
+    <string name="app_legal3"><![CDATA[ <b>Biblioteki:</b><br/> ]]>
+    <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
+    <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>
+    <![CDATA[ github.com/caarmen/SunriseSunset ]]> <![CDATA[ <br /> ]]>
+    <![CDATA[ github.com/QuadFlask/colorpicker ]]></string>
     
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Pomoc</string>
@@ -581,9 +585,9 @@
     <!-- calculator implemenations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
     <string name="calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
-    <string name="calculator_displayString_time4a_simple">A simple, relatively fast, but imprecise calculator.</string>  <!-- TODO -->
-    <string name="calculator_displayString_time4a_noaa">Follows algorithms published by the National Oceanic and Atmospheric Administration.</string>  <!-- TODO -->
-    <string name="calculator_displayString_time4a_cc">Follows algorithms published by Dershowitz/Reingold in their book "Calendrical Calculations" (third edition).</string>  <!-- TODO -->
-    <string name="calculator_displayString_time4a_4j">Based on astronomical calculations published by Jean Meeus in his book "Astronomical Algorithms" (second edition).</string>  <!-- TODO -->
+    <string name="calculator_displayString_time4a_simple">Prosty, względnie szybki, ale nieprecyzyjny kalkulator.</string>
+    <string name="calculator_displayString_time4a_noaa">Użyto algorytmów opublikowanych przez National Oceanic and Atmospheric Administration.</string>
+    <string name="calculator_displayString_time4a_cc">Użyto algorytmów opublikowanych w książce „Calendrical Calculations” (wyd. trzecie) autorstwa Dershowitz/Reingold.</string>
+    <string name="calculator_displayString_time4a_4j">Oparto na obliczeniach astronomicznych opublikowanych w książce „Astronomical Algorithms” (wyd. drugie) autorstwa Jean Meeus.</string>
 
 </resources>
