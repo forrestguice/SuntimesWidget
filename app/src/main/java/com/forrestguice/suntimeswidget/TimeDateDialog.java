@@ -132,18 +132,18 @@ public class TimeDateDialog extends DialogFragment implements DatePicker.OnDateC
      * @param savedInstanceState a bundle containing previously saved dialog state
      * @return a dialog instance ready to be shown
      */
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings({"deprecation","RestrictedApi"})
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
         super.onCreateDialog(savedInstanceState);
         final FragmentActivity myParent = getActivity();
-        Resources r = getResources();
 
         LayoutInflater inflater = myParent.getLayoutInflater();
         @SuppressLint("InflateParams")
         View dialogContent = inflater.inflate(R.layout.layout_dialog_date, null);
 
+        Resources r = getResources();
         int padding = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, r.getDisplayMetrics());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(myParent);

@@ -124,7 +124,7 @@ public class LocationConfigDialog extends DialogFragment
      * @param savedInstanceState a Bundle containing previously saved dialog state
      * @return an AlertDialog ready for display
      */
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings({"deprecation","RestrictedApi"})
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {

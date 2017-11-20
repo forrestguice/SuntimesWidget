@@ -74,7 +74,7 @@ public class TimeZoneDialog extends DialogFragment
     private WidgetTimezones.TimeZoneItemAdapter spinner_timezone_adapter;
     private boolean loading = false;
 
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings({"deprecation","RestrictedApi"})
     @NonNull @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState)
     {
@@ -90,7 +90,6 @@ public class TimeZoneDialog extends DialogFragment
 
         AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
         builder.setView(dialogContent, 0, padding, 0, 0);
-
         builder.setTitle(myParent.getString(R.string.timezone_dialog_title));
 
         AlertDialog dialog = builder.create();

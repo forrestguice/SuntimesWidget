@@ -888,6 +888,7 @@ public class SuntimesActivity extends AppCompatActivity
         return true;
     }
 
+    @SuppressWarnings("RestrictedApi")
     @Override
     protected boolean onPrepareOptionsPanel(View view, Menu menu)
     {
