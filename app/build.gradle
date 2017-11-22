@@ -54,7 +54,7 @@ dependencies
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.github.forrestguice:sunrisesunsetlib-java:SunriseSunsetCalculator-1.2-p0-fixdst'
     compile 'com.github.caarmen.SunriseSunset:lib-sunrise-sunset:1.1.0'
-    compile group: 'net.time4j', name: 'time4j-android', version: '3.36-2017c'
+    compile 'net.time4j:time4j-android:3.36.1-TEST'
     compile 'com.github.QuadFlask:colorpicker:0.0.13'
 
     testCompile 'junit:junit:4.12'
