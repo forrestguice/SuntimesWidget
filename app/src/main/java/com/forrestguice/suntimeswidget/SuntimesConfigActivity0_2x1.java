@@ -38,7 +38,7 @@ public class SuntimesConfigActivity0_2x1 extends SuntimesConfigActivity0
     protected void initViews( Context context )
     {
         super.initViews(context);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH)
         {
             hideOption1x1LayoutMode();
         }
@@ -48,7 +48,7 @@ public class SuntimesConfigActivity0_2x1 extends SuntimesConfigActivity0
     protected void updateWidget(Context context)
     {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        SuntimesWidget0_2x1.updateAppWidget(context, appWidgetManager, appWidgetId, new SuntimesLayout_2x1_0());
+        SuntimesWidget0_2x1.updateAppWidget(context, appWidgetManager, appWidgetId, new SuntimesLayout_2x1_0(), SuntimesWidget0_2x1.class);
     }
 
 }

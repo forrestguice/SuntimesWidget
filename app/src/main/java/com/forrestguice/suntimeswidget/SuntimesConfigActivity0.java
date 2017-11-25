@@ -450,9 +450,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // widget: allow resize
         //
         checkbox_allowResize = (CheckBox)findViewById(R.id.appwidget_appearance_allowResize);
-        if (checkbox_allowResize != null && Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
+        if (checkbox_allowResize != null && Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH)
         {
-            disableOptionAllowResize();  // resizable widgets require api16+
+            disableOptionAllowResize();  // resizable widgets require api14+
         }
 
         //
@@ -914,7 +914,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected void updateWidget( Context context )
     {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId);
+        SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0.class);
     }
 
     /**
