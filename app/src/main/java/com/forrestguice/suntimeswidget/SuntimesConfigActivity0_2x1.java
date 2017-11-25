@@ -22,6 +22,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.widget.ArrayAdapter;
 
+import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x3_0;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 /**
@@ -38,6 +39,6 @@ public class SuntimesConfigActivity0_2x1 extends SuntimesConfigActivity0
     protected void updateWidget(Context context)
     {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        SuntimesWidget0_2x1.updateAppWidget(context, appWidgetManager, appWidgetId, null);
+        SuntimesWidget0_2x1.updateAppWidget(context, appWidgetManager, appWidgetId, new SuntimesLayout_1x3_0());
     }
 }
