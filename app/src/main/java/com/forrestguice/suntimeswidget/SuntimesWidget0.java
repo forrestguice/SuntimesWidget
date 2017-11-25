@@ -171,7 +171,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
 
     protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
-        SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId);
+        SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0.class);
     }
 
     public static void initLocale(Context context)
@@ -273,10 +273,10 @@ public class SuntimesWidget0 extends AppWidgetProvider
      * @param appWidgetManager widget manager
      * @param appWidgetId id of widget to be updated
      */
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
+    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Class widgetClass)
     {
         SuntimesLayout layout = getWidgetLayout(context, appWidgetManager, appWidgetId);
-        SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, layout);
+        SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, layout, widgetClass);
     }
 
     /**
@@ -285,7 +285,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
      * @param appWidgetId id of the widget to be updated
      * @param layout a SuntimesLayout managing the views to be updated
      */
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SuntimesLayout layout)
+    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SuntimesLayout layout, Class widgetClass)
     {
         RemoteViews views = layout.getViews(context);
 
@@ -306,7 +306,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
             data.linkData(noonData);
         }
 
-        views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, SuntimesWidget0.class));
+        views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, widgetClass));
         layout.updateViews(context, appWidgetId, views, data);
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }

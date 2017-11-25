@@ -72,7 +72,7 @@ public class SuntimesConfigActivity1 extends SuntimesConfigActivity0
     protected void updateWidget(Context context)
     {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        SuntimesWidget1.updateAppWidget(context, appWidgetManager, appWidgetId, null);
+        SuntimesWidget1.updateAppWidget(context, appWidgetManager, appWidgetId);
     }
 
     @Override

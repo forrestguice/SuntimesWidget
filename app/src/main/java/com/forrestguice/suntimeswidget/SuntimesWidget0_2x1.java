@@ -18,6 +18,9 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.appwidget.AppWidgetManager;
+import android.content.Context;
+
 /**
  * Widget receiver for resizable widget (that falls back to 2x1 layout).
  */
@@ -35,6 +38,12 @@ public class SuntimesWidget0_2x1 extends SuntimesWidget0
     protected int getUpdateAlarmId()
     {
         return SuntimesWidget0_2x1.UPDATEALARM_ID;
+    }
+
+    @Override
+    protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
+    {
+        SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0_2x1.class);
     }
 }
 

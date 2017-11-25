@@ -83,7 +83,7 @@ public class SuntimesWidget1 extends SuntimesWidget0
         return super.handleClickAction(context, intent);
     }
 
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SuntimesLayout layout)
+    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
         RemoteViews views = getWidgetViews(context, appWidgetManager, appWidgetId);
         views.setOnClickPendingIntent(R.id.widgetframe_outer_1x1, SuntimesWidget0.clickActionIntent(context, appWidgetId, SuntimesWidget1.class));
@@ -95,11 +95,6 @@ public class SuntimesWidget1 extends SuntimesWidget0
         {
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.view_flip);
         }
-    }
-
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
-    {
-        SuntimesWidget1.updateAppWidget(context, appWidgetManager, appWidgetId, null);
     }
 
     protected static RemoteViews getWidgetViews(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
