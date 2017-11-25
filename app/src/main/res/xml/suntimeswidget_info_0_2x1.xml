@@ -10,7 +10,7 @@
     android:initialKeyguardLayout="@layout/layout_widget_1x3_0"
 
     android:updatePeriodMillis="@integer/widget_updateInterval"
-    android:configure="com.forrestguice.suntimeswidget.SuntimesConfigActivity0"
+    android:configure="com.forrestguice.suntimeswidget.SuntimesConfigActivity0_2x1"
     android:widgetCategory="home_screen|keyguard"
     android:previewImage="@drawable/ic_suntimes">
 
