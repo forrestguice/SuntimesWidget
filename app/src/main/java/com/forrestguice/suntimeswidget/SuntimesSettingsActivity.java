@@ -51,7 +51,7 @@ import java.util.List;
 
 /**
  * A preferences activity for the main app;
- * @see SuntimesConfigActivity for widget configuration.
+ * @see SuntimesConfigActivity0 for widget configuration.
  */
 public class SuntimesSettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener
 {

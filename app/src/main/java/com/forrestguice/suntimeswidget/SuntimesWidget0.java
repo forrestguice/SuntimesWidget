@@ -147,7 +147,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
      */
     protected Class getConfigClass()
     {
-        return SuntimesConfigActivity.class;
+        return SuntimesConfigActivity0.class;
     }
 
     /**

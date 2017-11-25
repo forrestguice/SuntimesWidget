@@ -25,9 +25,9 @@ import android.widget.ArrayAdapter;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 /**
- * Flippable widget config activity.
+ * Widget config activity for flippable widget.
  */
-public class SuntimesConfigActivity1 extends SuntimesConfigActivity
+public class SuntimesConfigActivity1 extends SuntimesConfigActivity0
 {
     public SuntimesConfigActivity1()
     {

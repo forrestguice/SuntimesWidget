@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2014 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -18,24 +18,26 @@
 
 package com.forrestguice.suntimeswidget;
 
-/**
- * Widget receiver for resizable widget (that falls back to 2x1 layout).
- */
-public class SuntimesWidget0_2x1 extends SuntimesWidget0
-{
-    public static final int UPDATEALARM_ID = 2;
+import android.appwidget.AppWidgetManager;
+import android.content.Context;
+import android.widget.ArrayAdapter;
 
-    @Override
-    protected Class getConfigClass()
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+
+/**
+ * Widget config activity (for resizable widget that falls back to 2x1 layout).
+ */
+public class SuntimesConfigActivity0_2x1 extends SuntimesConfigActivity0
+{
+    public SuntimesConfigActivity0_2x1()
     {
-        return SuntimesConfigActivity0.class;
+        super();
     }
 
     @Override
-    protected int getUpdateAlarmId()
+    protected void updateWidget(Context context)
     {
-        return SuntimesWidget0_2x1.UPDATEALARM_ID;
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        SuntimesWidget0_2x1.updateAppWidget(context, appWidgetManager, appWidgetId, null);
     }
 }
-
-

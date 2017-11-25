@@ -60,7 +60,7 @@ import java.util.TimeZone;
 import static com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity.PICK_THEME_REQUEST;
 
 /**
- * Main widget config activity.
+ * Widget config activity for resizable widget.
  */
 public class SuntimesConfigActivity0 extends AppCompatActivity
 {

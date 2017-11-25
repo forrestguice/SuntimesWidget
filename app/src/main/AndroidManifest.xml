@@ -83,7 +83,7 @@
 
         <!-- Widget 0 Configuration Activity -->
         <activity
-            android:name=".SuntimesConfigActivity" >
+            android:name=".SuntimesConfigActivity0" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
