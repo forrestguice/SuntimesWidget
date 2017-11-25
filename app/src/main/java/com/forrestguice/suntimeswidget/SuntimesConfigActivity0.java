@@ -62,7 +62,7 @@ import static com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity.PIC
 /**
  * Main widget config activity.
  */
-public class SuntimesConfigActivity extends AppCompatActivity
+public class SuntimesConfigActivity0 extends AppCompatActivity
 {
     protected static final String DIALOGTAG_ABOUT = "about";
     protected static final String DIALOGTAG_HELP = "help";
@@ -108,7 +108,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
 
     protected ActionMode actionMode = null;
 
-    public SuntimesConfigActivity()
+    public SuntimesConfigActivity0()
     {
         super();
     }
@@ -124,7 +124,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
         setResult(RESULT_CANCELED);  // causes widget host to cancel if user presses back
         setContentView(R.layout.layout_settings);
 
-        Context context = SuntimesConfigActivity.this;
+        Context context = SuntimesConfigActivity0.this;
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if (extras != null)
@@ -342,7 +342,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
                 protected void onPreExecute()
                 {
                     super.onPreExecute();
-                    spinner_timezone.setAdapter(new WidgetTimezones.TimeZoneItemAdapter(SuntimesConfigActivity.this, R.layout.layout_listitem_timezone));
+                    spinner_timezone.setAdapter(new WidgetTimezones.TimeZoneItemAdapter(SuntimesConfigActivity0.this, R.layout.layout_listitem_timezone));
                     button_addWidget.setEnabled(false);
                 }
 
@@ -383,7 +383,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
             public void onSaveSortMode( WidgetTimezones.TimeZoneSort sortMode )
             {
                 super.onSaveSortMode(sortMode);
-                AppSettings.setTimeZoneSortPref(SuntimesConfigActivity.this, sortMode);
+                AppSettings.setTimeZoneSortPref(SuntimesConfigActivity0.this, sortMode);
             }
 
             @Override
@@ -900,7 +900,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
             locationConfig.setMode(LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT);
             locationConfig.populateLocationList();  // triggers 'add place'
 
-            final Context context = SuntimesConfigActivity.this;
+            final Context context = SuntimesConfigActivity0.this;
             saveSettings(context);
             updateWidget(context);
 
