@@ -88,7 +88,7 @@
                 app:layout_constraintStart_toEndOf="@+id/centerLine"
                 app:layout_constraintEnd_toEndOf="parent">
 
-                <include layout="@layout/layout_widget_1x3_0" />
+                <include layout="@layout/layout_widget_2x1_0" />
 
             </FrameLayout>
 

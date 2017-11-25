@@ -20,7 +20,6 @@ package com.forrestguice.suntimeswidget.layouts;
 
 import android.content.Context;
 import android.os.Build;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -36,7 +35,7 @@ public class SuntimesLayout_2x1_0 extends SuntimesLayout
     @Override
     public void initLayoutID()
     {
-        this.layoutID = R.layout.layout_widget_1x3_0;
+        this.layoutID = R.layout.layout_widget_2x1_0;
     }
 
     @Override
