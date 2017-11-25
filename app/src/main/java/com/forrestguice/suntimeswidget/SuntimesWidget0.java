@@ -36,7 +36,7 @@ import android.appwidget.AppWidgetProvider;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x3_0;
+import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_2x1_0;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
@@ -259,7 +259,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
         if (WidgetSettings.loadAllowResizePref(context, appWidgetId))
         {
             int minWidth1x3 = context.getResources().getInteger(R.integer.widget_size_minWidthDp1x3);
-            layout = ((mustFitWithinDp[0] >= minWidth1x3) ? new SuntimesLayout_1x3_0()
+            layout = ((mustFitWithinDp[0] >= minWidth1x3) ? new SuntimesLayout_2x1_0()
                                                           : WidgetSettings.load1x1ModePref_asLayout(context, appWidgetId));
         } else {
             layout = WidgetSettings.load1x1ModePref_asLayout(context, appWidgetId);

@@ -31,7 +31,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.SuntimesUtils.TimeDisplayText;
 
-public class SuntimesLayout_1x3_0 extends SuntimesLayout
+public class SuntimesLayout_2x1_0 extends SuntimesLayout
 {
     @Override
     public void initLayoutID()
