@@ -18,7 +18,10 @@
 
 package com.forrestguice.suntimeswidget;
 
-public class SuntimesWidget0_2x1 extends SuntimesWidget
+/**
+ * Widget receiver for resizable widget (that falls back to 2x1 layout).
+ */
+public class SuntimesWidget0_2x1 extends SuntimesWidget0
 {
     public static final int UPDATEALARM_ID = 2;
 

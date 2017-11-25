@@ -302,7 +302,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             final SuntimesUtils utils = new SuntimesUtils();
             String titlePattern = context.getString(R.string.configLabel_widgetList_itemTitlePattern);
 
-            int[] ids0 = widgetManager.getAppWidgetIds(new ComponentName(context, SuntimesWidget.class));
+            int[] ids0 = widgetManager.getAppWidgetIds(new ComponentName(context, SuntimesWidget0.class));
             for (int id : ids0)
             {
                 AppWidgetProviderInfo info = widgetManager.getAppWidgetInfo(id);

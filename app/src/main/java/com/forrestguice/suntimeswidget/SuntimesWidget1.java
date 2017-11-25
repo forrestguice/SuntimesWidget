@@ -34,9 +34,9 @@ import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_0;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 /**
- *  Flippable widget
+ *  Widget receiver for flippable widget.
  */
-public class SuntimesWidget1 extends SuntimesWidget
+public class SuntimesWidget1 extends SuntimesWidget0
 {
     private static final int UPDATEALARM_ID = 1;
 
@@ -86,7 +86,7 @@ public class SuntimesWidget1 extends SuntimesWidget
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SuntimesLayout layout)
     {
         RemoteViews views = getWidgetViews(context, appWidgetManager, appWidgetId);
-        views.setOnClickPendingIntent(R.id.widgetframe_outer_1x1, SuntimesWidget.clickActionIntent(context, appWidgetId, SuntimesWidget1.class));
+        views.setOnClickPendingIntent(R.id.widgetframe_outer_1x1, SuntimesWidget0.clickActionIntent(context, appWidgetId, SuntimesWidget1.class));
 
         appWidgetManager.updateAppWidget(appWidgetId, null);   // null on this line to discard previously cached RemoveViews
         appWidgetManager.updateAppWidget(appWidgetId, views);  // so this next line actually updates...

@@ -44,9 +44,9 @@ import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import java.util.Calendar;
 
 /**
- * Main widget
+ * Widget receiver for resizable widget (that falls back to 1x1 layout).
  */
-public class SuntimesWidget extends AppWidgetProvider
+public class SuntimesWidget0 extends AppWidgetProvider
 {
     public static final String SUNTIMES_WIDGET_UPDATE = "SUNTIMES_WIDGET_UPDATE";
     public static final int UPDATEALARM_ID = 0;
@@ -171,7 +171,7 @@ public class SuntimesWidget extends AppWidgetProvider
 
     protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
-        SuntimesWidget.updateAppWidget(context, appWidgetManager, appWidgetId);
+        SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId);
     }
 
     public static void initLocale(Context context)
@@ -270,7 +270,7 @@ public class SuntimesWidget extends AppWidgetProvider
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
         SuntimesLayout layout = getWidgetLayout(context, appWidgetManager, appWidgetId);
-        SuntimesWidget.updateAppWidget(context, appWidgetManager, appWidgetId, layout);
+        SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, layout);
     }
 
     /**
@@ -300,7 +300,7 @@ public class SuntimesWidget extends AppWidgetProvider
             data.linkData(noonData);
         }
 
-        views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget.clickActionIntent(context, appWidgetId, SuntimesWidget.class));
+        views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, SuntimesWidget0.class));
         layout.updateViews(context, appWidgetId, views, data);
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
@@ -376,7 +376,7 @@ public class SuntimesWidget extends AppWidgetProvider
      */
     protected int getUpdateAlarmId()
     {
-        return SuntimesWidget.UPDATEALARM_ID;
+        return SuntimesWidget0.UPDATEALARM_ID;
     }
 
     /**

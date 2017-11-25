@@ -242,9 +242,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     protected void updateLocale()
     {
         AppSettings.initLocale(this);
-        SuntimesWidget.triggerWidgetUpdate(this, SuntimesWidget.class);
-        SuntimesWidget.triggerWidgetUpdate(this, SuntimesWidget0_2x1.class);
-        SuntimesWidget.triggerWidgetUpdate(this, SuntimesWidget1.class);
+        SuntimesWidget0.triggerWidgetUpdate(this, SuntimesWidget0.class);
+        SuntimesWidget0.triggerWidgetUpdate(this, SuntimesWidget0_2x1.class);
+        SuntimesWidget0.triggerWidgetUpdate(this, SuntimesWidget1.class);
     }
 
     protected void rebuildActivity()

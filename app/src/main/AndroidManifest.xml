@@ -68,7 +68,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget 0_1x1: Resizable (falls back to static 1x1 for api less than 16) -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <receiver android:name=".SuntimesWidget"
+        <receiver android:name=".SuntimesWidget0"
                   android:label="@string/app_name_widget0">
 
             <intent-filter>
