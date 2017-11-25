@@ -40,7 +40,7 @@ public class SuntimesConfigActivity1 extends SuntimesConfigActivity0
         super.initViews(context);
         setConfigActivityTitle(getString(R.string.configLabel_title1));
         hideOptionCompareAgainst();
-        hideOptionLayoutMode();
+        hideOption1x1LayoutMode();
         disableOptionAllowResize();
     }
 

@@ -995,7 +995,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     /**
      *
      */
-    protected void hideOptionLayoutMode()
+    protected void hideOption1x1LayoutMode()
     {
         View layout_1x1mode = findViewById(R.id.appwidget_appearance_1x1mode_layout);
         if (layout_1x1mode != null)
