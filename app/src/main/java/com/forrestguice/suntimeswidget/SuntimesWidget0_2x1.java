@@ -18,9 +18,21 @@
 
 package com.forrestguice.suntimeswidget;
 
-public class SuntimesWidget0 extends SuntimesWidget
+public class SuntimesWidget0_2x1 extends SuntimesWidget
 {
-    // EMPTY
+    public static final int UPDATEALARM_ID = 2;
+
+    @Override
+    protected Class getConfigClass()
+    {
+        return SuntimesConfigActivity.class;
+    }
+
+    @Override
+    protected int getUpdateAlarmId()
+    {
+        return SuntimesWidget0_2x1.UPDATEALARM_ID;
+    }
 }
 
 
