@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.os.Build;
 
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_2x1_0;
 
@@ -34,9 +35,20 @@ public class SuntimesConfigActivity0_2x1 extends SuntimesConfigActivity0
     }
 
     @Override
+    protected void initViews( Context context )
+    {
+        super.initViews(context);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
+        {
+            hideOption1x1LayoutMode();
+        }
+    }
+
+    @Override
     protected void updateWidget(Context context)
     {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         SuntimesWidget0_2x1.updateAppWidget(context, appWidgetManager, appWidgetId, new SuntimesLayout_2x1_0());
     }
+
 }
