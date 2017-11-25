@@ -3,15 +3,15 @@
                     xmlns:tools="http://schemas.android.com/tools"
                     tools:ignore="UnusedAttribute"
 
-    android:resizeMode="horizontal"
-    android:minWidth="@dimen/widget_size_minWidth1x3" android:minHeight="@dimen/widget_size_minHeight"
-    android:minResizeWidth="@dimen/widget_size_minWidth" android:minResizeHeight="@dimen/widget_size_minHeight"
-    android:initialLayout="@layout/layout_widget_2x1_0"
-    android:initialKeyguardLayout="@layout/layout_widget_2x1_0"
+                    android:resizeMode="horizontal"
+                    android:minWidth="@dimen/widget_size_minWidth2x1" android:minHeight="@dimen/widget_size_minHeight"
+                    android:minResizeWidth="@dimen/widget_size_minWidth" android:minResizeHeight="@dimen/widget_size_minHeight"
+                    android:initialLayout="@layout/layout_widget_2x1_0"
+                    android:initialKeyguardLayout="@layout/layout_widget_2x1_0"
 
-    android:updatePeriodMillis="@integer/widget_updateInterval"
-    android:configure="com.forrestguice.suntimeswidget.SuntimesConfigActivity0_2x1"
-    android:widgetCategory="home_screen|keyguard"
-    android:previewImage="@drawable/widget0_2x1_preview">
+                    android:updatePeriodMillis="@integer/widget_updateInterval"
+                    android:configure="com.forrestguice.suntimeswidget.SuntimesConfigActivity0_2x1"
+                    android:widgetCategory="home_screen|keyguard"
+                    android:previewImage="@drawable/widget0_2x1_preview">
 
 </appwidget-provider>

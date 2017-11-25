@@ -44,6 +44,7 @@ import android.support.v7.view.ActionMode;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 
+import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
@@ -450,7 +451,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // widget: allow resize
         //
         checkbox_allowResize = (CheckBox)findViewById(R.id.appwidget_appearance_allowResize);
-        if (checkbox_allowResize != null && Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+        if (checkbox_allowResize != null && Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
         {
             disableOptionAllowResize();  // resizable widgets require api14+
         }
@@ -913,8 +914,13 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected void updateWidget( Context context )
     {
+        int minSize[] = new int[2];
+        minSize[0] = context.getResources().getInteger(R.integer.widget_size_minWidthDp);
+        minSize[1] = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
+
+        SuntimesLayout defLayout = WidgetSettings.load1x1ModePref_asLayout(context, appWidgetId);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0.class);
+        SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0.class, minSize, defLayout);
     }
 
     /**

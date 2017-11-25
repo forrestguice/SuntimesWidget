@@ -53,6 +53,21 @@ public class SuntimesWidget0 extends AppWidgetProvider
 
     protected static SuntimesUtils utils = new SuntimesUtils();
 
+    protected int[] minSize = { 0, 0 };
+    protected int[] getMinSize(Context context)
+    {
+        if (minSize[0] <= 0 || minSize[1] <= 0)
+        {
+            initMinSize(context);
+        }
+        return minSize;
+    }
+    protected void initMinSize(Context context)
+    {
+        minSize[0] = context.getResources().getInteger(R.integer.widget_size_minWidthDp);
+        minSize[1] = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
+    }
+
     /**
      * @param context the context
      * @param appWidgetManager widget manager
@@ -171,7 +186,8 @@ public class SuntimesWidget0 extends AppWidgetProvider
 
     protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
-        SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0.class);
+        SuntimesLayout defLayout = WidgetSettings.load1x1ModePref_asLayout(context, appWidgetId);
+        SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0.class, getMinSize(context), defLayout);
     }
 
     public static void initLocale(Context context)
@@ -217,11 +233,9 @@ public class SuntimesWidget0 extends AppWidgetProvider
         unsetUpdateAlarm(context);
     }
 
-    protected static int[] widgetSizeDp(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
+    protected static int[] widgetSizeDp(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize)
     {
-        int minWidth = context.getResources().getInteger(R.integer.widget_size_minWidthDp);
-        int minHeight = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
-        int[] mustFitWithinDp = {minWidth, minHeight};
+        int[] mustFitWithinDp = {defSize[0], defSize[1]};
         //Log.d("widgetSizeDp", "0: must fit:  [" + mustFitWithinDp[0] + ", " + mustFitWithinDp[1] + "]");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
@@ -251,18 +265,18 @@ public class SuntimesWidget0 extends AppWidgetProvider
      * @return a SuntimesLayout that is appropriate for available space.
      */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    protected static SuntimesLayout getWidgetLayout( Context context, AppWidgetManager appWidgetManager, int appWidgetId )
+    protected static SuntimesLayout getWidgetLayout( Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize, SuntimesLayout defLayout )
     {
-        int[] mustFitWithinDp = widgetSizeDp(context, appWidgetManager, appWidgetId);
+        int[] mustFitWithinDp = widgetSizeDp(context, appWidgetManager, appWidgetId, defSize);
 
         SuntimesLayout layout;
         if (WidgetSettings.loadAllowResizePref(context, appWidgetId))
         {
-            int minWidth1x3 = context.getResources().getInteger(R.integer.widget_size_minWidthDp1x3);
+            int minWidth1x3 = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
             layout = ((mustFitWithinDp[0] >= minWidth1x3) ? new SuntimesLayout_2x1_0()
                                                           : WidgetSettings.load1x1ModePref_asLayout(context, appWidgetId));
         } else {
-            layout = WidgetSettings.load1x1ModePref_asLayout(context, appWidgetId);
+            layout = defLayout; // WidgetSettings.load1x1ModePref_asLayout(context, appWidgetId);
         }
         //Log.d("getWidgetLayout", "layout is: " + layout);
         return layout;
@@ -273,9 +287,9 @@ public class SuntimesWidget0 extends AppWidgetProvider
      * @param appWidgetManager widget manager
      * @param appWidgetId id of widget to be updated
      */
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Class widgetClass)
+    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Class widgetClass, int[] defSize, SuntimesLayout defLayout)
     {
-        SuntimesLayout layout = getWidgetLayout(context, appWidgetManager, appWidgetId);
+        SuntimesLayout layout = getWidgetLayout(context, appWidgetManager, appWidgetId, defSize, defLayout);
         SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, layout, widgetClass);
     }
 

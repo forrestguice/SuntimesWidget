@@ -38,7 +38,7 @@ public class SuntimesConfigActivity0_2x1 extends SuntimesConfigActivity0
     protected void initViews( Context context )
     {
         super.initViews(context);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
         {
             hideOption1x1LayoutMode();
         }
@@ -47,8 +47,12 @@ public class SuntimesConfigActivity0_2x1 extends SuntimesConfigActivity0
     @Override
     protected void updateWidget(Context context)
     {
+        int minSize[] = new int[2];
+        minSize[0] = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
+        minSize[1] = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
+
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        SuntimesWidget0_2x1.updateAppWidget(context, appWidgetManager, appWidgetId, new SuntimesLayout_2x1_0(), SuntimesWidget0_2x1.class);
+        SuntimesWidget0_2x1.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0_2x1.class, minSize, new SuntimesLayout_2x1_0());
     }
 
 }
