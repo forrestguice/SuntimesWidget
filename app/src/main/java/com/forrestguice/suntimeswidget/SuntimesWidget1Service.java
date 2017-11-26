@@ -77,13 +77,13 @@ class SuntimesWidget1RemoteViewsFactory implements RemoteViewsService.RemoteView
     @Override
     public void onDataSetChanged()
     {
-        dataset.clear();
-        viewCount = 1;
+        ArrayList<SuntimesRiseSetData> dataset0 = new ArrayList<SuntimesRiseSetData>();
+        int viewCount0 = 1;
 
         SuntimesRiseSetData data0 = new SuntimesRiseSetData(context, appWidgetId);
         data0.calculate();
-        dataset.add(new SuntimesRiseSetData(data0, R.layout.layout_widget_1x1_1i));
-        viewCount++;
+        dataset0.add(new SuntimesRiseSetData(data0, R.layout.layout_widget_1x1_1i));
+        viewCount0++;
 
         boolean showNoon = WidgetSettings.loadShowNoonPref(context, appWidgetId);
         if (showNoon)
