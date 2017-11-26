@@ -372,6 +372,8 @@ public class WidgetThemes
                 TextView titleView = (TextView) view.findViewById(R.id.text_title);
                 titleView.setText(theme.themeDisplayString());
                 titleView.setTextColor(theme.getTitleColor());
+                titleView.setFocusable(false);
+                titleView.setFocusableInTouchMode(false);
 
                 TextView riseView = (TextView) view.findViewById(R.id.text_time_sunrise);
                 riseView.setTextColor(theme.getSunriseTextColor());
