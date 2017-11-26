@@ -19,12 +19,22 @@
 package com.forrestguice.suntimeswidget.layouts;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.LightingColorFilter;
+import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.v4.content.res.ResourcesCompat;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.SuntimesUtils.TimeDisplayText;
@@ -79,6 +89,12 @@ public class SuntimesLayout_1x1_0 extends SuntimesLayout
         int sunsetColor = theme.getSunsetTextColor();
         views.setTextColor(R.id.text_time_sunset_suffix, suffixColor);
         views.setTextColor(R.id.text_time_sunset, sunsetColor);
+
+        Bitmap sunriseIcon = SuntimesUtils.tintBitmapToColor(SuntimesUtils.drawableToBitmap(context, R.drawable.ic_sunrise0), sunriseColor);
+        views.setImageViewBitmap(R.id.icon_time_sunrise, sunriseIcon);
+
+        Bitmap sunsetIcon = SuntimesUtils.tintBitmapToColor(SuntimesUtils.drawableToBitmap(context, R.drawable.ic_sunset0), sunsetColor);
+        views.setImageViewBitmap(R.id.icon_time_sunset, sunsetIcon);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
