@@ -21,15 +21,9 @@ package com.forrestguice.suntimeswidget;
 import android.content.Context;
 import android.content.res.Resources;
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.LightingColorFilter;
-import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
 import android.text.Html;
 import android.text.Spannable;
 
@@ -42,7 +36,6 @@ import android.text.Spanned;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
@@ -673,52 +666,5 @@ public class SuntimesUtils
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             return Html.fromHtml(htmlString, Html.FROM_HTML_MODE_LEGACY);
         else return Html.fromHtml(htmlString);
-    }
-
-    /**
-     * Creates a tinted copy of the supplied bitmap.
-     * @param b a bitmap image
-     * @param color a color
-     * @return a bitmap tinted to color
-     */
-    public static Bitmap tintBitmapToColor(Bitmap b, int color)
-    {
-        Bitmap tinted = Bitmap.createBitmap(b.getWidth(), b.getHeight(), b.getConfig());
-        Canvas c = new Canvas(tinted);
-        Paint p = new Paint();
-        p.setColorFilter(new LightingColorFilter(color, 0));
-        c.drawBitmap(b, 0, 0, p);
-        return tinted;
-    }
-
-    /**
-     * @param context app context
-     * @param resourceID drawable resourceID
-     * @return a Bitmap representation of the Drawable
-     */
-    public static Bitmap drawableToBitmap(Context context, int resourceID)
-    {
-        Drawable drawable = ResourcesCompat.getDrawable(context.getResources(), resourceID, null);
-        return drawableToBitmap(context, drawable);
-    }
-
-    /**
-     * @param context app context
-     * @param drawable a Drawable
-     * @return a Bitmap representation of the Drawable
-     */
-    public static Bitmap drawableToBitmap(Context context, Drawable drawable)
-    {
-        if (drawable instanceof BitmapDrawable)
-        {
-            return ((BitmapDrawable)drawable).getBitmap();
-        }
-
-        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-        Bitmap bitmap = Bitmap.createBitmap(metrics, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawable.draw(canvas);
-        return bitmap;
     }
 }
