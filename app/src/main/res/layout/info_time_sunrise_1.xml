@@ -27,6 +27,7 @@
             style="@style/SunsetTimeImageView2"
             android:id="@+id/icon_time_sunrise"
             android:background="@drawable/ic_sunrise_large"
+            android:scaleType="fitStart"
             android:layout_marginTop="4dp"
             android:layout_width="@dimen/sunIconLarge_width" android:height="@dimen/sunIconLarge_height"
             android:contentDescription="@string/sunrise" />
