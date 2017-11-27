@@ -134,10 +134,13 @@ public class SuntimesLayout_2x1_0 extends SuntimesLayout
             views.setTextViewTextSize(R.id.text_delta_day_suffix, TypedValue.COMPLEX_UNIT_SP, textSize);
         }
 
-        Bitmap sunriseIcon = SuntimesUtils.tintBitmapToColor(SuntimesUtils.drawableToBitmap(context, R.drawable.ic_sunrise0), sunriseColor);
+        Bitmap sunriseIcon = SuntimesUtils.drawableToBitmap(context, R.drawable.ic_sunrise0, true, theme.getSunriseIconColor(), theme.getSunriseIconStrokeColor(), theme.getSunriseIconStrokePixels(context));
         views.setImageViewBitmap(R.id.icon_time_sunrise, sunriseIcon);
 
-        Bitmap sunsetIcon = SuntimesUtils.tintBitmapToColor(SuntimesUtils.drawableToBitmap(context, R.drawable.ic_sunset0), sunsetColor);
+        Bitmap noonIcon = SuntimesUtils.drawableToBitmap(context, R.drawable.ic_noon_large0, false, theme.getNoonIconColor(), theme.getNoonIconStrokeColor(), theme.getNoonIconStrokePixels(context));
+        views.setImageViewBitmap(R.id.icon_time_noon, noonIcon);
+
+        Bitmap sunsetIcon = SuntimesUtils.drawableToBitmap(context, R.drawable.ic_sunset0, true, theme.getSunsetIconColor(), theme.getSunsetIconStrokeColor(), theme.getSunsetIconStrokePixels(context));
         views.setImageViewBitmap(R.id.icon_time_sunset, sunsetIcon);
     }
 }

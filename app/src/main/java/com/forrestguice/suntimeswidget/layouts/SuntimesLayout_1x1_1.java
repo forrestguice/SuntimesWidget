@@ -78,7 +78,7 @@ public class SuntimesLayout_1x1_1 extends SuntimesLayout
             views.setTextViewTextSize(R.id.text_time_sunrise, TypedValue.COMPLEX_UNIT_SP, theme.getTimeSizeSp());
         }
 
-        Bitmap sunriseIcon = SuntimesUtils.tintBitmapToColor(SuntimesUtils.drawableToBitmap(context, R.drawable.ic_sunrise0), sunriseColor);
-        views.setImageViewBitmap(R.id.icon_time_sunrise, sunriseIcon);
+        //Bitmap sunriseIcon = SuntimesUtils.tintBitmapToColor(SuntimesUtils.drawableToBitmap(context, R.drawable.ic_sunrise_large0), sunriseColor);
+        //views.setImageViewBitmap(R.id.icon_time_sunrise, sunriseIcon);
     }
 }

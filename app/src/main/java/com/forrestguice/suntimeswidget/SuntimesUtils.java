@@ -26,6 +26,9 @@ import android.graphics.Canvas;
 import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.InsetDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -681,7 +684,7 @@ public class SuntimesUtils
      * @param color a color
      * @return a bitmap tinted to color
      */
-    public static Bitmap tintBitmapToColor(Bitmap b, int color)
+    public static Bitmap tintBitmap(Bitmap b, int color)
     {
         Bitmap tinted = Bitmap.createBitmap(b.getWidth(), b.getHeight(), b.getConfig());
         Canvas c = new Canvas(tinted);
@@ -700,6 +703,57 @@ public class SuntimesUtils
     {
         Drawable drawable = ResourcesCompat.getDrawable(context.getResources(), resourceID, null);
         return drawableToBitmap(context, drawable);
+    }
+
+    public static Bitmap drawableToBitmap(Context context, int resourceID, boolean isInset, int fillColor)
+    {
+        return SuntimesUtils.drawableToBitmap(context, resourceID, isInset, fillColor, 0, 0);
+    }
+
+    public static Bitmap drawableToBitmap(Context context, int resourceID, boolean isInset, int fillColor, int strokeColor, int strokePixels)
+    {
+        Drawable drawable = ResourcesCompat.getDrawable(context.getResources(), resourceID, null);
+        if (isInset)
+        {
+            InsetDrawable inset = (InsetDrawable)drawable;
+            return drawableToBitmap(context, tintDrawable(inset, fillColor, strokeColor, strokePixels));
+
+        } else {
+            GradientDrawable gradient = (GradientDrawable)drawable;
+            return drawableToBitmap(context, tintDrawable(gradient, fillColor, strokeColor, strokePixels));
+        }
+    }
+
+    /**
+     * @param drawable a ShapeDrawable
+     * @param fillColor the fill color
+     * @param strokeColor the stroke color
+     * @return a GradientDrawable with the given fill and stroke
+     */
+    public static Drawable tintDrawable(InsetDrawable drawable, int fillColor, int strokeColor, int strokePixels)
+    {
+        try {
+            GradientDrawable gradient = (GradientDrawable)drawable.getDrawable();
+            if (gradient != null)
+            {
+                SuntimesUtils.tintDrawable(gradient, fillColor, strokeColor, strokePixels);
+                return drawable;
+
+            } else {
+                Log.w("colorizeShapeDrawable", "failed to apply color! Null inset drawable.");
+                return drawable;
+            }
+        } catch (ClassCastException e) {
+            Log.w("colorizeShapeDrawable", "failed to apply color! " + e);
+            return drawable;
+        }
+    }
+
+    public static Drawable tintDrawable(GradientDrawable drawable, int fillColor, int strokeColor, int strokePixels)
+    {
+        drawable.setStroke(strokePixels, strokeColor);
+        drawable.setColor(fillColor);
+        return drawable;
     }
 
     /**
