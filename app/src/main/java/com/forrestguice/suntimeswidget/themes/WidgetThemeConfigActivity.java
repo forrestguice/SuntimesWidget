@@ -624,8 +624,22 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 this.themeTextColor = chooseColorText.getColor();
                 this.themeTimeColor = chooseColorTime.getColor();
                 this.themeTimeSuffixColor = chooseColorSuffix.getColor();
+
                 this.themeSunriseTextColor = chooseColorRise.getColor();
+                this.themeSunriseIconColor = this.themeSunriseTextColor;
+                this.themeSunriseIconStrokeColor = this.themeSunriseTextColor;
+                this.themeSunriseIconStrokeWidth = DarkTheme.THEMEDEF_RISEICON_STROKEWIDTH;
+
                 this.themeSunsetTextColor = chooseColorSet.getColor();
+                this.themeSunsetIconColor = this.themeSunsetTextColor;
+                this.themeSunsetIconStrokeColor = this.themeSunsetTextColor;
+                this.themeSunsetIconStrokeWidth = DarkTheme.THEMEDEF_SETICON_STROKEWIDTH;
+
+                this.themeNoonTextColor = this.themeSunsetTextColor;
+                this.themeNoonIconColor = this.themeSunriseTextColor;
+                this.themeNoonIconStrokeColor = this.themeSunsetTextColor;
+                this.themeNoonIconStrokeWidth = DarkTheme.THEMEDEF_NOONICON_STROKEWIDTH;
+
                 this.themePadding = choosePadding.getPadding();
                 ThemeBackground backgroundItem = (ThemeBackground)spinBackground.getSelectedItem();
                 if (backgroundItem != null)
