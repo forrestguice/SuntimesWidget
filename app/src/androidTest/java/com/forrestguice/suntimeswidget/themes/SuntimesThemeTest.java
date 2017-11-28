@@ -20,14 +20,19 @@ package com.forrestguice.suntimeswidget.themes;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.content.ContextCompat;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -36,37 +41,29 @@ import static junit.framework.Assert.assertTrue;
 @RunWith(AndroidJUnit4.class)
 public class SuntimesThemeTest extends SuntimesActivityTestBase
 {
-    private Context context;
-    private SuntimesTheme darkTheme, testTheme;
-
-    @Before
-    public void init()
-    {
-        context = activityRule.getActivity();
-
-        darkTheme = new DarkTheme(context);
-        darkTheme.saveTheme(WidgetThemes.getSharedPreferences(context));
-
-        testTheme = new TestTheme(context);
-        testTheme.deleteTheme(WidgetThemes.getSharedPreferences(context));
-    }
 
     ///////////////////////////////////////////////////////////////////////////
+
+    @Rule
+    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
 
     @Test
     public void test_initTheme()
     {
-        String themeName = DarkTheme.THEME_NAME;
-        SuntimesTheme defTheme = new TestTheme(context);
+        Context context = InstrumentationRegistry.getTargetContext();
+        SuntimesTheme darkTheme = new DarkTheme(context);
+        SuntimesTheme testTheme = new TestTheme(context);
+        testTheme.saveTheme(context, WidgetThemes.PREFS_THEMES);
+
         SuntimesTheme theme = new SuntimesTheme();
-        boolean initialized = theme.initTheme(context, WidgetThemes.PREFS_THEMES, themeName, defTheme);
+        boolean initialized = theme.initTheme(context, WidgetThemes.PREFS_THEMES, TestTheme.THEME_NAME, darkTheme);
         assertTrue(initialized);
-        verifyInit(theme, darkTheme);
+        verifyInit(theme, testTheme);
     }
 
     protected void verifyInit(SuntimesTheme theme, SuntimesTheme truth)
     {
-        assertTrue("theme name should match", theme.themeName().equals(truth.themeName()));
+        assertTrue("theme name should match " + truth.themeName() + " (was " + theme.themeName() + ")", theme.themeName().equals(truth.themeName()));
         assertTrue("theme version should match", theme.themeVersion() == truth.themeVersion());
         assertTrue("theme display should match", theme.themeDisplayString().equals(truth.themeDisplayString()));
         assertTrue("theme isDefault should match", theme.isDefault() == truth.isDefault());
@@ -86,27 +83,32 @@ public class SuntimesThemeTest extends SuntimesActivityTestBase
         assertTrue("theme text color should match", theme.getTextColor() == truth.getTextColor());
         assertTrue("theme time color should match", theme.getTimeColor() == truth.getTimeColor());
         assertTrue("theme suffix color should match", theme.getTimeSuffixColor() == truth.getTimeSuffixColor());
-        assertTrue("theme rise color should match", theme.getSunriseTextColor() == truth.getSunriseTextColor());
+
+        assertTrue("theme rise text color should match", theme.getSunriseTextColor() == truth.getSunriseTextColor());
+        assertTrue("theme rise icon fill color should match", theme.getSunriseIconColor() == truth.getSunriseIconColor());
+        assertTrue("theme rise icon stroke color should match", theme.getSunriseIconStrokeColor() == truth.getSunriseIconStrokeColor());
+        assertTrue("theme rise icon stroke width should match", theme.getSunriseIconStrokeWidth() == truth.getSunriseIconStrokeWidth());
+
+        assertTrue("theme noon text color should match", theme.getNoonTextColor() == truth.getNoonTextColor());
+        assertTrue("theme noon icon fill color should match", theme.getNoonIconColor() == truth.getNoonIconColor());
+        assertTrue("theme noon icon stroke color should match", theme.getNoonIconStrokeColor() == truth.getNoonIconStrokeColor());
+        assertTrue("theme noon icon stroke width should match", theme.getNoonIconStrokeWidth() == truth.getNoonIconStrokeWidth());
+
         assertTrue("theme set color should match", theme.getSunsetTextColor() == truth.getSunsetTextColor());
+        assertTrue("theme set icon fill color should match", theme.getSunsetIconColor() == truth.getSunsetIconColor());
+        assertTrue("theme set icon stroke color should match", theme.getSunsetIconStrokeColor() == truth.getSunsetIconStrokeColor());
+        assertTrue("theme set icon stroke width should match", theme.getSunriseIconStrokeWidth() == truth.getSunriseIconStrokeWidth());
     }
 
     @Test
     public void test_saveTheme()
     {
-        SharedPreferences themePref = WidgetThemes.getSharedPreferences(context);
-        SuntimesTheme theme = new TestTheme(context);
-        SuntimesTheme.ThemeDescriptor savedTheme = theme.saveTheme(themePref);
-
         assertTrue("STUB", true == false);  // TODO
     }
 
     @Test
     public void test_deleteTheme()
     {
-        SharedPreferences themePref = WidgetThemes.getSharedPreferences(context);
-        SuntimesTheme theme = new TestTheme(context);
-        theme.saveTheme(themePref);
-
         assertTrue("STUB", true == false);  // TODO
     }
 
@@ -146,10 +148,23 @@ public class SuntimesThemeTest extends SuntimesActivityTestBase
             this.themeTimeSuffixSize = TESTDEF_TIMESUFFIXSIZE;
             this.themeTitleColor = ContextCompat.getColor(context, TESTDEF_TITLECOLOR_ID);
             this.themeTextColor = ContextCompat.getColor(context, TESTDEF_TEXTCOLOR_ID);
-            this.themeSunriseTextColor = ContextCompat.getColor(context, TESTDEF_SUNRISECOLOR_ID);
-            this.themeSunsetTextColor = ContextCompat.getColor(context, TESTDEF_SUNSETCOLOR_ID);
             this.themeTimeColor = ContextCompat.getColor(context, TESTDEF_TIMECOLOR_ID);
             this.themeTimeSuffixColor = ContextCompat.getColor(context, TESTDEF_TIMESUFFIXCOLOR_ID);
+
+            this.themeSunriseTextColor = ContextCompat.getColor(context, TESTDEF_SUNRISECOLOR_ID);
+            this.themeSunriseIconColor = Color.GREEN;
+            this.themeSunriseIconStrokeColor = Color.YELLOW;
+            this.themeSunriseIconStrokeWidth = 1;
+
+            this.themeNoonTextColor = Color.WHITE;
+            this.themeNoonIconColor = Color.CYAN;
+            this.themeNoonIconStrokeColor = Color.MAGENTA;
+            this.themeNoonIconStrokeWidth = 2;
+
+            this.themeSunsetTextColor = ContextCompat.getColor(context, TESTDEF_SUNSETCOLOR_ID);
+            this.themeSunsetIconColor = Color.BLUE;
+            this.themeSunsetIconStrokeColor = Color.RED;
+            this.themeSunsetIconStrokeWidth = 3;
         }
 
         @Override
