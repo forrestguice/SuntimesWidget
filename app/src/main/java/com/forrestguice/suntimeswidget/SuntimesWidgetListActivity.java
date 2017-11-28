@@ -338,6 +338,24 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                 }
             }
 
+            int[] ids3 = widgetManager.getAppWidgetIds(new ComponentName(context, SuntimesWidget0_2x1.class));
+            for (int id : ids3)
+            {
+                AppWidgetProviderInfo info = widgetManager.getAppWidgetInfo(id);
+                SuntimesRiseSetData data =  new SuntimesRiseSetData(context, id);
+                String widgetTitle = utils.displayStringForTitlePattern(titlePattern, data);
+                String title = context.getString(R.string.configLabel_widgetList_itemTitle, widgetTitle);
+                String type = context.getString(R.string.app_name_widget0);
+                String source = ((data.calculatorMode() == null) ? "def" : data.calculatorMode().name());
+                String summary = context.getString(R.string.configLabel_widgetList_itemSummaryPattern, type, source);
+
+                try {
+                    items.add(new WidgetListItem(id, info.icon, title, summary, Class.forName(info.configure.getClassName()) ));
+                } catch (ClassNotFoundException e) {
+                    Log.e("WidgetListActivity", "configuration class for widget " + id + " missing.");
+                }
+            }
+
             return new WidgetListAdapter(context, items);
         }
 
