@@ -52,14 +52,23 @@ public class SuntimesTheme
     public static final String THEME_NOONICON_FILL_COLOR = "noonicon_fillcolor";
     public static final String THEME_NOONICON_STROKE_COLOR = "noonicon_strokecolor";
     public static final String THEME_NOONICON_STROKE_WIDTH = "noonicon_strokewidth";
+    public static final float THEME_NOONICON_STROKE_WIDTH_MIN = 0.0f;
+    public static final float THEME_NOONICON_STROKE_WIDTH_DEF = 3.0f;
+    public static final float THEME_NOONICON_STROKE_WIDTH_MAX = 7.0f;
 
     public static final String THEME_RISEICON_FILL_COLOR = "riseicon_fillcolor";
     public static final String THEME_RISEICON_STROKE_COLOR = "riseicon_strokecolor";
     public static final String THEME_RISEICON_STROKE_WIDTH = "riseicon_strokewidth";
+    public static final float THEME_RISEICON_STROKE_WIDTH_MIN = 0.0f;
+    public static final float THEME_RISEICON_STROKE_WIDTH_DEF = 0.0f;
+    public static final float THEME_RISEICON_STROKE_WIDTH_MAX = 7.0f;
 
     public static final String THEME_SETICON_FILL_COLOR = "seticon_fillcolor";
     public static final String THEME_SETICON_STROKE_COLOR = "seticon_strokecolor";
     public static final String THEME_SETICON_STROKE_WIDTH = "seticon_strokewidth";
+    public static final float THEME_SETICON_STROKE_WIDTH_MIN = 0.0f;
+    public static final float THEME_SETICON_STROKE_WIDTH_DEF = 0.0f;
+    public static final float THEME_SETICON_STROKE_WIDTH_MAX = 7.0f;
 
     public static final String THEME_TITLESIZE = "titlesize";
     public static final float THEME_TITLESIZE_MIN = 6.0f;
@@ -223,6 +232,11 @@ public class SuntimesTheme
         this.themeTimeSuffixSize = themes.getFloat( theme + THEME_TIMESUFFIXSIZE, defaultTheme.themeTimeSuffixSize );
 
         return true;
+    }
+
+    public ThemeDescriptor saveTheme(Context context, String themesPrefix)
+    {
+        return saveTheme(context.getSharedPreferences(themesPrefix, Context.MODE_PRIVATE));
     }
 
     public ThemeDescriptor saveTheme(SharedPreferences themes)
@@ -389,16 +403,17 @@ public class SuntimesTheme
 
     public int getSunriseIconStrokeWidth()
     {
-        return themeSunriseIconStrokeWidth;
+        return (themeSunriseIconStrokeWidth < THEME_RISEICON_STROKE_WIDTH_MIN) ? (int)THEME_RISEICON_STROKE_WIDTH_DEF :
+                (themeSunriseIconStrokeWidth > THEME_RISEICON_STROKE_WIDTH_MAX) ? (int)THEME_RISEICON_STROKE_WIDTH_MAX : themeSunriseIconStrokeWidth;
     }
 
     public int getSunriseIconStrokePixels(Context context)
     {
-        if (themeSunriseIconStrokePixels == -1)
-        {
+        //if (themeSunriseIconStrokePixels == -1)
+        //{
             DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-            themeSunriseIconStrokePixels = (int)((metrics.density * this.themeSunriseIconStrokeWidth) + 0.5f);
-        }
+            themeSunriseIconStrokePixels = (int)((metrics.density * getSunriseIconStrokeWidth()) + 0.5f);
+        //}
         return themeSunriseIconStrokePixels;
     }
 
@@ -419,16 +434,17 @@ public class SuntimesTheme
 
     public int getNoonIconStrokeWidth()
     {
-        return themeNoonIconStrokeWidth;
+        return (themeNoonIconStrokeWidth < THEME_NOONICON_STROKE_WIDTH_MIN) ? (int)THEME_NOONICON_STROKE_WIDTH_DEF :
+                (themeNoonIconStrokeWidth > THEME_NOONICON_STROKE_WIDTH_MAX) ? (int)THEME_NOONICON_STROKE_WIDTH_MAX : themeNoonIconStrokeWidth;
     }
 
     public int getNoonIconStrokePixels(Context context)
     {
-        if (themeNoonIconStrokePixels == -1)
-        {
+        //if (themeNoonIconStrokePixels == -1)
+        //{
             DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-            themeNoonIconStrokePixels = (int)((metrics.density * this.themeNoonIconStrokeWidth) + 0.5f);
-        }
+            themeNoonIconStrokePixels = (int)((metrics.density * getNoonIconStrokeWidth()) + 0.5f);
+        //}
         return themeNoonIconStrokePixels;
     }
 
@@ -449,16 +465,17 @@ public class SuntimesTheme
 
     public int getSunsetIconStrokeWidth()
     {
-        return themeSunsetIconStrokeWidth;
+        return (themeSunsetIconStrokeWidth < THEME_SETICON_STROKE_WIDTH_MIN) ? (int)THEME_SETICON_STROKE_WIDTH_DEF :
+                (themeSunsetIconStrokeWidth > THEME_SETICON_STROKE_WIDTH_MAX) ? (int)THEME_SETICON_STROKE_WIDTH_MAX : themeSunsetIconStrokeWidth;
     }
 
     public int getSunsetIconStrokePixels(Context context)
     {
-        if (themeSunsetIconStrokePixels == -1)
-        {
+        //if (themeSunsetIconStrokePixels == -1)
+        //{
             DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-            themeSunsetIconStrokePixels = (int)((metrics.density * this.themeSunsetIconStrokeWidth) + 0.5f);
-        }
+            themeSunsetIconStrokePixels = (int)((metrics.density * getSunsetIconStrokeWidth()) + 0.5f);
+        //}
         return themeSunsetIconStrokePixels;
     }
 
