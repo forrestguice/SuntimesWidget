@@ -19,11 +19,13 @@
 package com.forrestguice.suntimeswidget.layouts;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.SuntimesUtils.TimeDisplayText;
@@ -76,7 +78,7 @@ public class SuntimesLayout_1x1_1 extends SuntimesLayout
             views.setTextViewTextSize(R.id.text_time_sunrise, TypedValue.COMPLEX_UNIT_SP, theme.getTimeSizeSp());
         }
 
-        //Bitmap sunriseIcon = SuntimesUtils.tintBitmapToColor(SuntimesUtils.drawableToBitmap(context, R.drawable.ic_sunrise_large0), sunriseColor);
-        //views.setImageViewBitmap(R.id.icon_time_sunrise, sunriseIcon);
+        Bitmap sunriseIcon = SuntimesUtils.drawableToBitmap(context, R.drawable.ic_sunrise_large0, true, theme.getSunriseIconColor(), theme.getSunriseIconStrokeColor(), theme.getSunriseIconStrokePixels(context));
+        views.setImageViewBitmap(R.id.icon_time_sunrise, sunriseIcon);
     }
 }
