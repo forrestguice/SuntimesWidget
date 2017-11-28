@@ -19,11 +19,10 @@
 package com.forrestguice.suntimeswidget.themes;
 
 import android.app.Activity;
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.InsetDrawable;
 import android.os.Build;
@@ -31,7 +30,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -56,15 +54,14 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.settings.ColorChooser;
 import com.forrestguice.suntimeswidget.settings.PaddingChooser;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import static com.forrestguice.suntimeswidget.themes.SuntimesTheme.THEME_NAME;
 
@@ -101,12 +98,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private CheckBox checkUseFill, checkUseStroke, checkUseNoon;
 
     private Spinner spinBackground;
-    //protected ThemeBackground[] backgrounds;
 
     private View previewBackground;
     private TextView previewTitle, previewNoon, previewRise, previewSet, previewNoonSuffix, previewRiseSuffix, previewSetSuffix;
     private TextView previewTimeDeltaPrefix, previewTimeDelta, previewTimeDeltaSuffix;
-    private Calendar previewRiseTime, previewNoonTime, previewSetTime;
     private ImageView previewRiseIcon, previewNoonIcon, previewSetIcon;
     private int previewTimeDeltaValue;
 
@@ -132,9 +127,24 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         mode = (param_mode == null) ? UIMode.ADD_THEME : param_mode;
 
+        initData(this);
         initViews(this);
         loadTheme(param_themeName);
         updatePreview();
+    }
+
+    private SuntimesRiseSetData data;
+    private void initData(Context context)
+    {
+        data = new SuntimesRiseSetData(context, AppWidgetManager.INVALID_APPWIDGET_ID);   // use app configuration
+        data.setCompareMode(WidgetSettings.CompareMode.TOMORROW);
+        data.setTimeMode(WidgetSettings.TimeMode.OFFICIAL);
+        data.calculate();
+
+        SuntimesRiseSetData noonData = new SuntimesRiseSetData(data);
+        noonData.setTimeMode(WidgetSettings.TimeMode.NOON);
+        noonData.calculate();
+        data.linkData(noonData);
     }
 
     private void initLocale()
@@ -402,8 +412,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private boolean usingNoonIconColor()
     {
         boolean textCondition = (chooseColorNoon.getColor() != chooseColorSet.getColor());
-        // TODO
-        return textCondition;
+        boolean fillCondition = (chooseColorNoonIconFill.getColor() != chooseColorRise.getColor());
+        boolean strokeCondition = (chooseColorNoonIconStroke.getColor() != chooseColorSet.getColor());
+        return (textCondition || fillCondition || strokeCondition);
     }
 
     private ColorChooser createColorChooser(Context context, int labelID, int editID, int buttonID, String id)
@@ -447,18 +458,6 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
     protected void initPreview(Context context)
     {
-        previewNoonTime = Calendar.getInstance();
-        previewNoonTime.set(Calendar.HOUR_OF_DAY, 12);
-        previewNoonTime.set(Calendar.MINUTE, 0);
-
-        previewRiseTime = Calendar.getInstance();
-        previewRiseTime.set(Calendar.HOUR_OF_DAY, 7);
-        previewRiseTime.set(Calendar.MINUTE, 0);
-
-        previewSetTime = Calendar.getInstance();
-        previewSetTime.set(Calendar.HOUR_OF_DAY, 19);
-        previewSetTime.set(Calendar.MINUTE, 0);
-
         previewTimeDeltaValue = 60;  // seconds
 
         previewBackground = findViewById(R.id.widgetframe_inner);
@@ -504,7 +503,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             updateSizeFromChooser(previewTitle, chooseTitleSize);
         }
 
-        SuntimesUtils.TimeDisplayText noonText = utils.calendarTimeShortDisplayString(this, previewNoonTime);
+        SuntimesRiseSetData noonData = data.getLinked();
+        SuntimesUtils.TimeDisplayText noonText = ((noonData != null)
+                ? utils.calendarTimeShortDisplayString(this, noonData.sunriseCalendarToday())
+                : new SuntimesUtils.TimeDisplayText("12:00"));
         if (previewNoon != null)
         {
             previewNoon.setText(noonText.getValue());
@@ -518,7 +520,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             updateSizeFromChooser(previewNoonSuffix, chooseSuffixSize);
         }
 
-        SuntimesUtils.TimeDisplayText riseText = utils.calendarTimeShortDisplayString(this, previewRiseTime);
+        SuntimesUtils.TimeDisplayText riseText = utils.calendarTimeShortDisplayString(this, data.sunriseCalendarToday());
         if (previewRise != null)
         {
             previewRise.setText(riseText.getValue());
@@ -532,7 +534,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             updateSizeFromChooser(previewRiseSuffix, chooseSuffixSize);
         }
 
-        SuntimesUtils.TimeDisplayText setText = utils.calendarTimeShortDisplayString(this, previewSetTime);
+        SuntimesUtils.TimeDisplayText setText = utils.calendarTimeShortDisplayString(this, data.sunsetCalendarToday());
         if (previewSet != null)
         {
             previewSet.setText(setText.getValue());
@@ -548,7 +550,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         if (previewTimeDelta != null)
         {
-            previewTimeDelta.setText(utils.timeDeltaLongDisplayString(0, previewTimeDeltaValue * 1000).getValue());
+            previewTimeDelta.setText(utils.timeDeltaLongDisplayString(data.dayLengthToday(), data.dayLengthOther()).getValue());
             previewTimeDelta.setTextColor(chooseColorTime.getColor());
             updateSizeFromChooser(previewTimeDelta, chooseTextSize);
         }
@@ -617,7 +619,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     }
 
     /**
-     * @param outState
+     * @param outState Bundle
      */
     @Override
     public void onSaveInstanceState( Bundle outState )
@@ -644,7 +646,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     }
 
     /**
-     * @param savedState
+     * @param savedState Bundle
      */
     @Override
     public void onRestoreInstanceState(@NonNull Bundle savedState)
@@ -863,14 +865,6 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     protected String generateThemeDisplayString( String suggestedName )
     {
         return getString(R.string.addtheme_copydisplay, suggestedName);
-    }
-
-    private void collapseColorFields()
-    {
-        for (ColorChooser chooser : colorChoosers)
-        {
-            chooser.setCollapsed(true);
-        }
     }
 
     /**
