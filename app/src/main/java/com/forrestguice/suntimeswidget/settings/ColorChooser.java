@@ -35,8 +35,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Locale;

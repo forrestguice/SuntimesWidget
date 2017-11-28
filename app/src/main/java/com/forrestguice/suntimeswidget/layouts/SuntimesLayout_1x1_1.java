@@ -19,13 +19,11 @@
 package com.forrestguice.suntimeswidget.layouts;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.SuntimesUtils.TimeDisplayText;

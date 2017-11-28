@@ -23,7 +23,6 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.TypedValue;
 
 public class SuntimesTheme
 {

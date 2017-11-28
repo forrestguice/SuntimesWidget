@@ -26,7 +26,6 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import net.time4j.Moment;
 import net.time4j.PlainDate;
 import net.time4j.TemporalType;
-import net.time4j.android.ApplicationStarter;
 import net.time4j.calendar.astro.SolarTime;
 import net.time4j.calendar.astro.StdSolarCalculator;
 import net.time4j.calendar.astro.Twilight;

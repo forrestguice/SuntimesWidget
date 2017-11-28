@@ -20,16 +20,9 @@ package com.forrestguice.suntimeswidget.layouts;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.LightingColorFilter;
-import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
+
 import android.os.Build;
-import android.support.v4.content.res.ResourcesCompat;
-import android.util.DisplayMetrics;
-import android.util.Log;
+
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 

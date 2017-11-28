@@ -394,6 +394,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         {
             actionMode = null;
             selected = null;
+            //noinspection ConstantConditions
             adapter.setSelected(selected);
         }
 
