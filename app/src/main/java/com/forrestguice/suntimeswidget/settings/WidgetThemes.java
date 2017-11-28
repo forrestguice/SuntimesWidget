@@ -21,14 +21,17 @@ package com.forrestguice.suntimeswidget.settings;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.drawable.InsetDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -390,6 +393,16 @@ public class WidgetThemes
                 TextView setViewSuffix = (TextView) view.findViewById(R.id.text_time_sunset_suffix);
                 setViewSuffix.setTextColor(theme.getTimeSuffixColor());
                 setViewSuffix.setText(setText.getSuffix());
+
+                Resources resources = context.getResources();
+
+                InsetDrawable riseDrawable = (InsetDrawable) ResourcesCompat.getDrawable(resources, R.drawable.ic_sunrise0, null);
+                ImageView riseIcon = (ImageView)view.findViewById(R.id.icon_time_sunrise);
+                riseIcon.setImageBitmap(SuntimesUtils.drawableToBitmap(context, SuntimesUtils.tintDrawable(riseDrawable, theme.getSunriseIconColor(), theme.getSunriseIconStrokeColor(), theme.getSunriseIconStrokePixels(context))));
+
+                ImageView setIcon = (ImageView)view.findViewById(R.id.icon_time_sunset);
+                InsetDrawable setDrawable = (InsetDrawable) ResourcesCompat.getDrawable(resources, R.drawable.ic_sunset0, null);
+                setIcon.setImageBitmap(SuntimesUtils.drawableToBitmap(context, SuntimesUtils.tintDrawable(setDrawable, theme.getSunsetIconColor(), theme.getSunsetIconStrokeColor(), theme.getSunsetIconStrokePixels(context))));
 
                 View layout = view.findViewById(R.id.widgetframe_inner);
                 try {
