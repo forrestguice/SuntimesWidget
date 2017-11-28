@@ -32,6 +32,7 @@ public interface SuntimesThemeIO
     void setProgressListener( ProgressListener listener );
     void clearProgressListener();
 
+    @SuppressWarnings("EmptyMethod")
     abstract class ProgressListener
     {
         public void onExportStarted() {}
