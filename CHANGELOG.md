@@ -1,6 +1,7 @@
 ### ~ 
 * lists 2x1 widget (previously only accessible by resizing 1x1 widget).
 * fixes 2x1 layout for api versions <= 15 (previously inaccessible).
+* updates dependency (Time4A 3.37-2017c). 
 
 ### v0.5.0 (2017-11-18)
 * adds data source; Time4A (time4a-simple, time4a-noaa, time4a-cc, time4a-time4j) (contributions by MenoData) (#103).
