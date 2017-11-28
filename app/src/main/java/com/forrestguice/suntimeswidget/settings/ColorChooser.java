@@ -53,7 +53,7 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
     private boolean isCollapsed = false;
 
     public static final char[] alphabet = {'#', '0', '1', '2', '3', '4', '5', '6', '7','8', '9', 'a', 'A', 'b', 'B', 'c', 'C', 'd', 'D', 'e', 'E', 'f', 'F'};
-    HashSet<Character> inputSet;
+    protected final HashSet<Character> inputSet;
 
     public ColorChooser(final Context context, TextView txtLabel, EditText editField, ImageButton imgButton, String id)
     {
@@ -117,7 +117,7 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
         }
     }
 
-    private ArrayList<ColorChooser> linked = new ArrayList<ColorChooser>();
+    private final ArrayList<ColorChooser> linked = new ArrayList<ColorChooser>();
     public ArrayList<ColorChooser> getLinked()
     {
         return linked;
@@ -385,7 +385,7 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
         }
     }
 
-    private ColorDialog.ColorChangeListener colorDialogChangeListener = new ColorDialog.ColorChangeListener()
+    private final ColorDialog.ColorChangeListener colorDialogChangeListener = new ColorDialog.ColorChangeListener()
     {
         @Override
         public void onColorChanged(int color)

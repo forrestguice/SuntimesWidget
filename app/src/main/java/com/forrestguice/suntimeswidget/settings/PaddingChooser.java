@@ -29,8 +29,8 @@ import android.widget.EditText;
 
 public class PaddingChooser implements TextWatcher, View.OnFocusChangeListener
 {
-    private int[] padding = new int[4];
-    private EditText edit;
+    private final int[] padding = new int[4];
+    private final EditText edit;
 
     private boolean isRunning = false, isRemoving = false;
     private char[] brackets = {'[',']'};

@@ -41,10 +41,10 @@ import java.util.Locale;
 public class SizeChooser implements TextWatcher, View.OnFocusChangeListener
 {
     private String chooserID = "0";
-    private Context context;
+    private final Context context;
     private int value;
-    private EditText edit = null;
-    private float min, max;
+    private final EditText edit;
+    private final float min, max;
 
     public SizeChooser(Context context, EditText editField, float min, float max, String id)
     {
