@@ -20,17 +20,24 @@ package com.forrestguice.suntimeswidget.themes;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.InsetDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
@@ -39,8 +46,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -49,7 +59,6 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.ColorChooser;
 import com.forrestguice.suntimeswidget.settings.PaddingChooser;
-import com.forrestguice.suntimeswidget.settings.TextSizeChooser;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 
@@ -78,12 +87,19 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
     private ActionBar actionBar;
     private EditText editDisplay;
-    private TextSizeChooser chooseTitleSize, chooseTextSize, chooseTimeSize, chooseSuffixSize;
-    private ArrayList<TextSizeChooser> sizeChoosers;
+    private SizeChooser chooseTitleSize, chooseTextSize, chooseTimeSize, chooseSuffixSize;
+    private SizeChooser chooseIconStroke, chooseNoonIconStroke;
+    private ArrayList<SizeChooser> sizeChoosers;
     private ThemeNameChooser chooseName;
     private PaddingChooser choosePadding;
-    private ColorChooser chooseColorRise, chooseColorSet, chooseColorTitle, chooseColorText, chooseColorTime, chooseColorSuffix;
+
+    private ColorChooser chooseColorRise, chooseColorRiseIconFill, chooseColorRiseIconStroke;
+    private ColorChooser chooseColorNoon, chooseColorNoonIconFill, chooseColorNoonIconStroke;
+    private ColorChooser chooseColorSet, chooseColorSetIconFill, chooseColorSetIconStroke;
+    private ColorChooser chooseColorTitle, chooseColorText, chooseColorTime, chooseColorSuffix;
     private ArrayList<ColorChooser> colorChoosers;
+    private CheckBox checkUseFill, checkUseStroke, checkUseNoon;
+
     private Spinner spinBackground;
     //protected ThemeBackground[] backgrounds;
 
@@ -91,6 +107,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private TextView previewTitle, previewNoon, previewRise, previewSet, previewNoonSuffix, previewRiseSuffix, previewSetSuffix;
     private TextView previewTimeDeltaPrefix, previewTimeDelta, previewTimeDeltaSuffix;
     private Calendar previewRiseTime, previewNoonTime, previewSetTime;
+    private ImageView previewRiseIcon, previewNoonIcon, previewSetIcon;
     private int previewTimeDeltaValue;
 
     private SuntimesUtils utils = new SuntimesUtils();
@@ -182,21 +199,12 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             }
         });
 
-        EditText editTitleSize = (EditText)findViewById(R.id.edit_titleSize);
-        chooseTitleSize = new TextSizeChooser(this, editTitleSize, SuntimesTheme.THEME_TITLESIZE_MIN, SuntimesTheme.THEME_TITLESIZE_MAX);
-        sizeChoosers.add(chooseTitleSize);
-
-        EditText editTextSize = (EditText)findViewById(R.id.edit_textSize);
-        chooseTextSize = new TextSizeChooser(this, editTextSize, SuntimesTheme.THEME_TEXTSIZE_MIN, SuntimesTheme.THEME_TEXTSIZE_MAX);
-        sizeChoosers.add(chooseTextSize);
-
-        EditText editTimeSize = (EditText)findViewById(R.id.edit_timeSize);
-        chooseTimeSize = new TextSizeChooser(this, editTimeSize, SuntimesTheme.THEME_TIMESIZE_MIN, SuntimesTheme.THEME_TIMESIZE_MAX);
-        sizeChoosers.add(chooseTimeSize);
-
-        EditText editSuffixSize = (EditText)findViewById(R.id.edit_suffixSize);
-        chooseSuffixSize = new TextSizeChooser(this, editSuffixSize, SuntimesTheme.THEME_TIMESUFFIXSIZE_MIN, SuntimesTheme.THEME_TIMESUFFIXSIZE_MAX);
-        sizeChoosers.add(chooseSuffixSize);
+        chooseTitleSize = createSizeChooser(this, R.id.edit_titleSize, SuntimesTheme.THEME_TITLESIZE_MIN, SuntimesTheme.THEME_TITLESIZE_MAX, SuntimesTheme.THEME_TITLESIZE);
+        chooseTextSize = createSizeChooser(this, R.id.edit_textSize, SuntimesTheme.THEME_TEXTSIZE_MIN, SuntimesTheme.THEME_TEXTSIZE_MAX, SuntimesTheme.THEME_TEXTSIZE);
+        chooseTimeSize = createSizeChooser(this, R.id.edit_timeSize, SuntimesTheme.THEME_TIMESIZE_MIN, SuntimesTheme.THEME_TIMESIZE_MAX, SuntimesTheme.THEME_TIMESIZE);
+        chooseSuffixSize = createSizeChooser(this, R.id.edit_suffixSize, SuntimesTheme.THEME_TIMESUFFIXSIZE_MIN, SuntimesTheme.THEME_TIMESUFFIXSIZE_MAX, SuntimesTheme.THEME_TIMESUFFIXSIZE);
+        chooseIconStroke = createSizeChooser(this, R.id.edit_iconStroke, SuntimesTheme.THEME_SETICON_STROKE_WIDTH_MIN, SuntimesTheme.THEME_SETICON_STROKE_WIDTH_MAX, SuntimesTheme.THEME_SETICON_STROKE_WIDTH);
+        chooseNoonIconStroke = createSizeChooser(this, R.id.edit_noonIconStroke, SuntimesTheme.THEME_NOONICON_STROKE_WIDTH_MIN, SuntimesTheme.THEME_NOONICON_STROKE_WIDTH_MAX, SuntimesTheme.THEME_NOONICON_STROKE_WIDTH);
 
         EditText editPadding = (EditText)findViewById(R.id.edit_padding);
         choosePadding = new PaddingChooser(editPadding)
@@ -208,92 +216,98 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             }
         };
 
-        EditText editColorTitle = (EditText)findViewById(R.id.edit_titleColor);
-        ImageButton buttonColorTitle = (ImageButton)findViewById(R.id.editButton_titleColor);
-        chooseColorTitle = new ColorChooser(this, editColorTitle, buttonColorTitle, SuntimesTheme.THEME_TITLECOLOR)
+        // sunrise colors
+        chooseColorRise = createColorChooser(this, R.id.editLabel_sunriseColor, R.id.edit_sunriseColor, R.id.editButton_sunriseColor, SuntimesTheme.THEME_SUNRISECOLOR);
+        chooseColorRiseIconFill = createColorChooser(this, R.id.editLabel_sunriseFillColor, R.id.edit_sunriseFillColor, R.id.editButton_sunriseFillColor, SuntimesTheme.THEME_RISEICON_FILL_COLOR);
+        chooseColorRiseIconStroke = createColorChooser(this, R.id.editLabel_sunriseStrokeColor, R.id.edit_sunriseStrokeColor, R.id.editButton_sunriseStrokeColor, SuntimesTheme.THEME_RISEICON_STROKE_COLOR);
+
+        // noon colors
+        chooseColorNoon = createColorChooser(this, R.id.editLabel_noonColor, R.id.edit_noonColor, R.id.editButton_noonColor, SuntimesTheme.THEME_NOONCOLOR);
+        chooseColorNoonIconFill = createColorChooser(this, R.id.editLabel_noonFillColor, R.id.edit_noonFillColor,  R.id.editButton_noonFillColor, SuntimesTheme.THEME_NOONICON_FILL_COLOR);
+        chooseColorNoonIconStroke = createColorChooser(this, R.id.editLabel_noonStrokeColor, R.id.edit_noonStrokeColor, R.id.editButton_noonStrokeColor, SuntimesTheme.THEME_NOONICON_STROKE_COLOR);
+
+        // sunset colors
+        chooseColorSet = createColorChooser(this, R.id.editLabel_sunsetColor, R.id.edit_sunsetColor, R.id.editButton_sunsetColor, SuntimesTheme.THEME_SUNSETCOLOR);
+        chooseColorSetIconFill = createColorChooser(this, R.id.editLabel_sunsetFillColor, R.id.edit_sunsetFillColor, R.id.editButton_sunsetFillColor, SuntimesTheme.THEME_SETICON_FILL_COLOR);
+        chooseColorSetIconStroke = createColorChooser(this, R.id.editLabel_sunsetStrokeColor, R.id.edit_sunsetStrokeColor, R.id.editButton_sunsetStrokeColor, SuntimesTheme.THEME_SETICON_STROKE_COLOR);
+
+        // other colors
+        chooseColorTitle = createColorChooser(this, R.id.editLabel_titleColor, R.id.edit_titleColor, R.id.editButton_titleColor, SuntimesTheme.THEME_TITLECOLOR);
+        chooseColorText = createColorChooser(this, R.id.editLabel_textColor, R.id.edit_textColor, R.id.editButton_textColor, SuntimesTheme.THEME_TEXTCOLOR);
+        chooseColorTime = createColorChooser(this, R.id.editLabel_timeColor, R.id.edit_timeColor, R.id.editButton_timeColor, SuntimesTheme.THEME_TIMECOLOR);
+        chooseColorSuffix = createColorChooser(this, R.id.editLabel_suffixColor, R.id.edit_suffixColor, R.id.editButton_suffixColor, SuntimesTheme.THEME_TIMESUFFIXCOLOR);
+
+        checkUseNoon = (CheckBox)findViewById(R.id.enable_noonColor);
+        checkUseNoon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
             @Override
-            protected void onColorChanged( int newColor )
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
-                updatePreview();
-            }
-        };
-        colorChoosers.add(chooseColorTitle);
+                toggleNoonIconColor(isChecked);
+                if (!isChecked)
+                {
+                    chooseColorNoon.setColor(chooseColorSet.getColor());
+                    chooseColorNoonIconFill.setColor(chooseColorRise.getColor());
+                    chooseColorNoonIconStroke.setColor(chooseColorSet.getColor());
+                    updatePreview();
 
-        EditText editColorText = (EditText)findViewById(R.id.edit_textColor);
-        ImageButton buttonColorText = (ImageButton)findViewById(R.id.editButton_textColor);
-        chooseColorText = new ColorChooser(this, editColorText, buttonColorText, SuntimesTheme.THEME_TEXTCOLOR)
+                    chooseColorSet.link(chooseColorNoon);
+                    chooseColorSet.link(chooseColorNoonIconStroke);
+                    chooseColorRise.link(chooseColorNoonIconFill);
+                } else {
+                    chooseColorSet.unlink(chooseColorNoon);
+                    chooseColorSet.unlink(chooseColorNoonIconStroke);
+                    chooseColorRise.unlink(chooseColorNoonIconFill);
+                }
+            }
+        });
+
+        checkUseFill = (CheckBox)findViewById(R.id.enable_risesetFillColor);
+        checkUseFill.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
             @Override
-            protected void onColorChanged( int newColor )
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
-                updatePreview();
-            }
-        };
-        colorChoosers.add(chooseColorText);
+                toggleRiseSetIconFill(isChecked);
+                if (!isChecked)
+                {
+                    chooseColorRiseIconFill.setColor(chooseColorRise.getColor());
+                    chooseColorSetIconFill.setColor(chooseColorSet.getColor());
+                    updatePreview();
 
-        EditText editColorRise = (EditText)findViewById(R.id.edit_sunriseColor);
-        ImageButton buttonColorRise = (ImageButton)findViewById(R.id.editButton_sunriseColor);
-        chooseColorRise = new ColorChooser(this, editColorRise, buttonColorRise, SuntimesTheme.THEME_SUNRISECOLOR)
+                    chooseColorRise.link(chooseColorRiseIconFill);
+                    chooseColorSet.link(chooseColorSetIconFill);
+                } else {
+                    chooseColorRise.unlink(chooseColorRiseIconFill);
+                    chooseColorSet.unlink(chooseColorSetIconFill);
+                }
+            }
+        });
+
+        checkUseStroke = (CheckBox)findViewById(R.id.enable_risesetStrokeColor);
+        checkUseStroke.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
             @Override
-            protected void onColorChanged( int newColor )
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
-                updatePreview();
+                toggleRiseSetIconStroke(isChecked);
+                if (!isChecked)
+                {
+                    chooseColorRiseIconStroke.setColor(chooseColorSet.getColor());
+                    chooseColorSetIconStroke.setColor(chooseColorRise.getColor());
+                    updatePreview();
+
+                    chooseColorRise.link(chooseColorSetIconStroke);
+                    chooseColorSet.link(chooseColorRiseIconStroke);
+                } else {
+                    chooseColorRise.unlink(chooseColorSetIconStroke);
+                    chooseColorSet.unlink(chooseColorRiseIconStroke);
+                }
             }
-        };
-        colorChoosers.add(chooseColorRise);
+        });
 
-        EditText editColorSet = (EditText)findViewById(R.id.edit_sunsetColor);
-        ImageButton buttonColorSet = (ImageButton)findViewById(R.id.editButton_sunsetColor);
-        chooseColorSet = new ColorChooser(this, editColorSet, buttonColorSet, SuntimesTheme.THEME_SUNSETCOLOR)
-        {
-            @Override
-            protected void onColorChanged( int newColor )
-            {
-                updatePreview();
-            }
-        };
-        colorChoosers.add(chooseColorSet);
-
-        EditText editColorTime = (EditText)findViewById(R.id.edit_timeColor);
-        ImageButton buttonColorTime = (ImageButton)findViewById(R.id.editButton_timeColor);
-        chooseColorTime = new ColorChooser(this, editColorTime, buttonColorTime, SuntimesTheme.THEME_TIMECOLOR)
-        {
-            @Override
-            protected void onColorChanged( int newColor )
-            {
-                updatePreview();
-            }
-        };
-        colorChoosers.add(chooseColorTime);
-
-        EditText editColorSuffix = (EditText)findViewById(R.id.edit_suffixColor);
-        ImageButton buttonColorSuffix = (ImageButton)findViewById(R.id.editButton_suffixColor);
-        chooseColorSuffix = new ColorChooser(this, editColorSuffix, buttonColorSuffix, SuntimesTheme.THEME_TIMESUFFIXCOLOR)
-        {
-            @Override
-            protected void onColorChanged( int newColor )
-            {
-                updatePreview();
-            }
-        };
-        colorChoosers.add(chooseColorSuffix);
-
-        for (ColorChooser chooser : colorChoosers)
-        {
-            chooser.setFragmentManager(getSupportFragmentManager());
-        }
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
-        {
-            for (TextSizeChooser chooser : sizeChoosers)
-            {
-                chooser.setEnabled(false);  // changing text size requires api 16+
-            }
-            choosePadding.setEnabled(false);  // changing padding requires api 16+
-        }
-
+        initColorFields();
+        initSizeFields();
         switch (mode)
         {
             case EDIT_THEME:
@@ -307,6 +321,127 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 editName.setEnabled(true);
                 break;
 
+        }
+    }
+
+    private void toggleNoonIconColor( boolean enabled )
+    {
+        toggleNoonIconColor(enabled, false);
+    }
+    private void toggleNoonIconColor( boolean enabled, boolean setChecked )
+    {
+        chooseColorNoon.setEnabled(enabled);
+        chooseColorNoonIconFill.setEnabled(enabled);
+        chooseColorNoonIconStroke.setEnabled(enabled);
+
+        if (setChecked)
+        {
+            checkUseNoon.setChecked(enabled);
+            if (!enabled)
+            {
+                chooseColorSet.link(chooseColorNoon);
+                chooseColorSet.link(chooseColorNoonIconStroke);
+                chooseColorRise.link(chooseColorNoonIconFill);
+            }
+        }
+    }
+
+    private void toggleRiseSetIconFill( boolean enabled )
+    {
+        toggleRiseSetIconFill(enabled, false);
+    }
+    private void toggleRiseSetIconFill( boolean enabled, boolean setChecked )
+    {
+        chooseColorRiseIconFill.setEnabled(enabled);
+        chooseColorSetIconFill.setEnabled(enabled);
+        if (setChecked)
+        {
+            checkUseFill.setChecked(enabled);
+            if (!enabled)
+            {
+                chooseColorRise.link(chooseColorRiseIconFill);
+                chooseColorSet.link(chooseColorSetIconFill);
+            }
+        }
+    }
+
+    private void toggleRiseSetIconStroke( boolean enabled )
+    {
+        toggleRiseSetIconStroke(enabled, false);
+    }
+    private void toggleRiseSetIconStroke( boolean enabled, boolean setChecked )
+    {
+        chooseColorRiseIconStroke.setEnabled(enabled);
+        chooseColorSetIconStroke.setEnabled(enabled);
+        if (setChecked)
+        {
+            checkUseStroke.setChecked(enabled);
+            if (!enabled)
+            {
+                chooseColorRise.link(chooseColorSetIconStroke);
+                chooseColorSet.link(chooseColorRiseIconStroke);
+            }
+        }
+    }
+
+    /**
+     * @return true fill is set to something other than rise/set text color, false fill is same as text color
+     */
+    private boolean usingRiseSetIconFill()
+    {
+        return (chooseColorRise.getColor() != chooseColorRiseIconFill.getColor() ||
+                chooseColorSet.getColor() != chooseColorSetIconFill.getColor());
+    }
+
+    private boolean usingRiseSetIconStroke()
+    {
+        return (chooseColorSet.getColor() != chooseColorRiseIconStroke.getColor() ||
+                chooseColorRise.getColor() != chooseColorSetIconStroke.getColor());
+    }
+
+    private boolean usingNoonIconColor()
+    {
+        boolean textCondition = (chooseColorNoon.getColor() != chooseColorSet.getColor());
+        // TODO
+        return textCondition;
+    }
+
+    private ColorChooser createColorChooser(Context context, int labelID, int editID, int buttonID, String id)
+    {
+        TextView label = (TextView)findViewById(labelID);
+        EditText edit = (EditText)findViewById(editID);
+        ImageButton button = (ImageButton)findViewById(buttonID);
+        ColorChooser chooser = new ColorChooser(context, label, edit, button, id);
+        colorChoosers.add(chooser);
+        return chooser;
+    }
+
+    private SizeChooser createSizeChooser(Context context, int editID, float min, float max, String id)
+    {
+        EditText edit = (EditText)findViewById(editID);
+        SizeChooser chooser = new SizeChooser(context, edit, min, max, id);
+        sizeChoosers.add(chooser);
+        return chooser;
+    }
+
+    private void initColorFields()
+    {
+        for (ColorChooser chooser : colorChoosers)
+        {
+            chooser.setFragmentManager(getSupportFragmentManager());
+            chooser.setCollapsed(true);
+        }
+    }
+
+    private void initSizeFields()
+    {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
+        {
+            for (SizeChooser chooser : sizeChoosers)
+            {
+                chooser.setEnabled(false);  // changing text size requires api 16+
+            }
+            choosePadding.setEnabled(false);  // changing padding requires api 16+
         }
     }
 
@@ -331,12 +466,15 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         previewNoon = (TextView)findViewById(R.id.text_time_noon);
         previewNoonSuffix = (TextView)findViewById(R.id.text_time_noon_suffix);
+        previewNoonIcon = (ImageView)findViewById(R.id.icon_time_noon);
 
         previewRise = (TextView)findViewById(R.id.text_time_sunrise);
         previewRiseSuffix = (TextView)findViewById(R.id.text_time_sunrise_suffix);
+        previewRiseIcon = (ImageView)findViewById(R.id.icon_time_sunrise);
 
         previewSet = (TextView)findViewById(R.id.text_time_sunset);
         previewSetSuffix = (TextView)findViewById(R.id.text_time_sunset_suffix);
+        previewSetIcon = (ImageView)findViewById(R.id.icon_time_sunset);
 
         previewTimeDelta = (TextView)findViewById(R.id.text_delta_day_value);
         previewTimeDeltaPrefix = (TextView)findViewById(R.id.text_delta_day_prefix);
@@ -370,7 +508,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         if (previewNoon != null)
         {
             previewNoon.setText(noonText.getValue());
-            previewNoon.setTextColor(chooseColorSet.getColor());
+            previewNoon.setTextColor(chooseColorNoon.getColor());
             updateSizeFromChooser(previewNoon, chooseTimeSize);
         }
         if (previewNoonSuffix != null)
@@ -426,16 +564,38 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             previewTimeDeltaSuffix.setTextColor(chooseColorText.getColor());
             updateSizeFromChooser(previewTimeDeltaSuffix, chooseTextSize);
         }
+
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int strokePixels = (int)((metrics.density * chooseIconStroke.getValue()) + 0.5f);
+
+        if (previewRiseIcon != null)
+        {
+            InsetDrawable riseIcon = (InsetDrawable)ResourcesCompat.getDrawable(getResources(), R.drawable.ic_sunrise0, null);
+            previewRiseIcon.setImageDrawable(SuntimesUtils.tintDrawable(riseIcon, chooseColorRiseIconFill.getColor(), chooseColorRiseIconStroke.getColor(), strokePixels));
+        }
+
+        if (previewSetIcon != null)
+        {
+            InsetDrawable setIcon = (InsetDrawable)ResourcesCompat.getDrawable(getResources(), R.drawable.ic_sunset0, null);
+            previewSetIcon.setImageDrawable(SuntimesUtils.tintDrawable(setIcon, chooseColorSetIconFill.getColor(), chooseColorSetIconStroke.getColor(), strokePixels));
+        }
+
+        if (previewNoonIcon != null)
+        {
+            int noonStrokePixels = (int)((metrics.density * chooseNoonIconStroke.getValue()) + 0.5f);
+            GradientDrawable noonIcon = (GradientDrawable)ResourcesCompat.getDrawable(getResources(), R.drawable.ic_noon_large0, null);
+            previewNoonIcon.setImageDrawable(SuntimesUtils.tintDrawable(noonIcon, chooseColorNoonIconFill.getColor(), chooseColorNoonIconStroke.getColor(), noonStrokePixels));
+        }
     }
 
-    private static void updateSizeFromChooser(TextView text, TextSizeChooser chooser)
+    private static void updateSizeFromChooser(TextView text, SizeChooser chooser)
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
-            float textSize = chooser.getTextSize();
-            if (textSize >= chooser.getMinSp() && textSize <= chooser.getMaxSp())
+            float textSize = chooser.getValue();
+            if (textSize >= chooser.getMin() && textSize <= chooser.getMax())
             {
-                text.setTextSize(TypedValue.COMPLEX_UNIT_SP, chooser.getTextSize());
+                text.setTextSize(TypedValue.COMPLEX_UNIT_SP, chooser.getValue());
             }
         }
     }
@@ -456,6 +616,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * @param outState
+     */
     @Override
     public void onSaveInstanceState( Bundle outState )
     {
@@ -469,20 +632,20 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             outState.putInt(SuntimesTheme.THEME_BACKGROUND, background.getResID());
         }
 
-        outState.putInt(SuntimesTheme.THEME_TITLESIZE, chooseTitleSize.getTextSize());
-        outState.putInt(SuntimesTheme.THEME_TEXTSIZE, chooseTextSize.getTextSize());
-        outState.putInt(SuntimesTheme.THEME_TIMESIZE, chooseTimeSize.getTextSize());
-        outState.putInt(SuntimesTheme.THEME_TIMESUFFIXSIZE, chooseSuffixSize.getTextSize());
-
-        outState.putInt(SuntimesTheme.THEME_TITLECOLOR, chooseColorTitle.getColor());
-        outState.putInt(SuntimesTheme.THEME_TEXTCOLOR, chooseColorText.getColor());
-        outState.putInt(SuntimesTheme.THEME_SUNRISECOLOR, chooseColorRise.getColor());
-        outState.putInt(SuntimesTheme.THEME_SUNSETCOLOR, chooseColorSet.getColor());
-        outState.putInt(SuntimesTheme.THEME_TIMECOLOR, chooseColorTime.getColor());
-        outState.putInt(SuntimesTheme.THEME_TIMESUFFIXCOLOR, chooseColorSuffix.getColor());
+        for (SizeChooser chooser : sizeChoosers)
+        {
+            outState.putInt(chooser.getID(), chooser.getValue());
+        }
+        for (ColorChooser chooser : colorChoosers)
+        {
+            outState.putInt(chooser.getID(), chooser.getColor());
+        }
         outState.putIntArray(SuntimesTheme.THEME_PADDING, choosePadding.getPadding());
     }
 
+    /**
+     * @param savedState
+     */
     @Override
     public void onRestoreInstanceState(@NonNull Bundle savedState)
     {
@@ -496,17 +659,14 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         ThemeBackground background = (ThemeBackground)spinBackground.getSelectedItem();
         setSelectedBackground(savedState.getInt(SuntimesTheme.THEME_BACKGROUND, (background != null ? background.getResID() : DarkTheme.THEMEDEF_BACKGROUND_ID)));
 
-        chooseTitleSize.setTextSize(savedState.getInt(SuntimesTheme.THEME_TITLESIZE, this.chooseTitleSize.getTextSize()));
-        chooseTextSize.setTextSize(savedState.getInt(SuntimesTheme.THEME_TEXTSIZE, this.chooseTextSize.getTextSize()));
-        chooseTimeSize.setTextSize(savedState.getInt(SuntimesTheme.THEME_TIMESIZE, this.chooseTimeSize.getTextSize()));
-        chooseSuffixSize.setTextSize(savedState.getInt(SuntimesTheme.THEME_TIMESUFFIXSIZE, this.chooseSuffixSize.getTextSize()));
-
-        chooseColorTitle.setColor(savedState.getInt(SuntimesTheme.THEME_TITLECOLOR, chooseColorTitle.getColor()));
-        chooseColorText.setColor(savedState.getInt(SuntimesTheme.THEME_TEXTCOLOR, chooseColorText.getColor()));
-        chooseColorRise.setColor(savedState.getInt(SuntimesTheme.THEME_SUNRISECOLOR, chooseColorRise.getColor()));
-        chooseColorSet.setColor(savedState.getInt(SuntimesTheme.THEME_SUNSETCOLOR, chooseColorSet.getColor()));
-        chooseColorTime.setColor(savedState.getInt(SuntimesTheme.THEME_TIMECOLOR, chooseColorTime.getColor()));
-        chooseColorSuffix.setColor(savedState.getInt(SuntimesTheme.THEME_TIMESUFFIXCOLOR, chooseColorSuffix.getColor()));
+        for (SizeChooser chooser : sizeChoosers)
+        {
+            chooser.setValue(savedState);
+        }
+        for (ColorChooser chooser : colorChoosers)
+        {
+            chooser.setColor(savedState);
+        }
         choosePadding.setPadding(savedState.getIntArray(SuntimesTheme.THEME_PADDING));
     }
 
@@ -581,22 +741,40 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             {
                 editDisplay.setText((mode == UIMode.ADD_THEME) ? generateThemeDisplayString(theme.themeDisplayString()) : theme.themeDisplayString());
             }
-            chooseTitleSize.setTextSize((int)theme.getTitleSizeSp());
-            chooseTextSize.setTextSize((int)theme.getTextSizeSp());
-            chooseTimeSize.setTextSize((int)theme.getTimeSizeSp());
-            chooseSuffixSize.setTextSize((int)theme.getTimeSuffixSizeSp());
+            chooseTitleSize.setValue((int)theme.getTitleSizeSp());
+            chooseTextSize.setValue((int)theme.getTextSizeSp());
+            chooseTimeSize.setValue((int)theme.getTimeSizeSp());
+            chooseSuffixSize.setValue((int)theme.getTimeSuffixSizeSp());
             chooseColorTitle.setColor(theme.getTitleColor());
             chooseColorText.setColor(theme.getTextColor());
-            chooseColorRise.setColor(theme.getSunriseTextColor());
-            chooseColorSet.setColor(theme.getSunsetTextColor());
             chooseColorTime.setColor(theme.getTimeColor());
             chooseColorSuffix.setColor(theme.getTimeSuffixColor());
+
+            chooseIconStroke.setValue(theme.getSunsetIconStrokeWidth());
+            chooseNoonIconStroke.setValue(theme.getNoonIconStrokeWidth());
+
+            chooseColorRise.setColor(theme.getSunriseTextColor());
+            chooseColorRiseIconFill.setColor(theme.getSunriseIconColor());
+            chooseColorRiseIconStroke.setColor(theme.getSunriseIconStrokeColor());
+
+            chooseColorNoon.setColor(theme.getNoonTextColor());
+            chooseColorNoonIconFill.setColor(theme.getNoonIconColor());
+            chooseColorNoonIconStroke.setColor(theme.getNoonIconStrokeColor());
+
+            chooseColorSet.setColor(theme.getSunsetTextColor());
+            chooseColorSetIconFill.setColor(theme.getSunsetIconColor());
+            chooseColorSetIconStroke.setColor(theme.getSunsetIconStrokeColor());
+
             choosePadding.setPadding(theme.getPadding());
             setSelectedBackground(theme.getBackgroundId());
 
         } catch (InvalidParameterException e) {
             Log.e("loadTheme", "unable to load theme: " + e);
         }
+
+        toggleRiseSetIconFill(usingRiseSetIconFill(), true);
+        toggleRiseSetIconStroke(usingRiseSetIconStroke(), true);
+        toggleNoonIconColor(usingNoonIconColor(), true);
     }
 
     private void setSelectedBackground(int resId)
@@ -616,29 +794,29 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             {
                 this.themeName = chooseName.getThemeName();
                 this.themeDisplayString = editDisplay.getText().toString();
-                this.themeTitleSize = chooseTitleSize.getTextSize();
-                this.themeTextSize = chooseTextSize.getTextSize();
-                this.themeTimeSize = chooseTimeSize.getTextSize();
-                this.themeTimeSuffixSize = chooseSuffixSize.getTextSize();
+                this.themeTitleSize = chooseTitleSize.getValue();
+                this.themeTextSize = chooseTextSize.getValue();
+                this.themeTimeSize = chooseTimeSize.getValue();
+                this.themeTimeSuffixSize = chooseSuffixSize.getValue();
                 this.themeTitleColor = chooseColorTitle.getColor();
                 this.themeTextColor = chooseColorText.getColor();
                 this.themeTimeColor = chooseColorTime.getColor();
                 this.themeTimeSuffixColor = chooseColorSuffix.getColor();
 
                 this.themeSunriseTextColor = chooseColorRise.getColor();
-                this.themeSunriseIconColor = this.themeSunriseTextColor;
-                this.themeSunriseIconStrokeColor = this.themeSunriseTextColor;
-                this.themeSunriseIconStrokeWidth = DarkTheme.THEMEDEF_RISEICON_STROKEWIDTH;
+                this.themeSunriseIconColor = chooseColorRiseIconFill.getColor();
+                this.themeSunriseIconStrokeColor = chooseColorRiseIconStroke.getColor();
+                this.themeSunriseIconStrokeWidth = chooseIconStroke.getValue();
+
+                this.themeNoonTextColor = chooseColorNoon.getColor();
+                this.themeNoonIconColor = chooseColorNoonIconFill.getColor();
+                this.themeNoonIconStrokeColor = chooseColorNoonIconStroke.getColor();
+                this.themeNoonIconStrokeWidth = chooseNoonIconStroke.getValue();
 
                 this.themeSunsetTextColor = chooseColorSet.getColor();
-                this.themeSunsetIconColor = this.themeSunsetTextColor;
-                this.themeSunsetIconStrokeColor = this.themeSunsetTextColor;
-                this.themeSunsetIconStrokeWidth = DarkTheme.THEMEDEF_SETICON_STROKEWIDTH;
-
-                this.themeNoonTextColor = this.themeSunsetTextColor;
-                this.themeNoonIconColor = this.themeSunriseTextColor;
-                this.themeNoonIconStrokeColor = this.themeSunsetTextColor;
-                this.themeNoonIconStrokeWidth = DarkTheme.THEMEDEF_NOONICON_STROKEWIDTH;
+                this.themeSunsetIconColor = chooseColorSetIconFill.getColor();
+                this.themeSunsetIconStrokeColor = chooseColorSetIconStroke.getColor();
+                this.themeSunsetIconStrokeWidth = chooseIconStroke.getValue();
 
                 this.themePadding = choosePadding.getPadding();
                 ThemeBackground backgroundItem = (ThemeBackground)spinBackground.getSelectedItem();
@@ -687,15 +865,25 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         return getString(R.string.addtheme_copydisplay, suggestedName);
     }
 
+    private void collapseColorFields()
+    {
+        for (ColorChooser chooser : colorChoosers)
+        {
+            chooser.setCollapsed(true);
+        }
+    }
+
     /**
      * @return true fields are valid, false one or more fields is invalid
      */
     protected boolean validateInput()
     {
-        boolean isValid = chooseTitleSize.validateTextSize(this);
-        isValid = isValid && chooseTextSize.validateTextSize(this);
-        isValid = isValid && chooseTimeSize.validateTextSize(this);
-        isValid = isValid && chooseSuffixSize.validateTextSize(this);
+        boolean isValid = chooseTitleSize.validateValue(this);
+        isValid = isValid && chooseTextSize.validateValue(this);
+        isValid = isValid && chooseTimeSize.validateValue(this);
+        isValid = isValid && chooseSuffixSize.validateValue(this);
+        isValid = isValid && chooseIconStroke.validateValue(this);
+        isValid = isValid && chooseNoonIconStroke.validateValue(this);
         isValid = isValid && validateThemeDisplayText(editDisplay);
         isValid = isValid && validateThemeID(chooseName.getField());
         return isValid;
@@ -813,17 +1001,35 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     /**
      * TextSizeChooser
      */
-    private class TextSizeChooser extends com.forrestguice.suntimeswidget.settings.TextSizeChooser
+    private class SizeChooser extends com.forrestguice.suntimeswidget.settings.SizeChooser
     {
-        public TextSizeChooser(Context context, EditText editField, float min, float max)
+        public SizeChooser(Context context, EditText editField, float min, float max, String id)
         {
-            super(context, editField, min, max);
+            super(context, editField, min, max, id);
         }
 
         @Override
         public void updatePreview()
         {
             WidgetThemeConfigActivity.this.updatePreview();
+        }
+    }
+
+    /**
+     * ColorChooser
+     */
+    private class ColorChooser extends com.forrestguice.suntimeswidget.settings.ColorChooser
+    {
+        public ColorChooser(Context context, TextView txtLabel, EditText editField, ImageButton imgButton, String id)
+        {
+            super(context, txtLabel, editField, imgButton, id);
+        }
+
+        @Override
+        protected void onColorChanged( int newColor )
+        {
+            super.onColorChanged(newColor);
+            updatePreview();
         }
     }
 
