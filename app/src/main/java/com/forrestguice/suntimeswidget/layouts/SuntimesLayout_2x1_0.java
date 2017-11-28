@@ -90,7 +90,7 @@ public class SuntimesLayout_2x1_0 extends SuntimesLayout
 
         int sunriseColor = theme.getSunriseTextColor();
         int sunsetColor = theme.getSunsetTextColor();
-        int noonColor = theme.getSunsetTextColor();
+        int noonColor = theme.getNoonTextColor();
         int suffixColor = theme.getTimeSuffixColor();
         int timeColor = theme.getTimeColor();
         int textColor = theme.getTextColor();
