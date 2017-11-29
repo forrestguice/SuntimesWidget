@@ -731,20 +731,26 @@ public class SuntimesUtils
      */
     public static Drawable tintDrawable(InsetDrawable drawable, int fillColor, int strokeColor, int strokePixels)
     {
-        try {
-            GradientDrawable gradient = (GradientDrawable)drawable.getDrawable();
-            if (gradient != null)
-            {
-                SuntimesUtils.tintDrawable(gradient, fillColor, strokeColor, strokePixels);
-                return drawable;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+        {
+            try {
+                GradientDrawable gradient = (GradientDrawable)drawable.getDrawable();
+                if (gradient != null)
+                {
+                    SuntimesUtils.tintDrawable(gradient, fillColor, strokeColor, strokePixels);
+                    return drawable;
 
-            } else {
-                Log.w("colorizeShapeDrawable", "failed to apply color! Null inset drawable.");
+                } else {
+                    Log.w("tintDrawable", "failed to apply color! Null inset drawable.");
+                    return drawable;
+                }
+            } catch (ClassCastException e) {
+                Log.w("tintDrawable", "failed to apply color! " + e);
                 return drawable;
             }
-        } catch (ClassCastException e) {
-            Log.w("colorizeShapeDrawable", "failed to apply color! " + e);
-            return drawable;
+        } else {
+            Log.w("tintDrawable", "failed to apply color! InsetDrawable.getDrawable requires api 19+");
+            return drawable;   // not supported
         }
     }
 
