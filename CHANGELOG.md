@@ -1,4 +1,6 @@
 ### ~ 
+
+### v0.5.1 (2017-12-01)
 * restricts auto-backup to app settings and themes (now excludes widget settings and sqlite db).
 * adds collapsed UI state to ColorChooser; expanded by clicking label. 
 * adds to theme config activity: sunrise, sunset, and noon icon colors (fill, stroke, stroke width).
@@ -8,10 +10,11 @@
 * fixes widgets to allow for vertical resize.
 * lists 2x1 widget (previously only accessible by resizing 1x1 widget).
 * fixes 2x1 layout for api versions <= 15 (previously inaccessible).
-* updates dependency (Time4A 3.37-2017c). 
+* updates dependency (Time4A 3.37-2017c).
+* updates translations (eo, pl).
 
 ### v0.5.0 (2017-11-18)
-* automatic backups reenabled.
+* auto-backup reenabled.
 * adds data source; Time4A (time4a-simple, time4a-noaa, time4a-cc, time4a-time4j) (contributions by MenoData) (#103).
 * adds support for custom themes; theme editor activity (add / edit), theme selector activity (copy / delete / export) (#7).
 * adds widget option "show noon" (#102); adds noon field to 1x3 widget, adds noon to flippable widget.
