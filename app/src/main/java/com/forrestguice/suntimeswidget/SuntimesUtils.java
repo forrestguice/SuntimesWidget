@@ -21,9 +21,17 @@ package com.forrestguice.suntimeswidget;
 import android.content.Context;
 import android.content.res.Resources;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.LightingColorFilter;
+import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.InsetDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.text.Html;
 import android.text.Spannable;
 
@@ -36,6 +44,7 @@ import android.text.Spanned;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
@@ -666,5 +675,108 @@ public class SuntimesUtils
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             return Html.fromHtml(htmlString, Html.FROM_HTML_MODE_LEGACY);
         else return Html.fromHtml(htmlString);
+    }
+
+    /**
+     * Creates a tinted copy of the supplied bitmap.
+     * @param b a bitmap image
+     * @param color a color
+     * @return a bitmap tinted to color
+     */
+    public static Bitmap tintBitmap(Bitmap b, int color)
+    {
+        Bitmap tinted = Bitmap.createBitmap(b.getWidth(), b.getHeight(), b.getConfig());
+        Canvas c = new Canvas(tinted);
+        Paint p = new Paint();
+        p.setColorFilter(new LightingColorFilter(color, 0));
+        c.drawBitmap(b, 0, 0, p);
+        return tinted;
+    }
+
+    /**
+     * @param context app context
+     * @param resourceID drawable resourceID
+     * @return a Bitmap representation of the Drawable
+     */
+    public static Bitmap drawableToBitmap(Context context, int resourceID)
+    {
+        Drawable drawable = ResourcesCompat.getDrawable(context.getResources(), resourceID, null);
+        return drawableToBitmap(context, drawable);
+    }
+
+    public static Bitmap drawableToBitmap(Context context, int resourceID, boolean isInset, int fillColor)
+    {
+        return SuntimesUtils.drawableToBitmap(context, resourceID, isInset, fillColor, 0, 0);
+    }
+
+    public static Bitmap drawableToBitmap(Context context, int resourceID, boolean isInset, int fillColor, int strokeColor, int strokePixels)
+    {
+        Drawable drawable = ResourcesCompat.getDrawable(context.getResources(), resourceID, null);
+        if (isInset)
+        {
+            InsetDrawable inset = (InsetDrawable)drawable;
+            return drawableToBitmap(context, tintDrawable(inset, fillColor, strokeColor, strokePixels));
+
+        } else {
+            GradientDrawable gradient = (GradientDrawable)drawable;
+            return drawableToBitmap(context, tintDrawable(gradient, fillColor, strokeColor, strokePixels));
+        }
+    }
+
+    /**
+     * @param drawable a ShapeDrawable
+     * @param fillColor the fill color
+     * @param strokeColor the stroke color
+     * @return a GradientDrawable with the given fill and stroke
+     */
+    public static Drawable tintDrawable(InsetDrawable drawable, int fillColor, int strokeColor, int strokePixels)
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+        {
+            try {
+                GradientDrawable gradient = (GradientDrawable)drawable.getDrawable();
+                if (gradient != null)
+                {
+                    SuntimesUtils.tintDrawable(gradient, fillColor, strokeColor, strokePixels);
+                    return drawable;
+
+                } else {
+                    Log.w("tintDrawable", "failed to apply color! Null inset drawable.");
+                    return drawable;
+                }
+            } catch (ClassCastException e) {
+                Log.w("tintDrawable", "failed to apply color! " + e);
+                return drawable;
+            }
+        } else {
+            Log.w("tintDrawable", "failed to apply color! InsetDrawable.getDrawable requires api 19+");
+            return drawable;   // not supported
+        }
+    }
+
+    public static Drawable tintDrawable(GradientDrawable drawable, int fillColor, int strokeColor, int strokePixels)
+    {
+        drawable.setStroke(strokePixels, strokeColor);
+        drawable.setColor(fillColor);
+        return drawable;
+    }
+
+    /**
+     * @param context app context
+     * @param drawable a Drawable
+     * @return a Bitmap representation of the Drawable
+     */
+    public static Bitmap drawableToBitmap(Context context, Drawable drawable)
+    {
+        if (drawable instanceof BitmapDrawable)
+        {
+            return ((BitmapDrawable)drawable).getBitmap();
+        }
+
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+        return bitmap;
     }
 }

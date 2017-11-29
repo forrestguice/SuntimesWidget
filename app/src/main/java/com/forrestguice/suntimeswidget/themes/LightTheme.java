@@ -39,6 +39,10 @@ public class LightTheme extends SuntimesTheme
     public static final float THEMEDEF_TIMESIZE = 12;
     public static final float THEMEDEF_TIMESUFFIXSIZE = 6;
 
+    public static final int THEMEDEF_RISEICON_STROKEWIDTH = 0;
+    public static final int THEMEDEF_SETICON_STROKEWIDTH = 0;
+    public static final int THEMEDEF_NOONICON_STROKEWIDTH = 3;
+
     public static final int THEMEDEF_TITLECOLOR_ID = android.R.color.secondary_text_light;
     public static final int THEMEDEF_TEXTCOLOR_ID = android.R.color.tertiary_text_light;
     public static final int THEMEDEF_SUNRISECOLOR_ID = R.color.sunIcon_color_rising_light;
@@ -65,10 +69,24 @@ public class LightTheme extends SuntimesTheme
 
         this.themeTitleColor = ContextCompat.getColor(context, THEMEDEF_TITLECOLOR_ID);
         this.themeTextColor = ContextCompat.getColor(context, THEMEDEF_TEXTCOLOR_ID);
-        this.themeSunriseTextColor = ContextCompat.getColor(context, THEMEDEF_SUNRISECOLOR_ID);
-        this.themeSunsetTextColor = ContextCompat.getColor(context, THEMEDEF_SUNSETCOLOR_ID);
         this.themeTimeColor = ContextCompat.getColor(context, THEMEDEF_TIMECOLOR_ID);
         this.themeTimeSuffixColor = ContextCompat.getColor(context, THEMEDEF_TIMESUFFIXCOLOR_ID);
+
+        this.themeSunriseTextColor = ContextCompat.getColor(context, THEMEDEF_SUNRISECOLOR_ID);
+        this.themeSunriseIconColor = this.themeSunriseTextColor;
+        this.themeSunriseIconStrokeWidth = THEMEDEF_RISEICON_STROKEWIDTH;
+
+        this.themeSunsetTextColor = ContextCompat.getColor(context, THEMEDEF_SUNSETCOLOR_ID);
+        this.themeSunsetIconColor = this.themeSunsetTextColor;
+        this.themeSunsetIconStrokeWidth = THEMEDEF_SETICON_STROKEWIDTH;
+
+        this.themeNoonTextColor = this.themeSunsetTextColor;
+        this.themeNoonIconColor = this.themeSunriseTextColor;
+        this.themeNoonIconStrokeColor = this.themeSunsetTextColor;
+        this.themeNoonIconStrokeWidth = THEMEDEF_NOONICON_STROKEWIDTH;
+
+        this.themeSunriseIconStrokeColor = this.themeSunsetIconColor;
+        this.themeSunsetIconStrokeColor = this.themeSunriseIconColor;
     }
 
     public ThemeDescriptor themeDescriptor()

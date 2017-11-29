@@ -20,12 +20,16 @@ package com.forrestguice.suntimeswidget.settings;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 
@@ -34,24 +38,40 @@ import java.util.Locale;
 /**
  * TextSizeChooser
  */
-public class TextSizeChooser implements TextWatcher, View.OnFocusChangeListener
+public class SizeChooser implements TextWatcher, View.OnFocusChangeListener
 {
-    private Context context;
-    private int textSize;
-    private EditText edit = null;
-    private float minSp, maxSp;
+    private String chooserID = "0";
+    private final Context context;
+    private int value;
+    private final EditText edit;
+    private final float min, max;
 
-    public TextSizeChooser(Context context, EditText editField, float min, float max)
+    public SizeChooser(Context context, EditText editField, float min, float max, String id)
     {
+        this.chooserID = id;
         this.context = context;
-        minSp = min;
-        maxSp = max;
+        this.min = min;
+        this.max = max;
         edit = editField;
         if (edit != null)
         {
             edit.setRawInputType(InputType.TYPE_CLASS_NUMBER);
             edit.addTextChangedListener(this);
             edit.setOnFocusChangeListener(this);
+
+            edit.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+                {
+                    if (actionId == EditorInfo.IME_ACTION_DONE)
+                    {
+                        changeValue();
+                        return true;
+                    }
+                    return false;
+                }
+            });
+
         }
     }
 
@@ -72,38 +92,48 @@ public class TextSizeChooser implements TextWatcher, View.OnFocusChangeListener
         return enabled;
     }
 
+    public String getID()
+    {
+        return chooserID;
+    }
+
     public EditText getField()
     {
         return edit;
     }
 
-    public int getTextSize()
+    public int getValue()
     {
-        return textSize;
+        return value;
     }
 
-    public void setTextSize( int spValue )
+    public void setValue( int value )
     {
-        textSize = spValue;
+        this.value = value;
         updateViews();
+    }
+
+    public void setValue( Bundle savedState )
+    {
+        setValue(savedState.getInt(chooserID, getValue()));
     }
 
     public void updateViews()
     {
         if (edit != null)
         {
-            edit.setText(String.format(Locale.US, "%d", textSize));
+            edit.setText(String.format(Locale.US, "%d", value));
         }
     }
 
-    public float getMinSp()
+    public float getMin()
     {
-        return minSp;
+        return min;
     }
 
-    public float getMaxSp()
+    public float getMax()
     {
-        return maxSp;
+        return max;
     }
 
     @Override
@@ -115,11 +145,11 @@ public class TextSizeChooser implements TextWatcher, View.OnFocusChangeListener
     @Override
     public void afterTextChanged(Editable editable)
     {
-        String spValue = editable.toString();
+        String rawValue = editable.toString();
         try {
-            textSize = Integer.parseInt(spValue);
+            value = Integer.parseInt(rawValue);
         } catch (NumberFormatException e) {
-            Log.w("setTextSize", "Invalid size! " + spValue + " ignoring...");
+            Log.w("setTextSize", "Invalid size! " + rawValue + " ignoring...");
         }
     }
 
@@ -128,14 +158,19 @@ public class TextSizeChooser implements TextWatcher, View.OnFocusChangeListener
     {
         if (!hasFocus)
         {
-            if (edit != null)
-            {
-                afterTextChanged(edit.getText());
-            }
-            if (validateTextSize(context, edit, minSp, maxSp, false))
-            {
-                updatePreview();
-            }
+            changeValue();
+        }
+    }
+
+    private void changeValue()
+    {
+        if (edit != null)
+        {
+            afterTextChanged(edit.getText());
+        }
+        if (validateValue(context, edit, min, max, false))
+        {
+            updatePreview();
         }
     }
 
@@ -143,42 +178,42 @@ public class TextSizeChooser implements TextWatcher, View.OnFocusChangeListener
     {
     }
 
-    public boolean validateTextSize(Context context)
+    public boolean validateValue(Context context)
     {
-        return validateTextSize(context, edit, minSp, maxSp, true);
+        return validateValue(context, edit, min, max, true);
     }
 
-    public boolean validateTextSize(Context context, EditText editTextSize, float min, float max, boolean grabFocus)
+    public boolean validateValue(Context context, EditText editValue, float min, float max, boolean grabFocus)
     {
-        if (editTextSize == null)
+        if (editValue == null)
             return true;
 
         boolean isValid = true;
-        editTextSize.setError(null);
+        editValue.setError(null);
 
         try {
-            int textSize = Integer.parseInt(editTextSize.getText().toString());
+            int textSize = Integer.parseInt(editValue.getText().toString());
             if (textSize < min)
             {
-                isValid = false;       // title too small
-                editTextSize.setError(context.getString(R.string.edittheme_error_textsize_min, min+""));
+                isValid = false;       // too small
+                editValue.setError(context.getString(R.string.edittheme_error_textsize_min, min+""));
                 if (grabFocus)
-                    editTextSize.requestFocus();
+                    editValue.requestFocus();
             }
 
             if (textSize > max)
             {
-                isValid = false;       // title too large
-                editTextSize.setError(context.getString(R.string.edittheme_error_textsize_max, max+""));
+                isValid = false;       // too large
+                editValue.setError(context.getString(R.string.edittheme_error_textsize_max, max+""));
                 if (grabFocus)
-                    editTextSize.requestFocus();
+                    editValue.requestFocus();
             }
 
         } catch (NumberFormatException e) {
-            isValid = false;          // title NaN (too small)
-            editTextSize.setError(context.getString(R.string.edittheme_error_textsize_min, min+""));
+            isValid = false;          // NaN (too small)
+            editValue.setError(context.getString(R.string.edittheme_error_textsize_min, min+""));
             if (grabFocus)
-                editTextSize.requestFocus();
+                editValue.requestFocus();
         }
         return isValid;
     }

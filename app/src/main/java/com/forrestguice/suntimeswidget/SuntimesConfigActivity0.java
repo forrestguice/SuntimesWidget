@@ -44,6 +44,7 @@ import android.support.v7.view.ActionMode;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 
+import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
@@ -60,9 +61,9 @@ import java.util.TimeZone;
 import static com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity.PICK_THEME_REQUEST;
 
 /**
- * Main widget config activity.
+ * Widget config activity for resizable widget.
  */
-public class SuntimesConfigActivity extends AppCompatActivity
+public class SuntimesConfigActivity0 extends AppCompatActivity
 {
     protected static final String DIALOGTAG_ABOUT = "about";
     protected static final String DIALOGTAG_HELP = "help";
@@ -108,7 +109,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
 
     protected ActionMode actionMode = null;
 
-    public SuntimesConfigActivity()
+    public SuntimesConfigActivity0()
     {
         super();
     }
@@ -124,7 +125,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
         setResult(RESULT_CANCELED);  // causes widget host to cancel if user presses back
         setContentView(R.layout.layout_settings);
 
-        Context context = SuntimesConfigActivity.this;
+        Context context = SuntimesConfigActivity0.this;
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if (extras != null)
@@ -342,7 +343,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
                 protected void onPreExecute()
                 {
                     super.onPreExecute();
-                    spinner_timezone.setAdapter(new WidgetTimezones.TimeZoneItemAdapter(SuntimesConfigActivity.this, R.layout.layout_listitem_timezone));
+                    spinner_timezone.setAdapter(new WidgetTimezones.TimeZoneItemAdapter(SuntimesConfigActivity0.this, R.layout.layout_listitem_timezone));
                     button_addWidget.setEnabled(false);
                 }
 
@@ -383,7 +384,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
             public void onSaveSortMode( WidgetTimezones.TimeZoneSort sortMode )
             {
                 super.onSaveSortMode(sortMode);
-                AppSettings.setTimeZoneSortPref(SuntimesConfigActivity.this, sortMode);
+                AppSettings.setTimeZoneSortPref(SuntimesConfigActivity0.this, sortMode);
             }
 
             @Override
@@ -452,7 +453,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
         checkbox_allowResize = (CheckBox)findViewById(R.id.appwidget_appearance_allowResize);
         if (checkbox_allowResize != null && Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
         {
-            disableOptionAllowResize();  // resizable widgets require api16+
+            disableOptionAllowResize();  // resizable widgets require api14+
         }
 
         //
@@ -900,7 +901,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
             locationConfig.setMode(LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT);
             locationConfig.populateLocationList();  // triggers 'add place'
 
-            final Context context = SuntimesConfigActivity.this;
+            final Context context = SuntimesConfigActivity0.this;
             saveSettings(context);
             updateWidget(context);
 
@@ -913,8 +914,13 @@ public class SuntimesConfigActivity extends AppCompatActivity
 
     protected void updateWidget( Context context )
     {
+        int minSize[] = new int[2];
+        minSize[0] = context.getResources().getInteger(R.integer.widget_size_minWidthDp);
+        minSize[1] = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
+
+        SuntimesLayout defLayout = WidgetSettings.load1x1ModePref_asLayout(context, appWidgetId);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        SuntimesWidget.updateAppWidget(context, appWidgetManager, appWidgetId);
+        SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0.class, minSize, defLayout);
     }
 
     /**
@@ -995,7 +1001,7 @@ public class SuntimesConfigActivity extends AppCompatActivity
     /**
      *
      */
-    protected void hideOptionLayoutMode()
+    protected void hideOption1x1LayoutMode()
     {
         View layout_1x1mode = findViewById(R.id.appwidget_appearance_1x1mode_layout);
         if (layout_1x1mode != null)

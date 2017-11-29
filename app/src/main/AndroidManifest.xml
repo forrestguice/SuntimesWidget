@@ -66,8 +66,10 @@
             android:icon="@drawable/ic_suntimes">
         </activity>
 
-        <!-- Widget 0: Resizable (falls back to static 1x1 for api less than 16) -->
-        <receiver android:name=".SuntimesWidget"
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <!-- Widget 0_1x1: Resizable (falls back to static 1x1 for api less than 14) -->
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <receiver android:name=".SuntimesWidget0"
                   android:label="@string/app_name_widget0">
 
             <intent-filter>
@@ -77,19 +79,42 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/suntimeswidget_info_0" />
+                android:resource="@xml/suntimeswidget_info_0_1x1" />
         </receiver>
-
-        <!-- Widget 0 Configuration Activity -->
+        
         <activity
-            android:name=".SuntimesConfigActivity" >
+            android:name=".SuntimesConfigActivity0" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
 
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <!-- Widget 0_2x1: Resizable (falls back to static 2x1 for api less than 14) -->
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <receiver android:name=".SuntimesWidget0_2x1"
+                  android:label="@string/app_name_widget0">
 
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="SUNTIMES_WIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/suntimeswidget_info_0_2x1" />
+        </receiver>
+
+        <activity
+            android:name=".SuntimesConfigActivity0_2x1" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget 1: Flippable widget (uses RemoteView collections [requires api 14+]) -->
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <receiver
             android:name=".SuntimesWidget1"
             android:enabled="@bool/api_post_14"

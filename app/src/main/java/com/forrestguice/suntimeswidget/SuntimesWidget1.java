@@ -34,9 +34,9 @@ import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_0;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 /**
- *  Flippable widget
+ *  Widget receiver for flippable widget.
  */
-public class SuntimesWidget1 extends SuntimesWidget
+public class SuntimesWidget1 extends SuntimesWidget0
 {
     private static final int UPDATEALARM_ID = 1;
 
@@ -83,10 +83,10 @@ public class SuntimesWidget1 extends SuntimesWidget
         return super.handleClickAction(context, intent);
     }
 
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SuntimesLayout layout)
+    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
         RemoteViews views = getWidgetViews(context, appWidgetManager, appWidgetId);
-        views.setOnClickPendingIntent(R.id.widgetframe_outer_1x1, SuntimesWidget.clickActionIntent(context, appWidgetId, SuntimesWidget1.class));
+        views.setOnClickPendingIntent(R.id.widgetframe_outer_1x1, SuntimesWidget0.clickActionIntent(context, appWidgetId, SuntimesWidget1.class));
 
         appWidgetManager.updateAppWidget(appWidgetId, null);   // null on this line to discard previously cached RemoveViews
         appWidgetManager.updateAppWidget(appWidgetId, views);  // so this next line actually updates...
@@ -95,11 +95,6 @@ public class SuntimesWidget1 extends SuntimesWidget
         {
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.view_flip);
         }
-    }
-
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
-    {
-        SuntimesWidget1.updateAppWidget(context, appWidgetManager, appWidgetId, null);
     }
 
     protected static RemoteViews getWidgetViews(Context context, AppWidgetManager appWidgetManager, int appWidgetId)

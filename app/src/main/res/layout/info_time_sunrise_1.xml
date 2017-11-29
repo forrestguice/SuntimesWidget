@@ -20,35 +20,37 @@
 
     <LinearLayout
         style="@style/SunsetTimeLayout"
-        android:orientation="vertical"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
 
         <ImageView
-            style="@style/SunsetTimeImageView2"
             android:id="@+id/icon_time_sunrise"
-            android:background="@drawable/ic_sunrise_large"
+            style="@style/SunsetTimeImageView2"
+            android:layout_width="@dimen/sunIconLarge_width"
             android:layout_marginTop="4dp"
-            android:layout_width="@dimen/sunIconLarge_width" android:height="@dimen/sunIconLarge_height"
-            android:contentDescription="@string/sunrise" />
+            android:height="@dimen/sunIconLarge_height"
+            android:contentDescription="@string/sunrise"
+            android:scaleType="fitStart" />
 
-        <LinearLayout style="@style/SunsetTimeLayout"
+        <LinearLayout
+            style="@style/SunsetTimeLayout"
             android:orientation="horizontal">
 
             <TextView
-                style="@style/SunsetTimeTextView"
                 android:id="@+id/text_time_sunrise"
+                style="@style/SunsetTimeTextView"
                 android:textColor="@color/sunIcon_color_rising"
-                tools:text="7:00" />
+                tools:text="7:00"/>
 
             <TextView
-                style="@style/SunsetTimeTextSuffixView"
                 android:id="@+id/text_time_sunrise_suffix"
-                android:layout_gravity="bottom"
+                style="@style/SunsetTimeTextSuffixView"
                 android:layout_height="match_parent"
-                tools:text="AM" />
+                android:layout_gravity="bottom"
+                tools:text="AM"/>
 
         </LinearLayout>
 
-     </LinearLayout>
+    </LinearLayout>
 
 </merge>
