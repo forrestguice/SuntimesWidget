@@ -74,18 +74,19 @@ public class LightTheme extends SuntimesTheme
 
         this.themeSunriseTextColor = ContextCompat.getColor(context, THEMEDEF_SUNRISECOLOR_ID);
         this.themeSunriseIconColor = this.themeSunriseTextColor;
-        this.themeSunriseIconStrokeColor = this.themeSunriseIconColor;
         this.themeSunriseIconStrokeWidth = THEMEDEF_RISEICON_STROKEWIDTH;
 
         this.themeSunsetTextColor = ContextCompat.getColor(context, THEMEDEF_SUNSETCOLOR_ID);
         this.themeSunsetIconColor = this.themeSunsetTextColor;
-        this.themeSunsetIconStrokeColor = this.themeSunsetIconColor;
         this.themeSunsetIconStrokeWidth = THEMEDEF_SETICON_STROKEWIDTH;
 
         this.themeNoonTextColor = this.themeSunsetTextColor;
         this.themeNoonIconColor = this.themeSunriseTextColor;
         this.themeNoonIconStrokeColor = this.themeSunsetTextColor;
         this.themeNoonIconStrokeWidth = THEMEDEF_NOONICON_STROKEWIDTH;
+
+        this.themeSunriseIconStrokeColor = this.themeSunsetIconColor;
+        this.themeSunsetIconStrokeColor = this.themeSunriseIconColor;
     }
 
     public ThemeDescriptor themeDescriptor()
