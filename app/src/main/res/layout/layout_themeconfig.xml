@@ -147,6 +147,7 @@
                     <TextView
                         android:id="@+id/editLabel_titleColor"
                         style="@style/ColorEditLabel"
+                        android:paddingStart="8dp" android:paddingEnd="8dp"
 
                         android:nextFocusUp="@+id/edit_titleSize"
                         android:nextFocusLeft="@+id/editLabel_titleSize"
@@ -159,6 +160,7 @@
                     <EditText
                         android:id="@+id/edit_titleColor"
                         style="@style/ColorEdit" android:visibility="gone"
+                        android:fontFamily="monospace"
 
                         android:nextFocusUp="@+id/edit_titleSize"
                         android:nextFocusLeft="@+id/editLabel_titleSize"
@@ -171,6 +173,7 @@
                     <ImageButton
                         android:id="@+id/editButton_titleColor"
                         style="@style/ColorEditButton"
+                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
                         android:contentDescription="@string/configLabel_themeColorTitle" />
 
                 </LinearLayout>
@@ -188,6 +191,7 @@
                     <TextView
                         android:id="@+id/editLabel_suffixColor"
                         style="@style/ColorEditLabel"
+                        android:paddingStart="8dp" android:paddingEnd="8dp"
 
                         android:nextFocusUp="@+id/edit_titleSize"
                         android:nextFocusLeft="@+id/editLabel_titleColor"
@@ -200,6 +204,7 @@
                     <EditText
                         android:id="@+id/edit_suffixColor"
                         style="@style/ColorEdit" android:visibility="gone"
+                        android:fontFamily="monospace"
 
                         android:nextFocusUp="@+id/edit_titleSize"
                         android:nextFocusLeft="@+id/editLabel_titleColor"
@@ -212,6 +217,7 @@
                     <ImageButton
                         android:id="@+id/editButton_suffixColor"
                         style="@style/ColorEditButton"
+                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
                         android:contentDescription="@string/configLabel_themeColorSuffix" />
 
                 </LinearLayout>
@@ -227,6 +233,7 @@
                     <TextView
                         android:id="@+id/editLabel_textColor"
                         style="@style/ColorEditLabel"
+                        android:paddingStart="8dp" android:paddingEnd="8dp"
 
                         android:nextFocusUp="@+id/editLabel_titleColor"
                         android:nextFocusLeft="@+id/editLabel_titleColor"
@@ -239,6 +246,7 @@
                     <EditText
                         android:id="@+id/edit_textColor"
                         style="@style/ColorEdit" android:visibility="gone"
+                        android:fontFamily="monospace"
 
                         android:nextFocusUp="@+id/editLabel_titleColor"
                         android:nextFocusLeft="@+id/editLabel_titleColor"
@@ -251,6 +259,7 @@
                     <ImageButton
                         android:id="@+id/editButton_textColor"
                         style="@style/ColorEditButton"
+                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
                         android:contentDescription="@string/configLabel_themeColorText" />
 
                 </LinearLayout>
@@ -268,6 +277,7 @@
                     <TextView
                         android:id="@+id/editLabel_timeColor"
                         style="@style/ColorEditLabel"
+                        android:paddingStart="8dp" android:paddingEnd="8dp"
 
                         android:nextFocusUp="@+id/editLabel_titleColor"
                         android:nextFocusLeft="@+id/editLabel_timeColor"
@@ -280,6 +290,7 @@
                     <EditText
                         android:id="@+id/edit_timeColor"
                         style="@style/ColorEdit" android:visibility="gone"
+                        android:fontFamily="monospace"
 
                         android:nextFocusUp="@+id/editLabel_titleColor"
                         android:nextFocusLeft="@+id/editLabel_timeColor"
@@ -292,6 +303,7 @@
                     <ImageButton
                         android:id="@+id/editButton_timeColor"
                         style="@style/ColorEditButton"
+                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
                         android:contentDescription="@string/configLabel_themeColorTime" />
 
                 </LinearLayout>
@@ -308,6 +320,7 @@
                     <TextView
                         android:id="@+id/editLabel_sunriseColor"
                         style="@style/ColorEditLabel"
+                        android:paddingStart="8dp" android:paddingEnd="8dp"
 
                         android:nextFocusUp="@+id/editLabel_textColor"
                         android:nextFocusLeft="@+id/editLabel_textColor"
@@ -320,6 +333,7 @@
                     <EditText
                         android:id="@+id/edit_sunriseColor"
                         style="@style/ColorEdit" android:visibility="gone"
+                        android:fontFamily="monospace"
 
                         android:nextFocusUp="@+id/editLabel_textColor"
                         android:nextFocusLeft="@+id/editLabel_textColor"
@@ -332,6 +346,7 @@
                     <ImageButton
                         android:id="@+id/editButton_sunriseColor"
                         style="@style/ColorEditButton"
+                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
                         android:contentDescription="@string/configLabel_themeColorSunrise" />
 
                 </LinearLayout>
@@ -349,6 +364,7 @@
                     <TextView
                         android:id="@+id/editLabel_sunsetColor"
                         style="@style/ColorEditLabel"
+                        android:paddingStart="8dp" android:paddingEnd="8dp"
 
                         android:nextFocusUp="@+id/editLabel_textColor"
                         android:nextFocusLeft="@+id/editLabel_sunriseColor"
@@ -361,6 +377,7 @@
                     <EditText
                         android:id="@+id/edit_sunsetColor"
                         style="@style/ColorEdit" android:visibility="gone"
+                        android:fontFamily="monospace"
 
                         android:nextFocusUp="@+id/editLabel_textColor"
                         android:nextFocusLeft="@+id/editLabel_sunriseColor"
@@ -373,6 +390,7 @@
                     <ImageButton
                         android:id="@+id/editButton_sunsetColor"
                         style="@style/ColorEditButton"
+                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
                         android:contentDescription="@string/configLabel_themeColorSunset" />
 
                 </LinearLayout>
@@ -389,6 +407,7 @@
                     <TextView
                         android:id="@+id/editLabel_sunriseFillColor"
                         style="@style/ColorEditLabel"
+                        android:paddingStart="8dp" android:paddingEnd="8dp"
 
                         android:nextFocusUp="@+id/editLabel_sunriseColor"
                         android:nextFocusLeft="@+id/editLabel_sunriseColor"
@@ -401,6 +420,7 @@
                     <EditText
                         android:id="@+id/edit_sunriseFillColor"
                         style="@style/ColorEdit" android:visibility="gone"
+                        android:fontFamily="monospace"
 
                         android:nextFocusUp="@+id/editLabel_sunriseColor"
                         android:nextFocusLeft="@+id/editLabel_sunriseColor"
@@ -413,6 +433,7 @@
                     <ImageButton
                         android:id="@+id/editButton_sunriseFillColor"
                         style="@style/ColorEditButton"
+                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
                         android:contentDescription="@string/configLabel_themeColorFill" />
 
                 </LinearLayout>
@@ -430,6 +451,7 @@
                     <TextView
                         android:id="@+id/editLabel_sunsetFillColor"
                         style="@style/ColorEditLabel"
+                        android:paddingStart="8dp" android:paddingEnd="8dp"
 
                         android:nextFocusUp="@+id/editLabel_sunriseColor"
                         android:nextFocusLeft="@+id/editLabel_sunriseFillColor"
@@ -442,6 +464,7 @@
                     <EditText
                         android:id="@+id/edit_sunsetFillColor"
                         style="@style/ColorEdit" android:visibility="gone"
+                        android:fontFamily="monospace"
 
                         android:nextFocusUp="@+id/editLabel_sunriseColor"
                         android:nextFocusLeft="@+id/editLabel_sunriseFillColor"
@@ -454,6 +477,7 @@
                     <ImageButton
                         android:id="@+id/editButton_sunsetFillColor"
                         style="@style/ColorEditButton"
+                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
                         android:contentDescription="@string/configLabel_themeColorFill" />
 
                     <CheckBox
@@ -475,6 +499,7 @@
                     <TextView
                         android:id="@+id/editLabel_sunriseStrokeColor"
                         style="@style/ColorEditLabel"
+                        android:paddingStart="8dp" android:paddingEnd="8dp"
 
                         android:nextFocusUp="@+id/editLabel_sunriseFillColor"
                         android:nextFocusLeft="@+id/editLabel_sunriseFillColor"
@@ -487,6 +512,7 @@
                     <EditText
                         android:id="@+id/edit_sunriseStrokeColor"
                         style="@style/ColorEdit" android:visibility="gone"
+                        android:fontFamily="monospace"
 
                         android:nextFocusUp="@+id/editLabel_sunriseFillColor"
                         android:nextFocusLeft="@+id/editLabel_sunriseFillColor"
@@ -499,6 +525,7 @@
                     <ImageButton
                         android:id="@+id/editButton_sunriseStrokeColor"
                         style="@style/ColorEditButton"
+                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
                         android:contentDescription="@string/configLabel_themeColorBorder" />
 
                 </LinearLayout>
@@ -516,6 +543,7 @@
                     <TextView
                         android:id="@+id/editLabel_sunsetStrokeColor"
                         style="@style/ColorEditLabel"
+                        android:paddingStart="8dp" android:paddingEnd="8dp"
 
                         android:nextFocusUp="@+id/editLabel_sunriseFillColor"
                         android:nextFocusLeft="@+id/editLabel_sunriseStrokeColor"
@@ -528,6 +556,7 @@
                     <EditText
                         android:id="@+id/edit_sunsetStrokeColor"
                         style="@style/ColorEdit" android:visibility="gone"
+                        android:fontFamily="monospace"
 
                         android:nextFocusUp="@+id/editLabel_sunriseFillColor"
                         android:nextFocusLeft="@+id/editLabel_sunriseStrokeColor"
@@ -540,6 +569,7 @@
                     <ImageButton
                         android:id="@+id/editButton_sunsetStrokeColor"
                         style="@style/ColorEditButton"
+                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
                         android:contentDescription="@string/configLabel_themeColorBorder" />
 
                     <CheckBox
@@ -561,6 +591,7 @@
                     <TextView
                         android:id="@+id/editLabel_noonColor"
                         style="@style/ColorEditLabel"
+                        android:paddingStart="8dp" android:paddingEnd="8dp"
 
                         android:nextFocusUp="@+id/editLabel_sunriseStrokeColor"
                         android:nextFocusLeft="@+id/editLabel_sunriseStrokeColor"
@@ -573,6 +604,7 @@
                     <EditText
                         android:id="@+id/edit_noonColor"
                         style="@style/ColorEdit" android:visibility="gone"
+                        android:fontFamily="monospace"
 
                         android:nextFocusUp="@+id/editLabel_sunriseStrokeColor"
                         android:nextFocusLeft="@+id/editLabel_sunriseStrokeColor"
@@ -585,6 +617,7 @@
                     <ImageButton
                         android:id="@+id/editButton_noonColor"
                         style="@style/ColorEditButton"
+                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
                         android:contentDescription="@string/configLabel_themeColorNoon" />
 
                     <CheckBox
@@ -606,6 +639,7 @@
                     <TextView
                         android:id="@+id/editLabel_noonFillColor"
                         style="@style/ColorEditLabel"
+                        android:paddingStart="8dp" android:paddingEnd="8dp"
 
                         android:nextFocusUp="@+id/editLabel_noonColor"
                         android:nextFocusLeft="@+id/editLabel_noonColor"
@@ -618,6 +652,7 @@
                     <EditText
                         android:id="@+id/edit_noonFillColor"
                         style="@style/ColorEdit" android:visibility="gone"
+                        android:fontFamily="monospace"
 
                         android:nextFocusUp="@+id/editLabel_noonColor"
                         android:nextFocusLeft="@+id/editLabel_noonColor"
@@ -630,6 +665,7 @@
                     <ImageButton
                         android:id="@+id/editButton_noonFillColor"
                         style="@style/ColorEditButton"
+                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
                         android:contentDescription="@string/configLabel_themeColorFill" />
 
                 </LinearLayout>
@@ -646,6 +682,7 @@
                     <TextView
                         android:id="@+id/editLabel_noonStrokeColor"
                         style="@style/ColorEditLabel"
+                        android:paddingStart="8dp" android:paddingEnd="8dp"
 
                         android:nextFocusUp="@+id/editLabel_noonFillColor"
                         android:nextFocusLeft="@+id/editLabel_noonFillColor"
@@ -658,6 +695,7 @@
                     <EditText
                         android:id="@+id/edit_noonStrokeColor"
                         style="@style/ColorEdit" android:visibility="gone"
+                        android:fontFamily="monospace"
 
                         android:nextFocusUp="@+id/editLabel_noonFillColor"
                         android:nextFocusLeft="@+id/editLabel_noonFillColor"
@@ -670,6 +708,7 @@
                     <ImageButton
                         android:id="@+id/editButton_noonStrokeColor"
                         style="@style/ColorEditButton"
+                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
                         android:contentDescription="@string/configLabel_themeColorBorder" />
 
                     <CheckBox
@@ -691,6 +730,7 @@
                     <TextView
                         android:id="@+id/editLabel_iconStroke"
                         style="@style/SizeEditLabel"
+                        android:paddingStart="8dp" android:paddingEnd="8dp"
                         android:text="@string/configLabel_themeBorderWidthRiseSet" />
 
                     <EditText
@@ -719,6 +759,7 @@
                     <TextView
                         android:id="@+id/editLabel_noonIconStroke"
                         style="@style/SizeEditLabel"
+                        android:paddingStart="8dp" android:paddingEnd="8dp"
                         android:text="@string/configLabel_themeBorderWidthNoon" />
 
                     <EditText
@@ -764,6 +805,7 @@
             <TextView
                 android:id="@+id/editLabel_timeSize"
                 style="@style/SizeEditLabel"
+                android:paddingStart="8dp" android:paddingEnd="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBaseline_toBaselineOf="@+id/edit_timeSize"
                 android:text="@string/configLabel_themeSizeTime" />
@@ -781,6 +823,7 @@
             <TextView
                 android:id="@+id/editLabel_suffixSize"
                 style="@style/SizeEditLabel"
+                android:paddingStart="8dp" android:paddingEnd="8dp"
                 app:layout_constraintStart_toEndOf="@+id/edit_timeSize"
                 app:layout_constraintBaseline_toBaselineOf="@+id/edit_suffixSize"
                 android:layout_marginStart="16dp" android:layout_marginEnd="8dp"
@@ -800,6 +843,7 @@
             <TextView
                 android:id="@+id/editLabel_titleSize"
                 style="@style/SizeEditLabel"
+                android:paddingStart="8dp" android:paddingEnd="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBaseline_toBaselineOf="@+id/edit_titleSize"
                 android:text="@string/configLabel_themeSizeTitle" />
@@ -817,6 +861,7 @@
             <TextView
                 android:id="@+id/editLabel_textSize"
                 style="@style/SizeEditLabel"
+                android:paddingStart="8dp" android:paddingEnd="8dp"
                 app:layout_constraintStart_toEndOf="@+id/edit_titleSize"
                 app:layout_constraintBaseline_toBaselineOf="@+id/edit_textSize"
                 android:layout_marginStart="16dp" android:layout_marginEnd="8dp"
