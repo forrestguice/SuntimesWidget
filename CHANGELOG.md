@@ -1,4 +1,5 @@
 ### ~
+* restricts auto-backup to app settings and themes (now excludes widget settings and sqlite db).
 * updates dependency (Time4A 3.37-2017c). 
 
 ### v0.5.0 (2017-11-18)
