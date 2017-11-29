@@ -1,4 +1,5 @@
 ### ~ 
+* restricts auto-backup to app settings and themes (now excludes widget settings and sqlite db).
 * adds collapsed UI state to ColorChooser; expanded by clicking label. 
 * adds to theme config activity: sunrise, sunset, and noon icon colors (fill, stroke, stroke width).
 * fixes theme previews to display sunrise/sunset times (as configured by app) instead of static text.
