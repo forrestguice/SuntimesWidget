@@ -36,7 +36,7 @@ import android.appwidget.AppWidgetProvider;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x3_0;
+import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_2x1_0;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
@@ -44,14 +44,29 @@ import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import java.util.Calendar;
 
 /**
- * Main widget
+ * Widget receiver for resizable widget (that falls back to 1x1 layout).
  */
-public class SuntimesWidget extends AppWidgetProvider
+public class SuntimesWidget0 extends AppWidgetProvider
 {
     public static final String SUNTIMES_WIDGET_UPDATE = "SUNTIMES_WIDGET_UPDATE";
     public static final int UPDATEALARM_ID = 0;
 
     protected static SuntimesUtils utils = new SuntimesUtils();
+
+    protected int[] minSize = { 0, 0 };
+    protected int[] getMinSize(Context context)
+    {
+        if (minSize[0] <= 0 || minSize[1] <= 0)
+        {
+            initMinSize(context);
+        }
+        return minSize;
+    }
+    protected void initMinSize(Context context)
+    {
+        minSize[0] = context.getResources().getInteger(R.integer.widget_size_minWidthDp);
+        minSize[1] = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
+    }
 
     /**
      * @param context the context
@@ -147,7 +162,7 @@ public class SuntimesWidget extends AppWidgetProvider
      */
     protected Class getConfigClass()
     {
-        return SuntimesConfigActivity.class;
+        return SuntimesConfigActivity0.class;
     }
 
     /**
@@ -171,7 +186,8 @@ public class SuntimesWidget extends AppWidgetProvider
 
     protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
-        SuntimesWidget.updateAppWidget(context, appWidgetManager, appWidgetId);
+        SuntimesLayout defLayout = WidgetSettings.load1x1ModePref_asLayout(context, appWidgetId);
+        SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0.class, getMinSize(context), defLayout);
     }
 
     public void initLocale(Context context)
@@ -217,6 +233,31 @@ public class SuntimesWidget extends AppWidgetProvider
         unsetUpdateAlarm(context);
     }
 
+    protected static int[] widgetSizeDp(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize)
+    {
+        int[] mustFitWithinDp = {defSize[0], defSize[1]};
+        //Log.d("widgetSizeDp", "0: must fit:  [" + mustFitWithinDp[0] + ", " + mustFitWithinDp[1] + "]");
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        {
+            Bundle widgetOptions = appWidgetManager.getAppWidgetOptions(appWidgetId);
+            int[]  sizePortrait = { widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH),   // dp values
+                    widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT) };
+            int[]  sizeLandscape = { widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH),
+                    widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT) };
+
+            //Log.d("widgetSizeDp", "portrait:  [" + sizePortrait[0] + ", " + sizePortrait[1] + "]");
+            //Log.d("widgetSizeDp", "landscape: [" + sizeLandscape[0] + ", " + sizeLandscape[1] + "]");
+            //Toast toast = Toast.makeText(context, "[" + sizePortrait[0] + ", " + sizePortrait[1] + "]; " + "[" + sizeLandscape[0] + ", " + sizeLandscape[1] + "]", Toast.LENGTH_SHORT);
+            //toast.show();
+
+            mustFitWithinDp[0] = Math.min( sizePortrait[0], sizeLandscape[0] );
+            mustFitWithinDp[1] = Math.min( sizePortrait[1], sizeLandscape[1] );
+            //Log.d("widgetSizeDp", "1: must fit:  [" + mustFitWithinDp[0] + ", " + mustFitWithinDp[1] + "]");
+        }
+        return mustFitWithinDp;
+    }
+
     /**
      * @param context the context
      * @param appWidgetManager a reference to the AppWidgetManager
@@ -224,39 +265,18 @@ public class SuntimesWidget extends AppWidgetProvider
      * @return a SuntimesLayout that is appropriate for available space.
      */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    protected static SuntimesLayout getWidgetLayout( Context context, AppWidgetManager appWidgetManager, int appWidgetId )
+    protected static SuntimesLayout getWidgetLayout( Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize, SuntimesLayout defLayout )
     {
-        int minWidth = context.getResources().getInteger(R.integer.widget_size_minWidthDp);
-        int minHeight = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
-        int[] mustFitWithinDp = {minWidth, minHeight};
-        //Log.d("getWidgetLayout", "0: must fit:  [" + mustFitWithinDp[0] + ", " + mustFitWithinDp[1] + "]");
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-        {
-            Bundle widgetOptions = appWidgetManager.getAppWidgetOptions(appWidgetId);
-            int[]  sizePortrait = { widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH),   // dp values
-                                    widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT) };
-            int[]  sizeLandscape = { widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH),
-                                     widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT) };
-
-            //Log.d("updateAppWidget", "portrait:  [" + sizePortrait[0] + ", " + sizePortrait[1] + "]");
-            //Log.d("updateAppWidget", "landscape: [" + sizeLandscape[0] + ", " + sizeLandscape[1] + "]");
-            //Toast toast = Toast.makeText(context, "[" + sizePortrait[0] + ", " + sizePortrait[1] + "]; " + "[" + sizeLandscape[0] + ", " + sizeLandscape[1] + "]", Toast.LENGTH_SHORT);
-            //toast.show();
-
-            mustFitWithinDp[0] = Math.min( sizePortrait[0], sizeLandscape[0] );
-            mustFitWithinDp[1] = Math.min( sizePortrait[1], sizeLandscape[1] );
-            //Log.d("getWidgetLayout", "1: must fit:  [" + mustFitWithinDp[0] + ", " + mustFitWithinDp[1] + "]");
-        }
+        int[] mustFitWithinDp = widgetSizeDp(context, appWidgetManager, appWidgetId, defSize);
 
         SuntimesLayout layout;
         if (WidgetSettings.loadAllowResizePref(context, appWidgetId))
         {
-            int minWidth1x3 = context.getResources().getInteger(R.integer.widget_size_minWidthDp1x3);
-            layout = ((mustFitWithinDp[0] >= minWidth1x3) ? new SuntimesLayout_1x3_0()
+            int minWidth1x3 = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
+            layout = ((mustFitWithinDp[0] >= minWidth1x3) ? new SuntimesLayout_2x1_0()
                                                           : WidgetSettings.load1x1ModePref_asLayout(context, appWidgetId));
         } else {
-            layout = WidgetSettings.load1x1ModePref_asLayout(context, appWidgetId);
+            layout = defLayout; // WidgetSettings.load1x1ModePref_asLayout(context, appWidgetId);
         }
         //Log.d("getWidgetLayout", "layout is: " + layout);
         return layout;
@@ -267,10 +287,10 @@ public class SuntimesWidget extends AppWidgetProvider
      * @param appWidgetManager widget manager
      * @param appWidgetId id of widget to be updated
      */
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
+    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Class widgetClass, int[] defSize, SuntimesLayout defLayout)
     {
-        SuntimesLayout layout = getWidgetLayout(context, appWidgetManager, appWidgetId);
-        SuntimesWidget.updateAppWidget(context, appWidgetManager, appWidgetId, layout);
+        SuntimesLayout layout = getWidgetLayout(context, appWidgetManager, appWidgetId, defSize, defLayout);
+        SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, layout, widgetClass);
     }
 
     /**
@@ -279,7 +299,7 @@ public class SuntimesWidget extends AppWidgetProvider
      * @param appWidgetId id of the widget to be updated
      * @param layout a SuntimesLayout managing the views to be updated
      */
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SuntimesLayout layout)
+    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SuntimesLayout layout, Class widgetClass)
     {
         RemoteViews views = layout.getViews(context);
 
@@ -300,7 +320,7 @@ public class SuntimesWidget extends AppWidgetProvider
             data.linkData(noonData);
         }
 
-        views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget.clickActionIntent(context, appWidgetId, SuntimesWidget.class));
+        views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, widgetClass));
         layout.updateViews(context, appWidgetId, views, data);
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
@@ -392,7 +412,7 @@ public class SuntimesWidget extends AppWidgetProvider
      */
     protected int getUpdateAlarmId()
     {
-        return SuntimesWidget.UPDATEALARM_ID;
+        return SuntimesWidget0.UPDATEALARM_ID;
     }
 
     /**

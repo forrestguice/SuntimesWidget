@@ -77,13 +77,13 @@ class SuntimesWidget1RemoteViewsFactory implements RemoteViewsService.RemoteView
     @Override
     public void onDataSetChanged()
     {
-        dataset.clear();
-        viewCount = 1;
+        ArrayList<SuntimesRiseSetData> dataset0 = new ArrayList<SuntimesRiseSetData>();
+        int viewCount0 = 1;
 
         SuntimesRiseSetData data0 = new SuntimesRiseSetData(context, appWidgetId);
         data0.calculate();
-        dataset.add(new SuntimesRiseSetData(data0, R.layout.layout_widget_1x1_1i));
-        viewCount++;
+        dataset0.add(new SuntimesRiseSetData(data0, R.layout.layout_widget_1x1_1i));
+        viewCount0++;
 
         boolean showNoon = WidgetSettings.loadShowNoonPref(context, appWidgetId);
         if (showNoon)
@@ -91,13 +91,15 @@ class SuntimesWidget1RemoteViewsFactory implements RemoteViewsService.RemoteView
             SuntimesRiseSetData data1 = new SuntimesRiseSetData(data0);
             data1.setTimeMode(WidgetSettings.TimeMode.NOON);
             data1.calculate();
-            dataset.add(new SuntimesRiseSetData(data1, R.layout.layout_widget_1x1_4i));
-            viewCount++;
+            dataset0.add(new SuntimesRiseSetData(data1, R.layout.layout_widget_1x1_4i));
+            viewCount0++;
         }
 
-        dataset.add(new SuntimesRiseSetData(data0, R.layout.layout_widget_1x1_2i));
-        viewCount++;
+        dataset0.add(new SuntimesRiseSetData(data0, R.layout.layout_widget_1x1_2i));
+        viewCount0++;
 
+        dataset = dataset0;
+        viewCount = viewCount0;
         Log.d("DEBUG", "onDataSetChanged");
     }
 
@@ -115,10 +117,16 @@ class SuntimesWidget1RemoteViewsFactory implements RemoteViewsService.RemoteView
     @Override
     public RemoteViews getViewAt(int position)
     {
-        SuntimesRiseSetData data = dataset.get(position);
+        SuntimesRiseSetData data = null;
+        int layoutID = R.layout.layout_widget_1x1_2;
+        if (position >= 0 && position < dataset.size())
+        {
+            data = dataset.get(position);
+            layoutID = data.layoutID();
+        }
 
         SuntimesLayout layout;
-        switch(data.layoutID())
+        switch(layoutID)
         {
             case R.layout.layout_widget_1x1_1:
             case R.layout.layout_widget_1x1_1i:
@@ -136,15 +144,18 @@ class SuntimesWidget1RemoteViewsFactory implements RemoteViewsService.RemoteView
                 layout = new SuntimesLayout_1x1_2(R.layout.layout_widget_1x1_2i);
                 break;
         }
-
         RemoteViews views = layout.getViews(context);
 
         boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId);
         views.setViewVisibility(R.id.text_title, showTitle ? View.VISIBLE : View.GONE);
 
         layout.themeViews(context, views, appWidgetId);
-        layout.updateViews(context, appWidgetId, views, data);
-
+        if (data != null)
+        {
+            layout.updateViews(context, appWidgetId, views, data);
+        } else {
+            Log.w("DEBUG", "null data! skipping update");
+        }
         return views;
     }
 

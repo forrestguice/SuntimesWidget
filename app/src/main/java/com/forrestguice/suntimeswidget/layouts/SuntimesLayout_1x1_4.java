@@ -19,11 +19,13 @@
 package com.forrestguice.suntimeswidget.layouts;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.SuntimesUtils.TimeDisplayText;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -54,8 +56,6 @@ public class SuntimesLayout_1x1_4 extends SuntimesLayout
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesRiseSetData data)
     {
         super.updateViews(context, appWidgetId, views, data);
-
-        // upset noon time
         TimeDisplayText noonString = utils.calendarTimeShortDisplayString(context, data.sunsetCalendarToday());
         views.setTextViewText(R.id.text_time_noon, noonString.getValue());
         views.setTextViewText(R.id.text_time_noon_suffix, noonString.getSuffix());
@@ -66,8 +66,7 @@ public class SuntimesLayout_1x1_4 extends SuntimesLayout
     {
         super.themeViews(context, views, theme);
 
-        // theme sunset text
-        int noonColor = theme.getSunsetTextColor();
+        int noonColor = theme.getNoonTextColor();
         int suffixColor = theme.getTimeSuffixColor();
         views.setTextColor(R.id.text_time_noon_suffix, suffixColor);
         views.setTextColor(R.id.text_time_noon, noonColor);
@@ -76,5 +75,8 @@ public class SuntimesLayout_1x1_4 extends SuntimesLayout
             views.setTextViewTextSize(R.id.text_time_noon_suffix, TypedValue.COMPLEX_UNIT_SP, theme.getTimeSuffixSizeSp());
             views.setTextViewTextSize(R.id.text_time_noon, TypedValue.COMPLEX_UNIT_SP, theme.getTimeSizeSp());
         }
+
+        Bitmap noonIcon = SuntimesUtils.drawableToBitmap(context, R.drawable.ic_noon_large0, false, theme.getNoonIconColor(), theme.getNoonIconStrokeColor(), theme.getNoonIconStrokePixels(context));
+        views.setImageViewBitmap(R.id.icon_time_noon, noonIcon);
     }
 }

@@ -23,14 +23,19 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Locale;
 
@@ -39,22 +44,54 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
     private static final String DIALOGTAG_COLOR = "colorchooser";
 
     private String chooserID = "0";
-    final private ImageButton button;
-    final private EditText edit;
+    final protected ImageButton button;
+    final protected EditText edit;
+    final protected TextView label;
 
     private int color;
     private boolean isRunning = false, isRemoving = false;
+    private boolean isCollapsed = false;
 
     public static final char[] alphabet = {'#', '0', '1', '2', '3', '4', '5', '6', '7','8', '9', 'a', 'A', 'b', 'B', 'c', 'C', 'd', 'D', 'e', 'E', 'f', 'F'};
-    HashSet<Character> inputSet;
+    protected final HashSet<Character> inputSet;
 
-    public ColorChooser(final Context context, EditText editField, ImageButton button, String id)
+    public ColorChooser(final Context context, TextView txtLabel, EditText editField, ImageButton imgButton, String id)
     {
         chooserID = id;
 
+        label = txtLabel;
+        if (label != null)
+        {
+            label.setOnClickListener( new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    onFocusGained(v);
+                }
+            });
+        }
+
         edit = editField;
-        edit.addTextChangedListener(this);
-        edit.setOnFocusChangeListener(this);
+        if (edit != null)
+        {
+            edit.addTextChangedListener(this);
+            edit.setOnFocusChangeListener(this);
+
+            edit.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+                {
+                    if (actionId == EditorInfo.IME_ACTION_DONE)
+                    {
+                        changeColor();
+                        return true;
+                    }
+                    return false;
+                }
+            });
+
+        }
 
         inputSet = new HashSet<>();
         for (char c : alphabet)
@@ -62,15 +99,50 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
             inputSet.add(c);
         }
 
-        this.button = button;
-        this.button.setOnClickListener( new View.OnClickListener()
+        button = imgButton;
+        if (button != null)
         {
-            @Override
-            public void onClick(View v)
+            button.setOnClickListener(new View.OnClickListener()
             {
-                showColorPicker(context);
-            }
-        });
+                @Override
+                public void onClick(View v)
+                {
+                    if (label != null)
+                    {
+                        label.requestFocus();
+                    }
+                    showColorPicker(context);
+                }
+            });
+        }
+    }
+
+    private final ArrayList<ColorChooser> linked = new ArrayList<ColorChooser>();
+    public ArrayList<ColorChooser> getLinked()
+    {
+        return linked;
+    }
+    public void link(ColorChooser chooser)
+    {
+        if (!linked.contains(chooser))
+        {
+            linked.add(chooser);
+        }
+    }
+    public void unlink(ColorChooser chooser)
+    {
+        if (linked.contains(chooser))
+        {
+            linked.remove(chooser);
+        }
+    }
+
+    /**
+     * @return a key that identifies this chooser's value
+     */
+    public String getID()
+    {
+        return chooserID;
     }
 
     /**
@@ -87,6 +159,14 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
     public ImageButton getButton()
     {
         return button;
+    }
+
+    /**
+     * @return TextView wrapped by chooser
+     */
+    public TextView getLabel()
+    {
+        return label;
     }
 
     /**
@@ -110,6 +190,15 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
     }
 
     /**
+     * Set the color from provided bundle (using chooserID as a key).
+     * @param savedState Bundle
+     */
+    public void setColor( Bundle savedState )
+    {
+        setColor(savedState.getInt(chooserID, getColor()));
+    }
+
+    /**
      * @return color value
      */
     public int getColor()
@@ -117,15 +206,52 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
         return color;
     }
 
+    /**
+     * @param value true expand edit field, false collapse edit field
+     */
+    public void setCollapsed( boolean value )
+    {
+        isCollapsed = value;
+        updateViews();
+    }
+
+    public void setEnabled( boolean value )
+    {
+        if (label != null)
+        {
+            label.setEnabled(value);
+        }
+        if (edit != null)
+        {
+            edit.setEnabled(value);
+        }
+        if (button != null)
+        {
+            button.setEnabled(value);
+        }
+        if (!value)
+        {
+            setCollapsed(true);
+        }
+    }
+
     private void updateViews()
     {
-        edit.setText( String.format("#%08X", color) );
-        Drawable d = button.getDrawable();
-        if (d != null)
+        if (edit != null)
         {
-            GradientDrawable g = (GradientDrawable)d.mutate();
-            g.setColor(color);
-            g.invalidateSelf();
+            edit.setText( String.format("#%08X", color) );
+            edit.setVisibility((isCollapsed ? View.GONE : View.VISIBLE));
+        }
+
+        if (button != null)
+        {
+            Drawable d = button.getDrawable();
+            if (d != null)
+            {
+                GradientDrawable g = (GradientDrawable) d.mutate();
+                g.setColor(color);
+                g.invalidateSelf();
+            }
         }
     }
 
@@ -175,40 +301,67 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
         isRunning = false;
     }
 
-    protected void onColorChanged( int newColor ) {}
+    protected void onColorChanged( int newColor )
+    {
+        for (ColorChooser chooser : getLinked())
+        {
+            chooser.setColor(newColor);
+        }
+    }
+    protected void onFocusGained(View view)
+    {
+        setCollapsed(false);
+        if (edit != null)
+        {
+            edit.requestFocus();
+        }
+    }
+    protected void onFocusLost(View view)
+    {
+        setCollapsed(true);
+    }
 
     @Override
     public void onFocusChange(View view, boolean hasFocus)
     {
         if (!hasFocus)
         {
-            Editable editable = edit.getText();
-            int i = editable.toString().indexOf('#');
-            if (i != -1)                    // should start with a #
+            if (edit != null)
             {
-                editable.delete(i, i + 1);
+                changeColor();
+                onFocusLost(view);
             }
-            editable.insert(0, "#");
-
-            while (editable.length() < 3)   // supply an alpha value (FF)
-            {
-                editable.insert(1, "F");
-            }
-            if (editable.length() == 7)
-            {
-                editable.insert(1, "FF");
-            }
-
-            while (editable.length() < 9)   // fill rest with "0"
-            {
-                editable.append("0");
-            }
-
-            //Log.d("DEBUG", "color is " + editable.toString());
-            edit.setText(editable);
-            setColor(editable.toString());
-            onColorChanged(getColor());
         }
+    }
+
+    private void changeColor()
+    {
+        Editable editable = edit.getText();
+        int i = editable.toString().indexOf('#');
+        if (i != -1)                    // should start with a #
+        {
+            editable.delete(i, i + 1);
+        }
+        editable.insert(0, "#");
+
+        while (editable.length() < 3)   // supply an alpha value (FF)
+        {
+            editable.insert(1, "F");
+        }
+        if (editable.length() == 7)
+        {
+            editable.insert(1, "FF");
+        }
+
+        while (editable.length() < 9)   // fill rest with "0"
+        {
+            editable.append("0");
+        }
+
+        //Log.d("DEBUG", "color is " + editable.toString());
+        edit.setText(editable);
+        setColor(editable.toString());
+        onColorChanged(getColor());
     }
 
     private FragmentManager fragmentManager = null;
@@ -232,7 +385,7 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
         }
     }
 
-    private ColorDialog.ColorChangeListener colorDialogChangeListener = new ColorDialog.ColorChangeListener()
+    private final ColorDialog.ColorChangeListener colorDialogChangeListener = new ColorDialog.ColorChangeListener()
     {
         @Override
         public void onColorChanged(int color)

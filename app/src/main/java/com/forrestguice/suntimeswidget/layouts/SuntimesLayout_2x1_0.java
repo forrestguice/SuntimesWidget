@@ -19,24 +19,25 @@
 package com.forrestguice.suntimeswidget.layouts;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Build;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.SuntimesUtils.TimeDisplayText;
 
-public class SuntimesLayout_1x3_0 extends SuntimesLayout
+public class SuntimesLayout_2x1_0 extends SuntimesLayout
 {
     @Override
     public void initLayoutID()
     {
-        this.layoutID = R.layout.layout_widget_1x3_0;
+        this.layoutID = R.layout.layout_widget_2x1_0;
     }
 
     @Override
@@ -89,7 +90,7 @@ public class SuntimesLayout_1x3_0 extends SuntimesLayout
 
         int sunriseColor = theme.getSunriseTextColor();
         int sunsetColor = theme.getSunsetTextColor();
-        int noonColor = theme.getSunsetTextColor();
+        int noonColor = theme.getNoonTextColor();
         int suffixColor = theme.getTimeSuffixColor();
         int timeColor = theme.getTimeColor();
         int textColor = theme.getTextColor();
@@ -132,5 +133,14 @@ public class SuntimesLayout_1x3_0 extends SuntimesLayout
             views.setTextViewTextSize(R.id.text_delta_day_units, TypedValue.COMPLEX_UNIT_SP, textSize);
             views.setTextViewTextSize(R.id.text_delta_day_suffix, TypedValue.COMPLEX_UNIT_SP, textSize);
         }
+
+        Bitmap sunriseIcon = SuntimesUtils.drawableToBitmap(context, R.drawable.ic_sunrise0, true, theme.getSunriseIconColor(), theme.getSunriseIconStrokeColor(), theme.getSunriseIconStrokePixels(context));
+        views.setImageViewBitmap(R.id.icon_time_sunrise, sunriseIcon);
+
+        Bitmap noonIcon = SuntimesUtils.drawableToBitmap(context, R.drawable.ic_noon_large0, false, theme.getNoonIconColor(), theme.getNoonIconStrokeColor(), theme.getNoonIconStrokePixels(context));
+        views.setImageViewBitmap(R.id.icon_time_noon, noonIcon);
+
+        Bitmap sunsetIcon = SuntimesUtils.drawableToBitmap(context, R.drawable.ic_sunset0, true, theme.getSunsetIconColor(), theme.getSunsetIconStrokeColor(), theme.getSunsetIconStrokePixels(context));
+        views.setImageViewBitmap(R.id.icon_time_sunset, sunsetIcon);
     }
 }

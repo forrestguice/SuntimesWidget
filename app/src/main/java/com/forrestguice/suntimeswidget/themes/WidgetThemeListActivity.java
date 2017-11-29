@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.themes;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -47,6 +48,7 @@ import android.widget.Toast;
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -95,7 +97,17 @@ public class WidgetThemeListActivity extends AppCompatActivity
         }*/
 
         WidgetThemes.initThemes(this);
+        initData(this);
         initViews(this);
+    }
+
+    private SuntimesRiseSetData data;
+    private void initData(Context context)
+    {
+        data = new SuntimesRiseSetData(context, AppWidgetManager.INVALID_APPWIDGET_ID);   // use app configuration
+        data.setCompareMode(WidgetSettings.CompareMode.TOMORROW);
+        data.setTimeMode(WidgetSettings.TimeMode.OFFICIAL);
+        data.calculate();
     }
 
     private void initLocale()
@@ -130,6 +142,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
     protected void initThemeAdapter(Context context)
     {
         adapter = new WidgetThemes.ThemeGridAdapter(context, WidgetThemes.values());
+        adapter.setRiseSet(data.sunriseCalendarToday(), data.sunsetCalendarToday());
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
@@ -308,7 +321,6 @@ public class WidgetThemeListActivity extends AppCompatActivity
      */
     private void importThemes( Context context )
     {
-        //SharedPreferences themes = context.getSharedPreferences(PREFS_THEMES, Context.MODE_PRIVATE);
         // TODO
     }
 
@@ -382,6 +394,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         {
             actionMode = null;
             selected = null;
+            //noinspection ConstantConditions
             adapter.setSelected(selected);
         }
 
