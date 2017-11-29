@@ -41,7 +41,6 @@
         <ImageView
             style="@style/SunsetTimeImageView2"
             android:id="@+id/icon_time_sunset"
-            android:background="@drawable/ic_sunset_large"
             android:scaleType="fitEnd"
             android:layout_width="@dimen/sunIconLarge_width" android:height="@dimen/sunIconLarge_height"
             android:layout_marginBottom="4dp"
