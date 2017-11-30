@@ -1,6 +1,8 @@
 ### ~ 
 
 ### v0.5.1 (2017-12-01)
+* changes default data source to time4a-noaa (fallback remains sunrisesunsetlib).
+* fixes 2x1 widget to show seconds (e.g. "Tomorrow will be 1m 4s shorter").
 * restricts auto-backup to app settings and themes (now excludes widget settings and sqlite db).
 * adds collapsed UI state to ColorChooser; expanded by clicking label. 
 * adds to theme config activity: sunrise, sunset, and noon icon colors (fill, stroke, stroke width).
