@@ -55,7 +55,7 @@ public class WidgetSettings
     public static final String PREF_PREFIX_KEY_ACTION = "_action_";
 
     public static final String PREF_KEY_GENERAL_CALCULATOR = "calculator";
-    public static final String PREF_DEF_GENERAL_CALCULATOR = "any";
+    public static final String PREF_DEF_GENERAL_CALCULATOR = "time4a-noaa";
 
     public static final String PREF_KEY_APPEARANCE_THEME = "theme";
     public static final String PREF_DEF_APPEARANCE_THEME = DarkTheme.THEMEDEF_NAME;
