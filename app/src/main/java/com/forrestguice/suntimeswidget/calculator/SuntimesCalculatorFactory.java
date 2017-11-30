@@ -42,14 +42,17 @@ import java.util.TimeZone;
  *
  * This factory knows about the following implementations:
  *
- *   * sunrisesunsetlib (default)
+ *   * sunrisesunsetlib (fallback)
  *     :: com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.class
  *
  *   * ca.rmen.sunrisesunset
  *     :: com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator.class
  *
  *   * time4a
- *     :: com.forrestguice.suntimeswidget.calculator.time4a.SunriseSunsetSuntimesCalculator.class
+ *     :: com.forrestguice.suntimeswidget.calculator.time4a.Time4ASimpleSuntimesCalculator.class
+ *     :: com.forrestguice.suntimeswidget.calculator.time4a.Time4ANOAASuntimesCalculator.class
+ *     :: com.forrestguice.suntimeswidget.calculator.time4a.Time4ACCSuntimesCalculator.class
+ *     :: com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator.class
  *
  */
 public class SuntimesCalculatorFactory
@@ -101,9 +104,9 @@ public class SuntimesCalculatorFactory
 
         if (calculatorSetting == null)
         {
-            SuntimesCalculatorDescriptor defaultDesc = com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.getDescriptor();
-            SuntimesCalculatorDescriptor.addValue(defaultDesc);  // redundant
-            this.current = defaultDesc;
+            SuntimesCalculatorDescriptor desc = fallbackCalculatorDescriptor();
+            SuntimesCalculatorDescriptor.addValue(desc);  // redundant
+            this.current = desc;
 
         } else {
             this.current = calculatorSetting;
@@ -129,7 +132,7 @@ public class SuntimesCalculatorFactory
             //Log.d("createCalculator", "using .oO( " + calculator.name() + " ): " + timezone);
 
         } catch (Exception e1) {
-            calculator = new com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator();
+            calculator = fallbackCalculator();
             Log.e("createCalculator", "fail! .oO( " + current.getReference() + "), so instantiating default: " + calculator.getClass().getName() + " :: " + timezone);
         }
         calculator.init(location, timezone, context);
@@ -137,5 +140,14 @@ public class SuntimesCalculatorFactory
         //long bench_end = System.nanoTime();
         //Log.d("DEBUG", "created " + calculator.name() + " :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
         return calculator;
+    }
+
+    public SuntimesCalculator fallbackCalculator()
+    {
+        return new com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator();
+    }
+    public SuntimesCalculatorDescriptor fallbackCalculatorDescriptor()
+    {
+        return com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.getDescriptor();
     }
 }
