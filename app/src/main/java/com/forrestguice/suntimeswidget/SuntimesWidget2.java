@@ -38,7 +38,7 @@ import java.util.Calendar;
 /**
  *  Flippable widget
  */
-public class SuntimesWidget2 extends SuntimesWidget
+public class SuntimesWidget2 extends SuntimesWidget0
 {
     private static final int UPDATEALARM_ID = 2;
 
@@ -102,7 +102,7 @@ public class SuntimesWidget2 extends SuntimesWidget
         SuntimesEquinoxSolsticeData data = new SuntimesEquinoxSolsticeData(context, appWidgetId);
         data.calculate();
 
-        views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget.clickActionIntent(context, appWidgetId, SuntimesWidget2.class));
+        views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, SuntimesWidget2.class));
         layout.updateViews(context, appWidgetId, views, data);
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }

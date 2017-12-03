@@ -30,7 +30,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 /**
  * Solstice / Equinox widget config activity.
  */
-public class SuntimesConfigActivity2 extends SuntimesConfigActivity
+public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
 {
     public SuntimesConfigActivity2()
     {
@@ -44,7 +44,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity
         setConfigActivityTitle(getString(R.string.configLabel_title2));
 
         hideOptionCompareAgainst();
-        hideOptionLayoutMode();
+        hideOption1x1LayoutMode();
         disableOptionAllowResize();
     }
 
