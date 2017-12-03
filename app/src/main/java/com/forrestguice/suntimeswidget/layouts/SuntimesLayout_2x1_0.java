@@ -57,7 +57,7 @@ public class SuntimesLayout_2x1_0 extends SuntimesLayout
 
         // update day delta
         boolean showDayDelta = WidgetSettings.loadShowComparePref(context, appWidgetId);
-        TimeDisplayText dayDeltaDisplay = utils.timeDeltaLongDisplayString(data.dayLengthToday(), data.dayLengthOther());
+        TimeDisplayText dayDeltaDisplay = utils.timeDeltaLongDisplayString(data.dayLengthToday(), data.dayLengthOther(), true);
         String dayDeltaValue = dayDeltaDisplay.getValue();
         String dayDeltaUnits = dayDeltaDisplay.getUnits();
         String dayDeltaSuffix = dayDeltaDisplay.getSuffix();
