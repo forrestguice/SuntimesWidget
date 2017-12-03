@@ -26,6 +26,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import net.time4j.Moment;
 import net.time4j.PlainDate;
 import net.time4j.TemporalType;
+import net.time4j.calendar.astro.AstronomicalSeason;
 import net.time4j.calendar.astro.SolarTime;
 import net.time4j.calendar.astro.StdSolarCalculator;
 import net.time4j.calendar.astro.Twilight;
@@ -163,6 +164,34 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     }
 
     @Override
+    public Calendar getVernalEquinoxForYear(Calendar date)
+    {
+        AstronomicalSeason vernalEquinox = adjustSeasonToHemisphere(AstronomicalSeason.VERNAL_EQUINOX);
+        return momentToCalendar(vernalEquinox.inYear(date.get(Calendar.YEAR)));
+    }
+
+    @Override
+    public Calendar getSummerSolsticeForYear(Calendar date)
+    {
+        AstronomicalSeason summerSolstice = adjustSeasonToHemisphere(AstronomicalSeason.SUMMER_SOLSTICE);
+        return momentToCalendar(summerSolstice.inYear(date.get(Calendar.YEAR)));
+    }
+
+    @Override
+    public Calendar getAutumnalEquinoxForYear(Calendar date)
+    {
+        AstronomicalSeason autumnalEquinox = adjustSeasonToHemisphere(AstronomicalSeason.AUTUMNAL_EQUINOX);
+        return momentToCalendar(autumnalEquinox.inYear(date.get(Calendar.YEAR)));
+    }
+
+    @Override
+    public Calendar getWinterSolsticeForYear(Calendar date)
+    {
+        AstronomicalSeason winterSolstice = adjustSeasonToHemisphere(AstronomicalSeason.WINTER_SOLSTICE);
+        return momentToCalendar(winterSolstice.inYear(date.get(Calendar.YEAR)));
+    }
+
+    @Override
     public boolean isDay(Calendar dateTime)
     {
         net.time4j.tz.Timezone tz = toTimezone(dateTime.getTimeZone());
@@ -196,6 +225,14 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
             retValue.setTime(TemporalType.JAVA_UTIL_DATE.from(moment));
         }
         return retValue;
+    }
+
+    protected AstronomicalSeason adjustSeasonToHemisphere( AstronomicalSeason season )
+    {
+        boolean northernHemisphere = (this.solarTime.getLatitude() >= 0);
+        if (northernHemisphere)
+            return season.onNorthernHemisphere();
+        else return season.onSouthernHemisphere();
     }
 
 }
