@@ -269,7 +269,7 @@ public class EquinoxView extends LinearLayout
             Calendar noteTime = note.getTime();
             if (noteTime != null)
             {
-                long timeDelta = noteTime.getTimeInMillis() - now.getTimeInMillis();
+                long timeDelta = Math.abs(noteTime.getTimeInMillis() - now.getTimeInMillis());
                 if (timeDelta < timeDeltaMin)
                 {
                     timeDeltaMin = timeDelta;
