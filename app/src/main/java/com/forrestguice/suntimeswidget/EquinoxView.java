@@ -19,21 +19,17 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
@@ -213,18 +209,18 @@ public class EquinoxView extends LinearLayout
         }
     }
 
-    private int noteColor, springColor, summerColor, fallColor, winterColor;
+    private int noteColor; //, springColor, summerColor, fallColor, winterColor;
 
     private void initColors(Context context)
     {
-        int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.springColor, R.attr.summerColor, R.attr.fallColor, R.attr.winterColor };
+        int[] colorAttrs = { android.R.attr.textColorPrimary }; //, R.attr.springColor, R.attr.summerColor, R.attr.fallColor, R.attr.winterColor };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         int def = R.color.transparent;
         noteColor = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
-        springColor = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
-        summerColor = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
-        fallColor = ContextCompat.getColor(context, typedArray.getResourceId(3, def));
-        winterColor = ContextCompat.getColor(context, typedArray.getResourceId(4, def));
+        //springColor = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
+        //summerColor = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
+        //fallColor = ContextCompat.getColor(context, typedArray.getResourceId(3, def));
+        //winterColor = ContextCompat.getColor(context, typedArray.getResourceId(4, def));
         typedArray.recycle();
     }
 
@@ -323,7 +319,7 @@ public class EquinoxView extends LinearLayout
 
             for (EquinoxNote note : notes)
             {
-                note.setEnabled(note.getTime().after(Calendar.getInstance()));
+                note.setEnabled();
                 note.updateNote(context, data.now());
                 note.setVisible(!minimized);
             }
@@ -609,6 +605,17 @@ public class EquinoxView extends LinearLayout
             labelView.setEnabled(value);
             timeView.setEnabled(value);
             noteView.setEnabled(value);
+        }
+
+        public void setEnabled()
+        {
+            if (time != null)
+            {
+                setEnabled(time.after(Calendar.getInstance()));
+
+            } else {
+                setEnabled(false);
+            }
         }
 
         public void setVisible( boolean visible )
