@@ -421,9 +421,12 @@ public class SuntimesUtils
         long numberOfMinutes = numberOfSeconds / 60;
         long numberOfHours = numberOfMinutes / 60;
         long numberOfDays = numberOfHours / 24;
+        long numberOfWeeks = numberOfDays / 7;
         long numberOfYears = numberOfDays / 365;
 
-        long remainingDays = numberOfDays % 365;
+        long remainingWeeks = (long)(numberOfWeeks % 52.1429);
+        long remainingDays = numberOfDays % 7;
+        //long remainingDays = numberOfDays % 365;
         long remainingHours = numberOfHours % 24;
         long remainingMinutes = numberOfMinutes % 60;
         long remainingSeconds = numberOfSeconds % 60;
@@ -432,27 +435,32 @@ public class SuntimesUtils
         if (showingYears)
             value += String.format(strTimeDeltaFormat, numberOfYears, strYears);
 
+        boolean showingWeeks = (numberOfWeeks > 0);
+        if (showingWeeks)
+            value += (showingYears ? strSpace : strEmpty) +
+                    String.format(strTimeDeltaFormat, remainingWeeks, strWeeks);
+
         boolean showingDays = (remainingDays > 0);
         if (showingDays)
-            value += (showingYears ? strSpace : strEmpty) +
+            value += (showingYears || showingWeeks ? strSpace : strEmpty) +
                      String.format(strTimeDeltaFormat, remainingDays, strDays);
 
-        boolean showingHours = (remainingHours > 0);
+        boolean showingHours = (!showingYears && !showingWeeks && remainingHours > 0);
         if (showingHours)
-            value += (showingYears || showingDays ? strSpace : strEmpty) +
+            value += (showingYears || showingWeeks || showingDays ? strSpace : strEmpty) +
                      String.format(strTimeDeltaFormat, remainingHours, strHours);
 
-        boolean showingMinutes = (!showingDays && !showingYears && remainingMinutes > 0);
+        boolean showingMinutes = (!showingDays && !showingWeeks && !showingYears && remainingMinutes > 0);
         if (showingMinutes)
-            value += (showingYears || showingDays || showingHours ? strSpace : strEmpty) +
+            value += (showingYears || showingWeeks || showingDays || showingHours ? strSpace : strEmpty) +
                      String.format(strTimeDeltaFormat, remainingMinutes, strMinutes);
 
-        boolean showingSeconds = (showSeconds && !showingHours && !showingDays && !showingYears && (remainingSeconds > 0));
+        boolean showingSeconds = (showSeconds && !showingHours && !showingDays && !showingWeeks && !showingYears && (remainingSeconds > 0));
         if (showingSeconds)
             value += (showingMinutes ? strSpace : strEmpty) +
                      String.format(strTimeDeltaFormat, remainingSeconds, strSeconds);
 
-        if (!showingSeconds && !showingMinutes && !showingHours && !showingDays && !showingYears)
+        if (!showingSeconds && !showingMinutes && !showingHours && !showingDays && !showingWeeks && !showingYears)
             value += String.format(strTimeDeltaFormat, "1", strMinutes);
 
         TimeDisplayText text = new TimeDisplayText(value.trim(), units, suffix);
