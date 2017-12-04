@@ -108,6 +108,7 @@
   <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
   <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
   <string name="delta_years">y</string>    <!-- e.g. 1y -->
+  <string name="delta_weeks">w</string>    <!-- e.g. 2w -->  <!-- TODO -->
   <string name="delta_days">d</string>     <!-- e.g. 1d -->
   <string name="delta_hours">h</string>    <!-- e.g. 2h -->
   <string name="delta_minutes">m</string>  <!-- e.g. 3m -->

@@ -78,6 +78,7 @@ public class SuntimesUtils
     private static String strSpace = " ";
     private static String strEmpty = "";
     private static String strYears = "y";
+    private static String strWeeks = "w";
     private static String strDays = "d";
     private static String strHours = "h";
     private static String strMinutes = "m";
@@ -97,6 +98,7 @@ public class SuntimesUtils
         strTimeShorter = context.getString(R.string.delta_day_shorter);
         strTimeLonger = context.getString(R.string.delta_day_longer);
         strYears = context.getString(R.string.delta_years);
+        strWeeks = context.getString(R.string.delta_weeks);
         strDays = context.getString(R.string.delta_days);
         strHours = context.getString(R.string.delta_hours);
         strMinutes = context.getString(R.string.delta_minutes);
