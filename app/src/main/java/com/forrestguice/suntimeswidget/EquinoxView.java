@@ -323,6 +323,7 @@ public class EquinoxView extends LinearLayout
 
             for (EquinoxNote note : notes)
             {
+                note.setEnabled(note.getTime().after(Calendar.getInstance()));
                 note.updateNote(context, data.now());
                 note.setVisible(!minimized);
             }
@@ -345,6 +346,7 @@ public class EquinoxView extends LinearLayout
             // no data
             for (EquinoxNote note : notes)
             {
+                note.setEnabled(false);
                 note.updateTime(context, null);
                 note.updateNote(context, null);
 
@@ -562,12 +564,14 @@ public class EquinoxView extends LinearLayout
                     if (time.before(Calendar.getInstance()))
                     {
                         String noteString = context.getString(R.string.ago, noteText);
-                        SpannableString noteSpan = SuntimesUtils.createBoldColorSpan(noteString, noteText, noteColor);
+                        SpannableString noteSpan = (noteView.isEnabled() ? SuntimesUtils.createBoldColorSpan(noteString, noteText, noteColor)
+                                                                         : SuntimesUtils.createBoldSpan(noteString, noteText));
                         noteView.setText(noteSpan);
 
                     } else {
                         String noteString = context.getString(R.string.hence, noteText);
-                        SpannableString noteSpan = SuntimesUtils.createBoldColorSpan(noteString, noteText, noteColor);
+                        SpannableString noteSpan = (noteView.isEnabled() ? SuntimesUtils.createBoldColorSpan(noteString, noteText, noteColor)
+                                                                         : SuntimesUtils.createBoldSpan(noteString, noteText));
                         noteView.setText(noteSpan);
                     }
                 } else {
@@ -581,6 +585,7 @@ public class EquinoxView extends LinearLayout
             this.highlighted = highlighted;
             //highlight(labelView, highlighted);
             highlight(timeView, highlighted);
+            setEnabled(true);
         }
 
         private void highlight( TextView view, boolean value )
@@ -597,6 +602,13 @@ public class EquinoxView extends LinearLayout
                     view.setPaintFlags(view.getPaintFlags() & (~Paint.UNDERLINE_TEXT_FLAG));
                 }
             }
+        }
+
+        public void setEnabled( boolean value)
+        {
+            labelView.setEnabled(value);
+            timeView.setEnabled(value);
+            noteView.setEnabled(value);
         }
 
         public void setVisible( boolean visible )
