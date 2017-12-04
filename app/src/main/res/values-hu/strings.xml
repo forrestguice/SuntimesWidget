@@ -18,6 +18,7 @@
     <string name="configAction_setAlarm">Emlékeztető beállítása</string>
     <string name="configAction_setTimeZone">Időzóna beállítása</string>
     <string name="configAction_setDate">Dátum beállítása</string>
+    <string name="configAction_equinoxDialog">Solstice / Equinox</string> <!-- TODO -->
     <string name="configAction_help">Segítség</string>
     <string name="configAction_settings">Beállítások</string>
     <string name="configAction_aboutWidget">Rólunk</string>
@@ -126,7 +127,9 @@
     <string name="configAction_reconfigWidget_short">Újrakonfigurál</string>       <!-- Button: Reconfigure -->
     <string name="configAction_reconfigWidget">Widget újrakonfigurálása</string>      <!-- used as title when reconfiguring -->
     <string name="configLabel_title0">Suntimes Widget</string>                  <!-- used as title when adding -->
-    <string name="configLabel_title1">Flippable Widget</string>                 <!-- used as title when adding --> 
+    <string name="configLabel_title1">Flippable Widget</string>                 <!-- used as title when adding -->
+    <string name="configLabel_title2">Solstice Widget</string>                  <!-- used as title when adding -->  <!-- TODO -->
+
     <!-- Widget Setting: general -->
     <string name="configLabel_general">Általános beállítások</string>                <!-- group title -->
     <string name="configLabel_general_calculator">Adatok forrása:</string>         <!-- spinner label -->
@@ -152,6 +155,15 @@
     <string name="timeMode_astronomical">Csillagászati szürkület</string> <!-- setting -->
     <string name="timeMode_night">Éjjel</string>                   <!-- a label (not an actual timeMode setting) -->
     <string name="timeMode_day">Nappal</string>                       <!-- a label (not an actual timeMode setting) -->
+
+    <string name="timeMode_equinox_vernal">Spring Equinox</string>      <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_equinox_vernal_short">Equinox</string>       <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_equinox_autumnal">Fall Equinox</string>  <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_equinox_autumnal_short">Equinox</string>     <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_solstice_summer">Summer Solstice</string>    <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_solstice_summer_short">Solstice</string>     <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_solstice_winter">Winter Solstice</string>    <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_solstice_winter_short">Solstice</string>     <!-- setting -->  <!-- TODO -->
 
     <string name="configLabel_general_timeMode">Mód:</string>          <!-- spinner label -->
 
@@ -356,6 +368,11 @@
     <!-- App Setting: Show Lightmap -->
     <string name="configLabel_ui_showLightmap">Éjszakai fénytérkép megjelenítése</string>
     <string name="configLabel_ui_showLightmap_summary">Mutasd egy ábrán a napközbeni, éjjeli és szürkeleti időszakokat.</string>
+
+    <!-- App Setting: Show Equinox / Solstice -->
+    <string name="configLabel_ui_showEquinox">Show Solstice / Equinox</string>  <!-- TODO -->
+    <string name="configLabel_ui_showEquinox_summary">Show time until next solstice or equinox.</string>  <!-- TODO -->
+    <string name="configLabel_ui_showEquinox_notImplemented">Solstice and equinox not implemented by this data source.</string>  <!-- TODO -->
 
     <!-- App Setting: show data source -->
     <string name="configLabel_ui_showdatasource">Show Data Source</string>  <!-- TODO -->
@@ -565,6 +582,7 @@
     <string name="app_name">Suntimes</string>
     <string name="app_name_widget0">Suntimes Widget</string>
     <string name="app_name_widget1">Suntimes Widget (flippable)</string>
+    <string name="app_name_widget2">Suntimes Solstice Widget</string>  <!-- TODO -->
     <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Megnézheti a napkelte, a napnyugta és a szürkület idejét.</string>
     <string name="app_support_url"><![CDATA[

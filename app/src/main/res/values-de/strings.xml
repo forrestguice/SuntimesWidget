@@ -21,6 +21,7 @@
   <string name="configAction_setAlarm">Alarm</string>
   <string name="configAction_setTimeZone">Zeitzone</string>
   <string name="configAction_setDate">Datum</string>
+  <string name="configAction_equinoxDialog">Solstice / Equinox</string> <!-- TODO -->
   <string name="configAction_help">Hilfe</string>
   <string name="configAction_settings">Einstellungen</string>
   <string name="configAction_aboutWidget">Über</string>
@@ -156,14 +157,14 @@
   <string name="timeMode_night">Nacht</string>                   <!-- a label (not an actual timeMode setting) --> <!-- TODO: confirm this is right / fix -->
   <string name="timeMode_day">Tag</string>                       <!-- a label (not an actual timeMode setting) --> <!-- TODO: confirm this is right / fix -->
 
-    <string name="timeMode_equinox_vernal">Vernal Equinox</string>      <!-- setting --> <!-- TODO -->
-    <string name="timeMode_equinox_vernal_short">Equinox</string>       <!-- setting --> <!-- TODO -->
-    <string name="timeMode_equinox_autumnal">Autumnal Equinox</string>  <!-- setting --> <!-- TODO -->
-    <string name="timeMode_equinox_autumnal_short">Equinox</string>     <!-- setting --> <!-- TODO -->
-    <string name="timeMode_solstice_summer">Summer Solstice</string>    <!-- setting --> <!-- TODO -->
-    <string name="timeMode_solstice_summer_short">Solstice</string>     <!-- setting --> <!-- TODO -->
-    <string name="timeMode_solstice_winter">Winter Solstice</string>    <!-- setting --> <!-- TODO -->
-    <string name="timeMode_solstice_winter_short">Solstice</string>     <!-- setting --> <!-- TODO -->
+  <string name="timeMode_equinox_vernal">Spring Equinox</string>      <!-- setting -->  <!-- TODO -->
+  <string name="timeMode_equinox_vernal_short">Equinox</string>       <!-- setting -->  <!-- TODO -->
+  <string name="timeMode_equinox_autumnal">Fall Equinox</string>  <!-- setting -->  <!-- TODO -->
+  <string name="timeMode_equinox_autumnal_short">Equinox</string>     <!-- setting -->  <!-- TODO -->
+  <string name="timeMode_solstice_summer">Summer Solstice</string>    <!-- setting -->  <!-- TODO -->
+  <string name="timeMode_solstice_summer_short">Solstice</string>     <!-- setting -->  <!-- TODO -->
+  <string name="timeMode_solstice_winter">Winter Solstice</string>    <!-- setting -->  <!-- TODO -->
+  <string name="timeMode_solstice_winter_short">Solstice</string>     <!-- setting -->  <!-- TODO -->
 
   <string name="configLabel_general_timeMode">Modus:</string>          <!-- spinner label -->
 
@@ -367,6 +368,11 @@
   <!-- App Setting: Show Lightmap -->
   <string name="configLabel_ui_showLightmap">Show Light Map</string>  <!-- TODO -->
   <string name="configLabel_ui_showLightmap_summary">Show a stacked bar chart of day, night, and twilight periods.</string> <!-- TODO -->
+
+  <!-- App Setting: Show Equinox / Solstice -->
+  <string name="configLabel_ui_showEquinox">Show Solstice / Equinox</string>  <!-- TODO -->
+  <string name="configLabel_ui_showEquinox_summary">Show time until next solstice or equinox.</string>  <!-- TODO -->
+  <string name="configLabel_ui_showEquinox_notImplemented">Solstice and equinox not implemented by this data source.</string>  <!-- TODO -->
 
   <!-- App Setting: show data source -->
   <string name="configLabel_ui_showdatasource">Show Data Source</string>  <!-- TODO -->
