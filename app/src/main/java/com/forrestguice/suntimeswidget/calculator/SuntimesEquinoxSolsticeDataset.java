@@ -100,6 +100,11 @@ public class SuntimesEquinoxSolsticeDataset
         dataSolsticeWinter.invalidateCalculation();
     }
 
+    public boolean isImplemented()
+    {
+        return (dataEquinoxVernal.eventCalendarThisYear() != null);
+    }
+
     public Calendar todayIs()
     {
         return dataEquinoxVernal.todayIs();

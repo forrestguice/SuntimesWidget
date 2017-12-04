@@ -1309,7 +1309,7 @@ public class SuntimesActivity extends AppCompatActivity
         // equinox and solstice
         //
         boolean enableEquinox = AppSettings.loadShowEquinoxPref(this);
-        showEquinoxView(enableEquinox);
+        showEquinoxView(enableEquinox && dataset2.isImplemented());
         card_equinoxSolstice.updateViews(SuntimesActivity.this, dataset2);
 
         //
