@@ -263,7 +263,7 @@ public class EquinoxView extends LinearLayout
         }
 
         EquinoxNote soonest = null;
-        long timeDeltaMin = Integer.MAX_VALUE;
+        long timeDeltaMin = Long.MAX_VALUE;
         for (EquinoxNote note : notes)
         {
             Calendar noteTime = note.getTime();
@@ -328,15 +328,17 @@ public class EquinoxView extends LinearLayout
             }
 
             EquinoxNote nextNote = findNextNote(data.now());
-            if (nextNote != null)
+            if (nextNote == null)
             {
-                if (minimized)
-                {
-                    nextNote.setVisible(true);
+                nextNote = notes.get(0);
+            }
 
-                } else {
-                    nextNote.setHighlighted(true);
-                }
+            if (minimized)
+            {
+                nextNote.setVisible(true);
+
+            } else {
+                nextNote.setHighlighted(true);
             }
 
         } else {
