@@ -58,6 +58,7 @@ public class EquinoxView extends LinearLayout
     private boolean minimized = false;
     private boolean centered = false;
 
+    private TextView empty;
     private ViewFlipper flipper;           // flip between
     private Animation anim_card_outNext, anim_card_inNext, anim_card_outPrev, anim_card_inPrev;
     private ImageView btn_flipperNext_thisYear, btn_flipperPrev_thisYear;
@@ -98,6 +99,8 @@ public class EquinoxView extends LinearLayout
             LinearLayout.LayoutParams lp = generateLayoutParams(attrs);
             centered = ((lp.gravity == Gravity.CENTER) || (lp.gravity == Gravity.CENTER_HORIZONTAL));
         }
+
+        empty = (TextView)findViewById(R.id.txt_empty);
 
         flipper = (ViewFlipper)findViewById(R.id.info_equinoxsolstice_flipper);
         flipper.setOnTouchListener(cardTouchListener);
@@ -296,8 +299,26 @@ public class EquinoxView extends LinearLayout
     protected void updateViews( Context context, SuntimesEquinoxSolsticeDataset data )
     {
         showNextPrevButtons(!minimized);
+        flipper.setVisibility(View.VISIBLE);
+        empty.setVisibility(View.GONE);
 
-        if (data != null && data.isCalculated())
+        if (data == null)
+        {
+            for (EquinoxNote note : notes)
+            {
+                note.setEnabled(false);
+                note.updateTime(context, null);
+                note.updateNote(context, null);
+
+                if (minimized)
+                {
+                    note.setVisible(false);
+                }
+            }
+            return;
+        }
+
+        if (data.isCalculated() && data.isImplemented())
         {
             SuntimesUtils.TimeDisplayText thisYear = utils.calendarDateYearDisplayString(context, data.dataEquinoxVernal.eventCalendarThisYear());
             titleThisYear.setVisibility(minimized ? View.GONE : View.VISIBLE);
@@ -333,24 +354,13 @@ public class EquinoxView extends LinearLayout
             if (minimized)
             {
                 nextNote.setVisible(true);
-
             } else {
                 nextNote.setHighlighted(true);
             }
 
         } else {
-            // no data
-            for (EquinoxNote note : notes)
-            {
-                note.setEnabled(false);
-                note.updateTime(context, null);
-                note.updateNote(context, null);
-
-                if (minimized)
-                {
-                    note.setVisible(false);
-                }
-            }
+            empty.setVisibility(View.VISIBLE);
+            flipper.setVisibility(View.GONE);
         }
     }
 
