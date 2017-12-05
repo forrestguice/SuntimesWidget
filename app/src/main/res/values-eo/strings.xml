@@ -295,18 +295,18 @@
     <string name="configLabel_themeColorSunset">Koloro de sunsubiro:</string>   <!-- color label -->
     <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorNoon">Noon Color:</string>      <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorNoon">Koloro de sun-kulmino:</string>      <!-- color label -->
     <!--<string name="configHint_themeColorNoon">#FFFFFFFF</string>-->         <!-- color hint -->
 
-    <string name="configLabel_themeColorFill">Fill:</string>         <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorFill">Plenigo:</string>         <!-- color label -->
     <!--<string name="configHint_themeColorFill">#FFFFFFFF</string>-->        <!-- color hint -->
 
-    <string name="configLabel_themeColorBorder">Border:</string>         <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorBorder">Bordero:</string>         <!-- color label -->
     <!--<string name="configHint_themeColorBorder">#FFFFFFFF</string>-->        <!-- color hint -->
 
-    <string name="configLabel_themeBorderWidthRiseSet">Border Width (rise/set):</string>  <!-- size label --> <!-- TODO -->
+    <string name="configLabel_themeBorderWidthRiseSet">Larĝo de bordero (leviĝo/subiro):</string>  <!-- size label -->
     <!--<string name="configHint_themeBorderWidthRiseSet">2</string>-->                          <!-- size hint -->
-    <string name="configLabel_themeBorderWidthNoon">Border Width (noon):</string>         <!-- size label --> <!-- TODO -->
+    <string name="configLabel_themeBorderWidthNoon">Larĝo de bordero (sun-kulmino):</string>         <!-- size label -->
     <!--<string name="configHint_themeBorderWidthNoon">3</string>-->
 
     <string name="configLabel_themeColorSuffix">Koloro de sufikso:</string>   <!-- color label -->
