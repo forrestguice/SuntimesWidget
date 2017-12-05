@@ -285,18 +285,18 @@
     <string name="configLabel_themeColorSunset">Kolor zachodu:</string>   <!-- color label -->
     <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorNoon">Noon Color:</string>      <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorNoon">Kolor południa:</string>      <!-- color label -->
     <!--<string name="configHint_themeColorNoon">#FFFFFFFF</string>-->         <!-- color hint -->
 
-    <string name="configLabel_themeColorFill">Fill:</string>         <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorFill">Wypełnienie:</string>         <!-- color label -->
     <!--<string name="configHint_themeColorFill">#FFFFFFFF</string>-->        <!-- color hint -->
 
-    <string name="configLabel_themeColorBorder">Border:</string>         <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorBorder">Obramowanie:</string>         <!-- color label -->
     <!--<string name="configHint_themeColorBorder">#FFFFFFFF</string>-->        <!-- color hint -->
 
-    <string name="configLabel_themeBorderWidthRiseSet">Border Width (rise/set):</string>  <!-- size label --> <!-- TODO -->
+    <string name="configLabel_themeBorderWidthRiseSet">Szerokość obramowania (wschód/zachód):</string>  <!-- size label -->
     <!--<string name="configHint_themeBorderWidthRiseSet">2</string>-->                          <!-- size hint -->
-    <string name="configLabel_themeBorderWidthNoon">Border Width (noon):</string>         <!-- size label --> <!-- TODO -->
+    <string name="configLabel_themeBorderWidthNoon">Szerokość obramowania (południe):</string>         <!-- size label -->
     <!--<string name="configHint_themeBorderWidthNoon">3</string>-->
 
     <string name="configLabel_themeColorSuffix">Kolor sufiksu:</string>   <!-- color label -->
