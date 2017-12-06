@@ -254,7 +254,7 @@ public class EquinoxView extends LinearLayout
         this.minimized = value;
     }
 
-    private EquinoxNote findNextNote(Calendar now)
+    private EquinoxNote findSoonestNote(Calendar now)
     {
         if (notes == null || now == null)
         {
@@ -345,7 +345,7 @@ public class EquinoxView extends LinearLayout
                 note.setVisible(!minimized);
             }
 
-            EquinoxNote nextNote = findNextNote(data.now());
+            EquinoxNote nextNote = findSoonestNote(data.now());
             if (nextNote == null)
             {
                 nextNote = notes.get(0);

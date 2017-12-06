@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.calculator.time4a;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -167,28 +168,32 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     public Calendar getVernalEquinoxForYear(Calendar date)
     {
         AstronomicalSeason vernalEquinox = adjustSeasonToHemisphere(AstronomicalSeason.VERNAL_EQUINOX);
-        return momentToCalendar(vernalEquinox.inYear(date.get(Calendar.YEAR)));
+        Moment moment = vernalEquinox.inYear(date.get(Calendar.YEAR));
+        return momentToCalendar(moment);
     }
 
     @Override
     public Calendar getSummerSolsticeForYear(Calendar date)
     {
         AstronomicalSeason summerSolstice = adjustSeasonToHemisphere(AstronomicalSeason.SUMMER_SOLSTICE);
-        return momentToCalendar(summerSolstice.inYear(date.get(Calendar.YEAR)));
+        Moment moment = summerSolstice.inYear(date.get(Calendar.YEAR));
+        return momentToCalendar(moment);
     }
 
     @Override
     public Calendar getAutumnalEquinoxForYear(Calendar date)
     {
         AstronomicalSeason autumnalEquinox = adjustSeasonToHemisphere(AstronomicalSeason.AUTUMNAL_EQUINOX);
-        return momentToCalendar(autumnalEquinox.inYear(date.get(Calendar.YEAR)));
+        Moment moment = autumnalEquinox.inYear(date.get(Calendar.YEAR));
+        return momentToCalendar(moment);
     }
 
     @Override
     public Calendar getWinterSolsticeForYear(Calendar date)
     {
         AstronomicalSeason winterSolstice = adjustSeasonToHemisphere(AstronomicalSeason.WINTER_SOLSTICE);
-        return momentToCalendar(winterSolstice.inYear(date.get(Calendar.YEAR)));
+        Moment moment = winterSolstice.inYear(date.get(Calendar.YEAR));
+        return momentToCalendar(moment);
     }
 
     @Override

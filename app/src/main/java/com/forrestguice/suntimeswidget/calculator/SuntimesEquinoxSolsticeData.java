@@ -77,9 +77,8 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
     /**
      * result: eventCalendarUpcoming
      */
-    public Calendar eventCalendarUpcoming()
+    public Calendar eventCalendarUpcoming(Calendar now)
     {
-        Calendar now = Calendar.getInstance();
         Calendar event = eventCalendarThisYear();
         if (now.after(event))
         {
@@ -91,10 +90,9 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
     /**
      * @return true data is stale (upcoming event is in the past)
      */
-    public boolean isStale()
+    public boolean isStale(Calendar now)
     {
-        Calendar now = Calendar.getInstance();
-        Calendar event = eventCalendarUpcoming();
+        Calendar event = eventCalendarUpcoming(now);
         return now.after(event);
     }
 
