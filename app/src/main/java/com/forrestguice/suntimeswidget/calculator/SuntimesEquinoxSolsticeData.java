@@ -87,10 +87,10 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
         return event;
     }
 
-    public Calendar eventCalendarSoonest(Calendar now)
+    public Calendar eventCalendarClosest(Calendar now)
     {
         long timeDeltaMin = Long.MAX_VALUE;
-        Calendar soonest = eventCalendarThisYear;
+        Calendar closest = eventCalendarThisYear;
         Calendar[] events = {eventCalendarThisYear(), eventCalendarOtherYear()};
         for (Calendar event : events)
         {
@@ -100,11 +100,11 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
                 if (timeDelta < timeDeltaMin)
                 {
                     timeDeltaMin = timeDelta;
-                    soonest = event;
+                    closest = event;
                 }
             }
         }
-        return soonest;
+        return closest;
     }
 
     /**
