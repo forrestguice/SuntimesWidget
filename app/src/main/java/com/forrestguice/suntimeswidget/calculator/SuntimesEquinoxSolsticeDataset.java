@@ -86,6 +86,30 @@ public class SuntimesEquinoxSolsticeDataset
         dataSolsticeWinter.calculate();
     }
 
+    public SuntimesEquinoxSolsticeData findSoonest(Calendar now)
+    {
+        long timeDeltaMin = Long.MAX_VALUE;
+        SuntimesEquinoxSolsticeData soonest = null;
+        SuntimesEquinoxSolsticeData[] dataset = { dataEquinoxVernal, dataSolsticeSummer, dataEquinoxAutumnal, dataSolsticeWinter };
+        for (SuntimesEquinoxSolsticeData data : dataset)
+        {
+            Calendar[] events = {data.eventCalendarThisYear(), data.eventCalendarOtherYear()};
+            for (Calendar event : events)
+            {
+                if (event != null)
+                {
+                    long timeDelta = Math.abs(event.getTimeInMillis() - now.getTimeInMillis());
+                    if (timeDelta < timeDeltaMin)
+                    {
+                        timeDeltaMin = timeDelta;
+                        soonest = data;
+                    }
+                }
+            }
+        }
+        return soonest;
+    }
+
     public boolean isCalculated()
     {
         return dataEquinoxVernal.isCalculated();

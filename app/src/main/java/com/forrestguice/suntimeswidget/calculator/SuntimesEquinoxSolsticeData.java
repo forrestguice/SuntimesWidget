@@ -87,6 +87,26 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
         return event;
     }
 
+    public Calendar eventCalendarSoonest(Calendar now)
+    {
+        long timeDeltaMin = Long.MAX_VALUE;
+        Calendar soonest = eventCalendarThisYear;
+        Calendar[] events = {eventCalendarThisYear(), eventCalendarOtherYear()};
+        for (Calendar event : events)
+        {
+            if (event != null)
+            {
+                long timeDelta = Math.abs(event.getTimeInMillis() - now.getTimeInMillis());
+                if (timeDelta < timeDeltaMin)
+                {
+                    timeDeltaMin = timeDelta;
+                    soonest = event;
+                }
+            }
+        }
+        return soonest;
+    }
+
     /**
      * @return true data is stale (upcoming event is in the past)
      */
