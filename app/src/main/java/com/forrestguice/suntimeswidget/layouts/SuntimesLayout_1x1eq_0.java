@@ -62,25 +62,30 @@ public class SuntimesLayout_1x1eq_0 extends SuntimesLayoutEq
         {
             timeMode = data.timeMode();
             Calendar now = Calendar.getInstance();
-            Calendar event = data.eventCalendarUpcoming();
-
-            TimeDisplayText eventString = utils.calendarDateTimeDisplayString(context, event);
-            views.setTextViewText(R.id.text_time_event, eventString.getValue());
-
-            int noteStringId = R.string.hence;
-            if (event.before(now))
+            Calendar event = data.eventCalendarSoonest(now);
+            if (event != null)
             {
-                noteStringId = R.string.ago;
+                TimeDisplayText eventString = utils.calendarDateTimeDisplayString(context, event);
+                views.setTextViewText(R.id.text_time_event, eventString.getValue());
+
+                int noteStringId = R.string.hence;
+                if (event.before(now))
+                {
+                    noteStringId = R.string.ago;
+                }
+
+                String noteTime = utils.timeDeltaDisplayString(now.getTime(), event.getTime()).toString();
+                String noteString = context.getString(noteStringId, noteTime);
+                SpannableString noteSpan = SuntimesUtils.createBoldColorSpan(noteString, noteTime, timeColor);
+                views.setTextViewText(R.id.text_time_event_note, noteSpan);
+
+            } else {
+                views.setTextViewText(R.id.text_time_event, "");
+                views.setTextViewText(R.id.text_time_event_note, context.getString(R.string.configLabel_ui_showEquinox_notImplemented));
             }
-
-            String noteTime = utils.timeDeltaDisplayString(now.getTime(), event.getTime()).toString();
-            String noteString = context.getString(noteStringId, noteTime);
-            SpannableString noteSpan = SuntimesUtils.createBoldColorSpan(noteString, noteTime, timeColor);
-            views.setTextViewText(R.id.text_time_event_note, noteSpan);
-
         } else {
             views.setTextViewText(R.id.text_time_event, "");
-            views.setTextViewText(R.id.text_time_event_note, "");
+            views.setTextViewText(R.id.text_time_event_note, context.getString(R.string.time_loading));
         }
     }
 

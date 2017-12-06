@@ -1322,7 +1322,7 @@ public class SuntimesActivity extends AppCompatActivity
         //DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());       // 4/11/2016
         DateFormat dateFormat = android.text.format.DateFormat.getMediumDateFormat(getApplicationContext());   // Apr 11, 2016
         //DateFormat dateFormat = android.text.format.DateFormat.getLongDateFormat(getApplicationContext());   // April 11, 2016
-                
+
         String thisString = getString(R.string.today);
         String otherString = getString(R.string.tomorrow);
 

@@ -27,6 +27,7 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayoutEq;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1eq_0;
 
@@ -97,8 +98,20 @@ public class SuntimesWidget2 extends SuntimesWidget0
         boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId);
         views.setViewVisibility(R.id.text_title, showTitle ? View.VISIBLE : View.GONE);
 
-        SuntimesEquinoxSolsticeData data = new SuntimesEquinoxSolsticeData(context, appWidgetId);
-        data.calculate();
+        SuntimesEquinoxSolsticeData data;
+        boolean overrideMode = WidgetSettings.loadTimeMode2OverridePref(context, appWidgetId);
+        if (overrideMode)
+        {
+            SuntimesEquinoxSolsticeDataset dataset = new SuntimesEquinoxSolsticeDataset(context, appWidgetId);
+            dataset.calculateData();
+
+            SuntimesEquinoxSolsticeData nextEvent = dataset.findSoonest(dataset.now());
+            data = (nextEvent != null ? nextEvent : dataset.dataEquinoxVernal);
+
+        } else {
+            data = new SuntimesEquinoxSolsticeData(context, appWidgetId);
+            data.calculate();
+        }
 
         views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, SuntimesWidget2.class));
         layout.updateViews(context, appWidgetId, views, data);
