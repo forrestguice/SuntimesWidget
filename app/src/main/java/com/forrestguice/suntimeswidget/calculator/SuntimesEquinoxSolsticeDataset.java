@@ -48,6 +48,21 @@ public class SuntimesEquinoxSolsticeDataset
         dataSolsticeWinter.setTimeMode(WidgetSettings.SolsticeEquinoxMode.SOLSTICE_WINTER);
     }
 
+    public SuntimesEquinoxSolsticeDataset(Context context, int appWidgetId)
+    {
+        dataEquinoxVernal = new SuntimesEquinoxSolsticeData(context, appWidgetId);
+        dataEquinoxVernal.setTimeMode(WidgetSettings.SolsticeEquinoxMode.EQUINOX_VERNAL);
+
+        dataSolsticeSummer = new SuntimesEquinoxSolsticeData(dataEquinoxVernal);
+        dataSolsticeSummer.setTimeMode(WidgetSettings.SolsticeEquinoxMode.SOLSTICE_SUMMER);
+
+        dataEquinoxAutumnal = new SuntimesEquinoxSolsticeData(dataEquinoxVernal);
+        dataEquinoxAutumnal.setTimeMode(WidgetSettings.SolsticeEquinoxMode.EQUINOX_AUTUMNAL);
+
+        dataSolsticeWinter = new SuntimesEquinoxSolsticeData(dataEquinoxVernal);
+        dataSolsticeWinter.setTimeMode(WidgetSettings.SolsticeEquinoxMode.SOLSTICE_WINTER);
+    }
+
     public SuntimesEquinoxSolsticeDataset( SuntimesEquinoxSolsticeData dataEquinoxVernal,
                                            SuntimesEquinoxSolsticeData dataSolsticeSummer,
                                            SuntimesEquinoxSolsticeData dataEquinoxAutumnal,
