@@ -22,8 +22,6 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -45,6 +43,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
 
         hideOptionCompareAgainst();
         hideOption1x1LayoutMode();
+        showOptionShowNoon(false);
         disableOptionAllowResize();
     }
 
