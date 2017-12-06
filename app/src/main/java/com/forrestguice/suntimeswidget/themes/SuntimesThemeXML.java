@@ -37,7 +37,7 @@ public class SuntimesThemeXML implements SuntimesThemeIO
 {
     public static final String KEY_THEMES = "themes";
     public static final String KEY_THEME = "theme";
-    public static final String VERSION = "1.1";
+    public static final String VERSION = "1.2";
 
     public SuntimesThemeXML() {}
 
@@ -254,6 +254,22 @@ public class SuntimesThemeXML implements SuntimesThemeIO
                 xml.text(Integer.toString(theme.getSunsetIconStrokeWidth()));
                 xml.endTag(namespace, SuntimesTheme.THEME_SETICON_STROKE_WIDTH);
 
+                xml.startTag(namespace, SuntimesTheme.THEME_SPRINGCOLOR);
+                xml.text(Integer.toString(theme.getSpringColor()));
+                xml.endTag(namespace, SuntimesTheme.THEME_SPRINGCOLOR);
+
+                xml.startTag(namespace, SuntimesTheme.THEME_SUMMERCOLOR);
+                xml.text(Integer.toString(theme.getSummerColor()));
+                xml.endTag(namespace, SuntimesTheme.THEME_SUMMERCOLOR);
+
+                xml.startTag(namespace, SuntimesTheme.THEME_FALLCOLOR);
+                xml.text(Integer.toString(theme.getFallColor()));
+                xml.endTag(namespace, SuntimesTheme.THEME_FALLCOLOR);
+
+                xml.startTag(namespace, SuntimesTheme.THEME_WINTERCOLOR);
+                xml.text(Integer.toString(theme.getWinterColor()));
+                xml.endTag(namespace, SuntimesTheme.THEME_WINTERCOLOR);
+
                 xml.startTag(namespace, SuntimesTheme.THEME_TITLESIZE);
                 xml.text(Float.toString(theme.getTitleSizeSp()));
                 xml.endTag(namespace, SuntimesTheme.THEME_TITLESIZE);
@@ -438,6 +454,15 @@ public class SuntimesThemeXML implements SuntimesThemeIO
                         theme.themeSunsetIconStrokeColor = colorStringToInt(value);
                     } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_SETICON_STROKE_WIDTH)) {
                         theme.themeSunsetIconStrokeWidth = Integer.parseInt(value);
+
+                    } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_SPRINGCOLOR)) {
+                        theme.themeSpringColor = colorStringToInt(value);
+                    } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_SUMMERCOLOR)) {
+                        theme.themeSummerColor = colorStringToInt(value);
+                    } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_FALLCOLOR)) {
+                        theme.themeFallColor = colorStringToInt(value);
+                    } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_WINTERCOLOR)) {
+                        theme.themeWinterColor = colorStringToInt(value);
 
                     } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_TITLESIZE)) {
                         theme.themeTitleSize = Float.parseFloat(value);

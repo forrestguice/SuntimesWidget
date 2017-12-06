@@ -50,6 +50,11 @@ public class LightTheme extends SuntimesTheme
     public static final int THEMEDEF_SUNSETCOLOR_ID = R.color.sunIcon_color_setting_light;
     public static final int THEMEDEF_TIMESUFFIXCOLOR_ID = android.R.color.tertiary_text_light;
 
+    public static final int THEMEDEF_SPRINGCOLOR_ID = R.color.springColor_light;
+    public static final int THEMEDEF_SUMMERCOLOR_ID = R.color.summerColor_light;
+    public static final int THEMEDEF_FALLCOLOR_ID = R.color.fallColor_light;
+    public static final int THEMEDEF_WINTERCOLOR_ID = R.color.winterColor_light;
+
     public LightTheme(Context context)
     {
         super();
@@ -87,6 +92,11 @@ public class LightTheme extends SuntimesTheme
 
         this.themeSunriseIconStrokeColor = this.themeSunsetIconColor;
         this.themeSunsetIconStrokeColor = this.themeSunriseIconColor;
+
+        this.themeSpringColor = ContextCompat.getColor(context, THEMEDEF_SPRINGCOLOR_ID);
+        this.themeSummerColor = ContextCompat.getColor(context, THEMEDEF_SUMMERCOLOR_ID);
+        this.themeFallColor = ContextCompat.getColor(context, THEMEDEF_FALLCOLOR_ID);
+        this.themeWinterColor = ContextCompat.getColor(context, THEMEDEF_WINTERCOLOR_ID);
     }
 
     public ThemeDescriptor themeDescriptor()
