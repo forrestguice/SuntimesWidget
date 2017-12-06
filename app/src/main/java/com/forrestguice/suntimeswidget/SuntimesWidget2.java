@@ -97,13 +97,13 @@ public class SuntimesWidget2 extends SuntimesWidget0
         boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId);
         views.setViewVisibility(R.id.text_title, showTitle ? View.VISIBLE : View.GONE);
 
-        layout.themeViews(context, views, appWidgetId);
-
         SuntimesEquinoxSolsticeData data = new SuntimesEquinoxSolsticeData(context, appWidgetId);
         data.calculate();
 
         views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, SuntimesWidget2.class));
         layout.updateViews(context, appWidgetId, views, data);
+        layout.themeViews(context, views, appWidgetId);
+
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
@@ -156,6 +156,7 @@ public class SuntimesWidget2 extends SuntimesWidget0
     /**
      * UpdateInterval
      */
+    @SuppressWarnings("PointlessArithmeticExpression")
     public static enum UpdateInterval
     {
         INTERVAL_NORMAL(AlarmManager.INTERVAL_HOUR, -1),  // 1h

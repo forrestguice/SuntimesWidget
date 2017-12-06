@@ -27,7 +27,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.SuntimesUtils.TimeDisplayText;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
-import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.Calendar;
@@ -60,6 +60,7 @@ public class SuntimesLayout_1x1eq_0 extends SuntimesLayoutEq
 
         if (data != null && data.isCalculated())
         {
+            timeMode = data.timeMode();
             Calendar now = Calendar.getInstance();
             Calendar event = data.eventCalendarUpcoming();
 
@@ -83,6 +84,7 @@ public class SuntimesLayout_1x1eq_0 extends SuntimesLayoutEq
         }
     }
 
+    private WidgetSettings.SolsticeEquinoxMode timeMode = WidgetSettings.SolsticeEquinoxMode.EQUINOX_VERNAL;
     private int timeColor = Color.WHITE;
 
     @Override
@@ -92,7 +94,7 @@ public class SuntimesLayout_1x1eq_0 extends SuntimesLayoutEq
 
         timeColor = theme.getTimeColor();
         int textColor = theme.getTextColor();
-        int eventColor = Color.GREEN;  // TODO: from theme
+        int eventColor = theme.getSeasonColor(timeMode);
 
         views.setTextColor(R.id.text_time_event_note, textColor);
         views.setTextColor(R.id.text_time_event, eventColor);
