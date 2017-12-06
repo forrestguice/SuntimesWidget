@@ -254,6 +254,9 @@
     <string name="configLabel_general_compareMode">Compare Against:</string>    <!-- spinner label -->
     <string name="configLabel_general_showComparison">Show Comparison</string>  <!-- checkbox label -->
 
+    <!-- Widget Setting: tracking mode -->
+    <string name="trackingMode_closest">Closest event</string>                 <!-- setting -->
+    <string name="trackingMode_soonest">Upcoming event</string>                <!-- setting -->
     <!-- Widget Settings: noon -->
     <string name="configLabel_general_showNoon">Show Solar Noon</string>        <!-- checkbox label -->
 

@@ -90,6 +90,9 @@ public class WidgetSettings
     public static final String PREF_KEY_GENERAL_TIMENOTE_SET = "timenoteset";
     public static final SolarEvents PREF_DEF_GENERAL_TIMENOTE_SET = SolarEvents.SUNSET;
 
+    public static final String PREF_KEY_GENERAL_TRACKINGMODE = "trackingmode";
+    public static final TrackingMode PREF_DEF_GENERAL_TRACKINGMODE = TrackingMode.CLOSEST;
+
     public static final String PREF_KEY_GENERAL_COMPAREMODE = "comparemode";
     public static final CompareMode PREF_DEF_GENERAL_COMPAREMODE = CompareMode.TOMORROW;
 
@@ -676,6 +679,42 @@ public class WidgetSettings
         }
     }
 
+    /**
+     * TrackingMode
+     */
+    public static enum TrackingMode
+    {
+        CLOSEST("Closest Event"),
+        SOONEST("Upcoming Event");
+
+        private String displayString;
+
+        private TrackingMode( String displayString )
+        {
+            this.displayString = displayString;
+        }
+
+        public String getDisplayString()
+        {
+            return displayString;
+        }
+
+        public void setDisplayString( String displayString )
+        {
+            this.displayString = displayString;
+        }
+
+        public String toString()
+        {
+            return displayString;
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            CLOSEST.setDisplayString( context.getString(R.string.trackingMode_closest) );
+            SOONEST.setDisplayString( context.getString(R.string.trackingMode_soonest) );
+        }
+    }
 
     /**
      * SolsticeEquinoxMode
@@ -1372,6 +1411,38 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_TIMEZONE;
         prefs.remove(prefs_prefix + PREF_KEY_TIMEZONE_CUSTOM);
+        prefs.apply();
+    }
+
+
+    public static void saveTrackingModePref(Context context, int appWidgetId, WidgetSettings.TrackingMode mode)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putString(prefs_prefix + PREF_KEY_GENERAL_TRACKINGMODE, mode.name());
+        prefs.apply();
+    }
+    public static WidgetSettings.TrackingMode loadTrackingModePref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TRACKINGMODE, PREF_DEF_GENERAL_TRACKINGMODE.name());
+
+        TrackingMode trackingMode;
+        try
+        {
+            trackingMode = WidgetSettings.TrackingMode.valueOf(modeString);
+
+        } catch (IllegalArgumentException e) {
+            trackingMode = PREF_DEF_GENERAL_TRACKINGMODE;
+        }
+        return trackingMode;
+    }
+    public static void deleteTrackingModePref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_TRACKINGMODE);
         prefs.apply();
     }
 

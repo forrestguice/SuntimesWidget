@@ -313,6 +313,22 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     }
 
     @Test
+    public void test_trackingModePref()
+    {
+        WidgetSettings.saveTrackingModePref(context, appWidgetId, WidgetSettings.TrackingMode.CLOSEST);
+        WidgetSettings.TrackingMode mode2 = WidgetSettings.loadTrackingModePref(context, appWidgetId);
+        assertTrue("mode should be CLOSEST but was " + mode2, mode2 == WidgetSettings.TrackingMode.CLOSEST);
+
+        WidgetSettings.saveTrackingModePref(context, appWidgetId, WidgetSettings.TrackingMode.SOONEST);
+        WidgetSettings.TrackingMode mode1 = WidgetSettings.loadTrackingModePref(context, appWidgetId);
+        assertTrue("mode should be SOONEST but was " + mode1, mode1 == WidgetSettings.TrackingMode.SOONEST);
+
+        WidgetSettings.deleteTrackingModePref(context, appWidgetId);
+        WidgetSettings.TrackingMode mode0 = WidgetSettings.loadTrackingModePref(context, appWidgetId);
+        assertTrue("mode should be default (CLOSEST) but was " + mode0, mode0 == WidgetSettings.TrackingMode.CLOSEST && mode0 == WidgetSettings.PREF_DEF_GENERAL_TRACKINGMODE);
+    }
+
+    @Test
     public void test_compareModePref()
     {
         WidgetSettings.saveCompareModePref(context, appWidgetId, WidgetSettings.CompareMode.TOMORROW);
