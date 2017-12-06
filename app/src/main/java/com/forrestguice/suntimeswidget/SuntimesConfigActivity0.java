@@ -73,6 +73,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected Spinner spinner_calculatorMode;
     protected Spinner spinner_timeMode;
+    protected CheckBox checkbox_timeModeOverride;
     protected ImageButton button_timeModeHelp;
     protected Spinner spinner_compareMode;
     protected CheckBox checkbox_showNoon;
@@ -288,6 +289,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // widget: time mode
         //
         spinner_timeMode = (Spinner)findViewById(R.id.appwidget_general_timeMode);
+        checkbox_timeModeOverride = (CheckBox)findViewById(R.id.appwidget_general_timeMode_override);
         button_timeModeHelp = (ImageButton)findViewById(R.id.appwidget_general_timeMode_helpButton);
         initTimeMode(context);
 
@@ -543,6 +545,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 }
             });
         }
+
+        checkbox_timeModeOverride.setVisibility(View.GONE);
     }
 
     /**
@@ -562,6 +566,23 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         final WidgetSettings.TimeMode[] timeModes = WidgetSettings.TimeMode.values();
         WidgetSettings.TimeMode timeMode = timeModes[ spinner_timeMode.getSelectedItemPosition()];
         WidgetSettings.saveTimeModePref(context, appWidgetId, timeMode);
+    }
+
+    /**
+     * @param context
+     */
+    protected void loadTimeModeOverride(Context context)
+    {
+        boolean value = WidgetSettings.loadTimeMode2OverridePref(context, appWidgetId);
+        checkbox_timeModeOverride.setChecked(value);
+    }
+
+    /**
+     * @param context
+     */
+    public void saveTimeModeOverride(Context context)
+    {
+        WidgetSettings.saveTimeMode2OverridePref(context, appWidgetId, checkbox_timeModeOverride.isChecked());
     }
 
     private Button button_addWidget;
@@ -777,6 +798,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
         // save: time mode
         saveTimeMode(context);
+        saveTimeModeOverride(context);
     }
 
     /**
@@ -804,6 +826,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
         // load: time mode
         loadTimeMode(context);
+        loadTimeModeOverride(context);
     }
 
     /**
@@ -980,6 +1003,18 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (layout_showNoon != null)
         {
             layout_showNoon.setVisibility((showOption ? View.VISIBLE : View.GONE));
+        }
+    }
+
+    /**
+     * @param showUI
+     */
+    protected void showOptionTimeModeOverride( boolean showUI )
+    {
+        View layout_timeModeOverride = findViewById(R.id.appwidget_general_timeMode_override_layout);
+        if (layout_timeModeOverride != null)
+        {
+            layout_timeModeOverride.setVisibility((showUI ? View.VISIBLE : View.GONE));
         }
     }
 

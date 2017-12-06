@@ -171,6 +171,9 @@
 
     <string name="configLabel_general_timeMode">Mode:</string>          <!-- spinner label -->
 
+    <!-- Widget Setting: timeMode override -->
+    <string name="configLabel_general_timeMode_override">Track closest event</string>     <!-- checkbox label -->
+
     <!-- Widget Setting: layout mode -->
     <string name="widgetMode1x1_sunrise">Sunrise only</string>             <!-- setting -->
     <string name="widgetMode1x1_sunset">Sunset only</string>               <!-- setting -->

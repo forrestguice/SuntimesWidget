@@ -22,6 +22,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -45,6 +46,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
         hideOption1x1LayoutMode();
         showOptionShowNoon(false);
         disableOptionAllowResize();
+        showOptionTimeModeOverride(true);
     }
 
     @Override
@@ -75,6 +77,23 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
                     HelpDialog helpDialog = new HelpDialog();
                     helpDialog.setContent(getString(R.string.help_general_timeMode2));
                     helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
+                }
+            });
+            button_timeModeHelp.setEnabled(false);           // disabled/hidden until txt provided
+            button_timeModeHelp.setVisibility(View.GONE);
+        }
+
+        if (checkbox_timeModeOverride != null)
+        {
+            checkbox_timeModeOverride.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+            {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+                {
+                    if (spinner_timeMode != null)
+                    {
+                        spinner_timeMode.setEnabled(!isChecked);
+                    }
                 }
             });
         }
