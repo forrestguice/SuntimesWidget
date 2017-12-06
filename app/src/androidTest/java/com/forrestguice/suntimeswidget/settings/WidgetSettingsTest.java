@@ -81,6 +81,28 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         assertTrue("STUB", true == false);  // TODO
     }
 
+    @Test
+    public void test_timeMode2Pref()
+    {
+        assertTrue("STUB", true == false);  // TODO
+    }
+
+    @Test
+    public void test_timeMode2OverridePref()
+    {
+        WidgetSettings.saveTimeMode2OverridePref(context, appWidgetId, false);
+        boolean pref2 = WidgetSettings.loadTimeMode2OverridePref(context, appWidgetId);
+        assertTrue("pref should be false but was " + pref2, !pref2);
+
+        WidgetSettings.saveTimeMode2OverridePref(context, appWidgetId, true);
+        boolean pref1 = WidgetSettings.loadTimeMode2OverridePref(context, appWidgetId);
+        assertTrue("pref should be true but was " + pref1, pref1);
+
+        WidgetSettings.deleteTimeMode2OverridePref(context, appWidgetId);
+        boolean pref0 = WidgetSettings.loadTimeMode2OverridePref(context, appWidgetId);
+        assertTrue("mode should be default (false) but was " + pref0, !pref0 && pref0 == WidgetSettings.PREF_DEF_GENERAL_TIMEMODE2_OVERRIDE);
+    }
+
     ///////////////////////////////////////////////////////////////////////////
 
     @Test
