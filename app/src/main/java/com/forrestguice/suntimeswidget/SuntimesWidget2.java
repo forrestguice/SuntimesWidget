@@ -105,7 +105,9 @@ public class SuntimesWidget2 extends SuntimesWidget0
             SuntimesEquinoxSolsticeDataset dataset = new SuntimesEquinoxSolsticeDataset(context, appWidgetId);
             dataset.calculateData();
 
-            SuntimesEquinoxSolsticeData nextEvent = dataset.findSoonest(dataset.now());
+            WidgetSettings.TrackingMode trackingMode = WidgetSettings.loadTrackingModePref(context, appWidgetId);
+            SuntimesEquinoxSolsticeData nextEvent = (trackingMode == WidgetSettings.TrackingMode.SOONEST ? dataset.findSoonest(dataset.now())
+                                                                                                         : dataset.findClosest(dataset.now()));
             data = (nextEvent != null ? nextEvent : dataset.dataEquinoxVernal);
 
         } else {

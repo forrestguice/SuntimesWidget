@@ -62,7 +62,11 @@ public class SuntimesLayout_1x1eq_0 extends SuntimesLayoutEq
         {
             timeMode = data.timeMode();
             Calendar now = Calendar.getInstance();
-            Calendar event = data.eventCalendarSoonest(now);
+
+            WidgetSettings.TrackingMode trackingMode = WidgetSettings.loadTrackingModePref(context, appWidgetId);
+            Calendar event = (trackingMode == WidgetSettings.TrackingMode.SOONEST ? data.eventCalendarUpcoming(now)
+                                                                                  : data.eventCalendarClosest(now));
+
             if (event != null)
             {
                 TimeDisplayText eventString = utils.calendarDateTimeDisplayString(context, event);
