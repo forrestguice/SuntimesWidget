@@ -1631,6 +1631,7 @@ public class WidgetSettings
     {
         ActionMode.initDisplayStrings(context);
         WidgetMode1x1.initDisplayStrings(context);
+        TrackingMode.initDisplayStrings(context);
         CompareMode.initDisplayStrings(context);
         TimeMode.initDisplayStrings(context);
         SolsticeEquinoxMode.initDisplayStrings(context);

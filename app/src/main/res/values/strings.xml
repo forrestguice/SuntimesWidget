@@ -177,9 +177,6 @@
 
     <string name="configLabel_general_timeMode">Mode:</string>          <!-- spinner label -->
 
-    <!-- Widget Setting: timeMode override -->
-    <string name="configLabel_general_timeMode_override">Track closest event</string>     <!-- checkbox label -->
-
     <!-- Widget Setting: layout mode -->
     <string name="widgetMode1x1_sunrise">Sunrise only</string>             <!-- setting -->
     <string name="widgetMode1x1_sunset">Sunset only</string>               <!-- setting -->
@@ -255,8 +252,13 @@
     <string name="configLabel_general_showComparison">Show Comparison</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
-    <string name="trackingMode_closest">Closest event</string>                 <!-- setting -->
-    <string name="trackingMode_soonest">Upcoming event</string>                <!-- setting -->
+    <string name="trackingMode_closest">Closest Event</string>                 <!-- setting -->
+    <string name="trackingMode_soonest">Upcoming Event</string>                <!-- setting -->
+    <string name="configLabel_general_trackingMode">Track:</string>            <!-- spinner label -->
+
+    <!-- Widget Setting: timeMode override -->
+    <string name="configLabel_general_timeMode_override">Tracking overrides mode</string>     <!-- checkbox label -->
+
     <!-- Widget Settings: noon -->
     <string name="configLabel_general_showNoon">Show Solar Noon</string>        <!-- checkbox label -->
 

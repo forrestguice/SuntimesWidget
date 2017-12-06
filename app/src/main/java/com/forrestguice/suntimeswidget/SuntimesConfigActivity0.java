@@ -75,6 +75,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected Spinner spinner_timeMode;
     protected CheckBox checkbox_timeModeOverride;
     protected ImageButton button_timeModeHelp;
+    protected Spinner spinner_trackingMode;
     protected Spinner spinner_compareMode;
     protected CheckBox checkbox_showNoon;
     protected CheckBox checkbox_showCompare;
@@ -131,8 +132,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         Bundle extras = intent.getExtras();
         if (extras != null)
         {
-            appWidgetId = extras.getInt( AppWidgetManager.EXTRA_APPWIDGET_ID,
-                                         AppWidgetManager.INVALID_APPWIDGET_ID );
+            appWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID,
+                    AppWidgetManager.INVALID_APPWIDGET_ID);
             reconfigure = extras.getBoolean(WidgetSettings.ActionMode.ONTAP_LAUNCH_CONFIG.name(), false);
         }
 
@@ -166,9 +167,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     /**
      * Save settings (as represented by the state of the config UI).
+     *
      * @param context the android application context
      */
-    protected void saveSettings( Context context )
+    protected void saveSettings(Context context)
     {
         saveGeneralSettings(context);
         locationConfig.saveSettings(context);
@@ -179,9 +181,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     /**
      * Load settings (update the state of the config UI).
+     *
      * @param context a context used to access shared prefs
      */
-    protected void loadSettings( Context context )
+    protected void loadSettings(Context context)
     {
         loadGeneralSettings(context);
         loadAppearanceSettings(context);
@@ -197,6 +200,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         return adapter;
     }
+
     protected WidgetSettings.ActionMode[] supportedActionModes()
     {
         WidgetSettings.ActionMode[] allModes = WidgetSettings.ActionMode.values();
@@ -205,12 +209,12 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         return supportedModes;
     }
 
-    protected void initViews(final Context context )
+    protected void initViews(final Context context)
     {
         //
         // widget: add button
         //
-        button_addWidget = (Button)findViewById(R.id.add_button);
+        button_addWidget = (Button) findViewById(R.id.add_button);
         button_addWidget.setEnabled(false);   // enabled later after timezones fully loaded
         if (button_addWidget != null)
         {
@@ -226,16 +230,16 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         //
         // widget: onTap
         //
-        spinner_onTap = (Spinner)findViewById(R.id.appwidget_action_onTap);
+        spinner_onTap = (Spinner) findViewById(R.id.appwidget_action_onTap);
         spinner_onTap.setAdapter(createAdapter_actionMode());
         spinner_onTap.setOnItemSelectedListener(onActionModeListener);
 
         //
         // widget: onTap launchActivity
         //
-        text_launchActivity = (EditText)findViewById(R.id.appwidget_action_launch);
+        text_launchActivity = (EditText) findViewById(R.id.appwidget_action_launch);
 
-        ImageButton button_launchAppHelp = (ImageButton)findViewById(R.id.appwidget_action_launch_helpButton);
+        ImageButton button_launchAppHelp = (ImageButton) findViewById(R.id.appwidget_action_launch_helpButton);
         if (button_launchAppHelp != null)
         {
             button_launchAppHelp.setOnClickListener(new View.OnClickListener()
@@ -253,13 +257,13 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         //
         // widget: theme
         //
-        spinner_theme = (Spinner)findViewById(R.id.appwidget_appearance_theme);
+        spinner_theme = (Spinner) findViewById(R.id.appwidget_appearance_theme);
         if (spinner_theme != null)
         {
             initThemeAdapter(context);
         }
 
-        button_themeConfig = (TextView)findViewById(R.id.appwidget_appearance_theme_label);
+        button_themeConfig = (TextView) findViewById(R.id.appwidget_appearance_theme_label);
         if (button_themeConfig != null)
         {
             button_themeConfig.setOnClickListener(new View.OnClickListener()
@@ -276,7 +280,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         //
         // widget: source
         //
-        spinner_calculatorMode = (Spinner)findViewById(R.id.appwidget_general_calculator);
+        spinner_calculatorMode = (Spinner) findViewById(R.id.appwidget_general_calculator);
         if (spinner_calculatorMode != null)
         {
             ArrayAdapter<SuntimesCalculatorDescriptor> spinner_calculatorModeAdapter;
@@ -288,15 +292,15 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         //
         // widget: time mode
         //
-        spinner_timeMode = (Spinner)findViewById(R.id.appwidget_general_timeMode);
-        checkbox_timeModeOverride = (CheckBox)findViewById(R.id.appwidget_general_timeMode_override);
-        button_timeModeHelp = (ImageButton)findViewById(R.id.appwidget_general_timeMode_helpButton);
+        spinner_timeMode = (Spinner) findViewById(R.id.appwidget_general_timeMode);
+        checkbox_timeModeOverride = (CheckBox) findViewById(R.id.appwidget_general_timeMode_override);
+        button_timeModeHelp = (ImageButton) findViewById(R.id.appwidget_general_timeMode_helpButton);
         initTimeMode(context);
 
         //
         // widget: timezone mode
         //
-        spinner_timezoneMode = (Spinner)findViewById(R.id.appwidget_timezone_mode);
+        spinner_timezoneMode = (Spinner) findViewById(R.id.appwidget_timezone_mode);
         if (spinner_timezoneMode != null)
         {
             ArrayAdapter<WidgetSettings.TimezoneMode> spinner_timezoneModeAdapter;
@@ -309,9 +313,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         //
         // widget: timezone / solartime
         //
-        layout_timezone = (LinearLayout)findViewById(R.id.appwidget_timezone_custom_layout);
-        label_timezone = (TextView)findViewById(R.id.appwidget_timezone_custom_label);
-        spinner_timezone = (Spinner)findViewById(R.id.appwidget_timezone_custom);
+        layout_timezone = (LinearLayout) findViewById(R.id.appwidget_timezone_custom_layout);
+        label_timezone = (TextView) findViewById(R.id.appwidget_timezone_custom_label);
+        spinner_timezone = (Spinner) findViewById(R.id.appwidget_timezone_custom);
 
         if (label_timezone != null)
         {
@@ -361,9 +365,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             loadTask.execute(sortZonesBy);
         }
 
-        layout_solartime = (LinearLayout)findViewById(R.id.appwidget_solartime_layout);
-        label_solartime = (TextView)findViewById(R.id.appwidget_solartime_label);
-        spinner_solartime = (Spinner)findViewById(R.id.appwidget_solartime);
+        layout_solartime = (LinearLayout) findViewById(R.id.appwidget_solartime_layout);
+        label_solartime = (TextView) findViewById(R.id.appwidget_solartime_label);
+        spinner_solartime = (Spinner) findViewById(R.id.appwidget_solartime);
         if (spinner_solartime != null)
         {
             ArrayAdapter<WidgetSettings.SolarTimeMode> spinner_solartimeAdapter;
@@ -383,7 +387,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             }
 
             @Override
-            public void onSaveSortMode( WidgetTimezones.TimeZoneSort sortMode )
+            public void onSaveSortMode(WidgetTimezones.TimeZoneSort sortMode)
             {
                 super.onSaveSortMode(sortMode);
                 AppSettings.setTimeZoneSortPref(SuntimesConfigActivity0.this, sortMode);
@@ -400,7 +404,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         //
         // widget: location
         //
-        locationConfig = (LocationConfigView)findViewById(R.id.appwidget_location_config);
+        locationConfig = (LocationConfigView) findViewById(R.id.appwidget_location_config);
         if (locationConfig != null)
         {
             locationConfig.setAutoAllowed(false);
@@ -410,7 +414,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         //
         // widget: 1x1 widget mode
         //
-        spinner_1x1mode = (Spinner)findViewById(R.id.appwidget_appearance_1x1mode);
+        spinner_1x1mode = (Spinner) findViewById(R.id.appwidget_appearance_1x1mode);
         if (spinner_1x1mode != null)
         {
             ArrayAdapter<WidgetSettings.WidgetMode1x1> spinner_1x1ModeAdapter;
@@ -422,10 +426,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         //
         // widget: title text
         //
-        label_titleText = (TextView)findViewById(R.id.appwidget_appearance_titleText_label);
-        text_titleText = (EditText)findViewById(R.id.appwidget_appearance_titleText);
+        label_titleText = (TextView) findViewById(R.id.appwidget_appearance_titleText_label);
+        text_titleText = (EditText) findViewById(R.id.appwidget_appearance_titleText);
 
-        ImageButton button_titleText = (ImageButton)findViewById(R.id.appwidget_appearance_titleText_helpButton);
+        ImageButton button_titleText = (ImageButton) findViewById(R.id.appwidget_appearance_titleText_helpButton);
         if (button_titleText != null)
         {
             button_titleText.setOnClickListener(new View.OnClickListener()
@@ -443,7 +447,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         //
         // widget: show title
         //
-        checkbox_showTitle = (CheckBox)findViewById(R.id.appwidget_appearance_showTitle);
+        checkbox_showTitle = (CheckBox) findViewById(R.id.appwidget_appearance_showTitle);
         if (checkbox_showTitle != null)
         {
             checkbox_showTitle.setOnCheckedChangeListener(onShowTitleListener);
@@ -452,16 +456,28 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         //
         // widget: allow resize
         //
-        checkbox_allowResize = (CheckBox)findViewById(R.id.appwidget_appearance_allowResize);
+        checkbox_allowResize = (CheckBox) findViewById(R.id.appwidget_appearance_allowResize);
         if (checkbox_allowResize != null && Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
         {
             disableOptionAllowResize();  // resizable widgets require api14+
         }
 
         //
+        // widget: tracking mode
+        //
+        spinner_trackingMode = (Spinner) findViewById(R.id.appwidget_general_trackingMode);
+        if (spinner_trackingMode != null)
+        {
+            ArrayAdapter<WidgetSettings.TrackingMode> spinner_trackingModeAdapter;
+            spinner_trackingModeAdapter = new ArrayAdapter<WidgetSettings.TrackingMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.TrackingMode.values());
+            spinner_trackingModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner_trackingMode.setAdapter(spinner_trackingModeAdapter);
+        }
+
+        //
         // widget: compare mode
         //
-        spinner_compareMode = (Spinner)findViewById(R.id.appwidget_general_compareMode);
+        spinner_compareMode = (Spinner) findViewById(R.id.appwidget_general_compareMode);
         if (spinner_compareMode != null)
         {
             ArrayAdapter<WidgetSettings.CompareMode> spinner_compareModeAdapter;
@@ -473,12 +489,12 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         //
         // widget: showNoon
         //
-        checkbox_showNoon = (CheckBox)findViewById(R.id.appwidget_general_showNoon);
+        checkbox_showNoon = (CheckBox) findViewById(R.id.appwidget_general_showNoon);
 
         //
         // widget: showCompare
         //
-        checkbox_showCompare = (CheckBox)findViewById(R.id.appwidget_general_showCompare);
+        checkbox_showCompare = (CheckBox) findViewById(R.id.appwidget_general_showCompare);
         checkbox_showCompare.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
             @Override
@@ -491,7 +507,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         //
         // widget: about button
         //
-        Button button_aboutWidget = (Button)findViewById(R.id.about_button);
+        Button button_aboutWidget = (Button) findViewById(R.id.about_button);
         if (button_aboutWidget != null)
         {
             button_aboutWidget.setOnClickListener(onAboutButtonClickListener);
@@ -510,7 +526,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     /**
      * @param context a context used to access resources
      */
-    protected void initTimeMode( Context context )
+    protected void initTimeMode(Context context)
     {
         if (spinner_timeMode != null)
         {
@@ -528,7 +544,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 }
 
                 @Override
-                public void onNothingSelected(AdapterView<?> adapterView) {}
+                public void onNothingSelected(AdapterView<?> adapterView)
+                {
+                }
             });
         }
 
@@ -546,7 +564,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             });
         }
 
-        checkbox_timeModeOverride.setVisibility(View.GONE);
+        showOptionTimeModeOverride(false);
+        showOptionTrackingMode(false);
     }
 
     /**
@@ -564,7 +583,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected void saveTimeMode(Context context)
     {
         final WidgetSettings.TimeMode[] timeModes = WidgetSettings.TimeMode.values();
-        WidgetSettings.TimeMode timeMode = timeModes[ spinner_timeMode.getSelectedItemPosition()];
+        WidgetSettings.TimeMode timeMode = timeModes[spinner_timeMode.getSelectedItemPosition()];
         WidgetSettings.saveTimeModePref(context, appWidgetId, timeMode);
     }
 
@@ -587,7 +606,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     private Button button_addWidget;
 
-    private void setActionButtonText( String text )
+    private void setActionButtonText(String text)
     {
         if (button_addWidget != null)
         {
@@ -595,13 +614,13 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
-    private void setTitleTextEnabled( boolean value )
+    private void setTitleTextEnabled(boolean value)
     {
         label_titleText.setEnabled(value);
         text_titleText.setEnabled(value);
     }
 
-    private void setUseSolarTime( boolean value )
+    private void setUseSolarTime(boolean value)
     {
         label_solartime.setEnabled(value);
         spinner_solartime.setEnabled(value);
@@ -609,7 +628,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         layout_timezone.setVisibility((value ? View.GONE : View.VISIBLE));
     }
 
-    private void setCustomTimezoneEnabled( boolean value )
+    private void setCustomTimezoneEnabled(boolean value)
     {
         String timezoneID = (value ? customTimezoneID : TimeZone.getDefault().getID());
 
@@ -653,8 +672,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
         {
             final WidgetSettings.TimezoneMode[] timezoneModes = WidgetSettings.TimezoneMode.values();
-            WidgetSettings.TimezoneMode timezoneMode = timezoneModes[ parent.getSelectedItemPosition() ];
-            setCustomTimezoneEnabled( (timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE) );
+            WidgetSettings.TimezoneMode timezoneMode = timezoneModes[parent.getSelectedItemPosition()];
+            setCustomTimezoneEnabled((timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE));
             setUseSolarTime((timezoneMode == WidgetSettings.TimezoneMode.SOLAR_TIME));
         }
 
@@ -671,7 +690,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
         {
             final WidgetSettings.ActionMode[] actionModes = WidgetSettings.ActionMode.values();
-            WidgetSettings.ActionMode actionMode = actionModes[ parent.getSelectedItemPosition() ];
+            WidgetSettings.ActionMode actionMode = actionModes[parent.getSelectedItemPosition()];
 
             View launchActionView = findViewById(R.id.applayout_action_launch);
             if (launchActionView != null)
@@ -697,19 +716,20 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     /**
      * Save UI state to settings (appearance group).
+     *
      * @param context the android application context
      */
     protected void saveAppearanceSettings(Context context)
     {
         // save: widgetmode_1x1
         final WidgetSettings.WidgetMode1x1[] modes = WidgetSettings.WidgetMode1x1.values();
-        WidgetSettings.WidgetMode1x1 mode = modes[ spinner_1x1mode.getSelectedItemPosition() ];
+        WidgetSettings.WidgetMode1x1 mode = modes[spinner_1x1mode.getSelectedItemPosition()];
         WidgetSettings.save1x1ModePref(context, appWidgetId, mode);
         //Log.d("DEBUG", "Saved mode: " + mode.name());
 
         // save: theme
         final ThemeDescriptor[] themes = WidgetThemes.values();
-        ThemeDescriptor theme = themes[ spinner_theme.getSelectedItemPosition() ];
+        ThemeDescriptor theme = themes[spinner_theme.getSelectedItemPosition()];
         WidgetSettings.saveThemePref(context, appWidgetId, theme.name());
         //Log.d("DEBUG", "Saved theme: " + theme.name());
 
@@ -728,6 +748,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     /**
      * Load settings into UI state (appearance group).
+     *
      * @param context the android application context
      */
     protected void loadAppearanceSettings(Context context)
@@ -742,14 +763,16 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         try
         {
             themeDescriptor = WidgetThemes.valueOf(theme.themeName());
-        } catch (InvalidParameterException e) {
+        } catch (InvalidParameterException e)
+        {
             Log.e("loadAppearanceSettings", "Failed to load theme " + theme.themeName());
             themeDescriptor = DarkTheme.THEMEDEF_DESCRIPTOR;
         }
         if (themeDescriptor != null)
         {
             spinner_theme.setSelection(themeDescriptor.ordinal(WidgetThemes.values()));
-        } else {
+        } else
+        {
             Log.e("loadAppearanceSettings", "theme is not installed! " + theme.themeName());
         }
 
@@ -758,7 +781,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             boolean allowResize = WidgetSettings.loadAllowResizePref(context, appWidgetId);
             checkbox_allowResize.setChecked(allowResize);
-        } else {
+        } else
+        {
             disableOptionAllowResize();
         }
 
@@ -774,18 +798,24 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     /**
      * Save UI state to settings (general group).
+     *
      * @param context the android application context
      */
     protected void saveGeneralSettings(Context context)
     {
         // save: calculator mode
         final SuntimesCalculatorDescriptor[] calculators = SuntimesCalculatorDescriptor.values();
-        SuntimesCalculatorDescriptor calculator = calculators[ spinner_calculatorMode.getSelectedItemPosition() ];
+        SuntimesCalculatorDescriptor calculator = calculators[spinner_calculatorMode.getSelectedItemPosition()];
         WidgetSettings.saveCalculatorModePref(context, appWidgetId, calculator);
+
+        // save: tracking mode
+        final WidgetSettings.TrackingMode[] trackingModes = WidgetSettings.TrackingMode.values();
+        WidgetSettings.TrackingMode trackingMode = trackingModes[spinner_trackingMode.getSelectedItemPosition()];
+        WidgetSettings.saveTrackingModePref(context, appWidgetId, trackingMode);
 
         // save: compare mode
         final WidgetSettings.CompareMode[] compareModes = WidgetSettings.CompareMode.values();
-        WidgetSettings.CompareMode compareMode = compareModes[ spinner_compareMode.getSelectedItemPosition()];
+        WidgetSettings.CompareMode compareMode = compareModes[spinner_compareMode.getSelectedItemPosition()];
         WidgetSettings.saveCompareModePref(context, appWidgetId, compareMode);
 
         // save: showNoon
@@ -803,6 +833,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     /**
      * Load settings into UI state (general group).
+     *
      * @param context the android application context
      */
     protected void loadGeneralSettings(Context context)
@@ -810,6 +841,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // load: calculator mode
         SuntimesCalculatorDescriptor calculatorMode = WidgetSettings.loadCalculatorModePref(context, appWidgetId);
         spinner_calculatorMode.setSelection((calculatorMode != null ? calculatorMode.ordinal() : 0));
+
+        // load: tracking mode
+        WidgetSettings.TrackingMode trackingMode = WidgetSettings.loadTrackingModePref(context, appWidgetId);
+        spinner_trackingMode.setSelection(trackingMode.ordinal());
 
         // load: compare mode
         WidgetSettings.CompareMode compareMode = WidgetSettings.loadCompareModePref(context, appWidgetId);
@@ -831,21 +866,23 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     /**
      * Save UI state to settings (timezone group).
+     *
      * @param context the android application context
      */
     protected void saveTimezoneSettings(Context context)
     {
         // save: timezone mode
         final WidgetSettings.TimezoneMode[] timezoneModes = WidgetSettings.TimezoneMode.values();
-        WidgetSettings.TimezoneMode timezoneMode = timezoneModes[ spinner_timezoneMode.getSelectedItemPosition() ];
+        WidgetSettings.TimezoneMode timezoneMode = timezoneModes[spinner_timezoneMode.getSelectedItemPosition()];
         WidgetSettings.saveTimezoneModePref(context, appWidgetId, timezoneMode);
 
         // save: custom timezone
-        WidgetTimezones.TimeZoneItem customTimezone = (WidgetTimezones.TimeZoneItem)spinner_timezone.getSelectedItem();
+        WidgetTimezones.TimeZoneItem customTimezone = (WidgetTimezones.TimeZoneItem) spinner_timezone.getSelectedItem();
         if (customTimezone != null)
         {
             WidgetSettings.saveTimezonePref(context, appWidgetId, customTimezone.getID());
-        } else {
+        } else
+        {
             Log.e("saveTimezoneSettings", "Failed to save timezone; none selected (was null). The timezone selector may not have been fully loaded..");
         }
 
@@ -857,6 +894,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     /**
      * Load settings into UI state (timezone group).
+     *
      * @param context the android application context
      */
     protected void loadTimezoneSettings(Context context)
@@ -876,12 +914,13 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     /**
      * Save UI state to settings (action group).
+     *
      * @param context the android application context
      */
     protected void saveActionSettings(Context context)
     {
         // save: action mode
-        WidgetSettings.ActionMode actionMode = (WidgetSettings.ActionMode)spinner_onTap.getSelectedItem();
+        WidgetSettings.ActionMode actionMode = (WidgetSettings.ActionMode) spinner_onTap.getSelectedItem();
         WidgetSettings.saveActionModePref(context, appWidgetId, actionMode);
 
         // save: launch activity
@@ -891,6 +930,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     /**
      * Load settings into UI state (action group).
+     *
      * @param context the android application context
      */
     protected void loadActionSettings(Context context)
@@ -935,7 +975,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
-    protected void updateWidget( Context context )
+    protected void updateWidget(Context context)
     {
         int minSize[] = new int[2];
         minSize[0] = context.getResources().getInteger(R.integer.widget_size_minWidthDp);
@@ -960,8 +1000,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     };
 
     /**
-     * @param requestCode the request code that was passed to requestPermissions
-     * @param permissions the requested permissions
+     * @param requestCode  the request code that was passed to requestPermissions
+     * @param permissions  the requested permissions
      * @param grantResults either PERMISSION_GRANTED or PERMISSION_DENIED for each of the requested permissions
      */
     @Override
@@ -985,7 +1025,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     /**
      * @param showCompareUI true: show comparison ui, false: hide comparison ui
      */
-    protected void showCompareUI( boolean showCompareUI )
+    protected void showCompareUI(boolean showCompareUI)
     {
         View compareModeLayout = findViewById(R.id.appwidget_general_compareMode_layout);
         if (compareModeLayout != null)
@@ -997,7 +1037,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     /**
      * @param showOption true: show noon ui, false: hide noon ui
      */
-    protected void showOptionShowNoon( boolean showOption )
+    protected void showOptionShowNoon(boolean showOption)
     {
         View layout_showNoon = findViewById(R.id.appwidget_general_showNoon_layout);
         if (layout_showNoon != null)
@@ -1009,12 +1049,24 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     /**
      * @param showUI
      */
-    protected void showOptionTimeModeOverride( boolean showUI )
+    protected void showOptionTimeModeOverride(boolean showUI)
     {
         View layout_timeModeOverride = findViewById(R.id.appwidget_general_timeMode_override_layout);
         if (layout_timeModeOverride != null)
         {
             layout_timeModeOverride.setVisibility((showUI ? View.VISIBLE : View.GONE));
+        }
+    }
+
+    /**
+     * @param showUI
+     */
+    protected void showOptionTrackingMode(boolean showUI)
+    {
+        View layout_trackingMode = findViewById(R.id.appwidget_general_trackingMode_layout);
+        if (layout_trackingMode != null)
+        {
+            layout_trackingMode.setVisibility((showUI ? View.VISIBLE : View.GONE));
         }
     }
 

@@ -46,6 +46,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
         hideOption1x1LayoutMode();
         showOptionShowNoon(false);
         disableOptionAllowResize();
+        showOptionTrackingMode(true);
         showOptionTimeModeOverride(true);
     }
 
