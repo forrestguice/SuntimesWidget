@@ -248,6 +248,14 @@
     <string name="configLabel_general_compareMode">Kompari kun:</string>    <!-- spinner label -->
     <string name="configLabel_general_showComparison">Montri komparon</string>  <!-- checkbox label -->
 
+    <!-- Widget Setting: tracking mode -->
+    <string name="trackingMode_closest">Closest Event</string>                 <!-- setting --> <!-- TODO -->
+    <string name="trackingMode_soonest">Upcoming Event</string>                <!-- setting -->  <!-- TODO -->
+    <string name="configLabel_general_trackingMode">Track:</string>            <!-- spinner label -->  <!-- TODO -->
+
+    <!-- Widget Setting: timeMode override -->
+    <string name="configLabel_general_timeMode_override">Tracking overrides mode</string>     <!-- checkbox label -->  <!-- TODO -->
+
     <!-- Widget Settings: noon -->
     <string name="configLabel_general_showNoon">Montri tagmezon veran</string>        <!-- checkbox label -->
 
