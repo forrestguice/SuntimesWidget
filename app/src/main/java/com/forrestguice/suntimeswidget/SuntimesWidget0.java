@@ -344,7 +344,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
     }
 
     /**
-     * Start widget updates; register a daily alarm (inexactRepeating) that does not wake the device.
+     * Start widget updates; register an alarm (inexactRepeating) that does not wake the device.
      * @param context the context
      */
     protected void setUpdateAlarm( Context context )
@@ -381,11 +381,11 @@ public class SuntimesWidget0 extends AppWidgetProvider
     protected long getUpdateTimeMillis()
     {
         Calendar updateTime = Calendar.getInstance();
-        updateTime.set(Calendar.MILLISECOND, 0);
+        updateTime.set(Calendar.MILLISECOND, 0);   // reset seconds, minutes, and hours to 0
         updateTime.set(Calendar.MINUTE, 0);
         updateTime.set(Calendar.SECOND, 0);
         updateTime.set(Calendar.HOUR_OF_DAY, 0);
-        updateTime.add(Calendar.DAY_OF_MONTH, 1);
+        updateTime.add(Calendar.DAY_OF_MONTH, 1);  // and increment the date by 1 day
         return updateTime.getTimeInMillis();
     }
 
