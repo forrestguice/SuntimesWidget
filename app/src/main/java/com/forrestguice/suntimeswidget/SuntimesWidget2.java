@@ -41,12 +41,19 @@ import java.util.Calendar;
  */
 public class SuntimesWidget2 extends SuntimesWidget0
 {
+    public static final String SUNTIMES_WIDGET_UPDATE2 = "SUNTIMES_WIDGET_UPDATE2";
     private static final int UPDATEALARM_ID = 2;
 
     @Override
     protected Class getConfigClass()
     {
         return SuntimesConfigActivity2.class;
+    }
+
+    @Override
+    protected String getUpdateIntentFilter()
+    {
+        return SuntimesWidget2.SUNTIMES_WIDGET_UPDATE2;
     }
 
     /**
@@ -64,7 +71,7 @@ public class SuntimesWidget2 extends SuntimesWidget0
     @Override
     protected long getUpdateInterval()
     {
-        return UpdateInterval.INTERVAL_NORMAL.interval;
+        return UpdateInterval.INTERVAL_VERYRAPID.interval;
     }
 
     /**

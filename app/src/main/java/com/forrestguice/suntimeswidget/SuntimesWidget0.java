@@ -50,6 +50,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
 {
     public static final String SUNTIMES_WIDGET_UPDATE = "SUNTIMES_WIDGET_UPDATE";
     public static final int UPDATEALARM_ID = 0;
+    public static final String KEY_ALARMID = "alarmID";
 
     protected static SuntimesUtils utils = new SuntimesUtils();
 
@@ -93,16 +94,45 @@ public class SuntimesWidget0 extends AppWidgetProvider
         super.onReceive(context, intent);
         initLocale(context);
 
+        String filter = getUpdateIntentFilter();
         String action = intent.getAction();
-        if (action.equals(SUNTIMES_WIDGET_UPDATE))
+        if (action.equals(filter))
         {
-            AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
-            int[] widgetIds = widgetManager.getAppWidgetIds(new ComponentName(context, getClass()));
-            onUpdate(context, widgetManager, widgetIds);
+            int alarmID = intent.getIntExtra(KEY_ALARMID, -1);
+            Log.d("onReceive", filter + ": " + alarmID + ": " + getClass().toString());
+            updateWidgets(context);
 
-        } else if (!action.equals(AppWidgetManager.ACTION_APPWIDGET_OPTIONS_CHANGED)) {
+        } else if (isClickAction(action)) {
+            Log.d("onReceive", "ClickAction :: " + action + ":" + getClass());
             handleClickAction(context, intent);
+        } else if (action.equals(AppWidgetManager.ACTION_APPWIDGET_OPTIONS_CHANGED)) {
+            Log.d("onReceive", "ACTION_APPWIDGET_OPTIONS_CHANGED :: " + getClass());
+
+        } else if (action.equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE)) {
+            Log.d("onReceive", "ACTION_APPWIDGET_UPDATE :: " + getClass());
+
+        } else {
+            Log.d("onReceive", "unhandled :: " + action + " :: " + getClass());
         }
+    }
+
+    public boolean isClickAction(String action)
+    {
+        for (String clickAction : getClickActions())
+        {
+            if (clickAction.equals(action))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    protected String[] getClickActions()
+    {
+        return new String[] { WidgetSettings.ActionMode.ONTAP_DONOTHING.name(),
+                              WidgetSettings.ActionMode.ONTAP_LAUNCH_ACTIVITY.name(),
+                              WidgetSettings.ActionMode.ONTAP_LAUNCH_CONFIG.name() };
     }
 
     /**
@@ -163,6 +193,16 @@ public class SuntimesWidget0 extends AppWidgetProvider
     protected Class getConfigClass()
     {
         return SuntimesConfigActivity0.class;
+    }
+
+    /**
+     * @param context
+     */
+    public void updateWidgets(Context context)
+    {
+        AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
+        int[] widgetIds = widgetManager.getAppWidgetIds(new ComponentName(context, getClass()));
+        onUpdate(context, widgetManager, widgetIds);
     }
 
     /**
@@ -404,7 +444,19 @@ public class SuntimesWidget0 extends AppWidgetProvider
      */
     protected PendingIntent getUpdateIntent(Context context)
     {
-        return PendingIntent.getBroadcast(context, getUpdateAlarmId(), new Intent(SUNTIMES_WIDGET_UPDATE), PendingIntent.FLAG_CANCEL_CURRENT);
+        int alarmId = getUpdateAlarmId();
+        String updateFilter = getUpdateIntentFilter();
+        Intent intent = new Intent(updateFilter);
+        intent.putExtra(KEY_ALARMID, alarmId);
+        return PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+    }
+
+    /**
+     * @return intent-filter name
+     */
+    protected String getUpdateIntentFilter()
+    {
+        return SuntimesWidget0.SUNTIMES_WIDGET_UPDATE;
     }
 
     /**

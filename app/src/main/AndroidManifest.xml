@@ -150,7 +150,7 @@
 
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="SUNTIMES_WIDGET_UPDATE" />
+                <action android:name="SUNTIMES_WIDGET_UPDATE2" />
             </intent-filter>
 
             <meta-data
