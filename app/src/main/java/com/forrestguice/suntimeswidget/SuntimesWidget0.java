@@ -105,11 +105,6 @@ public class SuntimesWidget0 extends AppWidgetProvider
         } else if (isClickAction(action)) {
             Log.d("onReceive", "ClickAction :: " + action + ":" + getClass());
             handleClickAction(context, intent);
-
-        } else if (action.equals(Intent.ACTION_TIMEZONE_CHANGED)) {
-            Log.d("onReceive", "ACTION_TIMEZONE_CHANGED :: " + getClass());
-            updateWidgets(context);
-
         } else if (action.equals(AppWidgetManager.ACTION_APPWIDGET_OPTIONS_CHANGED)) {
             Log.d("onReceive", "ACTION_APPWIDGET_OPTIONS_CHANGED :: " + getClass());
 
