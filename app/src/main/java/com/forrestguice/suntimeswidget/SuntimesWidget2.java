@@ -170,14 +170,23 @@ public class SuntimesWidget2 extends SuntimesWidget0
 
     /**
      * UpdateInterval
+     * enum               interval  intended for                                example
+     *----------------------------------------------------------------------------------------------
+     * INTERVAL_SLOW      .. 1d  .. time shown is in years or weeks          .. e.g. 1y 2w from now
+     * INTERVAL_NORMAL    .. 12h .. time shown is less than a year           .. e.g. 14w 5d from now
+     * INTERVAL_FAST      .. 15m .. time shown is less than a week           .. e.g. 4d 16h from now
+     * INTERVAL_VERYFAST  .. 5m  .. time shown is less than a day            .. e.g. 16h 48m from now
+     * INTERVAL_RAPID     .. 1m  .. time shown is less than an hour          .. e.g. 45m from now
+     * INTERVAL_VERYRAPID .. 5s  .. time shown is less than a minute         .. e.g. 30s from now
      */
-    @SuppressWarnings("PointlessArithmeticExpression")
     public static enum UpdateInterval
     {
-        INTERVAL_NORMAL(AlarmManager.INTERVAL_HOUR, -1),  // 1h
-        INTERVAL_FAST(AlarmManager.INTERVAL_FIFTEEN_MINUTES, 24 * 60 * 60 * 1000),  // 15m, 24h
-        INTERVAL_RAPID(5 * 60 * 1000, 1 * 60 * 60 * 1000),  // 5m, 1h
-        INTERVAL_VERYRAPID(60 * 1000, 15 * 60 * 1000);      // 1m, 15m
+        INTERVAL_SLOW( ONE_DAY, -1 ),
+        INTERVAL_NORMAL( HALF_DAY, ONE_YEAR ),
+        INTERVAL_FAST( FIFTEEN_MINUTES, ONE_WEEK ),
+        INTERVAL_VERYFAST( FIVE_MINUTES, ONE_DAY ),
+        INTERVAL_RAPID( ONE_MINUTE, ONE_HOUR ),
+        INTERVAL_VERYRAPID( FIVE_SECONDS, ONE_MINUTE );
 
         public long interval, threshold;
 
@@ -192,18 +201,30 @@ public class SuntimesWidget2 extends SuntimesWidget0
             if (timeDelta < INTERVAL_VERYRAPID.threshold)
             {
                 return INTERVAL_VERYRAPID;
-
             } else if (timeDelta < INTERVAL_RAPID.threshold) {
                 return INTERVAL_RAPID;
-
+            } else if (timeDelta < INTERVAL_VERYFAST.threshold) {
+                return INTERVAL_VERYFAST;
             } else if (timeDelta < INTERVAL_FAST.threshold) {
                 return INTERVAL_FAST;
-
-            } else {
+            } else if (timeDelta < INTERVAL_NORMAL.threshold) {
                 return INTERVAL_NORMAL;
+            } else {
+                return INTERVAL_SLOW;
             }
         }
     }
 
+    private static final long ONE_YEAR = 365 * AlarmManager.INTERVAL_DAY;
+    private static final long ONE_WEEK = 7 * AlarmManager.INTERVAL_DAY;
+    private static final long ONE_DAY = AlarmManager.INTERVAL_DAY;
+    private static final long HALF_DAY = AlarmManager.INTERVAL_HALF_DAY;
+    private static final long ONE_HOUR = AlarmManager.INTERVAL_HOUR;
+    private static final long FIFTEEN_MINUTES = AlarmManager.INTERVAL_FIFTEEN_MINUTES;
+    private static final long FIVE_MINUTES = 5 * 60 * 1000;
+    @SuppressWarnings("PointlessArithmeticExpression")
+    private static final long ONE_MINUTE = 1 * 60 * 1000;
+    @SuppressWarnings("PointlessArithmeticExpression")
+    private static final long FIVE_SECONDS = 1 * 5 * 1000;
 
 }
