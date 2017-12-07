@@ -1,5 +1,9 @@
 ### ~ 
 
+###
+* adds solstice/equinox tracking to app (#13).
+* adds solstice/equinox widget (#13).
+
 ### v0.5.1 (2017-12-03)
 * changes default data source to time4a-noaa (fallback remains sunrisesunsetlib).
 * fixes 2x1 widget to show seconds (e.g. "Tomorrow will be 1m 4s shorter").
