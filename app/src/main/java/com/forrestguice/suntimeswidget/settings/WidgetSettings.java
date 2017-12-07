@@ -82,7 +82,7 @@ public class WidgetSettings
     public static final SolsticeEquinoxMode PREF_DEF_GENERAL_TIMEMODE2 = SolsticeEquinoxMode.EQUINOX_VERNAL;
 
     public static final String PREF_KEY_GENERAL_TIMEMODE2_OVERRIDE = "timemode2override";
-    public static final boolean PREF_DEF_GENERAL_TIMEMODE2_OVERRIDE = false;
+    public static final boolean PREF_DEF_GENERAL_TIMEMODE2_OVERRIDE = true;
 
     public static final String PREF_KEY_GENERAL_TIMENOTE_RISE = "timenoterise";
     public static final SolarEvents PREF_DEF_GENERAL_TIMENOTE_RISE = SolarEvents.SUNRISE;
