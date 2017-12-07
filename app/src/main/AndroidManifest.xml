@@ -73,6 +73,7 @@
                   android:label="@string/app_name_widget0">
 
             <intent-filter>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="SUNTIMES_WIDGET_UPDATE" />
             </intent-filter>
@@ -96,6 +97,7 @@
                   android:label="@string/app_name_widget0">
 
             <intent-filter>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="SUNTIMES_WIDGET_UPDATE" />
             </intent-filter>
@@ -121,6 +123,7 @@
             android:label="@string/app_name_widget1">
 
             <intent-filter>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="SUNTIMES_WIDGET_UPDATE" />
             </intent-filter>
@@ -149,6 +152,7 @@
                   android:label="@string/app_name_widget2">
 
             <intent-filter>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="SUNTIMES_WIDGET_UPDATE2" />
             </intent-filter>
