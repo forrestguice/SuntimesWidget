@@ -29,7 +29,6 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
-import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 
 import java.util.Locale;
 
@@ -412,7 +411,7 @@ public class AppSettings
 
     public static int loadTheme(Context context)
     {
-        return loadTheme(context, null);
+        return themePrefToStyleId(context, loadThemePref(context), null);
     }
     public static int loadTheme(Context context, SuntimesRiseSetData data)
     {

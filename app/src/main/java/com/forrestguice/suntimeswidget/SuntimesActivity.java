@@ -231,7 +231,7 @@ public class SuntimesActivity extends AppCompatActivity
 
         initGetFix();
         getFixHelper.loadSettings(savedState);
-        resetNoteIndex = true;
+        onStart_resetNoteIndex = true;
 
         Intent intent = getIntent();
         Uri data = intent.getData();
@@ -265,19 +265,14 @@ public class SuntimesActivity extends AppCompatActivity
     {
         super.onStart();
         calculateData(SuntimesActivity.this);
-        resetNoteIndex();
-        updateViews(SuntimesActivity.this);
-    }
-
-    private boolean resetNoteIndex = false;
-    private void resetNoteIndex()
-    {
-        if (resetNoteIndex)
+        if (onStart_resetNoteIndex)
         {
             notes.resetNoteIndex();
-            resetNoteIndex = false;
+            onStart_resetNoteIndex = false;
         }
+        updateViews(SuntimesActivity.this);
     }
+    private boolean onStart_resetNoteIndex = false;
 
     /**
      * OnResume: the user is now interacting w/ the Activity (running state)
