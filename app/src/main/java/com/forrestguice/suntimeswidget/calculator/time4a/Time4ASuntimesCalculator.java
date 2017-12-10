@@ -44,10 +44,18 @@ import java.util.TimeZone;
 
 public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
 {
+    public static final int[] FEATURES = new int[] { FEATURE_RISESET, FEATURE_SOLSTICE };
+
     public abstract StdSolarCalculator getCalculator();
 
     protected SolarTime solarTime;
     protected TimeZone timezone;
+
+    @Override
+    public int[] getSupportedFeatures()
+    {
+        return Time4ASuntimesCalculator.FEATURES;
+    }
 
     @Override
     public void init(WidgetSettings.Location locationSetting, String timezone)

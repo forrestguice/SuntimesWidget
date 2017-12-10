@@ -33,6 +33,10 @@ import java.util.TimeZone;
  */
 public interface SuntimesCalculator
 {
+    int FEATURE_RISESET = 0;      // feature: rise, set, and twilight times
+    int FEATURE_SOLSTICE = 10;    // feature: solstice/equinox times
+    int FEATURE_ALTITUDE = 20;    // feature: altitude based refinement
+
     //
     // 1.0.0 sunrise, sunset, noon, twilight times
     //
@@ -42,6 +46,12 @@ public interface SuntimesCalculator
      * @since 1.0.0
      */
     String name();
+
+    /**
+     * @return an array of FEATURE flags indicating operations supported by given implementation
+     * @since 1.2.0
+     */
+    int[] getSupportedFeatures();
 
     /**
      * Initialize the calculator with a given location and timezone.

@@ -29,6 +29,7 @@ public class Time4A4JSuntimesCalculator extends Time4ASuntimesCalculator impleme
     public static final String NAME = "time4a-time4j";
     public static final String REF = "com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator";
     public static final String LINK = "time4j.net";
+    public static final int[] FEATURES = new int[] { FEATURE_RISESET, FEATURE_SOLSTICE, FEATURE_ALTITUDE };
 
     public Time4A4JSuntimesCalculator() { /* EMPTY */ }
 
@@ -39,6 +40,12 @@ public class Time4A4JSuntimesCalculator extends Time4ASuntimesCalculator impleme
     }
 
     @Override
+    public int[] getSupportedFeatures()
+    {
+        return Time4A4JSuntimesCalculator.FEATURES;
+    }
+
+    @Override
     public StdSolarCalculator getCalculator()
     {
         return StdSolarCalculator.TIME4J;
@@ -46,7 +53,7 @@ public class Time4A4JSuntimesCalculator extends Time4ASuntimesCalculator impleme
 
     public static SuntimesCalculatorDescriptor getDescriptor()
     {
-        return new SuntimesCalculatorDescriptor(Time4A4JSuntimesCalculator.NAME, Time4A4JSuntimesCalculator.LINK, Time4A4JSuntimesCalculator.REF, R.string.calculator_displayString_time4a_4j);
+        return new SuntimesCalculatorDescriptor(Time4A4JSuntimesCalculator.NAME, Time4A4JSuntimesCalculator.LINK, Time4A4JSuntimesCalculator.REF, R.string.calculator_displayString_time4a_4j, Time4A4JSuntimesCalculator.FEATURES);
     }
 
 }

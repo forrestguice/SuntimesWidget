@@ -47,7 +47,7 @@ public class Time4ANOAASuntimesCalculator extends Time4ASuntimesCalculator imple
 
     public static SuntimesCalculatorDescriptor getDescriptor()
     {
-        return new SuntimesCalculatorDescriptor(Time4ANOAASuntimesCalculator.NAME, Time4ANOAASuntimesCalculator.LINK, Time4ANOAASuntimesCalculator.REF, R.string.calculator_displayString_time4a_noaa);
+        return new SuntimesCalculatorDescriptor(Time4ANOAASuntimesCalculator.NAME, Time4ANOAASuntimesCalculator.LINK, Time4ANOAASuntimesCalculator.REF, R.string.calculator_displayString_time4a_noaa, Time4ASuntimesCalculator.FEATURES);
     }
 
 }
