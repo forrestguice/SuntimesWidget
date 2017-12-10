@@ -27,6 +27,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 
 import java.util.Locale;
@@ -412,16 +413,16 @@ public class AppSettings
     {
         return loadTheme(context, null);
     }
-    public static int loadTheme(Context context, SuntimesRiseSetDataset dataset)
+    public static int loadTheme(Context context, SuntimesRiseSetData data)
     {
-        return themePrefToStyleId(loadThemePref(context), dataset);
+        return themePrefToStyleId(context, loadThemePref(context), data);
     }
 
-    public static int themePrefToStyleId( String themeName )
+    public static int themePrefToStyleId( Context context, String themeName )
     {
-        return themePrefToStyleId(themeName, null);
+        return themePrefToStyleId(context, themeName, null);
     }
-    public static int themePrefToStyleId( String themeName, SuntimesRiseSetDataset dataset )
+    public static int themePrefToStyleId( Context context, String themeName, SuntimesRiseSetData data )
     {
         int styleID = R.style.AppTheme_Dark;
         if (themeName != null)

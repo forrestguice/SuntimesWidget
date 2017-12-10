@@ -217,9 +217,7 @@ public class SuntimesActivity extends AppCompatActivity
     public void onCreate(Bundle savedState)
     {
         Context context = SuntimesActivity.this;
-        calculateData(context);
-
-        setTheme(AppSettings.loadTheme(this, dataset));
+        setTheme(AppSettings.loadTheme(this));
         GetFixUI.themeIcons(this);
 
         super.onCreate(savedState);
@@ -233,7 +231,7 @@ public class SuntimesActivity extends AppCompatActivity
 
         initGetFix();
         getFixHelper.loadSettings(savedState);
-        notes.resetNoteIndex();
+        resetNoteIndex = true;
 
         Intent intent = getIntent();
         Uri data = intent.getData();
@@ -267,7 +265,18 @@ public class SuntimesActivity extends AppCompatActivity
     {
         super.onStart();
         calculateData(SuntimesActivity.this);
+        resetNoteIndex();
         updateViews(SuntimesActivity.this);
+    }
+
+    private boolean resetNoteIndex = false;
+    private void resetNoteIndex()
+    {
+        if (resetNoteIndex)
+        {
+            notes.resetNoteIndex();
+            resetNoteIndex = false;
+        }
     }
 
     /**
