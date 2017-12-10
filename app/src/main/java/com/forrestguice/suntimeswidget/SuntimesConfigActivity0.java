@@ -195,10 +195,15 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected ArrayAdapter<SuntimesCalculatorDescriptor> createAdapter_calculators()
     {
-        SuntimesCalculatorDescriptor[] calculators = SuntimesCalculatorDescriptor.values();
+        SuntimesCalculatorDescriptor[] calculators = supportingCalculators();
         ArrayAdapter<SuntimesCalculatorDescriptor> adapter = new ArrayAdapter<SuntimesCalculatorDescriptor>(this, R.layout.layout_listitem_oneline, calculators);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         return adapter;
+    }
+
+    protected SuntimesCalculatorDescriptor[] supportingCalculators()
+    {
+        return SuntimesCalculatorDescriptor.values();
     }
 
     protected ArrayAdapter<WidgetSettings.TimezoneMode> createAdapter_timezoneMode()
@@ -833,7 +838,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected void saveGeneralSettings(Context context)
     {
         // save: calculator mode
-        final SuntimesCalculatorDescriptor[] calculators = SuntimesCalculatorDescriptor.values();
+        final SuntimesCalculatorDescriptor[] calculators = supportingCalculators();
         SuntimesCalculatorDescriptor calculator = calculators[spinner_calculatorMode.getSelectedItemPosition()];
         WidgetSettings.saveCalculatorModePref(context, appWidgetId, calculator);
 
@@ -868,8 +873,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected void loadGeneralSettings(Context context)
     {
         // load: calculator mode
+        SuntimesCalculatorDescriptor[] calculators = supportingCalculators();
         SuntimesCalculatorDescriptor calculatorMode = WidgetSettings.loadCalculatorModePref(context, appWidgetId);
-        spinner_calculatorMode.setSelection((calculatorMode != null ? calculatorMode.ordinal() : 0));
+        spinner_calculatorMode.setSelection((calculatorMode != null ? calculatorMode.ordinal(calculators) : 0));
 
         // load: tracking mode
         WidgetSettings.TrackingMode trackingMode = WidgetSettings.loadTrackingModePref(context, appWidgetId);

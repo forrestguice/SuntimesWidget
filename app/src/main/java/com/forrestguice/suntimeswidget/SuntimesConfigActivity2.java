@@ -24,6 +24,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 /**
@@ -99,6 +101,13 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
             });
         }
     }
+
+    @Override
+    protected SuntimesCalculatorDescriptor[] supportingCalculators()
+    {
+        return SuntimesCalculatorDescriptor.values(requiredFeatures);
+    }
+    private static int[] requiredFeatures = new int[] { SuntimesCalculator.FEATURE_SOLSTICE };
 
     @Override
     protected void loadTimeMode(Context context)
