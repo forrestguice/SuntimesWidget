@@ -588,7 +588,7 @@ public class SuntimesUtils
         WidgetSettings.SolsticeEquinoxMode timeMode = data.timeMode();
         WidgetSettings.Location location = data.location();
         String timezoneID = data.timezone().getID();
-        String datasource = data.calculatorMode().getDisplayString();
+        String datasource = (data.calculatorMode() == null) ? "" : data.calculatorMode().name();
 
         String displayString = titlePattern;
         displayString = displayString.replaceAll(modePatternShort, timeMode.getShortDisplayString());
