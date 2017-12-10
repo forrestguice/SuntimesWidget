@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.settings;
 
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -435,10 +436,12 @@ public class AppSettings
                 styleID = R.style.AppTheme_Dark;
 
             } else if (themeName.equals(THEME_DAYNIGHT)) {
-                if (dataset != null)
+                if (data == null)
                 {
-                    styleID = (dataset.isDay() ? R.style.AppTheme_Light : R.style.AppTheme_Dark);
+                    data = new SuntimesRiseSetData(context, AppWidgetManager.INVALID_APPWIDGET_ID);
+                    data.initCalculator();
                 }
+                styleID = (data.isDay() ? R.style.AppTheme_Light : R.style.AppTheme_Dark);
             }
         }
         return styleID;
