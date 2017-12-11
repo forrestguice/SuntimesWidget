@@ -123,9 +123,8 @@ public class SuntimesWidget2 extends SuntimesWidget0
         }
 
         views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, SuntimesWidget2.class));
-        layout.updateViews(context, appWidgetId, views, data);
         layout.themeViews(context, views, appWidgetId);
-
+        layout.updateViews(context, appWidgetId, views, data);
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
