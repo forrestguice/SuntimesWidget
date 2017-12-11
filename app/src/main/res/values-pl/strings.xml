@@ -299,6 +299,11 @@
     <string name="configLabel_themeColorText">Kolor tekstu:</string>       <!-- color label -->
     <string name="configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->
 
+    <string name="configLabel_themeColorSpring">Spring Color:</string> <!-- color label -->  <!-- TODO -->
+    <string name="configLabel_themeColorSummer">Summer Color:</string> <!-- color label -->  <!-- TODO -->
+    <string name="configLabel_themeColorFall">Fall Color:</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorWinter">Winter Color:</string> <!-- color label -->  <!-- TODO -->
+
     <string name="configLabel_themeColorSunrise">Kolor wschodu:</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
 

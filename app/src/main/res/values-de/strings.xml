@@ -303,6 +303,11 @@
   <string name="configLabel_themeColorText">Text Color:</string>       <!-- color label -->  <!-- TODO -->
   <string name="configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->  <!-- TODO -->
 
+  <string name="configLabel_themeColorSpring">Spring Color:</string> <!-- color label -->  <!-- TODO -->
+  <string name="configLabel_themeColorSummer">Summer Color:</string> <!-- color label -->  <!-- TODO -->
+  <string name="configLabel_themeColorFall">Fall Color:</string> <!-- color label --> <!-- TODO -->
+  <string name="configLabel_themeColorWinter">Winter Color:</string> <!-- color label -->  <!-- TODO -->
+
   <string name="configLabel_themeColorSunrise">Sunrise Color:</string> <!-- color label -->  <!-- TODO -->
   <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->  <!-- TODO -->
 
