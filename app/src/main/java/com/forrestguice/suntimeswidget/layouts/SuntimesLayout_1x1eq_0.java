@@ -80,7 +80,7 @@ public class SuntimesLayout_1x1eq_0 extends SuntimesLayoutEq
 
                 String noteTime = utils.timeDeltaDisplayString(now.getTime(), event.getTime()).toString();
                 String noteString = context.getString(noteStringId, noteTime);
-                SpannableString noteSpan = SuntimesUtils.createBoldColorSpan(noteString, noteTime, timeColor);
+                SpannableString noteSpan = SuntimesUtils.createColorSpan(noteString, noteTime, timeColor);
                 views.setTextViewText(R.id.text_time_event_note, noteSpan);
 
             } else {
