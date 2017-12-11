@@ -60,7 +60,6 @@ public class SuntimesLayout_1x1eq_0 extends SuntimesLayoutEq
 
         if (data != null && data.isCalculated())
         {
-            timeMode = data.timeMode();
             Calendar now = Calendar.getInstance();
 
             WidgetSettings.TrackingMode trackingMode = WidgetSettings.loadTrackingModePref(context, appWidgetId);
@@ -107,5 +106,11 @@ public class SuntimesLayout_1x1eq_0 extends SuntimesLayoutEq
 
         views.setTextColor(R.id.text_time_event_note, textColor);
         views.setTextColor(R.id.text_time_event, eventColor);
+    }
+
+    @Override
+    public void prepareForUpdate(SuntimesEquinoxSolsticeData data)
+    {
+        timeMode = data.timeMode();
     }
 }

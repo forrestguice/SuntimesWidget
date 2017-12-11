@@ -33,6 +33,16 @@ public abstract class SuntimesLayoutEq extends SuntimesLayout
     }
 
     /**
+     * Called by widget before themeViews and updateViews to give the layout obj an opportunity to
+     * modify its state based on the supplied data.
+     * @param data
+     */
+    public void prepareForUpdate(SuntimesEquinoxSolsticeData data)
+    {
+        // EMPTY
+    }
+
+    /**
      * Apply the provided data to the RemoteViews this layout knows about.
      * @param context the android application context
      * @param appWidgetId the android widget ID to update
@@ -47,4 +57,6 @@ public abstract class SuntimesLayoutEq extends SuntimesLayout
         views.setTextViewText(R.id.text_title, titleText);
         //Log.v("DEBUG", "title text: " + titleText);
     }
+
+
 }
