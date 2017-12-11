@@ -35,7 +35,7 @@ public abstract class SuntimesLayoutEq extends SuntimesLayout
     /**
      * Called by widget before themeViews and updateViews to give the layout obj an opportunity to
      * modify its state based on the supplied data.
-     * @param data
+     * @param data the data object (should be the same as supplied to updateViews)
      */
     public void prepareForUpdate(SuntimesEquinoxSolsticeData data)
     {

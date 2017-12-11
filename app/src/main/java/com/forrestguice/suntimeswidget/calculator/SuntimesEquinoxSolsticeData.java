@@ -54,7 +54,7 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
 
     /**
      * init from other SuntimesEquinoxSolsticeData object
-     * @param other
+     * @param other another SuntimesEquinoxSolsticeData obj
      */
     private void initFromOther( SuntimesEquinoxSolsticeData other )
     {

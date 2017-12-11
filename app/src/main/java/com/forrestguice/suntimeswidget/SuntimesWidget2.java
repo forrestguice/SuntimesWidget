@@ -74,9 +74,6 @@ public class SuntimesWidget2 extends SuntimesWidget0
         return UpdateInterval.INTERVAL_VERYRAPID.interval;
     }
 
-    /**
-     * @return
-     */
     @Override
     protected long getUpdateTimeMillis()
     {
@@ -131,12 +128,12 @@ public class SuntimesWidget2 extends SuntimesWidget0
 
     protected static SuntimesLayoutEq getWidgetLayout(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
-        int minWidth = context.getResources().getInteger(R.integer.widget_size_minWidthDp);
-        int minHeight = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
-        int[] mustFitWithinDp = {minWidth, minHeight};
+        //int minWidth = context.getResources().getInteger(R.integer.widget_size_minWidthDp);
+        //int minHeight = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
+        //int[] mustFitWithinDp = {minWidth, minHeight};
         //Log.d("getWidgetLayout2", "0: must fit:  [" + mustFitWithinDp[0] + ", " + mustFitWithinDp[1] + "]");
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+        /**if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
             Bundle widgetOptions = appWidgetManager.getAppWidgetOptions(appWidgetId);
             int[]  sizePortrait = { widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH),   // dp values
@@ -147,7 +144,7 @@ public class SuntimesWidget2 extends SuntimesWidget0
             mustFitWithinDp[0] = Math.min( sizePortrait[0], sizeLandscape[0] );
             mustFitWithinDp[1] = Math.min( sizePortrait[1], sizeLandscape[1] );
             //Log.d("getWidgetLayout2", "1: must fit:  [" + mustFitWithinDp[0] + ", " + mustFitWithinDp[1] + "]");
-        }
+        }*/
 
         SuntimesLayoutEq layout;
         //if (WidgetSettings.loadAllowResizePref(context, appWidgetId))

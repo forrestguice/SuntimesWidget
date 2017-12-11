@@ -20,7 +20,6 @@ package com.forrestguice.suntimeswidget.themes;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.util.Log;
