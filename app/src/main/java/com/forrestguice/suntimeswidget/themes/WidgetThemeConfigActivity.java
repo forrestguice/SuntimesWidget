@@ -242,10 +242,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         chooseColorSetIconStroke = createColorChooser(this, R.id.editLabel_sunsetStrokeColor, R.id.edit_sunsetStrokeColor, R.id.editButton_sunsetStrokeColor, SuntimesTheme.THEME_SETICON_STROKE_COLOR);
 
         // season colors
-        chooseColorSpring = createColorChooser(this, SuntimesTheme.THEME_SPRINGCOLOR );
-        chooseColorSummer = createColorChooser(this, SuntimesTheme.THEME_SUMMERCOLOR);
-        chooseColorFall = createColorChooser(this, SuntimesTheme.THEME_FALLCOLOR);
-        chooseColorWinter = createColorChooser(this, SuntimesTheme.THEME_WINTERCOLOR);
+        chooseColorSpring = createColorChooser(this, R.id.editLabel_springColor, R.id.edit_springColor, R.id.editButton_springColor, SuntimesTheme.THEME_SPRINGCOLOR );
+        chooseColorSummer = createColorChooser(this, R.id.editLabel_summerColor, R.id.edit_summerColor, R.id.editButton_summerColor, SuntimesTheme.THEME_SUMMERCOLOR);
+        chooseColorFall = createColorChooser(this, R.id.editLabel_fallColor, R.id.edit_fallColor, R.id.editButton_fallColor, SuntimesTheme.THEME_FALLCOLOR);
+        chooseColorWinter = createColorChooser(this, R.id.editLabel_winterColor, R.id.edit_winterColor, R.id.editButton_winterColor, SuntimesTheme.THEME_WINTERCOLOR);
 
         // other colors
         chooseColorTitle = createColorChooser(this, R.id.editLabel_titleColor, R.id.edit_titleColor, R.id.editButton_titleColor, SuntimesTheme.THEME_TITLECOLOR);
