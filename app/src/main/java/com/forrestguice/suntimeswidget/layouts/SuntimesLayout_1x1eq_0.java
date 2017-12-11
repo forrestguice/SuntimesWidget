@@ -20,7 +20,9 @@ package com.forrestguice.suntimeswidget.layouts;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
 import android.text.SpannableString;
+import android.util.TypedValue;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
@@ -106,6 +108,15 @@ public class SuntimesLayout_1x1eq_0 extends SuntimesLayoutEq
 
         views.setTextColor(R.id.text_time_event_note, textColor);
         views.setTextColor(R.id.text_time_event, eventColor);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        {
+            float textSize = theme.getTextSizeSp();
+            float timeSize = theme.getTimeSizeSp();
+
+            views.setTextViewTextSize(R.id.text_time_event_note, TypedValue.COMPLEX_UNIT_SP, textSize);
+            views.setTextViewTextSize(R.id.text_time_event, TypedValue.COMPLEX_UNIT_SP, timeSize);
+        }
     }
 
     @Override
