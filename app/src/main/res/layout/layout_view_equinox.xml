@@ -45,7 +45,7 @@
                 <FrameLayout
                     android:layout_width="48dp" android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/card_content"
-                    android:layout_toRightOf="@id/card_content">
+                    android:layout_toRightOf="@id/card_content" android:layout_toEndOf="@id/card_content">
                     <include layout="@layout/info_time_nextprev" />
                 </FrameLayout>
 
