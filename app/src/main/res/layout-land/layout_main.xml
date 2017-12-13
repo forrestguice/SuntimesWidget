@@ -126,6 +126,24 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/info_time_lightmap_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/lightmap_clickable_height"
+            android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingBottom="2dp" android:paddingTop="0dp"
+            android:layout_marginBottom="4dp"
+            android:background="?attr/selectableItemBackground" android:clickable="true">
+
+            <com.forrestguice.suntimeswidget.LightMapView
+                android:id="@+id/info_time_lightmap"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/lightmap_height"
+                android:layout_gravity="top"
+                tools:ignore="ContentDescription" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
             android:id="@+id/info_time_equinox_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -140,21 +158,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/info_time_lightmap_layout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/lightmap_clickable_height"
-            android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingBottom="2dp" android:paddingTop="0dp"
-            android:background="?attr/selectableItemBackground" android:clickable="true">
-
-            <com.forrestguice.suntimeswidget.LightMapView
-                android:id="@+id/info_time_lightmap"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/lightmap_height"
-                android:layout_gravity="top"
-                tools:ignore="ContentDescription" />
-
-        </LinearLayout>
 
     </LinearLayout>
 

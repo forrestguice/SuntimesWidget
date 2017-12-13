@@ -135,20 +135,6 @@
                 android:layout_width="match_parent" android:layout_height="6dp"
                 android:layout_margin="0dp" />
 
-            <!-- Solstice / Equinox -->
-            <LinearLayout
-                android:id="@+id/info_time_equinox_layout"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="?attr/timeCardBackground"
-                android:layout_marginTop="0dp" android:layout_marginBottom="6dp">
-
-                <com.forrestguice.suntimeswidget.EquinoxView
-                    android:id="@+id/info_date_solsticequinox"
-                    android:layout_width="match_parent" android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
             <!-- Lightmap -->
             <LinearLayout
                 android:id="@+id/info_time_lightmap_layout"
@@ -168,6 +154,20 @@
                 <View
                     android:layout_width="match_parent" android:layout_height="6dp"
                     android:layout_margin="0dp" />
+
+            </LinearLayout>
+
+            <!-- Solstice / Equinox -->
+            <LinearLayout
+                android:id="@+id/info_time_equinox_layout"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="?attr/timeCardBackground"
+                android:layout_marginTop="0dp" android:layout_marginBottom="6dp">
+
+                <com.forrestguice.suntimeswidget.EquinoxView
+                    android:id="@+id/info_date_solsticequinox"
+                    android:layout_width="match_parent" android:layout_height="wrap_content" />
 
             </LinearLayout>
 
