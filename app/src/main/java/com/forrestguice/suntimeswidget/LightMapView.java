@@ -95,6 +95,11 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         colorPointStroke = ContextCompat.getColor(context, typedArray.getResourceId(6, def));
 
         typedArray.recycle();
+
+        if (isInEditMode())
+        {
+            setBackgroundColor(colorNight);
+        }
     }
 
     public int getMaxUpdateRate()
