@@ -96,20 +96,23 @@ public class SuntimesCalculatorDescriptor implements Comparable
         }
 
         SuntimesCalculatorDescriptor descriptor = null;
-        value = value.trim().toLowerCase(Locale.US);
-        SuntimesCalculatorDescriptor[] values = SuntimesCalculatorDescriptor.values();
-        for (int i=0; i<values.length; i++)
+        if (value != null)
         {
-            SuntimesCalculatorDescriptor calculator = values[i];
-            if (calculator.name().equals(value) || value.equals("any"))
+            value = value.trim().toLowerCase(Locale.US);
+            SuntimesCalculatorDescriptor[] values = SuntimesCalculatorDescriptor.values();
+            for (int i=0; i<values.length; i++)
             {
-                descriptor = calculator;
-                break;
+                SuntimesCalculatorDescriptor calculator = values[i];
+                if (calculator.name().equals(value) || value.equals("any"))
+                {
+                    descriptor = calculator;
+                    break;
+                }
             }
         }
 
         if (descriptor == null) {
-            throw new InvalidParameterException("Calculator value for " + value + " not found. ..btw there are " + values.length + " items total.");
+            throw new InvalidParameterException("Calculator value for " + value + " not found.");
 
         } else {
             return descriptor;
