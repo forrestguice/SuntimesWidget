@@ -79,7 +79,18 @@ public class EquinoxView extends LinearLayout
     public EquinoxView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
+        applyAttributes(context, attrs);
         init(context, attrs);
+    }
+
+    private void applyAttributes(Context context, AttributeSet attrs)
+    {
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.EquinoxView, 0, 0);
+        try {
+            setMinimized(a.getBoolean(R.styleable.EquinoxView_minimized, false));
+        } finally {
+            a.recycle();
+        }
     }
 
     private void init(Context context, AttributeSet attrs)

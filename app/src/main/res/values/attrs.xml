@@ -54,4 +54,9 @@
     <attr name="icActionGPS" format="reference" />
     <attr name="icActionGPS_off" format="reference" />
     <attr name="icActionGPS_searching" format="reference" />
+
+    <declare-styleable name="EquinoxView">
+        <attr name="minimized" format="boolean" />
+    </declare-styleable>
+
 </resources>
