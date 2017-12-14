@@ -154,7 +154,8 @@
 
             <com.forrestguice.suntimeswidget.EquinoxView
                 android:id="@+id/info_date_solsticequinox"
-                android:layout_width="match_parent" android:layout_height="wrap_content" />
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                app:minimized="true" />
 
         </LinearLayout>
 
