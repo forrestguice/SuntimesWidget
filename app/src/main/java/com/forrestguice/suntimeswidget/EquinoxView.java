@@ -215,6 +215,11 @@ public class EquinoxView extends LinearLayout
                 nextYear.setLayoutParams(lpNextYear);
             }
         }
+
+        if (isInEditMode())
+        {
+            updateViews(context, null);
+        }
     }
 
     private int noteColor; //, springColor, summerColor, fallColor, winterColor;
@@ -301,11 +306,36 @@ public class EquinoxView extends LinearLayout
         }
     }
 
+    private void showTitle( boolean show )
+    {
+        titleThisYear.setVisibility(show ? View.VISIBLE : View.GONE);
+        titleNextYear.setVisibility(show ? View.VISIBLE : View.GONE);
+    }
+
+    private void showEmptyView( boolean show )
+    {
+        empty.setVisibility(show ? View.VISIBLE : View.GONE);
+        flipper.setVisibility(show ? View.GONE : View.VISIBLE);
+    }
+
     protected void updateViews( Context context, SuntimesEquinoxSolsticeDataset data )
     {
+        showTitle(!minimized);
         showNextPrevButtons(!minimized);
-        flipper.setVisibility(View.VISIBLE);
-        empty.setVisibility(View.GONE);
+        showEmptyView(false);
+
+        if (isInEditMode())
+        {
+            if (minimized)
+            {
+                for (int i = 1; i < notes.size(); i++)
+                {
+                    EquinoxNote note = notes.get(i);
+                    note.setVisible(false);
+                }
+            }
+            return;
+        }
 
         if (data == null)
         {
@@ -326,11 +356,9 @@ public class EquinoxView extends LinearLayout
         if (data.isCalculated() && data.isImplemented())
         {
             SuntimesUtils.TimeDisplayText thisYear = utils.calendarDateYearDisplayString(context, data.dataEquinoxVernal.eventCalendarThisYear());
-            titleThisYear.setVisibility(minimized ? View.GONE : View.VISIBLE);
             titleThisYear.setText(thisYear.toString());
 
             SuntimesUtils.TimeDisplayText nextYear = utils.calendarDateYearDisplayString(context, data.dataEquinoxVernal.eventCalendarOtherYear());
-            titleNextYear.setVisibility( minimized ? View.GONE : View.VISIBLE);
             titleNextYear.setText(nextYear.toString());
 
             note_equinox_vernal.updateTime(context, data.dataEquinoxVernal.eventCalendarThisYear());
@@ -364,8 +392,7 @@ public class EquinoxView extends LinearLayout
             }
 
         } else {
-            empty.setVisibility(View.VISIBLE);
-            flipper.setVisibility(View.GONE);
+            showEmptyView(true);
         }
     }
 
