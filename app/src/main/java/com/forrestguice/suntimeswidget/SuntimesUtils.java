@@ -27,6 +27,7 @@ import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.Icon;
 import android.graphics.drawable.InsetDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -47,6 +48,7 @@ import android.text.style.ImageSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Display;
 import android.view.Menu;
 
 import java.lang.reflect.Method;
@@ -694,32 +696,28 @@ public class SuntimesUtils
     }
 
     /**
-     * @param context app context
-     * @param resourceID drawable resourceID
-     * @return a Bitmap representation of the Drawable
+     * @param context
+     * @param resourceID
+     * @param isInset
+     * @param width
+     * @param height
+     * @param pixelValues
+     * @param fillColor
+     * @param strokeColor
+     * @param strokePx
+     * @return
      */
-    public static Bitmap drawableToBitmap(Context context, int resourceID)
-    {
-        Drawable drawable = ResourcesCompat.getDrawable(context.getResources(), resourceID, null);
-        return drawableToBitmap(context, drawable);
-    }
-
-    public static Bitmap drawableToBitmap(Context context, int resourceID, boolean isInset, int fillColor)
-    {
-        return SuntimesUtils.drawableToBitmap(context, resourceID, isInset, fillColor, 0, 0);
-    }
-
-    public static Bitmap drawableToBitmap(Context context, int resourceID, boolean isInset, int fillColor, int strokeColor, int strokePixels)
+    public static Bitmap drawableToBitmap(Context context, int resourceID, boolean isInset, int width, int height, boolean pixelValues, int fillColor, int strokeColor, int strokePx)
     {
         Drawable drawable = ResourcesCompat.getDrawable(context.getResources(), resourceID, null);
         if (isInset)
         {
             InsetDrawable inset = (InsetDrawable)drawable;
-            return drawableToBitmap(context, tintDrawable(inset, fillColor, strokeColor, strokePixels));
+            return drawableToBitmap(context, tintDrawable(inset, fillColor, strokeColor, strokePx), width, height, pixelValues);
 
         } else {
             GradientDrawable gradient = (GradientDrawable)drawable;
-            return drawableToBitmap(context, tintDrawable(gradient, fillColor, strokeColor, strokePixels));
+            return drawableToBitmap(context, tintDrawable(gradient, fillColor, strokeColor, strokePx), width, height, pixelValues);
         }
     }
 
@@ -762,18 +760,35 @@ public class SuntimesUtils
     }
 
     /**
-     * @param context app context
+     * @param context context used to access resources
      * @param drawable a Drawable
-     * @return a Bitmap representation of the Drawable
+     * @param w width (pixels or dp)
+     * @param h height (pixels or dp)
+     * @param pixelValues true w and h are in pixels, false w and h are in dp
+     * @return a Bitmap measuring w,h of the specified drawable
      */
-    public static Bitmap drawableToBitmap(Context context, Drawable drawable)
+    public static Bitmap drawableToBitmap(Context context, Drawable drawable, int w, int h, boolean pixelValues)
     {
         if (drawable instanceof BitmapDrawable)
         {
             return ((BitmapDrawable)drawable).getBitmap();
         }
 
-        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);  // CRASH: (api22) IllegalArgumentException: width and height must be > 0 
+        if (!pixelValues)
+        {
+            DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+            w = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, w, metrics);
+            h = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, h, metrics);
+        }
+        Log.d("DEBUG", "drawableToBitmap: " + drawable.toString() + "::" + w + ", " + h);
+
+        if (w <= 0 || h <= 0)
+        {
+            Log.w("drawableToBitmap", "invalid width or height: " + w + ", " + h);
+            w = h = 1;
+        }
+
+        Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         drawable.draw(canvas);
