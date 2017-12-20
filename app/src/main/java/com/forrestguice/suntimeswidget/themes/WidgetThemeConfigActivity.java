@@ -569,24 +569,19 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         int strokePixels = (int)((metrics.density * chooseIconStroke.getValue()) + 0.5f);
+        int noonStrokePixels = (int)((metrics.density * chooseNoonIconStroke.getValue()) + 0.5f);
 
         if (previewRiseIcon != null)
         {
-            InsetDrawable riseIcon = (InsetDrawable)ResourcesCompat.getDrawable(getResources(), R.drawable.ic_sunrise0, null);
-            previewRiseIcon.setImageDrawable(SuntimesUtils.tintDrawable(riseIcon, chooseColorRiseIconFill.getColor(), chooseColorRiseIconStroke.getColor(), strokePixels));
+            previewRiseIcon.setImageBitmap(SuntimesUtils.insetDrawableToBitmap(this, R.drawable.ic_sunrise0, chooseColorRiseIconFill.getColor(), chooseColorRiseIconStroke.getColor(), strokePixels));
         }
-
         if (previewSetIcon != null)
         {
-            InsetDrawable setIcon = (InsetDrawable)ResourcesCompat.getDrawable(getResources(), R.drawable.ic_sunset0, null);
-            previewSetIcon.setImageDrawable(SuntimesUtils.tintDrawable(setIcon, chooseColorSetIconFill.getColor(), chooseColorSetIconStroke.getColor(), strokePixels));
+            previewSetIcon.setImageBitmap(SuntimesUtils.insetDrawableToBitmap(this, R.drawable.ic_sunset0, chooseColorSetIconFill.getColor(), chooseColorSetIconStroke.getColor(), strokePixels));
         }
-
         if (previewNoonIcon != null)
         {
-            int noonStrokePixels = (int)((metrics.density * chooseNoonIconStroke.getValue()) + 0.5f);
-            GradientDrawable noonIcon = (GradientDrawable)ResourcesCompat.getDrawable(getResources(), R.drawable.ic_noon_large0, null);
-            previewNoonIcon.setImageDrawable(SuntimesUtils.tintDrawable(noonIcon, chooseColorNoonIconFill.getColor(), chooseColorNoonIconStroke.getColor(), noonStrokePixels));
+            previewNoonIcon.setImageBitmap(SuntimesUtils.gradientDrawableToBitmap(this, R.drawable.ic_noon_large0, chooseColorNoonIconFill.getColor(), chooseColorNoonIconStroke.getColor(), noonStrokePixels));
         }
     }
 
