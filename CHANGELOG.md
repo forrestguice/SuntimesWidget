@@ -1,4 +1,5 @@
 ### ~ 
+* fixes automatic keyboard popup (WidgetConfigActivity, ThemeConfigActivity); prevent the keyboard from taking focus on activity start. 
 * updates dependency (Time4A 3.38-2017c).
 
 ### v0.5.1 (2017-12-03)
