@@ -24,7 +24,6 @@
         <ImageView
             style="@style/SunsetTimeImageView"
             android:id="@+id/icon_time_sunrise"
-            android:background="@drawable/ic_sunrise"
             android:scaleType="fitStart"
             android:contentDescription="@string/sunrise_short" />
 

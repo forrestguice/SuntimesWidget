@@ -76,7 +76,7 @@ public class SuntimesLayout_1x1_4 extends SuntimesLayout
             views.setTextViewTextSize(R.id.text_time_noon, TypedValue.COMPLEX_UNIT_SP, theme.getTimeSizeSp());
         }
 
-        Bitmap noonIcon = SuntimesUtils.drawableToBitmap(context, R.drawable.ic_noon_large0, false, theme.getNoonIconColor(), theme.getNoonIconStrokeColor(), theme.getNoonIconStrokePixels(context));
+        Bitmap noonIcon = SuntimesUtils.gradientDrawableToBitmap(context, R.drawable.ic_noon_large0, theme.getNoonIconColor(), theme.getNoonIconStrokeColor(), theme.getNoonIconStrokePixels(context));
         views.setImageViewBitmap(R.id.icon_time_noon, noonIcon);
     }
 }

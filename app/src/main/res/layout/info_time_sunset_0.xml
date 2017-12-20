@@ -26,7 +26,6 @@
         <ImageView
             style="@style/SunsetTimeImageView"
             android:id="@+id/icon_time_sunset"
-            android:background="@drawable/ic_sunset"
             android:scaleType="fitEnd"
             android:contentDescription="@string/sunset_short"/>
 
