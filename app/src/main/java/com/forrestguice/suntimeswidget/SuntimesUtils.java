@@ -27,7 +27,6 @@ import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.Icon;
 import android.graphics.drawable.InsetDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -48,7 +47,6 @@ import android.text.style.ImageSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Display;
 import android.view.Menu;
 
 import java.lang.reflect.Method;
@@ -696,29 +694,61 @@ public class SuntimesUtils
     }
 
     /**
-     * @param context
-     * @param resourceID
-     * @param isInset
-     * @param width
-     * @param height
-     * @param pixelValues
-     * @param fillColor
-     * @param strokeColor
-     * @param strokePx
-     * @return
+     * @param context context used to get resources
+     * @param resourceID drawable resource ID to a GradientDrawable
+     * @param fillColor fill color to apply to drawable
+     * @param strokeColor stroke color to apply to drawable
+     * @param strokePx width of stroke
+     * @return a Bitmap of the drawable
      */
-    public static Bitmap drawableToBitmap(Context context, int resourceID, boolean isInset, int width, int height, boolean pixelValues, int fillColor, int strokeColor, int strokePx)
+    public static Bitmap gradientDrawableToBitmap(Context context, int resourceID, int fillColor, int strokeColor, int strokePx)
     {
         Drawable drawable = ResourcesCompat.getDrawable(context.getResources(), resourceID, null);
-        if (isInset)
-        {
-            InsetDrawable inset = (InsetDrawable)drawable;
-            return drawableToBitmap(context, tintDrawable(inset, fillColor, strokeColor, strokePx), width, height, pixelValues);
+        GradientDrawable gradient = (GradientDrawable)drawable;
 
-        } else {
-            GradientDrawable gradient = (GradientDrawable)drawable;
-            return drawableToBitmap(context, tintDrawable(gradient, fillColor, strokeColor, strokePx), width, height, pixelValues);
+        int w = 1, h = 1;
+        if (gradient != null)
+        {
+            w = gradient.getIntrinsicWidth();
+            h = gradient.getIntrinsicHeight();
         }
+
+        Drawable tinted =  tintDrawable(gradient, fillColor, strokeColor, strokePx);
+        return drawableToBitmap(context, tinted, w, h, true);
+    }
+
+    /**
+     * @param context context used to get resources
+     * @param resourceID drawable resource ID to an InsetDrawable
+     * @param fillColor fill color to apply to drawable
+     * @param strokeColor stroke color to apply to drawable
+     * @param strokePx width of stroke
+     * @return a Bitmap of the drawable
+     */
+    public static Bitmap insetDrawableToBitmap(Context context, int resourceID, int fillColor, int strokeColor, int strokePx)
+    {
+        Drawable drawable = ResourcesCompat.getDrawable(context.getResources(), resourceID, null);
+        InsetDrawable inset = (InsetDrawable)drawable;
+
+        int w = 1, h = 1;
+        if (inset != null)
+        {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+            {
+                Drawable wrapped = inset.getDrawable();
+                if (wrapped != null)
+                {
+                    w = wrapped.getIntrinsicWidth();
+                    h = wrapped.getIntrinsicHeight();
+                }
+            } else {
+                w = inset.getIntrinsicWidth();
+                h = inset.getIntrinsicHeight();
+            }
+        }
+
+        Drawable tinted = tintDrawable(inset, fillColor, strokeColor, strokePx);
+        return drawableToBitmap(context, tinted, w, h, true);
     }
 
     /**
@@ -764,17 +794,17 @@ public class SuntimesUtils
      * @param drawable a Drawable
      * @param w width (pixels or dp)
      * @param h height (pixels or dp)
-     * @param pixelValues true w and h are in pixels, false w and h are in dp
+     * @param pxValues true w and h are in pixels, false w and h are in dp
      * @return a Bitmap measuring w,h of the specified drawable
      */
-    public static Bitmap drawableToBitmap(Context context, Drawable drawable, int w, int h, boolean pixelValues)
+    public static Bitmap drawableToBitmap(Context context, Drawable drawable, int w, int h, boolean pxValues)
     {
         if (drawable instanceof BitmapDrawable)
         {
             return ((BitmapDrawable)drawable).getBitmap();
         }
 
-        if (!pixelValues)
+        if (!pxValues)
         {
             DisplayMetrics metrics = context.getResources().getDisplayMetrics();
             w = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, w, metrics);

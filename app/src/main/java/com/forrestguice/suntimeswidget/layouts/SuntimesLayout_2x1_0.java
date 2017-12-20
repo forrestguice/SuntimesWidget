@@ -134,13 +134,13 @@ public class SuntimesLayout_2x1_0 extends SuntimesLayout
             views.setTextViewTextSize(R.id.text_delta_day_suffix, TypedValue.COMPLEX_UNIT_SP, textSize);
         }
 
-        Bitmap sunriseIcon = SuntimesUtils.drawableToBitmap(context, R.drawable.ic_sunrise0, true, 18, 9, false, theme.getSunriseIconColor(), theme.getSunriseIconStrokeColor(), theme.getSunriseIconStrokePixels(context));
+        Bitmap sunriseIcon = SuntimesUtils.insetDrawableToBitmap(context, R.drawable.ic_sunrise0, theme.getSunriseIconColor(), theme.getSunriseIconStrokeColor(), theme.getSunriseIconStrokePixels(context));
         views.setImageViewBitmap(R.id.icon_time_sunrise, sunriseIcon);
 
-        Bitmap noonIcon = SuntimesUtils.drawableToBitmap(context, R.drawable.ic_noon_large0, false, 32, 32, false, theme.getNoonIconColor(), theme.getNoonIconStrokeColor(), theme.getNoonIconStrokePixels(context));
+        Bitmap noonIcon = SuntimesUtils.gradientDrawableToBitmap(context, R.drawable.ic_noon_large0, theme.getNoonIconColor(), theme.getNoonIconStrokeColor(), theme.getNoonIconStrokePixels(context));
         views.setImageViewBitmap(R.id.icon_time_noon, noonIcon);
 
-        Bitmap sunsetIcon = SuntimesUtils.drawableToBitmap(context, R.drawable.ic_sunset0, true, 18, 9, false, theme.getSunsetIconColor(), theme.getSunsetIconStrokeColor(), theme.getSunsetIconStrokePixels(context));
+        Bitmap sunsetIcon = SuntimesUtils.insetDrawableToBitmap(context, R.drawable.ic_sunset0, theme.getSunsetIconColor(), theme.getSunsetIconStrokeColor(), theme.getSunsetIconStrokePixels(context));
         views.setImageViewBitmap(R.id.icon_time_sunset, sunsetIcon);
     }
 }
