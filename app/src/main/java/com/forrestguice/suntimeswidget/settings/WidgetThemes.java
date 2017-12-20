@@ -393,15 +393,11 @@ public class WidgetThemes
                 setViewSuffix.setTextColor(theme.getTimeSuffixColor());
                 setViewSuffix.setText(setText.getSuffix());
 
-                Resources resources = context.getResources();
-
-                InsetDrawable riseDrawable = (InsetDrawable) ResourcesCompat.getDrawable(resources, R.drawable.ic_sunrise0, null);
                 ImageView riseIcon = (ImageView)view.findViewById(R.id.icon_time_sunrise);
-                //riseIcon.setImageBitmap(SuntimesUtils.drawableToBitmap(context, SuntimesUtils.tintDrawable(riseDrawable, theme.getSunriseIconColor(), theme.getSunriseIconStrokeColor(), theme.getSunriseIconStrokePixels(context))));
+                riseIcon.setImageBitmap(SuntimesUtils.insetDrawableToBitmap(context, R.drawable.ic_sunrise0, theme.getSunriseIconColor(), theme.getSunriseIconStrokeColor(), theme.getSunriseIconStrokePixels(context)));
 
                 ImageView setIcon = (ImageView)view.findViewById(R.id.icon_time_sunset);
-                InsetDrawable setDrawable = (InsetDrawable) ResourcesCompat.getDrawable(resources, R.drawable.ic_sunset0, null);
-                //setIcon.setImageBitmap(SuntimesUtils.drawableToBitmap(context, SuntimesUtils.tintDrawable(setDrawable, theme.getSunsetIconColor(), theme.getSunsetIconStrokeColor(), theme.getSunsetIconStrokePixels(context))));
+                setIcon.setImageBitmap(SuntimesUtils.insetDrawableToBitmap(context, R.drawable.ic_sunset0, theme.getSunsetIconColor(), theme.getSunsetIconStrokeColor(), theme.getSunsetIconStrokePixels(context)));
 
                 View layout = view.findViewById(R.id.widgetframe_inner);
                 try {
