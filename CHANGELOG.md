@@ -1,4 +1,5 @@
 ### ~ 
+* updates dependency (Time4A 3.38-2017c).
 
 ### v0.5.1 (2017-12-03)
 * changes default data source to time4a-noaa (fallback remains sunrisesunsetlib).
