@@ -462,39 +462,32 @@ public class WidgetThemes
             return themes;
         }
 
-
         @Override
         public View getDropDownView(int position, View convertView, ViewGroup parent)
         {
-            View view;
-            if (convertView != null)
+            View view = convertView;
+            if (view == null)
             {
-                return convertView;
-
-            } else {
                 LayoutInflater layoutInflater = LayoutInflater.from(context);
                 view = layoutInflater.inflate(dropDownLayoutId, parent, false);
-                TextView textView = (TextView) view.findViewById(android.R.id.text1);
-                textView.setText(themes[position].displayString());
-                return view;
             }
+            TextView textView = (TextView) view.findViewById(android.R.id.text1);
+            textView.setText(themes[position].displayString());
+            return view;
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent)
         {
-            View view;
-            if (convertView != null)
+            View view = convertView;
+            if (view == null)
             {
-                return convertView;
-
-            } else {
                 LayoutInflater layoutInflater = LayoutInflater.from(context);
                 view = layoutInflater.inflate(layoutId, parent, false);
-                TextView textView = (TextView) view.findViewById(android.R.id.text1);
-                textView.setText(themes[position].displayString());
-                return view;
             }
+            TextView textView = (TextView) view.findViewById(android.R.id.text1);
+            textView.setText(themes[position].displayString());
+            return view;
         }
     }
 
