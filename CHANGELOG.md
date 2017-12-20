@@ -1,5 +1,8 @@
 ### ~ 
 * fixes automatic keyboard popup (WidgetConfigActivity, ThemeConfigActivity); prevent the keyboard from taking focus on activity start. 
+* fixes stale/duplicate items in theme selector.
+* fixes theme preview icons (now shown) (api22+).
+* fixes crash when adding widgets (api22+) (#126).
 * updates dependency (Time4A 3.38-2017c).
 
 ### v0.5.1 (2017-12-03)
