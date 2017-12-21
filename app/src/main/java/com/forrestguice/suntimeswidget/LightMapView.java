@@ -32,6 +32,7 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 
+import java.lang.ref.WeakReference;
 import java.util.Calendar;
 
 /**
@@ -134,16 +135,18 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             drawTask.cancel(true);
         }
         drawTask = new LightMapTask();
-        drawTask.setListener(new LightMapTaskListener()
-        {
-            @Override
-            public void onFinished(Bitmap result)
-            {
-                setImageBitmap(result);
-            }
-        });
+        drawTask.setListener(onLightMapDrawn);
         drawTask.execute(data, getWidth(), getHeight(), colors);
     }
+
+    private LightMapTaskListener onLightMapDrawn = new LightMapTaskListener()
+    {
+        @Override
+        public void onFinished(Bitmap result)
+        {
+            setImageBitmap(result);
+        }
+    };
 
     /**
      * @param context a context used to access shared prefs
@@ -383,20 +386,24 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
 
         protected void onFinished( Bitmap result )
         {
-            if (listener != null)
+            if (listenerRef != null)
             {
-                listener.onFinished(result);
+                LightMapTaskListener listener = listenerRef.get();
+                if (listener != null)
+                {
+                    listener.onFinished(result);
+                }
             }
         }
 
-        private LightMapTaskListener listener = null;
-        void setListener( LightMapTaskListener listener )
+        private WeakReference<LightMapTaskListener> listenerRef = null;
+        public void setListener( LightMapTaskListener listener )
         {
-            this.listener = listener;
+            this.listenerRef = new WeakReference<LightMapTaskListener>(listener);
         }
-        void clearListener()
+        public void clearListener()
         {
-            this.listener = null;
+            this.listenerRef = null;
         }
     }
 
