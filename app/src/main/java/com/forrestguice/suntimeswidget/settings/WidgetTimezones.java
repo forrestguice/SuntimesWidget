@@ -41,7 +41,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.graphics.drawable.GradientDrawable;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -604,14 +603,7 @@ public class WidgetTimezones
         {
             onSaveSortMode(sortMode);
             WidgetTimezones.TimeZonesLoadTask loadTask = new WidgetTimezones.TimeZonesLoadTask(context);
-            loadTask.setListener(createTimeZonesLoadTaskListener(sortMode));
-            loadTask.execute(sortMode);
-        }
-
-        private WidgetTimezones.TimeZonesLoadTaskListener onTimeZonesLoaded = null;
-        private WidgetTimezones.TimeZonesLoadTaskListener createTimeZonesLoadTaskListener( final WidgetTimezones.TimeZoneSort sortMode  )
-        {
-            onTimeZonesLoaded = new WidgetTimezones.TimeZonesLoadTaskListener()  // hold a hard reference here (because the task uses WeakReference)
+            loadTask.setListener(new TimeZonesLoadTaskListener()
             {
                 @Override
                 public void onFinished(TimeZoneItemAdapter result)
@@ -620,8 +612,8 @@ public class WidgetTimezones
                     spinner.setAdapter(result);
                     onSortTimeZones(result, sortMode);
                 }
-            };
-            return onTimeZonesLoaded;
+            });
+            loadTask.execute(sortMode);
         }
 
         public boolean onActionItemClicked(int action)
@@ -726,23 +718,19 @@ public class WidgetTimezones
 
     public static class TimeZonesLoadTask extends AsyncTask<TimeZoneSort, Object, TimeZoneItemAdapter>
     {
-        private WeakReference<Context> contextRef;
+        private Context context;
 
         public TimeZonesLoadTask(Context context)
         {
-            this.contextRef = new WeakReference<Context>(context);
+            this.context = context;
         }
 
         @Override
         protected void onPreExecute()
         {
-            if (listenerRef != null)
+            if (listener != null)
             {
-                TimeZonesLoadTaskListener listener = listenerRef.get();
-                if (listener != null)
-                {
-                    listener.onStart();
-                }
+                listener.onStart();
             }
         }
 
@@ -769,10 +757,7 @@ public class WidgetTimezones
                 Collections.sort(timezones, sortBy.getComparator());
             }
 
-            Context context = contextRef.get();
-            if (context != null)
-                return new WidgetTimezones.TimeZoneItemAdapter(context, 0, timezones, sortBy);
-            else return null;
+            return new WidgetTimezones.TimeZoneItemAdapter(context, 0, timezones, sortBy);
         }
 
         @Override
@@ -783,24 +768,20 @@ public class WidgetTimezones
         @Override
         protected void onPostExecute(TimeZoneItemAdapter result)
         {
-            if (result != null && listenerRef != null)
+            if (listener != null)
             {
-                TimeZonesLoadTaskListener listener = listenerRef.get();
-                if (listener != null)
-                {
-                    listener.onFinished(result);
-                }
+                listener.onFinished(result);
             }
         }
 
-        private WeakReference<TimeZonesLoadTaskListener> listenerRef = null;
+        private TimeZonesLoadTaskListener listener = null;
         public void setListener(TimeZonesLoadTaskListener listener)
         {
-            this.listenerRef = new WeakReference<TimeZonesLoadTaskListener>(listener);
+            this.listener = listener;
         }
         public void clearListener()
         {
-            this.listenerRef = null;
+            this.listener = null;
         }
     }
 
