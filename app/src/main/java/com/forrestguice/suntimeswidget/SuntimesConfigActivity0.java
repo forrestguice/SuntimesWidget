@@ -338,26 +338,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
             WidgetTimezones.TimeZoneSort sortZonesBy = AppSettings.loadTimeZoneSortPref(context);
             WidgetTimezones.TimeZonesLoadTask loadTask = new WidgetTimezones.TimeZonesLoadTask(context);
-            loadTask.setListener(new WidgetTimezones.TimeZonesLoadTaskListener()
-            {
-                @Override
-                public void onStart()
-                {
-                    super.onStart();
-                    spinner_timezone.setAdapter(new WidgetTimezones.TimeZoneItemAdapter(SuntimesConfigActivity0.this, R.layout.layout_listitem_timezone));
-                    button_addWidget.setEnabled(false);
-                }
-
-                @Override
-                public void onFinished(WidgetTimezones.TimeZoneItemAdapter result)
-                {
-                    super.onFinished(result);
-                    spinner_timezone_adapter = result;
-                    spinner_timezone.setAdapter(spinner_timezone_adapter);
-                    WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
-                    button_addWidget.setEnabled(true);
-                }
-            });
+            loadTask.setListener(onTimeZonesLoaded);
             loadTask.execute(sortZonesBy);
         }
 
@@ -497,6 +478,27 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             button_aboutWidget.setOnClickListener(onAboutButtonClickListener);
         }
     }
+
+    private WidgetTimezones.TimeZonesLoadTaskListener onTimeZonesLoaded = new WidgetTimezones.TimeZonesLoadTaskListener()
+    {
+        @Override
+        public void onStart()
+        {
+            super.onStart();
+            spinner_timezone.setAdapter(new WidgetTimezones.TimeZoneItemAdapter(SuntimesConfigActivity0.this, R.layout.layout_listitem_timezone));
+            button_addWidget.setEnabled(false);
+        }
+
+        @Override
+        public void onFinished(WidgetTimezones.TimeZoneItemAdapter result)
+        {
+            super.onFinished(result);
+            spinner_timezone_adapter = result;
+            spinner_timezone.setAdapter(spinner_timezone_adapter);
+            WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
+            button_addWidget.setEnabled(true);
+        }
+    };
 
     /**
      * @param context a context used to access resources

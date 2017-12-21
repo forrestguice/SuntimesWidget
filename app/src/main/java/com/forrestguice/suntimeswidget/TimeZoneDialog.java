@@ -131,24 +131,7 @@ public class TimeZoneDialog extends DialogFragment
         initViews(myParent, dialogContent);
         WidgetTimezones.TimeZoneSort sortZonesBy = AppSettings.loadTimeZoneSortPref(myParent);
         WidgetTimezones.TimeZonesLoadTask loadTask = new WidgetTimezones.TimeZonesLoadTask(myParent);
-        loadTask.setListener(new WidgetTimezones.TimeZonesLoadTaskListener()
-        {
-            @Override
-            public void onStart()
-            {
-                super.onStart();
-                spinner_timezone.setAdapter(new WidgetTimezones.TimeZoneItemAdapter(myParent, R.layout.layout_listitem_timezone));
-            }
-
-            @Override
-            public void onFinished(WidgetTimezones.TimeZoneItemAdapter result)
-            {
-                super.onFinished(result);
-                spinner_timezone_adapter = result;
-                spinner_timezone.setAdapter(spinner_timezone_adapter);
-                WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
-            }
-        });
+        loadTask.setListener(onTimeZonesLoaded);
 
         if (savedInstanceState != null)
         {
@@ -164,6 +147,25 @@ public class TimeZoneDialog extends DialogFragment
         loadTask.execute(sortZonesBy);
         return dialog;
     }
+
+    private WidgetTimezones.TimeZonesLoadTaskListener onTimeZonesLoaded = new WidgetTimezones.TimeZonesLoadTaskListener()
+    {
+        @Override
+        public void onStart()
+        {
+            super.onStart();
+            spinner_timezone.setAdapter(new WidgetTimezones.TimeZoneItemAdapter(getActivity(), R.layout.layout_listitem_timezone));
+        }
+
+        @Override
+        public void onFinished(WidgetTimezones.TimeZoneItemAdapter result)
+        {
+            super.onFinished(result);
+            spinner_timezone_adapter = result;
+            spinner_timezone.setAdapter(spinner_timezone_adapter);
+            WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
+        }
+    };
 
     @Override
     public void onSaveInstanceState(Bundle outState)
