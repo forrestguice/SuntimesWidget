@@ -1,4 +1,6 @@
 ### ~ 
+
+### v0.5.2 (2017-12-20)
 * misc refactoring to prevent memory leaks (LightMapTask, TimeZonesLoadTask).
 * fixes flippable widget randomly displays 24hr time (#129).
 * fixes table switch animation fails to play (#125).
