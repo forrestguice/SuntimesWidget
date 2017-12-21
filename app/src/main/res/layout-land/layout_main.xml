@@ -130,7 +130,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/lightmap_clickable_height"
             android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingBottom="2dp" android:paddingTop="0dp"
-            android:background="?attr/selectableItemBackground" android:clickable="true">
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true" android:focusable="true">
 
             <com.forrestguice.suntimeswidget.LightMapView
                 android:id="@+id/info_time_lightmap"

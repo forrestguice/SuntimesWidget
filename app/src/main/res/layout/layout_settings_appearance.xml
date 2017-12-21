@@ -39,7 +39,8 @@
                 android:id="@+id/appwidget_appearance_theme_label"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="@string/configLabel_appearance_theme" android:layout_gravity="center_vertical"
-                android:textColor="@drawable/btn_labeltxt" android:clickable="true" />
+                android:textColor="@drawable/btn_labeltxt"
+                android:clickable="true" android:focusable="true" />
 
             <Spinner android:id="@+id/appwidget_appearance_theme"
                      android:layout_width="match_parent" android:layout_height="wrap_content" />
