@@ -1,4 +1,6 @@
 ### ~ 
+
+### v0.5.2 (2017-12-21)
 * fixes "tomorrow will be" comparison; erroneously reported 1m (when actually 0s) for non-simple sources (1m is correct for sunrisesunsetlib and time4a-simple).
 * misc refactoring to prevent memory leaks (LightMapTask, TimeZonesLoadTask).
 * fixes flippable widget randomly displays 24hr time (#129).
