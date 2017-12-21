@@ -41,6 +41,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.graphics.drawable.GradientDrawable;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -718,11 +719,11 @@ public class WidgetTimezones
 
     public static class TimeZonesLoadTask extends AsyncTask<TimeZoneSort, Object, TimeZoneItemAdapter>
     {
-        private Context context;
+        private WeakReference<Context> contextRef;
 
         public TimeZonesLoadTask(Context context)
         {
-            this.context = context;
+            this.contextRef = new WeakReference<Context>(context);
         }
 
         @Override
@@ -757,7 +758,10 @@ public class WidgetTimezones
                 Collections.sort(timezones, sortBy.getComparator());
             }
 
-            return new WidgetTimezones.TimeZoneItemAdapter(context, 0, timezones, sortBy);
+            Context context = contextRef.get();
+            if (context != null)
+                return new WidgetTimezones.TimeZoneItemAdapter(context, 0, timezones, sortBy);
+            else return null;
         }
 
         @Override
@@ -768,7 +772,7 @@ public class WidgetTimezones
         @Override
         protected void onPostExecute(TimeZoneItemAdapter result)
         {
-            if (listener != null)
+            if (result != null && listener != null)
             {
                 listener.onFinished(result);
             }
