@@ -423,7 +423,11 @@ public class SuntimesUtils
                      String.format(strTimeDeltaFormat, remainingSeconds, strSeconds);
 
         if (!showingSeconds && !showingMinutes && !showingHours && !showingDays && !showingYears)
-            value += String.format(strTimeDeltaFormat, "1", strMinutes);
+        {
+            if (showSeconds)
+                value += String.format(strTimeDeltaFormat, "0", strSeconds);
+            else value += String.format(strTimeDeltaFormat, "1", strMinutes);
+        }
 
         TimeDisplayText text = new TimeDisplayText(value.trim(), units, suffix);
         text.setRawValue(timeSpan);
