@@ -754,13 +754,19 @@ public class LocationConfigView extends LinearLayout
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
         {
             ClipboardManager clipboard = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
-            ClipData clip = ClipData.newPlainText("lat, lon", clipboardText);
-            clipboard.setPrimaryClip(clip);
+            if (clipboard != null)
+            {
+                ClipData clip = ClipData.newPlainText("lat, lon", clipboardText);
+                clipboard.setPrimaryClip(clip);
+            }
 
         } else {
             @SuppressWarnings("deprecation")
             android.text.ClipboardManager clipboard = (android.text.ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
-            clipboard.setText(clipboardText);
+            if (clipboard != null)
+            {
+                clipboard.setText(clipboardText);
+            }
         }
 
         if (!silent)

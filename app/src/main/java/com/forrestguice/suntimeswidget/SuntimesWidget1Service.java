@@ -32,6 +32,7 @@ import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_1;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_2;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_4;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.ArrayList;
@@ -100,7 +101,16 @@ class SuntimesWidget1RemoteViewsFactory implements RemoteViewsService.RemoteView
 
         dataset = dataset0;
         viewCount = viewCount0;
+
+        initLocale(context);
         Log.d("DEBUG", "onDataSetChanged");
+    }
+
+    private void initLocale( Context context )
+    {
+        AppSettings.initLocale(context);
+        SuntimesUtils.initDisplayStrings(context);
+        WidgetSettings.TimeMode.initDisplayStrings(context);
     }
 
     @Override

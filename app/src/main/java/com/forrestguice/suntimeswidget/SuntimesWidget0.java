@@ -94,13 +94,13 @@ public class SuntimesWidget0 extends AppWidgetProvider
         initLocale(context);
 
         String action = intent.getAction();
-        if (action.equals(SUNTIMES_WIDGET_UPDATE))
+        if (action != null && action.equals(SUNTIMES_WIDGET_UPDATE))
         {
             AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
             int[] widgetIds = widgetManager.getAppWidgetIds(new ComponentName(context, getClass()));
             onUpdate(context, widgetManager, widgetIds);
 
-        } else if (!action.equals(AppWidgetManager.ACTION_APPWIDGET_OPTIONS_CHANGED)) {
+        } else if (action == null || !action.equals(AppWidgetManager.ACTION_APPWIDGET_OPTIONS_CHANGED)) {
             handleClickAction(context, intent);
         }
     }
@@ -115,6 +115,11 @@ public class SuntimesWidget0 extends AppWidgetProvider
         String action = intent.getAction();
         Bundle extras = intent.getExtras();
         int appWidgetId = (extras != null ? extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, 0) : 0);
+
+        if (action == null)
+        {
+            return false;
+        }
 
         // OnTap: Ignore
         if (action.equals(WidgetSettings.ActionMode.ONTAP_DONOTHING.name()))
@@ -349,11 +354,14 @@ public class SuntimesWidget0 extends AppWidgetProvider
      */
     protected void setUpdateAlarm( Context context )
     {
-        long updateTime = getUpdateTimeMillis();
         PendingIntent alarmIntent = getUpdateIntent(context);
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setInexactRepeating(AlarmManager.RTC, updateTime, AlarmManager.INTERVAL_DAY, alarmIntent);
-        Log.d("DEBUG", "set update alarm: " + updateTime + " --> " + alarmIntent);
+        if (alarmManager != null)
+        {
+            long updateTime = getUpdateTimeMillis();
+            alarmManager.setInexactRepeating(AlarmManager.RTC, updateTime, AlarmManager.INTERVAL_DAY, alarmIntent);
+            Log.d("DEBUG", "set update alarm: " + updateTime + " --> " + alarmIntent);
+        }
     }
 
     /**
@@ -362,10 +370,13 @@ public class SuntimesWidget0 extends AppWidgetProvider
      */
     protected void unsetUpdateAlarm( Context context )
     {
-        PendingIntent alarmIntent = getUpdateIntent(context);
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.cancel(alarmIntent);
-        Log.d("DEBUG", "unset update alarm --> " + alarmIntent);
+        if (alarmManager != null)
+        {
+            PendingIntent alarmIntent = getUpdateIntent(context);
+            alarmManager.cancel(alarmIntent);
+            Log.d("DEBUG", "unset update alarm --> " + alarmIntent);
+        }
     }
 
     /**

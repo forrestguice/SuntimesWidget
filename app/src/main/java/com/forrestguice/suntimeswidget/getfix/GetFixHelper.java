@@ -397,17 +397,17 @@ public class GetFixHelper
     public static boolean isGPSProviderEnabled(Context context)
     {
         LocationManager locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        return (locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER));
     }
     public static boolean isNetProviderEnabled(Context context)
     {
         LocationManager locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
-        return locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        return (locationManager != null && locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER));
     }
     public static boolean isPassiveProviderEnabled(Context context)
     {
         LocationManager locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
-        return locationManager.isProviderEnabled(LocationManager.PASSIVE_PROVIDER);
+        return (locationManager != null && locationManager.isProviderEnabled(LocationManager.PASSIVE_PROVIDER));
     }
 
     public void showGPSEnabledPrompt()

@@ -87,6 +87,7 @@ public class SuntimesUtils
     private static String strTimeNone = "none";
     private static String strTimeLoading = "...";
     private static boolean is24 = true;
+    private static boolean initialized = false;
 
     public SuntimesUtils() {}
 
@@ -108,6 +109,13 @@ public class SuntimesUtils
         WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
         is24 = (mode == TimeFormatMode.MODE_SYSTEM) ? android.text.format.DateFormat.is24HourFormat(context)
                 : (mode == TimeFormatMode.MODE_24HR);
+
+        initialized = true;
+    }
+
+    public static boolean isInitialized()
+    {
+        return initialized;
     }
 
     /**
@@ -234,6 +242,11 @@ public class SuntimesUtils
      */
     public TimeDisplayText calendarTimeShortDisplayString(Context context, Calendar cal)
     {
+        if (!initialized)
+        {
+            Log.w("SuntimesUtils", "Not initialized! (calendarTimeShortDisplayString was called anyway; using defaults)");
+        }
+
         if (cal == null)
         {
             return new TimeDisplayText(strTimeNone);
