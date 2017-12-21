@@ -4,6 +4,18 @@
 * adds solstice/equinox tracking to app (#13).
 * adds solstice/equinox widget (#13).
 
+### v0.5.2 (2017-12-21)
+* fixes "tomorrow will be" comparison; erroneously reported 1m (when actually 0s) for non-simple sources (1m is correct for sunrisesunsetlib and time4a-simple).
+* misc refactoring to prevent memory leaks (LightMapTask, TimeZonesLoadTask).
+* fixes flippable widget randomly displays 24hr time (#129).
+* fixes table switch animation fails to play (#125).
+* fixes automatic keyboard popup (WidgetConfigActivity, ThemeConfigActivity); prevent the keyboard from taking focus on activity start. 
+* fixes stale/duplicate items in theme selector.
+* fixes theme preview icons (now shown) (api22+).
+* fixes theme icons don't use theme colors (api22+) (#120).
+* fixes crash when adding widgets (api22+) (#126).
+* updates dependency (Time4A 3.38-2017c).
+
 ### v0.5.1 (2017-12-03)
 * changes default data source to time4a-noaa (fallback remains sunrisesunsetlib).
 * fixes 2x1 widget to show seconds (e.g. "Tomorrow will be 1m 4s shorter").

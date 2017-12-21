@@ -91,6 +91,7 @@ public class SuntimesUtils
     private static String strTimeNone = "none";
     private static String strTimeLoading = "...";
     private static boolean is24 = true;
+    private static boolean initialized = false;
 
     private static String strDateYearFormat = "yyyy";
     private static String strDateShortFormat = "MMMM d";
@@ -131,6 +132,13 @@ public class SuntimesUtils
         strDateYearFormat = context.getString(R.string.dateyear_format_short);
         strDateShortFormat = context.getString(R.string.date_format_short);
         strDateLongFormat = context.getString(R.string.date_format_long);
+
+        initialized = true;
+    }
+
+    public static boolean isInitialized()
+    {
+        return initialized;
     }
 
     /**
@@ -258,6 +266,11 @@ public class SuntimesUtils
      */
     public TimeDisplayText calendarTimeShortDisplayString(Context context, Calendar cal)
     {
+        if (!initialized)
+        {
+            Log.w("SuntimesUtils", "Not initialized! (calendarTimeShortDisplayString was called anyway; using defaults)");
+        }
+
         if (cal == null)
         {
             return new TimeDisplayText(strTimeNone);
@@ -515,7 +528,11 @@ public class SuntimesUtils
                      String.format(strTimeDeltaFormat, remainingSeconds, strSeconds);
 
         if (!showingSeconds && !showingMinutes && !showingHours && !showingDays && !showingWeeks && !showingYears)
-            value += String.format(strTimeDeltaFormat, "1", strMinutes);
+        {
+            if (showSeconds)
+                value += String.format(strTimeDeltaFormat, "0", strSeconds);
+            else value += String.format(strTimeDeltaFormat, "1", strMinutes);
+        }
 
         TimeDisplayText text = new TimeDisplayText(value.trim(), units, suffix);
         text.setRawValue(timeSpan);
@@ -821,33 +838,61 @@ public class SuntimesUtils
     }
 
     /**
-     * @param context app context
-     * @param resourceID drawable resourceID
-     * @return a Bitmap representation of the Drawable
+     * @param context context used to get resources
+     * @param resourceID drawable resource ID to a GradientDrawable
+     * @param fillColor fill color to apply to drawable
+     * @param strokeColor stroke color to apply to drawable
+     * @param strokePx width of stroke
+     * @return a Bitmap of the drawable
      */
-    public static Bitmap drawableToBitmap(Context context, int resourceID)
+    public static Bitmap gradientDrawableToBitmap(Context context, int resourceID, int fillColor, int strokeColor, int strokePx)
     {
         Drawable drawable = ResourcesCompat.getDrawable(context.getResources(), resourceID, null);
-        return drawableToBitmap(context, drawable);
-    }
+        GradientDrawable gradient = (GradientDrawable)drawable;
 
-    public static Bitmap drawableToBitmap(Context context, int resourceID, boolean isInset, int fillColor)
-    {
-        return SuntimesUtils.drawableToBitmap(context, resourceID, isInset, fillColor, 0, 0);
-    }
-
-    public static Bitmap drawableToBitmap(Context context, int resourceID, boolean isInset, int fillColor, int strokeColor, int strokePixels)
-    {
-        Drawable drawable = ResourcesCompat.getDrawable(context.getResources(), resourceID, null);
-        if (isInset)
+        int w = 1, h = 1;
+        if (gradient != null)
         {
-            InsetDrawable inset = (InsetDrawable)drawable;
-            return drawableToBitmap(context, tintDrawable(inset, fillColor, strokeColor, strokePixels));
-
-        } else {
-            GradientDrawable gradient = (GradientDrawable)drawable;
-            return drawableToBitmap(context, tintDrawable(gradient, fillColor, strokeColor, strokePixels));
+            w = gradient.getIntrinsicWidth();
+            h = gradient.getIntrinsicHeight();
         }
+
+        Drawable tinted =  tintDrawable(gradient, fillColor, strokeColor, strokePx);
+        return drawableToBitmap(context, tinted, w, h, true);
+    }
+
+    /**
+     * @param context context used to get resources
+     * @param resourceID drawable resource ID to an InsetDrawable
+     * @param fillColor fill color to apply to drawable
+     * @param strokeColor stroke color to apply to drawable
+     * @param strokePx width of stroke
+     * @return a Bitmap of the drawable
+     */
+    public static Bitmap insetDrawableToBitmap(Context context, int resourceID, int fillColor, int strokeColor, int strokePx)
+    {
+        Drawable drawable = ResourcesCompat.getDrawable(context.getResources(), resourceID, null);
+        InsetDrawable inset = (InsetDrawable)drawable;
+
+        int w = 1, h = 1;
+        if (inset != null)
+        {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+            {
+                Drawable wrapped = inset.getDrawable();
+                if (wrapped != null)
+                {
+                    w = wrapped.getIntrinsicWidth();
+                    h = wrapped.getIntrinsicHeight();
+                }
+            } else {
+                w = inset.getIntrinsicWidth();
+                h = inset.getIntrinsicHeight();
+            }
+        }
+
+        Drawable tinted = tintDrawable(inset, fillColor, strokeColor, strokePx);
+        return drawableToBitmap(context, tinted, w, h, true);
     }
 
     /**
@@ -889,18 +934,35 @@ public class SuntimesUtils
     }
 
     /**
-     * @param context app context
+     * @param context context used to access resources
      * @param drawable a Drawable
-     * @return a Bitmap representation of the Drawable
+     * @param w width (pixels or dp)
+     * @param h height (pixels or dp)
+     * @param pxValues true w and h are in pixels, false w and h are in dp
+     * @return a Bitmap measuring w,h of the specified drawable
      */
-    public static Bitmap drawableToBitmap(Context context, Drawable drawable)
+    public static Bitmap drawableToBitmap(Context context, Drawable drawable, int w, int h, boolean pxValues)
     {
         if (drawable instanceof BitmapDrawable)
         {
             return ((BitmapDrawable)drawable).getBitmap();
         }
 
-        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        if (!pxValues)
+        {
+            DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+            w = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, w, metrics);
+            h = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, h, metrics);
+        }
+        Log.d("DEBUG", "drawableToBitmap: " + drawable.toString() + "::" + w + ", " + h);
+
+        if (w <= 0 || h <= 0)
+        {
+            Log.w("drawableToBitmap", "invalid width or height: " + w + ", " + h);
+            w = h = 1;
+        }
+
+        Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         drawable.draw(canvas);

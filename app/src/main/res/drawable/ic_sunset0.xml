@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <inset xmlns:android="http://schemas.android.com/apk/res/android"
-    android:insetTop="@dimen/sunIcon_inset">
+    android:insetTop="-8dp">
 
     <shape android:shape="oval">
-        <size android:width="@dimen/sunIcon_width" android:height="@dimen/sunIcon_height" />
+        <size android:width="@dimen/sunIcon_width" android:height="8dp" />
         <solid android:color="@color/sunIcon_color_setting" />
 
         <stroke android:width="@dimen/sunIcon_width_settingBorder"

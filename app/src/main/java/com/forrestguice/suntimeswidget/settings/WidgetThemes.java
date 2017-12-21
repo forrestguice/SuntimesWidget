@@ -393,15 +393,11 @@ public class WidgetThemes
                 setViewSuffix.setTextColor(theme.getTimeSuffixColor());
                 setViewSuffix.setText(setText.getSuffix());
 
-                Resources resources = context.getResources();
-
-                InsetDrawable riseDrawable = (InsetDrawable) ResourcesCompat.getDrawable(resources, R.drawable.ic_sunrise0, null);
                 ImageView riseIcon = (ImageView)view.findViewById(R.id.icon_time_sunrise);
-                riseIcon.setImageBitmap(SuntimesUtils.drawableToBitmap(context, SuntimesUtils.tintDrawable(riseDrawable, theme.getSunriseIconColor(), theme.getSunriseIconStrokeColor(), theme.getSunriseIconStrokePixels(context))));
+                riseIcon.setImageBitmap(SuntimesUtils.insetDrawableToBitmap(context, R.drawable.ic_sunrise0, theme.getSunriseIconColor(), theme.getSunriseIconStrokeColor(), theme.getSunriseIconStrokePixels(context)));
 
                 ImageView setIcon = (ImageView)view.findViewById(R.id.icon_time_sunset);
-                InsetDrawable setDrawable = (InsetDrawable) ResourcesCompat.getDrawable(resources, R.drawable.ic_sunset0, null);
-                setIcon.setImageBitmap(SuntimesUtils.drawableToBitmap(context, SuntimesUtils.tintDrawable(setDrawable, theme.getSunsetIconColor(), theme.getSunsetIconStrokeColor(), theme.getSunsetIconStrokePixels(context))));
+                setIcon.setImageBitmap(SuntimesUtils.insetDrawableToBitmap(context, R.drawable.ic_sunset0, theme.getSunsetIconColor(), theme.getSunsetIconStrokeColor(), theme.getSunsetIconStrokePixels(context)));
 
                 View layout = view.findViewById(R.id.widgetframe_inner);
                 try {
@@ -466,39 +462,32 @@ public class WidgetThemes
             return themes;
         }
 
-
         @Override
         public View getDropDownView(int position, View convertView, ViewGroup parent)
         {
-            View view;
-            if (convertView != null)
+            View view = convertView;
+            if (view == null)
             {
-                return convertView;
-
-            } else {
                 LayoutInflater layoutInflater = LayoutInflater.from(context);
                 view = layoutInflater.inflate(dropDownLayoutId, parent, false);
-                TextView textView = (TextView) view.findViewById(android.R.id.text1);
-                textView.setText(themes[position].displayString());
-                return view;
             }
+            TextView textView = (TextView) view.findViewById(android.R.id.text1);
+            textView.setText(themes[position].displayString());
+            return view;
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent)
         {
-            View view;
-            if (convertView != null)
+            View view = convertView;
+            if (view == null)
             {
-                return convertView;
-
-            } else {
                 LayoutInflater layoutInflater = LayoutInflater.from(context);
                 view = layoutInflater.inflate(layoutId, parent, false);
-                TextView textView = (TextView) view.findViewById(android.R.id.text1);
-                textView.setText(themes[position].displayString());
-                return view;
             }
+            TextView textView = (TextView) view.findViewById(android.R.id.text1);
+            textView.setText(themes[position].displayString());
+            return view;
         }
     }
 

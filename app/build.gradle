@@ -19,11 +19,12 @@ android
     defaultConfig
     {
         applicationId "com.forrestguice.suntimeswidget"
+        //noinspection MinSdkTooLow
         minSdkVersion 10
         //noinspection OldTargetApi
         targetSdkVersion 25
-        versionCode 14
-        versionName "0.5.1"
+        versionCode 15
+        versionName "0.5.2"
 
         buildConfigField "java.util.Date", "BUILD_TIME", "new java.util.Date(" + getDateAsMillis() + "L)"
         buildConfigField "String", "GIT_HASH", "\"${getGitHash()}\""
@@ -54,7 +55,7 @@ dependencies
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.github.forrestguice:sunrisesunsetlib-java:SunriseSunsetCalculator-1.2-p0-fixdst'
     compile 'com.github.caarmen.SunriseSunset:lib-sunrise-sunset:1.1.0'
-    compile group: 'net.time4j', name: 'time4j-android', version: '3.37-2017c'
+    compile group: 'net.time4j', name: 'time4j-android', version: '3.38-2017c'
     compile 'com.github.QuadFlask:colorpicker:0.0.13'
 
     testCompile 'junit:junit:4.12'

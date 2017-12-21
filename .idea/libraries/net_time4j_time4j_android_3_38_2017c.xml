@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="net.time4j:time4j-android-3.38-2017c">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.android/build-cache/1667b53650367c3a886e1d3d41ebbc9c489d5a0c/output/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/1667b53650367c3a886e1d3d41ebbc9c489d5a0c/output/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.time4j/time4j-android/3.38-2017c/2a457c0e6352ceb3fd8a21c3f76bf08aacc534a6/time4j-android-3.38-2017c-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
