@@ -71,7 +71,7 @@ public class SuntimesWidget1 extends SuntimesWidget0
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
         {
-            if (action.equals(WidgetSettings.ActionMode.ONTAP_FLIPTO_NEXTITEM.name()))
+            if (action != null && action.equals(WidgetSettings.ActionMode.ONTAP_FLIPTO_NEXTITEM.name()))
             {
                 RemoteViews views = getWidgetViews(context, null, appWidgetId);
                 views.showNext(R.id.view_flip);

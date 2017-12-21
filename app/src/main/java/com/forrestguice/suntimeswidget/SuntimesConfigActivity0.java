@@ -337,25 +337,27 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             spinner_timezone.setEmptyView(spinner_timezone_empty);
 
             WidgetTimezones.TimeZoneSort sortZonesBy = AppSettings.loadTimeZoneSortPref(context);
-            WidgetTimezones.TimeZonesLoadTask loadTask = new WidgetTimezones.TimeZonesLoadTask(context)
+            WidgetTimezones.TimeZonesLoadTask loadTask = new WidgetTimezones.TimeZonesLoadTask(context);
+            loadTask.setListener(new WidgetTimezones.TimeZonesLoadTaskListener()
             {
                 @Override
-                protected void onPreExecute()
+                public void onStart()
                 {
-                    super.onPreExecute();
+                    super.onStart();
                     spinner_timezone.setAdapter(new WidgetTimezones.TimeZoneItemAdapter(SuntimesConfigActivity0.this, R.layout.layout_listitem_timezone));
                     button_addWidget.setEnabled(false);
                 }
 
                 @Override
-                protected void onPostExecute(WidgetTimezones.TimeZoneItemAdapter result)
+                public void onFinished(WidgetTimezones.TimeZoneItemAdapter result)
                 {
+                    super.onFinished(result);
                     spinner_timezone_adapter = result;
                     spinner_timezone.setAdapter(spinner_timezone_adapter);
                     WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
                     button_addWidget.setEnabled(true);
                 }
-            };
+            });
             loadTask.execute(sortZonesBy);
         }
 

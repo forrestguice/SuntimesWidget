@@ -1,7 +1,11 @@
 ### ~ 
+* misc refactoring to prevent memory leaks (LightMapTask, TimeZonesLoadTask).
+* fixes flippable widget randomly displays 24hr time (#129).
+* fixes table switch animation fails to play (#125).
 * fixes automatic keyboard popup (WidgetConfigActivity, ThemeConfigActivity); prevent the keyboard from taking focus on activity start. 
 * fixes stale/duplicate items in theme selector.
 * fixes theme preview icons (now shown) (api22+).
+* fixes theme icons don't use theme colors (api22+) (#120).
 * fixes crash when adding widgets (api22+) (#126).
 * updates dependency (Time4A 3.38-2017c).
 

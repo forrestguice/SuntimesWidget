@@ -42,7 +42,8 @@
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:text="@string/configLabel_timezone_custom"
-                android:textColor="@drawable/btn_labeltxt" android:clickable="true"
+                android:textColor="@drawable/btn_labeltxt"
+                android:clickable="true" android:focusable="true"
                 android:enabled="false" />
 
             <Spinner android:id="@+id/appwidget_timezone_custom" android:layout_width="match_parent"

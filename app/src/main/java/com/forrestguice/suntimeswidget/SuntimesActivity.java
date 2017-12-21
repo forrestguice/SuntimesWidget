@@ -793,8 +793,8 @@ public class SuntimesActivity extends AppCompatActivity
         //anim_note_outPrev = AnimationUtils.loadAnimation(this, R.anim.slide_out_right);
         //anim_note_outNext = AnimationUtils.loadAnimation(this, R.anim.slide_out_left);
 
-        anim_card_inPrev = AnimationUtils.loadAnimation(this, R.anim.fade_in);
-        anim_card_inNext = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        anim_card_inPrev = AnimationUtils.loadAnimation(this, (isRtl ? R.anim.slide_in_right : R.anim.slide_in_left));
+        anim_card_inNext = AnimationUtils.loadAnimation(this,(isRtl ? R.anim.slide_in_left : R.anim.slide_in_right));
 
         anim_card_outPrev = AnimationUtils.loadAnimation(this, (isRtl ? R.anim.slide_out_left : R.anim.slide_out_right));
         anim_card_outNext = AnimationUtils.loadAnimation(this, (isRtl ? R.anim.slide_out_right : R.anim.slide_out_left));
