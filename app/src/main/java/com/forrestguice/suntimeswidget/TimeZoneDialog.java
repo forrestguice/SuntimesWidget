@@ -127,37 +127,28 @@ public class TimeZoneDialog extends DialogFragment
                     }
                 }
         );
-        /**dialog.setOnShowListener(new DialogInterface.OnShowListener()
-        {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {}
-        });*/
-        /**dialog.setOnDismissListener(new DialogInterface.OnDismissListener()
-        {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {}
-        });*/
 
         initViews(myParent, dialogContent);
         WidgetTimezones.TimeZoneSort sortZonesBy = AppSettings.loadTimeZoneSortPref(myParent);
-        WidgetTimezones.TimeZonesLoadTask loadTask = new WidgetTimezones.TimeZonesLoadTask(myParent)
+        WidgetTimezones.TimeZonesLoadTask loadTask = new WidgetTimezones.TimeZonesLoadTask(myParent);
+        loadTask.setListener(new WidgetTimezones.TimeZonesLoadTaskListener()
         {
             @Override
-            protected void onPreExecute()
+            public void onStart()
             {
-                super.onPreExecute();
+                super.onStart();
                 spinner_timezone.setAdapter(new WidgetTimezones.TimeZoneItemAdapter(myParent, R.layout.layout_listitem_timezone));
             }
 
             @Override
-            protected void onPostExecute(WidgetTimezones.TimeZoneItemAdapter result)
+            public void onFinished(WidgetTimezones.TimeZoneItemAdapter result)
             {
-                super.onPostExecute(result);
+                super.onFinished(result);
                 spinner_timezone_adapter = result;
                 spinner_timezone.setAdapter(spinner_timezone_adapter);
                 WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
             }
-        };
+        });
 
         if (savedInstanceState != null)
         {
