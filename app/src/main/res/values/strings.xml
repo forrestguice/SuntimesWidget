@@ -399,7 +399,7 @@
 
     <!-- App Setting: Solstice Tracking Mode -->
     <string name="configLabel_ui_solsticeTrackingMode">Solstice Tracking Mode</string>
-    <string name="configLabel_ui_solsticeTrackingMode_summary">%s</string>
+    <string name="configLabel_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Upcoming Event">%s</xliff:g></string>
 
     <!-- App Setting: show data source -->
     <string name="configLabel_ui_showdatasource">Show Data Source</string>
