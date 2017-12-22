@@ -93,6 +93,9 @@ public class WidgetSettings
     public static final String PREF_KEY_GENERAL_SHOWNOON = "shownoon";
     public static final boolean PREF_DEF_GENERAL_SHOWNOON = false;
 
+    public static final String PREF_KEY_GENERAL_SHOWSECONDS = "showseconds";
+    public static final boolean PREF_DEF_GENERAL_SHOWSECONDS = false;
+
     public static final String PREF_KEY_ACTION_MODE = "action";
     public static final ActionMode PREF_DEF_ACTION_MODE = ActionMode.ONTAP_LAUNCH_CONFIG;
 
@@ -1329,6 +1332,30 @@ public class WidgetSettings
     }
 
 
+
+    public static void saveShowSecondsPref(Context context, int appWidgetId, boolean showSeconds)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWSECONDS, showSeconds);
+        prefs.apply();
+    }
+    public static boolean loadShowSecondsPref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        return prefs.getBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWSECONDS, PREF_DEF_GENERAL_SHOWSECONDS);
+    }
+    public static void deleteShowSecondsPref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_SHOWSECONDS);
+        prefs.apply();
+    }
+
+
+
     public static void saveTimeNoteRisePref(Context context, int appWidgetId, SolarEvents riseChoice)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
@@ -1409,6 +1436,7 @@ public class WidgetSettings
         deleteCompareModePref(context, appWidgetId);
         deleteShowComparePref(context, appWidgetId);
         deleteShowNoonPref(context, appWidgetId);
+        deleteShowSecondsPref(context, appWidgetId);
 
         deleteLocationModePref(context, appWidgetId);
         deleteLocationPref(context, appWidgetId);

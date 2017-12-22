@@ -1,5 +1,9 @@
 ### ~ 
 
+###
+* adds option to show seconds in rise/set times displayed by widgets.
+* adds option to show seconds in rise/set/delta times displayed by the app.
+
 ### v0.5.2 (2017-12-21)
 * fixes "tomorrow will be" comparison; erroneously reported 1m (when actually 0s) for non-simple sources (1m is correct for sunrisesunsetlib and time4a-simple).
 * misc refactoring to prevent memory leaks (LightMapTask, TimeZonesLoadTask).

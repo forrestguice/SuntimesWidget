@@ -44,14 +44,15 @@ public class SuntimesLayout_2x1_0 extends SuntimesLayout
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesRiseSetData data)
     {
         super.updateViews(context, appWidgetId, views, data);
+        boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
 
         // update sunrise time
-        TimeDisplayText sunriseString = utils.calendarTimeShortDisplayString(context, data.sunriseCalendarToday());
+        TimeDisplayText sunriseString = utils.calendarTimeShortDisplayString(context, data.sunriseCalendarToday(), showSeconds);
         views.setTextViewText(R.id.text_time_sunrise, sunriseString.getValue());
         views.setTextViewText(R.id.text_time_sunrise_suffix, sunriseString.getSuffix());
 
         // upset sunset time
-        TimeDisplayText sunsetString = utils.calendarTimeShortDisplayString(context, data.sunsetCalendarToday());
+        TimeDisplayText sunsetString = utils.calendarTimeShortDisplayString(context, data.sunsetCalendarToday(), showSeconds);
         views.setTextViewText(R.id.text_time_sunset, sunsetString.getValue());
         views.setTextViewText(R.id.text_time_sunset_suffix, sunsetString.getSuffix());
 
@@ -73,7 +74,7 @@ public class SuntimesLayout_2x1_0 extends SuntimesLayout
         boolean showSolarNoon = WidgetSettings.loadShowNoonPref(context, appWidgetId);
         if (showSolarNoon && noonData != null)
         {
-            TimeDisplayText noonString = utils.calendarTimeShortDisplayString(context, noonData.sunsetCalendarToday());
+            TimeDisplayText noonString = utils.calendarTimeShortDisplayString(context, noonData.sunsetCalendarToday(), showSeconds);
             views.setTextViewText(R.id.text_time_noon, noonString.getValue());
             views.setTextViewText(R.id.text_time_noon_suffix, noonString.getSuffix());
             views.setViewVisibility(R.id.layout_noon, View.VISIBLE);
