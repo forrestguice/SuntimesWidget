@@ -401,7 +401,7 @@
     <string name="configLabel_ui_showEquinox_notImplemented">Solstice and equinox not implemented by this data source.</string>
 
     <!-- App Setting: Solstice Tracking Mode -->
-    <string name="configLabel_ui_solsticeTrackingMode">Solstice Tracking Mode</string>
+    <string name="configLabel_ui_solsticeTrackingMode">Solstice Tracking</string>
     <string name="configLabel_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Upcoming Event">%s</xliff:g></string>
 
     <!-- App Setting: show data source -->
