@@ -93,6 +93,9 @@ public class WidgetSettings
     public static final String PREF_KEY_GENERAL_SHOWNOON = "shownoon";
     public static final boolean PREF_DEF_GENERAL_SHOWNOON = false;
 
+    public static final String PREF_KEY_GENERAL_SHOWSECONDS = "showseconds";
+    public static final boolean PREF_DEF_GENERAL_SHOWSECONDS = false;
+
     public static final String PREF_KEY_ACTION_MODE = "action";
     public static final ActionMode PREF_DEF_ACTION_MODE = ActionMode.ONTAP_LAUNCH_CONFIG;
 
@@ -1327,6 +1330,20 @@ public class WidgetSettings
         prefs.remove(prefs_prefix + PREF_KEY_GENERAL_SHOWNOON);
         prefs.apply();
     }
+
+
+
+    public static void saveShowSecondsPref(Context context, int appWidgetId, boolean showSeconds)
+    {
+    }
+    public static boolean loadShowSecondsPref(Context context, int appWidgetId)
+    {
+        return false;
+    }
+    public static void deleteShowSecondsPref(Context context, int appWidgetId)
+    {
+    }
+
 
 
     public static void saveTimeNoteRisePref(Context context, int appWidgetId, SolarEvents riseChoice)
