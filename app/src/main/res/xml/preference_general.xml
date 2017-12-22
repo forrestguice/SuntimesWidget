@@ -11,6 +11,11 @@
             android:summary="%s"
             android:entries="@null" android:entryValues="@null" android:defaultValue="any" />
 
+        <CheckBoxPreference
+            android:key="appwidget_0_general_showseconds"
+            android:title="@string/configLabel_general_showSeconds"
+            android:summary="" android:defaultValue="false" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>
