@@ -1335,13 +1335,23 @@ public class WidgetSettings
 
     public static void saveShowSecondsPref(Context context, int appWidgetId, boolean showSeconds)
     {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWSECONDS, showSeconds);
+        prefs.apply();
     }
     public static boolean loadShowSecondsPref(Context context, int appWidgetId)
     {
-        return false;
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        return prefs.getBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWSECONDS, PREF_DEF_GENERAL_SHOWSECONDS);
     }
     public static void deleteShowSecondsPref(Context context, int appWidgetId)
     {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_SHOWSECONDS);
+        prefs.apply();
     }
 
 
@@ -1426,6 +1436,7 @@ public class WidgetSettings
         deleteCompareModePref(context, appWidgetId);
         deleteShowComparePref(context, appWidgetId);
         deleteShowNoonPref(context, appWidgetId);
+        deleteShowSecondsPref(context, appWidgetId);
 
         deleteLocationModePref(context, appWidgetId);
         deleteLocationPref(context, appWidgetId);
