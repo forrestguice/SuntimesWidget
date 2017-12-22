@@ -18,6 +18,7 @@
     <string name="configAction_setAlarm">Agordi averton</string>
     <string name="configAction_setTimeZone">Elekti horzonon</string>
     <string name="configAction_setDate">Elekti daton</string>
+    <string name="configAction_equinoxDialog">Solstice / Equinox</string> <!-- TODO -->
     <string name="configAction_help">Helpo</string>
     <string name="configAction_settings">Agordoj</string>
     <string name="configAction_aboutWidget">Pri</string>
@@ -106,6 +107,7 @@
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
     <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
     <string name="delta_years">a</string>    <!-- e.g. 1y -->
+    <string name="delta_weeks">w</string>    <!-- e.g. 2w -->  <!-- TODO -->
     <string name="delta_days">d</string>     <!-- e.g. 1d -->
     <string name="delta_hours">h</string>    <!-- e.g. 2h -->
     <string name="delta_minutes">min</string>  <!-- e.g. 3m -->
@@ -126,6 +128,7 @@
     <string name="configAction_reconfigWidget">Reagordi fenestraĵon</string>      <!-- used as title when reconfiguring -->
     <string name="configLabel_title0">Suntempoj fenestraĵo</string>                  <!-- used as title when adding -->
     <string name="configLabel_title1">Baskulebla fenestraĵo </string>                 <!-- used as title when adding -->
+    <string name="configLabel_title2">Solstice Widget</string>                  <!-- used as title when adding -->  <!-- TODO -->
 
     <!-- Widget Setting: general -->
     <string name="configLabel_general">Agordoj ĝeneralaj</string>                <!-- group title -->
@@ -152,6 +155,15 @@
     <string name="timeMode_astronomical">Astronomia krepusko</string> <!-- setting -->
     <string name="timeMode_night">Nokto</string>                <!-- a label (not an actual timeMode setting) -->
     <string name="timeMode_day">Tago</string>                   <!-- a label (not an actual timeMode setting) -->
+
+    <string name="timeMode_equinox_vernal">Spring Equinox</string>      <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_equinox_vernal_short">Equinox</string>       <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_equinox_autumnal">Fall Equinox</string>  <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_equinox_autumnal_short">Equinox</string>     <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_solstice_summer">Summer Solstice</string>    <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_solstice_summer_short">Solstice</string>     <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_solstice_winter">Winter Solstice</string>    <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_solstice_winter_short">Solstice</string>     <!-- setting -->  <!-- TODO -->
 
     <string name="configLabel_general_timeMode">Reĝimo:</string>          <!-- spinner label -->
 
@@ -236,6 +248,14 @@
     <string name="configLabel_general_compareMode">Kompari kun:</string>    <!-- spinner label -->
     <string name="configLabel_general_showComparison">Montri komparon</string>  <!-- checkbox label -->
 
+    <!-- Widget Setting: tracking mode -->
+    <string name="trackingMode_closest">Closest Event</string>                 <!-- setting --> <!-- TODO -->
+    <string name="trackingMode_soonest">Upcoming Event</string>                <!-- setting -->  <!-- TODO -->
+    <string name="configLabel_general_trackingMode">Track:</string>            <!-- spinner label -->  <!-- TODO -->
+
+    <!-- Widget Setting: timeMode override -->
+    <string name="configLabel_general_timeMode_override">Tracking overrides mode</string>     <!-- checkbox label -->  <!-- TODO -->
+
     <!-- Widget Settings: noon -->
     <string name="configLabel_general_showNoon">Montri tagmezon veran</string>        <!-- checkbox label -->
 
@@ -288,6 +308,11 @@
 
     <string name="configLabel_themeColorText">Koloro de teksto:</string>       <!-- color label -->
     <string name="configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->
+
+    <string name="configLabel_themeColorSpring">Spring Color:</string> <!-- color label -->  <!-- TODO -->
+    <string name="configLabel_themeColorSummer">Summer Color:</string> <!-- color label -->  <!-- TODO -->
+    <string name="configLabel_themeColorFall">Fall Color:</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorWinter">Winter Color:</string> <!-- color label -->  <!-- TODO -->
 
     <string name="configLabel_themeColorSunrise">Koloro de sunleviĝo:</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
@@ -362,6 +387,11 @@
     <!-- App Setting: Show Lightmap -->
     <string name="configLabel_ui_showLightmap">Montri lum-mapon</string>
     <string name="configLabel_ui_showLightmap_summary">Montri bastonan diagramon de periodoj de tago, nokto kaj krepusko.</string>
+
+    <!-- App Setting: Show Equinox / Solstice -->
+    <string name="configLabel_ui_showEquinox">Show Solstice / Equinox</string>  <!-- TODO -->
+    <string name="configLabel_ui_showEquinox_summary">Show time until next solstice or equinox.</string>  <!-- TODO -->
+    <string name="configLabel_ui_showEquinox_notImplemented">Solstice and equinox not implemented by this data source.</string>  <!-- TODO -->
 
     <!-- App Setting: show data source -->
     <string name="configLabel_ui_showdatasource">Montri fonton de datumoj</string>
@@ -550,6 +580,7 @@
     <string name="app_name">Suntempoj</string>
     <string name="app_name_widget0">Suntempoj Fenestraĵo</string>
     <string name="app_name_widget1">Suntempoj Fenestraĵo (baskulebla)</string>
+    <string name="app_name_widget2">Suntimes Solstice Widget</string>  <!-- TODO -->
     <string name="app_version"><![CDATA[<b>Versio:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Montras tempojn de sunleviĝoj, sunsubiroj kaj krepuskoj.</string>
     <string name="app_support_url"><![CDATA[

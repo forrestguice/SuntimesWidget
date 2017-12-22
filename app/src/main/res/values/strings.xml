@@ -18,6 +18,7 @@
     <string name="configAction_setAlarm">Set Alarm</string>
     <string name="configAction_setTimeZone">Set Time Zone</string>
     <string name="configAction_setDate">Set Date</string>
+    <string name="configAction_equinoxDialog">Solstice / Equinox</string>
     <string name="configAction_help">Help</string>
     <string name="configAction_settings">Settings</string>
     <string name="configAction_aboutWidget">About</string>
@@ -106,16 +107,26 @@
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
     <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
     <string name="delta_years">y</string>    <!-- e.g. 1y -->
+    <string name="delta_weeks">w</string>    <!-- e.g. 2w -->
     <string name="delta_days">d</string>     <!-- e.g. 1d -->
     <string name="delta_hours">h</string>    <!-- e.g. 2h -->
     <string name="delta_minutes">m</string>  <!-- e.g. 3m -->
     <string name="delta_seconds">s</string>  <!-- e.g. 4s -->
+
+    <string name="hence"><xliff:g id="timeSpan">%1$s</xliff:g>  from now</string>  <!-- e.g. 15d 23h from now -->
+    <string name="ago"><xliff:g id="timeSpan">%1$s</xliff:g>  ago</string>         <!-- e.g. 1y 15d 12h ago -->
 
     <!-- misc time values: might be displayed in a timeField in place of an actual time -->
     <string name="time_none">none</string>  <!-- no time / time does not occur -->
     <string name="time_loading">…</string>  <!-- calculating / time is loading -->
     <string name="time_format_12hr_veryshort"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- shortest 12hr time format; should omit am/pm -->
     <string name="time_format_24hr_veryshort"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- 24hr time format -->
+    <string name="time_format_12hr_short"><xliff:g id="hoursMinutes">%1$s</xliff:g> <xliff:g id="suffix">%2$s</xliff:g></string>
+    <string name="date_format_short"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>                                           <!-- MMMM d ... e.g. December 3 -->
+    <string name="date_format_long"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g>, <xliff:g id="patternYear">yyyy</xliff:g></string>  <!-- MMMM d, yyyy ... e.g. December 3, 2017 -->
+    <string name="datetime_format_short"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>           <!-- longDate, time ... e.g. December 3, 2017, 11:00 am -->
+    <string name="datetime_format_long"><xliff:g id="monthYear">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>        <!-- shortDate, time ... e.g. December 3, 11:00 am -->
+    <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
 
     <!--
          WIDGET CONFIG
@@ -127,6 +138,7 @@
     <string name="configAction_reconfigWidget">Reconfigure Widget</string>      <!-- used as title when reconfiguring -->
     <string name="configLabel_title0">Suntimes Widget</string>                  <!-- used as title when adding -->
     <string name="configLabel_title1">Flippable Widget</string>                 <!-- used as title when adding -->
+    <string name="configLabel_title2">Solstice Widget</string>                  <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
     <string name="configLabel_general">General Settings</string>                <!-- group title -->
@@ -153,6 +165,15 @@
     <string name="timeMode_astronomical">Astronomical Twilight</string> <!-- setting -->
     <string name="timeMode_night">Night</string>                   <!-- a label (not an actual timeMode setting) -->
     <string name="timeMode_day">Day</string>                       <!-- a label (not an actual timeMode setting) -->
+
+    <string name="timeMode_equinox_vernal">Spring Equinox</string>      <!-- setting -->
+    <string name="timeMode_equinox_vernal_short">Equinox</string>       <!-- setting -->
+    <string name="timeMode_equinox_autumnal">Fall Equinox</string>  <!-- setting -->
+    <string name="timeMode_equinox_autumnal_short">Equinox</string>     <!-- setting -->
+    <string name="timeMode_solstice_summer">Summer Solstice</string>    <!-- setting -->
+    <string name="timeMode_solstice_summer_short">Solstice</string>     <!-- setting -->
+    <string name="timeMode_solstice_winter">Winter Solstice</string>    <!-- setting -->
+    <string name="timeMode_solstice_winter_short">Solstice</string>     <!-- setting -->
 
     <string name="configLabel_general_timeMode">Mode:</string>          <!-- spinner label -->
 
@@ -230,6 +251,14 @@
     <string name="configLabel_general_compareMode">Compare Against:</string>    <!-- spinner label -->
     <string name="configLabel_general_showComparison">Show Comparison</string>  <!-- checkbox label -->
 
+    <!-- Widget Setting: tracking mode -->
+    <string name="trackingMode_closest">Closest Event</string>                 <!-- setting -->
+    <string name="trackingMode_soonest">Upcoming Event</string>                <!-- setting -->
+    <string name="configLabel_general_trackingMode">Track:</string>            <!-- spinner label -->
+
+    <!-- Widget Setting: timeMode override -->
+    <string name="configLabel_general_timeMode_override">Tracking overrides mode</string>     <!-- checkbox label -->
+
     <!-- Widget Settings: noon -->
     <string name="configLabel_general_showNoon">Show Solar Noon</string>        <!-- checkbox label -->
 
@@ -282,6 +311,11 @@
 
     <string name="configLabel_themeColorText">Text Color:</string>       <!-- color label -->
     <string name="configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->
+
+    <string name="configLabel_themeColorSpring">Spring Color:</string> <!-- color label -->
+    <string name="configLabel_themeColorSummer">Summer Color:</string> <!-- color label -->
+    <string name="configLabel_themeColorFall">Fall Color:</string> <!-- color label -->
+    <string name="configLabel_themeColorWinter">Winter Color:</string> <!-- color label -->
 
     <string name="configLabel_themeColorSunrise">Sunrise Color:</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
@@ -337,7 +371,7 @@
     <!--App Setting: WidgetList -->
     <string name="configLabel_widgetList">Widgets</string>               <!-- group title -->
     <string name="configLabel_widgetList_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
-    <string name="configLabel_widgetList_itemTitlePattern"><xliff:g id="titlePattern"><![CDATA[%M (%lat, %lon) [%t]]]></xliff:g></string> <!-- the pattern used when generating widget titles for display in the list -->
+    <string name="configLabel_widgetList_itemTitlePattern"><xliff:g id="titlePattern"><![CDATA[%M (%loc) [%t]]]></xliff:g></string> <!-- the pattern used when generating widget titles for display in the list -->
     <string name="configLabel_widgetList_itemSummaryPattern"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
     <string name="configLabel_widgetListHelp_title">Help</string>               <!-- always the first item in the widgetList -->
     <string name="configLabel_widgetListHelp_summary">Show widget help</string>
@@ -352,11 +386,16 @@
 
     <!-- App Setting: UI Warnings -->
     <string name="configLabel_ui_showWarnings">Show warnings</string>
-    <string name="configLabel_ui_showWarnings_summary">Show configuration warning messages</string>
+    <string name="configLabel_ui_showWarnings_summary">Show configuration warning messages.</string>
 
     <!-- App Setting: Show Lightmap -->
     <string name="configLabel_ui_showLightmap">Show Light Map</string>
     <string name="configLabel_ui_showLightmap_summary">Show a stacked bar chart of day, night, and twilight periods.</string>
+
+    <!-- App Setting: Show Equinox / Solstice -->
+    <string name="configLabel_ui_showEquinox">Show Solstice / Equinox</string>
+    <string name="configLabel_ui_showEquinox_summary">Show time until next solstice or equinox.</string>
+    <string name="configLabel_ui_showEquinox_notImplemented">Solstice and equinox not implemented by this data source.</string>
 
     <!-- App Setting: show data source -->
     <string name="configLabel_ui_showdatasource">Show Data Source</string>
@@ -634,6 +673,7 @@
     <string name="app_name">Suntimes</string>
     <string name="app_name_widget0">Suntimes Widget</string>
     <string name="app_name_widget1">Suntimes Widget (flippable)</string>
+    <string name="app_name_widget2">Suntimes Solstice Widget</string>
     <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Displays sunrise, sunset, and twilight times.</string>
     <string name="app_support_url"><![CDATA[
@@ -685,6 +725,12 @@
           <b>Civil Twilight:</b> The sun is 6 degrees below the horizon; the brightest stars are visible. There is enough light for most outdoor activities without requiring a light.<br/><br/>
           <b>Nautical Twilight:</b> The sun is 12 degrees below the horizon; object outlines and the horizon are increasingly indistinct. There isn\'t enough light for most outdoor activities without requiring a light.<br/><br/>
           <b>Astronomical Twilight:</b> The sun is 18 degrees below the horizon. Near darkness of night.<br/>
+    ]]></string>
+    <string name="help_general_timeMode2"><![CDATA[
+          <b>Spring Equinox:</b> TODO.<br/><br/>
+          <b>Summer Solstice:</b> TODO.<br/><br/>
+          <b>Fall Equinox:</b> TODO.<br/><br/>
+          <b>Winter Solstice:</b> TODO.<br/>
     ]]></string>
     <string name="help_general_daylength"><![CDATA[
         <b>Length of day:</b> the amount of time between sunrise and sunset.<br/><br/>

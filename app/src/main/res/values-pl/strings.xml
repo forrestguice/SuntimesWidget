@@ -18,6 +18,7 @@
     <string name="configAction_setAlarm">Ustaw alarm</string>
     <string name="configAction_setTimeZone">Ustaw strefę czasową</string>
     <string name="configAction_setDate">Ustaw datę</string>
+    <string name="configAction_equinoxDialog">Solstice / Equinox</string> <!-- TODO -->
     <string name="configAction_help">Pomoc</string>
     <string name="configAction_settings">Ustawienia</string>
     <string name="configAction_aboutWidget">O programie</string>
@@ -106,6 +107,7 @@
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
     <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
     <string name="delta_years">a</string>    <!-- e.g. 1y -->
+    <string name="delta_weeks">w</string>    <!-- e.g. 2w -->  <!-- TODO -->
     <string name="delta_days">d</string>     <!-- e.g. 1d -->
     <string name="delta_hours">h</string>    <!-- e.g. 2h -->
     <string name="delta_minutes">min</string>  <!-- e.g. 3m -->
@@ -126,6 +128,7 @@
     <string name="configAction_reconfigWidget">Edytuj widżet</string>      <!-- used as title when reconfiguring -->
     <string name="configLabel_title0">Zmierzchy i Świty Widżet</string>                  <!-- used as title when adding -->
     <string name="configLabel_title1">Przełączalny widżet</string>                 <!-- used as title when adding -->
+    <string name="configLabel_title2">Solstice Widget</string>                  <!-- used as title when adding -->  <!-- TODO -->
 
     <!-- Widget Setting: general -->
     <string name="configLabel_general">Ustawienia ogólne</string>                <!-- group title -->
@@ -152,6 +155,15 @@
     <string name="timeMode_astronomical">Astronomiczny świt/zmierzch</string> <!-- setting -->
     <string name="timeMode_night">Noc</string>                   <!-- a label (not an actual timeMode setting) -->
     <string name="timeMode_day">Dzień</string>                   <!-- a label (not an actual timeMode setting) -->
+
+    <string name="timeMode_equinox_vernal">Spring Equinox</string>      <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_equinox_vernal_short">Equinox</string>       <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_equinox_autumnal">Fall Equinox</string>  <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_equinox_autumnal_short">Equinox</string>     <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_solstice_summer">Summer Solstice</string>    <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_solstice_summer_short">Solstice</string>     <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_solstice_winter">Winter Solstice</string>    <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_solstice_winter_short">Solstice</string>     <!-- setting -->  <!-- TODO -->
 
     <string name="configLabel_general_timeMode">Tryb:</string>          <!-- spinner label -->
 
@@ -226,8 +238,16 @@
     <!-- Widget Setting: compare mode -->
     <string name="compareMode_yesterday">Wczoraj</string>                     <!-- setting -->
     <string name="compareMode_tomorrow">Jutro</string>                       <!-- setting -->
-
     <string name="configLabel_general_compareMode">Porównaj z:</string>    <!-- spinner label -->
+    <string name="configLabel_general_showComparison">Show Comparison</string>  <!-- checkbox label -->  <!-- TODO -->
+
+    <!-- Widget Setting: tracking mode -->
+    <string name="trackingMode_closest">Closest Event</string>                 <!-- setting --> <!-- TODO -->
+    <string name="trackingMode_soonest">Upcoming Event</string>                <!-- setting -->  <!-- TODO -->
+    <string name="configLabel_general_trackingMode">Track:</string>            <!-- spinner label -->  <!-- TODO -->
+
+    <!-- Widget Setting: timeMode override -->
+    <string name="configLabel_general_timeMode_override">Tracking overrides mode</string>     <!-- checkbox label -->  <!-- TODO -->
 
     <!-- Widget Setting: Launch App -->
     <string name="configLabel_action_launch">Akcja:</string>                 <!-- edittext label -->
@@ -278,6 +298,11 @@
 
     <string name="configLabel_themeColorText">Kolor tekstu:</string>       <!-- color label -->
     <string name="configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->
+
+    <string name="configLabel_themeColorSpring">Spring Color:</string> <!-- color label -->  <!-- TODO -->
+    <string name="configLabel_themeColorSummer">Summer Color:</string> <!-- color label -->  <!-- TODO -->
+    <string name="configLabel_themeColorFall">Fall Color:</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorWinter">Winter Color:</string> <!-- color label -->  <!-- TODO -->
 
     <string name="configLabel_themeColorSunrise">Kolor wschodu:</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
@@ -352,6 +377,11 @@
     <!-- App Setting: Show Lightmap -->
     <string name="configLabel_ui_showLightmap">Pokaż mapę światła</string>
     <string name="configLabel_ui_showLightmap_summary">Wyświetla pasek obrazujący czas dnia, nocy, świtu i zmierzchu.</string>
+
+    <!-- App Setting: Show Equinox / Solstice -->
+    <string name="configLabel_ui_showEquinox">Show Solstice / Equinox</string>  <!-- TODO -->
+    <string name="configLabel_ui_showEquinox_summary">Show time until next solstice or equinox.</string>  <!-- TODO -->
+    <string name="configLabel_ui_showEquinox_notImplemented">Solstice and equinox not implemented by this data source.</string>  <!-- TODO -->
 
     <!-- App Setting: show data source -->
     <string name="configLabel_ui_showdatasource">Wyświetl źródło danych</string>
@@ -547,6 +577,7 @@
     <string name="app_name">Zmierzchy i Świty</string>
     <string name="app_name_widget0">Zmierzchy/Świty Widżet</string>
     <string name="app_name_widget1">Zmierzchy/Świty Widżet (przełączalny)</string>
+    <string name="app_name_widget2">Suntimes Solstice Widget</string>  <!-- TODO -->
     <string name="app_version"><![CDATA[<b>Wersja:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Wyświetla czasy wschodu i zachodu Słońca, oraz świtu i zmierzchu.</string>
     <string name="app_support_url"><![CDATA[<b>Wsparcie:</b> odwiedź <a href="https://github.com/forrestguice/SuntimesWidget/issues">stronę trackera błędów</a> aby zgłosić błąd/sugestię.]]></string>
