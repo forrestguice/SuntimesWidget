@@ -134,6 +134,7 @@
   <!-- Widget Setting: general -->
   <string name="configLabel_general">Allgemeine Einstellungen</string>                <!-- group title -->
   <string name="configLabel_general_calculator">Datenquelle:</string>         <!-- spinner label -->
+  <string name="configLabel_general_showSeconds">Show seconds</string>        <!-- checkbox label --> <!-- TODO -->
 
   <!-- Widget Setting: appearance -->
   <string name="configLabel_appearance">Darstellung</string>           <!-- group title -->
