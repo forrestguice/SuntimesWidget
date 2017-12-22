@@ -19,6 +19,11 @@
             android:entries="@array/timeFormatMode_display" android:entryValues="@array/timeFormatMode_values"
             android:defaultValue="MODE_SYSTEM" />
 
+        <CheckBoxPreference
+            android:key="appwidget_0_general_showseconds"
+            android:title="@string/configLabel_general_showSeconds"
+            android:summary="" android:defaultValue="false" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

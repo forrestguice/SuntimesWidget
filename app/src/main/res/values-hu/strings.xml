@@ -133,6 +133,7 @@
     <!-- Widget Setting: general -->
     <string name="configLabel_general">Általános beállítások</string>                <!-- group title -->
     <string name="configLabel_general_calculator">Adatok forrása:</string>         <!-- spinner label -->
+    <string name="configLabel_general_showSeconds">Show seconds</string>        <!-- checkbox label --> <!-- TODO -->
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Megjelenés beállításai</string>           <!-- group title -->

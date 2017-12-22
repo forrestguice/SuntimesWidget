@@ -243,6 +243,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
             // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
             WidgetSettings.saveTrackingModePref(this, 0, WidgetSettings.TrackingMode.valueOf(sharedPreferences.getString(key, "missing")));
+	    return;
+	}
+
+        if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_SHOWSECONDS))
+        {
+            // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
+            // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
+            WidgetSettings.saveShowSecondsPref(this, 0, sharedPreferences.getBoolean(key, WidgetSettings.PREF_DEF_GENERAL_SHOWSECONDS));
             return;
         }
     }

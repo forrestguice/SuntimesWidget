@@ -27,6 +27,7 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.SuntimesUtils.TimeDisplayText;
 
@@ -56,9 +57,10 @@ public class SuntimesLayout_1x1_2 extends SuntimesLayout
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesRiseSetData data)
     {
         super.updateViews(context, appWidgetId, views, data);
+        boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
 
         // upset sunset time
-        TimeDisplayText sunsetString = utils.calendarTimeShortDisplayString(context, data.sunsetCalendarToday());
+        TimeDisplayText sunsetString = utils.calendarTimeShortDisplayString(context, data.sunsetCalendarToday(), showSeconds);
         views.setTextViewText(R.id.text_time_sunset, sunsetString.getValue());
         views.setTextViewText(R.id.text_time_sunset_suffix, sunsetString.getSuffix());
     }

@@ -88,6 +88,8 @@ public class SuntimesUtils
     private static String strTimeShortFormat12 = "h:mm a";
     private static String strTimeVeryShortFormat12 = "h:mm";
     private static String strTimeVeryShortFormat24 = "HH:mm";
+    private static String strTimeVeryShortFormat12s = "h:mm:ss";
+    private static String strTimeVeryShortFormat24s = "HH:mm:ss";
     private static String strTimeSuffixFormat = "a";
     private static String strTimeNone = "none";
     private static String strTimeLoading = "...";
@@ -122,6 +124,8 @@ public class SuntimesUtils
         strTimeDeltaFormat = context.getString(R.string.delta_format);
         strTimeVeryShortFormat12 = context.getString(R.string.time_format_12hr_veryshort);
         strTimeVeryShortFormat24 = context.getString(R.string.time_format_24hr_veryshort);
+        strTimeVeryShortFormat12s = context.getString(R.string.time_format_12hr_veryshort_withseconds);
+        strTimeVeryShortFormat24s = context.getString(R.string.time_format_24hr_veryshort_withseconds);
         strTimeNone = context.getString(R.string.time_none);
         strTimeLoading = context.getString(R.string.time_loading);
 
@@ -267,6 +271,10 @@ public class SuntimesUtils
      */
     public TimeDisplayText calendarTimeShortDisplayString(Context context, Calendar cal)
     {
+        return calendarTimeShortDisplayString(context, cal, false);
+    }
+    public TimeDisplayText calendarTimeShortDisplayString(Context context, Calendar cal, boolean showSeconds)
+    {
         if (!initialized)
         {
             Log.w("SuntimesUtils", "Not initialized! (calendarTimeShortDisplayString was called anyway; using defaults)");
@@ -276,10 +284,9 @@ public class SuntimesUtils
         {
             return new TimeDisplayText(strTimeNone);
 
-        } else
-        {
-            return (is24 ? calendarTime24HrDisplayString(context, cal)
-                    : calendarTime12HrDisplayString(context, cal));
+        } else {
+            return (is24 ? calendarTime24HrDisplayString(context, cal, showSeconds)
+                    : calendarTime12HrDisplayString(context, cal, showSeconds));
         }
     }
 
@@ -306,7 +313,7 @@ public class SuntimesUtils
      * @param cal     a Calendar representing some point in time
      * @return a time display string (12 hr) (short format)
      */
-    public TimeDisplayText calendarTime24HrDisplayString(Context context, @NonNull Calendar cal)
+    public TimeDisplayText calendarTime24HrDisplayString(Context context, @NonNull Calendar cal, boolean showSeconds)
     {
         TimeDisplayText retValue = new TimeDisplayText(calendarTime24HrString(context, cal), "", "");
         retValue.setRawValue(cal.getTimeInMillis());
@@ -316,7 +323,8 @@ public class SuntimesUtils
     public String calendarTime24HrString(Context context, @NonNull Calendar cal)
     {
         Locale locale = Resources.getSystem().getConfiguration().locale;
-        SimpleDateFormat timeFormat = new SimpleDateFormat(strTimeVeryShortFormat24, locale); // HH:mm
+        String format = (showSeconds ? strTimeVeryShortFormat24s : strTimeVeryShortFormat24);  // HH:mm or HH:mm:ss
+        SimpleDateFormat timeFormat = new SimpleDateFormat(format, locale);
         timeFormat.setTimeZone(cal.getTimeZone());
         return timeFormat.format(cal.getTime());
     }
@@ -327,7 +335,7 @@ public class SuntimesUtils
      * @param cal a Calendar representing some point in time
      * @return a time display string (24 hr) (short format)
      */
-    public TimeDisplayText calendarTime12HrDisplayString(Context context, @NonNull Calendar cal)
+    public TimeDisplayText calendarTime12HrDisplayString(Context context, @NonNull Calendar cal, boolean showSeconds)
     {
         // some locales use (or optionally allow) 12 hr time;
         //
@@ -363,7 +371,8 @@ public class SuntimesUtils
 
         Locale locale = Resources.getSystem().getConfiguration().locale;
 
-        SimpleDateFormat timeFormat = new SimpleDateFormat(strTimeVeryShortFormat12, locale); // h:mm
+        String format = (showSeconds ? strTimeVeryShortFormat12s : strTimeVeryShortFormat12);  // h:mm or h:mm:ss
+        SimpleDateFormat timeFormat = new SimpleDateFormat(format, locale);
         timeFormat.setTimeZone(cal.getTimeZone());
 
         SimpleDateFormat suffixFormat = new SimpleDateFormat(strTimeSuffixFormat, locale);  // a
@@ -523,7 +532,7 @@ public class SuntimesUtils
             value += (showingYears || showingWeeks || showingDays || showingHours ? strSpace : strEmpty) +
                      String.format(strTimeDeltaFormat, remainingMinutes, strMinutes);
 
-        boolean showingSeconds = (showSeconds && !showingHours && !showingDays && !showingWeeks && !showingYears && (remainingSeconds > 0));
+        boolean showingSeconds = (showSeconds && !showingDays && !showingWeeks && !showingYears && (remainingSeconds > 0));
         if (showingSeconds)
             value += (showingMinutes ? strSpace : strEmpty) +
                      String.format(strTimeDeltaFormat, remainingSeconds, strSeconds);
