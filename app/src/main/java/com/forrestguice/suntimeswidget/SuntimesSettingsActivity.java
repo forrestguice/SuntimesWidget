@@ -245,6 +245,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         SuntimesWidget0.triggerWidgetUpdate(this, SuntimesWidget0.class);
         SuntimesWidget0.triggerWidgetUpdate(this, SuntimesWidget0_2x1.class);
         SuntimesWidget0.triggerWidgetUpdate(this, SuntimesWidget1.class);
+        SuntimesWidget0.triggerWidgetUpdate(this, SuntimesWidget2.class);
     }
 
     protected void rebuildActivity()
