@@ -427,7 +427,7 @@ public class SuntimesUtils
             value += (showingYears || showingDays || showingHours ? strSpace : strEmpty) +
                      String.format(strTimeDeltaFormat, remainingMinutes, strMinutes);
 
-        boolean showingSeconds = (showSeconds && !showingHours && !showingDays && !showingYears && (remainingSeconds > 0));
+        boolean showingSeconds = (showSeconds && !showingDays && !showingYears && (remainingSeconds > 0));
         if (showingSeconds)
             value += (showingMinutes ? strSpace : strEmpty) +
                      String.format(strTimeDeltaFormat, remainingSeconds, strSeconds);
