@@ -28,6 +28,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.SuntimesUtils.TimeDisplayText;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 /**
@@ -56,7 +57,8 @@ public class SuntimesLayout_1x1_4 extends SuntimesLayout
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesRiseSetData data)
     {
         super.updateViews(context, appWidgetId, views, data);
-        TimeDisplayText noonString = utils.calendarTimeShortDisplayString(context, data.sunsetCalendarToday());
+        boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
+        TimeDisplayText noonString = utils.calendarTimeShortDisplayString(context, data.sunsetCalendarToday(), showSeconds);
         views.setTextViewText(R.id.text_time_noon, noonString.getValue());
         views.setTextViewText(R.id.text_time_noon_suffix, noonString.getSuffix());
     }
