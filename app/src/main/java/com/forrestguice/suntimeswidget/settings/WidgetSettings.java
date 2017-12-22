@@ -91,7 +91,7 @@ public class WidgetSettings
     public static final SolarEvents PREF_DEF_GENERAL_TIMENOTE_SET = SolarEvents.SUNSET;
 
     public static final String PREF_KEY_GENERAL_TRACKINGMODE = "trackingmode";
-    public static final TrackingMode PREF_DEF_GENERAL_TRACKINGMODE = TrackingMode.CLOSEST;
+    public static final TrackingMode PREF_DEF_GENERAL_TRACKINGMODE = TrackingMode.SOONEST;
 
     public static final String PREF_KEY_GENERAL_COMPAREMODE = "comparemode";
     public static final CompareMode PREF_DEF_GENERAL_COMPAREMODE = CompareMode.TOMORROW;

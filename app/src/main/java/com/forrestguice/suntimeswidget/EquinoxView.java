@@ -42,6 +42,7 @@ import android.widget.ViewFlipper;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -57,9 +58,10 @@ public class EquinoxView extends LinearLayout
     private boolean isRtl = false;
     private boolean minimized = false;
     private boolean centered = false;
+    private WidgetSettings.TrackingMode trackingMode = WidgetSettings.TrackingMode.SOONEST;
 
     private TextView empty;
-    private ViewFlipper flipper;           // flip between
+    private ViewFlipper flipper;           // flip between thisYear, nextYear
     private Animation anim_card_outNext, anim_card_inNext, anim_card_outPrev, anim_card_inPrev;
     private ImageView btn_flipperNext_thisYear, btn_flipperPrev_thisYear;
     private ImageView btn_flipperNext_nextYear, btn_flipperPrev_nextYear;
@@ -139,22 +141,22 @@ public class EquinoxView extends LinearLayout
             TextView txt_equinox_vernal_label = (TextView) thisYear.findViewById(R.id.text_date_equinox_vernal_label);
             TextView txt_equinox_vernal = (TextView) thisYear.findViewById(R.id.text_date_equinox_vernal);
             TextView txt_equinox_vernal_note = (TextView) thisYear.findViewById(R.id.text_date_equinox_vernal_note);
-            note_equinox_vernal = addNote(txt_equinox_vernal_label, txt_equinox_vernal, txt_equinox_vernal_note);
+            note_equinox_vernal = addNote(txt_equinox_vernal_label, txt_equinox_vernal, txt_equinox_vernal_note, 0 );
 
             TextView txt_solstice_summer_label = (TextView) thisYear.findViewById(R.id.text_date_solstice_summer_label);
             TextView txt_solstice_summer = (TextView) thisYear.findViewById(R.id.text_date_solstice_summer);
             TextView txt_solstice_summer_note = (TextView) thisYear.findViewById(R.id.text_date_solstice_summer_note);
-            note_solstice_summer = addNote(txt_solstice_summer_label, txt_solstice_summer, txt_solstice_summer_note);
+            note_solstice_summer = addNote(txt_solstice_summer_label, txt_solstice_summer, txt_solstice_summer_note, 0);
 
             TextView txt_equinox_autumnal_label = (TextView) thisYear.findViewById(R.id.text_date_equinox_autumnal_label);
             TextView txt_equinox_autumnal = (TextView) thisYear.findViewById(R.id.text_date_equinox_autumnal);
             TextView txt_equinox_autumnal_note = (TextView) thisYear.findViewById(R.id.text_date_equinox_autumnal_note);
-            note_equinox_autumnal = addNote(txt_equinox_autumnal_label, txt_equinox_autumnal, txt_equinox_autumnal_note);
+            note_equinox_autumnal = addNote(txt_equinox_autumnal_label, txt_equinox_autumnal, txt_equinox_autumnal_note, 0);
 
             TextView txt_solstice_winter_label = (TextView) thisYear.findViewById(R.id.text_date_solstice_winter_label);
             TextView txt_solstice_winter = (TextView) thisYear.findViewById(R.id.text_date_solstice_winter);
             TextView txt_solstice_winter_note = (TextView) thisYear.findViewById(R.id.text_date_solstice_winter_note);
-            note_solstice_winter = addNote(txt_solstice_winter_label, txt_solstice_winter, txt_solstice_winter_note);
+            note_solstice_winter = addNote(txt_solstice_winter_label, txt_solstice_winter, txt_solstice_winter_note, 0);
 
             if (centered)
             {
@@ -191,22 +193,22 @@ public class EquinoxView extends LinearLayout
             TextView txt_equinox_vernal2_label = (TextView) nextYear.findViewById(R.id.text_date_equinox_vernal_label);
             TextView txt_equinox_vernal2 = (TextView) nextYear.findViewById(R.id.text_date_equinox_vernal);
             TextView txt_equinox_vernal2_note = (TextView) nextYear.findViewById(R.id.text_date_equinox_vernal_note);
-            note_equinox_vernal2 = addNote(txt_equinox_vernal2_label, txt_equinox_vernal2, txt_equinox_vernal2_note);
+            note_equinox_vernal2 = addNote(txt_equinox_vernal2_label, txt_equinox_vernal2, txt_equinox_vernal2_note, 1);
 
             TextView txt_solstice_summer2_label = (TextView) nextYear.findViewById(R.id.text_date_solstice_summer_label);
             TextView txt_solstice_summer2 = (TextView) nextYear.findViewById(R.id.text_date_solstice_summer);
             TextView txt_solstice_summer2_note = (TextView) nextYear.findViewById(R.id.text_date_solstice_summer_note);
-            note_solstice_summer2 = addNote(txt_solstice_summer2_label, txt_solstice_summer2, txt_solstice_summer2_note);
+            note_solstice_summer2 = addNote(txt_solstice_summer2_label, txt_solstice_summer2, txt_solstice_summer2_note, 1);
 
             TextView txt_equinox_autumnal2_label = (TextView) nextYear.findViewById(R.id.text_date_equinox_autumnal_label);
             TextView txt_equinox_autumnal2 = (TextView) nextYear.findViewById(R.id.text_date_equinox_autumnal);
             TextView txt_equinox_autumnal2_note = (TextView) nextYear.findViewById(R.id.text_date_equinox_autumnal_note);
-            note_equinox_autumnal2 = addNote(txt_equinox_autumnal2_label, txt_equinox_autumnal2, txt_equinox_autumnal2_note);
+            note_equinox_autumnal2 = addNote(txt_equinox_autumnal2_label, txt_equinox_autumnal2, txt_equinox_autumnal2_note, 1);
 
             TextView txt_solstice_winter2_label = (TextView) nextYear.findViewById(R.id.text_date_solstice_winter_label);
             TextView txt_solstice_winter2 = (TextView) nextYear.findViewById(R.id.text_date_solstice_winter);
             TextView txt_solstice_winter2_note = (TextView) nextYear.findViewById(R.id.text_date_solstice_winter_note);
-            note_solstice_winter2 = addNote(txt_solstice_winter2_label, txt_solstice_winter2, txt_solstice_winter2_note);
+            note_solstice_winter2 = addNote(txt_solstice_winter2_label, txt_solstice_winter2, txt_solstice_winter2_note, 1);
 
             if (centered)
             {
@@ -252,41 +254,65 @@ public class EquinoxView extends LinearLayout
         anim_card_outPrev = AnimationUtils.loadAnimation(context, R.anim.fade_out);
     }
 
-    private EquinoxNote addNote(TextView labelView, TextView timeView, TextView noteView)
+    private EquinoxNote addNote(TextView labelView, TextView timeView, TextView noteView, int pageIndex)
     {
-        EquinoxNote note = new EquinoxNote(labelView, timeView, noteView);
+        EquinoxNote note = new EquinoxNote(labelView, timeView, noteView, pageIndex);
         notes.add(note);
         return note;
+    }
+
+    public void setTrackingMode(WidgetSettings.TrackingMode mode)
+    {
+        trackingMode = mode;
+    }
+    public WidgetSettings.TrackingMode getTrackingMode()
+    {
+        return trackingMode;
     }
 
     public void setMinimized( boolean value )
     {
         this.minimized = value;
     }
+    public boolean isMinimized()
+    {
+        return minimized;
+    }
 
     private EquinoxNote findSoonestNote(Calendar now)
+    {
+        return findClosestNote(now, true);
+    }
+    private EquinoxNote findClosestNote(Calendar now)
+    {
+        return findClosestNote(now, false);
+    }
+    private EquinoxNote findClosestNote(Calendar now, boolean upcoming)
     {
         if (notes == null || now == null)
         {
             return null;
         }
 
-        EquinoxNote soonest = null;
+        EquinoxNote closest = null;
         long timeDeltaMin = Long.MAX_VALUE;
         for (EquinoxNote note : notes)
         {
             Calendar noteTime = note.getTime();
             if (noteTime != null)
             {
+                if (upcoming && !noteTime.after(now))
+                    continue;
+
                 long timeDelta = Math.abs(noteTime.getTimeInMillis() - now.getTimeInMillis());
                 if (timeDelta < timeDeltaMin)
                 {
                     timeDeltaMin = timeDelta;
-                    soonest = note;
+                    closest = note;
                 }
             }
         }
-        return soonest;
+        return closest;
     }
 
     private void showNextPrevButtons( boolean show )
@@ -378,18 +404,16 @@ public class EquinoxView extends LinearLayout
                 note.setVisible(!minimized);
             }
 
-            EquinoxNote nextNote = findSoonestNote(data.now());
+            EquinoxNote nextNote = (trackingMode == WidgetSettings.TrackingMode.SOONEST ? findSoonestNote(data.now())
+                                                                                        : findClosestNote(data.now()));
             if (nextNote == null)
             {
                 nextNote = notes.get(0);
             }
 
-            if (minimized)
-            {
-                nextNote.setVisible(true);
-            } else {
-                nextNote.setHighlighted(true);
-            }
+            flipper.setDisplayedChild(nextNote.pageIndex);
+            nextNote.setVisible(true);
+            nextNote.setHighlighted(true);
 
         } else {
             showEmptyView(true);
@@ -568,12 +592,14 @@ public class EquinoxView extends LinearLayout
         protected TextView labelView, timeView, noteView;
         protected Calendar time, now;
         protected boolean highlighted;
+        protected int pageIndex = 0;
 
-        public EquinoxNote(TextView labelView, TextView timeView, TextView noteView)
+        public EquinoxNote(TextView labelView, TextView timeView, TextView noteView, int pageIndex)
         {
             this.labelView = labelView;
             this.timeView = timeView;
             this.noteView = noteView;
+            this.pageIndex = pageIndex;
         }
 
         public void updateTime( Context context, Calendar time )

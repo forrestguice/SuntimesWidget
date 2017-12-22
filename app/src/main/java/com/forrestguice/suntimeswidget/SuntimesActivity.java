@@ -659,6 +659,7 @@ public class SuntimesActivity extends AppCompatActivity
 
         card_equinoxSolstice = (EquinoxView) findViewById(R.id.info_date_solsticequinox);
         card_equinoxSolstice.setMinimized(true);
+        card_equinoxSolstice.setTrackingMode(WidgetSettings.loadTrackingModePref(context, AppWidgetManager.INVALID_APPWIDGET_ID));
         card_equinoxSolstice.setOnClickListener( new View.OnClickListener()
         {
             @Override
