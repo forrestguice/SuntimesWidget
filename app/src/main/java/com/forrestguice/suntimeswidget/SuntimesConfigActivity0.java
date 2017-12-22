@@ -77,6 +77,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected Spinner spinner_compareMode;
     protected CheckBox checkbox_showNoon;
     protected CheckBox checkbox_showCompare;
+    protected CheckBox checkbox_showSeconds;
 
     protected Spinner spinner_onTap;
     protected EditText text_launchActivity;
@@ -489,6 +490,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         });
 
         //
+        // widget: showSeconds
+        //
+        checkbox_showSeconds = (CheckBox)findViewById(R.id.appwidget_general_showSeconds);
+
+        //
         // widget: about button
         //
         Button button_aboutWidget = (Button)findViewById(R.id.about_button);
@@ -777,6 +783,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         boolean showCompare = checkbox_showCompare.isChecked();
         WidgetSettings.saveShowComparePref(context, appWidgetId, showCompare);
 
+        // save: showSeconds
+        boolean showSeconds = checkbox_showSeconds.isChecked();
+        WidgetSettings.saveShowSecondsPref(context, appWidgetId, showSeconds);
+
         // save: time mode
         saveTimeMode(context);
     }
@@ -803,6 +813,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // load: showNoon
         boolean showNoon = WidgetSettings.loadShowNoonPref(context, appWidgetId);
         checkbox_showNoon.setChecked(showNoon);
+
+        // load: showSeconds
+        boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
+        checkbox_showSeconds.setChecked(showSeconds);
 
         // load: time mode
         loadTimeMode(context);
