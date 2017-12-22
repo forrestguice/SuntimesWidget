@@ -1,6 +1,7 @@
 ### ~ 
 
 ###
+* adds option to show seconds in rise/set times displayed by widgets.
 * adds option to show seconds in rise/set/delta times displayed by the app.
 
 ### v0.5.2 (2017-12-21)
