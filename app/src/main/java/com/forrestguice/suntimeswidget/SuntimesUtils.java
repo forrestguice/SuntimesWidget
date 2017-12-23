@@ -315,12 +315,12 @@ public class SuntimesUtils
      */
     public TimeDisplayText calendarTime24HrDisplayString(Context context, @NonNull Calendar cal, boolean showSeconds)
     {
-        TimeDisplayText retValue = new TimeDisplayText(calendarTime24HrString(context, cal), "", "");
+        TimeDisplayText retValue = new TimeDisplayText(calendarTime24HrString(context, cal, showSeconds), "", "");
         retValue.setRawValue(cal.getTimeInMillis());
         return retValue;
     }
 
-    public String calendarTime24HrString(Context context, @NonNull Calendar cal)
+    public String calendarTime24HrString(Context context, @NonNull Calendar cal, boolean showSeconds)
     {
         Locale locale = Resources.getSystem().getConfiguration().locale;
         String format = (showSeconds ? strTimeVeryShortFormat24s : strTimeVeryShortFormat24);  // HH:mm or HH:mm:ss
