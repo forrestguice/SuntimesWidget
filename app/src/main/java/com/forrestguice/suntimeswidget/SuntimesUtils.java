@@ -86,6 +86,7 @@ public class SuntimesUtils
     private static String strSeconds = "s";
     private static String strTimeDeltaFormat = "%1$s" + strEmpty + "%2$s";
     private static String strTimeShortFormat12 = "h:mm a";
+    private static String strTimeShortFormat12s = "h:mm:ss a";
     private static String strTimeVeryShortFormat12 = "h:mm";
     private static String strTimeVeryShortFormat24 = "HH:mm";
     private static String strTimeVeryShortFormat12s = "h:mm:ss";
@@ -101,6 +102,8 @@ public class SuntimesUtils
     private static String strDateLongFormat = "MMMM d, yyyy";
     private static String strDateTimeShortFormat = "MMMM d, h:mm a";
     private static String strDateTimeLongFormat = "MMMM d, yyyy, h:mm a";
+    private static String strDateTimeShortFormatSec = "MMMM d, h:mm:ss a";
+    private static String strDateTimeLongFormatSec = "MMMM d, yyyy, h:mm:ss a";
 
     public SuntimesUtils()
     {
@@ -133,6 +136,11 @@ public class SuntimesUtils
         String timeFormat = (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12);
         strDateTimeShortFormat = context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormat);
         strDateTimeLongFormat = context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormat);
+
+        strTimeShortFormat12s = context.getString(R.string.time_format_12hr_short, strTimeVeryShortFormat12s, strTimeSuffixFormat);
+        String timeFormatSec = (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s);
+        strDateTimeShortFormatSec = context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormatSec);
+        strDateTimeLongFormatSec = context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormatSec);
 
         strDateYearFormat = context.getString(R.string.dateyear_format_short);
         strDateShortFormat = context.getString(R.string.date_format_short);
@@ -401,9 +409,14 @@ public class SuntimesUtils
     public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal)
     {
         Calendar now = Calendar.getInstance();
-        return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != now.get(Calendar.YEAR))));
+        return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != now.get(Calendar.YEAR))), false);
     }
-    public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showYear)
+    public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showSeconds)
+    {
+        Calendar now = Calendar.getInstance();
+        return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != now.get(Calendar.YEAR))), showSeconds);
+    }
+    public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showYear, boolean showSeconds)
     {
         if (cal == null || context == null)
         {
@@ -411,7 +424,12 @@ public class SuntimesUtils
         }
 
         Locale locale = Resources.getSystem().getConfiguration().locale;
-        SimpleDateFormat dateTimeFormat = new SimpleDateFormat((showYear ? strDateTimeLongFormat : strDateTimeShortFormat), locale);
+        SimpleDateFormat dateTimeFormat;
+
+        if (showSeconds)
+            dateTimeFormat = new SimpleDateFormat((showYear ? strDateTimeLongFormatSec : strDateTimeShortFormatSec), locale);
+        else dateTimeFormat = new SimpleDateFormat((showYear ? strDateTimeLongFormat : strDateTimeShortFormat), locale);
+
         dateTimeFormat.setTimeZone(cal.getTimeZone());
         TimeDisplayText displayText = new TimeDisplayText(dateTimeFormat.format(cal.getTime()), "", "");
         displayText.setRawValue(cal.getTimeInMillis());
