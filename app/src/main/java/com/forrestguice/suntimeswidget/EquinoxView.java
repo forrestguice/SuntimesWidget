@@ -387,15 +387,17 @@ public class EquinoxView extends LinearLayout
             SuntimesUtils.TimeDisplayText nextYear = utils.calendarDateYearDisplayString(context, data.dataEquinoxVernal.eventCalendarOtherYear());
             titleNextYear.setText(nextYear.toString());
 
-            note_equinox_vernal.updateTime(context, data.dataEquinoxVernal.eventCalendarThisYear());
-            note_equinox_autumnal.updateTime(context, data.dataEquinoxAutumnal.eventCalendarThisYear());
-            note_solstice_summer.updateTime(context, data.dataSolsticeSummer.eventCalendarThisYear());
-            note_solstice_winter.updateTime(context, data.dataSolsticeWinter.eventCalendarThisYear());
+            boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
 
-            note_equinox_vernal2.updateTime(context, data.dataEquinoxVernal.eventCalendarOtherYear());
-            note_equinox_autumnal2.updateTime(context, data.dataEquinoxAutumnal.eventCalendarOtherYear());
-            note_solstice_summer2.updateTime(context, data.dataSolsticeSummer.eventCalendarOtherYear());
-            note_solstice_winter2.updateTime(context, data.dataSolsticeWinter.eventCalendarOtherYear());
+            note_equinox_vernal.updateTime(context, data.dataEquinoxVernal.eventCalendarThisYear(), showSeconds);
+            note_equinox_autumnal.updateTime(context, data.dataEquinoxAutumnal.eventCalendarThisYear(), showSeconds);
+            note_solstice_summer.updateTime(context, data.dataSolsticeSummer.eventCalendarThisYear(), showSeconds);
+            note_solstice_winter.updateTime(context, data.dataSolsticeWinter.eventCalendarThisYear(), showSeconds);
+
+            note_equinox_vernal2.updateTime(context, data.dataEquinoxVernal.eventCalendarOtherYear(), showSeconds);
+            note_equinox_autumnal2.updateTime(context, data.dataEquinoxAutumnal.eventCalendarOtherYear(), showSeconds);
+            note_solstice_summer2.updateTime(context, data.dataSolsticeSummer.eventCalendarOtherYear(), showSeconds);
+            note_solstice_winter2.updateTime(context, data.dataSolsticeWinter.eventCalendarOtherYear(), showSeconds);
 
             for (EquinoxNote note : notes)
             {
@@ -604,10 +606,14 @@ public class EquinoxView extends LinearLayout
 
         public void updateTime( Context context, Calendar time )
         {
+            updateTime(context, time, false);
+        }
+        public void updateTime( Context context, Calendar time, boolean showSeconds )
+        {
             this.time = time;
             if (timeView != null)
             {
-                SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, time);
+                SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, time, showSeconds);
                 timeView.setText(timeText.toString());
 
             } else {
