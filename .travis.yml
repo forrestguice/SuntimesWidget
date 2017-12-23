@@ -13,3 +13,6 @@ android:
 before_install:
   - mkdir "$ANDROID_HOME/licenses" || true
   - cp ./google-licenses/* "$ANDROID_HOME/licenses/"
+
+script:
+  - ./gradlew clean assemble
