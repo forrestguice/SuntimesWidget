@@ -1,5 +1,6 @@
 # SuntimesWidget
 An Android app (and home screen widget) that displays sunrise, sunset, civil/nautical/astronomical twilight times for a given location.
+[![Build Status](https://travis-ci.org/forrestguice/SuntimesWidget.svg?branch=master)](https://travis-ci.org/forrestguice/SuntimesWidget)
 
 <a href="https://f-droid.org/repository/browse/?fdid=com.forrestguice.suntimeswidget" target="_blank">
 <img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="80"/></a>
@@ -11,10 +12,7 @@ The app:
 * can set an alarm for next sunrise, sunset, or civil/nautical/astronomical twilight.
 * can display the configured location on a map (requires a map application).
 * *does not* require GPS. The location is manually specified by default (and optionally obtained from GPS).
-* *does not* require network connectivity. Calculations are performed locally on the device using: 
-  * Time4A [LGPL-2.1] (http://github.com/MenoData/Time4A) 
-  * ca.rmen.sunrisesunset [LGPL-2.1] (http://github.com/caarmen/SunriseSunset)
-  * sunrisesunsetlib-java [Apache License 2.0] (http://mikereedell.github.io/sunrisesunsetlib-java/) 
+* *does not* require network connectivity. Calculations are performed locally on the device using.
 
 The widget is themeable and provides:
 * a dark theme (and dark w/ transparent background)
@@ -52,7 +50,7 @@ Feel free to pay whatever you think is fair using [![paypal](https://www.paypalo
 
 Any money given will indirectly go towards software development. It is not technically a donation since I am obligated to report anything given to me as earned income (and I will probably apply it toward personal expenses). I want to express my thanks to those who have sent me something. In total it has amounted to lunch and a coffee but its a very meaningful gesture.
 
-**Legal Stuff**
+## Legal Stuff
 
 The goal of this project is an app that is free and open-source (FOSS). The source code is available under *GPLv3* (https://github.com/forrestguice/SuntimesWidget).
 
@@ -61,19 +59,20 @@ Icons borrowed from:
 * "Google Material Icons" [Apache License 2.0] (https://material.io/icons/)
 * "Material Design Icons" [SIL Open Font License 1.1] (https://materialdesignicons.com)
 
-Additional libraries:
+Libraries used:
+* Time4A [LGPL-2.1] (http://github.com/MenoData/Time4A) 
+* ca.rmen.sunrisesunset [LGPL-2.1] (http://github.com/caarmen/SunriseSunset)
+* sunrisesunsetlib-java [Apache License 2.0] (http://mikereedell.github.io/sunrisesunsetlib-java/) 
 * QuadFlask/colorpicker [Apache License 2.0] (https://github.com/QuadFlask/colorpicker) 
 
-**Project Contributions**
-
-[Contributions to the project](CONTRIBUTING.md) are welcome.
+## Project Contributions
 
 German translation by <u>Henrik "HerHde" Hüttemann</u>.<br/>
 Polish and Esperanto translations by <u>Verdulo</u>.<br/>
 French translation by <u>Jej</u>.<br/>
 Hungarian translation by <u>Erci</u>.
 
-
+[Contributions to the project](CONTRIBUTING.md) are welcome.
 
 
 

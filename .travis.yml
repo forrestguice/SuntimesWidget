@@ -1,0 +1,18 @@
+language: android
+android:
+  components:
+    - tools
+    - platform-tools
+    - tools
+
+    - build-tools-26.0.2
+    - android-25
+    - extra-android-support
+    - extra-android-m2repository
+
+before_install:
+  - mkdir "$ANDROID_HOME/licenses" || true
+  - cp ./google-licenses/* "$ANDROID_HOME/licenses/"
+
+script:
+  - ./gradlew clean assemble
