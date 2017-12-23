@@ -70,7 +70,8 @@ public class SuntimesLayout_1x1eq_0 extends SuntimesLayoutEq
 
             if (event != null)
             {
-                TimeDisplayText eventString = utils.calendarDateTimeDisplayString(context, event);
+                boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
+                TimeDisplayText eventString = utils.calendarDateTimeDisplayString(context, event, showSeconds);
                 views.setTextViewText(R.id.text_time_event, eventString.getValue());
 
                 int noteStringId = R.string.hence;
