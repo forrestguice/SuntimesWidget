@@ -21,8 +21,6 @@ package com.forrestguice.suntimeswidget;
 import android.app.AlarmManager;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
-import android.os.Build;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -65,13 +63,10 @@ public class SuntimesWidget2 extends SuntimesWidget0
         return SuntimesWidget2.UPDATEALARM_ID;
     }
 
-    /**
-     * @return AlarmManager.INTERVAL_HOUR;
-     */
     @Override
     protected long getUpdateInterval()
     {
-        return UpdateInterval.INTERVAL_VERYRAPID.interval;
+        return AlarmManager.INTERVAL_HOUR * 3;
     }
 
     @Override
@@ -183,7 +178,7 @@ public class SuntimesWidget2 extends SuntimesWidget0
      * INTERVAL_RAPID     .. 1m  .. time shown is less than an hour          .. e.g. 45m from now
      * INTERVAL_VERYRAPID .. 5s  .. time shown is less than a minute         .. e.g. 30s from now
      */
-    public static enum UpdateInterval
+    /**public static enum UpdateInterval
     {
         INTERVAL_SLOW( ONE_DAY, -1 ),
         INTERVAL_NORMAL( HALF_DAY, ONE_YEAR ),
@@ -229,6 +224,6 @@ public class SuntimesWidget2 extends SuntimesWidget0
     @SuppressWarnings("PointlessArithmeticExpression")
     private static final long ONE_MINUTE = 1 * 60 * 1000;
     @SuppressWarnings("PointlessArithmeticExpression")
-    private static final long FIVE_SECONDS = 1 * 5 * 1000;
+    private static final long FIVE_SECONDS = 1 * 5 * 1000;*/
 
 }
