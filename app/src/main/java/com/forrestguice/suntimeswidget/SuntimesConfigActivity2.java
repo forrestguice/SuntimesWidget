@@ -50,6 +50,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
         disableOptionAllowResize();
         showOptionTrackingMode(true);
         showOptionTimeModeOverride(true);
+        showDataSource(false);  // temporarily hidden; atm all entries point to same implementation (false choice)
     }
 
     @Override

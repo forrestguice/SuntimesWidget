@@ -1078,6 +1078,15 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
+    protected void showDataSource(boolean showDataSourceUI)
+    {
+        View dataSourceLayout = findViewById(R.id.appwidget_general_calculator_layout);
+        if (dataSourceLayout != null)
+        {
+            dataSourceLayout.setVisibility((showDataSourceUI ? View.VISIBLE : View.GONE));
+        }
+    }
+
     /**
      * @param showCompareUI true: show comparison ui, false: hide comparison ui
      */
