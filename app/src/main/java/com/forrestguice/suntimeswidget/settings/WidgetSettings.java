@@ -993,9 +993,13 @@ public class WidgetSettings
     }
     public static boolean loadShowTitlePref(Context context, int appWidgetId)
     {
+        return loadShowTitlePref(context, appWidgetId, PREF_DEF_APPEARANCE_SHOWTITLE);
+    }
+    public static boolean loadShowTitlePref(Context context, int appWidgetId, boolean defValue)
+    {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
-        return prefs.getBoolean(prefs_prefix + PREF_KEY_APPEARANCE_SHOWTITLE, PREF_DEF_APPEARANCE_SHOWTITLE);
+        return prefs.getBoolean(prefs_prefix + PREF_KEY_APPEARANCE_SHOWTITLE, defValue);
     }
     public static void deleteShowTitlePref(Context context, int appWidgetId)
     {
@@ -1013,11 +1017,15 @@ public class WidgetSettings
         prefs.putString(prefs_prefix + PREF_KEY_APPEARANCE_TITLETEXT, titleText);
         prefs.apply();
     }
-   public static String loadTitleTextPref(Context context, int appWidgetId)
+    public static String loadTitleTextPref(Context context, int appWidgetId)
+    {
+        return loadTitleTextPref(context, appWidgetId, PREF_DEF_APPEARANCE_TITLETEXT);
+    }
+    public static String loadTitleTextPref(Context context, int appWidgetId, String defValue)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
-        return prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_TITLETEXT, PREF_DEF_APPEARANCE_TITLETEXT);
+        return prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_TITLETEXT, defValue);
     }
     public static void deleteTitleTextPref(Context context, int appWidgetId)
     {

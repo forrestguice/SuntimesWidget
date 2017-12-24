@@ -124,4 +124,18 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
         WidgetSettings.saveTimeMode2Pref(context, appWidgetId, timeMode);
     }
 
+    public static final boolean DEF_SHOWTITLE = true;
+    public static final String DEF_TITLETEXT = "%M";
+
+    @Override
+    protected void loadTitleSettings(Context context)
+    {
+        boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId, DEF_SHOWTITLE);
+        checkbox_showTitle.setChecked(showTitle);
+        setTitleTextEnabled(showTitle);
+
+        String titleText = WidgetSettings.loadTitleTextPref(context, appWidgetId, DEF_TITLETEXT);
+        text_titleText.setText(titleText);
+    }
+
 }
