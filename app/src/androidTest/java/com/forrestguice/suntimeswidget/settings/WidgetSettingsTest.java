@@ -81,6 +81,28 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         assertTrue("STUB", true == false);  // TODO
     }
 
+    @Test
+    public void test_timeMode2Pref()
+    {
+        assertTrue("STUB", true == false);  // TODO
+    }
+
+    @Test
+    public void test_timeMode2OverridePref()
+    {
+        WidgetSettings.saveTimeMode2OverridePref(context, appWidgetId, false);
+        boolean pref2 = WidgetSettings.loadTimeMode2OverridePref(context, appWidgetId);
+        assertTrue("pref should be false but was " + pref2, !pref2);
+
+        WidgetSettings.saveTimeMode2OverridePref(context, appWidgetId, true);
+        boolean pref1 = WidgetSettings.loadTimeMode2OverridePref(context, appWidgetId);
+        assertTrue("pref should be true but was " + pref1, pref1);
+
+        WidgetSettings.deleteTimeMode2OverridePref(context, appWidgetId);
+        boolean pref0 = WidgetSettings.loadTimeMode2OverridePref(context, appWidgetId);
+        assertTrue("mode should be default (false) but was " + pref0, !pref0 && pref0 == WidgetSettings.PREF_DEF_GENERAL_TIMEMODE2_OVERRIDE);
+    }
+
     ///////////////////////////////////////////////////////////////////////////
 
     @Test
@@ -288,6 +310,22 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     public void test_1x1ModePref()
     {
         assertTrue("STUB", true == false);  // TODO
+    }
+
+    @Test
+    public void test_trackingModePref()
+    {
+        WidgetSettings.saveTrackingModePref(context, appWidgetId, WidgetSettings.TrackingMode.CLOSEST);
+        WidgetSettings.TrackingMode mode2 = WidgetSettings.loadTrackingModePref(context, appWidgetId);
+        assertTrue("mode should be CLOSEST but was " + mode2, mode2 == WidgetSettings.TrackingMode.CLOSEST);
+
+        WidgetSettings.saveTrackingModePref(context, appWidgetId, WidgetSettings.TrackingMode.SOONEST);
+        WidgetSettings.TrackingMode mode1 = WidgetSettings.loadTrackingModePref(context, appWidgetId);
+        assertTrue("mode should be SOONEST but was " + mode1, mode1 == WidgetSettings.TrackingMode.SOONEST);
+
+        WidgetSettings.deleteTrackingModePref(context, appWidgetId);
+        WidgetSettings.TrackingMode mode0 = WidgetSettings.loadTrackingModePref(context, appWidgetId);
+        assertTrue("mode should be default (CLOSEST) but was " + mode0, mode0 == WidgetSettings.TrackingMode.CLOSEST && mode0 == WidgetSettings.PREF_DEF_GENERAL_TRACKINGMODE);
     }
 
     @Test

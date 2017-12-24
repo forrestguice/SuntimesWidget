@@ -238,6 +238,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             return;
         }
 
+        if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_TRACKINGMODE))
+        {
+            // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
+            // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
+            WidgetSettings.saveTrackingModePref(this, 0, WidgetSettings.TrackingMode.valueOf(sharedPreferences.getString(key, "missing")));
+	    return;
+	}
+
         if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_SHOWSECONDS))
         {
             // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
@@ -253,6 +261,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         SuntimesWidget0.triggerWidgetUpdate(this, SuntimesWidget0.class);
         SuntimesWidget0.triggerWidgetUpdate(this, SuntimesWidget0_2x1.class);
         SuntimesWidget0.triggerWidgetUpdate(this, SuntimesWidget1.class);
+        SuntimesWidget0.triggerWidgetUpdate(this, SuntimesWidget2.class);
     }
 
     protected void rebuildActivity()
@@ -298,14 +307,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         public void onAttach(Context context)
         {
             super.onAttach(context);
-            loadPref_general(context, calculatorPref);
+            loadPref_calculator(context, calculatorPref);
         }
 
         @Override
         public void onAttach(Activity activity)
         {
             super.onAttach(activity);
-            loadPref_general(activity, calculatorPref);
+            loadPref_calculator(activity, calculatorPref);
         }
     }
 
@@ -314,62 +323,34 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
      */
     private void initPref_general()
     {
-        //String key = AppSettings.PREF_KEY_GETFIX_MAXAGE;
-        //ListPreference gpsMaxAgePref = (ListPreference)findPreference(key);
-
-        //key = AppSettings.PREF_KEY_GETFIX_MAXELAPSED;
-        //ListPreference gpsMaxElapsedPref = (ListPreference)findPreference(key);
-
-        String key = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_GENERAL + WidgetSettings.PREF_KEY_GENERAL_CALCULATOR;
+        String key0 = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_GENERAL + WidgetSettings.PREF_KEY_GENERAL_CALCULATOR;
         //noinspection deprecation
-        SummaryListPreference calculatorPref = (SummaryListPreference)findPreference(key);
+        SummaryListPreference calculatorPref = (SummaryListPreference)findPreference(key0);
         if (calculatorPref != null)
         {
-            initPref_general(this, calculatorPref);
-            loadPref_general(this, calculatorPref);
+            initPref_calculator(this, calculatorPref);
+            loadPref_calculator(this, calculatorPref);
         }
+
+        String key1 = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + WidgetSettings.PREF_KEY_APPEARANCE_TIMEFORMATMODE;
+        ListPreference timeformatPref = (ListPreference)findPreference(key1);
+        initPref_timeFormat(this, timeformatPref);
     }
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private static void initPref_general(PreferenceFragment fragment)
     {
-        String key = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_GENERAL + WidgetSettings.PREF_KEY_GENERAL_CALCULATOR;
-        SummaryListPreference calculatorPref = (SummaryListPreference) fragment.findPreference(key);
+        String key0 = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_GENERAL + WidgetSettings.PREF_KEY_GENERAL_CALCULATOR;
+        SummaryListPreference calculatorPref = (SummaryListPreference) fragment.findPreference(key0);
         if (calculatorPref != null)
         {
             Context context = fragment.getActivity();
-            initPref_general(context, calculatorPref);
-            loadPref_general(context, calculatorPref);
-        }
-    }
-    private static void initPref_general(Context context, final SummaryListPreference calculatorPref)
-    {
-        SuntimesCalculatorDescriptor[] calculators = SuntimesCalculatorDescriptor.values();
-        String[] calculatorEntries = new String[calculators.length];
-        String[] calculatorValues = new String[calculators.length];
-        String[] calculatorSummaries = new String[calculators.length];
-
-        int i = 0;
-        for (SuntimesCalculatorDescriptor calculator : calculators)
-        {
-            calculator.initDisplayStrings(context);
-            calculatorEntries[i] = calculatorValues[i] = calculator.name();
-            calculatorSummaries[i] = calculator.getDisplayString();
-            i++;
+            initPref_calculator(context, calculatorPref);
+            loadPref_calculator(context, calculatorPref);
         }
 
-        calculatorPref.setEntries(calculatorEntries);
-        calculatorPref.setEntryValues(calculatorValues);
-        calculatorPref.setEntrySummaries(calculatorSummaries);
-    }
-    private static void loadPref_general(Context context, SummaryListPreference calculatorPref)
-    {
-        if (context != null && calculatorPref != null)
-        {
-            SuntimesCalculatorDescriptor currentMode = WidgetSettings.loadCalculatorModePref(context, 0);
-            int currentIndex = ((currentMode != null) ? calculatorPref.findIndexOfValue(currentMode.name()) : 0);
-            calculatorPref.setValueIndex(currentIndex);
-            //Log.d("SuntimesSettings", "current mode: " + currentMode + " (" + currentIndex + ")");
-        }
+        String key1 = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + WidgetSettings.PREF_KEY_APPEARANCE_TIMEFORMATMODE;
+        Preference timeformatPref = fragment.findPreference(key1);
+        initPref_timeFormat(fragment.getActivity(), timeformatPref);
     }
 
     //////////////////////////////////////////////////
@@ -719,19 +700,17 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
      */
     private void initPref_ui()
     {
-        String key = "appwidget_0_appearance_timeformatmode";
-        ListPreference timeformatPref = (ListPreference)findPreference(key);
-        initPref_ui(this, timeformatPref);
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private static void initPref_ui(PreferenceFragment fragment)
     {
-        String key = "appwidget_0_appearance_timeformatmode";
-        Preference timeformatPref = fragment.findPreference(key);
-        initPref_ui(fragment.getActivity(), timeformatPref);
     }
-    private static void initPref_ui(final Activity context, final Preference timeformatPref)
+
+    //////////////////////////////////////////////////
+    //////////////////////////////////////////////////
+
+    private static void initPref_timeFormat(final Activity context, final Preference timeformatPref)
     {
         WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
         timeformatPref.setSummary(timeFormatPrefSummary(mode, context));
@@ -758,5 +737,40 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         }
         return summary;
     }
+
+    //////////////////////////////////////////////////
+    //////////////////////////////////////////////////
+
+    private static void initPref_calculator(Context context, final SummaryListPreference calculatorPref)
+    {
+        SuntimesCalculatorDescriptor[] calculators = SuntimesCalculatorDescriptor.values();
+        String[] calculatorEntries = new String[calculators.length];
+        String[] calculatorValues = new String[calculators.length];
+        String[] calculatorSummaries = new String[calculators.length];
+
+        int i = 0;
+        for (SuntimesCalculatorDescriptor calculator : calculators)
+        {
+            calculator.initDisplayStrings(context);
+            calculatorEntries[i] = calculatorValues[i] = calculator.name();
+            calculatorSummaries[i] = calculator.getDisplayString();
+            i++;
+        }
+
+        calculatorPref.setEntries(calculatorEntries);
+        calculatorPref.setEntryValues(calculatorValues);
+        calculatorPref.setEntrySummaries(calculatorSummaries);
+    }
+    private static void loadPref_calculator(Context context, SummaryListPreference calculatorPref)
+    {
+        if (context != null && calculatorPref != null)
+        {
+            SuntimesCalculatorDescriptor currentMode = WidgetSettings.loadCalculatorModePref(context, 0);
+            int currentIndex = ((currentMode != null) ? calculatorPref.findIndexOfValue(currentMode.name()) : 0);
+            calculatorPref.setValueIndex(currentIndex);
+            //Log.d("SuntimesSettings", "current mode: " + currentMode + " (" + currentIndex + ")");
+        }
+    }
+
 
 }

@@ -1,6 +1,8 @@
 ### ~ 
 
 ###
+* adds solstice/equinox tracking to app (#13).
+* adds solstice/equinox widget (#13).
 * adds option to show seconds in rise/set times displayed by widgets.
 * adds option to show seconds in rise/set/delta times displayed by the app.
 

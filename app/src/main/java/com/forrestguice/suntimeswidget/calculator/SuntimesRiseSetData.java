@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -209,6 +210,27 @@ public class SuntimesRiseSetData extends SuntimesData
         this.compareMode = WidgetSettings.loadCompareModePref(context, appWidgetId);
     }
 
+    public void initCalculator()
+    {
+        SuntimesCalculatorFactory calculatorFactory = new SuntimesCalculatorFactory(context, calculatorMode);
+        this.calculator = calculatorFactory.createCalculator(location, timezone);
+    }
+
+    public boolean isDay()
+    {
+        return isDay(Calendar.getInstance(timezone()));
+    }
+    public boolean isDay(Calendar now)
+    {
+        if (calculator != null)
+        {
+            return calculator.isDay(now);
+        } else {
+            Log.w("isDay", "calculator is null! returning false");
+            return false;
+        }
+    }
+
     /**
      * Calculate
      */
@@ -223,8 +245,7 @@ public class SuntimesRiseSetData extends SuntimesData
         //Log.v("SuntimesWidgetData", "timezone: " + timezone);
         //Log.v("SuntimesWidgetData", "compare mode: " + compareMode.name());
 
-        SuntimesCalculatorFactory calculatorFactory = new SuntimesCalculatorFactory(context, calculatorMode);
-        this.calculator = calculatorFactory.createCalculator(location, timezone);
+        initCalculator();
 
         todaysCalendar = Calendar.getInstance(timezone);
         otherCalendar = Calendar.getInstance(timezone);

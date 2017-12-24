@@ -40,6 +40,7 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     public static final String NAME = "sunrisesunsetlib";
     public static final String REF = "com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator";
     public static final String LINK = "github.com/mikereedell/sunrisesunsetlib-java";
+    public static final int[] FEATURES = new int[] { SuntimesCalculator.FEATURE_RISESET };
     SunriseSunsetCalculator calculator = null;
     TimeZone timezone;
     Location location;
@@ -78,6 +79,12 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     public String name()
     {
         return NAME;
+    }
+
+    @Override
+    public int[] getSupportedFeatures()
+    {
+        return FEATURES;
     }
 
     @Override
@@ -145,6 +152,30 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     }
 
     @Override
+    public Calendar getVernalEquinoxForYear(Calendar date)
+    {
+        return null;
+    }
+
+    @Override
+    public Calendar getSummerSolsticeForYear(Calendar date)
+    {
+        return null;
+    }
+
+    @Override
+    public Calendar getAutumnalEquinoxForYear(Calendar date)
+    {
+        return null;
+    }
+
+    @Override
+    public Calendar getWinterSolsticeForYear(Calendar date)
+    {
+        return null;
+    }
+
+    @Override
     public Calendar getOfficialSunsetCalendarForDate( Calendar date )
     {
         return calculator.getOfficialSunsetCalendarForDate(date);
@@ -153,7 +184,7 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     public static SuntimesCalculatorDescriptor getDescriptor()
     {
         return new SuntimesCalculatorDescriptor(SunriseSunsetSuntimesCalculator.NAME, SunriseSunsetSuntimesCalculator.LINK, SunriseSunsetSuntimesCalculator.REF,
-                R.string.calculator_displayString_sunrisesunsetlib);
+                R.string.calculator_displayString_sunrisesunsetlib, SunriseSunsetSuntimesCalculator.FEATURES);
     }
 
     @Override

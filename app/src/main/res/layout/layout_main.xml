@@ -140,7 +140,7 @@
                 android:id="@+id/info_time_lightmap_layout"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/lightmap_clickable_height"
-                android:layout_marginBottom="0dp" android:layout_marginTop="0dp"
+                android:layout_marginBottom="2dp" android:layout_marginTop="0dp"
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true" android:focusable="true"
                 android:orientation="vertical">
@@ -158,12 +158,27 @@
 
             </LinearLayout>
 
+            <!-- Solstice / Equinox -->
+            <LinearLayout
+                android:id="@+id/info_time_equinox_layout"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="?attr/timeCardBackground"
+                android:layout_marginTop="0dp" android:layout_marginBottom="6dp">
+
+                <com.forrestguice.suntimeswidget.EquinoxView
+                    android:id="@+id/info_date_solsticequinox"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    app:minimized="true" />
+
+            </LinearLayout>
+
             <!-- Datasource -->
             <LinearLayout
                 android:id="@+id/layout_datasource"
                 style="@style/SunsetTimeCard" android:orientation="horizontal" android:gravity="end"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:layout_marginBottom="2dp" android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp" android:layout_marginTop="0dp"
                 android:paddingTop="0dp" android:paddingBottom="0dp">
 
                 <include layout="@layout/info_time_datasource" />

@@ -28,6 +28,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.InsetDrawable;
+
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -52,6 +53,8 @@ import android.view.Menu;
 import java.lang.reflect.Method;
 import java.text.DateFormat;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings.TimeFormatMode;
@@ -76,11 +79,14 @@ public class SuntimesUtils
     private static String strSpace = " ";
     private static String strEmpty = "";
     private static String strYears = "y";
+    private static String strWeeks = "w";
     private static String strDays = "d";
     private static String strHours = "h";
     private static String strMinutes = "m";
     private static String strSeconds = "s";
     private static String strTimeDeltaFormat = "%1$s" + strEmpty + "%2$s";
+    private static String strTimeShortFormat12 = "h:mm a";
+    private static String strTimeShortFormat12s = "h:mm:ss a";
     private static String strTimeVeryShortFormat12 = "h:mm";
     private static String strTimeVeryShortFormat24 = "HH:mm";
     private static String strTimeVeryShortFormat12s = "h:mm:ss";
@@ -91,17 +97,33 @@ public class SuntimesUtils
     private static boolean is24 = true;
     private static boolean initialized = false;
 
-    public SuntimesUtils() {}
+    private static String strDateYearFormat = "yyyy";
+    private static String strDateShortFormat = "MMMM d";
+    private static String strDateLongFormat = "MMMM d, yyyy";
+    private static String strDateTimeShortFormat = "MMMM d, h:mm a";
+    private static String strDateTimeLongFormat = "MMMM d, yyyy, h:mm a";
+    private static String strDateTimeShortFormatSec = "MMMM d, h:mm:ss a";
+    private static String strDateTimeLongFormatSec = "MMMM d, yyyy, h:mm:ss a";
 
-    public static void initDisplayStrings( Context context )
+    public SuntimesUtils()
     {
+    }
+
+    public static void initDisplayStrings(Context context)
+    {
+        WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
+        is24 = (mode == TimeFormatMode.MODE_SYSTEM) ? android.text.format.DateFormat.is24HourFormat(context)
+                                                    : (mode == TimeFormatMode.MODE_24HR);
+
         strTimeShorter = context.getString(R.string.delta_day_shorter);
         strTimeLonger = context.getString(R.string.delta_day_longer);
         strYears = context.getString(R.string.delta_years);
+        strWeeks = context.getString(R.string.delta_weeks);
         strDays = context.getString(R.string.delta_days);
         strHours = context.getString(R.string.delta_hours);
         strMinutes = context.getString(R.string.delta_minutes);
         strSeconds = context.getString(R.string.delta_seconds);
+
         strTimeDeltaFormat = context.getString(R.string.delta_format);
         strTimeVeryShortFormat12 = context.getString(R.string.time_format_12hr_veryshort);
         strTimeVeryShortFormat24 = context.getString(R.string.time_format_24hr_veryshort);
@@ -110,9 +132,19 @@ public class SuntimesUtils
         strTimeNone = context.getString(R.string.time_none);
         strTimeLoading = context.getString(R.string.time_loading);
 
-        WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
-        is24 = (mode == TimeFormatMode.MODE_SYSTEM) ? android.text.format.DateFormat.is24HourFormat(context)
-                : (mode == TimeFormatMode.MODE_24HR);
+        strTimeShortFormat12 = context.getString(R.string.time_format_12hr_short, strTimeVeryShortFormat12, strTimeSuffixFormat);
+        String timeFormat = (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12);
+        strDateTimeShortFormat = context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormat);
+        strDateTimeLongFormat = context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormat);
+
+        strTimeShortFormat12s = context.getString(R.string.time_format_12hr_short, strTimeVeryShortFormat12s, strTimeSuffixFormat);
+        String timeFormatSec = (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s);
+        strDateTimeShortFormatSec = context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormatSec);
+        strDateTimeLongFormatSec = context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormatSec);
+
+        strDateYearFormat = context.getString(R.string.dateyear_format_short);
+        strDateShortFormat = context.getString(R.string.date_format_short);
+        strDateLongFormat = context.getString(R.string.date_format_long);
 
         initialized = true;
     }
@@ -153,7 +185,7 @@ public class SuntimesUtils
             this.suffix = suffix;
         }
 
-        public void setRawValue( long value )
+        public void setRawValue(long value)
         {
             rawValue = value;
         }
@@ -177,7 +209,8 @@ public class SuntimesUtils
         {
             return suffix;
         }
-        public void setSuffix( String suffix )
+
+        public void setSuffix(String suffix)
         {
             this.suffix = suffix;
         }
@@ -214,7 +247,7 @@ public class SuntimesUtils
             if (obj == null || !TimeDisplayText.class.isAssignableFrom(obj.getClass()))
                 return false;
 
-            final TimeDisplayText other = (TimeDisplayText)obj;
+            final TimeDisplayText other = (TimeDisplayText) obj;
 
             if (!value.equals(other.getValue()))
                 return false;
@@ -241,7 +274,7 @@ public class SuntimesUtils
 
     /**
      * @param context a context used to access time/date settings
-     * @param cal a Calendar representing some point in time
+     * @param cal     a Calendar representing some point in time
      * @return a display string that describes the time (short format)
      */
     public TimeDisplayText calendarTimeShortDisplayString(Context context, Calendar cal)
@@ -267,8 +300,9 @@ public class SuntimesUtils
 
     /**
      * formats a time display string (lets the system determine the exact format).
+     *
      * @param context a context
-     * @param cal a Calendar representing some point in time
+     * @param cal     a Calendar representing some point in time
      * @return a time display string (short format)
      */
     public TimeDisplayText calendarTimeSysDisplayString(Context context, @NonNull Calendar cal)
@@ -282,20 +316,25 @@ public class SuntimesUtils
 
     /**
      * formats a 24 hr time display string
+     *
      * @param context a context
-     * @param cal a Calendar representing some point in time
+     * @param cal     a Calendar representing some point in time
      * @return a time display string (12 hr) (short format)
      */
     public TimeDisplayText calendarTime24HrDisplayString(Context context, @NonNull Calendar cal, boolean showSeconds)
+    {
+        TimeDisplayText retValue = new TimeDisplayText(calendarTime24HrString(context, cal, showSeconds), "", "");
+        retValue.setRawValue(cal.getTimeInMillis());
+        return retValue;
+    }
+
+    public String calendarTime24HrString(Context context, @NonNull Calendar cal, boolean showSeconds)
     {
         Locale locale = Resources.getSystem().getConfiguration().locale;
         String format = (showSeconds ? strTimeVeryShortFormat24s : strTimeVeryShortFormat24);  // HH:mm or HH:mm:ss
         SimpleDateFormat timeFormat = new SimpleDateFormat(format, locale);
         timeFormat.setTimeZone(cal.getTimeZone());
-
-        TimeDisplayText retValue = new TimeDisplayText(timeFormat.format(cal.getTime()), "", "");
-        retValue.setRawValue(cal.getTimeInMillis());
-        return retValue;
+        return timeFormat.format(cal.getTime());
     }
 
     /**
@@ -353,6 +392,82 @@ public class SuntimesUtils
         return retValue;
     }
 
+    public String calendarTime12HrString(Context context, @NonNull Calendar cal)
+    {
+        Locale locale = Resources.getSystem().getConfiguration().locale;
+        SimpleDateFormat timeFormat = new SimpleDateFormat(strTimeShortFormat12, locale); // h:mm a
+        timeFormat.setTimeZone(cal.getTimeZone());
+        return timeFormat.format(cal.getTime());
+    }
+
+
+    /**
+     * @param context
+     * @param cal
+     * @return
+     */
+    public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal)
+    {
+        Calendar now = Calendar.getInstance();
+        return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != now.get(Calendar.YEAR))), false);
+    }
+    public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showSeconds)
+    {
+        Calendar now = Calendar.getInstance();
+        return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != now.get(Calendar.YEAR))), showSeconds);
+    }
+    public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showYear, boolean showSeconds)
+    {
+        if (cal == null || context == null)
+        {
+            return new TimeDisplayText(strTimeNone);
+        }
+
+        Locale locale = Resources.getSystem().getConfiguration().locale;
+        SimpleDateFormat dateTimeFormat;
+
+        if (showSeconds)
+            dateTimeFormat = new SimpleDateFormat((showYear ? strDateTimeLongFormatSec : strDateTimeShortFormatSec), locale);
+        else dateTimeFormat = new SimpleDateFormat((showYear ? strDateTimeLongFormat : strDateTimeShortFormat), locale);
+
+        dateTimeFormat.setTimeZone(cal.getTimeZone());
+        TimeDisplayText displayText = new TimeDisplayText(dateTimeFormat.format(cal.getTime()), "", "");
+        displayText.setRawValue(cal.getTimeInMillis());
+        return displayText;
+
+        // doesn't use the appropriate timezone (always formats to system)
+        /**int formatFlags = DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME;
+        formatFlags = (showYear ? (formatFlags | DateUtils.FORMAT_SHOW_YEAR) : (formatFlags | DateUtils.FORMAT_NO_YEAR));
+        return new TimeDisplayText(DateUtils.formatDateRange(context, cal.getTimeInMillis(), cal.getTimeInMillis(), formatFlags), "", "");*/
+
+        // doesn't use app's 12hr/24hr setting, doesn't work w/ custom TimeZone objs
+        /**Long time = cal.getTimeInMillis();
+        String tzID = cal.getTimeZone().getID();
+        Formatter formatter = new Formatter(new StringBuilder(50), Locale.getDefault());
+        formatter = DateUtils.formatDateRange(context, formatter, time, time, formatFlags, tzID);
+        return new TimeDisplayText(formatter.toString(), "", "");*/
+
+        // doesn't use app's 12hr/24hr setting
+        /** DateFormat timeFormat = android.text.format.DateFormat.getLongDateFormat(context);
+        String value = timeFormat.format(cal.getTime());*/
+    }
+
+    /**
+     * @param context
+     * @param cal
+     * @return
+     */
+    public TimeDisplayText calendarDateYearDisplayString(Context context, Calendar cal)
+    {
+        if (cal == null)
+        {
+            return new TimeDisplayText(strTimeNone);
+        }
+        Locale locale = Resources.getSystem().getConfiguration().locale;
+        SimpleDateFormat dateFormat = new SimpleDateFormat(strDateYearFormat, locale);
+        return new TimeDisplayText(dateFormat.format(cal.getTime()), "", "");
+    }
+
     /**
      * @param c1 a Calendar representing some point in time
      * @param c2 another Calendar representing another point in time
@@ -401,9 +516,12 @@ public class SuntimesUtils
         long numberOfMinutes = numberOfSeconds / 60;
         long numberOfHours = numberOfMinutes / 60;
         long numberOfDays = numberOfHours / 24;
+        long numberOfWeeks = numberOfDays / 7;
         long numberOfYears = numberOfDays / 365;
 
-        long remainingDays = numberOfDays % 365;
+        long remainingWeeks = (long)(numberOfWeeks % 52.1429);
+        long remainingDays = numberOfDays % 7;
+        //long remainingDays = numberOfDays % 365;
         long remainingHours = numberOfHours % 24;
         long remainingMinutes = numberOfMinutes % 60;
         long remainingSeconds = numberOfSeconds % 60;
@@ -412,27 +530,32 @@ public class SuntimesUtils
         if (showingYears)
             value += String.format(strTimeDeltaFormat, numberOfYears, strYears);
 
+        boolean showingWeeks = (numberOfWeeks > 0);
+        if (showingWeeks)
+            value += (showingYears ? strSpace : strEmpty) +
+                    String.format(strTimeDeltaFormat, remainingWeeks, strWeeks);
+
         boolean showingDays = (remainingDays > 0);
         if (showingDays)
-            value += (showingYears ? strSpace : strEmpty) +
+            value += (showingYears || showingWeeks ? strSpace : strEmpty) +
                      String.format(strTimeDeltaFormat, remainingDays, strDays);
 
-        boolean showingHours = (remainingHours > 0);
+        boolean showingHours = (!showingYears && !showingWeeks && remainingHours > 0);
         if (showingHours)
-            value += (showingYears || showingDays ? strSpace : strEmpty) +
+            value += (showingYears || showingWeeks || showingDays ? strSpace : strEmpty) +
                      String.format(strTimeDeltaFormat, remainingHours, strHours);
 
-        boolean showingMinutes = (remainingMinutes > 0);
+        boolean showingMinutes = (!showingDays && !showingWeeks && !showingYears && remainingMinutes > 0);
         if (showingMinutes)
-            value += (showingYears || showingDays || showingHours ? strSpace : strEmpty) +
+            value += (showingYears || showingWeeks || showingDays || showingHours ? strSpace : strEmpty) +
                      String.format(strTimeDeltaFormat, remainingMinutes, strMinutes);
 
-        boolean showingSeconds = (showSeconds && !showingDays && !showingYears && (remainingSeconds > 0));
+        boolean showingSeconds = (showSeconds && !showingDays && !showingWeeks && !showingYears && (remainingSeconds > 0));
         if (showingSeconds)
             value += (showingMinutes ? strSpace : strEmpty) +
                      String.format(strTimeDeltaFormat, remainingSeconds, strSeconds);
 
-        if (!showingSeconds && !showingMinutes && !showingHours && !showingDays && !showingYears)
+        if (!showingSeconds && !showingMinutes && !showingHours && !showingDays && !showingWeeks && !showingYears)
         {
             if (showSeconds)
                 value += String.format(strTimeDeltaFormat, "0", strSeconds);
@@ -462,8 +585,34 @@ public class SuntimesUtils
      */
     public String displayStringForTitlePattern(String titlePattern, SuntimesRiseSetData data)
     {
+        String displayString = displayStringForTitlePattern(titlePattern, (SuntimesData)data);
         String modePattern = "%M";
         String modePatternShort = "%m";
+        WidgetSettings.TimeMode timeMode = data.timeMode();
+        displayString = displayString.replaceAll(modePatternShort, timeMode.getShortDisplayString());
+        displayString = displayString.replaceAll(modePattern, timeMode.getLongDisplayString());
+        return displayString;
+    }
+
+    /**
+     *
+     * @param titlePattern
+     * @param data
+     * @return
+     */
+    public String displayStringForTitlePattern(String titlePattern, SuntimesEquinoxSolsticeData data)
+    {
+        String displayString = displayStringForTitlePattern(titlePattern, (SuntimesData)data);
+        String modePattern = "%M";
+        String modePatternShort = "%m";
+        WidgetSettings.SolsticeEquinoxMode timeMode = data.timeMode();
+        displayString = displayString.replaceAll(modePatternShort, timeMode.getShortDisplayString());
+        displayString = displayString.replaceAll(modePattern, timeMode.getLongDisplayString());
+        return displayString;
+    }
+
+    public String displayStringForTitlePattern(String titlePattern, SuntimesData data)
+    {
         String locPattern = "%loc";
         String latPattern = "%lat";
         String lonPattern = "%lon";
@@ -471,21 +620,17 @@ public class SuntimesUtils
         String datasourcePattern = "%s";
         String percentPattern = "%%";
 
-        WidgetSettings.TimeMode timeMode = data.timeMode();
         WidgetSettings.Location location = data.location();
         String timezoneID = data.timezone().getID();
         String datasource = (data.calculatorMode() == null) ? "" : data.calculatorMode().name();
 
         String displayString = titlePattern;
-        displayString = displayString.replaceAll(modePatternShort, timeMode.getShortDisplayString());
-        displayString = displayString.replaceAll(modePattern, timeMode.getLongDisplayString());
         displayString = displayString.replaceAll(locPattern, location.getLabel());
         displayString = displayString.replaceAll(latPattern, location.getLatitude());
         displayString = displayString.replaceAll(lonPattern, location.getLongitude());
         displayString = displayString.replaceAll(timezoneIDPattern, timezoneID);
         displayString = displayString.replaceAll(datasourcePattern, datasource);
         displayString = displayString.replaceAll(percentPattern, "%");
-
         return displayString;
     }
 

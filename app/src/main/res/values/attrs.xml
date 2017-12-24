@@ -19,6 +19,11 @@
     <attr name="graphColor_pointFill" format="reference" />
     <attr name="graphColor_pointStroke" format="reference" />
 
+    <attr name="springColor" format="reference" />
+    <attr name="summerColor" format="reference" />
+    <attr name="fallColor" format="reference" />
+    <attr name="winterColor" format="reference" />
+
     <attr name="tagColor_warning" format="reference" />
     <attr name="tagColor_error" format="reference" />
     <attr name="tagColor_dst" format="reference" />
@@ -49,4 +54,9 @@
     <attr name="icActionGPS" format="reference" />
     <attr name="icActionGPS_off" format="reference" />
     <attr name="icActionGPS_searching" format="reference" />
+
+    <declare-styleable name="EquinoxView">
+        <attr name="minimized" format="boolean" />
+    </declare-styleable>
+
 </resources>

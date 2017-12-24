@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2017 Forrest Guice
+    This file is part of SuntimesWidget.
+
+    SuntimesWidget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SuntimesWidget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout style="@style/SunsetTimeLayout"
+        android:orientation="vertical" android:layout_gravity="center_horizontal">
+
+        <TextView
+            style="@style/SunsetTimeTextView"
+            android:id="@+id/text_time_event"
+            android:textColor="@color/sunIcon_color_rising"
+            tools:text="March 20, 3:28 AM" />
+
+        <TextView
+            style="@style/SunsetTimeTextView2"
+            android:id="@+id/text_time_event_note"
+            tools:text="20d 14h from now" />
+
+    </LinearLayout>
+
+</merge>

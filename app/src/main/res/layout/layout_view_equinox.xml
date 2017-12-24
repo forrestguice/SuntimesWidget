@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2016 Forrest Guice
+    This file is part of SuntimesWidget.
+
+    SuntimesWidget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SuntimesWidget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools">
+
+    <FrameLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content">
+
+        <ViewFlipper android:id="@+id/info_equinoxsolstice_flipper"
+                     android:background="?attr/selectableItemBackground"
+                     android:layout_width="match_parent" android:layout_height="wrap_content"
+                     android:elevation="5dp" android:clickable="true"
+                     tools:ignore="UnusedAttribute">
+
+            <RelativeLayout
+                style="@style/SunsetTimeCard"
+                android:background="@color/transparent"
+                android:id="@+id/info_equinoxsolstice_thisyear"
+                android:layout_width="wrap_content"
+                android:animateLayoutChanges="true"
+                tools:ignore="UnusedAttribute"
+                android:paddingTop="4dp" android:paddingBottom="5dp"
+                android:paddingLeft="10dp" android:paddingRight="10dp">
+
+                <include layout="@layout/info_time_solsticequinox" />
+
+                <!-- next/prev buttons -->
+                <FrameLayout
+                    android:layout_width="48dp" android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/card_content"
+                    android:layout_toRightOf="@id/card_content" android:layout_toEndOf="@id/card_content">
+                    <include layout="@layout/info_time_nextprev" />
+                </FrameLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                style="@style/SunsetTimeCard"
+                android:id="@+id/info_equinoxsolstice_nextyear"
+                android:background="@color/transparent"
+                android:layout_width="wrap_content"
+                android:animateLayoutChanges="true"
+                tools:ignore="UnusedAttribute"
+                android:paddingTop="4dp" android:paddingBottom="5dp"
+                android:paddingLeft="10dp" android:paddingRight="10dp">
+
+                <include layout="@layout/info_time_solsticequinox" />
+
+                <!-- next/prev buttons -->
+                <FrameLayout
+                    android:layout_width="48dp" android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/card_content"
+                    android:layout_toRightOf="@id/card_content" android:layout_toEndOf="@id/card_content">
+                    <include layout="@layout/info_time_nextprev" />
+                </FrameLayout>
+
+            </RelativeLayout>
+
+        </ViewFlipper>
+
+        <TextView android:id="@+id/txt_empty"
+                  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:gravity="center" android:layout_gravity="center"
+                  android:visibility="gone"
+                  android:layout_margin="16dp"
+                  android:textSize="12sp"
+                  android:text="@string/configLabel_ui_showEquinox_notImplemented" />
+
+    </FrameLayout>
+
+</merge>

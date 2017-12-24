@@ -78,11 +78,20 @@ public class WidgetSettings
     public static final String PREF_KEY_GENERAL_TIMEMODE = "timemode";
     public static final TimeMode PREF_DEF_GENERAL_TIMEMODE = TimeMode.OFFICIAL;
 
+    public static final String PREF_KEY_GENERAL_TIMEMODE2 = "timemode2";
+    public static final SolsticeEquinoxMode PREF_DEF_GENERAL_TIMEMODE2 = SolsticeEquinoxMode.EQUINOX_VERNAL;
+
+    public static final String PREF_KEY_GENERAL_TIMEMODE2_OVERRIDE = "timemode2override";
+    public static final boolean PREF_DEF_GENERAL_TIMEMODE2_OVERRIDE = true;
+
     public static final String PREF_KEY_GENERAL_TIMENOTE_RISE = "timenoterise";
     public static final SolarEvents PREF_DEF_GENERAL_TIMENOTE_RISE = SolarEvents.SUNRISE;
 
     public static final String PREF_KEY_GENERAL_TIMENOTE_SET = "timenoteset";
     public static final SolarEvents PREF_DEF_GENERAL_TIMENOTE_SET = SolarEvents.SUNSET;
+
+    public static final String PREF_KEY_GENERAL_TRACKINGMODE = "trackingmode";
+    public static final TrackingMode PREF_DEF_GENERAL_TRACKINGMODE = TrackingMode.SOONEST;
 
     public static final String PREF_KEY_GENERAL_COMPAREMODE = "comparemode";
     public static final CompareMode PREF_DEF_GENERAL_COMPAREMODE = CompareMode.TOMORROW;
@@ -669,7 +678,104 @@ public class WidgetSettings
         public static void initDisplayStrings( Context context )
         {
             YESTERDAY.setDisplayString( context.getString(R.string.compareMode_yesterday) );
-            TOMORROW.setDisplayString( context.getString(R.string.compareMode_tomorrow) );
+            TOMORROW.setDisplayString(context.getString(R.string.compareMode_tomorrow));
+        }
+    }
+
+    /**
+     * TrackingMode
+     */
+    public static enum TrackingMode
+    {
+        CLOSEST("Closest Event"),
+        SOONEST("Upcoming Event");
+
+        private String displayString;
+
+        private TrackingMode( String displayString )
+        {
+            this.displayString = displayString;
+        }
+
+        public String getDisplayString()
+        {
+            return displayString;
+        }
+
+        public void setDisplayString( String displayString )
+        {
+            this.displayString = displayString;
+        }
+
+        public String toString()
+        {
+            return displayString;
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            CLOSEST.setDisplayString( context.getString(R.string.trackingMode_closest) );
+            SOONEST.setDisplayString( context.getString(R.string.trackingMode_soonest) );
+        }
+    }
+
+    /**
+     * SolsticeEquinoxMode
+     */
+    public static enum SolsticeEquinoxMode
+    {
+        EQUINOX_VERNAL("Equinox", "Vernal Equinox"),
+        SOLSTICE_SUMMER("Solstice", "Summer Solstice"),
+        EQUINOX_AUTUMNAL("Equinox", "Autumnal Equinox"),
+        SOLSTICE_WINTER("Solstice", "Winter Solstice");
+
+        public static boolean shortDisplayStrings = false;
+
+        private String shortDisplayString;
+        private String longDisplayString;
+
+        private SolsticeEquinoxMode(String shortDisplayString, String longDisplayString)
+        {
+            this.shortDisplayString = shortDisplayString;
+            this.longDisplayString = longDisplayString;
+        }
+
+        public String toString()
+        {
+            if (shortDisplayStrings)
+                return shortDisplayString;
+            else return longDisplayString;
+        }
+
+        public String getShortDisplayString()
+        {
+            return shortDisplayString;
+        }
+
+        public String getLongDisplayString()
+        {
+            return longDisplayString;
+        }
+
+        public void setDisplayStrings(String shortDisplayString, String longDisplayString)
+        {
+            this.shortDisplayString = shortDisplayString;
+            this.longDisplayString = longDisplayString;
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            EQUINOX_VERNAL.setDisplayStrings(context.getString(R.string.timeMode_equinox_vernal_short),
+                    context.getString(R.string.timeMode_equinox_vernal));
+
+            SOLSTICE_SUMMER.setDisplayStrings( context.getString(R.string.timeMode_solstice_summer_short),
+                    context.getString(R.string.timeMode_solstice_summer));
+
+            EQUINOX_AUTUMNAL.setDisplayStrings( context.getString(R.string.timeMode_equinox_autumnal_short),
+                    context.getString(R.string.timeMode_equinox_autumnal) );
+
+            SOLSTICE_WINTER.setDisplayStrings(context.getString(R.string.timeMode_solstice_winter_short),
+                    context.getString(R.string.timeMode_solstice_winter));
         }
     }
 
@@ -887,9 +993,13 @@ public class WidgetSettings
     }
     public static boolean loadShowTitlePref(Context context, int appWidgetId)
     {
+        return loadShowTitlePref(context, appWidgetId, PREF_DEF_APPEARANCE_SHOWTITLE);
+    }
+    public static boolean loadShowTitlePref(Context context, int appWidgetId, boolean defValue)
+    {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
-        return prefs.getBoolean(prefs_prefix + PREF_KEY_APPEARANCE_SHOWTITLE, PREF_DEF_APPEARANCE_SHOWTITLE);
+        return prefs.getBoolean(prefs_prefix + PREF_KEY_APPEARANCE_SHOWTITLE, defValue);
     }
     public static void deleteShowTitlePref(Context context, int appWidgetId)
     {
@@ -907,11 +1017,15 @@ public class WidgetSettings
         prefs.putString(prefs_prefix + PREF_KEY_APPEARANCE_TITLETEXT, titleText);
         prefs.apply();
     }
-   public static String loadTitleTextPref(Context context, int appWidgetId)
+    public static String loadTitleTextPref(Context context, int appWidgetId)
+    {
+        return loadTitleTextPref(context, appWidgetId, PREF_DEF_APPEARANCE_TITLETEXT);
+    }
+    public static String loadTitleTextPref(Context context, int appWidgetId, String defValue)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
-        return prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_TITLETEXT, PREF_DEF_APPEARANCE_TITLETEXT);
+        return prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_TITLETEXT, defValue);
     }
     public static void deleteTitleTextPref(Context context, int appWidgetId)
     {
@@ -952,6 +1066,63 @@ public class WidgetSettings
         prefs.remove(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE);
         prefs.apply();
     }
+
+
+    public static void saveTimeMode2OverridePref(Context context, int appWidgetId, boolean value)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putBoolean(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE2_OVERRIDE, value);
+        prefs.apply();
+    }
+    public static boolean loadTimeMode2OverridePref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        return prefs.getBoolean(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE2_OVERRIDE, PREF_DEF_GENERAL_TIMEMODE2_OVERRIDE);
+    }
+    public static void deleteTimeMode2OverridePref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE2_OVERRIDE);
+        prefs.apply();
+    }
+
+
+    public static void saveTimeMode2Pref(Context context, int appWidgetId, SolsticeEquinoxMode mode)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putString(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE2, mode.name());
+        prefs.apply();
+    }
+    public static WidgetSettings.SolsticeEquinoxMode loadTimeMode2Pref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE2, PREF_DEF_GENERAL_TIMEMODE2.name());
+
+        SolsticeEquinoxMode timeMode;
+        try
+        {
+            timeMode = WidgetSettings.SolsticeEquinoxMode.valueOf(modeString);
+
+        } catch (IllegalArgumentException e) {
+            timeMode = PREF_DEF_GENERAL_TIMEMODE2;
+        }
+        return timeMode;
+    }
+    public static void deleteTimeMode2Pref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE2);
+        prefs.apply();
+    }
+
+
+
 
     public static void saveSolarTimeModePref(Context context, int appWidgetId, WidgetSettings.SolarTimeMode mode)
     {
@@ -1255,6 +1426,38 @@ public class WidgetSettings
     }
 
 
+    public static void saveTrackingModePref(Context context, int appWidgetId, WidgetSettings.TrackingMode mode)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putString(prefs_prefix + PREF_KEY_GENERAL_TRACKINGMODE, mode.name());
+        prefs.apply();
+    }
+    public static WidgetSettings.TrackingMode loadTrackingModePref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TRACKINGMODE, PREF_DEF_GENERAL_TRACKINGMODE.name());
+
+        TrackingMode trackingMode;
+        try
+        {
+            trackingMode = WidgetSettings.TrackingMode.valueOf(modeString);
+
+        } catch (IllegalArgumentException e) {
+            trackingMode = PREF_DEF_GENERAL_TRACKINGMODE;
+        }
+        return trackingMode;
+    }
+    public static void deleteTrackingModePref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_TRACKINGMODE);
+        prefs.apply();
+    }
+
+
     public static void saveCompareModePref(Context context, int appWidgetId, WidgetSettings.CompareMode mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
@@ -1433,6 +1636,7 @@ public class WidgetSettings
 
         deleteCalculatorModePref(context, appWidgetId);
         deleteTimeModePref(context, appWidgetId);
+        deleteTimeMode2Pref(context, appWidgetId);
         deleteCompareModePref(context, appWidgetId);
         deleteShowComparePref(context, appWidgetId);
         deleteShowNoonPref(context, appWidgetId);
@@ -1463,8 +1667,10 @@ public class WidgetSettings
     {
         ActionMode.initDisplayStrings(context);
         WidgetMode1x1.initDisplayStrings(context);
+        TrackingMode.initDisplayStrings(context);
         CompareMode.initDisplayStrings(context);
         TimeMode.initDisplayStrings(context);
+        SolsticeEquinoxMode.initDisplayStrings(context);
         LocationMode.initDisplayStrings(context);
         TimezoneMode.initDisplayStrings(context);
         SolarTimeMode.initDisplayStrings(context);

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    tools:ignore="UnusedAttribute"
+
+    android:widgetCategory="home_screen|keyguard"
+    android:previewImage="@drawable/widget2_preview"
+    android:resizeMode="horizontal|vertical"
+    android:initialKeyguardLayout="@layout/layout_widget_1x1eq_0"
+
+    android:minWidth="@dimen/widget_size_minWidth" android:minHeight="@dimen/widget_size_minHeight"
+    android:updatePeriodMillis="@integer/widget_updateInterval"
+    android:initialLayout="@layout/layout_widget_1x1eq_0"
+    android:configure="com.forrestguice.suntimeswidget.SuntimesConfigActivity2">
+
+</appwidget-provider>

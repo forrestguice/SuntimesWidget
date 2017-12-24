@@ -40,6 +40,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -51,6 +53,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     private static final String DIALOGTAG_HELP = "help";
 
     private ListView widgetList;
+    private static final SuntimesUtils utils = new SuntimesUtils();
 
     public SuntimesWidgetListActivity()
     {
@@ -294,68 +297,56 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             return view;
         }
 
+        public static WidgetListItem createWidgetListItem(Context context, int appWidgetId, AppWidgetManager widgetManager, SuntimesData data, String widgetTitle, int widgetNameStringId) throws ClassNotFoundException
+        {
+            AppWidgetProviderInfo info = widgetManager.getAppWidgetInfo(appWidgetId);
+            String title = context.getString(R.string.configLabel_widgetList_itemTitle, widgetTitle);
+            String type = context.getString(widgetNameStringId);
+            String source = ((data.calculatorMode() == null) ? "def" : data.calculatorMode().name());
+            String summary = context.getString(R.string.configLabel_widgetList_itemSummaryPattern, type, source);
+            return new WidgetListItem(appWidgetId, info.icon, title, summary, Class.forName(info.configure.getClassName()) );
+        }
+
+        public static ArrayList<WidgetListItem> createWidgetListItems(Context context, AppWidgetManager widgetManager, Class widgetClass, String titlePattern)
+        {
+            ArrayList<WidgetListItem> items = new ArrayList<WidgetListItem>();
+            int[] ids = widgetManager.getAppWidgetIds(new ComponentName(context, widgetClass));
+            for (int id : ids)
+            {
+                try {
+                    SuntimesData data;
+                    String widgetTitle;
+                    int widgetNameId;
+                    if (widgetClass == SuntimesWidget2.class)
+                    {
+                        SuntimesEquinoxSolsticeData data0 =  new SuntimesEquinoxSolsticeData(context, id);
+                        widgetTitle = utils.displayStringForTitlePattern(titlePattern, data0);
+                        widgetNameId = R.string.app_name_widget2;
+                        data = data0;
+
+                    } else {
+                        SuntimesRiseSetData data0 = new SuntimesRiseSetData(context, id);
+                        widgetTitle = utils.displayStringForTitlePattern(titlePattern, data0);
+                        widgetNameId = (widgetClass == SuntimesWidget1.class ? R.string.app_name_widget1 : R.string.app_name_widget0);
+                        data = data0;
+                    }
+                    items.add(createWidgetListItem(context, id, widgetManager, data, widgetTitle, widgetNameId));
+                } catch (ClassNotFoundException e) {
+                    Log.e("WidgetListActivity", "configuration class for widget " + id + " missing.");
+                }
+            }
+            return items;
+        }
+
         public static WidgetListAdapter createWidgetListAdapter(Context context)
         {
             AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
             ArrayList<WidgetListItem> items = new ArrayList<WidgetListItem>();
-
-            final SuntimesUtils utils = new SuntimesUtils();
             String titlePattern = context.getString(R.string.configLabel_widgetList_itemTitlePattern);
-
-            int[] ids0 = widgetManager.getAppWidgetIds(new ComponentName(context, SuntimesWidget0.class));
-            for (int id : ids0)
-            {
-                AppWidgetProviderInfo info = widgetManager.getAppWidgetInfo(id);
-                SuntimesRiseSetData data =  new SuntimesRiseSetData(context, id);
-                String widgetTitle = utils.displayStringForTitlePattern(titlePattern, data);
-                String title = context.getString(R.string.configLabel_widgetList_itemTitle, widgetTitle);
-                String type = context.getString(R.string.app_name_widget0);
-                String source = ((data.calculatorMode() == null) ? "def" : data.calculatorMode().name());
-                String summary = context.getString(R.string.configLabel_widgetList_itemSummaryPattern, type, source);
-
-                try {
-                    items.add(new WidgetListItem(id, info.icon, title, summary, Class.forName(info.configure.getClassName()) ));
-                } catch (ClassNotFoundException e) {
-                    Log.e("WidgetListActivity", "configuration class for widget " + id + " missing.");
-                }
-            }
-
-            int[] ids1 = widgetManager.getAppWidgetIds(new ComponentName(context, SuntimesWidget1.class));
-            for (int id : ids1)
-            {
-                AppWidgetProviderInfo info = widgetManager.getAppWidgetInfo(id);
-                SuntimesRiseSetData data = new SuntimesRiseSetData(context, id);
-                String widgetTitle = utils.displayStringForTitlePattern(titlePattern, data);
-                String title = context.getString(R.string.configLabel_widgetList_itemTitle, widgetTitle);
-                String type = context.getString(R.string.app_name_widget1);
-                String source = ((data.calculatorMode() == null) ? "def" : data.calculatorMode().name());
-                String summary = context.getString(R.string.configLabel_widgetList_itemSummaryPattern, type, source);
-
-                try {
-                    items.add(new WidgetListItem(id, info.icon, title, summary, Class.forName(info.configure.getClassName()) ));
-                } catch (ClassNotFoundException e) {
-                    Log.e("WidgetListActivity", "configuration class for widget " + id + " missing.");
-                }
-            }
-
-            int[] ids3 = widgetManager.getAppWidgetIds(new ComponentName(context, SuntimesWidget0_2x1.class));
-            for (int id : ids3)
-            {
-                AppWidgetProviderInfo info = widgetManager.getAppWidgetInfo(id);
-                SuntimesRiseSetData data =  new SuntimesRiseSetData(context, id);
-                String widgetTitle = utils.displayStringForTitlePattern(titlePattern, data);
-                String title = context.getString(R.string.configLabel_widgetList_itemTitle, widgetTitle);
-                String type = context.getString(R.string.app_name_widget0);
-                String source = ((data.calculatorMode() == null) ? "def" : data.calculatorMode().name());
-                String summary = context.getString(R.string.configLabel_widgetList_itemSummaryPattern, type, source);
-
-                try {
-                    items.add(new WidgetListItem(id, info.icon, title, summary, Class.forName(info.configure.getClassName()) ));
-                } catch (ClassNotFoundException e) {
-                    Log.e("WidgetListActivity", "configuration class for widget " + id + " missing.");
-                }
-            }
-
+            items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget0.class, titlePattern));
+            items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget0_2x1.class, titlePattern));
+            items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget1.class, titlePattern));
+            items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget2.class, titlePattern));
             return new WidgetListAdapter(context, items);
         }
 

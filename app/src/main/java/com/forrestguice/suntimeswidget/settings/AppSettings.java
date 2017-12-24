@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.settings;
 
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -27,7 +28,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 
 import java.util.Locale;
 
@@ -63,6 +64,9 @@ public class AppSettings
 
     public static final String PREF_KEY_UI_SHOWLIGHTMAP = "app_ui_showlightmap";
     public static final boolean PREF_DEF_UI_SHOWLIGHTMAP = true;
+
+    public static final String PREF_KEY_UI_SHOWEQUINOX = "app_ui_showequinox";
+    public static final boolean PREF_DEF_UI_SHOWEQUINOX = true;
 
     public static final String PREF_KEY_UI_SHOWDATASOURCE = "app_ui_showdatasource";
     public static final boolean PREF_DEF_UI_SHOWDATASOURCE = true;
@@ -332,6 +336,12 @@ public class AppSettings
         return pref.getBoolean(PREF_KEY_UI_SHOWLIGHTMAP, PREF_DEF_UI_SHOWLIGHTMAP);
     }
 
+    public static boolean loadShowEquinoxPref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_UI_SHOWEQUINOX, PREF_DEF_UI_SHOWEQUINOX);
+    }
+
     public static boolean loadDatasourceUIPref( Context context )
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
@@ -410,18 +420,18 @@ public class AppSettings
 
     public static int loadTheme(Context context)
     {
-        return loadTheme(context, null);
+        return themePrefToStyleId(context, loadThemePref(context), null);
     }
-    public static int loadTheme(Context context, SuntimesRiseSetDataset dataset)
+    public static int loadTheme(Context context, SuntimesRiseSetData data)
     {
-        return themePrefToStyleId(loadThemePref(context), dataset);
+        return themePrefToStyleId(context, loadThemePref(context), data);
     }
 
-    public static int themePrefToStyleId( String themeName )
+    public static int themePrefToStyleId( Context context, String themeName )
     {
-        return themePrefToStyleId(themeName, null);
+        return themePrefToStyleId(context, themeName, null);
     }
-    public static int themePrefToStyleId( String themeName, SuntimesRiseSetDataset dataset )
+    public static int themePrefToStyleId( Context context, String themeName, SuntimesRiseSetData data )
     {
         int styleID = R.style.AppTheme_Dark;
         if (themeName != null)
@@ -434,10 +444,12 @@ public class AppSettings
                 styleID = R.style.AppTheme_Dark;
 
             } else if (themeName.equals(THEME_DAYNIGHT)) {
-                if (dataset != null)
+                if (data == null)
                 {
-                    styleID = (dataset.isDay() ? R.style.AppTheme_Light : R.style.AppTheme_Dark);
+                    data = new SuntimesRiseSetData(context, AppWidgetManager.INVALID_APPWIDGET_ID);
+                    data.initCalculator();
                 }
+                styleID = (data.isDay() ? R.style.AppTheme_Light : R.style.AppTheme_Dark);
             }
         }
         return styleID;

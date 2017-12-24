@@ -24,6 +24,8 @@ import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+
 public class SuntimesTheme
 {
     public static final String THEME_KEY = "theme_";
@@ -68,6 +70,11 @@ public class SuntimesTheme
     public static final float THEME_SETICON_STROKE_WIDTH_MIN = 0.0f;
     public static final float THEME_SETICON_STROKE_WIDTH_DEF = 0.0f;
     public static final float THEME_SETICON_STROKE_WIDTH_MAX = 7.0f;
+
+    public static final String THEME_SPRINGCOLOR = "springcolor";
+    public static final String THEME_SUMMERCOLOR = "summercolor";
+    public static final String THEME_FALLCOLOR = "fallcolor";
+    public static final String THEME_WINTERCOLOR = "wintercolor";
 
     public static final String THEME_TITLESIZE = "titlesize";
     public static final float THEME_TITLESIZE_MIN = 6.0f;
@@ -123,6 +130,11 @@ public class SuntimesTheme
     protected int themeSunsetIconStrokeWidth;
     protected int themeSunsetIconStrokePixels = -1;
 
+    protected int themeSpringColor;
+    protected int themeSummerColor;
+    protected int themeFallColor;
+    protected int themeWinterColor;
+
     protected float themeTitleSize = THEME_TITLESIZE_DEF;
     protected float themeTextSize = THEME_TEXTSIZE_DEF;
     protected float themeTimeSize = THEME_TIMESIZE_DEF;
@@ -164,6 +176,11 @@ public class SuntimesTheme
         this.themeSunsetIconColor = otherTheme.themeSunsetIconColor;
         this.themeSunsetIconStrokeColor = otherTheme.themeSunsetIconStrokeColor;
         this.themeSunsetIconStrokeWidth = otherTheme.themeSunsetIconStrokeWidth;
+
+        this.themeSpringColor = otherTheme.themeSpringColor;
+        this.themeSummerColor = otherTheme.themeSummerColor;
+        this.themeFallColor = otherTheme.themeFallColor;
+        this.themeWinterColor = otherTheme.themeWinterColor;
 
         this.themeTitleSize = otherTheme.themeTitleSize;
         this.themeTextSize = otherTheme.themeTextSize;
@@ -225,6 +242,11 @@ public class SuntimesTheme
         this.themeSunsetIconStrokeColor = themes.getInt( theme + THEME_SETICON_STROKE_COLOR, defaultTheme.themeSunsetIconStrokeColor );
         this.themeSunsetIconStrokeWidth = themes.getInt( theme + THEME_SETICON_STROKE_WIDTH, defaultTheme.themeSunsetIconStrokeWidth );
 
+        this.themeSpringColor = themes.getInt( theme + THEME_SPRINGCOLOR, defaultTheme.themeSpringColor );
+        this.themeSummerColor = themes.getInt( theme + THEME_SUMMERCOLOR, defaultTheme.themeSummerColor );
+        this.themeFallColor = themes.getInt( theme + THEME_FALLCOLOR, defaultTheme.themeFallColor );
+        this.themeWinterColor = themes.getInt( theme + THEME_WINTERCOLOR, defaultTheme.themeWinterColor );
+
         this.themeTitleSize = themes.getFloat( theme + THEME_TITLESIZE, defaultTheme.themeTitleSize );
         this.themeTextSize = themes.getFloat( theme + THEME_TEXTSIZE, defaultTheme.themeTextSize );
         this.themeTimeSize = themes.getFloat( theme + THEME_TIMESIZE, defaultTheme.themeTimeSize );
@@ -273,6 +295,11 @@ public class SuntimesTheme
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_SETICON_FILL_COLOR, this.themeSunsetIconColor);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_SETICON_STROKE_COLOR, this.themeSunsetIconStrokeColor);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_SETICON_STROKE_WIDTH, this.themeSunsetIconStrokeWidth);
+
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_SPRINGCOLOR, this.themeSpringColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_SUMMERCOLOR, this.themeSummerColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_FALLCOLOR, this.themeFallColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_WINTERCOLOR, this.themeWinterColor);
 
         themePrefs.putFloat(themePrefix + SuntimesTheme.THEME_TITLESIZE, this.themeTitleSize);
         themePrefs.putFloat(themePrefix + SuntimesTheme.THEME_TEXTSIZE, this.themeTextSize);
@@ -327,6 +354,11 @@ public class SuntimesTheme
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_SETICON_FILL_COLOR);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_SETICON_STROKE_COLOR);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_SETICON_STROKE_WIDTH);
+
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_SPRINGCOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_SUMMERCOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_FALLCOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_WINTERCOLOR);
 
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_TITLESIZE);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_TEXTSIZE);
@@ -476,6 +508,38 @@ public class SuntimesTheme
             themeSunsetIconStrokePixels = (int)((metrics.density * getSunsetIconStrokeWidth()) + 0.5f);
         //}
         return themeSunsetIconStrokePixels;
+    }
+
+    public int getSpringColor()
+    {
+        return themeSpringColor;
+    }
+    public int getSummerColor()
+    {
+        return themeSummerColor;
+    }
+    public int getFallColor()
+    {
+        return themeFallColor;
+    }
+    public int getWinterColor()
+    {
+        return themeWinterColor;
+    }
+    public int getSeasonColor(WidgetSettings.SolsticeEquinoxMode event)
+    {
+        switch (event)
+        {
+            case SOLSTICE_WINTER:
+                return getWinterColor();
+            case EQUINOX_AUTUMNAL:
+                return getFallColor();
+            case SOLSTICE_SUMMER:
+                return getSummerColor();
+            case EQUINOX_VERNAL:
+            default:
+                return getSpringColor();
+        }
     }
 
     public float getTitleSizeSp()
