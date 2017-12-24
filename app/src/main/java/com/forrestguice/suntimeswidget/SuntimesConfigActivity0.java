@@ -648,7 +648,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     private Button button_addWidget;
 
-    private void setActionButtonText(String text)
+    protected void setActionButtonText(String text)
     {
         if (button_addWidget != null)
         {
@@ -656,13 +656,13 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
-    private void setTitleTextEnabled(boolean value)
+    protected void setTitleTextEnabled(boolean value)
     {
         label_titleText.setEnabled(value);
         text_titleText.setEnabled(value);
     }
 
-    private void setUseSolarTime(boolean value)
+    protected void setUseSolarTime(boolean value)
     {
         label_solartime.setEnabled(value);
         spinner_solartime.setEnabled(value);
@@ -670,7 +670,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         layout_timezone.setVisibility((value ? View.GONE : View.VISIBLE));
     }
 
-    private void setCustomTimezoneEnabled(boolean value)
+    protected void setCustomTimezoneEnabled(boolean value)
     {
         String timezoneID = (value ? customTimezoneID : TimeZone.getDefault().getID());
 
@@ -828,6 +828,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             disableOptionAllowResize();
         }
 
+        loadTitleSettings(context);
+    }
+
+    protected void loadTitleSettings(Context context)
+    {
         // load: show title
         boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId);
         checkbox_showTitle.setChecked(showTitle);
