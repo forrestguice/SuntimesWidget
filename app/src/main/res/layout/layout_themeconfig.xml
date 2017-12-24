@@ -28,71 +28,100 @@
         android:background="?attr/colorPrimary" android:theme="?attr/toolbarTheme" app:popupTheme="?attr/actionBarPopupTheme"
         app:title="@string/configLabel_widgetThemeAdd" />
 
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content">
+
+        <!-- guidelines -->
+        <android.support.constraint.Guideline
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:id="@+id/centerLine" app:layout_constraintGuide_percent="0.5"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteY="81dp"
+            tools:layout_editor_absoluteX="180dp"/>
+
+        <android.support.constraint.Guideline
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:id="@+id/centerLineL" app:layout_constraintGuide_percent="0.42"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteY="81dp"
+            tools:layout_editor_absoluteX="151dp"/>
+
+        <android.support.constraint.Guideline
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:id="@+id/centerLineR" app:layout_constraintGuide_percent="0.58"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteY="81dp"
+            tools:layout_editor_absoluteX="209dp"/>
+
+        <!-- Theme Name (ID) -->
+        <TextView
+            android:id="@+id/editLabel_themeName"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBaseline_toBaselineOf="@+id/edit_themeName"
+            android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="8dp" android:paddingRight="8dp"
+            android:text="@string/configLabel_themeID"
+            tools:layout_editor_absoluteX="0dp"/>
+
+        <EditText
+            android:id="@+id/edit_themeName"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/editLabel_themeName"
+            app:layout_constraintEnd_toEndOf="@+id/centerLine"
+            android:inputType="textNoSuggestions"
+            android:hint="@string/configHint_themeID"
+            android:text=""
+            tools:layout_editor_absoluteX="33dp"/>
+
+        <!-- Theme Name (display string) -->
+        <TextView
+            android:id="@+id/editLabel_themeDisplay"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBaseline_toBaselineOf="@+id/edit_themeDisplay"
+            android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="8dp" android:paddingRight="8dp"
+            android:text="@string/configLabel_themeName"
+            tools:layout_editor_absoluteX="0dp"/>
+
+        <EditText
+            android:id="@+id/edit_themeDisplay"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/edit_themeName"
+            app:layout_constraintStart_toEndOf="@+id/editLabel_themeDisplay"
+            app:layout_constraintEnd_toEndOf="@+id/centerLine"
+            android:inputType="text"
+            android:hint="@string/configHint_themeName"
+            android:text=""
+            tools:layout_editor_absoluteX="65dp"/>
+
+        <!-- preview area -->
+        <FrameLayout
+            android:id="@+id/preview_area"
+            android:layout_width="170dp" android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/centerLine"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:layout_editor_absoluteX="185dp">
+
+            <include layout="@layout/layout_widget_2x1_0" />
+
+        </FrameLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
     <ScrollView android:id="@+id/scrollView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
         <android.support.constraint.ConstraintLayout
+            android:background="?attr/colorPrimary"
+            android:layout_marginBottom="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusable="true" android:focusableInTouchMode="true">
-
-            <!-- Theme Name (ID) -->
-            <TextView
-                android:id="@+id/editLabel_themeName"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBaseline_toBaselineOf="@+id/edit_themeName"
-                android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="8dp" android:paddingRight="8dp"
-                android:text="@string/configLabel_themeID"
-                tools:layout_editor_absoluteX="0dp"/>
-
-            <EditText
-                android:id="@+id/edit_themeName"
-                android:layout_width="0dp" android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/editLabel_themeName"
-                app:layout_constraintEnd_toEndOf="@+id/centerLine"
-                android:inputType="textNoSuggestions"
-                android:hint="@string/configHint_themeID"
-                android:text=""
-                tools:layout_editor_absoluteX="33dp"/>
-
-            <!-- Theme Name (display string) -->
-            <TextView
-                android:id="@+id/editLabel_themeDisplay"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBaseline_toBaselineOf="@+id/edit_themeDisplay"
-                android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="8dp" android:paddingRight="8dp"
-                android:text="@string/configLabel_themeName"
-                tools:layout_editor_absoluteX="0dp"/>
-
-            <EditText
-                android:id="@+id/edit_themeDisplay"
-                android:layout_width="0dp" android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/edit_themeName"
-                app:layout_constraintStart_toEndOf="@+id/editLabel_themeDisplay"
-                app:layout_constraintEnd_toEndOf="@+id/centerLine"
-                android:inputType="text"
-                android:hint="@string/configHint_themeName"
-                android:text=""
-                tools:layout_editor_absoluteX="65dp"/>
-
-            <!-- preview area -->
-            <FrameLayout
-                android:id="@+id/preview_area"
-                android:layout_width="170dp" android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/topRule"
-                app:layout_constraintStart_toEndOf="@+id/centerLine"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:layout_editor_absoluteX="185dp">
-
-                <include layout="@layout/layout_widget_2x1_0" />
-
-            </FrameLayout>
 
             <!-- Background -->
             <TextView
@@ -108,21 +137,107 @@
             <Spinner
                 android:id="@+id/editSpin_background"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="8dp" android:layout_marginBottom="4dp"
                 app:layout_constraintStart_toEndOf="@+id/editLabel_background"
-                app:layout_constraintTop_toBottomOf="@+id/edit_themeDisplay"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:layout_editor_absoluteX="42dp"/>
 
-            <!-- horizontal rule -->
-            <View
-                android:id="@+id/topRule" style="@style/SunsetTimeHorizontalRule"
-                android:layout_width="0dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/editSpin_background"
+            <!-- Padding -->
+            <TextView
+                android:id="@+id/editLabel_padding"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_height="0dp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/edit_padding"
+                android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="8dp" android:paddingRight="8dp"
+                android:text="@string/configLabel_themePadding"
                 tools:layout_editor_absoluteX="0dp"/>
+
+            <EditText
+                android:id="@+id/edit_padding"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:inputType="textNoSuggestions"
+                android:text="" android:hint="@string/configHint_themePadding"
+                app:layout_constraintStart_toEndOf="@+id/editLabel_padding"
+                app:layout_constraintEnd_toEndOf="@+id/edit_suffixSize"
+                app:layout_constraintTop_toBottomOf="@+id/editSpin_background"
+                tools:layout_editor_absoluteX="72dp"/>
+
+            <!-- Time Size -->
+            <TextView
+                android:id="@+id/editLabel_timeSize"
+                style="@style/SizeEditLabel"
+                android:paddingStart="8dp" android:paddingEnd="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@+id/edit_timeSize"
+                android:text="@string/configLabel_themeSizeTime" />
+
+            <EditText
+                android:id="@+id/edit_timeSize"
+                style="@style/SizeEdit"
+                android:layout_width="0dp"
+                android:text="" android:hint="@string/configHint_themeSizeTime" tools:text="12"
+                app:layout_constraintStart_toEndOf="@+id/editLabel_timeSize"
+                app:layout_constraintTop_toBottomOf="@+id/edit_padding"
+                tools:layout_editor_absoluteX="81dp"/>
+
+            <!-- Suffix Size -->
+            <TextView
+                android:id="@+id/editLabel_suffixSize"
+                style="@style/SizeEditLabel"
+                android:paddingStart="8dp" android:paddingEnd="8dp"
+                app:layout_constraintStart_toEndOf="@+id/edit_timeSize"
+                app:layout_constraintBaseline_toBaselineOf="@+id/edit_suffixSize"
+                android:layout_marginStart="16dp" android:layout_marginEnd="8dp"
+                android:layout_marginLeft="16dp" android:layout_marginRight="8dp"
+                android:text="@string/configLabel_themeSizeSuffix" />
+
+            <EditText
+                android:id="@+id/edit_suffixSize"
+                style="@style/SizeEdit"
+                android:layout_width="0dp"
+                android:text="" android:hint="@string/configHint_themeSizeSuffix" tools:text="8"
+                app:layout_constraintStart_toEndOf="@+id/editLabel_suffixSize"
+                app:layout_constraintTop_toBottomOf="@+id/edit_padding"
+                tools:layout_editor_absoluteX="210dp"/>
+
+            <!-- Title Size -->
+            <TextView
+                android:id="@+id/editLabel_titleSize"
+                style="@style/SizeEditLabel"
+                android:paddingStart="8dp" android:paddingEnd="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@+id/edit_titleSize"
+                android:text="@string/configLabel_themeSizeTitle" />
+
+            <EditText
+                android:id="@+id/edit_titleSize"
+                style="@style/SizeEdit"
+                android:layout_width="0dp"
+                android:text="" android:hint="@string/configHint_themeSizeTitle" tools:text="14"
+                app:layout_constraintStart_toEndOf="@+id/editLabel_titleSize"
+                app:layout_constraintTop_toBottomOf="@+id/edit_suffixSize"
+                tools:layout_editor_absoluteX="77dp"/>
+
+            <!-- Text Size -->
+            <TextView
+                android:id="@+id/editLabel_textSize"
+                style="@style/SizeEditLabel"
+                android:paddingStart="8dp" android:paddingEnd="8dp"
+                app:layout_constraintStart_toEndOf="@+id/edit_titleSize"
+                app:layout_constraintBaseline_toBaselineOf="@+id/edit_textSize"
+                android:layout_marginStart="16dp" android:layout_marginEnd="8dp"
+                android:layout_marginLeft="16dp" android:layout_marginRight="8dp"
+                android:text="@string/configLabel_themeSizeText"/>
+
+            <EditText
+                android:id="@+id/edit_textSize"
+                style="@style/SizeEdit"
+                android:layout_width="0dp"
+                android:text="" android:hint="@string/configHint_themeSizeText" tools:text="10"
+                app:layout_constraintStart_toEndOf="@+id/editLabel_textSize"
+                app:layout_constraintTop_toBottomOf="@+id/edit_suffixSize"
+                tools:layout_editor_absoluteX="197dp"/>
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/layout_colors"
@@ -748,7 +863,6 @@
 
                 </LinearLayout>
 
-
                 <!-- Noon Stroke -->
                 <LinearLayout
                     android:id="@+id/layout_noonIconStroke"
@@ -777,130 +891,185 @@
 
                 </LinearLayout>
 
+                <View android:layout_width="0dp" android:layout_height="1dp" android:background="?attr/hrColor"
+                      android:layout_marginBottom="4dp"
+                    app:layout_constraintBottom_toTopOf="@+id/layout_springColor"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <!-- Spring Color -->
+                <LinearLayout
+                    android:id="@+id/layout_springColor"
+                    android:orientation="horizontal" android:gravity="center_vertical"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_noonIconStroke"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="16dp"
+                    tools:layout_editor_absoluteX="27dp">
+
+                    <TextView
+                        android:id="@+id/editLabel_springColor"
+                        style="@style/ColorEditLabel"
+                        android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                        android:nextFocusUp="@+id/editLabel_noonIconStroke"
+                        android:nextFocusLeft="@+id/editLabel_noonIconStroke"
+                        android:nextFocusRight="@+id/editLabel_summerColor"
+                        android:nextFocusForward="@+id/editLabel_summerColor"
+                        android:nextFocusDown="@+id/editLabel_fallColor"
+
+                        android:text="@string/configLabel_themeColorSpring" />
+
+                    <EditText
+                        android:id="@+id/edit_springColor"
+                        style="@style/ColorEdit" android:visibility="gone"
+                        android:fontFamily="monospace"
+
+                        android:nextFocusUp="@+id/editLabel_noonIconStroke"
+                        android:nextFocusLeft="@+id/editLabel_noonIconStroke"
+                        android:nextFocusRight="@+id/editLabel_summerColor"
+                        android:nextFocusForward="@+id/editLabel_summerColor"
+                        android:nextFocusDown="@+id/editLabel_fallColor"
+
+                        android:text="" android:hint="@string/configHint_themeColorSunrise" />
+
+                    <ImageButton
+                        android:id="@+id/editButton_springColor"
+                        style="@style/ColorEditButton"
+                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                        android:contentDescription="@string/configLabel_themeColorSpring" />
+
+                </LinearLayout>
+
+                <!-- Summer Color -->
+                <LinearLayout
+                    android:id="@+id/layout_summerColor"
+                    android:orientation="horizontal" android:gravity="center_vertical"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@+id/layout_springColor"
+                    app:layout_constraintStart_toEndOf="@+id/layout_springColor"
+                    android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+                    android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
+
+                    <TextView
+                        android:id="@+id/editLabel_summerColor"
+                        style="@style/ColorEditLabel"
+                        android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                        android:nextFocusUp="@+id/editLabel_springColor"
+                        android:nextFocusLeft="@+id/editLabel_springColor"
+                        android:nextFocusRight="@+id/editLabel_fallColor"
+                        android:nextFocusForward="@+id/editLabel_fallColor"
+                        android:nextFocusDown="@+id/editLabel_winterColor"
+
+                        android:text="@string/configLabel_themeColorSummer" />
+
+                    <EditText
+                        android:id="@+id/edit_summerColor"
+                        style="@style/ColorEdit" android:visibility="gone"
+                        android:fontFamily="monospace"
+
+                        android:nextFocusUp="@+id/editLabel_springColor"
+                        android:nextFocusLeft="@+id/editLabel_springColor"
+                        android:nextFocusRight="@+id/editLabel_fallColor"
+                        android:nextFocusForward="@+id/editLabel_fallColor"
+                        android:nextFocusDown="@+id/editLabel_winterColor"
+
+                        android:text="" android:hint="@string/configHint_themeColorSunset" />
+
+                    <ImageButton
+                        android:id="@+id/editButton_summerColor"
+                        style="@style/ColorEditButton"
+                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                        android:contentDescription="@string/configLabel_themeColorSummer" />
+
+                </LinearLayout>
+
+                <!-- Fall Color -->
+                <LinearLayout
+                    android:id="@+id/layout_fallColor"
+                    android:orientation="horizontal" android:gravity="center_vertical"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_springColor"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:layout_editor_absoluteX="27dp">
+
+                    <TextView
+                        android:id="@+id/editLabel_fallColor"
+                        style="@style/ColorEditLabel"
+                        android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                        android:nextFocusUp="@+id/editLabel_springColor"
+                        android:nextFocusLeft="@+id/editLabel_summerColor"
+                        android:nextFocusRight="@+id/editLabel_winterColor"
+                        android:nextFocusForward="@+id/editLabel_winterColor"
+                        android:nextFocusDown="@+id/editLabel_winterColor"
+
+                        android:text="@string/configLabel_themeColorFall" />
+
+                    <EditText
+                        android:id="@+id/edit_fallColor"
+                        style="@style/ColorEdit" android:visibility="gone"
+                        android:fontFamily="monospace"
+
+                        android:nextFocusUp="@+id/editLabel_springColor"
+                        android:nextFocusLeft="@+id/editLabel_summerColor"
+                        android:nextFocusRight="@+id/editLabel_winterColor"
+                        android:nextFocusForward="@+id/editLabel_winterColor"
+                        android:nextFocusDown="@+id/editLabel_winterColor"
+
+                        android:text="" android:hint="@string/configHint_themeColorSunrise" />
+
+                    <ImageButton
+                        android:id="@+id/editButton_fallColor"
+                        style="@style/ColorEditButton"
+                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                        android:contentDescription="@string/configLabel_themeColorFall" />
+
+                </LinearLayout>
+
+                <!-- Winter Color -->
+                <LinearLayout
+                    android:id="@+id/layout_winterColor"
+                    android:orientation="horizontal" android:gravity="center_vertical"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@+id/layout_fallColor"
+                    app:layout_constraintStart_toEndOf="@+id/layout_fallColor"
+                    android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+                    android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
+
+                    <TextView
+                        android:id="@+id/editLabel_winterColor"
+                        style="@style/ColorEditLabel"
+                        android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                        android:nextFocusUp="@+id/editLabel_summerColor"
+                        android:nextFocusLeft="@+id/editLabel_fallColor"
+
+                        android:text="@string/configLabel_themeColorWinter" />
+
+                    <EditText
+                        android:id="@+id/edit_winterColor"
+                        style="@style/ColorEdit" android:visibility="gone"
+                        android:fontFamily="monospace"
+
+                        android:nextFocusUp="@+id/editLabel_summerColor"
+                        android:nextFocusLeft="@+id/editLabel_fallColor"
+
+                        android:text="" android:hint="@string/configHint_themeColorSunset" />
+
+                    <ImageButton
+                        android:id="@+id/editButton_winterColor"
+                        style="@style/ColorEditButton"
+                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                        android:contentDescription="@string/configLabel_themeColorWinter" />
+
+                </LinearLayout>
 
             </android.support.constraint.ConstraintLayout>
 
-
-            <!-- Padding -->
-            <TextView
-                android:id="@+id/editLabel_padding"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBaseline_toBaselineOf="@+id/edit_padding"
-                android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="8dp" android:paddingRight="8dp"
-                android:text="@string/configLabel_themePadding"
-                tools:layout_editor_absoluteX="0dp"/>
-
-            <EditText
-                android:id="@+id/edit_padding"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:inputType="textNoSuggestions"
-                android:text="" android:hint="@string/configHint_themePadding"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/editLabel_padding"
-                app:layout_constraintTop_toBottomOf="@+id/layout_colors"
-                tools:layout_editor_absoluteX="72dp"/>
-
-            <!-- Time Size -->
-            <TextView
-                android:id="@+id/editLabel_timeSize"
-                style="@style/SizeEditLabel"
-                android:paddingStart="8dp" android:paddingEnd="8dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBaseline_toBaselineOf="@+id/edit_timeSize"
-                android:text="@string/configLabel_themeSizeTime" />
-
-            <EditText
-                android:id="@+id/edit_timeSize"
-                style="@style/SizeEdit"
-                android:layout_width="0dp"
-                android:text="" android:hint="@string/configHint_themeSizeTime" tools:text="12"
-                app:layout_constraintStart_toEndOf="@+id/editLabel_timeSize"
-                app:layout_constraintTop_toBottomOf="@+id/topRule"
-                tools:layout_editor_absoluteX="81dp"/>
-
-            <!-- Suffix Size -->
-            <TextView
-                android:id="@+id/editLabel_suffixSize"
-                style="@style/SizeEditLabel"
-                android:paddingStart="8dp" android:paddingEnd="8dp"
-                app:layout_constraintStart_toEndOf="@+id/edit_timeSize"
-                app:layout_constraintBaseline_toBaselineOf="@+id/edit_suffixSize"
-                android:layout_marginStart="16dp" android:layout_marginEnd="8dp"
-                android:layout_marginLeft="16dp" android:layout_marginRight="8dp"
-                android:text="@string/configLabel_themeSizeSuffix" />
-
-            <EditText
-                android:id="@+id/edit_suffixSize"
-                style="@style/SizeEdit"
-                android:layout_width="0dp"
-                android:text="" android:hint="@string/configHint_themeSizeSuffix" tools:text="8"
-                app:layout_constraintStart_toEndOf="@+id/editLabel_suffixSize"
-                app:layout_constraintTop_toBottomOf="@+id/topRule"
-                tools:layout_editor_absoluteX="210dp"/>
-
-            <!-- Title Size -->
-            <TextView
-                android:id="@+id/editLabel_titleSize"
-                style="@style/SizeEditLabel"
-                android:paddingStart="8dp" android:paddingEnd="8dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBaseline_toBaselineOf="@+id/edit_titleSize"
-                android:text="@string/configLabel_themeSizeTitle" />
-
-            <EditText
-                android:id="@+id/edit_titleSize"
-                style="@style/SizeEdit"
-                android:layout_width="0dp"
-                android:text="" android:hint="@string/configHint_themeSizeTitle" tools:text="14"
-                app:layout_constraintStart_toEndOf="@+id/editLabel_titleSize"
-                app:layout_constraintTop_toBottomOf="@+id/edit_suffixSize"
-                tools:layout_editor_absoluteX="77dp"/>
-
-            <!-- Text Size -->
-            <TextView
-                android:id="@+id/editLabel_textSize"
-                style="@style/SizeEditLabel"
-                android:paddingStart="8dp" android:paddingEnd="8dp"
-                app:layout_constraintStart_toEndOf="@+id/edit_titleSize"
-                app:layout_constraintBaseline_toBaselineOf="@+id/edit_textSize"
-                android:layout_marginStart="16dp" android:layout_marginEnd="8dp"
-                android:layout_marginLeft="16dp" android:layout_marginRight="8dp"
-                android:text="@string/configLabel_themeSizeText"/>
-
-            <EditText
-                android:id="@+id/edit_textSize"
-                style="@style/SizeEdit"
-                android:layout_width="0dp"
-                android:text="" android:hint="@string/configHint_themeSizeText" tools:text="10"
-                app:layout_constraintStart_toEndOf="@+id/editLabel_textSize"
-                app:layout_constraintTop_toBottomOf="@+id/edit_suffixSize"
-                tools:layout_editor_absoluteX="197dp"/>
-
-            <!-- guidelines -->
-            <android.support.constraint.Guideline
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:id="@+id/centerLine" app:layout_constraintGuide_percent="0.5"
-                android:orientation="vertical"
-                tools:layout_editor_absoluteY="81dp"
-                tools:layout_editor_absoluteX="180dp"/>
-
-            <android.support.constraint.Guideline
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:id="@+id/centerLineL" app:layout_constraintGuide_percent="0.42"
-                android:orientation="vertical"
-                tools:layout_editor_absoluteY="81dp"
-                tools:layout_editor_absoluteX="151dp"/>
-
-            <android.support.constraint.Guideline
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:id="@+id/centerLineR" app:layout_constraintGuide_percent="0.58"
-                android:orientation="vertical"
-                tools:layout_editor_absoluteY="81dp"
-                tools:layout_editor_absoluteX="209dp"/>
-
         </android.support.constraint.ConstraintLayout>
+
     </ScrollView>
 
 </LinearLayout>

@@ -74,6 +74,10 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     private void init(Context context)
     {
         colors = new LightMapColors(context);
+        if (isInEditMode())
+        {
+            setBackgroundColor(colors.colorNight);
+        }
     }
 
     public int getMaxUpdateRate()

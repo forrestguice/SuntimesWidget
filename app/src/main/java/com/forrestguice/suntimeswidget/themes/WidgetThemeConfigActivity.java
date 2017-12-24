@@ -94,6 +94,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private ColorChooser chooseColorNoon, chooseColorNoonIconFill, chooseColorNoonIconStroke;
     private ColorChooser chooseColorSet, chooseColorSetIconFill, chooseColorSetIconStroke;
     private ColorChooser chooseColorTitle, chooseColorText, chooseColorTime, chooseColorSuffix;
+    private ColorChooser chooseColorSpring, chooseColorSummer, chooseColorFall, chooseColorWinter;
     private ArrayList<ColorChooser> colorChoosers;
     private CheckBox checkUseFill, checkUseStroke, checkUseNoon;
 
@@ -103,7 +104,6 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private TextView previewTitle, previewNoon, previewRise, previewSet, previewNoonSuffix, previewRiseSuffix, previewSetSuffix;
     private TextView previewTimeDeltaPrefix, previewTimeDelta, previewTimeDeltaSuffix;
     private ImageView previewRiseIcon, previewNoonIcon, previewSetIcon;
-    private int previewTimeDeltaValue;
 
     private SuntimesUtils utils = new SuntimesUtils();
 
@@ -240,6 +240,12 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         chooseColorSet = createColorChooser(this, R.id.editLabel_sunsetColor, R.id.edit_sunsetColor, R.id.editButton_sunsetColor, SuntimesTheme.THEME_SUNSETCOLOR);
         chooseColorSetIconFill = createColorChooser(this, R.id.editLabel_sunsetFillColor, R.id.edit_sunsetFillColor, R.id.editButton_sunsetFillColor, SuntimesTheme.THEME_SETICON_FILL_COLOR);
         chooseColorSetIconStroke = createColorChooser(this, R.id.editLabel_sunsetStrokeColor, R.id.edit_sunsetStrokeColor, R.id.editButton_sunsetStrokeColor, SuntimesTheme.THEME_SETICON_STROKE_COLOR);
+
+        // season colors
+        chooseColorSpring = createColorChooser(this, R.id.editLabel_springColor, R.id.edit_springColor, R.id.editButton_springColor, SuntimesTheme.THEME_SPRINGCOLOR );
+        chooseColorSummer = createColorChooser(this, R.id.editLabel_summerColor, R.id.edit_summerColor, R.id.editButton_summerColor, SuntimesTheme.THEME_SUMMERCOLOR);
+        chooseColorFall = createColorChooser(this, R.id.editLabel_fallColor, R.id.edit_fallColor, R.id.editButton_fallColor, SuntimesTheme.THEME_FALLCOLOR);
+        chooseColorWinter = createColorChooser(this, R.id.editLabel_winterColor, R.id.edit_winterColor, R.id.editButton_winterColor, SuntimesTheme.THEME_WINTERCOLOR);
 
         // other colors
         chooseColorTitle = createColorChooser(this, R.id.editLabel_titleColor, R.id.edit_titleColor, R.id.editButton_titleColor, SuntimesTheme.THEME_TITLECOLOR);
@@ -417,11 +423,19 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         return (textCondition || fillCondition || strokeCondition);
     }
 
+    private ColorChooser createColorChooser(Context context, String id)
+    {
+        return createColorChooser(context, null, null, null, id);
+    }
     private ColorChooser createColorChooser(Context context, int labelID, int editID, int buttonID, String id)
     {
         TextView label = (TextView)findViewById(labelID);
         EditText edit = (EditText)findViewById(editID);
         ImageButton button = (ImageButton)findViewById(buttonID);
+        return createColorChooser(context, label, edit, button, id);
+    }
+    private ColorChooser createColorChooser(Context context, TextView label, EditText edit, ImageButton button, String id)
+    {
         ColorChooser chooser = new ColorChooser(context, label, edit, button, id);
         colorChoosers.add(chooser);
         return chooser;
@@ -458,8 +472,6 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
     protected void initPreview(Context context)
     {
-        previewTimeDeltaValue = 60;  // seconds
-
         previewBackground = findViewById(R.id.widgetframe_inner);
         previewTitle = (TextView)findViewById(R.id.text_title);
 
@@ -762,6 +774,11 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             chooseColorSetIconFill.setColor(theme.getSunsetIconColor());
             chooseColorSetIconStroke.setColor(theme.getSunsetIconStrokeColor());
 
+            chooseColorSpring.setColor(theme.getSpringColor());
+            chooseColorSummer.setColor(theme.getSummerColor());
+            chooseColorFall.setColor(theme.getFallColor());
+            chooseColorWinter.setColor(theme.getWinterColor());
+
             choosePadding.setPadding(theme.getPadding());
             setSelectedBackground(theme.getBackgroundId());
 
@@ -814,6 +831,11 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 this.themeSunsetIconColor = chooseColorSetIconFill.getColor();
                 this.themeSunsetIconStrokeColor = chooseColorSetIconStroke.getColor();
                 this.themeSunsetIconStrokeWidth = chooseIconStroke.getValue();
+
+                this.themeSpringColor = chooseColorSpring.getColor();
+                this.themeSummerColor = chooseColorSummer.getColor();
+                this.themeFallColor = chooseColorFall.getColor();
+                this.themeWinterColor = chooseColorWinter.getColor();
 
                 this.themePadding = choosePadding.getPadding();
                 ThemeBackground backgroundItem = (ThemeBackground)spinBackground.getSelectedItem();

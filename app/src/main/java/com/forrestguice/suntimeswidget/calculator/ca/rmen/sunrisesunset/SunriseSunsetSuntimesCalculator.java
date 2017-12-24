@@ -33,10 +33,17 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     public static final String NAME = "ca.rmen.sunrisesunset";
     public static final String REF = "com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator";
     public static final String LINK = "github.com/caarmen/SunriseSunset";
+    public static final int[] FEATURES = new int[] { SuntimesCalculator.FEATURE_RISESET };
 
     WidgetSettings.Location location;
 
     public SunriseSunsetSuntimesCalculator() { /* EMPTY */ }
+
+    @Override
+    public int[] getSupportedFeatures()
+    {
+        return FEATURES;
+    }
 
     @Override
     public void init(WidgetSettings.Location locationSetting, String timezone)
@@ -135,6 +142,30 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     }
 
     @Override
+    public Calendar getVernalEquinoxForYear(Calendar date)
+    {
+        return null;  // TODO
+    }
+
+    @Override
+    public Calendar getSummerSolsticeForYear(Calendar date)
+    {
+        return null;  // TODO
+    }
+
+    @Override
+    public Calendar getAutumnalEquinoxForYear(Calendar date)
+    {
+        return null;  // TODO
+    }
+
+    @Override
+    public Calendar getWinterSolsticeForYear(Calendar date)
+    {
+        return null;  // TODO
+    }
+
+    @Override
     public Calendar[] getMorningBlueHourForDate(Calendar date)
     {
         return null;
@@ -176,7 +207,7 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     public static SuntimesCalculatorDescriptor getDescriptor()
     {
         return new SuntimesCalculatorDescriptor(SunriseSunsetSuntimesCalculator.NAME, SunriseSunsetSuntimesCalculator.LINK, SunriseSunsetSuntimesCalculator.REF,
-                R.string.calculator_displayString_caarmensunrisesunset);
+                R.string.calculator_displayString_caarmensunrisesunset, SunriseSunsetSuntimesCalculator.FEATURES);
     }
 }
 

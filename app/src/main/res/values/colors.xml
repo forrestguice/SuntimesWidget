@@ -70,12 +70,23 @@
     <color name="graphColor_astronomical_light">#ff0000ff</color>
     <color name="graphColor_night_light">#ff757575</color>
 
+    <color name="springColor_dark">#8BC34A</color>
+    <color name="summerColor_dark">#ffffcc00</color>
+    <color name="fallColor_dark">#FF5722</color>
+    <color name="winterColor_dark">#03A9F4</color>
+
+    <color name="springColor_light">#8BC34A</color>
+    <color name="summerColor_light">#FFC107</color>
+    <color name="fallColor_light">#FF5722</color>
+    <color name="winterColor_light">#03A9F4</color>
+
     <!-- misc -->
     <color name="transparent">#00000000</color>
     <color name="grey_50">#fffafafa</color>
     <color name="grey_100">#fff5f5f5</color>
     <color name="grey_800">#ff424242</color>
     <color name="grey_850">#ff303030</color>
+    <color name="grey_900">#ff212121</color>
     <color name="deep_teal_200">#ff80cbc4</color>
     <color name="deep_teal_500">#ff009688</color>
 </resources>

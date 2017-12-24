@@ -116,7 +116,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     public static void verifyTheme(SuntimesActivity activity)
     {
         String themeName = AppSettings.loadThemePref(activity);
-        int themeId = AppSettings.themePrefToStyleId(themeName, activity.dataset);
+        int themeId = AppSettings.themePrefToStyleId(activity, themeName, activity.dataset.dataActual);
         int loadedStyleId = activity.getThemeId();
         Log.d("TEST", "themeId = " + themeId + " (" + themeName + "), loaded = " + loadedStyleId );
         assertTrue(loadedStyleId == themeId);

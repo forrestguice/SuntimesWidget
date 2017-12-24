@@ -68,6 +68,26 @@ public class SuntimesCalculatorDescriptor implements Comparable
         return array;
     }
 
+    public static SuntimesCalculatorDescriptor[] values( int[] requestedFeatures )
+    {
+        if (!SuntimesCalculatorFactory.initialized)
+        {
+            SuntimesCalculatorFactory.initCalculators();
+        }
+
+        ArrayList<SuntimesCalculatorDescriptor> matchingCalculators = new ArrayList<>();
+        for (int i=0; i<calculators.size(); i++)
+        {
+            SuntimesCalculatorDescriptor descriptor = (SuntimesCalculatorDescriptor)calculators.get(i);
+            if (descriptor.hasRequestedFeatures(requestedFeatures))
+            {
+                matchingCalculators.add(descriptor);
+            }
+        }
+        SuntimesCalculatorDescriptor[] retValues = new SuntimesCalculatorDescriptor[matchingCalculators.size()];
+        return matchingCalculators.toArray(retValues);
+    }
+
     public static SuntimesCalculatorDescriptor valueOf(String value)
     {
         if (!SuntimesCalculatorFactory.initialized)
@@ -76,20 +96,23 @@ public class SuntimesCalculatorDescriptor implements Comparable
         }
 
         SuntimesCalculatorDescriptor descriptor = null;
-        value = value.trim().toLowerCase(Locale.US);
-        SuntimesCalculatorDescriptor[] values = SuntimesCalculatorDescriptor.values();
-        for (int i=0; i<values.length; i++)
+        if (value != null)
         {
-            SuntimesCalculatorDescriptor calculator = values[i];
-            if (calculator.name().equals(value) || value.equals("any"))
+            value = value.trim().toLowerCase(Locale.US);
+            SuntimesCalculatorDescriptor[] values = SuntimesCalculatorDescriptor.values();
+            for (int i=0; i<values.length; i++)
             {
-                descriptor = calculator;
-                break;
+                SuntimesCalculatorDescriptor calculator = values[i];
+                if (calculator.name().equals(value) || value.equals("any"))
+                {
+                    descriptor = calculator;
+                    break;
+                }
             }
         }
 
         if (descriptor == null) {
-            throw new InvalidParameterException("Calculator value for " + value + " not found. ..btw there are " + values.length + " items total.");
+            throw new InvalidParameterException("Calculator value for " + value + " not found.");
 
         } else {
             return descriptor;
@@ -100,6 +123,7 @@ public class SuntimesCalculatorDescriptor implements Comparable
     private String displayString;
     private final String calculatorRef;
     private int resID = -1;
+    private int[] features = new int[] { SuntimesCalculator.FEATURE_RISESET };
 
     /**
      * Create a SuntimesCalculatorDescriptor object.
@@ -120,6 +144,14 @@ public class SuntimesCalculatorDescriptor implements Comparable
         this.calculatorRef = classRef;
         this.resID = resID;
     }
+    public SuntimesCalculatorDescriptor(String name, String displayString, String classRef, int resID, int[] features)
+    {
+        this.name = name;
+        this.displayString = displayString;
+        this.calculatorRef = classRef;
+        this.resID = resID;
+        this.features = features;
+    }
 
     /**
      * Get the order of this descriptor within the static list of recognized descriptors.
@@ -127,8 +159,12 @@ public class SuntimesCalculatorDescriptor implements Comparable
      */
     public int ordinal()
     {
-        int ordinal = -1;
         SuntimesCalculatorDescriptor[] values = SuntimesCalculatorDescriptor.values();
+        return ordinal(values);
+    }
+    public int ordinal( SuntimesCalculatorDescriptor[] values )
+    {
+        int ordinal = -1;
         for (int i=0; i<values.length; i++)
         {
             SuntimesCalculatorDescriptor calculator = values[i];
@@ -173,6 +209,32 @@ public class SuntimesCalculatorDescriptor implements Comparable
     public String getReference()
     {
         return calculatorRef;
+    }
+
+
+    public int[] getSupportedFeatures()
+    {
+        return features;
+    }
+
+    public boolean hasRequestedFeatures( int[] requestedFeatures )
+    {
+        int[] supportedFeatures = getSupportedFeatures();
+        for (int feature : requestedFeatures)
+        {
+            boolean isSupported = false;
+            for (int supported : supportedFeatures)
+            {
+                if (feature == supported)
+                {
+                    isSupported = true;
+                    break;
+                }
+            }
+            if (!isSupported)
+                return false;
+        }
+        return true;
     }
 
     @Override

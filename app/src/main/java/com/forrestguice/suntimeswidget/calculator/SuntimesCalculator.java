@@ -33,11 +33,25 @@ import java.util.TimeZone;
  */
 public interface SuntimesCalculator
 {
+    int FEATURE_RISESET = 0;      // feature: rise, set, and twilight times
+    int FEATURE_SOLSTICE = 10;    // feature: solstice/equinox times
+    int FEATURE_ALTITUDE = 20;    // feature: altitude based refinement
+
+    //
+    // 1.0.0 sunrise, sunset, noon, twilight times
+    //
+
     /**
      * @return the identifier for the given implementation of SuntimesCalculator
      * @since 1.0.0
      */
     String name();
+
+    /**
+     * @return an array of FEATURE flags indicating operations supported by given implementation
+     * @since 1.2.0
+     */
+    int[] getSupportedFeatures();
 
     /**
      * Initialize the calculator with a given location and timezone.
@@ -135,6 +149,42 @@ public interface SuntimesCalculator
      * @since 1.0.0
      */
     Calendar getAstronomicalSunsetCalendarForDate( Calendar date );
+
+    //
+    // 1.2.0, equinox/solstice dates
+    //
+
+    /**
+     * @param date a Calendar representing a given date
+     * @return a Calendar for vernal equinox for the year of the given date
+     * @since 1.2.0
+     */
+    Calendar getVernalEquinoxForYear( Calendar date );
+
+    /**
+     * @param date a Calendar representing a given date
+     * @return a Calendar for summer solstice for the year of the given date
+     * @since 1.2.0
+     */
+    Calendar getSummerSolsticeForYear( Calendar date );
+
+    /**
+     * @param date a Calendar representing a given date
+     * @return a Calendar for autumnal equinox for the year of the given date
+     * @since 1.2.0
+     */
+    Calendar getAutumnalEquinoxForYear( Calendar date );
+
+    /**
+     * @param date a Calendar representing a given date
+     * @return a Calendar for winter soltice for the year of the given date
+     * @since 1.2.0
+     */
+    Calendar getWinterSolsticeForYear( Calendar date );
+
+    //
+    // 1.1.0, blue hour, golden hour, isDay
+    //
 
     /**
      * Morning Blue Hour

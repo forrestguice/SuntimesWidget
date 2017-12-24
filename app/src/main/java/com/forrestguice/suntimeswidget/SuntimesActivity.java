@@ -66,6 +66,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
+
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
@@ -103,6 +105,7 @@ public class SuntimesActivity extends AppCompatActivity
     private static final String DIALOGTAG_LOCATION = "location";
     private static final String DIALOGTAG_DATE = "dateselect";
     private static final String DIALOGTAG_LIGHTMAP = "lightmap";
+    private static final String DIALOGTAG_EQUINOX = "equinox";
 
     protected static final SuntimesUtils utils = new SuntimesUtils();
 
@@ -114,6 +117,7 @@ public class SuntimesActivity extends AppCompatActivity
     private WidgetSettings.Location location;
     protected SuntimesNotes notes;
     protected SuntimesRiseSetDataset dataset;
+    protected SuntimesEquinoxSolsticeDataset dataset2;
 
     private int color_textTimeDelta;
 
@@ -182,6 +186,9 @@ public class SuntimesActivity extends AppCompatActivity
     private TextView txt_daylength2;
     private TextView txt_lightlength2;
 
+    private EquinoxView card_equinoxSolstice;
+    private View equinoxLayout;
+
     private LightMapView lightmap;
     private View lightmapLayout;
 
@@ -212,9 +219,7 @@ public class SuntimesActivity extends AppCompatActivity
     public void onCreate(Bundle savedState)
     {
         Context context = SuntimesActivity.this;
-        calculateData(context);
-
-        setTheme(AppSettings.loadTheme(this, dataset));
+        setTheme(AppSettings.loadTheme(this));
         GetFixUI.themeIcons(this);
 
         super.onCreate(savedState);
@@ -228,7 +233,7 @@ public class SuntimesActivity extends AppCompatActivity
 
         initGetFix();
         getFixHelper.loadSettings(savedState);
-        notes.resetNoteIndex();
+        onStart_resetNoteIndex = true;
 
         Intent intent = getIntent();
         Uri data = intent.getData();
@@ -262,8 +267,14 @@ public class SuntimesActivity extends AppCompatActivity
     {
         super.onStart();
         calculateData(SuntimesActivity.this);
+        if (onStart_resetNoteIndex)
+        {
+            notes.resetNoteIndex();
+            onStart_resetNoteIndex = false;
+        }
         updateViews(SuntimesActivity.this);
     }
+    private boolean onStart_resetNoteIndex = false;
 
     /**
      * OnResume: the user is now interacting w/ the Activity (running state)
@@ -315,6 +326,14 @@ public class SuntimesActivity extends AppCompatActivity
             lightMapDialog.updateViews(dataset);
             //Log.d("DEBUG", "LightMapDialog updated on restore.");
         }
+
+        EquinoxDialog equinoxDialog = (EquinoxDialog) fragments.findFragmentByTag(DIALOGTAG_EQUINOX);
+        if (equinoxDialog != null)
+        {
+            equinoxDialog.setData(dataset2);
+            equinoxDialog.updateViews(dataset2);
+            //Log.d("DEBUG", "EquinoxDialog updated on restore.");
+        }
     }
 
     /**
@@ -333,6 +352,7 @@ public class SuntimesActivity extends AppCompatActivity
         saveWarnings(outState);
         outState.putBoolean(KEY_UI_USERSWAPPEDCARD, userSwappedCard);
         outState.putBoolean(KEY_UI_CARDISTOMORROW, (card_flipper.getDisplayedChild() != 0));
+        card_equinoxSolstice.saveState(outState);
     }
 
     @Override
@@ -343,6 +363,7 @@ public class SuntimesActivity extends AppCompatActivity
         setUserSwappedCard(savedInstanceState.getBoolean(KEY_UI_USERSWAPPEDCARD, false), "onRestoreInstanceState");
         boolean cardIsTomorrow = savedInstanceState.getBoolean(KEY_UI_CARDISTOMORROW, false);
         card_flipper.setDisplayedChild((cardIsTomorrow ? 1 : 0));
+        card_equinoxSolstice.loadState(savedInstanceState);
     }
 
     /**
@@ -399,6 +420,7 @@ public class SuntimesActivity extends AppCompatActivity
         initClockViews(context);
         initNoteViews(context);
         initCardViews(context);
+        initEquinoxViews(context);
         initLightMap(context);
         initMisc(context);
     }
@@ -627,6 +649,35 @@ public class SuntimesActivity extends AppCompatActivity
         } else {
             Log.w("initNoteViews", "Failed to init note layout2; was null!");
         }
+    }
+
+    /**
+     * initialize the solstice/equinox views
+     * @param context
+     */
+    private void initEquinoxViews(Context context)
+    {
+        equinoxLayout = findViewById(R.id.info_time_equinox_layout);
+
+        card_equinoxSolstice = (EquinoxView) findViewById(R.id.info_date_solsticequinox);
+        card_equinoxSolstice.setMinimized(true);
+        card_equinoxSolstice.setOnClickListener( new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                showEquinoxDialog();
+            }
+        });
+        card_equinoxSolstice.setOnLongClickListener( new View.OnLongClickListener()
+        {
+            @Override
+            public boolean onLongClick(View view)
+            {
+                showEquinoxDialog();
+                return true;
+            }
+        });
     }
 
     /**
@@ -892,6 +943,10 @@ public class SuntimesActivity extends AppCompatActivity
                 scheduleAlarm();
                 return true;
 
+            case R.id.action_equinox:
+                showEquinoxDialog();
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -1128,18 +1183,22 @@ public class SuntimesActivity extends AppCompatActivity
     private void initData( Context context )
     {
         dataset = new SuntimesRiseSetDataset(context);
+        dataset2 = new SuntimesEquinoxSolsticeDataset(context);
     }
 
     protected void calculateData( Context context )
     {
         initData(context);
         dataset.calculateData();
+        dataset2.calculateData();
+
         initNotes();
     }
 
     protected void invalidateData( Context context )
     {
         dataset.invalidateCalculation();
+        dataset2.invalidateCalculation();
         updateViews(context);
     }
 
@@ -1253,6 +1312,14 @@ public class SuntimesActivity extends AppCompatActivity
             txt_sunset2_nautical.setText(notCalculated);
             txt_sunset2_astro.setText(notCalculated);
         }
+
+        //
+        // equinox and solstice
+        //
+        boolean enableEquinox = AppSettings.loadShowEquinoxPref(this);
+        showEquinoxView(enableEquinox && dataset2.isImplemented());
+        card_equinoxSolstice.setTrackingMode(WidgetSettings.loadTrackingModePref(context, AppWidgetManager.INVALID_APPWIDGET_ID));
+        card_equinoxSolstice.updateViews(SuntimesActivity.this, dataset2);
 
         //
         // clock & date
@@ -1733,6 +1800,18 @@ public class SuntimesActivity extends AppCompatActivity
         LightMapDialog lightMapDialog = new LightMapDialog();
         lightMapDialog.setData(dataset);
         lightMapDialog.show(getSupportFragmentManager(), DIALOGTAG_LIGHTMAP);
+    }
+
+    protected void showEquinoxView( boolean value )
+    {
+        equinoxLayout.setVisibility((value ? View.VISIBLE : View.GONE ));
+    }
+
+    protected void showEquinoxDialog()
+    {
+        EquinoxDialog equinoxDialog = new EquinoxDialog();
+        equinoxDialog.setData(dataset2);
+        equinoxDialog.show(getSupportFragmentManager(), DIALOGTAG_EQUINOX);
     }
 
     /**

@@ -155,7 +155,7 @@ public class SuntimesRiseSetDataset
             return (time.after(sunrise) && time.before(sunset));
 
         } else {
-            return dataActual.calculator.isDay(dateTime);
+            return dataActual.isDay(dateTime);
         }
     }
 

@@ -35,7 +35,7 @@
 
         <LinearLayout
             android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:paddingTop="6dp" android:paddingBottom="8dp" android:paddingLeft="8dp" android:paddingRight="8dp">
+            android:paddingTop="6dp" android:paddingBottom="6dp" android:paddingLeft="8dp" android:paddingRight="8dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -130,6 +130,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/lightmap_clickable_height"
             android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingBottom="2dp" android:paddingTop="0dp"
+            android:layout_marginBottom="4dp"
             android:background="?attr/selectableItemBackground"
             android:clickable="true" android:focusable="true">
 
@@ -141,6 +142,24 @@
                 tools:ignore="ContentDescription" />
 
         </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/info_time_equinox_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/timeCardBackground"
+            android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+            android:layout_marginBottom="6dp">
+
+            <com.forrestguice.suntimeswidget.EquinoxView
+                android:id="@+id/info_date_solsticequinox"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                app:minimized="true" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 

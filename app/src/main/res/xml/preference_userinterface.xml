@@ -13,14 +13,6 @@
             android:defaultValue="dark" />
 
         <com.forrestguice.suntimeswidget.settings.ListPreference
-            android:key="appwidget_0_appearance_timeformatmode"
-            android:title="@string/configLabel_timeFormatMode"
-            android:dialogTitle="@string/configLabel_timeFormatMode"
-            android:summary="%s"
-            android:entries="@array/timeFormatMode_display" android:entryValues="@array/timeFormatMode_values"
-            android:defaultValue="MODE_SYSTEM" />
-
-        <com.forrestguice.suntimeswidget.settings.ListPreference
             android:key="app_ui_clocktapaction"
             android:title="@string/configLabel_action_onClockTap"
             android:dialogTitle="@string/configLabel_action_onClockTap"
@@ -57,10 +49,23 @@
             android:defaultValue="true" />
 
         <CheckBoxPreference
+            android:key="app_ui_showequinox"
+            android:title="@string/configLabel_ui_showEquinox"
+            android:summary="@string/configLabel_ui_showEquinox_summary"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
             android:key="app_ui_showwarnings"
             android:title="@string/configLabel_ui_showWarnings"
             android:summary="@string/configLabel_ui_showWarnings_summary"
             android:defaultValue="true" />
+
+        <com.forrestguice.suntimeswidget.settings.ListPreference
+            android:key="appwidget_0_general_trackingmode"
+            android:title="@string/configLabel_ui_solsticeTrackingMode"
+            android:summary="@string/configLabel_ui_solsticeTrackingMode_summary"
+            android:entries="@array/solsticeTrackingMode_display" android:entryValues="@array/solsticeTrackingMode_values"
+            android:defaultValue="SOONEST" />
 
     </PreferenceCategory>
 

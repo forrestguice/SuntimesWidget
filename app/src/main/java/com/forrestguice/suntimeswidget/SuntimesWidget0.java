@@ -50,6 +50,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
 {
     public static final String SUNTIMES_WIDGET_UPDATE = "SUNTIMES_WIDGET_UPDATE";
     public static final int UPDATEALARM_ID = 0;
+    public static final String KEY_ALARMID = "alarmID";
 
     protected static SuntimesUtils utils = new SuntimesUtils();
 
@@ -93,16 +94,46 @@ public class SuntimesWidget0 extends AppWidgetProvider
         super.onReceive(context, intent);
         initLocale(context);
 
+        String filter = getUpdateIntentFilter();
         String action = intent.getAction();
-        if (action != null && action.equals(SUNTIMES_WIDGET_UPDATE))
+        if (action != null && action.equals(filter))
         {
-            AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
-            int[] widgetIds = widgetManager.getAppWidgetIds(new ComponentName(context, getClass()));
-            onUpdate(context, widgetManager, widgetIds);
+            int alarmID = intent.getIntExtra(KEY_ALARMID, -1);
+            Log.d("onReceive", filter + ": " + alarmID + ": " + getClass().toString());
+            updateWidgets(context);
 
-        } else if (action == null || !action.equals(AppWidgetManager.ACTION_APPWIDGET_OPTIONS_CHANGED)) {
+        } else if (isClickAction(action)) {
+            Log.d("onReceive", "ClickAction :: " + action + ":" + getClass());
             handleClickAction(context, intent);
+
+        } else if (action != null && action.equals(AppWidgetManager.ACTION_APPWIDGET_OPTIONS_CHANGED)) {
+            Log.d("onReceive", "ACTION_APPWIDGET_OPTIONS_CHANGED :: " + getClass());
+
+        } else if (action != null && action.equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE)) {
+            Log.d("onReceive", "ACTION_APPWIDGET_UPDATE :: " + getClass());
+
+        } else {
+            Log.d("onReceive", "unhandled :: " + action + " :: " + getClass());
         }
+    }
+
+    public boolean isClickAction(String action)
+    {
+        for (String clickAction : getClickActions())
+        {
+            if (clickAction.equals(action))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    protected String[] getClickActions()
+    {
+        return new String[] { WidgetSettings.ActionMode.ONTAP_DONOTHING.name(),
+                              WidgetSettings.ActionMode.ONTAP_LAUNCH_ACTIVITY.name(),
+                              WidgetSettings.ActionMode.ONTAP_LAUNCH_CONFIG.name() };
     }
 
     /**
@@ -171,6 +202,16 @@ public class SuntimesWidget0 extends AppWidgetProvider
     }
 
     /**
+     * @param context
+     */
+    public void updateWidgets(Context context)
+    {
+        AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
+        int[] widgetIds = widgetManager.getAppWidgetIds(new ComponentName(context, getClass()));
+        onUpdate(context, widgetManager, widgetIds);
+    }
+
+    /**
      * @param context the context
      * @param appWidgetManager widget manager
      * @param appWidgetIds the widgetIDs that need to be updated
@@ -195,7 +236,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
         SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0.class, getMinSize(context), defLayout);
     }
 
-    public static void initLocale(Context context)
+    public void initLocale(Context context)
     {
         AppSettings.initLocale(context);
         SuntimesUtils.initDisplayStrings(context);
@@ -349,7 +390,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
     }
 
     /**
-     * Start widget updates; register a daily alarm (inexactRepeating) that does not wake the device.
+     * Start widget updates; register an alarm (inexactRepeating) that does not wake the device.
      * @param context the context
      */
     protected void setUpdateAlarm( Context context )
@@ -379,27 +420,54 @@ public class SuntimesWidget0 extends AppWidgetProvider
         }
     }
 
+    protected void resetUpdateAlarm( Context context )
+    {
+        unsetUpdateAlarm(context);
+        setUpdateAlarm(context);
+    }
+
     /**
      * @return time of update event (in millis); next midnight
      */
     protected long getUpdateTimeMillis()
     {
         Calendar updateTime = Calendar.getInstance();
-        updateTime.set(Calendar.MILLISECOND, 0);
+        updateTime.set(Calendar.MILLISECOND, 0);   // reset seconds, minutes, and hours to 0
         updateTime.set(Calendar.MINUTE, 0);
         updateTime.set(Calendar.SECOND, 0);
         updateTime.set(Calendar.HOUR_OF_DAY, 0);
-        updateTime.add(Calendar.DAY_OF_MONTH, 1);
+        updateTime.add(Calendar.DAY_OF_MONTH, 1);  // and increment the date by 1 day
         return updateTime.getTimeInMillis();
     }
 
     /**
+     * @return an AlarmManager interval; e.g. AlarmManager.INTERVAL_DAY
+     */
+    protected long getUpdateInterval()
+    {
+        return AlarmManager.INTERVAL_DAY;
+    }
+
+    /**
+     * @param context
      * @param context the context
      * @return a SUNTIMES_WIDGET_UPDATE broadcast intent for widget alarmId (@see getUpdateAlarmId)
      */
     protected PendingIntent getUpdateIntent(Context context)
     {
-        return PendingIntent.getBroadcast(context, getUpdateAlarmId(), new Intent(SUNTIMES_WIDGET_UPDATE), PendingIntent.FLAG_CANCEL_CURRENT);
+        int alarmId = getUpdateAlarmId();
+        String updateFilter = getUpdateIntentFilter();
+        Intent intent = new Intent(updateFilter);
+        intent.putExtra(KEY_ALARMID, alarmId);
+        return PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+    }
+
+    /**
+     * @return intent-filter name
+     */
+    protected String getUpdateIntentFilter()
+    {
+        return SuntimesWidget0.SUNTIMES_WIDGET_UPDATE;
     }
 
     /**
