@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2017 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -20,7 +20,6 @@ package com.forrestguice.suntimeswidget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
-import android.widget.ArrayAdapter;
 
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -59,13 +58,15 @@ public class SuntimesConfigActivity1 extends SuntimesConfigActivity0
     }
 
     @Override
-    protected void loadActionSettings(Context context)
+    protected WidgetSettings.ActionMode defaultActionMode()
     {
-        if (spinner_onTap != null)
-        {
-            WidgetSettings.ActionMode actionMode = WidgetSettings.ActionMode.ONTAP_FLIPTO_NEXTITEM;
-            spinner_onTap.setSelection(actionMode.ordinal());
-        }
+        return WidgetSettings.ActionMode.ONTAP_FLIPTO_NEXTITEM;
+    }
+
+    @Override
+    protected WidgetSettings.ActionMode[] supportedActionModes()
+    {
+        return WidgetSettings.ActionMode.values();
     }
 
     @Override
@@ -73,14 +74,6 @@ public class SuntimesConfigActivity1 extends SuntimesConfigActivity0
     {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         SuntimesWidget1.updateAppWidget(context, appWidgetManager, appWidgetId);
-    }
-
-    @Override
-    protected ArrayAdapter<WidgetSettings.ActionMode> createAdapter_actionMode()
-    {
-        ArrayAdapter<WidgetSettings.ActionMode> adapter = new ArrayAdapter<WidgetSettings.ActionMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.ActionMode.values());
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        return adapter;
     }
 
 }
