@@ -280,10 +280,14 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
 
         private View widgetItemView(int position, View convertView, @NonNull ViewGroup parent)
         {
-            WidgetListItem item = widgets.get(position);
+            View view = convertView;
+            if (convertView == null)
+            {
+                LayoutInflater inflater = LayoutInflater.from(context);
+                view = inflater.inflate(R.layout.layout_listitem_widgets, parent, false);
+            }
 
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.layout_listitem_widgets, parent, false);
+            WidgetListItem item = widgets.get(position);
 
             ImageView icon = (ImageView) view.findViewById(android.R.id.icon1);
             icon.setImageResource(item.getIcon());

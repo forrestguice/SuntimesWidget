@@ -797,7 +797,9 @@ public class SuntimesUtils
         {
             blank = "";
             for (int i=0; i<tag.length(); i++)
-            {    blank += " ";    }
+            {   //noinspection StringConcatenationInLoop
+                blank += " ";
+            }
         }
 
         public String getTag()

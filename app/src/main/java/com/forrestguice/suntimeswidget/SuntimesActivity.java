@@ -2013,22 +2013,24 @@ public class SuntimesActivity extends AppCompatActivity
 
             wasDismissed = false;
             snackbar = Snackbar.make(card_flipper, message, Snackbar.LENGTH_INDEFINITE);
-            snackbar.setCallback(new Snackbar.Callback()
-            {
-                @Override
-                public void onDismissed(Snackbar snackbar, int event)
-                {
-                    super.onDismissed(snackbar, event);
-                    switch (event)
-                    {
-                        case DISMISS_EVENT_SWIPE:
-                            wasDismissed = true;
-                            showNextWarning();
-                            break;
-                    }
-                }
-            });
+            snackbar.addCallback(snackbarListener);
         }
+
+        private Snackbar.Callback snackbarListener = new Snackbar.Callback()
+        {
+            @Override
+            public void onDismissed(Snackbar snackbar, int event)
+            {
+                super.onDismissed(snackbar, event);
+                switch (event)
+                {
+                    case DISMISS_EVENT_SWIPE:
+                        wasDismissed = true;
+                        showNextWarning();
+                        break;
+                }
+            }
+        };
 
         private void showNextWarning()
         {

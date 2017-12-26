@@ -26,7 +26,7 @@
         <ViewFlipper android:id="@+id/info_equinoxsolstice_flipper"
                      android:background="?attr/selectableItemBackground"
                      android:layout_width="match_parent" android:layout_height="wrap_content"
-                     android:elevation="5dp" android:clickable="true"
+                     android:elevation="5dp" android:clickable="true" android:focusable="true"
                      tools:ignore="UnusedAttribute">
 
             <RelativeLayout
