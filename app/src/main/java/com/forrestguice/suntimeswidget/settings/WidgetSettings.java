@@ -788,7 +788,9 @@ public class WidgetSettings
         CIVIL("Civil", "Civil Twilight"),
         NAUTICAL("Nautical", "Nautical Twilight"),
         ASTRONOMICAL("Astronomical", "Astronomical Twilight"),
-        NOON("Noon", "Solar Noon");
+        NOON("Noon", "Solar Noon"),
+        GOLD("Golden", "Golden Hour"),
+        BLUE("Blue", "Blue Hour");
 
         public static boolean shortDisplayStrings = false;
         private String longDisplayString;
@@ -844,6 +846,12 @@ public class WidgetSettings
 
             NOON.setDisplayStrings( context.getString(R.string.timeMode_noon_short),
                     context.getString(R.string.timeMode_noon) );
+
+            GOLD.setDisplayStrings( context.getString(R.string.timeMode_golden_short),
+                    context.getString(R.string.timeMode_golden) );
+
+            BLUE.setDisplayStrings( context.getString(R.string.timeMode_blue_short),
+                    context.getString(R.string.timeMode_blue) );
         }
     }
 

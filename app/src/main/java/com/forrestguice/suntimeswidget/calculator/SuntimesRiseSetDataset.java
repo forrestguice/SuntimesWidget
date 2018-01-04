@@ -34,6 +34,8 @@ public class SuntimesRiseSetDataset
     public SuntimesRiseSetData dataNautical;
     public SuntimesRiseSetData dataAstro;
     public SuntimesRiseSetData dataNoon;
+    public SuntimesRiseSetData dataGold;
+    public SuntimesRiseSetData dataBlue;
 
     public SuntimesRiseSetDataset(Context context)
     {
@@ -52,39 +54,12 @@ public class SuntimesRiseSetDataset
 
         dataNoon = new SuntimesRiseSetData(dataActual);
         dataNoon.setTimeMode(WidgetSettings.TimeMode.NOON);
-    }
 
-    public SuntimesRiseSetDataset(SuntimesRiseSetData dataActual, SuntimesRiseSetData dataCivil, SuntimesRiseSetData dataNautical, SuntimesRiseSetData dataAstro, SuntimesRiseSetData dataNoon)
-    {
-        this.dataActual = dataActual;
-        if (dataActual == null)
-        {
-            throw new NullPointerException("dataActual must not be null!");
-        }
+        dataGold = new SuntimesRiseSetData(dataActual);
+        dataGold.setTimeMode(WidgetSettings.TimeMode.GOLD);
 
-        this.dataCivil = dataCivil;
-        if (dataCivil == null)
-        {
-            throw new NullPointerException("dataCivil must not be null!");
-        }
-
-        this.dataNautical = dataNautical;
-        if (dataNautical == null)
-        {
-            throw new NullPointerException("dataNautical must not be null!");
-        }
-
-        this.dataAstro = dataAstro;
-        if (dataAstro == null)
-        {
-            throw new NullPointerException("dataAstro must not be null!");
-        }
-
-        this.dataNoon = dataNoon;
-        if (dataNoon == null)
-        {
-            throw new NullPointerException("dataNoon must not be null!");
-        }
+        dataBlue = new SuntimesRiseSetData(dataActual);
+        dataBlue.setTimeMode(WidgetSettings.TimeMode.BLUE);
     }
 
     public void calculateData()
@@ -94,6 +69,8 @@ public class SuntimesRiseSetDataset
         dataNautical.calculate();
         dataAstro.calculate();
         dataNoon.calculate();
+        dataGold.calculate();
+        dataBlue.calculate();
     }
 
     public boolean isCalculated()
@@ -108,6 +85,8 @@ public class SuntimesRiseSetDataset
         dataNautical.invalidateCalculation();
         dataAstro.invalidateCalculation();
         dataNoon.invalidateCalculation();
+        dataGold.invalidateCalculation();
+        dataBlue.invalidateCalculation();
     }
 
     public Calendar todayIs()

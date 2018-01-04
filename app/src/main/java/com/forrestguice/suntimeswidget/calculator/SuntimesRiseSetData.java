@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -275,6 +275,20 @@ public class SuntimesRiseSetData extends SuntimesData
 
         switch (timeMode)
         {
+            case GOLD:
+                sunriseCalendarToday = calculator.getMorningGoldenHourForDate(todaysCalendar);
+                sunsetCalendarToday = calculator.getEveningGoldenHourForDate(todaysCalendar);
+                sunriseCalendarOther = calculator.getMorningGoldenHourForDate(otherCalendar);
+                sunsetCalendarOther = calculator.getEveningGoldenHourForDate(otherCalendar);
+                break;
+
+            case BLUE:
+                sunriseCalendarToday = calculator.getMorningBlueHourForDate(todaysCalendar);
+                sunsetCalendarToday = calculator.getEveningBlueHourForDate(todaysCalendar);
+                sunriseCalendarOther = calculator.getMorningBlueHourForDate(otherCalendar);
+                sunsetCalendarOther = calculator.getEveningBlueHourForDate(otherCalendar);
+                break;
+
             case NOON:
                 sunriseCalendarToday = sunsetCalendarToday = calculator.getSolarNoonCalendarForDate(todaysCalendar);
                 sunriseCalendarOther = sunsetCalendarOther = calculator.getSolarNoonCalendarForDate(otherCalendar);
