@@ -168,13 +168,19 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     @Override
     public Calendar getMorningBlueHourForDate(Calendar date)
     {
-        return null;
+        Calendar[] blueTimes = SunriseSunset.getSunriseSunset(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), SUN_ALTITUDE_BLUE_MORNING);
+        if (blueTimes == null)
+            return null;
+        else return blueTimes[0];
     }
 
     @Override
     public Calendar getEveningBlueHourForDate(Calendar date)
     {
-        return null;
+        Calendar[] blueTimes = SunriseSunset.getSunriseSunset(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), SUN_ALTITUDE_BLUE_EVENING);
+        if (blueTimes == null)
+            return null;
+        else return blueTimes[1];
     }
 
     @Override
@@ -196,6 +202,8 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     }
 
     public static final double SUN_ALTITUDE_GOLDEN = 6.0;
+    public static final double SUN_ALTITUDE_BLUE_MORNING = -8.0;
+    public static final double SUN_ALTITUDE_BLUE_EVENING = -4.0;
 
     @Override
     public boolean isDay(Calendar dateTime)

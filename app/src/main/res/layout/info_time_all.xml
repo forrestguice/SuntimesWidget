@@ -324,18 +324,16 @@
             android:text="@string/timeMode_blue_short"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_time_label_noon"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:visibility="gone" />
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <TextView
             android:id="@+id/text_time_blue_morning"
             style="@style/SunsetTimeTextView"
             android:layout_marginEnd="@dimen/table_set_rightMargin"
             android:layout_marginRight="@dimen/table_set_rightMargin"
-            android:textColor="@color/sunIcon_color_setting"
+            android:textColor="@color/sunIcon_color_rising"
             app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_blue"
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunrise"
-            android:visibility="gone"
             tools:text="12:00 PM"/>
 
         <TextView
@@ -346,7 +344,6 @@
             android:textColor="@color/sunIcon_color_rising"
             app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_blue"
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
-            android:visibility="gone"
             tools:text="4:00 PM" />
 
     </android.support.constraint.ConstraintLayout>
