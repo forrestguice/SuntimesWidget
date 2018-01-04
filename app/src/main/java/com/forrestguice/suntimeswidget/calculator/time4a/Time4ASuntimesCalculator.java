@@ -177,15 +177,34 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     @Override
     public Calendar getMorningGoldenHourForDate(Calendar date)
     {
-        return null;
+        SolarTime.Calculator calculator = solarTime.getCalculator();
+        int altitude = solarTime.getAltitude();
+        double latitude = solarTime.getLatitude();
+        double longitude = solarTime.getLongitude();
+        double geodeticAngle = calculator.getGeodeticAngle(latitude, altitude);
+        double goldenAngle = 90 + geodeticAngle - SUN_ALTITUDE_GOLDEN;
+
+        PlainDate localDate = calendarToPlainDate(date);
+        Moment goldMorningEnd = calculator.sunrise(localDate, latitude, longitude, goldenAngle);
+        return momentToCalendar(goldMorningEnd);
     }
 
     @Override
     public Calendar getEveningGoldenHourForDate(Calendar date)
     {
-        return null;
+        SolarTime.Calculator calculator = solarTime.getCalculator();
+        int altitude = solarTime.getAltitude();
+        double latitude = solarTime.getLatitude();
+        double longitude = solarTime.getLongitude();
+        double geodeticAngle = calculator.getGeodeticAngle(latitude, altitude);
+        double goldenAngle = 90 + geodeticAngle - SUN_ALTITUDE_GOLDEN;
+
+        PlainDate localDate = calendarToPlainDate(date);
+        Moment goldEveningStart = this.solarTime.getCalculator().sunset(localDate, latitude, longitude, goldenAngle);
+        return momentToCalendar(goldEveningStart);
     }
 
+    public static final double SUN_ALTITUDE_GOLDEN = 6.0;
     public static final double SUN_ALTITUDE_BLUE_HIGH = 8.0;
     public static final double SUN_ALTITUDE_BLUE_LOW = 4.0;
 
