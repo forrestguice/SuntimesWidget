@@ -168,6 +168,10 @@
     <string name="timeMode_astronomical">Astronomical Twilight</string> <!-- setting -->
     <string name="timeMode_night">Night</string>                   <!-- a label (not an actual timeMode setting) -->
     <string name="timeMode_day">Day</string>                       <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_golden_short">Golden</string>                <!-- setting -->
+    <string name="timeMode_golden">Golden Hour</string>                 <!-- setting -->
+    <string name="timeMode_blue_short">Blue</string>                    <!-- setting -->
+    <string name="timeMode_blue">Blue Hour</string>                     <!-- setting -->
 
     <string name="timeMode_equinox_vernal">Spring Equinox</string>      <!-- setting -->
     <string name="timeMode_equinox_vernal_short">Equinox</string>       <!-- setting -->
