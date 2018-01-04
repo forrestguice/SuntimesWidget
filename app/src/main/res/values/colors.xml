@@ -29,6 +29,10 @@
     <color name="errorTag_light">#FF5252</color>
     <color name="dstTag_light">#ffcc00</color>
 
+    <!-- moon icon -->
+    <color name="moonIcon_color_rising">@color/grey_100</color>
+    <color name="moonIcon_color_setting">@color/grey_100</color>
+
     <!-- sun icon -->
     <color name="sunIcon_color_rising">@color/sunIcon_color_rising_dark</color>
     <color name="sunIcon_color_setting">@color/sunIcon_color_setting_dark</color>

@@ -104,6 +104,9 @@
     <string name="sunset">Sunset</string>                               <!-- contentDescription -->
     <string name="sunset_short">Sunset</string>                            <!-- table title -->
 
+    <string name="moonrise">Moonrise</string>                             <!-- contentDescription -->
+    <string name="moonset">Moonset</string>                             <!-- contentDescription -->
+
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
     <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
     <string name="delta_years">y</string>    <!-- e.g. 1y -->
