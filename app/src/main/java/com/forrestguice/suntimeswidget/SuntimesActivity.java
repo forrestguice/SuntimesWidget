@@ -66,7 +66,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
@@ -1258,17 +1258,17 @@ public class SuntimesActivity extends AppCompatActivity
 
             if (showGold)
             {
-                String sunriseString_blue = utils.calendarTimeShortDisplayString(context, dataset.dataCivil.sunriseCalendarToday(), showSeconds).toString();  // TODO
-                String sunriseString_gold = utils.calendarTimeShortDisplayString(context, dataset.dataAstro.sunriseCalendarToday(), showSeconds).toString(); // TODO
-                String sunsetString_gold = utils.calendarTimeShortDisplayString(context, dataset.dataAstro.sunsetCalendarToday(), showSeconds).toString();  // TODO
-                String sunsetString_blue = utils.calendarTimeShortDisplayString(context, dataset.dataCivil.sunsetCalendarToday(), showSeconds).toString(); // TODO
+                String sunriseString_blue = utils.calendarTimeShortDisplayString(context, dataset.dataBlue.sunriseCalendarToday(), showSeconds).toString();
+                String sunriseString_gold = utils.calendarTimeShortDisplayString(context, dataset.dataGold.sunriseCalendarToday(), showSeconds).toString();
+                String sunsetString_gold = utils.calendarTimeShortDisplayString(context, dataset.dataGold.sunsetCalendarToday(), showSeconds).toString();
+                String sunsetString_blue = utils.calendarTimeShortDisplayString(context, dataset.dataBlue.sunsetCalendarToday(), showSeconds).toString();
                 row_gold.updateFields(sunriseString_gold, sunsetString_gold);
                 row_blue.updateFields(sunriseString_blue, sunsetString_blue);
 
-                String sunriseString_blue2 = utils.calendarTimeShortDisplayString(context, dataset.dataCivil.sunriseCalendarOther(), showSeconds).toString();  // TODO
-                String sunriseString_gold2 = utils.calendarTimeShortDisplayString(context, dataset.dataAstro.sunriseCalendarOther(), showSeconds).toString(); // TODO
-                String sunsetString_gold2 = utils.calendarTimeShortDisplayString(context, dataset.dataAstro.sunsetCalendarOther(), showSeconds).toString();  // TODO
-                String sunsetString_blue2 = utils.calendarTimeShortDisplayString(context, dataset.dataCivil.sunsetCalendarOther(), showSeconds).toString(); // TODO
+                String sunriseString_blue2 = utils.calendarTimeShortDisplayString(context, dataset.dataBlue.sunriseCalendarOther(), showSeconds).toString();
+                String sunriseString_gold2 = utils.calendarTimeShortDisplayString(context, dataset.dataGold.sunriseCalendarOther(), showSeconds).toString();
+                String sunsetString_gold2 = utils.calendarTimeShortDisplayString(context, dataset.dataGold.sunsetCalendarOther(), showSeconds).toString();
+                String sunsetString_blue2 = utils.calendarTimeShortDisplayString(context, dataset.dataBlue.sunsetCalendarOther(), showSeconds).toString();
                 row_gold2.updateFields(sunriseString_gold2, sunsetString_gold2);
                 row_blue2.updateFields(sunriseString_blue2, sunsetString_blue2);
             }
