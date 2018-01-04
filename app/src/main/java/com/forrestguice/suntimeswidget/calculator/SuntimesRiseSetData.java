@@ -283,10 +283,10 @@ public class SuntimesRiseSetData extends SuntimesData
                 break;
 
             case BLUE:
-                sunriseCalendarToday = calculator.getMorningBlueHourForDate(todaysCalendar);
-                sunsetCalendarToday = calculator.getEveningBlueHourForDate(todaysCalendar);
-                sunriseCalendarOther = calculator.getMorningBlueHourForDate(otherCalendar);
-                sunsetCalendarOther = calculator.getEveningBlueHourForDate(otherCalendar);
+                sunriseCalendarToday = calculator.getMorningBlueHourForDate(todaysCalendar)[0];
+                sunsetCalendarToday = calculator.getEveningBlueHourForDate(todaysCalendar)[1];
+                sunriseCalendarOther = calculator.getMorningBlueHourForDate(otherCalendar)[0];
+                sunsetCalendarOther = calculator.getEveningBlueHourForDate(otherCalendar)[1];
                 break;
 
             case NOON:

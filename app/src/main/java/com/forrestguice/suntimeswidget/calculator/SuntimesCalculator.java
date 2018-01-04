@@ -190,18 +190,18 @@ public interface SuntimesCalculator
     /**
      * Morning Blue Hour
      * @param date a Calendar representing a given date
-     * @return start of the morning blue hour
+     * @return [start,end] of the morning blue hour
      * @since 1.3.0
      */
-    Calendar getMorningBlueHourForDate( Calendar date );
+    Calendar[] getMorningBlueHourForDate( Calendar date );
 
     /**
      * Evening Blue Hour
      * @param date a Calendar representing a given date
-     * @return end of the evening blue hour
+     * @return [start,end] of the evening blue hour
      * @since 1.3.0
      */
-    Calendar getEveningBlueHourForDate( Calendar date );
+    Calendar[] getEveningBlueHourForDate( Calendar date );
 
     /**
      * Morning Golden Hour

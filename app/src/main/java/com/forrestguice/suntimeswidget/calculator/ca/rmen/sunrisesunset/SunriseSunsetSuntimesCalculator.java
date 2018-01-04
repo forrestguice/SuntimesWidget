@@ -144,43 +144,57 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     @Override
     public Calendar getVernalEquinoxForYear(Calendar date)
     {
-        return null;  // TODO
+        return null;
     }
 
     @Override
     public Calendar getSummerSolsticeForYear(Calendar date)
     {
-        return null;  // TODO
+        return null;
     }
 
     @Override
     public Calendar getAutumnalEquinoxForYear(Calendar date)
     {
-        return null;  // TODO
+        return null;
     }
 
     @Override
     public Calendar getWinterSolsticeForYear(Calendar date)
     {
-        return null;  // TODO
+        return null;
     }
 
     @Override
-    public Calendar getMorningBlueHourForDate(Calendar date)
+    public Calendar[] getMorningBlueHourForDate(Calendar date)
     {
-        Calendar[] blueTimes = SunriseSunset.getSunriseSunset(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), SUN_ALTITUDE_BLUE_MORNING);
-        if (blueTimes == null)
-            return null;
-        else return blueTimes[0];
+        Calendar[] blueTimes = new Calendar[2];
+        Calendar[] blueTimes0 = SunriseSunset.getSunriseSunset(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), SUN_ALTITUDE_BLUE_HIGH);
+        Calendar[] blueTimes1 = SunriseSunset.getSunriseSunset(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), SUN_ALTITUDE_BLUE_LOW);
+
+        if (blueTimes0 != null)
+            blueTimes[0] = blueTimes0[0];
+
+        if (blueTimes1 != null)
+            blueTimes[1] = blueTimes1[0];
+
+        return blueTimes;
     }
 
     @Override
-    public Calendar getEveningBlueHourForDate(Calendar date)
+    public Calendar[] getEveningBlueHourForDate(Calendar date)
     {
-        Calendar[] blueTimes = SunriseSunset.getSunriseSunset(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), SUN_ALTITUDE_BLUE_EVENING);
-        if (blueTimes == null)
-            return null;
-        else return blueTimes[1];
+        Calendar[] blueTimes = new Calendar[2];
+        Calendar[] blueTimes0 = SunriseSunset.getSunriseSunset(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), SUN_ALTITUDE_BLUE_LOW);
+        Calendar[] blueTimes1 = SunriseSunset.getSunriseSunset(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), SUN_ALTITUDE_BLUE_HIGH);
+
+        if (blueTimes0 != null)
+            blueTimes[0] = blueTimes0[1];
+
+        if (blueTimes1 != null)
+            blueTimes[1] = blueTimes1[1];
+
+        return blueTimes;
     }
 
     @Override
@@ -202,8 +216,8 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     }
 
     public static final double SUN_ALTITUDE_GOLDEN = 6.0;
-    public static final double SUN_ALTITUDE_BLUE_MORNING = -8.0;
-    public static final double SUN_ALTITUDE_BLUE_EVENING = -4.0;
+    public static final double SUN_ALTITUDE_BLUE_HIGH = -8.0;
+    public static final double SUN_ALTITUDE_BLUE_LOW = -4.0;
 
     @Override
     public boolean isDay(Calendar dateTime)
