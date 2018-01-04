@@ -1970,6 +1970,67 @@ public class SuntimesActivity extends AppCompatActivity
     }
 
     /**
+     * TimeFieldRow
+     */
+    private static class TimeFieldRow
+    {
+        private TextView label;
+        private TextView[] fields;
+
+        private TimeFieldRow( TextView label, TextView ...fields )
+        {
+            this.label = label;
+            this.fields = fields;
+        }
+
+        private TimeFieldRow( View parent, int labelID, int ...fieldIDs )
+        {
+            if (parent != null)
+            {
+                this.label = (TextView) parent.findViewById(labelID);
+                this.fields = new TextView[fieldIDs.length];
+
+                for (int i=0; i<fieldIDs.length; i++)
+                {
+                    this.fields[i] = (TextView) parent.findViewById(fieldIDs[i]);
+                }
+            }
+        }
+
+        public void updateFields( String ...values )
+        {
+            for (int i=0; i<values.length; i++)
+            {
+                if (i >= fields.length)
+                    break;
+
+                if (fields[i] != null)
+                {
+                    fields[i].setText( values[i] );
+                }
+            }
+        }
+
+        public void setVisible( boolean show )
+        {
+            int visibility = (show ? View.VISIBLE : View.GONE);
+
+            if (label != null)
+            {
+                label.setVisibility(visibility);
+            }
+
+            for (int i=0; i<fields.length; i++)
+            {
+                if (fields[i] != null)
+                {
+                    fields[i].setVisibility(visibility);
+                }
+            }
+        }
+    }
+
+    /**
      * SuntimesWarning; wraps a Snackbar and some flags.
      */
     private class SuntimesWarning
