@@ -158,6 +158,9 @@ public class SuntimesActivity extends AppCompatActivity
     private TextView txt_sunset_astro,      txt_sunset2_astro;
     private TextView txt_solarnoon,         txt_solarnoon2;
 
+    private TimeFieldRow row_gold,          row_gold2;
+    private TimeFieldRow row_blue,          row_blue2;
+
     private LinearLayout layout_daylength,  layout_daylength2;
     private TextView txt_daylength,         txt_daylength2;
     private TextView txt_lightlength,       txt_lightlength2;
@@ -181,6 +184,7 @@ public class SuntimesActivity extends AppCompatActivity
     private List<SuntimesWarning> warnings;
 
     private boolean showSeconds = WidgetSettings.PREF_DEF_GENERAL_SHOWSECONDS;
+    private boolean showGold = AppSettings.PREF_DEF_UI_SHOWGOLDHOUR;
 
     public SuntimesActivity()
     {
@@ -701,6 +705,9 @@ public class SuntimesActivity extends AppCompatActivity
             txt_solarnoon = (TextView) viewToday.findViewById(R.id.text_time_noon);
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.NOON, false), txt_solarnoon);
 
+            row_gold = new TimeFieldRow(viewToday, R.id.text_time_label_golden, R.id.text_time_golden_morning, R.id.text_time_golden_evening);
+            row_blue = new TimeFieldRow(viewToday, R.id.text_time_label_blue, R.id.text_time_blue_morning, R.id.text_time_blue_evening);
+
             layout_daylength = (LinearLayout) viewToday.findViewById(R.id.layout_daylength);
             txt_daylength = (TextView) viewToday.findViewById(R.id.text_daylength);
             txt_lightlength = (TextView) viewToday.findViewById(R.id.text_lightlength);
@@ -758,6 +765,9 @@ public class SuntimesActivity extends AppCompatActivity
 
             txt_solarnoon2 = (TextView) viewTomorrow.findViewById(R.id.text_time_noon);
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.NOON, true), txt_solarnoon2);
+
+            row_gold2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_golden, R.id.text_time_golden_morning, R.id.text_time_golden_evening);
+            row_blue2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_blue, R.id.text_time_blue_morning, R.id.text_time_blue_evening);
 
             layout_daylength2 = (LinearLayout) viewTomorrow.findViewById(R.id.layout_daylength);
             txt_daylength2 = (TextView) viewTomorrow.findViewById(R.id.text_daylength);
@@ -1196,6 +1206,8 @@ public class SuntimesActivity extends AppCompatActivity
             actionBar.setSubtitle(locationSubtitle);
         }
 
+        showGold = AppSettings.loadGoldHourPref(context);
+        showGoldBlueFields(showGold);
 
         showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
 
@@ -1243,6 +1255,23 @@ public class SuntimesActivity extends AppCompatActivity
             txt_sunset2_nautical.setText(sunsetString_nauticalTime2.toString());
             txt_sunset2_astro.setText(sunsetString_astroTime2.toString());
 
+            if (showGold)
+            {
+                String sunriseString_blue = utils.calendarTimeShortDisplayString(context, dataset.dataCivil.sunriseCalendarToday(), showSeconds).toString();  // TODO
+                String sunriseString_gold = utils.calendarTimeShortDisplayString(context, dataset.dataAstro.sunriseCalendarToday(), showSeconds).toString(); // TODO
+                String sunsetString_gold = utils.calendarTimeShortDisplayString(context, dataset.dataAstro.sunsetCalendarToday(), showSeconds).toString();  // TODO
+                String sunsetString_blue = utils.calendarTimeShortDisplayString(context, dataset.dataCivil.sunsetCalendarToday(), showSeconds).toString(); // TODO
+                row_gold.updateFields(sunriseString_gold, sunsetString_gold);
+                row_blue.updateFields(sunriseString_blue, sunsetString_blue);
+
+                String sunriseString_blue2 = utils.calendarTimeShortDisplayString(context, dataset.dataCivil.sunriseCalendarOther(), showSeconds).toString();  // TODO
+                String sunriseString_gold2 = utils.calendarTimeShortDisplayString(context, dataset.dataAstro.sunriseCalendarOther(), showSeconds).toString(); // TODO
+                String sunsetString_gold2 = utils.calendarTimeShortDisplayString(context, dataset.dataAstro.sunsetCalendarOther(), showSeconds).toString();  // TODO
+                String sunsetString_blue2 = utils.calendarTimeShortDisplayString(context, dataset.dataCivil.sunsetCalendarOther(), showSeconds).toString(); // TODO
+                row_gold2.updateFields(sunriseString_gold2, sunsetString_gold2);
+                row_blue2.updateFields(sunriseString_blue2, sunsetString_blue2);
+            }
+
             SuntimesUtils.TimeDisplayText dayLengthDisplay = utils.timeDeltaLongDisplayString(0, dataset.dataActual.dayLengthToday(), showSeconds);
             dayLengthDisplay.setSuffix("");
             String dayLength = dayLengthDisplay.toString();
@@ -1279,6 +1308,9 @@ public class SuntimesActivity extends AppCompatActivity
             txt_sunset_nautical.setText(notCalculated);
             txt_sunset_astro.setText(notCalculated);
 
+            row_gold.updateFields(notCalculated, notCalculated);
+            row_blue.updateFields(notCalculated, notCalculated);
+
             txt_sunrise2_actual.setText(notCalculated);
             txt_sunrise2_civil.setText(notCalculated);
             txt_sunrise2_nautical.setText(notCalculated);
@@ -1288,6 +1320,9 @@ public class SuntimesActivity extends AppCompatActivity
             txt_sunset2_civil.setText(notCalculated);
             txt_sunset2_nautical.setText(notCalculated);
             txt_sunset2_astro.setText(notCalculated);
+
+            row_gold2.updateFields(notCalculated, notCalculated);
+            row_blue2.updateFields(notCalculated, notCalculated);
         }
 
         //
@@ -1789,6 +1824,15 @@ public class SuntimesActivity extends AppCompatActivity
         EquinoxDialog equinoxDialog = new EquinoxDialog();
         equinoxDialog.setData(dataset2);
         equinoxDialog.show(getSupportFragmentManager(), DIALOGTAG_EQUINOX);
+    }
+
+    protected void showGoldBlueFields( boolean value )
+    {
+        row_gold.setVisible(value);
+        row_blue.setVisible(value);
+
+        row_gold2.setVisible(value);
+        row_blue2.setVisible(value);
     }
 
     /**
