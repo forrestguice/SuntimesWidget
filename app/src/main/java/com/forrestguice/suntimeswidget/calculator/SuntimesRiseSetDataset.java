@@ -179,6 +179,11 @@ public class SuntimesRiseSetDataset
         return dataActual.timezoneMode();
     }
 
+    public SuntimesCalculatorDescriptor calculatorMode()
+    {
+        return dataActual.calculatorMode();
+    }
+
     public Calendar now()
     {
         return Calendar.getInstance(timezone());

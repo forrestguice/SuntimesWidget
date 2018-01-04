@@ -66,6 +66,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
@@ -1206,7 +1207,7 @@ public class SuntimesActivity extends AppCompatActivity
             actionBar.setSubtitle(locationSubtitle);
         }
 
-        showGold = AppSettings.loadGoldHourPref(context);
+        showGold = AppSettings.loadGoldHourPref(context) && dataset.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_GOLDBLUE);
         showGoldBlueFields(showGold);
 
         showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
