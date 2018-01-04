@@ -129,62 +129,38 @@ public class SuntimesActivity extends AppCompatActivity
     // note views
     private ProgressBar note_progress;
     private ViewFlipper note_flipper;
-    private Animation anim_note_inPrev;
-    private Animation anim_note_inNext;
-    private Animation anim_note_outNext;
-    private Animation anim_note_outPrev;
+    private Animation anim_note_inPrev, anim_note_inNext;
+    private Animation anim_note_outPrev, anim_note_outNext;
 
-    private ImageView ic_time1_note;
-    private TextView txt_time1_note1;
-    private TextView txt_time1_note2;
-    private TextView txt_time1_note3;
-
-    private ImageView ic_time2_note;
-    private TextView txt_time2_note1;
-    private TextView txt_time2_note2;
-    private TextView txt_time2_note3;
+    private ImageView ic_time1_note,    ic_time2_note;
+    private TextView txt_time1_note1,   txt_time2_note1;
+    private TextView txt_time1_note2,   txt_time2_note2;
+    private TextView txt_time1_note3,   txt_time2_note3;
 
     // time card views
     private ViewFlipper card_flipper;
-    private Animation anim_card_inPrev;
-    private Animation anim_card_inNext;
-    private Animation anim_card_outNext;
-    private Animation anim_card_outPrev;
+    private Animation anim_card_inPrev, anim_card_inNext;
+    private Animation anim_card_outPrev, anim_card_outNext;
 
     private ImageButton btn_flipperNext_today;
     private ImageButton btn_flipperPrev_today;
     private ImageButton btn_flipperNext_tomorrow;
     private ImageButton btn_flipperPrev_tomorrow;
 
-    private TextView txt_date;
-    private TextView txt_sunrise_actual;
-    private TextView txt_sunrise_civil;
-    private TextView txt_sunrise_nautical;
-    private TextView txt_sunrise_astro;
-    private TextView txt_sunset_actual;
-    private TextView txt_sunset_civil;
-    private TextView txt_sunset_nautical;
-    private TextView txt_sunset_astro;
-    private TextView txt_solarnoon;
+    private TextView txt_date,              txt_date2;
+    private TextView txt_sunrise_actual,    txt_sunrise2_actual;
+    private TextView txt_sunrise_civil,     txt_sunrise2_civil;
+    private TextView txt_sunrise_nautical,  txt_sunrise2_nautical;
+    private TextView txt_sunrise_astro,     txt_sunrise2_astro;
+    private TextView txt_sunset_actual,     txt_sunset2_actual;
+    private TextView txt_sunset_civil,      txt_sunset2_civil;
+    private TextView txt_sunset_nautical,   txt_sunset2_nautical;
+    private TextView txt_sunset_astro,      txt_sunset2_astro;
+    private TextView txt_solarnoon,         txt_solarnoon2;
 
-    private LinearLayout layout_daylength;
-    private TextView txt_daylength;
-    private TextView txt_lightlength;
-
-    private TextView txt_date2;
-    private TextView txt_sunrise2_actual;
-    private TextView txt_sunrise2_civil;
-    private TextView txt_sunrise2_nautical;
-    private TextView txt_sunrise2_astro;
-    private TextView txt_sunset2_actual;
-    private TextView txt_sunset2_civil;
-    private TextView txt_sunset2_nautical;
-    private TextView txt_sunset2_astro;
-    private TextView txt_solarnoon2;
-
-    private LinearLayout layout_daylength2;
-    private TextView txt_daylength2;
-    private TextView txt_lightlength2;
+    private LinearLayout layout_daylength,  layout_daylength2;
+    private TextView txt_daylength,         txt_daylength2;
+    private TextView txt_lightlength,       txt_lightlength2;
 
     private EquinoxView card_equinoxSolstice;
     private View equinoxLayout;
