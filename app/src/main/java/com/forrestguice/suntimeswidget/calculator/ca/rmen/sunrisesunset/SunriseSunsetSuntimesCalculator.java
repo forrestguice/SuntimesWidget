@@ -33,7 +33,7 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     public static final String NAME = "ca.rmen.sunrisesunset";
     public static final String REF = "com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator";
     public static final String LINK = "github.com/caarmen/SunriseSunset";
-    public static final int[] FEATURES = new int[] { SuntimesCalculator.FEATURE_RISESET };
+    public static final int[] FEATURES = new int[] { SuntimesCalculator.FEATURE_RISESET, SuntimesCalculator.FEATURE_GOLDBLUE };
 
     WidgetSettings.Location location;
 
@@ -180,14 +180,22 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     @Override
     public Calendar getMorningGoldenHourForDate(Calendar date)
     {
-        return null;
+        Calendar[] goldenTimes = SunriseSunset.getSunriseSunset(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), SUN_ALTITUDE_GOLDEN);
+        if (goldenTimes == null)
+            return null;
+        else return goldenTimes[0];
     }
 
     @Override
     public Calendar getEveningGoldenHourForDate(Calendar date)
     {
-        return null;
+        Calendar[] goldenTimes = SunriseSunset.getSunriseSunset(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), SUN_ALTITUDE_GOLDEN);
+        if (goldenTimes == null)
+            return null;
+        else return goldenTimes[1];
     }
+
+    public static final double SUN_ALTITUDE_GOLDEN = 6.0;
 
     @Override
     public boolean isDay(Calendar dateTime)
