@@ -1,6 +1,6 @@
 ### ~ 
 
-###
+### v0.6.0 (2017-12-27)
 * adds solstice/equinox tracking to app (#13).
 * adds solstice/equinox widget (#13).
 * adds option to show seconds in rise/set times displayed by widgets.

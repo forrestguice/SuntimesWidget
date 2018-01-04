@@ -85,7 +85,7 @@ public class LocationConfigView extends LinearLayout
 
     public void init(FragmentActivity context, boolean asDialog)
     {
-        final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final LayoutInflater inflater = LayoutInflater.from(context);
         inflater.inflate((asDialog ? R.layout.layout_dialog_location2 : R.layout.layout_settings_location2), this);
         myParent = context;
         initViews(context);
@@ -940,10 +940,14 @@ public class LocationConfigView extends LinearLayout
 
         private View listItemView(int position, View convertView, @NonNull ViewGroup parent)
         {
-            WidgetSettings.LocationMode item = modes.get(position);
+            View view = convertView;
+            if (view == null)
+            {
+                LayoutInflater inflater = LayoutInflater.from(context);
+                view = inflater.inflate(R.layout.layout_listitem_locations, parent, false);
+            }
 
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.layout_listitem_locations, parent, false);
+            WidgetSettings.LocationMode item = modes.get(position);
 
             //ImageView icon = (ImageView) view.findViewById(android.R.id.icon1);
             //icon.setImageResource(item.getIcon());

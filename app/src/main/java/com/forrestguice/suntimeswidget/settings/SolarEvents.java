@@ -134,8 +134,12 @@ public enum SolarEvents
 
         private View alarmItemView(int position, View convertView, @NonNull ViewGroup parent)
         {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.layout_listitem_solarevent, parent, false);
+            View view = convertView;
+            if (view == null)
+            {
+                LayoutInflater inflater = LayoutInflater.from(context);
+                view = inflater.inflate(R.layout.layout_listitem_solarevent, parent, false);
+            }
 
             ImageView icon = (ImageView) view.findViewById(android.R.id.icon1);
             int iconResource = choices.get(position).getIcon();

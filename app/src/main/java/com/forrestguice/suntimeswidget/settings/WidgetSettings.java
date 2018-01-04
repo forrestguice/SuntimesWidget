@@ -1188,7 +1188,7 @@ public class WidgetSettings
     }
 
 
-    public static void saveActionModePref(Context context, int appWidgetId, WidgetSettings.ActionMode mode)
+    public static void saveActionModePref(Context context, int appWidgetId, @NonNull WidgetSettings.ActionMode mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION;
@@ -1197,9 +1197,13 @@ public class WidgetSettings
     }
     public static WidgetSettings.ActionMode loadActionModePref(Context context, int appWidgetId)
     {
+        return loadActionModePref(context, appWidgetId, PREF_DEF_ACTION_MODE);
+    }
+    public static WidgetSettings.ActionMode loadActionModePref(Context context, int appWidgetId, @NonNull WidgetSettings.ActionMode defMode)
+    {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION;
-        String modeString = prefs.getString(prefs_prefix + PREF_KEY_ACTION_MODE, PREF_DEF_ACTION_MODE.name());
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_ACTION_MODE, defMode.name());
 
         ActionMode actionMode;
         try

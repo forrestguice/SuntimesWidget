@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2017 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -249,6 +249,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         ArrayAdapter<WidgetSettings.ActionMode> adapter = new ArrayAdapter<WidgetSettings.ActionMode>(this, R.layout.layout_listitem_oneline, supportedActionModes());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         return adapter;
+    }
+
+    protected WidgetSettings.ActionMode defaultActionMode()
+    {
+        return WidgetSettings.PREF_DEF_ACTION_MODE;
     }
 
     protected WidgetSettings.ActionMode[] supportedActionModes()
@@ -992,7 +997,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected void loadActionSettings(Context context)
     {
         // load: action mode
-        WidgetSettings.ActionMode actionMode = WidgetSettings.loadActionModePref(context, appWidgetId);
+        WidgetSettings.ActionMode actionMode = WidgetSettings.loadActionModePref(context, appWidgetId, defaultActionMode());
         spinner_onTap.setSelection(actionMode.ordinal(supportedActionModes()));
 
         // load: launch activity
