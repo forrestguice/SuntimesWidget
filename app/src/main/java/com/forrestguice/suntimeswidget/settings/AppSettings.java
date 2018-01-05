@@ -72,7 +72,10 @@ public class AppSettings
     public static final boolean PREF_DEF_UI_SHOWDATASOURCE = true;
 
     public static final String PREF_KEY_UI_SHOWGOLDHOUR = "app_ui_showgoldhour";
-    public static final boolean PREF_DEF_UI_SHOWGOLDHOUR = true;
+    public static final boolean PREF_DEF_UI_SHOWGOLDHOUR = false;
+
+    public static final String PREF_KEY_UI_SHOWBLUEHOUR = "app_ui_showbluehour";
+    public static final boolean PREF_DEF_UI_SHOWBLUEHOUR = false;
 
     public static final String PREF_KEY_UI_TIMEZONESORT = "app_ui_timezonesort";
     public static final WidgetTimezones.TimeZoneSort PREF_DEF_UI_TIMEZONESORT = WidgetTimezones.TimeZoneSort.SORT_BY_ID;
@@ -346,6 +349,12 @@ public class AppSettings
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getBoolean(PREF_KEY_UI_SHOWDATASOURCE, PREF_DEF_UI_SHOWDATASOURCE);
+    }
+
+    public static boolean loadBlueHourPref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_UI_SHOWBLUEHOUR, PREF_DEF_UI_SHOWBLUEHOUR);
     }
 
     public static boolean loadGoldHourPref( Context context )

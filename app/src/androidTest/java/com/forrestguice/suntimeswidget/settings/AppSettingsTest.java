@@ -69,6 +69,12 @@ public class AppSettingsTest extends SuntimesActivityTestBase
     }
 
     @Test
+    public void test_showBlueHourPref()
+    {
+        assertTrue("STUB: TODO", true == false);
+    }
+
+    @Test
     public void test_showGoldHourPref()
     {
         assertTrue("STUB: TODO", true == false);

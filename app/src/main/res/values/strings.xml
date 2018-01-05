@@ -412,9 +412,13 @@
     <string name="configLabel_ui_showdatasource">Show Data Source</string>
     <string name="configLabel_ui_showdatasource_summary">Show a label indicating the current configuration.</string>
 
-    <!-- App Setting: show gold & blue hour -->
-    <string name="configLabel_ui_showgoldhour">Show Gold &amp; Blue Hour</string>
-    <string name="configLabel_ui_showgoldhour_summary">Show gold and blue hour times.</string>
+    <!-- App Setting: show gold hour -->
+    <string name="configLabel_ui_showgoldhour">Show Gold Hour</string>
+    <string name="configLabel_ui_showgoldhour_summary">Show gold hour times.</string>
+
+    <!-- App Setting: show blue hour -->
+    <string name="configLabel_ui_showbluehour">Show Blue Hour</string>
+    <string name="configLabel_ui_showbluehour_summary">Show blue hour times.</string>
 
     <!-- App Setting: UI Theme -->
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->

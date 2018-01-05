@@ -186,6 +186,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     private boolean showSeconds = WidgetSettings.PREF_DEF_GENERAL_SHOWSECONDS;
     private boolean showGold = AppSettings.PREF_DEF_UI_SHOWGOLDHOUR;
+    private boolean showBlue = AppSettings.PREF_DEF_UI_SHOWBLUEHOUR;
 
     public SuntimesActivity()
     {
@@ -1207,8 +1208,12 @@ public class SuntimesActivity extends AppCompatActivity
             actionBar.setSubtitle(locationSubtitle);
         }
 
-        showGold = AppSettings.loadGoldHourPref(context) && dataset.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_GOLDBLUE);
-        showGoldBlueFields(showGold);
+        boolean supportsGoldBlue = dataset.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_GOLDBLUE);
+        showGold = AppSettings.loadGoldHourPref(context) && supportsGoldBlue;
+        showGoldTimes(showGold);
+
+        showBlue = AppSettings.loadBlueHourPref(context) && supportsGoldBlue;
+        showBlueTimes(showBlue);
 
         showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
 
@@ -1256,21 +1261,26 @@ public class SuntimesActivity extends AppCompatActivity
             txt_sunset2_nautical.setText(sunsetString_nauticalTime2.toString());
             txt_sunset2_astro.setText(sunsetString_astroTime2.toString());
 
-            if (showGold)
+            if (showBlue)
             {
                 String sunriseString_blue = utils.calendarTimeShortDisplayString(context, dataset.dataBlue.sunriseCalendarToday(), showSeconds).toString();
-                String sunriseString_gold = utils.calendarTimeShortDisplayString(context, dataset.dataGold.sunriseCalendarToday(), showSeconds).toString();
-                String sunsetString_gold = utils.calendarTimeShortDisplayString(context, dataset.dataGold.sunsetCalendarToday(), showSeconds).toString();
                 String sunsetString_blue = utils.calendarTimeShortDisplayString(context, dataset.dataBlue.sunsetCalendarToday(), showSeconds).toString();
-                row_gold.updateFields(sunriseString_gold, sunsetString_gold);
                 row_blue.updateFields(sunriseString_blue, sunsetString_blue);
 
                 String sunriseString_blue2 = utils.calendarTimeShortDisplayString(context, dataset.dataBlue.sunriseCalendarOther(), showSeconds).toString();
+                String sunsetString_blue2 = utils.calendarTimeShortDisplayString(context, dataset.dataBlue.sunsetCalendarOther(), showSeconds).toString();
+                row_blue2.updateFields(sunriseString_blue2, sunsetString_blue2);
+            }
+
+            if (showGold)
+            {
+                String sunriseString_gold = utils.calendarTimeShortDisplayString(context, dataset.dataGold.sunriseCalendarToday(), showSeconds).toString();
+                String sunsetString_gold = utils.calendarTimeShortDisplayString(context, dataset.dataGold.sunsetCalendarToday(), showSeconds).toString();
+                row_gold.updateFields(sunriseString_gold, sunsetString_gold);
+
                 String sunriseString_gold2 = utils.calendarTimeShortDisplayString(context, dataset.dataGold.sunriseCalendarOther(), showSeconds).toString();
                 String sunsetString_gold2 = utils.calendarTimeShortDisplayString(context, dataset.dataGold.sunsetCalendarOther(), showSeconds).toString();
-                String sunsetString_blue2 = utils.calendarTimeShortDisplayString(context, dataset.dataBlue.sunsetCalendarOther(), showSeconds).toString();
                 row_gold2.updateFields(sunriseString_gold2, sunsetString_gold2);
-                row_blue2.updateFields(sunriseString_blue2, sunsetString_blue2);
             }
 
             SuntimesUtils.TimeDisplayText dayLengthDisplay = utils.timeDeltaLongDisplayString(0, dataset.dataActual.dayLengthToday(), showSeconds);
@@ -1827,13 +1837,16 @@ public class SuntimesActivity extends AppCompatActivity
         equinoxDialog.show(getSupportFragmentManager(), DIALOGTAG_EQUINOX);
     }
 
-    protected void showGoldBlueFields( boolean value )
+    protected void showBlueTimes( boolean value )
+    {
+        row_blue.setVisible(value);
+        row_blue2.setVisible(value);
+    }
+
+    protected void showGoldTimes( boolean value )
     {
         row_gold.setVisible(value);
-        row_blue.setVisible(value);
-
         row_gold2.setVisible(value);
-        row_blue2.setVisible(value);
     }
 
     /**
