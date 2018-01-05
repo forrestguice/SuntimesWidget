@@ -39,11 +39,13 @@ public enum SolarEvents
     MORNING_NAUTICAL("nautical twilight", "morning nautical twilight", R.drawable.ic_sunrise_large),             // 1
     MORNING_CIVIL("civil twilight", "morning civil twilight", R.drawable.ic_sunrise_large),                      // 2
     SUNRISE("sunrise", "sunrise", R.drawable.ic_sunrise_large),                                                  // 3
-    NOON("solar noon", "solar noon", R.drawable.ic_noon_large),                                                  // 4
-    SUNSET("sunset", "sunset", R.drawable.ic_sunset_large),                                                      // 5
-    EVENING_CIVIL("civil twilight", "evening civil twilight", R.drawable.ic_sunset_large),                       // 6
-    EVENING_NAUTICAL("nautical twilight", "evening nautical twilight", R.drawable.ic_sunset_large),              // 7
-    EVENING_ASTRONOMICAL("astronomical twilight", "evening astronomical twilight", R.drawable.ic_sunset_large);  // 8
+    MORNING_GOLDEN("golden hour", "morning golden hour", R.drawable.ic_sunrise_large),                           // 4
+    NOON("solar noon", "solar noon", R.drawable.ic_noon_large),                                                  // 5
+    EVENING_GOLDEN("golden hour", "evening golden hour", R.drawable.ic_sunset_large),                            // 6
+    SUNSET("sunset", "sunset", R.drawable.ic_sunset_large),                                                      // 7
+    EVENING_CIVIL("civil twilight", "evening civil twilight", R.drawable.ic_sunset_large),                       // 8
+    EVENING_NAUTICAL("nautical twilight", "evening nautical twilight", R.drawable.ic_sunset_large),              // 9
+    EVENING_ASTRONOMICAL("astronomical twilight", "evening astronomical twilight", R.drawable.ic_sunset_large);  // 10
 
     private int iconResource;
     private String shortDisplayString, longDisplayString;
@@ -90,11 +92,13 @@ public enum SolarEvents
         MORNING_NAUTICAL.setDisplayString(modes_short[1], modes_long[1]);
         MORNING_CIVIL.setDisplayString(modes_short[2], modes_long[2]);
         SUNRISE.setDisplayString(modes_short[3], modes_long[3]);
-        NOON.setDisplayString(modes_short[4], modes_long[4]);
-        SUNSET.setDisplayString(modes_short[5], modes_long[5]);
-        EVENING_CIVIL.setDisplayString(modes_short[6], modes_long[6]);
-        EVENING_NAUTICAL.setDisplayString(modes_short[7], modes_long[7]);
-        EVENING_ASTRONOMICAL.setDisplayString(modes_short[8], modes_long[8]);
+        MORNING_GOLDEN.setDisplayString(modes_short[4], modes_long[4]);
+        NOON.setDisplayString(modes_short[5], modes_long[5]);
+        EVENING_GOLDEN.setDisplayString(modes_short[6], modes_long[6]);
+        SUNSET.setDisplayString(modes_short[7], modes_long[7]);
+        EVENING_CIVIL.setDisplayString(modes_short[8], modes_long[8]);
+        EVENING_NAUTICAL.setDisplayString(modes_short[9], modes_long[9]);
+        EVENING_ASTRONOMICAL.setDisplayString(modes_short[10], modes_long[10]);
     }
 
     public static SolarEventsAdapter createAdapter(Context context)

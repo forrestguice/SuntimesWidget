@@ -501,7 +501,9 @@
       <item>Naut. Morgen</item>
       <item>Bürg. Morgen</item>
       <item>Sonnenaufgang</item>
+      <item>golden hour</item>  <!-- TODO -->
       <item>Mittag</item>
+      <item>golden hour</item>  <!-- TODO -->
       <item>Sonnenuntergang</item>
       <item>Bürger. Abend</item>
       <item>Naut. Abend</item>
@@ -512,7 +514,9 @@
       <item>Nautische Morgendämmerung (Beginn)</item>
       <item>Bürgerliche Morgendämmerung (Beginn)</item>
       <item>Sonnenaufgang</item>
+      <item>morning golden hour (end)</item>  <!-- TODO -->
       <item>Mittagshöhe</item>
+      <item>evening golden hour (start)</item> <!-- TODO -->
       <item>Sonnenuntergang</item>
       <item>Bürgerliche Abenddämmerung (Ende)</item>
       <item>Nautische Abenddämmerung (Ende)</item>

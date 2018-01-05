@@ -508,7 +508,9 @@
         <item>crépuscule nautique</item>
         <item>crépuscule civil</item>
         <item>lever du soleil</item>
+        <item>golden hour</item>  <!-- TODO -->
         <item>midi solaire</item>
+        <item>golden hour</item>  <!-- TODO -->
         <item>coucher du soleil</item>
         <item>crépuscule civil</item>
         <item>crépuscule nautique</item>
@@ -519,7 +521,9 @@
         <item>crépuscule nautique du matin</item>
         <item>crépuscule civil du matin</item>
         <item>lever du soleil</item>
+        <item>morning golden hour (end)</item>  <!-- TODO -->
         <item>midi solaire</item>
+        <item>evening golden hour (start)</item>  <!-- TODO -->
         <item>coucher du soleil</item>
         <item>crépuscule civil du soir</item>
         <item>crépuscule nautique du soir</item>

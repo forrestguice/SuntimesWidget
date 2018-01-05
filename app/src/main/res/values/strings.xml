@@ -92,7 +92,9 @@
     <string name="until_civilTwilight">civil twilight</string>
     <string name="until_nauticalTwilight">nautical twilight</string>
     <string name="until_sunrise">sunrise</string>
+    <string name="untilEnd_goldhour">gold hour</string>
     <string name="until_noon">solar noon</string>
+    <string name="until_goldhour">gold hour</string>
     <string name="until_sunset">sunset</string>
     <string name="untilEnd_civilTwilight">civil twilight</string>
     <string name="untilEnd_nauticalTwilight">nautical twilight</string>
@@ -613,7 +615,9 @@
         <item>nautical twilight</item>
         <item>civil twilight</item>
         <item>sunrise</item>
+        <item>golden hour</item>
         <item>solar noon</item>
+        <item>golden hour</item>
         <item>sunset</item>
         <item>civil twilight</item>
         <item>nautical twilight</item>
@@ -624,7 +628,9 @@
         <item>morning nautical twilight (start)</item>
         <item>morning civil twilight (start)</item>
         <item>sunrise</item>
+        <item>morning golden hour (end)</item>
         <item>solar noon</item>
+        <item>evening golden hour (start)</item>
         <item>sunset</item>
         <item>evening civil twilight (end)</item>
         <item>evening nautical twilight (end)</item>
