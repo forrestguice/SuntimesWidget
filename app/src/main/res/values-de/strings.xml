@@ -99,6 +99,10 @@
   <string name="untilEnd_civilTwilight">bürgerlichen Dämmerung</string>
   <string name="untilEnd_nauticalTwilight">nautischen Dämmerung</string>
   <string name="untilEnd_astroTwilight">astronomischen Dämmerung</string>
+  <string name="until_goldhour">golden hour</string> <!-- TODO -->
+  <string name="untilEnd_goldhour">golden hour</string> <!-- TODO -->
+  <string name="until_bluehour">blue hour</string> <!-- TODO -->
+  <string name="untilEnd_bluehour">blue hour</string> <!-- TODO -->
 
   <!-- Table -->
   <string name="sunrise">Sonnenaufgang</string>                             <!-- contentDescription -->
@@ -511,6 +515,7 @@
   <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
       <item>Astron. Morgen</item>
       <item>Naut. Morgen</item>
+      <item>blue hour</item>   <!-- TODO -->
       <item>Bürg. Morgen</item>
       <item>Sonnenaufgang</item>
       <item>golden hour</item>  <!-- TODO -->
@@ -518,12 +523,14 @@
       <item>golden hour</item>  <!-- TODO -->
       <item>Sonnenuntergang</item>
       <item>Bürger. Abend</item>
+      <item>blue hour</item>   <!-- TODO -->
       <item>Naut. Abend</item>
       <item>Astron. Abend</item>
   </string-array>
   <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
       <item>Astronomische Morgendämmerung (Beginn)</item>
       <item>Nautische Morgendämmerung (Beginn)</item>
+      <item>morning blue hour (start)</item>  <!-- TODO -->
       <item>Bürgerliche Morgendämmerung (Beginn)</item>
       <item>Sonnenaufgang</item>
       <item>morning golden hour (end)</item>  <!-- TODO -->
@@ -531,6 +538,7 @@
       <item>evening golden hour (start)</item> <!-- TODO -->
       <item>Sonnenuntergang</item>
       <item>Bürgerliche Abenddämmerung (Ende)</item>
+      <item>evening blue hour (end)</item>  <!-- TODO -->
       <item>Nautische Abenddämmerung (Ende)</item>
       <item>Astronomische Abenddämmerung (Ende)</item>
   </string-array>

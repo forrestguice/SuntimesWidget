@@ -97,6 +97,10 @@
     <string name="untilEnd_civilTwilight">crépuscule civil</string>
     <string name="untilEnd_nauticalTwilight">crépuscule nautique</string>
     <string name="untilEnd_astroTwilight">crépuscule astronomique</string>
+    <string name="until_goldhour">golden hour</string> <!-- TODO -->
+    <string name="untilEnd_goldhour">golden hour</string> <!-- TODO -->
+    <string name="until_bluehour">blue hour</string> <!-- TODO -->
+    <string name="untilEnd_bluehour">blue hour</string> <!-- TODO -->
 
     <!-- Table -->
     <string name="sunrise">Lever du soleil</string>                             <!-- contentDescription -->
@@ -518,6 +522,7 @@
     <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
         <item>crépuscule astronomique</item>
         <item>crépuscule nautique</item>
+        <item>blue hour</item>   <!-- TODO -->
         <item>crépuscule civil</item>
         <item>lever du soleil</item>
         <item>golden hour</item>  <!-- TODO -->
@@ -525,12 +530,14 @@
         <item>golden hour</item>  <!-- TODO -->
         <item>coucher du soleil</item>
         <item>crépuscule civil</item>
+        <item>blue hour</item>   <!-- TODO -->
         <item>crépuscule nautique</item>
         <item>crépuscule astronomique</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>crépuscule astronomique du matin</item>
         <item>crépuscule nautique du matin</item>
+        <item>morning blue hour (start)</item>  <!-- TODO -->
         <item>crépuscule civil du matin</item>
         <item>lever du soleil</item>
         <item>morning golden hour (end)</item>  <!-- TODO -->
@@ -538,6 +545,7 @@
         <item>evening golden hour (start)</item>  <!-- TODO -->
         <item>coucher du soleil</item>
         <item>crépuscule civil du soir</item>
+        <item>evening blue hour (end)</item>  <!-- TODO -->
         <item>crépuscule nautique du soir</item>
         <item>crépuscule astronomique du soir</item>
     </string-array>
@@ -650,11 +658,6 @@
                   <b>%s</b> pour la source de donnée (e.g. sunrisesunsetlib) <br/>
                   <b>%t</b> pour le fuseau horaire (id) (ex. EU/Paris) <br/>
     ]]></string>
-
-    <string name="help_general">  <!-- general app help; composites a couple help topics together. -->
-        <xliff:g id="help_general_timeMode">%1$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_general_daylength">%2$s</xliff:g>
-    </string>
 
     <string name="help_general_timeMode"><![CDATA[
           <b>Heure réelle :</b> Le soleil est à l\'horizon. C\'est l\'heure (approximative) du lever et du coucher du soleil.<br/><br/>
