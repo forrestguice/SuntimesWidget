@@ -72,7 +72,7 @@ public class AppSettings
     public static final boolean PREF_DEF_UI_SHOWDATASOURCE = true;
 
     public static final String PREF_KEY_UI_SHOWGOLDHOUR = "app_ui_showgoldhour";
-    public static final boolean PREF_DEF_UI_SHOWGOLDHOUR = false;
+    public static final boolean PREF_DEF_UI_SHOWGOLDHOUR = true;
 
     public static final String PREF_KEY_UI_SHOWBLUEHOUR = "app_ui_showbluehour";
     public static final boolean PREF_DEF_UI_SHOWBLUEHOUR = false;
