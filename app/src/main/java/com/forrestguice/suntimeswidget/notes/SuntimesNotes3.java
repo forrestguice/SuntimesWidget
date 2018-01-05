@@ -27,6 +27,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -66,11 +67,12 @@ public class SuntimesNotes3 implements SuntimesNotes
         this.dataset = dataset;
 
         boolean hasGoldBlue = dataset.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_GOLDBLUE);
+        boolean enabledGold = AppSettings.loadGoldHourPref(context);
 
         notesList = new ArrayList<NoteData>();
         for (SolarEvents event : SolarEvents.values())
         {
-            if (!hasGoldBlue && (event.equals(SolarEvents.EVENING_GOLDEN) || event.equals(SolarEvents.MORNING_GOLDEN)))
+            if ((!hasGoldBlue || !enabledGold) && (event.equals(SolarEvents.EVENING_GOLDEN) || event.equals(SolarEvents.MORNING_GOLDEN)))
                 continue;
 
             NoteData note = createNote(event);
