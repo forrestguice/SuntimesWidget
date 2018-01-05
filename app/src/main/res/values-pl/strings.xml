@@ -156,6 +156,10 @@
     <string name="timeMode_astronomical">Astronomiczny świt/zmierzch</string> <!-- setting -->
     <string name="timeMode_night">Noc</string>                   <!-- a label (not an actual timeMode setting) -->
     <string name="timeMode_day">Dzień</string>                   <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_golden_short">Golden</string>                <!-- setting --> <!-- TODO -->
+    <string name="timeMode_golden">Golden Hour</string>                 <!-- setting --> <!-- TODO -->
+    <string name="timeMode_blue_short">Blue</string>                    <!-- setting --> <!-- TODO -->
+    <string name="timeMode_blue">Blue Hour</string>                     <!-- setting --> <!-- TODO -->
 
     <string name="timeMode_equinox_vernal">Spring Equinox</string>      <!-- setting -->  <!-- TODO -->
     <string name="timeMode_equinox_vernal_short">Equinox</string>       <!-- setting -->  <!-- TODO -->
@@ -391,6 +395,14 @@
     <!-- App Setting: show data source -->
     <string name="configLabel_ui_showdatasource">Wyświetl źródło danych</string>
     <string name="configLabel_ui_showdatasource_summary">Pokaż etykietę wyświetlającą obecną konfigurację.</string>
+
+    <!-- App Setting: show golden hour -->
+    <string name="configLabel_ui_showgoldhour">Show Golden Hour</string>                <!-- TODO -->
+    <string name="configLabel_ui_showgoldhour_summary">Show golden hour times.</string> <!-- TODO -->
+
+    <!-- App Setting: show blue hour -->
+    <string name="configLabel_ui_showbluehour">Show Blue Hour</string>                  <!-- TODO -->
+    <string name="configLabel_ui_showbluehour_summary">Show blue hour times.</string>   <!-- TODO -->
 
     <!-- App Setting: UI Theme -->
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
