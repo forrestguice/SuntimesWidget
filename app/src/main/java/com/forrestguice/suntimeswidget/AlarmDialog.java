@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -92,6 +92,8 @@ public class AlarmDialog extends DialogFragment
             boolean supportsGoldBlue = dataset.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_GOLDBLUE);
             if (!supportsGoldBlue)
             {
+                adapter.remove(SolarEvents.MORNING_BLUE);
+                adapter.remove(SolarEvents.EVENING_BLUE);
                 adapter.remove(SolarEvents.MORNING_GOLDEN);
                 adapter.remove(SolarEvents.EVENING_GOLDEN);
             }
@@ -384,6 +386,13 @@ public class AlarmDialog extends DialogFragment
                     calendar = dataset.dataNautical.sunriseCalendarOther();
                 }
                 break;
+            case MORNING_BLUE:
+                calendar = dataset.dataBlue.sunriseCalendarToday();
+                if (calendar != null && time.after(calendar.getTime()))
+                {
+                    calendar = dataset.dataBlue.sunriseCalendarOther();
+                }
+                break;
             case MORNING_CIVIL:
                 calendar = dataset.dataCivil.sunriseCalendarToday();
                 if (calendar != null && time.after(calendar.getTime()))
@@ -424,6 +433,13 @@ public class AlarmDialog extends DialogFragment
                 if (calendar != null && time.after(calendar.getTime()))
                 {
                     calendar = dataset.dataCivil.sunsetCalendarOther();
+                }
+                break;
+            case EVENING_BLUE:
+                calendar = dataset.dataBlue.sunsetCalendarToday();
+                if (calendar != null && time.after(calendar.getTime()))
+                {
+                    calendar = dataset.dataBlue.sunsetCalendarOther();
                 }
                 break;
             case EVENING_NAUTICAL:

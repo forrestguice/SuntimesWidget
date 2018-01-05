@@ -712,6 +712,8 @@ public class SuntimesActivity extends AppCompatActivity
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_GOLDEN, false), row_gold.getField(1));
 
             row_blue = new TimeFieldRow(viewToday, R.id.text_time_label_blue, R.id.text_time_blue_morning, R.id.text_time_blue_evening);
+            timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_BLUE, false), row_blue.getField(0));
+            timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_BLUE, false), row_blue.getField(1));
 
             layout_daylength = (LinearLayout) viewToday.findViewById(R.id.layout_daylength);
             txt_daylength = (TextView) viewToday.findViewById(R.id.text_daylength);
@@ -776,6 +778,8 @@ public class SuntimesActivity extends AppCompatActivity
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_GOLDEN, true), row_gold2.getField(1));
 
             row_blue2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_blue, R.id.text_time_blue_morning, R.id.text_time_blue_evening);
+            timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_BLUE, true), row_blue2.getField(0));
+            timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_BLUE, true), row_blue2.getField(1));
 
             layout_daylength2 = (LinearLayout) viewTomorrow.findViewById(R.id.layout_daylength);
             txt_daylength2 = (TextView) viewTomorrow.findViewById(R.id.text_daylength);

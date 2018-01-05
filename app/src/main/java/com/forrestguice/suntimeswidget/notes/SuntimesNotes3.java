@@ -68,11 +68,14 @@ public class SuntimesNotes3 implements SuntimesNotes
 
         boolean hasGoldBlue = dataset.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_GOLDBLUE);
         boolean enabledGold = AppSettings.loadGoldHourPref(context);
+        boolean enabledBlue = AppSettings.loadBlueHourPref(context);
 
         notesList = new ArrayList<NoteData>();
         for (SolarEvents event : SolarEvents.values())
         {
             if ((!hasGoldBlue || !enabledGold) && (event.equals(SolarEvents.EVENING_GOLDEN) || event.equals(SolarEvents.MORNING_GOLDEN)))
+                continue;
+            else if ((!hasGoldBlue || !enabledBlue) && (event.equals(SolarEvents.EVENING_BLUE) || event.equals(SolarEvents.MORNING_BLUE)))
                 continue;
 
             NoteData note = createNote(event);
@@ -261,6 +264,12 @@ public class SuntimesNotes3 implements SuntimesNotes
                 untilString = context.getString(R.string.until);
                 noteString = context.getString(R.string.until_nauticalTwilight);
                 break;
+            case MORNING_BLUE:
+                noteIcon = R.drawable.ic_sunrise_large;
+                noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_rising);
+                untilString = context.getString(R.string.until);
+                noteString = context.getString(R.string.until_bluehour);
+                break;
             case MORNING_CIVIL:
                 noteIcon = R.drawable.ic_sunrise_large;
                 noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_rising);
@@ -273,7 +282,6 @@ public class SuntimesNotes3 implements SuntimesNotes
                 untilString = context.getString(R.string.until);
                 noteString = context.getString(R.string.until_sunrise);
                 break;
-
             case MORNING_GOLDEN:
                 noteIcon = R.drawable.ic_sunrise_large;
                 noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_rising);
@@ -294,7 +302,6 @@ public class SuntimesNotes3 implements SuntimesNotes
                 untilString = context.getString(R.string.until);
                 noteString = context.getString(R.string.until_goldhour);
                 break;
-
             case SUNSET:
                 noteIcon = R.drawable.ic_sunset_large;
                 noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
@@ -306,6 +313,12 @@ public class SuntimesNotes3 implements SuntimesNotes
                 noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
                 untilString = context.getString(R.string.until_end);
                 noteString = context.getString(R.string.untilEnd_civilTwilight);
+                break;
+            case EVENING_BLUE:
+                noteIcon = R.drawable.ic_sunset_large;
+                noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
+                untilString = context.getString(R.string.until);
+                noteString = context.getString(R.string.untilEnd_bluehour);
                 break;
             case EVENING_NAUTICAL:
                 noteIcon = R.drawable.ic_sunset_large;
@@ -336,36 +349,21 @@ public class SuntimesNotes3 implements SuntimesNotes
         } else {
             switch (event)
             {
-                case MORNING_ASTRONOMICAL:
-                    prefix = context.getString(R.string.until);
-                    break;
+                case MORNING_ASTRONOMICAL:          // until
                 case MORNING_NAUTICAL:
-                    prefix = context.getString(R.string.until);
-                    break;
+                case MORNING_BLUE:
                 case MORNING_CIVIL:
-                    prefix = context.getString(R.string.until);
-                    break;
                 case SUNRISE:
-                    prefix = context.getString(R.string.until);
-                    break;
-                case MORNING_GOLDEN:
-                    prefix = context.getString(R.string.until_end);
-                    break;
                 case NOON:
-                    prefix = context.getString(R.string.until);
-                    break;
                 case EVENING_GOLDEN:
-                    prefix = context.getString(R.string.until);
-                    break;
                 case SUNSET:
                     prefix = context.getString(R.string.until);
                     break;
+
+                case MORNING_GOLDEN:               // until_end
                 case EVENING_CIVIL:
-                    prefix = context.getString(R.string.until_end);
-                    break;
+                case EVENING_BLUE:
                 case EVENING_NAUTICAL:
-                    prefix = context.getString(R.string.until_end);
-                    break;
                 case EVENING_ASTRONOMICAL:
                 default:
                     prefix = context.getString(R.string.until_end);
@@ -393,6 +391,10 @@ public class SuntimesNotes3 implements SuntimesNotes
                 date = dataset.dataNautical.sunriseCalendarToday();
                 dateOther = dataset.dataNautical.sunriseCalendarOther();
                 break;
+            case MORNING_BLUE:
+                date = dataset.dataBlue.sunriseCalendarToday();
+                dateOther = dataset.dataBlue.sunriseCalendarOther();
+                break;
             case MORNING_CIVIL:
                 date = dataset.dataCivil.sunriseCalendarToday();
                 dateOther = dataset.dataCivil.sunriseCalendarOther();
@@ -406,12 +408,10 @@ public class SuntimesNotes3 implements SuntimesNotes
                 date = dataset.dataGold.sunriseCalendarToday();
                 dateOther = dataset.dataGold.sunriseCalendarOther();
                 break;
-
             case NOON:
                 date = dataset.dataNoon.sunriseCalendarToday();
                 dateOther = dataset.dataNoon.sunriseCalendarOther();
                 break;
-
             case EVENING_GOLDEN:
                 date = dataset.dataGold.sunsetCalendarToday();
                 dateOther = dataset.dataGold.sunsetCalendarOther();
@@ -424,6 +424,10 @@ public class SuntimesNotes3 implements SuntimesNotes
             case EVENING_CIVIL:
                 date = dataset.dataCivil.sunsetCalendarToday();
                 dateOther = dataset.dataCivil.sunsetCalendarOther();
+                break;
+            case EVENING_BLUE:
+                date = dataset.dataBlue.sunsetCalendarToday();
+                dateOther = dataset.dataBlue.sunsetCalendarOther();
                 break;
             case EVENING_NAUTICAL:
                 date = dataset.dataNautical.sunsetCalendarToday();
