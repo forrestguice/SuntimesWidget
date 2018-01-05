@@ -41,11 +41,14 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -74,7 +77,33 @@ public class AlarmDialog extends DialogFragment
      */
     private SuntimesRiseSetDataset dataset;
     public SuntimesRiseSetDataset getData() { return dataset; }
-    public void setData( SuntimesRiseSetDataset dataset) { this.dataset = dataset; }
+    public void setData(Context context, SuntimesRiseSetDataset dataset)
+    {
+        this.dataset = dataset;
+        updateAdapter(context);
+        setChoice(choice);
+    }
+
+    public void updateAdapter(Context context)
+    {
+        adapter = SolarEvents.createAdapter(context);
+        if (dataset != null)
+        {
+            boolean supportsGoldBlue = dataset.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_GOLDBLUE);
+            if (!supportsGoldBlue)
+            {
+                adapter.remove(SolarEvents.MORNING_GOLDEN);
+                adapter.remove(SolarEvents.EVENING_GOLDEN);
+            }
+        }
+
+        if (spinner_scheduleMode != null)
+        {
+            spinner_scheduleMode.setAdapter(adapter);
+        }
+    }
+
+    private ArrayAdapter<SolarEvents> adapter = null;
 
     /**
      * The user's alarm choice.
@@ -87,7 +116,19 @@ public class AlarmDialog extends DialogFragment
             this.choice = choice;
             if (spinner_scheduleMode != null)
             {
-                spinner_scheduleMode.setSelection(choice.ordinal());
+                SpinnerAdapter adapter = spinner_scheduleMode.getAdapter();
+                if (adapter != null)
+                {
+                    for (int i = 0; i < adapter.getCount(); i++)
+                    {
+                        SolarEvents event = (SolarEvents) adapter.getItem(i);
+                        if (event.equals(choice))
+                        {
+                            spinner_scheduleMode.setSelection(i);
+                            break;
+                        }
+                    }
+                }
             }
         }
     }
@@ -196,15 +237,17 @@ public class AlarmDialog extends DialogFragment
         txt_note.setText("");
 
         spinner_scheduleMode = (Spinner) dialogContent.findViewById(R.id.appwidget_schedalarm_mode);
-        spinner_scheduleMode.setAdapter(SolarEvents.createAdapter(context));
+        if (adapter != null)
+        {
+            spinner_scheduleMode.setAdapter(adapter);
+        }
 
         spinner_scheduleMode.setOnItemSelectedListener(
                 new Spinner.OnItemSelectedListener()
                 {
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
                     {
-                        final SolarEvents[] choices = SolarEvents.values();
-                        choice = choices[spinner_scheduleMode.getSelectedItemPosition()];
+                        choice = (SolarEvents)spinner_scheduleMode.getSelectedItem();
 
                         Calendar now = dataset.now();
                         Calendar alarmCalendar = getCalendarForAlarmChoice(choice, now);
@@ -348,6 +391,13 @@ public class AlarmDialog extends DialogFragment
                     calendar = dataset.dataCivil.sunriseCalendarOther();
                 }
                 break;
+            case MORNING_GOLDEN:
+                calendar = dataset.dataGold.sunriseCalendarToday();
+                if (calendar != null && time.after(calendar.getTime()))
+                {
+                    calendar = dataset.dataGold.sunriseCalendarOther();
+                }
+                break;
             case NOON:
                 calendar = dataset.dataNoon.sunriseCalendarToday();
                 if (calendar != null && time.after(calendar.getTime()))
@@ -360,6 +410,13 @@ public class AlarmDialog extends DialogFragment
                 if (calendar != null && time.after(calendar.getTime()))
                 {
                     calendar = dataset.dataActual.sunsetCalendarOther();
+                }
+                break;
+            case EVENING_GOLDEN:
+                calendar = dataset.dataGold.sunsetCalendarToday();
+                if (calendar != null && time.after(calendar.getTime()))
+                {
+                    calendar = dataset.dataGold.sunsetCalendarOther();
                 }
                 break;
             case EVENING_CIVIL:
