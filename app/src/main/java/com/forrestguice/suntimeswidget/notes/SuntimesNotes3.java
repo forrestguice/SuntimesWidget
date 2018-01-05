@@ -25,6 +25,7 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -64,9 +65,14 @@ public class SuntimesNotes3 implements SuntimesNotes
         this.context = context;
         this.dataset = dataset;
 
+        boolean hasGoldBlue = dataset.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_GOLDBLUE);
+
         notesList = new ArrayList<NoteData>();
         for (SolarEvents event : SolarEvents.values())
         {
+            if (!hasGoldBlue && (event.equals(SolarEvents.EVENING_GOLDEN) || event.equals(SolarEvents.MORNING_GOLDEN)))
+                continue;
+
             NoteData note = createNote(event);
             notesList.add(note);
         }
@@ -147,13 +153,13 @@ public class SuntimesNotes3 implements SuntimesNotes
         if (dataset.isCalculated())
         {
             SolarEvents currentNoteMode = WidgetSettings.loadTimeNoteRisePref(context, 0);
-            int currentNote = currentNoteMode.ordinal();
+            int currentNote = getNoteIndex(currentNoteMode);
 
             int nextNote = 0;
-            if (currentNote < SolarEvents.values().length - 1)
+            if (currentNote < notesList.size() - 1)
                 nextNote = currentNote + 1;
 
-            SolarEvents nextNoteMode = SolarEvents.values()[nextNote];
+            SolarEvents nextNoteMode = notesList.get(nextNote).noteMode;
             WidgetSettings.saveTimeNoteRisePref(context, AppWidgetManager.INVALID_APPWIDGET_ID, nextNoteMode);
 
             //Log.d("showNextNote", "... current = " + currentNote + ", next = " + nextNote + ", mode = " + nextNoteMode.name());
@@ -176,15 +182,15 @@ public class SuntimesNotes3 implements SuntimesNotes
         if (dataset.isCalculated())
         {
             SolarEvents currentNoteMode = WidgetSettings.loadTimeNoteRisePref(context, AppWidgetManager.INVALID_APPWIDGET_ID);
-            int currentNote = currentNoteMode.ordinal();
+            int currentNote = getNoteIndex(currentNoteMode);
 
-            int prevNote = SolarEvents.values().length - 1;
+            int prevNote = notesList.size() - 1;
             if (currentNote > 0)
             {
                 prevNote = currentNote - 1;
             }
 
-            SolarEvents prevNoteMode = SolarEvents.values()[prevNote];
+            SolarEvents prevNoteMode = notesList.get(prevNote).noteMode;
             WidgetSettings.saveTimeNoteRisePref(context, AppWidgetManager.INVALID_APPWIDGET_ID, prevNoteMode);
             updateNote(context, dataset.now(), NoteChangedListener.TRANSITION_PREV);
             return true;
@@ -266,11 +272,25 @@ public class SuntimesNotes3 implements SuntimesNotes
                 noteString = context.getString(R.string.until_sunrise);
                 break;
 
+            case MORNING_GOLDEN:
+                noteIcon = R.drawable.ic_sunrise_large;
+                noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_rising);
+                untilString = context.getString(R.string.until);
+                noteString = context.getString(R.string.untilEnd_goldhour);
+                break;
+
             case NOON:
                 noteIcon = R.drawable.ic_noon_large;
                 noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
                 untilString = context.getString(R.string.until);
                 noteString = context.getString(R.string.until_noon);
+                break;
+
+            case EVENING_GOLDEN:
+                noteIcon = R.drawable.ic_sunset_large;
+                noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
+                untilString = context.getString(R.string.until);
+                noteString = context.getString(R.string.until_goldhour);
                 break;
 
             case SUNSET:
@@ -326,7 +346,13 @@ public class SuntimesNotes3 implements SuntimesNotes
                 case SUNRISE:
                     prefix = context.getString(R.string.until);
                     break;
+                case MORNING_GOLDEN:
+                    prefix = context.getString(R.string.until_end);
+                    break;
                 case NOON:
+                    prefix = context.getString(R.string.until);
+                    break;
+                case EVENING_GOLDEN:
                     prefix = context.getString(R.string.until);
                     break;
                 case SUNSET:
@@ -374,9 +400,19 @@ public class SuntimesNotes3 implements SuntimesNotes
                 dateOther = dataset.dataActual.sunriseCalendarOther();
                 break;
 
+            case MORNING_GOLDEN:
+                date = dataset.dataGold.sunriseCalendarToday();
+                dateOther = dataset.dataGold.sunriseCalendarOther();
+                break;
+
             case NOON:
                 date = dataset.dataNoon.sunriseCalendarToday();
                 dateOther = dataset.dataNoon.sunriseCalendarOther();
+                break;
+
+            case EVENING_GOLDEN:
+                date = dataset.dataGold.sunsetCalendarToday();
+                dateOther = dataset.dataGold.sunsetCalendarOther();
                 break;
 
             case SUNSET:
@@ -458,17 +494,38 @@ public class SuntimesNotes3 implements SuntimesNotes
     @Override
     public void updateNote(Context context, Calendar now, int transition)
     {
-        int choice = WidgetSettings.loadTimeNoteRisePref(context, AppWidgetManager.INVALID_APPWIDGET_ID).ordinal();
-        NoteData chosenNote = notesList.get(choice);
+        SolarEvents choice = WidgetSettings.loadTimeNoteRisePref(context, AppWidgetManager.INVALID_APPWIDGET_ID);
+        NoteData chosenNote = getNote(choice);
 
-        NoteData updatedNote = new NoteData(chosenNote);
-        updateNote(updatedNote, now);
-
-        if (currentNote == null || !currentNote.equals(updatedNote))
+        if (chosenNote != null)
         {
-            //Log.d("updateNote", "changing the note to " + updatedNote.toString() + "[" + choice + "]");
-            setNote(updatedNote, NoteChangedListener.TRANSITION_NEXT);
+            NoteData updatedNote = new NoteData(chosenNote);
+            updateNote(updatedNote, now);
+
+            if (currentNote == null || !currentNote.equals(updatedNote)) {
+                //Log.d("updateNote", "changing the note to " + updatedNote.toString() + "[" + choice + "]");
+                setNote(updatedNote, NoteChangedListener.TRANSITION_NEXT);
+            }
         }
+    }
+
+    public NoteData getNote(SolarEvents event)
+    {
+        int i = getNoteIndex(event);
+        if (i >= 0 && i < notesList.size())
+            return notesList.get(i);
+        else return null;
+    }
+
+    public int getNoteIndex(SolarEvents event)
+    {
+        for (int i=0; i< notesList.size(); i++)
+        {
+            NoteData note = notesList.get(i);
+            if (note.noteMode.equals(event))
+                return i;
+        }
+        return -1;
     }
 
     @Override

@@ -281,7 +281,7 @@ public class SuntimesActivity extends AppCompatActivity
         AlarmDialog alarmDialog = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_ALARM);
         if (alarmDialog != null)
         {
-            alarmDialog.setData(dataset);
+            alarmDialog.setData(this, dataset);
             alarmDialog.setOnAcceptedListener(alarmDialog.scheduleAlarmClickListener);
             //Log.d("DEBUG", "AlarmDialog listeners restored.");
         }
@@ -708,6 +708,9 @@ public class SuntimesActivity extends AppCompatActivity
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.NOON, false), txt_solarnoon);
 
             row_gold = new TimeFieldRow(viewToday, R.id.text_time_label_golden, R.id.text_time_golden_morning, R.id.text_time_golden_evening);
+            timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_GOLDEN, false), row_gold.getField(0));
+            timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_GOLDEN, false), row_gold.getField(1));
+
             row_blue = new TimeFieldRow(viewToday, R.id.text_time_label_blue, R.id.text_time_blue_morning, R.id.text_time_blue_evening);
 
             layout_daylength = (LinearLayout) viewToday.findViewById(R.id.layout_daylength);
@@ -769,6 +772,9 @@ public class SuntimesActivity extends AppCompatActivity
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.NOON, true), txt_solarnoon2);
 
             row_gold2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_golden, R.id.text_time_golden_morning, R.id.text_time_golden_evening);
+            timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_GOLDEN, true), row_gold2.getField(0));
+            timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_GOLDEN, true), row_gold2.getField(1));
+
             row_blue2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_blue, R.id.text_time_blue_morning, R.id.text_time_blue_evening);
 
             layout_daylength2 = (LinearLayout) viewTomorrow.findViewById(R.id.layout_daylength);
@@ -1147,7 +1153,7 @@ public class SuntimesActivity extends AppCompatActivity
         if (dataset.isCalculated())
         {
             AlarmDialog alarmDialog = new AlarmDialog();
-            alarmDialog.setData(dataset);
+            alarmDialog.setData(this, dataset);
             alarmDialog.setChoice(selected);
             alarmDialog.setOnAcceptedListener(alarmDialog.scheduleAlarmClickListener);
             alarmDialog.show(getSupportFragmentManager(), DIALOGTAG_ALARM);
@@ -2054,6 +2060,18 @@ public class SuntimesActivity extends AppCompatActivity
                     this.fields[i] = (TextView) parent.findViewById(fieldIDs[i]);
                 }
             }
+        }
+
+        public TextView getLabel()
+        {
+            return label;
+        }
+
+        public TextView getField( int i )
+        {
+            if (i >= 0 && i < fields.length)
+                return fields[i];
+            else return null;
         }
 
         public void updateFields( String ...values )
