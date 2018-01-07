@@ -51,7 +51,7 @@ public class AppSettings
     public static final String PREF_DEF_LOCALE = "en";
 
     public static final String PREF_KEY_UI_DATETAPACTION = "app_ui_datetapaction";
-    public static final DateTapAction PREF_DEF_UI_DATETAPACTION = DateTapAction.CONFIG_DATE;
+    public static final DateTapAction PREF_DEF_UI_DATETAPACTION = DateTapAction.SWAP_CARD;
 
     public static final String PREF_KEY_UI_CLOCKTAPACTION = "app_ui_clocktapaction";
     public static final ClockTapAction PREF_DEF_UI_CLOCKTAPACTION = ClockTapAction.ALARM;
