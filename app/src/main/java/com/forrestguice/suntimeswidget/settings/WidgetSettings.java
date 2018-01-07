@@ -780,6 +780,66 @@ public class WidgetSettings
     }
 
     /**
+     * MoonPhaseMode
+     */
+    public static enum MoonPhaseMode
+    {
+        NEW_MOON("New", "New Moon"),
+        FIRST_QUARTER_MOON("First Quarter", "First Quarter Moon"),
+        FULL_MOON("Full", "Full Moon"),
+        THIRD_QUARTER_MOON("Third Quarter", "Third Quarter Moon");
+
+        private String shortDisplayString;
+        private String longDisplayString;
+
+        public static boolean shortDisplayStrings = false;
+
+        private MoonPhaseMode( String shortDisplayString, String longDisplayString )
+        {
+            this.shortDisplayString = shortDisplayString;
+            this.longDisplayString = longDisplayString;
+        }
+
+        public String toString()
+        {
+            if (shortDisplayStrings)
+                return shortDisplayString;
+            else return longDisplayString;
+        }
+
+        public String getShortDisplayString()
+        {
+            return shortDisplayString;
+        }
+
+        public String getLongDisplayString()
+        {
+            return longDisplayString;
+        }
+
+        public void setDisplayStrings(String shortDisplayString, String longDisplayString)
+        {
+            this.shortDisplayString = shortDisplayString;
+            this.longDisplayString = longDisplayString;
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            NEW_MOON.setDisplayStrings(context.getString(R.string.timeMode_moon_new_short),
+                    context.getString(R.string.timeMode_moon_new));
+
+            FIRST_QUARTER_MOON.setDisplayStrings( context.getString(R.string.timeMode_moon_firstquarter_short),
+                    context.getString(R.string.timeMode_moon_firstquarter));
+
+            FULL_MOON.setDisplayStrings( context.getString(R.string.timeMode_moon_full_short),
+                    context.getString(R.string.timeMode_moon_full) );
+
+            THIRD_QUARTER_MOON.setDisplayStrings(context.getString(R.string.timeMode_moon_thirdquarter_short),
+                    context.getString(R.string.timeMode_moon_thirdquarter));
+        }
+    }
+
+    /**
      * TimeMode
      */
     public static enum TimeMode
@@ -1674,6 +1734,7 @@ public class WidgetSettings
         TrackingMode.initDisplayStrings(context);
         CompareMode.initDisplayStrings(context);
         TimeMode.initDisplayStrings(context);
+        MoonPhaseMode.initDisplayStrings(context);
         SolsticeEquinoxMode.initDisplayStrings(context);
         LocationMode.initDisplayStrings(context);
         TimezoneMode.initDisplayStrings(context);
