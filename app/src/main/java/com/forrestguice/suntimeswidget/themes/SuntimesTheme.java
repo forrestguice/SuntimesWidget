@@ -313,6 +313,10 @@ public class SuntimesTheme
         return themeDescriptor;
     }
 
+    public void deleteTheme(Context context, String themesPrefix)
+    {
+        deleteTheme(context.getSharedPreferences(themesPrefix, Context.MODE_PRIVATE));
+    }
     public void deleteTheme(SharedPreferences themes)
     {
         if (themeIsDefault)
