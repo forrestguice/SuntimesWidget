@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -83,6 +83,9 @@ public class WidgetSettings
 
     public static final String PREF_KEY_GENERAL_TIMEMODE2_OVERRIDE = "timemode2override";
     public static final boolean PREF_DEF_GENERAL_TIMEMODE2_OVERRIDE = true;
+
+    public static final String PREF_KEY_GENERAL_TIMEMODE3 = "timemode3";
+    public static final MoonPhaseMode PREF_DEF_GENERAL_TIMEMODE3 = MoonPhaseMode.FULL_MOON;
 
     public static final String PREF_KEY_GENERAL_TIMENOTE_RISE = "timenoterise";
     public static final SolarEvents PREF_DEF_GENERAL_TIMENOTE_RISE = SolarEvents.SUNRISE;
@@ -785,9 +788,9 @@ public class WidgetSettings
     public static enum MoonPhaseMode
     {
         NEW_MOON("New", "New Moon"),
-        FIRST_QUARTER_MOON("First Quarter", "First Quarter Moon"),
+        FIRST_QUARTER("First Quarter", "First Quarter Moon"),
         FULL_MOON("Full", "Full Moon"),
-        THIRD_QUARTER_MOON("Third Quarter", "Third Quarter Moon");
+        THIRD_QUARTER("Third Quarter", "Third Quarter Moon");
 
         private String shortDisplayString;
         private String longDisplayString;
@@ -828,13 +831,13 @@ public class WidgetSettings
             NEW_MOON.setDisplayStrings(context.getString(R.string.timeMode_moon_new_short),
                     context.getString(R.string.timeMode_moon_new));
 
-            FIRST_QUARTER_MOON.setDisplayStrings( context.getString(R.string.timeMode_moon_firstquarter_short),
+            FIRST_QUARTER.setDisplayStrings( context.getString(R.string.timeMode_moon_firstquarter_short),
                     context.getString(R.string.timeMode_moon_firstquarter));
 
             FULL_MOON.setDisplayStrings( context.getString(R.string.timeMode_moon_full_short),
                     context.getString(R.string.timeMode_moon_full) );
 
-            THIRD_QUARTER_MOON.setDisplayStrings(context.getString(R.string.timeMode_moon_thirdquarter_short),
+            THIRD_QUARTER.setDisplayStrings(context.getString(R.string.timeMode_moon_thirdquarter_short),
                     context.getString(R.string.timeMode_moon_thirdquarter));
         }
     }
@@ -1181,6 +1184,37 @@ public class WidgetSettings
         prefs.apply();
     }
 
+
+    public static void saveTimeMode3Pref(Context context, int appWidgetId, MoonPhaseMode mode)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putString(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE3, mode.name());
+        prefs.apply();
+    }
+    public static WidgetSettings.MoonPhaseMode loadTimeMode3Pref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE2, PREF_DEF_GENERAL_TIMEMODE3.name());
+
+        MoonPhaseMode timeMode;
+        try
+        {
+            timeMode = WidgetSettings.MoonPhaseMode.valueOf(modeString);
+
+        } catch (IllegalArgumentException e) {
+            timeMode = PREF_DEF_GENERAL_TIMEMODE3;
+        }
+        return timeMode;
+    }
+    public static void deleteTimeMode3Pref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE3);
+        prefs.apply();
+    }
 
 
 
@@ -1699,8 +1733,11 @@ public class WidgetSettings
         deleteTimeFormatModePref(context, appWidgetId);
 
         deleteCalculatorModePref(context, appWidgetId);
+
         deleteTimeModePref(context, appWidgetId);
         deleteTimeMode2Pref(context, appWidgetId);
+        deleteTimeMode3Pref(context, appWidgetId);
+
         deleteCompareModePref(context, appWidgetId);
         deleteShowComparePref(context, appWidgetId);
         deleteShowNoonPref(context, appWidgetId);

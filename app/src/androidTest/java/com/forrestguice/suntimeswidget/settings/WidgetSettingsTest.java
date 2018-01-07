@@ -88,6 +88,12 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     }
 
     @Test
+    public void test_timeMode3Pref()
+    {
+        assertTrue("STUB", true == false);  // TODO
+    }
+
+    @Test
     public void test_timeMode2OverridePref()
     {
         WidgetSettings.saveTimeMode2OverridePref(context, appWidgetId, false);
