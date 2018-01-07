@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.settings;
 import android.content.Context;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 
 import org.junit.Before;
@@ -45,13 +46,21 @@ public class AppSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_localeModePref()
     {
-        assertTrue("STUB: TODO", true == false);
+        String defaultValue0 = AppSettings.PREF_DEF_LOCALE_MODE.name();
+        String defaultValue1 = context.getResources().getString(R.string.def_app_locale_mode);
+        assertTrue("defaults should match", defaultValue0.equals(defaultValue1));
+
+        AppSettings.LocaleMode value = AppSettings.loadLocaleModePref(context);
     }
 
     @Test
     public void test_localePref()
     {
-        assertTrue("STUB: TODO", true == false);
+        String defaultValue0 = AppSettings.PREF_DEF_LOCALE;
+        String defaultValue1 = context.getResources().getString(R.string.def_app_locale);
+        assertTrue("defaults should match", defaultValue0.equals(defaultValue1));
+
+        String value = AppSettings.loadLocalePref(context);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -59,37 +68,81 @@ public class AppSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_themePref()
     {
-        assertTrue("STUB: TODO", true == false);
+        String defaultValue0 = AppSettings.PREF_DEF_APPEARANCE_THEME;
+        String defaultValue1 = context.getResources().getString(R.string.def_app_appearance_theme);
+        assertTrue("defaults should match", defaultValue0.equals(defaultValue1));
+
+        String value = AppSettings.loadThemePref(context);
     }
 
     @Test
     public void test_showWarningsPref()
     {
-        assertTrue("STUB: TODO", true == false);
+        boolean defaultValue0 = AppSettings.PREF_DEF_UI_SHOWWARNINGS;
+        boolean defaultValue1 = new Boolean(context.getResources().getString(R.string.def_app_ui_showwarnings));
+        assertTrue("defaults should match", defaultValue0 == defaultValue1);
+
+        boolean value = AppSettings.loadShowWarningsPref(context);
     }
 
     @Test
     public void test_showLightmapPref()
     {
-        assertTrue("STUB: TODO", true == false);
+        boolean defaultValue0 = AppSettings.PREF_DEF_UI_SHOWLIGHTMAP;
+        boolean defaultValue1 = new Boolean(context.getResources().getString(R.string.def_app_ui_showlightmap));
+        assertTrue("defaults should match", defaultValue0 == defaultValue1);
+
+        boolean value = AppSettings.loadShowLightmapPref(context);
+    }
+
+    @Test
+    public void test_showEquinoxPref()
+    {
+        boolean defaultValue0 = AppSettings.PREF_DEF_UI_SHOWEQUINOX;
+        boolean defaultValue1 = new Boolean(context.getResources().getString(R.string.def_app_ui_showequinox));
+        assertTrue("defaults should match", defaultValue0 == defaultValue1);
+
+        boolean value = AppSettings.loadShowEquinoxPref(context);
+    }
+
+    @Test
+    public void test_showDataSourcePref()
+    {
+        boolean defaultValue0 = AppSettings.PREF_DEF_UI_SHOWDATASOURCE;
+        boolean defaultValue1 = new Boolean(context.getResources().getString(R.string.def_app_ui_showdatasource));
+        assertTrue("defaults should match", defaultValue0 == defaultValue1);
+
+        boolean value = AppSettings.loadDatasourceUIPref(context);
     }
 
     @Test
     public void test_clockTapPref()
     {
-        assertTrue("STUB: TODO", true == false);
+        String defaultValue0 = AppSettings.PREF_DEF_UI_CLOCKTAPACTION.name();
+        String defaultValue1 = context.getResources().getString(R.string.def_app_ui_clocktapaction);
+        assertTrue("defaults should match", defaultValue0.equals(defaultValue1));
+
+        AppSettings.ClockTapAction value = AppSettings.loadClockTapActionPref(context);
     }
 
     @Test
     public void test_dateTapPref()
     {
-        assertTrue("STUB: TODO", true == false);
+        String defaultValue0 = AppSettings.PREF_DEF_UI_DATETAPACTION.name();
+        String defaultValue1 = context.getResources().getString(R.string.def_app_ui_datetapaction);
+        assertTrue("defaults should match", defaultValue0.equals(defaultValue1));
+
+        AppSettings.DateTapAction value = AppSettings.loadDateTapActionPref(context);
     }
 
     @Test
     public void test_noteTapPref()
     {
-        assertTrue("STUB: TODO", true == false);
+        String defaultValue0 = AppSettings.PREF_DEF_UI_NOTETAPACTION.name();
+        String defaultValue1 = context.getResources().getString(R.string.def_app_ui_notetapaction);
+        assertTrue("defaults should match", defaultValue0.equals(defaultValue1));
+
+        AppSettings.ClockTapAction value = AppSettings.loadNoteTapActionPref(context);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -115,18 +168,36 @@ public class AppSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_gpsMaxAgePref()
     {
-        assertTrue("STUB: TODO", true == false);
-    }
+        String defaultValue0 = context.getResources().getString(R.string.def_getFix_maxAge);
+        long defaultValue = Long.parseLong(defaultValue0);
+        assertTrue("default must be positive", defaultValue > 0);
 
-    @Test
-    public void test_gpsMinElapsedPref()
-    {
-        assertTrue("STUB: TODO", true == false);
+        boolean found = false;
+        String[] values = context.getResources().getStringArray(R.array.getFix_maxAge_values);
+        for (String value : values)
+        {
+            found = value.equals(defaultValue0);
+            if (found)
+                break;
+        }
+        assertTrue("default must belong to R.array.getFix_maxAge_values", found);
     }
 
     @Test
     public void test_gpsMaxElapsedPref()
     {
-        assertTrue("STUB: TODO", true == false);
+        String defaultValue0 = context.getResources().getString(R.string.def_getFix_maxElapsed);
+        long defaultValue = Long.parseLong(defaultValue0);
+        assertTrue("default must be positive", defaultValue > 0);
+
+        boolean found = false;
+        String[] values = context.getResources().getStringArray(R.array.getFix_maxElapse_values);
+        for (String value : values)
+        {
+            found = value.equals(defaultValue0);
+            if (found)
+                break;
+        }
+        assertTrue("default must belong to R.array.getFix_maxElapse_values", found);
     }
 }
