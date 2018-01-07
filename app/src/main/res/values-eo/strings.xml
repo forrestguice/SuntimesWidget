@@ -18,7 +18,7 @@
     <string name="configAction_setAlarm">Agordi averton</string>
     <string name="configAction_setTimeZone">Elekti horzonon</string>
     <string name="configAction_setDate">Elekti daton</string>
-    <string name="configAction_equinoxDialog">Solstice / Equinox</string> <!-- TODO -->
+    <string name="configAction_equinoxDialog">Solstico / ekvinokso</string>
     <string name="configAction_help">Helpo</string>
     <string name="configAction_settings">Agordoj</string>
     <string name="configAction_aboutWidget">Pri</string>
@@ -107,7 +107,7 @@
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
     <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
     <string name="delta_years">a</string>    <!-- e.g. 1y -->
-    <string name="delta_weeks">w</string>    <!-- e.g. 2w -->  <!-- TODO -->
+    <string name="delta_weeks">sem</string>    <!-- e.g. 2w -->
     <string name="delta_days">d</string>     <!-- e.g. 1d -->
     <string name="delta_hours">h</string>    <!-- e.g. 2h -->
     <string name="delta_minutes">min</string>  <!-- e.g. 3m -->
@@ -128,12 +128,12 @@
     <string name="configAction_reconfigWidget">Reagordi fenestraĵon</string>      <!-- used as title when reconfiguring -->
     <string name="configLabel_title0">Suntempoj fenestraĵo</string>                  <!-- used as title when adding -->
     <string name="configLabel_title1">Baskulebla fenestraĵo </string>                 <!-- used as title when adding -->
-    <string name="configLabel_title2">Solstice Widget</string>                  <!-- used as title when adding -->  <!-- TODO -->
+    <string name="configLabel_title2">Solstica fenestraĵo</string>                  <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
     <string name="configLabel_general">Agordoj ĝeneralaj</string>                <!-- group title -->
     <string name="configLabel_general_calculator">Fonto de datumoj:</string>         <!-- spinner label -->
-    <string name="configLabel_general_showSeconds">Show seconds</string>        <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_general_showSeconds">Montri sekundojn</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Agordoj de aspekto</string>           <!-- group title -->
@@ -157,15 +157,15 @@
     <string name="timeMode_night">Nokto</string>                <!-- a label (not an actual timeMode setting) -->
     <string name="timeMode_day">Tago</string>                   <!-- a label (not an actual timeMode setting) -->
 
-    <string name="timeMode_equinox_vernal">Spring Equinox</string>      <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_equinox_vernal_short">Equinox</string>       <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_equinox_autumnal">Fall Equinox</string>  <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_equinox_autumnal_short">Equinox</string>     <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_solstice_summer">Summer Solstice</string>    <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_solstice_summer_short">Solstice</string>     <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_solstice_winter">Winter Solstice</string>    <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_solstice_winter_short">Solstice</string>     <!-- setting -->  <!-- TODO -->
-
+    <string name="timeMode_equinox_vernal">Printempa tagnoktegaleco</string>      <!-- setting -->
+    <string name="timeMode_equinox_vernal_short">Ekvinokso</string>       <!-- setting -->
+    <string name="timeMode_equinox_autumnal">Aŭtuna tagnoktegaleco</string>  <!-- setting -->
+    <string name="timeMode_equinox_autumnal_short">Ekvinokso</string>     <!-- setting -->
+    <string name="timeMode_solstice_summer">Somera sunekstremo</string>    <!-- setting -->
+    <string name="timeMode_solstice_summer_short">Solstico</string>     <!-- setting -->
+    <string name="timeMode_solstice_winter">Vintra sunekstremo</string>    <!-- setting -->
+    <string name="timeMode_solstice_winter_short">Solstico</string>     <!-- setting -->
+    
     <string name="configLabel_general_timeMode">Reĝimo:</string>          <!-- spinner label -->
 
     <!-- Widget Setting: layout mode -->
@@ -250,12 +250,12 @@
     <string name="configLabel_general_showComparison">Montri komparon</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
-    <string name="trackingMode_closest">Closest Event</string>                 <!-- setting --> <!-- TODO -->
-    <string name="trackingMode_soonest">Upcoming Event</string>                <!-- setting -->  <!-- TODO -->
-    <string name="configLabel_general_trackingMode">Track:</string>            <!-- spinner label -->  <!-- TODO -->
+    <string name="trackingMode_closest">Plej proksima okazaĵo</string>                 <!-- setting -->
+    <string name="trackingMode_soonest">Sekvanta okazaĵo</string>                <!-- setting -->
+    <string name="configLabel_general_trackingMode">Spuri:</string>            <!-- spinner label -->
 
     <!-- Widget Setting: timeMode override -->
-    <string name="configLabel_general_timeMode_override">Tracking overrides mode</string>     <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_timeMode_override">Spurado transpasas reĝimon</string>     <!-- checkbox label -->
 
     <!-- Widget Settings: noon -->
     <string name="configLabel_general_showNoon">Montri tagmezon veran</string>        <!-- checkbox label -->
@@ -310,10 +310,10 @@
     <string name="configLabel_themeColorText">Koloro de teksto:</string>       <!-- color label -->
     <string name="configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->
 
-    <string name="configLabel_themeColorSpring">Spring Color:</string> <!-- color label -->  <!-- TODO -->
-    <string name="configLabel_themeColorSummer">Summer Color:</string> <!-- color label -->  <!-- TODO -->
-    <string name="configLabel_themeColorFall">Fall Color:</string> <!-- color label --> <!-- TODO -->
-    <string name="configLabel_themeColorWinter">Winter Color:</string> <!-- color label -->  <!-- TODO -->
+    <string name="configLabel_themeColorSpring">Printempa koloro:</string> <!-- color label -->
+    <string name="configLabel_themeColorSummer">Somera koloro:</string> <!-- color label -->
+    <string name="configLabel_themeColorFall">Aŭtuna koloro:</string> <!-- color label -->
+    <string name="configLabel_themeColorWinter">Vintra koloro:</string> <!-- color label -->
 
     <string name="configLabel_themeColorSunrise">Koloro de sunleviĝo:</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
@@ -390,13 +390,13 @@
     <string name="configLabel_ui_showLightmap_summary">Montri bastonan diagramon de periodoj de tago, nokto kaj krepusko.</string>
 
     <!-- App Setting: Show Equinox / Solstice -->
-    <string name="configLabel_ui_showEquinox">Show Solstice / Equinox</string>  <!-- TODO -->
-    <string name="configLabel_ui_showEquinox_summary">Show time until next solstice or equinox.</string>  <!-- TODO -->
-    <string name="configLabel_ui_showEquinox_notImplemented">Solstice and equinox not implemented by this data source.</string>  <!-- TODO -->
+    <string name="configLabel_ui_showEquinox">Montri sunekstremon / tagnoktegalecon</string>
+    <string name="configLabel_ui_showEquinox_summary">Montri tempon ĝis la sekvanta sunekstremo aŭ tagnoktegaleco.</string>
+    <string name="configLabel_ui_showEquinox_notImplemented">Sunekstremo kaj tagnoktegaleco ne estas ankoraŭ subtenataj de tiu ĉi fonto de datumoj.</string>
 
     <!-- App Setting: Solstice Tracking Mode -->
-    <string name="configLabel_ui_solsticeTrackingMode">Solstice Tracking</string> <!-- TODO -->
-    <string name="configLabel_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Upcoming Event">%s</xliff:g></string>  <!-- TODO -->
+    <string name="configLabel_ui_solsticeTrackingMode">Spuri solsticon</string>
+    <string name="configLabel_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Sekvanta okazaĵo">%s</xliff:g></string>
 
     <!-- App Setting: show data source -->
     <string name="configLabel_ui_showdatasource">Montri fonton de datumoj</string>
@@ -585,7 +585,7 @@
     <string name="app_name">Suntempoj</string>
     <string name="app_name_widget0">Suntempoj Fenestraĵo</string>
     <string name="app_name_widget1">Suntempoj Fenestraĵo (baskulebla)</string>
-    <string name="app_name_widget2">Suntimes Solstice Widget</string>  <!-- TODO -->
+    <string name="app_name_widget2">Suntempoj Solstica Fenestraĵo</string>
     <string name="app_version"><![CDATA[<b>Versio:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Montras tempojn de sunleviĝoj, sunsubiroj kaj krepuskoj.</string>
     <string name="app_support_url"><![CDATA[
@@ -656,4 +656,4 @@
     <string name="calculator_displayString_time4a_cc">Uzas algoritmojn publikigitajn de Dershowitz kaj Reingold en ilia libro “Calendrical Calculations” (tria eldono).</string>
     <string name="calculator_displayString_time4a_4j">Bazita sur astrosciencaj kalkuloj publikigitaj de Jean Meeus en lia libro “Astronomical Algorithms” (dua eldono).</string>
 
-</resources>
+/</resources>
