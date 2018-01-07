@@ -770,4 +770,24 @@
     <string name="calculator_displayString_time4a_cc">Follows algorithms published by Dershowitz/Reingold in their book "Calendrical Calculations" (third edition).</string>
     <string name="calculator_displayString_time4a_4j">Based on astronomical calculations published by Jean Meeus in his book "Astronomical Algorithms" (second edition).</string>
 
+    <!-- pref defaults -->
+    <string name="def_appwidget_0_general_calculator" translatable="false">any</string>
+    <string name="def_appwidget_0_appearance_timeformatmode" translatable="false">MODE_SYSTEM</string>
+    <string name="def_appwidget_0_general_showseconds" translatable="false">false</string>
+    <string name="def_appwidget_0_general_trackingmode" translatable="false">SOONEST</string>
+
+    <string name="def_app_locale_mode" translatable="false">SYSTEM_LOCALE</string>
+    <string name="def_app_locale" translatable="false">en</string>
+
+    <string name="def_getFix_maxElapsed" translatable="false">60000</string>
+    <string name="def_getFix_maxAge" translatable="false">300000</string>
+
+    <string name="def_app_ui_showwarnings" translatable="false">true</string>
+    <string name="def_app_ui_showequinox" translatable="false">true</string>
+    <string name="def_app_ui_showlightmap" translatable="false">true</string>
+    <string name="def_app_ui_showdatasource" translatable="false">true</string>
+    <string name="def_app_ui_datetapaction" translatable="false">SWAP_CARD</string>
+    <string name="def_app_ui_notetapaction" translatable="false">NEXT_NOTE</string>
+    <string name="def_app_ui_clocktapaction" translatable="false">ALARM</string>
+    <string name="def_app_appearance_theme" translatable="false">dark</string>
 </resources>
