@@ -69,6 +69,10 @@ public abstract class SuntimesActivityTestBase
     public static final String TESTLOC_1_LABEL = "Test Location 1";
     public static final String TESTLOC_1_LAT = "83.124";
     public static final String TESTLOC_1_LON = "23.1592";
+    public static final String TESTLOC_1_ALT = "10";
+
+    public static final String TESTTZID_0 = "US/Eastern";
+    public static final String TESTTZID_1 = "US/Pacific";
 
     public static final int TESTDATE_0_YEAR = 2017;
     public static final int TESTDATE_0_MONTH = 1;    // feb 19, 2017
