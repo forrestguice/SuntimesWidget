@@ -184,12 +184,21 @@
 
     <string name="timeMode_moon_new">New Moon</string>                     <!-- setting -->
     <string name="timeMode_moon_new_short">New</string>                    <!-- setting -->
-    <string name="timeMode_moon_firstquarter">First Quarter Moon</string>  <!-- setting -->
+
+    <string name="timeMode_moon_waxingcrescent_short">Waxing Crescent</string>               <!-- label -->
+    <string name="timeMode_moon_waxingcrescent">Waxing Crescent</string>                     <!-- label -->
+    <string name="timeMode_moon_firstquarter">First Quarter</string>  <!-- setting -->
     <string name="timeMode_moon_firstquarter_short">First Quarter</string> <!-- setting -->
+    <string name="timeMode_moon_waxinggibbous_short">Waxing Gibbous</string>               <!-- label -->
+    <string name="timeMode_moon_waxinggibbous">Waxing Gibbous</string>                     <!-- label -->
     <string name="timeMode_moon_full">Full Moon</string>                   <!-- setting -->
     <string name="timeMode_moon_full_short">Full</string>                  <!-- setting -->
-    <string name="timeMode_moon_thirdquarter">Third Quarter Moon</string>  <!-- setting -->
+    <string name="timeMode_moon_waninggibbous_short">Waning Gibbous</string>               <!-- label -->
+    <string name="timeMode_moon_waninggibbous">Waning Gibbous</string>                     <!-- label -->
+    <string name="timeMode_moon_thirdquarter">Third Quarter</string>  <!-- setting -->
     <string name="timeMode_moon_thirdquarter_short">Third Quarter</string> <!-- setting -->
+    <string name="timeMode_moon_waningcrescent_short">Waning Crescent</string>               <!-- label -->
+    <string name="timeMode_moon_waningcrescent">Waning Crescent</string>                     <!-- label -->
 
     <string name="configLabel_general_timeMode">Mode:</string>          <!-- spinner label -->
 
