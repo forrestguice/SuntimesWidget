@@ -10,7 +10,7 @@
             android:dialogTitle="@string/configLabel_appearance_theme"
             android:summary="%s"
             android:entries="@array/appThemes_display" android:entryValues="@array/appThemes_values"
-            android:defaultValue="dark" />
+            android:defaultValue="@string/def_app_appearance_theme" />
 
         <com.forrestguice.suntimeswidget.settings.ListPreference
             android:key="app_ui_clocktapaction"
@@ -18,7 +18,7 @@
             android:dialogTitle="@string/configLabel_action_onClockTap"
             android:summary="%s"
             android:entries="@array/clockTapActions_display" android:entryValues="@array/clockTapActions_values"
-            android:defaultValue="ALARM" />
+            android:defaultValue="@string/def_app_ui_clocktapaction" />
 
         <com.forrestguice.suntimeswidget.settings.ListPreference
             android:key="app_ui_notetapaction"
@@ -26,7 +26,7 @@
             android:dialogTitle="@string/configLabel_action_onNoteTap"
             android:summary="%s"
             android:entries="@array/noteTapActions_display" android:entryValues="@array/noteTapActions_values"
-            android:defaultValue="NEXT_NOTE" />
+            android:defaultValue="@string/def_app_ui_notetapaction" />
 
         <com.forrestguice.suntimeswidget.settings.ListPreference
             android:key="app_ui_datetapaction"
@@ -34,38 +34,38 @@
             android:dialogTitle="@string/configLabel_action_onDateTap"
             android:summary="%s"
             android:entries="@array/dateTapActions_display" android:entryValues="@array/dateTapActions_values"
-            android:defaultValue="SWAP_CARD" />
+            android:defaultValue="@string/def_app_ui_datetapaction" />
 
         <CheckBoxPreference
             android:key="app_ui_showdatasource"
             android:title="@string/configLabel_ui_showdatasource"
             android:summary="@string/configLabel_ui_showdatasource_summary"
-            android:defaultValue="true" />
+            android:defaultValue="@string/def_app_ui_showdatasource" />
 
         <CheckBoxPreference
             android:key="app_ui_showlightmap"
             android:title="@string/configLabel_ui_showLightmap"
             android:summary="@string/configLabel_ui_showLightmap_summary"
-            android:defaultValue="true" />
+            android:defaultValue="@string/def_app_ui_showlightmap" />
 
         <CheckBoxPreference
             android:key="app_ui_showequinox"
             android:title="@string/configLabel_ui_showEquinox"
             android:summary="@string/configLabel_ui_showEquinox_summary"
-            android:defaultValue="true" />
+            android:defaultValue="@string/def_app_ui_showequinox" />
 
         <CheckBoxPreference
             android:key="app_ui_showwarnings"
             android:title="@string/configLabel_ui_showWarnings"
             android:summary="@string/configLabel_ui_showWarnings_summary"
-            android:defaultValue="true" />
+            android:defaultValue="@string/def_app_ui_showwarnings" />
 
         <com.forrestguice.suntimeswidget.settings.ListPreference
             android:key="appwidget_0_general_trackingmode"
             android:title="@string/configLabel_ui_solsticeTrackingMode"
             android:summary="@string/configLabel_ui_solsticeTrackingMode_summary"
             android:entries="@array/solsticeTrackingMode_display" android:entryValues="@array/solsticeTrackingMode_values"
-            android:defaultValue="SOONEST" />
+            android:defaultValue="@string/def_appwidget_0_general_trackingmode" />
 
     </PreferenceCategory>
 
