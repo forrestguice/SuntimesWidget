@@ -144,6 +144,7 @@
     <string name="configLabel_title0">Suntimes Widget</string>                  <!-- used as title when adding -->
     <string name="configLabel_title1">Flippable Widget</string>                 <!-- used as title when adding -->
     <string name="configLabel_title2">Solstice Widget</string>                  <!-- used as title when adding -->
+    <string name="configLabel_moonwidget0">Moon Widget</string>                 <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
     <string name="configLabel_general">General Settings</string>                <!-- group title -->
@@ -703,6 +704,7 @@
     <string name="app_name_widget0">Suntimes Widget</string>
     <string name="app_name_widget1">Suntimes Widget (flippable)</string>
     <string name="app_name_widget2">Suntimes Solstice Widget</string>
+    <string name="app_name_moonwidget0">Moon Widget</string>
     <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Displays sunrise, sunset, and twilight times.</string>
     <string name="app_support_url"><![CDATA[

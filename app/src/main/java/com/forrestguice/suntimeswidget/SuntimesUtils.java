@@ -55,6 +55,7 @@ import java.text.DateFormat;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings.TimeFormatMode;
@@ -600,6 +601,13 @@ public class SuntimesUtils
      * @param data
      * @return
      */
+    public String displayStringForTitlePattern(String titlePattern, SuntimesMoonData data)
+    {
+        String displayString = displayStringForTitlePattern(titlePattern, (SuntimesData)data);
+        // TODO
+        return displayString;
+    }
+
     public String displayStringForTitlePattern(String titlePattern, SuntimesEquinoxSolsticeData data)
     {
         String displayString = displayStringForTitlePattern(titlePattern, (SuntimesData)data);

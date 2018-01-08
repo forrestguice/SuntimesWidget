@@ -166,6 +166,28 @@
             </intent-filter>
         </activity>
 
+        <!-- Widget: Moon -->
+        <receiver android:name=".MoonWidget0"
+            android:label="@string/app_name_moonwidget0">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="MOON_WIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_moon0" />
+        </receiver>
+
+        <!-- Moon Widget Config Activity -->
+        <activity
+            android:name=".MoonWidget0ConfigActivity" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>
