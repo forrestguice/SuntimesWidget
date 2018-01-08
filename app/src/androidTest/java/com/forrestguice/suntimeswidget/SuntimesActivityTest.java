@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -60,8 +60,11 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.forrestguice.suntimeswidget.AlarmDialogTest.cancelAlarmDialog;
 import static com.forrestguice.suntimeswidget.AlarmDialogTest.verifyAlarmDialog;
+import static com.forrestguice.suntimeswidget.DialogTest.cancelEquinoxDialog;
 import static com.forrestguice.suntimeswidget.DialogTest.cancelLightmapDialog;
+import static com.forrestguice.suntimeswidget.DialogTest.showEquinoxDialog;
 import static com.forrestguice.suntimeswidget.DialogTest.showLightmapDialog;
+import static com.forrestguice.suntimeswidget.DialogTest.verifyEquinoxDialog;
 import static com.forrestguice.suntimeswidget.DialogTest.verifyLightmapDialog;
 import static com.forrestguice.suntimeswidget.LocationDialogTest.applyLocationDialog;
 import static com.forrestguice.suntimeswidget.LocationDialogTest.inputLocationDialog_mode;
@@ -110,6 +113,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         verifyNote(activityRule.getActivity());
         verifyTimeCard();
         verifyLightmap(activityRule.getActivity());
+        verifySolsticeEquinox(activityRule.getActivity());
         verifyDataSourceUI(activityRule.getActivity());
     }
 
@@ -187,6 +191,16 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         }
     }
 
+    public static void verifySolsticeEquinox(Context context)
+    {
+        if (AppSettings.loadShowEquinoxPref(context))
+        {
+            onView(withId(R.id.info_date_solsticequinox)).check(assertShown);
+        } else {
+            onView(withId(R.id.info_date_solsticequinox)).check(matches(not(isDisplayed())));
+        }
+    }
+
     public static void verifyDataSourceUI(Context context)
     {
         if (AppSettings.loadDatasourceUIPref(context))
@@ -245,6 +259,20 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
 
         } else {
             onView(withId(R.id.info_time_lightmap)).check(matches(not(isDisplayed())));
+        }
+    }
+
+    @Test
+    public void test_onSolsticeEquinoxClick()
+    {
+        if (AppSettings.loadShowEquinoxPref(activityRule.getActivity()))
+        {
+            showEquinoxDialog(activityRule.getActivity());
+            verifyEquinoxDialog();
+            cancelEquinoxDialog();
+
+        } else {
+            onView(withId(R.id.info_date_solsticequinox)).check(matches(not(isDisplayed())));
         }
     }
 
