@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -82,6 +82,47 @@ public class DialogTest extends SuntimesActivityTestBase
     {
         onView(withId(R.id.info_time_lightmap_key)).perform(pressBack());
         onView(withId(R.id.info_time_lightmap_key)).check(doesNotExist());
+    }
+
+    /**
+     *  UI Test
+     *
+     *  Show, rotate, and dismiss the solstice/equinox dialog.
+     */
+    @Test
+    public void test_showEquinoxDialog()
+    {
+        Context context = activityRule.getActivity();
+        if (AppSettings.loadShowEquinoxPref(context))
+        {
+            showEquinoxDialog(context);
+            captureScreenshot("suntimes-dialog-equinox0");
+
+            verifyEquinoxDialog();
+            cancelEquinoxDialog();
+
+        } else {
+            onView(withId(R.id.info_time_equinox)).check(matches(not(isDisplayed())));
+        }
+    }
+
+    public static void showEquinoxDialog(Context context)
+    {
+        String actionText = context.getString(R.string.configAction_equinoxDialog);
+        openActionBarOverflowOrOptionsMenu(context);
+        onView(withText(actionText)).perform(click());
+        verifyEquinoxDialog();
+    }
+
+    public static void verifyEquinoxDialog()
+    {
+        onView(withId(R.id.info_time_equinox)).check(assertShown);
+    }
+
+    public static void cancelEquinoxDialog()
+    {
+        onView(withId(R.id.info_time_equinox)).perform(pressBack());
+        onView(withId(R.id.info_time_equinox)).check(doesNotExist());
     }
 
     /**

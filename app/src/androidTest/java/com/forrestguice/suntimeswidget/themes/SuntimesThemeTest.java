@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -39,16 +39,13 @@ import static junit.framework.Assert.assertTrue;
 @RunWith(AndroidJUnit4.class)
 public class SuntimesThemeTest extends SuntimesActivityTestBase
 {
-
-    ///////////////////////////////////////////////////////////////////////////
-
     @Rule
     public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
 
     @Test
     public void test_initTheme()
     {
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = activityRule.getActivity();
         SuntimesTheme darkTheme = new DarkTheme(context);
         SuntimesTheme testTheme = new TestTheme(context);
         testTheme.saveTheme(context, WidgetThemes.PREFS_THEMES);
@@ -57,6 +54,11 @@ public class SuntimesThemeTest extends SuntimesActivityTestBase
         boolean initialized = theme.initTheme(context, WidgetThemes.PREFS_THEMES, TestTheme.THEME_NAME, darkTheme);
         assertTrue(initialized);
         verifyInit(theme, testTheme);
+
+        testTheme.deleteTheme(context, WidgetThemes.PREFS_THEMES);
+        SuntimesTheme theme1 = new SuntimesTheme();
+        theme1.initTheme(context, WidgetThemes.PREFS_THEMES, TestTheme.THEME_NAME, darkTheme);
+        verifyInit(theme, darkTheme);    // verify deleted (init should be to default: darkTheme)
     }
 
     protected void verifyInit(SuntimesTheme theme, SuntimesTheme truth)
@@ -96,18 +98,11 @@ public class SuntimesThemeTest extends SuntimesActivityTestBase
         assertTrue("theme set icon fill color should match", theme.getSunsetIconColor() == truth.getSunsetIconColor());
         assertTrue("theme set icon stroke color should match", theme.getSunsetIconStrokeColor() == truth.getSunsetIconStrokeColor());
         assertTrue("theme set icon stroke width should match", theme.getSunriseIconStrokeWidth() == truth.getSunriseIconStrokeWidth());
-    }
 
-    @Test
-    public void test_saveTheme()
-    {
-        assertTrue("STUB", true == false);  // TODO
-    }
-
-    @Test
-    public void test_deleteTheme()
-    {
-        assertTrue("STUB", true == false);  // TODO
+        assertTrue("theme winter color should match", theme.getWinterColor() == truth.getWinterColor());
+        assertTrue("theme spring color should match", theme.getSpringColor() == truth.getSpringColor());
+        assertTrue("theme summer color should match", theme.getSummerColor() == truth.getSummerColor());
+        assertTrue("theme fall color should match", theme.getFallColor() == truth.getFallColor());
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -163,6 +158,11 @@ public class SuntimesThemeTest extends SuntimesActivityTestBase
             this.themeSunsetIconColor = Color.BLUE;
             this.themeSunsetIconStrokeColor = Color.RED;
             this.themeSunsetIconStrokeWidth = 3;
+
+            this.themeWinterColor = Color.BLUE;
+            this.themeSpringColor = Color.GREEN;
+            this.themeSummerColor = Color.YELLOW;
+            this.themeFallColor = Color.RED;
         }
 
         @Override

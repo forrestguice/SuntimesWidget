@@ -14,7 +14,7 @@
             android:dialogTitle="@string/configLabel_getFix_maxElapse"
             android:summary="@string/configLabel_getFix_maxElapse_summary"
             android:entries="@array/getFix_maxElapse_display" android:entryValues="@array/getFix_maxElapse_values"
-            android:defaultValue="60000" />
+            android:defaultValue="@string/def_getFix_maxElapsed" />
 
         <com.forrestguice.suntimeswidget.settings.ListPreference
             android:key="getFix_maxAge"
@@ -22,7 +22,7 @@
             android:dialogTitle="@string/configLabel_getFix_maxAge"
             android:summary="@string/configLabel_getFix_maxAge_summary"
             android:entries="@array/getFix_maxAge_display" android:entryValues="@array/getFix_maxAge_values"
-            android:defaultValue="300000" />
+            android:defaultValue="@string/def_getFix_maxAge" />
 
     </PreferenceCategory>
 
