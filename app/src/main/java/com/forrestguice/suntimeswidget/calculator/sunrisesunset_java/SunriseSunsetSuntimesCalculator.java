@@ -22,6 +22,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.calculator.MoonPhase;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -226,6 +227,26 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
         Date sunrise = sunriseCal.getTime();
         Date sunset = sunsetCal.getTime();
         return (time.after(sunrise) && time.before(sunset));
+    }
+
+    public Calendar getMoonriseCalendarForDate(Calendar date)
+    {
+        return null;  // TODO
+    }
+
+    public Calendar getMoonsetCalendarForDate(Calendar date)
+    {
+        return null;  // TODO
+    }
+
+    public MoonPhase getMoonPhase(Calendar date)
+    {
+        return null;  // TODO
+    }
+
+    public double getMoonIllumination(Calendar date)
+    {
+        return -1; // TODO
     }
 
 }

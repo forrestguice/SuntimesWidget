@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset;
 
 import android.content.Context;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.calculator.MoonPhase;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -208,6 +209,26 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     {
         return new SuntimesCalculatorDescriptor(SunriseSunsetSuntimesCalculator.NAME, SunriseSunsetSuntimesCalculator.LINK, SunriseSunsetSuntimesCalculator.REF,
                 R.string.calculator_displayString_caarmensunrisesunset, SunriseSunsetSuntimesCalculator.FEATURES);
+    }
+
+    public Calendar getMoonriseCalendarForDate(Calendar date)
+    {
+        return null;  // TODO
+    }
+
+    public Calendar getMoonsetCalendarForDate(Calendar date)
+    {
+        return null;  // TODO
+    }
+
+    public MoonPhase getMoonPhase(Calendar date)
+    {
+        return null;  // TODO
+    }
+
+    public double getMoonIllumination(Calendar date)
+    {
+        return -1; // TODO
     }
 }
 

@@ -20,7 +20,6 @@ package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
 
-import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import java.util.Calendar;
 
@@ -161,7 +160,7 @@ public class SuntimesMoonData extends SuntimesData
     public void calculate()
     {
         SuntimesCalculatorFactory calculatorFactory = new SuntimesCalculatorFactory(context, calculatorMode);
-        SuntimesCalculator calculator = calculatorFactory.createCalculator(location, timezone);  // TODO
+        SuntimesCalculator calculator = calculatorFactory.createCalculator(location, timezone);
 
         todaysCalendar = Calendar.getInstance(timezone);
         otherCalendar = Calendar.getInstance(timezone);
@@ -187,79 +186,17 @@ public class SuntimesMoonData extends SuntimesData
         date = todaysCalendar.getTime();
         dateOther = otherCalendar.getTime();
 
-        this.moonriseCalendarToday = todaysCalendar;  // TODO
-        this.moonsetCalendarToday = todaysCalendar;  // TODO
-        this.moonriseCalendarOther = otherCalendar;  // TODO
-        this.moonsetCalendarOther = otherCalendar;  // TODO
-        this.moonIlluminationToday = 0.5;  // TODO
-        this.moonIlluminationOther = 1;  // TODO
-        this.moonPhaseToday = MoonPhase.NEW;  // TODO
-        this.moonPhaseOther = MoonPhase.WAXING_CRESCENT;  // TODO
+        this.moonriseCalendarToday = calculator.getMoonriseCalendarForDate(todaysCalendar);
+        this.moonsetCalendarToday = calculator.getMoonsetCalendarForDate(todaysCalendar);
+        this.moonIlluminationToday = calculator.getMoonIllumination(todaysCalendar);
+        this.moonPhaseToday = calculator.getMoonPhase(todaysCalendar);
+
+        this.moonriseCalendarOther = calculator.getMoonriseCalendarForDate(otherCalendar);
+        this.moonsetCalendarOther = calculator.getMoonsetCalendarForDate(otherCalendar);
+        this.moonIlluminationOther = calculator.getMoonIllumination(otherCalendar);
+        this.moonPhaseOther = calculator.getMoonPhase(otherCalendar);
 
         super.calculate();
-    }
-
-    /**
-     * MoonPhase
-     */
-    public enum MoonPhase
-    {
-        NEW("New", "New Moon", R.drawable.ic_sunrise_large),         // TODO: icons
-        WAXING_CRESCENT("Waxing Crescent", "Waxing Crescent", R.drawable.ic_sunrise_large),
-        FIRST_QUARTER("First Quarter", "First Quarter", R.drawable.ic_sunrise_large),
-        WAXING_GIBBOUS("Waxing Gibbous", "Waxing Gibbous", R.drawable.ic_sunrise_large),
-        FULL("Full", "Full Moon", R.drawable.ic_noon_large),
-        WANING_GIBBOUS("Waning Gibbous", "Waning Gibbous", R.drawable.ic_sunset_large),
-        THIRD_QUARTER("Third Quarter", "Third Quarter", R.drawable.ic_sunset_large),
-        WANING_CRESCENT("Waxing Crescent", "Waxing Crescent", R.drawable.ic_sunset_large);
-
-        private int iconResource;
-        private String shortDisplayString, longDisplayString;
-
-        private MoonPhase(String shortDisplayString, String longDisplayString, int iconResource)
-        {
-            this.shortDisplayString = shortDisplayString;
-            this.longDisplayString = longDisplayString;
-            this.iconResource = iconResource;
-        }
-
-        public String toString()
-        {
-            return longDisplayString;
-        }
-
-        public int getIcon()
-        {
-            return iconResource;
-        }
-
-        public String getShortDisplayString()
-        {
-            return shortDisplayString;
-        }
-
-        public String getLongDisplayString()
-        {
-            return longDisplayString;
-        }
-
-        public void setDisplayString(String shortDisplayString, String longDisplayString)
-        {
-            this.shortDisplayString = shortDisplayString;
-            this.longDisplayString = longDisplayString;
-        }
-
-        public static void initDisplayStrings(Context context)
-        {
-             NEW.setDisplayString(context.getString(R.string.timeMode_moon_new_short), context.getString(R.string.timeMode_moon_new));
-             WAXING_CRESCENT.setDisplayString(context.getString(R.string.timeMode_moon_waxingcrescent_short), context.getString(R.string.timeMode_moon_waxingcrescent));
-             FIRST_QUARTER.setDisplayString(context.getString(R.string.timeMode_moon_firstquarter_short), context.getString(R.string.timeMode_moon_firstquarter));
-             WAXING_GIBBOUS.setDisplayString(context.getString(R.string.timeMode_moon_waxinggibbous_short), context.getString(R.string.timeMode_moon_waxinggibbous));
-             FULL.setDisplayString(context.getString(R.string.timeMode_moon_full_short), context.getString(R.string.timeMode_moon_full));
-             WANING_GIBBOUS.setDisplayString(context.getString(R.string.timeMode_moon_waninggibbous_short), context.getString(R.string.timeMode_moon_waninggibbous));
-             THIRD_QUARTER.setDisplayString(context.getString(R.string.timeMode_moon_thirdquarter_short), context.getString(R.string.timeMode_moon_thirdquarter));
-             WAXING_CRESCENT.setDisplayString(context.getString(R.string.timeMode_moon_waxingcrescent_short),context.getString(R.string.timeMode_moon_waxingcrescent));
-        }
     }
 
 }

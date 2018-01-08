@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -29,13 +29,14 @@ import java.util.TimeZone;
  * An interface used when calculating sunrise and sunset times. Implementations
  * of this interface are intended to be thin wrappers around third party code.
  *
- * @version 1.2.0
+ * @version 1.3.0
  */
 public interface SuntimesCalculator
 {
     int FEATURE_RISESET = 0;      // feature: rise, set, and twilight times
     int FEATURE_SOLSTICE = 10;    // feature: solstice/equinox times
     int FEATURE_ALTITUDE = 20;    // feature: altitude based refinement
+    int FEATURE_MOON = 30;        // feature: moonrise, moonset, phase, illumination
 
     //
     // 1.0.0 sunrise, sunset, noon, twilight times
@@ -225,4 +226,39 @@ public interface SuntimesCalculator
      */
     boolean isDay( Calendar dateTime );
 
+    //
+    // 1.3.0 moonrise, moonset, phase, illumination
+    //
+
+    /**
+     * Moonrise
+     * @param date a Calendar representing a given date
+     * @return a Calendar for moonrise for the given date
+     * @since 1.3.0
+     */
+    Calendar getMoonriseCalendarForDate(Calendar date);
+
+    /**
+     * Moonset
+     * @param date a Calendar representing a given date
+     * @return a Calendar for moonset for the given date
+     * @since 1.3.0
+     */
+    Calendar getMoonsetCalendarForDate(Calendar date);
+
+    /**
+     * MoonPhase
+     * @param date a Calendar representing a given date
+     * @return moon phase enum
+     * @since 1.3.0
+     */
+    MoonPhase getMoonPhase(Calendar date);
+
+    /**
+     * MoonIllumination
+     * @param date a Calendar representing a given date
+     * @return an illumination value [0,1]; 0%-100%
+     * @since 1.3.0
+     */
+    double getMoonIllumination(Calendar date);
 }

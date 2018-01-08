@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.calculator.time4a;
 import android.content.Context;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.calculator.MoonPhase;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -246,6 +247,26 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         if (northernHemisphere)
             return season.onNorthernHemisphere();
         else return season.onSouthernHemisphere();
+    }
+
+    public Calendar getMoonriseCalendarForDate(Calendar date)
+    {
+        return null;  // TODO
+    }
+
+    public Calendar getMoonsetCalendarForDate(Calendar date)
+    {
+        return null;  // TODO
+    }
+
+    public MoonPhase getMoonPhase(Calendar date)
+    {
+        return null;  // TODO
+    }
+
+    public double getMoonIllumination(Calendar date)
+    {
+        return -1; // TODO
     }
 
 }
