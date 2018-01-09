@@ -35,7 +35,7 @@
             android:paddingLeft="16dp" android:paddingRight="8dp"
             android:paddingTop="@dimen/settingsGroup_padding">
 
-            <TextView
+            <TextView android:labelFor="@+id/appwidget_appearance_theme"
                 android:id="@+id/appwidget_appearance_theme_label"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="@string/configLabel_appearance_theme" android:layout_gravity="center_vertical"
@@ -43,6 +43,7 @@
                 android:clickable="true" android:focusable="true" />
 
             <Spinner android:id="@+id/appwidget_appearance_theme"
+                     android:dropDownVerticalOffset="16sp"
                      android:layout_width="match_parent" android:layout_height="wrap_content" />
 
         </LinearLayout>
@@ -53,11 +54,13 @@
             android:paddingLeft="16dp" android:paddingRight="8dp"
             android:paddingTop="@dimen/settingsGroup_padding">
 
-            <TextView android:id="@+id/appwidget_appearance_1x1mode_label"
+            <TextView android:labelFor="@+id/appwidget_appearance_1x1mode"
+                android:id="@+id/appwidget_appearance_1x1mode_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:text="@string/configLabel_appearance_1x1mode" />
 
             <Spinner android:id="@+id/appwidget_appearance_1x1mode" android:layout_width="match_parent"
+                android:dropDownVerticalOffset="16sp"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
@@ -76,7 +79,7 @@
             android:orientation="horizontal"
             android:paddingLeft="16dp" android:paddingRight="8dp">
 
-            <TextView
+            <TextView android:labelFor="@+id/appwidget_appearance_titleText"
                 android:id="@+id/appwidget_appearance_titleText_label"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="@string/configLabel_appearance_titleText" />

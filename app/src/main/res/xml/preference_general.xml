@@ -9,7 +9,7 @@
             android:title="@string/configLabel_general_calculator"
             android:dialogTitle="@string/configLabel_general_calculator"
             android:summary="%s"
-            android:entries="@null" android:entryValues="@null" android:defaultValue="any" />
+            android:entries="@null" android:entryValues="@null" android:defaultValue="@string/def_appwidget_0_general_calculator" />
 
         <com.forrestguice.suntimeswidget.settings.ListPreference
             android:key="appwidget_0_appearance_timeformatmode"
@@ -17,12 +17,12 @@
             android:dialogTitle="@string/configLabel_timeFormatMode"
             android:summary="%s"
             android:entries="@array/timeFormatMode_display" android:entryValues="@array/timeFormatMode_values"
-            android:defaultValue="MODE_SYSTEM" />
+            android:defaultValue="@string/def_appwidget_0_appearance_timeformatmode" />
 
         <CheckBoxPreference
             android:key="appwidget_0_general_showseconds"
             android:title="@string/configLabel_general_showSeconds"
-            android:summary="" android:defaultValue="false" />
+            android:summary="" android:defaultValue="@string/def_appwidget_0_general_showseconds" />
 
     </PreferenceCategory>
 

@@ -33,11 +33,12 @@
             android:paddingLeft="16dp" android:paddingRight="8dp"
             android:paddingTop="@dimen/settingsGroup_padding">
 
-            <TextView
+            <TextView android:labelFor="@+id/appwidget_action_onTap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:text="@string/configLabel_action_onTap" />
 
             <Spinner android:id="@+id/appwidget_action_onTap" android:layout_width="match_parent"
+                android:dropDownVerticalOffset="16sp"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
@@ -52,7 +53,7 @@
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:paddingLeft="16dp" android:paddingRight="8dp">
 
-            <TextView
+            <TextView android:labelFor="@+id/appwidget_action_launch"
                 android:id="@+id/appwidget_action_launch_label"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="@string/configLabel_action_launch" />

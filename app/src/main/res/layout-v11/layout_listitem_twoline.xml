@@ -30,20 +30,19 @@
         android:visibility="gone" />
 
     <LinearLayout
-        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <CheckedTextView
+        <TextView
             style="?android:attr/dropDownItemStyle"
             android:id="@android:id/text1"
-            android:checkMark="@android:drawable/btn_radio"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="?android:attr/textColorAlertDialogListItem"
             android:singleLine="true"
             android:textStyle="bold"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:duplicateParentState="true"
-            android:paddingTop="0dp" android:paddingBottom="0dp"
+            android:paddingTop="4dp" android:paddingBottom="6dp"
             tools:text="Primary" />
 
         <TextView

@@ -26,7 +26,7 @@
 
             <TextView style="@style/SunsetTimeTextView"
                       android:id="@+id/text_time_noon_label"
-                      android:text="@string/timeMode_noon"
+                      android:text="@string/timeMode_noon" android:labelFor="@+id/text_time_noon"
                       android:minWidth="170dp" android:gravity="start" />
 
             <LinearLayout style="@style/SunsetTimeLayout"
