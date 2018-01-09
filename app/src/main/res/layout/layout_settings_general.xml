@@ -32,7 +32,7 @@
             android:orientation="horizontal"
             android:paddingRight="16dp" android:paddingLeft="16dp" android:paddingTop="@dimen/settingsGroup_padding">
 
-            <TextView
+            <TextView android:labelFor="@+id/appwidget_general_calculator"
                 android:id="@+id/appwidget_general_calculator_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:text="@string/configLabel_general_calculator" />
@@ -49,7 +49,7 @@
             android:paddingRight="16dp" android:paddingLeft="16dp" android:paddingTop="@dimen/settingsGroup_padding"
             android:weightSum="1">
 
-            <TextView
+            <TextView android:labelFor="@+id/appwidget_general_timeMode"
                 android:id="@+id/appwidget_general_timeMode_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:text="@string/configLabel_general_timeMode" />
@@ -75,7 +75,8 @@
                       android:orientation="horizontal"
                       android:paddingRight="16dp" android:paddingLeft="16dp" android:paddingTop="@dimen/settingsGroup_padding">
 
-            <TextView android:id="@+id/appwidget_general_trackingMode_label"
+            <TextView android:labelFor="@+id/appwidget_general_trackingMode"
+                      android:id="@+id/appwidget_general_trackingMode_label"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content" android:text="@string/configLabel_general_trackingMode" />
 
@@ -102,7 +103,7 @@
         <LinearLayout android:id="@+id/appwidget_general_showSeconds_layout"
                       android:layout_width="match_parent" android:layout_height="wrap_content"
                       android:orientation="horizontal"
-		      android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
+		              android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
 
 	      <CheckBox android:id="@+id/appwidget_general_showSeconds"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -140,7 +141,8 @@
             android:orientation="horizontal"
             android:paddingRight="16dp" android:paddingLeft="16dp" android:paddingTop="@dimen/settingsGroup_padding">
 
-            <TextView android:id="@+id/appwidget_general_compareMode_label"
+            <TextView android:labelFor="@+id/appwidget_general_compareMode"
+                android:id="@+id/appwidget_general_compareMode_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:text="@string/configLabel_general_compareMode" />
 
