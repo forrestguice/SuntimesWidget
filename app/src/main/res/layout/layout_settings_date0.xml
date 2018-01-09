@@ -25,7 +25,7 @@
             android:orientation="horizontal"
             android:paddingTop="@dimen/settingsGroup_padding">
 
-            <TextView
+            <TextView android:labelFor="@+id/appwidget_date_mode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:text="@string/configLabel_date_mode" />
 

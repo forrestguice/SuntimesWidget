@@ -32,12 +32,13 @@
             android:orientation="horizontal"
             android:paddingRight="16dp" android:paddingLeft="16dp" android:paddingTop="@dimen/settingsGroup_padding">
 
-            <TextView
+            <TextView android:labelFor="@+id/appwidget_general_calculator"
                 android:id="@+id/appwidget_general_calculator_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:text="@string/configLabel_general_calculator" />
 
             <Spinner android:id="@+id/appwidget_general_calculator" android:layout_width="match_parent"
+                android:dropDownVerticalOffset="16sp"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
@@ -48,13 +49,13 @@
             android:paddingRight="16dp" android:paddingLeft="16dp" android:paddingTop="@dimen/settingsGroup_padding"
             android:weightSum="1">
 
-            <TextView
+            <TextView android:labelFor="@+id/appwidget_general_timeMode"
                 android:id="@+id/appwidget_general_timeMode_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:text="@string/configLabel_general_timeMode" />
 
             <Spinner android:id="@+id/appwidget_general_timeMode" android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="wrap_content" android:dropDownVerticalOffset="16sp"
                 android:layout_weight="1" />
 
             <ImageButton android:id="@+id/appwidget_general_timeMode_helpButton"
@@ -74,13 +75,14 @@
                       android:orientation="horizontal"
                       android:paddingRight="16dp" android:paddingLeft="16dp" android:paddingTop="@dimen/settingsGroup_padding">
 
-            <TextView android:id="@+id/appwidget_general_trackingMode_label"
+            <TextView android:labelFor="@+id/appwidget_general_trackingMode"
+                      android:id="@+id/appwidget_general_trackingMode_label"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content" android:text="@string/configLabel_general_trackingMode" />
 
             <Spinner
                 android:id="@+id/appwidget_general_trackingMode" android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="wrap_content" android:dropDownVerticalOffset="16sp"
                 android:layout_weight="1" />
 
         </LinearLayout>
@@ -101,7 +103,7 @@
         <LinearLayout android:id="@+id/appwidget_general_showSeconds_layout"
                       android:layout_width="match_parent" android:layout_height="wrap_content"
                       android:orientation="horizontal"
-		      android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
+		              android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
 
 	      <CheckBox android:id="@+id/appwidget_general_showSeconds"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -139,11 +141,13 @@
             android:orientation="horizontal"
             android:paddingRight="16dp" android:paddingLeft="16dp" android:paddingTop="@dimen/settingsGroup_padding">
 
-            <TextView android:id="@+id/appwidget_general_compareMode_label"
+            <TextView android:labelFor="@+id/appwidget_general_compareMode"
+                android:id="@+id/appwidget_general_compareMode_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:text="@string/configLabel_general_compareMode" />
 
             <Spinner android:id="@+id/appwidget_general_compareMode" android:layout_width="match_parent"
+                android:dropDownVerticalOffset="16sp"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>

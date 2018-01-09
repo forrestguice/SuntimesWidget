@@ -30,26 +30,27 @@
         android:visibility="gone" />
 
     <LinearLayout
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <CheckedTextView
             style="?android:attr/dropDownItemStyle"
             android:id="@android:id/text1"
+            android:checkMark="@android:drawable/btn_radio"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/text_alertDialogListItem"
+            android:textColor="?android:attr/textColorAlertDialogListItem"
             android:singleLine="true"
             android:textStyle="bold"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:duplicateParentState="true"
-            android:paddingTop="4dp" android:paddingBottom="6dp"
+            android:paddingTop="0dp" android:paddingBottom="0dp"
             tools:text="Primary" />
 
         <TextView
             style="?android:attr/dropDownItemStyle"
             android:id="@android:id/text2"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/text_alertDialogListItem"
+            android:textColor="?android:attr/textColorAlertDialogListItem"
             android:textSize="12sp"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:duplicateParentState="true"

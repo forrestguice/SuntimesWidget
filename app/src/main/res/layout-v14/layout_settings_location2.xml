@@ -34,14 +34,15 @@
             android:orientation="horizontal"
             android:paddingRight="16dp" android:paddingLeft="16dp" android:paddingTop="@dimen/settingsGroup_padding">
 
-            <TextView
+            <TextView android:labelFor="@+id/appwidget_location_mode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:text="@string/configLabel_location_mode"
                 android:layout_gravity="center_vertical" />
 
             <Spinner android:id="@+id/appwidget_location_mode" android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                     android:layout_gravity="center_vertical" />
+                android:layout_gravity="center_vertical"
+                android:dropDownVerticalOffset="24sp" />
 
         </LinearLayout>
 
@@ -101,11 +102,11 @@
                 android:paddingRight="0dp" android:paddingEnd="0dp"
                 android:layout_gravity="center_vertical">
 
-                <TextView android:id="@+id/appwidget_location_name_label"
+                <TextView android:labelFor="@+id/view_flip"
+                          android:id="@+id/appwidget_location_name_label"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_gravity="end|center_vertical"
-                          android:text="@string/configLabel_location_name" android:enabled="false"
-                    />
+                          android:text="@string/configLabel_location_name" android:enabled="false" />
 
                 <ViewFlipper android:id="@+id/view_flip"
                              android:layout_width="fill_parent" android:layout_height="wrap_content"
@@ -122,8 +123,7 @@
 
                     <Spinner android:id="@+id/appwidget_location_nameSelect"
                              android:layout_width="fill_parent" android:layout_height="wrap_content"
-                             android:layout_gravity="center_vertical"
-                        />
+                             android:layout_gravity="center_vertical" android:dropDownVerticalOffset="24sp" />
 
                 </ViewFlipper>
 
@@ -145,7 +145,8 @@
                     android:columnCount="5" android:rowCount="4" android:orientation="horizontal"
                     android:paddingLeft="16dp" android:paddingRight="16dp" android:paddingTop="0dp">
 
-                    <TextView android:id="@+id/appwidget_location_lat_label"
+                    <TextView android:labelFor="@+id/appwidget_location_lat"
+                              android:id="@+id/appwidget_location_lat_label"
                               android:layout_width="wrap_content" android:layout_height="wrap_content"
                               android:layout_gravity="end"
                               android:text="@string/configLabel_location_lat" android:enabled="false"
@@ -163,7 +164,8 @@
                               android:layout_columnSpan="4"/>
 
 
-                    <TextView android:id="@+id/appwidget_location_lon_label"
+                    <TextView android:labelFor="@+id/appwidget_location_lon"
+                              android:id="@+id/appwidget_location_lon_label"
                               android:layout_width="wrap_content" android:layout_height="wrap_content"
                               android:layout_gravity="end"
                               android:text="@string/configLabel_location_lon" android:enabled="false"

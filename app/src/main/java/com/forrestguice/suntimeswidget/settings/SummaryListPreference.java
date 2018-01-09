@@ -72,7 +72,7 @@ public class SummaryListPreference extends com.forrestguice.suntimeswidget.setti
     public void onPrepareDialogBuilder(AlertDialog.Builder builder )
     {
         int index = findIndexOfValue(getSharedPreferences().getString(getKey(), "1"));
-        ListAdapter adapter = new SummaryListAdapter(getContext(), R.layout.layout_listitem_twoline, getEntries(), summaries, index);
+        ListAdapter adapter = new SummaryListAdapter(getContext(), R.layout.layout_listitem_checkedtwoline, getEntries(), summaries, index);
         builder.setAdapter(adapter, this);
         super.onPrepareDialogBuilder(builder);
     }
@@ -80,7 +80,7 @@ public class SummaryListPreference extends com.forrestguice.suntimeswidget.setti
     /**
      * SummaryListAdapter
      */
-    protected static class SummaryListAdapter extends ArrayAdapter<CharSequence>
+    public static class SummaryListAdapter extends ArrayAdapter<CharSequence>
     {
         private CharSequence[] summaries;
         private int layoutID;
