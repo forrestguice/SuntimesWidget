@@ -29,6 +29,7 @@
                 android:layout_height="wrap_content" android:text="@string/configLabel_timezone_mode" />
 
             <Spinner android:id="@+id/appwidget_timezone_mode" android:layout_width="match_parent"
+                android:dropDownVerticalOffset="16sp"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
@@ -47,6 +48,7 @@
                 android:enabled="false" />
 
             <Spinner android:id="@+id/appwidget_timezone_custom" android:layout_width="match_parent"
+                android:dropDownVerticalOffset="32sp"
                 android:layout_height="wrap_content" />
 
             <LinearLayout
@@ -73,6 +75,7 @@
                       android:layout_height="wrap_content" android:text="@string/configLabel_solartime" />
 
             <Spinner android:id="@+id/appwidget_solartime" android:layout_width="match_parent"
+                     android:dropDownVerticalOffset="16sp"
                      android:layout_height="wrap_content" />
 
         </LinearLayout>

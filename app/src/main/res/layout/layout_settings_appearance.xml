@@ -43,6 +43,7 @@
                 android:clickable="true" android:focusable="true" />
 
             <Spinner android:id="@+id/appwidget_appearance_theme"
+                     android:dropDownVerticalOffset="16sp"
                      android:layout_width="match_parent" android:layout_height="wrap_content" />
 
         </LinearLayout>
@@ -58,6 +59,7 @@
                 android:layout_height="wrap_content" android:text="@string/configLabel_appearance_1x1mode" />
 
             <Spinner android:id="@+id/appwidget_appearance_1x1mode" android:layout_width="match_parent"
+                android:dropDownVerticalOffset="16sp"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>

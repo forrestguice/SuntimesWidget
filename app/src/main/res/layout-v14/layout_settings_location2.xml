@@ -41,7 +41,8 @@
 
             <Spinner android:id="@+id/appwidget_location_mode" android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                     android:layout_gravity="center_vertical" />
+                android:layout_gravity="center_vertical"
+                android:dropDownVerticalOffset="24sp" />
 
         </LinearLayout>
 
@@ -122,8 +123,7 @@
 
                     <Spinner android:id="@+id/appwidget_location_nameSelect"
                              android:layout_width="fill_parent" android:layout_height="wrap_content"
-                             android:layout_gravity="center_vertical"
-                        />
+                             android:layout_gravity="center_vertical" android:dropDownVerticalOffset="24sp" />
 
                 </ViewFlipper>
 

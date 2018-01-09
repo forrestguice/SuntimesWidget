@@ -38,6 +38,7 @@
                 android:layout_height="wrap_content" android:text="@string/configLabel_general_calculator" />
 
             <Spinner android:id="@+id/appwidget_general_calculator" android:layout_width="match_parent"
+                android:dropDownVerticalOffset="16sp"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
@@ -54,7 +55,7 @@
                 android:layout_height="wrap_content" android:text="@string/configLabel_general_timeMode" />
 
             <Spinner android:id="@+id/appwidget_general_timeMode" android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="wrap_content" android:dropDownVerticalOffset="16sp"
                 android:layout_weight="1" />
 
             <ImageButton android:id="@+id/appwidget_general_timeMode_helpButton"
@@ -80,7 +81,7 @@
 
             <Spinner
                 android:id="@+id/appwidget_general_trackingMode" android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="wrap_content" android:dropDownVerticalOffset="16sp"
                 android:layout_weight="1" />
 
         </LinearLayout>
@@ -144,6 +145,7 @@
                 android:layout_height="wrap_content" android:text="@string/configLabel_general_compareMode" />
 
             <Spinner android:id="@+id/appwidget_general_compareMode" android:layout_width="match_parent"
+                android:dropDownVerticalOffset="16sp"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
