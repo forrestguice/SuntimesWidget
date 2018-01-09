@@ -197,9 +197,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected ArrayAdapter<SuntimesCalculatorDescriptor> createAdapter_calculators()
     {
         SuntimesCalculatorDescriptor[] calculators = supportingCalculators();
-        ArrayAdapter<SuntimesCalculatorDescriptor> adapter = new ArrayAdapter<SuntimesCalculatorDescriptor>(this, R.layout.layout_listitem_oneline, calculators);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        return adapter;
+        return new SuntimesCalculatorDescriptor.SuntimesCalculatorDescriptorListAdapter(this, R.layout.layout_listitem_oneline, R.layout.layout_listitem_twoline, calculators);
     }
 
     protected SuntimesCalculatorDescriptor[] supportingCalculators()
