@@ -34,9 +34,7 @@ The widget is resizable and has layouts for:
 * a 2x1 widget that displays the sunrise and sunset times, and displays the difference in the amount of daylight (in minutes) between today and tomorrow (or today and yesterday).
 
 
-<img alt="screenshot1" src='https://user-images.githubusercontent.com/10246147/32984023-7b17535e-cc5b-11e7-809c-6b00c25814f4.png' width="280px" />
-
-<img alt="screenshot2" src='https://user-images.githubusercontent.com/10246147/32984027-81568b7c-cc5b-11e7-8f49-fbd44c06cb19.png' width="280px" />
+<img alt="screenshot1" src='https://github.com/forrestguice/SuntimesWidget/blob/docs/doc/screenshots/v0.6.0/en/suntimes-activity-main0.png' width="280px" />
 
 **Bug Reports**
 
