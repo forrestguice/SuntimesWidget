@@ -54,7 +54,7 @@
             tools:layout_editor_absoluteX="209dp"/>
 
         <!-- Theme Name (ID) -->
-        <TextView
+        <TextView android:labelFor="@+id/edit_themeName"
             android:id="@+id/editLabel_themeName"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -75,7 +75,7 @@
             tools:layout_editor_absoluteX="33dp"/>
 
         <!-- Theme Name (display string) -->
-        <TextView
+        <TextView android:labelFor="@+id/edit_themeDisplay"
             android:id="@+id/editLabel_themeDisplay"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -124,7 +124,7 @@
             android:focusable="true" android:focusableInTouchMode="true">
 
             <!-- Background -->
-            <TextView
+            <TextView android:labelFor="@+id/editSpin_background"
                 android:id="@+id/editLabel_background"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
@@ -143,7 +143,7 @@
                 tools:layout_editor_absoluteX="42dp"/>
 
             <!-- Padding -->
-            <TextView
+            <TextView android:labelFor="@+id/edit_padding"
                 android:id="@+id/editLabel_padding"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
@@ -164,7 +164,7 @@
                 tools:layout_editor_absoluteX="72dp"/>
 
             <!-- Time Size -->
-            <TextView
+            <TextView android:labelFor="@+id/edit_timeSize"
                 android:id="@+id/editLabel_timeSize"
                 style="@style/SizeEditLabel"
                 android:paddingStart="8dp" android:paddingEnd="8dp"
@@ -182,7 +182,7 @@
                 tools:layout_editor_absoluteX="81dp"/>
 
             <!-- Suffix Size -->
-            <TextView
+            <TextView android:labelFor="@+id/edit_suffixSize"
                 android:id="@+id/editLabel_suffixSize"
                 style="@style/SizeEditLabel"
                 android:paddingStart="8dp" android:paddingEnd="8dp"
@@ -202,7 +202,7 @@
                 tools:layout_editor_absoluteX="210dp"/>
 
             <!-- Title Size -->
-            <TextView
+            <TextView android:labelFor="@+id/edit_titleSize"
                 android:id="@+id/editLabel_titleSize"
                 style="@style/SizeEditLabel"
                 android:paddingStart="8dp" android:paddingEnd="8dp"
@@ -220,7 +220,7 @@
                 tools:layout_editor_absoluteX="77dp"/>
 
             <!-- Text Size -->
-            <TextView
+            <TextView android:labelFor="@+id/edit_textSize"
                 android:id="@+id/editLabel_textSize"
                 style="@style/SizeEditLabel"
                 android:paddingStart="8dp" android:paddingEnd="8dp"
@@ -260,7 +260,7 @@
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent">
 
-                    <TextView
+                    <TextView android:labelFor="@+id/edit_titleColor"
                         android:id="@+id/editLabel_titleColor"
                         style="@style/ColorEditLabel"
                         android:paddingStart="8dp" android:paddingEnd="8dp"
@@ -304,7 +304,7 @@
                     android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
                     android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
 
-                    <TextView
+                    <TextView android:labelFor="@+id/edit_suffixColor"
                         android:id="@+id/editLabel_suffixColor"
                         style="@style/ColorEditLabel"
                         android:paddingStart="8dp" android:paddingEnd="8dp"
@@ -346,7 +346,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/layout_titleColor"
                     app:layout_constraintStart_toStartOf="parent">
 
-                    <TextView
+                    <TextView android:labelFor="@+id/edit_textColor"
                         android:id="@+id/editLabel_textColor"
                         style="@style/ColorEditLabel"
                         android:paddingStart="8dp" android:paddingEnd="8dp"
@@ -390,7 +390,7 @@
                     android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
                     android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
 
-                    <TextView
+                    <TextView android:labelFor="@+id/edit_timeColor"
                         android:id="@+id/editLabel_timeColor"
                         style="@style/ColorEditLabel"
                         android:paddingStart="8dp" android:paddingEnd="8dp"
@@ -433,7 +433,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     tools:layout_editor_absoluteX="27dp">
 
-                    <TextView
+                    <TextView android:labelFor="@+id/edit_sunriseColor"
                         android:id="@+id/editLabel_sunriseColor"
                         style="@style/ColorEditLabel"
                         android:paddingStart="8dp" android:paddingEnd="8dp"
@@ -477,7 +477,7 @@
                     android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
                     android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
 
-                    <TextView
+                    <TextView android:labelFor="@+id/edit_sunsetColor"
                         android:id="@+id/editLabel_sunsetColor"
                         style="@style/ColorEditLabel"
                         android:paddingStart="8dp" android:paddingEnd="8dp"
@@ -520,7 +520,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     tools:layout_editor_absoluteX="27dp">
 
-                    <TextView
+                    <TextView android:labelFor="@+id/edit_sunriseFillColor"
                         android:id="@+id/editLabel_sunriseFillColor"
                         style="@style/ColorEditLabel"
                         android:paddingStart="8dp" android:paddingEnd="8dp"
@@ -564,7 +564,7 @@
                     android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
                     android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
 
-                    <TextView
+                    <TextView android:labelFor="@+id/edit_sunsetFillColor"
                         android:id="@+id/editLabel_sunsetFillColor"
                         style="@style/ColorEditLabel"
                         android:paddingStart="8dp" android:paddingEnd="8dp"
@@ -612,7 +612,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     tools:layout_editor_absoluteX="27dp">
 
-                    <TextView
+                    <TextView android:labelFor="@+id/edit_sunriseStrokeColor"
                         android:id="@+id/editLabel_sunriseStrokeColor"
                         style="@style/ColorEditLabel"
                         android:paddingStart="8dp" android:paddingEnd="8dp"
@@ -656,7 +656,7 @@
                     android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
                     android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
 
-                    <TextView
+                    <TextView android:labelFor="@+id/edit_sunsetStrokeColor"
                         android:id="@+id/editLabel_sunsetStrokeColor"
                         style="@style/ColorEditLabel"
                         android:paddingStart="8dp" android:paddingEnd="8dp"
@@ -704,7 +704,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     tools:layout_editor_absoluteX="27dp">
 
-                    <TextView
+                    <TextView android:labelFor="@+id/edit_noonColor"
                         android:id="@+id/editLabel_noonColor"
                         style="@style/ColorEditLabel"
                         android:paddingStart="8dp" android:paddingEnd="8dp"
@@ -752,7 +752,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     tools:layout_editor_absoluteX="27dp">
 
-                    <TextView
+                    <TextView android:labelFor="@+id/edit_noonFillColor"
                         android:id="@+id/editLabel_noonFillColor"
                         style="@style/ColorEditLabel"
                         android:paddingStart="8dp" android:paddingEnd="8dp"
@@ -795,7 +795,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     tools:layout_editor_absoluteX="27dp">
 
-                    <TextView
+                    <TextView android:labelFor="@+id/edit_noonStrokeColor"
                         android:id="@+id/editLabel_noonStrokeColor"
                         style="@style/ColorEditLabel"
                         android:paddingStart="8dp" android:paddingEnd="8dp"
@@ -843,7 +843,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/layout_sunsetStrokeColor"
                     app:layout_constraintStart_toEndOf="@+id/layout_noonColor">
 
-                    <TextView
+                    <TextView android:labelFor="@+id/edit_iconStroke"
                         android:id="@+id/editLabel_iconStroke"
                         style="@style/SizeEditLabel"
                         android:paddingStart="8dp" android:paddingEnd="8dp"
@@ -871,7 +871,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/layout_noonFillColor"
                     app:layout_constraintStart_toEndOf="@+id/layout_noonStrokeColor">
 
-                    <TextView
+                    <TextView android:labelFor="@+id/edit_noonIconStroke"
                         android:id="@+id/editLabel_noonIconStroke"
                         style="@style/SizeEditLabel"
                         android:paddingStart="8dp" android:paddingEnd="8dp"
@@ -907,7 +907,7 @@
                     android:layout_marginTop="16dp"
                     tools:layout_editor_absoluteX="27dp">
 
-                    <TextView
+                    <TextView android:labelFor="@+id/edit_springColor"
                         android:id="@+id/editLabel_springColor"
                         style="@style/ColorEditLabel"
                         android:paddingStart="8dp" android:paddingEnd="8dp"
@@ -951,7 +951,7 @@
                     android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
                     android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
 
-                    <TextView
+                    <TextView android:labelFor="@+id/edit_summerColor"
                         android:id="@+id/editLabel_summerColor"
                         style="@style/ColorEditLabel"
                         android:paddingStart="8dp" android:paddingEnd="8dp"
@@ -994,7 +994,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     tools:layout_editor_absoluteX="27dp">
 
-                    <TextView
+                    <TextView android:labelFor="@+id/edit_fallColor"
                         android:id="@+id/editLabel_fallColor"
                         style="@style/ColorEditLabel"
                         android:paddingStart="8dp" android:paddingEnd="8dp"
@@ -1038,7 +1038,7 @@
                     android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
                     android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
 
-                    <TextView
+                    <TextView android:labelFor="@+id/edit_winterColor"
                         android:id="@+id/editLabel_winterColor"
                         style="@style/ColorEditLabel"
                         android:paddingStart="8dp" android:paddingEnd="8dp"
