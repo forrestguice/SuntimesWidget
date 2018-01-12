@@ -42,6 +42,7 @@ import org.junit.runner.RunWith;
 
 import java.io.File;
 
+import static android.os.Environment.DIRECTORY_PICTURES;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
@@ -172,7 +173,10 @@ public abstract class SuntimesActivityTestBase
             subdir = "/" + subdir;
         }
 
-        String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + SCREENSHOT_DIR + subdir;
+        // saves to..
+        //     SD card\Android\data\com.forrestguice.suntimeswidget\files\Pictures\test-screenshots\subdir
+        String dirPath = activity.getExternalFilesDir(DIRECTORY_PICTURES).getAbsolutePath() + "/" + SCREENSHOT_DIR + subdir;
+
         File dir = new File(dirPath);
         dir.mkdirs();
 
