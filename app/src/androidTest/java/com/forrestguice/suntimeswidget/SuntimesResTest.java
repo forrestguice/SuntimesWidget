@@ -18,7 +18,14 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
+import android.preference.PreferenceManager;
+import android.support.test.espresso.IdlingPolicies;
+import android.support.test.espresso.IdlingResource;
 import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -30,12 +37,82 @@ import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.File;
+import java.util.concurrent.TimeUnit;
+
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.registerIdlingResources;
+import static android.support.test.espresso.Espresso.unregisterIdlingResources;
+import static android.support.test.espresso.action.ViewActions.pressBack;
+import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static junit.framework.Assert.assertTrue;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class SuntimesResTest extends SuntimesActivityTestBase
 {
+    @Test
+    public void makeScreenshots()
+    {
+        Context context = activityRule.getActivity();
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        pref.putString(AppSettings.PREF_KEY_LOCALE_MODE, AppSettings.LocaleMode.CUSTOM_LOCALE.name());
+        pref.putBoolean(AppSettings.PREF_KEY_UI_SHOWWARNINGS, false);
+        pref.apply();
+
+        String version = BuildConfig.VERSION_NAME;
+        if (!version.startsWith("v"))
+            version = "v" + version;
+
+        String[] locales = context.getResources().getStringArray(R.array.locale_values);
+        for (String languageTag : locales)
+        {
+            pref.putString(AppSettings.PREF_KEY_LOCALE, languageTag);
+            pref.apply();
+            activityRule.launchActivity(activityRule.getActivity().getIntent());
+
+            // dialogs
+            DialogTest.showAboutDialog(context);
+            captureScreenshot(version + "/" + languageTag, "dialog-about");
+            DialogTest.cancelAboutDialog();
+
+            DialogTest.showHelpDialog(context);
+            captureScreenshot(version + "/" + languageTag, "dialog-help");
+            DialogTest.cancelHelpDialog();
+
+            DialogTest.showEquinoxDialog(context);
+            captureScreenshot(version + "/" + languageTag, "dialog-equinox");
+            DialogTest.cancelEquinoxDialog();
+
+            DialogTest.showLightmapDialog(context);
+            captureScreenshot(version + "/" + languageTag, "dialog-lightmap");
+            DialogTest.cancelLightmapDialog();
+
+            TimeZoneDialogTest.showTimezoneDialog(activityRule.getActivity());
+            captureScreenshot(version + "/" + languageTag, "dialog-timezone0");
+            TimeZoneDialogTest.inputTimezoneDialog_mode(context, WidgetSettings.TimezoneMode.SOLAR_TIME);
+            captureScreenshot(version + "/" + languageTag, "dialog-timezone1");
+            TimeZoneDialogTest.cancelTimezoneDialog();
+
+            AlarmDialogTest.showAlarmDialog(context);
+            captureScreenshot(version + "/" + languageTag, "dialog-alarm");
+            AlarmDialogTest.cancelAlarmDialog();
+
+            TimeDateDialogTest.showDateDialog(context);
+            captureScreenshot(version + "/" + languageTag, "dialog-date");
+            TimeDateDialogTest.cancelDateDialog();
+
+            LocationDialogTest.showLocationDialog();
+            captureScreenshot(version + "/" + languageTag, "dialog-location0");
+            LocationDialogTest.editLocationDialog();
+            captureScreenshot(version + "/" + languageTag, "dialog-location1");
+            LocationDialogTest.cancelLocationDialog(context);
+
+            // main activity
+            captureScreenshot(version + "/" + languageTag, "main");
+        }
+    }
+
     @Test
     public void test_stringArrays()
     {

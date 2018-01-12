@@ -150,6 +150,10 @@ public abstract class SuntimesActivityTestBase
     {
         SuntimesActivityTestBase.captureScreenshot(activityRule.getActivity(), name);
     }
+    public void captureScreenshot(String subdir, String name)
+    {
+        SuntimesActivityTestBase.captureScreenshot(activityRule.getActivity(), subdir, name);
+    }
 
     /**
      * @param activity Activity context
@@ -157,7 +161,18 @@ public abstract class SuntimesActivityTestBase
      */
     public static void captureScreenshot(Activity activity, String name)
     {
-        String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + SCREENSHOT_DIR;
+        SuntimesActivityTestBase.captureScreenshot(activity, "", name);
+    }
+
+    public static void captureScreenshot(Activity activity, String subdir, String name)
+    {
+        subdir = subdir.trim();
+        if (!subdir.isEmpty() && !subdir.startsWith("/"))
+        {
+            subdir = "/" + subdir;
+        }
+
+        String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + SCREENSHOT_DIR + subdir;
         File dir = new File(dirPath);
         dir.mkdirs();
 
@@ -231,5 +246,4 @@ public abstract class SuntimesActivityTestBase
         }).check(matches(withSpinnerText(text)));
         return displaysText[0];
     }
-
 }
