@@ -28,6 +28,7 @@ import android.support.test.runner.AndroidJUnit4;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -35,62 +36,72 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class SuntimesScreenshots extends SuntimesActivityTestBase
 {
+    private static String version = BuildConfig.VERSION_NAME;
+
+    @Before
+    public void initScreenshots()
+    {
+        if (!version.startsWith("v"))
+            version = "v" + version;
+    }
+
     @Test
     public void makeScreenshots()
     {
         SuntimesActivity context = activityRule.getActivity();
         configureAppForScreenshots(context);
 
-        String version = BuildConfig.VERSION_NAME;
-        if (!version.startsWith("v"))
-            version = "v" + version;
-
         String[] locales = context.getResources().getStringArray(R.array.locale_values);
         for (String languageTag : locales)
         {
-            configureAppForScreenshots(context, languageTag);
-            activityRule.launchActivity(activityRule.getActivity().getIntent());
-
-            // dialogs
-            DialogTest.showAboutDialog(context);
-            captureScreenshot(version + "/" + languageTag, "dialog-about");
-            DialogTest.cancelAboutDialog();
-
-            DialogTest.showHelpDialog(context);
-            captureScreenshot(version + "/" + languageTag, "dialog-help");
-            DialogTest.cancelHelpDialog();
-
-            DialogTest.showEquinoxDialog(context);
-            captureScreenshot(version + "/" + languageTag, "dialog-equinox");
-            DialogTest.cancelEquinoxDialog();
-
-            DialogTest.showLightmapDialog(context);
-            captureScreenshot(version + "/" + languageTag, "dialog-lightmap");
-            DialogTest.cancelLightmapDialog();
-
-            TimeZoneDialogTest.showTimezoneDialog(activityRule.getActivity());
-            captureScreenshot(version + "/" + languageTag, "dialog-timezone0");
-            TimeZoneDialogTest.inputTimezoneDialog_mode(context, WidgetSettings.TimezoneMode.SOLAR_TIME);
-            captureScreenshot(version + "/" + languageTag, "dialog-timezone1");
-            TimeZoneDialogTest.cancelTimezoneDialog();
-
-            AlarmDialogTest.showAlarmDialog(context);
-            captureScreenshot(version + "/" + languageTag, "dialog-alarm");
-            AlarmDialogTest.cancelAlarmDialog();
-
-            TimeDateDialogTest.showDateDialog(context);
-            captureScreenshot(version + "/" + languageTag, "dialog-date");
-            TimeDateDialogTest.cancelDateDialog();
-
-            LocationDialogTest.showLocationDialog();
-            captureScreenshot(version + "/" + languageTag, "dialog-location0");
-            LocationDialogTest.editLocationDialog();
-            captureScreenshot(version + "/" + languageTag, "dialog-location1");
-            LocationDialogTest.cancelLocationDialog(context);
-
-            // main activity
-            captureScreenshot(version + "/" + languageTag, "activity-main0");
+            makeScreenshots(context, languageTag);
         }
+    }
+
+    private void makeScreenshots(Context context, String languageTag)
+    {
+        configureAppForScreenshots(context, languageTag);
+        activityRule.launchActivity(activityRule.getActivity().getIntent());
+
+        // dialogs
+        DialogTest.showAboutDialog(context);
+        captureScreenshot(version + "/" + languageTag, "dialog-about");
+        DialogTest.cancelAboutDialog();
+
+        DialogTest.showHelpDialog(context);
+        captureScreenshot(version + "/" + languageTag, "dialog-help");
+        DialogTest.cancelHelpDialog();
+
+        DialogTest.showEquinoxDialog(context);
+        captureScreenshot(version + "/" + languageTag, "dialog-equinox");
+        DialogTest.cancelEquinoxDialog();
+
+        DialogTest.showLightmapDialog(context);
+        captureScreenshot(version + "/" + languageTag, "dialog-lightmap");
+        DialogTest.cancelLightmapDialog();
+
+        TimeZoneDialogTest.showTimezoneDialog(activityRule.getActivity());
+        captureScreenshot(version + "/" + languageTag, "dialog-timezone0");
+        TimeZoneDialogTest.inputTimezoneDialog_mode(context, WidgetSettings.TimezoneMode.SOLAR_TIME);
+        captureScreenshot(version + "/" + languageTag, "dialog-timezone1");
+        TimeZoneDialogTest.cancelTimezoneDialog();
+
+        AlarmDialogTest.showAlarmDialog(context);
+        captureScreenshot(version + "/" + languageTag, "dialog-alarm");
+        AlarmDialogTest.cancelAlarmDialog();
+
+        TimeDateDialogTest.showDateDialog(context);
+        captureScreenshot(version + "/" + languageTag, "dialog-date");
+        TimeDateDialogTest.cancelDateDialog();
+
+        LocationDialogTest.showLocationDialog();
+        captureScreenshot(version + "/" + languageTag, "dialog-location0");
+        LocationDialogTest.editLocationDialog();
+        captureScreenshot(version + "/" + languageTag, "dialog-location1");
+        LocationDialogTest.cancelLocationDialog(context);
+
+        // main activity
+        captureScreenshot(version + "/" + languageTag, "activity-main0");
     }
 
     private void configureAppForScreenshots(Activity context)
