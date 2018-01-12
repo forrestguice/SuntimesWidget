@@ -89,7 +89,7 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
             LocationDialogTest.cancelLocationDialog(context);
 
             // main activity
-            captureScreenshot(version + "/" + languageTag, "main");
+            captureScreenshot(version + "/" + languageTag, "activity-main0");
         }
     }
 
