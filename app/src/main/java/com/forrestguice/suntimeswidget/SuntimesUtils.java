@@ -497,7 +497,12 @@ public class SuntimesUtils
     {
         return timeDeltaLongDisplayString(timeSpan1, timeSpan2, false);
     }
-
+    public TimeDisplayText timeDeltaLongDisplayString(long timeSpan, boolean showSeconds)
+    {
+        TimeDisplayText text = timeDeltaLongDisplayString(0, timeSpan, showSeconds);
+        text.setSuffix("");
+        return text;
+    }
     public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2, boolean showSeconds)
     {
         String value = strSpace;
