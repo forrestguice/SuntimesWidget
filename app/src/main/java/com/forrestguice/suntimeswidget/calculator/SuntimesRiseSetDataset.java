@@ -183,6 +183,70 @@ public class SuntimesRiseSetDataset
     {
         return Calendar.getInstance(timezone());
     }
+
+    public long dayLength()
+    {
+        return dataActual.dayLengthToday();
+    }
+
+    public long nightLength()
+    {
+        Calendar astroSet = dataAstro.sunsetCalendarToday();
+        Calendar astroRise = dataAstro.sunriseCalendarOther();
+        if (astroRise == null || astroSet == null)
+            return 0;
+        else return astroRise.getTimeInMillis() - astroSet.getTimeInMillis();
+    }
+
+    public long astroMorningLength()
+    {
+        Calendar astroRise = dataAstro.sunriseCalendarToday();
+        Calendar nauticalRise = dataNautical.sunriseCalendarToday();
+        if (astroRise == null || nauticalRise == null)
+            return 0;
+        else return nauticalRise.getTimeInMillis() - astroRise.getTimeInMillis();
+    }
+    public long astroEveningLength()
+    {
+        Calendar nauticalSet = dataNautical.sunsetCalendarToday();
+        Calendar astroSet = dataAstro.sunsetCalendarToday();
+        if (astroSet == null || nauticalSet == null)
+            return 0;
+        else return astroSet.getTimeInMillis() - nauticalSet.getTimeInMillis();
+    }
+    public long nauticalMorningLength()
+    {
+        Calendar nauticalRise = dataNautical.sunriseCalendarToday();
+        Calendar civilRise = dataCivil.sunriseCalendarToday();
+        if (civilRise == null || nauticalRise == null)
+            return 0;
+        else return civilRise.getTimeInMillis() - nauticalRise.getTimeInMillis();
+    }
+    public long nauticalEveningLength()
+    {
+        Calendar nauticalSet = dataNautical.sunsetCalendarToday();
+        Calendar civilSet = dataCivil.sunsetCalendarToday();
+        if (civilSet == null || nauticalSet == null)
+            return 0;
+        else return nauticalSet.getTimeInMillis() - civilSet.getTimeInMillis();
+    }
+
+    public long civilMorningLength()
+    {
+        Calendar civilRise = dataCivil.sunriseCalendarToday();
+        Calendar sunRise = dataActual.sunriseCalendarToday();
+        if (civilRise == null || sunRise == null)
+            return 0;
+        else return sunRise.getTimeInMillis() - civilRise.getTimeInMillis();
+    }
+    public long civilEveningLength()
+    {
+        Calendar sunset = dataActual.sunsetCalendarToday();
+        Calendar civilSet = dataCivil.sunsetCalendarToday();
+        if (civilSet == null || sunset == null)
+            return 0;
+        else return civilSet.getTimeInMillis() - sunset.getTimeInMillis();
+    }
 }
 
 
