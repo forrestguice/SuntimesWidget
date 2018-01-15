@@ -47,10 +47,17 @@
 
             <TextView
                 android:id="@+id/info_time_lightmap_key_night_label"
+                android:labelFor="@+id/info_time_lightmap_key_night_duration"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
                 android:text="@string/timeMode_night" />
+
+            <TextView
+                android:id="@+id/info_time_lightmap_key_night_duration"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical" android:visibility="gone"
+                android:layout_marginStart="5dp" android:layout_marginLeft="5dp" />
 
         </LinearLayout>
 
@@ -68,10 +75,17 @@
 
             <TextView
                 android:id="@+id/info_time_lightmap_key_astro_label"
+                android:labelFor="@+id/info_time_lightmap_key_astro_duration"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
                 android:text="@string/timeMode_astronomical" />
+
+            <TextView
+                android:id="@+id/info_time_lightmap_key_astro_duration"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical" android:visibility="gone"
+                android:layout_marginStart="5dp" android:layout_marginLeft="5dp" />
 
         </LinearLayout>
 
@@ -89,10 +103,17 @@
 
             <TextView
                 android:id="@+id/info_time_lightmap_key_nautical_label"
+                android:labelFor="@+id/info_time_lightmap_key_nautical_duration"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
                 android:text="@string/timeMode_nautical" />
+
+            <TextView
+                android:id="@+id/info_time_lightmap_key_nautical_duration"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical" android:visibility="gone"
+                android:layout_marginStart="5dp" android:layout_marginLeft="5dp" />
 
         </LinearLayout>
 
@@ -110,10 +131,17 @@
 
             <TextView
                 android:id="@+id/info_time_lightmap_key_civil_label"
+                android:labelFor="@+id/info_time_lightmap_key_civil_duration"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
                 android:text="@string/timeMode_civil" />
+
+            <TextView
+                android:id="@+id/info_time_lightmap_key_civil_duration"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical" android:visibility="gone"
+                android:layout_marginStart="5dp" android:layout_marginLeft="5dp" />
 
         </LinearLayout>
 
@@ -131,10 +159,17 @@
 
             <TextView
                 android:id="@+id/info_time_lightmap_key_day_label"
+                android:labelFor="@+id/info_time_lightmap_key_day_duration"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
                 android:text="@string/timeMode_day" />
+
+            <TextView
+                android:id="@+id/info_time_lightmap_key_day_duration"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical" android:visibility="gone"
+                android:layout_marginStart="5dp" android:layout_marginLeft="5dp" />
 
         </LinearLayout>
 
