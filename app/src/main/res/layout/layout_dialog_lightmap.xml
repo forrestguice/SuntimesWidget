@@ -56,8 +56,9 @@
             <TextView
                 android:id="@+id/info_time_lightmap_key_night_duration"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical" android:visibility="gone"
-                android:layout_marginStart="5dp" android:layout_marginLeft="5dp" />
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
+                tools:text="[30m]" />
 
         </LinearLayout>
 
@@ -84,8 +85,9 @@
             <TextView
                 android:id="@+id/info_time_lightmap_key_astro_duration"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical" android:visibility="gone"
-                android:layout_marginStart="5dp" android:layout_marginLeft="5dp" />
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
+                tools:text="[30m]"/>
 
         </LinearLayout>
 
@@ -112,8 +114,9 @@
             <TextView
                 android:id="@+id/info_time_lightmap_key_nautical_duration"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical" android:visibility="gone"
-                android:layout_marginStart="5dp" android:layout_marginLeft="5dp" />
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
+                tools:text="[30m]"/>
 
         </LinearLayout>
 
@@ -140,8 +143,9 @@
             <TextView
                 android:id="@+id/info_time_lightmap_key_civil_duration"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical" android:visibility="gone"
-                android:layout_marginStart="5dp" android:layout_marginLeft="5dp" />
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
+                tools:text="[30m]"/>
 
         </LinearLayout>
 
@@ -168,8 +172,9 @@
             <TextView
                 android:id="@+id/info_time_lightmap_key_day_duration"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical" android:visibility="gone"
-                android:layout_marginStart="5dp" android:layout_marginLeft="5dp" />
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
+                tools:text="[30m]"/>
 
         </LinearLayout>
 
