@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -38,15 +38,18 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageView android:layout_gravity="center_vertical"
+            <ImageView
                 android:id="@+id/info_time_lightmap_key_night_icon"
                 android:layout_width="16dp" android:layout_height="16dp"
+                android:layout_gravity="center_vertical"
                 android:background="@drawable/ic_colortab"
                 android:contentDescription="@string/timeMode_night" />
 
-            <TextView android:layout_gravity="center_vertical"
-                android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
+            <TextView
+                android:id="@+id/info_time_lightmap_key_night_label"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
                 android:text="@string/timeMode_night" />
 
         </LinearLayout>
@@ -56,15 +59,18 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageView android:layout_gravity="center_vertical"
+            <ImageView
                 android:id="@+id/info_time_lightmap_key_astro_icon"
                 android:layout_width="16dp" android:layout_height="16dp"
+                android:layout_gravity="center_vertical"
                 android:background="@drawable/ic_colortab"
                 android:contentDescription="@string/timeMode_astronomical" />
 
-            <TextView android:layout_gravity="center_vertical"
-                android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
+            <TextView
+                android:id="@+id/info_time_lightmap_key_astro_label"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
                 android:text="@string/timeMode_astronomical" />
 
         </LinearLayout>
@@ -74,15 +80,18 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageView android:layout_gravity="center_vertical"
+            <ImageView
                 android:id="@+id/info_time_lightmap_key_nautical_icon"
                 android:layout_width="16dp" android:layout_height="16dp"
+                android:layout_gravity="center_vertical"
                 android:background="@drawable/ic_colortab"
                 android:contentDescription="@string/timeMode_nautical" />
 
-            <TextView android:layout_gravity="center_vertical"
-                android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
+            <TextView
+                android:id="@+id/info_time_lightmap_key_nautical_label"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
                 android:text="@string/timeMode_nautical" />
 
         </LinearLayout>
@@ -92,15 +101,18 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageView android:layout_gravity="center_vertical"
+            <ImageView
                 android:id="@+id/info_time_lightmap_key_civil_icon"
                 android:layout_width="16dp" android:layout_height="16dp"
+                android:layout_gravity="center_vertical"
                 android:background="@drawable/ic_colortab"
                 android:contentDescription="@string/timeMode_civil" />
 
-            <TextView android:layout_gravity="center_vertical"
-                android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
+            <TextView
+                android:id="@+id/info_time_lightmap_key_civil_label"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
                 android:text="@string/timeMode_civil" />
 
         </LinearLayout>
@@ -110,15 +122,18 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageView android:layout_gravity="center_vertical"
+            <ImageView
                 android:id="@+id/info_time_lightmap_key_day_icon"
                 android:layout_width="16dp" android:layout_height="16dp"
+                android:layout_gravity="center_vertical"
                 android:background="@drawable/ic_colortab"
                 android:contentDescription="@string/timeMode_day" />
 
-            <TextView android:layout_gravity="center_vertical"
-                android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
+            <TextView
+                android:id="@+id/info_time_lightmap_key_day_label"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
                 android:text="@string/timeMode_day" />
 
         </LinearLayout>
