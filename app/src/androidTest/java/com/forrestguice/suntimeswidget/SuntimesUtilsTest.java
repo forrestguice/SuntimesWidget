@@ -213,41 +213,24 @@ public class SuntimesUtilsTest
         SuntimesUtils.TimeDisplayText text3 = utils.timeDeltaDisplayString(null, null);
         assertTrue("result should be empty (null date), but was " + text3.toString(), text3.toString().isEmpty());
 
-        SuntimesUtils.TimeDisplayText text4 = utils.timeDeltaDisplayString(date1, date1);
-        assertTrue("result should be 1m (delta of 0), but was " + text4.toString(), text4.toString().equals("1m"));
-        assertTrue(text4.getSuffix().isEmpty());
+        test_timeDeltaDisplayString(date1, 0, "1m");
+        test_timeDeltaDisplayString(date1, 1 * 60 * 1000, "1m");
+        test_timeDeltaDisplayString(date1, 2 * 60 * 1000, "2m");
+        test_timeDeltaDisplayString(date1, 59 * 60 * 1000, "59m");
+        test_timeDeltaDisplayString(date1, 60 * 60 * 1000, "1h");
+        test_timeDeltaDisplayString(date1, 61 * 60 * 1000, "1h 1m");
+        test_timeDeltaDisplayString(date1, 1439 * 60 * 1000, "23h 59m");
+        test_timeDeltaDisplayString(date1, 1440 * 60 * 1000, "1d");
+        test_timeDeltaDisplayString(date1, 1500 * 60 * 1000, "1d 1h");
+    }
 
-        SuntimesUtils.TimeDisplayText text5 = utils.timeDeltaDisplayString(date1, new Date(date1.getTime() + 1 * 60 * 1000));
-        assertTrue("result should be 1m, but was " + text5.toString(), text5.toString().equals("1m"));
-
-        SuntimesUtils.TimeDisplayText text6 = utils.timeDeltaDisplayString(date1, new Date(date1.getTime() + 2 * 60 * 1000));
-        assertTrue("result should be 2m, but was " + text6.toString(), text6.toString().equals("2m"));
-
-        SuntimesUtils.TimeDisplayText text7 = utils.timeDeltaDisplayString(date1, new Date(date1.getTime() + 59 * 60 * 1000));
-        assertTrue("result should be 59m, but was " + text7.toString(), text7.toString().equals("59m"));
-
-        SuntimesUtils.TimeDisplayText text8 = utils.timeDeltaDisplayString(date1, new Date(date1.getTime() + 60 * 60 * 1000));
-        assertTrue("result should be 1h, but was " + text8.toString(), text8.toString().equals("1h"));
-
-        SuntimesUtils.TimeDisplayText text9 = utils.timeDeltaDisplayString(date1, new Date(date1.getTime() + 61 * 60 * 1000));
-        assertTrue("result should be 1h 1m, but was " + text9.toString(), text9.toString().equals("1h 1m"));
-
-        SuntimesUtils.TimeDisplayText text10 = utils.timeDeltaDisplayString(date1, new Date(date1.getTime() + 1439 * 60 * 1000));
-        assertTrue("result should be 23h 59m, but was " + text10.toString(), text10.toString().equals("23h 59m"));
-
-        SuntimesUtils.TimeDisplayText text11 = utils.timeDeltaDisplayString(date1, new Date(date1.getTime() + 1440 * 60 * 1000));
-        assertTrue("result should be 1d, but was " + text11.toString(), text11.toString().equals("1d"));
-        assertTrue(text11.getRawValue() == 1440 * 60 * 1000);
-
-        //SuntimesUtils.TimeDisplayText text12 = utils.timeDeltaDisplayString(date1, new Date(date1.getTime() + 1441 * 60 * 1000));
-        //assertTrue("result should be 1d 1m, but was " + text12.toString(), text12.toString().equals("1d 1m"));
-
-        SuntimesUtils.TimeDisplayText text13 = utils.timeDeltaDisplayString(date1, new Date(date1.getTime() + 1500 * 60 * 1000));
-        assertTrue("result should be 1d 1h, but was " + text13.toString(), text13.toString().equals("1d 1h"));
-
-        //SuntimesUtils.TimeDisplayText text14 = utils.timeDeltaDisplayString(date1, new Date(date1.getTime() + 1501 * 60 * 1000));
-        //assertTrue("result should be 1d 1h 1m, but was " + text14.toString(), text14.toString().equals("1d 1h 1m"));
-        //assertTrue(text14.getRawValue() == 1501 * 60 * 1000);
+    protected SuntimesUtils.TimeDisplayText test_timeDeltaDisplayString(Date date, long timeDelta, String expected)
+    {
+        SuntimesUtils.TimeDisplayText text = utils.timeDeltaDisplayString(date, new Date(date.getTime() + timeDelta));
+        assertTrue("result should be " + expected + " but was " + text.toString(), text.toString().equals(expected));
+        assertTrue(text.getRawValue() == timeDelta);
+        assertTrue(text.getSuffix().isEmpty());
+        return text;
     }
 
     @Test
@@ -256,55 +239,38 @@ public class SuntimesUtilsTest
         assertTrue("test precondition: english language", AppSettings.getLocale().getLanguage().equals("en"));
         long date1 = Calendar.getInstance().getTimeInMillis();
 
-        SuntimesUtils.TimeDisplayText text1 = utils.timeDeltaLongDisplayString(date1 + 1000 * 30, date1, true);
-        assertTrue("result should be 30s shorter, but was " + text1.toString(), text1.toString().equals("30s shorter"));
-        assertTrue(text1.getSuffix().equals("shorter"));
-        assertTrue(text1.getRawValue() == -1000 * 30);
+        test_timeDeltaLongDisplayString(date1,0, "1m shorter");
+        test_timeDeltaLongDisplayString(date1,-1000 * 30, "30s shorter", true);
+        test_timeDeltaLongDisplayString(date1,1000 * 30, "30s longer", true);
+        test_timeDeltaLongDisplayString(date1,1000 * 30, "1m longer", false);
+        test_timeDeltaLongDisplayString(date1,1 * 60 * 1000, "1m longer");
+        test_timeDeltaLongDisplayString(date1,2 * 60 * 1000, "2m longer");
+        test_timeDeltaLongDisplayString(date1,59 * 60 * 1000, "59m longer");
+        test_timeDeltaLongDisplayString(date1,60 * 60 * 1000, "1h longer");
+        test_timeDeltaLongDisplayString(date1,61 * 60 * 1000, "1h 1m longer");
+        test_timeDeltaLongDisplayString(date1,1439 * 60 * 1000, "23h 59m longer");
+        test_timeDeltaLongDisplayString(date1,1440 * 60 * 1000, "1d longer");
+        test_timeDeltaLongDisplayString(date1,1500 * 60 * 1000, "1d 1h longer");
+        test_timeDeltaLongDisplayString(date1,30 * 60 * 1000 + 60 * 1000, "31m longer", true);
+        test_timeDeltaLongDisplayString(date1,30 * 60 * 1000 + 59 * 1000, "30m 59s longer", true);
+        test_timeDeltaLongDisplayString(date1,660 * 60 * 1000 + 55 * 1000, "11h 55s longer", true);
+    }
 
-        SuntimesUtils.TimeDisplayText text2 = utils.timeDeltaLongDisplayString(date1, date1 + 1000 * 30, true);
-        assertTrue("result should be 30s longer, but was " + text2.toString(), text2.toString().equals("30s longer"));
-        assertTrue(text2.getSuffix().equals("longer"));
-        assertTrue(text2.getRawValue() == 1000 * 30);
+    protected SuntimesUtils.TimeDisplayText test_timeDeltaLongDisplayString(long date, long timeDelta, String expected)
+    {
+        return test_timeDeltaLongDisplayString(date, timeDelta, expected, false);
+    }
+    protected SuntimesUtils.TimeDisplayText test_timeDeltaLongDisplayString(long date, long timeDelta, String expected, boolean showSeconds)
+    {
+        SuntimesUtils.TimeDisplayText text = utils.timeDeltaLongDisplayString(date, date + timeDelta, showSeconds);
+        assertTrue("result should be " + expected + ", but was " + text.toString(), text.toString().equals(expected));
 
-        SuntimesUtils.TimeDisplayText text3 = utils.timeDeltaLongDisplayString(date1, date1 + 1000 * 30, false);
-        assertTrue("result should be 1m longer, but was " + text3.toString(), text3.toString().equals("1m longer"));
-        assertTrue(text3.getRawValue() == 1000 * 30);
+        if (timeDelta <= 0)
+            assertTrue(text.getSuffix().equals("shorter"));
+        else assertTrue(text.getSuffix().equals("longer"));
 
-        SuntimesUtils.TimeDisplayText text4 = utils.timeDeltaLongDisplayString(date1, date1);
-        assertTrue("result should be 1m (delta of 0), but was " + text4.toString(), text4.toString().startsWith("1m"));
-
-        SuntimesUtils.TimeDisplayText text5 = utils.timeDeltaLongDisplayString(date1, date1 + 1 * 60 * 1000);
-        assertTrue("result should be 1m longer, but was " + text5.toString(), text5.toString().equals("1m longer"));
-
-        SuntimesUtils.TimeDisplayText text6 = utils.timeDeltaLongDisplayString(date1, date1 + 2 * 60 * 1000);
-        assertTrue("result should be 2m longer, but was " + text6.toString(), text6.toString().equals("2m longer"));
-
-        SuntimesUtils.TimeDisplayText text7 = utils.timeDeltaLongDisplayString(date1, date1 + 59 * 60 * 1000);
-        assertTrue("result should be 59m longer, but was " + text7.toString(), text7.toString().equals("59m longer"));
-
-        SuntimesUtils.TimeDisplayText text8 = utils.timeDeltaLongDisplayString(date1, date1 + 60 * 60 * 1000);
-        assertTrue("result should be 1h longer, but was " + text8.toString(), text8.toString().equals("1h longer"));
-
-        SuntimesUtils.TimeDisplayText text9 = utils.timeDeltaLongDisplayString(date1, date1 + 61 * 60 * 1000);
-        assertTrue("result should be 1h 1m longer, but was " + text9.toString(), text9.toString().equals("1h 1m longer"));
-
-        SuntimesUtils.TimeDisplayText text10 = utils.timeDeltaLongDisplayString(date1, date1 + 1439 * 60 * 1000);
-        assertTrue("result should be 23h 59m longer, but was " + text10.toString(), text10.toString().equals("23h 59m longer"));
-
-        SuntimesUtils.TimeDisplayText text11 = utils.timeDeltaLongDisplayString(date1, date1 + 1440 * 60 * 1000);
-        assertTrue("result should be 1d longer, but was " + text11.toString(), text11.toString().equals("1d longer"));
-
-        //SuntimesUtils.TimeDisplayText text12 = utils.timeDeltaLongDisplayString(date1, date1 + 1441 * 60 * 1000);
-        //assertTrue("result should be 1d 1m longer, but was " + text12.toString(), text12.toString().equals("1d 1m longer"));
-
-        SuntimesUtils.TimeDisplayText text13 = utils.timeDeltaLongDisplayString(date1, date1 + 1500 * 60 * 1000);
-        assertTrue("result should be 1d 1h longer, but was " + text13.toString(), text13.toString().equals("1d 1h longer"));
-
-        //SuntimesUtils.TimeDisplayText text14 = utils.timeDeltaLongDisplayString(date1, date1 + 1501 * 60 * 1000);
-        //assertTrue("result should be 1d 1h 1m longer, but was " + text14.toString(), text14.toString().equals("1d 1h 1m longer"));
-
-        SuntimesUtils.TimeDisplayText text15 = utils.timeDeltaLongDisplayString(date1,date1 + 660 * 60 * 1000 + 55 * 1000, true);
-        assertTrue("result should be 11h 55s, but was " + text15.toString(), text15.toString().equals("11h 55s"));
+        assertTrue(text.getRawValue() == timeDelta);
+        return text;
     }
 
     @Test
