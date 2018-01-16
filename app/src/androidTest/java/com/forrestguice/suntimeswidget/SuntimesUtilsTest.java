@@ -142,30 +142,13 @@ public class SuntimesUtilsTest
         assertTrue("test precondition: english language", AppSettings.getLocale().getLanguage().equals("en"));
         WidgetSettings.saveTimeFormatModePref(mockContext, 0, WidgetSettings.TimeFormatMode.MODE_12HR);
         SuntimesUtils.initDisplayStrings(mockContext);
-
         String[] amPm = new SimpleDateFormat("a", Locale.getDefault()).getDateFormatSymbols().getAmPmStrings();  // am/pm strings
 
         long utcMillis = 1493315892762L;                          // april 27
         TimeZone tzAz = TimeZone.getTimeZone("US/Arizona");       // 10:58 AM in arizona
         TimeZone tzEast = TimeZone.getTimeZone("US/Eastern");     // 1:58 PM on east coast
-
-        Calendar timeEast = new GregorianCalendar(tzEast);
-        timeEast.setTimeInMillis(utcMillis);
-
-        SuntimesUtils.TimeDisplayText text0 = utils.calendarTimeShortDisplayString(mockContext, timeEast);
-        assertTrue("raw value should be " + utcMillis + ", but was " + text0.getRawValue(), text0.getRawValue() == utcMillis);
-        assertTrue("value should be 1:58, but was " + text0.getValue(), text0.getValue().equals("1:58"));
-        assertTrue("suffix should be " + amPm[1] + ", but was " + text0.getSuffix(), text0.getSuffix().equals(amPm[1]));
-        assertTrue("units should be empty but was " + text0.getUnits(), text0.getUnits().isEmpty());
-
-        Calendar timeAz = new GregorianCalendar(tzAz);
-        timeAz.setTimeInMillis(utcMillis);
-
-        SuntimesUtils.TimeDisplayText text1 = utils.calendarTimeShortDisplayString(mockContext, timeAz);
-        assertTrue("raw value should be " + utcMillis + ", but was " + text1.getRawValue(), text1.getRawValue() == utcMillis);
-        assertTrue("value should be 10:58, but was " + text1.getValue(), text1.getValue().equals("10:58"));
-        assertTrue("suffix should be " + amPm[0] + ", but was " + text1.getSuffix(), text1.getSuffix().equals(amPm[0]));
-        assertTrue("units should be empty but was " + text1.getUnits(), text1.getUnits().isEmpty());
+        test_calendarTimeShortDisplayString12hr(tzEast, utcMillis, "1:58", amPm[1]);
+        test_calendarTimeShortDisplayString12hr(tzAz, utcMillis, "10:58", amPm[0]);
     }
 
     @Test
@@ -178,25 +161,35 @@ public class SuntimesUtilsTest
         long utcMillis = 1493315892762L;                          // april 27
         TimeZone tzAz = TimeZone.getTimeZone("US/Arizona");       // 10:58 in arizona
         TimeZone tzEast = TimeZone.getTimeZone("US/Eastern");     // 13:58 on east coast
-
-        Calendar timeEast = new GregorianCalendar(tzEast);
-        timeEast.setTimeInMillis(utcMillis);
-
-        SuntimesUtils.TimeDisplayText text0 = utils.calendarTimeShortDisplayString(mockContext, timeEast);
-        assertTrue("raw value should be " + utcMillis + ", but was " + text0.getRawValue(), text0.getRawValue() == utcMillis);
-        assertTrue("value should be 13:58, but was " + text0.getValue(), text0.getValue().equals("13:58"));
-        assertTrue("suffix should be empty but was " + text0.getSuffix(), text0.getSuffix().isEmpty());
-        assertTrue("units should be empty but was " + text0.getUnits(), text0.getUnits().isEmpty());
-
-        Calendar timeAz = new GregorianCalendar(tzAz);
-        timeAz.setTimeInMillis(utcMillis);
-
-        SuntimesUtils.TimeDisplayText text1 = utils.calendarTimeShortDisplayString(mockContext, timeAz);
-        assertTrue("raw value should be " + utcMillis + ", but was " + text1.getRawValue(), text1.getRawValue() == utcMillis);
-        assertTrue("value should be 10:58, but was " + text1.getValue(), text1.getValue().equals("10:58"));
-        assertTrue("suffix should be empty but was " + text1.getSuffix(), text1.getSuffix().isEmpty());
-        assertTrue("units should be empty but was " + text1.getUnits(), text1.getUnits().isEmpty());
+        test_calendarTimeShortDisplayString24hr(tzEast, utcMillis, "13:58");
+        test_calendarTimeShortDisplayString24hr(tzAz, utcMillis, "10:58");
     }
+
+    protected SuntimesUtils.TimeDisplayText test_calendarTimeShortDisplayString12hr(TimeZone tz, long utcMillis, String expected, String expectedSuffix)
+    {
+        SuntimesUtils.TimeDisplayText text = test_calendarTimeShortDisplayString(tz, utcMillis, expected);
+        assertTrue("suffix should be " + expectedSuffix + ", but was " + text.getSuffix(), text.getSuffix().equals(expectedSuffix));
+        return text;
+    }
+
+    protected SuntimesUtils.TimeDisplayText test_calendarTimeShortDisplayString24hr(TimeZone tz, long utcMillis, String expected)
+    {
+        SuntimesUtils.TimeDisplayText text = test_calendarTimeShortDisplayString(tz, utcMillis, expected);
+        assertTrue("suffix should be empty but was " + text.getSuffix(), text.getSuffix().isEmpty());
+        return text;
+    }
+
+    protected SuntimesUtils.TimeDisplayText test_calendarTimeShortDisplayString(TimeZone tz, long utcMillis, String expected)
+    {
+        Calendar time = new GregorianCalendar(tz);
+        time.setTimeInMillis(utcMillis);
+        SuntimesUtils.TimeDisplayText text = utils.calendarTimeShortDisplayString(mockContext, time);
+        assertTrue("raw value should be " + utcMillis + ", but was " + text.getRawValue(), text.getRawValue() == utcMillis);
+        assertTrue("value should be " + expected + ", but was " + text.getValue(), text.getValue().equals(expected));
+        assertTrue("units should be empty but was " + text.getUnits(), text.getUnits().isEmpty());
+        return text;
+    }
+
 
     @Test
     public void test_timeDeltaDisplayString()
