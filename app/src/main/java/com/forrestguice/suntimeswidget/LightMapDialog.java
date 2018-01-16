@@ -48,7 +48,7 @@ public class LightMapDialog extends DialogFragment
     private LightMapView lightmap;
     private LightMapKey field_night, field_astro, field_nautical, field_civil, field_day;
     private int colorNight, colorAstro, colorNautical, colorCivil, colorDay;
-    private boolean showSeconds = false;
+    private boolean showSeconds = true;
 
     private SuntimesRiseSetDataset data;
     public void setData( SuntimesRiseSetDataset data )
@@ -139,12 +139,16 @@ public class LightMapDialog extends DialogFragment
         if (lightmap != null)
         {
             Context context = getContext();
-            showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
-            field_day.updateInfo(context, new long[] {data.dayLength()});
-            field_civil.updateInfo(context, data.civilTwilightLength());
-            field_nautical.updateInfo(context, data.nauticalTwilightLength());
-            field_astro.updateInfo(context, data.astroTwilightLength());
-            field_night.updateInfo(context, new long[] {data.nightLength()});
+            //showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
+
+            field_civil.updateInfo(context, createInfoArray(data.civilTwilightLength()));
+            field_nautical.updateInfo(context, createInfoArray(data.nauticalTwilightLength()));
+            field_astro.updateInfo(context, createInfoArray(data.astroTwilightLength()));
+            field_night.updateInfo(context, createInfoArray(new long[] {data.nightLength()}));
+
+            long dayDelta = data.dayLengthOther() - data.dayLength();
+            field_day.updateInfo(context, createInfoArray(data.dayLength(), dayDelta, colorDay));
+
             lightmap.updateViews(data);
             Log.d("DEBUG", "LightMapDialog updated");
         }
@@ -157,20 +161,20 @@ public class LightMapDialog extends DialogFragment
     {
         protected ImageView icon;
         protected TextView label;
-        protected TextView info;
+        protected TextView text;
 
         public LightMapKey(ImageView icon, TextView label, TextView duration)
         {
             this.icon = icon;
             this.label = label;
-            this.info = duration;
+            this.text = duration;
         }
 
         public LightMapKey(@NonNull View parent, int iconRes, int labelRes, int durationRes)
         {
             icon = (ImageView)parent.findViewById(iconRes);
             label = (TextView)parent.findViewById(labelRes);
-            info = (TextView)parent.findViewById(durationRes);
+            text = (TextView)parent.findViewById(durationRes);
         }
 
         public void setVisible(boolean visible)
@@ -179,42 +183,94 @@ public class LightMapDialog extends DialogFragment
             if (label != null) {
                 label.setVisibility(visibility);
             }
-            if (info != null) {
-                info.setVisibility(visibility);
+            if (text != null) {
+                text.setVisibility(visibility);
             }
             if (icon != null) {
                 icon.setVisibility(visibility);
             }
         }
 
-        public void updateInfo(Context context, long[] durations)
+        public void updateInfo(Context context, LightMapKeyInfo[] info)
         {
-            if (info == null)
+            if (text == null || info == null || context == null)
                 return;
 
-            ArrayList<SuntimesUtils.TimeDisplayText> txt = new ArrayList<>();
-            for (int i=0; i<durations.length; i++)
+            if (info.length == 1)
             {
-                if (durations[i] > 0)
-                    txt.add(utils.timeDeltaLongDisplayString(durations[i], showSeconds));
-            }
+                String duration = info[0].durationString(showSeconds);
+                if (info[0].delta > 0) {
+                    String s = context.getString(R.string.length_twilight1e_pos, duration, info[0].deltaString(showSeconds));
+                    if (info[0].durationColor != null)
+                        text.setText(SuntimesUtils.createColorSpan(s, duration, info[0].durationColor));
+                    else text.setText(new SpannableString(s));
 
-            if (txt.size() == 1)
-            {
-                info.setText(new SpannableString(context.getString(R.string.length_twilight1, txt.get(0).toString())));
+                } else if (info[0].delta < 0) {
+                    String s = context.getString(R.string.length_twilight1e_neg, duration, info[0].deltaString(showSeconds));
+                    if (info[0].durationColor != null)
+                        text.setText(SuntimesUtils.createColorSpan(s, duration, info[0].durationColor));
+                    else text.setText(new SpannableString(s));
+
+                } else {
+                    text.setText(new SpannableString(context.getString(R.string.length_twilight1, duration)));
+                }
                 setVisible(true);
 
-            } else if (txt.size() >= 2) {
-                String s = context.getString(R.string.length_twilight2, txt.get(0).toString(), txt.get(1).toString());
+            } else if (info.length >= 2) {
+                String s = context.getString(R.string.length_twilight2, info[0].durationString(showSeconds), info[1].durationString(showSeconds));
                 String delimiter = context.getString(R.string.length_delimiter);
-                info.setText(SuntimesUtils.createBoldColorSpan(s, delimiter, colorDay));
+                text.setText(SuntimesUtils.createBoldColorSpan(s, delimiter, colorDay));
                 setVisible(true);
 
             } else {
-                info.setText(new SpannableString(""));
+                text.setText(new SpannableString(""));
                 setVisible(false);
             }
         }
+    }
+
+    /**
+     * LightMapKeyInfo
+     */
+    public static class LightMapKeyInfo
+    {
+        public LightMapKeyInfo(long duration, long delta)
+        {
+            this.duration = duration;
+            this.delta = delta;
+        }
+
+        public long duration = 0;
+        public Integer durationColor = null;
+        public String durationString(boolean showSeconds)
+        {
+            return utils.timeDeltaLongDisplayString(duration, showSeconds).toString();
+        }
+
+        public long delta = 0;
+        public Integer deltaColor = null;
+        public String deltaString(boolean showSeconds)
+        {
+            return utils.timeDeltaLongDisplayString(delta, showSeconds).toString();
+        }
+    }
+
+    public static LightMapKeyInfo[] createInfoArray(long durations, long delta, int color)
+    {
+        LightMapKeyInfo[] info = new LightMapKeyInfo[1];
+        info[0] = new LightMapKeyInfo(durations, delta);
+        info[0].durationColor = color;
+        return info;
+    }
+
+    public static LightMapKeyInfo[] createInfoArray(long[] durations)
+    {
+        LightMapKeyInfo[] info = new LightMapKeyInfo[durations.length];
+        for (int i=0; i<durations.length; i++)
+        {
+            info[i] = new LightMapKeyInfo(durations[i], 0);
+        }
+        return info;
     }
 
 }
