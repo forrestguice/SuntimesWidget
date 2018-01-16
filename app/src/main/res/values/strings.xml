@@ -65,6 +65,8 @@
     <string name="length_day"><xliff:g id="timeSpan" example="12h">%1$s</xliff:g> in the day</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
     <string name="length_light"><xliff:g id="timeSpan" example="12h 50m">%1$s</xliff:g> of usable light</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
     <string name="length_twilight1"><xliff:g id="timeSpan1" example="10h 5m">%1$s</xliff:g></string>
+    <string name="length_twilight1e_pos"><xliff:g id="timeSpan1" example="10h 5m">%1$s</xliff:g> [+<xliff:g id="timeSpan1" example="+30s">%2$s</xliff:g>]</string>
+    <string name="length_twilight1e_neg"><xliff:g id="timeSpan1" example="10h 5m">%1$s</xliff:g> [-<xliff:g id="timeSpan1" example="+30s">%2$s</xliff:g>]</string>
     <string name="length_twilight2"><xliff:g id="timeSpan1" example="30m">%1$s</xliff:g> | <xliff:g id="timeSpan2" example="30m">%2$s</xliff:g></string>
     <string name="length_delimiter">|</string>
 
