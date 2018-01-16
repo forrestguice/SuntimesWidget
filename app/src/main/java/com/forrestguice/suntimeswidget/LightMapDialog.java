@@ -206,7 +206,8 @@ public class LightMapDialog extends DialogFragment
 
             } else if (txt.size() >= 2) {
                 String s = context.getString(R.string.length_twilight2, txt.get(0).toString(), txt.get(1).toString());
-                info.setText(SuntimesUtils.createBoldColorSpan(s, "|", colorDay));
+                String delimiter = context.getString(R.string.length_delimiter);
+                info.setText(SuntimesUtils.createBoldColorSpan(s, delimiter, colorDay));
                 setVisible(true);
 
             } else {
