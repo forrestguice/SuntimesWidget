@@ -302,6 +302,9 @@ public class SuntimesUtilsTest
 
         //SuntimesUtils.TimeDisplayText text14 = utils.timeDeltaLongDisplayString(date1, date1 + 1501 * 60 * 1000);
         //assertTrue("result should be 1d 1h 1m longer, but was " + text14.toString(), text14.toString().equals("1d 1h 1m longer"));
+
+        SuntimesUtils.TimeDisplayText text15 = utils.timeDeltaLongDisplayString(date1,date1 + 660 * 60 * 1000 + 55 * 1000, true);
+        assertTrue("result should be 11h 55s, but was " + text15.toString(), text15.toString().equals("11h 55s"));
     }
 
     @Test
