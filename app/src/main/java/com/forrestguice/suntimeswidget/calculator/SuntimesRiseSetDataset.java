@@ -234,6 +234,11 @@ public class SuntimesRiseSetDataset
         return dataActual.dayLengthToday();
     }
 
+    public long dayLengthOther()
+    {
+        return dataActual.dayLengthOther();
+    }
+
     /**
      * @param data0 data for this twilight (e.g. nautical)
      * @param data1 data for next twilight (e.g. civil)
