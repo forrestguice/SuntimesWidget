@@ -46,7 +46,7 @@ public enum SolarEvents
     NOON("solar noon", "solar noon", R.drawable.ic_noon_large),                                                  // 7
     EVENING_GOLDEN("golden hour", "evening golden hour", R.drawable.ic_sunset_large),                            // 8
     SUNSET("sunset", "sunset", R.drawable.ic_sunset_large),                                                      // 9
-    EVENING_BLUE4("blue hour", "evening blue hour", R.drawable.ic_sunrise_large),                                // 10
+    EVENING_BLUE4("blue hour", "evening blue hour", R.drawable.ic_sunset_large),                                 // 10
     EVENING_CIVIL("civil twilight", "evening civil twilight", R.drawable.ic_sunset_large),                       // 11
     EVENING_BLUE8("blue hour", "evening blue hour", R.drawable.ic_sunset_large),                                 // 12
     EVENING_NAUTICAL("nautical twilight", "evening nautical twilight", R.drawable.ic_sunset_large),              // 13

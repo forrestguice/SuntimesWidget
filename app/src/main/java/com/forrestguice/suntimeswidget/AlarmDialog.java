@@ -402,6 +402,13 @@ public class AlarmDialog extends DialogFragment
                     calendar = dataset.dataCivil.sunriseCalendarOther();
                 }
                 break;
+            case MORNING_BLUE4:
+                calendar = dataset.dataBlue4.sunriseCalendarToday();
+                if (calendar != null && time.after(calendar.getTime()))
+                {
+                    calendar = dataset.dataBlue4.sunriseCalendarOther();
+                }
+                break;
             case MORNING_GOLDEN:
                 calendar = dataset.dataGold.sunriseCalendarToday();
                 if (calendar != null && time.after(calendar.getTime()))
@@ -428,6 +435,13 @@ public class AlarmDialog extends DialogFragment
                 if (calendar != null && time.after(calendar.getTime()))
                 {
                     calendar = dataset.dataGold.sunsetCalendarOther();
+                }
+                break;
+            case EVENING_BLUE4:
+                calendar = dataset.dataBlue4.sunsetCalendarToday();
+                if (calendar != null && time.after(calendar.getTime()))
+                {
+                    calendar = dataset.dataBlue4.sunsetCalendarOther();
                 }
                 break;
             case EVENING_CIVIL:

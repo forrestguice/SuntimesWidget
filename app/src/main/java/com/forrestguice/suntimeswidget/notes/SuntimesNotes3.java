@@ -75,7 +75,7 @@ public class SuntimesNotes3 implements SuntimesNotes
         {
             if ((!hasGoldBlue || !enabledGold) && (event.equals(SolarEvents.EVENING_GOLDEN) || event.equals(SolarEvents.MORNING_GOLDEN)))
                 continue;
-            else if ((!hasGoldBlue || !enabledBlue) && (event.equals(SolarEvents.EVENING_BLUE8) || event.equals(SolarEvents.MORNING_BLUE8)))
+            else if ((!hasGoldBlue || !enabledBlue) && (event.equals(SolarEvents.EVENING_BLUE8) || event.equals(SolarEvents.MORNING_BLUE8) || event.equals(SolarEvents.EVENING_BLUE4) || event.equals(SolarEvents.MORNING_BLUE4)))
                 continue;
 
             NoteData note = createNote(event);
@@ -413,6 +413,10 @@ public class SuntimesNotes3 implements SuntimesNotes
                 date = dataset.dataCivil.sunriseCalendarToday();
                 dateOther = dataset.dataCivil.sunriseCalendarOther();
                 break;
+            case MORNING_BLUE4:
+                date = dataset.dataBlue4.sunriseCalendarToday();
+                dateOther = dataset.dataBlue4.sunriseCalendarOther();
+                break;
             case SUNRISE:
                 date = dataset.dataActual.sunriseCalendarToday();
                 dateOther = dataset.dataActual.sunriseCalendarOther();
@@ -434,6 +438,10 @@ public class SuntimesNotes3 implements SuntimesNotes
             case SUNSET:
                 date = dataset.dataActual.sunsetCalendarToday();
                 dateOther = dataset.dataActual.sunsetCalendarOther();
+                break;
+            case EVENING_BLUE4:
+                date = dataset.dataBlue4.sunsetCalendarToday();
+                dateOther = dataset.dataBlue4.sunsetCalendarOther();
                 break;
             case EVENING_CIVIL:
                 date = dataset.dataCivil.sunsetCalendarToday();

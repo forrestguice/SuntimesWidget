@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -36,6 +36,7 @@ public class SuntimesRiseSetDataset
     public SuntimesRiseSetData dataNoon;
     public SuntimesRiseSetData dataGold;
     public SuntimesRiseSetData dataBlue8;
+    public SuntimesRiseSetData dataBlue4;
 
     public SuntimesRiseSetDataset(Context context)
     {
@@ -60,6 +61,9 @@ public class SuntimesRiseSetDataset
 
         dataBlue8 = new SuntimesRiseSetData(dataActual);
         dataBlue8.setTimeMode(WidgetSettings.TimeMode.BLUE8);
+
+        dataBlue4 = new SuntimesRiseSetData(dataActual);
+        dataBlue4.setTimeMode(WidgetSettings.TimeMode.BLUE4);
     }
 
     public void calculateData()
@@ -70,7 +74,8 @@ public class SuntimesRiseSetDataset
         dataAstro.calculate();
         dataNoon.calculate();
         dataGold.calculate();
-        dataBlue.calculate();
+        dataBlue8.calculate();
+        dataBlue4.calculate();
     }
 
     public boolean isCalculated()
@@ -87,6 +92,7 @@ public class SuntimesRiseSetDataset
         dataNoon.invalidateCalculation();
         dataGold.invalidateCalculation();
         dataBlue8.invalidateCalculation();
+        dataBlue4.invalidateCalculation();
     }
 
     public Calendar todayIs()
