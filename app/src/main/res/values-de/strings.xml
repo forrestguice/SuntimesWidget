@@ -163,8 +163,10 @@
   <string name="timeMode_day">Tag</string>                       <!-- a label (not an actual timeMode setting) --> <!-- TODO: confirm this is right / fix -->
   <string name="timeMode_golden_short">Golden</string>                <!-- setting --> <!-- TODO -->
   <string name="timeMode_golden">Golden Hour</string>                 <!-- setting --> <!-- TODO -->
-  <string name="timeMode_blue_short">Blue</string>                    <!-- setting --> <!-- TODO -->
-  <string name="timeMode_blue">Blue Hour</string>                     <!-- setting --> <!-- TODO -->
+  <string name="timeMode_blue8_short">Blue</string>                    <!-- setting --> <!-- TODO -->
+  <string name="timeMode_blue8">Blue Hour</string>                     <!-- setting --> <!-- TODO -->
+  <string name="timeMode_blue4_short">Blue</string>                    <!-- setting --> <!-- TODO -->
+  <string name="timeMode_blue4">Blue Hour</string>                     <!-- setting --> <!-- TODO -->
 
   <string name="timeMode_equinox_vernal">Spring Equinox</string>      <!-- setting -->  <!-- TODO -->
   <string name="timeMode_equinox_vernal_short">Equinox</string>       <!-- setting -->  <!-- TODO -->

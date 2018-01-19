@@ -192,7 +192,7 @@
             style="@style/SunsetTimeTextView"
             android:layout_marginBottom="@dimen/table_cell_spacing"
             android:layout_marginTop="@dimen/table_cell_spacing"
-            android:text="@string/timeMode_blue_short"
+            android:text="@string/timeMode_blue8_short"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_time_label_nautical"
              />

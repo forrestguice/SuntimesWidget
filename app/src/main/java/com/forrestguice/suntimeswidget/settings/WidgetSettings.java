@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -790,7 +790,8 @@ public class WidgetSettings
         ASTRONOMICAL("Astronomical", "Astronomical Twilight"),
         NOON("Noon", "Solar Noon"),
         GOLD("Golden", "Golden Hour"),
-        BLUE("Blue", "Blue Hour");
+        BLUE8("Blue", "Blue Hour"),      // 8 deg; morning start, evening end
+        BLUE4("Blue", "Blue Hour");      // 4 deg; morning end, evening start
 
         public static boolean shortDisplayStrings = false;
         private String longDisplayString;
@@ -800,7 +801,6 @@ public class WidgetSettings
         {
             this.shortDisplayString = shortDisplayString;
             this.longDisplayString = longDisplayString;
-
         }
 
         public String toString()
@@ -850,8 +850,11 @@ public class WidgetSettings
             GOLD.setDisplayStrings( context.getString(R.string.timeMode_golden_short),
                     context.getString(R.string.timeMode_golden) );
 
-            BLUE.setDisplayStrings( context.getString(R.string.timeMode_blue_short),
-                    context.getString(R.string.timeMode_blue) );
+            BLUE8.setDisplayStrings( context.getString(R.string.timeMode_blue8_short),
+                    context.getString(R.string.timeMode_blue8) );
+
+            BLUE4.setDisplayStrings( context.getString(R.string.timeMode_blue4_short),
+                    context.getString(R.string.timeMode_blue4) );
         }
     }
 

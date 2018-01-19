@@ -59,7 +59,7 @@ public class SuntimesRiseSetDataset
         dataGold.setTimeMode(WidgetSettings.TimeMode.GOLD);
 
         dataBlue = new SuntimesRiseSetData(dataActual);
-        dataBlue.setTimeMode(WidgetSettings.TimeMode.BLUE);
+        dataBlue.setTimeMode(WidgetSettings.TimeMode.BLUE8);
     }
 
     public void calculateData()
