@@ -276,6 +276,12 @@ public class SuntimesNotes3 implements SuntimesNotes
                 untilString = context.getString(R.string.until);
                 noteString = context.getString(R.string.until_civilTwilight);
                 break;
+            case MORNING_BLUE4:
+                noteIcon = R.drawable.ic_sunrise_large;
+                noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_rising);
+                untilString = context.getString(R.string.until_end);
+                noteString = context.getString(R.string.untilEnd_bluehour);
+                break;
             case SUNRISE:
                 noteIcon = R.drawable.ic_sunrise_large;
                 noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_rising);
@@ -308,6 +314,12 @@ public class SuntimesNotes3 implements SuntimesNotes
                 untilString = context.getString(R.string.until);
                 noteString = context.getString(R.string.until_sunset);
                 break;
+            case EVENING_BLUE4:
+                noteIcon = R.drawable.ic_sunset_large;
+                noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
+                untilString = context.getString(R.string.until);
+                noteString = context.getString(R.string.until_bluehour);
+                break;
             case EVENING_CIVIL:
                 noteIcon = R.drawable.ic_sunset_large;
                 noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
@@ -317,7 +329,7 @@ public class SuntimesNotes3 implements SuntimesNotes
             case EVENING_BLUE8:
                 noteIcon = R.drawable.ic_sunset_large;
                 noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
-                untilString = context.getString(R.string.until);
+                untilString = context.getString(R.string.until_end);
                 noteString = context.getString(R.string.untilEnd_bluehour);
                 break;
             case EVENING_NAUTICAL:
@@ -352,6 +364,7 @@ public class SuntimesNotes3 implements SuntimesNotes
                 case MORNING_ASTRONOMICAL:          // until
                 case MORNING_NAUTICAL:
                 case MORNING_BLUE8:
+                case EVENING_BLUE4:
                 case MORNING_CIVIL:
                 case SUNRISE:
                 case NOON:
@@ -363,6 +376,7 @@ public class SuntimesNotes3 implements SuntimesNotes
                 case MORNING_GOLDEN:               // until_end
                 case EVENING_CIVIL:
                 case EVENING_BLUE8:
+                case MORNING_BLUE4:
                 case EVENING_NAUTICAL:
                 case EVENING_ASTRONOMICAL:
                 default:

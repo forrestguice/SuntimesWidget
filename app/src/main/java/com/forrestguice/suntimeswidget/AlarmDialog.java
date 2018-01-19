@@ -93,6 +93,8 @@ public class AlarmDialog extends DialogFragment
             if (!supportsGoldBlue)
             {
                 adapter.remove(SolarEvents.MORNING_BLUE8);
+                adapter.remove(SolarEvents.MORNING_BLUE4);
+                adapter.remove(SolarEvents.EVENING_BLUE4);
                 adapter.remove(SolarEvents.EVENING_BLUE8);
                 adapter.remove(SolarEvents.MORNING_GOLDEN);
                 adapter.remove(SolarEvents.EVENING_GOLDEN);

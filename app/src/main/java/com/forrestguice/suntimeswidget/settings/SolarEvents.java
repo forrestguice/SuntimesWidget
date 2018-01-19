@@ -40,15 +40,17 @@ public enum SolarEvents
     MORNING_NAUTICAL("nautical twilight", "morning nautical twilight", R.drawable.ic_sunrise_large),             // 1
     MORNING_BLUE8("blue hour", "morning blue hour", R.drawable.ic_sunrise_large),                                // 2
     MORNING_CIVIL("civil twilight", "morning civil twilight", R.drawable.ic_sunrise_large),                      // 3
-    SUNRISE("sunrise", "sunrise", R.drawable.ic_sunrise_large),                                                  // 4
-    MORNING_GOLDEN("golden hour", "morning golden hour", R.drawable.ic_sunrise_large),                           // 5
-    NOON("solar noon", "solar noon", R.drawable.ic_noon_large),                                                  // 6
-    EVENING_GOLDEN("golden hour", "evening golden hour", R.drawable.ic_sunset_large),                            // 7
-    SUNSET("sunset", "sunset", R.drawable.ic_sunset_large),                                                      // 8
-    EVENING_CIVIL("civil twilight", "evening civil twilight", R.drawable.ic_sunset_large),                       // 9
-    EVENING_BLUE8("blue hour", "evening blue hour", R.drawable.ic_sunset_large),                                 // 10
-    EVENING_NAUTICAL("nautical twilight", "evening nautical twilight", R.drawable.ic_sunset_large),              // 11
-    EVENING_ASTRONOMICAL("astronomical twilight", "evening astronomical twilight", R.drawable.ic_sunset_large);  // 12  .. R.array.solarevents_short/_long req same length/order
+    MORNING_BLUE4("blue hour", "morning blue hour", R.drawable.ic_sunrise_large),                                // 4
+    SUNRISE("sunrise", "sunrise", R.drawable.ic_sunrise_large),                                                  // 5
+    MORNING_GOLDEN("golden hour", "morning golden hour", R.drawable.ic_sunrise_large),                           // 6
+    NOON("solar noon", "solar noon", R.drawable.ic_noon_large),                                                  // 7
+    EVENING_GOLDEN("golden hour", "evening golden hour", R.drawable.ic_sunset_large),                            // 8
+    SUNSET("sunset", "sunset", R.drawable.ic_sunset_large),                                                      // 9
+    EVENING_BLUE4("blue hour", "evening blue hour", R.drawable.ic_sunrise_large),                                // 10
+    EVENING_CIVIL("civil twilight", "evening civil twilight", R.drawable.ic_sunset_large),                       // 11
+    EVENING_BLUE8("blue hour", "evening blue hour", R.drawable.ic_sunset_large),                                 // 12
+    EVENING_NAUTICAL("nautical twilight", "evening nautical twilight", R.drawable.ic_sunset_large),              // 13
+    EVENING_ASTRONOMICAL("astronomical twilight", "evening astronomical twilight", R.drawable.ic_sunset_large);  // 14  .. R.array.solarevents_short/_long req same length/order
 
     private int iconResource;
     private String shortDisplayString, longDisplayString;
