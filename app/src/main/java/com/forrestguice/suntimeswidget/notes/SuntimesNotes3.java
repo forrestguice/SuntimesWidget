@@ -406,8 +406,8 @@ public class SuntimesNotes3 implements SuntimesNotes
                 dateOther = dataset.dataNautical.sunriseCalendarOther();
                 break;
             case MORNING_BLUE8:
-                date = dataset.dataBlue.sunriseCalendarToday();
-                dateOther = dataset.dataBlue.sunriseCalendarOther();
+                date = dataset.dataBlue8.sunriseCalendarToday();
+                dateOther = dataset.dataBlue8.sunriseCalendarOther();
                 break;
             case MORNING_CIVIL:
                 date = dataset.dataCivil.sunriseCalendarToday();
@@ -440,8 +440,8 @@ public class SuntimesNotes3 implements SuntimesNotes
                 dateOther = dataset.dataCivil.sunsetCalendarOther();
                 break;
             case EVENING_BLUE8:
-                date = dataset.dataBlue.sunsetCalendarToday();
-                dateOther = dataset.dataBlue.sunsetCalendarOther();
+                date = dataset.dataBlue8.sunsetCalendarToday();
+                dateOther = dataset.dataBlue8.sunsetCalendarOther();
                 break;
             case EVENING_NAUTICAL:
                 date = dataset.dataNautical.sunsetCalendarToday();

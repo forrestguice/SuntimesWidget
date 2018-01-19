@@ -389,10 +389,10 @@ public class AlarmDialog extends DialogFragment
                 }
                 break;
             case MORNING_BLUE8:
-                calendar = dataset.dataBlue.sunriseCalendarToday();
+                calendar = dataset.dataBlue8.sunriseCalendarToday();
                 if (calendar != null && time.after(calendar.getTime()))
                 {
-                    calendar = dataset.dataBlue.sunriseCalendarOther();
+                    calendar = dataset.dataBlue8.sunriseCalendarOther();
                 }
                 break;
             case MORNING_CIVIL:
@@ -438,10 +438,10 @@ public class AlarmDialog extends DialogFragment
                 }
                 break;
             case EVENING_BLUE8:
-                calendar = dataset.dataBlue.sunsetCalendarToday();
+                calendar = dataset.dataBlue8.sunsetCalendarToday();
                 if (calendar != null && time.after(calendar.getTime()))
                 {
-                    calendar = dataset.dataBlue.sunsetCalendarOther();
+                    calendar = dataset.dataBlue8.sunsetCalendarOther();
                 }
                 break;
             case EVENING_NAUTICAL:

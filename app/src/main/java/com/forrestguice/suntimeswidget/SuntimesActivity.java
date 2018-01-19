@@ -1275,12 +1275,12 @@ public class SuntimesActivity extends AppCompatActivity
 
             if (showBlue)
             {
-                String sunriseString_blue = utils.calendarTimeShortDisplayString(context, dataset.dataBlue.sunriseCalendarToday(), showSeconds).toString();
-                String sunsetString_blue = utils.calendarTimeShortDisplayString(context, dataset.dataBlue.sunsetCalendarToday(), showSeconds).toString();
+                String sunriseString_blue = utils.calendarTimeShortDisplayString(context, dataset.dataBlue8.sunriseCalendarToday(), showSeconds).toString();
+                String sunsetString_blue = utils.calendarTimeShortDisplayString(context, dataset.dataBlue8.sunsetCalendarToday(), showSeconds).toString();
                 row_blue.updateFields(sunriseString_blue, sunsetString_blue);
 
-                String sunriseString_blue2 = utils.calendarTimeShortDisplayString(context, dataset.dataBlue.sunriseCalendarOther(), showSeconds).toString();
-                String sunsetString_blue2 = utils.calendarTimeShortDisplayString(context, dataset.dataBlue.sunsetCalendarOther(), showSeconds).toString();
+                String sunriseString_blue2 = utils.calendarTimeShortDisplayString(context, dataset.dataBlue8.sunriseCalendarOther(), showSeconds).toString();
+                String sunsetString_blue2 = utils.calendarTimeShortDisplayString(context, dataset.dataBlue8.sunsetCalendarOther(), showSeconds).toString();
                 row_blue2.updateFields(sunriseString_blue2, sunsetString_blue2);
             }
 

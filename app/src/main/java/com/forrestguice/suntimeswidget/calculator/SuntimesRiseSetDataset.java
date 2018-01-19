@@ -35,7 +35,7 @@ public class SuntimesRiseSetDataset
     public SuntimesRiseSetData dataAstro;
     public SuntimesRiseSetData dataNoon;
     public SuntimesRiseSetData dataGold;
-    public SuntimesRiseSetData dataBlue;
+    public SuntimesRiseSetData dataBlue8;
 
     public SuntimesRiseSetDataset(Context context)
     {
@@ -58,8 +58,8 @@ public class SuntimesRiseSetDataset
         dataGold = new SuntimesRiseSetData(dataActual);
         dataGold.setTimeMode(WidgetSettings.TimeMode.GOLD);
 
-        dataBlue = new SuntimesRiseSetData(dataActual);
-        dataBlue.setTimeMode(WidgetSettings.TimeMode.BLUE8);
+        dataBlue8 = new SuntimesRiseSetData(dataActual);
+        dataBlue8.setTimeMode(WidgetSettings.TimeMode.BLUE8);
     }
 
     public void calculateData()
@@ -86,7 +86,7 @@ public class SuntimesRiseSetDataset
         dataAstro.invalidateCalculation();
         dataNoon.invalidateCalculation();
         dataGold.invalidateCalculation();
-        dataBlue.invalidateCalculation();
+        dataBlue8.invalidateCalculation();
     }
 
     public Calendar todayIs()
