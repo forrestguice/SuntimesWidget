@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -38,7 +38,7 @@ public enum SolarEvents
 {
     MORNING_ASTRONOMICAL("astronomical twilight", "morning astronomical twilight", R.drawable.ic_sunrise_large), // 0
     MORNING_NAUTICAL("nautical twilight", "morning nautical twilight", R.drawable.ic_sunrise_large),             // 1
-    MORNING_BLUE("blue hour", "morning blue hour", R.drawable.ic_sunrise_large),                                 // 2
+    MORNING_BLUE8("blue hour", "morning blue hour", R.drawable.ic_sunrise_large),                                // 2
     MORNING_CIVIL("civil twilight", "morning civil twilight", R.drawable.ic_sunrise_large),                      // 3
     SUNRISE("sunrise", "sunrise", R.drawable.ic_sunrise_large),                                                  // 4
     MORNING_GOLDEN("golden hour", "morning golden hour", R.drawable.ic_sunrise_large),                           // 5
@@ -46,7 +46,7 @@ public enum SolarEvents
     EVENING_GOLDEN("golden hour", "evening golden hour", R.drawable.ic_sunset_large),                            // 7
     SUNSET("sunset", "sunset", R.drawable.ic_sunset_large),                                                      // 8
     EVENING_CIVIL("civil twilight", "evening civil twilight", R.drawable.ic_sunset_large),                       // 9
-    EVENING_BLUE("blue hour", "evening blue hour", R.drawable.ic_sunset_large),                                  // 10
+    EVENING_BLUE8("blue hour", "evening blue hour", R.drawable.ic_sunset_large),                                 // 10
     EVENING_NAUTICAL("nautical twilight", "evening nautical twilight", R.drawable.ic_sunset_large),              // 11
     EVENING_ASTRONOMICAL("astronomical twilight", "evening astronomical twilight", R.drawable.ic_sunset_large);  // 12  .. R.array.solarevents_short/_long req same length/order
 

@@ -75,7 +75,7 @@ public class SuntimesNotes3 implements SuntimesNotes
         {
             if ((!hasGoldBlue || !enabledGold) && (event.equals(SolarEvents.EVENING_GOLDEN) || event.equals(SolarEvents.MORNING_GOLDEN)))
                 continue;
-            else if ((!hasGoldBlue || !enabledBlue) && (event.equals(SolarEvents.EVENING_BLUE) || event.equals(SolarEvents.MORNING_BLUE)))
+            else if ((!hasGoldBlue || !enabledBlue) && (event.equals(SolarEvents.EVENING_BLUE8) || event.equals(SolarEvents.MORNING_BLUE8)))
                 continue;
 
             NoteData note = createNote(event);
@@ -264,7 +264,7 @@ public class SuntimesNotes3 implements SuntimesNotes
                 untilString = context.getString(R.string.until);
                 noteString = context.getString(R.string.until_nauticalTwilight);
                 break;
-            case MORNING_BLUE:
+            case MORNING_BLUE8:
                 noteIcon = R.drawable.ic_sunrise_large;
                 noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_rising);
                 untilString = context.getString(R.string.until);
@@ -314,7 +314,7 @@ public class SuntimesNotes3 implements SuntimesNotes
                 untilString = context.getString(R.string.until_end);
                 noteString = context.getString(R.string.untilEnd_civilTwilight);
                 break;
-            case EVENING_BLUE:
+            case EVENING_BLUE8:
                 noteIcon = R.drawable.ic_sunset_large;
                 noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
                 untilString = context.getString(R.string.until);
@@ -351,7 +351,7 @@ public class SuntimesNotes3 implements SuntimesNotes
             {
                 case MORNING_ASTRONOMICAL:          // until
                 case MORNING_NAUTICAL:
-                case MORNING_BLUE:
+                case MORNING_BLUE8:
                 case MORNING_CIVIL:
                 case SUNRISE:
                 case NOON:
@@ -362,7 +362,7 @@ public class SuntimesNotes3 implements SuntimesNotes
 
                 case MORNING_GOLDEN:               // until_end
                 case EVENING_CIVIL:
-                case EVENING_BLUE:
+                case EVENING_BLUE8:
                 case EVENING_NAUTICAL:
                 case EVENING_ASTRONOMICAL:
                 default:
@@ -391,7 +391,7 @@ public class SuntimesNotes3 implements SuntimesNotes
                 date = dataset.dataNautical.sunriseCalendarToday();
                 dateOther = dataset.dataNautical.sunriseCalendarOther();
                 break;
-            case MORNING_BLUE:
+            case MORNING_BLUE8:
                 date = dataset.dataBlue.sunriseCalendarToday();
                 dateOther = dataset.dataBlue.sunriseCalendarOther();
                 break;
@@ -425,7 +425,7 @@ public class SuntimesNotes3 implements SuntimesNotes
                 date = dataset.dataCivil.sunsetCalendarToday();
                 dateOther = dataset.dataCivil.sunsetCalendarOther();
                 break;
-            case EVENING_BLUE:
+            case EVENING_BLUE8:
                 date = dataset.dataBlue.sunsetCalendarToday();
                 dateOther = dataset.dataBlue.sunsetCalendarOther();
                 break;

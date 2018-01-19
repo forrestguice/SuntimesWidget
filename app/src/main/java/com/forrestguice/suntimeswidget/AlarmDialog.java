@@ -92,8 +92,8 @@ public class AlarmDialog extends DialogFragment
             boolean supportsGoldBlue = dataset.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_GOLDBLUE);
             if (!supportsGoldBlue)
             {
-                adapter.remove(SolarEvents.MORNING_BLUE);
-                adapter.remove(SolarEvents.EVENING_BLUE);
+                adapter.remove(SolarEvents.MORNING_BLUE8);
+                adapter.remove(SolarEvents.EVENING_BLUE8);
                 adapter.remove(SolarEvents.MORNING_GOLDEN);
                 adapter.remove(SolarEvents.EVENING_GOLDEN);
             }
@@ -386,7 +386,7 @@ public class AlarmDialog extends DialogFragment
                     calendar = dataset.dataNautical.sunriseCalendarOther();
                 }
                 break;
-            case MORNING_BLUE:
+            case MORNING_BLUE8:
                 calendar = dataset.dataBlue.sunriseCalendarToday();
                 if (calendar != null && time.after(calendar.getTime()))
                 {
@@ -435,7 +435,7 @@ public class AlarmDialog extends DialogFragment
                     calendar = dataset.dataCivil.sunsetCalendarOther();
                 }
                 break;
-            case EVENING_BLUE:
+            case EVENING_BLUE8:
                 calendar = dataset.dataBlue.sunsetCalendarToday();
                 if (calendar != null && time.after(calendar.getTime()))
                 {
