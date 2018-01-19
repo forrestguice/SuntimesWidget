@@ -1,5 +1,10 @@
 ### ~ 
 
+### ...
+* adds option to show/hide blue hour.
+* adds option to show/hide golden hour.
+* adds golden hour, blue hour (8deg), and blue hour (4deg) to rise/set times.
+
 ### v0.6.0 (2017-12-27)
 * adds solstice/equinox tracking to app (#13).
 * adds solstice/equinox widget (#13).
