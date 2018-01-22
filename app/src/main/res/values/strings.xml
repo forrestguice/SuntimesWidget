@@ -698,8 +698,8 @@
     <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Displays sunrise, sunset, and twilight times.</string>
     <string name="app_support_url"><![CDATA[
-        <b>Suport:</b> visita el
-        <a href="https://github.com/forrestguice/SuntimesWidget/issues">seguiment d\'incidències</a> per enviar una petició.
+        <b>Support:</b> visit the
+        <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a> to submit a request.
     ]]></string>
     <string name="app_url"><xliff:g id="url"><![CDATA[
         <a href="https://github.com/forrestguice/SuntimesWidget">github.com/forrestguice/SuntimesWidget</a>

@@ -627,10 +627,10 @@
     <string name="app_name_widget2">Suntimes Solstice Widget</string>
     <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Mostra les hores de l\'alba, vespre i llum crepuscular.</string>
-    <string name="app_suppert_url"><![CDATA[
-    <b>Soperte:</b> visita el
-    <a href="https://github.com/forrestguice/SuntimesWidget/issues">seguidor de cuestiones</a> per a registrar una petición.
-]]></string>
+    <string name="app_support_url"><![CDATA[
+        <b>Suport:</b> visita el
+        <a href="https://github.com/forrestguice/SuntimesWidget/issues">seguiment d\'incidències</a> per enviar una petició.
+    ]]></string>
     <string name="app_url"><xliff:g id="url"><![CDATA[
     <a href="https://github.com/forrestguice/SuntimesWidget">github.com/forrestguice/SuntimesWidget</a>
 ]]></xliff:g></string>
