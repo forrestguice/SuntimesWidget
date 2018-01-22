@@ -437,18 +437,18 @@
 
     <!-- App Setting: Clock UI "on tap" action -->
     <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
-        <item>Do nothing</item>
-        <item>Set an Alarm</item>
-        <item>Show next note</item>
-        <item>Show previous note</item>
+        <item>No hacer nada</item>
+        <item>Poner una alarma</item>
+        <item>Mostrar nota siguiente</item>
+        <item>Mostrar nota anterior</item>
     </string-array>
 
     <!-- App Setting: Note UI "on tap" action -->
     <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
-        <item>Do nothing</item>
-        <item>Set alarm for note</item>
-        <item>Show next note</item>
-        <item>Show previous note</item>
+        <item>No hacer nada</item>
+        <item>Poner una alarma a la nota</item>
+        <item>Mostrar nota siguiente</item>
+        <item>Mostrar nota anterior</item>
     </string-array>
 
     <!-- App Setting: time zone sort modes -->

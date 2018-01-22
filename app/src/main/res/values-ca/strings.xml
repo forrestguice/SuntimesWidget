@@ -298,7 +298,7 @@
     <string name="deletetheme_dialog_title">Esborrar tema</string>        <!-- dialog title -->
     <string name="deletetheme_dialog_message">¿Estàs segur que vols esborrar <xliff:g id="themeName">%1$s</xliff:g>?</string>   <!-- dialog msg -->
     <string name="deletetheme_dialog_ok">Esborrar</string>        <!-- button -->
-    <string name="deletetheme_dialog_cancel">Cancel·la</string>    <!-- button -->
+    <string name="deletetheme_dialog_cancel">Cancel·lar</string>    <!-- button -->
 
     <string name="configLabel_widgetThemeAdd">Afegir tema</string>     <!-- title text -->
     <string name="configLabel_widgetThemeEdit">Editar tema</string>   <!-- title text -->
@@ -430,26 +430,26 @@
     </string-array>
     <!-- App Setting: Date "on tap" action -->
     <string-array name="dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
-        <item>Do nothing</item>
-        <item>Swap cards (today/tomorrow)</item>
-        <item>Show calendar app</item>
-        <item>Set custom date</item>
+        <item>No fer res</item>
+        <item>Intercanviar targetes (avui/demà)</item>
+        <item>Mostra aplicació de calendari</item>
+        <item>Posar data personalitzada</item>
     </string-array>
 
     <!-- App Setting: Clock UI "on tap" action -->
     <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
-        <item>Do nothing</item>
-        <item>Set an Alarm</item>
-        <item>Show next note</item>
-        <item>Show previous note</item>
+        <item>No fer res</item>
+        <item>Posar una alarma</item>
+        <item>Mostrar nota següent</item>
+        <item>Mostrar nota anterior</item>
     </string-array>
 
     <!-- App Setting: Note UI "on tap" action -->
     <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
-        <item>Do nothing</item>
-        <item>Set alarm for note</item>
-        <item>Show next note</item>
-        <item>Show previous note</item>
+        <item>No fer res</item>
+        <item>Posar una alarma a la nota</item>
+        <item>Mostrar nota següent</item>
+        <item>Mostrar nota anterior</item>
     </string-array>
 
     <!-- App Setting: time zone sort modes -->
@@ -525,7 +525,7 @@
     <string name="configLabel_schedalarm_mode">Planificar alarma per a</string>
     <string name="schedalarm_dialog_title">Posar alarma</string>
     <string name="schedalarm_dialog_ok">Posar alarma</string>
-    <string name="schedalarm_dialog_cancel">Cancel·la</string>
+    <string name="schedalarm_dialog_cancel">Cancel·lar</string>
     <string name="schedalarm_dialog_error">No és va configurar l\'alarma</string>
     <string name="schedalarm_dialog_error2">L\'alarma no és pot configurar...</string>
     <string name="schedalarm_dialog_note">prop de <xliff:g id="timetext" example="6h 30m">%s</xliff:g> des d\'ara.</string>
@@ -574,17 +574,17 @@
     <!-- Dialog: Use Date -->
     <string name="timedate_dialog_title">Configurar data</string>
     <string name="timedate_dialog_ok">Configurar</string>
-    <string name="timedate_dialog_cancel">Cancel·la</string>
+    <string name="timedate_dialog_cancel">Cancel·lar</string>
 
     <!-- Dialog: Use Timezone -->
     <string name="timezone_dialog_title">Zona horària</string>
     <string name="timezone_dialog_ok">Configurar</string>
-    <string name="timezone_dialog_cancel">Cancel·la</string>
+    <string name="timezone_dialog_cancel">Cancel·lar</string>
 
     <!-- Dialog: Set Location -->
     <string name="location_dialog_title">Localització</string>
     <string name="location_dialog_ok">Actualizar</string>
-    <string name="location_dialog_cancel">Cancel·la</string>
+    <string name="location_dialog_cancel">Cancel·lar</string>
     <string name="location_dialog_error_lat">No és una latitud vàlida.</string>
     <string name="location_dialog_error_lon">No és una longitud vàlida.</string>
 
@@ -592,22 +592,22 @@
 
     <!-- Dialog: Clear Places -->
     <string name="locationclear_dialog_title">Netejar llocs?</string>
-    <string name="locationclear_dialog_message">Estàs segur de voler esesborrar la base de dades de llocs?</string>
+    <string name="locationclear_dialog_message">Estàs segur de voler esborrar la base de dades de llocs?</string>
     <string name="locationclear_dialog_ok">Esborrar</string>
-    <string name="locationclear_dialog_cancel">Cancel·la</string>
+    <string name="locationclear_dialog_cancel">Cancel·lar</string>
 
     <!-- Dialog: Clear Places (progress) -->
     <string name="locationcleared_dialog_title">Esborrant llocs</string>
     <string name="locationcleared_dialog_message">Esborrant base de dades…</string>
-    <string name="locationcleared_toast_success">La base de dades de llocs se ha esborrado.</string>
+    <string name="locationcleared_toast_success">La base de dades de llocs s\'ha esborrat.</string>
 
     <!-- Dialog: export Places -->
     <string name="locationexport_dialog_title">Exportant llocs</string>
-    <string name="locationexport_dialog_message">Exportant base de dades a un archivo csv.</string>
+    <string name="locationexport_dialog_message">Exportant base de dades a un arxiu csv.</string>
 
     <!-- Dialog: export Themes -->
     <string name="themesexport_dialog_title">Exportant temes</string>
-    <string name="themesexport_dialog_message">Exportant temes a un archivo.</string>
+    <string name="themesexport_dialog_message">Exportant temes a un arxiu.</string>
 
     <!-- Dialog: export -->
     <string name="msg_export_success">Copiar temporalment a <xliff:g id="filepath">%s</xliff:g></string>
@@ -617,15 +617,15 @@
     <!-- Dialog: Color -->
     <string name="color_dialog_msg">Escollir color</string>
     <string name="color_dialog_ok">Sel·leccionar</string>
-    <string name="color_dialog_cancel">Cancel·la</string>
+    <string name="color_dialog_cancel">Cancel·lar</string>
 
     <!-- Dialog: About -->
     <string name="about_dialog_title">Sobre de</string>
     <string name="app_name">Suntimes</string>
     <string name="app_name_widget0">Suntimes Widget</string>
-    <string name="app_name_widget1">Suntimes Widget (flippable)</string>
+    <string name="app_name_widget1">Suntimes Widget (reversible)</string>
     <string name="app_name_widget2">Suntimes Solstice Widget</string>
-    <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
+    <string name="app_version"><![CDATA[<b>Versió:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Mostra les hores de l\'alba, vespre i llum crepuscular.</string>
     <string name="app_support_url"><![CDATA[
         <b>Suport:</b> visita el
