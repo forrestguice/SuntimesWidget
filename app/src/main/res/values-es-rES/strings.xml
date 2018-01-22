@@ -624,7 +624,7 @@
     <string name="app_name_widget0">Suntimes Widget</string>
     <string name="app_name_widget1">Suntimes Widget (flippable)</string>
     <string name="app_name_widget2">Suntimes Solstice Widget</string>
-    <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
+    <string name="app_version"><![CDATA[<b>Versión:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Muestra las horas de amanecer, anochecer y luz crepuscular.</string>
     <string name="app_support_url"><![CDATA[
         <b>Soporte:</b> visita el
