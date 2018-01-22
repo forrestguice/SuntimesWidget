@@ -278,7 +278,7 @@
     <string name="configAction_editTheme">Editar</string>         <!-- button (contentDescription) -->
     <string name="configAction_deleteTheme">Borrar</string>     <!-- button (contentDescription) -->
     <string name="configAction_copyTheme">Copiar</string>         <!-- button (contentDescription) -->
-    <string name="configAction_expertThemes">Exportar</string>    <!-- button (contentDescription) -->
+    <string name="configAction_exportThemes">Exportar</string>    <!-- button (contentDescription) -->
     <string name="configAction_impertThemes">Importar</string>    <!-- button (contentDescription) -->
 
     <string name="addtheme_custname">tema_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
@@ -382,7 +382,7 @@
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">Llocs</string>                           <!-- group title -->
-    <string name="configLabel_places_expert">Exportar llocs</string>
+    <string name="configLabel_places_export">Exportar llocs</string>
     <string name="configLabel_places_clear">Borrar llocs</string>
 
     <!-- App Setting: UI -->
@@ -601,18 +601,18 @@
     <string name="locationcleared_dialog_message">Esborrant base de dades…</string>
     <string name="locationcleared_toast_success">La base de dades de llocs se ha esborrado.</string>
 
-    <!-- Dialog: Expert Places -->
-    <string name="locationexpert_dialog_title">Exportant llocs</string>
-    <string name="locationexpert_dialog_message">Exportant base de dades a un archivo csv.</string>
+    <!-- Dialog: export Places -->
+    <string name="locationexport_dialog_title">Exportant llocs</string>
+    <string name="locationexport_dialog_message">Exportant base de dades a un archivo csv.</string>
 
-    <!-- Dialog: Expert Themes -->
-    <string name="themesexpert_dialog_title">Exportant temes</string>
-    <string name="themesexpert_dialog_message">Exportant temes a un archivo.</string>
+    <!-- Dialog: export Themes -->
+    <string name="themesexport_dialog_title">Exportant temes</string>
+    <string name="themesexport_dialog_message">Exportant temes a un archivo.</string>
 
-    <!-- Dialog: Expert -->
-    <string name="msg_expert_success">Copiar temporalment a <xliff:g id="filepath">%s</xliff:g></string>
-    <string name="msg_expert_failure">Exportar a <xliff:g id="filepath">%s</xliff:g> failed!</string>
-    <string name="msg_expert_to">Exportar amb</string>  <!-- title displayed over "share action" chooser -->
+    <!-- Dialog: export -->
+    <string name="msg_export_success">Copiar temporalment a <xliff:g id="filepath">%s</xliff:g></string>
+    <string name="msg_export_failure">Exportar a <xliff:g id="filepath">%s</xliff:g> failed!</string>
+    <string name="msg_export_to">Exportar amb</string>  <!-- title displayed over "share action" chooser -->
 
     <!-- Dialog: Color -->
     <string name="color_dialog_msg">Escollir color</string>
