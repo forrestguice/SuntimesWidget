@@ -279,7 +279,7 @@
     <string name="configAction_deleteTheme">Borrar</string>     <!-- button (contentDescription) -->
     <string name="configAction_copyTheme">Copiar</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportThemes">Exportar</string>    <!-- button (contentDescription) -->
-    <string name="configAction_impertThemes">Importar</string>    <!-- button (contentDescription) -->
+    <string name="configAction_importThemes">Importar</string>    <!-- button (contentDescription) -->
 
     <string name="addtheme_custname">tema_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
     <string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_copy<xliff:g id="#">%2$s</xliff:g></string>   <!-- copied theme id -->
