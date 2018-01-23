@@ -429,10 +429,10 @@
     </string-array>
     <!-- App Setting: Date "on tap" action -->
     <string-array name="dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
-        <item>Do nothing</item>
-        <item>Swap cards (today/tomorrow)</item>
-        <item>Show calendar app</item>
-        <item>Set custom date</item>
+        <item>No hacer nada</item>
+        <item>Swap cards (today/tomorrow)</item> <!-- TODO -->
+        <item>Show calendar app</item> <!-- TODO -->
+        <item>Set custom date</item>  <!-- TODO -->
     </string-array>
 
     <!-- App Setting: Clock UI "on tap" action -->
