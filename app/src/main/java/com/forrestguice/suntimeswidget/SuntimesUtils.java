@@ -552,7 +552,7 @@ public class SuntimesUtils
 
         boolean showingSeconds = (showSeconds && !showingDays && !showingWeeks && !showingYears && (remainingSeconds > 0));
         if (showingSeconds)
-            value += (showingMinutes ? strSpace : strEmpty) +
+            value += (showingHours || showingMinutes ? strSpace : strEmpty) +
                      String.format(strTimeDeltaFormat, remainingSeconds, strSeconds);
 
         if (!showingSeconds && !showingMinutes && !showingHours && !showingDays && !showingWeeks && !showingYears)

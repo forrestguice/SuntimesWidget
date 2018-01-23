@@ -2,6 +2,7 @@
 
 ### v0.6.1 (2018-01-23)
 * adds translations to Catalan (ca) and Spanish (es-ES) (contributed by Raulvo) (#141).
+* fixes bug; expected "11h 55s", actual "11h55s" (#b61d942).
 * enhances the calculator selector used by widget configuration (now shows descriptive text).
 * misc accessibility fixes (labelFor, dropDownVerticalOffset).
 * adds web links in the About Dialog to the changelog and version commit.  
