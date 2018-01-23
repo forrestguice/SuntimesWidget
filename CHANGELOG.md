@@ -1,4 +1,6 @@
 ### ~
+
+### v0.6.1 (2018-01-23)
 * adds translations to Catalan (ca) and Spanish (es-ES) (contributed by Raulvo) (#141).
 * enhances the calculator selector used by widget configuration (now shows descriptive text).
 * misc accessibility fixes (labelFor, dropDownVerticalOffset).
