@@ -635,7 +635,7 @@
     ]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[
         <b>Código fuente:</b><br />
-        Copyright &#169 2014-2017 Forrest Guice <br />
+        Copyright &#169 2014-2018 Forrest Guice <br />
         Código fuente disponible bajo GPLv3.
     ]]></string>
     <string name="app_legal2"><![CDATA[
@@ -644,7 +644,7 @@
         Traducción a polaco y esperanto por Verdulo. <br />
         Traducción a francés por Jej. <br />
         Traducción a húngaro por Erci. <br />
-        Traducción a español y catalán por <a href=https://github.com/Raulvo>Raulvo</a>
+        Traducción a español y catalán por <a href=https://github.com/Raulvo>Raulvo</a>.
 
     ]]></string>
     <string name="app_legal3"><![CDATA[ <b>Bibliotecas:</b><br/> ]]>
