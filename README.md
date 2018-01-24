@@ -34,9 +34,7 @@ The widget is resizable and has layouts for:
 * a 2x1 widget that displays the sunrise and sunset times, and displays the difference in the amount of daylight (in minutes) between today and tomorrow (or today and yesterday).
 
 
-<img alt="screenshot1" src='https://user-images.githubusercontent.com/10246147/32984023-7b17535e-cc5b-11e7-809c-6b00c25814f4.png' width="280px" />
-
-<img alt="screenshot2" src='https://user-images.githubusercontent.com/10246147/32984027-81568b7c-cc5b-11e7-8f49-fbd44c06cb19.png' width="280px" />
+<img alt="screenshot1" src='https://github.com/forrestguice/SuntimesWidget/blob/docs/doc/screenshots/v0.6.0/en/activity-main0.png' width="280px" />
 
 **Bug Reports**
 
@@ -46,9 +44,8 @@ When submitting a bug please be detailed and specific. What did you expect the a
 
 **Donations**
 
-Feel free to pay whatever you think is fair using [![paypal](https://www.paypalobjects.com/webstatic/en_US/i/btn/png/silver-rect-paypal-26px.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2)
-
-Any money given will indirectly go towards software development. It is not technically a donation since I am obligated to report anything given to me as earned income (and I will probably apply it toward personal expenses). I want to express my thanks to those who have sent me something. In total it has amounted to lunch and a coffee but its a very meaningful gesture.
+Pay as you like. [![paypal](https://www.paypalobjects.com/webstatic/en_US/i/btn/png/silver-rect-paypal-26px.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2)
+I want to express my thanks to those who have sent me something. Its a very meaningful gesture.
 
 ## Legal Stuff
 
@@ -70,7 +67,8 @@ Libraries used:
 German translation by <u>Henrik "HerHde" Hüttemann</u>.<br/>
 Polish and Esperanto translations by <u>Verdulo</u>.<br/>
 French translation by <u>Jej</u>.<br/>
-Hungarian translation by <u>Erci</u>.
+Hungarian translation by <u>Erci</u>.<br/>
+Catalan and Spanish translations by <u><a href="https://github.com/Raulvo">Raulvo</a></u>.
 
 [Contributions to the project](CONTRIBUTING.md) are welcome.
 

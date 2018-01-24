@@ -488,6 +488,8 @@
         <item>Allemand</item>
         <item>Hongrois</item>      <!-- TODO: confirm translation -->
         <item>Polonais</item>
+        <item>Espagnol</item>
+        <item>Catalan</item>
     </string-array>
 
     <!--
@@ -605,15 +607,16 @@
     ]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[
         <b>Code source :</b><br />
-        Copyright &#169 2014 Forrest Guice <br />
+        Copyright &#169 2014-2018 Forrest Guice <br />
         Code source disponible sous licence GPLv3.
     ]]></string>
     <string name="app_legal2"><![CDATA[
         <b>Traductions :</b><br/>
         Traduction allemande par Henrik "HerHde" Hüttemann. <br />
-        Traduction polonnaise et espéranto par verdulo. <br />
+        Traduction polonnaise et espéranto par Verdulo. <br />
         Traduction française par Jejc <br />
-        Traduction hongrois par Erci.
+        Traduction hongrois par Erci. <br />
+        Traduction espagnol et catalan par <a href=https://github.com/Raulvo>Raulvo</a>.
     ]]></string>
     <string name="app_legal3"><![CDATA[ <b>Bibliothèques:</b><br/> ]]>
     <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>

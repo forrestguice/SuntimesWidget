@@ -481,6 +481,8 @@
       <item>Deutsche</item>
       <item>Ungarisch</item>   <!-- TODO: confirm translation -->
       <item>Polieren</item>
+      <item>Spanisch</item>
+      <item>Katalanisch</item>
   </string-array>
 
   <!--
@@ -596,14 +598,15 @@
       <a href="https://github.com/forrestguice/SuntimesWidget">github.com/forrestguice/SuntimesWidget</a>
   ]]></xliff:g></string>
   <string name="app_legal1"><![CDATA[
-      Copyright &#169 2014 Forrest Guice <br />
+      Copyright &#169 2014-2018 Forrest Guice <br />
       Source code available under GPLv3.
   ]]></string>
   <string name="app_legal2"><![CDATA[
       Deutsche Übersetzung von Henrik &quot;HerHde&quot; Hüttemann. <br/>
-      Polnisch Übersetzung von Verdulo. <br />
+      Polnisch und Esperanto Übersetzung von Verdulo. <br />
       Französisch Übersetzung von Jej. <br />
-      Ungarische Übersetzung von Erci.
+      Ungarische Übersetzung von Erci. <br />
+      Spanisch und Katalanisch Übersetzung von <a href=https://github.com/Raulvo>Raulvo</a>.
   ]]></string>
   <string name="app_legal3"><![CDATA[ <b>Libraries:</b><br/> ]]>
     <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>

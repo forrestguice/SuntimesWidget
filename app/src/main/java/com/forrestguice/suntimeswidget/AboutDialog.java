@@ -51,12 +51,31 @@ public class AboutDialog extends DialogFragment
         return dialog;
     }
 
+    public static final String CHANGELOG_URL = "https://github.com/forrestguice/SuntimesWidget/blob/master/CHANGELOG.md";
+    public static String changelogAnchor(String text)
+    {
+        return "<a href=\"" + CHANGELOG_URL + "\">" + text + "</a>";
+    }
+
+    public static final String COMMIT_URL = "https://github.com/forrestguice/SuntimesWidget/commit/";
+    protected static String gitCommitAnchor(String gitHash)
+    {
+        String commitUrl = COMMIT_URL + gitHash;
+        return "<a href=\"" + commitUrl + "\">" + gitHash + "</a>";
+    }
+
+    protected static String smallText(String text)
+    {
+        return "<small>" + text + "</small>";
+    }
+
     public String htmlVersionString()
     {
-        String versionString = BuildConfig.VERSION_NAME + " <small>(" + BuildConfig.GIT_HASH + "@" + BuildConfig.BUILD_TIME.getTime() + ")</small>";
+        String buildString = gitCommitAnchor(BuildConfig.GIT_HASH) + "@" + BuildConfig.BUILD_TIME.getTime();
+        String versionString = changelogAnchor(BuildConfig.VERSION_NAME) + " " + smallText("(" + buildString + ")");
         if (BuildConfig.DEBUG)
         {
-            versionString += " <small>[" + BuildConfig.BUILD_TYPE + "]</small>";
+            versionString += " " + smallText("[" + BuildConfig.BUILD_TYPE + "]");
         }
         return getString(R.string.app_version, versionString);
     }

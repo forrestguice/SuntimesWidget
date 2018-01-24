@@ -42,6 +42,7 @@ import org.junit.runner.RunWith;
 
 import java.io.File;
 
+import static android.os.Environment.DIRECTORY_PICTURES;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
@@ -71,8 +72,13 @@ public abstract class SuntimesActivityTestBase
     public static final String TESTLOC_1_LON = "23.1592";
     public static final String TESTLOC_1_ALT = "10";
 
+    public static final String TESTLOC_2_LABEL = "Iron Springs";
+    public static final String TESTLOC_2_LAT = "34.58742";
+    public static final String TESTLOC_2_LON = "-112.57367";
+
     public static final String TESTTZID_0 = "US/Eastern";
     public static final String TESTTZID_1 = "US/Pacific";
+    public static final String TESTTZID_2 = "US/Arizona";
 
     public static final int TESTDATE_0_YEAR = 2017;
     public static final int TESTDATE_0_MONTH = 1;    // feb 19, 2017
@@ -150,6 +156,10 @@ public abstract class SuntimesActivityTestBase
     {
         SuntimesActivityTestBase.captureScreenshot(activityRule.getActivity(), name);
     }
+    public void captureScreenshot(String subdir, String name)
+    {
+        SuntimesActivityTestBase.captureScreenshot(activityRule.getActivity(), subdir, name);
+    }
 
     /**
      * @param activity Activity context
@@ -157,7 +167,21 @@ public abstract class SuntimesActivityTestBase
      */
     public static void captureScreenshot(Activity activity, String name)
     {
-        String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + SCREENSHOT_DIR;
+        SuntimesActivityTestBase.captureScreenshot(activity, "", name);
+    }
+
+    public static void captureScreenshot(Activity activity, String subdir, String name)
+    {
+        subdir = subdir.trim();
+        if (!subdir.isEmpty() && !subdir.startsWith("/"))
+        {
+            subdir = "/" + subdir;
+        }
+
+        // saves to..
+        //     SD card\Android\data\com.forrestguice.suntimeswidget\files\Pictures\test-screenshots\subdir
+        String dirPath = activity.getExternalFilesDir(DIRECTORY_PICTURES).getAbsolutePath() + "/" + SCREENSHOT_DIR + subdir;
+
         File dir = new File(dirPath);
         dir.mkdirs();
 
@@ -231,5 +255,4 @@ public abstract class SuntimesActivityTestBase
         }).check(matches(withSpinnerText(text)));
         return displaysText[0];
     }
-
 }

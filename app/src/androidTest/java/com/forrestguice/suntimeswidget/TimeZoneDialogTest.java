@@ -58,6 +58,7 @@ public class TimeZoneDialogTest extends SuntimesActivityTestBase
     public void test_showTimezoneDialog()
     {
         showTimezoneDialog(activityRule.getActivity());
+        verifyTimezoneDialog(activityRule.getActivity());
         captureScreenshot("suntimes-dialog-timezone0");
 
         inputTimezoneDialog_mode(activityRule.getActivity(), WidgetSettings.TimezoneMode.CURRENT_TIMEZONE);
@@ -79,8 +80,6 @@ public class TimeZoneDialogTest extends SuntimesActivityTestBase
         String actionTimezoneText = activity.getString(R.string.configAction_setTimeZone);
         openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
         onView(withText(actionTimezoneText)).perform(click());
-
-        verifyTimezoneDialog(activity);
     }
 
     public static void verifyTimezoneDialog(Context context)

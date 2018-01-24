@@ -495,6 +495,8 @@
         <item>German</item>
         <item>Hungarian</item>
         <item>Polish</item>
+        <item>Spanyol</item>
+        <item>Katalán</item>
     </string-array>
 
     <!--
@@ -612,15 +614,16 @@
     ]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[
         <b>Source Code:</b><br />
-        Copyright &#169 2014 Forrest Guice <br />
+        Copyright &#169 2014-2018 Forrest Guice <br />
         Source code available under GPLv3.
     ]]></string>
     <string name="app_legal2"><![CDATA[
         <b>Translations:</b><br/>
         German translation by Henrik "HerHde" Hüttemann. <br />
-        Polish and Esperanto translation by verdulo. <br />
+        Polish and Esperanto translation by Verdulo. <br />
         French translation by Jej. <br />
-        Hungarian translation by Erci.
+        Hungarian translation by Erci. <br />
+        Spanish and Catalan translation by <a href=https://github.com/Raulvo>Raulvo</a>.
     ]]></string>
     <string name="app_legal3"><![CDATA[ <b>Libraries:</b><br/> ]]>
     <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
