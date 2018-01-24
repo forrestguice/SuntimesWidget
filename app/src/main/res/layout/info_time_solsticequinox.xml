@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -33,7 +33,8 @@
             <TextView style="@style/SunsetTimeTextView"
                       android:id="@+id/text_date_equinox_vernal_label"
                       android:text="@string/timeMode_equinox_vernal" android:labelFor="@+id/text_date_equinox_vernal"
-                      android:layout_width="125dp" android:gravity="top" android:layout_gravity="top" />
+                      android:layout_width="125dp" android:gravity="top" android:layout_gravity="top"
+                      android:layout_marginEnd="8dp" android:layout_marginRight="8dp" />
             <LinearLayout style="@style/SunsetTimeLayout"
                           android:orientation="vertical" android:layout_margin="0dp"
                           android:layout_gravity="top">
@@ -61,7 +62,8 @@
             <TextView style="@style/SunsetTimeTextView"
                       android:text="@string/timeMode_solstice_summer" android:labelFor="@+id/text_date_solstice_summer"
                       android:id="@+id/text_date_solstice_summer_label"
-                      android:layout_width="125dp" android:gravity="top" android:layout_gravity="top" />
+                      android:layout_width="125dp" android:gravity="top" android:layout_gravity="top"
+                      android:layout_marginEnd="8dp" android:layout_marginRight="8dp" />
             <LinearLayout style="@style/SunsetTimeLayout"
                           android:orientation="vertical" android:layout_margin="0dp"
                           android:layout_gravity="top">
@@ -87,7 +89,8 @@
             <TextView style="@style/SunsetTimeTextView"
                       android:text="@string/timeMode_equinox_autumnal" android:labelFor="@+id/text_date_equinox_autumnal"
                       android:id="@+id/text_date_equinox_autumnal_label"
-                      android:layout_width="125dp" android:gravity="top" android:layout_gravity="top" />
+                      android:layout_width="125dp" android:gravity="top" android:layout_gravity="top"
+                      android:layout_marginEnd="8dp" android:layout_marginRight="8dp" />
             <LinearLayout style="@style/SunsetTimeLayout"
                           android:orientation="vertical" android:layout_margin="0dp"
                           android:layout_gravity="top">
@@ -113,7 +116,8 @@
             <TextView style="@style/SunsetTimeTextView"
                       android:text="@string/timeMode_solstice_winter" android:labelFor="@+id/text_date_solstice_winter"
                       android:id="@+id/text_date_solstice_winter_label"
-                      android:layout_width="125dp" android:gravity="top" android:layout_gravity="top" />
+                      android:layout_width="125dp" android:gravity="top" android:layout_gravity="top"
+                      android:layout_marginEnd="8dp" android:layout_marginRight="8dp" />
             <LinearLayout style="@style/SunsetTimeLayout"
                           android:orientation="vertical" android:layout_margin="0dp"
                           android:layout_gravity="top">

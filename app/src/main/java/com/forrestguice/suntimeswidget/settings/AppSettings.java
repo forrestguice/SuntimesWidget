@@ -23,7 +23,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.Build;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
@@ -191,7 +193,7 @@ public class AppSettings
         return Locale.getDefault();
     }
 
-    public static boolean loadLocale( Context context, String localeCode )
+    public static boolean loadLocale( Context context, String languageTag )
     {
         Resources resources = context.getApplicationContext().getResources();
         Configuration config = resources.getConfiguration();
@@ -201,14 +203,31 @@ public class AppSettings
         {
             systemLocale = Locale.getDefault().getLanguage();
         }
-        Locale customLocale = new Locale(localeCode);
 
+        Locale customLocale = localeForLanguageTag(languageTag);
         Locale.setDefault(customLocale);
         config.locale = customLocale;
         resources.updateConfiguration(config, metrics);
 
-        //Log.d("loadLocale", "locale loaded " + localeCode);
+        Log.i("loadLocale", languageTag);
         return true;
+    }
+
+    private static @NonNull Locale localeForLanguageTag(@NonNull String languageTag)
+    {
+        Locale locale;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+        {
+            locale = Locale.forLanguageTag(languageTag);
+
+        } else {
+            String[] parts = languageTag.split("[_]");
+            String language = parts[0];
+            String country = (parts.length >= 2) ? parts[1] : null;
+            locale = (country != null) ? new Locale(language, country) : new Locale(language);
+        }
+        Log.d("localeForLanguageTag", "tag: " + languageTag + " :: locale: " + locale.toString());
+        return locale;
     }
 
     /**
