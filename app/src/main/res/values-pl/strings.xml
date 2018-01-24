@@ -477,6 +477,8 @@
         <item>Niemiecki</item>
         <item>Węgierski</item>
         <item>Polski</item>
+        <item>Hiszpański</item>
+        <item>Kataloński</item>
     </string-array>
 
     <!--
@@ -587,8 +589,14 @@
     <string name="app_shortdesc">Wyświetla czasy wschodu i zachodu Słońca, oraz świtu i zmierzchu.</string>
     <string name="app_support_url"><![CDATA[<b>Wsparcie:</b> odwiedź <a href="https://github.com/forrestguice/SuntimesWidget/issues">stronę trackera błędów</a> aby zgłosić błąd/sugestię.]]></string>
     <string name="app_url"><xliff:g id="url"><![CDATA[<a href="https://github.com/forrestguice/SuntimesWidget">github.com/forrestguice/SuntimesWidget</a>]]></xliff:g></string>
-    <string name="app_legal1"><![CDATA[Prawo autorskie &#169 2014 Forrest Guice <br />Kod źródłowy dostępny na licencji GPLv3.]]></string>
-    <string name="app_legal2"><![CDATA[Niemieckie tłumaczenie: Henrik "HerHde" Hüttemann. <br />Esperanckie i Polskie tłumaczenie: Verdulo.<br />Francuskie tłumaczenie: Jej.]]></string>
+    <string name="app_legal1"><![CDATA[Prawo autorskie &#169 2014-2018 Forrest Guice <br />Kod źródłowy dostępny na licencji GPLv3.]]></string>
+    <string name="app_legal2"><![CDATA[
+        Niemieckie tłumaczenie: Henrik "HerHde" Hüttemann<br />
+        Esperanckie i Polskie tłumaczenia: Verdulo<br />
+        Francuskie tłumaczenie: Jej
+        Węgierskie tłumaczenie: Erci<br />
+        Hispańskie i Katalońskie tłumaczenia: <a href=https://github.com/Raulvo>Raulvo</a>
+    ]]></string>
     <string name="app_legal3"><![CDATA[ <b>Biblioteki:</b><br/> ]]>
     <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
     <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>

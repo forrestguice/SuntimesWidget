@@ -516,6 +516,8 @@
         <item>Germana</item>
         <item>Hungara</item>
         <item>Pola</item>
+        <item>Hispana</item>
+        <item>Kataluna</item>
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
@@ -596,14 +598,15 @@
         <a href="https://github.com/forrestguice/SuntimesWidget">github.com/forrestguice/SuntimesWidget</a>
     ]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[
-        Kopirajto &#169 2014 Forrest GUICE <br />
+        Kopirajto &#169 2014-2018 Forrest GUICE <br />
         Fontkodo disponebla laŭ la permesilo GPLv3.
     ]]></string>
     <string name="app_legal2"><![CDATA[
         Germana traduko de Henrik "HerHde" Hüttemann. <br />
         Pola kaj Esperanta tradukoj de Verdulo. <br />
         Franca traduko de Jej. <br />
-        Hunga traduko de Erci.
+        Hungra traduko de Erci. <br />
+        Hispana kaj Kataluna tradukoj de <a href=https://github.com/Raulvo>Raulvo</a>
     ]]></string>
     <string name="app_legal3"><![CDATA[ <b>Bibliotekoj:</b><br/> ]]>
     <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
