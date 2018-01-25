@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -36,8 +36,7 @@
             android:layout_marginTop="5dp"
             android:text="@string/app_name"
             android:gravity="center"
-            android:drawableStart="@drawable/ic_suntimes"
-            android:drawableLeft="@drawable/ic_suntimes"
+            android:drawableStart="@mipmap/ic_suntimes" android:drawableLeft="@mipmap/ic_suntimes"
             android:drawablePadding="10dp"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
