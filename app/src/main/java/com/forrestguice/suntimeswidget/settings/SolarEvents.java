@@ -94,14 +94,14 @@ public enum SolarEvents
         String[] modes_long = context.getResources().getStringArray(R.array.solarevents_long);
         if (modes_long.length != modes_short.length)
         {
-            Log.e("initDisplayStrings", "The size of solarevents_short and solarevents_long DOES NOT MATCH! locale: " + AppSettings.getLocale().toLanguageTag());
+            Log.e("initDisplayStrings", "The size of solarevents_short and solarevents_long DOES NOT MATCH! locale: " + AppSettings.getLocale().toString());
             return;
         }
 
         SolarEvents[] values = values();
         if (modes_long.length != values.length)
         {
-            Log.e("initDisplayStrings", "The size of solarevents_long and SolarEvents DOES NOT MATCH! locale: " + AppSettings.getLocale().toLanguageTag());
+            Log.e("initDisplayStrings", "The size of solarevents_long and SolarEvents DOES NOT MATCH! locale: " + AppSettings.getLocale().toString());
             return;
         }
 
