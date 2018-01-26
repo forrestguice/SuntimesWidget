@@ -595,16 +595,13 @@ public class SuntimesUtils
         return displayString;
     }
 
-    /**
-     *
-     * @param titlePattern
-     * @param data
-     * @return
-     */
     public String displayStringForTitlePattern(String titlePattern, SuntimesMoonData data)
     {
         String displayString = displayStringForTitlePattern(titlePattern, (SuntimesData)data);
-        // TODO
+        String modePattern = "%M";
+        String modePatternShort = "%m";
+        displayString = displayString.replaceAll(modePatternShort, "");
+        displayString = displayString.replaceAll(modePattern, "");
         return displayString;
     }
 
