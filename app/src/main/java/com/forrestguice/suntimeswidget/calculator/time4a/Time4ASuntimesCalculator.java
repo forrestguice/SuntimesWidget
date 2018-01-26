@@ -251,7 +251,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
 
     public Calendar[] getMoonRiseSetCalendarForDate(Calendar date)
     {
-        return null;  // TODO
+        return new Calendar[] { null, null };  // TODO
     }
 
     public MoonPhase getMoonPhase(Calendar date)

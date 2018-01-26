@@ -187,14 +187,20 @@ public class SuntimesMoonData extends SuntimesData
         dateOther = otherCalendar.getTime();
 
         Calendar[] riseSetToday = calculator.getMoonRiseSetCalendarForDate(todaysCalendar);
-        this.moonriseCalendarToday = riseSetToday[0];
-        this.moonsetCalendarToday = riseSetToday[1];
+        if (riseSetToday != null)
+        {
+            this.moonriseCalendarToday = riseSetToday[0];
+            this.moonsetCalendarToday = riseSetToday[1];
+        }
         this.moonIlluminationToday = calculator.getMoonIllumination(todaysCalendar);
         this.moonPhaseToday = calculator.getMoonPhase(todaysCalendar);
 
         Calendar[] riseSetOther = calculator.getMoonRiseSetCalendarForDate(otherCalendar);
-        this.moonriseCalendarOther = riseSetOther[0];
-        this.moonsetCalendarOther = riseSetOther[1];
+        if (riseSetOther != null)
+        {
+            this.moonriseCalendarOther = riseSetOther[0];
+            this.moonsetCalendarOther = riseSetOther[1];
+        }
         this.moonIlluminationOther = calculator.getMoonIllumination(otherCalendar);
         this.moonPhaseOther = calculator.getMoonPhase(otherCalendar);
 
