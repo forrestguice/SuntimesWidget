@@ -29,9 +29,6 @@ import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_0;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
-/**
- *  Flippable widget
- */
 public class MoonWidget0 extends SuntimesWidget0
 {
     public static final String WIDGET_UPDATE = "MOON_WIDGET_UPDATE";
@@ -95,7 +92,7 @@ public class MoonWidget0 extends SuntimesWidget0
     {
         AppSettings.initLocale(context);
         SuntimesUtils.initDisplayStrings(context);
-        WidgetSettings.SolsticeEquinoxMode.initDisplayStrings(context);
+        WidgetSettings.MoonPhaseMode.initDisplayStrings(context);
     }
 
 }
