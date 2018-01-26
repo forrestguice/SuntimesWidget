@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
-import android.content.res.Resources;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -56,6 +55,7 @@ import java.text.DateFormat;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings.TimeFormatMode;
 
@@ -272,6 +272,11 @@ public class SuntimesUtils
         }
     }
 
+    public static Locale getLocale()
+    {
+        return Locale.getDefault();
+    }
+
     /**
      * @param context a context used to access time/date settings
      * @param cal     a Calendar representing some point in time
@@ -330,7 +335,7 @@ public class SuntimesUtils
 
     public String calendarTime24HrString(Context context, @NonNull Calendar cal, boolean showSeconds)
     {
-        Locale locale = Resources.getSystem().getConfiguration().locale;
+        Locale locale = getLocale();
         String format = (showSeconds ? strTimeVeryShortFormat24s : strTimeVeryShortFormat24);  // HH:mm or HH:mm:ss
         SimpleDateFormat timeFormat = new SimpleDateFormat(format, locale);
         timeFormat.setTimeZone(cal.getTimeZone());
@@ -377,11 +382,13 @@ public class SuntimesUtils
         //   dansk               6.47 AM        11.46 PM           (da)
         //   norsk bokmal        6.47 a.m.      11.46 p.m.         (nb)
 
-        Locale locale = Resources.getSystem().getConfiguration().locale;
+        Locale locale = getLocale();
 
         String format = (showSeconds ? strTimeVeryShortFormat12s : strTimeVeryShortFormat12);  // h:mm or h:mm:ss
         SimpleDateFormat timeFormat = new SimpleDateFormat(format, locale);
         timeFormat.setTimeZone(cal.getTimeZone());
+
+        //Log.d("DEBUG","TimeFormat: " + timeFormat.toPattern() + " (" + locale.toString() + ")");
 
         SimpleDateFormat suffixFormat = new SimpleDateFormat(strTimeSuffixFormat, locale);  // a
         suffixFormat.setTimeZone(cal.getTimeZone());
@@ -394,7 +401,7 @@ public class SuntimesUtils
 
     public String calendarTime12HrString(Context context, @NonNull Calendar cal)
     {
-        Locale locale = Resources.getSystem().getConfiguration().locale;
+        Locale locale = getLocale();
         SimpleDateFormat timeFormat = new SimpleDateFormat(strTimeShortFormat12, locale); // h:mm a
         timeFormat.setTimeZone(cal.getTimeZone());
         return timeFormat.format(cal.getTime());
@@ -423,12 +430,14 @@ public class SuntimesUtils
             return new TimeDisplayText(strTimeNone);
         }
 
-        Locale locale = Resources.getSystem().getConfiguration().locale;
+        Locale locale = getLocale();
         SimpleDateFormat dateTimeFormat;
 
         if (showSeconds)
             dateTimeFormat = new SimpleDateFormat((showYear ? strDateTimeLongFormatSec : strDateTimeShortFormatSec), locale);
         else dateTimeFormat = new SimpleDateFormat((showYear ? strDateTimeLongFormat : strDateTimeShortFormat), locale);
+
+        //Log.d("DEBUG","DateTimeFormat: " + dateTimeFormat.toPattern() + " (" + locale.toString() + ")");
 
         dateTimeFormat.setTimeZone(cal.getTimeZone());
         TimeDisplayText displayText = new TimeDisplayText(dateTimeFormat.format(cal.getTime()), "", "");
@@ -463,8 +472,9 @@ public class SuntimesUtils
         {
             return new TimeDisplayText(strTimeNone);
         }
-        Locale locale = Resources.getSystem().getConfiguration().locale;
+        Locale locale = getLocale();
         SimpleDateFormat dateFormat = new SimpleDateFormat(strDateYearFormat, locale);
+        //Log.d("DEBUG", "Year Format: " + dateFormat.toPattern() + " (" + locale.toString() + ")");
         return new TimeDisplayText(dateFormat.format(cal.getTime()), "", "");
     }
 
@@ -984,7 +994,7 @@ public class SuntimesUtils
             w = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, w, metrics);
             h = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, h, metrics);
         }
-        Log.d("DEBUG", "drawableToBitmap: " + drawable.toString() + "::" + w + ", " + h);
+        //Log.d("DEBUG", "drawableToBitmap: " + drawable.toString() + "::" + w + ", " + h);
 
         if (w <= 0 || h <= 0)
         {
