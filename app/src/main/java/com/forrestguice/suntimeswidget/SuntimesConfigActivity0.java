@@ -1090,6 +1090,15 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
+    protected void showTimeMode(boolean showTimeModeUI)
+    {
+        View timeModeLayout = findViewById(R.id.appwidget_general_timeMode_layout);
+        if (timeModeLayout != null)
+        {
+            timeModeLayout.setVisibility((showTimeModeUI ? View.VISIBLE : View.GONE));
+        }
+    }
+
     /**
      * @param showCompareUI true: show comparison ui, false: hide comparison ui
      */
