@@ -42,6 +42,7 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -328,6 +329,12 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                         widgetNameId = R.string.app_name_widget2;
                         data = data0;
 
+                    } else if (widgetClass == MoonWidget0.class) {
+                        SuntimesMoonData data0 =  new SuntimesMoonData(context, id);
+                        widgetTitle = utils.displayStringForTitlePattern(titlePattern, data0);
+                        widgetNameId = R.string.app_name_moonwidget0;
+                        data = data0;
+
                     } else {
                         SuntimesRiseSetData data0 = new SuntimesRiseSetData(context, id);
                         widgetTitle = utils.displayStringForTitlePattern(titlePattern, data0);
@@ -351,6 +358,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget0_2x1.class, titlePattern));
             items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget1.class, titlePattern));
             items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget2.class, titlePattern));
+            items.addAll(createWidgetListItems(context, widgetManager, MoonWidget0.class, titlePattern));
             return new WidgetListAdapter(context, items);
         }
 
