@@ -71,12 +71,12 @@ public class MoonLayout_1x1_0 extends MoonLayout
     {
         super.themeViews(context, views, theme);
 
-        int moonriseColor = theme.getSunriseTextColor();  // TODO
+        int moonriseColor = theme.getMoonriseTextColor();
         int suffixColor = theme.getTimeSuffixColor();
         views.setTextColor(R.id.text_time_rise_suffix, suffixColor);
         views.setTextColor(R.id.text_time_rise, moonriseColor);
 
-        int moonsetColor = theme.getSunsetTextColor(); // TODO
+        int moonsetColor = theme.getMoonsetTextColor();
         views.setTextColor(R.id.text_time_set_suffix, suffixColor);
         views.setTextColor(R.id.text_time_set, moonsetColor);
 
@@ -92,10 +92,10 @@ public class MoonLayout_1x1_0 extends MoonLayout
             views.setTextViewTextSize(R.id.text_time_set_suffix, TypedValue.COMPLEX_UNIT_SP, suffSize);
         }
 
-        Bitmap moonriseIcon = SuntimesUtils.insetDrawableToBitmap(context, R.drawable.ic_moonrise, theme.getSunriseIconColor(), theme.getSunriseIconStrokeColor(), theme.getSunriseIconStrokePixels(context));  // TODO: colors
+        Bitmap moonriseIcon = SuntimesUtils.insetDrawableToBitmap(context, R.drawable.ic_moonrise, moonriseColor, moonriseColor, 0);
         views.setImageViewBitmap(R.id.icon_time_sunrise, moonriseIcon);
 
-        Bitmap moonsetIcon = SuntimesUtils.insetDrawableToBitmap(context, R.drawable.ic_moonset, theme.getSunsetIconColor(), theme.getSunsetIconStrokeColor(), theme.getSunsetIconStrokePixels(context));  // TODO: colors
+        Bitmap moonsetIcon = SuntimesUtils.insetDrawableToBitmap(context, R.drawable.ic_moonset, moonsetColor,moonsetColor, 0);
         views.setImageViewBitmap(R.id.icon_time_sunset, moonsetIcon);
     }
 

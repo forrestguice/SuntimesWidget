@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -49,6 +49,8 @@ public class SuntimesTheme
     public static final String THEME_SUNRISECOLOR = "sunrisecolor";
     public static final String THEME_NOONCOLOR = "nooncolor";
     public static final String THEME_SUNSETCOLOR = "sunsetcolor";
+    public static final String THEME_MOONRISECOLOR = "moonrisecolor";
+    public static final String THEME_MOONSETCOLOR = "moonsetcolor";
 
     public static final String THEME_NOONICON_FILL_COLOR = "noonicon_fillcolor";
     public static final String THEME_NOONICON_STROKE_COLOR = "noonicon_strokecolor";
@@ -135,6 +137,9 @@ public class SuntimesTheme
     protected int themeFallColor;
     protected int themeWinterColor;
 
+    protected int themeMoonriseTextColor;
+    protected int themeMoonsetTextColor;
+
     protected float themeTitleSize = THEME_TITLESIZE_DEF;
     protected float themeTextSize = THEME_TEXTSIZE_DEF;
     protected float themeTimeSize = THEME_TIMESIZE_DEF;
@@ -176,6 +181,9 @@ public class SuntimesTheme
         this.themeSunsetIconColor = otherTheme.themeSunsetIconColor;
         this.themeSunsetIconStrokeColor = otherTheme.themeSunsetIconStrokeColor;
         this.themeSunsetIconStrokeWidth = otherTheme.themeSunsetIconStrokeWidth;
+
+        this.themeMoonriseTextColor = otherTheme.themeMoonriseTextColor;
+        this.themeMoonsetTextColor = otherTheme.themeMoonsetTextColor;
 
         this.themeSpringColor = otherTheme.themeSpringColor;
         this.themeSummerColor = otherTheme.themeSummerColor;
@@ -242,6 +250,9 @@ public class SuntimesTheme
         this.themeSunsetIconStrokeColor = themes.getInt( theme + THEME_SETICON_STROKE_COLOR, defaultTheme.themeSunsetIconStrokeColor );
         this.themeSunsetIconStrokeWidth = themes.getInt( theme + THEME_SETICON_STROKE_WIDTH, defaultTheme.themeSunsetIconStrokeWidth );
 
+        this.themeMoonriseTextColor = themes.getInt( theme + THEME_MOONRISECOLOR, defaultTheme.themeMoonriseTextColor );
+        this.themeMoonsetTextColor = themes.getInt( theme + THEME_MOONSETCOLOR, defaultTheme.themeMoonsetTextColor );
+
         this.themeSpringColor = themes.getInt( theme + THEME_SPRINGCOLOR, defaultTheme.themeSpringColor );
         this.themeSummerColor = themes.getInt( theme + THEME_SUMMERCOLOR, defaultTheme.themeSummerColor );
         this.themeFallColor = themes.getInt( theme + THEME_FALLCOLOR, defaultTheme.themeFallColor );
@@ -295,6 +306,9 @@ public class SuntimesTheme
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_SETICON_FILL_COLOR, this.themeSunsetIconColor);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_SETICON_STROKE_COLOR, this.themeSunsetIconStrokeColor);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_SETICON_STROKE_WIDTH, this.themeSunsetIconStrokeWidth);
+
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_MOONRISECOLOR, this.themeMoonriseTextColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_MOONSETCOLOR, this.themeMoonsetTextColor);
 
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_SPRINGCOLOR, this.themeSpringColor);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_SUMMERCOLOR, this.themeSummerColor);
@@ -358,6 +372,9 @@ public class SuntimesTheme
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_SETICON_FILL_COLOR);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_SETICON_STROKE_COLOR);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_SETICON_STROKE_WIDTH);
+
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_MOONRISECOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_MOONSETCOLOR);
 
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_SPRINGCOLOR);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_SUMMERCOLOR);
@@ -481,6 +498,16 @@ public class SuntimesTheme
             themeNoonIconStrokePixels = (int)((metrics.density * getNoonIconStrokeWidth()) + 0.5f);
         //}
         return themeNoonIconStrokePixels;
+    }
+
+    public int getMoonriseTextColor()
+    {
+        return themeMoonriseTextColor;
+    }
+
+    public int getMoonsetTextColor()
+    {
+        return themeMoonsetTextColor;
     }
 
     public int getSunsetTextColor()

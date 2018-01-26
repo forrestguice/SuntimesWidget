@@ -30,8 +30,14 @@
     <color name="dstTag_light">#ffcc00</color>
 
     <!-- moon icon -->
-    <color name="moonIcon_color_rising">@color/grey_100</color>
-    <color name="moonIcon_color_setting">@color/grey_100</color>
+    <color name="moonIcon_color_rising">@color/moonIcon_color_rising_dark</color>
+    <color name="moonIcon_color_setting">@color/moonIcon_color_setting_dark</color>
+
+    <color name="moonIcon_color_rising_dark">@color/grey_100</color>
+    <color name="moonIcon_color_setting_dark">@color/grey_500</color>
+
+    <color name="moonIcon_color_rising_light">@color/grey_500</color>
+    <color name="moonIcon_color_setting_light">@color/grey_600</color>
 
     <!-- sun icon -->
     <color name="sunIcon_color_rising">@color/sunIcon_color_rising_dark</color>
@@ -88,6 +94,8 @@
     <color name="transparent">#00000000</color>
     <color name="grey_50">#fffafafa</color>
     <color name="grey_100">#fff5f5f5</color>
+    <color name="grey_500">#ff9e9e9e</color>
+    <color name="grey_600">#757575</color>
     <color name="grey_800">#ff424242</color>
     <color name="grey_850">#ff303030</color>
     <color name="grey_900">#ff212121</color>
