@@ -48,13 +48,13 @@ public class SuntimesLayout_2x1_0 extends SuntimesLayout
 
         // update sunrise time
         TimeDisplayText sunriseString = utils.calendarTimeShortDisplayString(context, data.sunriseCalendarToday(), showSeconds);
-        views.setTextViewText(R.id.text_time_sunrise, sunriseString.getValue());
-        views.setTextViewText(R.id.text_time_sunrise_suffix, sunriseString.getSuffix());
+        views.setTextViewText(R.id.text_time_rise, sunriseString.getValue());
+        views.setTextViewText(R.id.text_time_rise_suffix, sunriseString.getSuffix());
 
         // upset sunset time
         TimeDisplayText sunsetString = utils.calendarTimeShortDisplayString(context, data.sunsetCalendarToday(), showSeconds);
-        views.setTextViewText(R.id.text_time_sunset, sunsetString.getValue());
-        views.setTextViewText(R.id.text_time_sunset_suffix, sunsetString.getSuffix());
+        views.setTextViewText(R.id.text_time_set, sunsetString.getValue());
+        views.setTextViewText(R.id.text_time_set_suffix, sunsetString.getSuffix());
 
         // update day delta
         boolean showDayDelta = WidgetSettings.loadShowComparePref(context, appWidgetId);
@@ -97,12 +97,12 @@ public class SuntimesLayout_2x1_0 extends SuntimesLayout
         int textColor = theme.getTextColor();
 
         // theme sunrise text
-        views.setTextColor(R.id.text_time_sunrise_suffix, suffixColor);
-        views.setTextColor(R.id.text_time_sunrise, sunriseColor);
+        views.setTextColor(R.id.text_time_rise_suffix, suffixColor);
+        views.setTextColor(R.id.text_time_rise, sunriseColor);
 
         // theme sunset text
-        views.setTextColor(R.id.text_time_sunset_suffix, suffixColor);
-        views.setTextColor(R.id.text_time_sunset, sunsetColor);
+        views.setTextColor(R.id.text_time_set_suffix, suffixColor);
+        views.setTextColor(R.id.text_time_set, sunsetColor);
 
         // theme note
         views.setTextColor(R.id.text_delta_day_prefix, textColor);
@@ -120,14 +120,14 @@ public class SuntimesLayout_2x1_0 extends SuntimesLayout
             float timeSize = theme.getTimeSizeSp();
             float suffSize = theme.getTimeSuffixSizeSp();
 
-            views.setTextViewTextSize(R.id.text_time_sunrise_suffix, TypedValue.COMPLEX_UNIT_SP, suffSize);
-            views.setTextViewTextSize(R.id.text_time_sunrise, TypedValue.COMPLEX_UNIT_SP, timeSize);
+            views.setTextViewTextSize(R.id.text_time_rise_suffix, TypedValue.COMPLEX_UNIT_SP, suffSize);
+            views.setTextViewTextSize(R.id.text_time_rise, TypedValue.COMPLEX_UNIT_SP, timeSize);
 
             views.setTextViewTextSize(R.id.text_time_noon, TypedValue.COMPLEX_UNIT_SP, timeSize);
             views.setTextViewTextSize(R.id.text_time_noon_suffix, TypedValue.COMPLEX_UNIT_SP, suffSize);
 
-            views.setTextViewTextSize(R.id.text_time_sunset, TypedValue.COMPLEX_UNIT_SP, timeSize);
-            views.setTextViewTextSize(R.id.text_time_sunset_suffix, TypedValue.COMPLEX_UNIT_SP, suffSize);
+            views.setTextViewTextSize(R.id.text_time_set, TypedValue.COMPLEX_UNIT_SP, timeSize);
+            views.setTextViewTextSize(R.id.text_time_set_suffix, TypedValue.COMPLEX_UNIT_SP, suffSize);
 
             views.setTextViewTextSize(R.id.text_delta_day_prefix, TypedValue.COMPLEX_UNIT_SP, textSize);
             views.setTextViewTextSize(R.id.text_delta_day_value, TypedValue.COMPLEX_UNIT_SP, textSize);

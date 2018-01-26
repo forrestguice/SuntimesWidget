@@ -375,19 +375,19 @@ public class WidgetThemes
                 titleView.setFocusable(false);
                 titleView.setFocusableInTouchMode(false);
 
-                TextView riseView = (TextView) view.findViewById(R.id.text_time_sunrise);
+                TextView riseView = (TextView) view.findViewById(R.id.text_time_rise);
                 riseView.setTextColor(theme.getSunriseTextColor());
                 riseView.setText(riseText.getValue());
 
-                TextView riseViewSuffix = (TextView) view.findViewById(R.id.text_time_sunrise_suffix);
+                TextView riseViewSuffix = (TextView) view.findViewById(R.id.text_time_rise_suffix);
                 riseViewSuffix.setTextColor(theme.getTimeSuffixColor());
                 riseViewSuffix.setText(riseText.getSuffix());
 
-                TextView setView = (TextView) view.findViewById(R.id.text_time_sunset);
+                TextView setView = (TextView) view.findViewById(R.id.text_time_set);
                 setView.setTextColor(theme.getSunsetTextColor());
                 setView.setText(setText.getValue());
 
-                TextView setViewSuffix = (TextView) view.findViewById(R.id.text_time_sunset_suffix);
+                TextView setViewSuffix = (TextView) view.findViewById(R.id.text_time_set_suffix);
                 setViewSuffix.setTextColor(theme.getTimeSuffixColor());
                 setViewSuffix.setText(setText.getSuffix());
 

@@ -476,12 +476,12 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         previewNoonSuffix = (TextView)findViewById(R.id.text_time_noon_suffix);
         previewNoonIcon = (ImageView)findViewById(R.id.icon_time_noon);
 
-        previewRise = (TextView)findViewById(R.id.text_time_sunrise);
-        previewRiseSuffix = (TextView)findViewById(R.id.text_time_sunrise_suffix);
+        previewRise = (TextView)findViewById(R.id.text_time_rise);
+        previewRiseSuffix = (TextView)findViewById(R.id.text_time_rise_suffix);
         previewRiseIcon = (ImageView)findViewById(R.id.icon_time_sunrise);
 
-        previewSet = (TextView)findViewById(R.id.text_time_sunset);
-        previewSetSuffix = (TextView)findViewById(R.id.text_time_sunset_suffix);
+        previewSet = (TextView)findViewById(R.id.text_time_set);
+        previewSetSuffix = (TextView)findViewById(R.id.text_time_set_suffix);
         previewSetIcon = (ImageView)findViewById(R.id.icon_time_sunset);
 
         previewTimeDelta = (TextView)findViewById(R.id.text_delta_day_value);
