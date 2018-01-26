@@ -211,12 +211,7 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
                 R.string.calculator_displayString_caarmensunrisesunset, SunriseSunsetSuntimesCalculator.FEATURES);
     }
 
-    public Calendar getMoonriseCalendarForDate(Calendar date)
-    {
-        return null;  // TODO
-    }
-
-    public Calendar getMoonsetCalendarForDate(Calendar date)
+    public Calendar[] getMoonRiseSetCalendarForDate(Calendar date)
     {
         return null;  // TODO
     }

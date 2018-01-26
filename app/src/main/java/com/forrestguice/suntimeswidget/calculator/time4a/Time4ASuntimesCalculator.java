@@ -249,12 +249,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         else return season.onSouthernHemisphere();
     }
 
-    public Calendar getMoonriseCalendarForDate(Calendar date)
-    {
-        return null;  // TODO
-    }
-
-    public Calendar getMoonsetCalendarForDate(Calendar date)
+    public Calendar[] getMoonRiseSetCalendarForDate(Calendar date)
     {
         return null;  // TODO
     }

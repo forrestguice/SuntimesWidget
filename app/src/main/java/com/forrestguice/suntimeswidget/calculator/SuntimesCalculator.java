@@ -231,20 +231,12 @@ public interface SuntimesCalculator
     //
 
     /**
-     * Moonrise
+     * MoonRiseSet
      * @param date a Calendar representing a given date
      * @return a Calendar for moonrise for the given date
      * @since 1.3.0
      */
-    Calendar getMoonriseCalendarForDate(Calendar date);
-
-    /**
-     * Moonset
-     * @param date a Calendar representing a given date
-     * @return a Calendar for moonset for the given date
-     * @since 1.3.0
-     */
-    Calendar getMoonsetCalendarForDate(Calendar date);
+    Calendar[] getMoonRiseSetCalendarForDate(Calendar date);
 
     /**
      * MoonPhase
