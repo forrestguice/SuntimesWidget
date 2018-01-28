@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -50,6 +50,7 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.ImageSpan;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -831,6 +832,15 @@ public class SuntimesActivity extends AppCompatActivity
         txt_time = (TextView) findViewById(R.id.text_time);
         txt_time_suffix = (TextView) findViewById(R.id.text_time_suffix);
         txt_timezone = (TextView) findViewById(R.id.text_timezone);
+
+        float fontScale = getResources().getConfiguration().fontScale;
+        if (fontScale > 1)
+        {                                                // when using "large text"...
+            float textSizePx = txt_time.getTextSize();       // revert scaling on txt_time (its already large enough / takes too much space at x1.3)
+            float adjustedTextSizePx = textSizePx * (1 / fontScale);
+            Log.w("initClockViews", "txt_time is oversized! downsizing from " + textSizePx + "px to " + adjustedTextSizePx + "px.");
+            txt_time.setTextSize(TypedValue.COMPLEX_UNIT_PX, adjustedTextSizePx);
+        }
     }
 
     /**
