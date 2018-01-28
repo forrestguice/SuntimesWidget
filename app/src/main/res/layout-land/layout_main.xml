@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -42,7 +42,15 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <include layout="@layout/info_time_now" />
+                <LinearLayout android:id="@+id/layout_clock"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:orientation="vertical"
+                    android:padding="10dp" >
+
+                    <include layout="@layout/info_time_now" />
+
+                </LinearLayout>
 
                 <FrameLayout
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
