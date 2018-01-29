@@ -526,7 +526,7 @@
     <string name="schedalarm_dialog_ok">Poner alarma</string>
     <string name="schedalarm_dialog_cancel">Cancelar</string>
     <string name="schedalarm_dialog_error">No se configuró la alarma</string>
-    <string name="schedalarm_dialog_error2">La alarma no se puede configurar...</string>
+    <string name="schedalarm_dialog_error2">La alarma no se puede configurar…</string>
     <string name="schedalarm_dialog_note">cerca de <xliff:g id="timetext" example="6h 30m">%s</xliff:g> desde ahora.</string>
     <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="nautical twilight">%s</xliff:g> no ocurre.</string>
     <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
