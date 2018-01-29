@@ -107,6 +107,7 @@ public class SuntimesCalculatorDescriptor implements Comparable
         {
             value = value.trim().toLowerCase(Locale.US);
             SuntimesCalculatorDescriptor[] values = SuntimesCalculatorDescriptor.values();
+            //noinspection ForLoopReplaceableByForEach
             for (int i=0; i<values.length; i++)
             {
                 SuntimesCalculatorDescriptor calculator = values[i];

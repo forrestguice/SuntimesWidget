@@ -746,6 +746,7 @@ public class WidgetTimezones
 
             ArrayList<TimeZoneItem> timezones = new ArrayList<TimeZoneItem>();
             String[] allTimezoneValues = TimeZone.getAvailableIDs();
+            //noinspection ForLoopReplaceableByForEach
             for (int i = 0; i < allTimezoneValues.length; i++)
             {
                 TimeZone timezone = TimeZone.getTimeZone(allTimezoneValues[i]);
