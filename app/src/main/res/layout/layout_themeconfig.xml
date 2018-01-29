@@ -271,7 +271,8 @@
                         android:nextFocusDown="@+id/editLabel_textColor"
                         android:nextFocusForward="@+id/editLabel_suffixColor"
 
-                        android:text="@string/configLabel_themeColorTitle" />
+                        android:text="@string/configLabel_themeColorTitle"
+                        tools:ignore="UnusedAttribute" />
 
                     <EditText
                         android:id="@+id/edit_titleColor"
@@ -284,7 +285,8 @@
                         android:nextFocusDown="@+id/editLabel_textColor"
                         android:nextFocusForward="@+id/editLabel_suffixColor"
 
-                        android:text="" android:hint="@string/configHint_themeColorTitle" />
+                        android:text="" android:hint="@string/configHint_themeColorTitle"
+                        tools:ignore="UnusedAttribute" />
 
                     <ImageButton
                         android:id="@+id/editButton_titleColor"
@@ -315,7 +317,8 @@
                         android:nextFocusDown="@+id/editLabel_textColor"
                         android:nextFocusForward="@+id/editLabel_textColor"
 
-                        android:text="@string/configLabel_themeColorSuffix"/>
+                        android:text="@string/configLabel_themeColorSuffix"
+                        tools:ignore="UnusedAttribute" />
 
                     <EditText
                         android:id="@+id/edit_suffixColor"
@@ -328,7 +331,8 @@
                         android:nextFocusDown="@+id/editLabel_textColor"
                         android:nextFocusForward="@+id/editLabel_textColor"
 
-                        android:text="" android:hint="@string/configHint_themeColorSuffix" />
+                        android:text="" android:hint="@string/configHint_themeColorSuffix"
+                        tools:ignore="UnusedAttribute" />
 
                     <ImageButton
                         android:id="@+id/editButton_suffixColor"
@@ -357,7 +361,8 @@
                         android:nextFocusDown="@+id/editLabel_sunriseColor"
                         android:nextFocusForward="@+id/editLabel_timeColor"
 
-                        android:text="@string/configLabel_themeColorText" />
+                        android:text="@string/configLabel_themeColorText"
+                        tools:ignore="UnusedAttribute" />
 
                     <EditText
                         android:id="@+id/edit_textColor"
@@ -370,7 +375,8 @@
                         android:nextFocusDown="@+id/editLabel_sunriseColor"
                         android:nextFocusForward="@+id/editLabel_timeColor"
 
-                        android:text="" android:hint="@string/configHint_themeColorText" />
+                        android:text="" android:hint="@string/configHint_themeColorText"
+                        tools:ignore="UnusedAttribute" />
 
                     <ImageButton
                         android:id="@+id/editButton_textColor"
@@ -401,7 +407,8 @@
                         android:nextFocusDown="@+id/editLabel_sunriseColor"
                         android:nextFocusForward="@+id/editLabel_sunriseColor"
 
-                        android:text="@string/configLabel_themeColorTime" />
+                        android:text="@string/configLabel_themeColorTime"
+                        tools:ignore="UnusedAttribute" />
 
                     <EditText
                         android:id="@+id/edit_timeColor"
@@ -414,7 +421,8 @@
                         android:nextFocusDown="@+id/editLabel_sunriseColor"
                         android:nextFocusForward="@+id/editLabel_sunriseColor"
 
-                        android:text="" android:hint="@string/configHint_themeColorTime" />
+                        android:text="" android:hint="@string/configHint_themeColorTime"
+                        tools:ignore="UnusedAttribute" />
 
                     <ImageButton
                         android:id="@+id/editButton_timeColor"
@@ -444,7 +452,8 @@
                         android:nextFocusForward="@+id/editLabel_sunsetColor"
                         android:nextFocusDown="@+id/editLabel_sunriseFillColor"
 
-                        android:text="@string/configLabel_themeColorSunrise" />
+                        android:text="@string/configLabel_themeColorSunrise"
+                        tools:ignore="UnusedAttribute" />
 
                     <EditText
                         android:id="@+id/edit_sunriseColor"
@@ -457,7 +466,8 @@
                         android:nextFocusForward="@+id/editLabel_sunsetColor"
                         android:nextFocusDown="@+id/editLabel_sunriseFillColor"
 
-                        android:text="" android:hint="@string/configHint_themeColorSunrise" />
+                        android:text="" android:hint="@string/configHint_themeColorSunrise"
+                        tools:ignore="UnusedAttribute" />
 
                     <ImageButton
                         android:id="@+id/editButton_sunriseColor"
@@ -488,7 +498,8 @@
                         android:nextFocusForward="@+id/editLabel_sunriseFillColor"
                         android:nextFocusDown="@+id/editLabel_sunriseFillColor"
 
-                        android:text="@string/configLabel_themeColorSunset" />
+                        android:text="@string/configLabel_themeColorSunset"
+                        tools:ignore="UnusedAttribute" />
 
                     <EditText
                         android:id="@+id/edit_sunsetColor"
@@ -501,7 +512,8 @@
                         android:nextFocusForward="@+id/editLabel_sunriseFillColor"
                         android:nextFocusDown="@+id/editLabel_sunriseFillColor"
 
-                        android:text="" android:hint="@string/configHint_themeColorSunset" />
+                        android:text="" android:hint="@string/configHint_themeColorSunset"
+                        tools:ignore="UnusedAttribute" />
 
                     <ImageButton
                         android:id="@+id/editButton_sunsetColor"
@@ -531,7 +543,8 @@
                         android:nextFocusForward="@+id/editLabel_sunsetFillColor"
                         android:nextFocusDown="@+id/editLabel_sunriseStrokeColor"
 
-                        android:text="@string/configLabel_themeColorFill" />
+                        android:text="@string/configLabel_themeColorFill"
+                        tools:ignore="UnusedAttribute" />
 
                     <EditText
                         android:id="@+id/edit_sunriseFillColor"
@@ -544,7 +557,8 @@
                         android:nextFocusForward="@+id/editLabel_sunsetFillColor"
                         android:nextFocusDown="@+id/editLabel_sunriseStrokeColor"
 
-                        android:text="" android:hint="@string/configHint_themeColorFill" />
+                        android:text="" android:hint="@string/configHint_themeColorFill"
+                        tools:ignore="UnusedAttribute" />
 
                     <ImageButton
                         android:id="@+id/editButton_sunriseFillColor"
@@ -575,7 +589,8 @@
                         android:nextFocusForward="@+id/editLabel_sunriseStrokeColor"
                         android:nextFocusDown="@+id/editLabel_sunriseStrokeColor"
 
-                        android:text="@string/configLabel_themeColorFill" />
+                        android:text="@string/configLabel_themeColorFill"
+                        tools:ignore="UnusedAttribute" />
 
                     <EditText
                         android:id="@+id/edit_sunsetFillColor"
@@ -588,7 +603,8 @@
                         android:nextFocusForward="@+id/editLabel_sunriseStrokeColor"
                         android:nextFocusDown="@+id/editLabel_sunriseStrokeColor"
 
-                        android:text="" android:hint="@string/configHint_themeColorFill" />
+                        android:text="" android:hint="@string/configHint_themeColorFill"
+                        tools:ignore="UnusedAttribute" />
 
                     <ImageButton
                         android:id="@+id/editButton_sunsetFillColor"
@@ -623,7 +639,8 @@
                         android:nextFocusForward="@+id/editLabel_sunsetStrokeColor"
                         android:nextFocusDown="@+id/editLabel_noonColor"
 
-                        android:text="@string/configLabel_themeColorBorder" />
+                        android:text="@string/configLabel_themeColorBorder"
+                        tools:ignore="UnusedAttribute" />
 
                     <EditText
                         android:id="@+id/edit_sunriseStrokeColor"
@@ -636,7 +653,8 @@
                         android:nextFocusForward="@+id/editLabel_sunsetStrokeColor"
                         android:nextFocusDown="@+id/editLabel_noonColor"
 
-                        android:text="" android:hint="@string/configHint_themeColorBorder" />
+                        android:text="" android:hint="@string/configHint_themeColorBorder"
+                        tools:ignore="UnusedAttribute" />
 
                     <ImageButton
                         android:id="@+id/editButton_sunriseStrokeColor"
@@ -667,7 +685,8 @@
                         android:nextFocusForward="@+id/editLabel_noonColor"
                         android:nextFocusDown="@+id/editLabel_noonColor"
 
-                        android:text="@string/configLabel_themeColorBorder" />
+                        android:text="@string/configLabel_themeColorBorder"
+                        tools:ignore="UnusedAttribute" />
 
                     <EditText
                         android:id="@+id/edit_sunsetStrokeColor"
@@ -680,7 +699,8 @@
                         android:nextFocusForward="@+id/editLabel_noonColor"
                         android:nextFocusDown="@+id/editLabel_noonColor"
 
-                        android:text="" android:hint="@string/configHint_themeColorBorder" />
+                        android:text="" android:hint="@string/configHint_themeColorBorder"
+                        tools:ignore="UnusedAttribute" />
 
                     <ImageButton
                         android:id="@+id/editButton_sunsetStrokeColor"
@@ -715,7 +735,8 @@
                         android:nextFocusForward="@+id/edit_iconStroke"
                         android:nextFocusDown="@+id/editLabel_noonFillColor"
 
-                        android:text="@string/configLabel_themeColorNoon" />
+                        android:text="@string/configLabel_themeColorNoon"
+                        tools:ignore="UnusedAttribute" />
 
                     <EditText
                         android:id="@+id/edit_noonColor"
@@ -728,7 +749,8 @@
                         android:nextFocusForward="@+id/edit_iconStroke"
                         android:nextFocusDown="@+id/editLabel_noonFillColor"
 
-                        android:text="" android:hint="@string/configHint_themeColorNoon" />
+                        android:text="" android:hint="@string/configHint_themeColorNoon"
+                        tools:ignore="UnusedAttribute" />
 
                     <ImageButton
                         android:id="@+id/editButton_noonColor"
@@ -763,7 +785,8 @@
                         android:nextFocusForward="@+id/editLabel_noonStrokeColor"
                         android:nextFocusDown="@+id/editLabel_noonStrokeColor"
 
-                        android:text="@string/configLabel_themeColorFill" />
+                        android:text="@string/configLabel_themeColorFill"
+                        tools:ignore="UnusedAttribute" />
 
                     <EditText
                         android:id="@+id/edit_noonFillColor"
@@ -776,7 +799,8 @@
                         android:nextFocusForward="@+id/editLabel_noonStrokeColor"
                         android:nextFocusDown="@+id/editLabel_noonStrokeColor"
 
-                        android:text="" android:hint="@string/configHint_themeColorFill" />
+                        android:text="" android:hint="@string/configHint_themeColorFill"
+                        tools:ignore="UnusedAttribute" />
 
                     <ImageButton
                         android:id="@+id/editButton_noonFillColor"
@@ -806,7 +830,8 @@
                         android:nextFocusForward="@+id/edit_noonIconStroke"
                         android:nextFocusDown="@+id/editLabel_noonIconStroke"
 
-                        android:text="@string/configLabel_themeColorBorder" />
+                        android:text="@string/configLabel_themeColorBorder"
+                        tools:ignore="UnusedAttribute" />
 
                     <EditText
                         android:id="@+id/edit_noonStrokeColor"
@@ -819,7 +844,8 @@
                         android:nextFocusForward="@+id/edit_noonIconStroke"
                         android:nextFocusDown="@+id/editLabel_noonIconStroke"
 
-                        android:text="" android:hint="@string/configHint_themeColorBorder" />
+                        android:text="" android:hint="@string/configHint_themeColorBorder"
+                        tools:ignore="UnusedAttribute" />
 
                     <ImageButton
                         android:id="@+id/editButton_noonStrokeColor"
@@ -859,7 +885,8 @@
                         android:nextFocusForward="@+id/editLabel_noonFillColor"
                         android:nextFocusDown="@+id/editLabel_noonFillColor"
 
-                        android:text="" android:hint="@string/configHint_themeBorderWidthRiseSet" tools:text="12" />
+                        android:text="" android:hint="@string/configHint_themeBorderWidthRiseSet" tools:text="12"
+                        tools:ignore="UnusedAttribute" />
 
                 </LinearLayout>
 
@@ -887,7 +914,8 @@
                         android:nextFocusForward="@+id/edit_padding"
                         android:nextFocusDown="@+id/editLabel_padding"
 
-                        android:text="" android:hint="@string/configHint_themeBorderWidthNoon" tools:text="12" />
+                        android:text="" android:hint="@string/configHint_themeBorderWidthNoon" tools:text="12"
+                        tools:ignore="UnusedAttribute" />
 
                 </LinearLayout>
 
@@ -918,7 +946,8 @@
                         android:nextFocusForward="@+id/editLabel_summerColor"
                         android:nextFocusDown="@+id/editLabel_fallColor"
 
-                        android:text="@string/configLabel_themeColorSpring" />
+                        android:text="@string/configLabel_themeColorSpring"
+                        tools:ignore="UnusedAttribute" />
 
                     <EditText
                         android:id="@+id/edit_springColor"
@@ -931,7 +960,8 @@
                         android:nextFocusForward="@+id/editLabel_summerColor"
                         android:nextFocusDown="@+id/editLabel_fallColor"
 
-                        android:text="" android:hint="@string/configHint_themeColorSunrise" />
+                        android:text="" android:hint="@string/configHint_themeColorSunrise"
+                        tools:ignore="UnusedAttribute" />
 
                     <ImageButton
                         android:id="@+id/editButton_springColor"
@@ -962,7 +992,8 @@
                         android:nextFocusForward="@+id/editLabel_fallColor"
                         android:nextFocusDown="@+id/editLabel_winterColor"
 
-                        android:text="@string/configLabel_themeColorSummer" />
+                        android:text="@string/configLabel_themeColorSummer"
+                        tools:ignore="UnusedAttribute" />
 
                     <EditText
                         android:id="@+id/edit_summerColor"
@@ -975,7 +1006,8 @@
                         android:nextFocusForward="@+id/editLabel_fallColor"
                         android:nextFocusDown="@+id/editLabel_winterColor"
 
-                        android:text="" android:hint="@string/configHint_themeColorSunset" />
+                        android:text="" android:hint="@string/configHint_themeColorSunset"
+                        tools:ignore="UnusedAttribute" />
 
                     <ImageButton
                         android:id="@+id/editButton_summerColor"
@@ -1005,7 +1037,8 @@
                         android:nextFocusForward="@+id/editLabel_winterColor"
                         android:nextFocusDown="@+id/editLabel_winterColor"
 
-                        android:text="@string/configLabel_themeColorFall" />
+                        android:text="@string/configLabel_themeColorFall"
+                        tools:ignore="UnusedAttribute" />
 
                     <EditText
                         android:id="@+id/edit_fallColor"
@@ -1018,7 +1051,8 @@
                         android:nextFocusForward="@+id/editLabel_winterColor"
                         android:nextFocusDown="@+id/editLabel_winterColor"
 
-                        android:text="" android:hint="@string/configHint_themeColorSunrise" />
+                        android:text="" android:hint="@string/configHint_themeColorSunrise"
+                        tools:ignore="UnusedAttribute" />
 
                     <ImageButton
                         android:id="@+id/editButton_fallColor"
@@ -1056,7 +1090,8 @@
                         android:nextFocusUp="@+id/editLabel_summerColor"
                         android:nextFocusLeft="@+id/editLabel_fallColor"
 
-                        android:text="" android:hint="@string/configHint_themeColorSunset" />
+                        android:text="" android:hint="@string/configHint_themeColorSunset"
+                        tools:ignore="UnusedAttribute" />
 
                     <ImageButton
                         android:id="@+id/editButton_winterColor"
