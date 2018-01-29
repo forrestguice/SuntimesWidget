@@ -655,7 +655,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     /**
      * initialize the solstice/equinox views
-     * @param context
+     * @param context a context used to access resources
      */
     private void initEquinoxViews(Context context)
     {

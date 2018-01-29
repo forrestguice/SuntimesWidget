@@ -409,9 +409,9 @@ public class SuntimesUtils
 
 
     /**
-     * @param context
-     * @param cal
-     * @return
+     * @param context a context
+     * @param cal a Calendar representing some date + time
+     * @return a time display string
      */
     public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal)
     {
@@ -462,9 +462,9 @@ public class SuntimesUtils
     }
 
     /**
-     * @param context
-     * @param cal
-     * @return
+     * @param context a context
+     * @param cal a Calendar representing some year
+     * @return a time display string
      */
     public TimeDisplayText calendarDateYearDisplayString(Context context, Calendar cal)
     {
@@ -604,12 +604,6 @@ public class SuntimesUtils
         return displayString;
     }
 
-    /**
-     *
-     * @param titlePattern
-     * @param data
-     * @return
-     */
     public String displayStringForTitlePattern(String titlePattern, SuntimesEquinoxSolsticeData data)
     {
         String displayString = displayStringForTitlePattern(titlePattern, (SuntimesData)data);
