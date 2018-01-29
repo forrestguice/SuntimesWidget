@@ -508,6 +508,7 @@ public class SuntimesUtils
         return timeDeltaLongDisplayString(timeSpan1, timeSpan2, false);
     }
 
+    @SuppressWarnings("ConstantConditions")
     public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2, boolean showSeconds)
     {
         String value = strSpace;
