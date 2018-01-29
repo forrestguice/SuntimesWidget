@@ -46,6 +46,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+@SuppressWarnings("Convert2Diamond")
 public class EquinoxView extends LinearLayout
 {
     public static final String KEY_UI_USERSWAPPEDCARD = "userSwappedCard";

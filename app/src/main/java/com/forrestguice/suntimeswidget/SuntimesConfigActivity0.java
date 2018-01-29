@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2017 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -63,6 +63,7 @@ import static com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity.PIC
 /**
  * Widget config activity for resizable widget.
  */
+@SuppressWarnings("Convert2Diamond")
 public class SuntimesConfigActivity0 extends AppCompatActivity
 {
     protected static final String DIALOGTAG_ABOUT = "about";

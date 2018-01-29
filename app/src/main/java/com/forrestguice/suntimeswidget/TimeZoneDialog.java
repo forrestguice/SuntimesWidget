@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -51,6 +51,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import java.util.TimeZone;
 
+@SuppressWarnings("Convert2Diamond")
 public class TimeZoneDialog extends DialogFragment
 {
     public static final String KEY_TIMEZONE_MODE = "timezoneMode";

@@ -91,6 +91,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 
+@SuppressWarnings("Convert2Diamond")
 public class SuntimesActivity extends AppCompatActivity
 {
     public static final String KEY_UI_CARDISTOMORROW = "cardIsTomorrow";

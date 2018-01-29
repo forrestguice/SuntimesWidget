@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -31,6 +31,7 @@ import java.lang.ref.WeakReference;
 import java.util.Arrays;
 import java.util.Comparator;
 
+@SuppressWarnings("Convert2Diamond")
 public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.ExportResult>
 {
     public static final long MIN_WAIT_TIME = 2000;

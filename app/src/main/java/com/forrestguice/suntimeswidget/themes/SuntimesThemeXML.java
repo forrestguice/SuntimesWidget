@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -33,6 +33,7 @@ import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+@SuppressWarnings("Convert2Diamond")
 public class SuntimesThemeXML implements SuntimesThemeIO
 {
     public static final String KEY_THEMES = "themes";

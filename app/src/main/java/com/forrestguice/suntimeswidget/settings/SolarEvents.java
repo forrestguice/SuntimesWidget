@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -33,6 +33,7 @@ import com.forrestguice.suntimeswidget.R;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+@SuppressWarnings("Convert2Diamond")
 public enum SolarEvents
 {
     MORNING_ASTRONOMICAL("astronomical twilight", "morning astronomical twilight", R.drawable.ic_sunrise_large), // 0
