@@ -446,6 +446,7 @@ public class AppSettings
         int styleID = R.style.AppTheme_Dark;
         if (themeName != null)
         {
+            //noinspection IfCanBeSwitch
             if (themeName.equals(THEME_LIGHT))
             {
                 styleID = R.style.AppTheme_Light;
