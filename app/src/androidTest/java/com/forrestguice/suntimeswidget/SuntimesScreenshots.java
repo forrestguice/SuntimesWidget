@@ -45,63 +45,96 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
             version = "v" + version;
     }
 
+    /**
+     * Make the main screenshot only (for each locale + theme).
+     */
+    @Test
+    public void makeScreenshot()
+    {
+        makeScreenshots(false);
+    }
+
+    /**
+     * Make a complete set of screenshots (for each locale + theme); this takes several minutes.
+     */
     @Test
     public void makeScreenshots()
+    {
+        makeScreenshots(true);
+    }
+
+    /**
+     * @param complete true make complete set of screenshots, false main screenshot only
+     */
+    public void makeScreenshots(boolean complete)
     {
         SuntimesActivity context = activityRule.getActivity();
         configureAppForScreenshots(context);
 
         String[] locales = context.getResources().getStringArray(R.array.locale_values);
+        String[] themes = new String[] { AppSettings.THEME_DARK, AppSettings.THEME_LIGHT };
         for (String languageTag : locales)
         {
-            makeScreenshots(context, languageTag);
+            for (String theme : themes)
+            {
+                if (complete)
+                    makeScreenshots1(context, languageTag, theme);
+                else makeScreenshots0(context, languageTag, theme);
+            }
         }
     }
 
-    private void makeScreenshots(Context context, String languageTag)
+    private void makeScreenshots0(Context context, String languageTag, String theme)
     {
-        configureAppForScreenshots(context, languageTag);
+        configureAppForScreenshots(context, languageTag, theme);
+        activityRule.launchActivity(activityRule.getActivity().getIntent());
+        captureScreenshot(version + "/" + languageTag, "activity-main0-" + theme);
+    }
+
+    private void makeScreenshots1(Context context, String languageTag, String theme)
+    {
+        configureAppForScreenshots(context, languageTag, theme);
         activityRule.launchActivity(activityRule.getActivity().getIntent());
 
         // dialogs
         DialogTest.showAboutDialog(context);
-        captureScreenshot(version + "/" + languageTag, "dialog-about");
+        captureScreenshot(version + "/" + languageTag, "dialog-about-" + theme);
         DialogTest.cancelAboutDialog();
 
         DialogTest.showHelpDialog(context);
-        captureScreenshot(version + "/" + languageTag, "dialog-help");
+        captureScreenshot(version + "/" + languageTag, "dialog-help-" + theme);
         DialogTest.cancelHelpDialog();
 
         DialogTest.showEquinoxDialog(context);
-        captureScreenshot(version + "/" + languageTag, "dialog-equinox");
+        captureScreenshot(version + "/" + languageTag, "dialog-equinox-" + theme);
         DialogTest.cancelEquinoxDialog();
 
         DialogTest.showLightmapDialog(context);
-        captureScreenshot(version + "/" + languageTag, "dialog-lightmap");
+        captureScreenshot(version + "/" + languageTag, "dialog-lightmap-" + theme);
         DialogTest.cancelLightmapDialog();
 
         TimeZoneDialogTest.showTimezoneDialog(activityRule.getActivity());
-        captureScreenshot(version + "/" + languageTag, "dialog-timezone0");
+        captureScreenshot(version + "/" + languageTag, "dialog-timezone0-" + theme);
         TimeZoneDialogTest.inputTimezoneDialog_mode(context, WidgetSettings.TimezoneMode.SOLAR_TIME);
-        captureScreenshot(version + "/" + languageTag, "dialog-timezone1");
+        captureScreenshot(version + "/" + languageTag, "dialog-timezone1-" + theme);
         TimeZoneDialogTest.cancelTimezoneDialog();
 
         AlarmDialogTest.showAlarmDialog(context);
-        captureScreenshot(version + "/" + languageTag, "dialog-alarm");
+        captureScreenshot(version + "/" + languageTag, "dialog-alarm-" + theme);
         AlarmDialogTest.cancelAlarmDialog();
 
         TimeDateDialogTest.showDateDialog(context);
-        captureScreenshot(version + "/" + languageTag, "dialog-date");
+        captureScreenshot(version + "/" + languageTag, "dialog-date-" + theme);
         TimeDateDialogTest.cancelDateDialog();
 
         LocationDialogTest.showLocationDialog();
-        captureScreenshot(version + "/" + languageTag, "dialog-location0");
+        captureScreenshot(version + "/" + languageTag, "dialog-location0-" + theme);
         LocationDialogTest.editLocationDialog();
-        captureScreenshot(version + "/" + languageTag, "dialog-location1");
+        captureScreenshot(version + "/" + languageTag, "dialog-location1-" + theme);
         LocationDialogTest.cancelLocationDialog(context);
 
         // main activity
-        captureScreenshot(version + "/" + languageTag, "activity-main0");
+        captureScreenshot(version + "/" + languageTag, "activity-main0-" + theme);
     }
 
     private void configureAppForScreenshots(Activity context)
@@ -126,9 +159,14 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
 
     private void configureAppForScreenshots(Context context, String languageTag)
     {
+        configureAppForScreenshots(context, languageTag, AppSettings.PREF_DEF_APPEARANCE_THEME);
+    }
+    private void configureAppForScreenshots(Context context, String languageTag, String theme)
+    {
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
         prefs.putString(AppSettings.PREF_KEY_LOCALE_MODE, AppSettings.LocaleMode.CUSTOM_LOCALE.name());
         prefs.putString(AppSettings.PREF_KEY_LOCALE, languageTag);
+        prefs.putString(AppSettings.PREF_KEY_APPEARANCE_THEME, theme);
         prefs.apply();
     }
 
