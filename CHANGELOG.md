@@ -1,4 +1,6 @@
 ### ~
+
+### v0.6.2 (2018-01-31)
 * fixes copy/paste: rise/set times & solstice/equinox dates now selectable.
 * misc layout fixes / improved accessibility; better support for "large text".
 * fixes bug "solstice/equinox dates not localized" (#146).
