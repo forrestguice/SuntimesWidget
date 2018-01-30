@@ -1,5 +1,9 @@
 ### ~
-
+* fixes copy/paste: rise/set times & solstice/equinox dates now selectable.
+* misc layout fixes / improved accessibility; better support for "large text".
+* fixes bug "solstice/equinox dates not localized" (#146).
+* adds "adaptive" launcher icon (used by api26+).
+ 
 ### v0.6.1 (2018-01-23)
 * adds translations to Catalan (ca) and Spanish (es-ES) (contributed by Raulvo) (#141).
 * fixes bug; expected "11h 55s", actual "11h55s" (#b61d942).
