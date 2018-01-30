@@ -59,6 +59,7 @@ public class EquinoxDialog extends DialogFragment
         if (savedInstanceState != null)
         {
             Log.d("DEBUG", "EquinoxDialog onCreate (restoreState)");
+            equinoxView.loadState(savedInstanceState);
         }
 
         dialog.setOnShowListener(new DialogInterface.OnShowListener()
@@ -75,7 +76,6 @@ public class EquinoxDialog extends DialogFragment
 
     public void initViews(View dialogView)
     {
-
         equinoxView = (EquinoxView) dialogView.findViewById(R.id.info_time_equinox);
     }
 
@@ -86,5 +86,12 @@ public class EquinoxDialog extends DialogFragment
             equinoxView.updateViews(getContext(), data);
             Log.d("DEBUG", "EquinoxDialog updated");
         }
+    }
+
+    @Override
+    public void onSaveInstanceState( Bundle outState )
+    {
+        equinoxView.saveState(outState);
+        super.onSaveInstanceState(outState);
     }
 }

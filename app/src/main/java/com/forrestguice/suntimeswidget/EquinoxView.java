@@ -49,9 +49,9 @@ import java.util.Calendar;
 @SuppressWarnings("Convert2Diamond")
 public class EquinoxView extends LinearLayout
 {
-    public static final String KEY_UI_USERSWAPPEDCARD = "userSwappedCard";
-    public static final String KEY_UI_CARDISNEXTYEAR = "cardIsNextYear";
-    public static final String KEY_UI_MINIMIZED = "isMinimized";
+    public static final String KEY_UI_USERSWAPPEDCARD = "userSwappedEquinoxCard";
+    public static final String KEY_UI_CARDISNEXTYEAR = "equinoxCardIsNextYear";
+    public static final String KEY_UI_MINIMIZED = "equinoxIsMinimized";
 
     private SuntimesUtils utils = new SuntimesUtils();
     private boolean userSwappedCard = false;
@@ -411,7 +411,10 @@ public class EquinoxView extends LinearLayout
                 nextNote = notes.get(0);
             }
 
-            flipper.setDisplayedChild(nextNote.pageIndex);
+            if (!userSwappedCard)
+            {
+                flipper.setDisplayedChild(nextNote.pageIndex);
+            }
             nextNote.setVisible(true);
             nextNote.setHighlighted(true);
 
@@ -423,20 +426,20 @@ public class EquinoxView extends LinearLayout
     public boolean saveState(Bundle bundle)
     {
         boolean cardIsNextYear = (flipper.getDisplayedChild() != 0);
-        Log.d("DEBUG", "EquinoxView saveState");
         bundle.putBoolean(EquinoxView.KEY_UI_CARDISNEXTYEAR, cardIsNextYear);
         bundle.putBoolean(EquinoxView.KEY_UI_USERSWAPPEDCARD, userSwappedCard);
         bundle.putBoolean(EquinoxView.KEY_UI_MINIMIZED, minimized);
+        Log.d("DEBUG", "EquinoxView saveState :: nextyear:" + cardIsNextYear + " :: swapped:" + userSwappedCard + " :: minimized:" + minimized);
         return true;
     }
 
     public void loadState(Bundle bundle)
     {
-        Log.d("DEBUG", "EquinoxView loadState");
         boolean cardIsNextYear = bundle.getBoolean(EquinoxView.KEY_UI_CARDISNEXTYEAR, false);
         flipper.setDisplayedChild((cardIsNextYear ? 1 : 0));
-        userSwappedCard = bundle.getBoolean(KEY_UI_USERSWAPPEDCARD, false);
-        minimized = bundle.getBoolean(KEY_UI_MINIMIZED, minimized);
+        userSwappedCard = bundle.getBoolean(EquinoxView.KEY_UI_USERSWAPPEDCARD, false);
+        minimized = bundle.getBoolean(EquinoxView.KEY_UI_MINIMIZED, minimized);
+        Log.d("DEBUG", "EquinoxView loadState :: nextyear: " + cardIsNextYear + " :: swapped:" + userSwappedCard + " :: minimized:" + minimized);
     }
 
     public boolean showNextCard()
@@ -446,9 +449,8 @@ public class EquinoxView extends LinearLayout
             flipper.setOutAnimation(anim_card_outNext);
             flipper.setInAnimation(anim_card_inNext);
             flipper.showNext();
-            return true;
         }
-        return false;
+        return true;
     }
 
     public boolean hasNextCard()
@@ -464,9 +466,8 @@ public class EquinoxView extends LinearLayout
             flipper.setOutAnimation(anim_card_outPrev);
             flipper.setInAnimation(anim_card_inPrev);
             flipper.showPrevious();
-            return true;
         }
-        return false;
+        return true;
     }
 
     public boolean hasPreviousCard()
