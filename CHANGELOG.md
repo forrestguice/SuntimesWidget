@@ -1,5 +1,4 @@
 ### ~
-* fixes copy/paste: rise/set times & solstice/equinox dates now selectable.
 * misc layout fixes / improved accessibility; better support for "large text".
 * fixes bug "solstice/equinox dates not localized" (#146).
 * adds "adaptive" launcher icon (used by api26+).

@@ -79,7 +79,7 @@
                 android:textSize="12sp" android:antialias="true"
                 android:textColor="@drawable/txt_equinox_vernal"
                 android:clickable="true" android:focusable="true" android:focusableInTouchMode="true"
-                android:singleLine="true" android:ellipsize="marquee" android:textIsSelectable="true"
+                android:singleLine="true" android:ellipsize="marquee"
                 tools:text="March 20, 2016; 9:00 PM" />
 
             <TextView
@@ -112,7 +112,7 @@
                 android:textSize="12sp" android:antialias="true"
                 android:textColor="@drawable/txt_solstice_summer"
                 android:clickable="true" android:focusable="true" android:focusableInTouchMode="true"
-                android:singleLine="true" android:ellipsize="marquee" android:textIsSelectable="true"
+                android:singleLine="true" android:ellipsize="marquee"
                 tools:text="June 20, 2016; 9:00 PM" />
             <TextView
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -145,7 +145,7 @@
                 android:textSize="12sp" android:antialias="true"
                 android:textColor="@drawable/txt_equinox_autumnal"
                 android:clickable="true" android:focusable="true" android:focusableInTouchMode="true"
-                android:singleLine="true" android:ellipsize="marquee" android:textIsSelectable="true"
+                android:singleLine="true" android:ellipsize="marquee"
                 tools:text="September 22, 2016; 9:00 PM" />
 
             <TextView
@@ -177,7 +177,7 @@
                 android:textSize="12sp" android:antialias="true"
                 android:textColor="@drawable/txt_solstice_winter"
                 android:clickable="true" android:focusable="true" android:focusableInTouchMode="true"
-                android:singleLine="true" android:ellipsize="marquee" android:textIsSelectable="true"
+                android:singleLine="true" android:ellipsize="marquee"
                 tools:text="December 21, 2016; 9:00 PM" />
 
             <TextView
