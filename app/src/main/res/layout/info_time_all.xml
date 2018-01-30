@@ -144,7 +144,6 @@
             android:textColor="@color/sunIcon_color_rising"
             app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_astro"
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunrise"
-            android:textIsSelectable="true"
             tools:text="7:00 AM"/>
 
         <TextView
@@ -155,7 +154,6 @@
             android:textColor="@color/sunIcon_color_setting"
             app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_astro"
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
-            android:textIsSelectable="true"
             tools:text="12:20 PM"/>
 
         <!-- Nautical -->
@@ -177,7 +175,6 @@
             android:textColor="@color/sunIcon_color_rising"
             app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_nautical"
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunrise"
-            android:textIsSelectable="true"
             tools:text="8:00 AM"/>
 
         <TextView
@@ -188,7 +185,6 @@
             android:textColor="@color/sunIcon_color_setting"
             app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_nautical"
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
-            android:textIsSelectable="true"
             tools:text="4:20 PM"/>
 
         <!-- Civil -->
@@ -210,7 +206,6 @@
             android:textColor="@color/sunIcon_color_rising"
             app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_civil"
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunrise"
-            android:textIsSelectable="true"
             tools:text="10:00 AM"/>
 
         <TextView
@@ -221,7 +216,6 @@
             android:textColor="@color/sunIcon_color_setting"
             app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_civil"
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
-            android:textIsSelectable="true"
             tools:text="4:20 PM"/>
 
         <!-- Official -->
@@ -243,7 +237,6 @@
             android:textColor="@color/sunIcon_color_rising"
             app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_official"
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunrise"
-            android:textIsSelectable="true"
             tools:text="9:00 AM"/>
 
         <TextView
@@ -254,7 +247,6 @@
             android:textColor="@color/sunIcon_color_setting"
             app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_official"
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
-            android:textIsSelectable="true"
             tools:text="4:20 PM"/>
 
         <!-- horizontal rule -->
@@ -287,7 +279,6 @@
             android:textColor="@color/sunIcon_color_setting"
             app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_noon"
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
-            android:textIsSelectable="true"
             tools:text="12:20 PM"/>
 
 
