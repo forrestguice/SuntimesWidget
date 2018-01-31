@@ -28,6 +28,8 @@
     -->
     <string name="nextDay">Következő nap</string>
     <string name="prevDay">Előző nap</string>
+    <string name="nextYear">Next Year</string>        <!-- TODO -->
+    <string name="prevYear">Previous Year</string>        <!-- TODO -->
 
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).

@@ -43,7 +43,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_title"
             app:layout_constraintBottom_toBottomOf="@+id/text_title"
-            android:contentDescription="@string/prevDay" />
+            android:contentDescription="@string/prevYear" />
 
         <ImageButton
             android:id="@+id/info_time_nextbtn"
@@ -54,7 +54,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_title"
             app:layout_constraintBottom_toBottomOf="@+id/text_title"
-            android:contentDescription="@string/nextDay" />
+            android:contentDescription="@string/nextYear" />
 
         <!-- Row 0 (vernal equinox) -->
         <TextView style="@style/SunsetTimeTextView"

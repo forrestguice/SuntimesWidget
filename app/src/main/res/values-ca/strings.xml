@@ -29,6 +29,8 @@
     -->
     <string name="nextDay">Dia següent</string>
     <string name="prevDay">Dia anterior</string>
+    <string name="nextYear">Next Year</string>        <!-- TODO -->
+    <string name="prevYear">Previous Year</string>        <!-- TODO -->
 
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
