@@ -48,6 +48,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
+import android.view.View;
 
 import java.lang.reflect.Method;
 import java.text.DateFormat;
@@ -1002,5 +1003,23 @@ public class SuntimesUtils
         drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         drawable.draw(canvas);
         return bitmap;
+    }
+
+    /**
+     * @param view the View to trigger the accessibility event
+     * @param msg text that will be read aloud (if accessibility enabled)
+     */
+    public static void announceForAccessibility(View view, String msg)
+    {
+        if (view == null)
+            return;
+
+        if (Build.VERSION.SDK_INT >= 16)
+        {
+            view.announceForAccessibility(msg);
+
+        } //else {
+            // TODO
+        //}
     }
 }

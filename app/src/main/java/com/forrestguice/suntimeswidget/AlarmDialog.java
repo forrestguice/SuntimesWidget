@@ -215,12 +215,14 @@ public class AlarmDialog extends DialogFragment
                             String noteString = context.getString(R.string.schedalarm_dialog_note, timeString);
                             txt_note.setText(SuntimesUtils.createBoldColorSpan(noteString, timeString, color_textTimeDelta));
                             icon_note.setVisibility(View.GONE);
+                            SuntimesUtils.announceForAccessibility(txt_note, context.getString(R.string.configLabel_schedalarm_mode) + " " + choice.getLongDisplayString() + ", " + txt_note.getText());
 
                         } else {
                             String timeString = " " + choice.getLongDisplayString() + " ";
                             String noteString = context.getString(R.string.schedalarm_dialog_note2, timeString);
                             txt_note.setText(SuntimesUtils.createBoldColorSpan(noteString, timeString, color_textTimeDelta));
                             icon_note.setVisibility(View.VISIBLE);
+                            SuntimesUtils.announceForAccessibility(txt_note, choice.getLongDisplayString() + ", " + txt_note.getText());
                         }
                     }
 
