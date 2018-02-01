@@ -380,6 +380,10 @@
   <!-- App Setting: UI -->
   <string name="configLabel_ui">Benutzeroberfläche</string>                       <!-- group title -->
 
+  <!-- App Setting: Verbose Accessibility -->
+  <string name="configLabel_accessibility_verbose">Verbose TalkBack</string>   <!-- TODO -->
+  <string name="configLabel_accessibility_verbose_summary">Announce automated changes to the UI.</string>     <!-- TODO -->
+
   <!-- App Setting: UI Warnings -->
   <string name="configLabel_ui_showWarnings">Enable warnings</string>                               <!-- TODO -->
   <string name="configLabel_ui_showWarnings_summary">Show configuration warning messages</string>   <!-- TODO -->

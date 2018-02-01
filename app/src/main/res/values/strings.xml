@@ -391,7 +391,7 @@
 
     <!-- App Setting: Verbose Accessibility -->
     <string name="configLabel_accessibility_verbose">Verbose TalkBack</string>
-    <string name="configLabel_accessibility_verbose_summary">Announce automated changes to the UI (note update).</string>
+    <string name="configLabel_accessibility_verbose_summary">Announce automated changes to the UI.</string>
 
     <!-- App Setting: UI Warnings -->
     <string name="configLabel_ui_showWarnings">Show warnings</string>
