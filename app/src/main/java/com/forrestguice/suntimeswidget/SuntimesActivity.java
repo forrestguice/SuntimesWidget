@@ -1669,6 +1669,7 @@ public class SuntimesActivity extends AppCompatActivity
             card_flipper.setOutAnimation(anim_card_outNext);
             card_flipper.setInAnimation(anim_card_inNext);
             card_flipper.showNext();
+            SuntimesUtils.announceForAccessibility(card_flipper, txt_date2.getText().toString());
             return true;
         }
         return false;
@@ -1690,6 +1691,7 @@ public class SuntimesActivity extends AppCompatActivity
             card_flipper.setOutAnimation(anim_card_outPrev);
             card_flipper.setInAnimation(anim_card_inPrev);
             card_flipper.showPrevious();
+            SuntimesUtils.announceForAccessibility(card_flipper, txt_date.getText().toString());
             return true;
         }
         return false;
