@@ -207,6 +207,7 @@ public class SuntimesActivity extends AppCompatActivity
     private List<SuntimesWarning> warnings;
 
     private boolean showSeconds = WidgetSettings.PREF_DEF_GENERAL_SHOWSECONDS;
+    private boolean verboseAccessibility = AppSettings.PREF_DEF_ACCESSIBILITY_VERBOSE;
 
     public SuntimesActivity()
     {
@@ -1217,6 +1218,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         stopTimeTask();
 
+        verboseAccessibility = AppSettings.loadVerboseAccessibilityPref(this);
         showWarnings = AppSettings.loadShowWarningsPref(this);
         dateWarning.shouldShow = false;
         timezoneWarning.shouldShow = false;
@@ -2003,8 +2005,12 @@ public class SuntimesActivity extends AppCompatActivity
             note_flipper.showPrevious();
         }
 
+        if (verboseAccessibility)
+        {
             String announcement = note.timeText.toString() + " " + note.prefixText + " " + note.noteText;
             SuntimesUtils.announceForAccessibility(note_flipper, announcement);
+        }
+
         highlightTimeField(new SolarEvents.SolarEventField(note.noteMode, note.tomorrow));
     }
 
