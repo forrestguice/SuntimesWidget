@@ -2003,6 +2003,8 @@ public class SuntimesActivity extends AppCompatActivity
             note_flipper.showPrevious();
         }
 
+            String announcement = note.timeText.toString() + " " + note.prefixText + " " + note.noteText;
+            SuntimesUtils.announceForAccessibility(note_flipper, announcement);
         highlightTimeField(new SolarEvents.SolarEventField(note.noteMode, note.tomorrow));
     }
 
