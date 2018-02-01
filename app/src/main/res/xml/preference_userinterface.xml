@@ -67,6 +67,12 @@
             android:entries="@array/solsticeTrackingMode_display" android:entryValues="@array/solsticeTrackingMode_values"
             android:defaultValue="@string/def_appwidget_0_general_trackingmode" />
 
+        <CheckBoxPreference
+            android:key="app_accessibility_verbose"
+            android:title="@string/configLabel_accessibility_verbose"
+            android:summary="@string/configLabel_accessibility_verbose_summary"
+            android:defaultValue="@string/def_app_accessibility_verbose" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

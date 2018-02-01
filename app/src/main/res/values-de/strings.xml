@@ -31,6 +31,8 @@
   -->
   <string name="nextDay">Nächster Tag</string>
   <string name="prevDay">Vorheriger Tag</string>
+  <string name="nextYear">Next Year</string>        <!-- TODO -->
+  <string name="prevYear">Previous Year</string>        <!-- TODO -->
 
   <!-- Field: timezone
        The time zone field that appears below the clock (main activity).
@@ -377,6 +379,10 @@
 
   <!-- App Setting: UI -->
   <string name="configLabel_ui">Benutzeroberfläche</string>                       <!-- group title -->
+
+  <!-- App Setting: Verbose Accessibility -->
+  <string name="configLabel_accessibility_verbose">Verbose TalkBack</string>   <!-- TODO -->
+  <string name="configLabel_accessibility_verbose_summary">Announce automated changes to the UI.</string>     <!-- TODO -->
 
   <!-- App Setting: UI Warnings -->
   <string name="configLabel_ui_showWarnings">Enable warnings</string>                               <!-- TODO -->

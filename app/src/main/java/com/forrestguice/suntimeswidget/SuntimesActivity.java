@@ -207,6 +207,7 @@ public class SuntimesActivity extends AppCompatActivity
     private List<SuntimesWarning> warnings;
 
     private boolean showSeconds = WidgetSettings.PREF_DEF_GENERAL_SHOWSECONDS;
+    private boolean verboseAccessibility = AppSettings.PREF_DEF_ACCESSIBILITY_VERBOSE;
 
     public SuntimesActivity()
     {
@@ -1217,6 +1218,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         stopTimeTask();
 
+        verboseAccessibility = AppSettings.loadVerboseAccessibilityPref(this);
         showWarnings = AppSettings.loadShowWarningsPref(this);
         dateWarning.shouldShow = false;
         timezoneWarning.shouldShow = false;
@@ -1669,6 +1671,7 @@ public class SuntimesActivity extends AppCompatActivity
             card_flipper.setOutAnimation(anim_card_outNext);
             card_flipper.setInAnimation(anim_card_inNext);
             card_flipper.showNext();
+            SuntimesUtils.announceForAccessibility(card_flipper, txt_date2.getText().toString());
             return true;
         }
         return false;
@@ -1690,6 +1693,7 @@ public class SuntimesActivity extends AppCompatActivity
             card_flipper.setOutAnimation(anim_card_outPrev);
             card_flipper.setInAnimation(anim_card_inPrev);
             card_flipper.showPrevious();
+            SuntimesUtils.announceForAccessibility(card_flipper, txt_date.getText().toString());
             return true;
         }
         return false;
@@ -1999,6 +2003,12 @@ public class SuntimesActivity extends AppCompatActivity
             note_flipper.setInAnimation(anim_note_inPrev);
             note_flipper.setOutAnimation(anim_note_outPrev);
             note_flipper.showPrevious();
+        }
+
+        if (verboseAccessibility)
+        {
+            String announcement = note.timeText.toString() + " " + note.prefixText + " " + note.noteText;
+            SuntimesUtils.announceForAccessibility(note_flipper, announcement);
         }
 
         highlightTimeField(new SolarEvents.SolarEventField(note.noteMode, note.tomorrow));

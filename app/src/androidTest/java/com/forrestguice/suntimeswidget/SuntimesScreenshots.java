@@ -32,15 +32,29 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.HashMap;
+
+@SuppressWarnings("Convert2Diamond")
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class SuntimesScreenshots extends SuntimesActivityTestBase
 {
     private static String version = BuildConfig.VERSION_NAME;
 
+    private HashMap<String, ScreenshotConfig> config;
+    private ScreenshotConfig defaultConfig = new ScreenshotConfig(new WidgetSettings.Location("Iron Springs", "34.58742", "-112.57367"), "US/Arizona");
+
     @Before
     public void initScreenshots()
     {
+        config = new HashMap<String, ScreenshotConfig>();
+        config.put("ca", new ScreenshotConfig(new WidgetSettings.Location("Barcelona", "41.3825", "2.1769"), "CET"));
+        config.put("de", new ScreenshotConfig(new WidgetSettings.Location("Berlin", "52.5243", "13.4105"), "Europe/Berlin"));
+        config.put("es_ES", new ScreenshotConfig(new WidgetSettings.Location("Madrid", "40.4378", "-3.8196"), "Europe/Madrid"));
+        config.put("fr", new ScreenshotConfig(new WidgetSettings.Location("Paris", "48.8566", "2.3518"), "Europe/Paris"));
+        config.put("hu", new ScreenshotConfig(new WidgetSettings.Location("Budapest", "47.4811", "18.9902"), "Europe/Budapest"));
+        config.put("pl", new ScreenshotConfig(new WidgetSettings.Location("Warszawa", "52.2319", "21.0067"), "Poland"));
+
         if (!version.startsWith("v"))
             version = "v" + version;
     }
@@ -140,13 +154,6 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
     private void configureAppForScreenshots(Activity context)
     {
         WidgetSettings.saveDateModePref(context, 0, WidgetSettings.DateMode.CURRENT_DATE);
-
-        WidgetSettings.saveLocationModePref(context, 0, WidgetSettings.LocationMode.CUSTOM_LOCATION);
-        WidgetSettings.saveLocationPref(context, 0, new WidgetSettings.Location(TESTLOC_2_LABEL, TESTLOC_2_LAT, TESTLOC_2_LON));
-
-        WidgetSettings.saveTimezoneModePref(context, 0, WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE);
-        WidgetSettings.saveTimezonePref(context, 0, TESTTZID_2);
-
         WidgetSettings.saveTrackingModePref(context, 0, WidgetSettings.TrackingMode.SOONEST);
 
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
@@ -168,6 +175,30 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
         prefs.putString(AppSettings.PREF_KEY_LOCALE, languageTag);
         prefs.putString(AppSettings.PREF_KEY_APPEARANCE_THEME, theme);
         prefs.apply();
+
+        ScreenshotConfig configuration = defaultConfig;
+        if (config.containsKey(languageTag))
+        {
+            configuration = config.get(languageTag);
+        }
+
+        WidgetSettings.saveLocationModePref(context, 0, WidgetSettings.LocationMode.CUSTOM_LOCATION);
+        WidgetSettings.saveLocationPref(context, 0, configuration.location);
+
+        WidgetSettings.saveTimezoneModePref(context, 0, WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE);
+        WidgetSettings.saveTimezonePref(context, 0, configuration.timezoneID);
+    }
+
+    public static class ScreenshotConfig
+    {
+        public WidgetSettings.Location location;
+        public String timezoneID;
+
+        public ScreenshotConfig(WidgetSettings.Location location, String timezoneID)
+        {
+            this.location = location;
+            this.timezoneID = timezoneID;
+        }
     }
 
 }
