@@ -74,7 +74,7 @@ public class AppSettings
     public static final boolean PREF_DEF_UI_SHOWDATASOURCE = true;
 
     public static final String PREF_KEY_ACCESSIBILITY_VERBOSE = "app_accessibility_verbose";
-    public static final boolean PREF_DEF_ACCESSIBILITY_VERBOSE = true;
+    public static final boolean PREF_DEF_ACCESSIBILITY_VERBOSE = false;
 
     public static final String PREF_KEY_UI_TIMEZONESORT = "app_ui_timezonesort";
     public static final WidgetTimezones.TimeZoneSort PREF_DEF_UI_TIMEZONESORT = WidgetTimezones.TimeZoneSort.SORT_BY_ID;

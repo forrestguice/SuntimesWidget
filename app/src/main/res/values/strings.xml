@@ -801,5 +801,5 @@
     <string name="def_app_ui_notetapaction" translatable="false">NEXT_NOTE</string>
     <string name="def_app_ui_clocktapaction" translatable="false">ALARM</string>
     <string name="def_app_appearance_theme" translatable="false">dark</string>
-    <string name="def_app_accessibility_verbose" translatable="false">true</string>
+    <string name="def_app_accessibility_verbose" translatable="false">false</string>
 </resources>
