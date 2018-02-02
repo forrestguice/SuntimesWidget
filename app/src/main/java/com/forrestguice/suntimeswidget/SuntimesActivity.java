@@ -839,9 +839,11 @@ public class SuntimesActivity extends AppCompatActivity
         if (fontScale > 1)
         {                                                // when using "large text"...
             float textSizePx = txt_time.getTextSize();       // revert scaling on txt_time (its already large enough / takes too much space at x1.3)
-            float adjustedTextSizePx = textSizePx * (1 / fontScale);
+            float invFontScale = (1 / fontScale);
+            float adjustedTextSizePx = textSizePx * invFontScale;
             Log.w("initClockViews", "txt_time is oversized! downsizing from " + textSizePx + "px to " + adjustedTextSizePx + "px.");
             txt_time.setTextSize(TypedValue.COMPLEX_UNIT_PX, adjustedTextSizePx);
+            txt_time_suffix.setTextSize(TypedValue.COMPLEX_UNIT_PX, (txt_time_suffix.getTextSize() * invFontScale));
         }
     }
 
