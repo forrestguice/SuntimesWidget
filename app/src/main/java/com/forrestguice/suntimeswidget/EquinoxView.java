@@ -419,7 +419,15 @@ public class EquinoxView extends LinearLayout
             nextNote.setHighlighted(true);
 
         } else {
-            showEmptyView(true);
+            if (minimized)
+            {
+                for (EquinoxNote note : notes)
+                {
+                    note.setVisible(false);
+                }
+            } else {
+                showEmptyView(true);
+            }
         }
     }
 
