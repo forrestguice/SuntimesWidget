@@ -1981,6 +1981,7 @@ public class SuntimesActivity extends AppCompatActivity
             ic_time2_note.setVisibility(View.VISIBLE);
             txt_time2_note1.setText(" " + note.timeText.toString());  // todo: fix spacing in layout
             txt_time2_note2.setText(note.prefixText);
+            txt_time2_note2.setVisibility(note.prefixText.isEmpty() ? View.GONE : View.VISIBLE);
             txt_time2_note3.setText(note.noteText);
             txt_time2_note3.setTextColor(note.noteColor);
 
@@ -1991,6 +1992,7 @@ public class SuntimesActivity extends AppCompatActivity
             ic_time1_note.setVisibility(View.VISIBLE);
             txt_time1_note1.setText(" " + note.timeText.toString()); // todo: fix spacing in layout
             txt_time1_note2.setText(note.prefixText);
+            txt_time1_note2.setVisibility(note.prefixText.isEmpty() ? View.GONE : View.VISIBLE);
             txt_time1_note3.setText(note.noteText);
             txt_time1_note3.setTextColor(note.noteColor);
         }
