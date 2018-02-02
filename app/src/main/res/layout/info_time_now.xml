@@ -42,8 +42,8 @@
                       style="@style/SunsetTimeTextSuffixView"
                       android:layout_gravity="center_vertical|bottom|end"
                       android:textSize="18sp"
-                      android:text=""
-                      tools:text="PM" />
+                      android:text="" android:maxEms="@integer/clock_amppm_maxems"
+                      tools:text="nachm." />
         </LinearLayout>
 
         <TextView style="@style/SunsetTimeTextView"
