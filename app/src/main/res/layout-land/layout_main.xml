@@ -71,7 +71,8 @@
                         <LinearLayout
                             android:id="@+id/info_time_note1"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center">
 
                             <include layout="@layout/info_time_note" />
 
@@ -80,7 +81,8 @@
                         <LinearLayout
                             android:id="@+id/info_time_note2"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center">
 
                             <include layout="@layout/info_time_note" />
 
