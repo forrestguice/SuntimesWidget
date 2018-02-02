@@ -50,7 +50,7 @@
                   android:text=""
                   tools:text="until"
                   android:layout_gravity="center_horizontal"
-                  android:textSize="14sp"
+                  android:textSize="12sp"
                   android:singleLine="true"
                   android:gravity="center"/>
 
