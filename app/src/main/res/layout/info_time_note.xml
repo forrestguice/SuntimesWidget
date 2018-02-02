@@ -62,7 +62,7 @@
         <TextView style="@style/SunsetTimeTextView"
                   android:id="@+id/text_timenote3"
                   android:text=""
-                  tools:text="civil twilight"
+                  tools:text="a very long civil twilight string"
                   android:layout_gravity="center_horizontal"
                   android:textSize="16sp"
                   android:gravity="center"
