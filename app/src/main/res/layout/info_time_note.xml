@@ -20,12 +20,7 @@
     <LinearLayout
         android:id="@+id/layout_timenote"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:orientation="vertical" android:layout_gravity="center_vertical"
-
-        android:layout_marginLeft="6dp" android:layout_marginRight="6dp"
-        android:layout_marginStart="6dp" android:layout_marginEnd="6dp"
-        android:paddingLeft="10dp" android:paddingRight="10dp"
-        android:paddingTop="5dp" android:paddingBottom="5dp">
+        android:orientation="vertical" android:layout_gravity="center_vertical">
 
         <LinearLayout
             android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -41,7 +36,7 @@
             <TextView style="@style/SunsetTimeTextView"
                       android:id="@+id/text_timenote1"
                       android:text=""
-                      tools:text="2h 15m"
+                      tools:text="12h 15m"
                       android:gravity="center"
                       android:textSize="18sp"
                       android:singleLine="true"
@@ -62,10 +57,10 @@
         <TextView style="@style/SunsetTimeTextView"
                   android:id="@+id/text_timenote3"
                   android:text=""
-                  tools:text="a very long civil twilight string"
+                  tools:text="astronomical twilight"
                   android:layout_gravity="center_horizontal"
                   android:textSize="16sp"
-                  android:gravity="center"
+                  android:gravity="center" android:maxWidth="@dimen/clock_note_maxwidth"
                   android:layout_margin="0dp"/>
 
     </LinearLayout>
