@@ -65,48 +65,43 @@
                 </LinearLayout>
 
                 <!-- Flipper: Note -->
-                <FrameLayout
+                <ScrollView
                     android:id="@+id/noteframe"
                     android:layout_width="0dp" android:layout_height="0dp"
+                    app:layout_constraintHorizontal_weight="1"
                     app:layout_constraintTop_toTopOf="@+id/layout_clock"
                     app:layout_constraintBottom_toBottomOf="@+id/layout_clock"
                     app:layout_constraintStart_toEndOf="@+id/layout_clock"
                     app:layout_constraintEnd_toEndOf="parent">
 
-                    <ScrollView
+                    <ViewFlipper
+                        android:id="@+id/info_note_flipper"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:paddingStart="8dp" android:paddingEnd="8dp"
-                        android:paddingLeft="8dp" android:paddingRight="8dp">
+                        android:layout_gravity="center_horizontal" android:paddingTop="8dp"
+                        android:background="?attr/selectableItemBackground">
 
-                        <ViewFlipper
-                            android:id="@+id/info_note_flipper"
-                            android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:background="?attr/selectableItemBackground">
+                        <LinearLayout android:id="@+id/info_time_note1"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content">
+                            <include layout="@layout/info_time_note"/>
+                        </LinearLayout>
 
-                            <LinearLayout android:id="@+id/info_time_note1"
-                                android:layout_width="wrap_content" android:layout_height="wrap_content">
-                                <include layout="@layout/info_time_note"/>
-                            </LinearLayout>
+                        <LinearLayout android:id="@+id/info_time_note2"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content">
+                            <include layout="@layout/info_time_note"/>
+                        </LinearLayout>
 
-                            <LinearLayout android:id="@+id/info_time_note2"
-                                android:layout_width="wrap_content" android:layout_height="wrap_content">
-                                <include layout="@layout/info_time_note"/>
-                            </LinearLayout>
+                    </ViewFlipper>
 
-                        </ViewFlipper>
+                </ScrollView>
 
-                    </ScrollView>
-
-                    <ProgressBar
-                        android:id="@+id/info_note_progress" style="?android:attr/progressBarStyle"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:paddingStart="32dp" android:paddingEnd="32dp"
-                        android:paddingLeft="32dp" android:paddingRight="32dp"
-                        android:layout_gravity="left|start|center_vertical" />
-
-                </FrameLayout>
+                <ProgressBar
+                    android:id="@+id/info_note_progress" style="?android:attr/progressBarStyle"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:paddingStart="32dp" android:paddingEnd="32dp"
+                    android:paddingLeft="32dp" android:paddingRight="32dp"
+                    app:layout_constraintTop_toTopOf="@+id/layout_clock"
+                    app:layout_constraintBottom_toBottomOf="@+id/layout_clock"
+                    app:layout_constraintStart_toEndOf="@+id/layout_clock" />
 
             </android.support.constraint.ConstraintLayout>
 
