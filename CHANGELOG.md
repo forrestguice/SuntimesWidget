@@ -1,6 +1,6 @@
 ### ~
 
-### v0.6.2 (2018-02-01)
+### v0.6.2 (2018-02-03)
 * adds option "verbose accessibility"; better support for TalkBack. 
 * misc usability fixes (MainActivity, AlarmDialog); better support for TalkBack. 
 * misc layout fixes (improved accessibility); better support for "large text".
