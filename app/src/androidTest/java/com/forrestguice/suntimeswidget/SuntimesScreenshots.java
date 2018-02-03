@@ -22,6 +22,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.test.espresso.IdlingPolicies;
+import android.support.test.espresso.IdlingResource;
 import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -33,6 +35,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
+
+import static android.support.test.espresso.Espresso.registerIdlingResources;
+import static android.support.test.espresso.Espresso.unregisterIdlingResources;
 
 @SuppressWarnings("Convert2Diamond")
 @LargeTest
@@ -102,7 +108,16 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
     {
         configureAppForScreenshots(context, languageTag, theme);
         activityRule.launchActivity(activityRule.getActivity().getIntent());
+
+        long waitTime = 3 * 1000;            // wait a moment
+        IdlingResource waitForResource = new ElapsedTimeIdlingResource(waitTime);
+        IdlingPolicies.setMasterPolicyTimeout(waitTime * 2, TimeUnit.MILLISECONDS);
+        IdlingPolicies.setIdlingResourceTimeout(waitTime * 2, TimeUnit.MILLISECONDS);
+        registerIdlingResources(waitForResource);
+
         captureScreenshot(version + "/" + languageTag, "activity-main0-" + theme);
+
+        unregisterIdlingResources(waitForResource);
     }
 
     private void makeScreenshots1(Context context, String languageTag, String theme)

@@ -839,9 +839,11 @@ public class SuntimesActivity extends AppCompatActivity
         if (fontScale > 1)
         {                                                // when using "large text"...
             float textSizePx = txt_time.getTextSize();       // revert scaling on txt_time (its already large enough / takes too much space at x1.3)
-            float adjustedTextSizePx = textSizePx * (1 / fontScale);
+            float invFontScale = (1 / fontScale);
+            float adjustedTextSizePx = textSizePx * invFontScale;
             Log.w("initClockViews", "txt_time is oversized! downsizing from " + textSizePx + "px to " + adjustedTextSizePx + "px.");
             txt_time.setTextSize(TypedValue.COMPLEX_UNIT_PX, adjustedTextSizePx);
+            txt_time_suffix.setTextSize(TypedValue.COMPLEX_UNIT_PX, (txt_time_suffix.getTextSize() * invFontScale));
         }
     }
 
@@ -1977,8 +1979,9 @@ public class SuntimesActivity extends AppCompatActivity
             ic_time2_note.setBackgroundResource(note.noteIconResource);
             adjustNoteIconSize(note, ic_time2_note);
             ic_time2_note.setVisibility(View.VISIBLE);
-            txt_time2_note1.setText(" " + note.timeText.toString());  // todo: fix spacing in layout
+            txt_time2_note1.setText(note.timeText.toString());
             txt_time2_note2.setText(note.prefixText);
+            txt_time2_note2.setVisibility(note.prefixText.isEmpty() ? View.GONE : View.VISIBLE);
             txt_time2_note3.setText(note.noteText);
             txt_time2_note3.setTextColor(note.noteColor);
 
@@ -1987,8 +1990,9 @@ public class SuntimesActivity extends AppCompatActivity
             ic_time1_note.setBackgroundResource(note.noteIconResource);
             adjustNoteIconSize(note, ic_time1_note);
             ic_time1_note.setVisibility(View.VISIBLE);
-            txt_time1_note1.setText(" " + note.timeText.toString()); // todo: fix spacing in layout
+            txt_time1_note1.setText(note.timeText.toString());
             txt_time1_note2.setText(note.prefixText);
+            txt_time1_note2.setVisibility(note.prefixText.isEmpty() ? View.GONE : View.VISIBLE);
             txt_time1_note3.setText(note.noteText);
             txt_time1_note3.setTextColor(note.noteColor);
         }
