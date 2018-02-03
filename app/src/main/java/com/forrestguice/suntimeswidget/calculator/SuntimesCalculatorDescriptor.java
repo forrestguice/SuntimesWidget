@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2017 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -43,6 +43,7 @@ import java.util.Locale;
  * method can be used to retrieve a descriptor from this list using its name. The ordinal() method
  * will return a descriptor's order within the list.
  */
+@SuppressWarnings("Convert2Diamond")
 public class SuntimesCalculatorDescriptor implements Comparable
 {
     private static ArrayList<Object> calculators = new ArrayList<Object>();
@@ -107,6 +108,7 @@ public class SuntimesCalculatorDescriptor implements Comparable
         {
             value = value.trim().toLowerCase(Locale.US);
             SuntimesCalculatorDescriptor[] values = SuntimesCalculatorDescriptor.values();
+            //noinspection ForLoopReplaceableByForEach
             for (int i=0; i<values.length; i++)
             {
                 SuntimesCalculatorDescriptor calculator = values[i];

@@ -1,5 +1,5 @@
 /**
- Copyright (C) 2014 Forrest Guice
+ Copyright (C) 2014-2018 Forrest Guice
  This file is part of SuntimesWidget.
 
  SuntimesWidget is free software: you can redistribute it and/or modify
@@ -717,6 +717,7 @@ public class WidgetTimezones
     ///////////////////////////////////////
     ///////////////////////////////////////
 
+    @SuppressWarnings("Convert2Diamond")
     public static class TimeZonesLoadTask extends AsyncTask<TimeZoneSort, Object, TimeZoneItemAdapter>
     {
         private WeakReference<Context> contextRef;
@@ -746,6 +747,7 @@ public class WidgetTimezones
 
             ArrayList<TimeZoneItem> timezones = new ArrayList<TimeZoneItem>();
             String[] allTimezoneValues = TimeZone.getAvailableIDs();
+            //noinspection ForLoopReplaceableByForEach
             for (int i = 0; i < allTimezoneValues.length; i++)
             {
                 TimeZone timezone = TimeZone.getTimeZone(allTimezoneValues[i]);

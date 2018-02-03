@@ -28,6 +28,8 @@
     -->
     <string name="nextDay">Sekva tago</string>
     <string name="prevDay">Antaŭa tago</string>
+    <string name="nextYear">Sekva jaro</string>
+    <string name="prevYear">Antaŭa jaro</string>
 
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
@@ -112,6 +114,9 @@
     <string name="delta_hours">h</string>    <!-- e.g. 2h -->
     <string name="delta_minutes">min</string>  <!-- e.g. 3m -->
     <string name="delta_seconds">s</string>  <!-- e.g. 4s -->
+
+    <string name="hence">post <xliff:g id="timeSpan">%1$s</xliff:g></string>  <!-- e.g. 15d 23h from now -->
+    <string name="ago">antaŭ <xliff:g id="timeSpan">%1$s</xliff:g></string>         <!-- e.g. 1y 15d 12h ago -->
 
     <!-- misc time values: might be displayed in a timeField in place of an actual time -->
     <string name="time_none">neniam</string>  <!-- no time / time does not occur -->
@@ -232,7 +237,7 @@
     <string name="timeFormatMode_12hr">12-hora</string>                  <!-- setting -->
     <string name="timeFormatMode_24hr">24-hora</string>                  <!-- setting -->
 
-    <string name="configLabel_timeFormatMode">Tempa formo:</string>             <!-- spinner label -->
+    <string name="configLabel_timeFormatMode">Formo de tempo:</string>             <!-- spinner label -->
     <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
 
     <!-- Widget Setting: date mode -->
@@ -380,6 +385,10 @@
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Fasado</string>                       <!-- group title -->
+
+    <!-- App Setting: Verbose Accessibility -->
+    <string name="configLabel_accessibility_verbose">Interagi kun TalkBack</string>
+    <string name="configLabel_accessibility_verbose_summary">Anonci aŭtomatajn ŝanĝojn al uzant-interfaco.</string>
 
     <!-- App Setting: UI Warnings -->
     <string name="configLabel_ui_showWarnings">Aktivigi avertojn</string>

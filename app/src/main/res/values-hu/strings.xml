@@ -28,6 +28,8 @@
     -->
     <string name="nextDay">Következő nap</string>
     <string name="prevDay">Előző nap</string>
+    <string name="nextYear">Next Year</string>        <!-- TODO -->
+    <string name="prevYear">Previous Year</string>        <!-- TODO -->
 
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
@@ -111,6 +113,9 @@
     <string name="delta_hours">óra</string>    <!-- e.g. 2h -->
     <string name="delta_minutes">perc</string>  <!-- e.g. 3m -->
     <string name="delta_seconds">mp</string>  <!-- e.g. 4s -->
+
+    <string name="hence"><xliff:g id="timeSpan">%1$s</xliff:g>  from now</string>  <!-- e.g. 15d 23h from now -->  <!-- TODO -->
+    <string name="ago"><xliff:g id="timeSpan">%1$s</xliff:g>  ago</string>         <!-- e.g. 1y 15d 12h ago -->  <!-- TODO -->
 
     <!-- misc time values: might be displayed in a timeField in place of an actual time -->
     <string name="time_none">nem megjeleníthető</string>  <!-- no time / time does not occur -->
@@ -374,6 +379,10 @@
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Felhasználói felület</string>                       <!-- group title -->
+
+    <!-- App Setting: Verbose Accessibility -->
+    <string name="configLabel_accessibility_verbose">Verbose TalkBack</string>   <!-- TODO -->
+    <string name="configLabel_accessibility_verbose_summary">Announce automated changes to the UI.</string>     <!-- TODO -->
 
     <!-- App Setting: UI Warnings -->
     <string name="configLabel_ui_showWarnings">Mutasd a figyelmeztetéseket</string>

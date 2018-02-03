@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- values-sw330dp\table_res.xml :: slightly larger than a typical phone -->
 <resources>
+    <integer name="clock_amppm_maxems">3</integer>
+
     <integer name="table_weight0">3</integer>
     <integer name="table_weight1">2</integer>
 

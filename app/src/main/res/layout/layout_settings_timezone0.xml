@@ -70,6 +70,7 @@
                       android:visibility="gone">
 
             <TextView android:id="@+id/appwidget_solartime_label"
+                      android:labelFor="@+id/appwidget_solartime"
                       android:layout_gravity="center_vertical"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content" android:text="@string/configLabel_solartime" />

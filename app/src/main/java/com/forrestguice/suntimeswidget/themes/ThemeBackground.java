@@ -90,6 +90,7 @@ public enum ThemeBackground
     public static ThemeBackground getThemeBackground( int resID )
     {
         ThemeBackground[] backgrounds = ThemeBackground.values();
+        //noinspection ForLoopReplaceableByForEach
         for (int i=0; i<backgrounds.length; i++)
         {
             if (backgrounds[i] != null && backgrounds[i].getResID() == resID)

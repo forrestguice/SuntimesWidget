@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -31,6 +31,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 /**
  * Solstice / Equinox widget config activity.
  */
+@SuppressWarnings("Convert2Diamond")
 public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
 {
     public SuntimesConfigActivity2()

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -48,6 +48,7 @@ import java.util.ArrayList;
  * A helper class that helps to manage a GetFixTask; has methods for starting/stopping the task;
  * allows a single task to run at a time.
  */
+@SuppressWarnings("Convert2Diamond")
 public class GetFixHelper
 {
     public static final String KEY_LOCATION_GETTINGFIX = "gettingfix";

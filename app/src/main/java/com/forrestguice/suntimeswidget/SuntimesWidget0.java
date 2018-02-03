@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -202,7 +202,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
     }
 
     /**
-     * @param context
+     * @param context the context
      */
     public void updateWidgets(Context context)
     {
@@ -449,7 +449,6 @@ public class SuntimesWidget0 extends AppWidgetProvider
     }
 
     /**
-     * @param context
      * @param context the context
      * @return a SUNTIMES_WIDGET_UPDATE broadcast intent for widget alarmId (@see getUpdateAlarmId)
      */

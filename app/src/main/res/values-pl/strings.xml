@@ -28,6 +28,8 @@
     -->
     <string name="nextDay">Następny dzień</string>
     <string name="prevDay">Poprzedni dzień</string>
+    <string name="nextYear">Następny rok</string>
+    <string name="prevYear">Poprzedni rok</string>
 
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
@@ -112,6 +114,9 @@
     <string name="delta_hours">h</string>    <!-- e.g. 2h -->
     <string name="delta_minutes">min</string>  <!-- e.g. 3m -->
     <string name="delta_seconds">s</string>  <!-- e.g. 4s -->
+
+    <string name="hence">za <xliff:g id="timeSpan">%1$s</xliff:g></string>  <!-- e.g. 15d 23h from now -->
+    <string name="ago"><xliff:g id="timeSpan">%1$s</xliff:g> temu</string>         <!-- e.g. 1y 15d 12h ago -->
 
     <!-- misc time values: might be displayed in a timeField in place of an actual time -->
     <string name="time_none">brak</string>  <!-- no time / time does not occur -->
@@ -370,6 +375,10 @@
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Interfejs użytkownika</string>                       <!-- group title -->
+
+    <!-- App Setting: Verbose Accessibility -->
+    <string name="configLabel_accessibility_verbose">Współdziałaj z TalkBack</string>
+    <string name="configLabel_accessibility_verbose_summary">Raportuj automatyczne zmiany do UI.</string>
 
     <!-- App Setting: UI Warnings -->
     <string name="configLabel_ui_showWarnings">Włącz powiadomienia</string>

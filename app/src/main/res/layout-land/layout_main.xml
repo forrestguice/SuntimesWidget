@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -37,20 +37,33 @@
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:paddingTop="6dp" android:paddingBottom="6dp" android:paddingLeft="8dp" android:paddingRight="8dp">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="wrap_content" android:layout_height="match_parent"
+                android:orientation="vertical" android:minWidth="150dp">
 
-                <include layout="@layout/info_time_now" />
-
-                <FrameLayout
+                <LinearLayout android:id="@+id/layout_clock"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:background="?attr/selectableItemBackground"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <include layout="@layout/info_time_now" />
+
+                </LinearLayout>
+
+                <ScrollView
+                    android:id="@+id/info_note_flipper_scroll"
+                    android:layout_width="0dp" android:layout_height="0dp"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_clock"
+                    app:layout_constraintBottom_toTopOf="@+id/layout_datasource"
+                    app:layout_constraintStart_toStartOf="@+id/layout_clock"
+                    app:layout_constraintEnd_toEndOf="@+id/layout_clock">
 
                     <ViewFlipper
                         android:id="@+id/info_note_flipper"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:background="?attr/selectableItemBackground"
                         android:layout_marginTop="5dp" android:layout_marginBottom="5dp">
@@ -58,7 +71,8 @@
                         <LinearLayout
                             android:id="@+id/info_time_note1"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center">
 
                             <include layout="@layout/info_time_note" />
 
@@ -67,7 +81,8 @@
                         <LinearLayout
                             android:id="@+id/info_time_note2"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center">
 
                             <include layout="@layout/info_time_note" />
 
@@ -75,33 +90,42 @@
 
                     </ViewFlipper>
 
-                    <ProgressBar
-                        android:id="@+id/info_note_progress"
-                        style="?android:attr/progressBarStyle"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:layout_gravity="center" />
+                </ScrollView>
 
-                </FrameLayout>
+                <ProgressBar
+                    android:id="@+id/info_note_progress"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_clock"
+                    app:layout_constraintBottom_toTopOf="@+id/layout_datasource"
+                    app:layout_constraintStart_toStartOf="@+id/layout_clock"
+                    app:layout_constraintEnd_toEndOf="@+id/layout_clock"
+                    android:layout_gravity="center" />
 
                 <!-- Datasource -->
                 <LinearLayout
                     android:id="@+id/layout_datasource"
                     style="@style/SunsetTimeCard" android:orientation="horizontal" android:gravity="center"
-                    android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_gravity="bottom"
-                    android:layout_marginBottom="0dp" android:layout_marginTop="2dp"
-                    android:paddingTop="0dp" android:paddingBottom="0dp">
+                    android:layout_width="0dp" android:layout_height="wrap_content" android:layout_gravity="bottom"
+                    android:layout_marginBottom="0dp" android:layout_marginTop="4dp"
+                    android:paddingTop="0dp" android:paddingBottom="0dp"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/info_note_flipper_scroll"
+                    app:layout_constraintBottom_toBottomOf="parent">
 
                     <include layout="@layout/info_time_datasource" />
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </android.support.constraint.ConstraintLayout>
 
             <ViewFlipper
                 android:id="@+id/info_time_flipper"
                 android:layout_width="fill_parent" android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:layout_marginLeft="15dp" android:layout_marginStart="15dp"
+                android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
                 android:elevation="5dp"
                 tools:ignore="UnusedAttribute">
 

@@ -73,6 +73,9 @@ public class AppSettings
     public static final String PREF_KEY_UI_SHOWDATASOURCE = "app_ui_showdatasource";
     public static final boolean PREF_DEF_UI_SHOWDATASOURCE = true;
 
+    public static final String PREF_KEY_ACCESSIBILITY_VERBOSE = "app_accessibility_verbose";
+    public static final boolean PREF_DEF_ACCESSIBILITY_VERBOSE = false;
+
     public static final String PREF_KEY_UI_TIMEZONESORT = "app_ui_timezonesort";
     public static final WidgetTimezones.TimeZoneSort PREF_DEF_UI_TIMEZONESORT = WidgetTimezones.TimeZoneSort.SORT_BY_ID;
 
@@ -364,6 +367,12 @@ public class AppSettings
         return pref.getBoolean(PREF_KEY_UI_SHOWDATASOURCE, PREF_DEF_UI_SHOWDATASOURCE);
     }
 
+    public static boolean loadVerboseAccessibilityPref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_ACCESSIBILITY_VERBOSE, PREF_DEF_ACCESSIBILITY_VERBOSE);
+    }
+
     /**
      * Preference: the action that is performed when the clock ui is clicked/tapped
      */
@@ -446,6 +455,7 @@ public class AppSettings
         int styleID = R.style.AppTheme_Dark;
         if (themeName != null)
         {
+            //noinspection IfCanBeSwitch
             if (themeName.equals(THEME_LIGHT))
             {
                 styleID = R.style.AppTheme_Light;

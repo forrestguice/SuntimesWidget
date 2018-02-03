@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2016 Forrest Guice
+    Copyright (C) 2016-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -41,14 +41,6 @@
 
                 <include layout="@layout/info_time_solsticequinox" />
 
-                <!-- next/prev buttons -->
-                <FrameLayout
-                    android:layout_width="48dp" android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/card_content"
-                    android:layout_toRightOf="@id/card_content" android:layout_toEndOf="@id/card_content">
-                    <include layout="@layout/info_time_nextprev" />
-                </FrameLayout>
-
             </RelativeLayout>
 
             <RelativeLayout
@@ -62,14 +54,6 @@
                 android:paddingLeft="10dp" android:paddingRight="10dp">
 
                 <include layout="@layout/info_time_solsticequinox" />
-
-                <!-- next/prev buttons -->
-                <FrameLayout
-                    android:layout_width="48dp" android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/card_content"
-                    android:layout_toRightOf="@id/card_content" android:layout_toEndOf="@id/card_content">
-                    <include layout="@layout/info_time_nextprev" />
-                </FrameLayout>
 
             </RelativeLayout>
 

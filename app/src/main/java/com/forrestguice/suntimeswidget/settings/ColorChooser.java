@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Locale;
 
+@SuppressWarnings("Convert2Diamond")
 public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
 {
     private static final String DIALOGTAG_COLOR = "colorchooser";
