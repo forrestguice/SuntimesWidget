@@ -48,18 +48,18 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
     private static String version = BuildConfig.VERSION_NAME;
 
     private HashMap<String, ScreenshotConfig> config;
-    private ScreenshotConfig defaultConfig = new ScreenshotConfig(new WidgetSettings.Location("Iron Springs", "34.58742", "-112.57367"), "US/Arizona");
+    private ScreenshotConfig defaultConfig = new ScreenshotConfig(new WidgetSettings.Location("Iron Springs", "34.58742", "-112.57367"), "US/Arizona", false);
 
     @Before
     public void initScreenshots()
     {
         config = new HashMap<String, ScreenshotConfig>();
-        config.put("ca", new ScreenshotConfig(new WidgetSettings.Location("Barcelona", "41.3825", "2.1769"), "CET"));
-        config.put("de", new ScreenshotConfig(new WidgetSettings.Location("Berlin", "52.5243", "13.4105"), "Europe/Berlin"));
-        config.put("es_ES", new ScreenshotConfig(new WidgetSettings.Location("Madrid", "40.4378", "-3.8196"), "Europe/Madrid"));
-        config.put("fr", new ScreenshotConfig(new WidgetSettings.Location("Paris", "48.8566", "2.3518"), "Europe/Paris"));
-        config.put("hu", new ScreenshotConfig(new WidgetSettings.Location("Budapest", "47.4811", "18.9902"), "Europe/Budapest"));
-        config.put("pl", new ScreenshotConfig(new WidgetSettings.Location("Warszawa", "52.2319", "21.0067"), "Poland"));
+        config.put("ca", new ScreenshotConfig(new WidgetSettings.Location("Barcelona", "41.3825", "2.1769"), "CET", true));
+        config.put("de", new ScreenshotConfig(new WidgetSettings.Location("Berlin", "52.5243", "13.4105"), "Europe/Berlin", true));
+        config.put("es_ES", new ScreenshotConfig(new WidgetSettings.Location("Madrid", "40.4378", "-3.8196"), "Europe/Madrid", true));
+        config.put("fr", new ScreenshotConfig(new WidgetSettings.Location("Paris", "48.8566", "2.3518"), "Europe/Paris", true));
+        config.put("hu", new ScreenshotConfig(new WidgetSettings.Location("Budapest", "47.4811", "18.9902"), "Europe/Budapest", true));
+        config.put("pl", new ScreenshotConfig(new WidgetSettings.Location("Warszawa", "52.2319", "21.0067"), "Poland", true));
 
         if (!version.startsWith("v"))
             version = "v" + version;
@@ -170,6 +170,7 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
     {
         WidgetSettings.saveDateModePref(context, 0, WidgetSettings.DateMode.CURRENT_DATE);
         WidgetSettings.saveTrackingModePref(context, 0, WidgetSettings.TrackingMode.SOONEST);
+        WidgetSettings.saveShowSecondsPref(context, 0, false);
 
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
         prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWWARNINGS, false);
@@ -197,6 +198,8 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
             configuration = config.get(languageTag);
         }
 
+        WidgetSettings.saveTimeFormatModePref(context, 0, configuration.timeformat);
+
         WidgetSettings.saveLocationModePref(context, 0, WidgetSettings.LocationMode.CUSTOM_LOCATION);
         WidgetSettings.saveLocationPref(context, 0, configuration.location);
 
@@ -208,11 +211,13 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
     {
         public WidgetSettings.Location location;
         public String timezoneID;
+        public WidgetSettings.TimeFormatMode timeformat;
 
-        public ScreenshotConfig(WidgetSettings.Location location, String timezoneID)
+        public ScreenshotConfig(WidgetSettings.Location location, String timezoneID, boolean format24)
         {
             this.location = location;
             this.timezoneID = timezoneID;
+            this.timeformat = (format24 ? WidgetSettings.TimeFormatMode.MODE_24HR : WidgetSettings.TimeFormatMode.MODE_12HR);
         }
     }
 
