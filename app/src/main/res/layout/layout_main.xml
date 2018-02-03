@@ -94,14 +94,18 @@
 
                 </ScrollView>
 
-                <ProgressBar
-                    android:id="@+id/info_note_progress" style="?android:attr/progressBarStyle"
+                <FrameLayout
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:paddingStart="32dp" android:paddingEnd="32dp"
-                    android:paddingLeft="32dp" android:paddingRight="32dp"
-                    app:layout_constraintTop_toTopOf="@+id/layout_clock"
-                    app:layout_constraintBottom_toBottomOf="@+id/layout_clock"
-                    app:layout_constraintStart_toEndOf="@+id/layout_clock" />
+                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/layout_clock">
+
+                    <ProgressBar
+                        android:id="@+id/info_note_progress" style="?android:attr/progressBarStyle"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:paddingStart="32dp" android:paddingEnd="32dp"
+                        android:paddingLeft="32dp" android:paddingRight="32dp" />
+                    
+                </FrameLayout>
 
             </android.support.constraint.ConstraintLayout>
 
