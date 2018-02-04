@@ -1,5 +1,13 @@
 ### ~
 
+### v0.6.2 (2018-02-03)
+* adds option "verbose accessibility"; better support for TalkBack. 
+* misc usability fixes (MainActivity, AlarmDialog); better support for TalkBack. 
+* misc layout fixes (improved accessibility); better support for "large text".
+* fixes bug "solstice/equinox dates not localized" (#146).
+* adds "adaptive" launcher icon (used by api26+).
+* updates translations (eo, pl) (#148, #149).
+ 
 ### v0.6.1 (2018-01-23)
 * adds translations to Catalan (ca) and Spanish (es-ES) (contributed by Raulvo) (#141).
 * fixes bug; expected "11h 55s", actual "11h55s" (#b61d942).

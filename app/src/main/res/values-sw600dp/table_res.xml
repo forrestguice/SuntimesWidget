@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- values-sw600dp\table_res.xml :: 7" tablets and larger -->
 <resources>
+    <dimen name="clock_note_maxwidth">300dp</dimen>
+
     <integer name="table_weight0">1</integer>
     <integer name="table_weight1">4</integer>
 

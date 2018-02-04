@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -39,6 +39,7 @@ import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI1;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+@SuppressWarnings("Convert2Diamond")
 public class LocationDialog extends Dialog
 {
     private FragmentActivity myParent;

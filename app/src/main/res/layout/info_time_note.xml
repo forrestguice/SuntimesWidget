@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2014-2018 Forrest Guice
+    This file is part of SuntimesWidget.
+
+    SuntimesWidget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SuntimesWidget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
+-->
 <merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
     <LinearLayout
         android:id="@+id/layout_timenote"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:orientation="vertical" android:layout_gravity="center_vertical"
-        android:layout_marginTop="10dp" android:layout_marginBottom="10dp"
-        android:layout_marginLeft="6dp" android:layout_marginRight="6dp"
-        android:layout_marginStart="6dp" android:layout_marginEnd="6dp"
-        android:paddingLeft="10dp" android:paddingRight="10dp"
-        android:paddingTop="5dp" android:paddingBottom="5dp">
+        android:orientation="vertical" android:layout_gravity="center_vertical">
 
         <LinearLayout
             android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -19,12 +31,14 @@
                 android:id="@+id/icon_timenote"
                 android:background="@drawable/ic_sunrise_large"
                 android:layout_width="@dimen/sunIconLarge_width" android:layout_height="@dimen/sunIconLarge_height"
+                android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
+                android:layout_marginLeft="0dp" android:layout_marginStart="0dp"
                 tools:ignore="contentDescription" />
 
             <TextView style="@style/SunsetTimeTextView"
                       android:id="@+id/text_timenote1"
                       android:text=""
-                      tools:text="2h 15m"
+                      tools:text="12h 15m"
                       android:gravity="center"
                       android:textSize="18sp"
                       android:singleLine="true"
@@ -38,17 +52,17 @@
                   android:text=""
                   tools:text="until"
                   android:layout_gravity="center_horizontal"
-                  android:textSize="14sp"
+                  android:textSize="12sp"
                   android:singleLine="true"
                   android:gravity="center"/>
 
         <TextView style="@style/SunsetTimeTextView"
                   android:id="@+id/text_timenote3"
                   android:text=""
-                  tools:text="civil twilight"
+                  tools:text="astronomical twilight"
                   android:layout_gravity="center_horizontal"
                   android:textSize="16sp"
-                  android:gravity="center"
+                  android:gravity="center" android:maxWidth="@dimen/clock_note_maxwidth"
                   android:layout_margin="0dp"/>
 
     </LinearLayout>

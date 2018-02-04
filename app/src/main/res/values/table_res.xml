@@ -2,6 +2,9 @@
 <!-- values\table_res.xml :: typical sized phone (width <= 320dp) -->
 <resources>
 
+    <integer name="clock_amppm_maxems">2</integer>
+    <dimen name="clock_note_maxwidth">125dp</dimen>
+
     <dimen name="table_cell_spacing">10dp</dimen>     <!-- spacing between rows -->
     <integer name="table_weight0">9</integer>
     <integer name="table_weight1">1</integer>

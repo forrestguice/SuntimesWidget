@@ -29,6 +29,8 @@
     -->
     <string name="nextDay">Dia següent</string>
     <string name="prevDay">Dia anterior</string>
+    <string name="nextYear">Next Year</string>        <!-- TODO -->
+    <string name="prevYear">Previous Year</string>        <!-- TODO -->
 
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
@@ -388,6 +390,10 @@
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Interfície d\'usuari</string>                       <!-- group title -->
 
+    <!-- App Setting: Verbose Accessibility -->
+    <string name="configLabel_accessibility_verbose">Verbose TalkBack</string>   <!-- TODO -->
+    <string name="configLabel_accessibility_verbose_summary">Announce automated changes to the UI.</string>     <!-- TODO -->
+
     <!-- App Setting: UI Warnings -->
     <string name="configLabel_ui_showWarnings">Mostrar avisos</string>
     <string name="configLabel_ui_showWarnings_summary">Mostrar Configuració de missatges d\'avís.</string>
@@ -527,7 +533,7 @@
     <string name="schedalarm_dialog_ok">Posar alarma</string>
     <string name="schedalarm_dialog_cancel">Cancel·lar</string>
     <string name="schedalarm_dialog_error">No és va configurar l\'alarma</string>
-    <string name="schedalarm_dialog_error2">L\'alarma no és pot configurar...</string>
+    <string name="schedalarm_dialog_error2">L\'alarma no és pot configurar…</string>
     <string name="schedalarm_dialog_note">prop de <xliff:g id="timetext" example="6h 30m">%s</xliff:g> des d\'ara.</string>
     <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="nautical twilight">%s</xliff:g> no passa.</string>
     <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->

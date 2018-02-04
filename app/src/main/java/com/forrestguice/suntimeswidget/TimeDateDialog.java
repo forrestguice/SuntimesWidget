@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -43,6 +43,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import java.util.Calendar;
 
 
+@SuppressWarnings("Convert2Diamond")
 public class TimeDateDialog extends DialogFragment implements DatePicker.OnDateChangedListener
 {
     public static final String KEY_TIMEDATE_MODE = "dateMode";

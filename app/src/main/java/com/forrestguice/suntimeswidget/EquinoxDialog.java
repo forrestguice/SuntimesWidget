@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -59,23 +60,26 @@ public class EquinoxDialog extends DialogFragment
         if (savedInstanceState != null)
         {
             Log.d("DEBUG", "EquinoxDialog onCreate (restoreState)");
+            equinoxView.loadState(savedInstanceState);
         }
 
-        dialog.setOnShowListener(new DialogInterface.OnShowListener()
-        {
-            @Override
-            public void onShow(DialogInterface dialogInterface)
-            {
-                equinoxView.updateViews(getContext(), data);
-            }
-        });
-
+        dialog.setOnShowListener(onShowListener);
         return dialog;
     }
 
+    private DialogInterface.OnShowListener onShowListener = new DialogInterface.OnShowListener() {
+        @Override
+        public void onShow(DialogInterface dialogInterface) {
+            Context context = getContext();
+            if (context != null)
+            {
+                equinoxView.updateViews(getContext(), data);
+            } else Log.w("EquinoxDialog.onShow", "null context! skipping update");
+        }
+    };
+
     public void initViews(View dialogView)
     {
-
         equinoxView = (EquinoxView) dialogView.findViewById(R.id.info_time_equinox);
     }
 
@@ -86,5 +90,12 @@ public class EquinoxDialog extends DialogFragment
             equinoxView.updateViews(getContext(), data);
             Log.d("DEBUG", "EquinoxDialog updated");
         }
+    }
+
+    @Override
+    public void onSaveInstanceState( Bundle outState )
+    {
+        equinoxView.saveState(outState);
+        super.onSaveInstanceState(outState);
     }
 }

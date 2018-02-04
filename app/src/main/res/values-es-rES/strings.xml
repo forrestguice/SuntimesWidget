@@ -387,6 +387,10 @@
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Interfaz de usuario</string>                       <!-- group title -->
 
+    <!-- App Setting: Verbose Accessibility -->
+    <string name="configLabel_accessibility_verbose">Verbose TalkBack</string>   <!-- TODO -->
+    <string name="configLabel_accessibility_verbose_summary">Announce automated changes to the UI.</string>     <!-- TODO -->
+
     <!-- App Setting: UI Warnings -->
     <string name="configLabel_ui_showWarnings">Mostrar avisos</string>
     <string name="configLabel_ui_showWarnings_summary">Mostrar configuración de mensajes de aviso.</string>
@@ -526,7 +530,7 @@
     <string name="schedalarm_dialog_ok">Poner alarma</string>
     <string name="schedalarm_dialog_cancel">Cancelar</string>
     <string name="schedalarm_dialog_error">No se configuró la alarma</string>
-    <string name="schedalarm_dialog_error2">La alarma no se puede configurar...</string>
+    <string name="schedalarm_dialog_error2">La alarma no se puede configurar…</string>
     <string name="schedalarm_dialog_note">cerca de <xliff:g id="timetext" example="6h 30m">%s</xliff:g> desde ahora.</string>
     <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="nautical twilight">%s</xliff:g> no ocurre.</string>
     <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
