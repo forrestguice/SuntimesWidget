@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -25,7 +25,7 @@
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_alignParentLeft="true" android:layout_alignParentStart="true"
         android:layout_margin="8dp"
-        android:src="@drawable/ic_action_help"
+        android:src="?attr/icActionHelp"
         tools:ignore="contentDescription" />
 
     <LinearLayout

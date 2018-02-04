@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -37,6 +37,7 @@ import java.util.List;
  * gps updates, and then waits a predetermined amount of time for a
  * good location fix to be acquired; updates progress.
  */
+@SuppressWarnings("Convert2Diamond")
 public class GetFixTask extends AsyncTask<String, Location, Location>
 {
     public static final int MIN_ELAPSED = 1000 * 5;        // wait at least 5s before settling on a fix

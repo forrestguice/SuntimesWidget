@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -890,6 +890,7 @@ public class LocationConfigView extends LinearLayout
     /**
      *
      */
+    @SuppressWarnings("Convert2Diamond")
     private class LocationModeAdapter extends ArrayAdapter<WidgetSettings.LocationMode>
     {
         private Context context;

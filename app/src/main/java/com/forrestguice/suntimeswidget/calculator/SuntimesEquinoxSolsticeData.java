@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -64,8 +64,8 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
 
     /**
      * init from shared preferences
-     * @param context
-     * @param appWidgetId
+     * @param context a context used to access shared prefs
+     * @param appWidgetId the widgetID to load settings from (0 for app)
      */
     @Override
     public void initFromSettings(Context context, int appWidgetId)

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -253,6 +253,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     /**
      * A ListAdapter of WidgetListItems.
      */
+    @SuppressWarnings("Convert2Diamond")
     public static class WidgetListAdapter extends ArrayAdapter<WidgetListItem>
     {
         private Context context;

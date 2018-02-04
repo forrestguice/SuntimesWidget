@@ -50,6 +50,7 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.ImageSpan;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -91,6 +92,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 
+@SuppressWarnings("Convert2Diamond")
 public class SuntimesActivity extends AppCompatActivity
 {
     public static final String KEY_UI_CARDISTOMORROW = "cardIsTomorrow";
@@ -188,6 +190,7 @@ public class SuntimesActivity extends AppCompatActivity
     private boolean showSeconds = WidgetSettings.PREF_DEF_GENERAL_SHOWSECONDS;
     private boolean showGold = AppSettings.PREF_DEF_UI_SHOWGOLDHOUR;
     private boolean showBlue = AppSettings.PREF_DEF_UI_SHOWBLUEHOUR;
+    private boolean verboseAccessibility = AppSettings.PREF_DEF_ACCESSIBILITY_VERBOSE;
 
     public SuntimesActivity()
     {
@@ -636,7 +639,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     /**
      * initialize the solstice/equinox views
-     * @param context
+     * @param context a context used to access resources
      */
     private void initEquinoxViews(Context context)
     {
@@ -838,6 +841,17 @@ public class SuntimesActivity extends AppCompatActivity
         txt_time = (TextView) findViewById(R.id.text_time);
         txt_time_suffix = (TextView) findViewById(R.id.text_time_suffix);
         txt_timezone = (TextView) findViewById(R.id.text_timezone);
+
+        float fontScale = getResources().getConfiguration().fontScale;
+        if (fontScale > 1)
+        {                                                // when using "large text"...
+            float textSizePx = txt_time.getTextSize();       // revert scaling on txt_time (its already large enough / takes too much space at x1.3)
+            float invFontScale = (1 / fontScale);
+            float adjustedTextSizePx = textSizePx * invFontScale;
+            Log.w("initClockViews", "txt_time is oversized! downsizing from " + textSizePx + "px to " + adjustedTextSizePx + "px.");
+            txt_time.setTextSize(TypedValue.COMPLEX_UNIT_PX, adjustedTextSizePx);
+            txt_time_suffix.setTextSize(TypedValue.COMPLEX_UNIT_PX, (txt_time_suffix.getTextSize() * invFontScale));
+        }
     }
 
     /**
@@ -1215,6 +1229,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         stopTimeTask();
 
+        verboseAccessibility = AppSettings.loadVerboseAccessibilityPref(this);
         showWarnings = AppSettings.loadShowWarningsPref(this);
         dateWarning.shouldShow = false;
         timezoneWarning.shouldShow = false;
@@ -1712,6 +1727,7 @@ public class SuntimesActivity extends AppCompatActivity
             card_flipper.setOutAnimation(anim_card_outNext);
             card_flipper.setInAnimation(anim_card_inNext);
             card_flipper.showNext();
+            SuntimesUtils.announceForAccessibility(card_flipper, txt_date2.getText().toString());
             return true;
         }
         return false;
@@ -1733,6 +1749,7 @@ public class SuntimesActivity extends AppCompatActivity
             card_flipper.setOutAnimation(anim_card_outPrev);
             card_flipper.setInAnimation(anim_card_inPrev);
             card_flipper.showPrevious();
+            SuntimesUtils.announceForAccessibility(card_flipper, txt_date.getText().toString());
             return true;
         }
         return false;
@@ -2030,8 +2047,9 @@ public class SuntimesActivity extends AppCompatActivity
             ic_time2_note.setBackgroundResource(note.noteIconResource);
             adjustNoteIconSize(note, ic_time2_note);
             ic_time2_note.setVisibility(View.VISIBLE);
-            txt_time2_note1.setText(" " + note.timeText.toString());  // todo: fix spacing in layout
+            txt_time2_note1.setText(note.timeText.toString());
             txt_time2_note2.setText(note.prefixText);
+            txt_time2_note2.setVisibility(note.prefixText.isEmpty() ? View.GONE : View.VISIBLE);
             txt_time2_note3.setText(note.noteText);
             txt_time2_note3.setTextColor(note.noteColor);
 
@@ -2040,8 +2058,9 @@ public class SuntimesActivity extends AppCompatActivity
             ic_time1_note.setBackgroundResource(note.noteIconResource);
             adjustNoteIconSize(note, ic_time1_note);
             ic_time1_note.setVisibility(View.VISIBLE);
-            txt_time1_note1.setText(" " + note.timeText.toString()); // todo: fix spacing in layout
+            txt_time1_note1.setText(note.timeText.toString());
             txt_time1_note2.setText(note.prefixText);
+            txt_time1_note2.setVisibility(note.prefixText.isEmpty() ? View.GONE : View.VISIBLE);
             txt_time1_note3.setText(note.noteText);
             txt_time1_note3.setTextColor(note.noteColor);
         }
@@ -2056,6 +2075,12 @@ public class SuntimesActivity extends AppCompatActivity
             note_flipper.setInAnimation(anim_note_inPrev);
             note_flipper.setOutAnimation(anim_note_outPrev);
             note_flipper.showPrevious();
+        }
+
+        if (verboseAccessibility)
+        {
+            String announcement = note.timeText.toString() + " " + note.prefixText + " " + note.noteText;
+            SuntimesUtils.announceForAccessibility(note_flipper, announcement);
         }
 
         highlightTimeField(new SolarEvents.SolarEventField(note.noteMode, note.tomorrow));

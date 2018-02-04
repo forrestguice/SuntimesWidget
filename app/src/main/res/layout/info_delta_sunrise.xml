@@ -25,14 +25,14 @@
             style="@style/SunsetTimeTextView"
             android:id="@+id/text_delta_sunrise"
             android:textColor="@color/sunIcon_color_rising"
-            tools:text="+2:40"
+            tools:text="+2:40" tools:ignore="SmallSp"
             android:textSize="8sp" />
 
         <TextView
             style="@style/SunsetTimeTextView"
             android:id="@+id/text_delta_sunrise_suffix"
-            tools:text="min"
-            android:textSize="10sp"/>
+            tools:text="min" tools:ignore="SmallSp"
+            android:textSize="10sp" />
 
     </LinearLayout>
 </merge>

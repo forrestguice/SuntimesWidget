@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -37,6 +37,7 @@ import java.util.HashMap;
 /**
  * The second implementation of SuntimesNotes; it does the same as the first (but hopefully a little cleaner).
  */
+@SuppressWarnings("Convert2Diamond")
 public class SuntimesNotes2 implements SuntimesNotes
 {
     protected static final SuntimesUtils utils = new SuntimesUtils();

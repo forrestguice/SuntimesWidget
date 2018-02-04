@@ -1,5 +1,5 @@
 /**
- Copyright (C) 2014 Forrest Guice
+ Copyright (C) 2014-2018 Forrest Guice
  This file is part of SuntimesWidget.
 
  SuntimesWidget is free software: you can redistribute it and/or modify
@@ -54,6 +54,7 @@ public class SuntimesWidget1Service extends RemoteViewsService
 /**
  * SuntimesWidgetRemoteViewsFactory : RemoteViewsFactory
  */
+@SuppressWarnings("Convert2Diamond")
 @TargetApi(14)
 class SuntimesWidget1RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
 {

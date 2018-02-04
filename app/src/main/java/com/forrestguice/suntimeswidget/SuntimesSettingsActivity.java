@@ -87,6 +87,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         String action = getIntent().getAction();
         if (action != null)
         {
+            //noinspection IfCanBeSwitch
             if (action.equals(ACTION_PREFS_GENERAL))
             {
                 //noinspection deprecation

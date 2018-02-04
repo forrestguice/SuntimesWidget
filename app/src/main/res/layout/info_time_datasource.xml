@@ -22,6 +22,6 @@
         android:id="@+id/txt_datasource"
         android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center_vertical"
         android:textColor="@drawable/btn_datetxt" android:textSize="10sp" android:textStyle="bold"
-        tools:text="sunrisesunsetlib" />
+        tools:text="sunrisesunsetlib" tools:ignore="SmallSp" />
 
 </merge>

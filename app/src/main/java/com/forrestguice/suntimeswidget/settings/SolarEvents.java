@@ -34,6 +34,7 @@ import com.forrestguice.suntimeswidget.R;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+@SuppressWarnings("Convert2Diamond")
 public enum SolarEvents
 {
     MORNING_ASTRONOMICAL("astronomical twilight", "morning astronomical twilight", R.drawable.ic_sunrise_large), // 0

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2017 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -63,6 +63,7 @@ import static com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity.PIC
 /**
  * Widget config activity for resizable widget.
  */
+@SuppressWarnings("Convert2Diamond")
 public class SuntimesConfigActivity0 extends AppCompatActivity
 {
     protected static final String DIALOGTAG_ABOUT = "about";
@@ -633,7 +634,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     }
 
     /**
-     * @param context
+     * @param context a context used to access shared prefs
      */
     protected void loadTimeModeOverride(Context context)
     {
@@ -642,7 +643,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     }
 
     /**
-     * @param context
+     * @param context a context used to access shared prefs
      */
     public void saveTimeModeOverride(Context context)
     {
@@ -1115,7 +1116,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     }
 
     /**
-     * @param showUI
+     * @param showUI true show option, false hide option
      */
     protected void showOptionTimeModeOverride(boolean showUI)
     {
@@ -1127,7 +1128,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     }
 
     /**
-     * @param showUI
+     * @param showUI true show option, false hide option
      */
     protected void showOptionTrackingMode(boolean showUI)
     {
