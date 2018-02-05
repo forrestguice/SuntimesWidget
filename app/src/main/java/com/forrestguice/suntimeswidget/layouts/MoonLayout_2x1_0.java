@@ -27,18 +27,19 @@ import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.MoonPhase;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
-public class MoonLayout_1x1_0 extends MoonLayout
+public class MoonLayout_2x1_0 extends MoonLayout
 {
-    public MoonLayout_1x1_0()
+    public MoonLayout_2x1_0()
     {
         super();
     }
 
-    public MoonLayout_1x1_0(int layoutID)
+    public MoonLayout_2x1_0(int layoutID)
     {
         this.layoutID = layoutID;
     }
@@ -46,7 +47,7 @@ public class MoonLayout_1x1_0 extends MoonLayout
     @Override
     public void initLayoutID()
     {
-        this.layoutID = R.layout.layout_widget_moon_1x1_0;
+        this.layoutID = R.layout.layout_widget_moon_2x1_0;
     }
 
     @Override
@@ -62,6 +63,12 @@ public class MoonLayout_1x1_0 extends MoonLayout
         SuntimesUtils.TimeDisplayText setString = utils.calendarTimeShortDisplayString(context, data.moonsetCalendarToday(), showSeconds);
         views.setTextViewText(R.id.text_time_moonset, setString.getValue());
         views.setTextViewText(R.id.text_time_moonset_suffix, setString.getSuffix());
+
+        //double illumination = data.getMoonIlluminationToday();
+        //views.setTextViewText(R.id.text_time_set, "" + illumination);   // TODO: format illumination
+
+        MoonPhase phase = data.getMoonPhaseToday();
+
     }
 
     private int timeColor = Color.WHITE;

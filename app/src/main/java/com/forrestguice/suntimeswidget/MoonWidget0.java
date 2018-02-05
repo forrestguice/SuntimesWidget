@@ -20,12 +20,14 @@ package com.forrestguice.suntimeswidget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_0;
+import com.forrestguice.suntimeswidget.layouts.MoonLayout_2x1_0;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -55,13 +57,13 @@ public class MoonWidget0 extends SuntimesWidget0
     @Override
     protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
-
-        MoonWidget0.updateAppWidget(context, appWidgetManager, appWidgetId);
+        MoonLayout defLayout = new MoonLayout_1x1_0();
+        MoonWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, getMinSize(context), defLayout);
     }
 
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
+    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize, MoonLayout defLayout)
     {
-        MoonLayout layout = MoonWidget0.getWidgetLayout(context, appWidgetManager, appWidgetId);
+        MoonLayout layout = MoonWidget0.getWidgetLayout(context, appWidgetManager, appWidgetId, defSize, defLayout);
         MoonWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, layout);
     }
 
@@ -82,9 +84,20 @@ public class MoonWidget0 extends SuntimesWidget0
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
-    protected static MoonLayout getWidgetLayout(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
+    protected static MoonLayout getWidgetLayout(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize, MoonLayout defLayout)
     {
-        return new MoonLayout_1x1_0();
+        int[] mustFitWithinDp = widgetSizeDp(context, appWidgetManager, appWidgetId, defSize);
+        MoonLayout layout;
+        if (WidgetSettings.loadAllowResizePref(context, appWidgetId))
+        {
+            int minWidth1x3 = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
+            layout = ((mustFitWithinDp[0] >= minWidth1x3)
+                    ? new MoonLayout_2x1_0() : new MoonLayout_1x1_0());
+        } else {
+            layout = defLayout; // WidgetSettings.load1x1ModePref_asLayout(context, appWidgetId);
+        }
+        Log.d("getWidgetLayout", "layout is: " + layout);
+        return layout;
     }
 
     @Override

@@ -23,6 +23,8 @@ import android.content.Context;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.layouts.MoonLayout;
+import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_0;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
@@ -49,8 +51,14 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
     @Override
     protected void updateWidget(Context context)
     {
+        int minSize[] = new int[2];
+        minSize[0] = context.getResources().getInteger(R.integer.widget_size_minWidthDp);
+        minSize[1] = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
+
+        MoonLayout defLayout = new MoonLayout_1x1_0();
+
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        MoonWidget0.updateAppWidget(context, appWidgetManager, appWidgetId);
+        MoonWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, minSize, defLayout);
     }
 
     @Override
