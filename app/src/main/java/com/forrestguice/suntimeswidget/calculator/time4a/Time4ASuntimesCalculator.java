@@ -252,14 +252,59 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     @Override
     public MoonTimes getMoonTimesForDate(Calendar date)
     {
+        Moment moment = TemporalType.JAVA_UTIL_DATE.translate(date.getTime());
+        TZID tzid = toTimezone(date.getTimeZone()).getID();
+        PlainDate localDate = moment.toZonalTimestamp(tzid).toDate();
 
-        return null;
+        LunarTime lunarTime = LunarTime.ofLocation(tzid, this.solarTime.getLatitude(), this.solarTime.getLongitude(), this.solarTime.getAltitude());
+        LunarTime.Moonlight moonlight = lunarTime.on(localDate);
+
+        MoonTimes result = new MoonTimes();
+        result.riseTime = momentToCalendar(moonlight.moonrise()); // might be null meaning there is no moonrise
+        result.setTime = momentToCalendar(moonlight.moonset()); // might be null meaning there is no moonset
+        return result;
     }
 
     @Override
     public MoonIllumination getMoonIlluminationForDate(Calendar date)
     {
-        return null;
+        Moment moment = TemporalType.JAVA_UTIL_DATE.translate(date.getTime());
+        MoonIllumination result = new MoonIllumination();
+        result.illumination = net.time4j.calendar.astro.MoonPhase.getIllumination(moment);
+
+        if (result.illumination == 0)             // New Moon
+        {
+            result.phase = MoonPhase.NEW;
+
+        } else if (result.illumination == 1) {    // Full Moon
+            result.phase = MoonPhase.FULL;
+
+        } else {
+            double illumination1;      // determine changing illumination (waxing / waning)
+            int c = 0;  // c counts loop (+days)
+            int n = 4;  // if c >= n something not right.. break loop
+            do {
+                c++;
+                Moment moment1 = moment.plus(c, java.util.concurrent.TimeUnit.DAYS);
+                illumination1 = net.time4j.calendar.astro.MoonPhase.getIllumination(moment1);
+            } while (illumination1 == result.illumination && c < n);
+
+            boolean isWaxing = (illumination1 > result.illumination);
+            if (result.illumination > 0.0 && result.illumination < 0.50)
+            {
+                // Crescent Moon
+                result.phase = (isWaxing ? MoonPhase.WAXING_CRESCENT : MoonPhase.WANING_CRESCENT);
+
+            } else if (result.illumination == 0.5) {
+                // Quarter Moon
+                result.phase = (isWaxing ? MoonPhase.FIRST_QUARTER : MoonPhase.THIRD_QUARTER);
+
+            } else if (result.illumination > 0.5 && result.illumination < 1.0) {
+                // Gibbous Moon
+                result.phase = (isWaxing ? MoonPhase.WAXING_GIBBOUS : MoonPhase.WANING_GIBBOUS);
+            }
+        }
+        return result;
     }
 
 }
