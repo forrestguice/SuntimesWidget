@@ -22,6 +22,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
+import android.text.SpannableString;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 
@@ -64,19 +65,26 @@ public class MoonLayout_2x1_0 extends MoonLayout
         views.setTextViewText(R.id.text_time_moonset, setString.getValue());
         views.setTextViewText(R.id.text_time_moonset_suffix, setString.getSuffix());
 
-        //double illumination = data.getMoonIlluminationToday();
-        //views.setTextViewText(R.id.text_time_set, "" + illumination);   // TODO: format illumination
+        String illumString = data.getMoonIlluminationToday() + "";   // TODO: format illumination
+        String illumNoteString = illumString + " illuminated";       // TODO: i18n
+        SpannableString illumNoteSpan = SuntimesUtils.createColorSpan(illumNoteString, illumString, illumColor);
+        views.setTextViewText(R.id.text_info_moonillum, illumNoteSpan);
 
         MoonPhase phase = data.getMoonPhaseToday();
-
+        views.setTextViewText(R.id.text_info_moonphase, phase.getLongDisplayString());
     }
 
-    private int timeColor = Color.WHITE;
+    private int illumColor = Color.WHITE;
 
     @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         super.themeViews(context, views, theme);
+
+        illumColor = theme.getTimeColor();
+        int textColor = theme.getTextColor();
+        views.setTextColor(R.id.text_info_moonillum, textColor);
+        views.setTextColor(R.id.text_info_moonphase, textColor);
 
         int moonriseColor = theme.getMoonriseTextColor();
         int suffixColor = theme.getTimeSuffixColor();
