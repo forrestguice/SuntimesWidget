@@ -231,26 +231,28 @@ public interface SuntimesCalculator
     //
 
     /**
-     * MoonRiseSet
+     * getMoonTimesForDate
      * @param date a Calendar representing a given date
-     * @return a Calendar for moonrise for the given date
+     * @return a MoonTimes obj wrapping riseTime, setTime, etc.
      * @since 1.3.0
      */
-    Calendar[] getMoonRiseSetCalendarForDate(Calendar date);
-
-    /**
-     * MoonPhase
-     * @param date a Calendar representing a given date
-     * @return moon phase enum
-     * @since 1.3.0
-     */
-    MoonPhase getMoonPhase(Calendar date);
+    MoonTimes getMoonTimesForDate(Calendar date);
+    class MoonTimes
+    {
+        public Calendar riseTime = null;
+        public Calendar setTime = null;
+    }
 
     /**
      * MoonIllumination
      * @param date a Calendar representing a given date
-     * @return an illumination value [0,1]; 0%-100%
+     * @return a MoonIllumination obj wrapping an illumination value [0,1]; 0%-100%, phase enum, etc.
      * @since 1.3.0
      */
-    double getMoonIllumination(Calendar date);
+    MoonIllumination getMoonIlluminationForDate(Calendar date);
+    class MoonIllumination
+    {
+        public double illumination = -1;
+        public MoonPhase phase = null;
+    }
 }

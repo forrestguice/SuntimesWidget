@@ -229,19 +229,16 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
         return (time.after(sunrise) && time.before(sunset));
     }
 
-    public Calendar[] getMoonRiseSetCalendarForDate(Calendar date)
+    @Override
+    public MoonTimes getMoonTimesForDate(Calendar date)
     {
-        return null;  // TODO
+        return null;
     }
 
-    public MoonPhase getMoonPhase(Calendar date)
+    @Override
+    public MoonIllumination getMoonIlluminationForDate(Calendar date)
     {
-        return null;  // TODO
-    }
-
-    public double getMoonIllumination(Calendar date)
-    {
-        return -1; // TODO
+        return null;
     }
 
 }

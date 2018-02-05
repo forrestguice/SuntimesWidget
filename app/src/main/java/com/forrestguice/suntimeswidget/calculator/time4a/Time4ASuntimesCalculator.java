@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget.calculator.time4a;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.MoonPhase;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
@@ -29,6 +28,7 @@ import net.time4j.Moment;
 import net.time4j.PlainDate;
 import net.time4j.TemporalType;
 import net.time4j.calendar.astro.AstronomicalSeason;
+import net.time4j.calendar.astro.LunarTime;
 import net.time4j.calendar.astro.SolarTime;
 import net.time4j.calendar.astro.StdSolarCalculator;
 import net.time4j.calendar.astro.Twilight;
@@ -249,19 +249,17 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         else return season.onSouthernHemisphere();
     }
 
-    public Calendar[] getMoonRiseSetCalendarForDate(Calendar date)
+    @Override
+    public MoonTimes getMoonTimesForDate(Calendar date)
     {
-        return new Calendar[] { null, null };  // TODO
+
+        return null;
     }
 
-    public MoonPhase getMoonPhase(Calendar date)
+    @Override
+    public MoonIllumination getMoonIlluminationForDate(Calendar date)
     {
-        return null;  // TODO
-    }
-
-    public double getMoonIllumination(Calendar date)
-    {
-        return -1; // TODO
+        return null;
     }
 
 }

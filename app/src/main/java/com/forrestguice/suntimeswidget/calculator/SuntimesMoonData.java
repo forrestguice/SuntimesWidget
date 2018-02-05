@@ -186,23 +186,31 @@ public class SuntimesMoonData extends SuntimesData
         date = todaysCalendar.getTime();
         dateOther = otherCalendar.getTime();
 
-        Calendar[] riseSetToday = calculator.getMoonRiseSetCalendarForDate(todaysCalendar);
-        if (riseSetToday != null)
+        SuntimesCalculator.MoonTimes moonTimes0 = calculator.getMoonTimesForDate(todaysCalendar);
+        SuntimesCalculator.MoonIllumination moonIllumination0 = calculator.getMoonIlluminationForDate(todaysCalendar);
+        if (moonTimes0 != null)
         {
-            this.moonriseCalendarToday = riseSetToday[0];
-            this.moonsetCalendarToday = riseSetToday[1];
+            this.moonriseCalendarToday = moonTimes0.riseTime;
+            this.moonsetCalendarToday = moonTimes0.setTime;
         }
-        this.moonIlluminationToday = calculator.getMoonIllumination(todaysCalendar);
-        this.moonPhaseToday = calculator.getMoonPhase(todaysCalendar);
+        if (moonIllumination0 != null)
+        {
+            this.moonIlluminationToday = moonIllumination0.illumination;
+            this.moonPhaseToday = moonIllumination0.phase;
+        }
 
-        Calendar[] riseSetOther = calculator.getMoonRiseSetCalendarForDate(otherCalendar);
-        if (riseSetOther != null)
+        SuntimesCalculator.MoonTimes moonTimes1 = calculator.getMoonTimesForDate(otherCalendar);
+        SuntimesCalculator.MoonIllumination moonIllumination1 = calculator.getMoonIlluminationForDate(otherCalendar);
+        if (moonTimes1 != null)
         {
-            this.moonriseCalendarOther = riseSetOther[0];
-            this.moonsetCalendarOther = riseSetOther[1];
+            this.moonriseCalendarOther = moonTimes1.riseTime;
+            this.moonsetCalendarOther = moonTimes1.setTime;
         }
-        this.moonIlluminationOther = calculator.getMoonIllumination(otherCalendar);
-        this.moonPhaseOther = calculator.getMoonPhase(otherCalendar);
+        if (moonIllumination1 != null)
+        {
+            this.moonIlluminationOther = moonIllumination1.illumination;
+            this.moonPhaseOther = moonIllumination1.phase;
+        }
 
         super.calculate();
     }

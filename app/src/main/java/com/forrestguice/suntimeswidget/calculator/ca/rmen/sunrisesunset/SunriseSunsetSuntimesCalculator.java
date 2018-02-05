@@ -197,6 +197,17 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     }
 
     @Override
+    public MoonTimes getMoonTimesForDate(Calendar date)
+    {
+        return null;
+    }
+
+    @Override
+    public MoonIllumination getMoonIlluminationForDate(Calendar date) {
+        return null;
+    }
+
+    @Override
     public Calendar getOfficialSunsetCalendarForDate( Calendar date )
     {
         Calendar[] riseset = SunriseSunset.getSunriseSunset(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble());
@@ -211,19 +222,5 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
                 R.string.calculator_displayString_caarmensunrisesunset, SunriseSunsetSuntimesCalculator.FEATURES);
     }
 
-    public Calendar[] getMoonRiseSetCalendarForDate(Calendar date)
-    {
-        return null;  // TODO
-    }
-
-    public MoonPhase getMoonPhase(Calendar date)
-    {
-        return null;  // TODO
-    }
-
-    public double getMoonIllumination(Calendar date)
-    {
-        return -1; // TODO
-    }
 }
 
