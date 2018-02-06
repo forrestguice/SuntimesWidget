@@ -240,5 +240,11 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
         return null;
     }
 
+    @Override
+    public Calendar getMoonPhaseNextDate(MoonPhase phase, Calendar date)
+    {
+        return null;
+    }
+
 }
 

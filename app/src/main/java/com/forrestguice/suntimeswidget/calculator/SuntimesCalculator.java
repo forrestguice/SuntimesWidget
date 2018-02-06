@@ -255,4 +255,19 @@ public interface SuntimesCalculator
         public double illumination = -1;
         public MoonPhaseDisplay phase = null;
     }
+
+    /**
+     * Get the date of the next major moon phase.
+     * @param phase a major moon phase (NEW, FIRST_QUARTER, FULL, THIRD_QUARTER)
+     * @param date a Calendar representing a given date
+     * @return a Calendar for the given phase (occurring after the given date).
+     * @since 1.3.0
+     */
+    Calendar getMoonPhaseNextDate(MoonPhase phase, Calendar date);
+    enum MoonPhase
+    {
+        NEW, FIRST_QUARTER, FULL, THIRD_QUARTER;
+        private MoonPhase() {}
+    }
+
 }
