@@ -267,13 +267,13 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     }
 
     @Override
-    public MoonIllumination getMoonIlluminationForDate(Calendar date)
+    public double getMoonIlluminationForDate(Calendar date)
     {
         Moment moment = TemporalType.JAVA_UTIL_DATE.translate(date.getTime());
-        MoonIllumination result = new MoonIllumination();
-        result.illumination = net.time4j.calendar.astro.MoonPhase.getIllumination(moment);
+        //MoonIllumination result = new MoonIllumination();
+        //result.illumination = net.time4j.calendar.astro.MoonPhase.getIllumination(moment);
 
-        if (result.illumination < 0.05)             // New Moon
+        /**if (result.illumination < 0.05)             // New Moon
         {
             result.phase = MoonPhaseDisplay.NEW;
 
@@ -303,8 +303,9 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
                 // Gibbous Moon
                 result.phase = (isWaxing ? MoonPhaseDisplay.WAXING_GIBBOUS : MoonPhaseDisplay.WANING_GIBBOUS);
             }
-        }
-        return result;
+        }*/
+        //return result;
+        return net.time4j.calendar.astro.MoonPhase.getIllumination(moment);
     }
 
     @Override

@@ -74,14 +74,17 @@ public class MoonLayout_2x1_0 extends MoonLayout
         SpannableString illumNoteSpan = SuntimesUtils.createColorSpan(illumNote, illum, illumColor);
         views.setTextViewText(R.id.text_info_moonillum, illumNoteSpan);
 
-        MoonPhaseDisplay phase = data.getMoonPhaseToday();
-        views.setTextViewText(R.id.text_info_moonphase, phase.getLongDisplayString());
-
         for (MoonPhaseDisplay moonPhase : MoonPhaseDisplay.values())
         {
             views.setViewVisibility(moonPhase.getView(), View.GONE);
         }
-        views.setViewVisibility(phase.getView(), View.VISIBLE);
+
+        MoonPhaseDisplay phase = data.getMoonPhaseToday();
+        if (phase != null)
+        {
+            views.setTextViewText(R.id.text_info_moonphase, phase.getLongDisplayString());
+            views.setViewVisibility(phase.getView(), View.VISIBLE);
+        }
     }
 
     private int illumColor = Color.WHITE;

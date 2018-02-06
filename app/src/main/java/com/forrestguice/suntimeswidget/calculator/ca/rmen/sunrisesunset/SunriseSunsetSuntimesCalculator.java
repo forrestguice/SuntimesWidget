@@ -202,8 +202,8 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     }
 
     @Override
-    public MoonIllumination getMoonIlluminationForDate(Calendar date) {
-        return null;
+    public double getMoonIlluminationForDate(Calendar date) {
+        return -1;
     }
 
     @Override

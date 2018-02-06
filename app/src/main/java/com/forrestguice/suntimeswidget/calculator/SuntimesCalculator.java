@@ -246,15 +246,10 @@ public interface SuntimesCalculator
     /**
      * MoonIllumination
      * @param date a Calendar representing a given date
-     * @return a MoonIllumination obj wrapping an illumination value [0,1]; 0%-100%, phase enum, etc.
+     * @return an illumination value [0,1] (0%-100%)
      * @since 1.3.0
      */
-    MoonIllumination getMoonIlluminationForDate(Calendar date);
-    class MoonIllumination
-    {
-        public double illumination = -1;
-        public MoonPhaseDisplay phase = null;
-    }
+    double getMoonIlluminationForDate(Calendar date);
 
     /**
      * Get the date of the next major moon phase.

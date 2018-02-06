@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import java.util.Calendar;
@@ -117,11 +118,20 @@ public class SuntimesMoonData extends SuntimesData
     /**
      * result: phase other
      */
-    private MoonPhaseDisplay moonPhaseOther;
-    public MoonPhaseDisplay getMoonPhaseOther()
+    private HashMap<SuntimesCalculator.MoonPhase, Calendar> moonPhases = new HashMap<>(4);
+    public Calendar moonPhaseCalendar(SuntimesCalculator.MoonPhase phase)
     {
         return moonPhaseOther;
     }
+
+    /**
+     * result: phase other
+     */
+    //private MoonPhaseDisplay moonPhaseOther;
+    //public MoonPhaseDisplay getMoonPhaseOther()
+    //{
+        //return moonPhaseOther;
+    //}
 
     /**
      * init from other SuntimesEquinoxSolsticeData object
@@ -142,7 +152,7 @@ public class SuntimesMoonData extends SuntimesData
         this.moonIlluminationOther = other.moonIlluminationOther;
 
         this.moonPhaseToday = other.moonPhaseToday;
-        this.moonPhaseOther = other.moonPhaseOther;
+        //this.moonPhaseOther = other.moonPhaseOther;
     }
 
     /**
@@ -187,29 +197,31 @@ public class SuntimesMoonData extends SuntimesData
         dateOther = otherCalendar.getTime();
 
         SuntimesCalculator.MoonTimes moonTimes0 = calculator.getMoonTimesForDate(todaysCalendar);
-        SuntimesCalculator.MoonIllumination moonIllumination0 = calculator.getMoonIlluminationForDate(todaysCalendar);
         if (moonTimes0 != null)
         {
             this.moonriseCalendarToday = moonTimes0.riseTime;
             this.moonsetCalendarToday = moonTimes0.setTime;
         }
-        if (moonIllumination0 != null)
+
+        double moonIllumination0 = calculator.getMoonIlluminationForDate(todaysCalendar);
+        if (moonIllumination0 >= 0)
         {
-            this.moonIlluminationToday = moonIllumination0.illumination;
-            this.moonPhaseToday = moonIllumination0.phase;
+            this.moonIlluminationToday = moonIllumination0;
         }
 
         SuntimesCalculator.MoonTimes moonTimes1 = calculator.getMoonTimesForDate(otherCalendar);
-        SuntimesCalculator.MoonIllumination moonIllumination1 = calculator.getMoonIlluminationForDate(otherCalendar);
         if (moonTimes1 != null)
         {
             this.moonriseCalendarOther = moonTimes1.riseTime;
             this.moonsetCalendarOther = moonTimes1.setTime;
         }
-        if (moonIllumination1 != null)
+
+        double moonIllumination1 = calculator.getMoonIlluminationForDate(otherCalendar);
+        if (moonIllumination1 >= 0)
         {
-            this.moonIlluminationOther = moonIllumination1.illumination;
-            this.moonPhaseOther = moonIllumination1.phase;
+            this.moonIlluminationOther = moonIllumination1;
+        }
+        {
         }
 
         super.calculate();
