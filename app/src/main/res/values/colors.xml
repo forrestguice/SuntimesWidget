@@ -30,15 +30,32 @@
     <color name="errorTag_light">#FF5252</color>
     <color name="dstTag_light">#ffcc00</color>
 
-    <!-- moon icon -->
+    <!-- moon icons (rising, setting) -->
     <color name="moonIcon_color_rising">@color/moonIcon_color_rising_dark</color>
     <color name="moonIcon_color_setting">@color/moonIcon_color_setting_dark</color>
 
     <color name="moonIcon_color_rising_dark">@color/grey_100</color>
     <color name="moonIcon_color_setting_dark">@color/grey_500</color>
-
     <color name="moonIcon_color_rising_light">@color/grey_500</color>
     <color name="moonIcon_color_setting_light">@color/grey_600</color>
+
+    <!-- moon icon (new) -->
+    <color name="moonIcon_color_new">@color/moonIcon_color_new_dark</color>
+    <color name="moonIcon_color_new_border">@color/moonIcon_color_new_border_dark</color>
+
+    <color name="moonIcon_color_new_dark">@color/grey_900</color>
+    <color name="moonIcon_color_new_border_dark">@color/grey_500</color>
+    <color name="moonIcon_color_new_light">@color/grey_900</color>
+    <color name="moonIcon_color_new_border_light">@color/grey_600</color>
+
+    <!-- moon icon (full) -->
+    <color name="moonIcon_color_full">@color/moonIcon_color_full_dark</color>
+    <color name="moonIcon_color_full_border">@color/moonIcon_color_full_border_dark</color>
+
+    <color name="moonIcon_color_full_dark">@color/grey_100</color>
+    <color name="moonIcon_color_full_border_dark">@color/grey_500</color>
+    <color name="moonIcon_color_full_light">@color/grey_100</color>
+    <color name="moonIcon_color_full_border_light">@color/grey_600</color>
 
     <!-- sun icon -->
     <color name="sunIcon_color_rising">@color/sunIcon_color_rising_dark</color>
