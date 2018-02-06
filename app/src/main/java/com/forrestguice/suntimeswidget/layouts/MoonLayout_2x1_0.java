@@ -110,10 +110,10 @@ public class MoonLayout_2x1_0 extends MoonLayout
             views.setTextViewTextSize(R.id.text_time_moonset_suffix, TypedValue.COMPLEX_UNIT_SP, suffSize);
         }
 
-        Bitmap moonriseIcon = SuntimesUtils.insetDrawableToBitmap(context, R.drawable.ic_moonrise, moonriseColor, moonriseColor, 0);
+        Bitmap moonriseIcon = SuntimesUtils.insetDrawableToBitmap(context, R.drawable.ic_moon_rise, moonriseColor, moonriseColor, 0);
         views.setImageViewBitmap(R.id.icon_time_moonrise, moonriseIcon);
 
-        Bitmap moonsetIcon = SuntimesUtils.insetDrawableToBitmap(context, R.drawable.ic_moonset, moonsetColor,moonsetColor, 0);
+        Bitmap moonsetIcon = SuntimesUtils.insetDrawableToBitmap(context, R.drawable.ic_moon_set, moonsetColor,moonsetColor, 0);
         views.setImageViewBitmap(R.id.icon_time_moonset, moonsetIcon);
     }
 
