@@ -33,6 +33,8 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
+import java.text.NumberFormat;
+
 public class MoonLayout_2x1_0 extends MoonLayout
 {
     public MoonLayout_2x1_0()
@@ -65,9 +67,10 @@ public class MoonLayout_2x1_0 extends MoonLayout
         views.setTextViewText(R.id.text_time_moonset, setString.getValue());
         views.setTextViewText(R.id.text_time_moonset_suffix, setString.getSuffix());
 
-        String illumString = data.getMoonIlluminationToday() + "";   // TODO: format illumination
-        String illumNoteString = illumString + " illuminated";       // TODO: i18n
-        SpannableString illumNoteSpan = SuntimesUtils.createColorSpan(illumNoteString, illumString, illumColor);
+        NumberFormat percentage = NumberFormat.getPercentInstance();
+        String illum = percentage.format(data.getMoonIlluminationToday());
+        String illumNote = context.getString(R.string.moon_illumination, illum);
+        SpannableString illumNoteSpan = SuntimesUtils.createColorSpan(illumNote, illum, illumColor);
         views.setTextViewText(R.id.text_info_moonillum, illumNoteSpan);
 
         MoonPhase phase = data.getMoonPhaseToday();

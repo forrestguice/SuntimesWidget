@@ -67,6 +67,9 @@
     <string name="length_day"><xliff:g id="timeSpan" example="12h">%1$s</xliff:g> in the day</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
     <string name="length_light"><xliff:g id="timeSpan" example="12h 50m">%1$s</xliff:g> of usable light</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
 
+    <!-- Field: moon illumination (as seen in moon widget) -->
+    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> illuminated</string>  <!-- TODO: i18n -->
+
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
          e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
          The relative order is defined by the layout (layout/info_time_daydelta.xml).
