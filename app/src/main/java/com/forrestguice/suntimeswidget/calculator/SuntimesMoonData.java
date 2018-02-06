@@ -23,6 +23,7 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import java.util.Calendar;
+import java.util.HashMap;
 
 public class SuntimesMoonData extends SuntimesData
 {
@@ -116,12 +117,16 @@ public class SuntimesMoonData extends SuntimesData
     }
 
     /**
-     * result: phase other
+     * result: major phases (date of next: new moon, first quarter, full moon, third quarter)
      */
     private HashMap<SuntimesCalculator.MoonPhase, Calendar> moonPhases = new HashMap<>(4);
     public Calendar moonPhaseCalendar(SuntimesCalculator.MoonPhase phase)
     {
-        return moonPhaseOther;
+        if (moonPhases.containsKey(phase))
+        {
+            return moonPhases.get(phase);
+        }
+        return null;
     }
 
     /**
@@ -150,6 +155,8 @@ public class SuntimesMoonData extends SuntimesData
 
         this.moonIlluminationToday = other.moonIlluminationToday;
         this.moonIlluminationOther = other.moonIlluminationOther;
+
+        this.moonPhases = new HashMap<>(other.moonPhases);
 
         this.moonPhaseToday = other.moonPhaseToday;
         //this.moonPhaseOther = other.moonPhaseOther;
@@ -221,10 +228,67 @@ public class SuntimesMoonData extends SuntimesData
         {
             this.moonIlluminationOther = moonIllumination1;
         }
+
+        Calendar startOfDay = (Calendar)todaysCalendar.clone();
+        startOfDay.set(Calendar.HOUR_OF_DAY, 0);
+        startOfDay.set(Calendar.MINUTE, 0);
+        startOfDay.set(Calendar.SECOND, 0);
+
+        for (SuntimesCalculator.MoonPhase phase : SuntimesCalculator.MoonPhase.values())
         {
+            moonPhases.put(phase, calculator.getMoonPhaseNextDate(phase, startOfDay));
         }
+        moonPhaseToday = findPhaseOf(startOfDay);
 
         super.calculate();
+    }
+
+    public SuntimesCalculator.MoonPhase nextPhase(Calendar calendar)
+    {
+        SuntimesCalculator.MoonPhase result = SuntimesCalculator.MoonPhase.FULL;
+        long date = calendar.getTimeInMillis();
+
+        long least = Long.MAX_VALUE;
+        for (SuntimesCalculator.MoonPhase phase : moonPhases.keySet())
+        {
+            Calendar phaseDate = moonPhases.get(phase);
+            long delta = phaseDate.getTimeInMillis() - date;
+            if (delta >= 0 && delta < least)
+            {
+                least = delta;
+                result = phase;
+            }
+        }
+        return result;
+    }
+
+    public MoonPhaseDisplay findPhaseOf(Calendar calendar)
+    {
+        SuntimesCalculator.MoonPhase nextPhase = nextPhase(calendar);
+        Calendar nextPhaseDate = moonPhases.get(nextPhase);
+        boolean nextPhaseIsToday = (calendar.get(Calendar.YEAR) == nextPhaseDate.get(Calendar.YEAR)) &&
+                                   (calendar.get(Calendar.DAY_OF_YEAR) == nextPhaseDate.get(Calendar.DAY_OF_YEAR));
+        if (nextPhaseIsToday)
+        {
+            switch (nextPhase)             // nextPhase is today (report major phase)
+            {
+                case NEW: return MoonPhaseDisplay.NEW;
+                case FIRST_QUARTER: return MoonPhaseDisplay.FIRST_QUARTER;
+                case THIRD_QUARTER: return MoonPhaseDisplay.THIRD_QUARTER;
+                case FULL:
+                default: return MoonPhaseDisplay.FULL;
+            }
+
+        } else {
+            switch (nextPhase)             // next phase is distant (report leading minor phase)
+            {
+                case NEW: return MoonPhaseDisplay.WANING_CRESCENT;
+                case FIRST_QUARTER: return MoonPhaseDisplay.WAXING_CRESCENT;
+                case THIRD_QUARTER: return MoonPhaseDisplay.WANING_GIBBOUS;
+                case FULL:
+                default: return MoonPhaseDisplay.WAXING_GIBBOUS;
+            }
+        }
     }
 
 }
