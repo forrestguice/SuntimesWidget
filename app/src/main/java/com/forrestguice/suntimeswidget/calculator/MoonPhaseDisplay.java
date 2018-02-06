@@ -22,9 +22,9 @@ import android.content.Context;
 import com.forrestguice.suntimeswidget.R;
 
 /**
- * MoonPhase
+ * MoonPhaseDisplay
  */
-public enum MoonPhase
+public enum MoonPhaseDisplay
 {
     NEW("New", "New Moon", R.drawable.ic_moon_new, R.id.icon_info_moonphase_new),         // TODO: icons
     WAXING_CRESCENT("Waxing Crescent", "Waxing Crescent", R.drawable.ic_moon_full, R.id.icon_info_moonphase_waxing_crescent),
@@ -38,7 +38,7 @@ public enum MoonPhase
     private int iconResource, viewResource;
     private String shortDisplayString, longDisplayString;
 
-    private MoonPhase(String shortDisplayString, String longDisplayString, int iconResource, int viewResource)
+    private MoonPhaseDisplay(String shortDisplayString, String longDisplayString, int iconResource, int viewResource)
     {
         this.shortDisplayString = shortDisplayString;
         this.longDisplayString = longDisplayString;

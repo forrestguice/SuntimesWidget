@@ -253,6 +253,6 @@ public interface SuntimesCalculator
     class MoonIllumination
     {
         public double illumination = -1;
-        public MoonPhase phase = null;
+        public MoonPhaseDisplay phase = null;
     }
 }

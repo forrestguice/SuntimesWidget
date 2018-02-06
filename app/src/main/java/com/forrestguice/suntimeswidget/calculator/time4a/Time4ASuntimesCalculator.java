@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget.calculator.time4a;
 
 import android.content.Context;
 
-import com.forrestguice.suntimeswidget.calculator.MoonPhase;
+import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -274,10 +274,10 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
 
         if (result.illumination < 0.05)             // New Moon
         {
-            result.phase = MoonPhase.NEW;
+            result.phase = MoonPhaseDisplay.NEW;
 
         } else if (result.illumination > 0.95) {    // Full Moon
-            result.phase = MoonPhase.FULL;
+            result.phase = MoonPhaseDisplay.FULL;
 
         } else {
             double illumination1;      // determine changing illumination (waxing / waning)
@@ -292,15 +292,15 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
             boolean isWaxing = (illumination1 > result.illumination);
             if (result.illumination > 0.45 && result.illumination < 0.55) {
                 // Quarter Moon
-                result.phase = (isWaxing ? MoonPhase.FIRST_QUARTER : MoonPhase.THIRD_QUARTER);
+                result.phase = (isWaxing ? MoonPhaseDisplay.FIRST_QUARTER : MoonPhaseDisplay.THIRD_QUARTER);
 
             } else if (result.illumination <= 0.45) {
                 // Crescent Moon
-                result.phase = (isWaxing ? MoonPhase.WAXING_CRESCENT : MoonPhase.WANING_CRESCENT);
+                result.phase = (isWaxing ? MoonPhaseDisplay.WAXING_CRESCENT : MoonPhaseDisplay.WANING_CRESCENT);
 
             } else {
                 // Gibbous Moon
-                result.phase = (isWaxing ? MoonPhase.WAXING_GIBBOUS : MoonPhase.WANING_GIBBOUS);
+                result.phase = (isWaxing ? MoonPhaseDisplay.WAXING_GIBBOUS : MoonPhaseDisplay.WANING_GIBBOUS);
             }
         }
         return result;

@@ -81,8 +81,8 @@ public class SuntimesMoonData extends SuntimesData
     /**
      * result: phase today
      */
-    private MoonPhase moonPhaseToday;
-    public MoonPhase getMoonPhaseToday()
+    private MoonPhaseDisplay moonPhaseToday;
+    public MoonPhaseDisplay getMoonPhaseToday()
     {
         return moonPhaseToday;
     }
@@ -117,8 +117,8 @@ public class SuntimesMoonData extends SuntimesData
     /**
      * result: phase other
      */
-    private MoonPhase moonPhaseOther;
-    public MoonPhase getMoonPhaseOther()
+    private MoonPhaseDisplay moonPhaseOther;
+    public MoonPhaseDisplay getMoonPhaseOther()
     {
         return moonPhaseOther;
     }

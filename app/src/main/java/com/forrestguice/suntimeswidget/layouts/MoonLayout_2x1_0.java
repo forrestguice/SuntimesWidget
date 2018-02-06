@@ -29,7 +29,7 @@ import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.calculator.MoonPhase;
+import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -74,10 +74,10 @@ public class MoonLayout_2x1_0 extends MoonLayout
         SpannableString illumNoteSpan = SuntimesUtils.createColorSpan(illumNote, illum, illumColor);
         views.setTextViewText(R.id.text_info_moonillum, illumNoteSpan);
 
-        MoonPhase phase = data.getMoonPhaseToday();
+        MoonPhaseDisplay phase = data.getMoonPhaseToday();
         views.setTextViewText(R.id.text_info_moonphase, phase.getLongDisplayString());
 
-        for (MoonPhase moonPhase : MoonPhase.values())
+        for (MoonPhaseDisplay moonPhase : MoonPhaseDisplay.values())
         {
             views.setViewVisibility(moonPhase.getView(), View.GONE);
         }
