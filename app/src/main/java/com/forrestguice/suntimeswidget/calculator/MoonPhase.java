@@ -26,23 +26,24 @@ import com.forrestguice.suntimeswidget.R;
  */
 public enum MoonPhase
 {
-    NEW("New", "New Moon", R.drawable.ic_sunrise_large),         // TODO: icons
-    WAXING_CRESCENT("Waxing Crescent", "Waxing Crescent", R.drawable.ic_sunrise_large),
-    FIRST_QUARTER("First Quarter", "First Quarter", R.drawable.ic_sunrise_large),
-    WAXING_GIBBOUS("Waxing Gibbous", "Waxing Gibbous", R.drawable.ic_sunrise_large),
-    FULL("Full", "Full Moon", R.drawable.ic_noon_large),
-    WANING_GIBBOUS("Waning Gibbous", "Waning Gibbous", R.drawable.ic_sunset_large),
-    THIRD_QUARTER("Third Quarter", "Third Quarter", R.drawable.ic_sunset_large),
-    WANING_CRESCENT("Waxing Crescent", "Waxing Crescent", R.drawable.ic_sunset_large);
+    NEW("New", "New Moon", R.drawable.ic_moon_new, R.id.icon_info_moonphase_new),         // TODO: icons
+    WAXING_CRESCENT("Waxing Crescent", "Waxing Crescent", R.drawable.ic_moon_full, R.id.icon_info_moonphase_waxing_crescent),
+    FIRST_QUARTER("First Quarter", "First Quarter", R.drawable.ic_moon_waxing_quarter, R.id.icon_info_moonphase_waxing_quarter),
+    WAXING_GIBBOUS("Waxing Gibbous", "Waxing Gibbous", R.drawable.ic_moon_full, R.id.icon_info_moonphase_waxing_gibbous),
+    FULL("Full", "Full Moon", R.drawable.ic_moon_full, R.id.icon_info_moonphase_full),
+    WANING_GIBBOUS("Waning Gibbous", "Waning Gibbous", R.drawable.ic_moon_waning_quarter, R.id.icon_info_moonphase_waning_gibbous),
+    THIRD_QUARTER("Third Quarter", "Third Quarter", R.drawable.ic_moon_waning_quarter, R.id.icon_info_moonphase_waning_quarter),
+    WANING_CRESCENT("Waxing Crescent", "Waxing Crescent", R.drawable.ic_moon_full, R.id.icon_info_moonphase_waning_crescent);
 
-    private int iconResource;
+    private int iconResource, viewResource;
     private String shortDisplayString, longDisplayString;
 
-    private MoonPhase(String shortDisplayString, String longDisplayString, int iconResource)
+    private MoonPhase(String shortDisplayString, String longDisplayString, int iconResource, int viewResource)
     {
         this.shortDisplayString = shortDisplayString;
         this.longDisplayString = longDisplayString;
         this.iconResource = iconResource;
+        this.viewResource = viewResource;
     }
 
     public String toString()
@@ -53,6 +54,11 @@ public enum MoonPhase
     public int getIcon()
     {
         return iconResource;
+    }
+
+    public int getView()
+    {
+        return viewResource;
     }
 
     public String getShortDisplayString()
