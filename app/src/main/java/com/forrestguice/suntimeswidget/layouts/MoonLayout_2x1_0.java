@@ -24,6 +24,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.text.SpannableString;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
@@ -75,6 +76,12 @@ public class MoonLayout_2x1_0 extends MoonLayout
 
         MoonPhase phase = data.getMoonPhaseToday();
         views.setTextViewText(R.id.text_info_moonphase, phase.getLongDisplayString());
+
+        for (MoonPhase moonPhase : MoonPhase.values())
+        {
+            views.setViewVisibility(moonPhase.getView(), View.GONE);
+        }
+        views.setViewVisibility(phase.getView(), View.VISIBLE);
     }
 
     private int illumColor = Color.WHITE;

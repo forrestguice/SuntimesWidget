@@ -32,16 +32,15 @@
             tools:text="title" />
 
         <LinearLayout
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:divider="@drawable/ic_spacer" android:showDividers="middle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginBottom="2dp"
-            android:orientation="horizontal" android:layout_gravity="center_horizontal">
+            android:divider="@drawable/ic_spacer"
+            android:orientation="horizontal"
+            android:showDividers="middle">
 
-            <ImageView
-                android:id="@+id/icon_info_moonphase"
-                android:layout_width="32dp" android:layout_height="32dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_noon_large" />
+            <include layout="@layout/icons_moon_phases" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -49,13 +48,17 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/text_info_moonphase" style="@style/SunsetTimeTextView2"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:id="@+id/text_info_moonphase"
+                    style="@style/SunsetTimeTextView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     tools:text="New Moon" />
 
                 <TextView
-                    android:id="@+id/text_info_moonillum" style="@style/SunsetTimeTextView2"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:id="@+id/text_info_moonillum"
+                    style="@style/SunsetTimeTextView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     tools:text="0% illuminated" />
 
             </LinearLayout>
