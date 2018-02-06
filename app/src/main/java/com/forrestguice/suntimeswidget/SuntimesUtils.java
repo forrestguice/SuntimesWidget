@@ -884,6 +884,12 @@ public class SuntimesUtils
         return tinted;
     }
 
+    public static Bitmap drawableToBitmap(Context context, int resourceID, int w, int h, boolean pxValues)
+    {
+        Drawable drawable = ResourcesCompat.getDrawable(context.getResources(), resourceID, null);
+        return drawableToBitmap(context, drawable, w, h, pxValues);
+    }
+
     /**
      * @param context context used to get resources
      * @param resourceID drawable resource ID to a GradientDrawable
