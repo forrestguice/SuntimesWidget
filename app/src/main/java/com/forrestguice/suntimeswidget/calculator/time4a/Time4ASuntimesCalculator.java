@@ -272,11 +272,11 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         MoonIllumination result = new MoonIllumination();
         result.illumination = net.time4j.calendar.astro.MoonPhase.getIllumination(moment);
 
-        if (result.illumination == 0)             // New Moon
+        if (result.illumination < 0.05)             // New Moon
         {
             result.phase = MoonPhase.NEW;
 
-        } else if (result.illumination == 1) {    // Full Moon
+        } else if (result.illumination > 0.95) {    // Full Moon
             result.phase = MoonPhase.FULL;
 
         } else {
@@ -287,19 +287,18 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
                 c++;
                 Moment moment1 = moment.plus(c, java.util.concurrent.TimeUnit.DAYS);
                 illumination1 = net.time4j.calendar.astro.MoonPhase.getIllumination(moment1);
-            } while (illumination1 == result.illumination && c < n);
+            } while (illumination1 == result.illumination && c < n);     // c expected to be 1
 
             boolean isWaxing = (illumination1 > result.illumination);
-            if (result.illumination > 0.0 && result.illumination < 0.50)
-            {
-                // Crescent Moon
-                result.phase = (isWaxing ? MoonPhase.WAXING_CRESCENT : MoonPhase.WANING_CRESCENT);
-
-            } else if (result.illumination == 0.5) {
+            if (result.illumination > 0.45 && result.illumination < 0.55) {
                 // Quarter Moon
                 result.phase = (isWaxing ? MoonPhase.FIRST_QUARTER : MoonPhase.THIRD_QUARTER);
 
-            } else if (result.illumination > 0.5 && result.illumination < 1.0) {
+            } else if (result.illumination <= 0.45) {
+                // Crescent Moon
+                result.phase = (isWaxing ? MoonPhase.WAXING_CRESCENT : MoonPhase.WANING_CRESCENT);
+
+            } else {
                 // Gibbous Moon
                 result.phase = (isWaxing ? MoonPhase.WAXING_GIBBOUS : MoonPhase.WANING_GIBBOUS);
             }
