@@ -114,6 +114,10 @@ public class MoonLayout_2x1_0 extends MoonLayout
         {
             float timeSize = theme.getTimeSizeSp();
             float suffSize = theme.getTimeSuffixSizeSp();
+            float textSize = theme.getTextSizeSp();
+
+            views.setTextViewTextSize(R.id.text_info_moonphase, TypedValue.COMPLEX_UNIT_SP, textSize);
+            views.setTextViewTextSize(R.id.text_info_moonillum, TypedValue.COMPLEX_UNIT_SP, textSize);
 
             views.setTextViewTextSize(R.id.text_time_moonrise_suffix, TypedValue.COMPLEX_UNIT_SP, suffSize);
             views.setTextViewTextSize(R.id.text_time_moonrise, TypedValue.COMPLEX_UNIT_SP, timeSize);
