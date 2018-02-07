@@ -236,9 +236,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         return adapter;
     }
 
-    protected ArrayAdapter<WidgetSettings.WidgetMode1x1> createAdapter_widgetMode1x1()
+    protected ArrayAdapter<WidgetSettings.WidgetModeSun1x1> createAdapter_widgetMode1x1()
     {
-        ArrayAdapter<WidgetSettings.WidgetMode1x1> adapter = new ArrayAdapter<WidgetSettings.WidgetMode1x1>(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetMode1x1.values());
+        ArrayAdapter<WidgetSettings.WidgetModeSun1x1> adapter = new ArrayAdapter<WidgetSettings.WidgetModeSun1x1>(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSun1x1.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         return adapter;
     }
@@ -768,9 +768,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected void saveAppearanceSettings(Context context)
     {
         // save: widgetmode_1x1
-        final WidgetSettings.WidgetMode1x1[] modes = WidgetSettings.WidgetMode1x1.values();
-        WidgetSettings.WidgetMode1x1 mode = modes[spinner_1x1mode.getSelectedItemPosition()];
-        WidgetSettings.save1x1ModePref(context, appWidgetId, mode);
+        final WidgetSettings.WidgetModeSun1x1[] modes = WidgetSettings.WidgetModeSun1x1.values();
+        WidgetSettings.WidgetModeSun1x1 mode = modes[spinner_1x1mode.getSelectedItemPosition()];
+        WidgetSettings.saveSun1x1ModePref(context, appWidgetId, mode);
         //Log.d("DEBUG", "Saved mode: " + mode.name());
 
         // save: theme
@@ -800,7 +800,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected void loadAppearanceSettings(Context context)
     {
         // load: widgetmode_1x1
-        WidgetSettings.WidgetMode1x1 mode1x1 = WidgetSettings.load1x1ModePref(context, appWidgetId);
+        WidgetSettings.WidgetModeSun1x1 mode1x1 = WidgetSettings.loadSun1x1ModePref(context, appWidgetId);
         spinner_1x1mode.setSelection(mode1x1.ordinal());
 
         // load: theme
@@ -1041,7 +1041,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         minSize[0] = context.getResources().getInteger(R.integer.widget_size_minWidthDp);
         minSize[1] = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
 
-        SuntimesLayout defLayout = WidgetSettings.load1x1ModePref_asLayout(context, appWidgetId);
+        SuntimesLayout defLayout = WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0.class, minSize, defLayout);
     }
