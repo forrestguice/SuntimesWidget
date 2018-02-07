@@ -20,11 +20,11 @@ package com.forrestguice.suntimeswidget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.widget.ArrayAdapter;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout;
-import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_0;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
@@ -42,7 +42,6 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
         showTimeMode(false);
         showOptionShowNoon(false);
         hideOptionCompareAgainst();
-        hideOption1x1LayoutMode();
         showOptionTrackingMode(false);
         showOptionTimeModeOverride(false);
         //showDataSource(false);
@@ -55,8 +54,7 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
         minSize[0] = context.getResources().getInteger(R.integer.widget_size_minWidthDp);
         minSize[1] = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
 
-        MoonLayout defLayout = new MoonLayout_1x1_0();
-
+        MoonLayout defLayout = WidgetSettings.loadMoon1x1ModePref_asLayout(context, appWidgetId);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         MoonWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, minSize, defLayout);
     }
@@ -75,6 +73,38 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
     protected void saveTimeMode(Context context)
     {
         // EMPTY
+    }
+
+    @Override
+    protected void initWidgetMode1x1(Context context)
+    {
+        if (spinner_1x1mode != null)
+        {
+            spinner_1x1mode.setAdapter(createAdapter_widgetModeMoon1x1());
+        }
+    }
+
+    protected ArrayAdapter<WidgetSettings.WidgetModeMoon1x1> createAdapter_widgetModeMoon1x1()
+    {
+        ArrayAdapter<WidgetSettings.WidgetModeMoon1x1> adapter = new ArrayAdapter<WidgetSettings.WidgetModeMoon1x1>(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeMoon1x1.values());
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        return adapter;
+    }
+
+    @Override
+    protected void saveWidgetMode1x1(Context context)
+    {
+        final WidgetSettings.WidgetModeMoon1x1[] modes = WidgetSettings.WidgetModeMoon1x1.values();
+        WidgetSettings.WidgetModeMoon1x1 mode = modes[spinner_1x1mode.getSelectedItemPosition()];
+        WidgetSettings.saveMoon1x1ModePref(context, appWidgetId, mode);
+        //Log.d("DEBUG", "Saved mode: " + mode.name());
+    }
+
+    @Override
+    protected void loadWidgetMode1x1(Context context)
+    {
+        WidgetSettings.WidgetModeMoon1x1 mode1x1 = WidgetSettings.loadMoon1x1ModePref(context, appWidgetId);
+        spinner_1x1mode.setSelection(mode1x1.ordinal());
     }
 
     @Override
