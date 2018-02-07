@@ -69,15 +69,16 @@ public class MoonWidget0 extends SuntimesWidget0
 
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, MoonLayout layout)
     {
+        SuntimesMoonData data = new SuntimesMoonData(context, appWidgetId);
+        data.calculate();
+        layout.prepareForUpdate(data);
+
         RemoteViews views = layout.getViews(context);
         views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, MoonWidget0.class));
 
         boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId);
         views.setViewVisibility(R.id.text_title, showTitle ? View.VISIBLE : View.GONE);
 
-        SuntimesMoonData data = new SuntimesMoonData(context, appWidgetId);
-        data.calculate();
-        layout.prepareForUpdate(data);
         layout.themeViews(context, views, appWidgetId);
         layout.updateViews(context, appWidgetId, views, data);
 

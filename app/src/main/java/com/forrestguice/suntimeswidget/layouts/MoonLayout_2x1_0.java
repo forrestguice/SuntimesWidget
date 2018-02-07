@@ -24,6 +24,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.text.SpannableString;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -35,6 +36,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.text.NumberFormat;
+import java.util.Calendar;
 
 public class MoonLayout_2x1_0 extends MoonLayout
 {
@@ -130,6 +132,24 @@ public class MoonLayout_2x1_0 extends MoonLayout
     @Override
     public void prepareForUpdate(SuntimesMoonData data)
     {
-        // EMPTY
+        Calendar riseTime = data.moonriseCalendarToday();
+        Calendar setTime = data.moonsetCalendarToday();
+
+        if (riseTime != null && setTime != null)
+        {
+            if (riseTime.before(setTime))
+                this.layoutID = R.layout.layout_widget_moon_2x1_0;      // moon rises then sets
+            else this.layoutID = R.layout.layout_widget_moon_2x1_01;    // moon sets then rises
+
+        } else if (riseTime == null && setTime == null) {
+            this.layoutID = R.layout.layout_widget_moon_2x1_0;  // moon doesn't rise or set today
+
+        } else if (setTime != null) {
+            this.layoutID = R.layout.layout_widget_moon_2x1_01;  // moon doesn't rise (but it sets)
+
+        } else {
+            this.layoutID = R.layout.layout_widget_moon_2x1_0;  // moon doesn't set (but it rises)
+        }
     }
 }
+
