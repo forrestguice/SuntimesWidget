@@ -27,6 +27,7 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_0;
+import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_1;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_2x1_0;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -93,9 +94,9 @@ public class MoonWidget0 extends SuntimesWidget0
         {
             int minWidth1x3 = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
             layout = ((mustFitWithinDp[0] >= minWidth1x3)
-                    ? new MoonLayout_2x1_0() : new MoonLayout_1x1_0());
+                    ? new MoonLayout_2x1_0() : WidgetSettings.loadMoon1x1ModePref_asLayout(context, appWidgetId));
         } else {
-            layout = defLayout; // WidgetSettings.load1x1ModePref_asLayout(context, appWidgetId);
+            layout = defLayout;
         }
         Log.d("getWidgetLayout", "layout is: " + layout);
         return layout;

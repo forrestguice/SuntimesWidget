@@ -26,7 +26,9 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.layouts.MoonLayout;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_0;
+import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_1;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_0;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_1;
@@ -261,8 +263,8 @@ public class WidgetSettings
      */
     public static enum WidgetModeMoon1x1
     {
-        MODE1x1_RISESET("Moonrise & Moonset", R.layout.layout_widget_1x1_0),
-        MODE1x1_PHASE("Moon phase & illumination", R.layout.layout_widget_1x1_3);
+        MODE1x1_RISESET("Moonrise & Moonset", R.layout.layout_widget_moon_1x1_0),
+        MODE1x1_PHASE("Moon phase & illumination", R.layout.layout_widget_moon_1x1_1);
 
         private final int layoutID;
         private String displayString;
@@ -1058,6 +1060,23 @@ public class WidgetSettings
             Log.w("loadMoon1x1ModePref", "Failed to load value '" + modeString + "'; using default '" + PREF_DEF_APPEARANCE_WIDGETMODE_MOON1x1.name() + "'.");
         }
         return widgetMode;
+    }
+    public static MoonLayout loadMoon1x1ModePref_asLayout(Context context, int appWidgetId)
+    {
+        MoonLayout layout;
+        WidgetModeMoon1x1 mode = loadMoon1x1ModePref(context, appWidgetId);
+        switch (mode)
+        {
+            case MODE1x1_PHASE:
+                layout = new MoonLayout_1x1_1();
+                break;
+
+            case MODE1x1_RISESET:
+            default:
+                layout = new MoonLayout_1x1_0();
+                break;
+        }
+        return layout;
     }
     public static void deleteMoon1x1ModePref(Context context, int appWidgetId)
     {
