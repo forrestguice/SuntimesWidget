@@ -404,6 +404,22 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     }
 
     @Test
+    public void test_1x1MoonModePref()
+    {
+        WidgetSettings.saveMoon1x1ModePref(context, appWidgetId, WidgetSettings.WidgetModeMoon1x1.MODE1x1_RISESET);
+        WidgetSettings.WidgetModeMoon1x1 pref1 = WidgetSettings.loadMoon1x1ModePref(context, appWidgetId);
+        assertTrue("pref should be RISESET but was " + pref1, pref1.equals(WidgetSettings.WidgetModeMoon1x1.MODE1x1_RISESET));
+
+        WidgetSettings.saveMoon1x1ModePref(context, appWidgetId, WidgetSettings.WidgetModeMoon1x1.MODE1x1_PHASE);
+        WidgetSettings.WidgetModeMoon1x1 pref2 = WidgetSettings.loadMoon1x1ModePref(context, appWidgetId);
+        assertTrue("pref should be PHASE but was " + pref2, pref2.equals(WidgetSettings.WidgetModeMoon1x1.MODE1x1_PHASE));
+
+        WidgetSettings.deleteMoon1x1ModePref(context, appWidgetId);
+        WidgetSettings.WidgetModeMoon1x1 pref0 = WidgetSettings.loadMoon1x1ModePref(context, appWidgetId);
+        assertTrue("pref should be default (RISESET) but was " + pref0, pref0.equals(WidgetSettings.PREF_DEF_APPEARANCE_WIDGETMODE_MOON1x1) && pref0.equals(WidgetSettings.WidgetModeMoon1x1.MODE1x1_RISESET));
+    }
+
+    @Test
     public void test_trackingModePref()
     {
         WidgetSettings.saveTrackingModePref(context, appWidgetId, WidgetSettings.TrackingMode.SOONEST);

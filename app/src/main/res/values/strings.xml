@@ -212,6 +212,8 @@
     <string name="widgetMode1x1_sunset">Sunset only</string>               <!-- setting -->
     <string name="widgetMode1x1_both_1">Sunrise &amp; Sunset (1)</string>  <!-- setting -->
     <string name="widgetMode1x1_both_2">Sunrise &amp; Sunset (2)</string>  <!-- setting -->
+    <string name="widgetMode1x1_moonriseset">Moonrise &amp; Moonset</string>     <!-- setting -->   <!-- TODO: i18n -->
+    <string name="widgetMode1x1_moonphase">Moon phase &amp; illumination</string>     <!-- setting -->  <!-- TODO: i18n -->
 
     <string name="configLabel_appearance_1x1mode">1x1 Layout:</string>     <!-- spinner label -->
 
