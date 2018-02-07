@@ -132,11 +132,11 @@ public class SuntimesMoonData extends SuntimesData
     /**
      * result: phase other
      */
-    //private MoonPhaseDisplay moonPhaseOther;
-    //public MoonPhaseDisplay getMoonPhaseOther()
-    //{
-        //return moonPhaseOther;
-    //}
+    private MoonPhaseDisplay moonPhaseOther;
+    /**public MoonPhaseDisplay getMoonPhaseOther()
+    {
+        return moonPhaseOther;
+    }*/
 
     /**
      * init from other SuntimesEquinoxSolsticeData object
@@ -268,26 +268,41 @@ public class SuntimesMoonData extends SuntimesData
         Calendar nextPhaseDate = moonPhases.get(nextPhase);
         boolean nextPhaseIsToday = (calendar.get(Calendar.YEAR) == nextPhaseDate.get(Calendar.YEAR)) &&
                                    (calendar.get(Calendar.DAY_OF_YEAR) == nextPhaseDate.get(Calendar.DAY_OF_YEAR));
-        if (nextPhaseIsToday)
-        {
-            switch (nextPhase)             // nextPhase is today (report major phase)
-            {
-                case NEW: return MoonPhaseDisplay.NEW;
-                case FIRST_QUARTER: return MoonPhaseDisplay.FIRST_QUARTER;
-                case THIRD_QUARTER: return MoonPhaseDisplay.THIRD_QUARTER;
-                case FULL:
-                default: return MoonPhaseDisplay.FULL;
-            }
+        return (nextPhaseIsToday ? toPhase(nextPhase) : prevMinorPhase(nextPhase));
+    }
 
-        } else {
-            switch (nextPhase)             // next phase is distant (report leading minor phase)
-            {
-                case NEW: return MoonPhaseDisplay.WANING_CRESCENT;
-                case FIRST_QUARTER: return MoonPhaseDisplay.WAXING_CRESCENT;
-                case THIRD_QUARTER: return MoonPhaseDisplay.WANING_GIBBOUS;
-                case FULL:
-                default: return MoonPhaseDisplay.WAXING_GIBBOUS;
-            }
+    public static MoonPhaseDisplay toPhase( SuntimesCalculator.MoonPhase input )
+    {
+        switch (input) {
+            case NEW: return MoonPhaseDisplay.NEW;
+            case FIRST_QUARTER: return MoonPhaseDisplay.FIRST_QUARTER;
+            case THIRD_QUARTER: return MoonPhaseDisplay.THIRD_QUARTER;
+            case FULL:
+            default: return MoonPhaseDisplay.FULL;
+        }
+    }
+
+    public static MoonPhaseDisplay prevMinorPhase(SuntimesCalculator.MoonPhase input)
+    {
+        switch (input)
+        {
+            case NEW: return MoonPhaseDisplay.WANING_CRESCENT;
+            case FIRST_QUARTER: return MoonPhaseDisplay.WAXING_CRESCENT;
+            case THIRD_QUARTER: return MoonPhaseDisplay.WANING_GIBBOUS;
+            case FULL:
+            default: return MoonPhaseDisplay.WAXING_GIBBOUS;
+        }
+    }
+
+    public static MoonPhaseDisplay nextMinorPhase(SuntimesCalculator.MoonPhase input)
+    {
+        switch (input)
+        {
+            case NEW: return MoonPhaseDisplay.WAXING_CRESCENT;
+            case FIRST_QUARTER: return MoonPhaseDisplay.WAXING_GIBBOUS;
+            case THIRD_QUARTER: return MoonPhaseDisplay.WANING_CRESCENT;
+            case FULL:
+            default: return MoonPhaseDisplay.WANING_GIBBOUS;
         }
     }
 
