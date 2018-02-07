@@ -384,17 +384,17 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_1x1ModePref()
     {
-        WidgetSettings.save1x1ModePref(context, appWidgetId, WidgetSettings.WidgetMode1x1.WIDGETMODE1x1_SUNRISE);
-        WidgetSettings.WidgetMode1x1 pref2 = WidgetSettings.load1x1ModePref(context, appWidgetId);
-        assertTrue("pref should be SUNRISE but was " + pref2, pref2.equals(WidgetSettings.WidgetMode1x1.WIDGETMODE1x1_SUNRISE));
+        WidgetSettings.saveSun1x1ModePref(context, appWidgetId, WidgetSettings.WidgetModeSun1x1.WIDGETMODE1x1_SUNRISE);
+        WidgetSettings.WidgetModeSun1x1 pref2 = WidgetSettings.loadSun1x1ModePref(context, appWidgetId);
+        assertTrue("pref should be SUNRISE but was " + pref2, pref2.equals(WidgetSettings.WidgetModeSun1x1.WIDGETMODE1x1_SUNRISE));
 
-        WidgetSettings.save1x1ModePref(context, appWidgetId, WidgetSettings.WidgetMode1x1.WIDGETMODE1x1_SUNSET);
-        WidgetSettings.WidgetMode1x1 pref1 = WidgetSettings.load1x1ModePref(context, appWidgetId);
-        assertTrue("pref should be SUNSET but was " + pref1, pref1.equals(WidgetSettings.WidgetMode1x1.WIDGETMODE1x1_SUNSET));
+        WidgetSettings.saveSun1x1ModePref(context, appWidgetId, WidgetSettings.WidgetModeSun1x1.WIDGETMODE1x1_SUNSET);
+        WidgetSettings.WidgetModeSun1x1 pref1 = WidgetSettings.loadSun1x1ModePref(context, appWidgetId);
+        assertTrue("pref should be SUNSET but was " + pref1, pref1.equals(WidgetSettings.WidgetModeSun1x1.WIDGETMODE1x1_SUNSET));
 
-        WidgetSettings.delete1x1ModePref(context, appWidgetId);
-        WidgetSettings.WidgetMode1x1 pref0 = WidgetSettings.load1x1ModePref(context, appWidgetId);
-        assertTrue("pref should be default (BOTH_1) but was " + pref0, pref0.equals(WidgetSettings.PREF_DEF_APPEARANCE_WIDGETMODE_1x1) && pref0.equals(WidgetSettings.WidgetMode1x1.WIDGETMODE1x1_BOTH_1));
+        WidgetSettings.deleteSun1x1ModePref(context, appWidgetId);
+        WidgetSettings.WidgetModeSun1x1 pref0 = WidgetSettings.loadSun1x1ModePref(context, appWidgetId);
+        assertTrue("pref should be default (BOTH_1) but was " + pref0, pref0.equals(WidgetSettings.PREF_DEF_APPEARANCE_WIDGETMODE_SUN1x1) && pref0.equals(WidgetSettings.WidgetModeSun1x1.WIDGETMODE1x1_BOTH_1));
     }
 
     @Test

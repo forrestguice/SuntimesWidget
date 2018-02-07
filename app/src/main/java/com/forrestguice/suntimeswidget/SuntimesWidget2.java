@@ -146,9 +146,9 @@ public class SuntimesWidget2 extends SuntimesWidget0
         //{
             /**int minWidth1x3 = context.getResources().getInteger(R.integer.widget_size_minWidthDp1x3);
             layout = ((mustFitWithinDp[0] >= minWidth1x3) ? new SuntimesLayout_1x3_0()
-                    : WidgetSettings.load1x1ModePref_asLayout(context, appWidgetId));
+                    : WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId));
             } else {
-            layout = WidgetSettings.load1x1ModePref_asLayout(context, appWidgetId); */
+            layout = WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId); */
             //layout = new SuntimesLayout_1x1eq_0();  // TODO
 
         //} else {

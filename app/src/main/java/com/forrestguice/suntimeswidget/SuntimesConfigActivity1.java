@@ -50,7 +50,7 @@ public class SuntimesConfigActivity1 extends SuntimesConfigActivity0
 
         if (spinner_1x1mode != null)
         {
-            WidgetSettings.WidgetMode1x1 widgetMode = WidgetSettings.WidgetMode1x1.WIDGETMODE1x1_SUNSET;
+            WidgetSettings.WidgetModeSun1x1 widgetMode = WidgetSettings.WidgetModeSun1x1.WIDGETMODE1x1_SUNSET;
             spinner_1x1mode.setSelection(widgetMode.ordinal());
         }
 
