@@ -38,7 +38,8 @@
                 style="@style/SunsetTimeTextView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="0% illuminated" />
+                android:layout_gravity="center"
+                tools:text="0%" />
 
         </LinearLayout>
 

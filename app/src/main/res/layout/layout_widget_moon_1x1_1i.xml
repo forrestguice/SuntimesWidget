@@ -29,7 +29,6 @@
     <LinearLayout
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal" android:layout_marginBottom="2dp"
-        android:showDividers="middle" android:divider="@drawable/ic_spacer"
         android:orientation="horizontal">
 
         <include layout="@layout/info_moonphase" />
