@@ -385,6 +385,7 @@
     <string name="configLabel_places">Places</string>                           <!-- group title -->
     <string name="configLabel_places_export">Export Places</string>
     <string name="configLabel_places_clear">Clear Places</string>
+    <string name="configLabel_places_build">Build City List</string>   <!-- TODO: i18n -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">User Interface</string>                       <!-- group title -->
@@ -676,6 +677,11 @@
     <string name="locationcleared_dialog_title">Clearing Places</string>
     <string name="locationcleared_dialog_message">Clearing the database…</string>
     <string name="locationcleared_toast_success">The database of places has been cleared.</string>
+
+    <!-- Dialog: Build Places List (progress) -->
+    <string name="locationbuild_dialog_title">Building Database</string>
+    <string name="locationbuild_dialog_message">Building a database of places…</string>
+    <string name="locationbuild_toast_success">Added <xliff:g id="n">%1$s</xliff:g> places to the database.</string>
 
     <!-- Dialog: Export Places -->
     <string name="locationexport_dialog_title">Exporting Places</string>
