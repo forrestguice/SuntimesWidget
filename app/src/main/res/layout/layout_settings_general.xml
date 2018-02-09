@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2014-2017 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -97,6 +97,17 @@
                 android:id="@+id/appwidget_general_timeMode_override"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="@string/configLabel_general_timeMode_override" />
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/appwidget_general_showWeeks_layout"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
+
+            <CheckBox android:id="@+id/appwidget_general_showWeeks"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/configLabel_general_showWeeks" />
 
         </LinearLayout>
 
