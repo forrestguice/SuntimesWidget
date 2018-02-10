@@ -386,6 +386,8 @@
     <string name="configLabel_places">Emplacements</string>                           <!-- group title -->
     <string name="configLabel_places_export">Exporter les emplacements</string>
     <string name="configLabel_places_clear">Effacer les emplacements</string>
+    <string name="configLabel_places_build">Add World Places</string>  <!-- TODO -->
+    <string name="configLabel_places_build_summary">Scan locales and add cities to the database.</string>   <!-- TODO -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Interface utilisateur</string>                       <!-- group title -->

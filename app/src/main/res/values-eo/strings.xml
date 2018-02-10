@@ -392,6 +392,8 @@
     <string name="configLabel_places">Lokoj</string>                           <!-- group title -->
     <string name="configLabel_places_export">Elporti lokojn</string>
     <string name="configLabel_places_clear">Forviŝi lokojn</string>
+    <string name="configLabel_places_build">Add World Places</string>  <!-- TODO -->
+    <string name="configLabel_places_build_summary">Scan locales and add cities to the database.</string>   <!-- TODO -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Fasado</string>                       <!-- group title -->

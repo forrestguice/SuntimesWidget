@@ -396,6 +396,8 @@
     <string name="configLabel_places">Llocs</string>                           <!-- group title -->
     <string name="configLabel_places_export">Exportar llocs</string>
     <string name="configLabel_places_clear">Borrar llocs</string>
+    <string name="configLabel_places_build">Add World Places</string>  <!-- TODO -->
+    <string name="configLabel_places_build_summary">Scan locales and add cities to the database.</string>   <!-- TODO -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Interfície d\'usuari</string>                       <!-- group title -->
