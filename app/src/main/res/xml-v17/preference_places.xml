@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/configLabel_places">
+
+        <Preference android:title="@string/configLabel_places_build"
+            android:summary="@string/configLabel_places_build_summary" android:key="places_build" />
+
+        <Preference android:title="@string/configLabel_places_clear" android:key="places_clear" />
+
+        <Preference android:title="@string/configLabel_places_export" android:key="places_export" />
+
+        <com.forrestguice.suntimeswidget.settings.ListPreference
+            android:key="getFix_maxElapsed"
+            android:title="@string/configLabel_getFix_maxElapse"
+            android:dialogTitle="@string/configLabel_getFix_maxElapse"
+            android:summary="@string/configLabel_getFix_maxElapse_summary"
+            android:entries="@array/getFix_maxElapse_display" android:entryValues="@array/getFix_maxElapse_values"
+            android:defaultValue="@string/def_getFix_maxElapsed" />
+
+        <com.forrestguice.suntimeswidget.settings.ListPreference
+            android:key="getFix_maxAge"
+            android:title="@string/configLabel_getFix_maxAge"
+            android:dialogTitle="@string/configLabel_getFix_maxAge"
+            android:summary="@string/configLabel_getFix_maxAge_summary"
+            android:entries="@array/getFix_maxAge_display" android:entryValues="@array/getFix_maxAge_values"
+            android:defaultValue="@string/def_getFix_maxAge" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

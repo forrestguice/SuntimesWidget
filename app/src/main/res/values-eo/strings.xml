@@ -394,6 +394,8 @@
     <string name="configLabel_places">Lokoj</string>                           <!-- group title -->
     <string name="configLabel_places_export">Elporti lokojn</string>
     <string name="configLabel_places_clear">Forviŝi lokojn</string>
+    <string name="configLabel_places_build">Add World Places</string>  <!-- TODO -->
+    <string name="configLabel_places_build_summary">Scan locales and add cities to the database.</string>   <!-- TODO -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Fasado</string>                       <!-- group title -->
@@ -608,6 +610,11 @@
     <string name="locationcleared_dialog_title">Forigi lokojn</string>
     <string name="locationcleared_dialog_message">Forviŝado de la datumbazo…</string>
     <string name="locationcleared_toast_success">La datumbazo de lokoj estas forviŝita.</string>
+
+    <!-- Dialog: Build Places List (progress) -->
+    <string name="locationbuild_dialog_title">Building Database</string>  <!-- TODO -->
+    <string name="locationbuild_dialog_message">Building a database of places…</string>  <!-- TODO -->
+    <string name="locationbuild_toast_success">Added <xliff:g id="n">%1$s</xliff:g> places to the database.</string>  <!-- TODO -->
 
     <!-- Dialog: Export Places -->
     <string name="locationexport_dialog_title">Elporti lokojn</string>
