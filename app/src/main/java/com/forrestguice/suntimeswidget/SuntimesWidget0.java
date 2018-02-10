@@ -232,7 +232,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
 
     protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
-        SuntimesLayout defLayout = WidgetSettings.load1x1ModePref_asLayout(context, appWidgetId);
+        SuntimesLayout defLayout = WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId);
         SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0.class, getMinSize(context), defLayout);
     }
 
@@ -320,9 +320,9 @@ public class SuntimesWidget0 extends AppWidgetProvider
         {
             int minWidth1x3 = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
             layout = ((mustFitWithinDp[0] >= minWidth1x3) ? new SuntimesLayout_2x1_0()
-                                                          : WidgetSettings.load1x1ModePref_asLayout(context, appWidgetId));
+                                                          : WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId));
         } else {
-            layout = defLayout; // WidgetSettings.load1x1ModePref_asLayout(context, appWidgetId);
+            layout = defLayout; // WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId);
         }
         //Log.d("getWidgetLayout", "layout is: " + layout);
         return layout;
