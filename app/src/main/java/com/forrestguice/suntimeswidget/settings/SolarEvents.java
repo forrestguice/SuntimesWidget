@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.settings;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,13 +39,19 @@ public enum SolarEvents
 {
     MORNING_ASTRONOMICAL("astronomical twilight", "morning astronomical twilight", R.drawable.ic_sunrise_large), // 0
     MORNING_NAUTICAL("nautical twilight", "morning nautical twilight", R.drawable.ic_sunrise_large),             // 1
-    MORNING_CIVIL("civil twilight", "morning civil twilight", R.drawable.ic_sunrise_large),                      // 2
-    SUNRISE("sunrise", "sunrise", R.drawable.ic_sunrise_large),                                                  // 3
-    NOON("solar noon", "solar noon", R.drawable.ic_noon_large),                                                  // 4
-    SUNSET("sunset", "sunset", R.drawable.ic_sunset_large),                                                      // 5
-    EVENING_CIVIL("civil twilight", "evening civil twilight", R.drawable.ic_sunset_large),                       // 6
-    EVENING_NAUTICAL("nautical twilight", "evening nautical twilight", R.drawable.ic_sunset_large),              // 7
-    EVENING_ASTRONOMICAL("astronomical twilight", "evening astronomical twilight", R.drawable.ic_sunset_large);  // 8
+    MORNING_BLUE8("blue hour", "morning blue hour", R.drawable.ic_sunrise_large),                                // 2
+    MORNING_CIVIL("civil twilight", "morning civil twilight", R.drawable.ic_sunrise_large),                      // 3
+    MORNING_BLUE4("blue hour", "morning blue hour", R.drawable.ic_sunrise_large),                                // 4
+    SUNRISE("sunrise", "sunrise", R.drawable.ic_sunrise_large),                                                  // 5
+    MORNING_GOLDEN("golden hour", "morning golden hour", R.drawable.ic_sunrise_large),                           // 6
+    NOON("solar noon", "solar noon", R.drawable.ic_noon_large),                                                  // 7
+    EVENING_GOLDEN("golden hour", "evening golden hour", R.drawable.ic_sunset_large),                            // 8
+    SUNSET("sunset", "sunset", R.drawable.ic_sunset_large),                                                      // 9
+    EVENING_BLUE4("blue hour", "evening blue hour", R.drawable.ic_sunset_large),                                 // 10
+    EVENING_CIVIL("civil twilight", "evening civil twilight", R.drawable.ic_sunset_large),                       // 11
+    EVENING_BLUE8("blue hour", "evening blue hour", R.drawable.ic_sunset_large),                                 // 12
+    EVENING_NAUTICAL("nautical twilight", "evening nautical twilight", R.drawable.ic_sunset_large),              // 13
+    EVENING_ASTRONOMICAL("astronomical twilight", "evening astronomical twilight", R.drawable.ic_sunset_large);  // 14  .. R.array.solarevents_short/_long req same length/order
 
     private int iconResource;
     private String shortDisplayString, longDisplayString;
@@ -86,16 +93,23 @@ public enum SolarEvents
     {
         String[] modes_short = context.getResources().getStringArray(R.array.solarevents_short);
         String[] modes_long = context.getResources().getStringArray(R.array.solarevents_long);
+        if (modes_long.length != modes_short.length)
+        {
+            Log.e("initDisplayStrings", "The size of solarevents_short and solarevents_long DOES NOT MATCH! locale: " + AppSettings.getLocale().toString());
+            return;
+        }
 
-        MORNING_ASTRONOMICAL.setDisplayString(modes_short[0], modes_long[0]);
-        MORNING_NAUTICAL.setDisplayString(modes_short[1], modes_long[1]);
-        MORNING_CIVIL.setDisplayString(modes_short[2], modes_long[2]);
-        SUNRISE.setDisplayString(modes_short[3], modes_long[3]);
-        NOON.setDisplayString(modes_short[4], modes_long[4]);
-        SUNSET.setDisplayString(modes_short[5], modes_long[5]);
-        EVENING_CIVIL.setDisplayString(modes_short[6], modes_long[6]);
-        EVENING_NAUTICAL.setDisplayString(modes_short[7], modes_long[7]);
-        EVENING_ASTRONOMICAL.setDisplayString(modes_short[8], modes_long[8]);
+        SolarEvents[] values = values();
+        if (modes_long.length != values.length)
+        {
+            Log.e("initDisplayStrings", "The size of solarevents_long and SolarEvents DOES NOT MATCH! locale: " + AppSettings.getLocale().toString());
+            return;
+        }
+
+        for (int i = 0; i < values.length; i++)
+        {
+            values[i].setDisplayString(modes_short[i], modes_long[i]);
+        }
     }
 
     public static SolarEventsAdapter createAdapter(Context context)

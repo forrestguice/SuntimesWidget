@@ -190,23 +190,23 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     @Override
     public Calendar[] getMorningBlueHourForDate(Calendar date)
     {
-        return null;
+        return new Calendar[] { null, null };
     }
 
     @Override
     public Calendar[] getEveningBlueHourForDate(Calendar date)
     {
-        return null;
+        return new Calendar[] { null, null };
     }
 
     @Override
-    public Calendar[] getMorningGoldenHourForDate(Calendar date)
+    public Calendar getMorningGoldenHourForDate(Calendar date)
     {
         return null;
     }
 
     @Override
-    public Calendar[] getEveningGoldenHourForDate(Calendar date)
+    public Calendar getEveningGoldenHourForDate(Calendar date)
     {
         return null;
     }

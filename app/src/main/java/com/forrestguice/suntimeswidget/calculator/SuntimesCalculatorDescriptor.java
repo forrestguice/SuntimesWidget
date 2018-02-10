@@ -226,6 +226,11 @@ public class SuntimesCalculatorDescriptor implements Comparable
         return features;
     }
 
+    public boolean hasRequestedFeature( int requestedFeature )
+    {
+        return hasRequestedFeatures( new int[] {requestedFeature} );
+    }
+
     public boolean hasRequestedFeatures( int[] requestedFeatures )
     {
         int[] supportedFeatures = getSupportedFeatures();

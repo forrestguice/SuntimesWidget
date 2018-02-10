@@ -37,6 +37,7 @@ public interface SuntimesCalculator
     int FEATURE_SOLSTICE = 10;    // feature: solstice/equinox times
     int FEATURE_ALTITUDE = 20;    // feature: altitude based refinement
     int FEATURE_MOON = 30;        // feature: moonrise, moonset, phase, illumination
+    int FEATURE_GOLDBLUE = 30;    // feature: gold, blue hour times
 
     //
     // 1.0.0 sunrise, sunset, noon, twilight times
@@ -184,40 +185,44 @@ public interface SuntimesCalculator
     Calendar getWinterSolsticeForYear( Calendar date );
 
     //
-    // 1.1.0, blue hour, golden hour, isDay
+    // 1.3.0, blue hour, golden hour
     //
 
     /**
      * Morning Blue Hour
      * @param date a Calendar representing a given date
-     * @return a [Calendar,Calendar] pair for [start,end] of the morning blue hour
-     * @since 1.1.0
+     * @return [start,end] of the morning blue hour
+     * @since 1.3.0
      */
     Calendar[] getMorningBlueHourForDate( Calendar date );
 
     /**
      * Evening Blue Hour
      * @param date a Calendar representing a given date
-     * @return a [Calendar,Calendar] pair for [start,end] of the evening blue hour
-     * @since 1.1.0
+     * @return [start,end] of the evening blue hour
+     * @since 1.3.0
      */
     Calendar[] getEveningBlueHourForDate( Calendar date );
 
     /**
      * Morning Golden Hour
      * @param date a Calendar representing a given date
-     * @return a [Calendar,Calendar] pair for [start,end] of the morning golden hour
-     * @since 1.1.0
+     * @return end of the morning golden hour
+     * @since 1.3.0
      */
-    Calendar[] getMorningGoldenHourForDate( Calendar date );
+    Calendar getMorningGoldenHourForDate( Calendar date );
 
     /**
      * Evening Golden Hour
      * @param date a Calendar representing a given date
-     * @return a [Calendar,Calendar] pair for [start,end] of the evening golden hour
+     * @return start of the evening golden hour
      * @since 1.1.0
      */
-    Calendar[] getEveningGoldenHourForDate( Calendar date );
+    Calendar getEveningGoldenHourForDate( Calendar date );
+
+    //
+    // 1.1.0 isDay
+    //
 
     /**
      * @param dateTime a Calendar representing a given date and time

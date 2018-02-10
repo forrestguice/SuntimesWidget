@@ -86,6 +86,18 @@ public class AppSettingsTest extends SuntimesActivityTestBase
     }
 
     @Test
+    public void test_showBlueHourPref()
+    {
+        assertTrue("STUB: TODO", true == false);
+    }
+
+    @Test
+    public void test_showGoldHourPref()
+    {
+        assertTrue("STUB: TODO", true == false);
+    }
+
+    @Test
     public void test_showLightmapPref()
     {
         boolean defaultValue0 = AppSettings.PREF_DEF_UI_SHOWLIGHTMAP;
