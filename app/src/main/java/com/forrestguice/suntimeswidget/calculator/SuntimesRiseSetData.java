@@ -332,10 +332,10 @@ public class SuntimesRiseSetData extends SuntimesData
         }
 
         dayLengthToday = (sunsetCalendarToday == null || sunriseCalendarToday == null)
-                ? -1 : sunsetCalendarToday.getTimeInMillis() - sunriseCalendarToday.getTimeInMillis();
+                ? 0 : sunsetCalendarToday.getTimeInMillis() - sunriseCalendarToday.getTimeInMillis();
 
         dayLengthOther = ((sunriseCalendarOther == null || sunsetCalendarOther == null))
-                ? -1 : sunsetCalendarOther.getTimeInMillis() - sunriseCalendarOther.getTimeInMillis();
+                ? 0 : sunsetCalendarOther.getTimeInMillis() - sunriseCalendarOther.getTimeInMillis();
 
         super.calculate();
     }
