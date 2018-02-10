@@ -636,6 +636,11 @@
     <string name="locationcleared_dialog_message">Borrando base de datos…</string>
     <string name="locationcleared_toast_success">La base de datos de lugares se ha borrado.</string>
 
+    <!-- Dialog: Build Places List (progress) -->
+    <string name="locationbuild_dialog_title">Building Database</string>  <!-- TODO -->
+    <string name="locationbuild_dialog_message">Building a database of places…</string>  <!-- TODO -->
+    <string name="locationbuild_toast_success">Added <xliff:g id="n">%1$s</xliff:g> places to the database.</string>  <!-- TODO -->
+
     <!-- Dialog: Export Places -->
     <string name="locationexport_dialog_title">Exportando lugares</string>
     <string name="locationexport_dialog_message">Exportando base de datos a un archivo csv.</string>

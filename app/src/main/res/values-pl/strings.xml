@@ -606,6 +606,11 @@
     <string name="locationcleared_dialog_message">Czyszczenie bazy danych…</string>
     <string name="locationcleared_toast_success">Baza danych miejsc została wyczyszczona.</string>
 
+    <!-- Dialog: Build Places List (progress) -->
+    <string name="locationbuild_dialog_title">Building Database</string>  <!-- TODO -->
+    <string name="locationbuild_dialog_message">Building a database of places…</string>  <!-- TODO -->
+    <string name="locationbuild_toast_success">Added <xliff:g id="n">%1$s</xliff:g> places to the database.</string>  <!-- TODO -->
+
     <!-- Dialog: Export Places -->
     <string name="locationexport_dialog_title">Eksport miejsc</string>
     <string name="locationexport_dialog_message">Eksportowanie bazy danych do pliku csv.</string>

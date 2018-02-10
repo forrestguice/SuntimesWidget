@@ -639,6 +639,11 @@
     <string name="locationcleared_dialog_message">Esborrant base de dades…</string>
     <string name="locationcleared_toast_success">La base de dades de llocs s\'ha esborrat.</string>
 
+    <!-- Dialog: Build Places List (progress) -->
+    <string name="locationbuild_dialog_title">Building Database</string>  <!-- TODO -->
+    <string name="locationbuild_dialog_message">Building a database of places…</string>  <!-- TODO -->
+    <string name="locationbuild_toast_success">Added <xliff:g id="n">%1$s</xliff:g> places to the database.</string>  <!-- TODO -->
+
     <!-- Dialog: export Places -->
     <string name="locationexport_dialog_title">Exportant llocs</string>
     <string name="locationexport_dialog_message">Exportant base de dades a un arxiu csv.</string>

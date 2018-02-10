@@ -609,6 +609,11 @@
     <string name="locationcleared_dialog_message">Forviŝado de la datumbazo…</string>
     <string name="locationcleared_toast_success">La datumbazo de lokoj estas forviŝita.</string>
 
+    <!-- Dialog: Build Places List (progress) -->
+    <string name="locationbuild_dialog_title">Building Database</string>  <!-- TODO -->
+    <string name="locationbuild_dialog_message">Building a database of places…</string>  <!-- TODO -->
+    <string name="locationbuild_toast_success">Added <xliff:g id="n">%1$s</xliff:g> places to the database.</string>  <!-- TODO -->
+
     <!-- Dialog: Export Places -->
     <string name="locationexport_dialog_title">Elporti lokojn</string>
     <string name="locationexport_dialog_message">Elportado de la datumbazo al csv-dosiero.</string>
