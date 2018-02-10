@@ -31,6 +31,7 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -41,7 +42,7 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
     public static final long MIN_WAIT_TIME = 2000;
 
     private GetFixDatabaseAdapter db;
-    private Context context;
+    private WeakReference<Context> contextRef;
 
     private boolean isPaused = false;
     public void pauseTask()
@@ -61,7 +62,7 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
 
     public BuildPlacesTask(Context context)
     {
-        this.context = context;
+        this.contextRef = new WeakReference<Context>(context);
         db = new GetFixDatabaseAdapter(context.getApplicationContext());
     }
 
@@ -72,12 +73,12 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
         long startTime = System.currentTimeMillis();
         ArrayList<WidgetSettings.Location> locations = new ArrayList<>();
         try {
-
+            Context context = contextRef.get();
             db.open();
             for (Locale locale : Locale.getAvailableLocales())
             {
                 WidgetSettings.Location location = null;
-                if (Build.VERSION.SDK_INT >= 17)
+                if (Build.VERSION.SDK_INT >= 17 && context != null)
                 {
                     Configuration config = new Configuration(context.getResources().getConfiguration());
                     config.setLocale(locale);
