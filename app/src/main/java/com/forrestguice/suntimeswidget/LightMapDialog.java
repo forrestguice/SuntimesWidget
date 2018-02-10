@@ -40,6 +40,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class LightMapDialog extends DialogFragment
 {
@@ -84,6 +85,7 @@ public class LightMapDialog extends DialogFragment
     public void initViews(View dialogView)
     {
         lightmap = (LightMapView)dialogView.findViewById(R.id.info_time_lightmap);
+
         field_night = new LightMapKey(dialogView, R.id.info_time_lightmap_key_night_icon, R.id.info_time_lightmap_key_night_label, R.id.info_time_lightmap_key_night_duration);
         field_astro = new LightMapKey(dialogView, R.id.info_time_lightmap_key_astro_icon, R.id.info_time_lightmap_key_astro_label, R.id.info_time_lightmap_key_astro_duration);
         field_nautical = new LightMapKey(dialogView, R.id.info_time_lightmap_key_nautical_icon, R.id.info_time_lightmap_key_nautical_label, R.id.info_time_lightmap_key_nautical_duration);
@@ -137,8 +139,6 @@ public class LightMapDialog extends DialogFragment
         if (lightmap != null)
         {
             Context context = getContext();
-            //showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
-
             field_civil.updateInfo(context, createInfoArray(data.civilTwilightLength()));
             field_nautical.updateInfo(context, createInfoArray(data.nauticalTwilightLength()));
             field_astro.updateInfo(context, createInfoArray(data.astroTwilightLength()));
@@ -210,7 +210,10 @@ public class LightMapDialog extends DialogFragment
                     else text.setText(new SpannableString(s));
 
                 } else {
-                    text.setText(new SpannableString(context.getString(R.string.length_twilight1, duration)));
+                    String s = context.getString(R.string.length_twilight1, duration);
+                    if (info[0].durationColor != null)
+                        text.setText(SuntimesUtils.createColorSpan(s, duration, info[0].durationColor));
+                    else text.setText(new SpannableString(s));
                 }
                 setVisible(true);
 
@@ -255,20 +258,29 @@ public class LightMapDialog extends DialogFragment
 
     public static LightMapKeyInfo[] createInfoArray(long durations, long delta, int color)
     {
-        LightMapKeyInfo[] info = new LightMapKeyInfo[1];
-        info[0] = new LightMapKeyInfo(durations, delta);
-        info[0].durationColor = color;
-        return info;
+        if (durations != 0)
+        {
+            LightMapKeyInfo[] info = new LightMapKeyInfo[1];
+            info[0] = new LightMapKeyInfo(durations, delta);
+            info[0].durationColor = color;
+            return info;
+
+        } else {
+            return new LightMapKeyInfo[0];
+        }
     }
 
     public static LightMapKeyInfo[] createInfoArray(long[] durations)
     {
-        LightMapKeyInfo[] info = new LightMapKeyInfo[durations.length];
+        ArrayList<LightMapKeyInfo> info = new ArrayList<>();
         for (int i=0; i<durations.length; i++)
         {
-            info[i] = new LightMapKeyInfo(durations[i], 0);
+            if (durations[i] != 0)
+            {
+                info.add(new LightMapKeyInfo(durations[i], 0));
+            }
         }
-        return info;
+        return info.toArray(new LightMapKeyInfo[0]);
     }
 
 }
