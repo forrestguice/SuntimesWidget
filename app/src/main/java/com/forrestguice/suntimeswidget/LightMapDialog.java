@@ -76,16 +76,8 @@ public class LightMapDialog extends DialogFragment
             Log.d("DEBUG", "LightMapDialog onCreate (restoreState)");
         }
 
-        dialog.setOnShowListener(new DialogInterface.OnShowListener()
-        {
-            @Override
-            public void onShow(DialogInterface dialogInterface)
-            {
-                updateViews(data);
-            }
-        });
-
         themeViews(dialog.getContext());
+        updateViews();
         return dialog;
     }
 
@@ -134,7 +126,13 @@ public class LightMapDialog extends DialogFragment
         }
     }
 
-    public void updateViews( SuntimesRiseSetDataset data )
+    public void updateViews()
+    {
+        if (data != null)
+            updateViews(data);
+    }
+
+    protected void updateViews( @NonNull SuntimesRiseSetDataset data )
     {
         if (lightmap != null)
         {
