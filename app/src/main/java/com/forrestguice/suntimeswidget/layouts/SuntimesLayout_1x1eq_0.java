@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2017 Forrest Guice
+   Copyright (C) 2017-2018 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -70,6 +70,7 @@ public class SuntimesLayout_1x1eq_0 extends SuntimesLayoutEq
 
             if (event != null)
             {
+                boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, appWidgetId);
                 boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
                 TimeDisplayText eventString = utils.calendarDateTimeDisplayString(context, event, showSeconds);
                 views.setTextViewText(R.id.text_time_event, eventString.getValue());
@@ -80,7 +81,7 @@ public class SuntimesLayout_1x1eq_0 extends SuntimesLayoutEq
                     noteStringId = R.string.ago;
                 }
 
-                String noteTime = utils.timeDeltaDisplayString(now.getTime(), event.getTime()).toString();
+                String noteTime = utils.timeDeltaDisplayString(now.getTime(), event.getTime(), showWeeks).toString();
                 String noteString = context.getString(noteStringId, noteTime);
                 SpannableString noteSpan = SuntimesUtils.createColorSpan(noteString, noteTime, timeColor);
                 views.setTextViewText(R.id.text_time_event_note, noteSpan);

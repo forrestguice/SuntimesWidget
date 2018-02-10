@@ -154,6 +154,9 @@
     <string name="configLabel_general_calculator">Font de dades:</string>         <!-- spinner label -->
     <string name="configLabel_general_showSeconds">Mostrar segons</string>        <!-- checkbox label -->
 
+    <string name="configLabel_general_showWeeks">Show Weeks</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_showWeeks_summary">Divide time spans greater than 7 days into weeks (e.g. 15d becomes 2w 1d).</string>        <!-- checkbox label -->  <!-- TODO -->
+
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Opcions d\'apariència</string>           <!-- group title -->
     <string name="configLabel_appearance_theme">Tema:</string>                  <!-- spinner label -->
@@ -396,6 +399,8 @@
     <string name="configLabel_places">Llocs</string>                           <!-- group title -->
     <string name="configLabel_places_export">Exportar llocs</string>
     <string name="configLabel_places_clear">Borrar llocs</string>
+    <string name="configLabel_places_build">Add World Places</string>  <!-- TODO -->
+    <string name="configLabel_places_build_summary">Scan locales and add cities to the database.</string>   <!-- TODO -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Interfície d\'usuari</string>                       <!-- group title -->
@@ -636,6 +641,11 @@
     <string name="locationcleared_dialog_title">Esborrant llocs</string>
     <string name="locationcleared_dialog_message">Esborrant base de dades…</string>
     <string name="locationcleared_toast_success">La base de dades de llocs s\'ha esborrat.</string>
+
+    <!-- Dialog: Build Places List (progress) -->
+    <string name="locationbuild_dialog_title">Building Database</string>  <!-- TODO -->
+    <string name="locationbuild_dialog_message">Building a database of places…</string>  <!-- TODO -->
+    <string name="locationbuild_toast_success">Added <xliff:g id="n">%1$s</xliff:g> places to the database.</string>  <!-- TODO -->
 
     <!-- Dialog: export Places -->
     <string name="locationexport_dialog_title">Exportant llocs</string>

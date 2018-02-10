@@ -72,6 +72,11 @@
             android:summary="@string/configLabel_ui_showWarnings_summary"
             android:defaultValue="@string/def_app_ui_showwarnings" />
 
+        <CheckBoxPreference
+            android:key="appwidget_0_general_showweeks"
+            android:title="@string/configLabel_general_showWeeks"
+            android:summary="@string/configLabel_general_showWeeks_summary" android:defaultValue="@string/def_appwidget_0_general_showweeks" />
+
         <com.forrestguice.suntimeswidget.settings.ListPreference
             android:key="appwidget_0_general_trackingmode"
             android:title="@string/configLabel_ui_solsticeTrackingMode"

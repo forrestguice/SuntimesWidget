@@ -151,6 +151,9 @@
     <string name="configLabel_general_calculator">Fuente de datos:</string>         <!-- spinner label -->
     <string name="configLabel_general_showSeconds">Mostrar segundos</string>        <!-- checkbox label -->
 
+    <string name="configLabel_general_showWeeks">Show Weeks</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_showWeeks_summary">Divide time spans greater than 7 days into weeks (e.g. 15d becomes 2w 1d).</string>        <!-- checkbox label -->  <!-- TODO -->
+
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Opciones de apariencia</string>           <!-- group title -->
     <string name="configLabel_appearance_theme">Tema:</string>                  <!-- spinner label -->
@@ -393,6 +396,8 @@
     <string name="configLabel_places">Lugares</string>                           <!-- group title -->
     <string name="configLabel_places_export">Exportar lugares</string>
     <string name="configLabel_places_clear">Borrar lugares</string>
+    <string name="configLabel_places_build">Add World Places</string>  <!-- TODO -->
+    <string name="configLabel_places_build_summary">Scan locales and add cities to the database.</string>   <!-- TODO -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Interfaz de usuario</string>                       <!-- group title -->
@@ -633,6 +638,11 @@
     <string name="locationcleared_dialog_title">Borrando lugares</string>
     <string name="locationcleared_dialog_message">Borrando base de datos…</string>
     <string name="locationcleared_toast_success">La base de datos de lugares se ha borrado.</string>
+
+    <!-- Dialog: Build Places List (progress) -->
+    <string name="locationbuild_dialog_title">Building Database</string>  <!-- TODO -->
+    <string name="locationbuild_dialog_message">Building a database of places…</string>  <!-- TODO -->
+    <string name="locationbuild_toast_success">Added <xliff:g id="n">%1$s</xliff:g> places to the database.</string>  <!-- TODO -->
 
     <!-- Dialog: Export Places -->
     <string name="locationexport_dialog_title">Exportando lugares</string>

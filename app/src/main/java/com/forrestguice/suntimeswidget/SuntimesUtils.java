@@ -487,9 +487,13 @@ public class SuntimesUtils
      */
     public TimeDisplayText timeDeltaDisplayString(Date c1, Date c2)
     {
+        return timeDeltaDisplayString(c1, c2, false);
+    }
+    public TimeDisplayText timeDeltaDisplayString(Date c1, Date c2, boolean showWeeks)
+    {
         if (c1 != null && c2 != null)
         {
-            TimeDisplayText displayText = timeDeltaLongDisplayString(c1.getTime(), c2.getTime());
+            TimeDisplayText displayText = timeDeltaLongDisplayString(c1.getTime(), c2.getTime(), showWeeks, false);
             displayText.setSuffix("");
             return displayText;
 
@@ -507,11 +511,15 @@ public class SuntimesUtils
      */
     public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2)
     {
-        return timeDeltaLongDisplayString(timeSpan1, timeSpan2, false);
+        return timeDeltaLongDisplayString(timeSpan1, timeSpan2, false, false);
+    }
+    public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2, boolean showSeconds)
+    {
+        return timeDeltaLongDisplayString(timeSpan1, timeSpan2, false, showSeconds);
     }
 
     @SuppressWarnings("ConstantConditions")
-    public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2, boolean showSeconds)
+    public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2, boolean showWeeks, boolean showSeconds)
     {
         String value = strSpace;
         String units = strEmpty;
@@ -533,8 +541,7 @@ public class SuntimesUtils
         long numberOfYears = numberOfDays / 365;
 
         long remainingWeeks = (long)(numberOfWeeks % 52.1429);
-        long remainingDays = numberOfDays % 7;
-        //long remainingDays = numberOfDays % 365;
+        long remainingDays = (showWeeks ? (numberOfDays % 7) : (numberOfDays % 365));
         long remainingHours = numberOfHours % 24;
         long remainingMinutes = numberOfMinutes % 60;
         long remainingSeconds = numberOfSeconds % 60;
@@ -543,7 +550,7 @@ public class SuntimesUtils
         if (showingYears)
             value += String.format(strTimeDeltaFormat, numberOfYears, strYears);
 
-        boolean showingWeeks = (numberOfWeeks > 0);
+        boolean showingWeeks = (showWeeks && numberOfWeeks > 0);
         if (showingWeeks)
             value += (showingYears ? strSpace : strEmpty) +
                     String.format(strTimeDeltaFormat, remainingWeeks, strWeeks);
