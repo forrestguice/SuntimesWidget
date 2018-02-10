@@ -1,5 +1,9 @@
 ### ~
 
+* adds option to show/hide blue hour.
+* adds option to show/hide golden hour.
+* adds golden hour, blue hour (8deg), and blue hour (4deg) to rise/set times.
+
 ### v0.6.2 (2018-02-03)
 * adds option "verbose accessibility"; better support for TalkBack. 
 * misc usability fixes (MainActivity, AlarmDialog); better support for TalkBack. 
@@ -15,11 +19,6 @@
 * misc accessibility fixes (labelFor, dropDownVerticalOffset).
 * adds web links in the About Dialog to the changelog and version commit.  
 * updates translations (eo, pl) (#137).
-
-### ...
-* adds option to show/hide blue hour.
-* adds option to show/hide golden hour.
-* adds golden hour, blue hour (8deg), and blue hour (4deg) to rise/set times.
 
 ### v0.6.0 (2017-12-27)
 * adds solstice/equinox tracking to app (#13).
