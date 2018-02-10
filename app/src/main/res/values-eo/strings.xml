@@ -99,6 +99,10 @@
     <string name="untilEnd_civilTwilight">civila sunsubiro</string>
     <string name="untilEnd_nauticalTwilight">naŭtika sunsubiro</string>
     <string name="untilEnd_astroTwilight">astronomia sunsubiro</string>
+    <string name="until_goldhour">golden hour</string> <!-- TODO -->
+    <string name="untilEnd_goldhour">golden hour</string> <!-- TODO -->
+    <string name="until_bluehour">blue hour</string> <!-- TODO -->
+    <string name="untilEnd_bluehour">blue hour</string> <!-- TODO -->
 
     <!-- Table -->
     <string name="sunrise">Sunleviĝo</string>                             <!-- contentDescription -->
@@ -161,6 +165,12 @@
     <string name="timeMode_astronomical">Astronomia krepusko</string> <!-- setting -->
     <string name="timeMode_night">Nokto</string>                <!-- a label (not an actual timeMode setting) -->
     <string name="timeMode_day">Tago</string>                   <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_golden_short">Golden</string>                <!-- setting --> <!-- TODO -->
+    <string name="timeMode_golden">Golden Hour</string>                 <!-- setting --> <!-- TODO -->
+    <string name="timeMode_blue8_short">Blue (8\u00B0)</string>                    <!-- setting --> <!-- TODO -->
+    <string name="timeMode_blue8">Blue Hour (8\u00B0)</string>                     <!-- setting --> <!-- TODO -->
+    <string name="timeMode_blue4_short">Blue (4\u00B0)</string>                    <!-- setting --> <!-- TODO -->
+    <string name="timeMode_blue4">Blue Hour (4\u00B0)</string>                     <!-- setting --> <!-- TODO -->
 
     <string name="timeMode_equinox_vernal">Printempa tagnoktegaleco</string>      <!-- setting -->
     <string name="timeMode_equinox_vernal_short">Ekvinokso</string>       <!-- setting -->
@@ -411,6 +421,14 @@
     <string name="configLabel_ui_showdatasource">Montri fonton de datumoj</string>
     <string name="configLabel_ui_showdatasource_summary">Montri etikedon indikantan la nunan agordaron.</string>
 
+    <!-- App Setting: show golden hour -->
+    <string name="configLabel_ui_showgoldhour">Show Golden Hour</string>                <!-- TODO -->
+    <string name="configLabel_ui_showgoldhour_summary">Show golden hour times.</string> <!-- TODO -->
+
+    <!-- App Setting: show blue hour -->
+    <string name="configLabel_ui_showbluehour">Show Blue Hour</string>                  <!-- TODO -->
+    <string name="configLabel_ui_showbluehour_summary">Show blue hour times.</string>   <!-- TODO -->
+
     <!-- App Setting: UI Theme -->
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
         <item>Hela etoso</item>
@@ -485,22 +503,34 @@
     <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
         <item>astronomia sunleviĝo</item>
         <item>naŭtika sunleviĝo</item>
+        <item>blue hour</item>   <!-- TODO -->
         <item>civila sunleviĝo</item>
+        <item>blue hour</item>   <!-- TODO -->
         <item>sunleviĝo</item>
+        <item>golden hour</item>  <!-- TODO -->
         <item>tagmezo vera</item>
+        <item>golden hour</item>  <!-- TODO -->
         <item>sunsubiro</item>
+        <item>blue hour</item>  <!-- TODO -->
         <item>civila sunsubiro</item>
+        <item>blue hour</item>  <!-- TODO -->
         <item>naŭtika sunsubiro</item>
         <item>astronomia sunsubiro</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>astronomia sunleviĝo</item>
         <item>naŭtika sunleviĝo</item>
+        <item>morning blue hour (start)</item>  <!-- TODO -->
         <item>civila sunleviĝo</item>
+        <item>morning blue hour (end)</item>  <!-- TODO -->
         <item>sunleviĝo</item>
+        <item>morning golden hour (end)</item>  <!-- TODO -->
         <item>tagmezo vera (kulminado)</item>
+        <item>evening golden hour (start)</item> <!-- TODO -->
         <item>sunsubiro</item>
+        <item>evening blue hour (start)</item>  <!-- TODO -->
         <item>civila sunsubiro</item>
+        <item>evening blue hour (end)</item>  <!-- TODO -->
         <item>naŭtika sunsubiro</item>
         <item>astronomia sunsubiro</item>
     </string-array>
@@ -635,11 +665,6 @@
                 * <b>%s</b> por fonto de datumoj (ekz. “sunrisesunsetlib”) <br/>
                 * <b>%t</b> por horzono (ekz. Usono/Arizono) <br/>
     ]]></string>
-    
-    <string name="help_general">  <!-- general app help; composites a couple help topics together. -->
-        <xliff:g id="help_general_timeMode">%1$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_general_daylength">%2$s</xliff:g>
-    </string>
 
     <string name="help_general_timeMode"><![CDATA[
           <b>Reala sunleviĝo/sunsubiro:</b> la Suno estas sur la horizonto, tio ĉi estas proksimuma tempo de sunleviĝo aŭ sunsubiro.<br/><br/>

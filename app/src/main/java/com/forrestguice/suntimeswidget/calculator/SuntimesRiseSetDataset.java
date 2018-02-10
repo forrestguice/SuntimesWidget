@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -34,6 +34,9 @@ public class SuntimesRiseSetDataset
     public SuntimesRiseSetData dataNautical;
     public SuntimesRiseSetData dataAstro;
     public SuntimesRiseSetData dataNoon;
+    public SuntimesRiseSetData dataGold;
+    public SuntimesRiseSetData dataBlue8;
+    public SuntimesRiseSetData dataBlue4;
 
     public SuntimesRiseSetDataset(Context context)
     {
@@ -52,39 +55,15 @@ public class SuntimesRiseSetDataset
 
         dataNoon = new SuntimesRiseSetData(dataActual);
         dataNoon.setTimeMode(WidgetSettings.TimeMode.NOON);
-    }
 
-    public SuntimesRiseSetDataset(SuntimesRiseSetData dataActual, SuntimesRiseSetData dataCivil, SuntimesRiseSetData dataNautical, SuntimesRiseSetData dataAstro, SuntimesRiseSetData dataNoon)
-    {
-        this.dataActual = dataActual;
-        if (dataActual == null)
-        {
-            throw new NullPointerException("dataActual must not be null!");
-        }
+        dataGold = new SuntimesRiseSetData(dataActual);
+        dataGold.setTimeMode(WidgetSettings.TimeMode.GOLD);
 
-        this.dataCivil = dataCivil;
-        if (dataCivil == null)
-        {
-            throw new NullPointerException("dataCivil must not be null!");
-        }
+        dataBlue8 = new SuntimesRiseSetData(dataActual);
+        dataBlue8.setTimeMode(WidgetSettings.TimeMode.BLUE8);
 
-        this.dataNautical = dataNautical;
-        if (dataNautical == null)
-        {
-            throw new NullPointerException("dataNautical must not be null!");
-        }
-
-        this.dataAstro = dataAstro;
-        if (dataAstro == null)
-        {
-            throw new NullPointerException("dataAstro must not be null!");
-        }
-
-        this.dataNoon = dataNoon;
-        if (dataNoon == null)
-        {
-            throw new NullPointerException("dataNoon must not be null!");
-        }
+        dataBlue4 = new SuntimesRiseSetData(dataActual);
+        dataBlue4.setTimeMode(WidgetSettings.TimeMode.BLUE4);
     }
 
     public void calculateData()
@@ -94,6 +73,9 @@ public class SuntimesRiseSetDataset
         dataNautical.calculate();
         dataAstro.calculate();
         dataNoon.calculate();
+        dataGold.calculate();
+        dataBlue8.calculate();
+        dataBlue4.calculate();
     }
 
     public boolean isCalculated()
@@ -108,6 +90,9 @@ public class SuntimesRiseSetDataset
         dataNautical.invalidateCalculation();
         dataAstro.invalidateCalculation();
         dataNoon.invalidateCalculation();
+        dataGold.invalidateCalculation();
+        dataBlue8.invalidateCalculation();
+        dataBlue4.invalidateCalculation();
     }
 
     public Calendar todayIs()
@@ -177,6 +162,11 @@ public class SuntimesRiseSetDataset
     public WidgetSettings.TimezoneMode timezoneMode()
     {
         return dataActual.timezoneMode();
+    }
+
+    public SuntimesCalculatorDescriptor calculatorMode()
+    {
+        return dataActual.calculatorMode();
     }
 
     public Calendar now()

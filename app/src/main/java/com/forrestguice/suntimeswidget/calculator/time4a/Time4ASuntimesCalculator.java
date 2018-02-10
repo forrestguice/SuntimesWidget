@@ -44,7 +44,7 @@ import java.util.TimeZone;
 
 public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
 {
-    public static final int[] FEATURES = new int[] { FEATURE_RISESET, FEATURE_SOLSTICE };
+    public static final int[] FEATURES = new int[] { FEATURE_RISESET, FEATURE_SOLSTICE, FEATURE_GOLDBLUE };
 
     public abstract StdSolarCalculator getCalculator();
 
@@ -143,26 +143,70 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     @Override
     public Calendar[] getMorningBlueHourForDate(Calendar date)
     {
-        return null;
+        SolarTime.Calculator calculator = solarTime.getCalculator();
+        int altitude = solarTime.getAltitude();
+        double latitude = solarTime.getLatitude();
+        double longitude = solarTime.getLongitude();
+        double geodeticAngle = calculator.getGeodeticAngle(latitude, altitude);
+        double blueStartAngle = 90 + geodeticAngle + SUN_ALTITUDE_BLUE_HIGH;
+        double blueEndAngle = 90 + geodeticAngle + SUN_ALTITUDE_BLUE_LOW;
+
+        PlainDate localDate = calendarToPlainDate(date);
+        Moment blueMorningStart = calculator.sunrise(localDate, latitude, longitude, blueStartAngle);
+        Moment blueMorningEnd = calculator.sunrise(localDate, latitude, longitude, blueEndAngle);
+        return new Calendar[] { momentToCalendar(blueMorningStart), momentToCalendar(blueMorningEnd) };
     }
 
     @Override
     public Calendar[] getEveningBlueHourForDate(Calendar date)
     {
-        return null;
+        SolarTime.Calculator calculator = solarTime.getCalculator();
+        int altitude = solarTime.getAltitude();
+        double latitude = solarTime.getLatitude();
+        double longitude = solarTime.getLongitude();
+        double geodeticAngle = calculator.getGeodeticAngle(latitude, altitude);
+        double blueStartAngle = 90 + geodeticAngle + SUN_ALTITUDE_BLUE_LOW;
+        double blueEndAngle = 90 + geodeticAngle + SUN_ALTITUDE_BLUE_HIGH;
+
+        PlainDate localDate = calendarToPlainDate(date);
+        Moment blueEveningStart = calculator.sunset(localDate, latitude, longitude, blueStartAngle);
+        Moment blueEveningEnd = calculator.sunset(localDate, latitude, longitude, blueEndAngle);
+        return new Calendar[] { momentToCalendar(blueEveningStart), momentToCalendar(blueEveningEnd) };
     }
 
     @Override
-    public Calendar[] getMorningGoldenHourForDate(Calendar date)
+    public Calendar getMorningGoldenHourForDate(Calendar date)
     {
-        return null;
+        SolarTime.Calculator calculator = solarTime.getCalculator();
+        int altitude = solarTime.getAltitude();
+        double latitude = solarTime.getLatitude();
+        double longitude = solarTime.getLongitude();
+        double geodeticAngle = calculator.getGeodeticAngle(latitude, altitude);
+        double goldenAngle = 90 + geodeticAngle - SUN_ALTITUDE_GOLDEN;
+
+        PlainDate localDate = calendarToPlainDate(date);
+        Moment goldMorningEnd = calculator.sunrise(localDate, latitude, longitude, goldenAngle);
+        return momentToCalendar(goldMorningEnd);
     }
 
     @Override
-    public Calendar[] getEveningGoldenHourForDate(Calendar date)
+    public Calendar getEveningGoldenHourForDate(Calendar date)
     {
-        return null;
+        SolarTime.Calculator calculator = solarTime.getCalculator();
+        int altitude = solarTime.getAltitude();
+        double latitude = solarTime.getLatitude();
+        double longitude = solarTime.getLongitude();
+        double geodeticAngle = calculator.getGeodeticAngle(latitude, altitude);
+        double goldenAngle = 90 + geodeticAngle - SUN_ALTITUDE_GOLDEN;
+
+        PlainDate localDate = calendarToPlainDate(date);
+        Moment goldEveningStart = this.solarTime.getCalculator().sunset(localDate, latitude, longitude, goldenAngle);
+        return momentToCalendar(goldEveningStart);
     }
+
+    public static final double SUN_ALTITUDE_GOLDEN = 6.0;
+    public static final double SUN_ALTITUDE_BLUE_HIGH = 8.0;
+    public static final double SUN_ALTITUDE_BLUE_LOW = 4.0;
 
     @Override
     public Calendar getOfficialSunsetCalendarForDate( Calendar date )

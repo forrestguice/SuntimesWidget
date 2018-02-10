@@ -43,6 +43,18 @@
             android:defaultValue="@string/def_app_ui_showdatasource" />
 
         <CheckBoxPreference
+            android:key="app_ui_showbluehour"
+            android:title="@string/configLabel_ui_showbluehour"
+            android:summary="@string/configLabel_ui_showbluehour_summary"
+            android:defaultValue="false" />
+
+        <CheckBoxPreference
+            android:key="app_ui_showgoldhour"
+            android:title="@string/configLabel_ui_showgoldhour"
+            android:summary="@string/configLabel_ui_showgoldhour_summary"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
             android:key="app_ui_showlightmap"
             android:title="@string/configLabel_ui_showLightmap"
             android:summary="@string/configLabel_ui_showLightmap_summary"

@@ -73,6 +73,12 @@ public class AppSettings
     public static final String PREF_KEY_UI_SHOWDATASOURCE = "app_ui_showdatasource";
     public static final boolean PREF_DEF_UI_SHOWDATASOURCE = true;
 
+    public static final String PREF_KEY_UI_SHOWGOLDHOUR = "app_ui_showgoldhour";
+    public static final boolean PREF_DEF_UI_SHOWGOLDHOUR = true;
+
+    public static final String PREF_KEY_UI_SHOWBLUEHOUR = "app_ui_showbluehour";
+    public static final boolean PREF_DEF_UI_SHOWBLUEHOUR = false;
+
     public static final String PREF_KEY_ACCESSIBILITY_VERBOSE = "app_accessibility_verbose";
     public static final boolean PREF_DEF_ACCESSIBILITY_VERBOSE = false;
 
@@ -365,6 +371,18 @@ public class AppSettings
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getBoolean(PREF_KEY_UI_SHOWDATASOURCE, PREF_DEF_UI_SHOWDATASOURCE);
+    }
+
+    public static boolean loadBlueHourPref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_UI_SHOWBLUEHOUR, PREF_DEF_UI_SHOWBLUEHOUR);
+    }
+
+    public static boolean loadGoldHourPref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_UI_SHOWGOLDHOUR, PREF_DEF_UI_SHOWGOLDHOUR);
     }
 
     public static boolean loadVerboseAccessibilityPref( Context context )
