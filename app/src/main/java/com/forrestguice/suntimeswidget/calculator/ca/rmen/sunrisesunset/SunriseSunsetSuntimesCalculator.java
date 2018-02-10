@@ -33,7 +33,7 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     public static final String NAME = "ca.rmen.sunrisesunset";
     public static final String REF = "com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator";
     public static final String LINK = "github.com/caarmen/SunriseSunset";
-    public static final int[] FEATURES = new int[] { SuntimesCalculator.FEATURE_RISESET };
+    public static final int[] FEATURES = new int[] { SuntimesCalculator.FEATURE_RISESET, SuntimesCalculator.FEATURE_GOLDBLUE };
 
     WidgetSettings.Location location;
 
@@ -144,50 +144,80 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     @Override
     public Calendar getVernalEquinoxForYear(Calendar date)
     {
-        return null;  // TODO
+        return null;
     }
 
     @Override
     public Calendar getSummerSolsticeForYear(Calendar date)
     {
-        return null;  // TODO
+        return null;
     }
 
     @Override
     public Calendar getAutumnalEquinoxForYear(Calendar date)
     {
-        return null;  // TODO
+        return null;
     }
 
     @Override
     public Calendar getWinterSolsticeForYear(Calendar date)
     {
-        return null;  // TODO
+        return null;
     }
 
     @Override
     public Calendar[] getMorningBlueHourForDate(Calendar date)
     {
-        return null;
+        Calendar[] blueTimes = new Calendar[2];
+        Calendar[] blueTimes0 = SunriseSunset.getSunriseSunset(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), SUN_ALTITUDE_BLUE_HIGH);
+        Calendar[] blueTimes1 = SunriseSunset.getSunriseSunset(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), SUN_ALTITUDE_BLUE_LOW);
+
+        if (blueTimes0 != null)
+            blueTimes[0] = blueTimes0[0];
+
+        if (blueTimes1 != null)
+            blueTimes[1] = blueTimes1[0];
+
+        return blueTimes;
     }
 
     @Override
     public Calendar[] getEveningBlueHourForDate(Calendar date)
     {
-        return null;
+        Calendar[] blueTimes = new Calendar[2];
+        Calendar[] blueTimes0 = SunriseSunset.getSunriseSunset(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), SUN_ALTITUDE_BLUE_LOW);
+        Calendar[] blueTimes1 = SunriseSunset.getSunriseSunset(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), SUN_ALTITUDE_BLUE_HIGH);
+
+        if (blueTimes0 != null)
+            blueTimes[0] = blueTimes0[1];
+
+        if (blueTimes1 != null)
+            blueTimes[1] = blueTimes1[1];
+
+        return blueTimes;
     }
 
     @Override
-    public Calendar[] getMorningGoldenHourForDate(Calendar date)
+    public Calendar getMorningGoldenHourForDate(Calendar date)
     {
-        return null;
+        Calendar[] goldenTimes = SunriseSunset.getSunriseSunset(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), SUN_ALTITUDE_GOLDEN);
+        if (goldenTimes == null)
+            return null;
+        else return goldenTimes[0];
     }
 
     @Override
-    public Calendar[] getEveningGoldenHourForDate(Calendar date)
+    public Calendar getEveningGoldenHourForDate(Calendar date)
     {
-        return null;
+        Calendar[] goldenTimes = SunriseSunset.getSunriseSunset(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), SUN_ALTITUDE_GOLDEN);
+        if (goldenTimes == null)
+            return null;
+        else return goldenTimes[1];
     }
+
+    public static final double SUN_ALTITUDE_GOLDEN = 6.0;
+    public static final double SUN_ALTITUDE_BLUE_HIGH = -8.0;
+    public static final double SUN_ALTITUDE_BLUE_LOW = -4.0;
 
     @Override
     public boolean isDay(Calendar dateTime)

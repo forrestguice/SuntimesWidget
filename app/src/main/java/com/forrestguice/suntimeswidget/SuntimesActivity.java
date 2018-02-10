@@ -67,6 +67,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
@@ -131,62 +132,42 @@ public class SuntimesActivity extends AppCompatActivity
     // note views
     private ProgressBar note_progress;
     private ViewFlipper note_flipper;
-    private Animation anim_note_inPrev;
-    private Animation anim_note_inNext;
-    private Animation anim_note_outNext;
-    private Animation anim_note_outPrev;
+    private Animation anim_note_inPrev, anim_note_inNext;
+    private Animation anim_note_outPrev, anim_note_outNext;
 
-    private ImageView ic_time1_note;
-    private TextView txt_time1_note1;
-    private TextView txt_time1_note2;
-    private TextView txt_time1_note3;
-
-    private ImageView ic_time2_note;
-    private TextView txt_time2_note1;
-    private TextView txt_time2_note2;
-    private TextView txt_time2_note3;
+    private ImageView ic_time1_note,    ic_time2_note;
+    private TextView txt_time1_note1,   txt_time2_note1;
+    private TextView txt_time1_note2,   txt_time2_note2;
+    private TextView txt_time1_note3,   txt_time2_note3;
 
     // time card views
     private ViewFlipper card_flipper;
-    private Animation anim_card_inPrev;
-    private Animation anim_card_inNext;
-    private Animation anim_card_outNext;
-    private Animation anim_card_outPrev;
+    private Animation anim_card_inPrev, anim_card_inNext;
+    private Animation anim_card_outPrev, anim_card_outNext;
 
     private ImageButton btn_flipperNext_today;
     private ImageButton btn_flipperPrev_today;
     private ImageButton btn_flipperNext_tomorrow;
     private ImageButton btn_flipperPrev_tomorrow;
 
-    private TextView txt_date;
-    private TextView txt_sunrise_actual;
-    private TextView txt_sunrise_civil;
-    private TextView txt_sunrise_nautical;
-    private TextView txt_sunrise_astro;
-    private TextView txt_sunset_actual;
-    private TextView txt_sunset_civil;
-    private TextView txt_sunset_nautical;
-    private TextView txt_sunset_astro;
-    private TextView txt_solarnoon;
+    private TextView txt_date,              txt_date2;
+    private TextView txt_sunrise_actual,    txt_sunrise2_actual;
+    private TextView txt_sunrise_civil,     txt_sunrise2_civil;
+    private TextView txt_sunrise_nautical,  txt_sunrise2_nautical;
+    private TextView txt_sunrise_astro,     txt_sunrise2_astro;
+    private TextView txt_sunset_actual,     txt_sunset2_actual;
+    private TextView txt_sunset_civil,      txt_sunset2_civil;
+    private TextView txt_sunset_nautical,   txt_sunset2_nautical;
+    private TextView txt_sunset_astro,      txt_sunset2_astro;
+    private TextView txt_solarnoon,         txt_solarnoon2;
 
-    private LinearLayout layout_daylength;
-    private TextView txt_daylength;
-    private TextView txt_lightlength;
+    private TimeFieldRow row_gold,          row_gold2;
+    private TimeFieldRow row_blue8,         row_blue8_2;
+    private TimeFieldRow row_blue4,         row_blue4_2;
 
-    private TextView txt_date2;
-    private TextView txt_sunrise2_actual;
-    private TextView txt_sunrise2_civil;
-    private TextView txt_sunrise2_nautical;
-    private TextView txt_sunrise2_astro;
-    private TextView txt_sunset2_actual;
-    private TextView txt_sunset2_civil;
-    private TextView txt_sunset2_nautical;
-    private TextView txt_sunset2_astro;
-    private TextView txt_solarnoon2;
-
-    private LinearLayout layout_daylength2;
-    private TextView txt_daylength2;
-    private TextView txt_lightlength2;
+    private LinearLayout layout_daylength,  layout_daylength2;
+    private TextView txt_daylength,         txt_daylength2;
+    private TextView txt_lightlength,       txt_lightlength2;
 
     private EquinoxView card_equinoxSolstice;
     private View equinoxLayout;
@@ -207,6 +188,8 @@ public class SuntimesActivity extends AppCompatActivity
     private List<SuntimesWarning> warnings;
 
     private boolean showSeconds = WidgetSettings.PREF_DEF_GENERAL_SHOWSECONDS;
+    private boolean showGold = AppSettings.PREF_DEF_UI_SHOWGOLDHOUR;
+    private boolean showBlue = AppSettings.PREF_DEF_UI_SHOWBLUEHOUR;
     private boolean verboseAccessibility = AppSettings.PREF_DEF_ACCESSIBILITY_VERBOSE;
 
     public SuntimesActivity()
@@ -302,7 +285,7 @@ public class SuntimesActivity extends AppCompatActivity
         AlarmDialog alarmDialog = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_ALARM);
         if (alarmDialog != null)
         {
-            alarmDialog.setData(dataset);
+            alarmDialog.setData(this, dataset);
             alarmDialog.setOnAcceptedListener(alarmDialog.scheduleAlarmClickListener);
             //Log.d("DEBUG", "AlarmDialog listeners restored.");
         }
@@ -728,6 +711,18 @@ public class SuntimesActivity extends AppCompatActivity
             txt_solarnoon = (TextView) viewToday.findViewById(R.id.text_time_noon);
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.NOON, false), txt_solarnoon);
 
+            row_gold = new TimeFieldRow(viewToday, R.id.text_time_label_golden, R.id.text_time_golden_morning, R.id.text_time_golden_evening);
+            timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_GOLDEN, false), row_gold.getField(0));
+            timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_GOLDEN, false), row_gold.getField(1));
+
+            row_blue8 = new TimeFieldRow(viewToday, R.id.text_time_label_blue8, R.id.text_time_blue8_morning, R.id.text_time_blue8_evening);
+            timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_BLUE8, false), row_blue8.getField(0));
+            timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_BLUE8, false), row_blue8.getField(1));
+
+            row_blue4 = new TimeFieldRow(viewToday, R.id.text_time_label_blue4, R.id.text_time_blue4_morning, R.id.text_time_blue4_evening);
+            timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_BLUE4, false), row_blue4.getField(0));
+            timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_BLUE4, false), row_blue4.getField(1));
+
             layout_daylength = (LinearLayout) viewToday.findViewById(R.id.layout_daylength);
             txt_daylength = (TextView) viewToday.findViewById(R.id.text_daylength);
             txt_lightlength = (TextView) viewToday.findViewById(R.id.text_lightlength);
@@ -785,6 +780,18 @@ public class SuntimesActivity extends AppCompatActivity
 
             txt_solarnoon2 = (TextView) viewTomorrow.findViewById(R.id.text_time_noon);
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.NOON, true), txt_solarnoon2);
+
+            row_gold2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_golden, R.id.text_time_golden_morning, R.id.text_time_golden_evening);
+            timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_GOLDEN, true), row_gold2.getField(0));
+            timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_GOLDEN, true), row_gold2.getField(1));
+
+            row_blue8_2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_blue8, R.id.text_time_blue8_morning, R.id.text_time_blue8_evening);
+            timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_BLUE8, true), row_blue8_2.getField(0));
+            timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_BLUE8, true), row_blue8_2.getField(1));
+
+            row_blue4_2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_blue4, R.id.text_time_blue4_morning, R.id.text_time_blue4_evening);
+            timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_BLUE4, true), row_blue4_2.getField(0));
+            timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_BLUE4, true), row_blue4_2.getField(1));
 
             layout_daylength2 = (LinearLayout) viewTomorrow.findViewById(R.id.layout_daylength);
             txt_daylength2 = (TextView) viewTomorrow.findViewById(R.id.text_daylength);
@@ -1123,7 +1130,9 @@ public class SuntimesActivity extends AppCompatActivity
     {
         String topic1 = getString(R.string.help_general_timeMode);
         String topic2 = getString(R.string.help_general_daylength);
-        String helpText = getString(R.string.help_general, topic1, topic2);
+        String topic3 = getString(R.string.help_general_goldhour);
+        String topic4 = getString(R.string.help_general_bluehour);
+        String helpText = getString(R.string.help_general, topic1, topic2, topic3, topic4);
 
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(helpText);
@@ -1173,7 +1182,7 @@ public class SuntimesActivity extends AppCompatActivity
         if (dataset.isCalculated())
         {
             AlarmDialog alarmDialog = new AlarmDialog();
-            alarmDialog.setData(dataset);
+            alarmDialog.setData(this, dataset);
             alarmDialog.setChoice(selected);
             alarmDialog.setOnAcceptedListener(alarmDialog.scheduleAlarmClickListener);
             alarmDialog.show(getSupportFragmentManager(), DIALOGTAG_ALARM);
@@ -1235,32 +1244,39 @@ public class SuntimesActivity extends AppCompatActivity
             actionBar.setSubtitle(locationSubtitle);
         }
 
+        boolean supportsGoldBlue = dataset.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_GOLDBLUE);
+        showGold = AppSettings.loadGoldHourPref(context) && supportsGoldBlue;
+        showGoldTimes(showGold);
+
+        showBlue = AppSettings.loadBlueHourPref(context) && supportsGoldBlue;
+        showBlueTimes(showBlue);
+
         showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
-
-        // today's view
-        SuntimesUtils.TimeDisplayText sunriseString_actualTime = utils.calendarTimeShortDisplayString(context, dataset.dataActual.sunriseCalendarToday(), showSeconds);
-        SuntimesUtils.TimeDisplayText sunriseString_civilTime = utils.calendarTimeShortDisplayString(context, dataset.dataCivil.sunriseCalendarToday(), showSeconds);
-        SuntimesUtils.TimeDisplayText sunriseString_nauticalTime = utils.calendarTimeShortDisplayString(context, dataset.dataNautical.sunriseCalendarToday(), showSeconds);
-        SuntimesUtils.TimeDisplayText sunriseString_astroTime = utils.calendarTimeShortDisplayString(context, dataset.dataAstro.sunriseCalendarToday(), showSeconds);
-        SuntimesUtils.TimeDisplayText noonString = utils.calendarTimeShortDisplayString(context, dataset.dataNoon.sunriseCalendarToday(), showSeconds);
-        SuntimesUtils.TimeDisplayText sunsetString_actualTime = utils.calendarTimeShortDisplayString(context, dataset.dataActual.sunsetCalendarToday(), showSeconds);
-        SuntimesUtils.TimeDisplayText sunsetString_civilTime = utils.calendarTimeShortDisplayString(context, dataset.dataCivil.sunsetCalendarToday(), showSeconds);
-        SuntimesUtils.TimeDisplayText sunsetString_nauticalTime = utils.calendarTimeShortDisplayString(context, dataset.dataNautical.sunsetCalendarToday(), showSeconds);
-        SuntimesUtils.TimeDisplayText sunsetString_astroTime = utils.calendarTimeShortDisplayString(context, dataset.dataAstro.sunsetCalendarToday(), showSeconds);
-
-        // tomorrow's view
-        SuntimesUtils.TimeDisplayText sunriseString_actualTime2 = utils.calendarTimeShortDisplayString(context, dataset.dataActual.sunriseCalendarOther(), showSeconds);
-        SuntimesUtils.TimeDisplayText sunriseString_civilTime2 = utils.calendarTimeShortDisplayString(context, dataset.dataCivil.sunriseCalendarOther(), showSeconds);
-        SuntimesUtils.TimeDisplayText sunriseString_nauticalTime2 = utils.calendarTimeShortDisplayString(context, dataset.dataNautical.sunriseCalendarOther(), showSeconds);
-        SuntimesUtils.TimeDisplayText sunriseString_astroTime2 = utils.calendarTimeShortDisplayString(context, dataset.dataAstro.sunriseCalendarOther(), showSeconds);
-        SuntimesUtils.TimeDisplayText noonString2 = utils.calendarTimeShortDisplayString(context, dataset.dataNoon.sunriseCalendarOther(), showSeconds);
-        SuntimesUtils.TimeDisplayText sunsetString_actualTime2 = utils.calendarTimeShortDisplayString(context, dataset.dataActual.sunsetCalendarOther(), showSeconds);
-        SuntimesUtils.TimeDisplayText sunsetString_civilTime2 = utils.calendarTimeShortDisplayString(context, dataset.dataCivil.sunsetCalendarOther(), showSeconds);
-        SuntimesUtils.TimeDisplayText sunsetString_nauticalTime2 = utils.calendarTimeShortDisplayString(context, dataset.dataNautical.sunsetCalendarOther(), showSeconds);
-        SuntimesUtils.TimeDisplayText sunsetString_astroTime2 = utils.calendarTimeShortDisplayString(context, dataset.dataAstro.sunsetCalendarOther(), showSeconds);
 
         if (dataset.isCalculated())
         {
+            // today's view
+            SuntimesUtils.TimeDisplayText sunriseString_actualTime = utils.calendarTimeShortDisplayString(context, dataset.dataActual.sunriseCalendarToday(), showSeconds);
+            SuntimesUtils.TimeDisplayText sunriseString_civilTime = utils.calendarTimeShortDisplayString(context, dataset.dataCivil.sunriseCalendarToday(), showSeconds);
+            SuntimesUtils.TimeDisplayText sunriseString_nauticalTime = utils.calendarTimeShortDisplayString(context, dataset.dataNautical.sunriseCalendarToday(), showSeconds);
+            SuntimesUtils.TimeDisplayText sunriseString_astroTime = utils.calendarTimeShortDisplayString(context, dataset.dataAstro.sunriseCalendarToday(), showSeconds);
+            SuntimesUtils.TimeDisplayText noonString = utils.calendarTimeShortDisplayString(context, dataset.dataNoon.sunriseCalendarToday(), showSeconds);
+            SuntimesUtils.TimeDisplayText sunsetString_actualTime = utils.calendarTimeShortDisplayString(context, dataset.dataActual.sunsetCalendarToday(), showSeconds);
+            SuntimesUtils.TimeDisplayText sunsetString_civilTime = utils.calendarTimeShortDisplayString(context, dataset.dataCivil.sunsetCalendarToday(), showSeconds);
+            SuntimesUtils.TimeDisplayText sunsetString_nauticalTime = utils.calendarTimeShortDisplayString(context, dataset.dataNautical.sunsetCalendarToday(), showSeconds);
+            SuntimesUtils.TimeDisplayText sunsetString_astroTime = utils.calendarTimeShortDisplayString(context, dataset.dataAstro.sunsetCalendarToday(), showSeconds);
+
+            // tomorrow's view
+            SuntimesUtils.TimeDisplayText sunriseString_actualTime2 = utils.calendarTimeShortDisplayString(context, dataset.dataActual.sunriseCalendarOther(), showSeconds);
+            SuntimesUtils.TimeDisplayText sunriseString_civilTime2 = utils.calendarTimeShortDisplayString(context, dataset.dataCivil.sunriseCalendarOther(), showSeconds);
+            SuntimesUtils.TimeDisplayText sunriseString_nauticalTime2 = utils.calendarTimeShortDisplayString(context, dataset.dataNautical.sunriseCalendarOther(), showSeconds);
+            SuntimesUtils.TimeDisplayText sunriseString_astroTime2 = utils.calendarTimeShortDisplayString(context, dataset.dataAstro.sunriseCalendarOther(), showSeconds);
+            SuntimesUtils.TimeDisplayText noonString2 = utils.calendarTimeShortDisplayString(context, dataset.dataNoon.sunriseCalendarOther(), showSeconds);
+            SuntimesUtils.TimeDisplayText sunsetString_actualTime2 = utils.calendarTimeShortDisplayString(context, dataset.dataActual.sunsetCalendarOther(), showSeconds);
+            SuntimesUtils.TimeDisplayText sunsetString_civilTime2 = utils.calendarTimeShortDisplayString(context, dataset.dataCivil.sunsetCalendarOther(), showSeconds);
+            SuntimesUtils.TimeDisplayText sunsetString_nauticalTime2 = utils.calendarTimeShortDisplayString(context, dataset.dataNautical.sunsetCalendarOther(), showSeconds);
+            SuntimesUtils.TimeDisplayText sunsetString_astroTime2 = utils.calendarTimeShortDisplayString(context, dataset.dataAstro.sunsetCalendarOther(), showSeconds);
+
             txt_sunrise_actual.setText(sunriseString_actualTime.toString());
             txt_sunrise_civil.setText(sunriseString_civilTime.toString());
             txt_sunrise_nautical.setText(sunriseString_nauticalTime.toString());
@@ -1280,6 +1296,36 @@ public class SuntimesActivity extends AppCompatActivity
             txt_sunset2_civil.setText(sunsetString_civilTime2.toString());
             txt_sunset2_nautical.setText(sunsetString_nauticalTime2.toString());
             txt_sunset2_astro.setText(sunsetString_astroTime2.toString());
+
+            if (showBlue)
+            {
+                String sunriseString_blue8 = utils.calendarTimeShortDisplayString(context, dataset.dataBlue8.sunriseCalendarToday(), showSeconds).toString();
+                String sunsetString_blue8 = utils.calendarTimeShortDisplayString(context, dataset.dataBlue8.sunsetCalendarToday(), showSeconds).toString();
+                row_blue8.updateFields(sunriseString_blue8, sunsetString_blue8);
+
+                String sunriseString_blue8_2 = utils.calendarTimeShortDisplayString(context, dataset.dataBlue8.sunriseCalendarOther(), showSeconds).toString();
+                String sunsetString_blue8_2 = utils.calendarTimeShortDisplayString(context, dataset.dataBlue8.sunsetCalendarOther(), showSeconds).toString();
+                row_blue8_2.updateFields(sunriseString_blue8_2, sunsetString_blue8_2);
+
+                String sunriseString_blue4 = utils.calendarTimeShortDisplayString(context, dataset.dataBlue4.sunriseCalendarToday(), showSeconds).toString();
+                String sunsetString_blue4 = utils.calendarTimeShortDisplayString(context, dataset.dataBlue4.sunsetCalendarToday(), showSeconds).toString();
+                row_blue4.updateFields(sunriseString_blue4, sunsetString_blue4);
+
+                String sunriseString_blue4_2 = utils.calendarTimeShortDisplayString(context, dataset.dataBlue4.sunriseCalendarOther(), showSeconds).toString();
+                String sunsetString_blue4_2 = utils.calendarTimeShortDisplayString(context, dataset.dataBlue4.sunsetCalendarOther(), showSeconds).toString();
+                row_blue4_2.updateFields(sunriseString_blue4_2, sunsetString_blue4_2);
+            }
+
+            if (showGold)
+            {
+                String sunriseString_gold = utils.calendarTimeShortDisplayString(context, dataset.dataGold.sunriseCalendarToday(), showSeconds).toString();
+                String sunsetString_gold = utils.calendarTimeShortDisplayString(context, dataset.dataGold.sunsetCalendarToday(), showSeconds).toString();
+                row_gold.updateFields(sunriseString_gold, sunsetString_gold);
+
+                String sunriseString_gold2 = utils.calendarTimeShortDisplayString(context, dataset.dataGold.sunriseCalendarOther(), showSeconds).toString();
+                String sunsetString_gold2 = utils.calendarTimeShortDisplayString(context, dataset.dataGold.sunsetCalendarOther(), showSeconds).toString();
+                row_gold2.updateFields(sunriseString_gold2, sunsetString_gold2);
+            }
 
             SuntimesUtils.TimeDisplayText dayLengthDisplay = utils.timeDeltaLongDisplayString(0, dataset.dataActual.dayLengthToday(), showSeconds);
             dayLengthDisplay.setSuffix("");
@@ -1317,6 +1363,10 @@ public class SuntimesActivity extends AppCompatActivity
             txt_sunset_nautical.setText(notCalculated);
             txt_sunset_astro.setText(notCalculated);
 
+            row_gold.updateFields(notCalculated, notCalculated);
+            row_blue8.updateFields(notCalculated, notCalculated);
+            row_blue4.updateFields(notCalculated, notCalculated);
+
             txt_sunrise2_actual.setText(notCalculated);
             txt_sunrise2_civil.setText(notCalculated);
             txt_sunrise2_nautical.setText(notCalculated);
@@ -1326,6 +1376,10 @@ public class SuntimesActivity extends AppCompatActivity
             txt_sunset2_civil.setText(notCalculated);
             txt_sunset2_nautical.setText(notCalculated);
             txt_sunset2_astro.setText(notCalculated);
+
+            row_gold2.updateFields(notCalculated, notCalculated);
+            row_blue8_2.updateFields(notCalculated, notCalculated);
+            row_blue4_2.updateFields(notCalculated, notCalculated);
         }
 
         //
@@ -1831,6 +1885,20 @@ public class SuntimesActivity extends AppCompatActivity
         equinoxDialog.show(getSupportFragmentManager(), DIALOGTAG_EQUINOX);
     }
 
+    protected void showBlueTimes( boolean value )
+    {
+        row_blue8.setVisible(value);
+        row_blue8_2.setVisible(value);
+        row_blue4.setVisible(value);
+        row_blue4_2.setVisible(value);
+    }
+
+    protected void showGoldTimes( boolean value )
+    {
+        row_gold.setVisible(value);
+        row_gold2.setVisible(value);
+    }
+
     /**
      * Show data source labels / ui.
      */
@@ -2016,6 +2084,79 @@ public class SuntimesActivity extends AppCompatActivity
         }
 
         highlightTimeField(new SolarEvents.SolarEventField(note.noteMode, note.tomorrow));
+    }
+
+    /**
+     * TimeFieldRow
+     */
+    private static class TimeFieldRow
+    {
+        private TextView label;
+        private TextView[] fields;
+
+        private TimeFieldRow( TextView label, TextView ...fields )
+        {
+            this.label = label;
+            this.fields = fields;
+        }
+
+        private TimeFieldRow( View parent, int labelID, int ...fieldIDs )
+        {
+            if (parent != null)
+            {
+                this.label = (TextView) parent.findViewById(labelID);
+                this.fields = new TextView[fieldIDs.length];
+
+                for (int i=0; i<fieldIDs.length; i++)
+                {
+                    this.fields[i] = (TextView) parent.findViewById(fieldIDs[i]);
+                }
+            }
+        }
+
+        public TextView getLabel()
+        {
+            return label;
+        }
+
+        public TextView getField( int i )
+        {
+            if (i >= 0 && i < fields.length)
+                return fields[i];
+            else return null;
+        }
+
+        public void updateFields( String ...values )
+        {
+            for (int i=0; i<values.length; i++)
+            {
+                if (i >= fields.length)
+                    break;
+
+                if (fields[i] != null)
+                {
+                    fields[i].setText( values[i] );
+                }
+            }
+        }
+
+        public void setVisible( boolean show )
+        {
+            int visibility = (show ? View.VISIBLE : View.GONE);
+
+            if (label != null)
+            {
+                label.setVisibility(visibility);
+            }
+
+            for (int i=0; i<fields.length; i++)
+            {
+                if (fields[i] != null)
+                {
+                    fields[i].setVisibility(visibility);
+                }
+            }
+        }
     }
 
     /**

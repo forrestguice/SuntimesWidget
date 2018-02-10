@@ -30,7 +30,7 @@ public class Time4ACCSuntimesCalculator extends Time4ASuntimesCalculator impleme
     public static final String NAME = "time4a-cc";
     public static final String REF = "com.forrestguice.suntimeswidget.calculator.time4a.Time4ACCSuntimesCalculator";
     public static final String LINK = "time4j.net";
-    public static final int[] FEATURES = new int[] { FEATURE_RISESET, FEATURE_SOLSTICE, FEATURE_ALTITUDE };
+    public static final int[] FEATURES = new int[] { FEATURE_RISESET, FEATURE_SOLSTICE, FEATURE_GOLDBLUE, FEATURE_ALTITUDE };
 
     public Time4ACCSuntimesCalculator() { /* EMPTY */ }
 
