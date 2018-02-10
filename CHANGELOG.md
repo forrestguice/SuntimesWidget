@@ -1,5 +1,8 @@
 ### ~
 
+
+* adds "show weeks" option to app and solstice widget (#153).
+
 ### v0.6.2 (2018-02-03)
 * adds option "verbose accessibility"; better support for TalkBack. 
 * misc usability fixes (MainActivity, AlarmDialog); better support for TalkBack. 
