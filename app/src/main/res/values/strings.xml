@@ -158,6 +158,9 @@
     <string name="configLabel_general_calculator">Data Source:</string>         <!-- spinner label -->
     <string name="configLabel_general_showSeconds">Show Seconds</string>        <!-- checkbox label -->
 
+    <string name="configLabel_general_showWeeks">Show Weeks</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showWeeks_summary">Divide time spans greater than 7 days into weeks (e.g. 15d becomes 2w 1d).</string>        <!-- checkbox label -->
+
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Appearance Settings</string>           <!-- group title -->
     <string name="configLabel_appearance_theme">Theme:</string>                  <!-- spinner label -->
@@ -400,6 +403,8 @@
     <string name="configLabel_places">Places</string>                           <!-- group title -->
     <string name="configLabel_places_export">Export Places</string>
     <string name="configLabel_places_clear">Clear Places</string>
+    <string name="configLabel_places_build">Add World Places</string>
+    <string name="configLabel_places_build_summary">Scan locales and add cities to the database.</string>
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">User Interface</string>                       <!-- group title -->
@@ -712,6 +717,11 @@
     <string name="locationcleared_dialog_message">Clearing the database…</string>
     <string name="locationcleared_toast_success">The database of places has been cleared.</string>
 
+    <!-- Dialog: Build Places List (progress) -->
+    <string name="locationbuild_dialog_title">Building Database</string>
+    <string name="locationbuild_dialog_message">Building a database of places…</string>
+    <string name="locationbuild_toast_success">Added <xliff:g id="n">%1$s</xliff:g> places to the database.</string>
+
     <!-- Dialog: Export Places -->
     <string name="locationexport_dialog_title">Exporting Places</string>
     <string name="locationexport_dialog_message">Exporting the database to csv file.</string>
@@ -826,6 +836,7 @@
     <!-- pref defaults -->
     <string name="def_appwidget_0_general_calculator" translatable="false">any</string>
     <string name="def_appwidget_0_appearance_timeformatmode" translatable="false">MODE_SYSTEM</string>
+    <string name="def_appwidget_0_general_showweeks" translatable="false">false</string>
     <string name="def_appwidget_0_general_showseconds" translatable="false">false</string>
     <string name="def_appwidget_0_general_trackingmode" translatable="false">SOONEST</string>
 

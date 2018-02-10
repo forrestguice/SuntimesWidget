@@ -47,6 +47,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
 
         hideOptionCompareAgainst();
         hideOption1x1LayoutMode();
+        showOptionWeeks(true);
         showOptionShowNoon(false);
         disableOptionAllowResize();
         showOptionTrackingMode(true);

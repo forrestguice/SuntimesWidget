@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2017 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -40,6 +40,7 @@ import android.util.TypedValue;
 import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.ClearPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -244,14 +245,22 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
             // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
             WidgetSettings.saveTrackingModePref(this, 0, WidgetSettings.TrackingMode.valueOf(sharedPreferences.getString(key, "missing")));
-	    return;
-	}
+	        return;
+        }
 
         if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_SHOWSECONDS))
         {
             // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
             // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
             WidgetSettings.saveShowSecondsPref(this, 0, sharedPreferences.getBoolean(key, WidgetSettings.PREF_DEF_GENERAL_SHOWSECONDS));
+            return;
+        }
+
+        if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_SHOWWEEKS))
+        {
+            // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
+            // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
+            WidgetSettings.saveShowWeeksPref(this, 0, sharedPreferences.getBoolean(key, WidgetSettings.PREF_DEF_GENERAL_SHOWWEEKS));
             return;
         }
     }
@@ -429,7 +438,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
             Preference clearPlacesPref = findPreference("places_clear");
             Preference exportPlacesPref = findPreference("places_export");
-            base = new PlacesPrefsBase(getActivity(), clearPlacesPref, exportPlacesPref);
+            Preference buildPlacesPref = findPreference("places_build");
+            base = new PlacesPrefsBase(getActivity(), buildPlacesPref, clearPlacesPref, exportPlacesPref);
         }
 
         @Override
@@ -473,11 +483,15 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
      */
     private static class PlacesPrefsBase
     {
+        public static final String KEY_ISBUILDING = "isbuilding";
         public static final String KEY_ISCLEARING = "isclearing";
         public static final String KEY_ISEXPORTING = "isexporting";
 
         private Context myParent;
         private ProgressDialog progress;
+
+        private BuildPlacesTask buildPlacesTask = null;
+        private boolean isBuilding = false;
 
         private ClearPlacesTask clearPlacesTask = null;
         private boolean isClearing = false;
@@ -485,16 +499,28 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         private ExportPlacesTask exportPlacesTask = null;
         private boolean isExporting = false;
 
-        public PlacesPrefsBase(Context context, Preference clearPref, Preference exportPref)
+        public PlacesPrefsBase(Context context, Preference buildPref, Preference clearPref, Preference exportPref)
         {
             myParent = context;
-            clearPref.setOnPreferenceClickListener(onClickClearPlaces);
-            exportPref.setOnPreferenceClickListener(onClickExportPlaces);
+
+            if (buildPref != null)
+                buildPref.setOnPreferenceClickListener(onClickBuildPlaces);
+
+            if (clearPref != null)
+                clearPref.setOnPreferenceClickListener(onClickClearPlaces);
+
+            if (exportPref != null)
+                exportPref.setOnPreferenceClickListener(onClickExportPlaces);
         }
 
         public void setParent( Context context )
         {
             myParent = context;
+        }
+
+        public void showProgressBuilding()
+        {
+            progress = ProgressDialog.show(myParent, myParent.getString(R.string.locationbuild_dialog_title), myParent.getString(R.string.locationbuild_dialog_message), true);
         }
 
         public void showProgressClearing()
@@ -514,6 +540,48 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 progress.dismiss();
             }
         }
+
+        /**
+         * Build Places (click handler)
+         */
+        private Preference.OnPreferenceClickListener onClickBuildPlaces = new Preference.OnPreferenceClickListener()
+        {
+            public boolean onPreferenceClick(Preference preference)
+            {
+                if (myParent != null)
+                {
+                    buildPlacesTask = new BuildPlacesTask(myParent);
+                    buildPlacesTask.setTaskListener(buildPlacesListener);
+                    buildPlacesTask.execute();
+                    return true;
+                }
+                return false;
+            }
+        };
+
+        /**
+         * Build Places (task handler)
+         */
+        private BuildPlacesTask.TaskListener buildPlacesListener = new BuildPlacesTask.TaskListener()
+        {
+            @Override
+            public void onStarted()
+            {
+                isBuilding = true;
+                showProgressBuilding();
+            }
+
+            @Override
+            public void onFinished(Integer result)
+            {
+                buildPlacesTask = null;
+                isBuilding = false;
+                dismissProgress();
+                if (result > 0) {
+                    Toast.makeText(myParent, myParent.getString(R.string.locationbuild_toast_success, result.toString()), Toast.LENGTH_LONG).show();
+                } // else // TODO: fail msg
+            }
+        };
 
         /**
          * Export Places (click handler)
@@ -639,6 +707,12 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 exportPlacesTask.clearTaskListener();
             }
 
+            if (isBuilding && buildPlacesTask != null)
+            {
+                buildPlacesTask.pauseTask();
+                buildPlacesTask.clearTaskListener();
+            }
+
             dismissProgress();
         }
 
@@ -658,6 +732,13 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 showProgressExporting();
                 exportPlacesTask.resumeTask();
             }
+
+            if (isBuilding && buildPlacesTask != null)
+            {
+                buildPlacesTask.setTaskListener(buildPlacesListener);
+                showProgressBuilding();
+                buildPlacesTask.resumeTask();
+            }
         }
     }
 
@@ -667,10 +748,12 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     private void initPref_places()
     {
         //noinspection deprecation
+        Preference buildPlacesPref = findPreference("places_build");
+        //noinspection deprecation
         Preference clearPlacesPref = findPreference("places_clear");
         //noinspection deprecation
         Preference exportPlacesPref = findPreference("places_export");
-        placesPrefBase = new PlacesPrefsBase(this, clearPlacesPref, exportPlacesPref);
+        placesPrefBase = new PlacesPrefsBase(this, buildPlacesPref, clearPlacesPref, exportPlacesPref);
     }
 
     //////////////////////////////////////////////////

@@ -462,6 +462,22 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     }
 
     @Test
+    public void test_showWeeksPref()
+    {
+        WidgetSettings.saveShowWeeksPref(context, appWidgetId, false);
+        boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, appWidgetId);
+        assertTrue("showWeeks should be false but was " + showWeeks, !showWeeks);
+
+        WidgetSettings.saveShowWeeksPref(context, appWidgetId, true);
+        showWeeks = WidgetSettings.loadShowWeeksPref(context, appWidgetId);
+        assertTrue("showWeeks should be true but was " + showWeeks, showWeeks);
+
+        WidgetSettings.deleteShowWeeksPref(context, appWidgetId);
+        showWeeks = WidgetSettings.loadShowWeeksPref(context, appWidgetId);
+        assertTrue("showWeeks should be default (false) but was " + showWeeks, !showWeeks && showWeeks == WidgetSettings.PREF_DEF_GENERAL_SHOWWEEKS);
+    }
+
+    @Test
     public void test_showSecondsPref()
     {
         WidgetSettings.saveShowSecondsPref(context, appWidgetId, false);
