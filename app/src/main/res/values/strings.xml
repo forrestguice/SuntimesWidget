@@ -153,6 +153,9 @@
     <string name="configLabel_general_calculator">Data Source:</string>         <!-- spinner label -->
     <string name="configLabel_general_showSeconds">Show Seconds</string>        <!-- checkbox label -->
 
+    <string name="configLabel_general_showWeeks">Show Weeks</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showWeeks_summary">Divide time spans greater than 7 days into weeks (e.g. 15d becomes 2w 1d).</string>        <!-- checkbox label -->
+
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Appearance Settings</string>           <!-- group title -->
     <string name="configLabel_appearance_theme">Theme:</string>                  <!-- spinner label -->
@@ -821,6 +824,7 @@
     <!-- pref defaults -->
     <string name="def_appwidget_0_general_calculator" translatable="false">any</string>
     <string name="def_appwidget_0_appearance_timeformatmode" translatable="false">MODE_SYSTEM</string>
+    <string name="def_appwidget_0_general_showweeks" translatable="false">false</string>
     <string name="def_appwidget_0_general_showseconds" translatable="false">false</string>
     <string name="def_appwidget_0_general_trackingmode" translatable="false">SOONEST</string>
 

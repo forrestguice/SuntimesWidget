@@ -1,8 +1,9 @@
 ### ~
 
-* adds option to show/hide blue hour.
-* adds option to show/hide golden hour.
-* adds golden hour, blue hour (8deg), and blue hour (4deg) to rise/set times.
+* adds "show weeks" option to app and solstice widget (#153).
+* adds "show blue hour" option to app (#127).
+* adds "show golden hour" option to app (#127).
+* adds golden hour, blue hour (8deg), and blue hour (4deg) to rise/set times (#127).
 
 ### v0.6.2 (2018-02-03)
 * adds option "verbose accessibility"; better support for TalkBack. 

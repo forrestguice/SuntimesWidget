@@ -81,6 +81,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected CheckBox checkbox_showNoon;
     protected CheckBox checkbox_showCompare;
     protected CheckBox checkbox_showSeconds;
+    protected CheckBox checkbox_showWeeks;
 
     protected Spinner spinner_onTap;
     protected EditText text_launchActivity;
@@ -551,6 +552,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         checkbox_showSeconds = (CheckBox)findViewById(R.id.appwidget_general_showSeconds);
 
         //
+        // widget: showWeeks
+        checkbox_showWeeks = (CheckBox)findViewById(R.id.appwidget_general_showWeeks);
+        showOptionWeeks(false);
+
+        //
         // widget: about button
         //
         Button button_aboutWidget = (Button) findViewById(R.id.about_button);
@@ -881,6 +887,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         boolean showSeconds = checkbox_showSeconds.isChecked();
         WidgetSettings.saveShowSecondsPref(context, appWidgetId, showSeconds);
 
+        // save: showWeeks
+        boolean showWeeks = checkbox_showWeeks.isChecked();
+        WidgetSettings.saveShowWeeksPref(context, appWidgetId, showWeeks);
+
         // save: time mode
         saveTimeMode(context);
         saveTimeModeOverride(context);
@@ -918,6 +928,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // load: showSeconds
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
         checkbox_showSeconds.setChecked(showSeconds);
+
+        // load: showWeeks
+        boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, appWidgetId);
+        checkbox_showWeeks.setChecked(showWeeks);
 
         // load: time mode
         loadTimeMode(context);
@@ -1088,6 +1102,15 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (dataSourceLayout != null)
         {
             dataSourceLayout.setVisibility((showDataSourceUI ? View.VISIBLE : View.GONE));
+        }
+    }
+
+    protected void showOptionWeeks( boolean showOption )
+    {
+        View weeksOptionLayout = findViewById(R.id.appwidget_general_showWeeks_layout);
+        if (weeksOptionLayout != null)
+        {
+            weeksOptionLayout.setVisibility((showOption ? View.VISIBLE : View.GONE));
         }
     }
 

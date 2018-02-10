@@ -144,6 +144,9 @@
     <string name="configLabel_general_calculator">Adatok forrása:</string>         <!-- spinner label -->
     <string name="configLabel_general_showSeconds">Show seconds</string>        <!-- checkbox label --> <!-- TODO -->
 
+    <string name="configLabel_general_showWeeks">Show Weeks</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_showWeeks_summary">Divide time spans greater than 7 days into weeks (e.g. 15d becomes 2w 1d).</string>        <!-- checkbox label -->  <!-- TODO -->
+
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Megjelenés beállításai</string>           <!-- group title -->
     <string name="configLabel_appearance_theme">Téma:</string>                  <!-- spinner label -->
