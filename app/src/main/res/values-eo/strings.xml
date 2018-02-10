@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="http://schemas.android.com/tools">
 
     <string name="default_location_label">Bjalistoko</string>
@@ -139,6 +138,9 @@
     <string name="configLabel_general">Agordoj ĝeneralaj</string>                <!-- group title -->
     <string name="configLabel_general_calculator">Fonto de datumoj:</string>         <!-- spinner label -->
     <string name="configLabel_general_showSeconds">Montri sekundojn</string>        <!-- checkbox label -->
+
+    <string name="configLabel_general_showWeeks">Show Weeks</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_showWeeks_summary">Divide time spans greater than 7 days into weeks (e.g. 15d becomes 2w 1d).</string>        <!-- checkbox label -->  <!-- TODO -->
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Agordoj de aspekto</string>           <!-- group title -->
