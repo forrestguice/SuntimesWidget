@@ -4,7 +4,8 @@
     <PreferenceCategory
         android:title="@string/configLabel_places">
 
-        <Preference android:title="@string/configLabel_places_build" android:key="places_build" />
+        <Preference android:title="@string/configLabel_places_build"
+            android:summary="@string/configLabel_places_build_summary" android:key="places_build" />
 
         <Preference android:title="@string/configLabel_places_clear" android:key="places_clear" />
 
