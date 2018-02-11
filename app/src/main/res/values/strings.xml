@@ -191,7 +191,7 @@
 
     <string name="timeMode_equinox_vernal">Spring Equinox</string>      <!-- setting -->
     <string name="timeMode_equinox_vernal_short">Equinox</string>       <!-- setting -->
-    <string name="timeMode_equinox_autumnal">Fall Equinox</string>  <!-- setting -->
+    <string name="timeMode_equinox_autumnal">Autumn Equinox</string>  <!-- setting -->
     <string name="timeMode_equinox_autumnal_short">Equinox</string>     <!-- setting -->
     <string name="timeMode_solstice_summer">Summer Solstice</string>    <!-- setting -->
     <string name="timeMode_solstice_summer_short">Solstice</string>     <!-- setting -->
@@ -337,7 +337,7 @@
 
     <string name="configLabel_themeColorSpring">Spring Color:</string> <!-- color label -->
     <string name="configLabel_themeColorSummer">Summer Color:</string> <!-- color label -->
-    <string name="configLabel_themeColorFall">Fall Color:</string> <!-- color label -->
+    <string name="configLabel_themeColorFall">Autumn Color:</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Winter Color:</string> <!-- color label -->
 
     <string name="configLabel_themeColorSunrise">Sunrise Color:</string> <!-- color label -->
@@ -804,7 +804,7 @@
     <string name="help_general_timeMode2"><![CDATA[
           <b>Spring Equinox:</b> TODO.<br/><br/>
           <b>Summer Solstice:</b> TODO.<br/><br/>
-          <b>Fall Equinox:</b> TODO.<br/><br/>
+          <b>Autumn Equinox:</b> TODO.<br/><br/>
           <b>Winter Solstice:</b> TODO.<br/>
     ]]></string>
     <string name="help_general_daylength"><![CDATA[
