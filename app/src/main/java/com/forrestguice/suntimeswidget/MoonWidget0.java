@@ -28,6 +28,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_0;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_2x1_0;
+import com.forrestguice.suntimeswidget.layouts.MoonLayout_3x1_0;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -91,9 +92,11 @@ public class MoonWidget0 extends SuntimesWidget0
         MoonLayout layout;
         if (WidgetSettings.loadAllowResizePref(context, appWidgetId))
         {
-            int minWidth1x3 = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
-            layout = ((mustFitWithinDp[0] >= minWidth1x3)
-                    ? new MoonLayout_2x1_0() : WidgetSettings.loadMoon1x1ModePref_asLayout(context, appWidgetId));
+            int minWidth3x1 = context.getResources().getInteger(R.integer.widget_size_minWidthDp3x1);
+            int minWidth2x1 = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
+            layout = (mustFitWithinDp[0] >= minWidth3x1) ? new MoonLayout_3x1_0()
+                   : (mustFitWithinDp[0] >= minWidth2x1) ? new MoonLayout_2x1_0()
+                   : WidgetSettings.loadMoon1x1ModePref_asLayout(context, appWidgetId);
         } else {
             layout = defLayout;
         }
