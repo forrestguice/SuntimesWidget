@@ -75,13 +75,13 @@ public class DialogTest extends SuntimesActivityTestBase
 
     public static void verifyLightmapDialog()
     {
-        onView(withId(R.id.info_time_lightmap_key)).check(assertShown);
+        onView(withId(R.id.info_time_lightmap_layout)).check(assertShown);
     }
 
     public static void cancelLightmapDialog()
     {
-        onView(withId(R.id.info_time_lightmap_key)).perform(pressBack());
-        onView(withId(R.id.info_time_lightmap_key)).check(doesNotExist());
+        onView(withId(R.id.info_time_lightmap_layout)).perform(pressBack());
+        onView(withId(R.id.info_time_lightmap_layout)).check(doesNotExist());
     }
 
     /**
