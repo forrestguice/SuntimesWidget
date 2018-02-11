@@ -211,10 +211,10 @@ public class SuntimesUtilsTest
         test_timeDeltaDisplayString(date1, 2 * 60 * 1000, "2m");
         test_timeDeltaDisplayString(date1, 59 * 60 * 1000, "59m");
         test_timeDeltaDisplayString(date1, 60 * 60 * 1000, "1h");
-        test_timeDeltaDisplayString(date1, 61 * 60 * 1000, "1h 1m");
-        test_timeDeltaDisplayString(date1, 1439 * 60 * 1000, "23h 59m");
+        test_timeDeltaDisplayString(date1, 61 * 60 * 1000, "1h\u00A01m");
+        test_timeDeltaDisplayString(date1, 1439 * 60 * 1000, "23h\u00A059m");
         test_timeDeltaDisplayString(date1, 1440 * 60 * 1000, "1d");
-        test_timeDeltaDisplayString(date1, 1500 * 60 * 1000, "1d 1h");
+        test_timeDeltaDisplayString(date1, 1500 * 60 * 1000, "1d\u00A01h");
     }
 
     protected SuntimesUtils.TimeDisplayText test_timeDeltaDisplayString(Date date, long timeDelta, String expected)
@@ -240,13 +240,13 @@ public class SuntimesUtilsTest
         test_timeDeltaLongDisplayString(date1,2 * 60 * 1000, "2m longer");
         test_timeDeltaLongDisplayString(date1,59 * 60 * 1000, "59m longer");
         test_timeDeltaLongDisplayString(date1,60 * 60 * 1000, "1h longer");
-        test_timeDeltaLongDisplayString(date1,61 * 60 * 1000, "1h 1m longer");
-        test_timeDeltaLongDisplayString(date1,1439 * 60 * 1000, "23h 59m longer");
+        test_timeDeltaLongDisplayString(date1,61 * 60 * 1000, "1h\u00A01m longer");
+        test_timeDeltaLongDisplayString(date1,1439 * 60 * 1000, "23h\u00A059m longer");
         test_timeDeltaLongDisplayString(date1,1440 * 60 * 1000, "1d longer");
-        test_timeDeltaLongDisplayString(date1,1500 * 60 * 1000, "1d 1h longer");
+        test_timeDeltaLongDisplayString(date1,1500 * 60 * 1000, "1d\u00A01h longer");
         test_timeDeltaLongDisplayString(date1,30 * 60 * 1000 + 60 * 1000, "31m longer", true);
-        test_timeDeltaLongDisplayString(date1,30 * 60 * 1000 + 59 * 1000, "30m 59s longer", true);
-        test_timeDeltaLongDisplayString(date1,660 * 60 * 1000 + 55 * 1000, "11h 55s longer", true);
+        test_timeDeltaLongDisplayString(date1,30 * 60 * 1000 + 59 * 1000, "30m\u00A059s longer", true);
+        test_timeDeltaLongDisplayString(date1,660 * 60 * 1000 + 55 * 1000, "11h\u00A055s longer", true);
     }
 
     protected SuntimesUtils.TimeDisplayText test_timeDeltaLongDisplayString(long date, long timeDelta, String expected)

@@ -309,7 +309,7 @@ public class SuntimesActivity extends AppCompatActivity
         if (lightMapDialog != null)
         {
             lightMapDialog.setData(dataset);
-            lightMapDialog.updateViews(dataset);
+            lightMapDialog.updateViews();
             //Log.d("DEBUG", "LightMapDialog updated on restore.");
         }
 

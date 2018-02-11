@@ -78,7 +78,7 @@ public class SuntimesUtils
 
     private static String strTimeShorter = "shorter";
     private static String strTimeLonger = "longer";
-    private static String strSpace = " ";
+    private static String strSpace = "\u00A0";
     private static String strEmpty = "";
     private static String strYears = "y";
     private static String strWeeks = "w";
@@ -518,10 +518,17 @@ public class SuntimesUtils
         return timeDeltaLongDisplayString(timeSpan1, timeSpan2, false, showSeconds);
     }
 
+    public TimeDisplayText timeDeltaLongDisplayString(long timeSpan, boolean showSeconds)
+    {
+        TimeDisplayText text = timeDeltaLongDisplayString(0, timeSpan, showSeconds);
+        text.setSuffix("");
+        return text;
+    }
+
     @SuppressWarnings("ConstantConditions")
     public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2, boolean showWeeks, boolean showSeconds)
     {
-        String value = strSpace;
+        String value = strEmpty;
         String units = strEmpty;
         String suffix = strEmpty;
 

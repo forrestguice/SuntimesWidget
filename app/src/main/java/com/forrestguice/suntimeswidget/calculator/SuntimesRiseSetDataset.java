@@ -20,11 +20,14 @@ package com.forrestguice.suntimeswidget.calculator;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.util.Log;
 
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 public class SuntimesRiseSetDataset
@@ -173,6 +176,135 @@ public class SuntimesRiseSetDataset
     {
         return Calendar.getInstance(timezone());
     }
+
+    public static Calendar midnight(Calendar date)
+    {
+        Calendar midnight = (Calendar)date.clone();
+        midnight.set(Calendar.HOUR_OF_DAY, 0);
+        midnight.set(Calendar.MINUTE, 0);
+        midnight.set(Calendar.SECOND, 0);
+        return midnight;
+    }
+
+    public long nightLength()
+    {
+        Calendar astroSet = dataAstro.sunsetCalendarToday();
+        Calendar astroRise = dataAstro.sunriseCalendarOther();
+        if (astroRise == null || astroSet == null)
+            return 0;
+        else return astroRise.getTimeInMillis() - astroSet.getTimeInMillis();
+    }
+
+    public long[] astroTwilightLength()
+    {
+        long[] durations = new long[2];
+        durations[0] = morningTwilightLength(dataAstro, dataNautical);
+        durations[1] = eveningTwilightLength(dataNautical, dataAstro);
+        return durations;
+    }
+
+    public long[] nauticalTwilightLength()
+    {
+        long[] durations = new long[2];
+        durations[0] = morningTwilightLength(dataNautical, dataCivil);
+        durations[1] = eveningTwilightLength(dataCivil, dataNautical);
+        return durations;
+    }
+
+    public long[] civilTwilightLength()
+    {
+        long[] durations = new long[2];
+        durations[0] = morningTwilightLength(dataCivil, dataActual);
+        durations[1] = eveningTwilightLength(dataActual, dataCivil);
+        return durations;
+    }
+
+    public long dayLength()
+    {
+        return dataActual.dayLengthToday();
+    }
+
+    public long dayLengthOther()
+    {
+        return dataActual.dayLengthOther();
+    }
+
+    /**
+     * @param data0 data for this twilight (e.g. nautical)
+     * @param data1 data for next twilight (e.g. civil)
+     * @return the (morning) duration of this twilight
+     */
+    public static long morningTwilightLength(SuntimesRiseSetData data0, SuntimesRiseSetData data1)
+    {
+        Calendar startRise = data0.sunriseCalendarToday();  // twilight is starting (rising)
+        Calendar endRise = data1.sunriseCalendarToday();    // twilight is ending (rising next twilight)
+        Calendar endSet = null;                             // twilight is ending (setting)
+
+        if (startRise != null && endRise != null)
+        {
+            return endRise.getTimeInMillis() - startRise.getTimeInMillis();                // avg:  >..N../  T  /---D---\  T  \..N..<
+                                                                                           //            twilight rising to next
+        } else if (startRise != null) {
+            endSet = data0.sunsetCalendarToday();
+            if (endSet != null)
+            {
+                return endSet.getTimeInMillis() - startRise.getTimeInMillis();          // special: >..N..../  T   \.....N..<
+                                                                                        //               twilight is peak (rising today / setting today)
+            } else {
+                endRise = data1.sunriseCalendarOther();
+                if (endRise != null)
+                {
+                    return endRise.getTimeInMillis() - startRise.getTimeInMillis();     // special: >..N...../  T   <>   /----D----<
+                                                                                        //             twilight straddles day (rising to next tomorrow)
+                } else {
+                    endSet = data0.sunsetCalendarOther();
+                    if (endSet != null)
+                    {
+                        return endSet.getTimeInMillis() - startRise.getTimeInMillis();  // special: >..N...../  T   <>   \......N..<
+                                                                                        //              twilight is peak (rising today / setting tomorrow)
+                    } else {
+                        return 0;                                                       // unknown: >..N...../  T   <>             <
+                    }                                                                   //              twilight is peak (but does not set tomorrow)
+                }
+            }
+        //} else if (endRise != null) {
+        //    return endRise.getTimeInMillis() - midnight(endRise).getTimeInMillis();     // special: >   T       /---D---\       T   >
+                                                                                        //              twilight starts w/ day (rose yesterday, rising to next today)
+        } else {
+            return 0;                                                                   // unknown: >.................<
+        }                                                                               //              twilight DNE (no rise or set times)
+    }
+
+    /**
+     * @param data0 data for prev twilight (e.g. civil)
+     * @param data1 data for this twilight (e.g. nautical)
+     * @return the (evening) duration of this twilight
+     */
+    public static long eveningTwilightLength(SuntimesRiseSetData data0, SuntimesRiseSetData data1)
+    {
+        Calendar startSet = data0.sunsetCalendarToday();  // civil
+        Calendar endSet = data1.sunsetCalendarToday();    // nautical
+        Calendar startRise = null;
+
+        if (startSet != null && endSet != null)
+        {
+            return endSet.getTimeInMillis() - startSet.getTimeInMillis();                  // avg:  >..N../  T  /---D---\  T  \..N..<
+
+        } else if (startSet != null) {
+            startRise = data0.sunriseCalendarOther();
+            if (startRise != null)
+            {
+                return startRise.getTimeInMillis() - startSet.getTimeInMillis();        // special: >   T       /---D---\       T   >
+                                                                                        //              twilight ends w/ day (no night)
+            } else {
+                return 0;
+            }
+
+        } else {
+            return 0;                                                                   //            twilight setting to next
+        }
+    }
+
 }
 
 
