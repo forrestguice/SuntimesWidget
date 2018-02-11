@@ -17,7 +17,8 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
-    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <include layout="@layout/icons_moon_phases" />
 
@@ -31,14 +32,15 @@
                 style="@style/SunsetTimeTextView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="New Moon" />
+                android:gravity="start" android:maxLines="2" android:ellipsize="end"
+                tools:text="Waning\nCrescent" />
 
             <TextView
                 android:id="@+id/text_info_moonillum"
                 style="@style/SunsetTimeTextView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:gravity="start"
                 tools:text="0%" />
 
         </LinearLayout>
