@@ -87,8 +87,8 @@ public class SuntimesUtils
     private static String strMinutes = "m";
     private static String strSeconds = "s";
     private static String strTimeDeltaFormat = "%1$s" + strEmpty + "%2$s";
-    private static String strTimeShortFormat12 = "h:mm a";
-    private static String strTimeShortFormat12s = "h:mm:ss a";
+    private static String strTimeShortFormat12 = "h:mm\u00A0a";
+    private static String strTimeShortFormat12s = "h:mm:ss\u00A0a";
     private static String strTimeVeryShortFormat12 = "h:mm";
     private static String strTimeVeryShortFormat24 = "HH:mm";
     private static String strTimeVeryShortFormat12s = "h:mm:ss";
@@ -102,10 +102,10 @@ public class SuntimesUtils
     private static String strDateYearFormat = "yyyy";
     private static String strDateShortFormat = "MMMM d";
     private static String strDateLongFormat = "MMMM d, yyyy";
-    private static String strDateTimeShortFormat = "MMMM d, h:mm a";
-    private static String strDateTimeLongFormat = "MMMM d, yyyy, h:mm a";
-    private static String strDateTimeShortFormatSec = "MMMM d, h:mm:ss a";
-    private static String strDateTimeLongFormatSec = "MMMM d, yyyy, h:mm:ss a";
+    private static String strDateTimeShortFormat = "MMMM d, h:mm\u00A0a";
+    private static String strDateTimeLongFormat = "MMMM d, yyyy, h:mm\u00A0a";
+    private static String strDateTimeShortFormatSec = "MMMM d, h:mm:ss\u00A0a";
+    private static String strDateTimeLongFormatSec = "MMMM d, yyyy, h:mm:ss\u00A0a";
 
     public SuntimesUtils()
     {
