@@ -7,10 +7,7 @@
 
     <!-- Widget Setting: time mode -->
     <string name="timeMode_equinox_autumnal">Fall Equinox</string>  <!-- setting -->
-    <string name="timeMode_equinox_autumnal_short">Equinox</string>     <!-- setting -->
 
-    <!-- App Setting: WidgetThemes -->
-    <string name="configLabel_themeColorFall">Fall Color:</string> <!-- color label -->
     <string name="configLabel_themeColorFall">Fall Colour:</string> <!-- color label -->
 
 </resources>

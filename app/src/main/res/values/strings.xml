@@ -322,31 +322,31 @@
     <string name="configLabel_widgetThemeAdd">Add Theme</string>     <!-- title text -->
     <string name="configLabel_widgetThemeEdit">Edit Theme</string>   <!-- title text -->
     <string name="configAction_saveTheme">Save</string>           <!-- button (contentDescription) -->
-    <string name="configAction_chooseColor">Choose Color</string> <!-- button (contentDescription) -->
+    <string name="configAction_chooseColor">Choose Colour</string> <!-- button (contentDescription) -->
 
     <string name="configLabel_themeBackgroundId">Base:</string>    <!-- spinner label -->
     <string name="configLabel_themeBackground_light">Light</string>        <!-- light background -->
     <string name="configLabel_themeBackground_dark">Dark</string>          <!-- dark background -->
     <string name="configLabel_themeBackground_trans">Transparent</string>  <!-- transparent background -->
 
-    <string name="configLabel_themeColorTitle">Title Color:</string>     <!-- color label -->
+    <string name="configLabel_themeColorTitle">Title Colour:</string>     <!-- color label -->
     <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->
 
-    <string name="configLabel_themeColorText">Text Color:</string>       <!-- color label -->
+    <string name="configLabel_themeColorText">Text Colour:</string>       <!-- color label -->
     <string name="configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->
 
-    <string name="configLabel_themeColorSpring">Spring Color:</string> <!-- color label -->
-    <string name="configLabel_themeColorSummer">Summer Color:</string> <!-- color label -->
-    <string name="configLabel_themeColorFall">Autumn Color:</string> <!-- color label -->
-    <string name="configLabel_themeColorWinter">Winter Color:</string> <!-- color label -->
+    <string name="configLabel_themeColorSpring">Spring Colour:</string> <!-- color label -->
+    <string name="configLabel_themeColorSummer">Summer Colour:</string> <!-- color label -->
+    <string name="configLabel_themeColorFall">Autumn Colour:</string> <!-- color label -->
+    <string name="configLabel_themeColorWinter">Winter Colour:</string> <!-- color label -->
 
-    <string name="configLabel_themeColorSunrise">Sunrise Color:</string> <!-- color label -->
+    <string name="configLabel_themeColorSunrise">Sunrise Colour:</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
 
-    <string name="configLabel_themeColorSunset">Sunset Color:</string>   <!-- color label -->
+    <string name="configLabel_themeColorSunset">Sunset Colour:</string>   <!-- color label -->
     <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorNoon">Noon Color:</string>      <!-- color label -->
+    <string name="configLabel_themeColorNoon">Noon Colour:</string>      <!-- color label -->
     <string name="configHint_themeColorNoon">#FFFFFFFF</string>         <!-- color hint -->
 
     <string name="configLabel_themeColorFill">Fill:</string>         <!-- color label -->
@@ -360,10 +360,10 @@
     <string name="configLabel_themeBorderWidthNoon">Border Width (noon):</string>         <!-- size label -->
     <string name="configHint_themeBorderWidthNoon">3</string>                             <!-- size hint -->
 
-    <string name="configLabel_themeColorSuffix">Suffix Color:</string>   <!-- color label -->
+    <string name="configLabel_themeColorSuffix">Suffix Colour:</string>   <!-- color label -->
     <string name="configHint_themeColorSuffix">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorTime">Text Color2:</string>      <!-- color label -->
+    <string name="configLabel_themeColorTime">Text Colour2:</string>      <!-- color label -->
     <string name="configHint_themeColorTime">#FFFFFFFF</string>          <!-- color hint -->
 
     <string name="configLabel_themeSizeTitle">Title Size:</string>  <!-- edit label -->
@@ -736,7 +736,7 @@
     <string name="msg_export_to">Export with</string>  <!-- title displayed over "share action" chooser -->
 
     <!-- Dialog: Color -->
-    <string name="color_dialog_msg">Choose Color</string>
+    <string name="color_dialog_msg">Choose Colour</string>
     <string name="color_dialog_ok">Select</string>
     <string name="color_dialog_cancel">Cancel</string>
 
