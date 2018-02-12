@@ -40,7 +40,7 @@ import java.util.Calendar;
 public class SuntimesWidget2 extends SuntimesWidget0
 {
     public static final String SUNTIMES_WIDGET_UPDATE2 = "SUNTIMES_WIDGET_UPDATE2";
-    private static final int UPDATEALARM_ID = 2;
+    private static final int UPDATEALARM_ID = 3;
 
     @Override
     protected Class getConfigClass()
