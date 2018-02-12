@@ -21,13 +21,16 @@ package com.forrestguice.suntimeswidget.calculator;
 import android.content.Context;
 import android.util.Log;
 
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
 public class SuntimesMoonData extends SuntimesData
 {
     private Context context;
+    private SuntimesCalculator.MoonTimes[] riseSet = new SuntimesCalculator.MoonTimes[3];
 
     public SuntimesMoonData(Context context, int appWidgetId)
     {
@@ -40,35 +43,51 @@ public class SuntimesMoonData extends SuntimesData
         initFromOther(other);
     }
 
-    /**
-     * Property: compare mode
-     */
-    private WidgetSettings.CompareMode compareMode;
-    public WidgetSettings.CompareMode compareMode()
-    {
-        return compareMode;
-    }
-    public void setCompareMode( WidgetSettings.CompareMode mode )
-    {
-        compareMode = mode;
-    }
+    protected Calendar otherCalendar0;
+    public Calendar getOtherCalendar0() { return otherCalendar0; }
 
     /**
      * result: moonrise today
      */
-    private Calendar moonriseCalendarToday;
+    public Calendar moonriseCalendarYesterday()
+    {
+        if (riseSet[0] != null)
+            return riseSet[0].riseTime;
+        else return null;
+    }
     public Calendar moonriseCalendarToday()
     {
-        return moonriseCalendarToday;
+        if (riseSet[1] != null)
+            return riseSet[1].riseTime;
+        else return null;
+    }
+    public Calendar moonriseCalendarTomorrow()
+    {
+        if (riseSet[2] != null)
+            return riseSet[2].riseTime;
+        else return null;
     }
 
     /**
      * result: moonset today
      */
-    private Calendar moonsetCalendarToday;
+    public Calendar moonsetCalendarYesterday()
+    {
+        if (riseSet[0] != null)
+            return riseSet[0].setTime;
+        else return null;
+    }
     public Calendar moonsetCalendarToday()
     {
-        return moonsetCalendarToday;
+        if (riseSet[1] != null)
+            return riseSet[1].setTime;
+        else return null;
+    }
+    public Calendar moonsetCalendarTomorrow()
+    {
+        if (riseSet[2] != null)
+            return riseSet[2].setTime;
+        else return null;
     }
 
     /**
@@ -81,39 +100,21 @@ public class SuntimesMoonData extends SuntimesData
     }
 
     /**
+     * result: moon transit time
+     */
+    private Calendar noonToday;
+    public Calendar getLunarNoonToday()
+    {
+        return noonToday;
+    }
+
+    /**
      * result: phase today
      */
     private MoonPhaseDisplay moonPhaseToday;
     public MoonPhaseDisplay getMoonPhaseToday()
     {
         return moonPhaseToday;
-    }
-
-    /**
-     * result: moonrise other
-     */
-    private Calendar moonriseCalendarOther;
-    public Calendar moonriseCalendarOther()
-    {
-        return moonriseCalendarOther;
-    }
-
-    /**
-     * result: moonset other
-     */
-    private Calendar moonsetCalendarOther;
-    public Calendar moonsetCalendarOther()
-    {
-        return moonsetCalendarOther;
-    }
-
-    /**
-     * result: illumination other
-     */
-    private double moonIlluminationOther;
-    public double getMoonIlluminationOther()
-    {
-        return moonIlluminationOther;
     }
 
     /**
@@ -130,36 +131,16 @@ public class SuntimesMoonData extends SuntimesData
     }
 
     /**
-     * result: phase other
-     */
-    private MoonPhaseDisplay moonPhaseOther;
-    /**public MoonPhaseDisplay getMoonPhaseOther()
-    {
-        return moonPhaseOther;
-    }*/
-
-    /**
      * init from other SuntimesEquinoxSolsticeData object
      * @param other another SuntimesEquinoxSolsticeData obj
      */
     private void initFromOther( SuntimesMoonData other )
     {
         super.initFromOther(other);
-        this.compareMode = other.compareMode();
-
-        this.moonriseCalendarToday = other.moonriseCalendarToday;
-        this.moonriseCalendarOther = other.moonriseCalendarOther;
-
-        this.moonsetCalendarToday = other.moonsetCalendarToday;
-        this.moonsetCalendarOther = other.moonsetCalendarOther;
-
+        this.riseSet = other.riseSet;
         this.moonIlluminationToday = other.moonIlluminationToday;
-        this.moonIlluminationOther = other.moonIlluminationOther;
-
         this.moonPhases = new HashMap<>(other.moonPhases);
-
         this.moonPhaseToday = other.moonPhaseToday;
-        //this.moonPhaseOther = other.moonPhaseOther;
     }
 
     /**
@@ -171,9 +152,11 @@ public class SuntimesMoonData extends SuntimesData
     public void initFromSettings(Context context, int appWidgetId)
     {
         super.initFromSettings(context, appWidgetId);
-        this.compareMode = WidgetSettings.loadCompareModePref(context, appWidgetId);
     }
 
+    /**
+     * calculate
+     */
     public void calculate()
     {
         SuntimesCalculatorFactory calculatorFactory = new SuntimesCalculatorFactory(context, calculatorMode);
@@ -181,52 +164,45 @@ public class SuntimesMoonData extends SuntimesData
 
         todaysCalendar = Calendar.getInstance(timezone);
         otherCalendar = Calendar.getInstance(timezone);
+        otherCalendar0 = Calendar.getInstance(timezone);
 
         if (todayIsNotToday())
         {
             todaysCalendar.set(todayIs.get(Calendar.YEAR), todayIs.get(Calendar.MONTH), todayIs.get(Calendar.DAY_OF_MONTH));
             otherCalendar.set(todayIs.get(Calendar.YEAR), todayIs.get(Calendar.MONTH), todayIs.get(Calendar.DAY_OF_MONTH));
+            otherCalendar0.set(todayIs.get(Calendar.YEAR), todayIs.get(Calendar.MONTH), todayIs.get(Calendar.DAY_OF_MONTH));
         }
 
-        switch (compareMode)
-        {
-            case YESTERDAY:
-                otherCalendar.add(Calendar.DAY_OF_MONTH, -1);
-                break;
-
-            case TOMORROW:
-            default:
-                otherCalendar.add(Calendar.DAY_OF_MONTH, 1);
-                break;
-        }
+        otherCalendar0.add(Calendar.DAY_OF_MONTH, -1);   // yesterday
+        otherCalendar.add(Calendar.DAY_OF_MONTH, 1);   // tomorrow
 
         date = todaysCalendar.getTime();
         dateOther = otherCalendar.getTime();
 
-        SuntimesCalculator.MoonTimes moonTimes0 = calculator.getMoonTimesForDate(todaysCalendar);
-        if (moonTimes0 != null)
-        {
-            this.moonriseCalendarToday = moonTimes0.riseTime;
-            this.moonsetCalendarToday = moonTimes0.setTime;
-        }
+        riseSet[0] = calculator.getMoonTimesForDate(otherCalendar0);
+        riseSet[1] = calculator.getMoonTimesForDate(todaysCalendar);
+        riseSet[2] = calculator.getMoonTimesForDate(otherCalendar);
 
-        double moonIllumination0 = calculator.getMoonIlluminationForDate(todaysCalendar);
-        if (moonIllumination0 >= 0)
+        ArrayList<Calendar> noons = findNoon();
+        if (noons.size() >= 1)
         {
-            this.moonIlluminationToday = moonIllumination0;
+            noonToday = noons.get(noons.size() - 1);
+            for (Calendar noon : noons)
+            {
+                if (noon.get(Calendar.DAY_OF_YEAR) == todaysCalendar.get(Calendar.DAY_OF_YEAR))
+                {
+                    noonToday = noon;
+                    break;
+                }
+            }
         }
+        //SuntimesUtils utils = new SuntimesUtils();
+        //Log.d("DEBUG", "transit at " + utils.calendarDateTimeDisplayString(context, transitToday));
 
-        SuntimesCalculator.MoonTimes moonTimes1 = calculator.getMoonTimesForDate(otherCalendar);
-        if (moonTimes1 != null)
+        double moonIllumination = (noonToday != null ? calculator.getMoonIlluminationForDate(noonToday) : 0);
+        if (moonIllumination >= 0)
         {
-            this.moonriseCalendarOther = moonTimes1.riseTime;
-            this.moonsetCalendarOther = moonTimes1.setTime;
-        }
-
-        double moonIllumination1 = calculator.getMoonIlluminationForDate(otherCalendar);
-        if (moonIllumination1 >= 0)
-        {
-            this.moonIlluminationOther = moonIllumination1;
+            this.moonIlluminationToday = moonIllumination;
         }
 
         Calendar startOfDay = (Calendar)todaysCalendar.clone();
@@ -241,6 +217,47 @@ public class SuntimesMoonData extends SuntimesData
         moonPhaseToday = findPhaseOf(startOfDay);
 
         super.calculate();
+    }
+
+    /**
+     * @return a list of lunar noon times created by examining the moonrise/moonset times from yesterday, today, and tomorrow.
+     */
+    private ArrayList<Calendar> findNoon()
+    {
+        ArrayList<Calendar> noon = new ArrayList<>();
+        for (int i=0; i<riseSet.length-1; i++)
+        {
+            Calendar rise = riseSet[i].riseTime;
+            if (rise != null)
+            {
+                Calendar set = riseSet[i].setTime;
+                if (set != null && set.after(rise))
+                {
+                    noon.add(midpoint(rise, set));
+
+                } else {
+                    set = riseSet[i+1].setTime;
+                    if (set != null)
+                    {
+                        noon.add(midpoint(rise, set));
+                    }
+                }
+            }
+        }
+        return noon;
+    }
+
+    /**
+     * @param c1 start time
+     * @param c2 end time
+     * @return the midpoint between start and end.
+     */
+    private Calendar midpoint(Calendar c1, Calendar c2)
+    {
+        int midpoint = (int)((c2.getTimeInMillis() - c1.getTimeInMillis()) / 2);
+        Calendar retValue = (Calendar)c1.clone();
+        retValue.add(Calendar.MILLISECOND, midpoint);
+        return retValue;
     }
 
     public SuntimesCalculator.MoonPhase nextPhase(Calendar calendar)
