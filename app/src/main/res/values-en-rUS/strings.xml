@@ -3,7 +3,6 @@
 
     <!-- Widget Setting: time mode -->
     <string name="timeMode_equinox_autumnal">Fall Equinox</string>  <!-- setting -->
-    <string name="timeMode_equinox_autumnal_short">Equinox</string>     <!-- setting -->
 
     <!-- App Setting: WidgetThemes -->
     <string name="configAction_chooseColor">Choose Color</string> <!-- button (contentDescription) -->

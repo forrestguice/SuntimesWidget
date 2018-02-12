@@ -414,7 +414,7 @@
     <string name="configLabel_accessibility_verbose_summary">Announce automated changes to the UI.</string>
 
     <!-- App Setting: UI Warnings -->
-    <string name="configLabel_ui_showWarnings">Show warnings</string>
+    <string name="configLabel_ui_showWarnings">Show Warnings</string>
     <string name="configLabel_ui_showWarnings_summary">Show configuration warning messages.</string>
 
     <!-- App Setting: Show Lightmap -->
