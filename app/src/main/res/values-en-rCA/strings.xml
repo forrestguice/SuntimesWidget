@@ -11,5 +11,6 @@
 
     <!-- App Setting: WidgetThemes -->
     <string name="configLabel_themeColorFall">Fall Color:</string> <!-- color label -->
+    <string name="configLabel_themeColorFall">Fall Colour:</string> <!-- color label -->
 
 </resources>
