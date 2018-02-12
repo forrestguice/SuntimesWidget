@@ -35,7 +35,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 public class MoonWidget0 extends SuntimesWidget0
 {
     public static final String WIDGET_UPDATE = "MOON_WIDGET_UPDATE";
-    private static final int UPDATEALARM_ID = 2;
+    private static final int UPDATEALARM_ID = 4;
 
     @Override
     protected Class getConfigClass()
@@ -59,23 +59,23 @@ public class MoonWidget0 extends SuntimesWidget0
     protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
         MoonLayout defLayout = WidgetSettings.loadMoon1x1ModePref_asLayout(context, appWidgetId); 
-        MoonWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, getMinSize(context), defLayout);
+        MoonWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, MoonWidget0.class, getMinSize(context), defLayout);
     }
 
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize, MoonLayout defLayout)
+    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Class widgetClass, int[] defSize, MoonLayout defLayout)
     {
         MoonLayout layout = MoonWidget0.getWidgetLayout(context, appWidgetManager, appWidgetId, defSize, defLayout);
-        MoonWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, layout);
+        MoonWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, layout, widgetClass);
     }
 
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, MoonLayout layout)
+    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, MoonLayout layout, Class widgetClass)
     {
         SuntimesMoonData data = new SuntimesMoonData(context, appWidgetId);
         data.calculate();
         layout.prepareForUpdate(data);
 
         RemoteViews views = layout.getViews(context);
-        views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, MoonWidget0.class));
+        views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, widgetClass));
 
         boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId);
         views.setViewVisibility(R.id.text_title, showTitle ? View.VISIBLE : View.GONE);

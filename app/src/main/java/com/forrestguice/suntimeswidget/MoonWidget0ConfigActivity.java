@@ -56,7 +56,7 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
 
         MoonLayout defLayout = WidgetSettings.loadMoon1x1ModePref_asLayout(context, appWidgetId);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        MoonWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, minSize, defLayout);
+        MoonWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, MoonWidget0.class, minSize, defLayout);
     }
 
     @Override

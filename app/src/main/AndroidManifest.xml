@@ -144,7 +144,9 @@
             </intent-filter>
         </activity>
 
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget 2: Solstice / Equinox widget (resizable (falls back to static 1x1 for api less than 16)) -->
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <receiver android:name=".SuntimesWidget2"
                   android:label="@string/app_name_widget2">
 
@@ -166,7 +168,9 @@
             </intent-filter>
         </activity>
 
-        <!-- Widget: Moon -->
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <!-- Widget: Moon0 1x1 -->
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <receiver android:name=".MoonWidget0"
             android:label="@string/app_name_moonwidget0">
 
@@ -177,10 +181,9 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/widget_moon0" />
+                android:resource="@xml/widget_moon0_1x1" />
         </receiver>
 
-        <!-- Moon Widget Config Activity -->
         <activity
             android:name=".MoonWidget0ConfigActivity" >
             <intent-filter>
