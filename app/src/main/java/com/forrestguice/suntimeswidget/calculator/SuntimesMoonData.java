@@ -226,7 +226,7 @@ public class SuntimesMoonData extends SuntimesData
         {
             moonPhases.put(phase, calculator.getMoonPhaseNextDate(phase, midnight));
         }
-        moonPhaseToday = findPhaseOf(midnight);
+        moonPhaseToday = findPhaseOf(midnight, true);
 
         super.calculate();
     }
@@ -303,10 +303,22 @@ public class SuntimesMoonData extends SuntimesData
      * @param calendar a date/time
      * @return a MoonPhaseDisplay enum
      */
-    protected MoonPhaseDisplay findPhaseOf(Calendar calendar)
+    public MoonPhaseDisplay findPhaseOf(Calendar calendar)
+    {
+        return findPhaseOf(calendar, false);
+    }
+
+    /**
+     * @param calendar a date/time
+     * @param updateNext sideeffect; cache next major phase in results (@see getMoonPhaseNext)
+     * @return a MoonPhaseDisplay enum
+     */
+    protected MoonPhaseDisplay findPhaseOf(Calendar calendar, boolean updateNext)
     {
         SuntimesCalculator.MoonPhase nextPhase = nextPhase(calendar);
-        this.moonPhaseNext = nextPhase;
+        if (updateNext) {
+            this.moonPhaseNext = nextPhase;
+        }
 
         Calendar nextPhaseDate = moonPhases.get(nextPhase);
         boolean nextPhaseIsToday = (calendar.get(Calendar.YEAR) == nextPhaseDate.get(Calendar.YEAR)) &&
