@@ -122,6 +122,15 @@ public class SuntimesMoonData extends SuntimesData
     }
 
     /**
+     * result: next major phase
+     */
+    private SuntimesCalculator.MoonPhase moonPhaseNext;
+    public SuntimesCalculator.MoonPhase getMoonPhaseNext()
+    {
+        return moonPhaseNext;
+    }
+
+    /**
      * result: major phases (date of next: new moon, first quarter, full moon, third quarter)
      */
     private HashMap<SuntimesCalculator.MoonPhase, Calendar> moonPhases = new HashMap<>(4);
@@ -294,9 +303,11 @@ public class SuntimesMoonData extends SuntimesData
      * @param calendar a date/time
      * @return a MoonPhaseDisplay enum
      */
-    public MoonPhaseDisplay findPhaseOf(Calendar calendar)
+    protected MoonPhaseDisplay findPhaseOf(Calendar calendar)
     {
         SuntimesCalculator.MoonPhase nextPhase = nextPhase(calendar);
+        this.moonPhaseNext = nextPhase;
+
         Calendar nextPhaseDate = moonPhases.get(nextPhase);
         boolean nextPhaseIsToday = (calendar.get(Calendar.YEAR) == nextPhaseDate.get(Calendar.YEAR)) &&
                                    (calendar.get(Calendar.DAY_OF_YEAR) == nextPhaseDate.get(Calendar.DAY_OF_YEAR));
