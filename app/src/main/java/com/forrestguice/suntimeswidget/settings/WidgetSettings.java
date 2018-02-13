@@ -305,7 +305,7 @@ public class WidgetSettings
         public static void initDisplayStrings( Context context )
         {
             MODE1x1_RISESET.setDisplayString(context.getString(R.string.widgetMode1x1_moonriseset));
-            MODE1x1_PHASEILLUM.setDisplayString(context.getString(R.string.widgetMode1x1_moonphase));
+            MODE1x1_PHASEILLUM.setDisplayString(context.getString(R.string.widgetMode1x1_moonphaseillum));
             MODE1x1_PHASE.setDisplayString(context.getString(R.string.widgetMode1x1_moonphase));
             MODE1x1_ILLUM.setDisplayString(context.getString(R.string.widgetMode1x1_moonillum));
         }
