@@ -195,6 +195,23 @@
     <string name="timeMode_solstice_winter">Solsticio de invierno</string>    <!-- setting -->
     <string name="timeMode_solstice_winter_short">Solsticio</string>     <!-- setting -->
 
+    <string name="timeMode_moon_new">New Moon</string>                               <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_moon_new_short">New</string>                              <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_moon_waxingcrescent_short">Waxing Crescent</string>               <!-- label -->  <!-- TODO -->
+    <string name="timeMode_moon_waxingcrescent">Waxing Crescent</string>                     <!-- label -->  <!-- TODO -->
+    <string name="timeMode_moon_firstquarter">First Quarter</string>                 <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_moon_firstquarter_short">First Quarter</string>           <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_moon_waxinggibbous_short">Waxing Gibbous</string>               <!-- label -->  <!-- TODO -->
+    <string name="timeMode_moon_waxinggibbous">Waxing Gibbous</string>                     <!-- label -->  <!-- TODO -->
+    <string name="timeMode_moon_full">Full Moon</string>                             <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_moon_full_short">Full</string>                            <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_moon_waninggibbous_short">Waning Gibbous</string>               <!-- label -->  <!-- TODO -->
+    <string name="timeMode_moon_waninggibbous">Waning Gibbous</string>                     <!-- label -->  <!-- TODO -->
+    <string name="timeMode_moon_thirdquarter">Third Quarter</string>                 <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_moon_thirdquarter_short">Third Quarter</string>           <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_moon_waningcrescent_short">Waning Crescent</string>               <!-- label -->  <!-- TODO -->
+    <string name="timeMode_moon_waningcrescent">Waning Crescent</string>                     <!-- label -->  <!-- TODO -->
+
     <string name="configLabel_general_timeMode">Modo:</string>          <!-- spinner label -->
 
     <!-- Widget Setting: layout mode -->
