@@ -36,8 +36,8 @@ public interface SuntimesCalculator
     int FEATURE_RISESET = 0;      // feature: rise, set, and twilight times
     int FEATURE_SOLSTICE = 10;    // feature: solstice/equinox times
     int FEATURE_ALTITUDE = 20;    // feature: altitude based refinement
-    int FEATURE_MOON = 30;        // feature: moonrise, moonset, phase, illumination
     int FEATURE_GOLDBLUE = 30;    // feature: gold, blue hour times
+    int FEATURE_MOON = 40;        // feature: moonrise, moonset, phase, illumination
 
     //
     // 1.0.0 sunrise, sunset, noon, twilight times
