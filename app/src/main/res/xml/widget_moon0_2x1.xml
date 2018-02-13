@@ -4,7 +4,7 @@
                     tools:ignore="UnusedAttribute"
 
     android:widgetCategory="home_screen|keyguard"
-    android:previewImage="@mipmap/ic_suntimes"
+    android:previewImage="@drawable/moonwidget0_2x1_preview"
     android:resizeMode="horizontal|vertical"
     android:initialLayout="@layout/layout_widget_moon_2x1_0"
     android:initialKeyguardLayout="@layout/layout_widget_moon_2x1_0"
