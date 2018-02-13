@@ -34,7 +34,6 @@
         <TextView
             android:id="@+id/text_info_moonillum" style="@style/SunsetTimeTextView2"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_marginRight="3dp" android:layout_marginEnd="3dp"
             android:paddingTop="3dp" android:gravity="start"
             tools:text="90%" />
 
