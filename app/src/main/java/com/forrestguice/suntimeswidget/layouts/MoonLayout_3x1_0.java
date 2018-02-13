@@ -77,11 +77,11 @@ public class MoonLayout_3x1_0 extends MoonLayout
     {
         super.themeViews(context, views, theme);
 
-        int moonriseColor = theme.getMoonriseTextColor();
-        views.setTextColor(R.id.moonphase_new_date, moonriseColor);
-        views.setTextColor(R.id.moonphase_firstquarter_date, moonriseColor);
-        views.setTextColor(R.id.moonphase_full_date, moonriseColor);
-        views.setTextColor(R.id.moonphase_thirdquarter_date, moonriseColor);
+        int timeColor = theme.getTimeColor();
+        views.setTextColor(R.id.moonphase_new_date, timeColor);
+        views.setTextColor(R.id.moonphase_firstquarter_date, timeColor);
+        views.setTextColor(R.id.moonphase_full_date, timeColor);
+        views.setTextColor(R.id.moonphase_thirdquarter_date, timeColor);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
