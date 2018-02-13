@@ -66,6 +66,10 @@
     <string name="length_day"><xliff:g id="timeSpan" example="12h">%1$s</xliff:g> da tago</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
     <string name="length_light"><xliff:g id="timeSpan" example="12h 50m">%1$s</xliff:g> da uzebla lumo</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
 
+    <!-- Field: moon illumination (as seen in moon widget) -->
+    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> illuminated</string>  <!-- "50% illuminated" .. used in 2x1 widget --> <!-- TODO -->
+    <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- "50%" .. used in 1x1 widget -->
+
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
          e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
          The relative order is defined by the layout (layout/info_time_daydelta.xml).
@@ -190,6 +194,11 @@
     <string name="widgetMode1x1_sunset">Nur sunsubiro</string>               <!-- setting -->
     <string name="widgetMode1x1_both_1">Sunleviĝo kaj sunsubiro (1)</string>  <!-- setting -->
     <string name="widgetMode1x1_both_2">Sunleviĝo kaj sunsubiro (2)</string>  <!-- setting -->
+
+    <string name="widgetMode1x1_moonriseset">Moonrise &amp; moonset</string>     <!-- setting -->   <!-- TODO -->
+    <string name="widgetMode1x1_moonphaseillum">Moon phase &amp; illumination</string>     <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode1x1_moonphase">Moon phase only</string>     <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode1x1_moonillum">Moon illumination only</string>     <!-- setting -->  <!-- TODO -->
 
     <string name="configLabel_appearance_1x1mode">1x1 grando:</string>     <!-- spinner label -->
 
@@ -637,7 +646,7 @@
     <string name="app_name_widget1">Suntempoj Fenestraĵo (baskulebla)</string>
     <string name="app_name_widget2">Suntempoj Solstica Fenestraĵo</string>
     <string name="app_version"><![CDATA[<b>Versio:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
-    <string name="app_shortdesc">Montras tempojn de sunleviĝoj, sunsubiroj kaj krepuskoj.</string>
+    <string name="app_shortdesc">Montras tempojn de sunleviĝoj, sunsubiroj kaj krepuskoj.</string> <!-- TODO: needs update to mention the moon. default changed to -> "Displays sunlight and moonlight times" -->
     <string name="app_support_url"><![CDATA[
         <b>Subteno:</b> vizitu la
         <a href="https://github.com/forrestguice/SuntimesWidget/issues">erar-spurilon</a> por raporti problemon.
@@ -687,6 +696,12 @@
         <b>Kiom da uzebla lumo:</b> kvanto da tempo inter civila sunleviĝo kaj civila sunsubiro.</br>
     ]]>
     </string>
+    <string name="help_general_goldhour"><![CDATA[
+        <b>Golden Hour:</b> The sun is between 6 degrees above or below the horizon. In the morning the golden hour begins with civil twilight and ends a short time after sunrise. In the evening the golden hour begins a short time before sunset and ends with civil twilight.<br/>
+    ]]></string>  <!-- TODO -->
+    <string name="help_general_bluehour"><![CDATA[
+        <b>Blue Hour:</b> The sun is between 8 degrees and 4 degrees below the horizon. The start and end of the blue hour falls between nautical and civil twilight.<br/>
+    ]]></string>  <!-- TODO -->
     <string name="help_action_launch"><![CDATA[
         La plene unusignifa nomo de klaso de Ago por lanĉi.<br/>
     ]]></string>

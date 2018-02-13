@@ -73,8 +73,8 @@
     <string name="length_delimiter">|</string>
 
     <!-- Field: moon illumination (as seen in moon widget) -->
-    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> illuminated</string>  <!-- used in 2x1 widget --> <!-- TODO: i18n -->
-    <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- used in 1x1 widget --> <!-- TODO: i18n -->
+    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> illuminated</string>  <!-- used in 2x1 widget -->
+    <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- used in 1x1 widget -->
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
          e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
@@ -231,10 +231,11 @@
     <string name="widgetMode1x1_sunset">Sunset only</string>               <!-- setting -->
     <string name="widgetMode1x1_both_1">Sunrise &amp; Sunset (1)</string>  <!-- setting -->
     <string name="widgetMode1x1_both_2">Sunrise &amp; Sunset (2)</string>  <!-- setting -->
-    <string name="widgetMode1x1_moonriseset">Moonrise &amp; Moonset</string>     <!-- setting -->   <!-- TODO: i18n -->
-    <string name="widgetMode1x1_moonphaseillum">Moon phase &amp; illumination</string>     <!-- setting -->  <!-- TODO: i18n -->
-    <string name="widgetMode1x1_moonphase">Moon phase only</string>     <!-- setting -->  <!-- TODO: i18n -->
-    <string name="widgetMode1x1_moonillum">Moon illumination only</string>     <!-- setting -->  <!-- TODO: i18n -->
+
+    <string name="widgetMode1x1_moonriseset">Moonrise &amp; moonset</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonphaseillum">Moon phase &amp; illumination</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonphase">Moon phase only</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonillum">Moon illumination only</string>     <!-- setting -->
 
     <string name="configLabel_appearance_1x1mode">1x1 Layout:</string>     <!-- spinner label -->
 
@@ -779,7 +780,7 @@
     <string name="app_name_widget2">Suntimes Solstice Widget</string>
     <string name="app_name_moonwidget0">Moon Widget</string>
     <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
-    <string name="app_shortdesc">Displays sunrise, sunset, and twilight times.</string>
+    <string name="app_shortdesc">Displays sunlight and moonlight times.</string>
     <string name="app_support_url"><![CDATA[
         <b>Support:</b> visit the
         <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a> to submit a request.
