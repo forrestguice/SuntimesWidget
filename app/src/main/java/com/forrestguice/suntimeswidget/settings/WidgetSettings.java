@@ -29,6 +29,8 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_0;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_1;
+import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_2;
+import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_3;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_0;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_1;
@@ -267,7 +269,9 @@ public class WidgetSettings
     public static enum WidgetModeMoon1x1
     {
         MODE1x1_RISESET("Moonrise & Moonset", R.layout.layout_widget_moon_1x1_0),
-        MODE1x1_PHASE("Moon phase & illumination", R.layout.layout_widget_moon_1x1_1);
+        MODE1x1_PHASEILLUM("Moon phase & illumination", R.layout.layout_widget_moon_1x1_1),
+        MODE1x1_PHASE("Moon phase only", R.layout.layout_widget_moon_1x1_2),
+        MODE1x1_ILLUM("Moon illumination only", R.layout.layout_widget_moon_1x1_3);
 
         private final int layoutID;
         private String displayString;
@@ -301,7 +305,9 @@ public class WidgetSettings
         public static void initDisplayStrings( Context context )
         {
             MODE1x1_RISESET.setDisplayString(context.getString(R.string.widgetMode1x1_moonriseset));
+            MODE1x1_PHASEILLUM.setDisplayString(context.getString(R.string.widgetMode1x1_moonphase));
             MODE1x1_PHASE.setDisplayString(context.getString(R.string.widgetMode1x1_moonphase));
+            MODE1x1_ILLUM.setDisplayString(context.getString(R.string.widgetMode1x1_moonillum));
         }
     }
 
@@ -1081,7 +1087,15 @@ public class WidgetSettings
         WidgetModeMoon1x1 mode = loadMoon1x1ModePref(context, appWidgetId);
         switch (mode)
         {
+            case MODE1x1_ILLUM:
+                layout = new MoonLayout_1x1_3();
+                break;
+
             case MODE1x1_PHASE:
+                layout = new MoonLayout_1x1_2();
+                break;
+
+            case MODE1x1_PHASEILLUM:
                 layout = new MoonLayout_1x1_1();
                 break;
 

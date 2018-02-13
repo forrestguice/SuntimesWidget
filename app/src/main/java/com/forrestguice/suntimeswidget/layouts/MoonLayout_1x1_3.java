@@ -19,30 +19,23 @@
 package com.forrestguice.suntimeswidget.layouts;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.text.SpannableString;
-import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
-import java.text.NumberFormat;
-
 /**
- * Moon Phase + Illumination (1x1)
+ * Moon Phase (1x1)
  */
-public class MoonLayout_1x1_1 extends MoonLayout
+public class MoonLayout_1x1_3 extends MoonLayout_1x1_1
 {
-    public MoonLayout_1x1_1()
+    public MoonLayout_1x1_3()
     {
         super();
     }
 
-    public MoonLayout_1x1_1(int layoutID)
+    public MoonLayout_1x1_3(int layoutID)
     {
         this.layoutID = layoutID;
     }
@@ -50,46 +43,24 @@ public class MoonLayout_1x1_1 extends MoonLayout
     @Override
     public void initLayoutID()
     {
-        this.layoutID = R.layout.layout_widget_moon_1x1_1;
+        this.layoutID = R.layout.layout_widget_moon_1x1_3;
     }
 
     @Override
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesMoonData data)
     {
         super.updateViews(context, appWidgetId, views, data);
-
-        NumberFormat percentage = NumberFormat.getPercentInstance();
-        String illum = percentage.format(data.getMoonIlluminationToday());
-        String illumNote = context.getString(R.string.moon_illumination_short, illum);
-        SpannableString illumNoteSpan = SuntimesUtils.createColorSpan(illumNote, illum, illumColor);
-        views.setTextViewText(R.id.text_info_moonillum, illumNoteSpan);
-
-        for (MoonPhaseDisplay moonPhase : MoonPhaseDisplay.values())
-        {
-            views.setViewVisibility(moonPhase.getView(), View.GONE);
-        }
-
-        MoonPhaseDisplay phase = data.getMoonPhaseToday();
-        if (phase != null)
-        {
-            views.setTextViewText(R.id.text_info_moonphase, phase.getLongDisplayString());
-            views.setViewVisibility(phase.getView(), View.VISIBLE);
-        }
     }
-
-    protected int illumColor = Color.WHITE;
 
     @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         super.themeViews(context, views, theme);
-        illumColor = theme.getTimeColor();
-        themeViewsMoonPhaseText(context, views, theme);
     }
 
     @Override
     public void prepareForUpdate(SuntimesMoonData data)
     {
-        // EMPTY
+        super.prepareForUpdate(data);
     }
 }
