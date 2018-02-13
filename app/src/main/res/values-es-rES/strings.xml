@@ -700,6 +700,7 @@
 
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Ayuda</string>
+    <!-- TODO: needs update (see values\strings.xml) -->
     <string name="help_appearance_title"><![CDATA[
         Las siguientes sustituciones están soportadas: <br />
                 * <b>%loc</b> para etiqueta <br />

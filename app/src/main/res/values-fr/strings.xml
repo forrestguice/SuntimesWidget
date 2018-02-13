@@ -676,6 +676,7 @@
 
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Aide</string>
+    <!-- TODO: needs update (see values\strings.xml) -->
     <string name="help_appearance_title"><![CDATA[
         Les substitutions suivantes sont reconnues : <br />
                   <b>%loc</b> pour le libellé <br />

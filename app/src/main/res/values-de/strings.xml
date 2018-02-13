@@ -666,6 +666,7 @@
 
   <!-- Dialog: Help -->
   <string name="help_dialog_title">Hilfe</string>
+  <!-- TODO: needs update (see values\strings.xml) -->
   <string name="help_appearance_title"><![CDATA[
       Es werden folgende Platzhalter unterstützt: <br />
               * <b>%loc</b> für den Ort <br />

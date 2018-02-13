@@ -654,6 +654,7 @@
     
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Pomoc</string>
+    <!-- TODO: needs update (see values\strings.xml) -->
     <string name="help_appearance_title"><![CDATA[
         Używane są następujące oznaczenia: <br />
                 * <b>%loc</b> jako etykieta <br />

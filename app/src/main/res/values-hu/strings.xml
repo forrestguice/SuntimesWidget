@@ -684,14 +684,32 @@
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Segítség</string>
     <string name="help_appearance_title"><![CDATA[
-        The following substitutions are supported: <br />
-                * <b>%loc</b> for label <br />
-                * <b>%lat</b> for latitude <br />
-                * <b>%lon</b> for longitude <br/>
-                * <b>%m</b> for time mode (short) (e.g. "Civil") <br/>
-                * <b>%M</b> for time mode (long) (e.g. "Civil Twilight") <br/>
+        The following title substitutions are supported:<br/>
+        <br/>
+        <b>All Widgets:</b> <br />
+                * <b>%d</b> for date (e.g. February 12) <br/>
+                * <b>%dd</b> for day (short) (e.g. Mon) <br/>
+                * <b>%dD</b> for day (long) (e.g. Monday) <br/>
+                * <b>%dY</b> for year (e.g. 2018) <br/>
+                <br/>
+                * <b>%loc</b> for label (e.g. Prescott) <br />
+                * <b>%lat</b> for latitude (e.g. 35.5409) <br />
+                * <b>%lon</b> for longitude (e.g. -112.4691) <br/>
+                <br/>
                 * <b>%s</b> for data source (e.g. sunrisesunsetlib) <br/>
                 * <b>%t</b> for time zone (id) (e.g. US/Arizona) <br/>
+         <br/>
+         <b>Sun Widgets:</b> <br/>
+                * <b>%m</b> for mode (short) (e.g. Civil) <br/>
+                * <b>%M</b> for mode (long) (e.g. Civil Twilight) <br/>
+         <br/>
+         <b>Moon Widgets:</b> <br/>
+                * <b>%i</b> for moon illumination (e.g. 25%) <br/>
+                * <b>%M</b> for moon phase (e.g. Waxing Crescent) <br/>
+         <br/>
+         <b>Solstice Widgets:</b> <br/>
+                * <b>%m</b> for mode (short) (e.g. Solstice) <br/>
+                * <b>%M</b> for mode (long) (e.g. Winter Solstice) <br/>
     ]]></string>
 
     <string name="help_general_timeMode"><![CDATA[

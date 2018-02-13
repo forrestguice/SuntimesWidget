@@ -664,6 +664,7 @@
     
     <!-- Dialog: Help -->  
     <string name="help_dialog_title">Helpo</string>
+    <!-- TODO: needs update (see values\strings.xml) -->
     <string name="help_appearance_title"><![CDATA[
         La jenaj mallongigoj estas disponeblaj: <br />
                 * <b>%loc</b> por etikedo <br />
