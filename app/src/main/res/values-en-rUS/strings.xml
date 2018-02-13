@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="http://schemas.android.com/tools">
+
+    <!-- Widget Setting: time mode -->
+    <string name="timeMode_equinox_autumnal">Fall Equinox</string>  <!-- setting -->
+
+    <!-- App Setting: WidgetThemes -->
+    <string name="configAction_chooseColor">Choose Color</string> <!-- button (contentDescription) -->
+
+    <string name="configLabel_themeColorTitle">Title Color:</string>     <!-- color label -->
+    <string name="configLabel_themeColorText">Text Color:</string>       <!-- color label -->
+
+    <string name="configLabel_themeColorSpring">Spring Color:</string> <!-- color label -->
+    <string name="configLabel_themeColorSummer">Summer Color:</string> <!-- color label -->
+    <string name="configLabel_themeColorFall">Fall Color:</string> <!-- color label -->
+    <string name="configLabel_themeColorWinter">Winter Color:</string> <!-- color label -->
+
+    <string name="configLabel_themeColorSunrise">Sunrise Color:</string> <!-- color label -->
+    <string name="configLabel_themeColorSunset">Sunset Color:</string>   <!-- color label -->
+    <string name="configLabel_themeColorNoon">Noon Color:</string>      <!-- color label -->
+
+    <string name="configLabel_themeColorSuffix">Suffix Color:</string>   <!-- color label -->
+    <string name="configLabel_themeColorTime">Text Color2:</string>      <!-- color label -->
+
+    <!-- Dialog: Color -->
+    <string name="color_dialog_msg">Choose Color</string>
+
+</resources>

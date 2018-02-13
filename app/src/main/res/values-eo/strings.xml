@@ -102,10 +102,10 @@
     <string name="untilEnd_civilTwilight">civila sunsubiro</string>
     <string name="untilEnd_nauticalTwilight">naŭtika sunsubiro</string>
     <string name="untilEnd_astroTwilight">astronomia sunsubiro</string>
-    <string name="until_goldhour">golden hour</string> <!-- TODO -->
-    <string name="untilEnd_goldhour">golden hour</string> <!-- TODO -->
-    <string name="until_bluehour">blue hour</string> <!-- TODO -->
-    <string name="untilEnd_bluehour">blue hour</string> <!-- TODO -->
+    <string name="until_goldhour">ora horo</string>
+    <string name="untilEnd_goldhour">ora horo</string>
+    <string name="until_bluehour">blua horo</string>
+    <string name="untilEnd_bluehour">blua horo</string>
 
     <!-- Table -->
     <string name="sunrise">Sunleviĝo</string>                             <!-- contentDescription -->
@@ -117,7 +117,7 @@
     <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
     <string name="delta_years">a</string>    <!-- e.g. 1y -->
     <string name="delta_weeks">sem</string>    <!-- e.g. 2w -->
-    <string name="delta_days">d</string>     <!-- e.g. 1d -->
+    <string name="delta_days">t</string>     <!-- e.g. 1d -->
     <string name="delta_hours">h</string>    <!-- e.g. 2h -->
     <string name="delta_minutes">min</string>  <!-- e.g. 3m -->
     <string name="delta_seconds">s</string>  <!-- e.g. 4s -->
@@ -147,8 +147,8 @@
     <string name="configLabel_general_calculator">Fonto de datumoj:</string>         <!-- spinner label -->
     <string name="configLabel_general_showSeconds">Montri sekundojn</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showWeeks">Show Weeks</string>        <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_general_showWeeks_summary">Divide time spans greater than 7 days into weeks (e.g. 15d becomes 2w 1d).</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_showWeeks">Montri semajnojn</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showWeeks_summary">Dividi temp-intervalojn longaj ol 7 tagoj inter semajnoj (ekz. 15t iĝas 2sem 1t).</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Agordoj de aspekto</string>           <!-- group title -->
@@ -171,12 +171,12 @@
     <string name="timeMode_astronomical">Astronomia krepusko</string> <!-- setting -->
     <string name="timeMode_night">Nokto</string>                <!-- a label (not an actual timeMode setting) -->
     <string name="timeMode_day">Tago</string>                   <!-- a label (not an actual timeMode setting) -->
-    <string name="timeMode_golden_short">Golden</string>                <!-- setting --> <!-- TODO -->
-    <string name="timeMode_golden">Golden Hour</string>                 <!-- setting --> <!-- TODO -->
-    <string name="timeMode_blue8_short">Blue (8\u00B0)</string>                    <!-- setting --> <!-- TODO -->
-    <string name="timeMode_blue8">Blue Hour (8\u00B0)</string>                     <!-- setting --> <!-- TODO -->
-    <string name="timeMode_blue4_short">Blue (4\u00B0)</string>                    <!-- setting --> <!-- TODO -->
-    <string name="timeMode_blue4">Blue Hour (4\u00B0)</string>                     <!-- setting --> <!-- TODO -->
+    <string name="timeMode_golden_short">Ora</string>                <!-- setting -->
+    <string name="timeMode_golden">Ora horo</string>                 <!-- setting -->
+    <string name="timeMode_blue8_short">Blua (8\u00B0)</string>                    <!-- setting -->
+    <string name="timeMode_blue8">Blua horo (8\u00B0)</string>                     <!-- setting -->
+    <string name="timeMode_blue4_short">Blua (4\u00B0)</string>                    <!-- setting -->
+    <string name="timeMode_blue4">Blua horo (4\u00B0)</string>                     <!-- setting -->
 
     <string name="timeMode_equinox_vernal">Printempa tagnoktegaleco</string>      <!-- setting -->
     <string name="timeMode_equinox_vernal_short">Ekvinokso</string>       <!-- setting -->
@@ -420,8 +420,8 @@
     <string name="configLabel_places">Lokoj</string>                           <!-- group title -->
     <string name="configLabel_places_export">Elporti lokojn</string>
     <string name="configLabel_places_clear">Forviŝi lokojn</string>
-    <string name="configLabel_places_build">Add World Places</string>  <!-- TODO -->
-    <string name="configLabel_places_build_summary">Scan locales and add cities to the database.</string>   <!-- TODO -->
+    <string name="configLabel_places_build">Aldoni mondajn lokojn</string>
+    <string name="configLabel_places_build_summary">Skani lokojn kaj aldoni urbojn al la datumbazo.</string>
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Fasado</string>                       <!-- group title -->
@@ -452,12 +452,12 @@
     <string name="configLabel_ui_showdatasource_summary">Montri etikedon indikantan la nunan agordaron.</string>
 
     <!-- App Setting: show golden hour -->
-    <string name="configLabel_ui_showgoldhour">Show Golden Hour</string>                <!-- TODO -->
-    <string name="configLabel_ui_showgoldhour_summary">Show golden hour times.</string> <!-- TODO -->
+    <string name="configLabel_ui_showgoldhour">Montri oran horon</string>
+    <string name="configLabel_ui_showgoldhour_summary">Montri periodon de ora horo.</string>
 
     <!-- App Setting: show blue hour -->
-    <string name="configLabel_ui_showbluehour">Show Blue Hour</string>                  <!-- TODO -->
-    <string name="configLabel_ui_showbluehour_summary">Show blue hour times.</string>   <!-- TODO -->
+    <string name="configLabel_ui_showbluehour">Montri bluan horon</string>
+    <string name="configLabel_ui_showbluehour_summary">Montri periodon de blua horo.</string>
 
     <!-- App Setting: UI Theme -->
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
@@ -533,34 +533,34 @@
     <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
         <item>astronomia sunleviĝo</item>
         <item>naŭtika sunleviĝo</item>
-        <item>blue hour</item>   <!-- TODO -->
+        <item>blua horo</item>
         <item>civila sunleviĝo</item>
-        <item>blue hour</item>   <!-- TODO -->
+        <item>blua horo</item>
         <item>sunleviĝo</item>
-        <item>golden hour</item>  <!-- TODO -->
+        <item>ora horo</item>
         <item>tagmezo vera</item>
-        <item>golden hour</item>  <!-- TODO -->
+        <item>ora horo</item>
         <item>sunsubiro</item>
-        <item>blue hour</item>  <!-- TODO -->
+        <item>blua horo</item>
         <item>civila sunsubiro</item>
-        <item>blue hour</item>  <!-- TODO -->
+        <item>blua horo</item>
         <item>naŭtika sunsubiro</item>
         <item>astronomia sunsubiro</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>astronomia sunleviĝo</item>
         <item>naŭtika sunleviĝo</item>
-        <item>morning blue hour (start)</item>  <!-- TODO -->
+        <item>matena blua horo (komenco)</item>
         <item>civila sunleviĝo</item>
-        <item>morning blue hour (end)</item>  <!-- TODO -->
+        <item>matena blua horo (fino)</item>
         <item>sunleviĝo</item>
-        <item>morning golden hour (end)</item>  <!-- TODO -->
+        <item>matena ora horo (fino)</item>
         <item>tagmezo vera (kulminado)</item>
-        <item>evening golden hour (start)</item> <!-- TODO -->
+        <item>vespera ora horo (komenco)</item>
         <item>sunsubiro</item>
-        <item>evening blue hour (start)</item>  <!-- TODO -->
+        <item>vespera blua horo (komenco)</item>
         <item>civila sunsubiro</item>
-        <item>evening blue hour (end)</item>  <!-- TODO -->
+        <item>vespera blua horo (fino)</item>
         <item>naŭtika sunsubiro</item>
         <item>astronomia sunsubiro</item>
     </string-array>
@@ -638,9 +638,9 @@
     <string name="locationcleared_toast_success">La datumbazo de lokoj estas forviŝita.</string>
 
     <!-- Dialog: Build Places List (progress) -->
-    <string name="locationbuild_dialog_title">Building Database</string>  <!-- TODO -->
-    <string name="locationbuild_dialog_message">Building a database of places…</string>  <!-- TODO -->
-    <string name="locationbuild_toast_success">Added <xliff:g id="n">%1$s</xliff:g> places to the database.</string>  <!-- TODO -->
+    <string name="locationbuild_dialog_title">Kreado de datumbazo</string>
+    <string name="locationbuild_dialog_message">Kreado de datumbazo de lokoj…</string>
+    <string name="locationbuild_toast_success">Aldonis <xliff:g id="n">%1$s</xliff:g> lokojn al la datumbazo.</string>
 
     <!-- Dialog: Export Places -->
     <string name="locationexport_dialog_title">Elporti lokojn</string>

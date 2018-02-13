@@ -5,4 +5,9 @@
     <string name="default_location_latitude">43.6159</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">-79.3769</string>   <!-- decimal degrees (DD) -->
 
+    <!-- Widget Setting: time mode -->
+    <string name="timeMode_equinox_autumnal">Fall Equinox</string>  <!-- setting -->
+
+    <string name="configLabel_themeColorFall">Fall Colour:</string> <!-- color label -->
+
 </resources>
