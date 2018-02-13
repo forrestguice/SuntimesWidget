@@ -680,19 +680,20 @@ public class SuntimesUtils
     public String displayStringForTitlePattern(Context context, String titlePattern, SuntimesMoonData data)
     {
         String displayString = displayStringForTitlePattern(context, titlePattern, (SuntimesData)data);
-        String modePattern = "%M";
-        String modePatternShort = "%m";
-        String illumPattern = "%i";
-
-        displayString = displayString.replaceAll(modePatternShort, data.getMoonPhaseToday().getShortDisplayString());
-        displayString = displayString.replaceAll(modePattern, data.getMoonPhaseToday().getLongDisplayString());
-
-        if (displayString.contains(illumPattern))
+        if (data != null && data.isCalculated())
         {
-            NumberFormat percentage = NumberFormat.getPercentInstance();
-            displayString = displayString.replaceAll(illumPattern, percentage.format(data.getMoonIlluminationToday()));
-        }
+            String modePattern = "%M";
+            String modePatternShort = "%m";
+            String illumPattern = "%i";
 
+            displayString = displayString.replaceAll(modePatternShort, data.getMoonPhaseToday().getShortDisplayString());
+            displayString = displayString.replaceAll(modePattern, data.getMoonPhaseToday().getLongDisplayString());
+
+            if (displayString.contains(illumPattern)) {
+                NumberFormat percentage = NumberFormat.getPercentInstance();
+                displayString = displayString.replaceAll(illumPattern, percentage.format(data.getMoonIlluminationToday()));
+            }
+        }
         return displayString;
     }
 
