@@ -24,7 +24,7 @@
     <ImageView android:visibility="gone"
         android:id="@+id/icon_info_moonphase_new"
         android:layout_width="24dp" android:layout_height="24dp"
-        android:src="@drawable/ic_moon_new" />
+        android:src="@drawable/ic_moon_new" android:contentDescription="@string/timeMode_moon_new" />
 
     <ImageView android:visibility="gone"
         android:id="@+id/icon_info_moonphase_waxing_crescent"
@@ -32,7 +32,7 @@
         android:scaleType="fitStart"
         android:layout_marginLeft="2dp" android:layout_marginStart="2dp"
         android:layout_marginRight="2dp" android:layout_marginEnd="2dp"
-        android:src="@drawable/ic_moon_waxing_crescent" />
+        android:src="@drawable/ic_moon_waxing_crescent" android:contentDescription="@string/timeMode_moon_waxingcrescent" />
 
     <ImageView android:visibility="gone"
         android:id="@+id/icon_info_moonphase_waxing_quarter"
@@ -40,24 +40,24 @@
         android:scaleType="fitStart"
         android:layout_marginLeft="2dp" android:layout_marginStart="2dp"
         android:layout_marginRight="2dp" android:layout_marginEnd="2dp"
-        android:src="@drawable/ic_moon_waxing_quarter" />
+        android:src="@drawable/ic_moon_waxing_quarter" android:contentDescription="@string/timeMode_moon_firstquarter" />
 
     <ImageView android:visibility="gone"
         android:id="@+id/icon_info_moonphase_waxing_gibbous"
         android:layout_width="18dp" android:layout_height="24dp"
         android:scaleType="fitStart"
-        android:src="@drawable/ic_moon_waxing_gibbous" />
+        android:src="@drawable/ic_moon_waxing_gibbous" android:contentDescription="@string/timeMode_moon_waxinggibbous" />
 
     <ImageView android:visibility="gone"
         android:id="@+id/icon_info_moonphase_full"
         android:layout_width="24dp" android:layout_height="24dp"
-        android:src="@drawable/ic_moon_full" />
+        android:src="@drawable/ic_moon_full" android:contentDescription="@string/timeMode_moon_full" />
 
     <ImageView android:visibility="gone"
         android:id="@+id/icon_info_moonphase_waning_gibbous"
         android:layout_width="18dp" android:layout_height="24dp"
         android:scaleType="fitEnd"
-        android:src="@drawable/ic_moon_waning_gibbous" />
+        android:src="@drawable/ic_moon_waning_gibbous" android:contentDescription="@string/timeMode_moon_waninggibbous" />
 
     <ImageView android:visibility="gone"
         android:id="@+id/icon_info_moonphase_waning_quarter"
@@ -65,7 +65,7 @@
         android:scaleType="fitEnd"
         android:layout_marginLeft="2dp" android:layout_marginStart="2dp"
         android:layout_marginRight="2dp" android:layout_marginEnd="2dp"
-        android:src="@drawable/ic_moon_waning_quarter" />
+        android:src="@drawable/ic_moon_waning_quarter" android:contentDescription="@string/timeMode_moon_thirdquarter" />
 
     <ImageView android:visibility="visible"
         android:id="@+id/icon_info_moonphase_waning_crescent"
@@ -73,6 +73,6 @@
         android:scaleType="fitEnd"
         android:layout_marginLeft="2dp" android:layout_marginStart="2dp"
         android:layout_marginRight="2dp" android:layout_marginEnd="2dp"
-        android:src="@drawable/ic_moon_waning_crescent" />
+        android:src="@drawable/ic_moon_waning_crescent" android:contentDescription="@string/timeMode_moon_waningcrescent" />
 
 </FrameLayout>

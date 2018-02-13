@@ -25,7 +25,7 @@
     <ImageView
         android:id="@+id/moonphase_full_icon"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:src="@drawable/ic_moon_full" />
+        android:src="@drawable/ic_moon_full" android:contentDescription="@string/timeMode_moon_full" />
 
     <TextView
         android:id="@+id/moonphase_full_date"

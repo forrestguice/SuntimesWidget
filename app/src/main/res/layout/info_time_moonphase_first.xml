@@ -25,7 +25,7 @@
     <ImageView
         android:id="@+id/moonphase_firstquarter_icon"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:src="@drawable/ic_moon_waxing_quarter" />
+        android:src="@drawable/ic_moon_waxing_quarter" android:contentDescription="@string/timeMode_moon_firstquarter" />
 
     <TextView
         android:id="@+id/moonphase_firstquarter_date"
