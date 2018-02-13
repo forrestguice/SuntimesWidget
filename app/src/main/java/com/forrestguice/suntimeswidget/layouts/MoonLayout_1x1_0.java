@@ -33,6 +33,9 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.Calendar;
 
+/**
+ * Moonrise / Moonset (1x1)
+ */
 public class MoonLayout_1x1_0 extends MoonLayout
 {
     public MoonLayout_1x1_0()
@@ -66,61 +69,18 @@ public class MoonLayout_1x1_0 extends MoonLayout
         views.setTextViewText(R.id.text_time_moonset_suffix, setString.getSuffix());
     }
 
-    private int timeColor = Color.WHITE;
-
     @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         super.themeViews(context, views, theme);
-
-        int moonriseColor = theme.getMoonriseTextColor();
-        int suffixColor = theme.getTimeSuffixColor();
-        views.setTextColor(R.id.text_time_moonrise_suffix, suffixColor);
-        views.setTextColor(R.id.text_time_moonrise, moonriseColor);
-
-        int moonsetColor = theme.getMoonsetTextColor();
-        views.setTextColor(R.id.text_time_moonset_suffix, suffixColor);
-        views.setTextColor(R.id.text_time_moonset, moonsetColor);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-        {
-            float timeSize = theme.getTimeSizeSp();
-            float suffSize = theme.getTimeSuffixSizeSp();
-
-            views.setTextViewTextSize(R.id.text_time_moonrise_suffix, TypedValue.COMPLEX_UNIT_SP, suffSize);
-            views.setTextViewTextSize(R.id.text_time_moonrise, TypedValue.COMPLEX_UNIT_SP, timeSize);
-
-            views.setTextViewTextSize(R.id.text_time_moonset, TypedValue.COMPLEX_UNIT_SP, timeSize);
-            views.setTextViewTextSize(R.id.text_time_moonset_suffix, TypedValue.COMPLEX_UNIT_SP, suffSize);
-        }
-
-        Bitmap moonriseIcon = SuntimesUtils.insetDrawableToBitmap(context, R.drawable.ic_moon_rise, moonriseColor, moonriseColor, 0);
-        views.setImageViewBitmap(R.id.icon_time_moonrise, moonriseIcon);
-
-        Bitmap moonsetIcon = SuntimesUtils.insetDrawableToBitmap(context, R.drawable.ic_moon_set, moonsetColor,moonsetColor, 0);
-        views.setImageViewBitmap(R.id.icon_time_moonset, moonsetIcon);
+        themeViewsMoonRiseSetText(context, views, theme);
+        themeViewsMoonRiseSetIcons(context, views, theme);
     }
 
     @Override
     public void prepareForUpdate(SuntimesMoonData data)
     {
-        Calendar riseTime = data.moonriseCalendarToday();
-        Calendar setTime = data.moonsetCalendarToday();
-
-        if (riseTime != null && setTime != null)
-        {
-            if (riseTime.before(setTime))
-                this.layoutID = R.layout.layout_widget_moon_1x1_0;      // moon rises then sets
-            else this.layoutID = R.layout.layout_widget_moon_1x1_01;    // moon sets then rises
-
-        } else if (riseTime == null && setTime == null) {
-            this.layoutID = R.layout.layout_widget_moon_1x1_0;  // moon doesn't rise or set today
-
-        } else if (setTime != null) {
-            this.layoutID = R.layout.layout_widget_moon_1x1_01;  // moon doesn't rise (but it sets)
-
-        } else {
-            this.layoutID = R.layout.layout_widget_moon_1x1_0;  // moon doesn't set (but it rises)
-        }
+        this.layoutID = chooseMoonLayout(R.layout.layout_widget_moon_1x1_0, R.layout.layout_widget_moon_1x1_01, data);
     }
+
 }

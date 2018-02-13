@@ -32,6 +32,9 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.Calendar;
 
+/**
+ * Moon Primary Phases (3x1)
+ */
 public class MoonLayout_3x1_0 extends MoonLayout
 {
     public MoonLayout_3x1_0()
@@ -75,9 +78,6 @@ public class MoonLayout_3x1_0 extends MoonLayout
         super.themeViews(context, views, theme);
 
         int moonriseColor = theme.getMoonriseTextColor();
-        //int moonsetColor = theme.getMoonsetTextColor();
-        //int suffixColor = theme.getTimeSuffixColor();
-
         views.setTextColor(R.id.moonphase_new_date, moonriseColor);
         views.setTextColor(R.id.moonphase_firstquarter_date, moonriseColor);
         views.setTextColor(R.id.moonphase_full_date, moonriseColor);
@@ -86,9 +86,6 @@ public class MoonLayout_3x1_0 extends MoonLayout
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
             float timeSize = theme.getTimeSizeSp();
-            //float suffSize = theme.getTimeSuffixSizeSp();
-            //float textSize = theme.getTextSizeSp();
-
             views.setTextViewTextSize(R.id.moonphase_new_date, TypedValue.COMPLEX_UNIT_SP, timeSize);
             views.setTextViewTextSize(R.id.moonphase_firstquarter_date, TypedValue.COMPLEX_UNIT_SP, timeSize);
             views.setTextViewTextSize(R.id.moonphase_full_date, TypedValue.COMPLEX_UNIT_SP, timeSize);
@@ -99,12 +96,8 @@ public class MoonLayout_3x1_0 extends MoonLayout
     @Override
     public void prepareForUpdate(SuntimesMoonData data)
     {
-        Calendar startOfDay = (Calendar)data.calendar().clone();
-        startOfDay.set(Calendar.HOUR_OF_DAY, 0);
-        startOfDay.set(Calendar.MINUTE, 0);
-        startOfDay.set(Calendar.SECOND, 0);
-
-        SuntimesCalculator.MoonPhase nextPhase = data.nextPhase(startOfDay);
+        Calendar midnight = data.midnight();
+        SuntimesCalculator.MoonPhase nextPhase = data.nextPhase(midnight);
         switch (nextPhase)
         {
             case THIRD_QUARTER:

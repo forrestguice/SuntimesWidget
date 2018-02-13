@@ -20,9 +20,7 @@ package com.forrestguice.suntimeswidget.layouts;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Build;
 import android.text.SpannableString;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -34,6 +32,9 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.text.NumberFormat;
 
+/**
+ * Moon Phase (1x1)
+ */
 public class MoonLayout_1x1_1 extends MoonLayout
 {
     public MoonLayout_1x1_1()
@@ -82,18 +83,8 @@ public class MoonLayout_1x1_1 extends MoonLayout
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         super.themeViews(context, views, theme);
-
         illumColor = theme.getTimeColor();
-        int textColor = theme.getTextColor();
-        views.setTextColor(R.id.text_info_moonillum, textColor);
-        views.setTextColor(R.id.text_info_moonphase, textColor);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-        {
-            float textSize = theme.getTextSizeSp();
-            views.setTextViewTextSize(R.id.text_info_moonphase, TypedValue.COMPLEX_UNIT_SP, textSize);
-            views.setTextViewTextSize(R.id.text_info_moonillum, TypedValue.COMPLEX_UNIT_SP, textSize);
-        }
+        themeViewsMoonPhaseText(context, views, theme);
     }
 
     @Override
