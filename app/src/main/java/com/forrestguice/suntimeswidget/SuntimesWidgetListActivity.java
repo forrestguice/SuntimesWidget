@@ -326,19 +326,19 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                     if (widgetClass == SuntimesWidget2.class)
                     {
                         SuntimesEquinoxSolsticeData data0 =  new SuntimesEquinoxSolsticeData(context, id);
-                        widgetTitle = utils.displayStringForTitlePattern(titlePattern, data0);
+                        widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
                         widgetNameId = R.string.app_name_widget2;
                         data = data0;
 
                     } else if (widgetClass == MoonWidget0.class) {
                         SuntimesMoonData data0 =  new SuntimesMoonData(context, id);
-                        widgetTitle = utils.displayStringForTitlePattern(titlePattern, data0);
+                        widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
                         widgetNameId = R.string.app_name_moonwidget0;
                         data = data0;
 
                     } else {
                         SuntimesRiseSetData data0 = new SuntimesRiseSetData(context, id);
-                        widgetTitle = utils.displayStringForTitlePattern(titlePattern, data0);
+                        widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
                         widgetNameId = (widgetClass == SuntimesWidget1.class ? R.string.app_name_widget1 : R.string.app_name_widget0);
                         data = data0;
                     }
