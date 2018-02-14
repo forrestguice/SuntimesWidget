@@ -39,6 +39,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.widget.Toast;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.ClearPlacesTask;
@@ -361,7 +362,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         SummaryListPreference moonCalculatorPref = (SummaryListPreference)findPreference(key_moonCalc);
         if (moonCalculatorPref != null)
         {
-            initPref_calculator(this, moonCalculatorPref);  // TODO: filter list
+            initPref_calculator(this, moonCalculatorPref, new int[] {SuntimesCalculator.FEATURE_MOON});
             loadPref_calculator(this, moonCalculatorPref, "moon");
         }
 
@@ -386,7 +387,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         SummaryListPreference moonCalculatorPref = (SummaryListPreference) fragment.findPreference(key_moonCalc);
         if (moonCalculatorPref != null)
         {
-            initPref_calculator(context, moonCalculatorPref);  // TODO: filter list
+            initPref_calculator(context, moonCalculatorPref, new int[] {SuntimesCalculator.FEATURE_MOON});
             loadPref_calculator(context, moonCalculatorPref, "moon");
         }
 
@@ -859,7 +860,12 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
     private static void initPref_calculator(Context context, final SummaryListPreference calculatorPref)
     {
-        SuntimesCalculatorDescriptor[] calculators = SuntimesCalculatorDescriptor.values();
+        initPref_calculator(context, calculatorPref, null);
+    }
+    private static void initPref_calculator(Context context, final SummaryListPreference calculatorPref, int[] requestedFeatures)
+    {
+        SuntimesCalculatorDescriptor[] calculators = (requestedFeatures == null ? SuntimesCalculatorDescriptor.values()
+                                                                                : SuntimesCalculatorDescriptor.values(requestedFeatures));
         String[] calculatorEntries = new String[calculators.length];
         String[] calculatorValues = new String[calculators.length];
         String[] calculatorSummaries = new String[calculators.length];
