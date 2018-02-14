@@ -2,6 +2,12 @@
 <resources>
     <dimen name="widget_margin">8dp</dimen>
 
+    <integer name="widget_size_minWidthDp4x1">250</integer>
+    <dimen name="widget_size_minWidth4x1">250dp</dimen>
+
+    <integer name="widget_size_minWidthDp3x1">180</integer>
+    <dimen name="widget_size_minWidth3x1">180dp</dimen>
+
     <integer name="widget_size_minWidthDp2x1">110</integer>
     <integer name="widget_size_minWidthDp">40</integer>
     <integer name="widget_size_minHeightDp">40</integer>
@@ -27,6 +33,10 @@
     <dimen name="sunIcon_width_border">0dip</dimen>
     <dimen name="sunIcon_width_risingBorder">@dimen/sunIcon_width_border</dimen>
     <dimen name="sunIcon_width_settingBorder">@dimen/sunIcon_width_border</dimen>
+
+    <dimen name="moonIcon_inset">-9dip</dimen>
+    <dimen name="moonIcon_height">9dip</dimen>
+    <dimen name="moonIcon_width">18dip</dimen>
 
     <dimen name="settingsGroup_margin">5dp</dimen>
     <dimen name="settingsGroup_padding">4dp</dimen>

@@ -26,6 +26,12 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.layouts.MoonLayout;
+import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_0;
+import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_1;
+import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_2;
+import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_3;
+import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_4;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_0;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_1;
@@ -69,6 +75,9 @@ public class WidgetSettings
     public static final String PREF_KEY_APPEARANCE_WIDGETMODE_SUN1x1 = "widgetmode_1x1";
     public static final WidgetModeSun1x1 PREF_DEF_APPEARANCE_WIDGETMODE_SUN1x1 = WidgetModeSun1x1.WIDGETMODE1x1_BOTH_1;
 
+    public static final String PREF_KEY_APPEARANCE_WIDGETMODE_MOON1x1 = "widgetmode_moon1x1";
+    public static final WidgetModeMoon1x1 PREF_DEF_APPEARANCE_WIDGETMODE_MOON1x1 = WidgetModeMoon1x1.MODE1x1_RISESET;
+
     public static final String PREF_KEY_APPEARANCE_ALLOWRESIZE = "allowresize";
     public static final boolean PREF_DEF_APPEARANCE_ALLOWRESIZE = true;
 
@@ -83,6 +92,9 @@ public class WidgetSettings
 
     public static final String PREF_KEY_GENERAL_TIMEMODE2_OVERRIDE = "timemode2override";
     public static final boolean PREF_DEF_GENERAL_TIMEMODE2_OVERRIDE = true;
+
+    public static final String PREF_KEY_GENERAL_TIMEMODE3 = "timemode3";
+    public static final MoonPhaseMode PREF_DEF_GENERAL_TIMEMODE3 = MoonPhaseMode.FULL_MOON;
 
     public static final String PREF_KEY_GENERAL_TIMENOTE_RISE = "timenoterise";
     public static final SolarEvents PREF_DEF_GENERAL_TIMENOTE_RISE = SolarEvents.SUNRISE;
@@ -248,6 +260,57 @@ public class WidgetSettings
             WIDGETMODE1x1_SUNSET.setDisplayString(context.getString(R.string.widgetMode1x1_sunset));
             WIDGETMODE1x1_BOTH_1.setDisplayString(context.getString(R.string.widgetMode1x1_both_1));
             WIDGETMODE1x1_BOTH_2.setDisplayString(context.getString(R.string.widgetMode1x1_both_2));
+        }
+    }
+
+
+    /**
+     * WidgetModeMoon1x1
+     */
+    public static enum WidgetModeMoon1x1
+    {
+        MODE1x1_RISESET("Moonrise & moonset", R.layout.layout_widget_moon_1x1_0),
+        MODE1x1_PHASEILLUM("Moon phase & illumination", R.layout.layout_widget_moon_1x1_1),
+        MODE1x1_PHASE("Moon phase only", R.layout.layout_widget_moon_1x1_2),
+        MODE1x1_ILLUM("Moon illumination only", R.layout.layout_widget_moon_1x1_3),
+        MODE1x1_PHASENEXT("Next major phase", R.layout.layout_widget_moon_1x1_4);
+
+        private final int layoutID;
+        private String displayString;
+
+        private WidgetModeMoon1x1(String displayString, int layoutID)
+        {
+            this.displayString = displayString;
+            this.layoutID = layoutID;
+        }
+
+        public int getLayoutID()
+        {
+            return layoutID;
+        }
+
+        public String toString()
+        {
+            return displayString;
+        }
+
+        public String getDisplayString()
+        {
+            return displayString;
+        }
+
+        public void setDisplayString( String displayString )
+        {
+            this.displayString = displayString;
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            MODE1x1_RISESET.setDisplayString(context.getString(R.string.widgetMode1x1_moonriseset));
+            MODE1x1_PHASEILLUM.setDisplayString(context.getString(R.string.widgetMode1x1_moonphaseillum));
+            MODE1x1_PHASE.setDisplayString(context.getString(R.string.widgetMode1x1_moonphase));
+            MODE1x1_ILLUM.setDisplayString(context.getString(R.string.widgetMode1x1_moonillum));
+            MODE1x1_PHASENEXT.setDisplayString(context.getString(R.string.widgetMode1x1_moonphasenext));
         }
     }
 
@@ -783,6 +846,66 @@ public class WidgetSettings
     }
 
     /**
+     * MoonPhaseMode
+     */
+    public static enum MoonPhaseMode
+    {
+        NEW_MOON("New", "New Moon"),
+        FIRST_QUARTER("First Quarter", "First Quarter Moon"),
+        FULL_MOON("Full", "Full Moon"),
+        THIRD_QUARTER("Third Quarter", "Third Quarter Moon");
+
+        private String shortDisplayString;
+        private String longDisplayString;
+
+        public static boolean shortDisplayStrings = false;
+
+        private MoonPhaseMode( String shortDisplayString, String longDisplayString )
+        {
+            this.shortDisplayString = shortDisplayString;
+            this.longDisplayString = longDisplayString;
+        }
+
+        public String toString()
+        {
+            if (shortDisplayStrings)
+                return shortDisplayString;
+            else return longDisplayString;
+        }
+
+        public String getShortDisplayString()
+        {
+            return shortDisplayString;
+        }
+
+        public String getLongDisplayString()
+        {
+            return longDisplayString;
+        }
+
+        public void setDisplayStrings(String shortDisplayString, String longDisplayString)
+        {
+            this.shortDisplayString = shortDisplayString;
+            this.longDisplayString = longDisplayString;
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            NEW_MOON.setDisplayStrings(context.getString(R.string.timeMode_moon_new_short),
+                    context.getString(R.string.timeMode_moon_new));
+
+            FIRST_QUARTER.setDisplayStrings( context.getString(R.string.timeMode_moon_firstquarter_short),
+                    context.getString(R.string.timeMode_moon_firstquarter));
+
+            FULL_MOON.setDisplayStrings( context.getString(R.string.timeMode_moon_full_short),
+                    context.getString(R.string.timeMode_moon_full) );
+
+            THIRD_QUARTER.setDisplayStrings(context.getString(R.string.timeMode_moon_thirdquarter_short),
+                    context.getString(R.string.timeMode_moon_thirdquarter));
+        }
+    }
+
+    /**
      * TimeMode
      */
     public static enum TimeMode
@@ -932,6 +1055,69 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
         prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_SUN1x1);
+        prefs.apply();
+    }
+
+
+
+    public static void saveMoon1x1ModePref(Context context, int appWidgetId, WidgetModeMoon1x1 mode)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.putString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_MOON1x1, mode.name());
+        prefs.apply();
+    }
+    public static WidgetModeMoon1x1 loadMoon1x1ModePref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_MOON1x1, PREF_DEF_APPEARANCE_WIDGETMODE_MOON1x1.name());
+
+        WidgetModeMoon1x1 widgetMode;
+        try
+        {
+            widgetMode = WidgetModeMoon1x1.valueOf(modeString);
+
+        } catch (IllegalArgumentException e) {
+            widgetMode = PREF_DEF_APPEARANCE_WIDGETMODE_MOON1x1;
+            Log.w("loadMoon1x1ModePref", "Failed to load value '" + modeString + "'; using default '" + PREF_DEF_APPEARANCE_WIDGETMODE_MOON1x1.name() + "'.");
+        }
+        return widgetMode;
+    }
+    public static MoonLayout loadMoon1x1ModePref_asLayout(Context context, int appWidgetId)
+    {
+        MoonLayout layout;
+        WidgetModeMoon1x1 mode = loadMoon1x1ModePref(context, appWidgetId);
+        switch (mode)
+        {
+            case MODE1x1_PHASENEXT:
+                layout = new MoonLayout_1x1_4();
+                break;
+
+            case MODE1x1_ILLUM:
+                layout = new MoonLayout_1x1_3();
+                break;
+
+            case MODE1x1_PHASE:
+                layout = new MoonLayout_1x1_2();
+                break;
+
+            case MODE1x1_PHASEILLUM:
+                layout = new MoonLayout_1x1_1();
+                break;
+
+            case MODE1x1_RISESET:
+            default:
+                layout = new MoonLayout_1x1_0();
+                break;
+        }
+        return layout;
+    }
+    public static void deleteMoon1x1ModePref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_MOON1x1);
         prefs.apply();
     }
 
@@ -1135,6 +1321,37 @@ public class WidgetSettings
         prefs.apply();
     }
 
+
+    public static void saveTimeMode3Pref(Context context, int appWidgetId, MoonPhaseMode mode)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putString(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE3, mode.name());
+        prefs.apply();
+    }
+    public static WidgetSettings.MoonPhaseMode loadTimeMode3Pref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE2, PREF_DEF_GENERAL_TIMEMODE3.name());
+
+        MoonPhaseMode timeMode;
+        try
+        {
+            timeMode = WidgetSettings.MoonPhaseMode.valueOf(modeString);
+
+        } catch (IllegalArgumentException e) {
+            timeMode = PREF_DEF_GENERAL_TIMEMODE3;
+        }
+        return timeMode;
+    }
+    public static void deleteTimeMode3Pref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE3);
+        prefs.apply();
+    }
 
 
 
@@ -1667,6 +1884,7 @@ public class WidgetSettings
         deleteActionLaunchPref(context, appWidgetId);
 
         deleteSun1x1ModePref(context, appWidgetId);
+        deleteMoon1x1ModePref(context, appWidgetId);
         deleteAllowResizePref(context, appWidgetId);
 
         deleteThemePref(context, appWidgetId);
@@ -1675,8 +1893,11 @@ public class WidgetSettings
         deleteTimeFormatModePref(context, appWidgetId);
 
         deleteCalculatorModePref(context, appWidgetId);
+
         deleteTimeModePref(context, appWidgetId);
         deleteTimeMode2Pref(context, appWidgetId);
+        deleteTimeMode3Pref(context, appWidgetId);
+
         deleteCompareModePref(context, appWidgetId);
         deleteShowComparePref(context, appWidgetId);
         deleteShowNoonPref(context, appWidgetId);
@@ -1708,9 +1929,11 @@ public class WidgetSettings
     {
         ActionMode.initDisplayStrings(context);
         WidgetModeSun1x1.initDisplayStrings(context);
+        WidgetModeMoon1x1.initDisplayStrings(context);
         TrackingMode.initDisplayStrings(context);
         CompareMode.initDisplayStrings(context);
         TimeMode.initDisplayStrings(context);
+        MoonPhaseMode.initDisplayStrings(context);
         SolsticeEquinoxMode.initDisplayStrings(context);
         LocationMode.initDisplayStrings(context);
         TimezoneMode.initDisplayStrings(context);

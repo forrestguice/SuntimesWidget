@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:insetTop="@dimen/moonIcon_inset">
+
+    <shape android:shape="oval">
+        <size android:width="@dimen/moonIcon_width" android:height="@dimen/moonIcon_height" />
+        <solid android:color="@color/moonIcon_color_setting" />
+
+        <stroke android:width="0dp"
+                android:color="@color/moonIcon_color_setting" />
+
+    </shape>
+</inset>

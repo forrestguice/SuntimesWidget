@@ -1,5 +1,6 @@
 ### ~
 
+* adds moon widgets (1x1, 2x1; showing today's rise/set times, phase, & illumination) (#52).
 * adds twilight durations to the lightmap dialog.
 * adds option to "places settings" to generate a list of world cities (by scanning locale defaults).
 * adds "show weeks" option to app and solstice widget (#153).

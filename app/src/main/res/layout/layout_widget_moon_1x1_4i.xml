@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2018 Forrest Guice
+    This file is part of SuntimesWidget.
+
+    SuntimesWidget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SuntimesWidget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/widgetframe_inner" style="@style/SunsetTimeWidget"
+    android:orientation="vertical" android:layout_width="match_parent">
+
+    <TextView android:id="@+id/text_title" style="@style/SunsetTimeTextTitleView"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:gravity="start" tools:text="title" />
+
+    <LinearLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp" android:orientation="vertical">
+
+        <include layout="@layout/icons_moon_phases" />
+
+        <TextView
+            android:id="@+id/moonphase_major_date"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            style="@style/SunsetTimeTextView" tools:text="February 15, 8:00 AM"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
+
+</LinearLayout>

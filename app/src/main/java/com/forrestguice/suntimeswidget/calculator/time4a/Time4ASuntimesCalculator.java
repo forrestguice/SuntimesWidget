@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget.calculator.time4a;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -28,6 +27,7 @@ import net.time4j.Moment;
 import net.time4j.PlainDate;
 import net.time4j.TemporalType;
 import net.time4j.calendar.astro.AstronomicalSeason;
+import net.time4j.calendar.astro.LunarTime;
 import net.time4j.calendar.astro.SolarTime;
 import net.time4j.calendar.astro.StdSolarCalculator;
 import net.time4j.calendar.astro.Twilight;
@@ -290,6 +290,48 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         if (northernHemisphere)
             return season.onNorthernHemisphere();
         else return season.onSouthernHemisphere();
+    }
+
+    @Override
+    public MoonTimes getMoonTimesForDate(Calendar date)
+    {
+        Moment moment = TemporalType.JAVA_UTIL_DATE.translate(date.getTime());
+        TZID tzid = toTimezone(date.getTimeZone()).getID();
+        PlainDate localDate = moment.toZonalTimestamp(tzid).toDate();
+
+        LunarTime lunarTime = LunarTime.ofLocation(tzid, this.solarTime.getLatitude(), this.solarTime.getLongitude(), this.solarTime.getAltitude());
+        LunarTime.Moonlight moonlight = lunarTime.on(localDate);
+
+        MoonTimes result = new MoonTimes();
+        result.riseTime = momentToCalendar(moonlight.moonrise()); // might be null meaning there is no moonrise
+        result.setTime = momentToCalendar(moonlight.moonset()); // might be null meaning there is no moonset
+        return result;
+    }
+
+    @Override
+    public double getMoonIlluminationForDate(Calendar date)
+    {
+        Moment moment = TemporalType.JAVA_UTIL_DATE.translate(date.getTime());
+        return net.time4j.calendar.astro.MoonPhase.getIllumination(moment);
+    }
+
+    @Override
+    public Calendar getMoonPhaseNextDate(MoonPhase phase, Calendar date)
+    {
+        net.time4j.calendar.astro.MoonPhase moonPhase = toPhase(phase);
+        Moment phaseMoment = moonPhase.after(TemporalType.JAVA_UTIL_DATE.translate(date.getTime()));
+        return momentToCalendar(phaseMoment);
+    }
+
+    private net.time4j.calendar.astro.MoonPhase toPhase( MoonPhase input )
+    {
+        switch (input) {
+            case NEW: return net.time4j.calendar.astro.MoonPhase.NEW_MOON;
+            case FIRST_QUARTER: return net.time4j.calendar.astro.MoonPhase.FIRST_QUARTER;
+            case THIRD_QUARTER: return net.time4j.calendar.astro.MoonPhase.LAST_QUARTER;
+            case FULL:
+            default: return net.time4j.calendar.astro.MoonPhase.FULL_MOON;
+        }
     }
 
 }

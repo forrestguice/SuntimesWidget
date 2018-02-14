@@ -66,6 +66,10 @@
     <string name="length_day"><xliff:g id="timeSpan" example="12h">%1$s</xliff:g> napkeltétől napnyugtáig</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
     <string name="length_light"><xliff:g id="timeSpan" example="12h 50m">%1$s</xliff:g> nappal hossza</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
 
+    <!-- Field: moon illumination (as seen in moon widget) -->
+    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> illuminated</string>  <!-- "50% illuminated" .. used in 2x1 widget --> <!-- TODO -->
+    <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- "50%" .. used in 1x1 widget -->
+
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
          e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
          The relative order is defined by the layout (layout/info_time_daydelta.xml).
@@ -184,6 +188,23 @@
     <string name="timeMode_solstice_winter">Winter Solstice</string>    <!-- setting -->  <!-- TODO -->
     <string name="timeMode_solstice_winter_short">Solstice</string>     <!-- setting -->  <!-- TODO -->
 
+    <string name="timeMode_moon_new">New Moon</string>                               <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_moon_new_short">New</string>                              <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_moon_waxingcrescent_short">Waxing Crescent</string>               <!-- label -->  <!-- TODO -->
+    <string name="timeMode_moon_waxingcrescent">Waxing Crescent</string>                     <!-- label -->  <!-- TODO -->
+    <string name="timeMode_moon_firstquarter">First Quarter</string>                 <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_moon_firstquarter_short">First Quarter</string>           <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_moon_waxinggibbous_short">Waxing Gibbous</string>               <!-- label -->  <!-- TODO -->
+    <string name="timeMode_moon_waxinggibbous">Waxing Gibbous</string>                     <!-- label -->  <!-- TODO -->
+    <string name="timeMode_moon_full">Full Moon</string>                             <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_moon_full_short">Full</string>                            <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_moon_waninggibbous_short">Waning Gibbous</string>               <!-- label -->  <!-- TODO -->
+    <string name="timeMode_moon_waninggibbous">Waning Gibbous</string>                     <!-- label -->  <!-- TODO -->
+    <string name="timeMode_moon_thirdquarter">Third Quarter</string>                 <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_moon_thirdquarter_short">Third Quarter</string>           <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_moon_waningcrescent_short">Waning Crescent</string>               <!-- label -->  <!-- TODO -->
+    <string name="timeMode_moon_waningcrescent">Waning Crescent</string>                     <!-- label -->  <!-- TODO -->
+
     <string name="configLabel_general_timeMode">Mód:</string>          <!-- spinner label -->
 
     <!-- Widget Setting: layout mode -->
@@ -191,6 +212,12 @@
     <string name="widgetMode1x1_sunset">Csak napnyugta</string>               <!-- setting -->
     <string name="widgetMode1x1_both_1">Napkelte &amp; napnyugta (1)</string>  <!-- setting -->
     <string name="widgetMode1x1_both_2">Napkelte &amp; napnyugta (2)</string>  <!-- setting -->
+
+    <string name="widgetMode1x1_moonriseset">Moonrise &amp; moonset</string>     <!-- setting -->   <!-- TODO -->
+    <string name="widgetMode1x1_moonphaseillum">Moon phase &amp; illumination</string>     <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode1x1_moonphase">Moon phase only</string>     <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode1x1_moonillum">Moon illumination only</string>     <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode1x1_moonphasenext">Next major phase</string>     <!-- setting -->  <!-- TODO -->
 
     <string name="configLabel_appearance_1x1mode">1x1 megjelenítés:</string>     <!-- spinner label -->
 
@@ -653,7 +680,7 @@
     <string name="app_name_widget1">Suntimes Widget (flippable)</string>
     <string name="app_name_widget2">Suntimes Solstice Widget</string>  <!-- TODO -->
     <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
-    <string name="app_shortdesc">Megnézheti a napkelte, a napnyugta és a szürkület idejét.</string>
+    <string name="app_shortdesc">Megnézheti a napkelte, a napnyugta és a szürkület idejét.</string>  <!-- TODO: needs update to mention the moon. default changed to -> "Displays sunlight and moonlight times" -->
     <string name="app_support_url"><![CDATA[
         <b>Support:</b> visit the
         <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a> to submit a request.
@@ -684,14 +711,32 @@
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Segítség</string>
     <string name="help_appearance_title"><![CDATA[
-        The following substitutions are supported: <br />
-                * <b>%loc</b> for label <br />
-                * <b>%lat</b> for latitude <br />
-                * <b>%lon</b> for longitude <br/>
-                * <b>%m</b> for time mode (short) (e.g. "Civil") <br/>
-                * <b>%M</b> for time mode (long) (e.g. "Civil Twilight") <br/>
+        The following title substitutions are supported:<br/>
+        <br/>
+        <b>All Widgets:</b> <br />
+                * <b>%d</b> for date (e.g. February 12) <br/>
+                * <b>%dd</b> for day (short) (e.g. Mon) <br/>
+                * <b>%dD</b> for day (long) (e.g. Monday) <br/>
+                * <b>%dY</b> for year (e.g. 2018) <br/>
+                <br/>
+                * <b>%loc</b> for label (e.g. Prescott) <br />
+                * <b>%lat</b> for latitude (e.g. 35.5409) <br />
+                * <b>%lon</b> for longitude (e.g. -112.4691) <br/>
+                <br/>
                 * <b>%s</b> for data source (e.g. sunrisesunsetlib) <br/>
                 * <b>%t</b> for time zone (id) (e.g. US/Arizona) <br/>
+         <br/>
+         <b>Sun Widgets:</b> <br/>
+                * <b>%m</b> for mode (short) (e.g. Civil) <br/>
+                * <b>%M</b> for mode (long) (e.g. Civil Twilight) <br/>
+         <br/>
+         <b>Moon Widgets:</b> <br/>
+                * <b>%i</b> for moon illumination (e.g. 25%) <br/>
+                * <b>%M</b> for moon phase (e.g. Waxing Crescent) <br/>
+         <br/>
+         <b>Solstice Widgets:</b> <br/>
+                * <b>%m</b> for mode (short) (e.g. Solstice) <br/>
+                * <b>%M</b> for mode (long) (e.g. Winter Solstice) <br/>
     ]]></string>
 
     <string name="help_general_timeMode"><![CDATA[
@@ -705,6 +750,12 @@
         <b>Usable light:</b> the amount of time between morning and evening civil twilight.</br>
     ]]>
     </string>
+    <string name="help_general_goldhour"><![CDATA[
+        <b>Golden Hour:</b> The sun is between 6 degrees above or below the horizon. In the morning the golden hour begins with civil twilight and ends a short time after sunrise. In the evening the golden hour begins a short time before sunset and ends with civil twilight.<br/>
+    ]]></string>  <!-- TODO -->
+    <string name="help_general_bluehour"><![CDATA[
+        <b>Blue Hour:</b> The sun is between 8 degrees and 4 degrees below the horizon. The start and end of the blue hour falls between nautical and civil twilight.<br/>
+    ]]></string>  <!-- TODO -->
     <string name="help_action_launch"><![CDATA[
         The fully qualified class name of the Activity to be launched.<br/>
     ]]></string>

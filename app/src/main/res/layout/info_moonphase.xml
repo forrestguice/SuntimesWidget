@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2018 Forrest Guice
+    This file is part of SuntimesWidget.
+
+    SuntimesWidget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SuntimesWidget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <include layout="@layout/icons_moon_phases" />
+
+        <LinearLayout
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:orientation="vertical" android:layout_gravity="center_vertical" android:weightSum="1">
+
+            <TextView
+                android:id="@+id/text_info_moonphase" style="@style/SunsetTimeTextView2"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:gravity="start|bottom" android:maxLines="2" android:ellipsize="end"
+                android:layout_marginTop="0dp" android:layout_marginBottom="0dp"
+                tools:text="Waning Crescent" />
+
+            <TextView
+                android:id="@+id/text_info_moonillum" style="@style/SunsetTimeTextView2"
+                android:layout_width="wrap_content" android:layout_height="0dp" android:layout_weight="1"
+                android:gravity="start|top" android:layout_marginTop="0dp" android:layout_marginBottom="0dp"
+                tools:text="0%" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</merge>

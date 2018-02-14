@@ -37,6 +37,7 @@ public interface SuntimesCalculator
     int FEATURE_SOLSTICE = 10;    // feature: solstice/equinox times
     int FEATURE_ALTITUDE = 20;    // feature: altitude based refinement
     int FEATURE_GOLDBLUE = 30;    // feature: gold, blue hour times
+    int FEATURE_MOON = 40;        // feature: moonrise, moonset, phase, illumination
 
     //
     // 1.0.0 sunrise, sunset, noon, twilight times
@@ -229,5 +230,44 @@ public interface SuntimesCalculator
      * @since 1.1.0
      */
     boolean isDay( Calendar dateTime );
+
+    //
+    // 1.3.0 moonrise, moonset, phase, illumination
+    //
+
+    /**
+     * getMoonTimesForDate
+     * @param date a Calendar representing a given date
+     * @return a MoonTimes obj wrapping riseTime, setTime, etc.
+     * @since 1.3.0
+     */
+    MoonTimes getMoonTimesForDate(Calendar date);
+    class MoonTimes
+    {
+        public Calendar riseTime = null;
+        public Calendar setTime = null;
+    }
+
+    /**
+     * MoonIllumination
+     * @param date a Calendar representing a given date
+     * @return an illumination value [0,1] (0%-100%)
+     * @since 1.3.0
+     */
+    double getMoonIlluminationForDate(Calendar date);
+
+    /**
+     * Get the date of the next major moon phase.
+     * @param phase a major moon phase (NEW, FIRST_QUARTER, FULL, THIRD_QUARTER)
+     * @param date a Calendar representing a given date
+     * @return a Calendar for the given phase (occurring after the given date).
+     * @since 1.3.0
+     */
+    Calendar getMoonPhaseNextDate(MoonPhase phase, Calendar date);
+    enum MoonPhase
+    {
+        NEW, FIRST_QUARTER, FULL, THIRD_QUARTER;
+        private MoonPhase() {}
+    }
 
 }
