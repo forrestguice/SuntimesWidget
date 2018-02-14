@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -20,7 +20,6 @@ package com.forrestguice.suntimeswidget.calculator.time4a;
 
 import android.content.Context;
 
-import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -29,7 +28,6 @@ import net.time4j.PlainDate;
 import net.time4j.TemporalType;
 import net.time4j.calendar.astro.AstronomicalSeason;
 import net.time4j.calendar.astro.LunarTime;
-import net.time4j.calendar.astro.MoonPhase;
 import net.time4j.calendar.astro.SolarTime;
 import net.time4j.calendar.astro.StdSolarCalculator;
 import net.time4j.calendar.astro.Twilight;
@@ -314,41 +312,6 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     public double getMoonIlluminationForDate(Calendar date)
     {
         Moment moment = TemporalType.JAVA_UTIL_DATE.translate(date.getTime());
-        //MoonIllumination result = new MoonIllumination();
-        //result.illumination = net.time4j.calendar.astro.MoonPhase.getIllumination(moment);
-
-        /**if (result.illumination < 0.05)             // New Moon
-        {
-            result.phase = MoonPhaseDisplay.NEW;
-
-        } else if (result.illumination > 0.95) {    // Full Moon
-            result.phase = MoonPhaseDisplay.FULL;
-
-        } else {
-            double illumination1;      // determine changing illumination (waxing / waning)
-            int c = 0;  // c counts loop (+days)
-            int n = 4;  // if c >= n something not right.. break loop
-            do {
-                c++;
-                Moment moment1 = moment.plus(c, java.util.concurrent.TimeUnit.DAYS);
-                illumination1 = net.time4j.calendar.astro.MoonPhase.getIllumination(moment1);
-            } while (illumination1 == result.illumination && c < n);     // c expected to be 1
-
-            boolean isWaxing = (illumination1 > result.illumination);
-            if (result.illumination > 0.45 && result.illumination < 0.55) {
-                // Quarter Moon
-                result.phase = (isWaxing ? MoonPhaseDisplay.FIRST_QUARTER : MoonPhaseDisplay.THIRD_QUARTER);
-
-            } else if (result.illumination <= 0.45) {
-                // Crescent Moon
-                result.phase = (isWaxing ? MoonPhaseDisplay.WAXING_CRESCENT : MoonPhaseDisplay.WANING_CRESCENT);
-
-            } else {
-                // Gibbous Moon
-                result.phase = (isWaxing ? MoonPhaseDisplay.WAXING_GIBBOUS : MoonPhaseDisplay.WANING_GIBBOUS);
-            }
-        }*/
-        //return result;
         return net.time4j.calendar.astro.MoonPhase.getIllumination(moment);
     }
 
