@@ -70,6 +70,7 @@ import android.widget.ViewFlipper;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
@@ -121,6 +122,7 @@ public class SuntimesActivity extends AppCompatActivity
     protected SuntimesNotes notes;
     protected SuntimesRiseSetDataset dataset;
     protected SuntimesEquinoxSolsticeDataset dataset2;
+    protected SuntimesMoonData dataset3;
 
     private int color_textTimeDelta;
 
@@ -1207,6 +1209,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         dataset = new SuntimesRiseSetDataset(context);
         dataset2 = (AppSettings.loadShowEquinoxPref(context) ? new SuntimesEquinoxSolsticeDataset(context) : null);
+        dataset3 = (AppSettings.loadShowMoonPref(context) ? new SuntimesMoonData(context, 0, "moon") : null);
     }
 
     protected void calculateData( Context context )
@@ -1219,6 +1222,9 @@ public class SuntimesActivity extends AppCompatActivity
         if (dataset2 != null)
             dataset2.calculateData();
 
+        if (dataset3 != null)
+            dataset3.calculate();
+
         initNotes();
     }
 
@@ -1229,6 +1235,10 @@ public class SuntimesActivity extends AppCompatActivity
 
         if (dataset2 != null)
             dataset2.invalidateCalculation();
+
+        if (dataset3 != null)
+            dataset3.invalidateCalculation();
+
         updateViews(context);
     }
 
