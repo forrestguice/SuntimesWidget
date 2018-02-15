@@ -485,7 +485,7 @@ public class AppSettings
                 if (data == null)
                 {
                     data = new SuntimesRiseSetData(context, AppWidgetManager.INVALID_APPWIDGET_ID);
-                    data.initCalculator();
+                    data.initCalculator(context);
                 }
                 styleID = (data.isDay() ? R.style.AppTheme_Light : R.style.AppTheme_Dark);
             }
