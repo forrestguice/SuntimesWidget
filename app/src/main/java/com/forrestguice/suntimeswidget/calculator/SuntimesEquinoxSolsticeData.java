@@ -143,8 +143,7 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
         //Log.v("SuntimesWidgetData", "timezone_mode: " + timezoneMode.name());
         //Log.v("SuntimesWidgetData", "timezone: " + timezone);
 
-        SuntimesCalculatorFactory calculatorFactory = new SuntimesCalculatorFactory(context, calculatorMode);
-        SuntimesCalculator calculator = calculatorFactory.createCalculator(location, timezone);
+        initCalculator(context);
 
         todaysCalendar = Calendar.getInstance(timezone);
         otherCalendar = Calendar.getInstance(timezone);

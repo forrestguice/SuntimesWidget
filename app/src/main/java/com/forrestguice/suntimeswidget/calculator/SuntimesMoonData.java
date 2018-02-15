@@ -172,8 +172,7 @@ public class SuntimesMoonData extends SuntimesData
      */
     public void calculate()
     {
-        SuntimesCalculatorFactory calculatorFactory = new SuntimesCalculatorFactory(context, calculatorMode);
-        SuntimesCalculator calculator = calculatorFactory.createCalculator(location, timezone);
+        initCalculator(context);
 
         todaysCalendar = Calendar.getInstance(timezone);
         otherCalendar = Calendar.getInstance(timezone);

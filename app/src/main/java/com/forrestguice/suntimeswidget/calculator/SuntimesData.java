@@ -225,6 +225,12 @@ public class SuntimesData
         }
     }
 
+    public void initCalculator(Context context)
+    {
+        SuntimesCalculatorFactory calculatorFactory = new SuntimesCalculatorFactory(context, calculatorMode);
+        this.calculator = calculatorFactory.createCalculator(location, timezone);
+    }
+
     /**
      * @return the start of today (@see calendar()), at 0h 0m 0s
      */
