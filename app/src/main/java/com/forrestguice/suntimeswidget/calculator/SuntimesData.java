@@ -168,10 +168,14 @@ public class SuntimesData
      */
     protected void initFromSettings(Context context, int appWidgetId)
     {
+        initFromSettings(context, appWidgetId, "");
+    }
+    protected void initFromSettings(Context context, int appWidgetId, String calculatorName)
+    {
         calculated = false;
 
         // from general settings
-        calculatorMode = WidgetSettings.loadCalculatorModePref(context, appWidgetId);
+        calculatorMode = WidgetSettings.loadCalculatorModePref(context, appWidgetId, calculatorName);
 
         // from location settings
         location = WidgetSettings.loadLocationPref(context, appWidgetId);

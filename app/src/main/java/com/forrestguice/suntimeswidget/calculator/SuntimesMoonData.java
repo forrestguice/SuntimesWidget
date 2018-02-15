@@ -37,6 +37,11 @@ public class SuntimesMoonData extends SuntimesData
         this.context = context;
         initFromSettings(context, appWidgetId);
     }
+    public SuntimesMoonData(Context context, int appWidgetId, String calculatorName)
+    {
+        this.context = context;
+        initFromSettings(context, appWidgetId, calculatorName);
+    }
     public SuntimesMoonData(SuntimesMoonData other)
     {
         this.context = other.context;
@@ -154,17 +159,6 @@ public class SuntimesMoonData extends SuntimesData
         this.moonIlluminationToday = other.moonIlluminationToday;
         this.moonPhases = new HashMap<>(other.moonPhases);
         this.moonPhaseToday = other.moonPhaseToday;
-    }
-
-    /**
-     * init from shared preferences
-     * @param context
-     * @param appWidgetId
-     */
-    @Override
-    public void initFromSettings(Context context, int appWidgetId)
-    {
-        super.initFromSettings(context, appWidgetId);
     }
 
     /**

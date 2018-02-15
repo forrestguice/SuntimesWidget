@@ -33,6 +33,11 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
         this.context = context;
         initFromSettings(context, appWidgetId);
     }
+    public SuntimesEquinoxSolsticeData(Context context, int appWidgetId, String calculatorName)
+    {
+        this.context = context;
+        initFromSettings(context, appWidgetId, calculatorName);
+    }
     public SuntimesEquinoxSolsticeData(SuntimesEquinoxSolsticeData other)
     {
         this.context = other.context;
@@ -68,9 +73,9 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
      * @param appWidgetId the widgetID to load settings from (0 for app)
      */
     @Override
-    public void initFromSettings(Context context, int appWidgetId)
+    public void initFromSettings(Context context, int appWidgetId, String calculatorName)
     {
-        super.initFromSettings(context, appWidgetId);
+        super.initFromSettings(context, appWidgetId, calculatorName);
         timeMode = WidgetSettings.loadTimeMode2Pref(context, appWidgetId);
     }
 

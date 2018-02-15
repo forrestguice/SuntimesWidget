@@ -35,6 +35,11 @@ public class SuntimesRiseSetData extends SuntimesData
         this.context = context;
         initFromSettings(context, appWidgetId);
     }
+    public SuntimesRiseSetData(Context context, int appWidgetId, String calculatorName)
+    {
+        this.context = context;
+        initFromSettings(context, appWidgetId, calculatorName);
+    }
     public SuntimesRiseSetData(SuntimesRiseSetData other)
     {
         this.context = other.context;
@@ -203,9 +208,9 @@ public class SuntimesRiseSetData extends SuntimesData
      * @param appWidgetId the widgetID to load settings from (0 for app)
      */
     @Override
-    protected void initFromSettings(Context context, int appWidgetId)
+    protected void initFromSettings(Context context, int appWidgetId, String calculatorName)
     {
-        super.initFromSettings(context, appWidgetId);
+        super.initFromSettings(context, appWidgetId, calculatorName);
         this.timeMode = WidgetSettings.loadTimeModePref(context, appWidgetId);
         this.compareMode = WidgetSettings.loadCompareModePref(context, appWidgetId);
     }
