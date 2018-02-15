@@ -1206,22 +1206,29 @@ public class SuntimesActivity extends AppCompatActivity
     private void initData( Context context )
     {
         dataset = new SuntimesRiseSetDataset(context);
-        dataset2 = new SuntimesEquinoxSolsticeDataset(context);
+        dataset2 = (AppSettings.loadShowEquinoxPref(context) ? new SuntimesEquinoxSolsticeDataset(context) : null);
     }
 
     protected void calculateData( Context context )
     {
         initData(context);
-        dataset.calculateData();
-        dataset2.calculateData();
+
+        if (dataset != null)
+            dataset.calculateData();
+
+        if (dataset2 != null)
+            dataset2.calculateData();
 
         initNotes();
     }
 
     protected void invalidateData( Context context )
     {
-        dataset.invalidateCalculation();
-        dataset2.invalidateCalculation();
+        if (dataset != null)
+            dataset.invalidateCalculation();
+
+        if (dataset2 != null)
+            dataset2.invalidateCalculation();
         updateViews(context);
     }
 
@@ -1386,7 +1393,7 @@ public class SuntimesActivity extends AppCompatActivity
         // equinox and solstice
         //
         boolean enableEquinox = AppSettings.loadShowEquinoxPref(this);
-        showEquinoxView(enableEquinox && dataset2.isImplemented());
+        showEquinoxView(enableEquinox && dataset2 != null && dataset2.isImplemented());
         card_equinoxSolstice.setTrackingMode(WidgetSettings.loadTrackingModePref(context, AppWidgetManager.INVALID_APPWIDGET_ID));
         card_equinoxSolstice.updateViews(SuntimesActivity.this, dataset2);
 
