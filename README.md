@@ -1,5 +1,5 @@
 # SuntimesWidget
-An Android app (and widget collection) that displays sunlight and moonlight times for a given location. 
+Android app (and widget collection) that displays sunlight and moonlight times for a given location. 
 [![Build Status](https://travis-ci.org/forrestguice/SuntimesWidget.svg?branch=master)](https://travis-ci.org/forrestguice/SuntimesWidget)
 
 Displays sunrise and sunset, civil/nautical/astronomical twilight, blue/gold hour, solstices/equinoxes, moonrise and moonset, moon phases and illumination. 
@@ -11,26 +11,24 @@ Displays sunrise and sunset, civil/nautical/astronomical twilight, blue/gold hou
 
 The app:
 * displays the current time, and notes the time until next sunrise, sunset, blue/gold hour, or civil/nautical/astronomical twilight.
-* displays the next solstice or equinox, and notes the time until that event.
+* displays the solstice/equinox, and notes the time until the next event.
 * can set an alarm for next sunrise, sunset, blue/gold hour, or civil/nautical/astronomical twilight.
 * can display the configured location on a map (requires a map application).
 * *does not* require GPS. The location is manually specified by default (and optionally obtained from GPS).
-* *does not* require network connectivity. Calculations are performed locally on the device using.
+* *does not* require network connectivity. Calculations are performed locally on the device. 
 
-The widgets are themeable and provide:
+Widgets are themeable and provide:
 * a theme editor and support for basic custom themes.
 * a (default) dark theme (and dark w/ transparent background).
 * a (default) light theme (and light w/ transparent background).
 
-The widgets are (re)configurable:
-* configure location (latitude / longitude)
-* configure timezone
-* configure widget theme
-* configure user-defined title (supports limited substitutions)
-* configure "show noon" and "show comparison"
-* configure "comparison mode" (against tomorrow or yesterday)
+Widgets are (re)configurable:
+* location (latitude / longitude).
+* timezone (system / custom), or solar time (local mean time, apparent solar time).
+* user-defined titles (supporting limited substitutions).
+* misc options: "show seconds", "show noon", and "show comparison", etc.
 
-The widgets are resizable and include...
+Widgets are resizable and include...
 
 **Sun widgets:**
 * 1x1 sun widget that displays the sunrise or sunset time.
