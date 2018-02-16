@@ -1132,7 +1132,7 @@ public class SuntimesActivity extends AppCompatActivity
         String topic2 = getString(R.string.help_general_daylength);
         String topic3 = getString(R.string.help_general_goldhour);
         String topic4 = getString(R.string.help_general_bluehour);
-        String helpText = getString(R.string.help_general, topic1, topic2, topic3, topic4);
+        String helpText = getString(R.string.help_general4, topic1, topic2, topic3, topic4);
 
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(helpText);
