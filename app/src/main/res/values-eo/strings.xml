@@ -359,6 +359,9 @@
     <string name="configLabel_themeColorFall">Aŭtuna koloro:</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Vintra koloro:</string> <!-- color label -->
 
+    <string name="configLabel_themeColorMoonrise">Moonrise Color:</string> <!-- color label -->  <!-- TODO -->
+    <string name="configLabel_themeColorMoonset">Moonset Color:</string> <!-- color label -->    <!-- TODO -->
+
     <string name="configLabel_themeColorSunrise">Koloro de sunleviĝo:</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
 

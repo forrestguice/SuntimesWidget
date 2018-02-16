@@ -360,6 +360,9 @@
     <string name="configLabel_themeColorFall">Color de otoño:</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Color de invierno:</string> <!-- color label -->
 
+    <string name="configLabel_themeColorMoonrise">Moonrise Color:</string> <!-- color label -->  <!-- TODO -->
+    <string name="configLabel_themeColorMoonset">Moonset Color:</string> <!-- color label -->    <!-- TODO -->
+
     <string name="configLabel_themeColorSunrise">Color de amanecer:</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
 
