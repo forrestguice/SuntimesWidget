@@ -9,7 +9,8 @@
 * adds "show blue hour" option to app (#127).
 * adds "show golden hour" option to app (#127).
 * adds golden hour, blue hour (8deg), and blue hour (4deg) to rise/set times (#127).
-* fixes en localization; e.g. "Fall" is better known as "Autumn" (#159).
+* fixes en localization; e.g. "Fall" is better known as "Autumn" (#159), "color" vs "colour", etc.
+* updates translations (eo, pl) (#160).
 
 ### v0.6.2 (2018-02-03)
 * adds option "verbose accessibility"; better support for TalkBack. 
