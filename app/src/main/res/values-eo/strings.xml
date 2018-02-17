@@ -728,6 +728,7 @@
                 * <b>%m</b> por reĝimo (mallonge) (ekz. solstico) <br/>
                 * <b>%M</b> por reĝimo (longe) (ekz. vintra sunekstremo) <br/>
          ]]>
+    </string>
     <string name="help_general_timeMode"><![CDATA[
           <b>Reala sunleviĝo/sunsubiro:</b> la Suno estas sur la horizonto, tio ĉi estas proksimuma tempo de sunleviĝo aŭ sunsubiro.<br/><br/>
           <b>Civila krepusko:</b> la Suno estas 6 gradoj sub la horizonto, la plej helaj steloj estas videblaj. Estas sufiĉe da lumo por fari plejparte da agadoj eksterdome sen artefarita prilumado.<br/><br/>
