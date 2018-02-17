@@ -1101,6 +1101,101 @@
 
                 </LinearLayout>
 
+
+                <View android:layout_width="0dp" android:layout_height="1dp" android:background="?attr/hrColor"
+                    android:layout_marginBottom="4dp"
+                    app:layout_constraintBottom_toTopOf="@+id/layout_moonriseColor"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+
+                <!-- Moonrise Color -->
+                <LinearLayout
+                    android:id="@+id/layout_moonriseColor"
+                    android:orientation="horizontal" android:gravity="center_vertical"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_fallColor"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="16dp"
+                    tools:layout_editor_absoluteX="27dp">
+
+                    <TextView android:labelFor="@+id/edit_moonriseColor"
+                        android:id="@+id/editLabel_moonriseColor"
+                        style="@style/ColorEditLabel"
+                        android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                        android:nextFocusUp="@+id/editLabel_fallColor"
+                        android:nextFocusLeft="@+id/editLabel_winterColor"
+                        android:nextFocusRight="@+id/editLabel_moonsetColor"
+                        android:nextFocusForward="@+id/editLabel_moonsetColor"
+                        android:nextFocusDown="@+id/editLabel_moonsetColor"
+
+                        android:text="@string/configLabel_themeColorMoonrise"
+                        tools:ignore="UnusedAttribute" />
+
+                    <EditText
+                        android:id="@+id/edit_moonriseColor"
+                        style="@style/ColorEdit" android:visibility="gone"
+                        android:fontFamily="monospace"
+
+                        android:nextFocusUp="@+id/editLabel_fallColor"
+                        android:nextFocusLeft="@+id/editLabel_winterColor"
+                        android:nextFocusRight="@+id/editLabel_moonsetColor"
+                        android:nextFocusForward="@+id/editLabel_moonsetColor"
+                        android:nextFocusDown="@+id/editLabel_moonsetColor"
+
+                        android:text="" android:hint="@string/configHint_themeColorSunrise"
+                        tools:ignore="UnusedAttribute" />
+
+                    <ImageButton
+                        android:id="@+id/editButton_moonriseColor"
+                        style="@style/ColorEditButton"
+                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                        android:contentDescription="@string/configLabel_themeColorMoonrise" />
+
+                </LinearLayout>
+
+                <!-- Moonset Color -->
+                <LinearLayout
+                    android:id="@+id/layout_moonsetColor"
+                    android:orientation="horizontal" android:gravity="center_vertical"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@+id/layout_moonriseColor"
+                    app:layout_constraintStart_toEndOf="@+id/layout_moonriseColor"
+                    android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+                    android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
+
+                    <TextView android:labelFor="@+id/edit_moonsetColor"
+                        android:id="@+id/editLabel_moonsetColor"
+                        style="@style/ColorEditLabel"
+                        android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                        android:nextFocusUp="@+id/editLabel_winterColor"
+                        android:nextFocusLeft="@+id/editLabel_moonriseColor"
+
+                        android:text="@string/configLabel_themeColorMoonset" />
+
+                    <EditText
+                        android:id="@+id/edit_moonsetColor"
+                        style="@style/ColorEdit" android:visibility="gone"
+                        android:fontFamily="monospace"
+
+                        android:nextFocusUp="@+id/editLabel_winterColor"
+                        android:nextFocusLeft="@+id/editLabel_moonriseColor"
+
+                        android:text="" android:hint="@string/configHint_themeColorSunset"
+                        tools:ignore="UnusedAttribute" />
+
+                    <ImageButton
+                        android:id="@+id/editButton_moonsetColor"
+                        style="@style/ColorEditButton"
+                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                        android:contentDescription="@string/configLabel_themeColorMoonset" />
+
+                </LinearLayout>
+
+
+
             </android.support.constraint.ConstraintLayout>
 
         </android.support.constraint.ConstraintLayout>
