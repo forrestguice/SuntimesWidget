@@ -110,8 +110,13 @@
     <!-- Table -->
     <string name="sunrise">Sunleviĝo</string>                             <!-- contentDescription -->
     <string name="sunrise_short">Leviĝo</string>                          <!-- table title -->
-    <string name="sunset">Sunsubiro</string>                               <!-- contentDescription -->
-    <string name="sunset_short">Subiro</string>                            <!-- table title -->
+    <string name="sunset">Sunsubiro</string>                              <!-- contentDescription -->
+    <string name="sunset_short">Subiro</string>                           <!-- table title -->
+    <string name="moonrise">Lunleviĝo</string>                            <!-- contentDescription -->
+    <string name="moonrise_short">Lunleviĝo</string>                      <!-- table title -->
+    <string name="moonset">Lunsubiro</string>                             <!-- contentDescription -->
+    <string name="moonset_short">Lunsubiro</string>                       <!-- table title -->
+    
 
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
     <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
@@ -187,6 +192,7 @@
     <string name="timeMode_solstice_winter">Vintra sunekstremo</string>    <!-- setting -->
     <string name="timeMode_solstice_winter_short">Solstico</string>     <!-- setting -->
 
+    <string name="timeMode_moon">Luno</string>                                          <!-- label -->
     <string name="timeMode_moon_new">Nova Luno</string>                                  <!-- setting -->
     <string name="timeMode_moon_new_short">Novluno</string>                              <!-- setting -->
     <string name="timeMode_moon_waxingcrescent_short">Kreskanta (&lt;50%)</string>      <!-- label -->
@@ -218,7 +224,7 @@
     <string name="widgetMode1x1_moonillum">Nur prilumeco de Luno</string>         <!-- setting -->
     <string name="widgetMode1x1_moonphasenext">Sekva ĉefa fazo</string>             <!-- setting -->
 
-    <string name="configLabel_appearance_1x1mode">1x1 grando:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_1x1mode">Grando 1x1:</string>     <!-- spinner label -->
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Fari nenion</string>           <!-- setting -->
