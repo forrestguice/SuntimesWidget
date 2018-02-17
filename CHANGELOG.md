@@ -1,5 +1,6 @@
 ### ~
 
+### v0.7.0 (2018-02-17)
 * adds a 3x1 moon widget (showing major phases) (#52).
 * adds a 2x1 moon widget (showing rise/set + phase + illumination) (#52).
 * adds several 1x1 moon widgets (showing rise/set times, current phase, next phase, or illumination) (#52).
@@ -10,7 +11,7 @@
 * adds "show golden hour" option to app (#127).
 * adds golden hour, blue hour (8deg), and blue hour (4deg) to rise/set times (#127).
 * fixes en localization; e.g. "Fall" is better known as "Autumn" (#159), "color" vs "colour", etc.
-* updates translations (eo, pl) (#160).
+* updates translations (eo, pl) (#160, #162, #163).
 
 ### v0.6.2 (2018-02-03)
 * adds option "verbose accessibility"; better support for TalkBack. 

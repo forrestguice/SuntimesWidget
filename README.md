@@ -1,6 +1,8 @@
 # SuntimesWidget
-An Android app (and home screen widget) that displays sunrise, sunset, civil/nautical/astronomical twilight times for a given location.
+Android app (and widget collection) that displays sunlight and moonlight times for a given location. 
 [![Build Status](https://travis-ci.org/forrestguice/SuntimesWidget.svg?branch=master)](https://travis-ci.org/forrestguice/SuntimesWidget)
+
+Displays sunrise and sunset, civil/nautical/astronomical twilight, blue/gold hour, solstices/equinoxes, moonrise and moonset, moon phases and illumination. 
 
 <a href="https://f-droid.org/repository/browse/?fdid=com.forrestguice.suntimeswidget" target="_blank">
 <img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="80"/></a>
@@ -8,44 +10,65 @@ An Android app (and home screen widget) that displays sunrise, sunset, civil/nau
 **App and Widget Features**
 
 The app:
-* displays the current time, and notes the time until next sunrise, sunset, or civil/nautical/astronomical twilight.
-* can set an alarm for next sunrise, sunset, or civil/nautical/astronomical twilight.
+* displays the current time, and notes the time until next sunrise, sunset, blue/gold hour, or civil/nautical/astronomical twilight.
+* displays the solstice/equinox, and notes the time until the next event.
+* can set an alarm for next sunrise, sunset, blue/gold hour, or civil/nautical/astronomical twilight.
 * can display the configured location on a map (requires a map application).
 * *does not* require GPS. The location is manually specified by default (and optionally obtained from GPS).
-* *does not* require network connectivity. Calculations are performed locally on the device using.
+* *does not* require network connectivity. Calculations are performed locally on the device. 
 
-The widget is themeable and provides:
-* a dark theme (and dark w/ transparent background)
-* a light theme (and light w/ transparent background)
+Widgets are themeable and provide:
 * a theme editor and support for basic custom themes.
+* a (default) dark theme (and dark w/ transparent background).
+* a (default) light theme (and light w/ transparent background).
 
-The widget is (re)configurable:
-* configure location (latitude / longitude)
-* configure timezone
-* configure widget theme
-* configure user-defined title (supports limited substitutions)
-* configure "show noon" and "show comparison"
-* configure "comparison mode" (against tomorrow or yesterday)
+Widgets are (re)configurable:
+* location (latitude / longitude).
+* timezone (system / custom), or solar time (local mean time, apparent solar time).
+* user-defined titles (supporting limited substitutions).
+* misc options: "show seconds", "show noon", and "show comparison", etc.
 
-The widget is resizable and has layouts for:
-* a 1x1 widget that displays either the sunrise OR sunset time.
-* a 1x1 widget that displays both the sunrise AND sunset times.
-* a 1x1 widget that flips between sunrise and sunset times.
-* a 2x1 widget that displays the sunrise and sunset times, and displays the difference in the amount of daylight (in minutes) between today and tomorrow (or today and yesterday).
+Widgets are resizable and include...
 
+**Sun widgets:**
+* 1x1 sun widget that displays the sunrise or sunset time.
+* 1x1 sun widget that displays both sunrise and sunset times.
+* 1x1 sun widget that flips between sunrise and sunset times.
+* 2x1 sun widget that displays the sunrise and sunset times, and the difference in daylight between today and tomorrow (or yesterday).
 
-<img alt="screenshot1" src='https://github.com/forrestguice/SuntimesWidget/blob/docs/doc/screenshots/v0.6.0/en/activity-main0.png' width="280px" />
+**Moon widgets:**
+* 1x1 moon widget that displays moonrise and moonset.
+* 1x1 moon widget that displays next major phase.
+* 1x1 moon widget that displays phase and illumination (or phase only, or illumination only).
+* 2x1 moon widget that displays moonrise and moonset, phase, and illumination.
+* 3x1 moon widget that displays upcoming major moon phases.
 
-**Bug Reports**
+**Solstice widgets:**
+* 1x1 solstice widget that tracks the upcoming solstice or equinox.
+
+<img width="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/widget0_1x1_preview.png" align="center"></img>
+<img width="288px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/widget0_2x1_preview.png" align="center"></img>
+<img width="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/moonwidget4_1x1_preview.png" align="center"></img>
+<img width="288px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/moonwidget0_2x1_preview.png" align="center"></img>
+<img height="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/moonwidget0_3x1_preview.png" align="center"></img>
+<br />
+<img alt="screenshot1" src='https://github.com/forrestguice/SuntimesWidget/blob/docs/doc/screenshots/v0.7.0/en/activity-main0-dark.png' width="280px" />&nbsp;&nbsp;<img alt="screenshot1" src='https://github.com/forrestguice/SuntimesWidget/blob/docs/doc/screenshots/v0.7.0/en/activity-main0-light.png' width="280px" />
+<br />Additional screenshots can be found on the <a href="https://github.com/forrestguice/SuntimesWidget/wiki/Screenshots">project wiki</a> and in the <a href="https://github.com/forrestguice/SuntimesWidget/tree/docs/doc/screenshots">docs branch</a>.
+
+## Donations ##
+
+Do you find value in this software? Pay as you like. 
+
+[![paypal](https://www.paypalobjects.com/webstatic/en_US/i/btn/png/silver-rect-paypal-26px.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2) [![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=forrestguice&url=https://github.com/forrestguice/SuntimesWidget&title=Suntimes&tags=github&category=software)
+
+I want to express my thanks to those who have sent me something. This is a very meaningful gesture.
+
+## Bug Reports ##
 
 You can report bugs using the issue tracker. Be aware that times are approximate and may differ from official sources (up to 10 minutes).
 
 When submitting a bug please be detailed and specific. What did you expect the app to do, what did you actually observe? Bugs that can't be reproduced won't get fixed. If reporting inaccurate times include the lat/lon, timezone, and the date. Other useful information includes Android OS version and your specific device model.
 
-**Donations**
-
-Pay as you like. [![paypal](https://www.paypalobjects.com/webstatic/en_US/i/btn/png/silver-rect-paypal-26px.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2)
-I want to express my thanks to those who have sent me something. Its a very meaningful gesture.
 
 ## Legal Stuff
 
