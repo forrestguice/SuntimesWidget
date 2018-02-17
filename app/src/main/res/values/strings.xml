@@ -118,9 +118,10 @@
     <string name="sunrise_short">Sunrise</string>                          <!-- table title -->
     <string name="sunset">Sunset</string>                               <!-- contentDescription -->
     <string name="sunset_short">Sunset</string>                            <!-- table title -->
-
     <string name="moonrise">Moonrise</string>                             <!-- contentDescription -->
+    <string name="moonrise_short">Moonrise</string>                             <!-- table title -->
     <string name="moonset">Moonset</string>                             <!-- contentDescription -->
+    <string name="moonset_short">Moonset</string>                             <!-- table title -->
 
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
     <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
@@ -207,6 +208,7 @@
     <string name="timeMode_solstice_winter">Winter Solstice</string>    <!-- setting -->
     <string name="timeMode_solstice_winter_short">Solstice</string>     <!-- setting -->
 
+    <string name="timeMode_moon">Moon</string>                               <!-- label -->
     <string name="timeMode_moon_new">New Moon</string>                               <!-- setting -->
     <string name="timeMode_moon_new_short">New</string>                              <!-- setting -->
     <string name="timeMode_moon_waxingcrescent_short">Waxing Crescent</string>               <!-- label -->
@@ -371,6 +373,9 @@
     <string name="configLabel_themeColorSummer">Summer Colour:</string> <!-- color label -->
     <string name="configLabel_themeColorFall">Autumn Colour:</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Winter Colour:</string> <!-- color label -->
+
+    <string name="configLabel_themeColorMoonrise">Moonrise Colour:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonset">Moonset Colour:</string> <!-- color label -->
 
     <string name="configLabel_themeColorSunrise">Sunrise Colour:</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
@@ -845,11 +850,20 @@
                 * <b>%M</b> for mode (long) (e.g. Winter Solstice) <br/>
     ]]></string>
 
-    <string name="help_general">  <!-- general app help; composites a couple help topics together. -->
-        <xliff:g id="help_general_timeMode">%1$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_general_daylength">%2$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_general_goldhour">%3$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_general_bluehour">%4$s</xliff:g>
+    <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
+        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic2">%2$s</xliff:g>
+    </string>
+    <string name="help_general3">  <!-- general app help; composites a couple help topics together. -->
+        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic2">%2$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic3">%3$s</xliff:g>
+    </string>
+    <string name="help_general4">  <!-- general app help; composites a couple help topics together. -->
+        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic2">%2$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic3">%3$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic4">%4$s</xliff:g>
     </string>
 
     <string name="help_general_timeMode"><![CDATA[
@@ -858,6 +872,7 @@
           <b>Nautical Twilight:</b> The sun is 12 degrees below the horizon; object outlines and the horizon are increasingly indistinct. There isn\'t enough light for most outdoor activities without requiring a light.<br/><br/>
           <b>Astronomical Twilight:</b> The sun is 18 degrees below the horizon. Near darkness of night.<br/>
     ]]></string>
+
     <string name="help_general_timeMode2"><![CDATA[
           <b>Spring Equinox:</b> TODO.<br/><br/>
           <b>Summer Solstice:</b> TODO.<br/><br/>

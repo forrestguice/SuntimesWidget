@@ -67,7 +67,7 @@
     <string name="length_light"><xliff:g id="timeSpan" example="12h 50m">%1$s</xliff:g> da uzebla lumo</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
 
     <!-- Field: moon illumination (as seen in moon widget) -->
-    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> illuminated</string>  <!-- "50% illuminated" .. used in 2x1 widget --> <!-- TODO -->
+    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> prilumata</string>  <!-- "50% illuminated" .. used in 2x1 widget -->
     <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- "50%" .. used in 1x1 widget -->
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
@@ -110,8 +110,12 @@
     <!-- Table -->
     <string name="sunrise">Sunleviĝo</string>                             <!-- contentDescription -->
     <string name="sunrise_short">Leviĝo</string>                          <!-- table title -->
-    <string name="sunset">Sunsubiro</string>                               <!-- contentDescription -->
-    <string name="sunset_short">Subiro</string>                            <!-- table title -->
+    <string name="sunset">Sunsubiro</string>                              <!-- contentDescription -->
+    <string name="sunset_short">Subiro</string>                           <!-- table title -->
+    <string name="moonrise">Lunleviĝo</string>                            <!-- contentDescription -->
+    <string name="moonrise_short">Lunleviĝo</string>                      <!-- table title -->
+    <string name="moonset">Lunsubiro</string>                             <!-- contentDescription -->
+    <string name="moonset_short">Lunsubiro</string>                       <!-- table title -->
 
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
     <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
@@ -187,22 +191,23 @@
     <string name="timeMode_solstice_winter">Vintra sunekstremo</string>    <!-- setting -->
     <string name="timeMode_solstice_winter_short">Solstico</string>     <!-- setting -->
 
-    <string name="timeMode_moon_new">New Moon</string>                               <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_moon_new_short">New</string>                              <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_moon_waxingcrescent_short">Waxing Crescent</string>               <!-- label -->  <!-- TODO -->
-    <string name="timeMode_moon_waxingcrescent">Waxing Crescent</string>                     <!-- label -->  <!-- TODO -->
-    <string name="timeMode_moon_firstquarter">First Quarter</string>                 <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_moon_firstquarter_short">First Quarter</string>           <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_moon_waxinggibbous_short">Waxing Gibbous</string>               <!-- label -->  <!-- TODO -->
-    <string name="timeMode_moon_waxinggibbous">Waxing Gibbous</string>                     <!-- label -->  <!-- TODO -->
-    <string name="timeMode_moon_full">Full Moon</string>                             <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_moon_full_short">Full</string>                            <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_moon_waninggibbous_short">Waning Gibbous</string>               <!-- label -->  <!-- TODO -->
-    <string name="timeMode_moon_waninggibbous">Waning Gibbous</string>                     <!-- label -->  <!-- TODO -->
-    <string name="timeMode_moon_thirdquarter">Third Quarter</string>                 <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_moon_thirdquarter_short">Third Quarter</string>           <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_moon_waningcrescent_short">Waning Crescent</string>               <!-- label -->  <!-- TODO -->
-    <string name="timeMode_moon_waningcrescent">Waning Crescent</string>                     <!-- label -->  <!-- TODO -->
+    <string name="timeMode_moon">Luno</string>                                          <!-- label -->
+    <string name="timeMode_moon_new">Nova Luno</string>                                  <!-- setting -->
+    <string name="timeMode_moon_new_short">Novluno</string>                              <!-- setting -->
+    <string name="timeMode_moon_waxingcrescent_short">Kreskanta (&lt;50%)</string>      <!-- label -->
+    <string name="timeMode_moon_waxingcrescent">Kreskanta antaŭ-Lunduono</string>        <!-- label -->
+    <string name="timeMode_moon_firstquarter">Kreskanta Lunduono</string>                <!-- setting -->
+    <string name="timeMode_moon_firstquarter_short">Unua kvarono</string>                <!-- setting -->
+    <string name="timeMode_moon_waxinggibbous_short">Kreskanta (&gt;50%)</string>       <!-- label -->
+    <string name="timeMode_moon_waxinggibbous">Kreskanta post-Lunduono</string>          <!-- label -->
+    <string name="timeMode_moon_full">Plena Luno</string>                                <!-- setting -->
+    <string name="timeMode_moon_full_short">Plenluno</string>                            <!-- setting -->
+    <string name="timeMode_moon_waninggibbous_short">Malkreskanta (&gt;50%)</string>    <!-- label -->
+    <string name="timeMode_moon_waninggibbous">Malkreskanta antaŭ-Lunduono</string>      <!-- label -->
+    <string name="timeMode_moon_thirdquarter">Malkreskanta Lunduono</string>             <!-- setting -->
+    <string name="timeMode_moon_thirdquarter_short">Tria kvarono</string>                <!-- setting -->
+    <string name="timeMode_moon_waningcrescent_short">Malkreskanta (&lt;50%)</string>   <!-- label -->
+    <string name="timeMode_moon_waningcrescent">Malkreskanta post-Lunduono</string>      <!-- label -->
 
     <string name="configLabel_general_timeMode">Reĝimo:</string>          <!-- spinner label -->
 
@@ -212,13 +217,13 @@
     <string name="widgetMode1x1_both_1">Sunleviĝo kaj sunsubiro (1)</string>  <!-- setting -->
     <string name="widgetMode1x1_both_2">Sunleviĝo kaj sunsubiro (2)</string>  <!-- setting -->
 
-    <string name="widgetMode1x1_moonriseset">Moonrise &amp; moonset</string>     <!-- setting -->   <!-- TODO -->
-    <string name="widgetMode1x1_moonphaseillum">Moon phase &amp; illumination</string>     <!-- setting -->  <!-- TODO -->
-    <string name="widgetMode1x1_moonphase">Moon phase only</string>     <!-- setting -->  <!-- TODO -->
-    <string name="widgetMode1x1_moonillum">Moon illumination only</string>     <!-- setting -->  <!-- TODO -->
-    <string name="widgetMode1x1_moonphasenext">Next major phase</string>     <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode1x1_moonriseset">Lunleviĝo kaj lunsubiro</string>       <!-- setting -->
+    <string name="widgetMode1x1_moonphaseillum">Lunfazo kaj prilumeco</string>    <!-- setting -->
+    <string name="widgetMode1x1_moonphase">Nur lunfazo</string>                     <!-- setting -->
+    <string name="widgetMode1x1_moonillum">Nur prilumeco de Luno</string>         <!-- setting -->
+    <string name="widgetMode1x1_moonphasenext">Sekva ĉefa fazo</string>             <!-- setting -->
 
-    <string name="configLabel_appearance_1x1mode">1x1 grando:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_1x1mode">Grando 1x1:</string>     <!-- spinner label -->
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Fari nenion</string>           <!-- setting -->
@@ -358,6 +363,9 @@
     <string name="configLabel_themeColorSummer">Somera koloro:</string> <!-- color label -->
     <string name="configLabel_themeColorFall">Aŭtuna koloro:</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Vintra koloro:</string> <!-- color label -->
+
+    <string name="configLabel_themeColorMoonrise">Koloro de lunleviĝo:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonset">Koloro de lunsubiro:</string>  <!-- color label -->
 
     <string name="configLabel_themeColorSunrise">Koloro de sunleviĝo:</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
@@ -664,7 +672,7 @@
     <string name="app_name_widget1">Suntempoj Fenestraĵo (baskulebla)</string>
     <string name="app_name_widget2">Suntempoj Solstica Fenestraĵo</string>
     <string name="app_version"><![CDATA[<b>Versio:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
-    <string name="app_shortdesc">Montras tempojn de sunleviĝoj, sunsubiroj kaj krepuskoj.</string> <!-- TODO: needs update to mention the moon. default changed to -> "Displays sunlight and moonlight times" -->
+    <string name="app_shortdesc">Montras tempojn de lumadoj de Suno kaj Luno.</string>
     <string name="app_support_url"><![CDATA[
         <b>Subteno:</b> vizitu la
         <a href="https://github.com/forrestguice/SuntimesWidget/issues">erar-spurilon</a> por raporti problemon.
@@ -691,18 +699,36 @@
     
     <!-- Dialog: Help -->  
     <string name="help_dialog_title">Helpo</string>
-    <!-- TODO: needs update (see values\strings.xml) -->
-    <string name="help_appearance_title"><![CDATA[
-        La jenaj mallongigoj estas disponeblaj: <br />
-                * <b>%loc</b> por etikedo <br />
-                * <b>%lat</b> por latitudo <br />
-                * <b>%lon</b> por longitudo <br/>
-                * <b>%m</b> por temp-reĝimo (mallonge) (ekz. “Civila”) <br/>
-                * <b>%M</b> por temp-reĝimo (longe) (ekz. “Civila krepusko”) <br/>
-                * <b>%s</b> por fonto de datumoj (ekz. “sunrisesunsetlib”) <br/>
-                * <b>%t</b> por horzono (ekz. Usono/Arizono) <br/>
-    ]]></string>
-
+    <string name="help_appearance_title">
+        <![CDATA[
+        La jenaj mallongigoj estas subtenataj:<br/>
+        <br/>
+        <b>Ĉiuj fenestraĵoj:</b> <br />
+                * <b>%d</b> por dato (ekz. februaro 12) <br/>
+                * <b>%dd</b> por tago (mallonge) (ekz. lu) <br/>
+                * <b>%dD</b> por tago (longe) (ekz. lundo) <br/>
+                * <b>%dY</b> por jaro (ekz. 2018) <br/>
+                <br/>
+                * <b>%loc</b> por etikedo (ekz. Prescott) <br />
+                * <b>%lat</b> por latitudo (ekz. 35.5409) <br />
+                * <b>%lon</b> por longitudo (ekz. -112.4691) <br/>
+                <br/>
+                * <b>%s</b> por datum-fonto (ekz. sunrisesunsetlib) <br/>
+                * <b>%t</b> por horzono (id) (ekz. US/Arizona) <br/>
+         <br/>
+         <b>Sunaj fenestraĵoj:</b> <br/>
+                * <b>%m</b> por reĝimo (mallonge) (ekz. civila) <br/>
+                * <b>%M</b> por reĝimo (longe) (ekz. civila krepusko) <br/>
+         <br/>
+         <b>Lunaj fenestraĵoj:</b> <br/>
+                * <b>%i</b> por prilumeco (ekz. 25%) <br/>
+                * <b>%M</b> por lunfazo (ekz. kreskanta post-Lunduono) <br/>
+         <br/>
+         <b>Solsticaj fenestraĵoj:</b> <br/>
+                * <b>%m</b> por reĝimo (mallonge) (ekz. solstico) <br/>
+                * <b>%M</b> por reĝimo (longe) (ekz. vintra sunekstremo) <br/>
+         ]]>
+    </string>
     <string name="help_general_timeMode"><![CDATA[
           <b>Reala sunleviĝo/sunsubiro:</b> la Suno estas sur la horizonto, tio ĉi estas proksimuma tempo de sunleviĝo aŭ sunsubiro.<br/><br/>
           <b>Civila krepusko:</b> la Suno estas 6 gradoj sub la horizonto, la plej helaj steloj estas videblaj. Estas sufiĉe da lumo por fari plejparte da agadoj eksterdome sen artefarita prilumado.<br/><br/>
@@ -715,11 +741,11 @@
     ]]>
     </string>
     <string name="help_general_goldhour"><![CDATA[
-        <b>Golden Hour:</b> The sun is between 6 degrees above or below the horizon. In the morning the golden hour begins with civil twilight and ends a short time after sunrise. In the evening the golden hour begins a short time before sunset and ends with civil twilight.<br/>
-    ]]></string>  <!-- TODO -->
+        <b>Ora horo:</b> la Suno estas inter 6 gradoj sub kaj super la horizonto. Matene la ora horo komenciĝas kun civila krepusko kaj finiĝas baldaŭ post sunleviĝo. Vespere la ora horo komenciĝas tuj antaŭ sunsubiro kaj finiĝas kun civila krepusko.<br/>
+    ]]></string>
     <string name="help_general_bluehour"><![CDATA[
-        <b>Blue Hour:</b> The sun is between 8 degrees and 4 degrees below the horizon. The start and end of the blue hour falls between nautical and civil twilight.<br/>
-    ]]></string>  <!-- TODO -->
+        <b>Blua horo:</b> la Suno estas inter 8 kaj 4 gradoj sub la horizonto. Komenco kaj fino de la blua horo okazas inter civila kaj naŭtika krepuskoj.<br/>
+    ]]></string>
     <string name="help_action_launch"><![CDATA[
         La plene unusignifa nomo de klaso de Ago por lanĉi.<br/>
     ]]></string>

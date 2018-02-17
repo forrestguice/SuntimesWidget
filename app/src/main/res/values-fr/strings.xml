@@ -113,6 +113,10 @@
     <string name="sunrise_short">Lever</string>                          <!-- table title -->
     <string name="sunset">Coucher du soleil</string>                               <!-- contentDescription -->
     <string name="sunset_short">Coucher</string>                            <!-- table title -->
+    <string name="moonrise">Moonrise</string>                             <!-- contentDescription -->  <!-- TODO -->
+    <string name="moonrise_short">Moonrise</string>                             <!-- table title -->  <!-- TODO -->
+    <string name="moonset">Moonset</string>                             <!-- contentDescription -->  <!-- TODO -->
+    <string name="moonset_short">Moonset</string>                             <!-- table title -->  <!-- TODO -->
 
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
     <string name="delta_format"><xliff:g example="3" id="value">%1$s</xliff:g><xliff:g example="m" id="units">%2$s</xliff:g></string>
@@ -188,6 +192,7 @@
     <string name="timeMode_solstice_winter">Winter Solstice</string>    <!-- setting -->  <!-- TODO -->
     <string name="timeMode_solstice_winter_short">Solstice</string>     <!-- setting -->  <!-- TODO -->
 
+    <string name="timeMode_moon">Moon</string>                               <!-- label -->  <!-- TODO -->
     <string name="timeMode_moon_new">New Moon</string>                               <!-- setting -->  <!-- TODO -->
     <string name="timeMode_moon_new_short">New</string>                              <!-- setting -->  <!-- TODO -->
     <string name="timeMode_moon_waxingcrescent_short">Waxing Crescent</string>               <!-- label -->  <!-- TODO -->
@@ -352,6 +357,9 @@
     <string name="configLabel_themeColorSummer">Summer Color:</string> <!-- color label -->  <!-- TODO -->
     <string name="configLabel_themeColorFall">Fall Color:</string> <!-- color label --> <!-- TODO -->
     <string name="configLabel_themeColorWinter">Winter Color:</string> <!-- color label -->  <!-- TODO -->
+
+    <string name="configLabel_themeColorMoonrise">Moonrise Color:</string> <!-- color label -->  <!-- TODO -->
+    <string name="configLabel_themeColorMoonset">Moonset Color:</string> <!-- color label -->    <!-- TODO -->
 
     <string name="configLabel_themeColorSunrise">Sunrise Color:</string> <!-- color label -->  <!-- TODO -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->  <!-- TODO -->

@@ -68,7 +68,7 @@
     <string name="length_light"><xliff:g id="timeSpan" example="12h 50m">%1$s</xliff:g> użytecznego światła</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
 
     <!-- Field: moon illumination (as seen in moon widget) -->
-    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> illuminated</string>  <!-- "50% illuminated" .. used in 2x1 widget --> <!-- TODO -->
+    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> oświetlenia</string>  <!-- "50% illuminated" .. used in 2x1 widget -->
     <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- "50%" .. used in 1x1 widget -->
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
@@ -113,6 +113,10 @@
     <string name="sunrise_short">Wschód</string>                          <!-- table title -->
     <string name="sunset">Zachód Słońca</string>                               <!-- contentDescription -->
     <string name="sunset_short">Zachód</string>                            <!-- table title -->
+    <string name="moonrise">Wschód Księżyca</string>                             <!-- contentDescription -->
+    <string name="moonrise_short">Wschód Księżyca</string>                             <!-- table title -->
+    <string name="moonset">Zachód Księżyca</string>                             <!-- contentDescription -->
+    <string name="moonset_short">Zachód Księżyca</string>                             <!-- table title -->
 
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
     <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
@@ -188,22 +192,23 @@
     <string name="timeMode_solstice_winter">Zimowe przesilenie</string>    <!-- setting -->
     <string name="timeMode_solstice_winter_short">Przesilenie</string>     <!-- setting -->
 
-    <string name="timeMode_moon_new">New Moon</string>                               <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_moon_new_short">New</string>                              <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_moon_waxingcrescent_short">Waxing Crescent</string>               <!-- label -->  <!-- TODO -->
-    <string name="timeMode_moon_waxingcrescent">Waxing Crescent</string>                     <!-- label -->  <!-- TODO -->
-    <string name="timeMode_moon_firstquarter">First Quarter</string>                 <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_moon_firstquarter_short">First Quarter</string>           <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_moon_waxinggibbous_short">Waxing Gibbous</string>               <!-- label -->  <!-- TODO -->
-    <string name="timeMode_moon_waxinggibbous">Waxing Gibbous</string>                     <!-- label -->  <!-- TODO -->
-    <string name="timeMode_moon_full">Full Moon</string>                             <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_moon_full_short">Full</string>                            <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_moon_waninggibbous_short">Waning Gibbous</string>               <!-- label -->  <!-- TODO -->
-    <string name="timeMode_moon_waninggibbous">Waning Gibbous</string>                     <!-- label -->  <!-- TODO -->
-    <string name="timeMode_moon_thirdquarter">Third Quarter</string>                 <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_moon_thirdquarter_short">Third Quarter</string>           <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_moon_waningcrescent_short">Waning Crescent</string>               <!-- label -->  <!-- TODO -->
-    <string name="timeMode_moon_waningcrescent">Waning Crescent</string>                     <!-- label -->  <!-- TODO -->
+    <string name="timeMode_moon">Księżyc</string>                               <!-- label -->
+    <string name="timeMode_moon_new">Nów</string>                               <!-- setting -->
+    <string name="timeMode_moon_new_short">Nów</string>                              <!-- setting -->
+    <string name="timeMode_moon_waxingcrescent_short">Rosnący (&lt;50%)</string>               <!-- label -->
+    <string name="timeMode_moon_waxingcrescent">Księżyc rosnący (&lt;50%)</string>                     <!-- label -->
+    <string name="timeMode_moon_firstquarter">Pierwsza kwadra</string>                 <!-- setting -->
+    <string name="timeMode_moon_firstquarter_short">Pierwsza kwadra</string>           <!-- setting -->
+    <string name="timeMode_moon_waxinggibbous_short">Rosnący (&gt;50%)</string>               <!-- label -->
+    <string name="timeMode_moon_waxinggibbous">Księżyc rosnący (&gt;50%)</string>                     <!-- label -->
+    <string name="timeMode_moon_full">Pełnia Księżyca</string>                             <!-- setting -->
+    <string name="timeMode_moon_full_short">Pełnia</string>                            <!-- setting -->
+    <string name="timeMode_moon_waninggibbous_short">Malejący (&gt;50%)</string>               <!-- label -->
+    <string name="timeMode_moon_waninggibbous">Księżyc malejący (&gt;50%)</string>                     <!-- label -->
+    <string name="timeMode_moon_thirdquarter">Ostatnia kwadra</string>                 <!-- setting -->
+    <string name="timeMode_moon_thirdquarter_short">Ostatnia kwadra</string>           <!-- setting -->
+    <string name="timeMode_moon_waningcrescent_short">Malejący (&lt;50%)</string>               <!-- label -->
+    <string name="timeMode_moon_waningcrescent">Księżyc malejący (&lt;50%)</string>                     <!-- label -->
 
     <string name="configLabel_general_timeMode">Tryb:</string>          <!-- spinner label -->
 
@@ -213,11 +218,11 @@
     <string name="widgetMode1x1_both_1">Wschód i zachód (1)</string>  <!-- setting -->
     <string name="widgetMode1x1_both_2">Wschód i zachód (2)</string>  <!-- setting -->
 
-    <string name="widgetMode1x1_moonriseset">Moonrise &amp; moonset</string>     <!-- setting -->   <!-- TODO -->
-    <string name="widgetMode1x1_moonphaseillum">Moon phase &amp; illumination</string>     <!-- setting -->  <!-- TODO -->
-    <string name="widgetMode1x1_moonphase">Moon phase only</string>     <!-- setting -->  <!-- TODO -->
-    <string name="widgetMode1x1_moonillum">Moon illumination only</string>     <!-- setting -->  <!-- TODO -->
-    <string name="widgetMode1x1_moonphasenext">Next major phase</string>     <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode1x1_moonriseset">Wschód i zachód Księżyca</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonphaseillum">Faza i oświetlenie Księżyca</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonphase">Tylko faza Księżyca</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonillum">Tylko oświetlenie Księżyca</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonphasenext">Następna faza główna</string>     <!-- setting -->
 
     <string name="configLabel_appearance_1x1mode">Wymiar 1x1:</string>     <!-- spinner label -->
 
@@ -350,10 +355,13 @@
     <string name="configLabel_themeColorFall">Jesienny kolor:</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Zimowy kolor:</string> <!-- color label -->
 
-    <string name="configLabel_themeColorSunrise">Kolor wschodu:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonrise">Kolor wschodu Księżyca:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonset">Kolor zachodu Księżyca:</string> <!-- color label -->
+
+    <string name="configLabel_themeColorSunrise">Kolor wschodu Słońca:</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
 
-    <string name="configLabel_themeColorSunset">Kolor zachodu:</string>   <!-- color label -->
+    <string name="configLabel_themeColorSunset">Kolor zachodu Słońca:</string>   <!-- color label -->
     <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
 
     <string name="configLabel_themeColorNoon">Kolor południa:</string>      <!-- color label -->
@@ -660,9 +668,9 @@
     <string name="app_name">Zmierzchy i Świty</string>
     <string name="app_name_widget0">Zmierzchy/Świty Widżet</string>
     <string name="app_name_widget1">Zmierzchy/Świty Widżet (przełączalny)</string>
-    <string name="app_name_widget2">Zmierzchy/Świty Widżet Przesilenie</string>
+    <string name="app_name_widget2">Zmierzchy/Świty Widżet Przesilenia</string>
     <string name="app_version"><![CDATA[<b>Wersja:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
-    <string name="app_shortdesc">Wyświetla czasy wschodu i zachodu Słońca, oraz świtu i zmierzchu.</string>  <!-- TODO: needs update to mention the moon. default changed to -> "Displays sunlight and moonlight times" -->
+    <string name="app_shortdesc">Wyświetla czasy świecenia Słońca i Księżyca.</string>
     <string name="app_support_url"><![CDATA[<b>Wsparcie:</b> odwiedź <a href="https://github.com/forrestguice/SuntimesWidget/issues">stronę trackera błędów</a> aby zgłosić błąd/sugestię.]]></string>
     <string name="app_url"><xliff:g id="url"><![CDATA[<a href="https://github.com/forrestguice/SuntimesWidget">github.com/forrestguice/SuntimesWidget</a>]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[Prawo autorskie &#169 2014-2018 Forrest Guice <br />Kod źródłowy dostępny na licencji GPLv3.]]></string>
@@ -681,18 +689,34 @@
     
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Pomoc</string>
-    <!-- TODO: needs update (see values\strings.xml) -->
     <string name="help_appearance_title"><![CDATA[
-        Używane są następujące oznaczenia: <br />
-                * <b>%loc</b> jako etykieta <br />
-                * <b>%lat</b> jako szerokość geo. <br />
-                * <b>%lon</b> jako długość geo. <br/>
-                * <b>%m</b> jako rodzaj zdarzenia (krótki) (np. „Cywilny”) <br/>
-                * <b>%M</b> jako rodzaj zdarzenia (długi) (np. „Cywilny świt/zmierzch”) <br/>
-                * <b>%s</b> jako źródło danych (np. „sunrisesunsetlib”) <br/>
-                * <b>%t</b> jako strefa czasowa (id) (np. Europa/Warszawa) <br/>
+        Wspierane są następujące skróty:<br/>
+        <br/>
+        <b>Wszystkie widżety:</b> <br />
+                * <b>%d</b> dla daty (np. 12 lutego) <br/>
+                * <b>%dd</b> dla dnia (skrót) (np. pon) <br/>
+                * <b>%dD</b> dla dnia (np. poniedziałek) <br/>
+                * <b>%dY</b> dla roku (np. 2018) <br/>
+                <br/>
+                * <b>%loc</b> dla etykiety (np. Prescott) <br />
+                * <b>%lat</b> dla szerokości geograficznej (np. 35.5409) <br />
+                * <b>%lon</b> dla długości geograficznej (np. -112.4691) <br/>
+                <br/>
+                * <b>%s</b> dla źródła danych (np. sunrisesunsetlib) <br/>
+                * <b>%t</b> dla strefy czasowej (id) (np. US/Arizona) <br/>
+         <br/>
+         <b>Widżety Słońca:</b> <br/>
+                * <b>%m</b> dla trybu (skrót) (np. cywilny) <br/>
+                * <b>%M</b> dla trybu (pełny) (np. wschód cywilny) <br/>
+         <br/>
+         <b>Widżety Księżyca:</b> <br/>
+                * <b>%i</b> dla oświetlenia Księżyca (np. 25%) <br/>
+                * <b>%M</b> dla fazy Księżyca (np. Księżyc rosnący (&lt;50%)) <br/>
+         <br/>
+         <b>Widżety przesilenia:</b> <br/>
+                * <b>%m</b> dla trybu (skrót) (np. przesilenie) <br/>
+                * <b>%M</b> dla trybu (pełny) (np. zimowe przesilenie) <br/>
     ]]></string>
-
     <string name="help_general_timeMode"><![CDATA[
           <b>Rzeczywisty wschód/zachód:</b> Słońce znajduje się na linii horyzontu, jest to przybliżony czas wschodu lub zachodu Słońca.<br/><br/>
           <b>Świt/zmierzch cywilny:</b> Słońce znajduje się 6 stopni pod horyzontem, widoczne są najjaśniejsze gwiazdy. Jest wystarczająco jasno na wykonywanie większości czynności na dworze bez potrzeby korzystania ze sztucznego oświetlenia.<br/><br/>
@@ -705,11 +729,11 @@
     ]]>
     </string>
     <string name="help_general_goldhour"><![CDATA[
-        <b>Golden Hour:</b> The sun is between 6 degrees above or below the horizon. In the morning the golden hour begins with civil twilight and ends a short time after sunrise. In the evening the golden hour begins a short time before sunset and ends with civil twilight.<br/>
-    ]]></string>  <!-- TODO -->
+        <b>Złota godzina:</b> Słońce znajduje się pomiędzy 6 stopniami nad i pod horyzontem. Ranem złota godzina zaczyna się wraz ze świtem cywilnym i kończy się wkrótce po wschodzie Słońca. Wieczorem złota godzina zaczyna się na krótko przed zachodem i kończy wraz ze zmierzchem cywilnym.<br/>
+    ]]></string>
     <string name="help_general_bluehour"><![CDATA[
-        <b>Blue Hour:</b> The sun is between 8 degrees and 4 degrees below the horizon. The start and end of the blue hour falls between nautical and civil twilight.<br/>
-    ]]></string>  <!-- TODO -->
+        <b>Błękitna godzina:</b> Słońce znajduje się pomiędzy 8 i 4 stopniami pod horyzontem. Początek i koniec błękitnej godziny przypada pomiędzy świtem (bądź zmierzchem) cywilnym i żeglarskim.<br/>
+    ]]></string>
     <string name="help_action_launch"><![CDATA[
         W pełni jednoznaczna nazwa klasy Czynności do wywołania.<br/>
     ]]></string>
