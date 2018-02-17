@@ -75,7 +75,7 @@ public abstract class SuntimesLayout
     {
         // update title
         String titlePattern = WidgetSettings.loadTitleTextPref(context, appWidgetId);
-        String titleText = utils.displayStringForTitlePattern(titlePattern, data);
+        String titleText = utils.displayStringForTitlePattern(context, titlePattern, data);
         views.setTextViewText(R.id.text_title, titleText);
         //Log.v("DEBUG", "title text: " + titleText);
     }

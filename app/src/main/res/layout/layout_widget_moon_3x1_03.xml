@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2018 Forrest Guice
+    This file is part of SuntimesWidget.
+
+    SuntimesWidget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SuntimesWidget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/widgetframe_outer_3x1"
+    style="@style/SunsetTimeWidgetFrame" android:layout_width="match_parent">
+
+    <LinearLayout android:id="@+id/widgetframe_inner" style="@style/SunsetTimeWidget"
+        android:orientation="vertical" android:layout_width="match_parent">
+
+        <TextView android:id="@+id/text_title" style="@style/SunsetTimeTextTitleView"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:gravity="start" tools:text="title" />
+
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="2dp" android:layout_marginBottom="2dp" android:weightSum="4">
+
+            <include layout="@layout/info_time_moonphase_third" />
+            <include layout="@layout/info_time_moonphase_new" />
+            <include layout="@layout/info_time_moonphase_first" />
+            <include layout="@layout/info_time_moonphase_full" />
+            
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

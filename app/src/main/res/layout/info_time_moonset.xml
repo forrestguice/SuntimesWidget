@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2018 Forrest Guice
+    This file is part of SuntimesWidget.
+
+    SuntimesWidget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SuntimesWidget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout style="@style/SunsetTimeLayout"
+        android:orientation="horizontal">
+
+        <ImageView
+            style="@style/SunsetTimeImageView"
+            android:id="@+id/icon_time_moonset"
+            android:scaleType="fitEnd"
+            android:background="@drawable/ic_moon_set"
+            android:contentDescription="@string/moonset" />
+
+        <TextView
+            style="@style/SunsetTimeTextView"
+            android:id="@+id/text_time_moonset"
+            android:textColor="@color/moonIcon_color_setting"
+            tools:text="3:00" />
+
+        <TextView
+            style="@style/SunsetTimeTextSuffixView"
+            android:id="@+id/text_time_moonset_suffix"
+            android:layout_gravity="bottom"
+            android:layout_height="match_parent"
+            tools:text="AM" />
+
+    </LinearLayout>
+
+</merge>

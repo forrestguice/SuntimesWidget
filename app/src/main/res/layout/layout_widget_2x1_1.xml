@@ -52,13 +52,13 @@
 
                     <TextView
                         style="@style/SunsetTimeTextView"
-                        android:id="@+id/text_time_sunset"
+                        android:id="@+id/text_time_set"
                         android:textColor="@color/sunIcon_color_rising"
                         tools:text="6:20" />
 
                     <TextView
                         style="@style/SunsetTimeTextSuffixView"
-                        android:id="@+id/text_time_sunrise_suffix"
+                        android:id="@+id/text_time_rise_suffix"
                         android:layout_gravity="bottom"
                         android:layout_height="match_parent"
                         tools:text="PM" />

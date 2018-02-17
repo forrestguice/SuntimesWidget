@@ -92,6 +92,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private ColorChooser chooseColorSet, chooseColorSetIconFill, chooseColorSetIconStroke;
     private ColorChooser chooseColorTitle, chooseColorText, chooseColorTime, chooseColorSuffix;
     private ColorChooser chooseColorSpring, chooseColorSummer, chooseColorFall, chooseColorWinter;
+    private ColorChooser chooseColorMoonrise, chooseColorMoonset;
     private ArrayList<ColorChooser> colorChoosers;
     private CheckBox checkUseFill, checkUseStroke, checkUseNoon;
 
@@ -243,6 +244,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         chooseColorSummer = createColorChooser(this, R.id.editLabel_summerColor, R.id.edit_summerColor, R.id.editButton_summerColor, SuntimesTheme.THEME_SUMMERCOLOR);
         chooseColorFall = createColorChooser(this, R.id.editLabel_fallColor, R.id.edit_fallColor, R.id.editButton_fallColor, SuntimesTheme.THEME_FALLCOLOR);
         chooseColorWinter = createColorChooser(this, R.id.editLabel_winterColor, R.id.edit_winterColor, R.id.editButton_winterColor, SuntimesTheme.THEME_WINTERCOLOR);
+
+        // moon colors
+        chooseColorMoonrise = createColorChooser(this, SuntimesTheme.THEME_MOONRISECOLOR);
+        chooseColorMoonset = createColorChooser(this, SuntimesTheme.THEME_MOONSETCOLOR);
 
         // other colors
         chooseColorTitle = createColorChooser(this, R.id.editLabel_titleColor, R.id.edit_titleColor, R.id.editButton_titleColor, SuntimesTheme.THEME_TITLECOLOR);
@@ -476,12 +481,12 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         previewNoonSuffix = (TextView)findViewById(R.id.text_time_noon_suffix);
         previewNoonIcon = (ImageView)findViewById(R.id.icon_time_noon);
 
-        previewRise = (TextView)findViewById(R.id.text_time_sunrise);
-        previewRiseSuffix = (TextView)findViewById(R.id.text_time_sunrise_suffix);
+        previewRise = (TextView)findViewById(R.id.text_time_rise);
+        previewRiseSuffix = (TextView)findViewById(R.id.text_time_rise_suffix);
         previewRiseIcon = (ImageView)findViewById(R.id.icon_time_sunrise);
 
-        previewSet = (TextView)findViewById(R.id.text_time_sunset);
-        previewSetSuffix = (TextView)findViewById(R.id.text_time_sunset_suffix);
+        previewSet = (TextView)findViewById(R.id.text_time_set);
+        previewSetSuffix = (TextView)findViewById(R.id.text_time_set_suffix);
         previewSetIcon = (ImageView)findViewById(R.id.icon_time_sunset);
 
         previewTimeDelta = (TextView)findViewById(R.id.text_delta_day_value);
@@ -776,6 +781,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             chooseColorFall.setColor(theme.getFallColor());
             chooseColorWinter.setColor(theme.getWinterColor());
 
+            chooseColorMoonrise.setColor(theme.getMoonriseTextColor());
+            chooseColorMoonset.setColor(theme.getMoonsetTextColor());
+
             choosePadding.setPadding(theme.getPadding());
             setSelectedBackground(theme.getBackgroundId());
 
@@ -833,6 +841,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 this.themeSummerColor = chooseColorSummer.getColor();
                 this.themeFallColor = chooseColorFall.getColor();
                 this.themeWinterColor = chooseColorWinter.getColor();
+
+                this.themeMoonriseTextColor = chooseColorMoonrise.getColor();
+                this.themeMoonsetTextColor = chooseColorMoonset.getColor();
 
                 this.themePadding = choosePadding.getPadding();
                 ThemeBackground backgroundItem = (ThemeBackground)spinBackground.getSelectedItem();

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2018 Forrest Guice
+    This file is part of SuntimesWidget.
+
+    SuntimesWidget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SuntimesWidget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/widgetframe_outer_2x1" style="@style/SunsetTimeWidgetFrame">
+
+    <LinearLayout android:id="@+id/widgetframe_inner" style="@style/SunsetTimeWidget"
+        android:orientation="vertical">
+
+        <TextView android:id="@+id/text_title" style="@style/SunsetTimeTextTitleView"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:gravity="start" tools:text="title" />
+
+        <LinearLayout
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:showDividers="middle" android:divider="@drawable/ic_spacer"
+            android:orientation="horizontal">
+
+            <include layout="@layout/info_moonphase" />
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/info_time_moonriseset" style="@style/SunsetTimeLayout"
+            android:showDividers="middle" android:divider="@drawable/ic_spacer"
+            android:orientation="horizontal"
+            tools:ignore="UnusedAttribute">
+
+            <include layout="@layout/info_time_moonrise" />
+            <include layout="@layout/info_time_moonset" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2014 Forrest Guice
+   Copyright (C) 2014-2018 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -50,6 +50,9 @@ public class LightTheme extends SuntimesTheme
     public static final int THEMEDEF_SUNSETCOLOR_ID = R.color.sunIcon_color_setting_light;
     public static final int THEMEDEF_TIMESUFFIXCOLOR_ID = android.R.color.tertiary_text_light;
 
+    public static final int THEMEDEF_MOONRISECOLOR_ID = R.color.moonIcon_color_rising_light;
+    public static final int THEMEDEF_MOONSETCOLOR_ID = R.color.moonIcon_color_setting_light;
+
     public static final int THEMEDEF_SPRINGCOLOR_ID = R.color.springColor_light;
     public static final int THEMEDEF_SUMMERCOLOR_ID = R.color.summerColor_light;
     public static final int THEMEDEF_FALLCOLOR_ID = R.color.fallColor_light;
@@ -92,6 +95,9 @@ public class LightTheme extends SuntimesTheme
 
         this.themeSunriseIconStrokeColor = this.themeSunsetIconColor;
         this.themeSunsetIconStrokeColor = this.themeSunriseIconColor;
+
+        this.themeMoonriseTextColor = ContextCompat.getColor(context, THEMEDEF_MOONRISECOLOR_ID);
+        this.themeMoonsetTextColor = ContextCompat.getColor(context, THEMEDEF_MOONSETCOLOR_ID);
 
         this.themeSpringColor = ContextCompat.getColor(context, THEMEDEF_SPRINGCOLOR_ID);
         this.themeSummerColor = ContextCompat.getColor(context, THEMEDEF_SUMMERCOLOR_ID);

@@ -72,6 +72,10 @@
     <string name="length_twilight2"><xliff:g id="timeSpan1" example="30m">%1$s</xliff:g> | <xliff:g id="timeSpan2" example="30m">%2$s</xliff:g></string>
     <string name="length_delimiter">|</string>
 
+    <!-- Field: moon illumination (as seen in moon widget) -->
+    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> illuminated</string>  <!-- used in 2x1 widget -->
+    <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- used in 1x1 widget -->
+
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
          e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
          The relative order is defined by the layout (layout/info_time_daydelta.xml).
@@ -115,6 +119,9 @@
     <string name="sunset">Sunset</string>                               <!-- contentDescription -->
     <string name="sunset_short">Sunset</string>                            <!-- table title -->
 
+    <string name="moonrise">Moonrise</string>                             <!-- contentDescription -->
+    <string name="moonset">Moonset</string>                             <!-- contentDescription -->
+
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
     <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
     <string name="delta_years">y</string>    <!-- e.g. 1y -->
@@ -134,7 +141,7 @@
     <string name="time_format_12hr_veryshort_withseconds"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  <!-- shortest 12hr time format (w/ seconds); should omit am/pm -->
     <string name="time_format_24hr_veryshort"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- 24hr time format -->
     <string name="time_format_24hr_veryshort_withseconds"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  <!-- 24hr time format (w/ seconds) -->
-    <string name="time_format_12hr_short"><xliff:g id="hoursMinutes">%1$s</xliff:g> <xliff:g id="suffix">%2$s</xliff:g></string>
+    <string name="time_format_12hr_short"><xliff:g id="hoursMinutes">%1$s</xliff:g> <xliff:g id="suffix">%2$s</xliff:g></string>
     <string name="date_format_short"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>                                           <!-- MMMM d ... e.g. December 3 -->
     <string name="date_format_long"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g>, <xliff:g id="patternYear">yyyy</xliff:g></string>  <!-- MMMM d, yyyy ... e.g. December 3, 2017 -->
     <string name="datetime_format_short"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>           <!-- longDate, time ... e.g. December 3, 2017, 11:00 am -->
@@ -152,6 +159,7 @@
     <string name="configLabel_title0">Suntimes Widget</string>                  <!-- used as title when adding -->
     <string name="configLabel_title1">Flippable Widget</string>                 <!-- used as title when adding -->
     <string name="configLabel_title2">Solstice Widget</string>                  <!-- used as title when adding -->
+    <string name="configLabel_moonwidget0">Moon Widget</string>                 <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
     <string name="configLabel_general">General Settings</string>                <!-- group title -->
@@ -191,12 +199,29 @@
 
     <string name="timeMode_equinox_vernal">Spring Equinox</string>      <!-- setting -->
     <string name="timeMode_equinox_vernal_short">Equinox</string>       <!-- setting -->
-    <string name="timeMode_equinox_autumnal">Fall Equinox</string>  <!-- setting -->
+    <string name="timeMode_equinox_autumnal">Autumn Equinox</string>  <!-- setting -->
     <string name="timeMode_equinox_autumnal_short">Equinox</string>     <!-- setting -->
     <string name="timeMode_solstice_summer">Summer Solstice</string>    <!-- setting -->
     <string name="timeMode_solstice_summer_short">Solstice</string>     <!-- setting -->
     <string name="timeMode_solstice_winter">Winter Solstice</string>    <!-- setting -->
     <string name="timeMode_solstice_winter_short">Solstice</string>     <!-- setting -->
+
+    <string name="timeMode_moon_new">New Moon</string>                               <!-- setting -->
+    <string name="timeMode_moon_new_short">New</string>                              <!-- setting -->
+    <string name="timeMode_moon_waxingcrescent_short">Waxing Crescent</string>               <!-- label -->
+    <string name="timeMode_moon_waxingcrescent">Waxing Crescent</string>                     <!-- label -->
+    <string name="timeMode_moon_firstquarter">First Quarter</string>                 <!-- setting -->
+    <string name="timeMode_moon_firstquarter_short">First Quarter</string>           <!-- setting -->
+    <string name="timeMode_moon_waxinggibbous_short">Waxing Gibbous</string>               <!-- label -->
+    <string name="timeMode_moon_waxinggibbous">Waxing Gibbous</string>                     <!-- label -->
+    <string name="timeMode_moon_full">Full Moon</string>                             <!-- setting -->
+    <string name="timeMode_moon_full_short">Full</string>                            <!-- setting -->
+    <string name="timeMode_moon_waninggibbous_short">Waning Gibbous</string>               <!-- label -->
+    <string name="timeMode_moon_waninggibbous">Waning Gibbous</string>                     <!-- label -->
+    <string name="timeMode_moon_thirdquarter">Third Quarter</string>                 <!-- setting -->
+    <string name="timeMode_moon_thirdquarter_short">Third Quarter</string>           <!-- setting -->
+    <string name="timeMode_moon_waningcrescent_short">Waning Crescent</string>               <!-- label -->
+    <string name="timeMode_moon_waningcrescent">Waning Crescent</string>                     <!-- label -->
 
     <string name="configLabel_general_timeMode">Mode:</string>          <!-- spinner label -->
 
@@ -205,6 +230,12 @@
     <string name="widgetMode1x1_sunset">Sunset only</string>               <!-- setting -->
     <string name="widgetMode1x1_both_1">Sunrise &amp; Sunset (1)</string>  <!-- setting -->
     <string name="widgetMode1x1_both_2">Sunrise &amp; Sunset (2)</string>  <!-- setting -->
+
+    <string name="widgetMode1x1_moonriseset">Moonrise &amp; moonset</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonphaseillum">Moon phase &amp; illumination</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonphase">Moon phase only</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonillum">Moon illumination only</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonphasenext">Next major phase</string>     <!-- setting -->
 
     <string name="configLabel_appearance_1x1mode">1x1 Layout:</string>     <!-- spinner label -->
 
@@ -322,31 +353,34 @@
     <string name="configLabel_widgetThemeAdd">Add Theme</string>     <!-- title text -->
     <string name="configLabel_widgetThemeEdit">Edit Theme</string>   <!-- title text -->
     <string name="configAction_saveTheme">Save</string>           <!-- button (contentDescription) -->
-    <string name="configAction_chooseColor">Choose Color</string> <!-- button (contentDescription) -->
+    <string name="configAction_chooseColor">Choose Colour</string> <!-- button (contentDescription) -->
 
     <string name="configLabel_themeBackgroundId">Base:</string>    <!-- spinner label -->
     <string name="configLabel_themeBackground_light">Light</string>        <!-- light background -->
     <string name="configLabel_themeBackground_dark">Dark</string>          <!-- dark background -->
     <string name="configLabel_themeBackground_trans">Transparent</string>  <!-- transparent background -->
 
-    <string name="configLabel_themeColorTitle">Title Color:</string>     <!-- color label -->
+    <string name="configLabel_themeColorTitle">Title Colour:</string>     <!-- color label -->
     <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->
 
-    <string name="configLabel_themeColorText">Text Color:</string>       <!-- color label -->
+    <string name="configLabel_themeColorText">Text Colour:</string>       <!-- color label -->
     <string name="configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->
 
-    <string name="configLabel_themeColorSpring">Spring Color:</string> <!-- color label -->
-    <string name="configLabel_themeColorSummer">Summer Color:</string> <!-- color label -->
-    <string name="configLabel_themeColorFall">Fall Color:</string> <!-- color label -->
-    <string name="configLabel_themeColorWinter">Winter Color:</string> <!-- color label -->
+    <string name="configLabel_themeColorSpring">Spring Colour:</string> <!-- color label -->
+    <string name="configLabel_themeColorSummer">Summer Colour:</string> <!-- color label -->
+    <string name="configLabel_themeColorFall">Autumn Colour:</string> <!-- color label -->
+    <string name="configLabel_themeColorWinter">Winter Colour:</string> <!-- color label -->
 
-    <string name="configLabel_themeColorSunrise">Sunrise Color:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonrise">Moonrise Colour:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonset">Moonset Colour:</string> <!-- color label -->
+
+    <string name="configLabel_themeColorSunrise">Sunrise Colour:</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
 
-    <string name="configLabel_themeColorSunset">Sunset Color:</string>   <!-- color label -->
+    <string name="configLabel_themeColorSunset">Sunset Colour:</string>   <!-- color label -->
     <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorNoon">Noon Color:</string>      <!-- color label -->
+    <string name="configLabel_themeColorNoon">Noon Colour:</string>      <!-- color label -->
     <string name="configHint_themeColorNoon">#FFFFFFFF</string>         <!-- color hint -->
 
     <string name="configLabel_themeColorFill">Fill:</string>         <!-- color label -->
@@ -360,10 +394,10 @@
     <string name="configLabel_themeBorderWidthNoon">Border Width (noon):</string>         <!-- size label -->
     <string name="configHint_themeBorderWidthNoon">3</string>                             <!-- size hint -->
 
-    <string name="configLabel_themeColorSuffix">Suffix Color:</string>   <!-- color label -->
+    <string name="configLabel_themeColorSuffix">Suffix Colour:</string>   <!-- color label -->
     <string name="configHint_themeColorSuffix">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorTime">Text Color2:</string>      <!-- color label -->
+    <string name="configLabel_themeColorTime">Text Colour2:</string>      <!-- color label -->
     <string name="configHint_themeColorTime">#FFFFFFFF</string>          <!-- color hint -->
 
     <string name="configLabel_themeSizeTitle">Title Size:</string>  <!-- edit label -->
@@ -394,7 +428,8 @@
     <!--App Setting: WidgetList -->
     <string name="configLabel_widgetList">Widgets</string>               <!-- group title -->
     <string name="configLabel_widgetList_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
-    <string name="configLabel_widgetList_itemTitlePattern"><xliff:g id="titlePattern"><![CDATA[%M (%loc) [%t]]]></xliff:g></string> <!-- the pattern used when generating widget titles for display in the list -->
+    <string name="configLabel_widgetList_itemTitlePattern" formatted="false"><xliff:g id="titlePattern"><![CDATA[%M (%loc) [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
+    <string name="configLabel_widgetList_itemTitlePattern1" formatted="false"><xliff:g id="titlePattern"><![CDATA[%loc [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
     <string name="configLabel_widgetList_itemSummaryPattern"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
     <string name="configLabel_widgetListHelp_title">Help</string>               <!-- always the first item in the widgetList -->
     <string name="configLabel_widgetListHelp_summary">Show widget help</string>
@@ -414,7 +449,7 @@
     <string name="configLabel_accessibility_verbose_summary">Announce automated changes to the UI.</string>
 
     <!-- App Setting: UI Warnings -->
-    <string name="configLabel_ui_showWarnings">Show warnings</string>
+    <string name="configLabel_ui_showWarnings">Show Warnings</string>
     <string name="configLabel_ui_showWarnings_summary">Show configuration warning messages.</string>
 
     <!-- App Setting: Show Lightmap -->
@@ -736,7 +771,7 @@
     <string name="msg_export_to">Export with</string>  <!-- title displayed over "share action" chooser -->
 
     <!-- Dialog: Color -->
-    <string name="color_dialog_msg">Choose Color</string>
+    <string name="color_dialog_msg">Choose Colour</string>
     <string name="color_dialog_ok">Select</string>
     <string name="color_dialog_cancel">Cancel</string>
 
@@ -746,8 +781,9 @@
     <string name="app_name_widget0">Suntimes Widget</string>
     <string name="app_name_widget1">Suntimes Widget (flippable)</string>
     <string name="app_name_widget2">Suntimes Solstice Widget</string>
+    <string name="app_name_moonwidget0">Moon Widget</string>
     <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
-    <string name="app_shortdesc">Displays sunrise, sunset, and twilight times.</string>
+    <string name="app_shortdesc">Displays sunlight and moonlight times.</string>
     <string name="app_support_url"><![CDATA[
         <b>Support:</b> visit the
         <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a> to submit a request.
@@ -778,21 +814,48 @@
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Help</string>
     <string name="help_appearance_title"><![CDATA[
-        The following substitutions are supported: <br />
-                * <b>%loc</b> for label <br />
-                * <b>%lat</b> for latitude <br />
-                * <b>%lon</b> for longitude <br/>
-                * <b>%m</b> for time mode (short) (e.g. "Civil") <br/>
-                * <b>%M</b> for time mode (long) (e.g. "Civil Twilight") <br/>
+        The following title substitutions are supported:<br/>
+        <br/>
+        <b>All Widgets:</b> <br />
+                * <b>%d</b> for date (e.g. February 12) <br/>
+                * <b>%dd</b> for day (short) (e.g. Mon) <br/>
+                * <b>%dD</b> for day (long) (e.g. Monday) <br/>
+                * <b>%dY</b> for year (e.g. 2018) <br/>
+                <br/>
+                * <b>%loc</b> for label (e.g. Prescott) <br />
+                * <b>%lat</b> for latitude (e.g. 35.5409) <br />
+                * <b>%lon</b> for longitude (e.g. -112.4691) <br/>
+                <br/>
                 * <b>%s</b> for data source (e.g. sunrisesunsetlib) <br/>
                 * <b>%t</b> for time zone (id) (e.g. US/Arizona) <br/>
+         <br/>
+         <b>Sun Widgets:</b> <br/>
+                * <b>%m</b> for mode (short) (e.g. Civil) <br/>
+                * <b>%M</b> for mode (long) (e.g. Civil Twilight) <br/>
+         <br/>
+         <b>Moon Widgets:</b> <br/>
+                * <b>%i</b> for moon illumination (e.g. 25%) <br/>
+                * <b>%M</b> for moon phase (e.g. Waxing Crescent) <br/>
+         <br/>
+         <b>Solstice Widgets:</b> <br/>
+                * <b>%m</b> for mode (short) (e.g. Solstice) <br/>
+                * <b>%M</b> for mode (long) (e.g. Winter Solstice) <br/>
     ]]></string>
 
-    <string name="help_general">  <!-- general app help; composites a couple help topics together. -->
-        <xliff:g id="help_general_timeMode">%1$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_general_daylength">%2$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_general_goldhour">%3$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_general_bluehour">%4$s</xliff:g>
+    <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
+        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic2">%2$s</xliff:g>
+    </string>
+    <string name="help_general3">  <!-- general app help; composites a couple help topics together. -->
+        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic2">%2$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic3">%3$s</xliff:g>
+    </string>
+    <string name="help_general4">  <!-- general app help; composites a couple help topics together. -->
+        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic2">%2$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic3">%3$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic4">%4$s</xliff:g>
     </string>
 
     <string name="help_general_timeMode"><![CDATA[
@@ -801,10 +864,11 @@
           <b>Nautical Twilight:</b> The sun is 12 degrees below the horizon; object outlines and the horizon are increasingly indistinct. There isn\'t enough light for most outdoor activities without requiring a light.<br/><br/>
           <b>Astronomical Twilight:</b> The sun is 18 degrees below the horizon. Near darkness of night.<br/>
     ]]></string>
+
     <string name="help_general_timeMode2"><![CDATA[
           <b>Spring Equinox:</b> TODO.<br/><br/>
           <b>Summer Solstice:</b> TODO.<br/><br/>
-          <b>Fall Equinox:</b> TODO.<br/><br/>
+          <b>Autumn Equinox:</b> TODO.<br/><br/>
           <b>Winter Solstice:</b> TODO.<br/>
     ]]></string>
     <string name="help_general_daylength"><![CDATA[

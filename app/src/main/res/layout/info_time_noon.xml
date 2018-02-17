@@ -39,7 +39,7 @@
 
                 <TextView
                     style="@style/SunsetTimeTextSuffixView"
-                    android:id="@+id/text_time_sunrise_suffix"
+                    android:id="@+id/text_time_rise_suffix"
                     android:layout_gravity="bottom"
                     android:layout_height="match_parent"
                     tools:text="AM" />

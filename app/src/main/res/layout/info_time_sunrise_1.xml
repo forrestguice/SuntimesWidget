@@ -37,13 +37,13 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/text_time_sunrise"
+                android:id="@+id/text_time_rise"
                 style="@style/SunsetTimeTextView"
                 android:textColor="@color/sunIcon_color_rising"
                 tools:text="7:00"/>
 
             <TextView
-                android:id="@+id/text_time_sunrise_suffix"
+                android:id="@+id/text_time_rise_suffix"
                 style="@style/SunsetTimeTextSuffixView"
                 android:layout_height="match_parent"
                 android:layout_gravity="bottom"

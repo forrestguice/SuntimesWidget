@@ -55,11 +55,13 @@ import java.text.DateFormat;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings.TimeFormatMode;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -86,8 +88,8 @@ public class SuntimesUtils
     private static String strMinutes = "m";
     private static String strSeconds = "s";
     private static String strTimeDeltaFormat = "%1$s" + strEmpty + "%2$s";
-    private static String strTimeShortFormat12 = "h:mm a";
-    private static String strTimeShortFormat12s = "h:mm:ss a";
+    private static String strTimeShortFormat12 = "h:mm\u00A0a";
+    private static String strTimeShortFormat12s = "h:mm:ss\u00A0a";
     private static String strTimeVeryShortFormat12 = "h:mm";
     private static String strTimeVeryShortFormat24 = "HH:mm";
     private static String strTimeVeryShortFormat12s = "h:mm:ss";
@@ -101,10 +103,10 @@ public class SuntimesUtils
     private static String strDateYearFormat = "yyyy";
     private static String strDateShortFormat = "MMMM d";
     private static String strDateLongFormat = "MMMM d, yyyy";
-    private static String strDateTimeShortFormat = "MMMM d, h:mm a";
-    private static String strDateTimeLongFormat = "MMMM d, yyyy, h:mm a";
-    private static String strDateTimeShortFormatSec = "MMMM d, h:mm:ss a";
-    private static String strDateTimeLongFormatSec = "MMMM d, yyyy, h:mm:ss a";
+    private static String strDateTimeShortFormat = "MMMM d, h:mm\u00A0a";
+    private static String strDateTimeLongFormat = "MMMM d, yyyy, h:mm\u00A0a";
+    private static String strDateTimeShortFormatSec = "MMMM d, h:mm:ss\u00A0a";
+    private static String strDateTimeLongFormatSec = "MMMM d, yyyy, h:mm:ss\u00A0a";
 
     public SuntimesUtils()
     {
@@ -408,6 +410,56 @@ public class SuntimesUtils
         return timeFormat.format(cal.getTime());
     }
 
+    /**
+     * @param context a context
+     * @param calendar a Calendar representing some date
+     * @param abbreviate true abbreviate name, false full name
+     * @return day name e.g. Monday (or Mon abbreviated)
+     */
+    public TimeDisplayText calendarDayDisplayString(Context context, Calendar calendar, boolean abbreviate)
+    {
+        if (calendar == null || context == null)
+        {
+            return new TimeDisplayText(strTimeNone);
+        }
+
+        Locale locale = getLocale();
+        SimpleDateFormat dayFormat = new SimpleDateFormat((abbreviate ? "E" : "EEEE"), locale);
+
+        dayFormat.setTimeZone(calendar.getTimeZone());
+        TimeDisplayText displayText = new TimeDisplayText(dayFormat.format(calendar.getTime()), "", "");
+        displayText.setRawValue(calendar.getTimeInMillis());
+        return displayText;
+    }
+
+    /**
+     * @param context a context
+     * @param calendar  a Calendar representing some date
+     * @return a time display string
+     */
+    public TimeDisplayText calendarDateDisplayString(Context context, Calendar calendar)
+    {
+        return calendarDateDisplayString(context, calendar, false);
+    }
+    public TimeDisplayText calendarDateDisplayString(Context context, Calendar calendar, boolean showYear)
+    {
+        if (calendar == null || context == null)
+        {
+            return new TimeDisplayText(strTimeNone);
+        }
+
+        Locale locale = getLocale();
+        SimpleDateFormat dateFormat;
+
+        if (showYear)
+            dateFormat = new SimpleDateFormat(strDateLongFormat, locale);
+        else dateFormat = new SimpleDateFormat(strDateShortFormat, locale);
+
+        dateFormat.setTimeZone(calendar.getTimeZone());
+        TimeDisplayText displayText = new TimeDisplayText(dateFormat.format(calendar.getTime()), "", "");
+        displayText.setRawValue(calendar.getTimeInMillis());
+        return displayText;
+    }
 
     /**
      * @param context a context
@@ -598,20 +650,25 @@ public class SuntimesUtils
      *
      * The following substitutions are supported:
      *   %% .. the % character
-     *   %m .. the time mode (short version; e.g. civil)
-     *   %M .. the time mode (long version; e.g. civil twilight)
+     *   %m .. the mode (short version; e.g. civil, Solstice, Full)
+     *   %M .. the mode (long version; e.g. civil twilight, Winter Solstice, Full Moon)
      *   %t .. the timezoneID (e.g. US/Arizona)
+     *   %d .. today's date (e.g. February 12)
+     *   %dd .. day name (short version; e.g. Mon)
+     *   %dD .. day name (long version; e.g. Monday)
+     *   %dY .. year (e.g. 2018)
      *   %loc .. the location (label/name)
      *   %lat .. the location (latitude)
      *   %lon .. the location (longitude)
      *   %s .. the data source
+     *   %i .. moon illumination (SuntimesMoonData only)
      *
      * @param titlePattern a pattern string (simple substitutions)
      * @return a display string suitable for display as a widget title
      */
-    public String displayStringForTitlePattern(String titlePattern, SuntimesRiseSetData data)
+    public String displayStringForTitlePattern(Context context, String titlePattern, SuntimesRiseSetData data)
     {
-        String displayString = displayStringForTitlePattern(titlePattern, (SuntimesData)data);
+        String displayString = displayStringForTitlePattern(context, titlePattern, (SuntimesData)data);
         String modePattern = "%M";
         String modePatternShort = "%m";
         WidgetSettings.TimeMode timeMode = data.timeMode();
@@ -619,10 +676,30 @@ public class SuntimesUtils
         displayString = displayString.replaceAll(modePattern, timeMode.getLongDisplayString());
         return displayString;
     }
-
-    public String displayStringForTitlePattern(String titlePattern, SuntimesEquinoxSolsticeData data)
+    
+    public String displayStringForTitlePattern(Context context, String titlePattern, SuntimesMoonData data)
     {
-        String displayString = displayStringForTitlePattern(titlePattern, (SuntimesData)data);
+        String displayString = displayStringForTitlePattern(context, titlePattern, (SuntimesData)data);
+        if (data != null && data.isCalculated())
+        {
+            String modePattern = "%M";
+            String modePatternShort = "%m";
+            String illumPattern = "%i";
+
+            displayString = displayString.replaceAll(modePatternShort, data.getMoonPhaseToday().getShortDisplayString());
+            displayString = displayString.replaceAll(modePattern, data.getMoonPhaseToday().getLongDisplayString());
+
+            if (displayString.contains(illumPattern)) {
+                NumberFormat percentage = NumberFormat.getPercentInstance();
+                displayString = displayString.replaceAll(illumPattern, percentage.format(data.getMoonIlluminationToday()));
+            }
+        }
+        return displayString;
+    }
+
+    public String displayStringForTitlePattern(Context context, String titlePattern, SuntimesEquinoxSolsticeData data)
+    {
+        String displayString = displayStringForTitlePattern(context, titlePattern, (SuntimesData)data);
         String modePattern = "%M";
         String modePatternShort = "%m";
         WidgetSettings.SolsticeEquinoxMode timeMode = data.timeMode();
@@ -631,13 +708,17 @@ public class SuntimesUtils
         return displayString;
     }
 
-    public String displayStringForTitlePattern(String titlePattern, SuntimesData data)
+    public String displayStringForTitlePattern(Context context, String titlePattern, SuntimesData data)
     {
         String locPattern = "%loc";
         String latPattern = "%lat";
         String lonPattern = "%lon";
         String timezoneIDPattern = "%t";
         String datasourcePattern = "%s";
+        String datePattern = "%d";
+        String dateYearPattern = "%dY";
+        String dateDayPattern = "%dD";
+        String dateDayPatternShort = "%dd";
         String percentPattern = "%%";
 
         WidgetSettings.Location location = data.location();
@@ -650,6 +731,15 @@ public class SuntimesUtils
         displayString = displayString.replaceAll(lonPattern, location.getLongitude());
         displayString = displayString.replaceAll(timezoneIDPattern, timezoneID);
         displayString = displayString.replaceAll(datasourcePattern, datasource);
+
+        if (displayString.contains(datePattern))
+        {
+            displayString = displayString.replaceAll(dateDayPatternShort, calendarDayDisplayString(context, data.calendar(), true).toString());
+            displayString = displayString.replaceAll(dateDayPattern, calendarDayDisplayString(context, data.calendar(), false).toString());
+            displayString = displayString.replaceAll(dateYearPattern, calendarDateYearDisplayString(context, data.calendar()).toString());
+            displayString = displayString.replaceAll(datePattern, calendarDateDisplayString(context, data.calendar(), false).toString());
+        }
+
         displayString = displayString.replaceAll(percentPattern, "%");
         return displayString;
     }
@@ -885,6 +975,12 @@ public class SuntimesUtils
         p.setColorFilter(new LightingColorFilter(color, 0));
         c.drawBitmap(b, 0, 0, p);
         return tinted;
+    }
+
+    public static Bitmap drawableToBitmap(Context context, int resourceID, int w, int h, boolean pxValues)
+    {
+        Drawable drawable = ResourcesCompat.getDrawable(context.getResources(), resourceID, null);
+        return drawableToBitmap(context, drawable, w, h, pxValues);
     }
 
     /**

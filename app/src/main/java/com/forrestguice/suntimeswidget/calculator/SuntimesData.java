@@ -225,7 +225,21 @@ public class SuntimesData
         }
     }
 
-
+    /**
+     * @return the start of today (@see calendar()), at 0h 0m 0s
+     */
+    public Calendar midnight()
+    {
+        Calendar midnight = null;
+        if (todaysCalendar != null)
+        {
+            midnight = (Calendar) todaysCalendar.clone();
+            midnight.set(Calendar.HOUR_OF_DAY, 0);
+            midnight.set(Calendar.MINUTE, 0);
+            midnight.set(Calendar.SECOND, 0);
+        }
+        return midnight;
+    }
 
 }
 

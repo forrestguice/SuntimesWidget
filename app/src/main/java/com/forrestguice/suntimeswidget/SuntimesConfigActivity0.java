@@ -237,7 +237,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         return adapter;
     }
 
-    protected ArrayAdapter<WidgetSettings.WidgetModeSun1x1> createAdapter_widgetMode1x1()
+    protected ArrayAdapter<WidgetSettings.WidgetModeSun1x1> createAdapter_widgetModeSun1x1()
     {
         ArrayAdapter<WidgetSettings.WidgetModeSun1x1> adapter = new ArrayAdapter<WidgetSettings.WidgetModeSun1x1>(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSun1x1.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -466,10 +466,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // widget: 1x1 widget mode
         //
         spinner_1x1mode = (Spinner) findViewById(R.id.appwidget_appearance_1x1mode);
-        if (spinner_1x1mode != null)
-        {
-            spinner_1x1mode.setAdapter(createAdapter_widgetMode1x1());
-        }
+        initWidgetMode1x1(context);
 
         //
         // widget: title text
@@ -578,6 +575,37 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     /**
      * @param context a context used to access resources
      */
+    protected void initWidgetMode1x1(Context context)
+    {
+        if (spinner_1x1mode != null)
+        {
+            spinner_1x1mode.setAdapter(createAdapter_widgetModeSun1x1());
+        }
+    }
+
+    /**
+     * @param context a context used to access shared prefs
+     */
+    protected void saveWidgetMode1x1(Context context)
+    {
+        final WidgetSettings.WidgetModeSun1x1[] modes = WidgetSettings.WidgetModeSun1x1.values();
+        WidgetSettings.WidgetModeSun1x1 mode = modes[spinner_1x1mode.getSelectedItemPosition()];
+        WidgetSettings.saveSun1x1ModePref(context, appWidgetId, mode);
+        //Log.d("DEBUG", "Saved mode: " + mode.name());
+    }
+
+    /**
+     * @param context a context used to access shared prefs
+     */
+    protected void loadWidgetMode1x1(Context context)
+    {
+        WidgetSettings.WidgetModeSun1x1 mode1x1 = WidgetSettings.loadSun1x1ModePref(context, appWidgetId);
+        spinner_1x1mode.setSelection(mode1x1.ordinal());
+    }
+
+    /**
+     * @param context a context used to access resources
+     */
     protected void initTimeMode(Context context)
     {
         if (spinner_timeMode != null)
@@ -610,7 +638,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 public void onClick(View v)
                 {
                     HelpDialog helpDialog = new HelpDialog();
-                    helpDialog.setContent(getString(R.string.help_general_timeMode));
+                    String help0 = getString(R.string.help_general_timeMode);
+                    String help1 = getString(R.string.help_general_bluehour);
+                    String help2 = getString(R.string.help_general_goldhour);
+                    helpDialog.setContent(getString(R.string.help_general3, help0, help1, help2));
                     helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
                 }
             });
@@ -774,10 +805,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected void saveAppearanceSettings(Context context)
     {
         // save: widgetmode_1x1
-        final WidgetSettings.WidgetModeSun1x1[] modes = WidgetSettings.WidgetModeSun1x1.values();
-        WidgetSettings.WidgetModeSun1x1 mode = modes[spinner_1x1mode.getSelectedItemPosition()];
-        WidgetSettings.saveSun1x1ModePref(context, appWidgetId, mode);
-        //Log.d("DEBUG", "Saved mode: " + mode.name());
+        saveWidgetMode1x1(context);
 
         // save: theme
         final ThemeDescriptor[] themes = WidgetThemes.values();
@@ -806,8 +834,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected void loadAppearanceSettings(Context context)
     {
         // load: widgetmode_1x1
-        WidgetSettings.WidgetModeSun1x1 mode1x1 = WidgetSettings.loadSun1x1ModePref(context, appWidgetId);
-        spinner_1x1mode.setSelection(mode1x1.ordinal());
+        loadWidgetMode1x1(context);
 
         // load: theme
         SuntimesTheme theme = WidgetSettings.loadThemePref(context, appWidgetId);
@@ -1102,6 +1129,15 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (dataSourceLayout != null)
         {
             dataSourceLayout.setVisibility((showDataSourceUI ? View.VISIBLE : View.GONE));
+        }
+    }
+    
+    protected void showTimeMode(boolean showTimeModeUI)
+    {
+        View timeModeLayout = findViewById(R.id.appwidget_general_timeMode_layout);
+        if (timeModeLayout != null)
+        {
+            timeModeLayout.setVisibility((showTimeModeUI ? View.VISIBLE : View.GONE));
         }
     }
 

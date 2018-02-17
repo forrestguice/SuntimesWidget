@@ -61,8 +61,8 @@ public class SuntimesLayout_1x1_1 extends SuntimesLayout
 
         // update sunrise time
         TimeDisplayText sunriseString = utils.calendarTimeShortDisplayString(context, data.sunriseCalendarToday(), showSeconds);
-        views.setTextViewText(R.id.text_time_sunrise, sunriseString.getValue());
-        views.setTextViewText(R.id.text_time_sunrise_suffix, sunriseString.getSuffix());
+        views.setTextViewText(R.id.text_time_rise, sunriseString.getValue());
+        views.setTextViewText(R.id.text_time_rise_suffix, sunriseString.getSuffix());
     }
 
     @Override
@@ -72,12 +72,12 @@ public class SuntimesLayout_1x1_1 extends SuntimesLayout
 
         int sunriseColor = theme.getSunriseTextColor();
         int suffixColor = theme.getTimeSuffixColor();
-        views.setTextColor(R.id.text_time_sunrise_suffix, suffixColor);
-        views.setTextColor(R.id.text_time_sunrise, sunriseColor);
+        views.setTextColor(R.id.text_time_rise_suffix, suffixColor);
+        views.setTextColor(R.id.text_time_rise, sunriseColor);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
-            views.setTextViewTextSize(R.id.text_time_sunrise_suffix, TypedValue.COMPLEX_UNIT_SP, theme.getTimeSuffixSizeSp());
-            views.setTextViewTextSize(R.id.text_time_sunrise, TypedValue.COMPLEX_UNIT_SP, theme.getTimeSizeSp());
+            views.setTextViewTextSize(R.id.text_time_rise_suffix, TypedValue.COMPLEX_UNIT_SP, theme.getTimeSuffixSizeSp());
+            views.setTextViewTextSize(R.id.text_time_rise, TypedValue.COMPLEX_UNIT_SP, theme.getTimeSizeSp());
         }
 
         Bitmap sunriseIcon = SuntimesUtils.insetDrawableToBitmap(context, R.drawable.ic_sunrise_large0, theme.getSunriseIconColor(), theme.getSunriseIconStrokeColor(), theme.getSunriseIconStrokePixels(context));
