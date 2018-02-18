@@ -48,6 +48,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.forrestguice.suntimeswidget.AboutDialog;
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -64,6 +65,8 @@ import static com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity.E
 
 public class WidgetThemeListActivity extends AppCompatActivity
 {
+    public static final String DIALOGTAG_ABOUT = "about";
+
     public static final int PICK_THEME_REQUEST = 1;
     public static final String ADAPTER_MODIFIED = "isModified";
 
@@ -123,9 +126,10 @@ public class WidgetThemeListActivity extends AppCompatActivity
     protected void initViews( Context context )
     {
         initActionBar(context);
+        themeActions = new WidgetThemeActionCompat(context);
+
         gridView = (GridView)findViewById(R.id.themegrid);
         initThemeAdapter(context);
-        themeActions = new WidgetThemeActionCompat(context);
     }
 
     protected void initActionBar( Context context )
@@ -359,6 +363,10 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
             case R.id.exportThemes:
                 exportThemes(this);
+                return true;
+
+            case R.id.action_about:
+                showAbout();
                 return true;
 
             case android.R.id.home:
