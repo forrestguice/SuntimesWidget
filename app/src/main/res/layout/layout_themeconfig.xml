@@ -96,7 +96,7 @@
             tools:layout_editor_absoluteX="65dp"/>
 
         <!-- preview area -->
-        <FrameLayout
+        <ViewFlipper
             android:id="@+id/preview_area"
             android:layout_width="170dp" android:layout_height="wrap_content"
             android:layout_margin="8dp"
@@ -108,7 +108,9 @@
 
             <include layout="@layout/layout_widget_2x1_0" />
 
-        </FrameLayout>
+            <include layout="@layout/layout_widget_moon_2x1_0" />
+
+        </ViewFlipper>
 
     </android.support.constraint.ConstraintLayout>
 

@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget.themes;
 
 import android.app.Activity;
-import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -48,9 +47,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.PaddingChooser;
@@ -58,6 +59,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 
 import java.security.InvalidParameterException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import static com.forrestguice.suntimeswidget.themes.SuntimesTheme.THEME_NAME;
@@ -98,10 +100,11 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
     private Spinner spinBackground;
 
-    private View previewBackground;
+    private ViewFlipper preview;
+    /**private View previewBackground;
     private TextView previewTitle, previewNoon, previewRise, previewSet, previewNoonSuffix, previewRiseSuffix, previewSetSuffix;
     private TextView previewTimeDeltaPrefix, previewTimeDelta, previewTimeDeltaSuffix;
-    private ImageView previewRiseIcon, previewNoonIcon, previewSetIcon;
+    private ImageView previewRiseIcon, previewNoonIcon, previewSetIcon;*/
 
     private SuntimesUtils utils = new SuntimesUtils();
 
@@ -132,9 +135,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     }
 
     private SuntimesRiseSetData data;
+    private SuntimesMoonData data2;
     private void initData(Context context)
     {
-        data = new SuntimesRiseSetData(context, AppWidgetManager.INVALID_APPWIDGET_ID);   // use app configuration
+        data = new SuntimesRiseSetData(context, 0);   // use app configuration
         data.setCompareMode(WidgetSettings.CompareMode.TOMORROW);
         data.setTimeMode(WidgetSettings.TimeMode.OFFICIAL);
         data.calculate();
@@ -143,6 +147,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         noonData.setTimeMode(WidgetSettings.TimeMode.NOON);
         noonData.calculate();
         data.linkData(noonData);
+
+        data2 = new SuntimesMoonData(context, 0);
+        data2.calculate();
     }
 
     private void initLocale()
@@ -474,128 +481,219 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
     protected void initPreview(Context context)
     {
-        previewBackground = findViewById(R.id.widgetframe_inner);
-        previewTitle = (TextView)findViewById(R.id.text_title);
-
-        previewNoon = (TextView)findViewById(R.id.text_time_noon);
-        previewNoonSuffix = (TextView)findViewById(R.id.text_time_noon_suffix);
-        previewNoonIcon = (ImageView)findViewById(R.id.icon_time_noon);
-
-        previewRise = (TextView)findViewById(R.id.text_time_rise);
-        previewRiseSuffix = (TextView)findViewById(R.id.text_time_rise_suffix);
-        previewRiseIcon = (ImageView)findViewById(R.id.icon_time_sunrise);
-
-        previewSet = (TextView)findViewById(R.id.text_time_set);
-        previewSetSuffix = (TextView)findViewById(R.id.text_time_set_suffix);
-        previewSetIcon = (ImageView)findViewById(R.id.icon_time_sunset);
-
-        previewTimeDelta = (TextView)findViewById(R.id.text_delta_day_value);
-        previewTimeDeltaPrefix = (TextView)findViewById(R.id.text_delta_day_prefix);
-        previewTimeDeltaSuffix = (TextView)findViewById(R.id.text_delta_day_suffix);
+        preview = (ViewFlipper)findViewById(R.id.preview_area);
+        preview.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                preview.showNext();
+            }
+        });
     }
 
     protected void updatePreview()
     {
-        if (previewBackground != null)
+        for (int i=0; i<preview.getChildCount(); i++)
         {
-            ThemeBackground background = (ThemeBackground)spinBackground.getSelectedItem();
-            if (background != null)
+            View previewLayout = preview.getChildAt(i);
+            if (previewLayout == null)
+                continue;
+
+            // Background
+            View previewBackground = previewLayout.findViewById(R.id.widgetframe_inner);
+            if (previewBackground != null)
             {
-                int[] padding = choosePadding.getPaddingPixels(this);
-                previewBackground.setBackgroundResource(background.getResID());
-                previewBackground.setPadding(padding[0], padding[1], padding[2], padding[3]);
+                ThemeBackground background = (ThemeBackground)spinBackground.getSelectedItem();
+                if (background != null)
+                {
+                    int[] padding = choosePadding.getPaddingPixels(this);
+                    previewBackground.setBackgroundResource(background.getResID());
+                    previewBackground.setPadding(padding[0], padding[1], padding[2], padding[3]);
+                }
             }
-        }
 
-        if (previewTitle != null)
-        {
-            String displayText = editDisplay.getText().toString().trim();
-            String titleText = (displayText.isEmpty() ? chooseName.getThemeName() : displayText);
-            previewTitle.setText(titleText);
-            previewTitle.setVisibility(View.VISIBLE);
-            previewTitle.setTextColor(chooseColorTitle.getColor());
-            updateSizeFromChooser(previewTitle, chooseTitleSize);
-        }
+            // Title
+            TextView previewTitle = (TextView)previewLayout.findViewById(R.id.text_title);
+            if (previewTitle != null)
+            {
+                String displayText = editDisplay.getText().toString().trim();
+                String titleText = (displayText.isEmpty() ? chooseName.getThemeName() : displayText);
+                previewTitle.setText(titleText);
+                previewTitle.setVisibility(View.VISIBLE);
+                previewTitle.setTextColor(chooseColorTitle.getColor());
+                updateSizeFromChooser(previewTitle, chooseTitleSize);
+            }
 
-        SuntimesRiseSetData noonData = data.getLinked();
-        SuntimesUtils.TimeDisplayText noonText = ((noonData != null)
-                ? utils.calendarTimeShortDisplayString(this, noonData.sunriseCalendarToday())
-                : new SuntimesUtils.TimeDisplayText("12:00"));
-        if (previewNoon != null)
-        {
-            previewNoon.setText(noonText.getValue());
-            previewNoon.setTextColor(chooseColorNoon.getColor());
-            updateSizeFromChooser(previewNoon, chooseTimeSize);
-        }
-        if (previewNoonSuffix != null)
-        {
-            previewNoonSuffix.setText(noonText.getSuffix());
-            previewNoonSuffix.setTextColor(chooseColorSuffix.getColor());
-            updateSizeFromChooser(previewNoonSuffix, chooseSuffixSize);
-        }
+            // Noon
+            TextView previewNoon = (TextView)previewLayout.findViewById(R.id.text_time_noon);
+            TextView previewNoonSuffix = (TextView)previewLayout.findViewById(R.id.text_time_noon_suffix);
 
-        SuntimesUtils.TimeDisplayText riseText = utils.calendarTimeShortDisplayString(this, data.sunriseCalendarToday());
-        if (previewRise != null)
-        {
-            previewRise.setText(riseText.getValue());
-            previewRise.setTextColor(chooseColorRise.getColor());
-            updateSizeFromChooser(previewRise, chooseTimeSize);
-        }
-        if (previewRiseSuffix != null)
-        {
-            previewRiseSuffix.setText(riseText.getSuffix());
-            previewRiseSuffix.setTextColor(chooseColorSuffix.getColor());
-            updateSizeFromChooser(previewRiseSuffix, chooseSuffixSize);
-        }
+            SuntimesRiseSetData noonData = data.getLinked();
+            SuntimesUtils.TimeDisplayText noonText = ((noonData != null)
+                    ? utils.calendarTimeShortDisplayString(this, noonData.sunriseCalendarToday())
+                    : new SuntimesUtils.TimeDisplayText("12:00"));
+            if (previewNoon != null)
+            {
+                previewNoon.setText(noonText.getValue());
+                previewNoon.setTextColor(chooseColorNoon.getColor());
+                updateSizeFromChooser(previewNoon, chooseTimeSize);
+            }
+            if (previewNoonSuffix != null)
+            {
+                previewNoonSuffix.setText(noonText.getSuffix());
+                previewNoonSuffix.setTextColor(chooseColorSuffix.getColor());
+                updateSizeFromChooser(previewNoonSuffix, chooseSuffixSize);
+            }
 
-        SuntimesUtils.TimeDisplayText setText = utils.calendarTimeShortDisplayString(this, data.sunsetCalendarToday());
-        if (previewSet != null)
-        {
-            previewSet.setText(setText.getValue());
-            previewSet.setTextColor(chooseColorSet.getColor());
-            updateSizeFromChooser(previewSet, chooseTimeSize);
-        }
-        if (previewSetSuffix != null)
-        {
-            previewSetSuffix.setText(setText.getSuffix());
-            previewSetSuffix.setTextColor(chooseColorSuffix.getColor());
-            updateSizeFromChooser(previewSetSuffix, chooseSuffixSize);
-        }
+            // Sunrise
+            TextView previewRise = (TextView)previewLayout.findViewById(R.id.text_time_rise);
+            TextView previewRiseSuffix = (TextView)previewLayout.findViewById(R.id.text_time_rise_suffix);
 
-        if (previewTimeDelta != null)
-        {
-            previewTimeDelta.setText(utils.timeDeltaLongDisplayString(data.dayLengthToday(), data.dayLengthOther()).getValue());
-            previewTimeDelta.setTextColor(chooseColorTime.getColor());
-            updateSizeFromChooser(previewTimeDelta, chooseTextSize);
-        }
-        if (previewTimeDeltaPrefix != null)
-        {
-            previewTimeDeltaPrefix.setText(getString(R.string.delta_day_tomorrow));
-            previewTimeDeltaPrefix.setTextColor(chooseColorText.getColor());
-            updateSizeFromChooser(previewTimeDeltaPrefix, chooseTextSize);
-        }
-        if (previewTimeDeltaSuffix != null)
-        {
-            previewTimeDeltaSuffix.setText(getString(R.string.delta_day_shorter));
-            previewTimeDeltaSuffix.setTextColor(chooseColorText.getColor());
-            updateSizeFromChooser(previewTimeDeltaSuffix, chooseTextSize);
-        }
+            SuntimesUtils.TimeDisplayText riseText = utils.calendarTimeShortDisplayString(this, data.sunriseCalendarToday());
+            if (previewRise != null)
+            {
+                previewRise.setText(riseText.getValue());
+                previewRise.setTextColor(chooseColorRise.getColor());
+                updateSizeFromChooser(previewRise, chooseTimeSize);
+            }
+            if (previewRiseSuffix != null)
+            {
+                previewRiseSuffix.setText(riseText.getSuffix());
+                previewRiseSuffix.setTextColor(chooseColorSuffix.getColor());
+                updateSizeFromChooser(previewRiseSuffix, chooseSuffixSize);
+            }
 
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
-        int strokePixels = (int)((metrics.density * chooseIconStroke.getValue()) + 0.5f);
-        int noonStrokePixels = (int)((metrics.density * chooseNoonIconStroke.getValue()) + 0.5f);
+            // Sunset
+            TextView previewSet = (TextView)previewLayout.findViewById(R.id.text_time_set);
+            TextView previewSetSuffix = (TextView)previewLayout.findViewById(R.id.text_time_set_suffix);
 
-        if (previewRiseIcon != null)
-        {
-            previewRiseIcon.setImageBitmap(SuntimesUtils.insetDrawableToBitmap(this, R.drawable.ic_sunrise0, chooseColorRiseIconFill.getColor(), chooseColorRiseIconStroke.getColor(), strokePixels));
-        }
-        if (previewSetIcon != null)
-        {
-            previewSetIcon.setImageBitmap(SuntimesUtils.insetDrawableToBitmap(this, R.drawable.ic_sunset0, chooseColorSetIconFill.getColor(), chooseColorSetIconStroke.getColor(), strokePixels));
-        }
-        if (previewNoonIcon != null)
-        {
-            previewNoonIcon.setImageBitmap(SuntimesUtils.gradientDrawableToBitmap(this, R.drawable.ic_noon_large0, chooseColorNoonIconFill.getColor(), chooseColorNoonIconStroke.getColor(), noonStrokePixels));
+            SuntimesUtils.TimeDisplayText setText = utils.calendarTimeShortDisplayString(this, data.sunsetCalendarToday());
+            if (previewSet != null)
+            {
+                previewSet.setText(setText.getValue());
+                previewSet.setTextColor(chooseColorSet.getColor());
+                updateSizeFromChooser(previewSet, chooseTimeSize);
+            }
+            if (previewSetSuffix != null)
+            {
+                previewSetSuffix.setText(setText.getSuffix());
+                previewSetSuffix.setTextColor(chooseColorSuffix.getColor());
+                updateSizeFromChooser(previewSetSuffix, chooseSuffixSize);
+            }
+
+            // Moonrise
+            TextView previewMoonrise = (TextView)previewLayout.findViewById(R.id.text_time_moonrise);
+            TextView previewMoonriseSuffix = (TextView)previewLayout.findViewById(R.id.text_time_moonrise_suffix);
+
+            SuntimesUtils.TimeDisplayText moonriseText = utils.calendarTimeShortDisplayString(this, data2.moonriseCalendarToday());
+            if (previewMoonrise != null)
+            {
+                previewMoonrise.setText(moonriseText.getValue());
+                previewMoonrise.setTextColor(chooseColorMoonrise.getColor());
+                updateSizeFromChooser(previewMoonrise, chooseTimeSize);
+            }
+            if (previewMoonriseSuffix != null)
+            {
+                previewMoonriseSuffix.setText(riseText.getSuffix());
+                previewMoonriseSuffix.setTextColor(chooseColorSuffix.getColor());
+                updateSizeFromChooser(previewMoonriseSuffix, chooseSuffixSize);
+            }
+
+            // Moonset
+            TextView previewMoonset = (TextView)previewLayout.findViewById(R.id.text_time_moonset);
+            TextView previewMoonsetSuffix = (TextView)previewLayout.findViewById(R.id.text_time_moonset_suffix);
+
+            SuntimesUtils.TimeDisplayText moonsetText = utils.calendarTimeShortDisplayString(this, data2.moonsetCalendarToday());
+            if (previewMoonset != null)
+            {
+                previewMoonset.setText(moonsetText.getValue());
+                previewMoonset.setTextColor(chooseColorMoonset.getColor());
+                updateSizeFromChooser(previewMoonset, chooseTimeSize);
+            }
+            if (previewMoonsetSuffix != null)
+            {
+                previewMoonsetSuffix.setText(moonriseText.getSuffix());
+                previewMoonsetSuffix.setTextColor(chooseColorSuffix.getColor());
+                updateSizeFromChooser(previewMoonsetSuffix, chooseSuffixSize);
+            }
+
+            // Moon Phase / Illumination
+            TextView previewMoonPhase = (TextView)previewLayout.findViewById(R.id.text_info_moonphase);
+            if (previewMoonPhase != null)
+            {
+                previewMoonPhase.setText(data2.getMoonPhaseToday().getLongDisplayString());
+                previewMoonPhase.setTextColor(chooseColorText.getColor());
+                updateSizeFromChooser(previewMoonPhase, chooseTextSize);
+            }
+
+            TextView previewMoonIllum = (TextView)previewLayout.findViewById(R.id.text_info_moonillum);
+            if (previewMoonIllum != null)
+            {
+                NumberFormat percentage = NumberFormat.getPercentInstance();
+                previewMoonIllum.setText(percentage.format(data2.getMoonIlluminationToday()));
+                previewMoonIllum.setTextColor(chooseColorTime.getColor());
+                updateSizeFromChooser(previewMoonPhase, chooseTextSize);
+            }
+
+            // Time Delta
+            TextView previewTimeDelta = (TextView)previewLayout.findViewById(R.id.text_delta_day_value);
+            TextView previewTimeDeltaPrefix = (TextView)previewLayout.findViewById(R.id.text_delta_day_prefix);
+            TextView previewTimeDeltaSuffix = (TextView)previewLayout.findViewById(R.id.text_delta_day_suffix);
+
+            if (previewTimeDelta != null)
+            {
+                previewTimeDelta.setText(utils.timeDeltaLongDisplayString(data.dayLengthToday(), data.dayLengthOther()).getValue());
+                previewTimeDelta.setTextColor(chooseColorTime.getColor());
+                updateSizeFromChooser(previewTimeDelta, chooseTextSize);
+            }
+            if (previewTimeDeltaPrefix != null)
+            {
+                previewTimeDeltaPrefix.setText(getString(R.string.delta_day_tomorrow));
+                previewTimeDeltaPrefix.setTextColor(chooseColorText.getColor());
+                updateSizeFromChooser(previewTimeDeltaPrefix, chooseTextSize);
+            }
+            if (previewTimeDeltaSuffix != null)
+            {
+                previewTimeDeltaSuffix.setText(getString(R.string.delta_day_shorter));
+                previewTimeDeltaSuffix.setTextColor(chooseColorText.getColor());
+                updateSizeFromChooser(previewTimeDeltaSuffix, chooseTextSize);
+            }
+
+            // Icons
+            DisplayMetrics metrics = getResources().getDisplayMetrics();
+            int strokePixels = (int)((metrics.density * chooseIconStroke.getValue()) + 0.5f);
+            int noonStrokePixels = (int)((metrics.density * chooseNoonIconStroke.getValue()) + 0.5f);
+
+            ImageView previewRiseIcon = (ImageView)previewLayout.findViewById(R.id.icon_time_sunrise);
+            if (previewRiseIcon != null)
+            {
+                previewRiseIcon.setImageBitmap(SuntimesUtils.insetDrawableToBitmap(this, R.drawable.ic_sunrise0, chooseColorRiseIconFill.getColor(), chooseColorRiseIconStroke.getColor(), strokePixels));
+            }
+
+            ImageView previewSetIcon = (ImageView)previewLayout.findViewById(R.id.icon_time_sunset);
+            if (previewSetIcon != null)
+            {
+                previewSetIcon.setImageBitmap(SuntimesUtils.insetDrawableToBitmap(this, R.drawable.ic_sunset0, chooseColorSetIconFill.getColor(), chooseColorSetIconStroke.getColor(), strokePixels));
+            }
+
+            ImageView previewNoonIcon = (ImageView)previewLayout.findViewById(R.id.icon_time_noon);
+            if (previewNoonIcon != null)
+            {
+                previewNoonIcon.setImageBitmap(SuntimesUtils.gradientDrawableToBitmap(this, R.drawable.ic_noon_large0, chooseColorNoonIconFill.getColor(), chooseColorNoonIconStroke.getColor(), noonStrokePixels));
+            }
+
+            ImageView previewMoonriseIcon = (ImageView)previewLayout.findViewById(R.id.icon_time_moonrise);
+            if (previewMoonriseIcon != null)
+            {
+                previewMoonriseIcon.setImageBitmap(SuntimesUtils.insetDrawableToBitmap(this, R.drawable.ic_moon_rise, chooseColorMoonrise.getColor(), chooseColorMoonrise.getColor(), 0));
+            }
+
+            ImageView previewMoonsetIcon = (ImageView)previewLayout.findViewById(R.id.icon_time_moonset);
+            if (previewMoonsetIcon != null)
+            {
+                previewMoonsetIcon.setImageBitmap(SuntimesUtils.insetDrawableToBitmap(this, R.drawable.ic_moon_set, chooseColorMoonset.getColor(), chooseColorMoonset.getColor(), 0));
+            }
         }
     }
 
