@@ -53,6 +53,12 @@ public class LightTheme extends SuntimesTheme
     public static final int THEMEDEF_MOONRISECOLOR_ID = R.color.moonIcon_color_rising_light;
     public static final int THEMEDEF_MOONSETCOLOR_ID = R.color.moonIcon_color_setting_light;
 
+    public static final int THEMEDEF_MOONWANINGCOLOR_ID = R.color.moonIcon_color_waning;
+    public static final int THEMEDEF_MOONNEWCOLOR_ID = R.color.moonIcon_color_new_light;
+    public static final int THEMEDEF_MOONWAXINGCOLOR_ID = R.color.moonIcon_color_waxing;
+    public static final int THEMEDEF_MOONFULLCOLOR_ID = R.color.moonIcon_color_full_light;
+
+
     public static final int THEMEDEF_SPRINGCOLOR_ID = R.color.springColor_light;
     public static final int THEMEDEF_SUMMERCOLOR_ID = R.color.summerColor_light;
     public static final int THEMEDEF_FALLCOLOR_ID = R.color.fallColor_light;
@@ -98,6 +104,10 @@ public class LightTheme extends SuntimesTheme
 
         this.themeMoonriseTextColor = ContextCompat.getColor(context, THEMEDEF_MOONRISECOLOR_ID);
         this.themeMoonsetTextColor = ContextCompat.getColor(context, THEMEDEF_MOONSETCOLOR_ID);
+        this.themeMoonWaningColor = ContextCompat.getColor(context, THEMEDEF_MOONWANINGCOLOR_ID);
+        this.themeMoonNewColor = ContextCompat.getColor(context, THEMEDEF_MOONNEWCOLOR_ID);
+        this.themeMoonWaxingColor = ContextCompat.getColor(context, THEMEDEF_MOONWAXINGCOLOR_ID);
+        this.themeMoonFullColor = ContextCompat.getColor(context, THEMEDEF_MOONFULLCOLOR_ID);
 
         this.themeSpringColor = ContextCompat.getColor(context, THEMEDEF_SPRINGCOLOR_ID);
         this.themeSummerColor = ContextCompat.getColor(context, THEMEDEF_SUMMERCOLOR_ID);

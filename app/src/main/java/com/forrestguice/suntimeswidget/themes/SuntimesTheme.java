@@ -49,8 +49,13 @@ public class SuntimesTheme
     public static final String THEME_SUNRISECOLOR = "sunrisecolor";
     public static final String THEME_NOONCOLOR = "nooncolor";
     public static final String THEME_SUNSETCOLOR = "sunsetcolor";
+
     public static final String THEME_MOONRISECOLOR = "moonrisecolor";
     public static final String THEME_MOONSETCOLOR = "moonsetcolor";
+    public static final String THEME_MOONWANINGCOLOR = "moonwaningcolor";
+    public static final String THEME_MOONNEWCOLOR = "moonnewcolor";
+    public static final String THEME_MOONWAXINGCOLOR = "moonwaxingcolor";
+    public static final String THEME_MOONFULLCOLOR = "moonfullcolor";
 
     public static final String THEME_NOONICON_FILL_COLOR = "noonicon_fillcolor";
     public static final String THEME_NOONICON_STROKE_COLOR = "noonicon_strokecolor";
@@ -139,6 +144,10 @@ public class SuntimesTheme
 
     protected int themeMoonriseTextColor;
     protected int themeMoonsetTextColor;
+    protected int themeMoonWaningColor;
+    protected int themeMoonNewColor;
+    protected int themeMoonWaxingColor;
+    protected int themeMoonFullColor;
 
     protected float themeTitleSize = THEME_TITLESIZE_DEF;
     protected float themeTextSize = THEME_TEXTSIZE_DEF;
@@ -184,6 +193,10 @@ public class SuntimesTheme
 
         this.themeMoonriseTextColor = otherTheme.themeMoonriseTextColor;
         this.themeMoonsetTextColor = otherTheme.themeMoonsetTextColor;
+        this.themeMoonWaningColor = otherTheme.themeMoonWaningColor;
+        this.themeMoonNewColor = otherTheme.themeMoonNewColor;
+        this.themeMoonWaxingColor = otherTheme.themeMoonWaxingColor;
+        this.themeMoonFullColor = otherTheme.themeMoonFullColor;
 
         this.themeSpringColor = otherTheme.themeSpringColor;
         this.themeSummerColor = otherTheme.themeSummerColor;
@@ -252,6 +265,10 @@ public class SuntimesTheme
 
         this.themeMoonriseTextColor = themes.getInt( theme + THEME_MOONRISECOLOR, defaultTheme.themeMoonriseTextColor );
         this.themeMoonsetTextColor = themes.getInt( theme + THEME_MOONSETCOLOR, defaultTheme.themeMoonsetTextColor );
+        this.themeMoonWaningColor = themes.getInt( theme + THEME_MOONWANINGCOLOR, defaultTheme.themeMoonWaningColor );
+        this.themeMoonNewColor = themes.getInt( theme + THEME_MOONNEWCOLOR, defaultTheme.themeMoonNewColor );
+        this.themeMoonWaxingColor = themes.getInt( theme + THEME_MOONWAXINGCOLOR, defaultTheme.themeMoonWaxingColor );
+        this.themeMoonFullColor = themes.getInt( theme + THEME_MOONFULLCOLOR, defaultTheme.themeMoonFullColor );
 
         this.themeSpringColor = themes.getInt( theme + THEME_SPRINGCOLOR, defaultTheme.themeSpringColor );
         this.themeSummerColor = themes.getInt( theme + THEME_SUMMERCOLOR, defaultTheme.themeSummerColor );
@@ -309,6 +326,10 @@ public class SuntimesTheme
 
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_MOONRISECOLOR, this.themeMoonriseTextColor);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_MOONSETCOLOR, this.themeMoonsetTextColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_MOONWANINGCOLOR, this.themeMoonWaningColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_MOONNEWCOLOR, this.themeMoonNewColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_MOONWAXINGCOLOR, this.themeMoonWaxingColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_MOONFULLCOLOR, this.themeMoonFullColor);
 
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_SPRINGCOLOR, this.themeSpringColor);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_SUMMERCOLOR, this.themeSummerColor);
@@ -375,6 +396,10 @@ public class SuntimesTheme
 
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_MOONRISECOLOR);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_MOONSETCOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_MOONWANINGCOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_MOONNEWCOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_MOONWAXINGCOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_MOONFULLCOLOR);
 
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_SPRINGCOLOR);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_SUMMERCOLOR);
@@ -498,6 +523,26 @@ public class SuntimesTheme
             themeNoonIconStrokePixels = (int)((metrics.density * getNoonIconStrokeWidth()) + 0.5f);
         //}
         return themeNoonIconStrokePixels;
+    }
+
+    public int getMoonWaningColor()
+    {
+        return themeMoonWaningColor;
+    }
+
+    public int getMoonNewColor()
+    {
+        return themeMoonNewColor;
+    }
+
+    public int getMoonWaxingColor()
+    {
+        return themeMoonWaxingColor;
+    }
+
+    public int getMoonFullColor()
+    {
+        return themeMoonFullColor;
     }
 
     public int getMoonriseTextColor()

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -97,16 +97,13 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private ColorChooser chooseColorTitle, chooseColorText, chooseColorTime, chooseColorSuffix;
     private ColorChooser chooseColorSpring, chooseColorSummer, chooseColorFall, chooseColorWinter;
     private ColorChooser chooseColorMoonrise, chooseColorMoonset;
+    private ColorChooser chooseColorMoonWaning, chooseColorMoonNew, chooseColorMoonWaxing, chooseColorMoonFull;
     private ArrayList<ColorChooser> colorChoosers;
     private CheckBox checkUseFill, checkUseStroke, checkUseNoon;
 
     private Spinner spinBackground;
 
     private ViewFlipper preview;
-    /**private View previewBackground;
-    private TextView previewTitle, previewNoon, previewRise, previewSet, previewNoonSuffix, previewRiseSuffix, previewSetSuffix;
-    private TextView previewTimeDeltaPrefix, previewTimeDelta, previewTimeDeltaSuffix;
-    private ImageView previewRiseIcon, previewNoonIcon, previewSetIcon;*/
 
     private SuntimesUtils utils = new SuntimesUtils();
 
@@ -257,6 +254,11 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         // moon colors
         chooseColorMoonrise = createColorChooser(this, R.id.editLabel_moonriseColor, R.id.edit_moonriseColor, R.id.editButton_moonriseColor, SuntimesTheme.THEME_MOONRISECOLOR);
         chooseColorMoonset = createColorChooser(this, R.id.editLabel_moonsetColor, R.id.edit_moonsetColor, R.id.editButton_moonsetColor, SuntimesTheme.THEME_MOONSETCOLOR);
+
+        chooseColorMoonWaning = createColorChooser(this, SuntimesTheme.THEME_MOONWANINGCOLOR);  // TODO
+        chooseColorMoonNew = createColorChooser(this, SuntimesTheme.THEME_MOONNEWCOLOR);  // TODO
+        chooseColorMoonWaxing = createColorChooser(this, SuntimesTheme.THEME_MOONWAXINGCOLOR);  // TODO
+        chooseColorMoonFull = createColorChooser(this, SuntimesTheme.THEME_MOONFULLCOLOR);  // TODO
 
         // other colors
         chooseColorTitle = createColorChooser(this, R.id.editLabel_titleColor, R.id.edit_titleColor, R.id.editButton_titleColor, SuntimesTheme.THEME_TITLECOLOR);
@@ -638,6 +640,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 updateSizeFromChooser(previewMoonPhase, chooseTextSize);
             }
 
+            // TODO: preview moon phase icons
+
             // Time Delta
             TextView previewTimeDelta = (TextView)previewLayout.findViewById(R.id.text_delta_day_value);
             TextView previewTimeDeltaPrefix = (TextView)previewLayout.findViewById(R.id.text_delta_day_prefix);
@@ -884,6 +888,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
             chooseColorMoonrise.setColor(theme.getMoonriseTextColor());
             chooseColorMoonset.setColor(theme.getMoonsetTextColor());
+            chooseColorMoonWaning.setColor(theme.getMoonWaningColor());
+            chooseColorMoonNew.setColor(theme.getMoonNewColor());
+            chooseColorMoonWaxing.setColor(theme.getMoonWaxingColor());
+            chooseColorMoonFull.setColor(theme.getMoonFullColor());
 
             choosePadding.setPadding(theme.getPadding());
             setSelectedBackground(theme.getBackgroundId());
@@ -945,6 +953,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
                 this.themeMoonriseTextColor = chooseColorMoonrise.getColor();
                 this.themeMoonsetTextColor = chooseColorMoonset.getColor();
+                this.themeMoonWaningColor = chooseColorMoonWaning.getColor();
+                this.themeMoonNewColor = chooseColorMoonNew.getColor();
+                this.themeMoonWaxingColor = chooseColorMoonWaxing.getColor();
+                this.themeMoonFullColor = chooseColorMoonFull.getColor();
 
                 this.themePadding = choosePadding.getPadding();
                 ThemeBackground backgroundItem = (ThemeBackground)spinBackground.getSelectedItem();
