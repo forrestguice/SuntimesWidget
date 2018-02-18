@@ -19,9 +19,11 @@
 package com.forrestguice.suntimeswidget.themes;
 
 import android.app.Activity;
+import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -719,6 +721,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     public void onResume()
     {
         super.onResume();
+        initWallpaper();
         for (ColorChooser chooser : colorChoosers)
         {
             chooser.onResume();
@@ -1050,6 +1053,20 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 editDisplay.requestFocus();
         }
         return isValid;
+    }
+
+    protected void initWallpaper()
+    {
+        WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
+        if (wallpaperManager != null)
+        {
+            ImageView background = (ImageView)findViewById(R.id.preview_background);
+            Drawable wallpaper = wallpaperManager.getDrawable();
+            if (background != null && wallpaper != null)
+            {
+                background.setImageDrawable(wallpaper);
+            }
+        }
     }
 
     /**
