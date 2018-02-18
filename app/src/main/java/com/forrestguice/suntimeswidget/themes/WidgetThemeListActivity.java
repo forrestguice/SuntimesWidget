@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -21,11 +21,13 @@ package com.forrestguice.suntimeswidget.themes;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.app.WallpaperManager;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -43,6 +45,7 @@ import android.widget.AdapterView;
 
 import android.widget.GridView;
 
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.ExportTask;
@@ -535,6 +538,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
     public void onResume()
     {
         super.onResume();
+        initWallpaper();
         if (isExporting && exportTask != null)
         {
             exportTask.setDescriptors(WidgetThemes.values());
@@ -542,6 +546,29 @@ public class WidgetThemeListActivity extends AppCompatActivity
             showExportProgress();
             exportTask.resumeTask();
         }
+    }
+
+    /**
+     * Set activity background to match home screen wallpaper.
+     */
+    protected void initWallpaper()
+    {
+        WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
+        if (wallpaperManager != null)
+        {
+            ImageView background = (ImageView)findViewById(R.id.themegrid_background);
+            Drawable wallpaper = wallpaperManager.getDrawable();
+            if (background != null && wallpaper != null)
+            {
+                background.setImageDrawable(wallpaper);
+            }
+        }
+    }
+
+    protected void showAbout()
+    {
+        AboutDialog aboutDialog = new AboutDialog();
+        aboutDialog.show(getSupportFragmentManager(), DIALOGTAG_ABOUT);
     }
 
     @SuppressWarnings("RestrictedApi")
