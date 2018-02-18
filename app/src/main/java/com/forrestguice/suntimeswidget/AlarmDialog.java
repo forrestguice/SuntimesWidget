@@ -42,6 +42,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -226,6 +227,7 @@ public class AlarmDialog extends DialogFragment
     private Spinner spinner_scheduleMode;
     private TextView txt_note;
     private ImageView icon_note;
+    private CheckBox check_daily;
 
     protected void initViews( final Context context, View dialogContent )
     {
@@ -239,6 +241,8 @@ public class AlarmDialog extends DialogFragment
 
         txt_note = (TextView) dialogContent.findViewById(R.id.appwidget_schedalarm_note);
         txt_note.setText("");
+
+        check_daily = (CheckBox) dialogContent.findViewById(R.id.appwidget_schedalarm_daily);
 
         spinner_scheduleMode = (Spinner) dialogContent.findViewById(R.id.appwidget_schedalarm_mode);
         if (adapter != null)
@@ -500,7 +504,11 @@ public class AlarmDialog extends DialogFragment
             Calendar calendar = getCalendarForAlarmChoice(choice, now);
             if (calendar != null)
             {
-                AlarmDialog.scheduleAlarm(getActivity(), alarmLabel, calendar);
+                AlarmDialog.scheduleAlarm(getActivity(), alarmLabel, calendar, true);
+                if (check_daily != null && check_daily.isChecked())
+                {
+                    // TODO
+                }
 
             } else {
                 String alarmErrorTxt = getString(R.string.schedalarm_dialog_error) + "\n" + getString(R.string.schedalarm_dialog_note2, choice.getLongDisplayString());
@@ -510,7 +518,7 @@ public class AlarmDialog extends DialogFragment
         }
     };
 
-    public static void scheduleAlarm(Activity context, String label, Calendar calendar)
+    public static void scheduleAlarm(Activity context, String label, Calendar calendar, boolean skipUI)
     {
         if (calendar == null)
             return;
@@ -521,10 +529,17 @@ public class AlarmDialog extends DialogFragment
         int minutes = alarm.get(Calendar.MINUTE);
 
         Intent alarmIntent = new Intent(AlarmClock.ACTION_SET_ALARM);
-        alarmIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         alarmIntent.putExtra(AlarmClock.EXTRA_MESSAGE, label);
         alarmIntent.putExtra(AlarmClock.EXTRA_HOUR, hour);
         alarmIntent.putExtra(AlarmClock.EXTRA_MINUTES, minutes);
+
+        if (skipUI && Build.VERSION.SDK_INT >= 11)
+        {
+            alarmIntent.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
+
+        } else {
+            alarmIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
 
         if (alarmIntent.resolveActivity(context.getPackageManager()) != null)
         {
