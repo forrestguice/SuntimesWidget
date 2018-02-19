@@ -42,6 +42,8 @@ public class LightTheme extends SuntimesTheme
     public static final int THEMEDEF_RISEICON_STROKEWIDTH = 0;
     public static final int THEMEDEF_SETICON_STROKEWIDTH = 0;
     public static final int THEMEDEF_NOONICON_STROKEWIDTH = 3;
+    public static final int THEMEDEF_MOONFULL_STROKEWIDTH = 3;
+    public static final int THEMEDEF_MOONNEW_STROKEWIDTH = 3;
 
     public static final int THEMEDEF_TITLECOLOR_ID = android.R.color.secondary_text_light;
     public static final int THEMEDEF_TEXTCOLOR_ID = android.R.color.tertiary_text_light;
@@ -108,6 +110,9 @@ public class LightTheme extends SuntimesTheme
         this.themeMoonNewColor = ContextCompat.getColor(context, THEMEDEF_MOONNEWCOLOR_ID);
         this.themeMoonWaxingColor = ContextCompat.getColor(context, THEMEDEF_MOONWAXINGCOLOR_ID);
         this.themeMoonFullColor = ContextCompat.getColor(context, THEMEDEF_MOONFULLCOLOR_ID);
+
+        this.themeMoonFullStroke = THEMEDEF_MOONFULL_STROKEWIDTH;
+        this.themeMoonNewStroke = THEMEDEF_MOONNEW_STROKEWIDTH;
 
         this.themeSpringColor = ContextCompat.getColor(context, THEMEDEF_SPRINGCOLOR_ID);
         this.themeSummerColor = ContextCompat.getColor(context, THEMEDEF_SUMMERCOLOR_ID);

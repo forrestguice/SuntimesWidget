@@ -87,6 +87,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private EditText editDisplay;
     private SizeChooser chooseTitleSize, chooseTextSize, chooseTimeSize, chooseSuffixSize;
     private SizeChooser chooseIconStroke, chooseNoonIconStroke;
+    private SizeChooser chooseMoonStroke;
     private ArrayList<SizeChooser> sizeChoosers;
     private ThemeNameChooser chooseName;
     private PaddingChooser choosePadding;
@@ -219,6 +220,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         chooseSuffixSize = createSizeChooser(this, R.id.edit_suffixSize, SuntimesTheme.THEME_TIMESUFFIXSIZE_MIN, SuntimesTheme.THEME_TIMESUFFIXSIZE_MAX, SuntimesTheme.THEME_TIMESUFFIXSIZE);
         chooseIconStroke = createSizeChooser(this, R.id.edit_iconStroke, SuntimesTheme.THEME_SETICON_STROKE_WIDTH_MIN, SuntimesTheme.THEME_SETICON_STROKE_WIDTH_MAX, SuntimesTheme.THEME_SETICON_STROKE_WIDTH);
         chooseNoonIconStroke = createSizeChooser(this, R.id.edit_noonIconStroke, SuntimesTheme.THEME_NOONICON_STROKE_WIDTH_MIN, SuntimesTheme.THEME_NOONICON_STROKE_WIDTH_MAX, SuntimesTheme.THEME_NOONICON_STROKE_WIDTH);
+        chooseMoonStroke = createSizeChooser(this, SuntimesTheme.THEME_MOON_STROKE_MIN, SuntimesTheme.THEME_MOON_STROKE_MAX, SuntimesTheme.THEME_MOONFULL_STROKE_WIDTH);
 
         EditText editPadding = (EditText)findViewById(R.id.edit_padding);
         choosePadding = new PaddingChooser(editPadding)
@@ -256,9 +258,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         chooseColorMoonset = createColorChooser(this, R.id.editLabel_moonsetColor, R.id.edit_moonsetColor, R.id.editButton_moonsetColor, SuntimesTheme.THEME_MOONSETCOLOR);
 
         chooseColorMoonWaning = createColorChooser(this, R.id.editLabel_moonWaningColor, R.id.edit_moonWaningColor, R.id.editButton_moonWaningColor, SuntimesTheme.THEME_MOONWANINGCOLOR);
-        chooseColorMoonWaxing = createColorChooser(this, R.id.editLabel_moonWaxingColor, R.id.edit_moonWaxingColor, R.id.editButton_moonWaxingColor, SuntimesTheme.THEME_MOONWAXINGCOLOR);
-
         chooseColorMoonNew = createColorChooser(this, SuntimesTheme.THEME_MOONNEWCOLOR);  // TODO
+        chooseColorMoonWaxing = createColorChooser(this, R.id.editLabel_moonWaxingColor, R.id.edit_moonWaxingColor, R.id.editButton_moonWaxingColor, SuntimesTheme.THEME_MOONWAXINGCOLOR);
         chooseColorMoonFull = createColorChooser(this, SuntimesTheme.THEME_MOONFULLCOLOR);  // TODO
 
         // other colors
@@ -455,9 +456,17 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         return chooser;
     }
 
+    private SizeChooser createSizeChooser(Context context, float min, float max, String id)
+    {
+        return createSizeChooser(context, null, min, max, id);
+    }
     private SizeChooser createSizeChooser(Context context, int editID, float min, float max, String id)
     {
         EditText edit = (EditText)findViewById(editID);
+        return createSizeChooser(context, edit, min, max, id);
+    }
+    private SizeChooser createSizeChooser(Context context, EditText edit, float min, float max, String id)
+    {
         SizeChooser chooser = new SizeChooser(context, edit, min, max, id);
         sizeChoosers.add(chooser);
         return chooser;
@@ -894,6 +903,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             chooseColorMoonWaxing.setColor(theme.getMoonWaxingColor());
             chooseColorMoonFull.setColor(theme.getMoonFullColor());
 
+            chooseMoonStroke.setValue(theme.getMoonFullStroke());
+
             choosePadding.setPadding(theme.getPadding());
             setSelectedBackground(theme.getBackgroundId());
 
@@ -958,6 +969,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 this.themeMoonNewColor = chooseColorMoonNew.getColor();
                 this.themeMoonWaxingColor = chooseColorMoonWaxing.getColor();
                 this.themeMoonFullColor = chooseColorMoonFull.getColor();
+
+                this.themeMoonFullStroke = chooseMoonStroke.getValue();
+                this.themeMoonNewStroke = chooseMoonStroke.getValue();
 
                 this.themePadding = choosePadding.getPadding();
                 ThemeBackground backgroundItem = (ThemeBackground)spinBackground.getSelectedItem();
