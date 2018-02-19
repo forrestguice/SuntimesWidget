@@ -103,10 +103,10 @@ public abstract class MoonLayout extends SuntimesLayout
         int colorNew = theme.getMoonNewColor();
 
         // full and new
-        Bitmap fullMoon =  SuntimesUtils.gradientDrawableToBitmap(context, MoonPhaseDisplay.FULL.getIcon(), colorFull, colorWaning, 2);
+        Bitmap fullMoon =  SuntimesUtils.gradientDrawableToBitmap(context, MoonPhaseDisplay.FULL.getIcon(), colorFull, colorWaning, theme.getMoonFullStrokePixels(context));
         views.setImageViewBitmap(R.id.icon_info_moonphase_full, fullMoon);
 
-        Bitmap newMoon =  SuntimesUtils.gradientDrawableToBitmap(context, MoonPhaseDisplay.NEW.getIcon(), colorNew, colorWaxing, 2);
+        Bitmap newMoon =  SuntimesUtils.gradientDrawableToBitmap(context, MoonPhaseDisplay.NEW.getIcon(), colorNew, colorWaxing, theme.getMoonNewStrokePixels(context));
         views.setImageViewBitmap(R.id.icon_info_moonphase_new, newMoon);
 
         // waxing
