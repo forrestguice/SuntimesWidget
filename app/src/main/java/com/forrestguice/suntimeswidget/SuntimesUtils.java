@@ -28,6 +28,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.InsetDrawable;
 
+import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -1041,6 +1042,32 @@ public class SuntimesUtils
         return drawableToBitmap(context, tinted, w, h, true);
     }
 
+    public static Bitmap layerDrawableToBitmap(Context context, int resourceID, int fillColor, int strokeColor, int strokePx)
+    {
+        Drawable drawable = ResourcesCompat.getDrawable(context.getResources(), resourceID, null);
+        LayerDrawable layers = (LayerDrawable)drawable;
+
+        int w = 1, h = 1;
+        if (layers != null)
+        {
+            //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+            //{
+                //Drawable layer0 = layers.getDrawable(0);
+                //if (layer0 != null)
+                //{
+                    //w = layer0.getIntrinsicWidth();
+                    //h = layer0.getIntrinsicHeight();
+                //}
+            //} else {
+                w = layers.getIntrinsicWidth();
+                h = layers.getIntrinsicHeight();
+            //}
+        }
+
+        Drawable tinted = tintDrawable(layers, fillColor, strokeColor, strokePx);
+        return drawableToBitmap(context, tinted, w, h, true);
+    }
+
     /**
      * @param drawable a ShapeDrawable
      * @param fillColor the fill color
@@ -1077,6 +1104,31 @@ public class SuntimesUtils
         drawable.setStroke(strokePixels, strokeColor);
         drawable.setColor(fillColor);
         return drawable;
+    }
+
+    public static Drawable tintDrawable(LayerDrawable drawable, int fillColor, int strokeColor, int strokePixels)
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+        {
+            try {
+                GradientDrawable gradient = (GradientDrawable)drawable.getDrawable(0);
+                if (gradient != null)
+                {
+                    SuntimesUtils.tintDrawable(gradient, fillColor, strokeColor, strokePixels);
+                    return drawable;
+
+                } else {
+                    Log.w("tintDrawable", "failed to apply color! Null inset drawable.");
+                    return drawable;
+                }
+            } catch (ClassCastException e) {
+                Log.w("tintDrawable", "failed to apply color! " + e);
+                return drawable;
+            }
+        } else {
+            Log.w("tintDrawable", "failed to apply color! InsetDrawable.getDrawable requires api 19+");
+            return drawable;   // not supported
+        }
     }
 
     /**
