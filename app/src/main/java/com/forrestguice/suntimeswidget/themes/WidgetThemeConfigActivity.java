@@ -255,9 +255,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         chooseColorMoonrise = createColorChooser(this, R.id.editLabel_moonriseColor, R.id.edit_moonriseColor, R.id.editButton_moonriseColor, SuntimesTheme.THEME_MOONRISECOLOR);
         chooseColorMoonset = createColorChooser(this, R.id.editLabel_moonsetColor, R.id.edit_moonsetColor, R.id.editButton_moonsetColor, SuntimesTheme.THEME_MOONSETCOLOR);
 
-        chooseColorMoonWaning = createColorChooser(this, SuntimesTheme.THEME_MOONWANINGCOLOR);  // TODO
+        chooseColorMoonWaning = createColorChooser(this, R.id.editLabel_moonWaningColor, R.id.edit_moonWaningColor, R.id.editButton_moonWaningColor, SuntimesTheme.THEME_MOONWANINGCOLOR);
+        chooseColorMoonWaxing = createColorChooser(this, R.id.editLabel_moonWaxingColor, R.id.edit_moonWaxingColor, R.id.editButton_moonWaxingColor, SuntimesTheme.THEME_MOONWAXINGCOLOR);
+
         chooseColorMoonNew = createColorChooser(this, SuntimesTheme.THEME_MOONNEWCOLOR);  // TODO
-        chooseColorMoonWaxing = createColorChooser(this, SuntimesTheme.THEME_MOONWAXINGCOLOR);  // TODO
         chooseColorMoonFull = createColorChooser(this, SuntimesTheme.THEME_MOONFULLCOLOR);  // TODO
 
         // other colors
