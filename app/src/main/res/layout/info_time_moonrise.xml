@@ -25,7 +25,6 @@
             style="@style/SunsetTimeImageView"
             android:id="@+id/icon_time_moonrise"
             android:scaleType="fitStart"
-            android:background="@drawable/ic_moon_rise"
             android:contentDescription="@string/moonrise" />
 
         <TextView
