@@ -132,6 +132,12 @@
                     <include layout="@layout/layout_widget_moon_2x1_0" />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+                    <include layout="@layout/layout_widget_moon_3x1_0" />
+                </LinearLayout>
+
             </ViewFlipper>
 
         </android.support.constraint.ConstraintLayout>
