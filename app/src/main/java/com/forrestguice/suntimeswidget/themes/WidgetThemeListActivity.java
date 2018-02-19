@@ -85,6 +85,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
     private boolean isExporting = false;
 
     private int previewID = -1;
+    boolean disallowSelect = false;
 
     public WidgetThemeListActivity()
     {
@@ -101,7 +102,8 @@ public class WidgetThemeListActivity extends AppCompatActivity
         setContentView(R.layout.layout_themelist);
 
         Intent intent = getIntent();
-        previewID = intent.getIntExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, -1);
+        previewID = intent.getIntExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, previewID);
+        disallowSelect = intent.getBooleanExtra(PARAM_NOSELECT, disallowSelect);
 
         WidgetThemes.initThemes(this);
         initData(this);
@@ -423,6 +425,9 @@ public class WidgetThemeListActivity extends AppCompatActivity
         public boolean onPrepareActionMode(android.support.v7.view.ActionMode mode, Menu menu)
         {
             SuntimesUtils.forceActionBarIcons(menu);
+
+            MenuItem selectItem = menu.findItem(R.id.selectTheme);
+            selectItem.setVisible( !disallowSelect );
 
             MenuItem deleteItem = menu.findItem(R.id.deleteTheme);
             deleteItem.setVisible( !theme.isDefault() );  // not allowed to delete default
