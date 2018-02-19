@@ -69,6 +69,10 @@ import static com.forrestguice.suntimeswidget.themes.SuntimesTheme.THEME_NAME;
 public class WidgetThemeConfigActivity extends AppCompatActivity
 {
     public static final String PARAM_MODE = "mode";
+    public static final String PARAM_PREVIEWID = "previewID";
+
+    public static final int PREVIEWID_SUN = 0;
+    public static final int PREVIEWID_MOON = 1;
 
     public static final int ADD_THEME_REQUEST = 0;
     public static final int EDIT_THEME_REQUEST = 1;
@@ -82,6 +86,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
     private UIMode param_mode = null;
     private String param_themeName = null;
+    private int param_previewID = -1;
 
     private ActionBar actionBar;
     private EditText editDisplay;
@@ -125,12 +130,18 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         Intent intent = getIntent();
         param_mode = (UIMode)intent.getSerializableExtra(PARAM_MODE);
         param_themeName = intent.getStringExtra(THEME_NAME);
+        param_previewID = intent.getIntExtra(PARAM_PREVIEWID, param_previewID);
 
         mode = (param_mode == null) ? UIMode.ADD_THEME : param_mode;
 
         initData(this);
         initViews(this);
         loadTheme(param_themeName);
+
+        if (param_previewID >= 0 && param_previewID < preview.getChildCount())
+        {
+            preview.setDisplayedChild(param_previewID);
+        }
         updatePreview();
     }
 

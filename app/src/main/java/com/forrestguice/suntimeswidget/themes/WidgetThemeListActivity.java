@@ -82,6 +82,8 @@ public class WidgetThemeListActivity extends AppCompatActivity
     private ExportThemesTask exportTask = null;
     private boolean isExporting = false;
 
+    private int previewID = -1;
+
     public WidgetThemeListActivity()
     {
         super();
@@ -96,11 +98,8 @@ public class WidgetThemeListActivity extends AppCompatActivity
         setResult(RESULT_CANCELED);
         setContentView(R.layout.layout_themelist);
 
-        /**Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-        if (extras != null)
-        {
-        }*/
+        Intent intent = getIntent();
+        previewID = intent.getIntExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, -1);
 
         WidgetThemes.initThemes(this);
         initData(this);
@@ -197,6 +196,9 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
         Intent intent = new Intent(this, WidgetThemeConfigActivity.class);
         intent.putExtra(WidgetThemeConfigActivity.PARAM_MODE, WidgetThemeConfigActivity.UIMode.ADD_THEME);
+        if (previewID >= 0) {
+            intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, previewID);
+        }
         startActivityForResult(intent, ADD_THEME_REQUEST);
     }
 
@@ -210,6 +212,9 @@ public class WidgetThemeListActivity extends AppCompatActivity
             Intent intent = new Intent(this, WidgetThemeConfigActivity.class);
             intent.putExtra(WidgetThemeConfigActivity.PARAM_MODE, WidgetThemeConfigActivity.UIMode.EDIT_THEME);
             intent.putExtra(SuntimesTheme.THEME_NAME, theme.themeName());
+            if (previewID >= 0) {
+                intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, previewID);
+            }
             startActivityForResult(intent, EDIT_THEME_REQUEST);
         }
     }
@@ -219,6 +224,9 @@ public class WidgetThemeListActivity extends AppCompatActivity
         Intent intent = new Intent(this, WidgetThemeConfigActivity.class);
         intent.putExtra(WidgetThemeConfigActivity.PARAM_MODE, WidgetThemeConfigActivity.UIMode.ADD_THEME);
         intent.putExtra(SuntimesTheme.THEME_NAME, theme.themeName());
+        if (previewID >= 0) {
+            intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, previewID);
+        }
         startActivityForResult(intent, ADD_THEME_REQUEST);
     }
 

@@ -329,8 +329,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 @Override
                 public void onClick(View v)
                 {
-                    Intent configThemesIntent = new Intent(context, WidgetThemeListActivity.class);
-                    startActivityForResult(configThemesIntent, PICK_THEME_REQUEST);
+                    launchThemeEditor(context);
                 }
             });
         }
@@ -1304,4 +1303,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             Log.w("selectTheme", "unable to find " + themeDescriptor.name() + " (bad position).");
         }
     }
+
+    protected void launchThemeEditor(Context context)
+    {
+        Intent configThemesIntent = new Intent(context, WidgetThemeListActivity.class);
+        startActivityForResult(configThemesIntent, PICK_THEME_REQUEST);
+    }
+
 }
