@@ -70,6 +70,8 @@ public class WidgetThemeListActivity extends AppCompatActivity
     public static final int PICK_THEME_REQUEST = 1;
     public static final String ADAPTER_MODIFIED = "isModified";
 
+    public static final String PARAM_NOSELECT = "noselect";
+
     private boolean adapterModified = false;
     private GridView gridView;
     private ActionBar actionBar;

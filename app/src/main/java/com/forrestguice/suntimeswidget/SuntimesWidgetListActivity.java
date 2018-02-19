@@ -24,9 +24,12 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -46,8 +49,12 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity;
+import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 
 import java.util.ArrayList;
+
+import static com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity.PICK_THEME_REQUEST;
 
 public class SuntimesWidgetListActivity extends AppCompatActivity
 {
@@ -149,6 +156,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         });
 
         initHelpItem();
+        initThemeItem(context);
     }
 
     protected void updateViews(Context context)
@@ -156,25 +164,32 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         widgetList.setAdapter(WidgetListAdapter.createWidgetListAdapter(context));
     }
 
+    /**
+     *
+     */
     private void initHelpItem()
     {
-        RelativeLayout helpItem = (RelativeLayout) findViewById(R.id.itemLayout);
-        if (helpItem != null)
+        View item1 = findViewById(R.id.item1);
+        if (item1 != null)
         {
-            helpItem.setOnClickListener(new View.OnClickListener()
+            RelativeLayout helpItem = (RelativeLayout) item1.findViewById(R.id.itemLayout);
+            if (helpItem != null)
             {
-                @Override
-                public void onClick(View view)
+                helpItem.setOnClickListener(new View.OnClickListener()
                 {
-                    showHelp();
-                }
-            });
+                    @Override
+                    public void onClick(View view)
+                    {
+                        showHelp();
+                    }
+                });
 
-            TextView helpTitle = (TextView) helpItem.findViewById(android.R.id.text1);
-            helpTitle.setText(getString(R.string.configLabel_widgetListHelp_title));
+                TextView helpTitle = (TextView) helpItem.findViewById(android.R.id.text1);
+                helpTitle.setText(getString(R.string.configLabel_widgetListHelp_title));
 
-            TextView helpSummary = (TextView) helpItem.findViewById(android.R.id.text2);
-            helpSummary.setText(getString(R.string.configLabel_widgetListHelp_summary));
+                TextView helpSummary = (TextView) helpItem.findViewById(android.R.id.text2);
+                helpSummary.setText(getString(R.string.configLabel_widgetListHelp_summary));
+            }
         }
     }
 
@@ -186,6 +201,53 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(getString(R.string.help_widgetlist));
         helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
+    }
+
+    /**
+     *
+     */
+    private void initThemeItem(final Context context)
+    {
+        View item2 = findViewById(R.id.item2);
+        if (item2 != null)
+        {
+            RelativeLayout themeItem = (RelativeLayout) item2.findViewById(R.id.itemLayout);
+            if (themeItem != null)
+            {
+                themeItem.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View view)
+                    {
+                        launchThemeEditor(context);
+                    }
+                });
+
+                TypedArray a = getTheme().obtainStyledAttributes(new int[] {R.attr.icActionSettings});
+                int resID = a.getResourceId(0, 0);
+                Drawable icon = getResources().getDrawable(resID);
+                a.recycle();
+
+                ImageView themeIcon = (ImageView) themeItem.findViewById(android.R.id.icon1);
+                themeIcon.setImageDrawable(icon);
+
+                TextView themeTitle = (TextView) themeItem.findViewById(android.R.id.text1);
+                themeTitle.setText(getString(R.string.configLabel_widgetThemeList));
+
+                TextView themeSummary = (TextView) themeItem.findViewById(android.R.id.text2);
+                themeSummary.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    /**
+     *
+     */
+    protected void launchThemeEditor(Context context)
+    {
+        Intent configThemesIntent = new Intent(context, WidgetThemeListActivity.class);
+        configThemesIntent.putExtra(WidgetThemeListActivity.PARAM_NOSELECT, true);
+        startActivity(configThemesIntent);
     }
 
     /**
