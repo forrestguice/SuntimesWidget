@@ -989,7 +989,7 @@ public class SuntimesUtils
      * @param resourceID drawable resource ID to a GradientDrawable
      * @param fillColor fill color to apply to drawable
      * @param strokeColor stroke color to apply to drawable
-     * @param strokePx width of stroke
+     * @param strokePx width of stroke (pixels)
      * @return a Bitmap of the drawable
      */
     public static Bitmap gradientDrawableToBitmap(Context context, int resourceID, int fillColor, int strokeColor, int strokePx)
@@ -1013,7 +1013,7 @@ public class SuntimesUtils
      * @param resourceID drawable resource ID to an InsetDrawable
      * @param fillColor fill color to apply to drawable
      * @param strokeColor stroke color to apply to drawable
-     * @param strokePx width of stroke
+     * @param strokePx width of stroke (pixels)
      * @return a Bitmap of the drawable
      */
     public static Bitmap insetDrawableToBitmap(Context context, int resourceID, int fillColor, int strokeColor, int strokePx)
@@ -1042,6 +1042,14 @@ public class SuntimesUtils
         return drawableToBitmap(context, tinted, w, h, true);
     }
 
+    /**
+     * @param context context used to get resources
+     * @param resourceID drawable resourceID to a LayerDrawable
+     * @param fillColor fill color to apply to drawable
+     * @param strokeColor stroke color to apply to drawable
+     * @param strokePx width of stroke (pixels)
+     * @return a Bitmap of the drawable
+     */
     public static Bitmap layerDrawableToBitmap(Context context, int resourceID, int fillColor, int strokeColor, int strokePx)
     {
         Drawable drawable = ResourcesCompat.getDrawable(context.getResources(), resourceID, null);
@@ -1059,7 +1067,7 @@ public class SuntimesUtils
                     //h = layer0.getIntrinsicHeight();
                 //}
             //} else {
-                w = layers.getIntrinsicWidth();
+                w = layers.getIntrinsicWidth();       // TODO: thoroughly test this...
                 h = layers.getIntrinsicHeight();
             //}
         }
@@ -1108,8 +1116,8 @@ public class SuntimesUtils
 
     public static Drawable tintDrawable(LayerDrawable drawable, int fillColor, int strokeColor, int strokePixels)
     {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-        {
+        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+        //{
             try {
                 GradientDrawable gradient = (GradientDrawable)drawable.getDrawable(0);
                 if (gradient != null)
@@ -1125,10 +1133,10 @@ public class SuntimesUtils
                 Log.w("tintDrawable", "failed to apply color! " + e);
                 return drawable;
             }
-        } else {
-            Log.w("tintDrawable", "failed to apply color! InsetDrawable.getDrawable requires api 19+");
-            return drawable;   // not supported
-        }
+        //} else {
+            //Log.w("tintDrawable", "failed to apply color! InsetDrawable.getDrawable requires api 19+");
+            //return drawable;   // not supported
+        //}
     }
 
     /**
