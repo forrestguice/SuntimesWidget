@@ -807,8 +807,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         saveWidgetMode1x1(context);
 
         // save: theme
-        final ThemeDescriptor[] themes = WidgetThemes.values();
-        ThemeDescriptor theme = themes[spinner_theme.getSelectedItemPosition()];
+        ThemeDescriptor theme = (ThemeDescriptor)spinner_theme.getSelectedItem();
         WidgetSettings.saveThemePref(context, appWidgetId, theme.name());
         //Log.d("DEBUG", "Saved theme: " + theme.name());
 
@@ -841,16 +840,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         try
         {
             themeDescriptor = WidgetThemes.valueOf(theme.themeName());
-        } catch (InvalidParameterException e)
-        {
+        } catch (InvalidParameterException e) {
             Log.e("loadAppearanceSettings", "Failed to load theme " + theme.themeName());
             themeDescriptor = DarkTheme.THEMEDEF_DESCRIPTOR;
         }
         if (themeDescriptor != null)
         {
-            spinner_theme.setSelection(themeDescriptor.ordinal(WidgetThemes.values()));
-        } else
-        {
+            spinner_theme.setSelection(themeDescriptor.ordinal(spinner_themeAdapter.values()));
+        } else {
             Log.e("loadAppearanceSettings", "theme is not installed! " + theme.themeName());
         }
 
@@ -859,8 +856,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             boolean allowResize = WidgetSettings.loadAllowResizePref(context, appWidgetId);
             checkbox_allowResize.setChecked(allowResize);
-        } else
-        {
+        } else {
             disableOptionAllowResize();
         }
 
