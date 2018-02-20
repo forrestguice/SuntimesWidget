@@ -519,6 +519,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             public void onClick(View v)
             {
                 preview.showNext();
+                updatePreview();
             }
         });
     }
@@ -528,12 +529,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
      */
     protected void updatePreview()
     {
-        for (int i=0; i<preview.getChildCount(); i++)
+        View previewLayout = preview.getCurrentView();
+        if (previewLayout != null)
         {
-            View previewLayout = preview.getChildAt(i);
-            if (previewLayout == null)
-                continue;
-
             updatePreview(previewLayout);
         }
     }
@@ -690,9 +688,13 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     protected void updatePreview_solstice(View previewLayout)
     {
         // TODO: spring color
+        //chooseColorSpring.getColor();
         // TODO: summer color
+        //chooseColorSummer.getColor();
         // TODO: autumn color
+        //chooseColorFall.getColor();
         // TODO: winter color
+        //chooseColorWinter.getColor();
     }
 
     /**
