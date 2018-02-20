@@ -73,6 +73,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 {
     public static final String PARAM_MODE = "mode";
     public static final String PARAM_PREVIEWID = "previewID";
+    public static final String PARAM_WALLPAPER = "useWallpaper";
+
+    public static final int SAVE_ITEM_DELAY = 1000;
 
     public static final int PREVIEWID_SUN_2x1 = 0;
     public static final int PREVIEWID_MOON_2x1 = 1;
@@ -91,6 +94,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private UIMode param_mode = null;
     private String param_themeName = null;
     private int param_previewID = -1;
+    private boolean param_wallpaper = true;
 
     private ActionBar actionBar;
     private EditText editDisplay;
@@ -135,6 +139,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         param_mode = (UIMode)intent.getSerializableExtra(PARAM_MODE);
         param_themeName = intent.getStringExtra(THEME_NAME);
         param_previewID = intent.getIntExtra(PARAM_PREVIEWID, param_previewID);
+        param_wallpaper = intent.getBooleanExtra(PARAM_WALLPAPER, param_wallpaper);
 
         mode = (param_mode == null) ? UIMode.ADD_THEME : param_mode;
 
@@ -904,7 +909,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     public void onResume()
     {
         super.onResume();
-        initWallpaper();
+        if (param_wallpaper)
+        {
+            initWallpaper();
+        }
         for (ColorChooser chooser : colorChoosers)
         {
             chooser.onResume();
@@ -1001,7 +1009,6 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         return true;
     }
-    public static final int SAVE_ITEM_DELAY = 1000;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)

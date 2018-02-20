@@ -27,9 +27,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -67,6 +69,8 @@ public class WidgetThemeListActivity extends AppCompatActivity
 {
     public static final String DIALOGTAG_ABOUT = "about";
 
+    public static final int WALLPAPER_DELAY = 1000;
+
     public static final int PICK_THEME_REQUEST = 1;
     public static final String ADAPTER_MODIFIED = "isModified";
 
@@ -88,6 +92,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
     private int previewID = -1;
     private boolean disallowSelect = false;
     private String preselectedTheme;
+    private boolean useWallpaper = false;
 
     public WidgetThemeListActivity()
     {
@@ -107,6 +112,10 @@ public class WidgetThemeListActivity extends AppCompatActivity
         previewID = intent.getIntExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, previewID);
         disallowSelect = intent.getBooleanExtra(PARAM_NOSELECT, disallowSelect);
         preselectedTheme = intent.getStringExtra(PARAM_SELECTED);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        useWallpaper = prefs.getBoolean(WidgetThemeConfigActivity.PARAM_WALLPAPER, useWallpaper);
+        useWallpaper = intent.getBooleanExtra(WidgetThemeConfigActivity.PARAM_WALLPAPER, useWallpaper);
 
         WidgetThemes.initThemes(this);
         initData(this);
@@ -142,6 +151,19 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
         gridView = (GridView)findViewById(R.id.themegrid);
         initThemeAdapter(context);
+
+        View bottomBanner = findViewById(R.id.themegrid_bottom);
+        if (bottomBanner != null)
+        {
+            bottomBanner.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    toggleWallpaper();
+                }
+            });
+        }
     }
 
     protected void initActionBar( Context context )
@@ -209,7 +231,9 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
         Intent intent = new Intent(this, WidgetThemeConfigActivity.class);
         intent.putExtra(WidgetThemeConfigActivity.PARAM_MODE, WidgetThemeConfigActivity.UIMode.ADD_THEME);
-        if (previewID >= 0) {
+        intent.putExtra(WidgetThemeConfigActivity.PARAM_WALLPAPER, useWallpaper);
+        if (previewID >= 0)
+        {
             intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, previewID);
         }
         startActivityForResult(intent, ADD_THEME_REQUEST);
@@ -224,6 +248,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         } else {
             Intent intent = new Intent(this, WidgetThemeConfigActivity.class);
             intent.putExtra(WidgetThemeConfigActivity.PARAM_MODE, WidgetThemeConfigActivity.UIMode.EDIT_THEME);
+            intent.putExtra(WidgetThemeConfigActivity.PARAM_WALLPAPER, useWallpaper);
             intent.putExtra(SuntimesTheme.THEME_NAME, theme.themeName());
             if (previewID >= 0) {
                 intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, previewID);
@@ -236,6 +261,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
     {
         Intent intent = new Intent(this, WidgetThemeConfigActivity.class);
         intent.putExtra(WidgetThemeConfigActivity.PARAM_MODE, WidgetThemeConfigActivity.UIMode.ADD_THEME);
+        intent.putExtra(WidgetThemeConfigActivity.PARAM_WALLPAPER, useWallpaper);
         intent.putExtra(SuntimesTheme.THEME_NAME, theme.themeName());
         if (previewID >= 0) {
             intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, previewID);
@@ -471,6 +497,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
                     case R.id.deleteTheme:
                         deleteTheme(theme);
+                        mode.finish();
                         return true;
                 }
             }
@@ -573,7 +600,10 @@ public class WidgetThemeListActivity extends AppCompatActivity
     public void onResume()
     {
         super.onResume();
-        initWallpaper();
+        if (useWallpaper)
+        {
+            initWallpaper(false);
+        }
         if (isExporting && exportTask != null)
         {
             exportTask.setDescriptors(WidgetThemes.values());
@@ -586,7 +616,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
     /**
      * Set activity background to match home screen wallpaper.
      */
-    protected void initWallpaper()
+    protected void initWallpaper(boolean animate)
     {
         WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
         if (wallpaperManager != null)
@@ -596,8 +626,33 @@ public class WidgetThemeListActivity extends AppCompatActivity
             if (background != null && wallpaper != null)
             {
                 background.setImageDrawable(wallpaper);
+                if (animate)
+                    background.animate().alpha(1f).setDuration(WALLPAPER_DELAY);
+                else background.setAlpha(1f);
             }
         }
+    }
+
+    protected void hideWallpaper()
+    {
+        ImageView background = (ImageView)findViewById(R.id.themegrid_background);
+        if (background != null)
+        {
+            background.animate().alpha(0f).setDuration(WALLPAPER_DELAY);
+        }
+    }
+
+    protected void toggleWallpaper()
+    {
+        useWallpaper = !useWallpaper;
+
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(this).edit();
+        prefs.putBoolean(WidgetThemeConfigActivity.PARAM_WALLPAPER, useWallpaper);
+        prefs.apply();
+
+        if (useWallpaper)
+            initWallpaper(true);
+        else hideWallpaper();
     }
 
     protected void showAbout()
