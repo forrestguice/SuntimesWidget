@@ -450,21 +450,23 @@ public class WidgetThemeListActivity extends AppCompatActivity
         @Override
         public boolean onActionItemClicked(android.support.v7.view.ActionMode mode, MenuItem item)
         {
-            mode.finish();
             if (theme != null)
             {
                 switch (item.getItemId())
                 {
                     case R.id.selectTheme:
+                        mode.finish();
                         selectTheme(theme);
                         return true;
 
                     case R.id.editTheme:
                         editTheme(theme);
+                        //mode.finish();    // TODO: is it OK to startActivity w/out finishing ActionMode? the transition looks better this way.
                         return true;
 
                     case R.id.copyTheme:
                         copyTheme(theme);
+                        //mode.finish();    // TODO: is it OK to startActivity w/out finishing ActionMode? the transition looks better this way.
                         return true;
 
                     case R.id.deleteTheme:
@@ -472,6 +474,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
                         return true;
                 }
             }
+            mode.finish();
             return false;
         }
     }
