@@ -870,6 +870,7 @@ public class SuntimesUtils
 
         if (drawable != null)
         {
+            drawable.mutate();    // don't cache state (or setColorFilter modifies all instances)
             if (width > 0 && height > 0)
             {
                 drawable.setBounds(0, 0, width, height);
