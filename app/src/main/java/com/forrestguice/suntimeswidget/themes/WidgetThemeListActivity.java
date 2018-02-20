@@ -70,6 +70,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
     public static final int PICK_THEME_REQUEST = 1;
     public static final String ADAPTER_MODIFIED = "isModified";
 
+    public static final String PARAM_SELECTED = "selected";
     public static final String PARAM_NOSELECT = "noselect";
 
     private boolean adapterModified = false;
@@ -85,7 +86,8 @@ public class WidgetThemeListActivity extends AppCompatActivity
     private boolean isExporting = false;
 
     private int previewID = -1;
-    boolean disallowSelect = false;
+    private boolean disallowSelect = false;
+    private String preselectedTheme;
 
     public WidgetThemeListActivity()
     {
@@ -104,10 +106,17 @@ public class WidgetThemeListActivity extends AppCompatActivity
         Intent intent = getIntent();
         previewID = intent.getIntExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, previewID);
         disallowSelect = intent.getBooleanExtra(PARAM_NOSELECT, disallowSelect);
+        preselectedTheme = intent.getStringExtra(PARAM_SELECTED);
 
         WidgetThemes.initThemes(this);
         initData(this);
         initViews(this);
+
+        if (preselectedTheme != null && !preselectedTheme.trim().isEmpty())
+        {
+            SuntimesTheme.ThemeDescriptor theme = (SuntimesTheme.ThemeDescriptor) adapter.getItem(adapter.ordinal(preselectedTheme));
+            triggerActionMode(null, theme);
+        }
     }
 
     private SuntimesRiseSetData data;
