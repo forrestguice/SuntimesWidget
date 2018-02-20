@@ -178,6 +178,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         colorChoosers = new ArrayList<>();
         sizeChoosers = new ArrayList<>();
 
+        initPreview(context);
+
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
         actionBar = getSupportActionBar();
@@ -186,8 +188,6 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
-        initPreview(context);
 
         ArrayAdapter<ThemeBackground> spinBackground_adapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, ThemeBackground.values());
         spinBackground_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -989,8 +989,19 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.themeconfig, menu);
+
+        final MenuItem saveItem = menu.findItem(R.id.saveTheme);
+        preview.getHandler().postDelayed(new Runnable()
+        {
+            public void run()
+            {
+                saveItem.setVisible(true);
+            }
+        }, SAVE_ITEM_DELAY);
+
         return true;
     }
+    public static final int SAVE_ITEM_DELAY = 1000;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
