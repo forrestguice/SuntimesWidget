@@ -1300,9 +1300,23 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
+    protected Intent themeEditorIntent(Context context)
+    {
+        Intent intent = new Intent(context, WidgetThemeListActivity.class);
+        if (spinner_theme != null)
+        {
+            ThemeDescriptor theme = (ThemeDescriptor) spinner_theme.getSelectedItem();
+            if (theme != null)
+            {
+                intent.putExtra(WidgetThemeListActivity.PARAM_SELECTED, theme.name());
+            }
+        }
+        return intent;
+    }
+
     protected void launchThemeEditor(Context context)
     {
-        Intent configThemesIntent = new Intent(context, WidgetThemeListActivity.class);
+        Intent configThemesIntent = themeEditorIntent(context);
         startActivityForResult(configThemesIntent, PICK_THEME_REQUEST);
     }
 

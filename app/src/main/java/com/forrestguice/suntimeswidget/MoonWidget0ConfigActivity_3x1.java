@@ -60,7 +60,7 @@ public class MoonWidget0ConfigActivity_3x1 extends MoonWidget0ConfigActivity
     @Override
     protected void launchThemeEditor(Context context)
     {
-        Intent configThemesIntent = new Intent(context, WidgetThemeListActivity.class);
+        Intent configThemesIntent = themeEditorIntent(context);
         configThemesIntent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, WidgetThemeConfigActivity.PREVIEWID_MOON_3x1);
         startActivityForResult(configThemesIntent, PICK_THEME_REQUEST);
     }
