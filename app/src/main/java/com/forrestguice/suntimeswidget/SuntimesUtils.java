@@ -50,6 +50,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ImageView;
 
 import java.lang.reflect.Method;
 import java.text.DateFormat;
@@ -961,6 +962,26 @@ public class SuntimesUtils
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             return Html.fromHtml(htmlString, Html.FROM_HTML_MODE_LEGACY);
         else return Html.fromHtml(htmlString);
+    }
+
+    /**
+     * @param view the ImageView
+     * @param color color to apply
+     */
+    public static void colorizeImageView(ImageView view, int color)
+    {
+        if (view != null && view.getBackground() != null)
+        {
+            try {
+                GradientDrawable d = (GradientDrawable) view.getBackground().mutate();
+                d.setColor(color);
+                d.invalidateSelf();
+                return;
+
+            } catch (ClassCastException e) {
+                Log.w("colorizeImageView", "failed to colorize! " + e);
+            }
+        }
     }
 
     /**
