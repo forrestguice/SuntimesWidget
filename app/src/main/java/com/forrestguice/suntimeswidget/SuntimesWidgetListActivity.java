@@ -48,6 +48,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 
 import java.util.ArrayList;
@@ -256,6 +257,14 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         configIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         configIntent.putExtra(WidgetSettings.ActionMode.ONTAP_LAUNCH_CONFIG.name(), true);
         startActivity(configIntent);
+    }
+
+    public static void updateWidgets(Context context, String themeName)
+    {
+        Intent updateIntent = new Intent();
+        updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        updateIntent.putExtra(SuntimesWidget0.KEY_THEME, themeName);
+        context.sendBroadcast(updateIntent);
     }
 
     /**

@@ -41,6 +41,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -51,6 +52,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
     public static final String SUNTIMES_WIDGET_UPDATE = "SUNTIMES_WIDGET_UPDATE";
     public static final int UPDATEALARM_ID = 0;
     public static final String KEY_ALARMID = "alarmID";
+    public static final String KEY_THEME = "themeName";
 
     protected static SuntimesUtils utils = new SuntimesUtils();
 
@@ -110,7 +112,12 @@ public class SuntimesWidget0 extends AppWidgetProvider
             Log.d("onReceive", "ACTION_APPWIDGET_OPTIONS_CHANGED :: " + getClass());
 
         } else if (action != null && action.equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE)) {
-            Log.d("onReceive", "ACTION_APPWIDGET_UPDATE :: " + getClass());
+            String themeName = (intent.hasExtra(KEY_THEME) ? intent.getStringExtra(KEY_THEME) : null);
+            Log.d("onReceive", "ACTION_APPWIDGET_UPDATE :: " + getClass() + " :: " + themeName);
+
+            if (themeName != null)
+                updateWidgets(context, themeName);
+            else updateWidgets(context);
 
         } else {
             Log.d("onReceive", "unhandled :: " + action + " :: " + getClass());
@@ -209,6 +216,27 @@ public class SuntimesWidget0 extends AppWidgetProvider
         AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
         int[] widgetIds = widgetManager.getAppWidgetIds(new ComponentName(context, getClass()));
         onUpdate(context, widgetManager, widgetIds);
+    }
+    public void updateWidgets(Context context, String themeName)
+    {
+        AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
+        int[] widgetIds = widgetManager.getAppWidgetIds(new ComponentName(context, getClass()));
+
+        ArrayList<Integer> filteredList = new ArrayList<>();
+        for (int id : widgetIds)
+        {
+            String theme = WidgetSettings.loadThemeName(context, id);
+            if (theme.equals(themeName))
+            {
+                filteredList.add(id);
+            }
+        }
+        int[] filteredIds = new int[filteredList.size()];
+        for (int i=0; i<filteredIds.length; i++)
+        {
+            filteredIds[i] = filteredList.get(i);
+        }
+        onUpdate(context, widgetManager, filteredIds);
     }
 
     /**
