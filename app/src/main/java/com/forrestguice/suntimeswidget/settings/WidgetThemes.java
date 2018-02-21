@@ -32,9 +32,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.forrestguice.suntimeswidget.R;
@@ -157,6 +161,38 @@ public class WidgetThemes
     public static ThemeDescriptor[] values()
     {
         return themes.values().toArray(new ThemeDescriptor[themes.values().size()]);
+    }
+
+    public static List<ThemeDescriptor> getValues()
+    {
+        return new ArrayList<ThemeDescriptor>(themes.values());
+    }
+
+    public static ThemeDescriptor[] sortedValues(boolean defaultsFirst)
+    {
+        List<SuntimesTheme.ThemeDescriptor> themeDefs = getSortedValues(defaultsFirst);
+        return themeDefs.toArray(new SuntimesTheme.ThemeDescriptor[themeDefs.size()]);
+    }
+
+    public static List<ThemeDescriptor> getSortedValues(final boolean defaultsFirst)
+    {
+        List<SuntimesTheme.ThemeDescriptor> themeDefs = getValues();
+        Collections.sort(themeDefs, new Comparator<ThemeDescriptor>()
+        {
+            @Override
+            public int compare(SuntimesTheme.ThemeDescriptor o1, SuntimesTheme.ThemeDescriptor o2)
+            {
+                if (defaultsFirst)
+                {
+                    if (o1.isDefault() && !o2.isDefault())
+                        return -1;
+                    else if (o2.isDefault() && !o1.isDefault())
+                        return 1;
+                }
+                return o1.displayString().compareTo(o2.displayString());
+            }
+        });
+        return themeDefs;
     }
 
     public static ThemeDescriptor valueOf(String themeName)
