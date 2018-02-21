@@ -56,7 +56,6 @@ import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.SuntimesWidget0;
-import com.forrestguice.suntimeswidget.SuntimesWidgetListActivity;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -126,8 +125,10 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
         if (preselectedTheme != null && !preselectedTheme.trim().isEmpty())
         {
-            SuntimesTheme.ThemeDescriptor theme = (SuntimesTheme.ThemeDescriptor) adapter.getItem(adapter.ordinal(preselectedTheme));
+            int i = adapter.ordinal(preselectedTheme);
+            SuntimesTheme.ThemeDescriptor theme = (SuntimesTheme.ThemeDescriptor) adapter.getItem(i);
             triggerActionMode(null, theme);
+            gridView.setSelection(i);
         }
     }
 
@@ -545,8 +546,12 @@ public class WidgetThemeListActivity extends AppCompatActivity
             if (data != null)
             {
                 String themeName = data.getStringExtra(SuntimesTheme.THEME_NAME);
-                SuntimesTheme.ThemeDescriptor theme = (SuntimesTheme.ThemeDescriptor) adapter.getItem(adapter.ordinal(themeName));
+                int i = adapter.ordinal(themeName);
+
+                SuntimesTheme.ThemeDescriptor theme = (SuntimesTheme.ThemeDescriptor) adapter.getItem(i);
                 triggerActionMode(null, theme);
+                gridView.setSelection(i);
+
                 Toast.makeText(this, getString(R.string.addtheme_toast_success, themeName), Toast.LENGTH_LONG).show();
             }
         }
@@ -562,16 +567,20 @@ public class WidgetThemeListActivity extends AppCompatActivity
             if (data != null)
             {
                 String themeName = data.getStringExtra(SuntimesTheme.THEME_NAME);
-                SuntimesTheme.ThemeDescriptor theme = (SuntimesTheme.ThemeDescriptor) adapter.getItem(adapter.ordinal(themeName));
+                int i = adapter.ordinal(themeName);
+
+                SuntimesTheme.ThemeDescriptor theme = (SuntimesTheme.ThemeDescriptor) adapter.getItem(i);
                 theme.updateDescriptor(this, WidgetThemes.PREFS_THEMES);
                 triggerActionMode(null, theme);
+                gridView.setSelection(i);
+
                 Toast.makeText(this, getString(R.string.edittheme_toast_success, themeName), Toast.LENGTH_LONG).show();
-                updateWidgets(this, themeName);
+                updateWidgetsMatchingTheme(this, themeName);
             }
         }
     }
 
-    public static void updateWidgets(Context context, String themeName)
+    public static void updateWidgetsMatchingTheme(Context context, String themeName)
     {
         Intent updateIntent = new Intent();
         updateIntent.setAction(SuntimesWidget0.SUNTIMES_THEME_UPDATE);
@@ -595,6 +604,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
     public void onSaveInstanceState( Bundle outState )
     {
         super.onSaveInstanceState(outState);
+
         if (selected != null)
         {
             outState.putString(SuntimesTheme.THEME_NAME, selected.name());
@@ -605,11 +615,14 @@ public class WidgetThemeListActivity extends AppCompatActivity
     public void onRestoreInstanceState(@NonNull Bundle savedState)
     {
         super.onRestoreInstanceState(savedState);
+
         String themeName = savedState.getString(SuntimesTheme.THEME_NAME);
         if (themeName != null)
         {
-            SuntimesTheme.ThemeDescriptor theme = (SuntimesTheme.ThemeDescriptor) adapter.getItem(adapter.ordinal(themeName));
+            int i = adapter.ordinal(themeName);
+            SuntimesTheme.ThemeDescriptor theme = (SuntimesTheme.ThemeDescriptor) adapter.getItem(i);
             triggerActionMode(null, theme);
+            gridView.setSelection(i);
         }
     }
 
