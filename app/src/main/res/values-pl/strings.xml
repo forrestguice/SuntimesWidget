@@ -328,6 +328,7 @@
     <string name="edittheme_error_displaytext">Wyświetlany tekst nie może być pusty.</string>  <!-- error hint (display text is empty) -->
     <string name="edittheme_error_textsize_min">Rozmiar musi być liczbą całkowitą &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->
     <string name="edittheme_error_textsize_max">Rozmiar musi być liczbą całkowitą &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->
+    <string name="edittheme_flag_default">default</string>  <!-- content description -->  <!-- TODO -->
 
     <string name="deletetheme_dialog_title">Usuń skórkę</string>        <!-- dialog title -->
     <string name="deletetheme_dialog_message">Czy na pewno chcesz usunąć <xliff:g id="themeName">%1$s</xliff:g>?</string>   <!-- dialog msg -->

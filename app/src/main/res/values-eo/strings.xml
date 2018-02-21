@@ -337,6 +337,7 @@
     <string name="edittheme_error_displaytext">Montrata teksto ne estu malplena.</string>  <!-- error hint (display text is empty) -->
     <string name="edittheme_error_textsize_min">Grando estu plena nombro &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->
     <string name="edittheme_error_textsize_max">Grando estu plena nombro &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->
+    <string name="edittheme_flag_default">default</string>  <!-- content description -->  <!-- TODO -->
 
     <string name="deletetheme_dialog_title">Forigi etoson</string>        <!-- dialog title -->
     <string name="deletetheme_dialog_message">Ĉu vi certe volas forigi <xliff:g id="themeName">%1$s</xliff:g>?</string>   <!-- dialog msg -->
