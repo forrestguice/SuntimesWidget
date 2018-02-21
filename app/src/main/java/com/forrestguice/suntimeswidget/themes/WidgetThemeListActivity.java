@@ -30,6 +30,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -631,6 +632,8 @@ public class WidgetThemeListActivity extends AppCompatActivity
             if (background != null && wallpaper != null)
             {
                 background.setImageDrawable(wallpaper);
+                background.setVisibility(View.VISIBLE);
+
                 if (animate)
                     background.animate().alpha(1f).setDuration(WALLPAPER_DELAY);
                 else background.setAlpha(1f);
@@ -644,6 +647,8 @@ public class WidgetThemeListActivity extends AppCompatActivity
         if (background != null)
         {
             background.animate().alpha(0f).setDuration(WALLPAPER_DELAY);
+            if (Build.VERSION.SDK_INT < 11)
+                background.setVisibility(View.GONE);
         }
     }
 
