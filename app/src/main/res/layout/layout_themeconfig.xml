@@ -22,7 +22,8 @@
     <ImageView
         android:id="@+id/preview_background"
         android:layout_width="match_parent" android:layout_height="match_parent"
-        android:src="?timeCardBackground" android:scaleType="centerCrop" />
+        android:src="?timeCardBackground" android:scaleType="centerCrop"
+        tools:ignore="ContentDescription" />
 
     <LinearLayout
         android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical">
@@ -120,22 +121,23 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:layout_editor_absoluteX="185dp">
 
-                <LinearLayout
+                <LinearLayout android:id="@+id/preview0"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_gravity="center">
-                    <include layout="@layout/layout_widget_2x1_0" />
+                    <include layout="@layout/layout_widget_2x1_0" tools:ignore="DuplicateIncludedIds"/>
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/preview1"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+                    <include layout="@layout/layout_widget_moon_2x1_0" tools:ignore="DuplicateIncludedIds" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/preview2"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_gravity="center">
-                    <include layout="@layout/layout_widget_moon_2x1_0" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_gravity="center">
-                    <include layout="@layout/layout_widget_moon_3x1_0" />
+                    <include layout="@layout/layout_widget_moon_3x1_0" tools:ignore="DuplicateIncludedIds" />
                 </LinearLayout>
 
             </ViewFlipper>
