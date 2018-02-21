@@ -1,6 +1,8 @@
 ### ~
 * adds "themes" menu item to widgetlist activity; launches the theme editor (w/out widget config).
 * adds "about" menu item to theme selector activity.
+* fixes theme selector ordering; sort items alphabetically, grid selector shows defaults first.
+* enhances the theme selector; grid selector item layout shows all colors.
 * enhances the theme selector; toggle the preview background (shows home screen wallpaper).
 * enhances the theme editor; flip between multiple previews (adds moon widget previews).
 * fixes theming of moon phase icons; the new moon, waxing, waning, and full moon colors are now themeable.
