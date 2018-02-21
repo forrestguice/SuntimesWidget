@@ -1131,12 +1131,15 @@ public class WidgetSettings
         prefs.putString(prefs_prefix + PREF_KEY_APPEARANCE_THEME, themeName);
         prefs.apply();
     }
-    public static SuntimesTheme loadThemePref(Context context, int appWidgetId)
+    public static String loadThemeName(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
-        String themeName = prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_THEME, PREF_DEF_APPEARANCE_THEME);
-
+        return prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_THEME, PREF_DEF_APPEARANCE_THEME);
+    }
+    public static SuntimesTheme loadThemePref(Context context, int appWidgetId)
+    {
+        String themeName = loadThemeName(context, appWidgetId);
         //noinspection UnnecessaryLocalVariable
         SuntimesTheme theme = WidgetThemes.loadTheme(context, themeName);
         //Log.d("loadThemePref", "theme is " + theme.themeName());
