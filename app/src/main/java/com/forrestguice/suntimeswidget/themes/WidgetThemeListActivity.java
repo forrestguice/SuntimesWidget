@@ -135,6 +135,11 @@ public class WidgetThemeListActivity extends AppCompatActivity
         data.setCompareMode(WidgetSettings.CompareMode.TOMORROW);
         data.setTimeMode(WidgetSettings.TimeMode.OFFICIAL);
         data.calculate();
+
+        SuntimesRiseSetData noonData = new SuntimesRiseSetData(data);
+        noonData.setTimeMode(WidgetSettings.TimeMode.NOON);
+        noonData.calculate();
+        data.linkData(noonData);
     }
 
     private void initLocale()
