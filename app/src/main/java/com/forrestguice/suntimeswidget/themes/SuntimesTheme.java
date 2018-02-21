@@ -740,6 +740,7 @@ public class SuntimesTheme
         private final String name;
         private String displayString;
         private final int version;
+        private final boolean isDefault;
 
         public ThemeDescriptor(String name, Context context, String themesPrefix)
         {
@@ -751,11 +752,13 @@ public class SuntimesTheme
                 this.name = name;
                 this.displayString = themesPref.getString(themePrefix + THEME_DISPLAYSTRING, "");
                 this.version = themesPref.getInt(themePrefix + THEME_VERSION, -1);
+                this.isDefault = themesPref.getBoolean(themePrefix + THEME_ISDEFAULT, false);
 
             } else {
                 this.name = "";
                 this.displayString = "";
                 this.version = -1;
+                this.isDefault = false;
             }
         }
 
@@ -764,6 +767,7 @@ public class SuntimesTheme
             this.name = name;
             this.displayString = displayString;
             this.version = version;
+            this.isDefault = false;
         }
 
         public boolean isValid()
@@ -793,6 +797,11 @@ public class SuntimesTheme
 
         public int version() {
             return version;
+        }
+
+        public boolean isDefault()
+        {
+            return isDefault;
         }
 
         public int ordinal(ThemeDescriptor[] values)
