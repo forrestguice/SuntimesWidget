@@ -57,6 +57,9 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
 {
     private static final String DIALOGTAG_HELP = "help";
 
+    private static final String KEY_LISTVIEW_TOP = "widgetlisttop";
+    private static final String KEY_LISTVIEW_INDEX = "widgetlistindex";
+
     private ListView widgetList;
     private static final SuntimesUtils utils = new SuntimesUtils();
 
@@ -131,6 +134,49 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     public void onDestroy()
     {
         super.onDestroy();
+    }
+
+
+    @Override
+    public void onSaveInstanceState( Bundle outState )
+    {
+        super.onSaveInstanceState(outState);
+        saveListViewPosition(outState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(@NonNull Bundle savedState)
+    {
+        super.onRestoreInstanceState(savedState);
+        restoreListViewPosition(savedState);
+    }
+
+    /**
+     * ..based on stack overflow answer by ian
+     * https://stackoverflow.com/questions/3014089/maintain-save-restore-scroll-position-when-returning-to-a-listview
+     */
+    private void saveListViewPosition( Bundle outState)
+    {
+        int i = widgetList.getFirstVisiblePosition();
+        outState.putInt(KEY_LISTVIEW_INDEX, i);
+
+        int top = 0;
+        View firstItem = widgetList.getChildAt(0);
+        if (firstItem != null)
+        {
+            top = firstItem.getTop() - widgetList.getPaddingTop();
+        }
+        outState.putInt(KEY_LISTVIEW_TOP, top);
+    }
+
+    private void restoreListViewPosition(@NonNull Bundle savedState )
+    {
+        int i = savedState.getInt(KEY_LISTVIEW_INDEX, -1);
+        if (i >= 0)
+        {
+            int top = savedState.getInt(KEY_LISTVIEW_TOP, 0);
+            widgetList.setSelectionFromTop(i, top);
+        }
     }
 
     /**
