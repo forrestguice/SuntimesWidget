@@ -259,14 +259,6 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         startActivity(configIntent);
     }
 
-    public static void updateWidgets(Context context, String themeName)
-    {
-        Intent updateIntent = new Intent();
-        updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        updateIntent.putExtra(SuntimesWidget0.KEY_THEME, themeName);
-        context.sendBroadcast(updateIntent);
-    }
-
     /**
      * ListItem representing a running widget; specifies appWidgetId, and configuration activity.
      */

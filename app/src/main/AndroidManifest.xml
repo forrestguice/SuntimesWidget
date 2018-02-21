@@ -75,6 +75,7 @@
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="SUNTIMES_WIDGET_UPDATE" />
+                <action android:name="SUNTIMES_THEME_UPDATE" />
             </intent-filter>
 
             <meta-data
@@ -98,6 +99,7 @@
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="SUNTIMES_WIDGET_UPDATE" />
+                <action android:name="SUNTIMES_THEME_UPDATE" />
             </intent-filter>
 
             <meta-data
@@ -123,6 +125,7 @@
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="SUNTIMES_WIDGET_UPDATE1" />
+                <action android:name="SUNTIMES_THEME_UPDATE" />
             </intent-filter>
 
             <meta-data
@@ -153,6 +156,7 @@
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="SUNTIMES_WIDGET_UPDATE2" />
+                <action android:name="SUNTIMES_THEME_UPDATE" />
             </intent-filter>
 
             <meta-data
@@ -177,6 +181,7 @@
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="MOON_WIDGET_UPDATE" />
+                <action android:name="SUNTIMES_THEME_UPDATE" />
             </intent-filter>
 
             <meta-data
@@ -200,6 +205,7 @@
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="MOON_WIDGET_UPDATE" />
+                <action android:name="SUNTIMES_THEME_UPDATE" />
             </intent-filter>
 
             <meta-data
@@ -223,6 +229,7 @@
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="MOON_WIDGET_UPDATE" />
+                <action android:name="SUNTIMES_THEME_UPDATE" />
             </intent-filter>
 
             <meta-data

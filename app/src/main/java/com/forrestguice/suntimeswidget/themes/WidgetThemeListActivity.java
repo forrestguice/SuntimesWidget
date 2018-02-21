@@ -55,6 +55,7 @@ import com.forrestguice.suntimeswidget.AboutDialog;
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.SuntimesWidget0;
 import com.forrestguice.suntimeswidget.SuntimesWidgetListActivity;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
@@ -565,9 +566,17 @@ public class WidgetThemeListActivity extends AppCompatActivity
                 theme.updateDescriptor(this, WidgetThemes.PREFS_THEMES);
                 triggerActionMode(null, theme);
                 Toast.makeText(this, getString(R.string.edittheme_toast_success, themeName), Toast.LENGTH_LONG).show();
-                SuntimesWidgetListActivity.updateWidgets(this, themeName);
+                updateWidgets(this, themeName);
             }
         }
+    }
+
+    public static void updateWidgets(Context context, String themeName)
+    {
+        Intent updateIntent = new Intent();
+        updateIntent.setAction(SuntimesWidget0.SUNTIMES_THEME_UPDATE);
+        updateIntent.putExtra(SuntimesWidget0.KEY_THEME, themeName);
+        context.sendBroadcast(updateIntent);
     }
 
     @Override
