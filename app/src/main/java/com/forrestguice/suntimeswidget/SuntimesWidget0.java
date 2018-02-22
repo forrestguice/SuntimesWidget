@@ -49,8 +49,8 @@ import java.util.Calendar;
  */
 public class SuntimesWidget0 extends AppWidgetProvider
 {
-    public static final String SUNTIMES_WIDGET_UPDATE = "SUNTIMES_WIDGET_UPDATE";
-    public static final String SUNTIMES_THEME_UPDATE = "SUNTIMES_THEME_UPDATE";
+    public static final String SUNTIMES_WIDGET_UPDATE = "suntimes.SUNTIMES_WIDGET_UPDATE";
+    public static final String SUNTIMES_THEME_UPDATE = "suntimes.SUNTIMES_THEME_UPDATE";
     public static final int UPDATEALARM_ID = 0;
     public static final String KEY_ALARMID = "alarmID";
     public static final String KEY_THEME = "themeName";

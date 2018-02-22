@@ -32,7 +32,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 public class MoonWidget0 extends SuntimesWidget0
 {
-    public static final String WIDGET_UPDATE = "MOON_WIDGET_UPDATE";
+    public static final String WIDGET_UPDATE = "suntimes.MOON_WIDGET_UPDATE";
     private static final int UPDATEALARM_ID = 4;
 
     @Override

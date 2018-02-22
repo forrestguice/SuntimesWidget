@@ -38,7 +38,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
  */
 public class SuntimesWidget1 extends SuntimesWidget0
 {
-    public static final String SUNTIMES_WIDGET_UPDATE1 = "SUNTIMES_WIDGET_UPDATE1";
+    public static final String SUNTIMES_WIDGET_UPDATE1 = "suntimes.SUNTIMES_WIDGET_UPDATE1";
     private static final int UPDATEALARM_ID = 1;
 
     @Override

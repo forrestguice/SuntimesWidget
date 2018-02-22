@@ -39,7 +39,7 @@ import java.util.Calendar;
  */
 public class SolsticeWidget0 extends SuntimesWidget0
 {
-    public static final String SUNTIMES_WIDGET_UPDATE2 = "SUNTIMES_WIDGET_UPDATE2";
+    public static final String SUNTIMES_WIDGET_UPDATE2 = "suntimes.SOLSTICE_WIDGET_UPDATE";
     private static final int UPDATEALARM_ID = 3;
 
     @Override
