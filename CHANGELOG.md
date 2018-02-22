@@ -1,4 +1,6 @@
 ### ~
+* fixes missing update alarms; opening the widget list now reschedules alarms (that may be missing / deleted (e.g. forced stop)).
+* adds widget ontap action; "update widget" to manually trigger widget updates.
 * adds "themes" menu item to widgetlist activity; launches the theme editor (w/out navigating through widget config).
 * adds "about" menu item to theme selector activity.
 * fixes widget list scroll; state preserved on orientation change.
