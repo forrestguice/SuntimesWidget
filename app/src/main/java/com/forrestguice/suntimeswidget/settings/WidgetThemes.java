@@ -426,9 +426,13 @@ public class WidgetThemes
                 flagIcon.setColorFilter(flagColor, PorterDuff.Mode.SRC_ATOP);
                 flagDefault.setVisibility((theme.isDefault()) ? View.VISIBLE : View.GONE);
 
+                boolean boldTime = theme.getTimeBold();
+
                 TextView riseView = (TextView) view.findViewById(R.id.text_time_rise);
                 riseView.setTextColor(theme.getSunriseTextColor());
-                riseView.setText(riseText.getValue());
+                String riseString = riseText.getValue();
+                CharSequence riseSequence = (boldTime ? SuntimesUtils.createBoldSpan(riseString, riseString) : riseString);
+                riseView.setText(riseSequence);
 
                 TextView riseViewSuffix = (TextView) view.findViewById(R.id.text_time_rise_suffix);
                 riseViewSuffix.setTextColor(theme.getTimeSuffixColor());
@@ -436,7 +440,9 @@ public class WidgetThemes
 
                 TextView setView = (TextView) view.findViewById(R.id.text_time_set);
                 setView.setTextColor(theme.getSunsetTextColor());
-                setView.setText(setText.getValue());
+                String setString = setText.getValue();
+                CharSequence setSequence = (boldTime ? SuntimesUtils.createBoldSpan(setString, setString) : setString);
+                setView.setText(setSequence);
 
                 TextView setViewSuffix = (TextView) view.findViewById(R.id.text_time_set_suffix);
                 setViewSuffix.setTextColor(theme.getTimeSuffixColor());
@@ -449,7 +455,9 @@ public class WidgetThemes
                 setIcon.setImageBitmap(SuntimesUtils.insetDrawableToBitmap(context, R.drawable.ic_sunset0, theme.getSunsetIconColor(), theme.getSunsetIconStrokeColor(), theme.getSunsetIconStrokePixels(context)));
 
                 TextView noonView = (TextView)view.findViewById(R.id.text_time_noon);
-                noonView.setText(noonText.getValue());
+                String noonString = noonText.getValue();
+                CharSequence noonSequence = (boldTime ? SuntimesUtils.createBoldSpan(noonString, noonString) : noonString);
+                noonView.setText(noonSequence);
                 noonView.setTextColor(theme.getNoonTextColor());
 
                 TextView noonSuffix = (TextView)view.findViewById(R.id.text_time_noon_suffix);
