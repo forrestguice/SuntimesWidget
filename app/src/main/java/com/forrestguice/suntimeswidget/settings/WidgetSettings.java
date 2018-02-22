@@ -32,6 +32,7 @@ import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_1;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_2;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_3;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_4;
+import com.forrestguice.suntimeswidget.layouts.SunLayout;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_0;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_1;
@@ -1029,9 +1030,9 @@ public class WidgetSettings
         }
         return widgetMode;
     }
-    public static SuntimesLayout loadSun1x1ModePref_asLayout(Context context, int appWidgetId)
+    public static SunLayout loadSun1x1ModePref_asLayout(Context context, int appWidgetId)
     {
-        SuntimesLayout layout;
+        SunLayout layout;
         WidgetModeSun1x1 mode = loadSun1x1ModePref(context, appWidgetId);
         switch (mode.getLayoutID())
         {

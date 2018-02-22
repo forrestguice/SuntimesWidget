@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2017 Forrest Guice
+   Copyright (C) 2017-2018 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -26,7 +26,6 @@ import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.SuntimesUtils.TimeDisplayText;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -34,7 +33,7 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 /**
  * A 1x1 layout that displays only the sunset time.
  */
-public class SuntimesLayout_1x1_4 extends SuntimesLayout
+public class SuntimesLayout_1x1_4 extends SunLayout
 {
     public SuntimesLayout_1x1_4()
     {
@@ -58,9 +57,7 @@ public class SuntimesLayout_1x1_4 extends SuntimesLayout
     {
         super.updateViews(context, appWidgetId, views, data);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
-        TimeDisplayText noonString = utils.calendarTimeShortDisplayString(context, data.sunsetCalendarToday(), showSeconds);
-        views.setTextViewText(R.id.text_time_noon, noonString.getValue());
-        views.setTextViewText(R.id.text_time_noon_suffix, noonString.getSuffix());
+        updateViewsNoonText(context, views, data, showSeconds);
     }
 
     @Override

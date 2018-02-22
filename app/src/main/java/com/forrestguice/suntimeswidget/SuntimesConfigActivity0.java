@@ -44,6 +44,7 @@ import android.support.v7.view.ActionMode;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 
+import com.forrestguice.suntimeswidget.layouts.SunLayout;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -1077,7 +1078,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         minSize[0] = context.getResources().getInteger(R.integer.widget_size_minWidthDp);
         minSize[1] = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
 
-        SuntimesLayout defLayout = WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId);
+        SunLayout defLayout = WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0.class, minSize, defLayout);
     }

@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2014 Forrest Guice
+   Copyright (C) 2014-2018 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -29,12 +29,11 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
-import com.forrestguice.suntimeswidget.SuntimesUtils.TimeDisplayText;
 
 /**
  * A 1x1 layout that displays only the sunset time.
  */
-public class SuntimesLayout_1x1_2 extends SuntimesLayout
+public class SuntimesLayout_1x1_2 extends SunLayout
 {
     public SuntimesLayout_1x1_2()
     {
@@ -52,17 +51,12 @@ public class SuntimesLayout_1x1_2 extends SuntimesLayout
         this.layoutID = R.layout.layout_widget_1x1_2;
     }
 
-
     @Override
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesRiseSetData data)
     {
         super.updateViews(context, appWidgetId, views, data);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
-
-        // upset sunset time
-        TimeDisplayText sunsetString = utils.calendarTimeShortDisplayString(context, data.sunsetCalendarToday(), showSeconds);
-        views.setTextViewText(R.id.text_time_set, sunsetString.getValue());
-        views.setTextViewText(R.id.text_time_set_suffix, sunsetString.getSuffix());
+        updateViewsSunsetText(context, views, data, showSeconds);
     }
 
     @Override

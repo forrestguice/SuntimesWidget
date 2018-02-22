@@ -28,6 +28,7 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.layouts.SunLayout;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_1;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_2;
@@ -136,7 +137,7 @@ class SuntimesWidget1RemoteViewsFactory implements RemoteViewsService.RemoteView
             layoutID = data.layoutID();
         }
 
-        SuntimesLayout layout;
+        SunLayout layout;
         switch(layoutID)
         {
             case R.layout.layout_widget_1x1_1:

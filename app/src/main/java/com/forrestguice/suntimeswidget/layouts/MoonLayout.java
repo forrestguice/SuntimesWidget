@@ -68,6 +68,21 @@ public abstract class MoonLayout extends SuntimesLayout
         //Log.v("DEBUG", "title text: " + titleText);
     }
 
+    protected void updateViewsMoonRiseSetText(Context context, RemoteViews views, SuntimesMoonData data, boolean showSeconds)
+    {
+        SuntimesUtils.TimeDisplayText riseText = utils.calendarTimeShortDisplayString(context, data.moonriseCalendarToday(), showSeconds);
+        String riseString = riseText.getValue();
+        CharSequence riseSequence = (boldTime ? SuntimesUtils.createBoldSpan(riseString, riseString) : riseString);
+        views.setTextViewText(R.id.text_time_moonrise, riseSequence);
+        views.setTextViewText(R.id.text_time_moonrise_suffix, riseText.getSuffix());
+
+        SuntimesUtils.TimeDisplayText setText = utils.calendarTimeShortDisplayString(context, data.moonsetCalendarToday(), showSeconds);
+        String setString = setText.getValue();
+        CharSequence setSequence = (boldTime ? SuntimesUtils.createBoldSpan(setString, setString) : setString);
+        views.setTextViewText(R.id.text_time_moonset, setSequence);
+        views.setTextViewText(R.id.text_time_moonset_suffix, setText.getSuffix());
+    }
+
     @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {

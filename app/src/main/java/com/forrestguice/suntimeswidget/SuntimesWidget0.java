@@ -35,6 +35,7 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.layouts.SunLayout;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_2x1_0;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -266,7 +267,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
 
     protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
-        SuntimesLayout defLayout = WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId);
+        SunLayout defLayout = WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId);
         SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0.class, getMinSize(context), defLayout);
     }
 
@@ -345,11 +346,11 @@ public class SuntimesWidget0 extends AppWidgetProvider
      * @return a SuntimesLayout that is appropriate for available space.
      */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    protected static SuntimesLayout getWidgetLayout( Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize, SuntimesLayout defLayout )
+    protected static SunLayout getWidgetLayout( Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize, SunLayout defLayout )
     {
         int[] mustFitWithinDp = widgetSizeDp(context, appWidgetManager, appWidgetId, defSize);
 
-        SuntimesLayout layout;
+        SunLayout layout;
         if (WidgetSettings.loadAllowResizePref(context, appWidgetId))
         {
             int minWidth1x3 = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
@@ -367,9 +368,9 @@ public class SuntimesWidget0 extends AppWidgetProvider
      * @param appWidgetManager widget manager
      * @param appWidgetId id of widget to be updated
      */
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Class widgetClass, int[] defSize, SuntimesLayout defLayout)
+    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Class widgetClass, int[] defSize, SunLayout defLayout)
     {
-        SuntimesLayout layout = getWidgetLayout(context, appWidgetManager, appWidgetId, defSize, defLayout);
+        SunLayout layout = getWidgetLayout(context, appWidgetManager, appWidgetId, defSize, defLayout);
         SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, layout, widgetClass);
     }
 
@@ -379,7 +380,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
      * @param appWidgetId id of the widget to be updated
      * @param layout a SuntimesLayout managing the views to be updated
      */
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SuntimesLayout layout, Class widgetClass)
+    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SunLayout layout, Class widgetClass)
     {
         RemoteViews views = layout.getViews(context);
 
