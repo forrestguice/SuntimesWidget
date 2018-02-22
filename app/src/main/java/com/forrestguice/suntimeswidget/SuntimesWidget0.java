@@ -224,7 +224,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
     public void updateWidgets(Context context)
     {
         AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
-        int[] widgetIds = widgetManager.getAppWidgetIds(new ComponentName(context, getClass()));
+        int[] widgetIds = getWidgetIds(context, widgetManager);
         onUpdate(context, widgetManager, widgetIds);
     }
     public void updateWidgets(Context context, String themeName)
@@ -237,7 +237,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
         }
 
         AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
-        int[] widgetIds = widgetManager.getAppWidgetIds(new ComponentName(context, getClass()));
+        int[] widgetIds = getWidgetIds(context, widgetManager);
         ArrayList<Integer> filteredList = new ArrayList<>();
         for (int id : widgetIds)
         {
@@ -256,6 +256,17 @@ public class SuntimesWidget0 extends AppWidgetProvider
             }
             onUpdate(context, widgetManager, filteredIds);
         }
+    }
+
+    public int[] getWidgetIds(Context context)
+    {
+        AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
+        return getWidgetIds(context, widgetManager);
+    }
+
+    public int[] getWidgetIds(Context context, AppWidgetManager widgetManager)
+    {
+        return widgetManager.getAppWidgetIds(new ComponentName(context, getClass()));
     }
 
     /**
