@@ -507,7 +507,14 @@ public class SuntimesWidget0 extends AppWidgetProvider
         String updateFilter = getUpdateIntentFilter();
         Intent intent = new Intent(updateFilter);
         intent.putExtra(KEY_ALARMID, alarmId);
-        return PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        /**
+         * https://stackoverflow.com/questions/14029400/flag-cancel-current-or-flag-update-current
+         * The discussion here suggests that FLAG_CANCEL_CURRENT doesn't work as expected, and
+         * results in stale alarms (that may eventually consume all of the device's memory).
+         */
+        //return PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        return PendingIntent.getBroadcast(context, alarmId, intent, 0);
     }
 
     /**
