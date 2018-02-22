@@ -76,6 +76,7 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="suntimes.SUNTIMES_WIDGET_UPDATE" />
                 <action android:name="suntimes.SUNTIMES_THEME_UPDATE" />
+                <action android:name="suntimes.SUNTIMES_ALARM_UPDATE" />
             </intent-filter>
 
             <meta-data
@@ -100,6 +101,7 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="suntimes.SUNTIMES_WIDGET_UPDATE" />
                 <action android:name="suntimes.SUNTIMES_THEME_UPDATE" />
+                <action android:name="suntimes.SUNTIMES_ALARM_UPDATE" />
             </intent-filter>
 
             <meta-data
@@ -126,6 +128,7 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="suntimes.SUNTIMES_WIDGET_UPDATE1" />
                 <action android:name="suntimes.SUNTIMES_THEME_UPDATE" />
+                <action android:name="suntimes.SUNTIMES_ALARM_UPDATE" />
             </intent-filter>
 
             <meta-data
@@ -157,6 +160,7 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="suntimes.SOLSTICE_WIDGET_UPDATE" />
                 <action android:name="suntimes.SUNTIMES_THEME_UPDATE" />
+                <action android:name="suntimes.SUNTIMES_ALARM_UPDATE" />
             </intent-filter>
 
             <meta-data
@@ -182,6 +186,7 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="suntimes.MOON_WIDGET_UPDATE" />
                 <action android:name="suntimes.SUNTIMES_THEME_UPDATE" />
+                <action android:name="suntimes.SUNTIMES_ALARM_UPDATE" />
             </intent-filter>
 
             <meta-data
@@ -206,6 +211,7 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="suntimes.MOON_WIDGET_UPDATE" />
                 <action android:name="suntimes.SUNTIMES_THEME_UPDATE" />
+                <action android:name="suntimes.SUNTIMES_ALARM_UPDATE" />
             </intent-filter>
 
             <meta-data
@@ -230,6 +236,7 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="suntimes.MOON_WIDGET_UPDATE" />
                 <action android:name="suntimes.SUNTIMES_THEME_UPDATE" />
+                <action android:name="suntimes.SUNTIMES_ALARM_UPDATE" />
             </intent-filter>
 
             <meta-data

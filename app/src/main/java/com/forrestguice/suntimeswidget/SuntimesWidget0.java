@@ -51,6 +51,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
 {
     public static final String SUNTIMES_WIDGET_UPDATE = "suntimes.SUNTIMES_WIDGET_UPDATE";
     public static final String SUNTIMES_THEME_UPDATE = "suntimes.SUNTIMES_THEME_UPDATE";
+    public static final String SUNTIMES_ALARM_UPDATE = "suntimes.SUNTIMES_ALARM_UPDATE";
     public static final int UPDATEALARM_ID = 0;
     public static final String KEY_ALARMID = "alarmID";
     public static final String KEY_THEME = "themeName";
@@ -117,6 +118,12 @@ public class SuntimesWidget0 extends AppWidgetProvider
             String themeName = (intent.hasExtra(KEY_THEME) ? intent.getStringExtra(KEY_THEME) : null);
             Log.d(TAG, "onReceive: SUNTIMES_THEME_UPDATE :: " + getClass() + " :: " + themeName);
             updateWidgets(context, themeName);
+
+        } else if (action != null && action.equals(SUNTIMES_ALARM_UPDATE)) {
+            Log.d(TAG, "onReceive: SUNTIMES_ALARM_UPDATE :: " + getClass());
+            if (getWidgetIds(context).length > 0) {
+                setUpdateAlarm(context);
+            }
 
         } else if (action != null && action.equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE)) {
             Log.d(TAG, "onReceive: ACTION_APPWIDGET_UPDATE :: " + getClass());
