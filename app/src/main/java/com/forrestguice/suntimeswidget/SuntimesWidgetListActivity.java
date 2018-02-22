@@ -48,7 +48,6 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 
 import java.util.ArrayList;
@@ -427,7 +426,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                     SuntimesData data;
                     String widgetTitle;
                     String widgetType;
-                    if (widgetClass == SuntimesWidget2.class)
+                    if (widgetClass == SolsticeWidget0.class)
                     {
                         SuntimesEquinoxSolsticeData data0 =  new SuntimesEquinoxSolsticeData(context, id);
                         widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
@@ -465,7 +464,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget0.class, titlePattern0));
             items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget0_2x1.class, titlePattern0));
             items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget1.class, titlePattern0));
-            items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget2.class, titlePattern0));
+            items.addAll(createWidgetListItems(context, widgetManager, SolsticeWidget0.class, titlePattern0));
 
             String titlePattern1 = context.getString(R.string.configLabel_widgetList_itemTitlePattern1);
             items.addAll(createWidgetListItems(context, widgetManager, MoonWidget0.class, titlePattern1));

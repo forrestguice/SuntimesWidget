@@ -37,7 +37,7 @@ import java.util.Calendar;
 /**
  *  Flippable widget
  */
-public class SuntimesWidget2 extends SuntimesWidget0
+public class SolsticeWidget0 extends SuntimesWidget0
 {
     public static final String SUNTIMES_WIDGET_UPDATE2 = "SUNTIMES_WIDGET_UPDATE2";
     private static final int UPDATEALARM_ID = 3;
@@ -45,22 +45,22 @@ public class SuntimesWidget2 extends SuntimesWidget0
     @Override
     protected Class getConfigClass()
     {
-        return SuntimesConfigActivity2.class;
+        return SolsticeWidget0ConfigActivity.class;
     }
 
     @Override
     protected String getUpdateIntentFilter()
     {
-        return SuntimesWidget2.SUNTIMES_WIDGET_UPDATE2;
+        return SolsticeWidget0.SUNTIMES_WIDGET_UPDATE2;
     }
 
     /**
-     * @return an update alarm identifier for this class (SuntimesWidget2: 2)
+     * @return an update alarm identifier for this class (SolsticeWidget0: 2)
      */
     @Override
     protected int getUpdateAlarmId()
     {
-        return SuntimesWidget2.UPDATEALARM_ID;
+        return SolsticeWidget0.UPDATEALARM_ID;
     }
 
     @Override
@@ -81,13 +81,13 @@ public class SuntimesWidget2 extends SuntimesWidget0
     protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
 
-        SuntimesWidget2.updateAppWidget(context, appWidgetManager, appWidgetId);
+        SolsticeWidget0.updateAppWidget(context, appWidgetManager, appWidgetId);
     }
 
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
-        SolsticeLayout layout = SuntimesWidget2.getWidgetLayout(context, appWidgetManager, appWidgetId);
-        SuntimesWidget2.updateAppWidget(context, appWidgetManager, appWidgetId, layout);
+        SolsticeLayout layout = SolsticeWidget0.getWidgetLayout(context, appWidgetManager, appWidgetId);
+        SolsticeWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, layout);
     }
 
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SolsticeLayout layout)
@@ -114,7 +114,7 @@ public class SuntimesWidget2 extends SuntimesWidget0
             data.calculate();
         }
 
-        views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, SuntimesWidget2.class));
+        views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, SolsticeWidget0.class));
         layout.prepareForUpdate(data);
         layout.themeViews(context, views, appWidgetId);
         layout.updateViews(context, appWidgetId, views, data);

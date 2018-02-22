@@ -11,6 +11,6 @@
     android:minWidth="@dimen/widget_size_minWidth" android:minHeight="@dimen/widget_size_minHeight"
     android:updatePeriodMillis="@integer/widget_updateInterval"
     android:initialLayout="@layout/layout_widget_1x1eq_0"
-    android:configure="com.forrestguice.suntimeswidget.SuntimesConfigActivity2">
+    android:configure="com.forrestguice.suntimeswidget.SolsticeWidget0ConfigActivity">
 
 </appwidget-provider>
