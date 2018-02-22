@@ -303,6 +303,10 @@ public class SuntimesThemeXML implements SuntimesThemeIO
                 xml.text(Integer.toString(theme.getMoonNewStroke()));
                 xml.endTag(namespace, SuntimesTheme.THEME_MOONNEW_STROKE_WIDTH);
 
+                xml.startTag(namespace, SuntimesTheme.THEME_TITLEBOLD);
+                xml.text(Boolean.toString(theme.getTitleBold()));
+                xml.endTag(namespace, SuntimesTheme.THEME_TITLEBOLD);
+
                 xml.startTag(namespace, SuntimesTheme.THEME_TITLESIZE);
                 xml.text(Float.toString(theme.getTitleSizeSp()));
                 xml.endTag(namespace, SuntimesTheme.THEME_TITLESIZE);
@@ -514,6 +518,9 @@ public class SuntimesThemeXML implements SuntimesThemeIO
                         theme.themeMoonFullStroke = Integer.parseInt(value);
                     } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_MOONNEW_STROKE_WIDTH)) {
                         theme.themeMoonNewStroke = Integer.parseInt(value);
+
+                    } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_TITLEBOLD)) {
+                        theme.themeTitleBold = Boolean.parseBoolean(value);
 
                     } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_TITLESIZE)) {
                         theme.themeTitleSize = Float.parseFloat(value);

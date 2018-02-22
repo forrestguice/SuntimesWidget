@@ -93,6 +93,7 @@ public class SuntimesTheme
     public static final float THEME_TITLESIZE_MIN = 6.0f;
     public static final float THEME_TITLESIZE_DEF = 10.0f;
     public static final float THEME_TITLESIZE_MAX = 32.0f;
+    public static final String THEME_TITLEBOLD = "titlebold";
 
     public static final String THEME_TEXTSIZE = "textsize";
     public static final float THEME_TEXTSIZE_MIN = 6.0f;
@@ -166,6 +167,8 @@ public class SuntimesTheme
     protected float themeTimeSize = THEME_TIMESIZE_DEF;
     protected float themeTimeSuffixSize = THEME_TIMESUFFIXSIZE_DEF;
 
+    protected boolean themeTitleBold = false;
+
     public SuntimesTheme()
     {
     }
@@ -222,6 +225,8 @@ public class SuntimesTheme
         this.themeTextSize = otherTheme.themeTextSize;
         this.themeTimeSize = otherTheme.themeTimeSize;
         this.themeTimeSuffixSize = otherTheme.themeTimeSuffixSize;
+
+        this.themeTitleBold = otherTheme.themeTitleBold;
     }
 
     public boolean initTheme( Context context, String themesPrefix, String themeName, SuntimesTheme defaultTheme )
@@ -298,6 +303,8 @@ public class SuntimesTheme
         this.themeTimeSize = themes.getFloat( theme + THEME_TIMESIZE, defaultTheme.themeTimeSize );
         this.themeTimeSuffixSize = themes.getFloat( theme + THEME_TIMESUFFIXSIZE, defaultTheme.themeTimeSuffixSize );
 
+        this.themeTitleBold = themes.getBoolean( theme + THEME_TITLEBOLD, defaultTheme.themeTitleBold);
+
         return true;
     }
 
@@ -361,6 +368,8 @@ public class SuntimesTheme
         themePrefs.putFloat(themePrefix + SuntimesTheme.THEME_TEXTSIZE, this.themeTextSize);
         themePrefs.putFloat(themePrefix + SuntimesTheme.THEME_TIMESIZE, this.themeTimeSize);
         themePrefs.putFloat(themePrefix + SuntimesTheme.THEME_TIMESUFFIXSIZE, this.themeTimeSuffixSize);
+
+        themePrefs.putBoolean(themePrefix + SuntimesTheme.THEME_TITLEBOLD, this.themeTitleBold);
 
         themePrefs.apply();
 
@@ -435,6 +444,8 @@ public class SuntimesTheme
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_TIMESIZE);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_TIMESUFFIXSIZE);
 
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_TITLEBOLD);
+
         themePrefs.apply();
     }
 
@@ -470,6 +481,11 @@ public class SuntimesTheme
     public int getTitleColor()
     {
         return themeTitleColor;
+    }
+
+    public boolean getTitleBold()
+    {
+        return themeTitleBold;
     }
 
     public int getTextColor()

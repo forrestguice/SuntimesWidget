@@ -39,6 +39,8 @@ public class DarkTheme extends SuntimesTheme
     public static final float THEMEDEF_TIMESIZE = 12;
     public static final float THEMEDEF_TIMESUFFIXSIZE = 6;
 
+    public static final boolean THEMEDEF_TITLEBOLD = false;
+
     public static final int THEMEDEF_RISEICON_STROKEWIDTH = 0;
     public static final int THEMEDEF_SETICON_STROKEWIDTH = 0;
     public static final int THEMEDEF_NOONICON_STROKEWIDTH = 3;
@@ -86,6 +88,8 @@ public class DarkTheme extends SuntimesTheme
         this.themeTextColor = ContextCompat.getColor(context, THEMEDEF_TEXTCOLOR_ID);
         this.themeTimeColor = ContextCompat.getColor(context, THEMEDEF_TIMECOLOR_ID);
         this.themeTimeSuffixColor = ContextCompat.getColor(context, THEMEDEF_TIMESUFFIXCOLOR_ID);
+
+        this.themeTitleBold = THEMEDEF_TITLEBOLD;
 
         this.themeSunriseTextColor = ContextCompat.getColor(context, THEMEDEF_SUNRISECOLOR_ID);
         this.themeSunriseIconColor = this.themeSunriseTextColor;
