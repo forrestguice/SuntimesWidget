@@ -395,6 +395,8 @@
     <string name="configLabel_themeSizeTitle">Title Size:</string>  <!-- edit label --> <!-- TODO -->
     <string name="configHint_themeSizeTitle">14</string>                 <!-- edit hint --> <!-- TODO -->
 
+    <string name="configLabel_themeTitleBold">Bold</string>          <!-- checkbox label -->  <!-- TODO -->
+
     <string name="configLabel_themeSizeText">Text Size:</string>    <!-- edit label --> <!-- TODO -->
     <string name="configHint_themeSizeText">10</string>                  <!-- edit hint --> <!-- TODO -->
 

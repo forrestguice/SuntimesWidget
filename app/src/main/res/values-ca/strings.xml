@@ -405,6 +405,8 @@
     <string name="configLabel_themeSizeTitle">Tamany del títol:</string>  <!-- edit label -->
     <string name="configHint_themeSizeTitle">14</string>                 <!-- edit hint -->
 
+    <string name="configLabel_themeTitleBold">Bold</string>          <!-- checkbox label -->  <!-- TODO -->
+
     <string name="configLabel_themeSizeText">Tamany del text:</string>    <!-- edit label -->
     <string name="configHint_themeSizeText">10</string>                  <!-- edit hint -->
 

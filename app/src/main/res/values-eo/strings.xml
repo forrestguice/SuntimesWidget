@@ -400,7 +400,9 @@
 
     <string name="configLabel_themeSizeTitle">Grando de titolo:</string>  <!-- edit label -->
     <string name="configHint_themeSizeTitle">14</string>                 <!-- edit hint -->
-    
+
+    <string name="configLabel_themeTitleBold">Bold</string>          <!-- checkbox label -->  <!-- TODO -->
+
     <string name="configLabel_themeSizeText">Grando de teksto:</string>    <!-- edit label -->
     <string name="configHint_themeSizeText">10</string>                  <!-- edit hint -->
 
