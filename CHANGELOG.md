@@ -8,7 +8,7 @@
 * enhances the theme selector; toggle the preview background (shows home screen wallpaper).
 * enhances the theme editor; flip between multiple previews (adds moon widget previews).
 * adds to theming; moon phase colors; the new moon, waxing, waning, and full moon colors are now themeable.
-* adds to theming; "bold text" title option.
+* adds to theming; "bold" title option, "bold" time option.
 
 ### v0.7.0 (2018-02-17)
 * adds a 3x1 moon widget (showing major phases) (#52).
