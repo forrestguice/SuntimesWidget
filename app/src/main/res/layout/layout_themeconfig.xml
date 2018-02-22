@@ -258,7 +258,7 @@
                     app:layout_constraintStart_toEndOf="@+id/edit_textSize"
                     app:layout_constraintTop_toTopOf="@+id/edit_textSize"
                     app:layout_constraintBottom_toBottomOf="@+id/edit_textSize"
-                    android:text="@string/configLabel_themeTitleBold" />
+                    android:text="@string/configLabel_themeBoldTitle" />
 
                 <!-- Text Size -->
                 <TextView android:labelFor="@+id/edit_textSize"

@@ -401,13 +401,15 @@
     <string name="configLabel_themeSizeTitle">Grando de titolo:</string>  <!-- edit label -->
     <string name="configHint_themeSizeTitle">14</string>                 <!-- edit hint -->
 
-    <string name="configLabel_themeTitleBold">Bold</string>          <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_themeBoldTitle">Bold</string>          <!-- checkbox label -->  <!-- TODO -->
 
     <string name="configLabel_themeSizeText">Grando de teksto:</string>    <!-- edit label -->
     <string name="configHint_themeSizeText">10</string>                  <!-- edit hint -->
 
     <string name="configLabel_themeSizeTime">Grando de tempo:</string>    <!-- edit label -->
     <string name="configHint_themeSizeTime">12</string>                  <!-- edit hint -->
+
+    <string name="configLabel_themeBoldTime">Bold</string>          <!-- checkbox label -->  <!-- TODO -->
 
     <string name="configLabel_themeSizeSuffix">Grando de sufikso:</string> <!-- edit label -->
     <string name="configHint_themeSizeSuffix">8</string>                  <!-- edit hint -->

@@ -402,13 +402,15 @@
     <string name="configLabel_themeSizeTitle">Tamaño del título:</string>  <!-- edit label -->
     <string name="configHint_themeSizeTitle">14</string>                 <!-- edit hint -->
 
-    <string name="configLabel_themeTitleBold">Bold</string>          <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_themeBoldTitle">Bold</string>          <!-- checkbox label -->  <!-- TODO -->
 
     <string name="configLabel_themeSizeText">Tamaño del texto:</string>    <!-- edit label -->
     <string name="configHint_themeSizeText">10</string>                  <!-- edit hint -->
 
     <string name="configLabel_themeSizeTime">Tamaño del tiempo:</string>    <!-- edit label -->
     <string name="configHint_themeSizeTime">12</string>                  <!-- edit hint -->
+
+    <string name="configLabel_themeBoldTime">Bold</string>          <!-- checkbox label -->  <!-- TODO -->
 
     <string name="configLabel_themeSizeSuffix">Tamaño del sufijo:</string> <!-- edit label -->
     <string name="configHint_themeSizeSuffix">8</string>                  <!-- edit hint -->
