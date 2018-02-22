@@ -473,6 +473,12 @@ public class SuntimesUtils
         Calendar now = Calendar.getInstance();
         return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != now.get(Calendar.YEAR))), false);
     }
+    public TimeDisplayText calendarDateTimeDisplayString(Context context, long timestamp)
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(timestamp);
+        return calendarDateTimeDisplayString(context, cal);
+    }
     public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showSeconds)
     {
         Calendar now = Calendar.getInstance();
