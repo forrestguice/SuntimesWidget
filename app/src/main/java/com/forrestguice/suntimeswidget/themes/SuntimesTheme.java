@@ -104,6 +104,7 @@ public class SuntimesTheme
     public static final float THEME_TIMESIZE_MIN = 6.0f;
     public static final float THEME_TIMESIZE_DEF = 12.0f;
     public static final float THEME_TIMESIZE_MAX = 32.0f;
+    public static final String THEME_TIMEBOLD = "timebold";
 
     public static final String THEME_TIMESUFFIXSIZE = "timesuffixsize";
     public static final float THEME_TIMESUFFIXSIZE_MIN = 4.0f;
@@ -168,6 +169,7 @@ public class SuntimesTheme
     protected float themeTimeSuffixSize = THEME_TIMESUFFIXSIZE_DEF;
 
     protected boolean themeTitleBold = false;
+    protected boolean themeTimeBold = false;
 
     public SuntimesTheme()
     {
@@ -227,6 +229,7 @@ public class SuntimesTheme
         this.themeTimeSuffixSize = otherTheme.themeTimeSuffixSize;
 
         this.themeTitleBold = otherTheme.themeTitleBold;
+        this.themeTimeBold = otherTheme.themeTimeBold;
     }
 
     public boolean initTheme( Context context, String themesPrefix, String themeName, SuntimesTheme defaultTheme )
@@ -303,7 +306,8 @@ public class SuntimesTheme
         this.themeTimeSize = themes.getFloat( theme + THEME_TIMESIZE, defaultTheme.themeTimeSize );
         this.themeTimeSuffixSize = themes.getFloat( theme + THEME_TIMESUFFIXSIZE, defaultTheme.themeTimeSuffixSize );
 
-        this.themeTitleBold = themes.getBoolean( theme + THEME_TITLEBOLD, defaultTheme.themeTitleBold);
+        this.themeTitleBold = themes.getBoolean( theme + THEME_TITLEBOLD, defaultTheme.themeTitleBold );
+        this.themeTimeBold = themes.getBoolean( theme + THEME_TIMEBOLD, defaultTheme.themeTimeBold );
 
         return true;
     }
@@ -370,6 +374,7 @@ public class SuntimesTheme
         themePrefs.putFloat(themePrefix + SuntimesTheme.THEME_TIMESUFFIXSIZE, this.themeTimeSuffixSize);
 
         themePrefs.putBoolean(themePrefix + SuntimesTheme.THEME_TITLEBOLD, this.themeTitleBold);
+        themePrefs.putBoolean(themePrefix + SuntimesTheme.THEME_TIMEBOLD, this.themeTimeBold);
 
         themePrefs.apply();
 
@@ -445,6 +450,7 @@ public class SuntimesTheme
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_TIMESUFFIXSIZE);
 
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_TITLEBOLD);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_TIMEBOLD);
 
         themePrefs.apply();
     }
@@ -496,6 +502,11 @@ public class SuntimesTheme
     public int getTimeColor()
     {
         return themeTimeColor;
+    }
+
+    public boolean getTimeBold()
+    {
+        return themeTimeBold;
     }
 
     public int getTimeSuffixColor()
