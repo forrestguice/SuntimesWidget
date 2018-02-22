@@ -54,6 +54,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
     public static final int UPDATEALARM_ID = 0;
     public static final String KEY_ALARMID = "alarmID";
     public static final String KEY_THEME = "themeName";
+    public static final String TAG = "WidgetUpdate";
 
     protected static SuntimesUtils utils = new SuntimesUtils();
 
@@ -102,29 +103,26 @@ public class SuntimesWidget0 extends AppWidgetProvider
         if (action != null && action.equals(filter))
         {
             int alarmID = intent.getIntExtra(KEY_ALARMID, -1);
-            Log.d("onReceive", filter + ": " + alarmID + ": " + getClass().toString());
+            Log.d(TAG, "onReceive: " + filter + ": " + alarmID + ": " + getClass().toString());
             updateWidgets(context);
 
         } else if (isClickAction(action)) {
-            Log.d("onReceive", "ClickAction :: " + action + ":" + getClass());
+            Log.d(TAG, "onReceive: ClickAction :: " + action + ":" + getClass());
             handleClickAction(context, intent);
 
         } else if (action != null && action.equals(AppWidgetManager.ACTION_APPWIDGET_OPTIONS_CHANGED)) {
-            Log.d("onReceive", "ACTION_APPWIDGET_OPTIONS_CHANGED :: " + getClass());
+            Log.d(TAG, "onReceive: ACTION_APPWIDGET_OPTIONS_CHANGED :: " + getClass());
 
         } else if (action != null && action.equals(SUNTIMES_THEME_UPDATE)) {
             String themeName = (intent.hasExtra(KEY_THEME) ? intent.getStringExtra(KEY_THEME) : null);
-            Log.d("onReceive", "SUNTIMES_THEME_UPDATE :: " + getClass() + " :: " + themeName);
-
-            if (themeName != null)
-                updateWidgets(context, themeName);
-            else updateWidgets(context);
+            Log.d(TAG, "onReceive: SUNTIMES_THEME_UPDATE :: " + getClass() + " :: " + themeName);
+            updateWidgets(context, themeName);
 
         } else if (action != null && action.equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE)) {
-            Log.d("onReceive", "ACTION_APPWIDGET_UPDATE :: " + getClass());
+            Log.d(TAG, "onReceive: ACTION_APPWIDGET_UPDATE :: " + getClass());
 
         } else {
-            Log.d("onReceive", "unhandled :: " + action + " :: " + getClass());
+            Log.d(TAG, "onReceive: unhandled :: " + action + " :: " + getClass());
         }
     }
 
@@ -187,7 +185,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
 
             } catch (ClassNotFoundException e) {
                 launchClass = getConfigClass();
-                Log.e("SuntimesWidget", "LaunchApp :: " + launchClassName + " cannot be found! " + e.toString());
+                Log.e(TAG, "LaunchApp :: " + launchClassName + " cannot be found! " + e.toString());
             }
 
             Intent launchIntent = new Intent(context, launchClass);
@@ -231,6 +229,13 @@ public class SuntimesWidget0 extends AppWidgetProvider
     }
     public void updateWidgets(Context context, String themeName)
     {
+        if (themeName == null)
+        {
+            Log.w(TAG, "updateWidgets: requested to update widgets by theme but no theme was supplied (null)... updating all");
+            updateWidgets(context);
+            return;
+        }
+
         AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
         int[] widgetIds = widgetManager.getAppWidgetIds(new ComponentName(context, getClass()));
         ArrayList<Integer> filteredList = new ArrayList<>();
@@ -443,7 +448,9 @@ public class SuntimesWidget0 extends AppWidgetProvider
         {
             long updateTime = getUpdateTimeMillis();
             alarmManager.setInexactRepeating(AlarmManager.RTC, updateTime, AlarmManager.INTERVAL_DAY, alarmIntent);
-            Log.d("DEBUG", "set update alarm: " + updateTime + " --> " + alarmIntent);
+
+            SuntimesUtils.TimeDisplayText updateDebug = utils.calendarDateTimeDisplayString(context, updateTime);
+            Log.d(TAG, "setUpdateAlarm: set alarm: " + updateDebug + " --> " + getUpdateIntentFilter());
         }
     }
 
@@ -458,7 +465,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
         {
             PendingIntent alarmIntent = getUpdateIntent(context);
             alarmManager.cancel(alarmIntent);
-            Log.d("DEBUG", "unset update alarm --> " + alarmIntent);
+            Log.d(TAG, "unsetUpdateAlarm: unset alarm --> " + getUpdateIntentFilter());
         }
     }
 
