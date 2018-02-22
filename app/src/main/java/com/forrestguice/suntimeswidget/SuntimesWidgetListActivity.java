@@ -81,6 +81,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         setResult(RESULT_CANCELED);
         setContentView(R.layout.layout_widgetlist);
         initViews(this);
+        updateWidgetAlarms(this);
     }
 
     private void initLocale(Context context)
@@ -302,6 +303,13 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         configIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         configIntent.putExtra(WidgetSettings.ActionMode.ONTAP_LAUNCH_CONFIG.name(), true);
         startActivity(configIntent);
+    }
+
+    public static void updateWidgetAlarms(Context context)
+    {
+        Intent updateIntent = new Intent();
+        updateIntent.setAction(SuntimesWidget0.SUNTIMES_ALARM_UPDATE);
+        context.sendBroadcast(updateIntent);
     }
 
     /**
