@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -114,6 +115,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private ColorChooser chooseColorMoonWaning, chooseColorMoonNew, chooseColorMoonWaxing, chooseColorMoonFull;
     private ArrayList<ColorChooser> colorChoosers;
     private CheckBox checkUseFill, checkUseStroke, checkUseNoon;
+
+    private CheckBox checkTitleBold;
 
     private Spinner spinBackground;
 
@@ -354,6 +357,16 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             }
         });
 
+        checkTitleBold = (CheckBox)findViewById(R.id.check_titleBold);
+        checkTitleBold.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+            {
+                updatePreview();
+            }
+        });
+
         initColorFields();
         initSizeFields();
         switch (mode)
@@ -559,9 +572,14 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         {
             String displayText = editDisplay.getText().toString().trim();
             String titleText = (displayText.isEmpty() ? chooseName.getThemeName() : displayText);
-            previewTitle.setText(titleText);
             previewTitle.setVisibility(View.VISIBLE);
             previewTitle.setTextColor(chooseColorTitle.getColor());
+
+            boolean boldText = checkTitleBold.isChecked();
+            if (boldText)
+                previewTitle.setText(SuntimesUtils.createBoldSpan(titleText, titleText));
+            else previewTitle.setText(titleText);
+
             updateSizeFromChooser(previewTitle, chooseTitleSize);
         }
 
@@ -1076,6 +1094,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             chooseColorTime.setColor(theme.getTimeColor());
             chooseColorSuffix.setColor(theme.getTimeSuffixColor());
 
+            checkTitleBold.setChecked(theme.getTitleBold());
+
             chooseIconStroke.setValue(theme.getSunsetIconStrokeWidth());
             chooseNoonIconStroke.setValue(theme.getNoonIconStrokeWidth());
 
@@ -1142,6 +1162,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 this.themeTextColor = chooseColorText.getColor();
                 this.themeTimeColor = chooseColorTime.getColor();
                 this.themeTimeSuffixColor = chooseColorSuffix.getColor();
+
+                this.themeTitleBold = checkTitleBold.isChecked();
 
                 this.themeSunriseTextColor = chooseColorRise.getColor();
                 this.themeSunriseIconColor = chooseColorRiseIconFill.getColor();

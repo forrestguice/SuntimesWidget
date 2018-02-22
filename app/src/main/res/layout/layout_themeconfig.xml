@@ -251,6 +251,15 @@
                     app:layout_constraintTop_toBottomOf="@+id/edit_suffixSize"
                     tools:layout_editor_absoluteX="77dp"/>
 
+                <!-- Title Bold -->
+                <CheckBox
+                    android:id="@+id/check_titleBold"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@+id/edit_textSize"
+                    app:layout_constraintTop_toTopOf="@+id/edit_textSize"
+                    app:layout_constraintBottom_toBottomOf="@+id/edit_textSize"
+                    android:text="@string/configLabel_themeTitleBold" />
+
                 <!-- Text Size -->
                 <TextView android:labelFor="@+id/edit_textSize"
                     android:id="@+id/editLabel_textSize"
