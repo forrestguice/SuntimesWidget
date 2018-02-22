@@ -26,9 +26,9 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
-public abstract class SuntimesLayoutEq extends SuntimesLayout
+public abstract class SolsticeLayout extends SuntimesLayout
 {
-    public SuntimesLayoutEq()
+    public SolsticeLayout()
     {
         initLayoutID();
     }

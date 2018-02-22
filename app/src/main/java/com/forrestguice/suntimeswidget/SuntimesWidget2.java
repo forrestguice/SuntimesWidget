@@ -26,8 +26,8 @@ import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayoutEq;
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1eq_0;
+import com.forrestguice.suntimeswidget.layouts.SolsticeLayout;
+import com.forrestguice.suntimeswidget.layouts.SolsticeLayout_1x1_0;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -86,11 +86,11 @@ public class SuntimesWidget2 extends SuntimesWidget0
 
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
-        SuntimesLayoutEq layout = SuntimesWidget2.getWidgetLayout(context, appWidgetManager, appWidgetId);
+        SolsticeLayout layout = SuntimesWidget2.getWidgetLayout(context, appWidgetManager, appWidgetId);
         SuntimesWidget2.updateAppWidget(context, appWidgetManager, appWidgetId, layout);
     }
 
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SuntimesLayoutEq layout)
+    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SolsticeLayout layout)
     {
         RemoteViews views = layout.getViews(context);
 
@@ -121,7 +121,7 @@ public class SuntimesWidget2 extends SuntimesWidget0
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
-    protected static SuntimesLayoutEq getWidgetLayout(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
+    protected static SolsticeLayout getWidgetLayout(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
         //int minWidth = context.getResources().getInteger(R.integer.widget_size_minWidthDp);
         //int minHeight = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
@@ -141,7 +141,7 @@ public class SuntimesWidget2 extends SuntimesWidget0
             //Log.d("getWidgetLayout2", "1: must fit:  [" + mustFitWithinDp[0] + ", " + mustFitWithinDp[1] + "]");
         }*/
 
-        SuntimesLayoutEq layout;
+        SolsticeLayout layout;
         //if (WidgetSettings.loadAllowResizePref(context, appWidgetId))
         //{
             /**int minWidth1x3 = context.getResources().getInteger(R.integer.widget_size_minWidthDp1x3);
@@ -149,10 +149,10 @@ public class SuntimesWidget2 extends SuntimesWidget0
                     : WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId));
             } else {
             layout = WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId); */
-            //layout = new SuntimesLayout_1x1eq_0();  // TODO
+            //layout = new SolsticeLayout_1x1_0();  // TODO
 
         //} else {
-            layout = new SuntimesLayout_1x1eq_0();
+            layout = new SolsticeLayout_1x1_0();
         //}
 
         //Log.d("getWidgetLayout2", "layout is: " + layout);
