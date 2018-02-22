@@ -192,7 +192,7 @@ public class WidgetThemes
                     else if (o2.isDefault() && !o1.isDefault())
                         return 1;
                 }
-                return o1.displayString().compareTo(o2.displayString());
+                return o1.displayString().compareToIgnoreCase(o2.displayString());
             }
         });
         return themeDefs;
