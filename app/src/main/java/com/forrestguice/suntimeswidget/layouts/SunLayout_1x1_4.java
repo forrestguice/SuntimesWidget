@@ -33,14 +33,14 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 /**
  * A 1x1 layout that displays only the sunset time.
  */
-public class SuntimesLayout_1x1_4 extends SunLayout
+public class SunLayout_1x1_4 extends SunLayout
 {
-    public SuntimesLayout_1x1_4()
+    public SunLayout_1x1_4()
     {
         super();
     }
 
-    public SuntimesLayout_1x1_4(int layoutID )
+    public SunLayout_1x1_4(int layoutID )
     {
         this.layoutID = layoutID;
     }

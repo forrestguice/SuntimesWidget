@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2014 Forrest Guice
+   Copyright (C) 2014-2018 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -20,9 +20,10 @@ package com.forrestguice.suntimeswidget.layouts;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+
 import android.os.Build;
+
 import android.util.TypedValue;
-import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
@@ -32,12 +33,25 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.SuntimesUtils.TimeDisplayText;
 
-public class SuntimesLayout_2x1_0 extends SunLayout
+/**
+ * A 1x1 layout that displays both the sunrise and sunset time.
+ */
+public class SunLayout_1x1_0 extends SunLayout
 {
+    public SunLayout_1x1_0()
+    {
+        super();
+    }
+
+    public SunLayout_1x1_0(int layoutID )
+    {
+        this.layoutID = layoutID;
+    }
+
     @Override
     public void initLayoutID()
     {
-        this.layoutID = R.layout.layout_widget_2x1_0;
+        this.layoutID = R.layout.layout_widget_1x1_0;
     }
 
     @Override
@@ -46,31 +60,6 @@ public class SuntimesLayout_2x1_0 extends SunLayout
         super.updateViews(context, appWidgetId, views, data);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
         updateViewsSunRiseSetText(context, views, data, showSeconds);
-
-        // update day delta
-        boolean showDayDelta = WidgetSettings.loadShowComparePref(context, appWidgetId);
-        TimeDisplayText dayDeltaDisplay = utils.timeDeltaLongDisplayString(data.dayLengthToday(), data.dayLengthOther(), true);
-        String dayDeltaValue = dayDeltaDisplay.getValue();
-        String dayDeltaUnits = dayDeltaDisplay.getUnits();
-        String dayDeltaSuffix = dayDeltaDisplay.getSuffix();
-
-        views.setTextViewText(R.id.text_delta_day_prefix, data.dayDeltaPrefix());
-        views.setTextViewText(R.id.text_delta_day_value, dayDeltaValue);
-        views.setTextViewText(R.id.text_delta_day_units, dayDeltaUnits);
-        views.setTextViewText(R.id.text_delta_day_suffix, dayDeltaSuffix);
-        views.setViewVisibility(R.id.layout_delta_day, (showDayDelta ? View.VISIBLE : View.GONE));
-
-        // update solar noon
-        SuntimesRiseSetData noonData = data.getLinked();
-        boolean showSolarNoon = WidgetSettings.loadShowNoonPref(context, appWidgetId);
-        if (showSolarNoon && noonData != null)
-        {
-            updateViewsNoonText(context, views, noonData, showSeconds);
-            views.setViewVisibility(R.id.layout_noon, View.VISIBLE);
-
-        } else {
-            views.setViewVisibility(R.id.layout_noon, View.GONE);
-        }
     }
 
     @Override
@@ -79,56 +68,28 @@ public class SuntimesLayout_2x1_0 extends SunLayout
         super.themeViews(context, views, theme);
 
         int sunriseColor = theme.getSunriseTextColor();
-        int sunsetColor = theme.getSunsetTextColor();
-        int noonColor = theme.getNoonTextColor();
         int suffixColor = theme.getTimeSuffixColor();
-        int timeColor = theme.getTimeColor();
-        int textColor = theme.getTextColor();
-
-        // theme sunrise text
         views.setTextColor(R.id.text_time_rise_suffix, suffixColor);
         views.setTextColor(R.id.text_time_rise, sunriseColor);
 
-        // theme sunset text
+        int sunsetColor = theme.getSunsetTextColor();
         views.setTextColor(R.id.text_time_set_suffix, suffixColor);
         views.setTextColor(R.id.text_time_set, sunsetColor);
 
-        // theme note
-        views.setTextColor(R.id.text_delta_day_prefix, textColor);
-        views.setTextColor(R.id.text_delta_day_value, timeColor);
-        views.setTextColor(R.id.text_delta_day_units, textColor);
-        views.setTextColor(R.id.text_delta_day_suffix, textColor);
-
-        // theme noon
-        views.setTextColor(R.id.text_time_noon_suffix, suffixColor);
-        views.setTextColor(R.id.text_time_noon, noonColor);
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
-            float textSize = theme.getTextSizeSp();
             float timeSize = theme.getTimeSizeSp();
             float suffSize = theme.getTimeSuffixSizeSp();
 
             views.setTextViewTextSize(R.id.text_time_rise_suffix, TypedValue.COMPLEX_UNIT_SP, suffSize);
             views.setTextViewTextSize(R.id.text_time_rise, TypedValue.COMPLEX_UNIT_SP, timeSize);
 
-            views.setTextViewTextSize(R.id.text_time_noon, TypedValue.COMPLEX_UNIT_SP, timeSize);
-            views.setTextViewTextSize(R.id.text_time_noon_suffix, TypedValue.COMPLEX_UNIT_SP, suffSize);
-
             views.setTextViewTextSize(R.id.text_time_set, TypedValue.COMPLEX_UNIT_SP, timeSize);
             views.setTextViewTextSize(R.id.text_time_set_suffix, TypedValue.COMPLEX_UNIT_SP, suffSize);
-
-            views.setTextViewTextSize(R.id.text_delta_day_prefix, TypedValue.COMPLEX_UNIT_SP, textSize);
-            views.setTextViewTextSize(R.id.text_delta_day_value, TypedValue.COMPLEX_UNIT_SP, textSize);
-            views.setTextViewTextSize(R.id.text_delta_day_units, TypedValue.COMPLEX_UNIT_SP, textSize);
-            views.setTextViewTextSize(R.id.text_delta_day_suffix, TypedValue.COMPLEX_UNIT_SP, textSize);
         }
 
         Bitmap sunriseIcon = SuntimesUtils.insetDrawableToBitmap(context, R.drawable.ic_sunrise0, theme.getSunriseIconColor(), theme.getSunriseIconStrokeColor(), theme.getSunriseIconStrokePixels(context));
         views.setImageViewBitmap(R.id.icon_time_sunrise, sunriseIcon);
-
-        Bitmap noonIcon = SuntimesUtils.gradientDrawableToBitmap(context, R.drawable.ic_noon_large0, theme.getNoonIconColor(), theme.getNoonIconStrokeColor(), theme.getNoonIconStrokePixels(context));
-        views.setImageViewBitmap(R.id.icon_time_noon, noonIcon);
 
         Bitmap sunsetIcon = SuntimesUtils.insetDrawableToBitmap(context, R.drawable.ic_sunset0, theme.getSunsetIconColor(), theme.getSunsetIconStrokeColor(), theme.getSunsetIconStrokePixels(context));
         views.setImageViewBitmap(R.id.icon_time_sunset, sunsetIcon);

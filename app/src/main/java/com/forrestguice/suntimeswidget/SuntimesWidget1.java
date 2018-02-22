@@ -30,7 +30,7 @@ import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_0;
+import com.forrestguice.suntimeswidget.layouts.SunLayout_1x1_0;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 /**
@@ -149,7 +149,7 @@ public class SuntimesWidget1 extends SuntimesWidget0
 
         } else {
             Log.w("getWidgetViews1", "Version less than " + Build.VERSION_CODES.ICE_CREAM_SANDWICH + "!! Calling the default implementation.");
-            SuntimesLayout layout = new SuntimesLayout_1x1_0();
+            SuntimesLayout layout = new SunLayout_1x1_0();
             return layout.getViews(context);
         }
     }

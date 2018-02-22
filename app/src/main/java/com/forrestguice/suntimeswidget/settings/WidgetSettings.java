@@ -33,10 +33,9 @@ import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_2;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_3;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_4;
 import com.forrestguice.suntimeswidget.layouts.SunLayout;
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_0;
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_1;
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_2;
+import com.forrestguice.suntimeswidget.layouts.SunLayout_1x1_0;
+import com.forrestguice.suntimeswidget.layouts.SunLayout_1x1_1;
+import com.forrestguice.suntimeswidget.layouts.SunLayout_1x1_2;
 import com.forrestguice.suntimeswidget.themes.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
@@ -1037,16 +1036,16 @@ public class WidgetSettings
         switch (mode.getLayoutID())
         {
             case R.layout.layout_widget_1x1_1:
-                layout = new SuntimesLayout_1x1_1();
+                layout = new SunLayout_1x1_1();
                 break;
 
             case R.layout.layout_widget_1x1_2:
-                layout = new SuntimesLayout_1x1_2();
+                layout = new SunLayout_1x1_2();
                 break;
 
             case R.layout.layout_widget_1x1_0:
             default:
-                layout = new SuntimesLayout_1x1_0(mode.getLayoutID());
+                layout = new SunLayout_1x1_0(mode.getLayoutID());
                 break;
         }
         return layout;
