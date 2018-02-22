@@ -1,11 +1,14 @@
 ### ~
-* adds "themes" menu item to widgetlist activity; launches the theme editor (w/out widget config).
+* adds "themes" menu item to widgetlist activity; launches the theme editor (w/out navigating through widget config).
 * adds "about" menu item to theme selector activity.
+* fixes widget list scroll; state preserved on orientation change.
+* fixes theme selector scroll; automatically scroll to the selected item.
 * fixes theme selector ordering; sort items alphabetically, grid selector shows defaults first.
-* enhances the theme selector; grid selector item layout shows all colors.
+* enhances the theme selector; grid selector item layout shows most colors.
 * enhances the theme selector; toggle the preview background (shows home screen wallpaper).
 * enhances the theme editor; flip between multiple previews (adds moon widget previews).
-* fixes theming of moon phase icons; the new moon, waxing, waning, and full moon colors are now themeable.
+* adds to theming; moon phase colors; the new moon, waxing, waning, and full moon colors are now themeable.
+* adds to theming; "bold text" title option.
 
 ### v0.7.0 (2018-02-17)
 * adds a 3x1 moon widget (showing major phases) (#52).
