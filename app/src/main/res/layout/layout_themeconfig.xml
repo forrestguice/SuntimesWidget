@@ -213,6 +213,15 @@
                     app:layout_constraintTop_toBottomOf="@+id/edit_padding"
                     tools:layout_editor_absoluteX="81dp"/>
 
+                <!-- Time Bold -->
+                <CheckBox
+                    android:id="@+id/check_timeBold"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@+id/edit_suffixSize"
+                    app:layout_constraintTop_toTopOf="@+id/edit_timeSize"
+                    app:layout_constraintBottom_toBottomOf="@+id/edit_timeSize"
+                    android:text="@string/configLabel_themeBoldTime" />
+
                 <!-- Suffix Size -->
                 <TextView android:labelFor="@+id/edit_suffixSize"
                     android:id="@+id/editLabel_suffixSize"
@@ -256,8 +265,8 @@
                     android:id="@+id/check_titleBold"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     app:layout_constraintStart_toEndOf="@+id/edit_textSize"
-                    app:layout_constraintTop_toTopOf="@+id/edit_textSize"
-                    app:layout_constraintBottom_toBottomOf="@+id/edit_textSize"
+                    app:layout_constraintTop_toTopOf="@+id/edit_titleSize"
+                    app:layout_constraintBottom_toBottomOf="@+id/edit_titleSize"
                     android:text="@string/configLabel_themeBoldTitle" />
 
                 <!-- Text Size -->

@@ -116,7 +116,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private ArrayList<ColorChooser> colorChoosers;
     private CheckBox checkUseFill, checkUseStroke, checkUseNoon;
 
-    private CheckBox checkTitleBold;
+    private CheckBox checkTitleBold, checkTimeBold;
 
     private Spinner spinBackground;
 
@@ -358,14 +358,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         });
 
         checkTitleBold = (CheckBox)findViewById(R.id.check_titleBold);
-        checkTitleBold.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-        {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-            {
-                updatePreview();
-            }
-        });
+        checkTitleBold.setOnCheckedChangeListener(onCheckChanged);
+
+        checkTimeBold = (CheckBox)findViewById(R.id.check_timeBold);
+        checkTimeBold.setOnCheckedChangeListener(onCheckChanged);
 
         initColorFields();
         initSizeFields();
@@ -384,6 +380,15 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         }
     }
+
+    private CompoundButton.OnCheckedChangeListener onCheckChanged = new CompoundButton.OnCheckedChangeListener()
+    {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+        {
+            updatePreview();
+        }
+    };
 
     private void toggleNoonIconColor( boolean enabled )
     {
@@ -604,7 +609,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 : new SuntimesUtils.TimeDisplayText("12:00"));
         if (previewNoon != null)
         {
-            previewNoon.setText(noonText.getValue());
+            String noonString = noonText.getValue();
+            CharSequence noon = (checkTimeBold.isChecked() ? SuntimesUtils.createBoldSpan(noonString, noonString) : noonString);
+            previewNoon.setText(noon);
             previewNoon.setTextColor(chooseColorNoon.getColor());
             updateSizeFromChooser(previewNoon, chooseTimeSize);
         }
@@ -622,7 +629,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         SuntimesUtils.TimeDisplayText riseText = utils.calendarTimeShortDisplayString(this, data.sunriseCalendarToday());
         if (previewRise != null)
         {
-            previewRise.setText(riseText.getValue());
+            String riseString = riseText.getValue();
+            CharSequence rise = (checkTimeBold.isChecked() ? SuntimesUtils.createBoldSpan(riseString, riseString) : riseString);
+            previewRise.setText(rise);
             previewRise.setTextColor(chooseColorRise.getColor());
             updateSizeFromChooser(previewRise, chooseTimeSize);
         }
@@ -640,7 +649,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         SuntimesUtils.TimeDisplayText setText = utils.calendarTimeShortDisplayString(this, data.sunsetCalendarToday());
         if (previewSet != null)
         {
-            previewSet.setText(setText.getValue());
+            String setString = setText.getValue();
+            CharSequence set = (checkTimeBold.isChecked() ? SuntimesUtils.createBoldSpan(setString, setString) : setString);
+            previewSet.setText(set);
             previewSet.setTextColor(chooseColorSet.getColor());
             updateSizeFromChooser(previewSet, chooseTimeSize);
         }
@@ -728,7 +739,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         SuntimesUtils.TimeDisplayText moonriseText = utils.calendarTimeShortDisplayString(this, data2.moonriseCalendarToday());
         if (previewMoonrise != null)
         {
-            previewMoonrise.setText(moonriseText.getValue());
+            String riseString = moonriseText.getValue();
+            CharSequence rise = (checkTimeBold.isChecked() ? SuntimesUtils.createBoldSpan(riseString, riseString) : riseString);
+            previewMoonrise.setText(rise);
             previewMoonrise.setTextColor(chooseColorMoonrise.getColor());
             updateSizeFromChooser(previewMoonrise, chooseTimeSize);
         }
@@ -746,7 +759,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         SuntimesUtils.TimeDisplayText moonsetText = utils.calendarTimeShortDisplayString(this, data2.moonsetCalendarToday());
         if (previewMoonset != null)
         {
-            previewMoonset.setText(moonsetText.getValue());
+            String setString = moonsetText.getValue();
+            CharSequence set = (checkTimeBold.isChecked() ? SuntimesUtils.createBoldSpan(setString, setString) : setString);
+            previewMoonset.setText(set);
             previewMoonset.setTextColor(chooseColorMoonset.getColor());
             updateSizeFromChooser(previewMoonset, chooseTimeSize);
         }
@@ -1095,6 +1110,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             chooseColorSuffix.setColor(theme.getTimeSuffixColor());
 
             checkTitleBold.setChecked(theme.getTitleBold());
+            checkTimeBold.setChecked(theme.getTimeBold());
 
             chooseIconStroke.setValue(theme.getSunsetIconStrokeWidth());
             chooseNoonIconStroke.setValue(theme.getNoonIconStrokeWidth());
@@ -1164,6 +1180,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 this.themeTimeSuffixColor = chooseColorSuffix.getColor();
 
                 this.themeTitleBold = checkTitleBold.isChecked();
+                this.themeTimeBold = checkTimeBold.isChecked();
 
                 this.themeSunriseTextColor = chooseColorRise.getColor();
                 this.themeSunriseIconColor = chooseColorRiseIconFill.getColor();
