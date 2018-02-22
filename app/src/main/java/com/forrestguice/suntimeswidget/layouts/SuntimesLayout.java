@@ -41,6 +41,8 @@ public abstract class SuntimesLayout
         initLayoutID();
     }
 
+    protected boolean boldTitle = false;
+
     /**
      * All SuntimesLayout subclasses must implement this method and provide a value for
      * the layoutID. The initLayoutID method should be called from the constructor.
@@ -76,7 +78,8 @@ public abstract class SuntimesLayout
         // update title
         String titlePattern = WidgetSettings.loadTitleTextPref(context, appWidgetId);
         String titleText = utils.displayStringForTitlePattern(context, titlePattern, data);
-        views.setTextViewText(R.id.text_title, titleText);
+        CharSequence title = (boldTitle ? SuntimesUtils.createBoldSpan(titleText, titleText) : titleText);
+        views.setTextViewText(R.id.text_title, title);
         //Log.v("DEBUG", "title text: " + titleText);
     }
 
@@ -122,6 +125,7 @@ public abstract class SuntimesLayout
         // theme title text color
         int titleColor = theme.getTitleColor();
         views.setTextColor(R.id.text_title, titleColor);
+        boldTitle = theme.getTitleBold();
     }
 
 }
