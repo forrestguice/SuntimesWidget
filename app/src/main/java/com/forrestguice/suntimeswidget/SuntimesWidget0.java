@@ -143,6 +143,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
     protected String[] getClickActions()
     {
         return new String[] { WidgetSettings.ActionMode.ONTAP_DONOTHING.name(),
+                              WidgetSettings.ActionMode.ONTAP_UPDATE.name(),
                               WidgetSettings.ActionMode.ONTAP_LAUNCH_ACTIVITY.name(),
                               WidgetSettings.ActionMode.ONTAP_LAUNCH_CONFIG.name() };
     }
@@ -167,6 +168,13 @@ public class SuntimesWidget0 extends AppWidgetProvider
         if (action.equals(WidgetSettings.ActionMode.ONTAP_DONOTHING.name()))
         {
             return false;
+        }
+
+        // OnTap: Update
+        if (action.equals(WidgetSettings.ActionMode.ONTAP_UPDATE.name()))
+        {
+            updateWidget(context, AppWidgetManager.getInstance(context), appWidgetId);
+            return true;
         }
 
         // OnTap: Launch an Activity

@@ -168,6 +168,7 @@ public class WidgetSettings
     public static enum ActionMode
     {
         ONTAP_DONOTHING("Ignore"),
+        ONTAP_UPDATE("Update Widget"),
         ONTAP_LAUNCH_CONFIG("Reconfigure Widget"),
         ONTAP_LAUNCH_ACTIVITY("Launch Activity"),
         ONTAP_FLIPTO_NEXTITEM("Flip Views");
@@ -197,6 +198,7 @@ public class WidgetSettings
         public static void initDisplayStrings( Context context )
         {
             ONTAP_DONOTHING.setDisplayString(context.getString(R.string.actionMode_doNothing));
+            ONTAP_UPDATE.setDisplayString(context.getString(R.string.actionMode_update));
             ONTAP_LAUNCH_CONFIG.setDisplayString(context.getString(R.string.actionMode_config));
             ONTAP_LAUNCH_ACTIVITY.setDisplayString(context.getString(R.string.actionMode_launchActivity));
             ONTAP_FLIPTO_NEXTITEM.setDisplayString(context.getString(R.string.actionMode_flipToNextItem));
