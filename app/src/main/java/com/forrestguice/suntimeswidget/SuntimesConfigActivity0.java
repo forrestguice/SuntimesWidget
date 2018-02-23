@@ -128,7 +128,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
         super.onCreate(icicle);
         initLocale();
-        setResult(RESULT_CANCELED);  // causes widget host to cancel if user presses back
+        setResult(RESULT_CANCELED);
         setContentView(R.layout.layout_settings);
 
         Context context = SuntimesConfigActivity0.this;
@@ -136,8 +136,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         Bundle extras = intent.getExtras();
         if (extras != null)
         {
-            appWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID,
-                    AppWidgetManager.INVALID_APPWIDGET_ID);
+            appWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
             reconfigure = extras.getBoolean(WidgetSettings.ActionMode.ONTAP_LAUNCH_CONFIG.name(), false);
         }
 
@@ -147,6 +146,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             finish();
             return;
         }
+
+        Intent cancelIntent = new Intent();
+        cancelIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        setResult(RESULT_CANCELED, cancelIntent);
 
         WidgetThemes.initThemes(context);
 
