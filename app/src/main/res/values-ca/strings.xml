@@ -238,6 +238,7 @@
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Res</string>           <!-- setting -->
+    <string name="actionMode_update">Update Widget</string>           <!-- setting -->  <!-- TODO -->
     <string name="actionMode_config">Reconfigurar widget</string>      <!-- setting -->
     <string name="actionMode_launchActivity">Llençar app</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Intercanviar vista</string>      <!-- setting -->
@@ -341,6 +342,7 @@
     <string name="edittheme_error_displaytext">El text a mostrar no ha de ser buit.</string>  <!-- error hint (display text is empty) -->
     <string name="edittheme_error_textsize_min">El tamany deu ser un enter &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->
     <string name="edittheme_error_textsize_max">El tamany deu ser un enter &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->
+    <string name="edittheme_flag_default">default</string>  <!-- content description -->  <!-- TODO -->
 
     <string name="deletetheme_dialog_title">Esborrar tema</string>        <!-- dialog title -->
     <string name="deletetheme_dialog_message">¿Estàs segur que vols esborrar <xliff:g id="themeName">%1$s</xliff:g>?</string>   <!-- dialog msg -->
@@ -370,6 +372,10 @@
 
     <string name="configLabel_themeColorMoonrise">Moonrise Color:</string> <!-- color label -->  <!-- TODO -->
     <string name="configLabel_themeColorMoonset">Moonset Color:</string> <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_themeColorMoonWaxing">Waxing Color:</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorMoonWaning">Waning Color:</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorMoonFull">Full Color:</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorMoonNew">New Color:</string> <!-- color label --> <!-- TODO -->
 
     <string name="configLabel_themeColorSunrise">Color d\'alba:</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
@@ -400,11 +406,15 @@
     <string name="configLabel_themeSizeTitle">Tamany del títol:</string>  <!-- edit label -->
     <string name="configHint_themeSizeTitle">14</string>                 <!-- edit hint -->
 
+    <string name="configLabel_themeBoldTitle">Bold</string>          <!-- checkbox label -->  <!-- TODO -->
+
     <string name="configLabel_themeSizeText">Tamany del text:</string>    <!-- edit label -->
     <string name="configHint_themeSizeText">10</string>                  <!-- edit hint -->
 
     <string name="configLabel_themeSizeTime">Tamany del temps:</string>    <!-- edit label -->
     <string name="configHint_themeSizeTime">12</string>                  <!-- edit hint -->
+
+    <string name="configLabel_themeBoldTime">Bold</string>          <!-- checkbox label -->  <!-- TODO -->
 
     <string name="configLabel_themeSizeSuffix">Tamany del sufijo:</string> <!-- edit label -->
     <string name="configHint_themeSizeSuffix">8</string>                  <!-- edit hint -->

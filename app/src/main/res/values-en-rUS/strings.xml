@@ -17,6 +17,10 @@
 
     <string name="configLabel_themeColorMoonrise">Moonrise Color:</string> <!-- color label -->
     <string name="configLabel_themeColorMoonset">Moonset Color:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaxing">Waxing Color:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaning">Waning Color:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonFull">Full Color:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonNew">New Color:</string> <!-- color label -->
 
     <string name="configLabel_themeColorSunrise">Sunrise Color:</string> <!-- color label -->
     <string name="configLabel_themeColorSunset">Sunset Color:</string>   <!-- color label -->

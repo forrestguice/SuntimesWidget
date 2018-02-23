@@ -6,7 +6,7 @@
         <item android:id="@+id/deleteTheme"
               android:title="@string/configAction_deleteTheme"
               android:icon="?attr/icActionDelete"
-              app:showAsAction="ifRoom"
+              app:showAsAction="never"
               android:orderInCategory="4" />
 
         <item android:id="@+id/copyTheme"

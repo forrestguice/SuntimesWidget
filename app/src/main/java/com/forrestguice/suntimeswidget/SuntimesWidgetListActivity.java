@@ -24,6 +24,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import android.support.annotation.NonNull;
@@ -46,12 +48,16 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 
 import java.util.ArrayList;
 
 public class SuntimesWidgetListActivity extends AppCompatActivity
 {
     private static final String DIALOGTAG_HELP = "help";
+
+    private static final String KEY_LISTVIEW_TOP = "widgetlisttop";
+    private static final String KEY_LISTVIEW_INDEX = "widgetlistindex";
 
     private ListView widgetList;
     private static final SuntimesUtils utils = new SuntimesUtils();
@@ -75,6 +81,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         setResult(RESULT_CANCELED);
         setContentView(R.layout.layout_widgetlist);
         initViews(this);
+        updateWidgetAlarms(this);
     }
 
     private void initLocale(Context context)
@@ -129,6 +136,49 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         super.onDestroy();
     }
 
+
+    @Override
+    public void onSaveInstanceState( Bundle outState )
+    {
+        super.onSaveInstanceState(outState);
+        saveListViewPosition(outState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(@NonNull Bundle savedState)
+    {
+        super.onRestoreInstanceState(savedState);
+        restoreListViewPosition(savedState);
+    }
+
+    /**
+     * ..based on stack overflow answer by ian
+     * https://stackoverflow.com/questions/3014089/maintain-save-restore-scroll-position-when-returning-to-a-listview
+     */
+    private void saveListViewPosition( Bundle outState)
+    {
+        int i = widgetList.getFirstVisiblePosition();
+        outState.putInt(KEY_LISTVIEW_INDEX, i);
+
+        int top = 0;
+        View firstItem = widgetList.getChildAt(0);
+        if (firstItem != null)
+        {
+            top = firstItem.getTop() - widgetList.getPaddingTop();
+        }
+        outState.putInt(KEY_LISTVIEW_TOP, top);
+    }
+
+    private void restoreListViewPosition(@NonNull Bundle savedState )
+    {
+        int i = savedState.getInt(KEY_LISTVIEW_INDEX, -1);
+        if (i >= 0)
+        {
+            int top = savedState.getInt(KEY_LISTVIEW_TOP, 0);
+            widgetList.setSelectionFromTop(i, top);
+        }
+    }
+
     /**
      * initialize ui/views
      * @param context a context used to access resources
@@ -149,6 +199,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         });
 
         initHelpItem();
+        initThemeItem(context);
     }
 
     protected void updateViews(Context context)
@@ -156,25 +207,32 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         widgetList.setAdapter(WidgetListAdapter.createWidgetListAdapter(context));
     }
 
+    /**
+     *
+     */
     private void initHelpItem()
     {
-        RelativeLayout helpItem = (RelativeLayout) findViewById(R.id.itemLayout);
-        if (helpItem != null)
+        View item1 = findViewById(R.id.item1);
+        if (item1 != null)
         {
-            helpItem.setOnClickListener(new View.OnClickListener()
+            RelativeLayout helpItem = (RelativeLayout) item1.findViewById(R.id.itemLayout);
+            if (helpItem != null)
             {
-                @Override
-                public void onClick(View view)
+                helpItem.setOnClickListener(new View.OnClickListener()
                 {
-                    showHelp();
-                }
-            });
+                    @Override
+                    public void onClick(View view)
+                    {
+                        showHelp();
+                    }
+                });
 
-            TextView helpTitle = (TextView) helpItem.findViewById(android.R.id.text1);
-            helpTitle.setText(getString(R.string.configLabel_widgetListHelp_title));
+                TextView helpTitle = (TextView) helpItem.findViewById(android.R.id.text1);
+                helpTitle.setText(getString(R.string.configLabel_widgetListHelp_title));
 
-            TextView helpSummary = (TextView) helpItem.findViewById(android.R.id.text2);
-            helpSummary.setText(getString(R.string.configLabel_widgetListHelp_summary));
+                TextView helpSummary = (TextView) helpItem.findViewById(android.R.id.text2);
+                helpSummary.setText(getString(R.string.configLabel_widgetListHelp_summary));
+            }
         }
     }
 
@@ -189,6 +247,53 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     }
 
     /**
+     *
+     */
+    private void initThemeItem(final Context context)
+    {
+        View item2 = findViewById(R.id.item2);
+        if (item2 != null)
+        {
+            RelativeLayout themeItem = (RelativeLayout) item2.findViewById(R.id.itemLayout);
+            if (themeItem != null)
+            {
+                themeItem.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View view)
+                    {
+                        launchThemeEditor(context);
+                    }
+                });
+
+                TypedArray a = getTheme().obtainStyledAttributes(new int[] {R.attr.icActionSettings});
+                int resID = a.getResourceId(0, 0);
+                Drawable icon = getResources().getDrawable(resID);
+                a.recycle();
+
+                ImageView themeIcon = (ImageView) themeItem.findViewById(android.R.id.icon1);
+                themeIcon.setImageDrawable(icon);
+
+                TextView themeTitle = (TextView) themeItem.findViewById(android.R.id.text1);
+                themeTitle.setText(getString(R.string.configLabel_widgetThemeList));
+
+                TextView themeSummary = (TextView) themeItem.findViewById(android.R.id.text2);
+                themeSummary.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    /**
+     *
+     */
+    protected void launchThemeEditor(Context context)
+    {
+        Intent configThemesIntent = new Intent(context, WidgetThemeListActivity.class);
+        configThemesIntent.putExtra(WidgetThemeListActivity.PARAM_NOSELECT, true);
+        startActivity(configThemesIntent);
+    }
+
+    /**
      * @param widget a WidgetListItem (referencing some widget id)
      */
     protected void reconfigureWidget(WidgetListItem widget)
@@ -198,6 +303,13 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         configIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         configIntent.putExtra(WidgetSettings.ActionMode.ONTAP_LAUNCH_CONFIG.name(), true);
         startActivity(configIntent);
+    }
+
+    public static void updateWidgetAlarms(Context context)
+    {
+        Intent updateIntent = new Intent();
+        updateIntent.setAction(SuntimesWidget0.SUNTIMES_ALARM_UPDATE);
+        context.sendBroadcast(updateIntent);
     }
 
     /**
@@ -322,7 +434,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                     SuntimesData data;
                     String widgetTitle;
                     String widgetType;
-                    if (widgetClass == SuntimesWidget2.class)
+                    if (widgetClass == SolsticeWidget0.class)
                     {
                         SuntimesEquinoxSolsticeData data0 =  new SuntimesEquinoxSolsticeData(context, id);
                         widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
@@ -360,7 +472,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget0.class, titlePattern0));
             items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget0_2x1.class, titlePattern0));
             items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget1.class, titlePattern0));
-            items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget2.class, titlePattern0));
+            items.addAll(createWidgetListItems(context, widgetManager, SolsticeWidget0.class, titlePattern0));
 
             String titlePattern1 = context.getString(R.string.configLabel_widgetList_itemTitlePattern1);
             items.addAll(createWidgetListItems(context, widgetManager, MoonWidget0.class, titlePattern1));

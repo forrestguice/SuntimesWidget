@@ -32,9 +32,9 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
  * Solstice / Equinox widget config activity.
  */
 @SuppressWarnings("Convert2Diamond")
-public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
+public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
 {
-    public SuntimesConfigActivity2()
+    public SolsticeWidget0ConfigActivity()
     {
         super();
     }
@@ -59,7 +59,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     protected void updateWidget(Context context)
     {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        SuntimesWidget2.updateAppWidget(context, appWidgetManager, appWidgetId);
+        SolsticeWidget0.updateAppWidget(context, appWidgetManager, appWidgetId);
     }
 
     @Override

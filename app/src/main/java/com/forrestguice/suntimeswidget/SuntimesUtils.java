@@ -28,6 +28,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.InsetDrawable;
 
+import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -49,6 +50,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ImageView;
 
 import java.lang.reflect.Method;
 import java.text.DateFormat;
@@ -471,6 +473,12 @@ public class SuntimesUtils
         Calendar now = Calendar.getInstance();
         return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != now.get(Calendar.YEAR))), false);
     }
+    public TimeDisplayText calendarDateTimeDisplayString(Context context, long timestamp)
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(timestamp);
+        return calendarDateTimeDisplayString(context, cal);
+    }
     public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showSeconds)
     {
         Calendar now = Calendar.getInstance();
@@ -869,6 +877,7 @@ public class SuntimesUtils
 
         if (drawable != null)
         {
+            drawable.mutate();    // don't cache state (or setColorFilter modifies all instances)
             if (width > 0 && height > 0)
             {
                 drawable.setBounds(0, 0, width, height);
@@ -962,6 +971,26 @@ public class SuntimesUtils
     }
 
     /**
+     * @param view the ImageView
+     * @param color color to apply
+     */
+    public static void colorizeImageView(ImageView view, int color)
+    {
+        if (view != null && view.getBackground() != null)
+        {
+            try {
+                GradientDrawable d = (GradientDrawable) view.getBackground().mutate();
+                d.setColor(color);
+                d.invalidateSelf();
+                return;
+
+            } catch (ClassCastException e) {
+                Log.w("colorizeImageView", "failed to colorize! " + e);
+            }
+        }
+    }
+
+    /**
      * Creates a tinted copy of the supplied bitmap.
      * @param b a bitmap image
      * @param color a color
@@ -988,7 +1017,7 @@ public class SuntimesUtils
      * @param resourceID drawable resource ID to a GradientDrawable
      * @param fillColor fill color to apply to drawable
      * @param strokeColor stroke color to apply to drawable
-     * @param strokePx width of stroke
+     * @param strokePx width of stroke (pixels)
      * @return a Bitmap of the drawable
      */
     public static Bitmap gradientDrawableToBitmap(Context context, int resourceID, int fillColor, int strokeColor, int strokePx)
@@ -1012,7 +1041,7 @@ public class SuntimesUtils
      * @param resourceID drawable resource ID to an InsetDrawable
      * @param fillColor fill color to apply to drawable
      * @param strokeColor stroke color to apply to drawable
-     * @param strokePx width of stroke
+     * @param strokePx width of stroke (pixels)
      * @return a Bitmap of the drawable
      */
     public static Bitmap insetDrawableToBitmap(Context context, int resourceID, int fillColor, int strokeColor, int strokePx)
@@ -1038,6 +1067,40 @@ public class SuntimesUtils
         }
 
         Drawable tinted = tintDrawable(inset, fillColor, strokeColor, strokePx);
+        return drawableToBitmap(context, tinted, w, h, true);
+    }
+
+    /**
+     * @param context context used to get resources
+     * @param resourceID drawable resourceID to a LayerDrawable
+     * @param fillColor fill color to apply to drawable
+     * @param strokeColor stroke color to apply to drawable
+     * @param strokePx width of stroke (pixels)
+     * @return a Bitmap of the drawable
+     */
+    public static Bitmap layerDrawableToBitmap(Context context, int resourceID, int fillColor, int strokeColor, int strokePx)
+    {
+        Drawable drawable = ResourcesCompat.getDrawable(context.getResources(), resourceID, null);
+        LayerDrawable layers = (LayerDrawable)drawable;
+
+        int w = 1, h = 1;
+        if (layers != null)
+        {
+            //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+            //{
+                //Drawable layer0 = layers.getDrawable(0);
+                //if (layer0 != null)
+                //{
+                    //w = layer0.getIntrinsicWidth();
+                    //h = layer0.getIntrinsicHeight();
+                //}
+            //} else {
+                w = layers.getIntrinsicWidth();       // TODO: thoroughly test this...
+                h = layers.getIntrinsicHeight();
+            //}
+        }
+
+        Drawable tinted = tintDrawable(layers, fillColor, strokeColor, strokePx);
         return drawableToBitmap(context, tinted, w, h, true);
     }
 
@@ -1077,6 +1140,31 @@ public class SuntimesUtils
         drawable.setStroke(strokePixels, strokeColor);
         drawable.setColor(fillColor);
         return drawable;
+    }
+
+    public static Drawable tintDrawable(LayerDrawable drawable, int fillColor, int strokeColor, int strokePixels)
+    {
+        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+        //{
+            try {
+                GradientDrawable gradient = (GradientDrawable)drawable.getDrawable(0);
+                if (gradient != null)
+                {
+                    SuntimesUtils.tintDrawable(gradient, fillColor, strokeColor, strokePixels);
+                    return drawable;
+
+                } else {
+                    Log.w("tintDrawable", "failed to apply color! Null inset drawable.");
+                    return drawable;
+                }
+            } catch (ClassCastException e) {
+                Log.w("tintDrawable", "failed to apply color! " + e);
+                return drawable;
+            }
+        //} else {
+            //Log.w("tintDrawable", "failed to apply color! InsetDrawable.getDrawable requires api 19+");
+            //return drawable;   // not supported
+        //}
     }
 
     /**

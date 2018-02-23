@@ -21,7 +21,7 @@ package com.forrestguice.suntimeswidget;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_2x1_0;
+import com.forrestguice.suntimeswidget.layouts.SunLayout_2x1_0;
 
 /**
  * Widget receiver for resizable widget (that falls back to 2x1 layout).
@@ -52,7 +52,7 @@ public class SuntimesWidget0_2x1 extends SuntimesWidget0
     @Override
     protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
-        SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0_2x1.class, getMinSize(context), new SuntimesLayout_2x1_0());
+        SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0_2x1.class, getMinSize(context), new SunLayout_2x1_0());
     }
 }
 

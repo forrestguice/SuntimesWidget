@@ -69,7 +69,6 @@ public class MoonLayout_1x1_4 extends MoonLayout
         {
             MoonPhaseDisplay nextPhase = SuntimesMoonData.toPhase(majorPhase);
             views.setViewVisibility(nextPhase.getView(), View.VISIBLE);
-            //views.setTextViewText(R.id.text_info_moonphase, phase.getLongDisplayString());
 
             SuntimesUtils.TimeDisplayText phaseString = utils.calendarDateTimeDisplayString(context, data.moonPhaseCalendar(majorPhase), showSeconds);
             views.setTextViewText(R.id.moonphase_major_date, phaseString.getValue());
@@ -80,6 +79,8 @@ public class MoonLayout_1x1_4 extends MoonLayout
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         super.themeViews(context, views, theme);
+        themeViewsMoonPhase(context, views, theme);
+        themeViewsMoonPhaseIcons(context, views, theme);
 
         int timeColor = theme.getTimeColor();
         views.setTextColor(R.id.moonphase_major_date, timeColor);

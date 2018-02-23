@@ -32,7 +32,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.SuntimesUtils.TimeDisplayText;
 
-public class SuntimesLayout_2x1_0 extends SuntimesLayout
+public class SunLayout_2x1_0 extends SunLayout
 {
     @Override
     public void initLayoutID()
@@ -45,16 +45,7 @@ public class SuntimesLayout_2x1_0 extends SuntimesLayout
     {
         super.updateViews(context, appWidgetId, views, data);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
-
-        // update sunrise time
-        TimeDisplayText sunriseString = utils.calendarTimeShortDisplayString(context, data.sunriseCalendarToday(), showSeconds);
-        views.setTextViewText(R.id.text_time_rise, sunriseString.getValue());
-        views.setTextViewText(R.id.text_time_rise_suffix, sunriseString.getSuffix());
-
-        // upset sunset time
-        TimeDisplayText sunsetString = utils.calendarTimeShortDisplayString(context, data.sunsetCalendarToday(), showSeconds);
-        views.setTextViewText(R.id.text_time_set, sunsetString.getValue());
-        views.setTextViewText(R.id.text_time_set_suffix, sunsetString.getSuffix());
+        updateViewsSunRiseSetText(context, views, data, showSeconds);
 
         // update day delta
         boolean showDayDelta = WidgetSettings.loadShowComparePref(context, appWidgetId);
@@ -74,9 +65,7 @@ public class SuntimesLayout_2x1_0 extends SuntimesLayout
         boolean showSolarNoon = WidgetSettings.loadShowNoonPref(context, appWidgetId);
         if (showSolarNoon && noonData != null)
         {
-            TimeDisplayText noonString = utils.calendarTimeShortDisplayString(context, noonData.sunsetCalendarToday(), showSeconds);
-            views.setTextViewText(R.id.text_time_noon, noonString.getValue());
-            views.setTextViewText(R.id.text_time_noon_suffix, noonString.getSuffix());
+            updateViewsNoonText(context, views, noonData, showSeconds);
             views.setViewVisibility(R.id.layout_noon, View.VISIBLE);
 
         } else {
