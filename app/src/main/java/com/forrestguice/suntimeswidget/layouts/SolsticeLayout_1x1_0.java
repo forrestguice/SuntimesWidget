@@ -37,14 +37,14 @@ import java.util.Calendar;
 /**
  * A 1x1 layout that displays either a solstice or equinox datetime.
  */
-public class SuntimesLayout_1x1eq_0 extends SuntimesLayoutEq
+public class SolsticeLayout_1x1_0 extends SolsticeLayout
 {
-    public SuntimesLayout_1x1eq_0()
+    public SolsticeLayout_1x1_0()
     {
         super();
     }
 
-    public SuntimesLayout_1x1eq_0(int layoutID)
+    public SolsticeLayout_1x1_0(int layoutID)
     {
         this.layoutID = layoutID;
     }

@@ -21,9 +21,7 @@ package com.forrestguice.suntimeswidget;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.TypedArray;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -37,10 +35,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class LightMapDialog extends DialogFragment
 {
@@ -111,21 +107,11 @@ public class LightMapDialog extends DialogFragment
         colorDay = ContextCompat.getColor(context, typedArray.getResourceId(4, def));
         typedArray.recycle();
 
-        colorizeImageView(field_night.icon, colorNight);
-        colorizeImageView(field_astro.icon, colorAstro);
-        colorizeImageView(field_nautical.icon, colorNautical);
-        colorizeImageView(field_civil.icon, colorCivil);
-        colorizeImageView(field_day.icon, colorDay);
-    }
-
-    private void colorizeImageView(ImageView view, int color)
-    {
-        if (view != null && view.getBackground() != null)
-        {
-            GradientDrawable d = (GradientDrawable) view.getBackground().mutate();
-            d.setColor(color);
-            d.invalidateSelf();
-        }
+        SuntimesUtils.colorizeImageView(field_night.icon, colorNight);
+        SuntimesUtils.colorizeImageView(field_astro.icon, colorAstro);
+        SuntimesUtils.colorizeImageView(field_nautical.icon, colorNautical);
+        SuntimesUtils.colorizeImageView(field_civil.icon, colorCivil);
+        SuntimesUtils.colorizeImageView(field_day.icon, colorDay);
     }
 
     public void updateViews()

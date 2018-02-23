@@ -44,6 +44,7 @@ import android.support.v7.view.ActionMode;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 
+import com.forrestguice.suntimeswidget.layouts.SunLayout;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -127,7 +128,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
         super.onCreate(icicle);
         initLocale();
-        setResult(RESULT_CANCELED);  // causes widget host to cancel if user presses back
+        setResult(RESULT_CANCELED);
         setContentView(R.layout.layout_settings);
 
         Context context = SuntimesConfigActivity0.this;
@@ -135,8 +136,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         Bundle extras = intent.getExtras();
         if (extras != null)
         {
-            appWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID,
-                    AppWidgetManager.INVALID_APPWIDGET_ID);
+            appWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
             reconfigure = extras.getBoolean(WidgetSettings.ActionMode.ONTAP_LAUNCH_CONFIG.name(), false);
         }
 
@@ -146,6 +146,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             finish();
             return;
         }
+
+        Intent cancelIntent = new Intent();
+        cancelIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        setResult(RESULT_CANCELED, cancelIntent);
 
         WidgetThemes.initThemes(context);
 
@@ -329,8 +333,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 @Override
                 public void onClick(View v)
                 {
-                    Intent configThemesIntent = new Intent(context, WidgetThemeListActivity.class);
-                    startActivityForResult(configThemesIntent, PICK_THEME_REQUEST);
+                    launchThemeEditor(context);
                 }
             });
         }
@@ -568,7 +571,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      */
     protected void initThemeAdapter(final Context context)
     {
-        spinner_themeAdapter = new WidgetThemes.ThemeListAdapter(this, R.layout.layout_listitem_oneline, android.R.layout.simple_spinner_dropdown_item, WidgetThemes.values());
+        spinner_themeAdapter = new WidgetThemes.ThemeListAdapter(this, R.layout.layout_listitem_oneline, android.R.layout.simple_spinner_dropdown_item, WidgetThemes.sortedValues(false));
         spinner_theme.setAdapter(spinner_themeAdapter);
     }
 
@@ -808,8 +811,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         saveWidgetMode1x1(context);
 
         // save: theme
-        final ThemeDescriptor[] themes = WidgetThemes.values();
-        ThemeDescriptor theme = themes[spinner_theme.getSelectedItemPosition()];
+        ThemeDescriptor theme = (ThemeDescriptor)spinner_theme.getSelectedItem();
         WidgetSettings.saveThemePref(context, appWidgetId, theme.name());
         //Log.d("DEBUG", "Saved theme: " + theme.name());
 
@@ -842,16 +844,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         try
         {
             themeDescriptor = WidgetThemes.valueOf(theme.themeName());
-        } catch (InvalidParameterException e)
-        {
+        } catch (InvalidParameterException e) {
             Log.e("loadAppearanceSettings", "Failed to load theme " + theme.themeName());
             themeDescriptor = DarkTheme.THEMEDEF_DESCRIPTOR;
         }
         if (themeDescriptor != null)
         {
-            spinner_theme.setSelection(themeDescriptor.ordinal(WidgetThemes.values()));
-        } else
-        {
+            spinner_theme.setSelection(themeDescriptor.ordinal(spinner_themeAdapter.values()));
+        } else {
             Log.e("loadAppearanceSettings", "theme is not installed! " + theme.themeName());
         }
 
@@ -860,8 +860,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             boolean allowResize = WidgetSettings.loadAllowResizePref(context, appWidgetId);
             checkbox_allowResize.setChecked(allowResize);
-        } else
-        {
+        } else {
             disableOptionAllowResize();
         }
 
@@ -1082,7 +1081,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         minSize[0] = context.getResources().getInteger(R.integer.widget_size_minWidthDp);
         minSize[1] = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
 
-        SuntimesLayout defLayout = WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId);
+        SunLayout defLayout = WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0.class, minSize, defLayout);
     }
@@ -1304,4 +1303,25 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             Log.w("selectTheme", "unable to find " + themeDescriptor.name() + " (bad position).");
         }
     }
+
+    protected Intent themeEditorIntent(Context context)
+    {
+        Intent intent = new Intent(context, WidgetThemeListActivity.class);
+        if (spinner_theme != null)
+        {
+            ThemeDescriptor theme = (ThemeDescriptor) spinner_theme.getSelectedItem();
+            if (theme != null)
+            {
+                intent.putExtra(WidgetThemeListActivity.PARAM_SELECTED, theme.name());
+            }
+        }
+        return intent;
+    }
+
+    protected void launchThemeEditor(Context context)
+    {
+        Intent configThemesIntent = themeEditorIntent(context);
+        startActivityForResult(configThemesIntent, PICK_THEME_REQUEST);
+    }
+
 }

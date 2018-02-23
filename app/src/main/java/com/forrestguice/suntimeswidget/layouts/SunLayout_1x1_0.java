@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2014 Forrest Guice
+   Copyright (C) 2014-2018 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -36,14 +36,14 @@ import com.forrestguice.suntimeswidget.SuntimesUtils.TimeDisplayText;
 /**
  * A 1x1 layout that displays both the sunrise and sunset time.
  */
-public class SuntimesLayout_1x1_0 extends SuntimesLayout
+public class SunLayout_1x1_0 extends SunLayout
 {
-    public SuntimesLayout_1x1_0()
+    public SunLayout_1x1_0()
     {
         super();
     }
 
-    public SuntimesLayout_1x1_0( int layoutID )
+    public SunLayout_1x1_0(int layoutID )
     {
         this.layoutID = layoutID;
     }
@@ -59,16 +59,7 @@ public class SuntimesLayout_1x1_0 extends SuntimesLayout
     {
         super.updateViews(context, appWidgetId, views, data);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
-
-        // update sunrise time
-        TimeDisplayText sunriseString = utils.calendarTimeShortDisplayString(context, data.sunriseCalendarToday(), showSeconds);
-        views.setTextViewText(R.id.text_time_rise, sunriseString.getValue());
-        views.setTextViewText(R.id.text_time_rise_suffix, sunriseString.getSuffix());
-
-        // update sunset time
-        TimeDisplayText sunsetString = utils.calendarTimeShortDisplayString(context, data.sunsetCalendarToday(), showSeconds);
-        views.setTextViewText(R.id.text_time_set, sunsetString.getValue());
-        views.setTextViewText(R.id.text_time_set_suffix, sunsetString.getSuffix());
+        updateViewsSunRiseSetText(context, views, data, showSeconds);
     }
 
     @Override

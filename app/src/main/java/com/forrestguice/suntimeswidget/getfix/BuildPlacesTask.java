@@ -25,7 +25,6 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;

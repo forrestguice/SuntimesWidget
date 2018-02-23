@@ -16,1190 +16,1429 @@
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <android.support.v7.widget.Toolbar android:id="@+id/app_menubar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary" android:theme="?attr/toolbarTheme" app:popupTheme="?attr/actionBarPopupTheme"
-        app:title="@string/configLabel_widgetThemeAdd" />
+    <ImageView
+        android:id="@+id/preview_background"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:src="?timeCardBackground" android:scaleType="centerCrop"
+        tools:ignore="ContentDescription" />
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent" android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical">
 
-        <!-- guidelines -->
-        <android.support.constraint.Guideline
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:id="@+id/centerLine" app:layout_constraintGuide_percent="0.5"
-            android:orientation="vertical"
-            tools:layout_editor_absoluteY="81dp"
-            tools:layout_editor_absoluteX="180dp"/>
-
-        <android.support.constraint.Guideline
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:id="@+id/centerLineL" app:layout_constraintGuide_percent="0.42"
-            android:orientation="vertical"
-            tools:layout_editor_absoluteY="81dp"
-            tools:layout_editor_absoluteX="151dp"/>
-
-        <android.support.constraint.Guideline
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:id="@+id/centerLineR" app:layout_constraintGuide_percent="0.58"
-            android:orientation="vertical"
-            tools:layout_editor_absoluteY="81dp"
-            tools:layout_editor_absoluteX="209dp"/>
-
-        <!-- Theme Name (ID) -->
-        <TextView android:labelFor="@+id/edit_themeName"
-            android:id="@+id/editLabel_themeName"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBaseline_toBaselineOf="@+id/edit_themeName"
-            android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="8dp" android:paddingRight="8dp"
-            android:text="@string/configLabel_themeID"
-            tools:layout_editor_absoluteX="0dp"/>
-
-        <EditText
-            android:id="@+id/edit_themeName"
-            android:layout_width="0dp" android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/editLabel_themeName"
-            app:layout_constraintEnd_toEndOf="@+id/centerLine"
-            android:inputType="textNoSuggestions"
-            android:hint="@string/configHint_themeID"
-            android:text=""
-            tools:layout_editor_absoluteX="33dp"/>
-
-        <!-- Theme Name (display string) -->
-        <TextView android:labelFor="@+id/edit_themeDisplay"
-            android:id="@+id/editLabel_themeDisplay"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBaseline_toBaselineOf="@+id/edit_themeDisplay"
-            android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="8dp" android:paddingRight="8dp"
-            android:text="@string/configLabel_themeName"
-            tools:layout_editor_absoluteX="0dp"/>
-
-        <EditText
-            android:id="@+id/edit_themeDisplay"
-            android:layout_width="0dp" android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/edit_themeName"
-            app:layout_constraintStart_toEndOf="@+id/editLabel_themeDisplay"
-            app:layout_constraintEnd_toEndOf="@+id/centerLine"
-            android:inputType="text"
-            android:hint="@string/configHint_themeName"
-            android:text=""
-            tools:layout_editor_absoluteX="65dp"/>
-
-        <!-- preview area -->
-        <FrameLayout
-            android:id="@+id/preview_area"
-            android:layout_width="170dp" android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/centerLine"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:layout_editor_absoluteX="185dp">
-
-            <include layout="@layout/layout_widget_2x1_0" />
-
-        </FrameLayout>
-
-    </android.support.constraint.ConstraintLayout>
-
-    <ScrollView android:id="@+id/scrollView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-        <android.support.constraint.ConstraintLayout
-            android:background="?attr/colorPrimary"
-            android:layout_marginBottom="16dp"
+        <android.support.v7.widget.Toolbar android:id="@+id/app_menubar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:focusable="true" android:focusableInTouchMode="true">
+            android:background="?attr/colorPrimary"
+            android:theme="?attr/toolbarTheme" app:popupTheme="?attr/actionBarPopupTheme"
+            app:title="@string/configLabel_widgetThemeAdd" />
 
-            <!-- Background -->
-            <TextView android:labelFor="@+id/editSpin_background"
-                android:id="@+id/editLabel_background"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/editSpin_background"
-                app:layout_constraintBottom_toBottomOf="@+id/editSpin_background"
-                android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="0dp" android:paddingRight="0dp"
-                android:text="@string/configLabel_themeBackgroundId"
-                tools:layout_editor_absoluteX="0dp"/>
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content">
 
-            <Spinner
-                android:id="@+id/editSpin_background"
+            <!-- guidelines -->
+            <android.support.constraint.Guideline
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_marginTop="8dp" android:layout_marginBottom="4dp"
-                app:layout_constraintStart_toEndOf="@+id/editLabel_background"
+                android:id="@+id/centerLine" app:layout_constraintGuide_percent="0.5"
+                android:orientation="vertical"
+                tools:layout_editor_absoluteY="81dp"
+                tools:layout_editor_absoluteX="180dp"/>
+
+            <android.support.constraint.Guideline
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:id="@+id/centerLineL" app:layout_constraintGuide_percent="0.42"
+                android:orientation="vertical"
+                tools:layout_editor_absoluteY="81dp"
+                tools:layout_editor_absoluteX="151dp"/>
+
+            <android.support.constraint.Guideline
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:id="@+id/centerLineR" app:layout_constraintGuide_percent="0.58"
+                android:orientation="vertical"
+                tools:layout_editor_absoluteY="81dp"
+                tools:layout_editor_absoluteX="209dp"/>
+
+            <View
+                android:layout_width="0dp" android:layout_height="0dp"
+                android:background="?attr/semiTransparentBackground"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:layout_editor_absoluteX="42dp"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/centerLine" />
 
-            <!-- Padding -->
-            <TextView android:labelFor="@+id/edit_padding"
-                android:id="@+id/editLabel_padding"
+            <!-- Theme Name (ID) -->
+            <TextView android:labelFor="@+id/edit_themeName"
+                android:id="@+id/editLabel_themeName"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBaseline_toBaselineOf="@+id/edit_padding"
+                app:layout_constraintBaseline_toBaselineOf="@+id/edit_themeName"
                 android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="8dp" android:paddingRight="8dp"
-                android:text="@string/configLabel_themePadding"
+                android:text="@string/configLabel_themeID"
                 tools:layout_editor_absoluteX="0dp"/>
 
             <EditText
-                android:id="@+id/edit_padding"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:inputType="textNoSuggestions"
-                android:text="" android:hint="@string/configHint_themePadding"
-                app:layout_constraintStart_toEndOf="@+id/editLabel_padding"
-                app:layout_constraintEnd_toEndOf="@+id/edit_suffixSize"
-                app:layout_constraintTop_toBottomOf="@+id/editSpin_background"
-                tools:layout_editor_absoluteX="72dp"/>
-
-            <!-- Time Size -->
-            <TextView android:labelFor="@+id/edit_timeSize"
-                android:id="@+id/editLabel_timeSize"
-                style="@style/SizeEditLabel"
-                android:paddingStart="8dp" android:paddingEnd="8dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBaseline_toBaselineOf="@+id/edit_timeSize"
-                android:text="@string/configLabel_themeSizeTime" />
-
-            <EditText
-                android:id="@+id/edit_timeSize"
-                style="@style/SizeEdit"
-                android:layout_width="0dp"
-                android:text="" android:hint="@string/configHint_themeSizeTime" tools:text="12"
-                app:layout_constraintStart_toEndOf="@+id/editLabel_timeSize"
-                app:layout_constraintTop_toBottomOf="@+id/edit_padding"
-                tools:layout_editor_absoluteX="81dp"/>
-
-            <!-- Suffix Size -->
-            <TextView android:labelFor="@+id/edit_suffixSize"
-                android:id="@+id/editLabel_suffixSize"
-                style="@style/SizeEditLabel"
-                android:paddingStart="8dp" android:paddingEnd="8dp"
-                app:layout_constraintStart_toEndOf="@+id/edit_timeSize"
-                app:layout_constraintBaseline_toBaselineOf="@+id/edit_suffixSize"
-                android:layout_marginStart="16dp" android:layout_marginEnd="8dp"
-                android:layout_marginLeft="16dp" android:layout_marginRight="8dp"
-                android:text="@string/configLabel_themeSizeSuffix" />
-
-            <EditText
-                android:id="@+id/edit_suffixSize"
-                style="@style/SizeEdit"
-                android:layout_width="0dp"
-                android:text="" android:hint="@string/configHint_themeSizeSuffix" tools:text="8"
-                app:layout_constraintStart_toEndOf="@+id/editLabel_suffixSize"
-                app:layout_constraintTop_toBottomOf="@+id/edit_padding"
-                tools:layout_editor_absoluteX="210dp"/>
-
-            <!-- Title Size -->
-            <TextView android:labelFor="@+id/edit_titleSize"
-                android:id="@+id/editLabel_titleSize"
-                style="@style/SizeEditLabel"
-                android:paddingStart="8dp" android:paddingEnd="8dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBaseline_toBaselineOf="@+id/edit_titleSize"
-                android:text="@string/configLabel_themeSizeTitle" />
-
-            <EditText
-                android:id="@+id/edit_titleSize"
-                style="@style/SizeEdit"
-                android:layout_width="0dp"
-                android:text="" android:hint="@string/configHint_themeSizeTitle" tools:text="14"
-                app:layout_constraintStart_toEndOf="@+id/editLabel_titleSize"
-                app:layout_constraintTop_toBottomOf="@+id/edit_suffixSize"
-                tools:layout_editor_absoluteX="77dp"/>
-
-            <!-- Text Size -->
-            <TextView android:labelFor="@+id/edit_textSize"
-                android:id="@+id/editLabel_textSize"
-                style="@style/SizeEditLabel"
-                android:paddingStart="8dp" android:paddingEnd="8dp"
-                app:layout_constraintStart_toEndOf="@+id/edit_titleSize"
-                app:layout_constraintBaseline_toBaselineOf="@+id/edit_textSize"
-                android:layout_marginStart="16dp" android:layout_marginEnd="8dp"
-                android:layout_marginLeft="16dp" android:layout_marginRight="8dp"
-                android:text="@string/configLabel_themeSizeText"/>
-
-            <EditText
-                android:id="@+id/edit_textSize"
-                style="@style/SizeEdit"
-                android:layout_width="0dp"
-                android:text="" android:hint="@string/configHint_themeSizeText" tools:text="10"
-                app:layout_constraintStart_toEndOf="@+id/editLabel_textSize"
-                app:layout_constraintTop_toBottomOf="@+id/edit_suffixSize"
-                tools:layout_editor_absoluteX="197dp"/>
-
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/layout_colors"
+                android:id="@+id/edit_themeName"
                 android:layout_width="0dp" android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/edit_titleSize"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/editLabel_themeName"
+                app:layout_constraintEnd_toEndOf="@+id/centerLine"
+                android:inputType="textNoSuggestions"
+                android:hint="@string/configHint_themeID"
+                android:text=""
+                tools:layout_editor_absoluteX="33dp"/>
+
+            <!-- Theme Name (display string) -->
+            <TextView android:labelFor="@+id/edit_themeDisplay"
+                android:id="@+id/editLabel_themeDisplay"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintBaseline_toBaselineOf="@+id/edit_themeDisplay"
+                android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="8dp" android:paddingRight="8dp"
+                android:text="@string/configLabel_themeName"
+                tools:layout_editor_absoluteX="0dp"/>
 
-                <android.support.constraint.Guideline
+            <EditText
+                android:id="@+id/edit_themeDisplay"
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/edit_themeName"
+                app:layout_constraintStart_toEndOf="@+id/editLabel_themeDisplay"
+                app:layout_constraintEnd_toEndOf="@+id/centerLine"
+                android:inputType="text"
+                android:hint="@string/configHint_themeName"
+                android:text=""
+                tools:layout_editor_absoluteX="65dp"/>
+
+            <!-- preview area -->
+            <ViewFlipper
+                android:id="@+id/preview_area"
+                android:layout_width="170dp" android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/centerLine"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:layout_editor_absoluteX="185dp">
+
+                <LinearLayout android:id="@+id/preview0"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:id="@+id/center_colors" app:layout_constraintGuide_percent="0.5"
-                    android:orientation="vertical"
-                    tools:layout_editor_absoluteY="0dp"
-                    tools:layout_editor_absoluteX="180dp"/>
-
-                <!-- Title Color -->
-                <LinearLayout
-                    android:id="@+id/layout_titleColor"
-                    android:orientation="horizontal" android:gravity="center_vertical"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent">
-
-                    <TextView android:labelFor="@+id/edit_titleColor"
-                        android:id="@+id/editLabel_titleColor"
-                        style="@style/ColorEditLabel"
-                        android:paddingStart="8dp" android:paddingEnd="8dp"
-
-                        android:nextFocusUp="@+id/edit_titleSize"
-                        android:nextFocusLeft="@+id/editLabel_titleSize"
-                        android:nextFocusRight="@+id/editLabel_suffixColor"
-                        android:nextFocusDown="@+id/editLabel_textColor"
-                        android:nextFocusForward="@+id/editLabel_suffixColor"
-
-                        android:text="@string/configLabel_themeColorTitle"
-                        tools:ignore="UnusedAttribute" />
-
-                    <EditText
-                        android:id="@+id/edit_titleColor"
-                        style="@style/ColorEdit" android:visibility="gone"
-                        android:fontFamily="monospace"
-
-                        android:nextFocusUp="@+id/edit_titleSize"
-                        android:nextFocusLeft="@+id/editLabel_titleSize"
-                        android:nextFocusRight="@+id/editLabel_suffixColor"
-                        android:nextFocusDown="@+id/editLabel_textColor"
-                        android:nextFocusForward="@+id/editLabel_suffixColor"
-
-                        android:text="" android:hint="@string/configHint_themeColorTitle"
-                        tools:ignore="UnusedAttribute" />
-
-                    <ImageButton
-                        android:id="@+id/editButton_titleColor"
-                        style="@style/ColorEditButton"
-                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
-                        android:contentDescription="@string/configLabel_themeColorTitle" />
-
+                    android:layout_gravity="center">
+                    <include layout="@layout/layout_widget_2x1_0" tools:ignore="DuplicateIncludedIds"/>
                 </LinearLayout>
 
-                <!-- Suffix Color -->
-                <LinearLayout
-                    android:id="@+id/layout_suffixColor"
-                    android:orientation="horizontal" android:gravity="center_vertical"
+                <LinearLayout android:id="@+id/preview1"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@+id/layout_titleColor"
-                    app:layout_constraintStart_toEndOf="@+id/layout_titleColor"
-                    android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
-                    android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
-
-                    <TextView android:labelFor="@+id/edit_suffixColor"
-                        android:id="@+id/editLabel_suffixColor"
-                        style="@style/ColorEditLabel"
-                        android:paddingStart="8dp" android:paddingEnd="8dp"
-
-                        android:nextFocusUp="@+id/edit_titleSize"
-                        android:nextFocusLeft="@+id/editLabel_titleColor"
-                        android:nextFocusRight="@+id/editLabel_textColor"
-                        android:nextFocusDown="@+id/editLabel_textColor"
-                        android:nextFocusForward="@+id/editLabel_textColor"
-
-                        android:text="@string/configLabel_themeColorSuffix"
-                        tools:ignore="UnusedAttribute" />
-
-                    <EditText
-                        android:id="@+id/edit_suffixColor"
-                        style="@style/ColorEdit" android:visibility="gone"
-                        android:fontFamily="monospace"
-
-                        android:nextFocusUp="@+id/edit_titleSize"
-                        android:nextFocusLeft="@+id/editLabel_titleColor"
-                        android:nextFocusRight="@+id/editLabel_textColor"
-                        android:nextFocusDown="@+id/editLabel_textColor"
-                        android:nextFocusForward="@+id/editLabel_textColor"
-
-                        android:text="" android:hint="@string/configHint_themeColorSuffix"
-                        tools:ignore="UnusedAttribute" />
-
-                    <ImageButton
-                        android:id="@+id/editButton_suffixColor"
-                        style="@style/ColorEditButton"
-                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
-                        android:contentDescription="@string/configLabel_themeColorSuffix" />
-
+                    android:layout_gravity="center">
+                    <include layout="@layout/layout_widget_moon_2x1_0" tools:ignore="DuplicateIncludedIds" />
                 </LinearLayout>
 
-                <!-- Text Color -->
                 <LinearLayout
-                    android:id="@+id/layout_textColor"
-                    android:orientation="horizontal" android:gravity="center_vertical"
+                    android:id="@+id/preview2"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_titleColor"
-                    app:layout_constraintStart_toStartOf="parent">
-
-                    <TextView android:labelFor="@+id/edit_textColor"
-                        android:id="@+id/editLabel_textColor"
-                        style="@style/ColorEditLabel"
-                        android:paddingStart="8dp" android:paddingEnd="8dp"
-
-                        android:nextFocusUp="@+id/editLabel_titleColor"
-                        android:nextFocusLeft="@+id/editLabel_titleColor"
-                        android:nextFocusRight="@+id/editLabel_timeColor"
-                        android:nextFocusDown="@+id/editLabel_sunriseColor"
-                        android:nextFocusForward="@+id/editLabel_timeColor"
-
-                        android:text="@string/configLabel_themeColorText"
-                        tools:ignore="UnusedAttribute" />
-
-                    <EditText
-                        android:id="@+id/edit_textColor"
-                        style="@style/ColorEdit" android:visibility="gone"
-                        android:fontFamily="monospace"
-
-                        android:nextFocusUp="@+id/editLabel_titleColor"
-                        android:nextFocusLeft="@+id/editLabel_titleColor"
-                        android:nextFocusRight="@+id/editLabel_timeColor"
-                        android:nextFocusDown="@+id/editLabel_sunriseColor"
-                        android:nextFocusForward="@+id/editLabel_timeColor"
-
-                        android:text="" android:hint="@string/configHint_themeColorText"
-                        tools:ignore="UnusedAttribute" />
-
-                    <ImageButton
-                        android:id="@+id/editButton_textColor"
-                        style="@style/ColorEditButton"
-                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
-                        android:contentDescription="@string/configLabel_themeColorText" />
-
+                    android:layout_gravity="center">
+                    <include layout="@layout/layout_widget_moon_3x1_0" tools:ignore="DuplicateIncludedIds" />
                 </LinearLayout>
 
-                <!-- Time Color -->
-                <LinearLayout
-                    android:id="@+id/layout_timeColor"
-                    android:orientation="horizontal" android:gravity="center_vertical"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@+id/layout_textColor"
-                    app:layout_constraintStart_toEndOf="@+id/layout_textColor"
-                    android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
-                    android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
-
-                    <TextView android:labelFor="@+id/edit_timeColor"
-                        android:id="@+id/editLabel_timeColor"
-                        style="@style/ColorEditLabel"
-                        android:paddingStart="8dp" android:paddingEnd="8dp"
-
-                        android:nextFocusUp="@+id/editLabel_titleColor"
-                        android:nextFocusLeft="@+id/editLabel_timeColor"
-                        android:nextFocusRight="@+id/editLabel_sunriseColor"
-                        android:nextFocusDown="@+id/editLabel_sunriseColor"
-                        android:nextFocusForward="@+id/editLabel_sunriseColor"
-
-                        android:text="@string/configLabel_themeColorTime"
-                        tools:ignore="UnusedAttribute" />
-
-                    <EditText
-                        android:id="@+id/edit_timeColor"
-                        style="@style/ColorEdit" android:visibility="gone"
-                        android:fontFamily="monospace"
-
-                        android:nextFocusUp="@+id/editLabel_titleColor"
-                        android:nextFocusLeft="@+id/editLabel_timeColor"
-                        android:nextFocusRight="@+id/editLabel_sunriseColor"
-                        android:nextFocusDown="@+id/editLabel_sunriseColor"
-                        android:nextFocusForward="@+id/editLabel_sunriseColor"
-
-                        android:text="" android:hint="@string/configHint_themeColorTime"
-                        tools:ignore="UnusedAttribute" />
-
-                    <ImageButton
-                        android:id="@+id/editButton_timeColor"
-                        style="@style/ColorEditButton"
-                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
-                        android:contentDescription="@string/configLabel_themeColorTime" />
-
-                </LinearLayout>
-
-                <!-- Sunrise Color -->
-                <LinearLayout
-                    android:id="@+id/layout_sunriseColor"
-                    android:orientation="horizontal" android:gravity="center_vertical"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_timeColor"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:layout_editor_absoluteX="27dp">
-
-                    <TextView android:labelFor="@+id/edit_sunriseColor"
-                        android:id="@+id/editLabel_sunriseColor"
-                        style="@style/ColorEditLabel"
-                        android:paddingStart="8dp" android:paddingEnd="8dp"
-
-                        android:nextFocusUp="@+id/editLabel_textColor"
-                        android:nextFocusLeft="@+id/editLabel_textColor"
-                        android:nextFocusRight="@+id/editLabel_sunsetColor"
-                        android:nextFocusForward="@+id/editLabel_sunsetColor"
-                        android:nextFocusDown="@+id/editLabel_sunriseFillColor"
-
-                        android:text="@string/configLabel_themeColorSunrise"
-                        tools:ignore="UnusedAttribute" />
-
-                    <EditText
-                        android:id="@+id/edit_sunriseColor"
-                        style="@style/ColorEdit" android:visibility="gone"
-                        android:fontFamily="monospace"
-
-                        android:nextFocusUp="@+id/editLabel_textColor"
-                        android:nextFocusLeft="@+id/editLabel_textColor"
-                        android:nextFocusRight="@+id/editLabel_sunsetColor"
-                        android:nextFocusForward="@+id/editLabel_sunsetColor"
-                        android:nextFocusDown="@+id/editLabel_sunriseFillColor"
-
-                        android:text="" android:hint="@string/configHint_themeColorSunrise"
-                        tools:ignore="UnusedAttribute" />
-
-                    <ImageButton
-                        android:id="@+id/editButton_sunriseColor"
-                        style="@style/ColorEditButton"
-                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
-                        android:contentDescription="@string/configLabel_themeColorSunrise" />
-
-                </LinearLayout>
-
-                <!-- Sunset Color -->
-                <LinearLayout
-                    android:id="@+id/layout_sunsetColor"
-                    android:orientation="horizontal" android:gravity="center_vertical"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@+id/layout_sunriseColor"
-                    app:layout_constraintStart_toEndOf="@+id/layout_sunriseColor"
-                    android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
-                    android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
-
-                    <TextView android:labelFor="@+id/edit_sunsetColor"
-                        android:id="@+id/editLabel_sunsetColor"
-                        style="@style/ColorEditLabel"
-                        android:paddingStart="8dp" android:paddingEnd="8dp"
-
-                        android:nextFocusUp="@+id/editLabel_textColor"
-                        android:nextFocusLeft="@+id/editLabel_sunriseColor"
-                        android:nextFocusRight="@+id/editLabel_sunriseFillColor"
-                        android:nextFocusForward="@+id/editLabel_sunriseFillColor"
-                        android:nextFocusDown="@+id/editLabel_sunriseFillColor"
-
-                        android:text="@string/configLabel_themeColorSunset"
-                        tools:ignore="UnusedAttribute" />
-
-                    <EditText
-                        android:id="@+id/edit_sunsetColor"
-                        style="@style/ColorEdit" android:visibility="gone"
-                        android:fontFamily="monospace"
-
-                        android:nextFocusUp="@+id/editLabel_textColor"
-                        android:nextFocusLeft="@+id/editLabel_sunriseColor"
-                        android:nextFocusRight="@+id/editLabel_sunriseFillColor"
-                        android:nextFocusForward="@+id/editLabel_sunriseFillColor"
-                        android:nextFocusDown="@+id/editLabel_sunriseFillColor"
-
-                        android:text="" android:hint="@string/configHint_themeColorSunset"
-                        tools:ignore="UnusedAttribute" />
-
-                    <ImageButton
-                        android:id="@+id/editButton_sunsetColor"
-                        style="@style/ColorEditButton"
-                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
-                        android:contentDescription="@string/configLabel_themeColorSunset" />
-
-                </LinearLayout>
-
-                <!-- Sunrise Fill Color -->
-                <LinearLayout
-                    android:id="@+id/layout_sunriseFillColor"
-                    android:orientation="horizontal" android:gravity="center_vertical"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_sunriseColor"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:layout_editor_absoluteX="27dp">
-
-                    <TextView android:labelFor="@+id/edit_sunriseFillColor"
-                        android:id="@+id/editLabel_sunriseFillColor"
-                        style="@style/ColorEditLabel"
-                        android:paddingStart="8dp" android:paddingEnd="8dp"
-
-                        android:nextFocusUp="@+id/editLabel_sunriseColor"
-                        android:nextFocusLeft="@+id/editLabel_sunriseColor"
-                        android:nextFocusRight="@+id/editLabel_sunsetFillColor"
-                        android:nextFocusForward="@+id/editLabel_sunsetFillColor"
-                        android:nextFocusDown="@+id/editLabel_sunriseStrokeColor"
-
-                        android:text="@string/configLabel_themeColorFill"
-                        tools:ignore="UnusedAttribute" />
-
-                    <EditText
-                        android:id="@+id/edit_sunriseFillColor"
-                        style="@style/ColorEdit" android:visibility="gone"
-                        android:fontFamily="monospace"
-
-                        android:nextFocusUp="@+id/editLabel_sunriseColor"
-                        android:nextFocusLeft="@+id/editLabel_sunriseColor"
-                        android:nextFocusRight="@+id/editLabel_sunsetFillColor"
-                        android:nextFocusForward="@+id/editLabel_sunsetFillColor"
-                        android:nextFocusDown="@+id/editLabel_sunriseStrokeColor"
-
-                        android:text="" android:hint="@string/configHint_themeColorFill"
-                        tools:ignore="UnusedAttribute" />
-
-                    <ImageButton
-                        android:id="@+id/editButton_sunriseFillColor"
-                        style="@style/ColorEditButton"
-                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
-                        android:contentDescription="@string/configLabel_themeColorFill" />
-
-                </LinearLayout>
-
-                <!-- Sunset Fill Color -->
-                <LinearLayout
-                    android:id="@+id/layout_sunsetFillColor"
-                    android:orientation="horizontal" android:gravity="center_vertical"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@+id/layout_sunriseFillColor"
-                    app:layout_constraintStart_toEndOf="@+id/layout_sunriseFillColor"
-                    android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
-                    android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
-
-                    <TextView android:labelFor="@+id/edit_sunsetFillColor"
-                        android:id="@+id/editLabel_sunsetFillColor"
-                        style="@style/ColorEditLabel"
-                        android:paddingStart="8dp" android:paddingEnd="8dp"
-
-                        android:nextFocusUp="@+id/editLabel_sunriseColor"
-                        android:nextFocusLeft="@+id/editLabel_sunriseFillColor"
-                        android:nextFocusRight="@+id/editLabel_sunriseStrokeColor"
-                        android:nextFocusForward="@+id/editLabel_sunriseStrokeColor"
-                        android:nextFocusDown="@+id/editLabel_sunriseStrokeColor"
-
-                        android:text="@string/configLabel_themeColorFill"
-                        tools:ignore="UnusedAttribute" />
-
-                    <EditText
-                        android:id="@+id/edit_sunsetFillColor"
-                        style="@style/ColorEdit" android:visibility="gone"
-                        android:fontFamily="monospace"
-
-                        android:nextFocusUp="@+id/editLabel_sunriseColor"
-                        android:nextFocusLeft="@+id/editLabel_sunriseFillColor"
-                        android:nextFocusRight="@+id/editLabel_sunriseStrokeColor"
-                        android:nextFocusForward="@+id/editLabel_sunriseStrokeColor"
-                        android:nextFocusDown="@+id/editLabel_sunriseStrokeColor"
-
-                        android:text="" android:hint="@string/configHint_themeColorFill"
-                        tools:ignore="UnusedAttribute" />
-
-                    <ImageButton
-                        android:id="@+id/editButton_sunsetFillColor"
-                        style="@style/ColorEditButton"
-                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
-                        android:contentDescription="@string/configLabel_themeColorFill" />
-
-                    <CheckBox
-                        android:id="@+id/enable_risesetFillColor"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
-                <!-- Sunrise Stroke Color -->
-                <LinearLayout
-                    android:id="@+id/layout_sunriseStrokeColor"
-                    android:orientation="horizontal" android:gravity="center_vertical"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_sunriseFillColor"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:layout_editor_absoluteX="27dp">
-
-                    <TextView android:labelFor="@+id/edit_sunriseStrokeColor"
-                        android:id="@+id/editLabel_sunriseStrokeColor"
-                        style="@style/ColorEditLabel"
-                        android:paddingStart="8dp" android:paddingEnd="8dp"
-
-                        android:nextFocusUp="@+id/editLabel_sunriseFillColor"
-                        android:nextFocusLeft="@+id/editLabel_sunriseFillColor"
-                        android:nextFocusRight="@+id/editLabel_sunsetStrokeColor"
-                        android:nextFocusForward="@+id/editLabel_sunsetStrokeColor"
-                        android:nextFocusDown="@+id/editLabel_noonColor"
-
-                        android:text="@string/configLabel_themeColorBorder"
-                        tools:ignore="UnusedAttribute" />
-
-                    <EditText
-                        android:id="@+id/edit_sunriseStrokeColor"
-                        style="@style/ColorEdit" android:visibility="gone"
-                        android:fontFamily="monospace"
-
-                        android:nextFocusUp="@+id/editLabel_sunriseFillColor"
-                        android:nextFocusLeft="@+id/editLabel_sunriseFillColor"
-                        android:nextFocusRight="@+id/editLabel_sunsetStrokeColor"
-                        android:nextFocusForward="@+id/editLabel_sunsetStrokeColor"
-                        android:nextFocusDown="@+id/editLabel_noonColor"
-
-                        android:text="" android:hint="@string/configHint_themeColorBorder"
-                        tools:ignore="UnusedAttribute" />
-
-                    <ImageButton
-                        android:id="@+id/editButton_sunriseStrokeColor"
-                        style="@style/ColorEditButton"
-                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
-                        android:contentDescription="@string/configLabel_themeColorBorder" />
-
-                </LinearLayout>
-
-                <!-- Sunset Stroke Color -->
-                <LinearLayout
-                    android:id="@+id/layout_sunsetStrokeColor"
-                    android:orientation="horizontal" android:gravity="center_vertical"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@+id/layout_sunriseStrokeColor"
-                    app:layout_constraintStart_toEndOf="@+id/layout_sunriseStrokeColor"
-                    android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
-                    android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
-
-                    <TextView android:labelFor="@+id/edit_sunsetStrokeColor"
-                        android:id="@+id/editLabel_sunsetStrokeColor"
-                        style="@style/ColorEditLabel"
-                        android:paddingStart="8dp" android:paddingEnd="8dp"
-
-                        android:nextFocusUp="@+id/editLabel_sunriseFillColor"
-                        android:nextFocusLeft="@+id/editLabel_sunriseStrokeColor"
-                        android:nextFocusRight="@+id/editLabel_noonColor"
-                        android:nextFocusForward="@+id/editLabel_noonColor"
-                        android:nextFocusDown="@+id/editLabel_noonColor"
-
-                        android:text="@string/configLabel_themeColorBorder"
-                        tools:ignore="UnusedAttribute" />
-
-                    <EditText
-                        android:id="@+id/edit_sunsetStrokeColor"
-                        style="@style/ColorEdit" android:visibility="gone"
-                        android:fontFamily="monospace"
-
-                        android:nextFocusUp="@+id/editLabel_sunriseFillColor"
-                        android:nextFocusLeft="@+id/editLabel_sunriseStrokeColor"
-                        android:nextFocusRight="@+id/editLabel_noonColor"
-                        android:nextFocusForward="@+id/editLabel_noonColor"
-                        android:nextFocusDown="@+id/editLabel_noonColor"
-
-                        android:text="" android:hint="@string/configHint_themeColorBorder"
-                        tools:ignore="UnusedAttribute" />
-
-                    <ImageButton
-                        android:id="@+id/editButton_sunsetStrokeColor"
-                        style="@style/ColorEditButton"
-                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
-                        android:contentDescription="@string/configLabel_themeColorBorder" />
-
-                    <CheckBox
-                        android:id="@+id/enable_risesetStrokeColor"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
-                <!-- Noon Color -->
-                <LinearLayout
-                    android:id="@+id/layout_noonColor"
-                    android:orientation="horizontal" android:gravity="center_vertical"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_sunriseStrokeColor"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:layout_editor_absoluteX="27dp">
-
-                    <TextView android:labelFor="@+id/edit_noonColor"
-                        android:id="@+id/editLabel_noonColor"
-                        style="@style/ColorEditLabel"
-                        android:paddingStart="8dp" android:paddingEnd="8dp"
-
-                        android:nextFocusUp="@+id/editLabel_sunriseStrokeColor"
-                        android:nextFocusLeft="@+id/editLabel_sunriseStrokeColor"
-                        android:nextFocusRight="@+id/edit_iconStroke"
-                        android:nextFocusForward="@+id/edit_iconStroke"
-                        android:nextFocusDown="@+id/editLabel_noonFillColor"
-
-                        android:text="@string/configLabel_themeColorNoon"
-                        tools:ignore="UnusedAttribute" />
-
-                    <EditText
-                        android:id="@+id/edit_noonColor"
-                        style="@style/ColorEdit" android:visibility="gone"
-                        android:fontFamily="monospace"
-
-                        android:nextFocusUp="@+id/editLabel_sunriseStrokeColor"
-                        android:nextFocusLeft="@+id/editLabel_sunriseStrokeColor"
-                        android:nextFocusRight="@+id/edit_iconStroke"
-                        android:nextFocusForward="@+id/edit_iconStroke"
-                        android:nextFocusDown="@+id/editLabel_noonFillColor"
-
-                        android:text="" android:hint="@string/configHint_themeColorNoon"
-                        tools:ignore="UnusedAttribute" />
-
-                    <ImageButton
-                        android:id="@+id/editButton_noonColor"
-                        style="@style/ColorEditButton"
-                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
-                        android:contentDescription="@string/configLabel_themeColorNoon" />
-
-                    <CheckBox
-                        android:id="@+id/enable_noonColor"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
-                <!-- Noon Fill Color -->
-                <LinearLayout
-                    android:id="@+id/layout_noonFillColor"
-                    android:orientation="horizontal" android:gravity="center_vertical"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_noonColor"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:layout_editor_absoluteX="27dp">
-
-                    <TextView android:labelFor="@+id/edit_noonFillColor"
-                        android:id="@+id/editLabel_noonFillColor"
-                        style="@style/ColorEditLabel"
-                        android:paddingStart="8dp" android:paddingEnd="8dp"
-
-                        android:nextFocusUp="@+id/editLabel_noonColor"
-                        android:nextFocusLeft="@+id/editLabel_noonColor"
-                        android:nextFocusRight="@+id/editLabel_noonStrokeColor"
-                        android:nextFocusForward="@+id/editLabel_noonStrokeColor"
-                        android:nextFocusDown="@+id/editLabel_noonStrokeColor"
-
-                        android:text="@string/configLabel_themeColorFill"
-                        tools:ignore="UnusedAttribute" />
-
-                    <EditText
-                        android:id="@+id/edit_noonFillColor"
-                        style="@style/ColorEdit" android:visibility="gone"
-                        android:fontFamily="monospace"
-
-                        android:nextFocusUp="@+id/editLabel_noonColor"
-                        android:nextFocusLeft="@+id/editLabel_noonColor"
-                        android:nextFocusRight="@+id/editLabel_noonStrokeColor"
-                        android:nextFocusForward="@+id/editLabel_noonStrokeColor"
-                        android:nextFocusDown="@+id/editLabel_noonStrokeColor"
-
-                        android:text="" android:hint="@string/configHint_themeColorFill"
-                        tools:ignore="UnusedAttribute" />
-
-                    <ImageButton
-                        android:id="@+id/editButton_noonFillColor"
-                        style="@style/ColorEditButton"
-                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
-                        android:contentDescription="@string/configLabel_themeColorFill" />
-
-                </LinearLayout>
-
-                <!-- Noon Stroke Color -->
-                <LinearLayout
-                    android:id="@+id/layout_noonStrokeColor"
-                    android:orientation="horizontal" android:gravity="center_vertical"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_noonFillColor"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:layout_editor_absoluteX="27dp">
-
-                    <TextView android:labelFor="@+id/edit_noonStrokeColor"
-                        android:id="@+id/editLabel_noonStrokeColor"
-                        style="@style/ColorEditLabel"
-                        android:paddingStart="8dp" android:paddingEnd="8dp"
-
-                        android:nextFocusUp="@+id/editLabel_noonFillColor"
-                        android:nextFocusLeft="@+id/editLabel_noonFillColor"
-                        android:nextFocusRight="@+id/edit_noonIconStroke"
-                        android:nextFocusForward="@+id/edit_noonIconStroke"
-                        android:nextFocusDown="@+id/editLabel_noonIconStroke"
-
-                        android:text="@string/configLabel_themeColorBorder"
-                        tools:ignore="UnusedAttribute" />
-
-                    <EditText
-                        android:id="@+id/edit_noonStrokeColor"
-                        style="@style/ColorEdit" android:visibility="gone"
-                        android:fontFamily="monospace"
-
-                        android:nextFocusUp="@+id/editLabel_noonFillColor"
-                        android:nextFocusLeft="@+id/editLabel_noonFillColor"
-                        android:nextFocusRight="@+id/edit_noonIconStroke"
-                        android:nextFocusForward="@+id/edit_noonIconStroke"
-                        android:nextFocusDown="@+id/editLabel_noonIconStroke"
-
-                        android:text="" android:hint="@string/configHint_themeColorBorder"
-                        tools:ignore="UnusedAttribute" />
-
-                    <ImageButton
-                        android:id="@+id/editButton_noonStrokeColor"
-                        style="@style/ColorEditButton"
-                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
-                        android:contentDescription="@string/configLabel_themeColorBorder" />
-
-                    <CheckBox
-                        android:id="@+id/checkBox_noonStrokeColor"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="invisible" />
-
-                </LinearLayout>
-
-                <!-- Icon Stroke -->
-                <LinearLayout
-                    android:id="@+id/layout_iconStroke"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_sunsetStrokeColor"
-                    app:layout_constraintStart_toEndOf="@+id/layout_noonColor">
-
-                    <TextView android:labelFor="@+id/edit_iconStroke"
-                        android:id="@+id/editLabel_iconStroke"
-                        style="@style/SizeEditLabel"
-                        android:paddingStart="8dp" android:paddingEnd="8dp"
-                        android:text="@string/configLabel_themeBorderWidthRiseSet" />
-
-                    <EditText
-                        android:id="@+id/edit_iconStroke"
-                        style="@style/SizeEdit"
-
-                        android:nextFocusUp="@+id/editLabel_sunriseStrokeColor"
-                        android:nextFocusLeft="@+id/editLabel_noonColor"
-                        android:nextFocusRight="@+id/editLabel_noonFillColor"
-                        android:nextFocusForward="@+id/editLabel_noonFillColor"
-                        android:nextFocusDown="@+id/editLabel_noonFillColor"
-
-                        android:text="" android:hint="@string/configHint_themeBorderWidthRiseSet" tools:text="12"
-                        tools:ignore="UnusedAttribute" />
-
-                </LinearLayout>
-
-                <!-- Noon Stroke -->
-                <LinearLayout
-                    android:id="@+id/layout_noonIconStroke"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_noonFillColor"
-                    app:layout_constraintStart_toEndOf="@+id/layout_noonStrokeColor">
-
-                    <TextView android:labelFor="@+id/edit_noonIconStroke"
-                        android:id="@+id/editLabel_noonIconStroke"
-                        style="@style/SizeEditLabel"
-                        android:paddingStart="8dp" android:paddingEnd="8dp"
-                        android:text="@string/configLabel_themeBorderWidthNoon" />
-
-                    <EditText
-                        android:id="@+id/edit_noonIconStroke"
-                        style="@style/SizeEdit"
-
-                        android:nextFocusUp="@+id/editLabel_noonStrokeColor"
-                        android:nextFocusLeft="@+id/editLabel_noonStrokeColor"
-                        android:nextFocusRight="@+id/edit_padding"
-                        android:nextFocusForward="@+id/edit_padding"
-                        android:nextFocusDown="@+id/editLabel_padding"
-
-                        android:text="" android:hint="@string/configHint_themeBorderWidthNoon" tools:text="12"
-                        tools:ignore="UnusedAttribute" />
-
-                </LinearLayout>
-
-                <View android:layout_width="0dp" android:layout_height="1dp" android:background="?attr/hrColor"
-                      android:layout_marginBottom="4dp"
-                    app:layout_constraintBottom_toTopOf="@+id/layout_springColor"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
-
-                <!-- Spring Color -->
-                <LinearLayout
-                    android:id="@+id/layout_springColor"
-                    android:orientation="horizontal" android:gravity="center_vertical"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_noonIconStroke"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginTop="16dp"
-                    tools:layout_editor_absoluteX="27dp">
-
-                    <TextView android:labelFor="@+id/edit_springColor"
-                        android:id="@+id/editLabel_springColor"
-                        style="@style/ColorEditLabel"
-                        android:paddingStart="8dp" android:paddingEnd="8dp"
-
-                        android:nextFocusUp="@+id/editLabel_noonIconStroke"
-                        android:nextFocusLeft="@+id/editLabel_noonIconStroke"
-                        android:nextFocusRight="@+id/editLabel_summerColor"
-                        android:nextFocusForward="@+id/editLabel_summerColor"
-                        android:nextFocusDown="@+id/editLabel_fallColor"
-
-                        android:text="@string/configLabel_themeColorSpring"
-                        tools:ignore="UnusedAttribute" />
-
-                    <EditText
-                        android:id="@+id/edit_springColor"
-                        style="@style/ColorEdit" android:visibility="gone"
-                        android:fontFamily="monospace"
-
-                        android:nextFocusUp="@+id/editLabel_noonIconStroke"
-                        android:nextFocusLeft="@+id/editLabel_noonIconStroke"
-                        android:nextFocusRight="@+id/editLabel_summerColor"
-                        android:nextFocusForward="@+id/editLabel_summerColor"
-                        android:nextFocusDown="@+id/editLabel_fallColor"
-
-                        android:text="" android:hint="@string/configHint_themeColorSunrise"
-                        tools:ignore="UnusedAttribute" />
-
-                    <ImageButton
-                        android:id="@+id/editButton_springColor"
-                        style="@style/ColorEditButton"
-                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
-                        android:contentDescription="@string/configLabel_themeColorSpring" />
-
-                </LinearLayout>
-
-                <!-- Summer Color -->
-                <LinearLayout
-                    android:id="@+id/layout_summerColor"
-                    android:orientation="horizontal" android:gravity="center_vertical"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@+id/layout_springColor"
-                    app:layout_constraintStart_toEndOf="@+id/layout_springColor"
-                    android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
-                    android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
-
-                    <TextView android:labelFor="@+id/edit_summerColor"
-                        android:id="@+id/editLabel_summerColor"
-                        style="@style/ColorEditLabel"
-                        android:paddingStart="8dp" android:paddingEnd="8dp"
-
-                        android:nextFocusUp="@+id/editLabel_springColor"
-                        android:nextFocusLeft="@+id/editLabel_springColor"
-                        android:nextFocusRight="@+id/editLabel_fallColor"
-                        android:nextFocusForward="@+id/editLabel_fallColor"
-                        android:nextFocusDown="@+id/editLabel_winterColor"
-
-                        android:text="@string/configLabel_themeColorSummer"
-                        tools:ignore="UnusedAttribute" />
-
-                    <EditText
-                        android:id="@+id/edit_summerColor"
-                        style="@style/ColorEdit" android:visibility="gone"
-                        android:fontFamily="monospace"
-
-                        android:nextFocusUp="@+id/editLabel_springColor"
-                        android:nextFocusLeft="@+id/editLabel_springColor"
-                        android:nextFocusRight="@+id/editLabel_fallColor"
-                        android:nextFocusForward="@+id/editLabel_fallColor"
-                        android:nextFocusDown="@+id/editLabel_winterColor"
-
-                        android:text="" android:hint="@string/configHint_themeColorSunset"
-                        tools:ignore="UnusedAttribute" />
-
-                    <ImageButton
-                        android:id="@+id/editButton_summerColor"
-                        style="@style/ColorEditButton"
-                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
-                        android:contentDescription="@string/configLabel_themeColorSummer" />
-
-                </LinearLayout>
-
-                <!-- Fall Color -->
-                <LinearLayout
-                    android:id="@+id/layout_fallColor"
-                    android:orientation="horizontal" android:gravity="center_vertical"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_springColor"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:layout_editor_absoluteX="27dp">
-
-                    <TextView android:labelFor="@+id/edit_fallColor"
-                        android:id="@+id/editLabel_fallColor"
-                        style="@style/ColorEditLabel"
-                        android:paddingStart="8dp" android:paddingEnd="8dp"
-
-                        android:nextFocusUp="@+id/editLabel_springColor"
-                        android:nextFocusLeft="@+id/editLabel_summerColor"
-                        android:nextFocusRight="@+id/editLabel_winterColor"
-                        android:nextFocusForward="@+id/editLabel_winterColor"
-                        android:nextFocusDown="@+id/editLabel_winterColor"
-
-                        android:text="@string/configLabel_themeColorFall"
-                        tools:ignore="UnusedAttribute" />
-
-                    <EditText
-                        android:id="@+id/edit_fallColor"
-                        style="@style/ColorEdit" android:visibility="gone"
-                        android:fontFamily="monospace"
-
-                        android:nextFocusUp="@+id/editLabel_springColor"
-                        android:nextFocusLeft="@+id/editLabel_summerColor"
-                        android:nextFocusRight="@+id/editLabel_winterColor"
-                        android:nextFocusForward="@+id/editLabel_winterColor"
-                        android:nextFocusDown="@+id/editLabel_winterColor"
-
-                        android:text="" android:hint="@string/configHint_themeColorSunrise"
-                        tools:ignore="UnusedAttribute" />
-
-                    <ImageButton
-                        android:id="@+id/editButton_fallColor"
-                        style="@style/ColorEditButton"
-                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
-                        android:contentDescription="@string/configLabel_themeColorFall" />
-
-                </LinearLayout>
-
-                <!-- Winter Color -->
-                <LinearLayout
-                    android:id="@+id/layout_winterColor"
-                    android:orientation="horizontal" android:gravity="center_vertical"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@+id/layout_fallColor"
-                    app:layout_constraintStart_toEndOf="@+id/layout_fallColor"
-                    android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
-                    android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
-
-                    <TextView android:labelFor="@+id/edit_winterColor"
-                        android:id="@+id/editLabel_winterColor"
-                        style="@style/ColorEditLabel"
-                        android:paddingStart="8dp" android:paddingEnd="8dp"
-
-                        android:nextFocusUp="@+id/editLabel_summerColor"
-                        android:nextFocusLeft="@+id/editLabel_fallColor"
-
-                        android:text="@string/configLabel_themeColorWinter" />
-
-                    <EditText
-                        android:id="@+id/edit_winterColor"
-                        style="@style/ColorEdit" android:visibility="gone"
-                        android:fontFamily="monospace"
-
-                        android:nextFocusUp="@+id/editLabel_summerColor"
-                        android:nextFocusLeft="@+id/editLabel_fallColor"
-
-                        android:text="" android:hint="@string/configHint_themeColorSunset"
-                        tools:ignore="UnusedAttribute" />
-
-                    <ImageButton
-                        android:id="@+id/editButton_winterColor"
-                        style="@style/ColorEditButton"
-                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
-                        android:contentDescription="@string/configLabel_themeColorWinter" />
-
-                </LinearLayout>
-
-
-                <View android:layout_width="0dp" android:layout_height="1dp" android:background="?attr/hrColor"
-                    android:layout_marginBottom="4dp"
-                    app:layout_constraintBottom_toTopOf="@+id/layout_moonriseColor"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
-
-
-                <!-- Moonrise Color -->
-                <LinearLayout
-                    android:id="@+id/layout_moonriseColor"
-                    android:orientation="horizontal" android:gravity="center_vertical"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_fallColor"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginTop="16dp"
-                    tools:layout_editor_absoluteX="27dp">
-
-                    <TextView android:labelFor="@+id/edit_moonriseColor"
-                        android:id="@+id/editLabel_moonriseColor"
-                        style="@style/ColorEditLabel"
-                        android:paddingStart="8dp" android:paddingEnd="8dp"
-
-                        android:nextFocusUp="@+id/editLabel_fallColor"
-                        android:nextFocusLeft="@+id/editLabel_winterColor"
-                        android:nextFocusRight="@+id/editLabel_moonsetColor"
-                        android:nextFocusForward="@+id/editLabel_moonsetColor"
-                        android:nextFocusDown="@+id/editLabel_moonsetColor"
-
-                        android:text="@string/configLabel_themeColorMoonrise"
-                        tools:ignore="UnusedAttribute" />
-
-                    <EditText
-                        android:id="@+id/edit_moonriseColor"
-                        style="@style/ColorEdit" android:visibility="gone"
-                        android:fontFamily="monospace"
-
-                        android:nextFocusUp="@+id/editLabel_fallColor"
-                        android:nextFocusLeft="@+id/editLabel_winterColor"
-                        android:nextFocusRight="@+id/editLabel_moonsetColor"
-                        android:nextFocusForward="@+id/editLabel_moonsetColor"
-                        android:nextFocusDown="@+id/editLabel_moonsetColor"
-
-                        android:text="" android:hint="@string/configHint_themeColorSunrise"
-                        tools:ignore="UnusedAttribute" />
-
-                    <ImageButton
-                        android:id="@+id/editButton_moonriseColor"
-                        style="@style/ColorEditButton"
-                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
-                        android:contentDescription="@string/configLabel_themeColorMoonrise" />
-
-                </LinearLayout>
-
-                <!-- Moonset Color -->
-                <LinearLayout
-                    android:id="@+id/layout_moonsetColor"
-                    android:orientation="horizontal" android:gravity="center_vertical"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@+id/layout_moonriseColor"
-                    app:layout_constraintStart_toEndOf="@+id/layout_moonriseColor"
-                    android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
-                    android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
-
-                    <TextView android:labelFor="@+id/edit_moonsetColor"
-                        android:id="@+id/editLabel_moonsetColor"
-                        style="@style/ColorEditLabel"
-                        android:paddingStart="8dp" android:paddingEnd="8dp"
-
-                        android:nextFocusUp="@+id/editLabel_winterColor"
-                        android:nextFocusLeft="@+id/editLabel_moonriseColor"
-
-                        android:text="@string/configLabel_themeColorMoonset" />
-
-                    <EditText
-                        android:id="@+id/edit_moonsetColor"
-                        style="@style/ColorEdit" android:visibility="gone"
-                        android:fontFamily="monospace"
-
-                        android:nextFocusUp="@+id/editLabel_winterColor"
-                        android:nextFocusLeft="@+id/editLabel_moonriseColor"
-
-                        android:text="" android:hint="@string/configHint_themeColorSunset"
-                        tools:ignore="UnusedAttribute" />
-
-                    <ImageButton
-                        android:id="@+id/editButton_moonsetColor"
-                        style="@style/ColorEditButton"
-                        android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
-                        android:contentDescription="@string/configLabel_themeColorMoonset" />
-
-                </LinearLayout>
-
-
-
-            </android.support.constraint.ConstraintLayout>
+            </ViewFlipper>
 
         </android.support.constraint.ConstraintLayout>
 
-    </ScrollView>
+        <ScrollView android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-</LinearLayout>
+            <android.support.constraint.ConstraintLayout
+                android:background="?attr/semiTransparentBackground"
+                android:layout_marginBottom="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true" android:focusableInTouchMode="true">
+
+                <!-- Background -->
+                <TextView android:labelFor="@+id/editSpin_background"
+                    android:id="@+id/editLabel_background"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/editSpin_background"
+                    app:layout_constraintBottom_toBottomOf="@+id/editSpin_background"
+                    android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="0dp" android:paddingRight="0dp"
+                    android:text="@string/configLabel_themeBackgroundId"
+                    tools:layout_editor_absoluteX="0dp"/>
+
+                <Spinner
+                    android:id="@+id/editSpin_background"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp" android:layout_marginBottom="4dp"
+                    app:layout_constraintStart_toEndOf="@+id/editLabel_background"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:layout_editor_absoluteX="42dp"/>
+
+                <!-- Padding -->
+                <TextView android:labelFor="@+id/edit_padding"
+                    android:id="@+id/editLabel_padding"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/edit_padding"
+                    android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="8dp" android:paddingRight="8dp"
+                    android:text="@string/configLabel_themePadding"
+                    tools:layout_editor_absoluteX="0dp"/>
+
+                <EditText
+                    android:id="@+id/edit_padding"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="textNoSuggestions"
+                    android:text="" android:hint="@string/configHint_themePadding"
+                    app:layout_constraintStart_toEndOf="@+id/editLabel_padding"
+                    app:layout_constraintEnd_toEndOf="@+id/edit_suffixSize"
+                    app:layout_constraintTop_toBottomOf="@+id/editSpin_background"
+                    tools:layout_editor_absoluteX="72dp"/>
+
+                <!-- Time Size -->
+                <TextView android:labelFor="@+id/edit_timeSize"
+                    android:id="@+id/editLabel_timeSize"
+                    style="@style/SizeEditLabel"
+                    android:paddingStart="8dp" android:paddingEnd="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/edit_timeSize"
+                    android:text="@string/configLabel_themeSizeTime" />
+
+                <EditText
+                    android:id="@+id/edit_timeSize"
+                    style="@style/SizeEdit"
+                    android:layout_width="0dp"
+                    android:text="" android:hint="@string/configHint_themeSizeTime" tools:text="12"
+                    app:layout_constraintStart_toEndOf="@+id/editLabel_timeSize"
+                    app:layout_constraintTop_toBottomOf="@+id/edit_padding"
+                    tools:layout_editor_absoluteX="81dp"/>
+
+                <!-- Time Bold -->
+                <CheckBox
+                    android:id="@+id/check_timeBold"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@+id/edit_suffixSize"
+                    app:layout_constraintTop_toTopOf="@+id/edit_timeSize"
+                    app:layout_constraintBottom_toBottomOf="@+id/edit_timeSize"
+                    android:text="@string/configLabel_themeBoldTime" />
+
+                <!-- Suffix Size -->
+                <TextView android:labelFor="@+id/edit_suffixSize"
+                    android:id="@+id/editLabel_suffixSize"
+                    style="@style/SizeEditLabel"
+                    android:paddingStart="8dp" android:paddingEnd="8dp"
+                    app:layout_constraintStart_toEndOf="@+id/edit_timeSize"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/edit_suffixSize"
+                    android:layout_marginStart="16dp" android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="16dp" android:layout_marginRight="8dp"
+                    android:text="@string/configLabel_themeSizeSuffix" />
+
+                <EditText
+                    android:id="@+id/edit_suffixSize"
+                    style="@style/SizeEdit"
+                    android:layout_width="0dp"
+                    android:text="" android:hint="@string/configHint_themeSizeSuffix" tools:text="8"
+                    app:layout_constraintStart_toEndOf="@+id/editLabel_suffixSize"
+                    app:layout_constraintTop_toBottomOf="@+id/edit_padding"
+                    tools:layout_editor_absoluteX="210dp"/>
+
+                <!-- Title Size -->
+                <TextView android:labelFor="@+id/edit_titleSize"
+                    android:id="@+id/editLabel_titleSize"
+                    style="@style/SizeEditLabel"
+                    android:paddingStart="8dp" android:paddingEnd="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/edit_titleSize"
+                    android:text="@string/configLabel_themeSizeTitle" />
+
+                <EditText
+                    android:id="@+id/edit_titleSize"
+                    style="@style/SizeEdit"
+                    android:layout_width="0dp"
+                    android:text="" android:hint="@string/configHint_themeSizeTitle" tools:text="14"
+                    app:layout_constraintStart_toEndOf="@+id/editLabel_titleSize"
+                    app:layout_constraintTop_toBottomOf="@+id/edit_suffixSize"
+                    tools:layout_editor_absoluteX="77dp"/>
+
+                <!-- Title Bold -->
+                <CheckBox
+                    android:id="@+id/check_titleBold"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@+id/edit_textSize"
+                    app:layout_constraintTop_toTopOf="@+id/edit_titleSize"
+                    app:layout_constraintBottom_toBottomOf="@+id/edit_titleSize"
+                    android:text="@string/configLabel_themeBoldTitle" />
+
+                <!-- Text Size -->
+                <TextView android:labelFor="@+id/edit_textSize"
+                    android:id="@+id/editLabel_textSize"
+                    style="@style/SizeEditLabel"
+                    android:paddingStart="8dp" android:paddingEnd="8dp"
+                    app:layout_constraintStart_toEndOf="@+id/edit_titleSize"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/edit_textSize"
+                    android:layout_marginStart="16dp" android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="16dp" android:layout_marginRight="8dp"
+                    android:text="@string/configLabel_themeSizeText"/>
+
+                <EditText
+                    android:id="@+id/edit_textSize"
+                    style="@style/SizeEdit"
+                    android:layout_width="0dp"
+                    android:text="" android:hint="@string/configHint_themeSizeText" tools:text="10"
+                    app:layout_constraintStart_toEndOf="@+id/editLabel_textSize"
+                    app:layout_constraintTop_toBottomOf="@+id/edit_suffixSize"
+                    tools:layout_editor_absoluteX="197dp"/>
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/layout_colors"
+                    android:layout_width="0dp" android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/edit_titleSize"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <android.support.constraint.Guideline
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:id="@+id/center_colors" app:layout_constraintGuide_percent="0.5"
+                        android:orientation="vertical"
+                        tools:layout_editor_absoluteY="0dp"
+                        tools:layout_editor_absoluteX="180dp"/>
+
+                    <!-- Title Color -->
+                    <LinearLayout
+                        android:id="@+id/layout_titleColor"
+                        android:orientation="horizontal" android:gravity="center_vertical"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <TextView android:labelFor="@+id/edit_titleColor"
+                            android:id="@+id/editLabel_titleColor"
+                            style="@style/ColorEditLabel"
+                            android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                            android:nextFocusUp="@+id/edit_titleSize"
+                            android:nextFocusLeft="@+id/editLabel_titleSize"
+                            android:nextFocusRight="@+id/editLabel_suffixColor"
+                            android:nextFocusDown="@+id/editLabel_textColor"
+                            android:nextFocusForward="@+id/editLabel_suffixColor"
+
+                            android:text="@string/configLabel_themeColorTitle"
+                            tools:ignore="UnusedAttribute" />
+
+                        <EditText
+                            android:id="@+id/edit_titleColor"
+                            style="@style/ColorEdit" android:visibility="gone"
+                            android:fontFamily="monospace"
+
+                            android:nextFocusUp="@+id/edit_titleSize"
+                            android:nextFocusLeft="@+id/editLabel_titleSize"
+                            android:nextFocusRight="@+id/editLabel_suffixColor"
+                            android:nextFocusDown="@+id/editLabel_textColor"
+                            android:nextFocusForward="@+id/editLabel_suffixColor"
+
+                            android:text="" android:hint="@string/configHint_themeColorTitle"
+                            tools:ignore="UnusedAttribute" />
+
+                        <ImageButton
+                            android:id="@+id/editButton_titleColor"
+                            style="@style/ColorEditButton"
+                            android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                            android:contentDescription="@string/configLabel_themeColorTitle" />
+
+                    </LinearLayout>
+
+                    <!-- Suffix Color -->
+                    <LinearLayout
+                        android:id="@+id/layout_suffixColor"
+                        android:orientation="horizontal" android:gravity="center_vertical"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="@+id/layout_titleColor"
+                        app:layout_constraintStart_toEndOf="@+id/layout_titleColor"
+                        android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+                        android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
+
+                        <TextView android:labelFor="@+id/edit_suffixColor"
+                            android:id="@+id/editLabel_suffixColor"
+                            style="@style/ColorEditLabel"
+                            android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                            android:nextFocusUp="@+id/edit_titleSize"
+                            android:nextFocusLeft="@+id/editLabel_titleColor"
+                            android:nextFocusRight="@+id/editLabel_textColor"
+                            android:nextFocusDown="@+id/editLabel_textColor"
+                            android:nextFocusForward="@+id/editLabel_textColor"
+
+                            android:text="@string/configLabel_themeColorSuffix"
+                            tools:ignore="UnusedAttribute" />
+
+                        <EditText
+                            android:id="@+id/edit_suffixColor"
+                            style="@style/ColorEdit" android:visibility="gone"
+                            android:fontFamily="monospace"
+
+                            android:nextFocusUp="@+id/edit_titleSize"
+                            android:nextFocusLeft="@+id/editLabel_titleColor"
+                            android:nextFocusRight="@+id/editLabel_textColor"
+                            android:nextFocusDown="@+id/editLabel_textColor"
+                            android:nextFocusForward="@+id/editLabel_textColor"
+
+                            android:text="" android:hint="@string/configHint_themeColorSuffix"
+                            tools:ignore="UnusedAttribute" />
+
+                        <ImageButton
+                            android:id="@+id/editButton_suffixColor"
+                            style="@style/ColorEditButton"
+                            android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                            android:contentDescription="@string/configLabel_themeColorSuffix" />
+
+                    </LinearLayout>
+
+                    <!-- Text Color -->
+                    <LinearLayout
+                        android:id="@+id/layout_textColor"
+                        android:orientation="horizontal" android:gravity="center_vertical"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/layout_titleColor"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <TextView android:labelFor="@+id/edit_textColor"
+                            android:id="@+id/editLabel_textColor"
+                            style="@style/ColorEditLabel"
+                            android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                            android:nextFocusUp="@+id/editLabel_titleColor"
+                            android:nextFocusLeft="@+id/editLabel_titleColor"
+                            android:nextFocusRight="@+id/editLabel_timeColor"
+                            android:nextFocusDown="@+id/editLabel_sunriseColor"
+                            android:nextFocusForward="@+id/editLabel_timeColor"
+
+                            android:text="@string/configLabel_themeColorText"
+                            tools:ignore="UnusedAttribute" />
+
+                        <EditText
+                            android:id="@+id/edit_textColor"
+                            style="@style/ColorEdit" android:visibility="gone"
+                            android:fontFamily="monospace"
+
+                            android:nextFocusUp="@+id/editLabel_titleColor"
+                            android:nextFocusLeft="@+id/editLabel_titleColor"
+                            android:nextFocusRight="@+id/editLabel_timeColor"
+                            android:nextFocusDown="@+id/editLabel_sunriseColor"
+                            android:nextFocusForward="@+id/editLabel_timeColor"
+
+                            android:text="" android:hint="@string/configHint_themeColorText"
+                            tools:ignore="UnusedAttribute" />
+
+                        <ImageButton
+                            android:id="@+id/editButton_textColor"
+                            style="@style/ColorEditButton"
+                            android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                            android:contentDescription="@string/configLabel_themeColorText" />
+
+                    </LinearLayout>
+
+                    <!-- Time Color -->
+                    <LinearLayout
+                        android:id="@+id/layout_timeColor"
+                        android:orientation="horizontal" android:gravity="center_vertical"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="@+id/layout_textColor"
+                        app:layout_constraintStart_toEndOf="@+id/layout_textColor"
+                        android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+                        android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
+
+                        <TextView android:labelFor="@+id/edit_timeColor"
+                            android:id="@+id/editLabel_timeColor"
+                            style="@style/ColorEditLabel"
+                            android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                            android:nextFocusUp="@+id/editLabel_titleColor"
+                            android:nextFocusLeft="@+id/editLabel_timeColor"
+                            android:nextFocusRight="@+id/editLabel_sunriseColor"
+                            android:nextFocusDown="@+id/editLabel_sunriseColor"
+                            android:nextFocusForward="@+id/editLabel_sunriseColor"
+
+                            android:text="@string/configLabel_themeColorTime"
+                            tools:ignore="UnusedAttribute" />
+
+                        <EditText
+                            android:id="@+id/edit_timeColor"
+                            style="@style/ColorEdit" android:visibility="gone"
+                            android:fontFamily="monospace"
+
+                            android:nextFocusUp="@+id/editLabel_titleColor"
+                            android:nextFocusLeft="@+id/editLabel_timeColor"
+                            android:nextFocusRight="@+id/editLabel_sunriseColor"
+                            android:nextFocusDown="@+id/editLabel_sunriseColor"
+                            android:nextFocusForward="@+id/editLabel_sunriseColor"
+
+                            android:text="" android:hint="@string/configHint_themeColorTime"
+                            tools:ignore="UnusedAttribute" />
+
+                        <ImageButton
+                            android:id="@+id/editButton_timeColor"
+                            style="@style/ColorEditButton"
+                            android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                            android:contentDescription="@string/configLabel_themeColorTime" />
+
+                    </LinearLayout>
+
+                    <!-- Sunrise Color -->
+                    <LinearLayout
+                        android:id="@+id/layout_sunriseColor"
+                        android:orientation="horizontal" android:gravity="center_vertical"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/layout_timeColor"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:layout_editor_absoluteX="27dp">
+
+                        <TextView android:labelFor="@+id/edit_sunriseColor"
+                            android:id="@+id/editLabel_sunriseColor"
+                            style="@style/ColorEditLabel"
+                            android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                            android:nextFocusUp="@+id/editLabel_textColor"
+                            android:nextFocusLeft="@+id/editLabel_textColor"
+                            android:nextFocusRight="@+id/editLabel_sunsetColor"
+                            android:nextFocusForward="@+id/editLabel_sunsetColor"
+                            android:nextFocusDown="@+id/editLabel_sunriseFillColor"
+
+                            android:text="@string/configLabel_themeColorSunrise"
+                            tools:ignore="UnusedAttribute" />
+
+                        <EditText
+                            android:id="@+id/edit_sunriseColor"
+                            style="@style/ColorEdit" android:visibility="gone"
+                            android:fontFamily="monospace"
+
+                            android:nextFocusUp="@+id/editLabel_textColor"
+                            android:nextFocusLeft="@+id/editLabel_textColor"
+                            android:nextFocusRight="@+id/editLabel_sunsetColor"
+                            android:nextFocusForward="@+id/editLabel_sunsetColor"
+                            android:nextFocusDown="@+id/editLabel_sunriseFillColor"
+
+                            android:text="" android:hint="@string/configHint_themeColorSunrise"
+                            tools:ignore="UnusedAttribute" />
+
+                        <ImageButton
+                            android:id="@+id/editButton_sunriseColor"
+                            style="@style/ColorEditButton"
+                            android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                            android:contentDescription="@string/configLabel_themeColorSunrise" />
+
+                    </LinearLayout>
+
+                    <!-- Sunset Color -->
+                    <LinearLayout
+                        android:id="@+id/layout_sunsetColor"
+                        android:orientation="horizontal" android:gravity="center_vertical"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="@+id/layout_sunriseColor"
+                        app:layout_constraintStart_toEndOf="@+id/layout_sunriseColor"
+                        android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+                        android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
+
+                        <TextView android:labelFor="@+id/edit_sunsetColor"
+                            android:id="@+id/editLabel_sunsetColor"
+                            style="@style/ColorEditLabel"
+                            android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                            android:nextFocusUp="@+id/editLabel_textColor"
+                            android:nextFocusLeft="@+id/editLabel_sunriseColor"
+                            android:nextFocusRight="@+id/editLabel_sunriseFillColor"
+                            android:nextFocusForward="@+id/editLabel_sunriseFillColor"
+                            android:nextFocusDown="@+id/editLabel_sunriseFillColor"
+
+                            android:text="@string/configLabel_themeColorSunset"
+                            tools:ignore="UnusedAttribute" />
+
+                        <EditText
+                            android:id="@+id/edit_sunsetColor"
+                            style="@style/ColorEdit" android:visibility="gone"
+                            android:fontFamily="monospace"
+
+                            android:nextFocusUp="@+id/editLabel_textColor"
+                            android:nextFocusLeft="@+id/editLabel_sunriseColor"
+                            android:nextFocusRight="@+id/editLabel_sunriseFillColor"
+                            android:nextFocusForward="@+id/editLabel_sunriseFillColor"
+                            android:nextFocusDown="@+id/editLabel_sunriseFillColor"
+
+                            android:text="" android:hint="@string/configHint_themeColorSunset"
+                            tools:ignore="UnusedAttribute" />
+
+                        <ImageButton
+                            android:id="@+id/editButton_sunsetColor"
+                            style="@style/ColorEditButton"
+                            android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                            android:contentDescription="@string/configLabel_themeColorSunset" />
+
+                    </LinearLayout>
+
+                    <!-- Sunrise Fill Color -->
+                    <LinearLayout
+                        android:id="@+id/layout_sunriseFillColor"
+                        android:orientation="horizontal" android:gravity="center_vertical"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/layout_sunriseColor"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:layout_editor_absoluteX="27dp">
+
+                        <TextView android:labelFor="@+id/edit_sunriseFillColor"
+                            android:id="@+id/editLabel_sunriseFillColor"
+                            style="@style/ColorEditLabel"
+                            android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                            android:nextFocusUp="@+id/editLabel_sunriseColor"
+                            android:nextFocusLeft="@+id/editLabel_sunriseColor"
+                            android:nextFocusRight="@+id/editLabel_sunsetFillColor"
+                            android:nextFocusForward="@+id/editLabel_sunsetFillColor"
+                            android:nextFocusDown="@+id/editLabel_sunriseStrokeColor"
+
+                            android:text="@string/configLabel_themeColorFill"
+                            tools:ignore="UnusedAttribute" />
+
+                        <EditText
+                            android:id="@+id/edit_sunriseFillColor"
+                            style="@style/ColorEdit" android:visibility="gone"
+                            android:fontFamily="monospace"
+
+                            android:nextFocusUp="@+id/editLabel_sunriseColor"
+                            android:nextFocusLeft="@+id/editLabel_sunriseColor"
+                            android:nextFocusRight="@+id/editLabel_sunsetFillColor"
+                            android:nextFocusForward="@+id/editLabel_sunsetFillColor"
+                            android:nextFocusDown="@+id/editLabel_sunriseStrokeColor"
+
+                            android:text="" android:hint="@string/configHint_themeColorFill"
+                            tools:ignore="UnusedAttribute" />
+
+                        <ImageButton
+                            android:id="@+id/editButton_sunriseFillColor"
+                            style="@style/ColorEditButton"
+                            android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                            android:contentDescription="@string/configLabel_themeColorFill" />
+
+                    </LinearLayout>
+
+                    <!-- Sunset Fill Color -->
+                    <LinearLayout
+                        android:id="@+id/layout_sunsetFillColor"
+                        android:orientation="horizontal" android:gravity="center_vertical"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="@+id/layout_sunriseFillColor"
+                        app:layout_constraintStart_toEndOf="@+id/layout_sunriseFillColor"
+                        android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+                        android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
+
+                        <TextView android:labelFor="@+id/edit_sunsetFillColor"
+                            android:id="@+id/editLabel_sunsetFillColor"
+                            style="@style/ColorEditLabel"
+                            android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                            android:nextFocusUp="@+id/editLabel_sunriseColor"
+                            android:nextFocusLeft="@+id/editLabel_sunriseFillColor"
+                            android:nextFocusRight="@+id/editLabel_sunriseStrokeColor"
+                            android:nextFocusForward="@+id/editLabel_sunriseStrokeColor"
+                            android:nextFocusDown="@+id/editLabel_sunriseStrokeColor"
+
+                            android:text="@string/configLabel_themeColorFill"
+                            tools:ignore="UnusedAttribute" />
+
+                        <EditText
+                            android:id="@+id/edit_sunsetFillColor"
+                            style="@style/ColorEdit" android:visibility="gone"
+                            android:fontFamily="monospace"
+
+                            android:nextFocusUp="@+id/editLabel_sunriseColor"
+                            android:nextFocusLeft="@+id/editLabel_sunriseFillColor"
+                            android:nextFocusRight="@+id/editLabel_sunriseStrokeColor"
+                            android:nextFocusForward="@+id/editLabel_sunriseStrokeColor"
+                            android:nextFocusDown="@+id/editLabel_sunriseStrokeColor"
+
+                            android:text="" android:hint="@string/configHint_themeColorFill"
+                            tools:ignore="UnusedAttribute" />
+
+                        <ImageButton
+                            android:id="@+id/editButton_sunsetFillColor"
+                            style="@style/ColorEditButton"
+                            android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                            android:contentDescription="@string/configLabel_themeColorFill" />
+
+                        <CheckBox
+                            android:id="@+id/enable_risesetFillColor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <!-- Sunrise Stroke Color -->
+                    <LinearLayout
+                        android:id="@+id/layout_sunriseStrokeColor"
+                        android:orientation="horizontal" android:gravity="center_vertical"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/layout_sunriseFillColor"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:layout_editor_absoluteX="27dp">
+
+                        <TextView android:labelFor="@+id/edit_sunriseStrokeColor"
+                            android:id="@+id/editLabel_sunriseStrokeColor"
+                            style="@style/ColorEditLabel"
+                            android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                            android:nextFocusUp="@+id/editLabel_sunriseFillColor"
+                            android:nextFocusLeft="@+id/editLabel_sunriseFillColor"
+                            android:nextFocusRight="@+id/editLabel_sunsetStrokeColor"
+                            android:nextFocusForward="@+id/editLabel_sunsetStrokeColor"
+                            android:nextFocusDown="@+id/editLabel_noonColor"
+
+                            android:text="@string/configLabel_themeColorBorder"
+                            tools:ignore="UnusedAttribute" />
+
+                        <EditText
+                            android:id="@+id/edit_sunriseStrokeColor"
+                            style="@style/ColorEdit" android:visibility="gone"
+                            android:fontFamily="monospace"
+
+                            android:nextFocusUp="@+id/editLabel_sunriseFillColor"
+                            android:nextFocusLeft="@+id/editLabel_sunriseFillColor"
+                            android:nextFocusRight="@+id/editLabel_sunsetStrokeColor"
+                            android:nextFocusForward="@+id/editLabel_sunsetStrokeColor"
+                            android:nextFocusDown="@+id/editLabel_noonColor"
+
+                            android:text="" android:hint="@string/configHint_themeColorBorder"
+                            tools:ignore="UnusedAttribute" />
+
+                        <ImageButton
+                            android:id="@+id/editButton_sunriseStrokeColor"
+                            style="@style/ColorEditButton"
+                            android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                            android:contentDescription="@string/configLabel_themeColorBorder" />
+
+                    </LinearLayout>
+
+                    <!-- Sunset Stroke Color -->
+                    <LinearLayout
+                        android:id="@+id/layout_sunsetStrokeColor"
+                        android:orientation="horizontal" android:gravity="center_vertical"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="@+id/layout_sunriseStrokeColor"
+                        app:layout_constraintStart_toEndOf="@+id/layout_sunriseStrokeColor"
+                        android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+                        android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
+
+                        <TextView android:labelFor="@+id/edit_sunsetStrokeColor"
+                            android:id="@+id/editLabel_sunsetStrokeColor"
+                            style="@style/ColorEditLabel"
+                            android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                            android:nextFocusUp="@+id/editLabel_sunriseFillColor"
+                            android:nextFocusLeft="@+id/editLabel_sunriseStrokeColor"
+                            android:nextFocusRight="@+id/editLabel_noonColor"
+                            android:nextFocusForward="@+id/editLabel_noonColor"
+                            android:nextFocusDown="@+id/editLabel_noonColor"
+
+                            android:text="@string/configLabel_themeColorBorder"
+                            tools:ignore="UnusedAttribute" />
+
+                        <EditText
+                            android:id="@+id/edit_sunsetStrokeColor"
+                            style="@style/ColorEdit" android:visibility="gone"
+                            android:fontFamily="monospace"
+
+                            android:nextFocusUp="@+id/editLabel_sunriseFillColor"
+                            android:nextFocusLeft="@+id/editLabel_sunriseStrokeColor"
+                            android:nextFocusRight="@+id/editLabel_noonColor"
+                            android:nextFocusForward="@+id/editLabel_noonColor"
+                            android:nextFocusDown="@+id/editLabel_noonColor"
+
+                            android:text="" android:hint="@string/configHint_themeColorBorder"
+                            tools:ignore="UnusedAttribute" />
+
+                        <ImageButton
+                            android:id="@+id/editButton_sunsetStrokeColor"
+                            style="@style/ColorEditButton"
+                            android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                            android:contentDescription="@string/configLabel_themeColorBorder" />
+
+                        <CheckBox
+                            android:id="@+id/enable_risesetStrokeColor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <!-- Noon Color -->
+                    <LinearLayout
+                        android:id="@+id/layout_noonColor"
+                        android:orientation="horizontal" android:gravity="center_vertical"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/layout_sunriseStrokeColor"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:layout_editor_absoluteX="27dp">
+
+                        <TextView android:labelFor="@+id/edit_noonColor"
+                            android:id="@+id/editLabel_noonColor"
+                            style="@style/ColorEditLabel"
+                            android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                            android:nextFocusUp="@+id/editLabel_sunriseStrokeColor"
+                            android:nextFocusLeft="@+id/editLabel_sunriseStrokeColor"
+                            android:nextFocusRight="@+id/edit_iconStroke"
+                            android:nextFocusForward="@+id/edit_iconStroke"
+                            android:nextFocusDown="@+id/editLabel_noonFillColor"
+
+                            android:text="@string/configLabel_themeColorNoon"
+                            tools:ignore="UnusedAttribute" />
+
+                        <EditText
+                            android:id="@+id/edit_noonColor"
+                            style="@style/ColorEdit" android:visibility="gone"
+                            android:fontFamily="monospace"
+
+                            android:nextFocusUp="@+id/editLabel_sunriseStrokeColor"
+                            android:nextFocusLeft="@+id/editLabel_sunriseStrokeColor"
+                            android:nextFocusRight="@+id/edit_iconStroke"
+                            android:nextFocusForward="@+id/edit_iconStroke"
+                            android:nextFocusDown="@+id/editLabel_noonFillColor"
+
+                            android:text="" android:hint="@string/configHint_themeColorNoon"
+                            tools:ignore="UnusedAttribute" />
+
+                        <ImageButton
+                            android:id="@+id/editButton_noonColor"
+                            style="@style/ColorEditButton"
+                            android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                            android:contentDescription="@string/configLabel_themeColorNoon" />
+
+                        <CheckBox
+                            android:id="@+id/enable_noonColor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <!-- Noon Fill Color -->
+                    <LinearLayout
+                        android:id="@+id/layout_noonFillColor"
+                        android:orientation="horizontal" android:gravity="center_vertical"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/layout_noonColor"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:layout_editor_absoluteX="27dp">
+
+                        <TextView android:labelFor="@+id/edit_noonFillColor"
+                            android:id="@+id/editLabel_noonFillColor"
+                            style="@style/ColorEditLabel"
+                            android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                            android:nextFocusUp="@+id/editLabel_noonColor"
+                            android:nextFocusLeft="@+id/editLabel_noonColor"
+                            android:nextFocusRight="@+id/editLabel_noonStrokeColor"
+                            android:nextFocusForward="@+id/editLabel_noonStrokeColor"
+                            android:nextFocusDown="@+id/editLabel_noonStrokeColor"
+
+                            android:text="@string/configLabel_themeColorFill"
+                            tools:ignore="UnusedAttribute" />
+
+                        <EditText
+                            android:id="@+id/edit_noonFillColor"
+                            style="@style/ColorEdit" android:visibility="gone"
+                            android:fontFamily="monospace"
+
+                            android:nextFocusUp="@+id/editLabel_noonColor"
+                            android:nextFocusLeft="@+id/editLabel_noonColor"
+                            android:nextFocusRight="@+id/editLabel_noonStrokeColor"
+                            android:nextFocusForward="@+id/editLabel_noonStrokeColor"
+                            android:nextFocusDown="@+id/editLabel_noonStrokeColor"
+
+                            android:text="" android:hint="@string/configHint_themeColorFill"
+                            tools:ignore="UnusedAttribute" />
+
+                        <ImageButton
+                            android:id="@+id/editButton_noonFillColor"
+                            style="@style/ColorEditButton"
+                            android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                            android:contentDescription="@string/configLabel_themeColorFill" />
+
+                    </LinearLayout>
+
+                    <!-- Noon Stroke Color -->
+                    <LinearLayout
+                        android:id="@+id/layout_noonStrokeColor"
+                        android:orientation="horizontal" android:gravity="center_vertical"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/layout_noonFillColor"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:layout_editor_absoluteX="27dp">
+
+                        <TextView android:labelFor="@+id/edit_noonStrokeColor"
+                            android:id="@+id/editLabel_noonStrokeColor"
+                            style="@style/ColorEditLabel"
+                            android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                            android:nextFocusUp="@+id/editLabel_noonFillColor"
+                            android:nextFocusLeft="@+id/editLabel_noonFillColor"
+                            android:nextFocusRight="@+id/edit_noonIconStroke"
+                            android:nextFocusForward="@+id/edit_noonIconStroke"
+                            android:nextFocusDown="@+id/editLabel_noonIconStroke"
+
+                            android:text="@string/configLabel_themeColorBorder"
+                            tools:ignore="UnusedAttribute" />
+
+                        <EditText
+                            android:id="@+id/edit_noonStrokeColor"
+                            style="@style/ColorEdit" android:visibility="gone"
+                            android:fontFamily="monospace"
+
+                            android:nextFocusUp="@+id/editLabel_noonFillColor"
+                            android:nextFocusLeft="@+id/editLabel_noonFillColor"
+                            android:nextFocusRight="@+id/edit_noonIconStroke"
+                            android:nextFocusForward="@+id/edit_noonIconStroke"
+                            android:nextFocusDown="@+id/editLabel_noonIconStroke"
+
+                            android:text="" android:hint="@string/configHint_themeColorBorder"
+                            tools:ignore="UnusedAttribute" />
+
+                        <ImageButton
+                            android:id="@+id/editButton_noonStrokeColor"
+                            style="@style/ColorEditButton"
+                            android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                            android:contentDescription="@string/configLabel_themeColorBorder" />
+
+                        <CheckBox
+                            android:id="@+id/checkBox_noonStrokeColor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="invisible" />
+
+                    </LinearLayout>
+
+                    <!-- Icon Stroke -->
+                    <LinearLayout
+                        android:id="@+id/layout_iconStroke"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        app:layout_constraintTop_toBottomOf="@+id/layout_sunsetStrokeColor"
+                        app:layout_constraintStart_toEndOf="@+id/layout_noonColor">
+
+                        <TextView android:labelFor="@+id/edit_iconStroke"
+                            android:id="@+id/editLabel_iconStroke"
+                            style="@style/SizeEditLabel"
+                            android:paddingStart="8dp" android:paddingEnd="8dp"
+                            android:text="@string/configLabel_themeBorderWidthRiseSet" />
+
+                        <EditText
+                            android:id="@+id/edit_iconStroke"
+                            style="@style/SizeEdit"
+
+                            android:nextFocusUp="@+id/editLabel_sunriseStrokeColor"
+                            android:nextFocusLeft="@+id/editLabel_noonColor"
+                            android:nextFocusRight="@+id/editLabel_noonFillColor"
+                            android:nextFocusForward="@+id/editLabel_noonFillColor"
+                            android:nextFocusDown="@+id/editLabel_noonFillColor"
+
+                            android:text="" android:hint="@string/configHint_themeBorderWidthRiseSet" tools:text="12"
+                            tools:ignore="UnusedAttribute" />
+
+                    </LinearLayout>
+
+                    <!-- Noon Stroke -->
+                    <LinearLayout
+                        android:id="@+id/layout_noonIconStroke"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        app:layout_constraintTop_toBottomOf="@+id/layout_noonFillColor"
+                        app:layout_constraintStart_toEndOf="@+id/layout_noonStrokeColor">
+
+                        <TextView android:labelFor="@+id/edit_noonIconStroke"
+                            android:id="@+id/editLabel_noonIconStroke"
+                            style="@style/SizeEditLabel"
+                            android:paddingStart="8dp" android:paddingEnd="8dp"
+                            android:text="@string/configLabel_themeBorderWidthNoon" />
+
+                        <EditText
+                            android:id="@+id/edit_noonIconStroke"
+                            style="@style/SizeEdit"
+
+                            android:nextFocusUp="@+id/editLabel_noonStrokeColor"
+                            android:nextFocusLeft="@+id/editLabel_noonStrokeColor"
+                            android:nextFocusRight="@+id/edit_padding"
+                            android:nextFocusForward="@+id/edit_padding"
+                            android:nextFocusDown="@+id/editLabel_padding"
+
+                            android:text="" android:hint="@string/configHint_themeBorderWidthNoon" tools:text="12"
+                            tools:ignore="UnusedAttribute" />
+
+                    </LinearLayout>
+
+                    <View android:layout_width="0dp" android:layout_height="1dp" android:background="?attr/hrColor"
+                        android:layout_marginBottom="4dp"
+                        app:layout_constraintBottom_toTopOf="@+id/layout_springColor"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <!-- Spring Color -->
+                    <LinearLayout
+                        android:id="@+id/layout_springColor"
+                        android:orientation="horizontal" android:gravity="center_vertical"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/layout_noonIconStroke"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="16dp"
+                        tools:layout_editor_absoluteX="27dp">
+
+                        <TextView android:labelFor="@+id/edit_springColor"
+                            android:id="@+id/editLabel_springColor"
+                            style="@style/ColorEditLabel"
+                            android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                            android:nextFocusUp="@+id/editLabel_noonIconStroke"
+                            android:nextFocusLeft="@+id/editLabel_noonIconStroke"
+                            android:nextFocusRight="@+id/editLabel_summerColor"
+                            android:nextFocusForward="@+id/editLabel_summerColor"
+                            android:nextFocusDown="@+id/editLabel_fallColor"
+
+                            android:text="@string/configLabel_themeColorSpring"
+                            tools:ignore="UnusedAttribute" />
+
+                        <EditText
+                            android:id="@+id/edit_springColor"
+                            style="@style/ColorEdit" android:visibility="gone"
+                            android:fontFamily="monospace"
+
+                            android:nextFocusUp="@+id/editLabel_noonIconStroke"
+                            android:nextFocusLeft="@+id/editLabel_noonIconStroke"
+                            android:nextFocusRight="@+id/editLabel_summerColor"
+                            android:nextFocusForward="@+id/editLabel_summerColor"
+                            android:nextFocusDown="@+id/editLabel_fallColor"
+
+                            android:text="" android:hint="@string/configHint_themeColorSunrise"
+                            tools:ignore="UnusedAttribute" />
+
+                        <ImageButton
+                            android:id="@+id/editButton_springColor"
+                            style="@style/ColorEditButton"
+                            android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                            android:contentDescription="@string/configLabel_themeColorSpring" />
+
+                    </LinearLayout>
+
+                    <!-- Summer Color -->
+                    <LinearLayout
+                        android:id="@+id/layout_summerColor"
+                        android:orientation="horizontal" android:gravity="center_vertical"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="@+id/layout_springColor"
+                        app:layout_constraintStart_toEndOf="@+id/layout_springColor"
+                        android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+                        android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
+
+                        <TextView android:labelFor="@+id/edit_summerColor"
+                            android:id="@+id/editLabel_summerColor"
+                            style="@style/ColorEditLabel"
+                            android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                            android:nextFocusUp="@+id/editLabel_springColor"
+                            android:nextFocusLeft="@+id/editLabel_springColor"
+                            android:nextFocusRight="@+id/editLabel_fallColor"
+                            android:nextFocusForward="@+id/editLabel_fallColor"
+                            android:nextFocusDown="@+id/editLabel_winterColor"
+
+                            android:text="@string/configLabel_themeColorSummer"
+                            tools:ignore="UnusedAttribute" />
+
+                        <EditText
+                            android:id="@+id/edit_summerColor"
+                            style="@style/ColorEdit" android:visibility="gone"
+                            android:fontFamily="monospace"
+
+                            android:nextFocusUp="@+id/editLabel_springColor"
+                            android:nextFocusLeft="@+id/editLabel_springColor"
+                            android:nextFocusRight="@+id/editLabel_fallColor"
+                            android:nextFocusForward="@+id/editLabel_fallColor"
+                            android:nextFocusDown="@+id/editLabel_winterColor"
+
+                            android:text="" android:hint="@string/configHint_themeColorSunset"
+                            tools:ignore="UnusedAttribute" />
+
+                        <ImageButton
+                            android:id="@+id/editButton_summerColor"
+                            style="@style/ColorEditButton"
+                            android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                            android:contentDescription="@string/configLabel_themeColorSummer" />
+
+                    </LinearLayout>
+
+                    <!-- Fall Color -->
+                    <LinearLayout
+                        android:id="@+id/layout_fallColor"
+                        android:orientation="horizontal" android:gravity="center_vertical"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/layout_springColor"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:layout_editor_absoluteX="27dp">
+
+                        <TextView android:labelFor="@+id/edit_fallColor"
+                            android:id="@+id/editLabel_fallColor"
+                            style="@style/ColorEditLabel"
+                            android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                            android:nextFocusUp="@+id/editLabel_springColor"
+                            android:nextFocusLeft="@+id/editLabel_summerColor"
+                            android:nextFocusRight="@+id/editLabel_winterColor"
+                            android:nextFocusForward="@+id/editLabel_winterColor"
+                            android:nextFocusDown="@+id/editLabel_winterColor"
+
+                            android:text="@string/configLabel_themeColorFall"
+                            tools:ignore="UnusedAttribute" />
+
+                        <EditText
+                            android:id="@+id/edit_fallColor"
+                            style="@style/ColorEdit" android:visibility="gone"
+                            android:fontFamily="monospace"
+
+                            android:nextFocusUp="@+id/editLabel_springColor"
+                            android:nextFocusLeft="@+id/editLabel_summerColor"
+                            android:nextFocusRight="@+id/editLabel_winterColor"
+                            android:nextFocusForward="@+id/editLabel_winterColor"
+                            android:nextFocusDown="@+id/editLabel_winterColor"
+
+                            android:text="" android:hint="@string/configHint_themeColorSunrise"
+                            tools:ignore="UnusedAttribute" />
+
+                        <ImageButton
+                            android:id="@+id/editButton_fallColor"
+                            style="@style/ColorEditButton"
+                            android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                            android:contentDescription="@string/configLabel_themeColorFall" />
+
+                    </LinearLayout>
+
+                    <!-- Winter Color -->
+                    <LinearLayout
+                        android:id="@+id/layout_winterColor"
+                        android:orientation="horizontal" android:gravity="center_vertical"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="@+id/layout_fallColor"
+                        app:layout_constraintStart_toEndOf="@+id/layout_fallColor"
+                        android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+                        android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
+
+                        <TextView android:labelFor="@+id/edit_winterColor"
+                            android:id="@+id/editLabel_winterColor"
+                            style="@style/ColorEditLabel"
+                            android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                            android:nextFocusUp="@+id/editLabel_summerColor"
+                            android:nextFocusLeft="@+id/editLabel_fallColor"
+
+                            android:text="@string/configLabel_themeColorWinter" />
+
+                        <EditText
+                            android:id="@+id/edit_winterColor"
+                            style="@style/ColorEdit" android:visibility="gone"
+                            android:fontFamily="monospace"
+
+                            android:nextFocusUp="@+id/editLabel_summerColor"
+                            android:nextFocusLeft="@+id/editLabel_fallColor"
+
+                            android:text="" android:hint="@string/configHint_themeColorSunset"
+                            tools:ignore="UnusedAttribute" />
+
+                        <ImageButton
+                            android:id="@+id/editButton_winterColor"
+                            style="@style/ColorEditButton"
+                            android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                            android:contentDescription="@string/configLabel_themeColorWinter" />
+
+                    </LinearLayout>
+
+
+                    <View android:layout_width="0dp" android:layout_height="1dp" android:background="?attr/hrColor"
+                        android:layout_marginBottom="4dp"
+                        app:layout_constraintBottom_toTopOf="@+id/layout_moonriseColor"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+
+                    <!-- Moonrise Color -->
+                    <LinearLayout
+                        android:id="@+id/layout_moonriseColor"
+                        android:orientation="horizontal" android:gravity="center_vertical"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/layout_fallColor"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="16dp"
+                        tools:layout_editor_absoluteX="27dp">
+
+                        <TextView android:labelFor="@+id/edit_moonriseColor"
+                            android:id="@+id/editLabel_moonriseColor"
+                            style="@style/ColorEditLabel"
+                            android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                            android:nextFocusUp="@+id/editLabel_fallColor"
+                            android:nextFocusLeft="@+id/editLabel_winterColor"
+                            android:nextFocusRight="@+id/editLabel_moonsetColor"
+                            android:nextFocusForward="@+id/editLabel_moonsetColor"
+                            android:nextFocusDown="@+id/editLabel_moonWaxingColor"
+
+                            android:text="@string/configLabel_themeColorMoonrise"
+                            tools:ignore="UnusedAttribute" />
+
+                        <EditText
+                            android:id="@+id/edit_moonriseColor"
+                            style="@style/ColorEdit" android:visibility="gone"
+                            android:fontFamily="monospace"
+
+                            android:nextFocusUp="@+id/editLabel_fallColor"
+                            android:nextFocusLeft="@+id/editLabel_winterColor"
+                            android:nextFocusRight="@+id/editLabel_moonsetColor"
+                            android:nextFocusForward="@+id/editLabel_moonsetColor"
+                            android:nextFocusDown="@+id/editLabel_moonWaxingColor"
+
+                            android:text="" android:hint="@string/configHint_themeColorSunrise"
+                            tools:ignore="UnusedAttribute" />
+
+                        <ImageButton
+                            android:id="@+id/editButton_moonriseColor"
+                            style="@style/ColorEditButton"
+                            android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                            android:contentDescription="@string/configLabel_themeColorMoonrise" />
+
+                    </LinearLayout>
+
+                    <!-- Moonset Color -->
+                    <LinearLayout
+                        android:id="@+id/layout_moonsetColor"
+                        android:orientation="horizontal" android:gravity="center_vertical"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="@+id/layout_moonriseColor"
+                        app:layout_constraintStart_toEndOf="@+id/layout_moonriseColor"
+                        android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+                        android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
+
+                        <TextView android:labelFor="@+id/edit_moonsetColor"
+                            android:id="@+id/editLabel_moonsetColor"
+                            style="@style/ColorEditLabel"
+                            android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                            android:nextFocusUp="@+id/editLabel_winterColor"
+                            android:nextFocusLeft="@+id/editLabel_moonriseColor"
+                            android:nextFocusRight="@+id/editLabel_moonWaxingColor"
+                            android:nextFocusForward="@+id/editLabel_moonWaxingColor"
+                            android:nextFocusDown="@+id/editLabel_moonWaningColor"
+
+                            android:text="@string/configLabel_themeColorMoonset" />
+
+                        <EditText
+                            android:id="@+id/edit_moonsetColor"
+                            style="@style/ColorEdit" android:visibility="gone"
+                            android:fontFamily="monospace"
+
+                            android:nextFocusUp="@+id/editLabel_winterColor"
+                            android:nextFocusLeft="@+id/editLabel_moonriseColor"
+                            android:nextFocusRight="@+id/editLabel_moonWaxingColor"
+                            android:nextFocusForward="@+id/editLabel_moonWaxingColor"
+                            android:nextFocusDown="@+id/editLabel_moonWaningColor"
+
+                            android:text="" android:hint="@string/configHint_themeColorSunset"
+                            tools:ignore="UnusedAttribute" />
+
+                        <ImageButton
+                            android:id="@+id/editButton_moonsetColor"
+                            style="@style/ColorEditButton"
+                            android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                            android:contentDescription="@string/configLabel_themeColorMoonset" />
+
+                    </LinearLayout>
+
+
+                    <!-- Moon Waxing Color -->
+                    <LinearLayout
+                        android:id="@+id/layout_moonWaxingColor"
+                        android:orientation="horizontal" android:gravity="center_vertical"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/layout_moonriseColor"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="16dp"
+                        tools:layout_editor_absoluteX="27dp">
+
+                        <TextView android:labelFor="@+id/edit_moonWaxingColor"
+                            android:id="@+id/editLabel_moonWaxingColor"
+                            style="@style/ColorEditLabel"
+                            android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                            android:nextFocusUp="@+id/editLabel_moonriseColor"
+                            android:nextFocusLeft="@+id/editLabel_moonsetColor"
+                            android:nextFocusRight="@+id/editLabel_moonWaxingColor"
+                            android:nextFocusForward="@+id/editLabel_moonWaxingColor"
+                            android:nextFocusDown="@+id/editLabel_moonNewColor"
+
+                            android:text="@string/configLabel_themeColorMoonWaxing"
+                            tools:ignore="UnusedAttribute" />
+
+                        <EditText
+                            android:id="@+id/edit_moonWaxingColor"
+                            style="@style/ColorEdit" android:visibility="gone"
+                            android:fontFamily="monospace"
+
+                            android:nextFocusUp="@+id/editLabel_moonriseColor"
+                            android:nextFocusLeft="@+id/editLabel_moonsetColor"
+                            android:nextFocusRight="@+id/editLabel_moonWaxingColor"
+                            android:nextFocusForward="@+id/editLabel_moonWaxingColor"
+                            android:nextFocusDown="@+id/editLabel_moonNewColor"
+
+                            android:text="" android:hint="@string/configHint_themeColorSunrise"
+                            tools:ignore="UnusedAttribute" />
+
+                        <ImageButton
+                            android:id="@+id/editButton_moonWaxingColor"
+                            style="@style/ColorEditButton"
+                            android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                            android:contentDescription="@string/configLabel_themeColorMoonWaxing" />
+
+                    </LinearLayout>
+
+                    <!-- Moon Waning Color -->
+                    <LinearLayout
+                        android:id="@+id/layout_moonWaningColor"
+                        android:orientation="horizontal" android:gravity="center_vertical"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="@+id/layout_moonWaxingColor"
+                        app:layout_constraintStart_toEndOf="@+id/layout_moonWaxingColor"
+                        android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+                        android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
+
+                        <TextView android:labelFor="@+id/edit_moonWaningColor"
+                            android:id="@+id/editLabel_moonWaningColor"
+                            style="@style/ColorEditLabel"
+                            android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                            android:nextFocusUp="@+id/editLabel_moonsetColor"
+                            android:nextFocusLeft="@+id/editLabel_moonWaxingColor"
+                            android:nextFocusRight="@+id/editLabel_moonNewColor"
+                            android:nextFocusForward="@+id/editLabel_moonNewColor"
+                            android:nextFocusDown="@+id/editLabel_moonFullColor"
+
+                            android:text="@string/configLabel_themeColorMoonWaning" />
+
+                        <EditText
+                            android:id="@+id/edit_moonWaningColor"
+                            style="@style/ColorEdit" android:visibility="gone"
+                            android:fontFamily="monospace"
+
+                            android:nextFocusUp="@+id/editLabel_moonsetColor"
+                            android:nextFocusLeft="@+id/editLabel_moonWaxingColor"
+                            android:nextFocusRight="@+id/editLabel_moonNewColor"
+                            android:nextFocusForward="@+id/editLabel_moonNewColor"
+                            android:nextFocusDown="@+id/editLabel_moonFullColor"
+
+                            android:text="" android:hint="@string/configHint_themeColorSunset"
+                            tools:ignore="UnusedAttribute" />
+
+                        <ImageButton
+                            android:id="@+id/editButton_moonWaningColor"
+                            style="@style/ColorEditButton"
+                            android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                            android:contentDescription="@string/configLabel_themeColorMoonWaning" />
+
+                    </LinearLayout>
+
+
+
+
+
+                    <!-- Moon New Color -->
+                    <LinearLayout
+                        android:id="@+id/layout_moonNewColor"
+                        android:orientation="horizontal" android:gravity="center_vertical"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/layout_moonWaxingColor"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="16dp"
+                        tools:layout_editor_absoluteX="27dp">
+
+                        <TextView android:labelFor="@+id/edit_moonNewColor"
+                            android:id="@+id/editLabel_moonNewColor"
+                            style="@style/ColorEditLabel"
+                            android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                            android:nextFocusUp="@+id/editLabel_moonWaxingColor"
+                            android:nextFocusLeft="@+id/editLabel_moonWaningColor"
+                            android:nextFocusRight="@+id/editLabel_moonFullColor"
+                            android:nextFocusForward="@+id/editLabel_moonFullColor"
+                            android:nextFocusDown="@+id/editLabel_moonFullColor"
+
+                            android:text="@string/configLabel_themeColorMoonNew"
+                            tools:ignore="UnusedAttribute" />
+
+                        <EditText
+                            android:id="@+id/edit_moonNewColor"
+                            style="@style/ColorEdit" android:visibility="gone"
+                            android:fontFamily="monospace"
+
+                            android:nextFocusUp="@+id/editLabel_moonWaxingColor"
+                            android:nextFocusLeft="@+id/editLabel_moonWaningColor"
+                            android:nextFocusRight="@+id/editLabel_moonFullColor"
+                            android:nextFocusForward="@+id/editLabel_moonFullColor"
+                            android:nextFocusDown="@+id/editLabel_moonFullColor"
+
+                            android:text="" android:hint="@string/configHint_themeColorSunrise"
+                            tools:ignore="UnusedAttribute" />
+
+                        <ImageButton
+                            android:id="@+id/editButton_moonNewColor"
+                            style="@style/ColorEditButton"
+                            android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                            android:contentDescription="@string/configLabel_themeColorMoonNew" />
+
+                    </LinearLayout>
+
+                    <!-- Moon Full Color -->
+                    <LinearLayout
+                        android:id="@+id/layout_moonFullColor"
+                        android:orientation="horizontal" android:gravity="center_vertical"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="@+id/layout_moonNewColor"
+                        app:layout_constraintStart_toEndOf="@+id/layout_moonNewColor"
+                        android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+                        android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
+
+                        <TextView android:labelFor="@+id/edit_moonFullColor"
+                            android:id="@+id/editLabel_moonFullColor"
+                            style="@style/ColorEditLabel"
+                            android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                            android:nextFocusUp="@+id/editLabel_moonWaningColor"
+                            android:nextFocusLeft="@+id/editLabel_moonNewColor"
+
+                            android:text="@string/configLabel_themeColorMoonFull" />
+
+                        <EditText
+                            android:id="@+id/edit_moonFullColor"
+                            style="@style/ColorEdit" android:visibility="gone"
+                            android:fontFamily="monospace"
+
+                            android:nextFocusUp="@+id/editLabel_moonWaningColor"
+                            android:nextFocusLeft="@+id/editLabel_moonNewColor"
+
+                            android:text="" android:hint="@string/configHint_themeColorSunset"
+                            tools:ignore="UnusedAttribute" />
+
+                        <ImageButton
+                            android:id="@+id/editButton_moonFullColor"
+                            style="@style/ColorEditButton"
+                            android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                            android:contentDescription="@string/configLabel_themeColorMoonFull" />
+
+                    </LinearLayout>
+
+
+
+                </android.support.constraint.ConstraintLayout>
+
+            </android.support.constraint.ConstraintLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</FrameLayout>

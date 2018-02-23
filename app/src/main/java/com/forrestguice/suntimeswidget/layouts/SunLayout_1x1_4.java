@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2014 Forrest Guice
+   Copyright (C) 2017-2018 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -29,19 +29,18 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
-import com.forrestguice.suntimeswidget.SuntimesUtils.TimeDisplayText;
 
 /**
  * A 1x1 layout that displays only the sunset time.
  */
-public class SuntimesLayout_1x1_2 extends SuntimesLayout
+public class SunLayout_1x1_4 extends SunLayout
 {
-    public SuntimesLayout_1x1_2()
+    public SunLayout_1x1_4()
     {
         super();
     }
 
-    public SuntimesLayout_1x1_2( int layoutID )
+    public SunLayout_1x1_4(int layoutID )
     {
         this.layoutID = layoutID;
     }
@@ -49,7 +48,7 @@ public class SuntimesLayout_1x1_2 extends SuntimesLayout
     @Override
     public void initLayoutID()
     {
-        this.layoutID = R.layout.layout_widget_1x1_2;
+        this.layoutID = R.layout.layout_widget_1x1_4;
     }
 
 
@@ -58,11 +57,7 @@ public class SuntimesLayout_1x1_2 extends SuntimesLayout
     {
         super.updateViews(context, appWidgetId, views, data);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
-
-        // upset sunset time
-        TimeDisplayText sunsetString = utils.calendarTimeShortDisplayString(context, data.sunsetCalendarToday(), showSeconds);
-        views.setTextViewText(R.id.text_time_set, sunsetString.getValue());
-        views.setTextViewText(R.id.text_time_set_suffix, sunsetString.getSuffix());
+        updateViewsNoonText(context, views, data, showSeconds);
     }
 
     @Override
@@ -70,17 +65,17 @@ public class SuntimesLayout_1x1_2 extends SuntimesLayout
     {
         super.themeViews(context, views, theme);
 
-        int sunsetColor = theme.getSunsetTextColor();
+        int noonColor = theme.getNoonTextColor();
         int suffixColor = theme.getTimeSuffixColor();
-        views.setTextColor(R.id.text_time_set_suffix, suffixColor);
-        views.setTextColor(R.id.text_time_set, sunsetColor);
+        views.setTextColor(R.id.text_time_noon_suffix, suffixColor);
+        views.setTextColor(R.id.text_time_noon, noonColor);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
-            views.setTextViewTextSize(R.id.text_time_set, TypedValue.COMPLEX_UNIT_SP, theme.getTimeSizeSp());
-            views.setTextViewTextSize(R.id.text_time_set_suffix, TypedValue.COMPLEX_UNIT_SP, theme.getTimeSuffixSizeSp());
+            views.setTextViewTextSize(R.id.text_time_noon_suffix, TypedValue.COMPLEX_UNIT_SP, theme.getTimeSuffixSizeSp());
+            views.setTextViewTextSize(R.id.text_time_noon, TypedValue.COMPLEX_UNIT_SP, theme.getTimeSizeSp());
         }
 
-        Bitmap sunsetIcon = SuntimesUtils.insetDrawableToBitmap(context, R.drawable.ic_sunset_large0, theme.getSunsetIconColor(), theme.getSunsetIconStrokeColor(), theme.getSunsetIconStrokePixels(context));
-        views.setImageViewBitmap(R.id.icon_time_sunset, sunsetIcon);
+        Bitmap noonIcon = SuntimesUtils.gradientDrawableToBitmap(context, R.drawable.ic_noon_large0, theme.getNoonIconColor(), theme.getNoonIconStrokeColor(), theme.getNoonIconStrokePixels(context));
+        views.setImageViewBitmap(R.id.icon_time_noon, noonIcon);
     }
 }

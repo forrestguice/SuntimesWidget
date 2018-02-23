@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <inset xmlns:android="http://schemas.android.com/apk/res/android"
-    android:insetTop="@dimen/moonIcon_inset">
+    android:insetTop="-8dp">
 
     <shape android:shape="oval">
-        <size android:width="@dimen/moonIcon_width" android:height="@dimen/moonIcon_height" />
+        <size android:width="@dimen/moonIcon_width" android:height="8dp" />
         <solid android:color="@color/moonIcon_color_setting" />
 
         <stroke android:width="0dp"

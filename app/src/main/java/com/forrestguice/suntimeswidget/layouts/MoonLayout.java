@@ -26,11 +26,13 @@ import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.Calendar;
+import java.util.HashMap;
 
 public abstract class MoonLayout extends SuntimesLayout
 {
@@ -61,8 +63,84 @@ public abstract class MoonLayout extends SuntimesLayout
         // update title
         String titlePattern = WidgetSettings.loadTitleTextPref(context, appWidgetId);
         String titleText = utils.displayStringForTitlePattern(context, titlePattern, data);
-        views.setTextViewText(R.id.text_title, titleText);
+        CharSequence title = (boldTitle ? SuntimesUtils.createBoldSpan(titleText, titleText) : titleText);
+        views.setTextViewText(R.id.text_title, title);
         //Log.v("DEBUG", "title text: " + titleText);
+    }
+
+    protected void updateViewsMoonRiseSetText(Context context, RemoteViews views, SuntimesMoonData data, boolean showSeconds)
+    {
+        SuntimesUtils.TimeDisplayText riseText = utils.calendarTimeShortDisplayString(context, data.moonriseCalendarToday(), showSeconds);
+        String riseString = riseText.getValue();
+        CharSequence riseSequence = (boldTime ? SuntimesUtils.createBoldSpan(riseString, riseString) : riseString);
+        views.setTextViewText(R.id.text_time_moonrise, riseSequence);
+        views.setTextViewText(R.id.text_time_moonrise_suffix, riseText.getSuffix());
+
+        SuntimesUtils.TimeDisplayText setText = utils.calendarTimeShortDisplayString(context, data.moonsetCalendarToday(), showSeconds);
+        String setString = setText.getValue();
+        CharSequence setSequence = (boldTime ? SuntimesUtils.createBoldSpan(setString, setString) : setString);
+        views.setTextViewText(R.id.text_time_moonset, setSequence);
+        views.setTextViewText(R.id.text_time_moonset_suffix, setText.getSuffix());
+    }
+
+    @Override
+    public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
+    {
+        super.themeViews(context, views, theme);
+    }
+
+    protected HashMap<MoonPhaseDisplay, Integer> phaseColors = new HashMap<>();
+
+    protected void themeViewsMoonPhase(Context context, RemoteViews views, SuntimesTheme theme)
+    {
+        int waningColor = theme.getMoonWaningColor();
+        int waxingColor = theme.getMoonWaxingColor();
+
+        phaseColors.put(MoonPhaseDisplay.FIRST_QUARTER, waxingColor);
+        phaseColors.put(MoonPhaseDisplay.WAXING_CRESCENT, waxingColor);
+        phaseColors.put(MoonPhaseDisplay.WAXING_GIBBOUS, waxingColor);
+
+        phaseColors.put(MoonPhaseDisplay.NEW, theme.getMoonNewColor());
+        phaseColors.put(MoonPhaseDisplay.FULL, theme.getMoonFullColor());
+
+        phaseColors.put(MoonPhaseDisplay.THIRD_QUARTER, waningColor);
+        phaseColors.put(MoonPhaseDisplay.WANING_CRESCENT, waningColor);
+        phaseColors.put(MoonPhaseDisplay.WANING_GIBBOUS, waningColor);
+    }
+
+    protected void themeViewsMoonPhaseIcons(Context context, RemoteViews views, SuntimesTheme theme)
+    {
+        int colorWaxing = theme.getMoonWaxingColor();
+        int colorWaning = theme.getMoonWaningColor();
+        int colorFull = theme.getMoonFullColor();
+        int colorNew = theme.getMoonNewColor();
+
+        // full and new
+        Bitmap fullMoon =  SuntimesUtils.gradientDrawableToBitmap(context, MoonPhaseDisplay.FULL.getIcon(), colorFull, colorWaning, theme.getMoonFullStrokePixels(context));
+        views.setImageViewBitmap(R.id.icon_info_moonphase_full, fullMoon);
+
+        Bitmap newMoon =  SuntimesUtils.gradientDrawableToBitmap(context, MoonPhaseDisplay.NEW.getIcon(), colorNew, colorWaxing, theme.getMoonNewStrokePixels(context));
+        views.setImageViewBitmap(R.id.icon_info_moonphase_new, newMoon);
+
+        // waxing
+        Bitmap waxingCrescent = SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.WAXING_CRESCENT.getIcon(), colorWaxing, colorWaxing, 0);
+        views.setImageViewBitmap(R.id.icon_info_moonphase_waxing_crescent, waxingCrescent);
+
+        Bitmap waxingQuarter = SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.FIRST_QUARTER.getIcon(), colorWaxing, colorWaxing, 0);
+        views.setImageViewBitmap(R.id.icon_info_moonphase_waxing_quarter, waxingQuarter);
+
+        Bitmap waxingGibbous = SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.WAXING_GIBBOUS.getIcon(), colorWaxing, colorWaxing, 0);
+        views.setImageViewBitmap(R.id.icon_info_moonphase_waxing_gibbous, waxingGibbous);
+
+        // waning
+        Bitmap waningCrescent = SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.WANING_CRESCENT.getIcon(), colorWaning, colorWaning, 0);
+        views.setImageViewBitmap(R.id.icon_info_moonphase_waning_crescent, waningCrescent);
+
+        Bitmap waningQuarter = SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.THIRD_QUARTER.getIcon(), colorWaning, colorWaning, 0);
+        views.setImageViewBitmap(R.id.icon_info_moonphase_waning_quarter, waningQuarter);
+
+        Bitmap waningGibbous = SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.WANING_GIBBOUS.getIcon(), colorWaning, colorWaning, 0);
+        views.setImageViewBitmap(R.id.icon_info_moonphase_waning_gibbous, waningGibbous);
     }
 
     protected void themeViewsMoonPhaseText(Context context, RemoteViews views, SuntimesTheme theme)

@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2014-2017 Forrest Guice
+   Copyright (C) 2014-2018 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -21,6 +21,8 @@ package com.forrestguice.suntimeswidget.settings;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -32,13 +34,18 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
 
@@ -159,6 +166,38 @@ public class WidgetThemes
         return themes.values().toArray(new ThemeDescriptor[themes.values().size()]);
     }
 
+    public static List<ThemeDescriptor> getValues()
+    {
+        return new ArrayList<ThemeDescriptor>(themes.values());
+    }
+
+    public static ThemeDescriptor[] sortedValues(boolean defaultsFirst)
+    {
+        List<SuntimesTheme.ThemeDescriptor> themeDefs = getSortedValues(defaultsFirst);
+        return themeDefs.toArray(new SuntimesTheme.ThemeDescriptor[themeDefs.size()]);
+    }
+
+    public static List<ThemeDescriptor> getSortedValues(final boolean defaultsFirst)
+    {
+        List<SuntimesTheme.ThemeDescriptor> themeDefs = getValues();
+        Collections.sort(themeDefs, new Comparator<ThemeDescriptor>()
+        {
+            @Override
+            public int compare(SuntimesTheme.ThemeDescriptor o1, SuntimesTheme.ThemeDescriptor o2)
+            {
+                if (defaultsFirst)
+                {
+                    if (o1.isDefault() && !o2.isDefault())
+                        return -1;
+                    else if (o2.isDefault() && !o1.isDefault())
+                        return 1;
+                }
+                return o1.displayString().compareToIgnoreCase(o2.displayString());
+            }
+        });
+        return themeDefs;
+    }
+
     public static ThemeDescriptor valueOf(String themeName)
     {
         return themes.get(themeName);
@@ -266,11 +305,15 @@ public class WidgetThemes
             riseTime.set(Calendar.HOUR_OF_DAY, 7);
             riseTime.set(Calendar.MINUTE, 0);
 
+            noonTime = Calendar.getInstance();
+            noonTime.set(Calendar.HOUR_OF_DAY, 12);
+            noonTime.set(Calendar.MINUTE, 0);
+
             setTime = Calendar.getInstance();
             setTime.set(Calendar.HOUR_OF_DAY, 19);
             setTime.set(Calendar.MINUTE, 0);
 
-            setRiseSet(riseTime, setTime);
+            setRiseSet(riseTime, setTime, noonTime);
         }
 
         private SuntimesTheme.ThemeDescriptor selected;
@@ -294,16 +337,18 @@ public class WidgetThemes
             return showAddButton;
         }
 
-        private Calendar riseTime, setTime;
-        private SuntimesUtils.TimeDisplayText riseText, setText;
-        public void setRiseSet(Calendar rise, Calendar set)
+        private Calendar riseTime, setTime, noonTime;
+        private SuntimesUtils.TimeDisplayText riseText, setText, noonText;
+        public void setRiseSet(Calendar rise, Calendar set, Calendar noon)
         {
             riseTime = rise;
             setTime = set;
+            noonTime = noon;
 
             SuntimesUtils utils = new SuntimesUtils();
             riseText = utils.calendarTimeShortDisplayString(context, riseTime);
             setText = utils.calendarTimeShortDisplayString(context, setTime);
+            noonText = utils.calendarTimeShortDisplayString(context, noonTime);
         }
 
         public int ordinal( String themeName )
@@ -375,9 +420,19 @@ public class WidgetThemes
                 titleView.setFocusable(false);
                 titleView.setFocusableInTouchMode(false);
 
+                int flagColor = theme.getTimeSuffixColor();
+                ImageView flagDefault = (ImageView)view.findViewById(R.id.icon_isdefault);
+                BitmapDrawable flagIcon = (BitmapDrawable) flagDefault.getBackground().mutate();
+                flagIcon.setColorFilter(flagColor, PorterDuff.Mode.SRC_ATOP);
+                flagDefault.setVisibility((theme.isDefault()) ? View.VISIBLE : View.GONE);
+
+                boolean boldTime = theme.getTimeBold();
+
                 TextView riseView = (TextView) view.findViewById(R.id.text_time_rise);
                 riseView.setTextColor(theme.getSunriseTextColor());
-                riseView.setText(riseText.getValue());
+                String riseString = riseText.getValue();
+                CharSequence riseSequence = (boldTime ? SuntimesUtils.createBoldSpan(riseString, riseString) : riseString);
+                riseView.setText(riseSequence);
 
                 TextView riseViewSuffix = (TextView) view.findViewById(R.id.text_time_rise_suffix);
                 riseViewSuffix.setTextColor(theme.getTimeSuffixColor());
@@ -385,7 +440,9 @@ public class WidgetThemes
 
                 TextView setView = (TextView) view.findViewById(R.id.text_time_set);
                 setView.setTextColor(theme.getSunsetTextColor());
-                setView.setText(setText.getValue());
+                String setString = setText.getValue();
+                CharSequence setSequence = (boldTime ? SuntimesUtils.createBoldSpan(setString, setString) : setString);
+                setView.setText(setSequence);
 
                 TextView setViewSuffix = (TextView) view.findViewById(R.id.text_time_set_suffix);
                 setViewSuffix.setTextColor(theme.getTimeSuffixColor());
@@ -396,6 +453,60 @@ public class WidgetThemes
 
                 ImageView setIcon = (ImageView)view.findViewById(R.id.icon_time_sunset);
                 setIcon.setImageBitmap(SuntimesUtils.insetDrawableToBitmap(context, R.drawable.ic_sunset0, theme.getSunsetIconColor(), theme.getSunsetIconStrokeColor(), theme.getSunsetIconStrokePixels(context)));
+
+                TextView noonView = (TextView)view.findViewById(R.id.text_time_noon);
+                String noonString = noonText.getValue();
+                CharSequence noonSequence = (boldTime ? SuntimesUtils.createBoldSpan(noonString, noonString) : noonString);
+                noonView.setText(noonSequence);
+                noonView.setTextColor(theme.getNoonTextColor());
+
+                TextView noonSuffix = (TextView)view.findViewById(R.id.text_time_noon_suffix);
+                noonSuffix.setText(noonText.getSuffix());
+                noonSuffix.setTextColor(theme.getTimeSuffixColor());
+
+                ImageView noonIcon = (ImageView)view.findViewById(R.id.icon_time_noon);
+                noonIcon.setImageBitmap(SuntimesUtils.gradientDrawableToBitmap(context, R.drawable.ic_noon_large0, theme.getNoonIconColor(), theme.getNoonIconStrokeColor(), theme.getNoonIconStrokePixels(context)));
+
+                int moonriseColor = theme.getMoonriseTextColor();
+                ImageView moonriseIcon = (ImageView)view.findViewById(R.id.icon_time_moonrise);
+                moonriseIcon.setImageBitmap(SuntimesUtils.insetDrawableToBitmap(context, R.drawable.ic_moon_rise, moonriseColor, moonriseColor, 0));
+
+                int moonsetColor = theme.getMoonsetTextColor();
+                ImageView moonsetIcon = (ImageView)view.findViewById(R.id.icon_time_moonset);
+                moonsetIcon.setImageBitmap(SuntimesUtils.insetDrawableToBitmap(context, R.drawable.ic_moon_set, moonsetColor, moonsetColor, 0));
+
+                int springColor = theme.getSpringColor();
+                ImageView springIcon = (ImageView)view.findViewById(R.id.icon_season_spring);
+                SuntimesUtils.colorizeImageView(springIcon, springColor);
+
+                int summerColor = theme.getSummerColor();
+                ImageView summerIcon = (ImageView)view.findViewById(R.id.icon_season_summer);
+                SuntimesUtils.colorizeImageView(summerIcon, summerColor);
+
+                int fallColor = theme.getFallColor();
+                ImageView fallIcon = (ImageView)view.findViewById(R.id.icon_season_fall);
+                SuntimesUtils.colorizeImageView(fallIcon, fallColor);
+
+                int winterColor = theme.getWinterColor();
+                ImageView winterIcon = (ImageView)view.findViewById(R.id.icon_season_winter);
+                SuntimesUtils.colorizeImageView(winterIcon, winterColor);
+
+                int waningColor = theme.getMoonWaningColor();
+                int waxingColor = theme.getMoonWaxingColor();
+                int fullColor = theme.getMoonFullColor();
+                int newColor = theme.getMoonNewColor();
+
+                ImageView newMoonIcon = (ImageView)view.findViewById(R.id.icon_info_moonphase_new);
+                newMoonIcon.setImageBitmap(SuntimesUtils.gradientDrawableToBitmap(context, MoonPhaseDisplay.NEW.getIcon(), newColor, waxingColor, theme.getMoonNewStrokePixels(context)));
+
+                ImageView waxingMoonIcon = (ImageView)view.findViewById(R.id.icon_info_moonphase_waxing_quarter);
+                waxingMoonIcon.setImageBitmap(SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.FIRST_QUARTER.getIcon(), waxingColor, waxingColor, 0));
+
+                ImageView fullMoonIcon = (ImageView)view.findViewById(R.id.icon_info_moonphase_full);
+                fullMoonIcon.setImageBitmap(SuntimesUtils.gradientDrawableToBitmap(context, MoonPhaseDisplay.FULL.getIcon(), fullColor, waningColor, theme.getMoonFullStrokePixels(context)));
+
+                ImageView waningMoonIcon = (ImageView)view.findViewById(R.id.icon_info_moonphase_waning_quarter);
+                waningMoonIcon.setImageBitmap(SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.THIRD_QUARTER.getIcon(), waningColor, waningColor, 0));
 
                 View layout = view.findViewById(R.id.widgetframe_inner);
                 try {
@@ -409,11 +520,13 @@ public class WidgetThemes
                     int[] padding = theme.getPaddingPixels(context);
                     layout.setPadding(padding[0], padding[1], padding[2], padding[3]);
 
-                    titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, theme.getTitleSizeSp());
+                    //titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, theme.getTitleSizeSp());
                     riseView.setTextSize(TypedValue.COMPLEX_UNIT_SP, theme.getTimeSizeSp());
                     riseViewSuffix.setTextSize(TypedValue.COMPLEX_UNIT_SP, theme.getTimeSuffixSizeSp());
                     setView.setTextSize(TypedValue.COMPLEX_UNIT_SP, theme.getTimeSizeSp());
                     setViewSuffix.setTextSize(TypedValue.COMPLEX_UNIT_SP, theme.getTimeSuffixSizeSp());
+                    noonView.setTextSize(TypedValue.COMPLEX_UNIT_SP, theme.getTimeSizeSp());
+                    noonSuffix.setTextSize(TypedValue.COMPLEX_UNIT_SP, theme.getTimeSuffixSizeSp());
                 }
             }
             return view;

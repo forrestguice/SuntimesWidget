@@ -1,5 +1,19 @@
 ### ~
 
+* adds widget ontap action; "update widget" to manually trigger widget updates.
+* fixes (workaround) missing/deleted update alarms; opening the widget list now reschedules alarms (that may be missing / deleted (e.g. forced stop)).
+* fixes widget update when a theme is modified; all widgets sharing that theme are updated.
+* adds "themes" menu item to widgetlist activity; launches the theme editor (w/out navigating through widget config).
+* adds "about" menu item to theme selector activity.
+* fixes widget list scroll; state preserved on orientation change.
+* fixes theme selector scroll; automatically scroll to the selected item.
+* fixes theme selector ordering; sort items alphabetically, grid selector shows defaults first.
+* enhances the theme selector; grid selector item layout shows more colors.
+* enhances the theme selector; toggle the preview background (shows home screen wallpaper).
+* enhances the theme editor; flip between multiple previews (adds moon widget previews).
+* adds to theming; moon phase colors; the new moon, waxing, waning, and full moon colors are now themeable.
+* adds to theming; "bold" title option, "bold" time option.
+
 ### v0.7.0 (2018-02-17)
 * adds a 3x1 moon widget (showing major phases) (#52).
 * adds a 2x1 moon widget (showing rise/set + phase + illumination) (#52).

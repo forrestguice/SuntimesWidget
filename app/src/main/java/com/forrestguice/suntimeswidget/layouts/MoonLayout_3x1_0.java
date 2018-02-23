@@ -19,12 +19,14 @@
 package com.forrestguice.suntimeswidget.layouts;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -91,6 +93,23 @@ public class MoonLayout_3x1_0 extends MoonLayout
             views.setTextViewTextSize(R.id.moonphase_full_date, TypedValue.COMPLEX_UNIT_SP, timeSize);
             views.setTextViewTextSize(R.id.moonphase_thirdquarter_date, TypedValue.COMPLEX_UNIT_SP, timeSize);
         }
+
+        int colorWaxing = theme.getMoonWaxingColor();
+        int colorWaning = theme.getMoonWaningColor();
+        int colorFull = theme.getMoonFullColor();
+        int colorNew = theme.getMoonNewColor();
+
+        Bitmap fullMoon =  SuntimesUtils.gradientDrawableToBitmap(context, MoonPhaseDisplay.FULL.getIcon(), colorFull, colorWaning, theme.getMoonFullStrokePixels(context));
+        views.setImageViewBitmap(R.id.moonphase_full_icon, fullMoon);
+
+        Bitmap newMoon =  SuntimesUtils.gradientDrawableToBitmap(context, MoonPhaseDisplay.NEW.getIcon(), colorNew, colorWaxing, theme.getMoonNewStrokePixels(context));
+        views.setImageViewBitmap(R.id.moonphase_new_icon, newMoon);
+
+        Bitmap waxingQuarter = SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.FIRST_QUARTER.getIcon(), colorWaxing, colorWaxing, 0);
+        views.setImageViewBitmap(R.id.moonphase_firstquarter_icon, waxingQuarter);
+
+        Bitmap waningQuarter = SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.THIRD_QUARTER.getIcon(), colorWaning, colorWaning, 0);
+        views.setImageViewBitmap(R.id.moonphase_thirdquarter_icon, waningQuarter);
     }
 
     @Override

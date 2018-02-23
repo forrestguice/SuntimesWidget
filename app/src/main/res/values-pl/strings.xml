@@ -228,6 +228,7 @@
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Nic nie rób</string>           <!-- setting -->
+    <string name="actionMode_update">Update Widget</string>           <!-- setting -->  <!-- TODO -->
     <string name="actionMode_config">Edytuj widżet</string>      <!-- setting -->
     <string name="actionMode_launchActivity">Uruchom apkę</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Przełącz widok</string>      <!-- setting -->
@@ -328,6 +329,7 @@
     <string name="edittheme_error_displaytext">Wyświetlany tekst nie może być pusty.</string>  <!-- error hint (display text is empty) -->
     <string name="edittheme_error_textsize_min">Rozmiar musi być liczbą całkowitą &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->
     <string name="edittheme_error_textsize_max">Rozmiar musi być liczbą całkowitą &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->
+    <string name="edittheme_flag_default">default</string>  <!-- content description -->  <!-- TODO -->
 
     <string name="deletetheme_dialog_title">Usuń skórkę</string>        <!-- dialog title -->
     <string name="deletetheme_dialog_message">Czy na pewno chcesz usunąć <xliff:g id="themeName">%1$s</xliff:g>?</string>   <!-- dialog msg -->
@@ -357,6 +359,10 @@
 
     <string name="configLabel_themeColorMoonrise">Kolor wschodu Księżyca:</string> <!-- color label -->
     <string name="configLabel_themeColorMoonset">Kolor zachodu Księżyca:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaxing">Waxing Color:</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorMoonWaning">Waning Color:</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorMoonFull">Full Color:</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorMoonNew">New Color:</string> <!-- color label --> <!-- TODO -->
 
     <string name="configLabel_themeColorSunrise">Kolor wschodu Słońca:</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
@@ -387,11 +393,15 @@
     <string name="configLabel_themeSizeTitle">Rozmiar tytułu:</string>  <!-- edit label -->
     <string name="configHint_themeSizeTitle">14</string>                 <!-- edit hint -->
 
+    <string name="configLabel_themeBoldTitle">Bold</string>          <!-- checkbox label -->  <!-- TODO -->
+
     <string name="configLabel_themeSizeText">Rozmiar tekstu:</string>    <!-- edit label -->
     <string name="configHint_themeSizeText">10</string>                  <!-- edit hint -->
 
     <string name="configLabel_themeSizeTime">Rozmiar czasu:</string>    <!-- edit label -->
     <string name="configHint_themeSizeTime">12</string>                  <!-- edit hint -->
+
+    <string name="configLabel_themeBoldTime">Bold</string>          <!-- checkbox label -->  <!-- TODO -->
 
     <string name="configLabel_themeSizeSuffix">Rozmiar sufiksu:</string> <!-- edit label -->
     <string name="configHint_themeSizeSuffix">8</string>                  <!-- edit hint -->
