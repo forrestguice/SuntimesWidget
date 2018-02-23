@@ -228,6 +228,7 @@
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Ne rien faire</string>           <!-- setting -->
+    <string name="actionMode_update">Update Widget</string>           <!-- setting -->  <!-- TODO -->
     <string name="actionMode_config">Reconfigurer le widget</string>      <!-- setting -->
     <string name="actionMode_launchActivity">Lancer l\'application</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Basculer l\'affichage</string>      <!-- setting -->

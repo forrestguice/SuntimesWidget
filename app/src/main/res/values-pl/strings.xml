@@ -228,6 +228,7 @@
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Nic nie rób</string>           <!-- setting -->
+    <string name="actionMode_update">Update Widget</string>           <!-- setting -->  <!-- TODO -->
     <string name="actionMode_config">Edytuj widżet</string>      <!-- setting -->
     <string name="actionMode_launchActivity">Uruchom apkę</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Przełącz widok</string>      <!-- setting -->
