@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2017-2018 Forrest Guice
+    This file is part of SuntimesWidget.
+
+    SuntimesWidget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SuntimesWidget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_colors_seasons"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Spring Color -->
+        <LinearLayout
+            android:id="@+id/layout_springColor"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteX="27dp">
+
+            <TextView android:labelFor="@+id/edit_springColor"
+                android:id="@+id/editLabel_springColor"
+                style="@style/ColorEditLabel"
+                android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                android:nextFocusUp="@+id/editLabel_noonIconStroke"
+                android:nextFocusLeft="@+id/editLabel_noonIconStroke"
+                android:nextFocusRight="@+id/editLabel_summerColor"
+                android:nextFocusForward="@+id/editLabel_summerColor"
+                android:nextFocusDown="@+id/editLabel_fallColor"
+
+                android:text="@string/configLabel_themeColorSpring"
+                tools:ignore="UnusedAttribute" />
+
+            <EditText
+                android:id="@+id/edit_springColor"
+                style="@style/ColorEdit" android:visibility="gone"
+                android:fontFamily="monospace"
+
+                android:nextFocusUp="@+id/editLabel_noonIconStroke"
+                android:nextFocusLeft="@+id/editLabel_noonIconStroke"
+                android:nextFocusRight="@+id/editLabel_summerColor"
+                android:nextFocusForward="@+id/editLabel_summerColor"
+                android:nextFocusDown="@+id/editLabel_fallColor"
+
+                android:text="" android:hint="@string/configHint_themeColorSunrise"
+                tools:ignore="UnusedAttribute" />
+
+            <ImageButton
+                android:id="@+id/editButton_springColor"
+                style="@style/ColorEditButton"
+                android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                android:contentDescription="@string/configLabel_themeColorSpring" />
+
+        </LinearLayout>
+
+        <!-- Summer Color -->
+        <LinearLayout
+            android:id="@+id/layout_summerColor"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/layout_springColor"
+            app:layout_constraintStart_toEndOf="@+id/layout_springColor"
+            android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+            android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
+
+            <TextView android:labelFor="@+id/edit_summerColor"
+                android:id="@+id/editLabel_summerColor"
+                style="@style/ColorEditLabel"
+                android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                android:nextFocusUp="@+id/editLabel_springColor"
+                android:nextFocusLeft="@+id/editLabel_springColor"
+                android:nextFocusRight="@+id/editLabel_fallColor"
+                android:nextFocusForward="@+id/editLabel_fallColor"
+                android:nextFocusDown="@+id/editLabel_winterColor"
+
+                android:text="@string/configLabel_themeColorSummer"
+                tools:ignore="UnusedAttribute" />
+
+            <EditText
+                android:id="@+id/edit_summerColor"
+                style="@style/ColorEdit" android:visibility="gone"
+                android:fontFamily="monospace"
+
+                android:nextFocusUp="@+id/editLabel_springColor"
+                android:nextFocusLeft="@+id/editLabel_springColor"
+                android:nextFocusRight="@+id/editLabel_fallColor"
+                android:nextFocusForward="@+id/editLabel_fallColor"
+                android:nextFocusDown="@+id/editLabel_winterColor"
+
+                android:text="" android:hint="@string/configHint_themeColorSunset"
+                tools:ignore="UnusedAttribute" />
+
+            <ImageButton
+                android:id="@+id/editButton_summerColor"
+                style="@style/ColorEditButton"
+                android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                android:contentDescription="@string/configLabel_themeColorSummer" />
+
+        </LinearLayout>
+
+        <!-- Fall Color -->
+        <LinearLayout
+            android:id="@+id/layout_fallColor"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/layout_springColor"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteX="27dp">
+
+            <TextView android:labelFor="@+id/edit_fallColor"
+                android:id="@+id/editLabel_fallColor"
+                style="@style/ColorEditLabel"
+                android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                android:nextFocusUp="@+id/editLabel_springColor"
+                android:nextFocusLeft="@+id/editLabel_summerColor"
+                android:nextFocusRight="@+id/editLabel_winterColor"
+                android:nextFocusForward="@+id/editLabel_winterColor"
+                android:nextFocusDown="@+id/editLabel_winterColor"
+
+                android:text="@string/configLabel_themeColorFall"
+                tools:ignore="UnusedAttribute" />
+
+            <EditText
+                android:id="@+id/edit_fallColor"
+                style="@style/ColorEdit" android:visibility="gone"
+                android:fontFamily="monospace"
+
+                android:nextFocusUp="@+id/editLabel_springColor"
+                android:nextFocusLeft="@+id/editLabel_summerColor"
+                android:nextFocusRight="@+id/editLabel_winterColor"
+                android:nextFocusForward="@+id/editLabel_winterColor"
+                android:nextFocusDown="@+id/editLabel_winterColor"
+
+                android:text="" android:hint="@string/configHint_themeColorSunrise"
+                tools:ignore="UnusedAttribute" />
+
+            <ImageButton
+                android:id="@+id/editButton_fallColor"
+                style="@style/ColorEditButton"
+                android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                android:contentDescription="@string/configLabel_themeColorFall" />
+
+        </LinearLayout>
+
+        <!-- Winter Color -->
+        <LinearLayout
+            android:id="@+id/layout_winterColor"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/layout_fallColor"
+            app:layout_constraintStart_toEndOf="@+id/layout_fallColor"
+            android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+            android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
+
+            <TextView android:labelFor="@+id/edit_winterColor"
+                android:id="@+id/editLabel_winterColor"
+                style="@style/ColorEditLabel"
+                android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                android:nextFocusUp="@+id/editLabel_summerColor"
+                android:nextFocusLeft="@+id/editLabel_fallColor"
+
+                android:text="@string/configLabel_themeColorWinter" />
+
+            <EditText
+                android:id="@+id/edit_winterColor"
+                style="@style/ColorEdit" android:visibility="gone"
+                android:fontFamily="monospace"
+
+                android:nextFocusUp="@+id/editLabel_summerColor"
+                android:nextFocusLeft="@+id/editLabel_fallColor"
+
+                android:text="" android:hint="@string/configHint_themeColorSunset"
+                tools:ignore="UnusedAttribute" />
+
+            <ImageButton
+                android:id="@+id/editButton_winterColor"
+                style="@style/ColorEditButton"
+                android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                android:contentDescription="@string/configLabel_themeColorWinter" />
+
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+</merge>
