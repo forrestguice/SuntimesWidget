@@ -91,7 +91,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
     private ExportThemesTask exportTask = null;
     private boolean isExporting = false;
 
-    private int previewID = -1;
+    private int previewID = 0;
     private boolean disallowSelect = false;
     private String preselectedTheme;
     private boolean useWallpaper = false;

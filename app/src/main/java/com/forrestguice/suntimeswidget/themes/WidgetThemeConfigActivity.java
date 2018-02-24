@@ -94,7 +94,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
     private UIMode param_mode = null;
     private String param_themeName = null;
-    private int param_previewID = -1;
+    private int param_previewID = 0;
     private boolean param_wallpaper = true;
 
     private ActionBar actionBar;
@@ -365,17 +365,25 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         initColorFields();
         initSizeFields();
+
+        TextView labelName = (TextView)findViewById(R.id.editLabel_themeName);
         switch (mode)
         {
             case EDIT_THEME:
                 actionBar.setTitle(getString(R.string.configLabel_widgetThemeEdit));
+                labelName.setEnabled(false);
+                labelName.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
                 editName.setEnabled(false);
+                editName.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
                 break;
 
             case ADD_THEME:
             default:
                 actionBar.setTitle(getString(R.string.configLabel_widgetThemeAdd));
+                labelName.setEnabled(true);
+                labelName.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
                 editName.setEnabled(true);
+                editName.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
                 break;
 
         }
