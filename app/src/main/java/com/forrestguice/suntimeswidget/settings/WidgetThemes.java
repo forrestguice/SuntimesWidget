@@ -449,10 +449,10 @@ public class WidgetThemes
                 setViewSuffix.setText(setText.getSuffix());
 
                 ImageView riseIcon = (ImageView)view.findViewById(R.id.icon_time_sunrise);
-                riseIcon.setImageBitmap(SuntimesUtils.insetDrawableToBitmap(context, R.drawable.ic_sunrise0, theme.getSunriseIconColor(), theme.getSunriseIconStrokeColor(), theme.getSunriseIconStrokePixels(context)));
+                riseIcon.setImageBitmap(SuntimesUtils.layerDrawableToBitmap(context, R.drawable.ic_sunrise0, theme.getSunriseIconColor(), theme.getSunriseIconStrokeColor(), theme.getSunriseIconStrokePixels(context)));
 
                 ImageView setIcon = (ImageView)view.findViewById(R.id.icon_time_sunset);
-                setIcon.setImageBitmap(SuntimesUtils.insetDrawableToBitmap(context, R.drawable.ic_sunset0, theme.getSunsetIconColor(), theme.getSunsetIconStrokeColor(), theme.getSunsetIconStrokePixels(context)));
+                setIcon.setImageBitmap(SuntimesUtils.layerDrawableToBitmap(context, R.drawable.ic_sunset0, theme.getSunsetIconColor(), theme.getSunsetIconStrokeColor(), theme.getSunsetIconStrokePixels(context)));
 
                 TextView noonView = (TextView)view.findViewById(R.id.text_time_noon);
                 String noonString = noonText.getValue();
@@ -469,11 +469,11 @@ public class WidgetThemes
 
                 int moonriseColor = theme.getMoonriseTextColor();
                 ImageView moonriseIcon = (ImageView)view.findViewById(R.id.icon_time_moonrise);
-                moonriseIcon.setImageBitmap(SuntimesUtils.insetDrawableToBitmap(context, R.drawable.ic_moon_rise, moonriseColor, moonriseColor, 0));
+                moonriseIcon.setImageBitmap(SuntimesUtils.layerDrawableToBitmap(context, R.drawable.ic_moon_rise, moonriseColor, moonriseColor, 0));
 
                 int moonsetColor = theme.getMoonsetTextColor();
                 ImageView moonsetIcon = (ImageView)view.findViewById(R.id.icon_time_moonset);
-                moonsetIcon.setImageBitmap(SuntimesUtils.insetDrawableToBitmap(context, R.drawable.ic_moon_set, moonsetColor, moonsetColor, 0));
+                moonsetIcon.setImageBitmap(SuntimesUtils.layerDrawableToBitmap(context, R.drawable.ic_moon_set, moonsetColor, moonsetColor, 0));
 
                 int springColor = theme.getSpringColor();
                 ImageView springIcon = (ImageView)view.findViewById(R.id.icon_season_spring);
