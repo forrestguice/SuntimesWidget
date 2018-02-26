@@ -533,6 +533,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 chooser.setEnabled(false);  // changing text size requires api 16+
             }
             choosePadding.setEnabled(false);  // changing padding requires api 16+
+
+            chooseIconStroke.setEnabled(true);
+            chooseNoonIconStroke.setEnabled(true);
         }
     }
 
