@@ -23,8 +23,10 @@
 
         <ImageView
             style="@style/SunsetTimeImageView"
-            android:id="@+id/icon_time_moonset"
+            android:id="@+id/icon_time_moonset" android:layout_width="18dp" android:layout_height="8dp"
             android:scaleType="fitEnd"
+            android:layout_marginLeft="2dp" android:layout_marginRight="1dp"  android:layout_marginTop="1dp"
+            android:layout_marginStart="2dp" android:layout_marginEnd="1dp"
             android:contentDescription="@string/moonset" />
 
         <TextView
@@ -38,6 +40,7 @@
             android:id="@+id/text_time_moonset_suffix"
             android:layout_gravity="bottom"
             android:layout_height="match_parent"
+            android:layout_margin="2dp"
             tools:text="AM" />
 
     </LinearLayout>
