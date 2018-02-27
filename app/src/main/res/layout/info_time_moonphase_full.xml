@@ -20,7 +20,8 @@
     android:id="@+id/moonphase_full_layout"
     android:layout_width="0dp" android:layout_height="wrap_content"
     android:minWidth="60dp" android:layout_weight="1"
-    android:gravity="center" android:orientation="vertical" android:layout_margin="2dp">
+    android:gravity="center" android:orientation="vertical" android:layout_margin="2dp"
+    tools:ignore="UseCompoundDrawables">
 
     <ImageView
         android:id="@+id/moonphase_full_icon"

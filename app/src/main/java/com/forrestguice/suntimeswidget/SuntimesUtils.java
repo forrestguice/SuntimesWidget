@@ -982,7 +982,6 @@ public class SuntimesUtils
                 GradientDrawable d = (GradientDrawable) view.getBackground().mutate();
                 d.setColor(color);
                 d.invalidateSelf();
-                return;
 
             } catch (ClassCastException e) {
                 Log.w("colorizeImageView", "failed to colorize! " + e);

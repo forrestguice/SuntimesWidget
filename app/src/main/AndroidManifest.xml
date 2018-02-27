@@ -81,7 +81,7 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/suntimeswidget_info_0_1x1" />
+                android:resource="@xml/widget_sun0_1x1" />
         </receiver>
         
         <activity
@@ -106,7 +106,7 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/suntimeswidget_info_0_2x1" />
+                android:resource="@xml/widget_sun0_2x1" />
         </receiver>
 
         <activity
@@ -133,7 +133,7 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/suntimeswidget_info_1" />
+                android:resource="@xml/widget_sun1_1x1" />
         </receiver>
 
         <!-- Widget 1 Service: Flippable widget [requires api 14+] -->
@@ -165,7 +165,7 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/suntimeswidget_info_2" />
+                android:resource="@xml/widget_solstice0_1x1" />
         </receiver>
 
         <!-- Widget 2 Configuration Activity -->
