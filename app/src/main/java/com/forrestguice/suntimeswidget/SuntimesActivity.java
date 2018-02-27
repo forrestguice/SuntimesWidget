@@ -110,6 +110,7 @@ public class SuntimesActivity extends AppCompatActivity
     private static final String DIALOGTAG_DATE = "dateselect";
     private static final String DIALOGTAG_LIGHTMAP = "lightmap";
     private static final String DIALOGTAG_EQUINOX = "equinox";
+    private static final String DIALOGTAG_MOON = "moon";
 
     protected static final SuntimesUtils utils = new SuntimesUtils();
 
@@ -321,6 +322,14 @@ public class SuntimesActivity extends AppCompatActivity
             equinoxDialog.setData(dataset2);
             equinoxDialog.updateViews(dataset2);
             //Log.d("DEBUG", "EquinoxDialog updated on restore.");
+        }
+
+        MoonDialog moonDialog = (MoonDialog) fragments.findFragmentByTag(DIALOGTAG_MOON);
+        if (moonDialog != null)
+        {
+            moonDialog.setData(dataset3);
+            moonDialog.updateViews();
+            //Log.d("DEBUG", "MoonDialog updated on restore.");
         }
     }
 
@@ -968,6 +977,10 @@ public class SuntimesActivity extends AppCompatActivity
 
             case R.id.action_equinox:
                 showEquinoxDialog();
+                return true;
+
+            case R.id.action_moon:
+                showMoonDialog();
                 return true;
 
             default:
@@ -1900,6 +1913,13 @@ public class SuntimesActivity extends AppCompatActivity
         EquinoxDialog equinoxDialog = new EquinoxDialog();
         equinoxDialog.setData(dataset2);
         equinoxDialog.show(getSupportFragmentManager(), DIALOGTAG_EQUINOX);
+    }
+
+    protected void showMoonDialog()
+    {
+        MoonDialog moonDialog = new MoonDialog();
+        moonDialog.setData(dataset3);
+        moonDialog.show(getSupportFragmentManager(), DIALOGTAG_MOON);
     }
 
     protected void showBlueTimes( boolean value )

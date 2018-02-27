@@ -19,6 +19,7 @@
     <string name="configAction_setTimeZone">Set Time Zone</string>
     <string name="configAction_setDate">Set Date</string>
     <string name="configAction_equinoxDialog">Solstice / Equinox</string>
+    <string name="configAction_moon">Moon</string>                            <!-- TODO: i18n -->
     <string name="configAction_help">Help</string>
     <string name="configAction_settings">Settings</string>
     <string name="configAction_aboutWidget">About</string>
