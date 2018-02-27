@@ -1,5 +1,6 @@
 ### ~
 
+* fixes bug #120 (widget icons don't use theme icons); now works for all api versions.
 * adds widget ontap action; "update widget" to manually trigger widget updates.
 * fixes (workaround) missing/deleted update alarms; opening the widget list now reschedules alarms (that may be missing / deleted (e.g. forced stop)).
 * fixes widget update when a theme is modified; all widgets sharing that theme are updated.
