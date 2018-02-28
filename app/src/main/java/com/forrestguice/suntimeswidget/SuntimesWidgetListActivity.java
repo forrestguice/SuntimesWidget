@@ -39,7 +39,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
@@ -198,8 +197,8 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             }
         });
 
-        initHelpItem();
-        initThemeItem(context);
+        initItem(R.id.item1, R.string.configLabel_widgetListHelp_title, R.string.configLabel_widgetListHelp_summary, R.attr.icActionHelp, helpClickListener);
+        initItem(R.id.item2, R.string.configLabel_widgetThemeList, 0, R.attr.icActionSettings, themesClickListener);
     }
 
     protected void updateViews(Context context)
@@ -207,34 +206,63 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         widgetList.setAdapter(WidgetListAdapter.createWidgetListAdapter(context));
     }
 
-    /**
-     *
-     */
-    private void initHelpItem()
+    private void initItem(int viewID, int titleTextID, int summaryTextID, int iconAttrID, View.OnClickListener clickListener)
     {
-        View item1 = findViewById(R.id.item1);
-        if (item1 != null)
+        View item = findViewById(viewID);
+        if (item != null)
         {
-            RelativeLayout helpItem = (RelativeLayout) item1.findViewById(R.id.itemLayout);
-            if (helpItem != null)
+            View itemLayout = item.findViewById(R.id.itemLayout);
+            if (itemLayout != null)
             {
-                helpItem.setOnClickListener(new View.OnClickListener()
-                {
-                    @Override
-                    public void onClick(View view)
-                    {
-                        showHelp();
-                    }
-                });
+                itemLayout.setOnClickListener(clickListener);
 
-                TextView helpTitle = (TextView) helpItem.findViewById(android.R.id.text1);
-                helpTitle.setText(getString(R.string.configLabel_widgetListHelp_title));
+                TypedArray a = getTheme().obtainStyledAttributes(new int[] {iconAttrID});
+                int resID = a.getResourceId(0, 0);
+                Drawable icon = getResources().getDrawable(resID);
+                a.recycle();
 
-                TextView helpSummary = (TextView) helpItem.findViewById(android.R.id.text2);
-                helpSummary.setText(getString(R.string.configLabel_widgetListHelp_summary));
+                ImageView iconView = (ImageView) itemLayout.findViewById(android.R.id.icon1);
+                if (iconAttrID > 0) {
+                    iconView.setImageDrawable(icon);
+                    iconView.setVisibility(View.VISIBLE);
+                } else iconView.setVisibility(View.GONE);
+
+                TextView titleView = (TextView) itemLayout.findViewById(android.R.id.text1);
+                if (titleTextID > 0) {
+                    titleView.setText(getString(titleTextID));
+                    titleView.setVisibility(View.VISIBLE);
+                } else titleView.setVisibility(View.GONE);
+
+                TextView summaryView = (TextView) itemLayout.findViewById(android.R.id.text2);
+                if (summaryTextID > 0) {
+                    summaryView.setText(getString(summaryTextID));
+                    summaryView.setVisibility(View.VISIBLE);
+                }else summaryView.setVisibility(View.GONE);
+
+                TextView text3 = (TextView) itemLayout.findViewById(R.id.text3);
+                if (text3 != null)
+                    text3.setVisibility(View.GONE);
             }
         }
     }
+
+    private View.OnClickListener helpClickListener = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View view)
+        {
+            showHelp();
+        }
+    };
+
+    private View.OnClickListener themesClickListener = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View view)
+        {
+            launchThemeEditor(SuntimesWidgetListActivity.this);
+        }
+    };
 
     /**
      *
@@ -244,43 +272,6 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(getString(R.string.help_widgetlist));
         helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
-    }
-
-    /**
-     *
-     */
-    private void initThemeItem(final Context context)
-    {
-        View item2 = findViewById(R.id.item2);
-        if (item2 != null)
-        {
-            RelativeLayout themeItem = (RelativeLayout) item2.findViewById(R.id.itemLayout);
-            if (themeItem != null)
-            {
-                themeItem.setOnClickListener(new View.OnClickListener()
-                {
-                    @Override
-                    public void onClick(View view)
-                    {
-                        launchThemeEditor(context);
-                    }
-                });
-
-                TypedArray a = getTheme().obtainStyledAttributes(new int[] {R.attr.icActionSettings});
-                int resID = a.getResourceId(0, 0);
-                Drawable icon = getResources().getDrawable(resID);
-                a.recycle();
-
-                ImageView themeIcon = (ImageView) themeItem.findViewById(android.R.id.icon1);
-                themeIcon.setImageDrawable(icon);
-
-                TextView themeTitle = (TextView) themeItem.findViewById(android.R.id.text1);
-                themeTitle.setText(getString(R.string.configLabel_widgetThemeList));
-
-                TextView themeSummary = (TextView) themeItem.findViewById(android.R.id.text2);
-                themeSummary.setVisibility(View.GONE);
-            }
-        }
     }
 
     /**
@@ -411,6 +402,12 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
 
             TextView text2 = (TextView) view.findViewById(android.R.id.text2);
             text2.setText(item.getSummary());
+
+            TextView text3 = (TextView) view.findViewById(R.id.text3);
+            if (text3 != null)
+            {
+                text3.setText(String.format("%s", item.getWidgetId()));
+            }
 
             return view;
         }

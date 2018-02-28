@@ -227,7 +227,7 @@
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Fari nenion</string>           <!-- setting -->
-    <string name="actionMode_update">Update Widget</string>           <!-- setting -->  <!-- TODO -->
+    <string name="actionMode_update">Aktualigi fenestraĵon</string>           <!-- setting -->
     <string name="actionMode_config">Reagordi fenestraĵon</string>      <!-- setting -->
     <string name="actionMode_launchActivity">Ekigi aplikaĵon</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Baskuli vidon</string>      <!-- setting -->
@@ -338,7 +338,7 @@
     <string name="edittheme_error_displaytext">Montrata teksto ne estu malplena.</string>  <!-- error hint (display text is empty) -->
     <string name="edittheme_error_textsize_min">Grando estu plena nombro &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->
     <string name="edittheme_error_textsize_max">Grando estu plena nombro &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->
-    <string name="edittheme_flag_default">default</string>  <!-- content description -->  <!-- TODO -->
+    <string name="edittheme_flag_default">norma</string>  <!-- content description -->
 
     <string name="deletetheme_dialog_title">Forigi etoson</string>        <!-- dialog title -->
     <string name="deletetheme_dialog_message">Ĉu vi certe volas forigi <xliff:g id="themeName">%1$s</xliff:g>?</string>   <!-- dialog msg -->
@@ -368,10 +368,10 @@
 
     <string name="configLabel_themeColorMoonrise">Koloro de lunleviĝo:</string> <!-- color label -->
     <string name="configLabel_themeColorMoonset">Koloro de lunsubiro:</string>  <!-- color label -->
-    <string name="configLabel_themeColorMoonWaxing">Waxing Color:</string> <!-- color label --> <!-- TODO -->
-    <string name="configLabel_themeColorMoonWaning">Waning Color:</string> <!-- color label --> <!-- TODO -->
-    <string name="configLabel_themeColorMoonFull">Full Color:</string> <!-- color label --> <!-- TODO -->
-    <string name="configLabel_themeColorMoonNew">New Color:</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorMoonWaxing">Koloro de kreskanta:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaning">Koloro de malkreskanta:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonFull">Koloro de Plenluno:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonNew">Koloro de Novluno:</string> <!-- color label -->
 
     <string name="configLabel_themeColorSunrise">Koloro de sunleviĝo:</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
@@ -402,7 +402,7 @@
     <string name="configLabel_themeSizeTitle">Grando de titolo:</string>  <!-- edit label -->
     <string name="configHint_themeSizeTitle">14</string>                 <!-- edit hint -->
 
-    <string name="configLabel_themeBoldTitle">Bold</string>          <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_themeBoldTitle">Grasa</string>          <!-- checkbox label -->
 
     <string name="configLabel_themeSizeText">Grando de teksto:</string>    <!-- edit label -->
     <string name="configHint_themeSizeText">10</string>                  <!-- edit hint -->
@@ -410,7 +410,7 @@
     <string name="configLabel_themeSizeTime">Grando de tempo:</string>    <!-- edit label -->
     <string name="configHint_themeSizeTime">12</string>                  <!-- edit hint -->
 
-    <string name="configLabel_themeBoldTime">Bold</string>          <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_themeBoldTime">Grasa</string>          <!-- checkbox label -->
 
     <string name="configLabel_themeSizeSuffix">Grando de sufikso:</string> <!-- edit label -->
     <string name="configHint_themeSizeSuffix">8</string>                  <!-- edit hint -->
@@ -746,7 +746,7 @@
           <b>Astronomia krepusko:</b> la Suno estas 18 gradoj sub la horizonto. Preskaŭ nigra nokto.<br/>
     ]]></string>
     <string name="help_general_daylength"><![CDATA[
-        <b>Longo de la tago:</b> kvanto da tempo inter sunleviĝo kaj sunsubiro.<br/><br/>
+        <b>Longo de tago:</b> kvanto da tempo inter sunleviĝo kaj sunsubiro.<br/><br/>
         <b>Kiom da uzebla lumo:</b> kvanto da tempo inter civila sunleviĝo kaj civila sunsubiro.</br>
     ]]>
     </string>

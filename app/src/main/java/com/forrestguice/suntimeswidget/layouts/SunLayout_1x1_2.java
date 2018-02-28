@@ -74,7 +74,7 @@ public class SunLayout_1x1_2 extends SunLayout
             views.setTextViewTextSize(R.id.text_time_set_suffix, TypedValue.COMPLEX_UNIT_SP, theme.getTimeSuffixSizeSp());
         }
 
-        Bitmap sunsetIcon = SuntimesUtils.insetDrawableToBitmap(context, R.drawable.ic_sunset_large0, theme.getSunsetIconColor(), theme.getSunsetIconStrokeColor(), theme.getSunsetIconStrokePixels(context));
+        Bitmap sunsetIcon = SuntimesUtils.layerDrawableToBitmap(context, R.drawable.ic_sunset_large0, theme.getSunsetIconColor(), theme.getSunsetIconStrokeColor(), theme.getSunsetIconStrokePixels(context));
         views.setImageViewBitmap(R.id.icon_time_sunset, sunsetIcon);
     }
 }

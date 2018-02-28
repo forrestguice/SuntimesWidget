@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<inset xmlns:android="http://schemas.android.com/apk/res/android"
-    android:insetBottom="-8dp">
-
-    <shape android:shape="oval">
-        <size android:width="@dimen/moonIcon_width" android:height="8dp" />
-        <solid android:color="@color/moonIcon_color_rising" />
-
-        <stroke android:width="0dp"
-                android:color="@color/moonIcon_color_rising" />
-
-    </shape>
-</inset>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:bottom="-8dp">
+        <shape android:shape="oval">
+            <size android:width="18dp" android:height="8dp" />
+            <solid android:color="@color/moonIcon_color_rising" />
+        </shape>
+    </item>
+</layer-list>

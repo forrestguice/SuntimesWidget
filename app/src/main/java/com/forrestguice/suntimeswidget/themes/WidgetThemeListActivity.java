@@ -91,7 +91,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
     private ExportThemesTask exportTask = null;
     private boolean isExporting = false;
 
-    private int previewID = -1;
+    private int previewID = 0;
     private boolean disallowSelect = false;
     private String preselectedTheme;
     private boolean useWallpaper = false;
@@ -658,9 +658,13 @@ public class WidgetThemeListActivity extends AppCompatActivity
                 background.setImageDrawable(wallpaper);
                 background.setVisibility(View.VISIBLE);
 
-                if (animate)
+                if (animate && (Build.VERSION.SDK_INT >= 12))
+                {
                     background.animate().alpha(1f).setDuration(WALLPAPER_DELAY);
-                else background.setAlpha(1f);
+
+                } else if (Build.VERSION.SDK_INT >= 11) {
+                    background.setAlpha(1f);
+                }
             }
         }
     }
@@ -670,9 +674,16 @@ public class WidgetThemeListActivity extends AppCompatActivity
         ImageView background = (ImageView)findViewById(R.id.themegrid_background);
         if (background != null)
         {
-            background.animate().alpha(0f).setDuration(WALLPAPER_DELAY);
-            if (Build.VERSION.SDK_INT < 11)
+            if (Build.VERSION.SDK_INT >= 12)
+            {
+                background.animate().alpha(0f).setDuration(WALLPAPER_DELAY);
+
+            } else if (Build.VERSION.SDK_INT >= 11) {
+                background.setAlpha(0f);
+
+            } else {
                 background.setVisibility(View.GONE);
+            }
         }
     }
 

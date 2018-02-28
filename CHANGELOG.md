@@ -1,5 +1,8 @@
 ### ~
 
+### v0.7.1 (2018-02-28)
+* fixes bug #120 (widget icons don't use theme icons); now works for all api versions.
+* enhances the widget list; adds appWidgetID label to the list and widget (re)configure activity.
 * adds widget ontap action; "update widget" to manually trigger widget updates.
 * fixes (workaround) missing/deleted update alarms; opening the widget list now reschedules alarms (that may be missing / deleted (e.g. forced stop)).
 * fixes widget update when a theme is modified; all widgets sharing that theme are updated.

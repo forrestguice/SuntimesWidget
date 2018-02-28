@@ -183,11 +183,11 @@ public abstract class MoonLayout extends SuntimesLayout
     protected void themeViewsMoonRiseSetIcons(Context context, RemoteViews views, SuntimesTheme theme)
     {
         int moonriseColor = theme.getMoonriseTextColor();
-        Bitmap moonriseIcon = SuntimesUtils.insetDrawableToBitmap(context, R.drawable.ic_moon_rise, moonriseColor, moonriseColor, 0);
+        Bitmap moonriseIcon = SuntimesUtils.layerDrawableToBitmap(context, R.drawable.ic_moon_rise, moonriseColor, moonriseColor, 0);
         views.setImageViewBitmap(R.id.icon_time_moonrise, moonriseIcon);
 
         int moonsetColor = theme.getMoonsetTextColor();
-        Bitmap moonsetIcon = SuntimesUtils.insetDrawableToBitmap(context, R.drawable.ic_moon_set, moonsetColor, moonsetColor, 0);
+        Bitmap moonsetIcon = SuntimesUtils.layerDrawableToBitmap(context, R.drawable.ic_moon_set, moonsetColor, moonsetColor, 0);
         views.setImageViewBitmap(R.id.icon_time_moonset, moonsetIcon);
     }
 

@@ -45,7 +45,6 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 
 import com.forrestguice.suntimeswidget.layouts.SunLayout;
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
@@ -72,6 +71,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     protected boolean reconfigure = false;
+
+    protected TextView text_appWidgetID;
 
     protected Spinner spinner_calculatorMode;
     protected Spinner spinner_timeMode;
@@ -270,6 +271,12 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected void initViews(final Context context)
     {
+        text_appWidgetID = (TextView) findViewById(R.id.text_appwidgetid);
+        if (text_appWidgetID != null)
+        {
+            text_appWidgetID.setText(String.format("%s", appWidgetId));
+        }
+
         //
         // widget: add button
         //
@@ -283,7 +290,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (reconfigure)
         {
             setActionButtonText(getString(R.string.configAction_reconfigWidget_short));
-            setConfigActivityTitle(getString(R.string.configAction_reconfigWidget));
+            //setConfigActivityTitle(getString(R.string.configAction_reconfigWidget));
         }
 
         //

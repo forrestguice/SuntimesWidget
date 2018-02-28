@@ -982,7 +982,6 @@ public class SuntimesUtils
                 GradientDrawable d = (GradientDrawable) view.getBackground().mutate();
                 d.setColor(color);
                 d.invalidateSelf();
-                return;
 
             } catch (ClassCastException e) {
                 Log.w("colorizeImageView", "failed to colorize! " + e);
@@ -1043,7 +1042,9 @@ public class SuntimesUtils
      * @param strokeColor stroke color to apply to drawable
      * @param strokePx width of stroke (pixels)
      * @return a Bitmap of the drawable
+     * @deprecated all insetDrawables were replaced with layerDrawables (2/26/2018), continued use of this method probably signifies a bug.
      */
+    @Deprecated
     public static Bitmap insetDrawableToBitmap(Context context, int resourceID, int fillColor, int strokeColor, int strokePx)
     {
         Drawable drawable = ResourcesCompat.getDrawable(context.getResources(), resourceID, null);
@@ -1086,18 +1087,9 @@ public class SuntimesUtils
         int w = 1, h = 1;
         if (layers != null)
         {
-            //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-            //{
-                //Drawable layer0 = layers.getDrawable(0);
-                //if (layer0 != null)
-                //{
-                    //w = layer0.getIntrinsicWidth();
-                    //h = layer0.getIntrinsicHeight();
-                //}
-            //} else {
-                w = layers.getIntrinsicWidth();       // TODO: thoroughly test this...
-                h = layers.getIntrinsicHeight();
-            //}
+            Drawable layer0 = layers.getDrawable(0);
+            w = layers.getIntrinsicWidth();
+            h = (layer0 != null ? layer0.getIntrinsicHeight() : layers.getIntrinsicHeight());
         }
 
         Drawable tinted = tintDrawable(layers, fillColor, strokeColor, strokePx);

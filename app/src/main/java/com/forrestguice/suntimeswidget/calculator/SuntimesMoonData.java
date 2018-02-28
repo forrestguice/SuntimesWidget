@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 

@@ -94,7 +94,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
     private UIMode param_mode = null;
     private String param_themeName = null;
-    private int param_previewID = -1;
+    private int param_previewID = 0;
     private boolean param_wallpaper = true;
 
     private ActionBar actionBar;
@@ -365,17 +365,25 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         initColorFields();
         initSizeFields();
+
+        TextView labelName = (TextView)findViewById(R.id.editLabel_themeName);
         switch (mode)
         {
             case EDIT_THEME:
                 actionBar.setTitle(getString(R.string.configLabel_widgetThemeEdit));
+                labelName.setEnabled(false);
+                labelName.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
                 editName.setEnabled(false);
+                editName.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
                 break;
 
             case ADD_THEME:
             default:
                 actionBar.setTitle(getString(R.string.configLabel_widgetThemeAdd));
+                labelName.setEnabled(true);
+                labelName.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
                 editName.setEnabled(true);
+                editName.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
                 break;
 
         }
@@ -525,6 +533,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 chooser.setEnabled(false);  // changing text size requires api 16+
             }
             choosePadding.setEnabled(false);  // changing padding requires api 16+
+
+            chooseIconStroke.setEnabled(true);
+            chooseNoonIconStroke.setEnabled(true);
         }
     }
 
@@ -694,13 +705,13 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         ImageView previewRiseIcon = (ImageView)previewLayout.findViewById(R.id.icon_time_sunrise);
         if (previewRiseIcon != null)
         {
-            previewRiseIcon.setImageBitmap(SuntimesUtils.insetDrawableToBitmap(this, R.drawable.ic_sunrise0, chooseColorRiseIconFill.getColor(), chooseColorRiseIconStroke.getColor(), strokePixels));
+            previewRiseIcon.setImageBitmap(SuntimesUtils.layerDrawableToBitmap(this, R.drawable.ic_sunrise0, chooseColorRiseIconFill.getColor(), chooseColorRiseIconStroke.getColor(), strokePixels));
         }
 
         ImageView previewSetIcon = (ImageView)previewLayout.findViewById(R.id.icon_time_sunset);
         if (previewSetIcon != null)
         {
-            previewSetIcon.setImageBitmap(SuntimesUtils.insetDrawableToBitmap(this, R.drawable.ic_sunset0, chooseColorSetIconFill.getColor(), chooseColorSetIconStroke.getColor(), strokePixels));
+            previewSetIcon.setImageBitmap(SuntimesUtils.layerDrawableToBitmap(this, R.drawable.ic_sunset0, chooseColorSetIconFill.getColor(), chooseColorSetIconStroke.getColor(), strokePixels));
         }
 
         ImageView previewNoonIcon = (ImageView)previewLayout.findViewById(R.id.icon_time_noon);
@@ -796,13 +807,13 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         ImageView previewMoonriseIcon = (ImageView)previewLayout.findViewById(R.id.icon_time_moonrise);
         if (previewMoonriseIcon != null)
         {
-            previewMoonriseIcon.setImageBitmap(SuntimesUtils.insetDrawableToBitmap(this, R.drawable.ic_moon_rise, chooseColorMoonrise.getColor(), chooseColorMoonrise.getColor(), 0));
+            previewMoonriseIcon.setImageBitmap(SuntimesUtils.layerDrawableToBitmap(this, R.drawable.ic_moon_rise, chooseColorMoonrise.getColor(), chooseColorMoonrise.getColor(), 0));
         }
 
         ImageView previewMoonsetIcon = (ImageView)previewLayout.findViewById(R.id.icon_time_moonset);
         if (previewMoonsetIcon != null)
         {
-            previewMoonsetIcon.setImageBitmap(SuntimesUtils.insetDrawableToBitmap(this, R.drawable.ic_moon_set, chooseColorMoonset.getColor(), chooseColorMoonset.getColor(), 0));
+            previewMoonsetIcon.setImageBitmap(SuntimesUtils.layerDrawableToBitmap(this, R.drawable.ic_moon_set, chooseColorMoonset.getColor(), chooseColorMoonset.getColor(), 0));
         }
 
         int colorWaxing = chooseColorMoonWaxing.getColor();
