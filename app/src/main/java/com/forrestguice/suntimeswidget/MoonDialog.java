@@ -40,6 +40,8 @@ public class MoonDialog extends DialogFragment
         this.data = data;
     }
 
+    private MoonPhaseView moonphases;
+
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
@@ -57,8 +59,7 @@ public class MoonDialog extends DialogFragment
         if (savedInstanceState != null)
         {
             Log.d("DEBUG", "MoonDialog onCreate (restoreState)");
-            // TODO
-            //e.g. equinoxView.loadState(savedInstanceState);
+            moonphases.loadState(savedInstanceState);
         }
 
         dialog.setOnShowListener(onShowListener);
@@ -77,12 +78,12 @@ public class MoonDialog extends DialogFragment
 
     public void initViews(View dialogView)
     {
-        // TODO
+        moonphases = (MoonPhaseView) dialogView.findViewById(R.id.moonphase_view);
     }
 
     public void updateViews()
     {
-        // TODO
+        moonphases.updateViews(getContext(), data);
     }
 
     @Override
