@@ -34,13 +34,17 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 public class LightMapDialog extends DialogFragment
 {
     private static SuntimesUtils utils = new SuntimesUtils();
+
+    private TextView sunElevation;
 
     private LightMapView lightmap;
     private LightMapKey field_night, field_astro, field_nautical, field_civil, field_day;
@@ -81,6 +85,7 @@ public class LightMapDialog extends DialogFragment
     public void initViews(View dialogView)
     {
         lightmap = (LightMapView)dialogView.findViewById(R.id.info_time_lightmap);
+        sunElevation = (TextView)dialogView.findViewById(R.id.info_sun_elevation);
 
         field_night = new LightMapKey(dialogView, R.id.info_time_lightmap_key_night_icon, R.id.info_time_lightmap_key_night_label, R.id.info_time_lightmap_key_night_duration);
         field_astro = new LightMapKey(dialogView, R.id.info_time_lightmap_key_astro_icon, R.id.info_time_lightmap_key_astro_label, R.id.info_time_lightmap_key_astro_duration);
@@ -135,6 +140,22 @@ public class LightMapDialog extends DialogFragment
 
             lightmap.updateViews(data);
             Log.d("DEBUG", "LightMapDialog updated");
+        }
+
+        if (sunElevation != null && data.dataActual != null)
+        {
+            SuntimesCalculator calculator = data.dataActual.calculator();
+            SuntimesCalculator.SunPosition position = (calculator != null ? calculator.getSunPosition(data.now()) : null);
+
+            if (position != null)
+            {
+                sunElevation.setText(NumberFormat.getNumberInstance().format(position.elevation));
+                sunElevation.setVisibility(View.VISIBLE);
+
+            } else {
+                sunElevation.setText("");
+                sunElevation.setVisibility(View.GONE);
+            }
         }
     }
 

@@ -32,6 +32,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <TextView android:id="@+id/info_sun_elevation"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/info_time_lightmap" app:layout_constraintEnd_toEndOf="@+id/info_time_lightmap"
+        app:layout_constraintTop_toTopOf="@+id/info_time_lightmap" app:layout_constraintBottom_toBottomOf="@+id/info_time_lightmap"
+        android:textStyle="bold" tools:text="47°" />
+
     <android.support.constraint.Guideline
         android:id="@+id/durationGuide"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
