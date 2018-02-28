@@ -228,6 +228,7 @@
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Ne rien faire</string>           <!-- setting -->
+    <string name="actionMode_update">Update Widget</string>           <!-- setting -->  <!-- TODO -->
     <string name="actionMode_config">Reconfigurer le widget</string>      <!-- setting -->
     <string name="actionMode_launchActivity">Lancer l\'application</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Basculer l\'affichage</string>      <!-- setting -->
@@ -331,6 +332,7 @@
     <string name="edittheme_error_displaytext">Display string must not be empty.</string>  <!-- error hint (display text is empty) -->  <!-- TODO -->
     <string name="edittheme_error_textsize_min">Size must be an integer &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) --> <!-- TODO -->
     <string name="edittheme_error_textsize_max">Size must be an integer &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->  <!-- TODO -->
+    <string name="edittheme_flag_default">default</string>  <!-- content description -->  <!-- TODO -->
 
     <string name="deletetheme_dialog_title">Delete Theme</string>        <!-- dialog title --> <!-- TODO -->
     <string name="deletetheme_dialog_message">Are you sure you want to delete <xliff:g id="themeName">%1$s</xliff:g>?</string>   <!-- dialog msg --> <!-- TODO -->
@@ -360,6 +362,10 @@
 
     <string name="configLabel_themeColorMoonrise">Moonrise Color:</string> <!-- color label -->  <!-- TODO -->
     <string name="configLabel_themeColorMoonset">Moonset Color:</string> <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_themeColorMoonWaxing">Waxing Color:</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorMoonWaning">Waning Color:</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorMoonFull">Full Color:</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorMoonNew">New Color:</string> <!-- color label --> <!-- TODO -->
 
     <string name="configLabel_themeColorSunrise">Sunrise Color:</string> <!-- color label -->  <!-- TODO -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->  <!-- TODO -->
@@ -390,11 +396,15 @@
     <string name="configLabel_themeSizeTitle">Title Size:</string>  <!-- edit label --> <!-- TODO -->
     <string name="configHint_themeSizeTitle">14</string>                 <!-- edit hint --> <!-- TODO -->
 
+    <string name="configLabel_themeBoldTitle">Bold</string>          <!-- checkbox label -->  <!-- TODO -->
+
     <string name="configLabel_themeSizeText">Text Size:</string>    <!-- edit label --> <!-- TODO -->
     <string name="configHint_themeSizeText">10</string>                  <!-- edit hint --> <!-- TODO -->
 
     <string name="configLabel_themeSizeTime">Time Size:</string>    <!-- edit label --> <!-- TODO -->
     <string name="configHint_themeSizeTime">12</string>                  <!-- edit hint --> <!-- TODO -->
+
+    <string name="configLabel_themeBoldTime">Bold</string>          <!-- checkbox label -->  <!-- TODO -->
 
     <string name="configLabel_themeSizeSuffix">Suffix Size:</string> <!-- edit label --> <!-- TODO -->
     <string name="configHint_themeSizeSuffix">8</string>                  <!-- edit hint --> <!-- TODO -->

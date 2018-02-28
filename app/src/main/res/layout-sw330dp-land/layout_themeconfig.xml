@@ -44,11 +44,11 @@
                 android:focusable="true" android:focusableInTouchMode="true">
 
                 <!-- Background Section -->
-                <LinearLayout
-                    android:id="@+id/layout_background"
+                <LinearLayout android:id="@+id/layout_background"
                     android:layout_width="0dp" android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="@+id/layout_text">
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/layout_text">
                     <include layout="@layout/layout_themeconfig_background" />
                 </LinearLayout>
 
@@ -75,34 +75,30 @@
                     <include layout="@layout/layout_themeconfig_sun" />
                 </LinearLayout>
 
+                <!-- Moon Section -->
+                <LinearLayout android:id="@+id/layout_moon"
+                    android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp" android:layout_marginLeft="16dp"
+                    android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintStart_toEndOf="@+id/layout_text" app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/layout_background">
+                    <include layout="@layout/layout_themeconfig_moon" />
+                </LinearLayout>
+
                 <!-- Seasons Section -->
                 <View android:id="@+id/divider_seasons"
                     android:layout_width="0dp" android:layout_height="1dp" android:background="?attr/hrColor"
                     android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_sun"
-                    app:layout_constraintStart_toStartOf="@+id/layout_sun" app:layout_constraintEnd_toEndOf="@+id/layout_sun" />
+                    app:layout_constraintTop_toBottomOf="@+id/layout_moon"
+                    app:layout_constraintStart_toStartOf="@+id/layout_moon" app:layout_constraintEnd_toEndOf="parent" />
 
                 <LinearLayout android:id="@+id/layout_seasons"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_width="0dp" android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/layout_moon" app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider_seasons">
                     <include layout="@layout/layout_themeconfig_seasons" />
-                </LinearLayout>
-
-                <!-- Moon Section -->
-                <View android:id="@+id/divider_moon"
-                    android:layout_width="0dp" android:layout_height="1dp" android:background="?attr/hrColor"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_seasons"
-                    app:layout_constraintStart_toStartOf="@+id/layout_moon" app:layout_constraintEnd_toEndOf="@+id/layout_moon" />
-
-                <LinearLayout android:id="@+id/layout_moon"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/divider_moon">
-                    <include layout="@layout/layout_themeconfig_moon" />
                 </LinearLayout>
 
             </android.support.constraint.ConstraintLayout>

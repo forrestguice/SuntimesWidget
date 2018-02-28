@@ -1,0 +1,7 @@
+Displays sunlight and moonlight times. Features an app and widget collection.
+
+Displays sunrise and sunset, twilight (civil / nautical / astronomical), blue
+and golden hour, the solstices and equinoxes, moonrise and moonset, moon phases and illumination.
+
+The times reported by this app are approximate. The app doesn't require network connectivity, GPS is optional.
+

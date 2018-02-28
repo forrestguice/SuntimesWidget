@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2017-2018 Forrest Guice
+    This file is part of SuntimesWidget.
+
+    SuntimesWidget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SuntimesWidget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content">
+
+        <!-- Background -->
+        <TextView android:labelFor="@+id/editSpin_background"
+            android:id="@+id/editLabel_background"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/editSpin_background"
+            app:layout_constraintBottom_toBottomOf="@+id/editSpin_background"
+            android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="0dp" android:paddingRight="0dp"
+            android:text="@string/configLabel_themeBackgroundId"
+            tools:layout_editor_absoluteX="0dp"/>
+
+        <Spinner
+            android:id="@+id/editSpin_background"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" android:layout_marginBottom="4dp"
+            app:layout_constraintStart_toEndOf="@+id/editLabel_background"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Padding -->
+        <TextView android:labelFor="@+id/edit_padding"
+            android:id="@+id/editLabel_padding"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBaseline_toBaselineOf="@+id/edit_padding"
+            android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="8dp" android:paddingRight="8dp"
+            android:text="@string/configLabel_themePadding" />
+
+        <EditText
+            android:id="@+id/edit_padding"  style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="textNoSuggestions"
+            android:text="" android:hint="@string/configHint_themePadding"
+            app:layout_constraintStart_toEndOf="@+id/editLabel_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editSpin_background" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</merge>

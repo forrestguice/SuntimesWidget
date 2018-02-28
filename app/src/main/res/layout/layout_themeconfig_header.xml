@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2017-2018 Forrest Guice
+    This file is part of SuntimesWidget.
+
+    SuntimesWidget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SuntimesWidget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content">
+
+        <!-- guidelines -->
+        <android.support.constraint.Guideline
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:id="@+id/centerLine" app:layout_constraintGuide_percent="0.5"
+            android:orientation="vertical" />
+
+        <android.support.constraint.Guideline
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:id="@+id/centerLineL" app:layout_constraintGuide_percent="0.42"
+            android:orientation="vertical" />
+
+        <android.support.constraint.Guideline
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:id="@+id/centerLineR" app:layout_constraintGuide_percent="0.58"
+            android:orientation="vertical" />
+
+        <View
+            android:layout_width="0dp" android:layout_height="0dp"
+            android:background="?attr/semiTransparentBackground"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/centerLine" />
+
+        <!-- Theme Name (ID) -->
+        <TextView android:labelFor="@+id/edit_themeName"
+            android:id="@+id/editLabel_themeName"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBaseline_toBaselineOf="@+id/edit_themeName"
+            android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="8dp" android:paddingRight="8dp"
+            android:text="@string/configLabel_themeID"
+            tools:layout_editor_absoluteX="0dp"/>
+
+        <EditText
+            android:id="@+id/edit_themeName" style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            android:layout_marginRight="4dp" android:layout_marginEnd="4dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/editLabel_themeName"
+            app:layout_constraintEnd_toEndOf="@+id/centerLine"
+            android:inputType="textNoSuggestions"
+            android:hint="@string/configHint_themeID" android:text="" />
+
+        <!-- Theme Name (display string) -->
+        <TextView android:labelFor="@+id/edit_themeDisplay"
+            android:id="@+id/editLabel_themeDisplay"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editLabel_themeName"
+            android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="8dp" android:paddingRight="8dp"
+            android:text="@string/configLabel_themeName"
+            tools:layout_editor_absoluteX="0dp"/>
+
+        <EditText
+            android:id="@+id/edit_themeDisplay" style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/editLabel_themeDisplay"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/centerLine"
+            android:inputType="text" android:textStyle="bold"
+            android:hint="@string/configHint_themeName" android:text=""
+            android:layout_marginLeft="8dp" android:layout_marginRight="4dp"
+            android:layout_marginStart="8dp" android:layout_marginEnd="4dp"
+            android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="8dp" android:paddingRight="8dp"
+            android:layout_marginBottom="10dp" />
+
+        <!-- preview area -->
+        <ViewFlipper
+            android:id="@+id/preview_area"
+            android:layout_width="170dp" android:layout_height="0dp"
+            android:layout_margin="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/centerLine"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <LinearLayout
+                android:id="@+id/preview0"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="center">
+                <include layout="@layout/layout_widget_2x1_0" tools:ignore="DuplicateIncludedIds" />
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/preview1"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="center">
+                <include layout="@layout/layout_widget_moon_2x1_0" tools:ignore="DuplicateIncludedIds" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/preview2"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="center">
+                <include layout="@layout/layout_widget_moon_3x1_0" tools:ignore="DuplicateIncludedIds" />
+            </LinearLayout>
+
+        </ViewFlipper>
+
+    </android.support.constraint.ConstraintLayout>
+
+</merge>

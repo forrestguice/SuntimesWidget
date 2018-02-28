@@ -28,10 +28,10 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_1;
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_2;
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_4;
+import com.forrestguice.suntimeswidget.layouts.SunLayout;
+import com.forrestguice.suntimeswidget.layouts.SunLayout_1x1_1;
+import com.forrestguice.suntimeswidget.layouts.SunLayout_1x1_2;
+import com.forrestguice.suntimeswidget.layouts.SunLayout_1x1_4;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -136,23 +136,23 @@ class SuntimesWidget1RemoteViewsFactory implements RemoteViewsService.RemoteView
             layoutID = data.layoutID();
         }
 
-        SuntimesLayout layout;
+        SunLayout layout;
         switch(layoutID)
         {
             case R.layout.layout_widget_1x1_1:
             case R.layout.layout_widget_1x1_1i:
-                layout = new SuntimesLayout_1x1_1(R.layout.layout_widget_1x1_1i);
+                layout = new SunLayout_1x1_1(R.layout.layout_widget_1x1_1i);
                 break;
 
             case R.layout.layout_widget_1x1_4:
             case R.layout.layout_widget_1x1_4i:
-                layout = new SuntimesLayout_1x1_4(R.layout.layout_widget_1x1_4i);
+                layout = new SunLayout_1x1_4(R.layout.layout_widget_1x1_4i);
                 break;
 
             case R.layout.layout_widget_1x1_2:
             case R.layout.layout_widget_1x1_2i:
             default:
-                layout = new SuntimesLayout_1x1_2(R.layout.layout_widget_1x1_2i);
+                layout = new SunLayout_1x1_2(R.layout.layout_widget_1x1_2i);
                 break;
         }
         RemoteViews views = layout.getViews(context);

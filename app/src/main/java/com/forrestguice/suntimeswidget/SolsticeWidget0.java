@@ -26,8 +26,8 @@ import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayoutEq;
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1eq_0;
+import com.forrestguice.suntimeswidget.layouts.SolsticeLayout;
+import com.forrestguice.suntimeswidget.layouts.SolsticeLayout_1x1_0;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -37,30 +37,30 @@ import java.util.Calendar;
 /**
  *  Flippable widget
  */
-public class SuntimesWidget2 extends SuntimesWidget0
+public class SolsticeWidget0 extends SuntimesWidget0
 {
-    public static final String SUNTIMES_WIDGET_UPDATE2 = "SUNTIMES_WIDGET_UPDATE2";
+    public static final String SUNTIMES_WIDGET_UPDATE2 = "suntimes.SOLSTICE_WIDGET_UPDATE";
     private static final int UPDATEALARM_ID = 3;
 
     @Override
     protected Class getConfigClass()
     {
-        return SuntimesConfigActivity2.class;
+        return SolsticeWidget0ConfigActivity.class;
     }
 
     @Override
     protected String getUpdateIntentFilter()
     {
-        return SuntimesWidget2.SUNTIMES_WIDGET_UPDATE2;
+        return SolsticeWidget0.SUNTIMES_WIDGET_UPDATE2;
     }
 
     /**
-     * @return an update alarm identifier for this class (SuntimesWidget2: 2)
+     * @return an update alarm identifier for this class (SolsticeWidget0: 2)
      */
     @Override
     protected int getUpdateAlarmId()
     {
-        return SuntimesWidget2.UPDATEALARM_ID;
+        return SolsticeWidget0.UPDATEALARM_ID;
     }
 
     @Override
@@ -81,16 +81,16 @@ public class SuntimesWidget2 extends SuntimesWidget0
     protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
 
-        SuntimesWidget2.updateAppWidget(context, appWidgetManager, appWidgetId);
+        SolsticeWidget0.updateAppWidget(context, appWidgetManager, appWidgetId);
     }
 
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
-        SuntimesLayoutEq layout = SuntimesWidget2.getWidgetLayout(context, appWidgetManager, appWidgetId);
-        SuntimesWidget2.updateAppWidget(context, appWidgetManager, appWidgetId, layout);
+        SolsticeLayout layout = SolsticeWidget0.getWidgetLayout(context, appWidgetManager, appWidgetId);
+        SolsticeWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, layout);
     }
 
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SuntimesLayoutEq layout)
+    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SolsticeLayout layout)
     {
         RemoteViews views = layout.getViews(context);
 
@@ -114,14 +114,14 @@ public class SuntimesWidget2 extends SuntimesWidget0
             data.calculate();
         }
 
-        views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, SuntimesWidget2.class));
+        views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, SolsticeWidget0.class));
         layout.prepareForUpdate(data);
         layout.themeViews(context, views, appWidgetId);
         layout.updateViews(context, appWidgetId, views, data);
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
-    protected static SuntimesLayoutEq getWidgetLayout(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
+    protected static SolsticeLayout getWidgetLayout(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
         //int minWidth = context.getResources().getInteger(R.integer.widget_size_minWidthDp);
         //int minHeight = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
@@ -141,7 +141,7 @@ public class SuntimesWidget2 extends SuntimesWidget0
             //Log.d("getWidgetLayout2", "1: must fit:  [" + mustFitWithinDp[0] + ", " + mustFitWithinDp[1] + "]");
         }*/
 
-        SuntimesLayoutEq layout;
+        SolsticeLayout layout;
         //if (WidgetSettings.loadAllowResizePref(context, appWidgetId))
         //{
             /**int minWidth1x3 = context.getResources().getInteger(R.integer.widget_size_minWidthDp1x3);
@@ -149,10 +149,10 @@ public class SuntimesWidget2 extends SuntimesWidget0
                     : WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId));
             } else {
             layout = WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId); */
-            //layout = new SuntimesLayout_1x1eq_0();  // TODO
+            //layout = new SolsticeLayout_1x1_0();  // TODO
 
         //} else {
-            layout = new SuntimesLayout_1x1eq_0();
+            layout = new SolsticeLayout_1x1_0();
         //}
 
         //Log.d("getWidgetLayout2", "layout is: " + layout);

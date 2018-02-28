@@ -30,6 +30,8 @@ public class DarkThemeTrans extends DarkTheme
     public static final ThemeDescriptor THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, THEMEDEF_DISPLAYSTRING, THEMEDEF_VERSION);
 
     public static final int THEMEDEF_BACKGROUND_ID = android.R.color.transparent;
+    public static final boolean THEMEDEF_TITLEBOLD = true;
+    public static final boolean THEMEDEF_TIMEBOLD = true;
 
     public DarkThemeTrans(Context context)
     {
@@ -39,6 +41,8 @@ public class DarkThemeTrans extends DarkTheme
         this.themeIsDefault = true;
         this.themeDisplayString = THEMEDEF_DISPLAYSTRING;
         this.themeBackground = THEMEDEF_BACKGROUND_ID;
+        this.themeTitleBold = THEMEDEF_TITLEBOLD;
+        this.themeTimeBold = THEMEDEF_TIMEBOLD;
     }
 
     public ThemeDescriptor themeDescriptor()

@@ -30,7 +30,7 @@ import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_0;
+import com.forrestguice.suntimeswidget.layouts.SunLayout_1x1_0;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 /**
@@ -38,12 +38,19 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
  */
 public class SuntimesWidget1 extends SuntimesWidget0
 {
+    public static final String SUNTIMES_WIDGET_UPDATE1 = "suntimes.SUNTIMES_WIDGET_UPDATE1";
     private static final int UPDATEALARM_ID = 1;
 
     @Override
     protected Class getConfigClass()
     {
         return SuntimesConfigActivity1.class;
+    }
+
+    @Override
+    protected String getUpdateIntentFilter()
+    {
+        return SuntimesWidget1.SUNTIMES_WIDGET_UPDATE1;
     }
 
     /**
@@ -65,6 +72,7 @@ public class SuntimesWidget1 extends SuntimesWidget0
     protected String[] getClickActions()
     {
         return new String[] { WidgetSettings.ActionMode.ONTAP_DONOTHING.name(),
+                              WidgetSettings.ActionMode.ONTAP_UPDATE.name(),
                               WidgetSettings.ActionMode.ONTAP_LAUNCH_ACTIVITY.name(),
                               WidgetSettings.ActionMode.ONTAP_LAUNCH_CONFIG.name(),
                               WidgetSettings.ActionMode.ONTAP_FLIPTO_NEXTITEM.name() };
@@ -142,7 +150,7 @@ public class SuntimesWidget1 extends SuntimesWidget0
 
         } else {
             Log.w("getWidgetViews1", "Version less than " + Build.VERSION_CODES.ICE_CREAM_SANDWICH + "!! Calling the default implementation.");
-            SuntimesLayout layout = new SuntimesLayout_1x1_0();
+            SuntimesLayout layout = new SunLayout_1x1_0();
             return layout.getViews(context);
         }
     }

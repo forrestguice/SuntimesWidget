@@ -74,6 +74,12 @@ public class MoonLayout_1x1_1 extends MoonLayout
         {
             views.setTextViewText(R.id.text_info_moonphase, phase.getLongDisplayString());
             views.setViewVisibility(phase.getView(), View.VISIBLE);
+
+            Integer phaseColor = phaseColors.get(phase);
+            if (phaseColor != null)
+            {
+                views.setTextColor(R.id.text_info_moonphase, phaseColor);
+            }
         }
     }
 
@@ -84,7 +90,10 @@ public class MoonLayout_1x1_1 extends MoonLayout
     {
         super.themeViews(context, views, theme);
         illumColor = theme.getTimeColor();
+
+        themeViewsMoonPhase(context, views, theme);
         themeViewsMoonPhaseText(context, views, theme);
+        themeViewsMoonPhaseIcons(context, views, theme);
     }
 
     @Override

@@ -22,7 +22,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.os.Build;
 
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_2x1_0;
+import com.forrestguice.suntimeswidget.layouts.SunLayout_2x1_0;
 
 /**
  * Widget config activity (for resizable widget that falls back to 2x1 layout).
@@ -52,7 +52,7 @@ public class SuntimesConfigActivity0_2x1 extends SuntimesConfigActivity0
         minSize[1] = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
 
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        SuntimesWidget0_2x1.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0_2x1.class, minSize, new SuntimesLayout_2x1_0());
+        SuntimesWidget0_2x1.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0_2x1.class, minSize, new SunLayout_2x1_0());
     }
 
 }

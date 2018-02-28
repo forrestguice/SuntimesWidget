@@ -59,14 +59,7 @@ public class MoonLayout_2x1_0 extends MoonLayout
     {
         super.updateViews(context, appWidgetId, views, data);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
-
-        SuntimesUtils.TimeDisplayText riseString = utils.calendarTimeShortDisplayString(context, data.moonriseCalendarToday(), showSeconds);
-        views.setTextViewText(R.id.text_time_moonrise, riseString.getValue());
-        views.setTextViewText(R.id.text_time_moonrise_suffix, riseString.getSuffix());
-
-        SuntimesUtils.TimeDisplayText setString = utils.calendarTimeShortDisplayString(context, data.moonsetCalendarToday(), showSeconds);
-        views.setTextViewText(R.id.text_time_moonset, setString.getValue());
-        views.setTextViewText(R.id.text_time_moonset_suffix, setString.getSuffix());
+        updateViewsMoonRiseSetText(context, views, data, showSeconds);
 
         NumberFormat percentage = NumberFormat.getPercentInstance();
         String illum = percentage.format(data.getMoonIlluminationToday());
@@ -84,6 +77,12 @@ public class MoonLayout_2x1_0 extends MoonLayout
         {
             views.setTextViewText(R.id.text_info_moonphase, phase.getLongDisplayString());
             views.setViewVisibility(phase.getView(), View.VISIBLE);
+
+            Integer phaseColor = phaseColors.get(phase);
+            if (phaseColor != null)
+            {
+                views.setTextColor(R.id.text_info_moonphase, phaseColor);
+            }
         }
     }
 
@@ -94,7 +93,11 @@ public class MoonLayout_2x1_0 extends MoonLayout
     {
         super.themeViews(context, views, theme);
         illumColor = theme.getTimeColor();
+
+        themeViewsMoonPhase(context, views, theme);
         themeViewsMoonPhaseText(context, views, theme);
+        themeViewsMoonPhaseIcons(context, views, theme);
+
         themeViewsMoonRiseSetText(context, views, theme);
         themeViewsMoonRiseSetIcons(context, views, theme);
     }

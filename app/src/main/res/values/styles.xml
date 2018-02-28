@@ -9,6 +9,7 @@
         <item name="dialogBackground">@color/dialog_bg_light</item>
         <item name="settingsCardBackground">@drawable/bg_widget</item>
         <item name="timeCardBackground">@color/card_bg_light</item>
+        <item name="semiTransparentBackground">@color/card_bg_lighttrans</item>
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
         <item name="hrColor">@color/hr_light</item>
         <item name="text_accentColor">@color/text_accent_light</item>
@@ -65,6 +66,7 @@
         <item name="dialogBackground">@color/dialog_bg_dark</item>
         <item name="settingsCardBackground">@drawable/bg_widget_dark</item>
         <item name="timeCardBackground">@color/card_bg_dark</item>
+        <item name="semiTransparentBackground">@color/card_bg_darktrans</item>
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
         <item name="hrColor">@color/hr_dark</item>
         <item name="text_accentColor">@color/text_accent_dark</item>
@@ -267,7 +269,7 @@
         <item name="android:src">@drawable/ic_colortab</item>
     </style>
 
-    <style name="SizeEdit">
+    <style name="SizeEdit" parent="@style/TextAppearance.AppCompat.Small">
         <item name="android:layout_width">50dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:minEms">2</item>

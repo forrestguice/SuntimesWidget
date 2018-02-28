@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<inset xmlns:android="http://schemas.android.com/apk/res/android"
-    android:insetBottom="@dimen/sunIcon_inset">
-
-    <shape android:shape="oval">
-        <size android:width="@dimen/sunIconLarge_width" android:height="@dimen/sunIconLarge_height" />
-        <solid android:color="@color/sunIcon_color_rising" />
-
-        <stroke android:width="@dimen/sunIcon_width_risingBorder"
-                android:color="@color/sunIcon_color_risingBorder" />
-
-    </shape>
-</inset>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:bottom="@dimen/sunIcon_inset">
+        <shape android:shape="oval">
+            <size android:width="@dimen/sunIconLarge_width" android:height="@dimen/sunIconLarge_height" />
+            <solid android:color="@color/sunIcon_color_rising" />
+            <stroke android:width="@dimen/sunIcon_width_risingBorder" android:color="@color/sunIcon_color_risingBorder" />
+        </shape>
+    </item>
+</layer-list>
