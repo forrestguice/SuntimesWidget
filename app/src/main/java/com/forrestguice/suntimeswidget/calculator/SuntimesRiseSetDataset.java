@@ -95,6 +95,11 @@ public class SuntimesRiseSetDataset
         dataBlue4.invalidateCalculation();
     }
 
+    public SuntimesCalculator calculator()
+    {
+        return dataActual.calculator();
+    }
+
     public Calendar todayIs()
     {
         return dataActual.todayIs();
