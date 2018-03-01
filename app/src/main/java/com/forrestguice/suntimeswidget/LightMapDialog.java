@@ -166,27 +166,27 @@ public class LightMapDialog extends DialogFragment
 
     protected void updateSunPositionViews(@NonNull SuntimesRiseSetDataset data)
     {
+        SuntimesCalculator calculator = data.calculator();
         if (sunLayout != null)
         {
-            SuntimesCalculator calculator = data.calculator();
             SuntimesCalculator.SunPosition currentPosition = (calculator != null ? calculator.getSunPosition(data.now()) : null);
-            sunAzimuth.setText(currentPosition != null ? NumberFormat.getNumberInstance().format(currentPosition.azimuth) : "");
-            sunElevation.setText(currentPosition != null ? NumberFormat.getNumberInstance().format(currentPosition.elevation) : "");
+            sunAzimuth.setText(currentPosition != null ? utils.formatAsDegrees(currentPosition.azimuth, 2) : "");
+            sunElevation.setText(currentPosition != null ? utils.formatAsDegrees(currentPosition.elevation, 2) : "");
 
             SuntimesRiseSetData riseSetData = data.dataActual;
             Calendar riseTime = (riseSetData != null ? riseSetData.sunriseCalendarToday() : null);
-            SuntimesCalculator.SunPosition positionRising = (riseTime != null ? calculator.getSunPosition(riseTime) : null);
-            sunAzimuthRising.setText(positionRising != null ? NumberFormat.getNumberInstance().format(positionRising.azimuth) : "");
+            SuntimesCalculator.SunPosition positionRising = (riseTime != null && calculator != null ? calculator.getSunPosition(riseTime) : null);
+            sunAzimuthRising.setText(positionRising != null ? utils.formatAsDegrees(positionRising.azimuth, 2) : "");
 
             Calendar setTime = (riseSetData != null ? riseSetData.sunsetCalendarToday() : null);
-            SuntimesCalculator.SunPosition positionSetting = (setTime != null ? calculator.getSunPosition(setTime) : null);
-            sunAzimuthSetting.setText(positionSetting != null ? NumberFormat.getNumberInstance().format(positionSetting.azimuth) : "");
+            SuntimesCalculator.SunPosition positionSetting = (setTime != null && calculator != null ? calculator.getSunPosition(setTime) : null);
+            sunAzimuthSetting.setText(positionSetting != null ? utils.formatAsDegrees(positionSetting.azimuth, 2) : "");
 
             SuntimesRiseSetData noonData = data.dataNoon;
             Calendar noonTime = (noonData != null ? noonData.sunriseCalendarToday() : null);
-            SuntimesCalculator.SunPosition positionAtNoon = (noonTime != null ? calculator.getSunPosition(noonTime) : null);
-            sunElevationAtNoon.setText(positionAtNoon != null ? NumberFormat.getNumberInstance().format(positionAtNoon.elevation) : "");
-            sunAzimuthAtNoon.setText(positionAtNoon != null ? NumberFormat.getNumberInstance().format(positionAtNoon.azimuth) : "");
+            SuntimesCalculator.SunPosition positionAtNoon = (noonTime != null && calculator != null ? calculator.getSunPosition(noonTime) : null);
+            sunElevationAtNoon.setText(positionAtNoon != null ? utils.formatAsDegrees(positionAtNoon.elevation, 2) : "");
+            sunAzimuthAtNoon.setText(positionAtNoon != null ? utils.formatAsDegrees(positionAtNoon.azimuth, 2) : "");
 
             showSunPosition(currentPosition != null);
         }

@@ -89,6 +89,7 @@ public class SuntimesUtils
     private static String strHours = "h";
     private static String strMinutes = "m";
     private static String strSeconds = "s";
+    private static String strDegreesFormat = "%1$s\u00B0";
     private static String strTimeDeltaFormat = "%1$s" + strEmpty + "%2$s";
     private static String strTimeShortFormat12 = "h:mm\u00A0a";
     private static String strTimeShortFormat12s = "h:mm:ss\u00A0a";
@@ -128,6 +129,7 @@ public class SuntimesUtils
         strHours = context.getString(R.string.delta_hours);
         strMinutes = context.getString(R.string.delta_minutes);
         strSeconds = context.getString(R.string.delta_seconds);
+        //strDegrees = context.getString(R.string.degrees);  // TODO
 
         strTimeDeltaFormat = context.getString(R.string.delta_format);
         strTimeVeryShortFormat12 = context.getString(R.string.time_format_12hr_veryshort);
@@ -651,6 +653,22 @@ public class SuntimesUtils
         TimeDisplayText text = new TimeDisplayText(value.trim(), units, suffix);
         text.setRawValue(timeSpan);
         return text;
+    }
+
+    /**
+     * @param value
+     * @return
+     */
+    public String formatAsDegrees(double value)
+    {
+        return String.format(strDegreesFormat, NumberFormat.getNumberInstance().format(value));
+    }
+    public String formatAsDegrees(double value, int places)
+    {
+        NumberFormat formatter = NumberFormat.getInstance();
+        formatter.setMinimumFractionDigits(places);
+        formatter.setMaximumFractionDigits(places);
+        return String.format(strDegreesFormat, formatter.format(value));
     }
 
     /**
