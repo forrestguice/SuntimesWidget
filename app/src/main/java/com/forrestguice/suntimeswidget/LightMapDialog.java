@@ -35,16 +35,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.SuntimesData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+
+import org.w3c.dom.Text;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class LightMapDialog extends DialogFragment
 {
     private static SuntimesUtils utils = new SuntimesUtils();
 
-    private TextView sunElevation;
+    private View sunLayout;
+    private TextView sunAzimuth, sunAzimuthRising, sunAzimuthSetting, sunAzimuthAtNoon;
+    private TextView sunElevation, sunElevationAtNoon;
 
     private LightMapView lightmap;
     private LightMapKey field_night, field_astro, field_nautical, field_civil, field_day;
@@ -85,7 +92,15 @@ public class LightMapDialog extends DialogFragment
     public void initViews(View dialogView)
     {
         lightmap = (LightMapView)dialogView.findViewById(R.id.info_time_lightmap);
-        sunElevation = (TextView)dialogView.findViewById(R.id.info_sun_elevation);
+
+        sunLayout = dialogView.findViewById(R.id.info_sun_layout);
+        sunElevation = (TextView)dialogView.findViewById(R.id.info_sun_elevation_current);
+        sunElevationAtNoon = (TextView)dialogView.findViewById(R.id.info_sun_elevation_atnoon);
+
+        sunAzimuth = (TextView)dialogView.findViewById(R.id.info_sun_azimuth_current);
+        sunAzimuthRising = (TextView)dialogView.findViewById(R.id.info_sun_azimuth_rising);
+        sunAzimuthAtNoon = (TextView)dialogView.findViewById(R.id.info_sun_azimuth_atnoon);
+        sunAzimuthSetting = (TextView)dialogView.findViewById(R.id.info_sun_azimuth_setting);
 
         field_night = new LightMapKey(dialogView, R.id.info_time_lightmap_key_night_icon, R.id.info_time_lightmap_key_night_label, R.id.info_time_lightmap_key_night_duration);
         field_astro = new LightMapKey(dialogView, R.id.info_time_lightmap_key_astro_icon, R.id.info_time_lightmap_key_astro_label, R.id.info_time_lightmap_key_astro_duration);
@@ -127,6 +142,12 @@ public class LightMapDialog extends DialogFragment
 
     protected void updateViews( @NonNull SuntimesRiseSetDataset data )
     {
+        updateLightmapViews(data);
+        updateSunPositionViews(data);
+    }
+
+    protected void updateLightmapViews(@NonNull SuntimesRiseSetDataset data)
+    {
         if (lightmap != null)
         {
             Context context = getContext();
@@ -139,23 +160,43 @@ public class LightMapDialog extends DialogFragment
             field_day.updateInfo(context, createInfoArray(data.dayLength(), dayDelta, colorDay));
 
             lightmap.updateViews(data);
-            Log.d("DEBUG", "LightMapDialog updated");
+            //Log.d("DEBUG", "LightMapDialog updated");
         }
+    }
 
-        if (sunElevation != null && data.dataActual != null)
+    protected void updateSunPositionViews(@NonNull SuntimesRiseSetDataset data)
+    {
+        if (sunLayout != null)
         {
-            SuntimesCalculator calculator = data.dataActual.calculator();
-            SuntimesCalculator.SunPosition position = (calculator != null ? calculator.getSunPosition(data.now()) : null);
+            SuntimesCalculator calculator = data.calculator();
+            SuntimesCalculator.SunPosition currentPosition = (calculator != null ? calculator.getSunPosition(data.now()) : null);
+            sunAzimuth.setText(currentPosition != null ? NumberFormat.getNumberInstance().format(currentPosition.azimuth) : "");
+            sunElevation.setText(currentPosition != null ? NumberFormat.getNumberInstance().format(currentPosition.elevation) : "");
 
-            if (position != null)
-            {
-                sunElevation.setText(NumberFormat.getNumberInstance().format(position.elevation));
-                sunElevation.setVisibility(View.VISIBLE);
+            SuntimesRiseSetData riseSetData = data.dataActual;
+            Calendar riseTime = (riseSetData != null ? riseSetData.sunriseCalendarToday() : null);
+            SuntimesCalculator.SunPosition positionRising = (riseTime != null ? calculator.getSunPosition(riseTime) : null);
+            sunAzimuthRising.setText(positionRising != null ? NumberFormat.getNumberInstance().format(positionRising.azimuth) : "");
 
-            } else {
-                sunElevation.setText("");
-                sunElevation.setVisibility(View.GONE);
-            }
+            Calendar setTime = (riseSetData != null ? riseSetData.sunsetCalendarToday() : null);
+            SuntimesCalculator.SunPosition positionSetting = (setTime != null ? calculator.getSunPosition(setTime) : null);
+            sunAzimuthSetting.setText(positionSetting != null ? NumberFormat.getNumberInstance().format(positionSetting.azimuth) : "");
+
+            SuntimesRiseSetData noonData = data.dataNoon;
+            Calendar noonTime = (noonData != null ? noonData.sunriseCalendarToday() : null);
+            SuntimesCalculator.SunPosition positionAtNoon = (noonTime != null ? calculator.getSunPosition(noonTime) : null);
+            sunElevationAtNoon.setText(positionAtNoon != null ? NumberFormat.getNumberInstance().format(positionAtNoon.elevation) : "");
+            sunAzimuthAtNoon.setText(positionAtNoon != null ? NumberFormat.getNumberInstance().format(positionAtNoon.azimuth) : "");
+
+            showSunPosition(currentPosition != null);
+        }
+    }
+
+    private void showSunPosition(boolean show)
+    {
+        if (sunLayout != null)
+        {
+            sunLayout.setVisibility(show ? View.VISIBLE : View.GONE);
         }
     }
 
