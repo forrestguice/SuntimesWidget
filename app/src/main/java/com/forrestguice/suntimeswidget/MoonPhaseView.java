@@ -87,10 +87,10 @@ public class MoonPhaseView extends LinearLayout
         empty = (TextView)findViewById(R.id.txt_empty);
         content = (LinearLayout)findViewById(R.id.moonphase_layout);
 
-        phaseNew = new PhaseField(this, R.id.moonphase_new_layout, R.id.moonphase_new_date);
-        phaseFirst = new PhaseField(this, R.id.moonphase_firstquarter_layout, R.id.moonphase_firstquarter_date);
-        phaseFull = new PhaseField(this, R.id.moonphase_full_layout, R.id.moonphase_full_date);
-        phaseLast = new PhaseField(this, R.id.moonphase_thirdquarter_layout, R.id.moonphase_thirdquarter_date);
+        phaseNew = new PhaseField(this, R.id.moonphase_new_layout, R.id.moonphase_new_date, R.id.moonphase_new_note);
+        phaseFirst = new PhaseField(this, R.id.moonphase_firstquarter_layout, R.id.moonphase_firstquarter_date, R.id.moonphase_firstquarter_note);
+        phaseFull = new PhaseField(this, R.id.moonphase_full_layout, R.id.moonphase_full_date, R.id.moonphase_full_note);
+        phaseLast = new PhaseField(this, R.id.moonphase_thirdquarter_layout, R.id.moonphase_thirdquarter_date, R.id.moonphase_thirdquarter_note);
 
         if (isInEditMode())
         {
@@ -133,11 +133,14 @@ public class MoonPhaseView extends LinearLayout
 
         if (data.isCalculated())
         {
+            boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, 0);
             boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
-            phaseNew.updateField(context, data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.NEW), showSeconds);
-            phaseFirst.updateField(context, data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FIRST_QUARTER), showSeconds);
-            phaseFull.updateField(context, data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FULL), showSeconds);
-            phaseLast.updateField(context, data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.THIRD_QUARTER), showSeconds);
+
+            phaseNew.updateField(context, data.now(), data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.NEW), showWeeks, showSeconds);
+            phaseFirst.updateField(context, data.now(), data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FIRST_QUARTER), showWeeks, showSeconds);
+            phaseFull.updateField(context, data.now(), data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FULL), showWeeks, showSeconds);
+            phaseLast.updateField(context, data.now(), data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.THIRD_QUARTER), showWeeks, showSeconds);
+
             reorderLayout(data.nextPhase(data.midnight()));
 
         } else {
@@ -216,27 +219,29 @@ public class MoonPhaseView extends LinearLayout
     private class PhaseField
     {
         public View layout;
-        public TextView dateText;
+        public TextView field;
+        public TextView note;
 
-        public PhaseField(@NonNull View parent, int layoutID, int dateTextID)
+        public PhaseField(@NonNull View parent, int layoutID, int dateTextID, int noteTextID)
         {
             layout = parent.findViewById(layoutID);
-            dateText = (TextView)parent.findViewById(dateTextID);
+            field = (TextView)parent.findViewById(dateTextID);
+            note = (TextView)parent.findViewById(noteTextID);
         }
 
-        public void updateField(Context context, Calendar dateTime, boolean showSeconds)
+        public void updateField(Context context, Calendar now, Calendar dateTime, boolean showWeeks, boolean showSeconds)
         {
-            if (dateText != null)
+            if (field != null)
             {
-                dateText.setText(utils.calendarDateTimeDisplayString(context, dateTime, showSeconds).getValue());
+                field.setText(utils.calendarDateTimeDisplayString(context, dateTime, showSeconds).getValue());
             }
-        }
 
-        public void setText(@NonNull CharSequence value)
-        {
-            if (dateText != null)
+            if (note != null)
             {
-                dateText.setText(value);
+                String noteText = utils.timeDeltaDisplayString(now.getTime(), dateTime.getTime(), showWeeks).toString();
+                String noteString = now.after(dateTime) ? context.getString(R.string.ago, noteText) : context.getString(R.string.hence, noteText);
+                note.setText(SuntimesUtils.createBoldColorSpan(noteString, noteText, noteColor));
+                note.setVisibility(View.VISIBLE);
             }
         }
 
