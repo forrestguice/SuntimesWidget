@@ -20,23 +20,20 @@ package com.forrestguice.suntimeswidget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.text.SpannableString;
 import android.util.AttributeSet;
-
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
-import java.util.Calendar;
+import java.text.NumberFormat;
 
 @SuppressWarnings("Convert2Diamond")
 public class MoonPhaseView extends LinearLayout
@@ -46,7 +43,7 @@ public class MoonPhaseView extends LinearLayout
     private boolean centered = false;
 
     private LinearLayout content;
-    private PhaseField phaseNew, phaseFirst, phaseFull, phaseLast;
+    private TextView phaseText, illumText;
     private TextView empty;
 
     public MoonPhaseView(Context context)
@@ -80,17 +77,15 @@ public class MoonPhaseView extends LinearLayout
 
         if (attrs != null)
         {
-            LinearLayout.LayoutParams lp = generateLayoutParams(attrs);
+            LayoutParams lp = generateLayoutParams(attrs);
             centered = ((lp.gravity == Gravity.CENTER) || (lp.gravity == Gravity.CENTER_HORIZONTAL));
         }
 
         empty = (TextView)findViewById(R.id.txt_empty);
         content = (LinearLayout)findViewById(R.id.moonphase_layout);
 
-        phaseNew = new PhaseField(this, R.id.moonphase_new_layout, R.id.moonphase_new_date, R.id.moonphase_new_note);
-        phaseFirst = new PhaseField(this, R.id.moonphase_firstquarter_layout, R.id.moonphase_firstquarter_date, R.id.moonphase_firstquarter_note);
-        phaseFull = new PhaseField(this, R.id.moonphase_full_layout, R.id.moonphase_full_date, R.id.moonphase_full_note);
-        phaseLast = new PhaseField(this, R.id.moonphase_thirdquarter_layout, R.id.moonphase_thirdquarter_date, R.id.moonphase_thirdquarter_note);
+        phaseText = (TextView)findViewById(R.id.text_info_moonphase);
+        illumText = (TextView)findViewById(R.id.text_info_moonillum);
 
         if (isInEditMode())
         {
@@ -133,62 +128,35 @@ public class MoonPhaseView extends LinearLayout
 
         if (data.isCalculated())
         {
-            boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, 0);
-            boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
+            for (MoonPhaseDisplay moonPhase : MoonPhaseDisplay.values())
+            {
+                View view = findViewById(moonPhase.getView());
+                view.setVisibility(View.GONE);
+            }
 
-            phaseNew.updateField(context, data.now(), data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.NEW), showWeeks, showSeconds);
-            phaseFirst.updateField(context, data.now(), data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FIRST_QUARTER), showWeeks, showSeconds);
-            phaseFull.updateField(context, data.now(), data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FULL), showWeeks, showSeconds);
-            phaseLast.updateField(context, data.now(), data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.THIRD_QUARTER), showWeeks, showSeconds);
+            MoonPhaseDisplay phase = data.getMoonPhaseToday();
+            if (phase != null)
+            {
+                phaseText.setText(phase.getLongDisplayString());
 
-            reorderLayout(data.nextPhase(data.midnight()));
+                View phaseIcon = findViewById(phase.getView());
+                phaseIcon.setVisibility(View.VISIBLE);
+
+                /**Integer phaseColor = phaseColors.get(phase);
+                if (phaseColor != null)
+                {
+                    phaseText.setTextColor(phaseColor);
+                }*/
+            }
+
+            NumberFormat percentage = NumberFormat.getPercentInstance();
+            String illum = percentage.format(data.getMoonIlluminationToday());
+            String illumNote = context.getString(R.string.moon_illumination, illum);
+            SpannableString illumNoteSpan = SuntimesUtils.createColorSpan(illumNote, illum, noteColor);
+            illumText.setText(illumNoteSpan);
 
         } else {
             showEmptyView(true);
-        }
-    }
-
-    private void clearLayout()
-    {
-        phaseNew.removeFromLayout(content);
-        phaseFirst.removeFromLayout(content);
-        phaseFull.removeFromLayout(content);
-        phaseLast.removeFromLayout(content);
-    }
-
-    private void reorderLayout( SuntimesCalculator.MoonPhase nextPhase )
-    {
-        clearLayout();
-        switch (nextPhase)
-        {
-            case THIRD_QUARTER:
-                phaseLast.addToLayout(content);
-                phaseNew.addToLayout(content);
-                phaseFirst.addToLayout(content);
-                phaseFull.addToLayout(content);
-                break;
-
-            case FULL:
-                phaseFull.addToLayout(content);
-                phaseLast.addToLayout(content);
-                phaseNew.addToLayout(content);
-                phaseFirst.addToLayout(content);
-                break;
-
-            case FIRST_QUARTER:
-                phaseFirst.addToLayout(content);
-                phaseFull.addToLayout(content);
-                phaseLast.addToLayout(content);
-                phaseNew.addToLayout(content);
-                break;
-
-            case NEW:
-            default:
-                phaseNew.addToLayout(content);
-                phaseFirst.addToLayout(content);
-                phaseFull.addToLayout(content);
-                phaseLast.addToLayout(content);
-                break;
         }
     }
 
@@ -203,59 +171,14 @@ public class MoonPhaseView extends LinearLayout
         //minimized = bundle.getBoolean(MoonPhaseView.KEY_UI_MINIMIZED, minimized);
     }
 
-    public void setOnClickListener( View.OnClickListener listener )
+    public void setOnClickListener( OnClickListener listener )
     {
         content.setOnClickListener(listener);
     }
 
-    public void setOnLongClickListener( View.OnLongClickListener listener)
+    public void setOnLongClickListener( OnLongClickListener listener)
     {
         content.setOnLongClickListener(listener);
-    }
-
-    /**
-     * PhaseField
-     */
-    private class PhaseField
-    {
-        public View layout;
-        public TextView field;
-        public TextView note;
-
-        public PhaseField(@NonNull View parent, int layoutID, int dateTextID, int noteTextID)
-        {
-            layout = parent.findViewById(layoutID);
-            field = (TextView)parent.findViewById(dateTextID);
-            note = (TextView)parent.findViewById(noteTextID);
-        }
-
-        public void updateField(Context context, Calendar now, Calendar dateTime, boolean showWeeks, boolean showSeconds)
-        {
-            if (field != null)
-            {
-                field.setText(utils.calendarDateTimeDisplayString(context, dateTime, showSeconds).getValue());
-            }
-
-            if (note != null)
-            {
-                String noteText = utils.timeDeltaDisplayString(now.getTime(), dateTime.getTime(), showWeeks).toString();
-                String noteString = now.after(dateTime) ? context.getString(R.string.ago, noteText) : context.getString(R.string.hence, noteText);
-                note.setText(SuntimesUtils.createBoldColorSpan(noteString, noteText, noteColor));
-                note.setVisibility(View.VISIBLE);
-            }
-        }
-
-        public void addToLayout(@NonNull LinearLayout parent)
-        {
-            if (layout != null)
-                parent.addView(layout);
-        }
-
-        public void removeFromLayout(@NonNull LinearLayout parent)
-        {
-            if (layout != null)
-                parent.removeView(layout);
-        }
     }
 
 }

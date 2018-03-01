@@ -21,11 +21,14 @@
     <FrameLayout
         android:layout_width="match_parent" android:layout_height="wrap_content">
 
-        <LinearLayout android:id="@+id/moonphase_layout"
+        <LinearLayout android:id="@+id/moonphases_layout"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_marginTop="2dp" android:layout_marginBottom="2dp" android:weightSum="4">
 
-            <include layout="@layout/info_moonphase" />
+            <include layout="@layout/info_time_moonphase_new" />
+            <include layout="@layout/info_time_moonphase_first" />
+            <include layout="@layout/info_time_moonphase_full" />
+            <include layout="@layout/info_time_moonphase_third" />
 
         </LinearLayout>
 

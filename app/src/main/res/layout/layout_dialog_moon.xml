@@ -20,9 +20,12 @@
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="TODO1" />
+    <com.forrestguice.suntimeswidget.MoonPhaseView
+        android:id="@+id/moonphase_view"
+        android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
-    <com.forrestguice.suntimeswidget.MoonPhaseView android:id="@+id/moonphase_view"
+    <com.forrestguice.suntimeswidget.MoonPhasesView
+        android:id="@+id/moonphases_view"
         android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
 </LinearLayout>
