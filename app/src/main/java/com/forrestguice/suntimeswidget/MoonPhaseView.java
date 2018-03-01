@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 
@@ -30,8 +31,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+
+import java.util.Calendar;
 
 @SuppressWarnings("Convert2Diamond")
 public class MoonPhaseView extends LinearLayout
@@ -40,7 +45,8 @@ public class MoonPhaseView extends LinearLayout
     private boolean isRtl = false;
     private boolean centered = false;
 
-    private View content;
+    private LinearLayout content;
+    private PhaseField phaseNew, phaseFirst, phaseFull, phaseLast;
     private TextView empty;
 
     public MoonPhaseView(Context context)
@@ -78,36 +84,19 @@ public class MoonPhaseView extends LinearLayout
             centered = ((lp.gravity == Gravity.CENTER) || (lp.gravity == Gravity.CENTER_HORIZONTAL));
         }
 
-        content = findViewById(R.id.moonphase_layout);
         empty = (TextView)findViewById(R.id.txt_empty);
+        content = (LinearLayout)findViewById(R.id.moonphase_layout);
+
+        phaseNew = new PhaseField(this, R.id.moonphase_new_layout, R.id.moonphase_new_date);
+        phaseFirst = new PhaseField(this, R.id.moonphase_firstquarter_layout, R.id.moonphase_firstquarter_date);
+        phaseFull = new PhaseField(this, R.id.moonphase_full_layout, R.id.moonphase_full_date);
+        phaseLast = new PhaseField(this, R.id.moonphase_thirdquarter_layout, R.id.moonphase_thirdquarter_date);
 
         if (isInEditMode())
         {
             updateViews(context, null);
         }
     }
-
-    /**private View.OnTouchListener createButtonListener(final ImageButton button)
-    {
-        return new View.OnTouchListener()
-        {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent)
-            {
-                if (button != null)
-                {
-                    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN)
-                    {
-                        button.setColorFilter(ContextCompat.getColor(getContext(), R.color.btn_tint_pressed));
-                        performClick();
-                    } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                        button.setColorFilter(null);
-                    }
-                }
-                return false;
-            }
-        };
-    }*/
 
     private int noteColor;
     private void initColors(Context context)
@@ -144,31 +133,71 @@ public class MoonPhaseView extends LinearLayout
 
         if (data.isCalculated())
         {
-            // TODO
+            boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
+            phaseNew.updateField(context, data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.NEW), showSeconds);
+            phaseFirst.updateField(context, data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FIRST_QUARTER), showSeconds);
+            phaseFull.updateField(context, data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FULL), showSeconds);
+            phaseLast.updateField(context, data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.THIRD_QUARTER), showSeconds);
+            reorderLayout(data.nextPhase(data.midnight()));
 
         } else {
             showEmptyView(true);
         }
     }
 
+    private void clearLayout()
+    {
+        phaseNew.removeFromLayout(content);
+        phaseFirst.removeFromLayout(content);
+        phaseFull.removeFromLayout(content);
+        phaseLast.removeFromLayout(content);
+    }
+
+    private void reorderLayout( SuntimesCalculator.MoonPhase nextPhase )
+    {
+        clearLayout();
+        switch (nextPhase)
+        {
+            case THIRD_QUARTER:
+                phaseLast.addToLayout(content);
+                phaseNew.addToLayout(content);
+                phaseFirst.addToLayout(content);
+                phaseFull.addToLayout(content);
+                break;
+
+            case FULL:
+                phaseFull.addToLayout(content);
+                phaseLast.addToLayout(content);
+                phaseNew.addToLayout(content);
+                phaseFirst.addToLayout(content);
+                break;
+
+            case FIRST_QUARTER:
+                phaseFirst.addToLayout(content);
+                phaseFull.addToLayout(content);
+                phaseLast.addToLayout(content);
+                phaseNew.addToLayout(content);
+                break;
+
+            case NEW:
+            default:
+                phaseNew.addToLayout(content);
+                phaseFirst.addToLayout(content);
+                phaseFull.addToLayout(content);
+                phaseLast.addToLayout(content);
+                break;
+        }
+    }
+
     public boolean saveState(Bundle bundle)
     {
-        /**boolean cardIsNextYear = (flipper.getDisplayedChild() != 0);
-        bundle.putBoolean(EquinoxView.KEY_UI_CARDISNEXTYEAR, cardIsNextYear);
-        bundle.putBoolean(EquinoxView.KEY_UI_USERSWAPPEDCARD, userSwappedCard);
-        bundle.putBoolean(EquinoxView.KEY_UI_MINIMIZED, minimized);
-        Log.d("DEBUG", "EquinoxView saveState :: nextyear:" + cardIsNextYear + " :: swapped:" + userSwappedCard + " :: minimized:" + minimized);
-        return true;*/
+        //bundle.putBoolean(MoonPhaseView.KEY_UI_MINIMIZED, minimized);
         return true;
     }
 
     public void loadState(Bundle bundle)
     {
-        /**boolean cardIsNextYear = bundle.getBoolean(EquinoxView.KEY_UI_CARDISNEXTYEAR, false);
-        flipper.setDisplayedChild((cardIsNextYear ? 1 : 0));
-        userSwappedCard = bundle.getBoolean(EquinoxView.KEY_UI_USERSWAPPEDCARD, false);
-        minimized = bundle.getBoolean(EquinoxView.KEY_UI_MINIMIZED, minimized);
-        Log.d("DEBUG", "EquinoxView loadState :: nextyear: " + cardIsNextYear + " :: swapped:" + userSwappedCard + " :: minimized:" + minimized);*/
+        //minimized = bundle.getBoolean(MoonPhaseView.KEY_UI_MINIMIZED, minimized);
     }
 
     public void setOnClickListener( View.OnClickListener listener )
@@ -179,6 +208,49 @@ public class MoonPhaseView extends LinearLayout
     public void setOnLongClickListener( View.OnLongClickListener listener)
     {
         content.setOnLongClickListener(listener);
+    }
+
+    /**
+     * PhaseField
+     */
+    private class PhaseField
+    {
+        public View layout;
+        public TextView dateText;
+
+        public PhaseField(@NonNull View parent, int layoutID, int dateTextID)
+        {
+            layout = parent.findViewById(layoutID);
+            dateText = (TextView)parent.findViewById(dateTextID);
+        }
+
+        public void updateField(Context context, Calendar dateTime, boolean showSeconds)
+        {
+            if (dateText != null)
+            {
+                dateText.setText(utils.calendarDateTimeDisplayString(context, dateTime, showSeconds).getValue());
+            }
+        }
+
+        public void setText(@NonNull CharSequence value)
+        {
+            if (dateText != null)
+            {
+                dateText.setText(value);
+            }
+        }
+
+        public void addToLayout(@NonNull LinearLayout parent)
+        {
+            if (layout != null)
+                parent.addView(layout);
+        }
+
+        public void removeFromLayout(@NonNull LinearLayout parent)
+        {
+            if (layout != null)
+                parent.removeView(layout);
+        }
     }
 
 }
