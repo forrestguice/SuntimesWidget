@@ -97,6 +97,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected CheckBox checkbox_showTitle;
     protected TextView label_titleText;
     protected EditText text_titleText;
+    protected CheckBox checkbox_showLabels;
 
     protected LocationConfigView locationConfig;
 
@@ -509,6 +510,13 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
 
         //
+        // widget: show labels
+        //
+        checkbox_showLabels = (CheckBox) findViewById(R.id.appwidget_appearance_showLabels);
+        showOptionLabels(false);
+
+
+        //
         // widget: allow resize
         //
         checkbox_allowResize = (CheckBox) findViewById(R.id.appwidget_appearance_allowResize);
@@ -833,6 +841,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // save:: title text
         String titleText = text_titleText.getText().toString().trim();
         WidgetSettings.saveTitleTextPref(context, appWidgetId, titleText);
+
+        // save: show labels
+        boolean showLabels = checkbox_showLabels.isChecked();
+        WidgetSettings.saveShowLabelsPref(context, appWidgetId, showLabels);
     }
 
     /**
@@ -872,6 +884,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
 
         loadTitleSettings(context);
+        loadShowLabels(context);
     }
 
     protected void loadTitleSettings(Context context)
@@ -884,6 +897,12 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // load: title text
         String titleText = WidgetSettings.loadTitleTextPref(context, appWidgetId);
         text_titleText.setText(titleText);
+    }
+
+    protected void loadShowLabels(Context context)
+    {
+        boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
+        checkbox_showLabels.setChecked(showLabels);
     }
 
     /**
@@ -1177,6 +1196,17 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (layout_showNoon != null)
         {
             layout_showNoon.setVisibility((showOption ? View.VISIBLE : View.GONE));
+        }
+    }
+
+    /**
+     * @param showOption true; show labels option, false hide option
+     */
+    protected void showOptionLabels(boolean showOption)
+    {
+        if (checkbox_showLabels != null)
+        {
+            checkbox_showLabels.setVisibility((showOption) ? View.VISIBLE : View.GONE);
         }
     }
 
