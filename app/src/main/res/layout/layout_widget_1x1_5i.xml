@@ -25,40 +25,46 @@
         android:id="@+id/text_title"
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:gravity="start" android:visibility="visible"
-        tools:text="title" android:layout_marginBottom="-3dp" />
+        tools:text="title" android:layout_marginBottom="2dp" />
 
     <LinearLayout
-        android:layout_width="wrap_content" android:layout_height="match_parent"
-        android:layout_gravity="center" android:orientation="vertical">
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:layout_gravity="center" android:orientation="vertical"
+        android:layout_marginLeft="2dp" android:layout_marginStart="2dp"
+        android:layout_marginRight="2dp" android:layout_marginEnd="2dp">
 
-        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView style="@style/SunsetTimeTextView"
                 android:id="@+id/info_sun_azimuth_current_label"
+                android:layout_width="0dp" android:layout_weight="1"
+                android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
                 android:text="@string/widgetLabel_azimuth" android:labelFor="@+id/info_sun_azimuth_current"
                 android:gravity="start" />
 
             <TextView style="@style/SunsetTimeTextView"
-                android:id="@+id/info_sun_azimuth_current"
-                android:layout_marginLeft="4dp" android:layout_marginStart="4dp"
-                android:layout_marginRight="4dp" android:layout_marginEnd="4dp"
+                android:id="@+id/info_sun_azimuth_current" android:layout_gravity="right|end|center_vertical"
+                android:layout_marginLeft="2dp" android:layout_marginStart="2dp"
+                android:layout_marginRight="2dp" android:layout_marginEnd="2dp"
                 android:text="" tools:text="280" />
 
         </LinearLayout>
 
-        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView style="@style/SunsetTimeTextView"
                 android:id="@+id/info_sun_elevation_current_label"
+                android:layout_width="0dp" android:layout_weight="1"
+                android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
                 android:text="@string/widgetLabel_elevation" android:labelFor="@+id/info_sun_azimuth_current"
                 android:gravity="start" />
 
             <TextView style="@style/SunsetTimeTextView"
-                android:id="@+id/info_sun_elevation_current"
-                android:layout_marginLeft="4dp" android:layout_marginStart="4dp"
-                android:layout_marginRight="4dp" android:layout_marginEnd="4dp"
+                android:id="@+id/info_sun_elevation_current" android:layout_gravity="right|end|center_vertical"
+                android:layout_marginLeft="2dp" android:layout_marginStart="2dp"
+                android:layout_marginRight="2dp" android:layout_marginEnd="2dp"
                 android:text="" tools:text="48" />
 
         </LinearLayout>
