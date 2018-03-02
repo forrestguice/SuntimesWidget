@@ -87,10 +87,10 @@ public class MoonPhasesView extends LinearLayout
         empty = (TextView)findViewById(R.id.txt_empty);
         content = (LinearLayout)findViewById(R.id.moonphases_layout);
 
-        phaseNew = new PhaseField(this, R.id.moonphase_new_layout, R.id.moonphase_new_date, R.id.moonphase_new_note);
-        phaseFirst = new PhaseField(this, R.id.moonphase_firstquarter_layout, R.id.moonphase_firstquarter_date, R.id.moonphase_firstquarter_note);
-        phaseFull = new PhaseField(this, R.id.moonphase_full_layout, R.id.moonphase_full_date, R.id.moonphase_full_note);
-        phaseLast = new PhaseField(this, R.id.moonphase_thirdquarter_layout, R.id.moonphase_thirdquarter_date, R.id.moonphase_thirdquarter_note);
+        phaseNew = new PhaseField(this, R.id.moonphase_new_layout, R.id.moonphase_new_label, R.id.moonphase_new_date, R.id.moonphase_new_note);
+        phaseFirst = new PhaseField(this, R.id.moonphase_firstquarter_layout, R.id.moonphase_firstquarter_label, R.id.moonphase_firstquarter_date, R.id.moonphase_firstquarter_note);
+        phaseFull = new PhaseField(this, R.id.moonphase_full_layout, R.id.moonphase_full_label, R.id.moonphase_full_date, R.id.moonphase_full_note);
+        phaseLast = new PhaseField(this, R.id.moonphase_thirdquarter_layout, R.id.moonphase_thirdquarter_label, R.id.moonphase_thirdquarter_date, R.id.moonphase_thirdquarter_note);
 
         if (isInEditMode())
         {
@@ -121,6 +121,11 @@ public class MoonPhasesView extends LinearLayout
 
     protected void updateViews( Context context, SuntimesMoonData data )
     {
+        phaseNew.showLabel(true);
+        phaseFirst.showLabel(true);
+        phaseFull.showLabel(true);
+        phaseLast.showLabel(true);
+
         if (isInEditMode())
         {
             return;
@@ -135,12 +140,10 @@ public class MoonPhasesView extends LinearLayout
         {
             boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, 0);
             boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
-
             phaseNew.updateField(context, data.now(), data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.NEW), showWeeks, showSeconds);
             phaseFirst.updateField(context, data.now(), data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FIRST_QUARTER), showWeeks, showSeconds);
             phaseFull.updateField(context, data.now(), data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FULL), showWeeks, showSeconds);
             phaseLast.updateField(context, data.now(), data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.THIRD_QUARTER), showWeeks, showSeconds);
-
             reorderLayout(data.nextPhase(data.midnight()));
 
         } else {
@@ -221,10 +224,12 @@ public class MoonPhasesView extends LinearLayout
         public View layout;
         public TextView field;
         public TextView note;
+        public TextView label;
 
-        public PhaseField(@NonNull View parent, int layoutID, int dateTextID, int noteTextID)
+        public PhaseField(@NonNull View parent, int layoutID, int labelID, int dateTextID, int noteTextID)
         {
             layout = parent.findViewById(layoutID);
+            label = (TextView)parent.findViewById(labelID);
             field = (TextView)parent.findViewById(dateTextID);
             note = (TextView)parent.findViewById(noteTextID);
         }
@@ -243,6 +248,11 @@ public class MoonPhasesView extends LinearLayout
                 note.setText(SuntimesUtils.createBoldColorSpan(noteString, noteText, noteColor));
                 note.setVisibility(View.VISIBLE);
             }
+        }
+
+        public void showLabel(boolean value)
+        {
+            label.setVisibility(value ? View.VISIBLE : View.GONE);
         }
 
         public void addToLayout(@NonNull LinearLayout parent)
