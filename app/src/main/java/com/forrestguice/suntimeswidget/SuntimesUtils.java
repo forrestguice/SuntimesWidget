@@ -60,6 +60,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings.TimeFormatMode;
 
@@ -732,6 +733,12 @@ public class SuntimesUtils
         displayString = displayString.replaceAll(modePatternShort, timeMode.getShortDisplayString());
         displayString = displayString.replaceAll(modePattern, timeMode.getLongDisplayString());
         return displayString;
+    }
+
+    public String displayStringForTitlePattern(Context context, String titlePattern, SuntimesRiseSetDataset dataset)
+    {
+        // TODO
+        return displayStringForTitlePattern(context, titlePattern, dataset.dataActual);
     }
 
     public String displayStringForTitlePattern(Context context, String titlePattern, SuntimesData data)
