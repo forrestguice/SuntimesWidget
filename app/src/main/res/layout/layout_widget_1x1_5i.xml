@@ -36,7 +36,7 @@
 
             <TextView style="@style/SunsetTimeTextView"
                 android:id="@+id/info_sun_azimuth_current_label"
-                android:text="Azimuth:" android:labelFor="@+id/info_sun_azimuth_current"
+                android:text="@string/widgetLabel_azimuth" android:labelFor="@+id/info_sun_azimuth_current"
                 android:gravity="start" />
 
             <TextView style="@style/SunsetTimeTextView"
@@ -52,7 +52,7 @@
 
             <TextView style="@style/SunsetTimeTextView"
                 android:id="@+id/info_sun_elevation_current_label"
-                android:text="Elevation:" android:labelFor="@+id/info_sun_azimuth_current"
+                android:text="@string/widgetLabel_elevation" android:labelFor="@+id/info_sun_azimuth_current"
                 android:gravity="start" />
 
             <TextView style="@style/SunsetTimeTextView"

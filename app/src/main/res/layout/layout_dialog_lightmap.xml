@@ -37,7 +37,7 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="Azimuth:" />
+            android:text="@string/widgetLabel_azimuth" />
 
         <TextView android:id="@+id/info_sun_azimuth_current" style="@style/SunsetTimeTextView"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/info_sun_azimuth_current_label"
             android:layout_marginTop="4dp"
-            android:text="Elevation:" />
+            android:text="@string/widgetLabel_elevation" />
 
         <TextView android:id="@+id/info_sun_elevation_current" style="@style/SunsetTimeTextView"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
