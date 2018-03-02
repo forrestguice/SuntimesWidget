@@ -170,8 +170,21 @@ public class LightMapDialog extends DialogFragment
         if (sunLayout != null)
         {
             SuntimesCalculator.SunPosition currentPosition = (calculator != null ? calculator.getSunPosition(data.now()) : null);
-            sunAzimuth.setText(currentPosition != null ? utils.formatAsDegrees(currentPosition.azimuth, 2) : "");
-            sunElevation.setText(currentPosition != null ? utils.formatAsDegrees(currentPosition.elevation, 2) : "");
+            if (currentPosition != null)
+            {
+                String azimuthString = utils.formatAsDegrees(currentPosition.azimuth, 2);
+                sunAzimuth.setText(azimuthString);
+
+                String elevationString = utils.formatAsDegrees(currentPosition.elevation, 2);
+                CharSequence elevationSeq = (currentPosition.elevation > 0)
+                        ? SuntimesUtils.createColorSpan(elevationString, elevationString, colorDay)
+                        : elevationString;
+                sunElevation.setText(elevationSeq);
+
+            } else {
+                sunAzimuth.setText("");
+                sunElevation.setText("");
+            }
 
             SuntimesRiseSetData riseSetData = data.dataActual;
             Calendar riseTime = (riseSetData != null ? riseSetData.sunriseCalendarToday() : null);
