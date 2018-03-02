@@ -72,6 +72,9 @@ public class WidgetSettings
     public static final String PREF_KEY_APPEARANCE_TITLETEXT = "titletext";
     public static final String PREF_DEF_APPEARANCE_TITLETEXT = "";
 
+    public static final String PREF_KEY_APPEARANCE_SHOWLABELS = "showlabels";
+    public static final boolean PREF_DEF_APPEARANCE_SHOWLABELS = false;
+
     public static final String PREF_KEY_APPEARANCE_WIDGETMODE_SUN1x1 = "widgetmode_1x1";
     public static final WidgetModeSun1x1 PREF_DEF_APPEARANCE_WIDGETMODE_SUN1x1 = WidgetModeSun1x1.WIDGETMODE1x1_BOTH_1;
 
@@ -1189,6 +1192,32 @@ public class WidgetSettings
     }
 
 
+    public static void saveShowLabelsPref(Context context, int appWidgetId, boolean showLabels)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.putBoolean(prefs_prefix + PREF_KEY_APPEARANCE_SHOWLABELS, showLabels);
+        prefs.apply();
+    }
+    public static boolean loadShowLabelsPref(Context context, int appWidgetId)
+    {
+        return loadShowLabelsPref(context, appWidgetId, PREF_DEF_APPEARANCE_SHOWLABELS);
+    }
+    public static boolean loadShowLabelsPref(Context context, int appWidgetId, boolean defaultValue)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        return prefs.getBoolean(prefs_prefix + PREF_KEY_APPEARANCE_SHOWLABELS, defaultValue);
+    }
+    public static void deleteShowLabelsPref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_SHOWLABELS);
+        prefs.apply();
+    }
+
+
     public static void saveShowTitlePref(Context context, int appWidgetId, boolean showTitle)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
@@ -1893,6 +1922,7 @@ public class WidgetSettings
         deleteAllowResizePref(context, appWidgetId);
 
         deleteThemePref(context, appWidgetId);
+        deleteShowLabelsPref(context, appWidgetId);
         deleteShowTitlePref(context, appWidgetId);
         deleteTitleTextPref(context, appWidgetId);
         deleteTimeFormatModePref(context, appWidgetId);
