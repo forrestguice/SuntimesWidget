@@ -20,8 +20,10 @@ package com.forrestguice.suntimeswidget.layouts;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Build;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
@@ -63,17 +65,50 @@ public class SunExtLayout_1x1_0 extends SunExtLayout
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesRiseSetDataset dataset)
     {
         super.updateViews(context, appWidgetId, views, dataset);
-
         SuntimesCalculator calculator = dataset.dataActual.calculator();
         SuntimesCalculator.SunPosition sunPosition = calculator.getSunPosition(dataset.now());
-        views.setTextViewText(R.id.info_sun_azimuth_current, sunPosition.azimuth + "");   // TODO: format
-        views.setTextViewText(R.id.info_sun_elevation_current, sunPosition.elevation + "");  // TODO: format
+
+        String azimuthString = utils.formatAsDegrees(sunPosition.azimuth, 2);
+        CharSequence azimuth = (boldTime ? SuntimesUtils.createBoldColorSpan(azimuthString, azimuthString, highlightColor)
+                                         : SuntimesUtils.createColorSpan(azimuthString, azimuthString, highlightColor));
+        views.setTextViewText(R.id.info_sun_azimuth_current, azimuth);
+
+        String elevationString = utils.formatAsDegrees(sunPosition.elevation, 2);
+        CharSequence elevation = (boldTime ? SuntimesUtils.createBoldColorSpan(elevationString, elevationString, highlightColor)
+                                           : SuntimesUtils.createColorSpan(elevationString, elevationString, highlightColor));
+        views.setTextViewText(R.id.info_sun_elevation_current, elevation);
+
+        boolean showLabels = true;  // TODO: from settings
+        int visibility = (showLabels ? View.VISIBLE : View.GONE);
+        views.setViewVisibility(R.id.info_sun_azimuth_current_label, visibility);
+        views.setViewVisibility(R.id.info_sun_elevation_current_label, visibility);
     }
+
+    private int highlightColor = Color.WHITE;
+    private boolean boldTime = false;
 
     @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         super.themeViews(context, views, theme);
-        // TODO
+        highlightColor = theme.getTimeColor();
+        boldTime = theme.getTimeBold();
+
+        int textColor = theme.getTextColor();
+        views.setTextColor(R.id.info_sun_azimuth_current_label, textColor);
+        views.setTextColor(R.id.info_sun_elevation_current_label, textColor);
+        views.setTextColor(R.id.info_sun_azimuth_current, textColor);
+        views.setTextColor(R.id.info_sun_elevation_current, textColor);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        {
+            float textSize = theme.getTextSizeSp();
+            views.setTextViewTextSize(R.id.info_sun_azimuth_current_label, TypedValue.COMPLEX_UNIT_SP, textSize);
+            views.setTextViewTextSize(R.id.info_sun_elevation_current_label, TypedValue.COMPLEX_UNIT_SP, textSize);
+
+            float timeSize = theme.getTimeSizeSp();
+            views.setTextViewTextSize(R.id.info_sun_azimuth_current, TypedValue.COMPLEX_UNIT_SP, timeSize);
+            views.setTextViewTextSize(R.id.info_sun_elevation_current, TypedValue.COMPLEX_UNIT_SP, timeSize);
+        }
     }
 }
