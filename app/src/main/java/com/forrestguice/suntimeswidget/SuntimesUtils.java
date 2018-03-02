@@ -66,6 +66,8 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings.TimeFormatMode;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -155,12 +157,124 @@ public class SuntimesUtils
         strDateShortFormat = context.getString(R.string.date_format_short);
         strDateLongFormat = context.getString(R.string.date_format_long);
 
+        CardinalDirection.initDisplayStrings(context);
         initialized = true;
     }
 
     public static boolean isInitialized()
     {
         return initialized;
+    }
+
+    /**
+     * CardinalDirection
+     */
+    public static enum CardinalDirection
+    {
+        NORTH(      "N",   "North"              , 0.0),
+        NORTH_NE(   "NNE", "North North East"   , 22.5),
+        NORTH_E(    "NE",  "North East"         , 45.0),
+
+        EAST_NE(    "ENE", "East North East"    , 67.5),
+        EAST(       "E",   "East"               , 90.0),
+        EAST_SE(    "ESE", "East South East"    , 112.5),
+
+        SOUTH_E(    "SE",  "South East"         , 135.0),
+        SOUTH_SE(   "SSE", "South South East"   , 157.5),
+        SOUTH(      "S",   "South"              , 180.0),
+        SOUTH_SW(   "SSW", "South South West"   , 202.5),
+        SOUTH_W(    "SW",  "South West"         , 225.0),
+
+        WEST_SW(    "WSW", "West South West"    , 247.5),
+        WEST(       "W",   "West"               , 270.0),
+        WEST_NW(    "WNW", "West North West"    , 292.5),
+
+        NORTH_W(    "NW",  "North West"         , 315.0),
+        NORTH_NW(   "NNW", "North North West"   , 337.5),
+        NORTH2(     "N",   "North"              , 360.0);
+
+        private String shortDisplayString;
+        private String longDisplayString;
+        private double degrees;
+
+        private CardinalDirection(String shortDisplayString, String longDisplayString, double degrees)
+        {
+            this.shortDisplayString = shortDisplayString;
+            this.longDisplayString = longDisplayString;
+            this.degrees = degrees;
+        }
+
+        public static CardinalDirection getDirection(double degrees)
+        {
+            if (degrees > 360)
+                degrees = degrees % 360;
+
+            while (degrees < 0)
+                degrees += 360;
+
+            CardinalDirection result = NORTH;
+            double least = Double.MAX_VALUE;
+            for (CardinalDirection direction : values())
+            {
+                double directionDegrees = direction.getDegress();
+                double diff = Math.abs(directionDegrees - degrees);
+                if (diff < least)
+                {
+                    least = diff;
+                    result = direction;
+                }
+            }
+            return result;
+        }
+
+        public String toString()
+        {
+            return shortDisplayString;
+        }
+
+        public double getDegress()
+        {
+            return degrees;
+        }
+
+        public String getShortDisplayString()
+        {
+            return shortDisplayString;
+        }
+
+        public String getLongDisplayString()
+        {
+            return longDisplayString;
+        }
+
+        public void setDisplayStrings(String shortDisplayString, String longDisplayString)
+        {
+            this.shortDisplayString = shortDisplayString;
+            this.longDisplayString = longDisplayString;
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            String[] modes_short = context.getResources().getStringArray(R.array.directions_short);
+            String[] modes_long = context.getResources().getStringArray(R.array.directions_long);
+            if (modes_long.length != modes_short.length)
+            {
+                Log.e("initDisplayStrings", "The size of directions_short and solarevents_long DOES NOT MATCH!");
+                return;
+            }
+
+            CardinalDirection[] values = values();
+            if (modes_long.length != values.length)
+            {
+                Log.e("initDisplayStrings", "The size of directions_long and SolarEvents DOES NOT MATCH!");
+                return;
+            }
+
+            for (int i = 0; i < values.length; i++)
+            {
+                values[i].setDisplayStrings(modes_short[i], modes_long[i]);
+            }
+        }
     }
 
     /**
@@ -1238,4 +1352,5 @@ public class SuntimesUtils
             // TODO
         //}
     }
+
 }
