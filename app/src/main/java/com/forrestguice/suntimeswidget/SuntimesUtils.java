@@ -130,7 +130,8 @@ public class SuntimesUtils
         strHours = context.getString(R.string.delta_hours);
         strMinutes = context.getString(R.string.delta_minutes);
         strSeconds = context.getString(R.string.delta_seconds);
-        //strDegrees = context.getString(R.string.degrees);  // TODO
+
+        strDegreesFormat = context.getString(R.string.degrees_format);
 
         strTimeDeltaFormat = context.getString(R.string.delta_format);
         strTimeVeryShortFormat12 = context.getString(R.string.time_format_12hr_veryshort);
