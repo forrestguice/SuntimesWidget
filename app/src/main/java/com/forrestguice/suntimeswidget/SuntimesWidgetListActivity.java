@@ -449,7 +449,8 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                     } else {
                         SuntimesRiseSetData data0 = new SuntimesRiseSetData(context, id);
                         widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
-                        widgetType = context.getString((widgetClass == SuntimesWidget1.class ? R.string.app_name_widget1 : R.string.app_name_widget0));
+                        widgetType = context.getString((widgetClass == SuntimesWidget1.class ? R.string.app_name_widget1 :
+                                                       (widgetClass == SuntimesWidget2.class) ? R.string.app_name_widget2 : R.string.app_name_widget0));
                         data = data0;
                     }
                     items.add(createWidgetListItem(context, id, widgetManager, data, widgetTitle, widgetType));
@@ -469,6 +470,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget0.class, titlePattern0));
             items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget0_2x1.class, titlePattern0));
             items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget1.class, titlePattern0));
+            items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget2.class, titlePattern0));
             items.addAll(createWidgetListItems(context, widgetManager, SolsticeWidget0.class, titlePattern0));
 
             String titlePattern1 = context.getString(R.string.configLabel_widgetList_itemTitlePattern1);
