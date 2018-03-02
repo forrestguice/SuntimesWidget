@@ -41,6 +41,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
         hideOption1x1LayoutMode();
         showTimeMode(false);
         showOptionShowNoon(false);
+        showOptionLabels(true);
     }
 
     @Override
@@ -67,6 +68,12 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         SuntimesWidget2.updateAppWidget(context, appWidgetManager, appWidgetId);
+    }
+
+    @Override
+    protected void loadShowLabels(Context context)
+    {
+        checkbox_showLabels.setChecked(WidgetSettings.loadShowLabelsPref(context, appWidgetId, true));
     }
 
 }

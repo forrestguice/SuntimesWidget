@@ -78,7 +78,7 @@ public class SunExtLayout_1x1_0 extends SunExtLayout
                                            : SuntimesUtils.createColorSpan(elevationString, elevationString, highlightColor));
         views.setTextViewText(R.id.info_sun_elevation_current, elevation);
 
-        boolean showLabels = true;  // TODO: from settings
+        boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         int visibility = (showLabels ? View.VISIBLE : View.GONE);
         views.setViewVisibility(R.id.info_sun_azimuth_current_label, visibility);
         views.setViewVisibility(R.id.info_sun_elevation_current_label, visibility);
