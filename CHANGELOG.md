@@ -1,5 +1,10 @@
 ### ~
 
+###
+* adds "sun position" overflow menu item; shows lightmap dialog.
+* adds 1x1 sun position widget; shows azimuth and elevation angles (#169).
+* adds sun azimuth and elevation angles to lightmap dialog (#169).
+
 ### v0.7.1 (2018-02-28)
 * fixes bug #120 (widget icons don't use theme icons); now works for all api versions.
 * enhances the widget list; adds appWidgetID label to the list and widget (re)configure activity.
