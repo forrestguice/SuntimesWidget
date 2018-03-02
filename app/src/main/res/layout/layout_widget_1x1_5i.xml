@@ -41,7 +41,9 @@
 
             <TextView style="@style/SunsetTimeTextView"
                 android:id="@+id/info_sun_azimuth_current"
-                android:text="" tools:text="12:01" />
+                android:layout_marginLeft="4dp" android:layout_marginStart="4dp"
+                android:layout_marginRight="4dp" android:layout_marginEnd="4dp"
+                android:text="" tools:text="280" />
 
         </LinearLayout>
 
@@ -49,12 +51,14 @@
             android:orientation="horizontal">
 
             <TextView style="@style/SunsetTimeTextView"
-                android:id="@+id/info_sun_azimuth_elevation_label"
+                android:id="@+id/info_sun_elevation_current_label"
                 android:text="Elevation:" android:labelFor="@+id/info_sun_azimuth_current"
                 android:gravity="start" />
 
             <TextView style="@style/SunsetTimeTextView"
                 android:id="@+id/info_sun_elevation_current"
+                android:layout_marginLeft="4dp" android:layout_marginStart="4dp"
+                android:layout_marginRight="4dp" android:layout_marginEnd="4dp"
                 android:text="" tools:text="48" />
 
         </LinearLayout>
