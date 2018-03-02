@@ -166,6 +166,7 @@
     <string name="configLabel_appearance">Opciones de apariencia</string>           <!-- group title -->
     <string name="configLabel_appearance_theme">Tema:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Crece con espacio disponible (reescalable)</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_showLabels">Show Labels</string>          <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_appearance_showTitle">Mostrar título</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Título:</string>              <!-- edittext label -->
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
