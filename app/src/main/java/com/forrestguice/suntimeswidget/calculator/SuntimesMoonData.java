@@ -99,12 +99,16 @@ public class SuntimesMoonData extends SuntimesData
     }
 
     /**
-     * result: illumination today
+     * result: illumination today (at lunar noon)
      */
     private double moonIlluminationToday;
     public double getMoonIlluminationToday()
     {
         return moonIlluminationToday;
+    }
+    public double getMoonIlluminationNow()
+    {
+        return (calculator != null ? calculator.getMoonIlluminationForDate(now()) : -1);
     }
 
     /**

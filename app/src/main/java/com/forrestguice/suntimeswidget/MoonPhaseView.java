@@ -41,6 +41,7 @@ public class MoonPhaseView extends LinearLayout
     private SuntimesUtils utils = new SuntimesUtils();
     private boolean isRtl = false;
     private boolean centered = false;
+    private boolean illumAtNoon = false;
 
     private LinearLayout content;
     private TextView phaseText, illumText;
@@ -149,8 +150,9 @@ public class MoonPhaseView extends LinearLayout
                 }*/
             }
 
+            double illumination = (illumAtNoon ? data.getMoonIlluminationToday() : data.getMoonIlluminationNow());
             NumberFormat percentage = NumberFormat.getPercentInstance();
-            String illum = percentage.format(data.getMoonIlluminationToday());
+            String illum = percentage.format(illumination);
             String illumNote = context.getString(R.string.moon_illumination, illum);
             SpannableString illumNoteSpan = SuntimesUtils.createColorSpan(illumNote, illum, noteColor);
             illumText.setText(illumNoteSpan);
