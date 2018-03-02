@@ -62,12 +62,12 @@ public class MoonPhaseView extends LinearLayout
 
     private void applyAttributes(Context context, AttributeSet attrs)
     {
-        /**TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.EquinoxView, 0, 0);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MoonPhaseView, 0, 0);
         try {
-            setMinimized(a.getBoolean(R.styleable.EquinoxView_minimized, false));
+            illumAtNoon = a.getBoolean(R.styleable.MoonPhaseView_illuminationAtLunarNoon, illumAtNoon);
         } finally {
             a.recycle();
-        }*/
+        }
     }
 
     private void init(Context context, AttributeSet attrs)

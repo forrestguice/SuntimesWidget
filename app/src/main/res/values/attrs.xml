@@ -60,4 +60,8 @@
         <attr name="minimized" format="boolean" />
     </declare-styleable>
 
+    <declare-styleable name="MoonPhaseView">
+        <attr name="illuminationAtLunarNoon" format="boolean" />
+    </declare-styleable>
+
 </resources>
