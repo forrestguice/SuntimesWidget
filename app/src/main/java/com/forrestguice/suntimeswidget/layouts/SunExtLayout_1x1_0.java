@@ -68,7 +68,7 @@ public class SunExtLayout_1x1_0 extends SunExtLayout
         SuntimesCalculator calculator = dataset.dataActual.calculator();
         SuntimesCalculator.SunPosition sunPosition = calculator.getSunPosition(dataset.now());
 
-        String azimuthString = utils.formatAsDegrees(sunPosition.azimuth, 2);
+        String azimuthString = utils.formatAsDirection(sunPosition.azimuth, 2);
         CharSequence azimuth = (boldTime ? SuntimesUtils.createBoldColorSpan(azimuthString, azimuthString, highlightColor)
                                          : SuntimesUtils.createColorSpan(azimuthString, azimuthString, highlightColor));
         views.setTextViewText(R.id.info_sun_azimuth_current, azimuth);

@@ -678,6 +678,7 @@
 
     <!-- cardinal directions -->
     <string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
+    <string name="direction_format"><xliff:g id="degrees" example="180°">%1$s</xliff:g> <xliff:g id="directions_short" example="S">%2$s</xliff:g></string>  <!-- e.g. 180°S -->
     <string-array name="directions_short">  <!-- one-to-one with directions_long -->   <!-- TODO: i18n -->
         <item>N</item>
         <item>NNE</item>

@@ -172,7 +172,7 @@ public class LightMapDialog extends DialogFragment
             SuntimesCalculator.SunPosition currentPosition = (calculator != null ? calculator.getSunPosition(data.now()) : null);
             if (currentPosition != null)
             {
-                String azimuthString = utils.formatAsDegrees(currentPosition.azimuth, 2);
+                String azimuthString = utils.formatAsDirection(currentPosition.azimuth, 2);
                 sunAzimuth.setText(azimuthString);
 
                 String elevationString = utils.formatAsDegrees(currentPosition.elevation, 2);
@@ -189,17 +189,17 @@ public class LightMapDialog extends DialogFragment
             SuntimesRiseSetData riseSetData = data.dataActual;
             Calendar riseTime = (riseSetData != null ? riseSetData.sunriseCalendarToday() : null);
             SuntimesCalculator.SunPosition positionRising = (riseTime != null && calculator != null ? calculator.getSunPosition(riseTime) : null);
-            sunAzimuthRising.setText(positionRising != null ? utils.formatAsDegrees(positionRising.azimuth, 2) : "");
+            sunAzimuthRising.setText(positionRising != null ? utils.formatAsDirection(positionRising.azimuth, 2) : "");
 
             Calendar setTime = (riseSetData != null ? riseSetData.sunsetCalendarToday() : null);
             SuntimesCalculator.SunPosition positionSetting = (setTime != null && calculator != null ? calculator.getSunPosition(setTime) : null);
-            sunAzimuthSetting.setText(positionSetting != null ? utils.formatAsDegrees(positionSetting.azimuth, 2) : "");
+            sunAzimuthSetting.setText(positionSetting != null ? utils.formatAsDirection(positionSetting.azimuth, 2) : "");
 
             SuntimesRiseSetData noonData = data.dataNoon;
             Calendar noonTime = (noonData != null ? noonData.sunriseCalendarToday() : null);
             SuntimesCalculator.SunPosition positionAtNoon = (noonTime != null && calculator != null ? calculator.getSunPosition(noonTime) : null);
             sunElevationAtNoon.setText(positionAtNoon != null ? utils.formatAsDegrees(positionAtNoon.elevation, 2) : "");
-            sunAzimuthAtNoon.setText(positionAtNoon != null ? utils.formatAsDegrees(positionAtNoon.azimuth, 2) : "");
+            sunAzimuthAtNoon.setText(positionAtNoon != null ? utils.formatAsDirection(positionAtNoon.azimuth, 2) : "");
 
             showSunPosition(currentPosition != null);
         }

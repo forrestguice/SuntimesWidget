@@ -93,7 +93,8 @@ public class SuntimesUtils
     private static String strMinutes = "m";
     private static String strSeconds = "s";
     private static String strDegreesFormat = "%1$s\u00B0";
-    private static String strTimeDeltaFormat = "%1$s" + strEmpty + "%2$s";
+    private static String strDirectionFormat = "%1$s %2$s";
+    private static String strTimeDeltaFormat = "%1$s"  + strEmpty + "%2$s";
     private static String strTimeShortFormat12 = "h:mm\u00A0a";
     private static String strTimeShortFormat12s = "h:mm:ss\u00A0a";
     private static String strTimeVeryShortFormat12 = "h:mm";
@@ -105,6 +106,8 @@ public class SuntimesUtils
     private static String strTimeLoading = "...";
     private static boolean is24 = true;
     private static boolean initialized = false;
+
+    private static String[] strDirections = {"N", };
 
     private static String strDateYearFormat = "yyyy";
     private static String strDateShortFormat = "MMMM d";
@@ -134,6 +137,7 @@ public class SuntimesUtils
         strSeconds = context.getString(R.string.delta_seconds);
 
         strDegreesFormat = context.getString(R.string.degrees_format);
+        strDirectionFormat = context.getString(R.string.direction_format);
 
         strTimeDeltaFormat = context.getString(R.string.delta_format);
         strTimeVeryShortFormat12 = context.getString(R.string.time_format_12hr_veryshort);
@@ -785,6 +789,12 @@ public class SuntimesUtils
         formatter.setMinimumFractionDigits(places);
         formatter.setMaximumFractionDigits(places);
         return String.format(strDegreesFormat, formatter.format(value));
+    }
+    public String formatAsDirection(double degreeValue, int places)
+    {
+        String degreeString = formatAsDegrees(degreeValue, places);
+        CardinalDirection direction = CardinalDirection.getDirection(degreeValue);
+        return String.format(strDirectionFormat, degreeString, direction.getShortDisplayString());
     }
 
     /**
