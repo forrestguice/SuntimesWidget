@@ -31,12 +31,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
+        <TextView android:id="@+id/sundialog_title" style="@style/TableHeadTextView"
+            android:text="@string/configAction_sunDialog"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="0dp"
+            android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
         <!-- azimuth -->
-        <TextView android:id="@+id/info_sun_azimuth_current_label"
+        <TextView android:id="@+id/info_sun_azimuth_current_label" style="@style/SunsetTimeTextView"
             android:labelFor="@+id/info_sun_azimuth_current"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sundialog_title"  android:layout_marginTop="6dp"
             android:text="@string/widgetLabel_azimuth" />
 
         <TextView android:id="@+id/info_sun_azimuth_current" style="@style/SunsetTimeTextView"
@@ -44,7 +51,7 @@
             app:layout_constraintStart_toEndOf="@+id/info_sun_azimuth_current_label"
             app:layout_constraintTop_toTopOf="@+id/info_sun_azimuth_current_label"
             app:layout_constraintBottom_toBottomOf="@+id/info_sun_azimuth_current_label"
-            android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+            android:layout_marginLeft="12dp" android:layout_marginStart="12dp"
             tools:text="147°" />
 
         <TextView android:id="@+id/info_sun_azimuth_rising" style="@style/SunsetTimeTextView"
@@ -72,7 +79,7 @@
             tools:text="147°" />
 
         <!-- elevation -->
-        <TextView android:id="@+id/info_sun_elevation_current_label"
+        <TextView android:id="@+id/info_sun_elevation_current_label" style="@style/SunsetTimeTextView"
             android:labelFor="@+id/info_sun_elevation_current"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -85,7 +92,7 @@
             app:layout_constraintStart_toEndOf="@+id/info_sun_elevation_current_label"
             app:layout_constraintTop_toTopOf="@+id/info_sun_elevation_current_label"
             app:layout_constraintBottom_toBottomOf="@+id/info_sun_elevation_current_label"
-            android:layout_margin="8dp"
+            android:layout_marginLeft="12dp" android:layout_marginStart="12dp"
             tools:text="47°" />
 
         <TextView android:id="@+id/info_sun_elevation_atnoon" style="@style/SunsetTimeTextView"
