@@ -145,7 +145,7 @@
     <string name="configAction_reconfigWidget">Reconfigurer le widget</string>      <!-- used as title when reconfiguring -->
     <string name="configLabel_title0">Suntimes Widget</string>                  <!-- used as title when adding -->
     <string name="configLabel_title1">Flippable Widget</string>                 <!-- used as title when adding -->
-    <string name="configLabel_title2">Solstice Widget</string>                  <!-- used as title when adding -->  <!-- TODO -->
+    <string name="configLabel_solsticewidget0">Solstice Widget</string>                  <!-- used as title when adding -->  <!-- TODO -->
 
     <!-- Widget Setting: general -->
     <string name="configLabel_general">Paramètres généraux</string>                <!-- group title -->
@@ -689,7 +689,7 @@
     <string name="app_name">Suntimes</string>
     <string name="app_name_widget0">Suntimes Widget</string>
     <string name="app_name_widget1">Suntimes Widget (flippable)</string>
-    <string name="app_name_widget2">Suntimes Solstice Widget</string>  <!-- TODO -->
+    <string name="app_name_solsticewidget0">Suntimes Solstice Widget</string>  <!-- TODO -->
     <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Affiche les heures de lever et coucher de soleil.</string>  <!-- TODO: needs update to mention the moon. default changed to -> "Displays sunlight and moonlight times" -->
     <string name="app_support_url"><![CDATA[

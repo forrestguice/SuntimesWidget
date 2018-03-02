@@ -435,7 +435,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                     {
                         SuntimesEquinoxSolsticeData data0 =  new SuntimesEquinoxSolsticeData(context, id);
                         widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
-                        widgetType = context.getString(R.string.app_name_widget2);
+                        widgetType = context.getString(R.string.app_name_solsticewidget0);
                         data = data0;
 
                     } else if (widgetClass == MoonWidget0.class || widgetClass == MoonWidget0_2x1.class || widgetClass == MoonWidget0_3x1.class) {

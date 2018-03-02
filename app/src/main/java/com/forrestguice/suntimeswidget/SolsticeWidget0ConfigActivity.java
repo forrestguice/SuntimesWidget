@@ -43,7 +43,7 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
     protected void initViews( Context context )
     {
         super.initViews(context);
-        setConfigActivityTitle(getString(R.string.configLabel_title2));
+        setConfigActivityTitle(getString(R.string.configLabel_solsticewidget0));
 
         hideOptionCompareAgainst();
         hideOption1x1LayoutMode();
