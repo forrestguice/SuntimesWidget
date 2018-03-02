@@ -21,6 +21,8 @@ package com.forrestguice.suntimeswidget;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
@@ -37,6 +39,8 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
         setConfigActivityTitle(getString(R.string.configLabel_title2));
         hideOptionCompareAgainst();
         hideOption1x1LayoutMode();
+        showTimeMode(false);
+        showOptionShowNoon(false);
     }
 
     @Override
@@ -50,6 +54,13 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     {
         return WidgetSettings.ActionMode.ONTAP_UPDATE;
     }
+
+    @Override
+    protected SuntimesCalculatorDescriptor[] supportingCalculators()
+    {
+        return SuntimesCalculatorDescriptor.values(requiredFeatures);
+    }
+    private static int[] requiredFeatures = new int[] { SuntimesCalculator.FEATURE_POSITION };
 
     @Override
     protected void updateWidget(Context context)
