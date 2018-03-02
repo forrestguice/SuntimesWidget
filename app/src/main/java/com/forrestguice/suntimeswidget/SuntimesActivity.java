@@ -968,6 +968,10 @@ public class SuntimesActivity extends AppCompatActivity
                 showEquinoxDialog();
                 return true;
 
+            case R.id.action_sunposition:
+                showLightMapDialog();
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
