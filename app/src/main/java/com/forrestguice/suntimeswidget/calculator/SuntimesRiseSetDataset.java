@@ -40,7 +40,17 @@ public class SuntimesRiseSetDataset
 
     public SuntimesRiseSetDataset(Context context)
     {
-        dataActual = new SuntimesRiseSetData(context, AppWidgetManager.INVALID_APPWIDGET_ID);
+        init(context, AppWidgetManager.INVALID_APPWIDGET_ID);
+    }
+
+    public SuntimesRiseSetDataset(Context context, int appWidgetID)
+    {
+        init(context, appWidgetID);
+    }
+
+    private void init(Context context, int appWidgetID)
+    {
+        dataActual = new SuntimesRiseSetData(context, appWidgetID);
         dataActual.setCompareMode(WidgetSettings.CompareMode.TOMORROW);
         dataActual.setTimeMode(WidgetSettings.TimeMode.OFFICIAL);
 
