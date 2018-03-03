@@ -736,7 +736,7 @@
     ]]></string>
     <string name="help_general_daylength"><![CDATA[
         <b>Długość dnia:</b> czas pomiędzy wschodem i zachodem Słońca.<br/><br/>
-        <b>Okres użytecznego światła:</b> czas pomiędzy cywilnym świtem i zmierzchem.</br>
+        <b>Okres użytecznego światła:</b> czas pomiędzy cywilnym świtem i zmierzchem.</br></br>
     ]]>
     </string>
     <string name="help_general_goldhour"><![CDATA[
