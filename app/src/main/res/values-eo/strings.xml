@@ -158,7 +158,7 @@
     <string name="configLabel_appearance">Agordoj de aspekto</string>           <!-- group title -->
     <string name="configLabel_appearance_theme">Etoso:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Etendigi al disponebla spaco (regrandigebla)</string>  <!-- checkbox label -->
-    <string name="configLabel_appearance_showLabels">Show Labels</string>          <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_appearance_showLabels">Montri etikedojn</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_showTitle">Montri titolon</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Titolo:</string>              <!-- edittext label -->
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
