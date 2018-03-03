@@ -1,1 +1,1 @@
-Wyświetla czasy wschodu i zachodu Słońca i Księżyca.
+Wyświetla czasy świecenia Słońca i Księżyca.
