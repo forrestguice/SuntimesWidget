@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2017-2018 Forrest Guice
+    This file is part of SuntimesWidget.
+
+    SuntimesWidget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SuntimesWidget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Title Area -->
+        <TextView android:labelFor="@+id/edit_titleSize"
+            android:id="@+id/editLabel_titleSize"
+            style="@style/SizeEditLabel"
+            android:paddingStart="8dp" android:paddingEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBaseline_toBaselineOf="@+id/edit_titleSize"
+            android:text="@string/configLabel_themeSizeTitle" />
+
+        <EditText
+            android:id="@+id/edit_titleSize" style="@style/SizeEdit"
+            android:layout_width="0dp"
+            android:text="" android:hint="@string/configHint_themeSizeTitle" tools:text="14"
+            app:layout_constraintStart_toEndOf="@+id/editLabel_titleSize"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <CheckBox
+            android:id="@+id/check_titleBold"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/layout_titleColor"
+            app:layout_constraintTop_toTopOf="@+id/edit_titleSize"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_titleSize"
+            android:text="@string/configLabel_themeBoldTitle" />
+
+        <LinearLayout
+            android:id="@+id/layout_titleColor"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/edit_titleSize"
+            app:layout_constraintTop_toTopOf="@+id/edit_titleSize"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_titleSize">
+
+            <TextView android:labelFor="@+id/edit_titleColor"
+                android:id="@+id/editLabel_titleColor"
+                style="@style/ColorEditLabel"
+                android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                android:nextFocusUp="@+id/edit_titleSize"
+                android:nextFocusLeft="@+id/editLabel_titleSize"
+                android:nextFocusRight="@+id/editLabel_suffixColor"
+                android:nextFocusDown="@+id/editLabel_textColor"
+                android:nextFocusForward="@+id/editLabel_suffixColor"
+
+                android:text="@string/configLabel_themeColorTitle"
+                tools:ignore="UnusedAttribute" />
+
+            <EditText
+                android:id="@+id/edit_titleColor"
+                style="@style/ColorEdit" android:visibility="gone"
+                android:fontFamily="monospace"
+
+                android:nextFocusUp="@+id/edit_titleSize"
+                android:nextFocusLeft="@+id/editLabel_titleSize"
+                android:nextFocusRight="@+id/editLabel_suffixColor"
+                android:nextFocusDown="@+id/editLabel_textColor"
+                android:nextFocusForward="@+id/editLabel_suffixColor"
+
+                android:text="" android:hint="@string/configHint_themeColorTitle"
+                tools:ignore="UnusedAttribute" />
+
+            <ImageButton
+                android:id="@+id/editButton_titleColor"
+                style="@style/ColorEditButton"
+                android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                android:contentDescription="@string/configLabel_themeColorTitle" />
+
+        </LinearLayout>
+
+        <!-- Text Area -->
+        <TextView android:labelFor="@+id/edit_textSize"
+            android:id="@+id/editLabel_textSize"
+            style="@style/SizeEditLabel"
+            android:paddingStart="8dp" android:paddingEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBaseline_toBaselineOf="@+id/edit_textSize"
+            android:text="@string/configLabel_themeSizeText"/>
+
+        <EditText
+            android:id="@+id/edit_textSize"
+            style="@style/SizeEdit"
+            android:layout_width="0dp"
+            android:text="" android:hint="@string/configHint_themeSizeText" tools:text="10"
+            app:layout_constraintStart_toEndOf="@+id/editLabel_textSize"
+            app:layout_constraintTop_toBottomOf="@+id/edit_titleSize"
+            tools:layout_editor_absoluteX="197dp"/>
+
+        <LinearLayout
+            android:id="@+id/layout_textColor"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/edit_textSize"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_textSize"
+            app:layout_constraintStart_toStartOf="@+id/layout_titleColor">
+
+            <TextView android:labelFor="@+id/edit_textColor"
+                android:id="@+id/editLabel_textColor"
+                style="@style/ColorEditLabel"
+                android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                android:nextFocusUp="@+id/editLabel_titleColor"
+                android:nextFocusLeft="@+id/editLabel_titleColor"
+                android:nextFocusRight="@+id/editLabel_timeColor"
+                android:nextFocusDown="@+id/editLabel_sunriseColor"
+                android:nextFocusForward="@+id/editLabel_timeColor"
+
+                android:text="@string/configLabel_themeColorText"
+                tools:ignore="UnusedAttribute" />
+
+            <EditText
+                android:id="@+id/edit_textColor"
+                style="@style/ColorEdit" android:visibility="gone"
+                android:fontFamily="monospace"
+
+                android:nextFocusUp="@+id/editLabel_titleColor"
+                android:nextFocusLeft="@+id/editLabel_titleColor"
+                android:nextFocusRight="@+id/editLabel_timeColor"
+                android:nextFocusDown="@+id/editLabel_sunriseColor"
+                android:nextFocusForward="@+id/editLabel_timeColor"
+
+                android:text="" android:hint="@string/configHint_themeColorText"
+                tools:ignore="UnusedAttribute" />
+
+            <ImageButton
+                android:id="@+id/editButton_textColor"
+                style="@style/ColorEditButton"
+                android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                android:contentDescription="@string/configLabel_themeColorText" />
+
+        </LinearLayout>
+
+        <!-- Time Area -->
+        <TextView android:labelFor="@+id/edit_timeSize"
+            android:id="@+id/editLabel_timeSize"
+            style="@style/SizeEditLabel"
+            android:paddingStart="8dp" android:paddingEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBaseline_toBaselineOf="@+id/edit_timeSize"
+            android:text="@string/configLabel_themeSizeTime" />
+
+        <EditText
+            android:id="@+id/edit_timeSize"
+            style="@style/SizeEdit"
+            android:layout_width="0dp"
+            android:text="" android:hint="@string/configHint_themeSizeTime" tools:text="12"
+            app:layout_constraintStart_toEndOf="@+id/editLabel_timeSize"
+            app:layout_constraintTop_toBottomOf="@+id/edit_textSize"
+            tools:layout_editor_absoluteX="81dp"/>
+
+        <CheckBox android:id="@+id/check_timeBold"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/layout_timeColor"
+            app:layout_constraintTop_toTopOf="@+id/edit_timeSize"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_timeSize"
+            android:text="@string/configLabel_themeBoldTime" />
+
+        <LinearLayout
+            android:id="@+id/layout_timeColor"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/edit_timeSize"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_timeSize"
+            app:layout_constraintStart_toStartOf="@+id/layout_titleColor">
+
+            <TextView android:labelFor="@+id/edit_timeColor"
+                android:id="@+id/editLabel_timeColor"
+                style="@style/ColorEditLabel"
+                android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                android:nextFocusUp="@+id/editLabel_titleColor"
+                android:nextFocusLeft="@+id/editLabel_timeColor"
+                android:nextFocusRight="@+id/editLabel_sunriseColor"
+                android:nextFocusDown="@+id/editLabel_sunriseColor"
+                android:nextFocusForward="@+id/editLabel_sunriseColor"
+
+                android:text="@string/configLabel_themeColorTime"
+                tools:ignore="UnusedAttribute" />
+
+            <EditText
+                android:id="@+id/edit_timeColor"
+                style="@style/ColorEdit" android:visibility="gone"
+                android:fontFamily="monospace"
+
+                android:nextFocusUp="@+id/editLabel_titleColor"
+                android:nextFocusLeft="@+id/editLabel_timeColor"
+                android:nextFocusRight="@+id/editLabel_sunriseColor"
+                android:nextFocusDown="@+id/editLabel_sunriseColor"
+                android:nextFocusForward="@+id/editLabel_sunriseColor"
+
+                android:text="" android:hint="@string/configHint_themeColorTime"
+                tools:ignore="UnusedAttribute" />
+
+            <ImageButton
+                android:id="@+id/editButton_timeColor"
+                style="@style/ColorEditButton"
+                android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                android:contentDescription="@string/configLabel_themeColorTime" />
+
+        </LinearLayout>
+
+
+        <!-- Suffix Area -->
+        <TextView android:labelFor="@+id/edit_suffixSize"
+            android:id="@+id/editLabel_suffixSize"
+            style="@style/SizeEditLabel"
+            android:paddingStart="8dp" android:paddingEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBaseline_toBaselineOf="@+id/edit_suffixSize"
+            android:text="@string/configLabel_themeSizeSuffix" />
+
+        <EditText
+            android:id="@+id/edit_suffixSize"
+            style="@style/SizeEdit"
+            android:layout_width="0dp"
+            android:text="" android:hint="@string/configHint_themeSizeSuffix" tools:text="8"
+            app:layout_constraintStart_toEndOf="@+id/editLabel_suffixSize"
+            app:layout_constraintTop_toBottomOf="@+id/edit_timeSize"
+            tools:layout_editor_absoluteX="210dp"/>
+
+        <LinearLayout
+            android:id="@+id/layout_suffixColor"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/edit_suffixSize"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_suffixSize"
+            app:layout_constraintStart_toStartOf="@+id/layout_titleColor">
+
+            <TextView android:labelFor="@+id/edit_suffixColor"
+                android:id="@+id/editLabel_suffixColor"
+                style="@style/ColorEditLabel"
+                android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                android:nextFocusUp="@+id/edit_titleSize"
+                android:nextFocusLeft="@+id/editLabel_titleColor"
+                android:nextFocusRight="@+id/editLabel_textColor"
+                android:nextFocusDown="@+id/editLabel_textColor"
+                android:nextFocusForward="@+id/editLabel_textColor"
+
+                android:text="@string/configLabel_themeColorSuffix"
+                tools:ignore="UnusedAttribute" />
+
+            <EditText
+                android:id="@+id/edit_suffixColor"
+                style="@style/ColorEdit" android:visibility="gone"
+                android:fontFamily="monospace"
+
+                android:nextFocusUp="@+id/edit_titleSize"
+                android:nextFocusLeft="@+id/editLabel_titleColor"
+                android:nextFocusRight="@+id/editLabel_textColor"
+                android:nextFocusDown="@+id/editLabel_textColor"
+                android:nextFocusForward="@+id/editLabel_textColor"
+
+                android:text="" android:hint="@string/configHint_themeColorSuffix"
+                tools:ignore="UnusedAttribute" />
+
+            <ImageButton
+                android:id="@+id/editButton_suffixColor"
+                style="@style/ColorEditButton"
+                android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                android:contentDescription="@string/configLabel_themeColorSuffix" />
+
+        </LinearLayout>
+
+
+
+
+
+
+
+    </android.support.constraint.ConstraintLayout>
+
+</merge>

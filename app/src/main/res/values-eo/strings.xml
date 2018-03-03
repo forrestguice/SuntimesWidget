@@ -158,6 +158,7 @@
     <string name="configLabel_appearance">Agordoj de aspekto</string>           <!-- group title -->
     <string name="configLabel_appearance_theme">Etoso:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Etendigi al disponebla spaco (regrandigebla)</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_showLabels">Montri etikedojn</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_showTitle">Montri titolon</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Titolo:</string>              <!-- edittext label -->
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
@@ -227,6 +228,7 @@
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Fari nenion</string>           <!-- setting -->
+    <string name="actionMode_update">Aktualigi fenestraĵon</string>           <!-- setting -->
     <string name="actionMode_config">Reagordi fenestraĵon</string>      <!-- setting -->
     <string name="actionMode_launchActivity">Ekigi aplikaĵon</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Baskuli vidon</string>      <!-- setting -->
@@ -337,6 +339,7 @@
     <string name="edittheme_error_displaytext">Montrata teksto ne estu malplena.</string>  <!-- error hint (display text is empty) -->
     <string name="edittheme_error_textsize_min">Grando estu plena nombro &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->
     <string name="edittheme_error_textsize_max">Grando estu plena nombro &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->
+    <string name="edittheme_flag_default">norma</string>  <!-- content description -->
 
     <string name="deletetheme_dialog_title">Forigi etoson</string>        <!-- dialog title -->
     <string name="deletetheme_dialog_message">Ĉu vi certe volas forigi <xliff:g id="themeName">%1$s</xliff:g>?</string>   <!-- dialog msg -->
@@ -366,6 +369,10 @@
 
     <string name="configLabel_themeColorMoonrise">Koloro de lunleviĝo:</string> <!-- color label -->
     <string name="configLabel_themeColorMoonset">Koloro de lunsubiro:</string>  <!-- color label -->
+    <string name="configLabel_themeColorMoonWaxing">Koloro de kreskanta:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaning">Koloro de malkreskanta:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonFull">Koloro de Plenluno:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonNew">Koloro de Novluno:</string> <!-- color label -->
 
     <string name="configLabel_themeColorSunrise">Koloro de sunleviĝo:</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
@@ -395,12 +402,16 @@
 
     <string name="configLabel_themeSizeTitle">Grando de titolo:</string>  <!-- edit label -->
     <string name="configHint_themeSizeTitle">14</string>                 <!-- edit hint -->
-    
+
+    <string name="configLabel_themeBoldTitle">Grasa</string>          <!-- checkbox label -->
+
     <string name="configLabel_themeSizeText">Grando de teksto:</string>    <!-- edit label -->
     <string name="configHint_themeSizeText">10</string>                  <!-- edit hint -->
 
     <string name="configLabel_themeSizeTime">Grando de tempo:</string>    <!-- edit label -->
     <string name="configHint_themeSizeTime">12</string>                  <!-- edit hint -->
+
+    <string name="configLabel_themeBoldTime">Grasa</string>          <!-- checkbox label -->
 
     <string name="configLabel_themeSizeSuffix">Grando de sufikso:</string> <!-- edit label -->
     <string name="configHint_themeSizeSuffix">8</string>                  <!-- edit hint -->
@@ -728,6 +739,7 @@
                 * <b>%m</b> por reĝimo (mallonge) (ekz. solstico) <br/>
                 * <b>%M</b> por reĝimo (longe) (ekz. vintra sunekstremo) <br/>
          ]]>
+    </string>
     <string name="help_general_timeMode"><![CDATA[
           <b>Reala sunleviĝo/sunsubiro:</b> la Suno estas sur la horizonto, tio ĉi estas proksimuma tempo de sunleviĝo aŭ sunsubiro.<br/><br/>
           <b>Civila krepusko:</b> la Suno estas 6 gradoj sub la horizonto, la plej helaj steloj estas videblaj. Estas sufiĉe da lumo por fari plejparte da agadoj eksterdome sen artefarita prilumado.<br/><br/>
@@ -735,7 +747,7 @@
           <b>Astronomia krepusko:</b> la Suno estas 18 gradoj sub la horizonto. Preskaŭ nigra nokto.<br/>
     ]]></string>
     <string name="help_general_daylength"><![CDATA[
-        <b>Longo de la tago:</b> kvanto da tempo inter sunleviĝo kaj sunsubiro.<br/><br/>
+        <b>Longo de tago:</b> kvanto da tempo inter sunleviĝo kaj sunsubiro.<br/><br/>
         <b>Kiom da uzebla lumo:</b> kvanto da tempo inter civila sunleviĝo kaj civila sunsubiro.</br>
     ]]>
     </string>

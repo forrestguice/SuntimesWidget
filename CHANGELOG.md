@@ -1,5 +1,23 @@
 ### ~
 
+### v0.7.1 (2018-02-28)
+* fixes bug #120 (widget icons don't use theme icons); now works for all api versions.
+* enhances the widget list; adds appWidgetID label to the list and widget (re)configure activity.
+* adds widget ontap action; "update widget" to manually trigger widget updates.
+* fixes (workaround) missing/deleted update alarms; opening the widget list now reschedules alarms (that may be missing / deleted (e.g. forced stop)).
+* fixes widget update when a theme is modified; all widgets sharing that theme are updated.
+* adds "themes" menu item to widgetlist activity; launches the theme editor (w/out navigating through widget config).
+* adds "about" menu item to theme selector activity.
+* fixes widget list scroll; state preserved on orientation change.
+* fixes theme selector scroll; automatically scroll to the selected item.
+* fixes theme selector ordering; sort items alphabetically, grid selector shows defaults first.
+* enhances the theme selector; grid selector item layout shows more colors.
+* enhances the theme selector; toggle the preview background (shows home screen wallpaper).
+* enhances the theme editor; flip between multiple previews (adds moon widget previews).
+* adds to theming; moon phase colors; the new moon, waxing, waning, and full moon colors are now themeable.
+* adds to theming; "bold" title option, "bold" time option.
+
+### v0.7.0 (2018-02-17)
 * adds a 3x1 moon widget (showing major phases) (#52).
 * adds a 2x1 moon widget (showing rise/set + phase + illumination) (#52).
 * adds several 1x1 moon widgets (showing rise/set times, current phase, next phase, or illumination) (#52).
@@ -10,7 +28,7 @@
 * adds "show golden hour" option to app (#127).
 * adds golden hour, blue hour (8deg), and blue hour (4deg) to rise/set times (#127).
 * fixes en localization; e.g. "Fall" is better known as "Autumn" (#159), "color" vs "colour", etc.
-* updates translations (eo, pl) (#160).
+* updates translations (eo, pl) (#160, #162, #163).
 
 ### v0.6.2 (2018-02-03)
 * adds option "verbose accessibility"; better support for TalkBack. 

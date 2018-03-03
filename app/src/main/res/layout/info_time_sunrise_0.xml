@@ -25,6 +25,8 @@
             style="@style/SunsetTimeImageView"
             android:id="@+id/icon_time_sunrise"
             android:scaleType="fitStart"
+            android:layout_marginLeft="2dp" android:layout_marginRight="1dp" android:layout_marginTop="1dp"
+            android:layout_marginStart="2dp" android:layout_marginEnd="1dp"
             android:contentDescription="@string/sunrise_short" />
 
         <TextView
@@ -38,6 +40,7 @@
             android:id="@+id/text_time_rise_suffix"
             android:layout_gravity="bottom"
             android:layout_height="match_parent"
+            android:layout_margin="2dp"
             tools:text="AM" />
 
     </LinearLayout>

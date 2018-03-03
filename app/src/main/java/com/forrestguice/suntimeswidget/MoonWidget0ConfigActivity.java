@@ -20,12 +20,16 @@ package com.forrestguice.suntimeswidget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.content.Intent;
 import android.widget.ArrayAdapter;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity;
+
+import static com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity.PICK_THEME_REQUEST;
 
 public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
 {
@@ -126,6 +130,14 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
 
         String titleText = WidgetSettings.loadTitleTextPref(context, appWidgetId, DEF_TITLETEXT);
         text_titleText.setText(titleText);
+    }
+
+    @Override
+    protected void launchThemeEditor(Context context)
+    {
+        Intent configThemesIntent = themeEditorIntent(context);
+        configThemesIntent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, WidgetThemeConfigActivity.PREVIEWID_MOON_2x1);
+        startActivityForResult(configThemesIntent, PICK_THEME_REQUEST);
     }
 
 }

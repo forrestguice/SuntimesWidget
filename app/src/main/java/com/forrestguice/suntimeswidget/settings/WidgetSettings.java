@@ -32,10 +32,10 @@ import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_1;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_2;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_3;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_4;
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_0;
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_1;
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_2;
+import com.forrestguice.suntimeswidget.layouts.SunLayout;
+import com.forrestguice.suntimeswidget.layouts.SunLayout_1x1_0;
+import com.forrestguice.suntimeswidget.layouts.SunLayout_1x1_1;
+import com.forrestguice.suntimeswidget.layouts.SunLayout_1x1_2;
 import com.forrestguice.suntimeswidget.themes.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
@@ -71,6 +71,9 @@ public class WidgetSettings
 
     public static final String PREF_KEY_APPEARANCE_TITLETEXT = "titletext";
     public static final String PREF_DEF_APPEARANCE_TITLETEXT = "";
+
+    public static final String PREF_KEY_APPEARANCE_SHOWLABELS = "showlabels";
+    public static final boolean PREF_DEF_APPEARANCE_SHOWLABELS = false;
 
     public static final String PREF_KEY_APPEARANCE_WIDGETMODE_SUN1x1 = "widgetmode_1x1";
     public static final WidgetModeSun1x1 PREF_DEF_APPEARANCE_WIDGETMODE_SUN1x1 = WidgetModeSun1x1.WIDGETMODE1x1_BOTH_1;
@@ -168,6 +171,7 @@ public class WidgetSettings
     public static enum ActionMode
     {
         ONTAP_DONOTHING("Ignore"),
+        ONTAP_UPDATE("Update Widget"),
         ONTAP_LAUNCH_CONFIG("Reconfigure Widget"),
         ONTAP_LAUNCH_ACTIVITY("Launch Activity"),
         ONTAP_FLIPTO_NEXTITEM("Flip Views");
@@ -197,6 +201,7 @@ public class WidgetSettings
         public static void initDisplayStrings( Context context )
         {
             ONTAP_DONOTHING.setDisplayString(context.getString(R.string.actionMode_doNothing));
+            ONTAP_UPDATE.setDisplayString(context.getString(R.string.actionMode_update));
             ONTAP_LAUNCH_CONFIG.setDisplayString(context.getString(R.string.actionMode_config));
             ONTAP_LAUNCH_ACTIVITY.setDisplayString(context.getString(R.string.actionMode_launchActivity));
             ONTAP_FLIPTO_NEXTITEM.setDisplayString(context.getString(R.string.actionMode_flipToNextItem));
@@ -1029,23 +1034,23 @@ public class WidgetSettings
         }
         return widgetMode;
     }
-    public static SuntimesLayout loadSun1x1ModePref_asLayout(Context context, int appWidgetId)
+    public static SunLayout loadSun1x1ModePref_asLayout(Context context, int appWidgetId)
     {
-        SuntimesLayout layout;
+        SunLayout layout;
         WidgetModeSun1x1 mode = loadSun1x1ModePref(context, appWidgetId);
         switch (mode.getLayoutID())
         {
             case R.layout.layout_widget_1x1_1:
-                layout = new SuntimesLayout_1x1_1();
+                layout = new SunLayout_1x1_1();
                 break;
 
             case R.layout.layout_widget_1x1_2:
-                layout = new SuntimesLayout_1x1_2();
+                layout = new SunLayout_1x1_2();
                 break;
 
             case R.layout.layout_widget_1x1_0:
             default:
-                layout = new SuntimesLayout_1x1_0(mode.getLayoutID());
+                layout = new SunLayout_1x1_0(mode.getLayoutID());
                 break;
         }
         return layout;
@@ -1131,12 +1136,15 @@ public class WidgetSettings
         prefs.putString(prefs_prefix + PREF_KEY_APPEARANCE_THEME, themeName);
         prefs.apply();
     }
-    public static SuntimesTheme loadThemePref(Context context, int appWidgetId)
+    public static String loadThemeName(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
-        String themeName = prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_THEME, PREF_DEF_APPEARANCE_THEME);
-
+        return prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_THEME, PREF_DEF_APPEARANCE_THEME);
+    }
+    public static SuntimesTheme loadThemePref(Context context, int appWidgetId)
+    {
+        String themeName = loadThemeName(context, appWidgetId);
         //noinspection UnnecessaryLocalVariable
         SuntimesTheme theme = WidgetThemes.loadTheme(context, themeName);
         //Log.d("loadThemePref", "theme is " + theme.themeName());
@@ -1180,6 +1188,32 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
         prefs.remove(prefs_prefix + PREF_KEY_GENERAL_CALCULATOR);
+        prefs.apply();
+    }
+
+
+    public static void saveShowLabelsPref(Context context, int appWidgetId, boolean showLabels)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.putBoolean(prefs_prefix + PREF_KEY_APPEARANCE_SHOWLABELS, showLabels);
+        prefs.apply();
+    }
+    public static boolean loadShowLabelsPref(Context context, int appWidgetId)
+    {
+        return loadShowLabelsPref(context, appWidgetId, PREF_DEF_APPEARANCE_SHOWLABELS);
+    }
+    public static boolean loadShowLabelsPref(Context context, int appWidgetId, boolean defaultValue)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        return prefs.getBoolean(prefs_prefix + PREF_KEY_APPEARANCE_SHOWLABELS, defaultValue);
+    }
+    public static void deleteShowLabelsPref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_SHOWLABELS);
         prefs.apply();
     }
 
@@ -1888,6 +1922,7 @@ public class WidgetSettings
         deleteAllowResizePref(context, appWidgetId);
 
         deleteThemePref(context, appWidgetId);
+        deleteShowLabelsPref(context, appWidgetId);
         deleteShowTitlePref(context, appWidgetId);
         deleteTitleTextPref(context, appWidgetId);
         deleteTimeFormatModePref(context, appWidgetId);

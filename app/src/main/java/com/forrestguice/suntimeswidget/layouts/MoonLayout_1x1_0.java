@@ -22,7 +22,6 @@ import android.content.Context;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -53,14 +52,7 @@ public class MoonLayout_1x1_0 extends MoonLayout
     {
         super.updateViews(context, appWidgetId, views, data);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
-
-        SuntimesUtils.TimeDisplayText riseString = utils.calendarTimeShortDisplayString(context, data.moonriseCalendarToday(), showSeconds);
-        views.setTextViewText(R.id.text_time_moonrise, riseString.getValue());
-        views.setTextViewText(R.id.text_time_moonrise_suffix, riseString.getSuffix());
-
-        SuntimesUtils.TimeDisplayText setString = utils.calendarTimeShortDisplayString(context, data.moonsetCalendarToday(), showSeconds);
-        views.setTextViewText(R.id.text_time_moonset, setString.getValue());
-        views.setTextViewText(R.id.text_time_moonset_suffix, setString.getSuffix());
+        updateViewsMoonRiseSetText(context, views, data, showSeconds);
     }
 
     @Override

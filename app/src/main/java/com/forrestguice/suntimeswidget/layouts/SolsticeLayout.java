@@ -22,12 +22,13 @@ import android.content.Context;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
-public abstract class SuntimesLayoutEq extends SuntimesLayout
+public abstract class SolsticeLayout extends SuntimesLayout
 {
-    public SuntimesLayoutEq()
+    public SolsticeLayout()
     {
         initLayoutID();
     }
@@ -54,7 +55,8 @@ public abstract class SuntimesLayoutEq extends SuntimesLayout
         // update title
         String titlePattern = WidgetSettings.loadTitleTextPref(context, appWidgetId);
         String titleText = utils.displayStringForTitlePattern(context, titlePattern, data);
-        views.setTextViewText(R.id.text_title, titleText);
+        CharSequence title = (boldTitle ? SuntimesUtils.createBoldSpan(titleText, titleText) : titleText);
+        views.setTextViewText(R.id.text_title, title);
         //Log.v("DEBUG", "title text: " + titleText);
     }
 

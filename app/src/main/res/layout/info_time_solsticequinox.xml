@@ -62,6 +62,7 @@
             android:text="@string/timeMode_equinox_vernal" android:labelFor="@+id/text_date_equinox_vernal"
             android:layout_width="125dp" android:gravity="start|top" android:layout_gravity="top"
             android:paddingEnd="8dp" android:paddingRight="8dp"
+            android:paddingStart="0dp" android:paddingLeft="0dp"
             android:layout_marginTop="4dp"
             app:layout_constraintTop_toBottomOf="@+id/text_title"
             app:layout_constraintStart_toStartOf="parent" />
@@ -97,6 +98,7 @@
             android:id="@+id/text_date_solstice_summer_label"
             android:layout_width="125dp" android:gravity="start|top" android:layout_gravity="top"
             android:paddingEnd="8dp" android:paddingRight="8dp"
+            android:paddingStart="0dp" android:paddingLeft="0dp"
             app:layout_constraintTop_toBottomOf="@+id/text_date_equinox_vernal_layout"
             app:layout_constraintStart_toStartOf="parent" />
         <LinearLayout style="@style/SunsetTimeLayout"
@@ -129,6 +131,7 @@
             android:id="@+id/text_date_equinox_autumnal_label"
             android:layout_width="125dp" android:gravity="start|top" android:layout_gravity="top"
             android:paddingEnd="8dp" android:paddingRight="8dp"
+            android:paddingStart="0dp" android:paddingLeft="0dp"
             app:layout_constraintTop_toBottomOf="@+id/text_date_solstice_summer_layout"
             app:layout_constraintStart_toStartOf="parent" />
         <LinearLayout style="@style/SunsetTimeLayout"
@@ -162,6 +165,7 @@
             android:id="@+id/text_date_solstice_winter_label"
             android:layout_width="125dp" android:gravity="start|top" android:layout_gravity="top"
             android:paddingEnd="8dp" android:paddingRight="8dp"
+            android:paddingStart="0dp" android:paddingLeft="0dp"
             app:layout_constraintTop_toBottomOf="@+id/text_date_equinox_autumnal_layout"
             app:layout_constraintStart_toStartOf="parent" />
         <LinearLayout style="@style/SunsetTimeLayout"

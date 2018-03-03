@@ -179,8 +179,8 @@
                     android:id="@+id/appwidget_location_latlon_overlay"
                     android:layout_width="50dp" android:layout_height="50dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_alignLeft="@id/appwidget_location_latlon"
-                    android:layout_alignRight="@id/appwidget_location_latlon"
+                    android:layout_alignLeft="@id/appwidget_location_latlon" android:layout_alignStart="@id/appwidget_location_latlon"
+                    android:layout_alignRight="@id/appwidget_location_latlon" android:layout_alignEnd="@id/appwidget_location_latlon"
                     android:layout_alignBottom="@id/appwidget_location_latlon"
                     android:layout_alignTop="@id/appwidget_location_latlon"/>
 
