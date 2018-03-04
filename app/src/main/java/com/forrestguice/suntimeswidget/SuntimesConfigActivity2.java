@@ -68,13 +68,8 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     @Override
     protected void updateWidget(Context context)
     {
-        int minSize[] = new int[2];
-        minSize[0] = context.getResources().getInteger(R.integer.widget_size_minWidthDp);
-        minSize[1] = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
-
         SunExtLayout defLayout = new SunExtLayout_1x1_0();
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        SuntimesWidget2.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget2.class, minSize, defLayout);
+        SuntimesWidget2.updateAppWidget(context, AppWidgetManager.getInstance(context), appWidgetId, SuntimesWidget2.class, minWidgetSize(context), defLayout);
     }
 
     @Override
