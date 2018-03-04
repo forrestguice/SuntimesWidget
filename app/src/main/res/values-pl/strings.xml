@@ -103,10 +103,10 @@
     <string name="untilEnd_civilTwilight">zmierzchu cywilnego</string>
     <string name="untilEnd_nauticalTwilight">zmierzchu żeglarskiego</string>
     <string name="untilEnd_astroTwilight">zmierzchu astronomicznego</string>
-    <string name="until_goldhour">złota godzina</string>
-    <string name="untilEnd_goldhour">złota godzina</string>
-    <string name="until_bluehour">błękitna godzina</string>
-    <string name="untilEnd_bluehour">błękitna godzina</string>
+    <string name="until_goldhour">złotej godziny</string>
+    <string name="untilEnd_goldhour">końca złotej godziny</string>
+    <string name="until_bluehour">błękitnej godziny</string>
+    <string name="untilEnd_bluehour">końca błękitnej godziny</string>
 
     <!-- Table -->
     <string name="sunrise">Wschód Słońca</string>                             <!-- contentDescription -->
