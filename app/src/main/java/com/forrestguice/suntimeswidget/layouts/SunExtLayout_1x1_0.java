@@ -22,6 +22,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
+import android.text.SpannableString;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -68,14 +69,16 @@ public class SunExtLayout_1x1_0 extends SunExtLayout
         SuntimesCalculator calculator = dataset.dataActual.calculator();
         SuntimesCalculator.SunPosition sunPosition = calculator.getSunPosition(dataset.now());
 
-        String azimuthString = utils.formatAsDirection(sunPosition.azimuth, 2);
-        CharSequence azimuth = (boldTime ? SuntimesUtils.createBoldColorSpan(azimuthString, azimuthString, highlightColor)
-                                         : SuntimesUtils.createColorSpan(azimuthString, azimuthString, highlightColor));
+        SuntimesUtils.TimeDisplayText azimuthDisplay = utils.formatAsDirection2(sunPosition.azimuth, 2);
+        String azimuthString = utils.formatAsDirection(azimuthDisplay.getValue(), azimuthDisplay.getSuffix());
+
+        SpannableString azimuth = SuntimesUtils.createColorSpan(null, azimuthString, azimuthDisplay.getValue(), highlightColor, boldTime);
+        azimuth = SuntimesUtils.createBoldSpan(azimuth, azimuthString, azimuthDisplay.getSuffix());
+        azimuth = SuntimesUtils.createRelativeSpan(azimuth, azimuthString, azimuthDisplay.getSuffix(), 0.7f);
         views.setTextViewText(R.id.info_sun_azimuth_current, azimuth);
 
         String elevationString = utils.formatAsDegrees(sunPosition.elevation, 2);
-        CharSequence elevation = (boldTime ? SuntimesUtils.createBoldColorSpan(elevationString, elevationString, highlightColor)
-                                           : SuntimesUtils.createColorSpan(elevationString, elevationString, highlightColor));
+        CharSequence elevation = SuntimesUtils.createColorSpan(null, elevationString, elevationString, highlightColor, boldTime);
         views.setTextViewText(R.id.info_sun_elevation_current, elevation);
 
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);

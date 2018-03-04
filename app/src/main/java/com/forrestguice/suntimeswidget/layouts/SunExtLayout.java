@@ -47,7 +47,7 @@ public abstract class SunExtLayout extends SuntimesLayout
         // update title
         String titlePattern = WidgetSettings.loadTitleTextPref(context, appWidgetId);
         String titleText = utils.displayStringForTitlePattern(context, titlePattern, dataset);
-        CharSequence title = (boldTitle ? SuntimesUtils.createBoldSpan(titleText, titleText) : titleText);
+        CharSequence title = (boldTitle ? SuntimesUtils.createBoldSpan(null, titleText, titleText) : titleText);
         views.setTextViewText(R.id.text_title, title);
         //Log.v("DEBUG", "title text: " + titleText);
     }

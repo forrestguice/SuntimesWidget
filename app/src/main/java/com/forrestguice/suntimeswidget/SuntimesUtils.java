@@ -14,7 +14,7 @@
 
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
-*/ 
+*/
 
 package com.forrestguice.suntimeswidget;
 
@@ -45,6 +45,7 @@ import android.text.Spanned;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
+import android.text.style.RelativeSizeSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -794,7 +795,17 @@ public class SuntimesUtils
     {
         String degreeString = formatAsDegrees(degreeValue, places);
         CardinalDirection direction = CardinalDirection.getDirection(degreeValue);
-        return String.format(strDirectionFormat, degreeString, direction.getShortDisplayString());
+        return formatAsDirection(degreeString, direction.getShortDisplayString());
+    }
+    public String formatAsDirection(String degreeString, String directionString)
+    {
+        return String.format(strDirectionFormat, degreeString, directionString);
+    }
+    public TimeDisplayText formatAsDirection2(double degreeValue, int places)
+    {
+        String degreeString = formatAsDegrees(degreeValue, places);
+        CardinalDirection direction = CardinalDirection.getDirection(degreeValue);
+        return new TimeDisplayText(degreeString, "", direction.getShortDisplayString());
     }
 
     /**
@@ -828,7 +839,7 @@ public class SuntimesUtils
         displayString = displayString.replaceAll(modePattern, timeMode.getLongDisplayString());
         return displayString;
     }
-    
+
     public String displayStringForTitlePattern(Context context, String titlePattern, SuntimesMoonData data)
     {
         String displayString = displayStringForTitlePattern(context, titlePattern, (SuntimesData)data);
@@ -930,42 +941,59 @@ public class SuntimesUtils
         }
         return span;
     }
-
-    public static SpannableString createColorSpan(String text, String toColorize, int color)
+    
+    public static SpannableString createColorSpan(SpannableString span, String text, String toColorize, int color)
     {
-        SpannableString span = new SpannableString(text);
+        if (span == null) {
+            span = new SpannableString(text);
+        }
         int start = text.indexOf(toColorize);
         int end = start + toColorize.length();
         span.setSpan(new ForegroundColorSpan(color), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         return span;
     }
-
-    public static SpannableString createBoldSpan(String text, String toBold)
+    public static SpannableString createColorSpan(SpannableString span, String text, String toColorize, int color, boolean bold)
     {
-        SpannableString span = new SpannableString(text);
+        if (bold) {
+            span = createBoldSpan(span, text, toColorize);
+        }
+        return createColorSpan(span, text, toColorize, color);
+    }
+
+    public static SpannableString createBoldSpan(SpannableString span, String text, String toBold)
+    {
+        if (span == null) {
+            span = new SpannableString(text);
+        }
         int start = text.indexOf(toBold);
         int end = start + toBold.length();
         span.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         return span;
     }
 
-    public static SpannableString createBoldColorSpan(String text, String toBold, int color)
+    public static SpannableString createBoldColorSpan(SpannableString span, String text, String toBold, int color)
     {
-        SpannableString span = new SpannableString(text);
-        int start = text.indexOf(toBold);
-        int end = start + toBold.length();
-        span.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        span.setSpan(new ForegroundColorSpan(color), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return createColorSpan(createBoldSpan(span, text, toBold), text, toBold, color);
+    }
+
+    public static SpannableString createRelativeSpan(SpannableString span, String text, String toRelative, float relativeSize)
+    {
+        if (span == null) {
+            span = new SpannableString(text);
+        }
+        int start = text.indexOf(toRelative);
+        int end = start + toRelative.length();
+        span.setSpan(new RelativeSizeSpan(relativeSize), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         return span;
     }
 
-    public static SpannableString createBoldColorSpan(String text, String toBold, int color, int pointSizePixels)
+    public static SpannableString createAbsoluteSpan(SpannableString span, String text, String toAbsolute, int pointSizePixels)
     {
-        SpannableString span = new SpannableString(text);
-        int start = text.indexOf(toBold);
-        int end = start + toBold.length();
-        span.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        span.setSpan(new ForegroundColorSpan(color), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        if (span == null) {
+            span = new SpannableString(text);
+        }
+        int start = text.indexOf(toAbsolute);
+        int end = start + toAbsolute.length();
         span.setSpan(new AbsoluteSizeSpan(pointSizePixels), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         return span;
     }
