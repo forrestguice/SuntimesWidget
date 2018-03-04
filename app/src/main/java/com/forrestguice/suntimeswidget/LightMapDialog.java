@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -86,10 +87,47 @@ public class LightMapDialog extends DialogFragment
             Log.d("DEBUG", "LightMapDialog onCreate (restoreState)");
         }
 
+        dialog.setOnShowListener(onShowDialogListener);
         themeViews(dialog.getContext());
-        updateViews();
         return dialog;
     }
+
+    private DialogInterface.OnShowListener onShowDialogListener = new DialogInterface.OnShowListener()
+    {
+        @Override
+        public void onShow(DialogInterface dialog)
+        {
+            startUpdateTask();
+        }
+    };
+
+    private void startUpdateTask()
+    {
+        stopUpdateTask();
+        if (sunElevation != null)
+            sunElevation.post(updateTask);
+    }
+    private void stopUpdateTask()
+    {
+        if (sunElevation != null)
+            sunElevation.removeCallbacks(updateTask);
+    }
+
+    public static final int UPDATE_RATE = 3000;
+    private Runnable updateTask = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            if (data != null)
+            {
+                updateLightmapViews(data);
+                updateSunPositionViews(data);
+            }
+            if (sunElevation != null)
+                sunElevation.postDelayed(this, UPDATE_RATE);
+        }
+    };
 
     public void initViews(View dialogView)
     {
@@ -144,8 +182,10 @@ public class LightMapDialog extends DialogFragment
 
     protected void updateViews( @NonNull SuntimesRiseSetDataset data )
     {
+        stopUpdateTask();
         updateLightmapViews(data);
         updateSunPositionViews(data);
+        startUpdateTask();
     }
 
     protected void updateLightmapViews(@NonNull SuntimesRiseSetDataset data)
@@ -166,9 +206,9 @@ public class LightMapDialog extends DialogFragment
         }
     }
 
-    private Spannable styleAzimuthText(double azimuth, int places, Integer color)
+    private Spannable styleAzimuthText(double azimuth, Integer color)
     {
-        SuntimesUtils.TimeDisplayText azimuthText = utils.formatAsDirection2(azimuth, places);
+        SuntimesUtils.TimeDisplayText azimuthText = utils.formatAsDirection2(azimuth, 2);
         String azimuthString = utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
         SpannableString azimuthSpan = SuntimesUtils.createRelativeSpan(null, azimuthString, azimuthText.getSuffix(), 0.7f);
         azimuthSpan = SuntimesUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
@@ -178,9 +218,9 @@ public class LightMapDialog extends DialogFragment
         return azimuthSpan;
     }
 
-    private CharSequence styleElevationText(double elevation, int places)
+    private CharSequence styleElevationText(double elevation)
     {
-        String elevationString = utils.formatAsDegrees(elevation, places);
+        String elevationString = utils.formatAsDegrees(elevation, 2);
         return ((elevation > 0) ? SuntimesUtils.createColorSpan(null, elevationString, elevationString, colorDay) : elevationString);
     }
 
@@ -192,8 +232,8 @@ public class LightMapDialog extends DialogFragment
             SuntimesCalculator.SunPosition currentPosition = (calculator != null ? calculator.getSunPosition(data.now()) : null);
             if (currentPosition != null)
             {
-                sunAzimuth.setText(styleAzimuthText(currentPosition.azimuth, 2, null));
-                sunElevation.setText(styleElevationText(currentPosition.elevation, 2));
+                sunAzimuth.setText(styleAzimuthText(currentPosition.azimuth, null));
+                sunElevation.setText(styleElevationText(currentPosition.elevation));
 
             } else {
                 sunAzimuth.setText("");
@@ -203,11 +243,11 @@ public class LightMapDialog extends DialogFragment
             SuntimesRiseSetData riseSetData = data.dataActual;
             Calendar riseTime = (riseSetData != null ? riseSetData.sunriseCalendarToday() : null);
             SuntimesCalculator.SunPosition positionRising = (riseTime != null && calculator != null ? calculator.getSunPosition(riseTime) : null);
-            sunAzimuthRising.setText(positionRising != null ? styleAzimuthText(positionRising.azimuth, 2, null) : "");
+            sunAzimuthRising.setText(positionRising != null ? styleAzimuthText(positionRising.azimuth, null) : "");
 
             Calendar setTime = (riseSetData != null ? riseSetData.sunsetCalendarToday() : null);
             SuntimesCalculator.SunPosition positionSetting = (setTime != null && calculator != null ? calculator.getSunPosition(setTime) : null);
-            sunAzimuthSetting.setText(positionSetting != null ? styleAzimuthText(positionSetting.azimuth, 2, null) : "");
+            sunAzimuthSetting.setText(positionSetting != null ? styleAzimuthText(positionSetting.azimuth, null) : "");
 
             SuntimesRiseSetData noonData = data.dataNoon;
             Calendar noonTime = (noonData != null ? noonData.sunriseCalendarToday() : null);
@@ -215,7 +255,7 @@ public class LightMapDialog extends DialogFragment
             if (positionAtNoon != null)
             {
                 sunElevationAtNoon.setText(utils.formatAsDegrees(positionAtNoon.elevation, 2));
-                sunAzimuthAtNoon.setText(styleAzimuthText(positionAtNoon.azimuth, 2, null));
+                sunAzimuthAtNoon.setText(styleAzimuthText(positionAtNoon.azimuth, null));
 
             } else {
                 sunElevationAtNoon.setText("");

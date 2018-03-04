@@ -1879,7 +1879,7 @@ public class SuntimesActivity extends AppCompatActivity
      */
     protected void showLightMapDialog()
     {
-        LightMapDialog lightMapDialog = new LightMapDialog();
+        final LightMapDialog lightMapDialog = new LightMapDialog();
         lightMapDialog.setData(dataset);
         lightMapDialog.show(getSupportFragmentManager(), DIALOGTAG_LIGHTMAP);
     }
