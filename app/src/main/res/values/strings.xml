@@ -437,7 +437,10 @@
     <string name="configHint_themeName">Label</string>                   <!-- edit hint -->
 
     <string name="widgetLabel_azimuth">Azimuth</string>                   <!-- label -->  <!-- TODO: i18n -->
-    <string name="widgetLabel_elevation">Elevation</string>               <!-- label -->  <!-- TODO: i18n -->
+    <string name="widgetLabel_azimuth_short">Az</string>                   <!-- label -->  <!-- TODO: i18n -->
+    <string name="widgetLabel_altitude">Altitude</string>               <!-- label -->  <!-- TODO: i18n -->
+    <string name="widgetLabel_altitude_short">Alt</string>               <!-- label -->  <!-- TODO: i18n -->
+
     <string name="widgetLabel_rightAscension">Right Ascension</string>    <!-- label -->  <!-- TODO: i18n -->
     <string name="widgetLabel_declination">Declination</string>           <!-- label -->  <!-- TODO: i18n -->
 
