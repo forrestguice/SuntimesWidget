@@ -88,10 +88,10 @@ public class SunExtLayout_1x1_0 extends SunExtLayout
         views.setViewVisibility(R.id.info_sun_elevation_current_label, visibility);
     }
 
-    private int highlightColor = Color.WHITE;
-    private boolean boldTime = false;
-    private float suffixSp;
-    private int suffixColor = Color.GRAY;
+    protected int highlightColor = Color.WHITE;
+    protected boolean boldTime = false;
+    protected float suffixSp;
+    protected int suffixColor = Color.GRAY;
 
     @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
