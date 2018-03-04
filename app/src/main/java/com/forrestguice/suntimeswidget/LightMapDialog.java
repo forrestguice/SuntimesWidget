@@ -20,16 +20,16 @@ package com.forrestguice.suntimeswidget;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,13 +38,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 
-import org.w3c.dom.Text;
-
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -195,12 +191,20 @@ public class LightMapDialog extends DialogFragment
         {
             Context context = getContext();
             field_civil.updateInfo(context, createInfoArray(data.civilTwilightLength()));
+            field_civil.highlight(false);
+
             field_nautical.updateInfo(context, createInfoArray(data.nauticalTwilightLength()));
+            field_nautical.highlight(false);
+
             field_astro.updateInfo(context, createInfoArray(data.astroTwilightLength()));
+            field_astro.highlight(false);
+
             field_night.updateInfo(context, createInfoArray(new long[] {data.nightLength()}));
+            field_night.highlight(false);
 
             long dayDelta = data.dayLengthOther() - data.dayLength();
             field_day.updateInfo(context, createInfoArray(data.dayLength(), dayDelta, colorDay));
+            field_day.highlight(false);
 
             lightmap.updateViews(data);
             //Log.d("DEBUG", "LightMapDialog updated");
@@ -211,18 +215,54 @@ public class LightMapDialog extends DialogFragment
     {
         SuntimesUtils.TimeDisplayText azimuthText = utils.formatAsDirection2(azimuth, places);
         String azimuthString = utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
-        SpannableString azimuthSpan = SuntimesUtils.createRelativeSpan(null, azimuthString, azimuthText.getSuffix(), 0.7f);
-        azimuthSpan = SuntimesUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
+        SpannableString azimuthSpan = null;
         if (color != null) {
             azimuthSpan = SuntimesUtils.createColorSpan(azimuthSpan, azimuthString, azimuthText.getSuffix(), color);
         }
+        azimuthSpan = SuntimesUtils.createRelativeSpan(azimuthSpan, azimuthString, azimuthText.getSuffix(), 0.7f);
+        azimuthSpan = SuntimesUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
         return azimuthSpan;
     }
 
     private CharSequence styleElevationText(double elevation, int places)
-        String elevationString = utils.formatAsDegrees(elevation, places);
     {
-        return ((elevation > 0) ? SuntimesUtils.createColorSpan(null, elevationString, elevationString, colorDay) : elevationString);
+        String elevationString = utils.formatAsDegrees(elevation, places);
+        SpannableString span = null;
+        if (elevation >= -18) {
+            span = SuntimesUtils.createColorSpan(span, elevationString, elevationString, getColorForElevation(elevation));
+        }
+        return (span != null ? span : elevationString);
+    }
+
+    private int getColorForElevation(double elevation)
+    {
+        if (elevation >= 0)
+            return colorDay;
+
+        if (elevation >= -6)
+            return colorCivil;
+
+        if (elevation >= -12)  //if (elevation >= -18)   // share color
+            return colorAstro;
+
+        return colorNight;
+    }
+
+    private void highlightLightmapKey(double elevation)
+    {
+        if (elevation >= 0)
+            field_day.highlight(true);
+
+        else if (elevation >= -6)
+            field_civil.highlight(true);
+
+        else if (elevation >= -12)
+            field_nautical.highlight(true);
+
+        else if (elevation >= -18)
+            field_astro.highlight(true);
+
+        else field_day.highlight(true);
     }
 
     protected void updateSunPositionViews(@NonNull SuntimesRiseSetDataset data)
@@ -235,6 +275,7 @@ public class LightMapDialog extends DialogFragment
             {
                 sunAzimuth.setText(styleAzimuthText(currentPosition.azimuth, null, 2));
                 sunElevation.setText(styleElevationText(currentPosition.elevation, 2));
+                highlightLightmapKey(currentPosition.elevation);
 
             } else {
                 sunAzimuth.setText("");
@@ -262,7 +303,6 @@ public class LightMapDialog extends DialogFragment
                 sunElevationAtNoon.setText("");
                 sunAzimuthAtNoon.setText("");
             }
-
 
             showSunPosition(currentPosition != null);
         }
@@ -311,6 +351,20 @@ public class LightMapDialog extends DialogFragment
             if (icon != null) {
                 icon.setVisibility(visibility);
             }
+        }
+
+        public void highlight(boolean highlight)
+        {
+            if (label != null)
+            {
+                label.setTypeface(null, (highlight ? Typeface.BOLD : Typeface.NORMAL));
+                if (highlight)
+                    label.setPaintFlags(label.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                else label.setPaintFlags(label.getPaintFlags() & (~Paint.UNDERLINE_TEXT_FLAG));
+            }
+
+            //if (text != null)
+                //text.setTypeface(null, (highlight ? Typeface.BOLD : Typeface.NORMAL));
         }
 
         public void updateInfo(Context context, LightMapKeyInfo[] info)
