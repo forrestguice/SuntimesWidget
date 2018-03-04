@@ -176,34 +176,36 @@ public class SuntimesUtils
      */
     public static enum CardinalDirection
     {
-        NORTH(      "N",   "North"              , 0.0),
-        NORTH_NE(   "NNE", "North North East"   , 22.5),
-        NORTH_E(    "NE",  "North East"         , 45.0),
+        NORTH(1,      "N",   "North"              , 0.0),
+        NORTH_NE(2,   "NNE", "North North East"   , 22.5),
+        NORTH_E(3,    "NE",  "North East"         , 45.0),
 
-        EAST_NE(    "ENE", "East North East"    , 67.5),
-        EAST(       "E",   "East"               , 90.0),
-        EAST_SE(    "ESE", "East South East"    , 112.5),
+        EAST_NE(4,    "ENE", "East North East"    , 67.5),
+        EAST(5,       "E",   "East"               , 90.0),
+        EAST_SE(6,    "ESE", "East South East"    , 112.5),
 
-        SOUTH_E(    "SE",  "South East"         , 135.0),
-        SOUTH_SE(   "SSE", "South South East"   , 157.5),
-        SOUTH(      "S",   "South"              , 180.0),
-        SOUTH_SW(   "SSW", "South South West"   , 202.5),
-        SOUTH_W(    "SW",  "South West"         , 225.0),
+        SOUTH_E(7,    "SE",  "South East"         , 135.0),
+        SOUTH_SE(8,   "SSE", "South South East"   , 157.5),
+        SOUTH(9,      "S",   "South"              , 180.0),
+        SOUTH_SW(10,  "SSW", "South South West"   , 202.5),
+        SOUTH_W(11,   "SW",  "South West"         , 225.0),
 
-        WEST_SW(    "WSW", "West South West"    , 247.5),
-        WEST(       "W",   "West"               , 270.0),
-        WEST_NW(    "WNW", "West North West"    , 292.5),
+        WEST_SW(12,   "WSW", "West South West"    , 247.5),
+        WEST(13,      "W",   "West"               , 270.0),
+        WEST_NW(14,   "WNW", "West North West"    , 292.5),
 
-        NORTH_W(    "NW",  "North West"         , 315.0),
-        NORTH_NW(   "NNW", "North North West"   , 337.5),
-        NORTH2(     "N",   "North"              , 360.0);
+        NORTH_W(15,   "NW",  "North West"         , 315.0),
+        NORTH_NW(16,  "NNW", "North North West"   , 337.5),
+        NORTH2(1,     "N",   "North"              , 360.0);
 
+        private int pointNum;
         private String shortDisplayString;
         private String longDisplayString;
         private double degrees;
 
-        private CardinalDirection(String shortDisplayString, String longDisplayString, double degrees)
+        private CardinalDirection(int pointNum, String shortDisplayString, String longDisplayString, double degrees)
         {
+            this.pointNum = pointNum;
             this.shortDisplayString = shortDisplayString;
             this.longDisplayString = longDisplayString;
             this.degrees = degrees;
@@ -240,6 +242,11 @@ public class SuntimesUtils
         public double getDegress()
         {
             return degrees;
+        }
+
+        public int getPoint()
+        {
+            return pointNum;
         }
 
         public String getShortDisplayString()
