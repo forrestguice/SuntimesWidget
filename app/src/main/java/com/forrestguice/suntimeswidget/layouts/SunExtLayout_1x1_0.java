@@ -73,8 +73,9 @@ public class SunExtLayout_1x1_0 extends SunExtLayout
         String azimuthString = utils.formatAsDirection(azimuthDisplay.getValue(), azimuthDisplay.getSuffix());
 
         SpannableString azimuth = SuntimesUtils.createColorSpan(null, azimuthString, azimuthDisplay.getValue(), highlightColor, boldTime);
-        azimuth = SuntimesUtils.createBoldSpan(azimuth, azimuthString, azimuthDisplay.getSuffix());
+        azimuth = SuntimesUtils.createBoldColorSpan(azimuth, azimuthString, azimuthDisplay.getSuffix(), suffixColor);
         azimuth = SuntimesUtils.createRelativeSpan(azimuth, azimuthString, azimuthDisplay.getSuffix(), 0.7f);
+        //azimuth = SuntimesUtils.createAbsoluteSpan(azimuth, azimuthString, azimuthDisplay.getSuffix(), SuntimesUtils.spToPixels(context, suffixSp));
         views.setTextViewText(R.id.info_sun_azimuth_current, azimuth);
 
         String elevationString = utils.formatAsDegrees(sunPosition.elevation, 2);
@@ -89,6 +90,8 @@ public class SunExtLayout_1x1_0 extends SunExtLayout
 
     private int highlightColor = Color.WHITE;
     private boolean boldTime = false;
+    private float suffixSp;
+    private int suffixColor = Color.GRAY;
 
     @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
@@ -96,6 +99,8 @@ public class SunExtLayout_1x1_0 extends SunExtLayout
         super.themeViews(context, views, theme);
         highlightColor = theme.getTimeColor();
         boldTime = theme.getTimeBold();
+        suffixSp = theme.getTimeSuffixSizeSp();
+        suffixColor = theme.getTimeSuffixColor();
 
         int textColor = theme.getTextColor();
         views.setTextColor(R.id.info_sun_azimuth_current_label, textColor);

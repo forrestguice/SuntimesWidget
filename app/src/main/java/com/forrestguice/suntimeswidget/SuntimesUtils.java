@@ -948,7 +948,7 @@ public class SuntimesUtils
         }
         return span;
     }
-    
+
     public static SpannableString createColorSpan(SpannableString span, String text, String toColorize, int color)
     {
         if (span == null) {
@@ -1005,7 +1005,7 @@ public class SuntimesUtils
         return span;
     }
 
-    public static int spToPixels(Context context, int spValue)
+    public static int spToPixels(Context context, float spValue)
     {
         return (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, spValue, context.getResources().getDisplayMetrics());
     }
