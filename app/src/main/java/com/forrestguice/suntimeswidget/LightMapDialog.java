@@ -23,6 +23,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -55,6 +56,8 @@ public class LightMapDialog extends DialogFragment
     private LightMapView lightmap;
     private LightMapKey field_night, field_astro, field_nautical, field_civil, field_day;
     private int colorNight, colorAstro, colorNautical, colorCivil, colorDay;
+    private int colorRising, colorSetting;
+    private int colorLabel;
     private boolean showSeconds = true;
     private int decimalPlaces = 1;
 
@@ -169,6 +172,10 @@ public class LightMapDialog extends DialogFragment
         SuntimesUtils.colorizeImageView(field_nautical.icon, colorNautical);
         SuntimesUtils.colorizeImageView(field_civil.icon, colorCivil);
         SuntimesUtils.colorizeImageView(field_day.icon, colorDay);
+
+        colorLabel = field_night.label.getTextColors().getColorForState(new int[] { -android.R.attr.state_enabled }, Color.BLUE); // field_night.label.getCurrentTextColor()
+        colorRising = ContextCompat.getColor(context, R.color.sunIcon_color_rising_dark);
+        colorSetting = ContextCompat.getColor(context, R.color.sunIcon_color_setting_dark);
     }
 
     public void updateViews()
@@ -217,7 +224,7 @@ public class LightMapDialog extends DialogFragment
         String azimuthString = utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
         SpannableString azimuthSpan = null;
         if (color != null) {
-            azimuthSpan = SuntimesUtils.createColorSpan(azimuthSpan, azimuthString, azimuthText.getSuffix(), color);
+            azimuthSpan = SuntimesUtils.createColorSpan(azimuthSpan, azimuthString, azimuthString, color);
         }
         azimuthSpan = SuntimesUtils.createRelativeSpan(azimuthSpan, azimuthString, azimuthText.getSuffix(), 0.7f);
         azimuthSpan = SuntimesUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
@@ -228,9 +235,9 @@ public class LightMapDialog extends DialogFragment
     {
         String elevationString = utils.formatAsDegrees(elevation, places);
         SpannableString span = null;
-        if (elevation >= -18) {
+        //if (elevation >= -18) {
             span = SuntimesUtils.createColorSpan(span, elevationString, elevationString, getColorForElevation(elevation));
-        }
+        //}
         return (span != null ? span : elevationString);
     }
 
@@ -245,7 +252,7 @@ public class LightMapDialog extends DialogFragment
         if (elevation >= -12)  //if (elevation >= -18)   // share color
             return colorAstro;
 
-        return colorNight;
+        return colorLabel;
     }
 
     private void highlightLightmapKey(double elevation)
@@ -262,7 +269,7 @@ public class LightMapDialog extends DialogFragment
         else if (elevation >= -18)
             field_astro.highlight(true);
 
-        else field_day.highlight(true);
+        else field_night.highlight(true);
     }
 
     protected void updateSunPositionViews(@NonNull SuntimesRiseSetDataset data)
@@ -285,11 +292,11 @@ public class LightMapDialog extends DialogFragment
             SuntimesRiseSetData riseSetData = data.dataActual;
             Calendar riseTime = (riseSetData != null ? riseSetData.sunriseCalendarToday() : null);
             SuntimesCalculator.SunPosition positionRising = (riseTime != null && calculator != null ? calculator.getSunPosition(riseTime) : null);
-            sunAzimuthRising.setText(positionRising != null ? styleAzimuthText(positionRising.azimuth, null, decimalPlaces) : "");
+            sunAzimuthRising.setText(positionRising != null ? styleAzimuthText(positionRising.azimuth, colorRising, decimalPlaces) : "");
 
             Calendar setTime = (riseSetData != null ? riseSetData.sunsetCalendarToday() : null);
             SuntimesCalculator.SunPosition positionSetting = (setTime != null && calculator != null ? calculator.getSunPosition(setTime) : null);
-            sunAzimuthSetting.setText(positionSetting != null ? styleAzimuthText(positionSetting.azimuth, null, decimalPlaces) : "");
+            sunAzimuthSetting.setText(positionSetting != null ? styleAzimuthText(positionSetting.azimuth, colorSetting, decimalPlaces) : "");
 
             SuntimesRiseSetData noonData = data.dataNoon;
             Calendar noonTime = (noonData != null ? noonData.sunriseCalendarToday() : null);
