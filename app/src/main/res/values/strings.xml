@@ -168,7 +168,10 @@
     <string name="configLabel_general_showSeconds">Show Seconds</string>        <!-- checkbox label -->
 
     <string name="configLabel_general_showWeeks">Show Weeks</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showWeeks_summary">Divide time spans greater than 7 days into weeks (e.g. 15d becomes 2w 1d).</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showWeeks_summary">Divide time spans greater than 7 days into weeks (e.g. 15d becomes 2w 1d).</string>    <!-- checkbox label -->
+
+    <string name="configLabel_general_showHours">Show Hours</string>        <!-- checkbox label -->  <!-- TODO: i18n -->
+    <string name="configLabel_general_showHours_summary">Include hours and minutes in time spans greater than a day.</string>    <!-- checkbox label -->    <!-- TODO: i18n -->
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Appearance Settings</string>           <!-- group title -->

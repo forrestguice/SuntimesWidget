@@ -120,6 +120,9 @@ public class WidgetSettings
     public static final String PREF_KEY_GENERAL_SHOWWEEKS = "showweeks";
     public static final boolean PREF_DEF_GENERAL_SHOWWEEKS = false;
 
+    public static final String PREF_KEY_GENERAL_SHOWHOURS = "showhours";
+    public static final boolean PREF_DEF_GENERAL_SHOWHOURS = true;
+
     public static final String PREF_KEY_GENERAL_SHOWSECONDS = "showseconds";
     public static final boolean PREF_DEF_GENERAL_SHOWSECONDS = false;
 
@@ -1827,6 +1830,28 @@ public class WidgetSettings
     }
 
 
+    public static void saveShowHoursPref(Context context, int appWidgetId, boolean showHours)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWHOURS, showHours);
+        prefs.apply();
+    }
+    public static boolean loadShowHoursPref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        return prefs.getBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWHOURS, PREF_DEF_GENERAL_SHOWHOURS);
+    }
+    public static void deleteShowHoursPref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_SHOWHOURS);
+        prefs.apply();
+    }
+
+
     public static void saveShowSecondsPref(Context context, int appWidgetId, boolean showSeconds)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
@@ -1937,6 +1962,7 @@ public class WidgetSettings
         deleteShowComparePref(context, appWidgetId);
         deleteShowNoonPref(context, appWidgetId);
         deleteShowWeeksPref(context, appWidgetId);
+        deleteShowHoursPref(context, appWidgetId);
         deleteShowSecondsPref(context, appWidgetId);
 
         deleteLocationModePref(context, appWidgetId);
