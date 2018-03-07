@@ -28,6 +28,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.text.NumberFormat;
@@ -57,6 +58,7 @@ public class MoonLayout_1x1_1 extends MoonLayout
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesMoonData data)
     {
         super.updateViews(context, appWidgetId, views, data);
+        boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
 
         NumberFormat percentage = NumberFormat.getPercentInstance();
         String illum = percentage.format(data.getMoonIlluminationToday());
@@ -73,6 +75,7 @@ public class MoonLayout_1x1_1 extends MoonLayout
         if (phase != null)
         {
             views.setTextViewText(R.id.text_info_moonphase, phase.getLongDisplayString());
+            views.setViewVisibility(R.id.text_info_moonphase, (showLabels ? View.VISIBLE : View.GONE));
             views.setViewVisibility(phase.getView(), View.VISIBLE);
 
             Integer phaseColor = phaseColors.get(phase);

@@ -73,7 +73,7 @@ public class WidgetSettings
     public static final String PREF_DEF_APPEARANCE_TITLETEXT = "";
 
     public static final String PREF_KEY_APPEARANCE_SHOWLABELS = "showlabels";
-    public static final boolean PREF_DEF_APPEARANCE_SHOWLABELS = false;
+    public static final boolean PREF_DEF_APPEARANCE_SHOWLABELS = true;
 
     public static final String PREF_KEY_APPEARANCE_WIDGETMODE_SUN1x1 = "widgetmode_1x1";
     public static final WidgetModeSun1x1 PREF_DEF_APPEARANCE_WIDGETMODE_SUN1x1 = WidgetModeSun1x1.WIDGETMODE1x1_BOTH_1;
