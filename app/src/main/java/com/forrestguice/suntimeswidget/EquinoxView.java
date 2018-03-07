@@ -398,10 +398,11 @@ public class EquinoxView extends LinearLayout
             note_solstice_winter2.updateTime(context, data.dataSolsticeWinter.eventCalendarOtherYear(), showSeconds);
 
             boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, 0);
+            boolean showHours = WidgetSettings.loadShowHoursPref(context, 0);
             for (EquinoxNote note : notes)
             {
                 note.setEnabled();
-                note.updateNote(context, data.now(), showWeeks);
+                note.updateNote(context, data.now(), showWeeks, showHours);
                 note.setVisible(!minimized);
             }
 
@@ -646,14 +647,14 @@ public class EquinoxView extends LinearLayout
         {
             updateTime(context, now, false);
         }
-        public void updateNote( Context context, Calendar now, boolean showWeeks )
+        public void updateNote( Context context, Calendar now, boolean showWeeks, boolean showHours )
         {
             this.now = now;
             if (noteView != null)
             {
                 if (now != null && time != null)
                 {
-                    String noteText = utils.timeDeltaDisplayString(now.getTime(), time.getTime(), showWeeks).toString();
+                    String noteText = utils.timeDeltaDisplayString(now.getTime(), time.getTime(), showWeeks, showHours).toString();
 
                     if (time.before(Calendar.getInstance()))
                     {
