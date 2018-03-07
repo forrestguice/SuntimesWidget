@@ -74,12 +74,13 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
                 boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, appWidgetId);
                 boolean showHours = WidgetSettings.loadShowHoursPref(context, appWidgetId);
                 boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
+                boolean showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
                 boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
 
                 views.setTextViewText(R.id.text_time_event_label, data.timeMode().getLongDisplayString());
                 views.setViewVisibility(R.id.text_time_event_label, (showLabels ? View.VISIBLE : View.GONE));
 
-                TimeDisplayText eventString = utils.calendarDateTimeDisplayString(context, event, showSeconds);
+                TimeDisplayText eventString = utils.calendarDateTimeDisplayString(context, event, showTimeDate, showSeconds);
                 views.setTextViewText(R.id.text_time_event, eventString.getValue());
 
                 int noteStringId = R.string.hence;
