@@ -150,10 +150,18 @@
     <!-- Widget Setting: general -->
     <string name="configLabel_general">Általános beállítások</string>                <!-- group title -->
     <string name="configLabel_general_calculator">Adatok forrása:</string>         <!-- spinner label -->
+
     <string name="configLabel_general_showSeconds">Show seconds</string>        <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_general_showSeconds_summary">Include seconds when displaying times.</string>        <!-- checkbox label --> <!-- TODO -->
+
+    <string name="configLabel_general_showTimeDate">Show Time (with dates)</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_showTimeDate_summary">Include the time when displaying dates.</string>        <!-- checkbox label -->  <!-- TODO -->
 
     <string name="configLabel_general_showWeeks">Show Weeks</string>        <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_general_showWeeks_summary">Divide time spans greater than 7 days into weeks (e.g. 15d becomes 2w 1d).</string>        <!-- checkbox label -->  <!-- TODO -->
+
+    <string name="configLabel_general_showHours">Show Hours</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_showHours_summary">Include hours and minutes in time spans greater than a day.</string>    <!-- checkbox label -->    <!-- TODO -->
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Megjelenés beállításai</string>           <!-- group title -->
