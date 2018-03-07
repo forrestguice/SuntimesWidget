@@ -253,6 +253,14 @@ public class SuntimesData
         return midnight;
     }
 
+    /**
+     * @return
+     */
+    public Calendar now()
+    {
+        return Calendar.getInstance(TimeZone.getTimeZone(timezone().getID()));
+    }
+
 }
 
 
