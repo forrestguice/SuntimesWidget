@@ -1,6 +1,7 @@
 ### ~
 
 ###
+* adds widget option "show time (with date)"; include the time when displaying dates.
 * adds widget option "show hours"; include hours/minutes in time spans greater than a day.
 * adds widget title substitution; %dt and %dT are for time (of last widget update).
 * adds widget title substitution; %id is for appWidgetID (for debug purposes).
