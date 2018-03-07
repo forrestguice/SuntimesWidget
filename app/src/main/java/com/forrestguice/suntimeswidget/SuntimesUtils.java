@@ -727,11 +727,13 @@ public class SuntimesUtils
         String dateYearPattern = "%dY";
         String dateDayPattern = "%dD";
         String dateDayPatternShort = "%dd";
+        String widgetIDPattern = "%id";
         String percentPattern = "%%";
 
         WidgetSettings.Location location = data.location();
         String timezoneID = data.timezone().getID();
         String datasource = (data.calculatorMode() == null) ? "" : data.calculatorMode().name();
+        String appWidgetID = (data.appWidgetID() != null ? String.format("%s", data.appWidgetID()) : "");
 
         String displayString = titlePattern;
         displayString = displayString.replaceAll(locPattern, location.getLabel());
@@ -739,6 +741,7 @@ public class SuntimesUtils
         displayString = displayString.replaceAll(lonPattern, location.getLongitude());
         displayString = displayString.replaceAll(timezoneIDPattern, timezoneID);
         displayString = displayString.replaceAll(datasourcePattern, datasource);
+        displayString = displayString.replaceAll(widgetIDPattern, appWidgetID);
 
         if (displayString.contains(datePattern))
         {

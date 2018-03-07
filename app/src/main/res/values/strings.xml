@@ -841,6 +841,7 @@
                 <br/>
                 * <b>%s</b> for data source (e.g. sunrisesunsetlib) <br/>
                 * <b>%t</b> for time zone (id) (e.g. US/Arizona) <br/>
+                * <b>%id</b> for appWidgetID <br/>
          <br/>
          <b>Sun Widgets:</b> <br/>
                 * <b>%m</b> for mode (short) (e.g. Civil) <br/>
