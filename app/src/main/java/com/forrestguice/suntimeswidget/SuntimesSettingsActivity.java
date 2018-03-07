@@ -263,6 +263,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             WidgetSettings.saveShowWeeksPref(this, 0, sharedPreferences.getBoolean(key, WidgetSettings.PREF_DEF_GENERAL_SHOWWEEKS));
             return;
         }
+
+        if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_SHOWHOURS))
+        {
+            // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
+            // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
+            WidgetSettings.saveShowHoursPref(this, 0, sharedPreferences.getBoolean(key, WidgetSettings.PREF_DEF_GENERAL_SHOWHOURS));
+            return;
+        }
     }
 
     protected void updateLocale()
