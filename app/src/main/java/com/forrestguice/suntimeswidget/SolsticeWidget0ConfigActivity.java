@@ -49,6 +49,7 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
         hideOption1x1LayoutMode();
         showOptionWeeks(true);
         showOptionHours(true);
+        showOptionLabels(true);
         showOptionShowNoon(false);
         disableOptionAllowResize();
         showOptionTrackingMode(true);
@@ -128,7 +129,7 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
         WidgetSettings.saveTimeMode2Pref(context, appWidgetId, timeMode);
     }
 
-    public static final boolean DEF_SHOWTITLE = true;
+    public static final boolean DEF_SHOWTITLE = false;
     public static final String DEF_TITLETEXT = "%M";
 
     @Override

@@ -22,6 +22,12 @@
         android:orientation="vertical" android:layout_gravity="center_horizontal">
 
         <TextView
+            style="@style/SunsetTimeTextView2" android:visibility="gone"
+            android:id="@+id/text_time_event_label"
+            android:textColor="@color/sunIcon_color_rising"
+            tools:text="Spring Equinox" />
+
+        <TextView
             style="@style/SunsetTimeTextView"
             android:id="@+id/text_time_event"
             android:textColor="@color/sunIcon_color_rising"
