@@ -90,7 +90,7 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
 
                 String noteTime = utils.timeDeltaDisplayString(now.getTime(), event.getTime(), showWeeks, showHours).toString();
                 String noteString = context.getString(noteStringId, noteTime);
-                SpannableString noteSpan = SuntimesUtils.createColorSpan(noteString, noteTime, timeColor);
+                SpannableString noteSpan = (boldTime ? SuntimesUtils.createBoldColorSpan(noteString, noteTime, timeColor) : SuntimesUtils.createColorSpan(noteString, noteTime, timeColor));
                 views.setTextViewText(R.id.text_time_event_note, noteSpan);
 
             } else {
@@ -109,6 +109,7 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
 
     private WidgetSettings.SolsticeEquinoxMode timeMode = WidgetSettings.SolsticeEquinoxMode.EQUINOX_VERNAL;
     private int timeColor = Color.WHITE;
+    private boolean boldTime = false;
 
     @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
@@ -118,6 +119,7 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
         timeColor = theme.getTimeColor();
         int textColor = theme.getTextColor();
         int eventColor = theme.getSeasonColor(timeMode);
+        boldTime = theme.getTimeBold();
 
         views.setTextColor(R.id.text_time_event_note, textColor);
         views.setTextColor(R.id.text_time_event, eventColor);
