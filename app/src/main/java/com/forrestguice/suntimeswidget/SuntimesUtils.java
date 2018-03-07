@@ -727,6 +727,8 @@ public class SuntimesUtils
         String dateYearPattern = "%dY";
         String dateDayPattern = "%dD";
         String dateDayPatternShort = "%dd";
+        String dateTimePattern = "%dT";
+        String dateTimePatternShort = "%dt";
         String widgetIDPattern = "%id";
         String percentPattern = "%%";
 
@@ -745,6 +747,8 @@ public class SuntimesUtils
 
         if (displayString.contains(datePattern))
         {
+            displayString = displayString.replaceAll(dateTimePatternShort, calendarTimeShortDisplayString(context, data.now(), false).toString());
+            displayString = displayString.replaceAll(dateTimePattern, calendarTimeShortDisplayString(context, data.now(), true).toString());
             displayString = displayString.replaceAll(dateDayPatternShort, calendarDayDisplayString(context, data.calendar(), true).toString());
             displayString = displayString.replaceAll(dateDayPattern, calendarDayDisplayString(context, data.calendar(), false).toString());
             displayString = displayString.replaceAll(dateYearPattern, calendarDateYearDisplayString(context, data.calendar()).toString());
