@@ -103,10 +103,10 @@
     <string name="untilEnd_civilTwilight">zmierzchu cywilnego</string>
     <string name="untilEnd_nauticalTwilight">zmierzchu żeglarskiego</string>
     <string name="untilEnd_astroTwilight">zmierzchu astronomicznego</string>
-    <string name="until_goldhour">złota godzina</string>
-    <string name="untilEnd_goldhour">złota godzina</string>
-    <string name="until_bluehour">błękitna godzina</string>
-    <string name="untilEnd_bluehour">błękitna godzina</string>
+    <string name="until_goldhour">złotej godziny</string>
+    <string name="untilEnd_goldhour">końca złotej godziny</string>
+    <string name="until_bluehour">błękitnej godziny</string>
+    <string name="untilEnd_bluehour">końca błękitnej godziny</string>
 
     <!-- Table -->
     <string name="sunrise">Wschód Słońca</string>                             <!-- contentDescription -->
@@ -159,7 +159,7 @@
     <string name="configLabel_appearance">Ustawienia wyglądu</string>           <!-- group title -->
     <string name="configLabel_appearance_theme">Skórka:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Poszerz do dostępnej przestrzeni (rozciągalne)</string>  <!-- checkbox label -->
-    <string name="configLabel_appearance_showLabels">Show Labels</string>          <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_appearance_showLabels">Wyświetl etykiety</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_showTitle">Pokaż tytuł</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Tytuł:</string>              <!-- edittext label -->
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
@@ -683,7 +683,6 @@
     <string name="app_version"><![CDATA[<b>Wersja:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Wyświetla czasy świecenia Słońca i Księżyca.</string>
     <string name="app_support_url"><![CDATA[<b>Wsparcie:</b> odwiedź <a href="https://github.com/forrestguice/SuntimesWidget/issues">stronę trackera błędów</a> aby zgłosić błąd/sugestię.]]></string>
-    <string name="app_url"><xliff:g id="url"><![CDATA[<a href="https://github.com/forrestguice/SuntimesWidget">github.com/forrestguice/SuntimesWidget</a>]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[Prawo autorskie &#169 2014-2018 Forrest Guice <br />Kod źródłowy dostępny na licencji GPLv3.]]></string>
     <string name="app_legal2"><![CDATA[
         Niemieckie tłumaczenie: Henrik "HerHde" Hüttemann<br />
@@ -736,7 +735,7 @@
     ]]></string>
     <string name="help_general_daylength"><![CDATA[
         <b>Długość dnia:</b> czas pomiędzy wschodem i zachodem Słońca.<br/><br/>
-        <b>Okres użytecznego światła:</b> czas pomiędzy cywilnym świtem i zmierzchem.</br>
+        <b>Okres użytecznego światła:</b> czas pomiędzy cywilnym świtem i zmierzchem.</br></br>
     ]]>
     </string>
     <string name="help_general_goldhour"><![CDATA[

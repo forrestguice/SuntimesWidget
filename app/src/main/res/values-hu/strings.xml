@@ -704,9 +704,6 @@
         <b>Support:</b> visit the
         <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a> to submit a request.
     ]]></string>
-    <string name="app_url"><xliff:g id="url"><![CDATA[
-        <a href="https://github.com/forrestguice/SuntimesWidget">github.com/forrestguice/SuntimesWidget</a>
-    ]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[
         <b>Source Code:</b><br />
         Copyright &#169 2014-2018 Forrest Guice <br />

@@ -720,9 +720,6 @@
         <b>Soporte:</b> visita el
         <a href="https://github.com/forrestguice/SuntimesWidget/issues">seguidor de cuestiones</a> para registrar una petición.
     ]]></string>
-    <string name="app_url"><xliff:g id="url"><![CDATA[
-        <a href="https://github.com/forrestguice/SuntimesWidget">github.com/forrestguice/SuntimesWidget</a>
-    ]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[
         <b>Código fuente:</b><br />
         Copyright &#169 2014-2018 Forrest Guice <br />

@@ -111,6 +111,17 @@
 
         </LinearLayout>
 
+        <LinearLayout android:id="@+id/appwidget_general_showHours_layout"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
+
+            <CheckBox android:id="@+id/appwidget_general_showHours"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/configLabel_general_showHours" />
+
+        </LinearLayout>
+
         <LinearLayout android:id="@+id/appwidget_general_showSeconds_layout"
                       android:layout_width="match_parent" android:layout_height="wrap_content"
                       android:orientation="horizontal"

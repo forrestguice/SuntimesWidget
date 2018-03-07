@@ -77,6 +77,11 @@
             android:title="@string/configLabel_general_showWeeks"
             android:summary="@string/configLabel_general_showWeeks_summary" android:defaultValue="@string/def_appwidget_0_general_showweeks" />
 
+        <CheckBoxPreference
+            android:key="appwidget_0_general_showhours"
+            android:title="@string/configLabel_general_showHours"
+            android:summary="@string/configLabel_general_showHours_summary" android:defaultValue="@string/def_appwidget_0_general_showhours" />
+
         <com.forrestguice.suntimeswidget.settings.ListPreference
             android:key="appwidget_0_general_trackingmode"
             android:title="@string/configLabel_ui_solsticeTrackingMode"

@@ -1,0 +1,5 @@
+Montras tempojn de lumado de Suno kaj Luno. Enhavas aplikaĵon kaj kolekton de fenestraĵoj.
+
+Montras sunleviĝon, sunsubiron, krepuskojn (civilan, naŭtikan, astronomian), bluan kaj oran horojn, sunekstremojn kaj tagnoktegalecojn, lunleviĝon kaj lunsubiron, lunfazojn kaj prilumecon de Luno.
+
+Tempoj montrataj en tiu ĉi aplikaĵo estas proksimumaj. Ne postulas aliron al interreto, GPS estas malnepra.

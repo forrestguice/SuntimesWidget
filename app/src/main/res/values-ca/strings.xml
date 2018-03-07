@@ -723,9 +723,6 @@
         <b>Suport:</b> visita el
         <a href="https://github.com/forrestguice/SuntimesWidget/issues">seguiment d\'incidències</a> per enviar una petició.
     ]]></string>
-    <string name="app_url"><xliff:g id="url"><![CDATA[
-    <a href="https://github.com/forrestguice/SuntimesWidget">github.com/forrestguice/SuntimesWidget</a>
-]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[
     <b>Codi font:</b><br />
     Copyright &#169 2014-2018 Forrest Guice <br />

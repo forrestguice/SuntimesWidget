@@ -45,6 +45,7 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
         setConfigActivityTitle(getString(R.string.configLabel_moonwidget0));
         showTimeMode(false);
         showOptionShowNoon(false);
+        showOptionLabels(true);
         hideOptionCompareAgainst();
         showOptionTrackingMode(false);
         showOptionTimeModeOverride(false);

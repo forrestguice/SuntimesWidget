@@ -516,6 +516,23 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     }
 
     @Test
+    public void test_showHoursPref()
+    {
+        WidgetSettings.saveShowHoursPref(context, appWidgetId, true);
+        boolean showHours = WidgetSettings.loadShowHoursPref(context, appWidgetId);
+        assertTrue("showHours should be true but was " + showHours, showHours);
+
+        WidgetSettings.saveShowHoursPref(context, appWidgetId, false);
+        showHours = WidgetSettings.loadShowHoursPref(context, appWidgetId);
+        assertTrue("showHours should be false but was " + showHours, !showHours);
+
+        WidgetSettings.deleteShowHoursPref(context, appWidgetId);
+        showHours = WidgetSettings.loadShowHoursPref(context, appWidgetId);
+        assertTrue("showHours should be default (true) but was " + showHours, showHours && showHours == WidgetSettings.PREF_DEF_GENERAL_SHOWHOURS);
+    }
+
+
+    @Test
     public void test_showSecondsPref()
     {
         WidgetSettings.saveShowSecondsPref(context, appWidgetId, false);
