@@ -1,0 +1,5 @@
+Wyświetla czasy świecenia Słońca i Księżyca. Dostępny jako aplikacja lub jako zestaw widźetów.
+
+Wyświetla wschód i zachód Słońca, świt/zmierzch (cywilny, żeglarski, astronomiczny), złotą i błękitną godzinę, przesilenia i równonoce, wschód i zachód Księżyca, fazy i oświetlenie Księżyca.
+
+Czasy podawane przez aplikację są przybliżone. Nie jest wymagane połączenie z internetem, GPS jest opcjonalny.

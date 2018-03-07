@@ -58,6 +58,7 @@ public class MoonLayout_2x1_0 extends MoonLayout
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesMoonData data)
     {
         super.updateViews(context, appWidgetId, views, data);
+        boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
         updateViewsMoonRiseSetText(context, views, data, showSeconds);
 
@@ -76,6 +77,7 @@ public class MoonLayout_2x1_0 extends MoonLayout
         if (phase != null)
         {
             views.setTextViewText(R.id.text_info_moonphase, phase.getLongDisplayString());
+            views.setViewVisibility(R.id.text_info_moonphase, (showLabels ? View.VISIBLE : View.GONE));
             views.setViewVisibility(phase.getView(), View.VISIBLE);
 
             Integer phaseColor = phaseColors.get(phase);

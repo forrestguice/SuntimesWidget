@@ -84,6 +84,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected CheckBox checkbox_showCompare;
     protected CheckBox checkbox_showSeconds;
     protected CheckBox checkbox_showWeeks;
+    protected CheckBox checkbox_showHours;
 
     protected Spinner spinner_onTap;
     protected EditText text_launchActivity;
@@ -568,8 +569,15 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
         //
         // widget: showWeeks
+        //
         checkbox_showWeeks = (CheckBox)findViewById(R.id.appwidget_general_showWeeks);
         showOptionWeeks(false);
+
+        //
+        // widget: showHours
+        //
+        checkbox_showHours = (CheckBox)findViewById(R.id.appwidget_general_showHours);
+        showOptionHours(false);
 
         //
         // widget: about button
@@ -943,6 +951,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         boolean showWeeks = checkbox_showWeeks.isChecked();
         WidgetSettings.saveShowWeeksPref(context, appWidgetId, showWeeks);
 
+        // save: showHours
+        boolean showHours = checkbox_showHours.isChecked();
+        WidgetSettings.saveShowHoursPref(context, appWidgetId, showHours);
+
         // save: time mode
         saveTimeMode(context);
         saveTimeModeOverride(context);
@@ -984,6 +996,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // load: showWeeks
         boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, appWidgetId);
         checkbox_showWeeks.setChecked(showWeeks);
+
+        // load: showHours
+        boolean showHours = WidgetSettings.loadShowHoursPref(context, appWidgetId);
+        checkbox_showHours.setChecked(showHours);
 
         // load: time mode
         loadTimeMode(context);
@@ -1172,6 +1188,15 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (weeksOptionLayout != null)
         {
             weeksOptionLayout.setVisibility((showOption ? View.VISIBLE : View.GONE));
+        }
+    }
+
+    protected void showOptionHours( boolean showOption )
+    {
+        View hoursOptionLayout = findViewById(R.id.appwidget_general_showHours_layout);
+        if (hoursOptionLayout != null)
+        {
+            hoursOptionLayout.setVisibility((showOption ? View.VISIBLE : View.GONE));
         }
     }
 

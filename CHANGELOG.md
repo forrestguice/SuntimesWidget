@@ -1,5 +1,12 @@
 ### ~
 
+###
+* adds widget option "show hours"; include hours/minutes in time spans greater than a day.
+* adds widget title substitution; %dt and %dT are for time (of last widget update).
+* adds widget title substitution; %id is for appWidgetID (for debug purposes).
+* adds widget option "show labels"; show/hide superfluous labels.
+* updates translations (eo, pl) (#171, #172); adds translated fastlane metadata.
+
 ### v0.7.1 (2018-02-28)
 * fixes bug #120 (widget icons don't use theme icons); now works for all api versions.
 * enhances the widget list; adds appWidgetID label to the list and widget (re)configure activity.

@@ -1,0 +1,1 @@
+Wyświetla czasy świecenia Słońca i Księżyca.

@@ -71,6 +71,7 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
             if (event != null)
             {
                 boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, appWidgetId);
+                boolean showHours = WidgetSettings.loadShowHoursPref(context, appWidgetId);
                 boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
                 TimeDisplayText eventString = utils.calendarDateTimeDisplayString(context, event, showSeconds);
                 views.setTextViewText(R.id.text_time_event, eventString.getValue());
@@ -81,7 +82,7 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
                     noteStringId = R.string.ago;
                 }
 
-                String noteTime = utils.timeDeltaDisplayString(now.getTime(), event.getTime(), showWeeks).toString();
+                String noteTime = utils.timeDeltaDisplayString(now.getTime(), event.getTime(), showWeeks, showHours).toString();
                 String noteString = context.getString(noteStringId, noteTime);
                 SpannableString noteSpan = SuntimesUtils.createColorSpan(noteString, noteTime, timeColor);
                 views.setTextViewText(R.id.text_time_event_note, noteSpan);
