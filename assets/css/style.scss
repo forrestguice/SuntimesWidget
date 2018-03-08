@@ -2,3 +2,63 @@
 ---
 
 @import "{{ site.theme }}";
+
+header img.appIcon {
+  width: auto;
+  height: 62px;
+  margin-right:15px;
+}
+a.fDroidButton {
+  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
+  font-size: 23px;
+  line-height: 1.2;
+  color: #fff;
+}
+header img.fDroidButton {
+  width: 202px;
+  height: auto;
+}
+header a.fDroidButton {
+  position: absolute;
+  top: 92px;
+  right: 0;
+}
+aside a.fDroidButton {
+  display: block;
+  padding-left: 0px;
+  margin-bottom: 20px;
+  font-size: 21px;
+}
+
+@media only screen and (max-width: 767px) {
+  header img.appIcon {
+    width: auto;
+    height: 48px;
+  }
+  header a.fDroidButton {
+    position: relative;
+    top: 20px;
+    display: inline-block;
+    width: auto;
+    height: auto;
+    padding: 0px;
+    margin-top: 15px;
+    font-size: 13px;
+    line-height: 1;
+    color: #2879d0;
+    text-align: center;
+    background-image: none;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+  }
+  /*    background-color: #9ddcff; */
+  header a.fDroidButton small {
+    display: inline;
+    font-size: 13px;
+  }
+  header img.fDroidButton {
+    width: auto;
+    height: 48px;
+  }
+}

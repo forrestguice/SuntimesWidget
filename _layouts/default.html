@@ -19,6 +19,7 @@
     <header>
       <div class="inner">
         <a href="{{ '/' | absolute_url }}">
+          <img src="./images/ic_suntimes.png" alt="Suntimes" align="left" class="appIcon" />
           <h1>{{ site.title | default: site.github.repository_name }}</h1>
         </a>
         <h2>{{ site.description | default: site.github.project_tagline }}</h2>
@@ -27,8 +28,12 @@
         {% endif %}
         {% if site.github.is_user_page %}
           <a href="{{ site.github.owner_url }}" class="button"><small>Follow me on</small> GitHub</a>
+        {% endif %}                
+        {% if site.fdroid_link %}
+          <a href="{{ site.fdroid_link }}" class="fDroidButton">
+            <img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" class="fDroidButton" />
+          </a>
         {% endif %}
-        <a href="https://f-droid.org/en/packages/com.forrestguice.suntimeswidget/"><small>Get it on</small> F-Droid</a>         
       </div>
     </header>
 
