@@ -63,7 +63,7 @@ public class MoonLayout_1x1_1 extends MoonLayout
         NumberFormat percentage = NumberFormat.getPercentInstance();
         String illum = percentage.format(data.getMoonIlluminationToday());
         String illumNote = context.getString(R.string.moon_illumination_short, illum);
-        SpannableString illumNoteSpan = SuntimesUtils.createColorSpan(illumNote, illum, illumColor);
+        SpannableString illumNoteSpan = (boldTime ? SuntimesUtils.createBoldColorSpan(illumNote, illum, illumColor) : SuntimesUtils.createColorSpan(illumNote, illum, illumColor));
         views.setTextViewText(R.id.text_info_moonillum, illumNoteSpan);
 
         for (MoonPhaseDisplay moonPhase : MoonPhaseDisplay.values())

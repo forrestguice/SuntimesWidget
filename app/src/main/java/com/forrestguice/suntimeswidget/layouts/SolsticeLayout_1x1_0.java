@@ -23,6 +23,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.text.SpannableString;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
@@ -73,7 +74,13 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
                 boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, appWidgetId);
                 boolean showHours = WidgetSettings.loadShowHoursPref(context, appWidgetId);
                 boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
-                TimeDisplayText eventString = utils.calendarDateTimeDisplayString(context, event, showSeconds);
+                boolean showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
+                boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
+
+                views.setTextViewText(R.id.text_time_event_label, data.timeMode().getLongDisplayString());
+                views.setViewVisibility(R.id.text_time_event_label, (showLabels ? View.VISIBLE : View.GONE));
+
+                TimeDisplayText eventString = utils.calendarDateTimeDisplayString(context, event, showTimeDate, showSeconds);
                 views.setTextViewText(R.id.text_time_event, eventString.getValue());
 
                 int noteStringId = R.string.hence;
@@ -84,21 +91,26 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
 
                 String noteTime = utils.timeDeltaDisplayString(now.getTime(), event.getTime(), showWeeks, showHours).toString();
                 String noteString = context.getString(noteStringId, noteTime);
-                SpannableString noteSpan = SuntimesUtils.createColorSpan(noteString, noteTime, timeColor);
+                SpannableString noteSpan = (boldTime ? SuntimesUtils.createBoldColorSpan(noteString, noteTime, timeColor) : SuntimesUtils.createColorSpan(noteString, noteTime, timeColor));
                 views.setTextViewText(R.id.text_time_event_note, noteSpan);
 
             } else {
                 views.setTextViewText(R.id.text_time_event, "");
                 views.setTextViewText(R.id.text_time_event_note, context.getString(R.string.configLabel_ui_showEquinox_notImplemented));
+                views.setTextViewText(R.id.text_time_event_label, "");
+                views.setViewVisibility(R.id.text_time_event_label, View.GONE);
             }
         } else {
             views.setTextViewText(R.id.text_time_event, "");
             views.setTextViewText(R.id.text_time_event_note, context.getString(R.string.time_loading));
+            views.setTextViewText(R.id.text_time_event_label, "");
+            views.setViewVisibility(R.id.text_time_event_label, View.GONE);
         }
     }
 
     private WidgetSettings.SolsticeEquinoxMode timeMode = WidgetSettings.SolsticeEquinoxMode.EQUINOX_VERNAL;
     private int timeColor = Color.WHITE;
+    private boolean boldTime = false;
 
     @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
@@ -108,15 +120,18 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
         timeColor = theme.getTimeColor();
         int textColor = theme.getTextColor();
         int eventColor = theme.getSeasonColor(timeMode);
+        boldTime = theme.getTimeBold();
 
         views.setTextColor(R.id.text_time_event_note, textColor);
         views.setTextColor(R.id.text_time_event, eventColor);
+        views.setTextColor(R.id.text_time_event_label, eventColor);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
             float textSize = theme.getTextSizeSp();
             float timeSize = theme.getTimeSizeSp();
 
+            views.setTextViewTextSize(R.id.text_time_event_label, TypedValue.COMPLEX_UNIT_SP, textSize);
             views.setTextViewTextSize(R.id.text_time_event_note, TypedValue.COMPLEX_UNIT_SP, textSize);
             views.setTextViewTextSize(R.id.text_time_event, TypedValue.COMPLEX_UNIT_SP, timeSize);
         }

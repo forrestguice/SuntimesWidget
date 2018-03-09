@@ -46,6 +46,7 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
         showTimeMode(false);
         showOptionShowNoon(false);
         showOptionLabels(true);
+        showOptionTimeDate(true);
         hideOptionCompareAgainst();
         showOptionTrackingMode(false);
         showOptionTimeModeOverride(false);

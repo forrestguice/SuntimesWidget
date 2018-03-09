@@ -83,6 +83,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected CheckBox checkbox_showNoon;
     protected CheckBox checkbox_showCompare;
     protected CheckBox checkbox_showSeconds;
+    protected CheckBox checkbox_showTimeDate;
     protected CheckBox checkbox_showWeeks;
     protected CheckBox checkbox_showHours;
 
@@ -568,6 +569,12 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         checkbox_showSeconds = (CheckBox)findViewById(R.id.appwidget_general_showSeconds);
 
         //
+        // widget: showTimeDate
+        //
+        checkbox_showTimeDate = (CheckBox)findViewById(R.id.appwidget_general_showTimeDate);
+        showOptionTimeDate(false);
+
+        //
         // widget: showWeeks
         //
         checkbox_showWeeks = (CheckBox)findViewById(R.id.appwidget_general_showWeeks);
@@ -947,6 +954,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         boolean showSeconds = checkbox_showSeconds.isChecked();
         WidgetSettings.saveShowSecondsPref(context, appWidgetId, showSeconds);
 
+        // save: showTimeDate
+        boolean showTimeDate = checkbox_showTimeDate.isChecked();
+        WidgetSettings.saveShowTimeDatePref(context, appWidgetId, showTimeDate);
+
         // save: showWeeks
         boolean showWeeks = checkbox_showWeeks.isChecked();
         WidgetSettings.saveShowWeeksPref(context, appWidgetId, showWeeks);
@@ -992,6 +1003,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // load: showSeconds
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
         checkbox_showSeconds.setChecked(showSeconds);
+
+        // load showTimeDate
+        boolean showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
+        checkbox_showTimeDate.setChecked(showTimeDate);
 
         // load: showWeeks
         boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, appWidgetId);
@@ -1197,6 +1212,15 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (hoursOptionLayout != null)
         {
             hoursOptionLayout.setVisibility((showOption ? View.VISIBLE : View.GONE));
+        }
+    }
+
+    protected void showOptionTimeDate( boolean showOption )
+    {
+        View optionLayout = findViewById(R.id.appwidget_general_showTimeDate_layout);
+        if (optionLayout != null)
+        {
+            optionLayout.setVisibility((showOption ? View.VISIBLE : View.GONE));
         }
     }
 

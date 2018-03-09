@@ -65,7 +65,7 @@ public class MoonLayout_2x1_0 extends MoonLayout
         NumberFormat percentage = NumberFormat.getPercentInstance();
         String illum = percentage.format(data.getMoonIlluminationToday());
         String illumNote = context.getString(R.string.moon_illumination, illum);
-        SpannableString illumNoteSpan = SuntimesUtils.createColorSpan(illumNote, illum, illumColor);
+        SpannableString illumNoteSpan = (boldTime ? SuntimesUtils.createBoldColorSpan(illumNote, illum, illumColor) : SuntimesUtils.createColorSpan(illumNote, illum, illumColor));
         views.setTextViewText(R.id.text_info_moonillum, illumNoteSpan);
 
         for (MoonPhaseDisplay moonPhase : MoonPhaseDisplay.values())
@@ -89,12 +89,14 @@ public class MoonLayout_2x1_0 extends MoonLayout
     }
 
     private int illumColor = Color.WHITE;
+    private boolean boldTime = false;
 
     @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         super.themeViews(context, views, theme);
         illumColor = theme.getTimeColor();
+        boldTime = theme.getTimeBold();
 
         themeViewsMoonPhase(context, views, theme);
         themeViewsMoonPhaseText(context, views, theme);

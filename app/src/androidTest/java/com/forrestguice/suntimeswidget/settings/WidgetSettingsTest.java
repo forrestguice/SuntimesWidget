@@ -548,4 +548,21 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         assertTrue("showSeconds should be default (false) but was " + showSeconds, !showSeconds && showSeconds == WidgetSettings.PREF_DEF_GENERAL_SHOWSECONDS);
     }
 
+    @Test
+    public void test_showTimeDatePref()
+    {
+        WidgetSettings.saveShowTimeDatePref(context, appWidgetId, true);
+        boolean showTimeDate = WidgetSettings.loadShowHoursPref(context, appWidgetId);
+        assertTrue("showTimeDate should be true but was " + showTimeDate, showTimeDate);
+
+        WidgetSettings.saveShowTimeDatePref(context, appWidgetId, false);
+        showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
+        assertTrue("showTimeDate should be false but was " + showTimeDate, !showTimeDate);
+
+        WidgetSettings.deleteShowTimeDatePref(context, appWidgetId);
+        showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
+        assertTrue("showTimeDate should be default (true) but was " + showTimeDate, showTimeDate && showTimeDate == WidgetSettings.PREF_DEF_GENERAL_SHOWTIMEDATE);
+    }
+
+
 }

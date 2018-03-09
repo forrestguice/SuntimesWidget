@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.layouts;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Build;
+import android.text.SpannableString;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -54,8 +55,8 @@ public class SunLayout_2x1_0 extends SunLayout
         String dayDeltaUnits = dayDeltaDisplay.getUnits();
         String dayDeltaSuffix = dayDeltaDisplay.getSuffix();
 
-        views.setTextViewText(R.id.text_delta_day_prefix, data.dayDeltaPrefix());
-        views.setTextViewText(R.id.text_delta_day_value, dayDeltaValue);
+        views.setTextViewText(R.id.text_delta_day_prefix, data.dayDeltaPrefix());   // TODO: refactor to use only a single TextView and SpannableString
+        views.setTextViewText(R.id.text_delta_day_value, (boldTime ? SuntimesUtils.createBoldSpan(dayDeltaValue, dayDeltaValue) : dayDeltaValue));
         views.setTextViewText(R.id.text_delta_day_units, dayDeltaUnits);
         views.setTextViewText(R.id.text_delta_day_suffix, dayDeltaSuffix);
         views.setViewVisibility(R.id.layout_delta_day, (showDayDelta ? View.VISIBLE : View.GONE));
@@ -73,6 +74,8 @@ public class SunLayout_2x1_0 extends SunLayout
         }
     }
 
+    private boolean boldTime = false;
+
     @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
@@ -84,6 +87,7 @@ public class SunLayout_2x1_0 extends SunLayout
         int suffixColor = theme.getTimeSuffixColor();
         int timeColor = theme.getTimeColor();
         int textColor = theme.getTextColor();
+        boldTime = theme.getTimeBold();
 
         // theme sunrise text
         views.setTextColor(R.id.text_time_rise_suffix, suffixColor);
