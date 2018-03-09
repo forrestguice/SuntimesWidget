@@ -26,7 +26,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
-public abstract class SunExtLayout extends SuntimesLayout
+public abstract class SunPosLayout extends SuntimesLayout
 {
     protected static final SuntimesUtils utils = new SuntimesUtils();
 

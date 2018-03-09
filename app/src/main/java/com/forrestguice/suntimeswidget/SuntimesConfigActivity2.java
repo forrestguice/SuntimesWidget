@@ -23,8 +23,8 @@ import android.content.Context;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
-import com.forrestguice.suntimeswidget.layouts.SunExtLayout;
-import com.forrestguice.suntimeswidget.layouts.SunExtLayout_1x1_0;
+import com.forrestguice.suntimeswidget.layouts.SunPosLayout;
+import com.forrestguice.suntimeswidget.layouts.SunPosLayout_1X1_0;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
@@ -68,7 +68,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     @Override
     protected void updateWidget(Context context)
     {
-        SunExtLayout defLayout = new SunExtLayout_1x1_0();
+        SunPosLayout defLayout = new SunPosLayout_1X1_0();
         SuntimesWidget2.updateAppWidget(context, AppWidgetManager.getInstance(context), appWidgetId, SuntimesWidget2.class, minWidgetSize(context), defLayout);
     }
 

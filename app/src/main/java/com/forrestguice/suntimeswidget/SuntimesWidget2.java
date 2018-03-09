@@ -25,9 +25,9 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
-import com.forrestguice.suntimeswidget.layouts.SunExtLayout;
-import com.forrestguice.suntimeswidget.layouts.SunExtLayout_1x1_0;
-import com.forrestguice.suntimeswidget.layouts.SunExtLayout_2x1_0;
+import com.forrestguice.suntimeswidget.layouts.SunPosLayout;
+import com.forrestguice.suntimeswidget.layouts.SunPosLayout_1X1_0;
+import com.forrestguice.suntimeswidget.layouts.SunPosLayout_2X1_0;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Calendar;
@@ -79,17 +79,17 @@ public class SuntimesWidget2 extends SuntimesWidget0
     @Override
     protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
-        SunExtLayout deflayout = new SunExtLayout_1x1_0();
+        SunPosLayout deflayout = new SunPosLayout_1X1_0();
         SuntimesWidget2.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget2.class, getMinSize(context), deflayout);
     }
 
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Class widgetClass, int[] defSize, SunExtLayout defLayout)
+    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Class widgetClass, int[] defSize, SunPosLayout defLayout)
     {
-        SunExtLayout layout = SuntimesWidget2.getWidgetLayout(context, appWidgetManager, appWidgetId, defSize, defLayout);
+        SunPosLayout layout = SuntimesWidget2.getWidgetLayout(context, appWidgetManager, appWidgetId, defSize, defLayout);
         SuntimesWidget2.updateAppWidget(context, appWidgetManager, appWidgetId, layout, widgetClass);
     }
 
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SunExtLayout layout, Class widgetClass)
+    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SunPosLayout layout, Class widgetClass)
     {
         RemoteViews views = layout.getViews(context);
 
@@ -105,15 +105,15 @@ public class SuntimesWidget2 extends SuntimesWidget0
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
-    protected static SunExtLayout getWidgetLayout(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize, SunExtLayout defLayout)
+    protected static SunPosLayout getWidgetLayout(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize, SunPosLayout defLayout)
     {
         int[] mustFitWithinDp = widgetSizeDp(context, appWidgetManager, appWidgetId, defSize);
-        SunExtLayout layout;
+        SunPosLayout layout;
         if (WidgetSettings.loadAllowResizePref(context, appWidgetId))
         {
             //int minWidth3x1 = context.getResources().getInteger(R.integer.widget_size_minWidthDp3x1);
             int minWidth2x1 = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
-            layout = (mustFitWithinDp[0] >= minWidth2x1) ? new SunExtLayout_2x1_0() : new SunExtLayout_1x1_0();
+            layout = (mustFitWithinDp[0] >= minWidth2x1) ? new SunPosLayout_2X1_0() : new SunPosLayout_1X1_0();
                     //: WidgetSettings.loadMoon1x1ModePref_asLayout(context, appWidgetId);
         } else {
             layout = defLayout;

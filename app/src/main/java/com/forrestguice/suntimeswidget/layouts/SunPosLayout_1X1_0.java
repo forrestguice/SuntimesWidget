@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget.layouts;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.text.SpannableString;
@@ -30,7 +29,6 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -38,14 +36,14 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 /**
  * A 1x1 layout that displays azimuth and elevation.
  */
-public class SunExtLayout_1x1_0 extends SunExtLayout
+public class SunPosLayout_1X1_0 extends SunPosLayout
 {
-    public SunExtLayout_1x1_0()
+    public SunPosLayout_1X1_0()
     {
         super();
     }
 
-    public SunExtLayout_1x1_0(int layoutID )
+    public SunPosLayout_1X1_0(int layoutID )
     {
         this.layoutID = layoutID;
     }

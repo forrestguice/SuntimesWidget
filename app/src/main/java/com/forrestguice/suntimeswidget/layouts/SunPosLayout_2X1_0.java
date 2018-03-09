@@ -23,14 +23,14 @@ import com.forrestguice.suntimeswidget.R;
 /**
  * A 2x1 layout that displays azimuth and elevation.
  */
-public class SunExtLayout_2x1_0 extends SunExtLayout_1x1_0
+public class SunPosLayout_2X1_0 extends SunPosLayout_1X1_0
 {
-    public SunExtLayout_2x1_0()
+    public SunPosLayout_2X1_0()
     {
         super();
     }
 
-    public SunExtLayout_2x1_0(int layoutID )
+    public SunPosLayout_2X1_0(int layoutID )
     {
         this.layoutID = layoutID;
     }
