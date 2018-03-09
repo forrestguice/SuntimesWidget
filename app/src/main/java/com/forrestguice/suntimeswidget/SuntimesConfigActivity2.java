@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.widget.ArrayAdapter;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
@@ -40,7 +41,6 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
         super.initViews(context);
         setConfigActivityTitle(getString(R.string.configLabel_title2));
         hideOptionCompareAgainst();
-        hideOption1x1LayoutMode();
         showTimeMode(false);
         showOptionShowNoon(false);
         showOptionLabels(true);
@@ -76,6 +76,38 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     protected void loadShowLabels(Context context)
     {
         checkbox_showLabels.setChecked(WidgetSettings.loadShowLabelsPref(context, appWidgetId, true));
+    }
+
+    @Override
+    protected void initWidgetMode1x1(Context context)
+    {
+        if (spinner_1x1mode != null)
+        {
+            spinner_1x1mode.setAdapter(createAdapter_widgetModeSunPos1x1());
+        }
+    }
+
+    protected ArrayAdapter<WidgetSettings.WidgetModeSunPos1x1> createAdapter_widgetModeSunPos1x1()
+    {
+        ArrayAdapter<WidgetSettings.WidgetModeSunPos1x1> adapter = new ArrayAdapter<WidgetSettings.WidgetModeSunPos1x1>(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSunPos1x1.values());
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        return adapter;
+    }
+
+    @Override
+    protected void saveWidgetMode1x1(Context context)
+    {
+        final WidgetSettings.WidgetModeSunPos1x1[] modes = WidgetSettings.WidgetModeSunPos1x1.values();
+        WidgetSettings.WidgetModeSunPos1x1 mode = modes[spinner_1x1mode.getSelectedItemPosition()];
+        WidgetSettings.saveSunPos1x1ModePref(context, appWidgetId, mode);
+        //Log.d("DEBUG", "Saved mode: " + mode.name());
+    }
+
+    @Override
+    protected void loadWidgetMode1x1(Context context)
+    {
+        WidgetSettings.WidgetModeSunPos1x1 mode1x1 = WidgetSettings.loadSunPos1x1ModePref(context, appWidgetId);
+        spinner_1x1mode.setSelection(mode1x1.ordinal());
     }
 
 }
