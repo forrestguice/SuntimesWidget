@@ -453,7 +453,7 @@
     <string name="widgetLabel_altitude_short">Alt</string>               <!-- label -->  <!-- TODO: i18n -->
 
     <string name="widgetLabel_rightAscension">Right Ascension</string>    <!-- label -->  <!-- TODO: i18n -->
-    <string name="widgetLabel_rightAscension_short">Right</string>    <!-- label -->  <!-- TODO: i18n -->
+    <string name="widgetLabel_rightAscension_short">RA</string>    <!-- label -->  <!-- TODO: i18n -->
     <string name="widgetLabel_declination">Declination</string>           <!-- label -->  <!-- TODO: i18n -->
     <string name="widgetLabel_declination_short">Dec</string>           <!-- label -->  <!-- TODO: i18n -->
 
