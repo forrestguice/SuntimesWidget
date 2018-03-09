@@ -112,9 +112,10 @@ public class SuntimesWidget2 extends SuntimesWidget0
         if (WidgetSettings.loadAllowResizePref(context, appWidgetId))
         {
             //int minWidth3x1 = context.getResources().getInteger(R.integer.widget_size_minWidthDp3x1);
-            int minWidth2x1 = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
-            layout = (mustFitWithinDp[0] >= minWidth2x1) ? new SunPosLayout_2X1_0()           // : new SunPosLayout_1X1_0();
-                    : WidgetSettings.loadSunPos1x1ModePref_asLayout(context, appWidgetId);
+            //int minWidth2x1 = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
+            layout = //(mustFitWithinDp[0] >= minWidth2x1) ? new SunPosLayout_2X1_0()           // : new SunPosLayout_1X1_0();
+                    //: WidgetSettings.loadSunPos1x1ModePref_asLayout(context, appWidgetId);
+                    WidgetSettings.loadSunPos1x1ModePref_asLayout(context, appWidgetId);
         } else {
             layout = defLayout;
         }
