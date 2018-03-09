@@ -23,10 +23,11 @@
     android:gravity="center" android:orientation="vertical" android:layout_margin="2dp"
     tools:ignore="UseCompoundDrawables">
 
-    <TextView android:visibility="gone"
+    <TextView
         android:id="@+id/moonphase_thirdquarter_label" android:layout_gravity="center"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        style="@style/SunsetTimeTextView2" android:text="@string/timeMode_moon_thirdquarter" />
+        style="@style/SunsetTimeTextView2" android:layout_marginTop="0dp"
+        android:text="@string/timeMode_moon_thirdquarter" />
 
     <ImageView
         android:id="@+id/moonphase_thirdquarter_icon"
