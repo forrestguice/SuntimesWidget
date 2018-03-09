@@ -345,6 +345,8 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         SunPosition result = new SunPosition();
         result.azimuth = position.getAzimuth();
         result.elevation = position.getElevation();
+        result.rightAscension = position.getRightAscension();
+        result.declination = position.getDeclination();
         return result;
     }
 
