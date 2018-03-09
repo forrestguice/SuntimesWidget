@@ -2,6 +2,7 @@
 
 ###
 * adds "sun position" overflow menu item; shows lightmap dialog.
+* adds 1x1 sun position widget; shows right ascension and declination.
 * adds 1x1 sun position widget; shows azimuth and elevation angles (#169).
 * adds sun azimuth and elevation angles to lightmap dialog (#169).
 
