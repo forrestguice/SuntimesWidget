@@ -99,6 +99,7 @@ public class MoonLayout_1x1_1 extends MoonLayout
         themeViewsMoonPhaseIcons(context, views, theme);
     }
 
+    @SuppressWarnings("EmptyMethod")
     @Override
     public void prepareForUpdate(SuntimesMoonData data)
     {
