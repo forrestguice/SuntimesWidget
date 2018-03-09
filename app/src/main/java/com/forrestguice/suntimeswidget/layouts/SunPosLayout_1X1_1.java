@@ -67,7 +67,7 @@ public class SunPosLayout_1X1_1 extends SunPosLayout
         SuntimesCalculator calculator = dataset.dataActual.calculator();
         SuntimesCalculator.SunPosition sunPosition = calculator.getSunPosition(dataset.now());
 
-        SuntimesUtils.TimeDisplayText rightAscDisplay = utils.formatAsDirection2(sunPosition.azimuth, 1);  // TODO
+        SuntimesUtils.TimeDisplayText rightAscDisplay = utils.formatAsDirection2(sunPosition.rightAscension, 1);
         String rightAscString = utils.formatAsDirection(rightAscDisplay.getValue(), rightAscDisplay.getSuffix());
 
         SpannableString rightAsc = SuntimesUtils.createColorSpan(null, rightAscString, rightAscDisplay.getValue(), highlightColor, boldTime);
@@ -75,7 +75,7 @@ public class SunPosLayout_1X1_1 extends SunPosLayout
         rightAsc = SuntimesUtils.createRelativeSpan(rightAsc, rightAscString, rightAscDisplay.getSuffix(), 0.7f);
         views.setTextViewText(R.id.info_sun_rightascension_current, rightAsc);
 
-        String declinationString = utils.formatAsDegrees(sunPosition.elevation, 1);  // TODO
+        String declinationString = utils.formatAsDegrees(sunPosition.declination, 1);
         CharSequence declination = SuntimesUtils.createColorSpan(null, declinationString, declinationString, highlightColor, boldTime);
         views.setTextViewText(R.id.info_sun_declination_current, declination);
 

@@ -277,7 +277,7 @@ public interface SuntimesCalculator
     //
 
     /**
-     * Get the sun's azimuth and elevation.
+     * Get the sun's azimuth and elevation (and/or rightAscension and declination).
      * @param dateTime a Calendar representing a given date + time
      * @return a SunPosition obj wrapping azimuth, elevation, etc
      * @since 1.4.0
@@ -287,5 +287,8 @@ public interface SuntimesCalculator
     {
         public double azimuth;
         public double elevation;
+
+        public double rightAscension;
+        public double declination;
     }
 }
