@@ -92,6 +92,12 @@ public class MoonLayout_3x1_0 extends MoonLayout
         views.setTextColor(R.id.moonphase_full_date, timeColor);
         views.setTextColor(R.id.moonphase_thirdquarter_date, timeColor);
 
+        int textColor = theme.getTextColor();
+        views.setTextColor(R.id.moonphase_new_label, textColor);
+        views.setTextColor(R.id.moonphase_firstquarter_label, textColor);
+        views.setTextColor(R.id.moonphase_full_label, textColor);
+        views.setTextColor(R.id.moonphase_thirdquarter_label, textColor);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
             float timeSize = theme.getTimeSizeSp();
@@ -99,6 +105,12 @@ public class MoonLayout_3x1_0 extends MoonLayout
             views.setTextViewTextSize(R.id.moonphase_firstquarter_date, TypedValue.COMPLEX_UNIT_SP, timeSize);
             views.setTextViewTextSize(R.id.moonphase_full_date, TypedValue.COMPLEX_UNIT_SP, timeSize);
             views.setTextViewTextSize(R.id.moonphase_thirdquarter_date, TypedValue.COMPLEX_UNIT_SP, timeSize);
+
+            float textSize = theme.getTextSizeSp();
+            views.setTextViewTextSize(R.id.moonphase_new_label, TypedValue.COMPLEX_UNIT_SP, textSize);
+            views.setTextViewTextSize(R.id.moonphase_firstquarter_label, TypedValue.COMPLEX_UNIT_SP, textSize);
+            views.setTextViewTextSize(R.id.moonphase_full_label, TypedValue.COMPLEX_UNIT_SP, textSize);
+            views.setTextViewTextSize(R.id.moonphase_thirdquarter_label, TypedValue.COMPLEX_UNIT_SP, textSize);
         }
 
         int colorWaxing = theme.getMoonWaxingColor();
