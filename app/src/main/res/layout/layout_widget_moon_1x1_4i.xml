@@ -29,6 +29,11 @@
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:layout_marginBottom="2dp" android:orientation="vertical">
 
+        <TextView android:visibility="gone"
+            android:id="@+id/moonphase_major_label" android:layout_gravity="center"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            style="@style/SunsetTimeTextView2" tools:text="@string/timeMode_moon_new" />
+
         <include layout="@layout/icons_moon_phases" />
 
         <TextView

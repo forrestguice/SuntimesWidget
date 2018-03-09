@@ -22,7 +22,13 @@
         <CheckBoxPreference
             android:key="appwidget_0_general_showseconds"
             android:title="@string/configLabel_general_showSeconds"
-            android:summary="" android:defaultValue="@string/def_appwidget_0_general_showseconds" />
+            android:summary="@string/configLabel_general_showSeconds_summary" android:defaultValue="@string/def_appwidget_0_general_showseconds" />
+
+        <CheckBoxPreference
+            android:key="appwidget_0_general_showtimedate"
+            android:title="@string/configLabel_general_showTimeDate"
+            android:summary="@string/configLabel_general_showTimeDate_summary" android:defaultValue="@string/def_appwidget_0_general_showtimedate" />
+
 
     </PreferenceCategory>
 

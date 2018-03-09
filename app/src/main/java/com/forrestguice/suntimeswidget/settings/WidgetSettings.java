@@ -126,6 +126,9 @@ public class WidgetSettings
     public static final String PREF_KEY_GENERAL_SHOWSECONDS = "showseconds";
     public static final boolean PREF_DEF_GENERAL_SHOWSECONDS = false;
 
+    public static final String PREF_KEY_GENERAL_SHOWTIMEDATE = "showtimedate";
+    public static final boolean PREF_DEF_GENERAL_SHOWTIMEDATE = true;
+
     public static final String PREF_KEY_ACTION_MODE = "action";
     public static final ActionMode PREF_DEF_ACTION_MODE = ActionMode.ONTAP_LAUNCH_CONFIG;
 
@@ -1874,6 +1877,27 @@ public class WidgetSettings
     }
 
 
+    public static void saveShowTimeDatePref(Context context, int appWidgetId, boolean showTimeWithDates)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWTIMEDATE, showTimeWithDates);
+        prefs.apply();
+    }
+    public static boolean loadShowTimeDatePref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        return prefs.getBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWTIMEDATE, PREF_DEF_GENERAL_SHOWTIMEDATE);
+    }
+    public static void deleteShowTimeDatePref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_SHOWTIMEDATE);
+        prefs.apply();
+    }
+
 
     public static void saveTimeNoteRisePref(Context context, int appWidgetId, SolarEvents riseChoice)
     {
@@ -1964,6 +1988,7 @@ public class WidgetSettings
         deleteShowWeeksPref(context, appWidgetId);
         deleteShowHoursPref(context, appWidgetId);
         deleteShowSecondsPref(context, appWidgetId);
+        deleteShowTimeDatePref(context, appWidgetId);
 
         deleteLocationModePref(context, appWidgetId);
         deleteLocationPref(context, appWidgetId);
