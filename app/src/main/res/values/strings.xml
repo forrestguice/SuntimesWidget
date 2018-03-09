@@ -244,6 +244,9 @@
     <string name="widgetMode1x1_both_1">Sunrise &amp; Sunset (1)</string>  <!-- setting -->
     <string name="widgetMode1x1_both_2">Sunrise &amp; Sunset (2)</string>  <!-- setting -->
 
+    <string name="widgetMode1x1_altaz">Altitude &amp; Azimuth</string>     <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode1x1_decright">Declination &amp; Right Ascension</string>     <!-- setting -->  <!-- TODO -->
+
     <string name="widgetMode1x1_moonriseset">Moonrise &amp; moonset</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphaseillum">Moon phase &amp; illumination</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphase">Moon phase only</string>     <!-- setting -->
@@ -450,7 +453,9 @@
     <string name="widgetLabel_altitude_short">Alt</string>               <!-- label -->  <!-- TODO: i18n -->
 
     <string name="widgetLabel_rightAscension">Right Ascension</string>    <!-- label -->  <!-- TODO: i18n -->
+    <string name="widgetLabel_rightAscension_short">Right</string>    <!-- label -->  <!-- TODO: i18n -->
     <string name="widgetLabel_declination">Declination</string>           <!-- label -->  <!-- TODO: i18n -->
+    <string name="widgetLabel_declination_short">Dec</string>           <!-- label -->  <!-- TODO: i18n -->
 
     <!--
          APP SETTINGS

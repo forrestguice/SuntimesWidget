@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -37,14 +37,14 @@
             android:orientation="horizontal" android:gravity="right|end|center_vertical">
 
             <TextView style="@style/SunsetTimeTextView" android:visibility="visible"
-                android:id="@+id/info_sun_elevation_current_label"
+                android:id="@+id/info_sun_declination_current_label"
                 android:layout_width="0dp" android:layout_weight="1"
                 android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
-                android:text="@string/widgetLabel_altitude_short" android:labelFor="@+id/info_sun_elevation_current"
+                android:text="@string/widgetLabel_declination_short" android:labelFor="@+id/info_sun_declination_current"
                 android:gravity="start" />
 
             <TextView style="@style/SunsetTimeTextView" android:gravity="end|right"
-                android:id="@+id/info_sun_elevation_current"
+                android:id="@+id/info_sun_declination_current"
                 android:layout_marginLeft="2dp" android:layout_marginStart="2dp"
                 android:layout_marginRight="2dp" android:layout_marginEnd="2dp"
                 android:text="" tools:text="48" />
@@ -55,14 +55,14 @@
             android:orientation="horizontal" android:gravity="right|end|center_vertical">
 
             <TextView style="@style/SunsetTimeTextView" android:visibility="visible"
-                android:id="@+id/info_sun_azimuth_current_label"
+                android:id="@+id/info_sun_rightascension_current_label"
                 android:layout_width="0dp" android:layout_weight="1"
                 android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
-                android:text="@string/widgetLabel_azimuth_short" android:labelFor="@+id/info_sun_azimuth_current"
+                android:text="@string/widgetLabel_rightAscension_short" android:labelFor="@+id/info_sun_rightascension_current"
                 android:gravity="start" />
 
             <TextView style="@style/SunsetTimeTextView"  android:gravity="end|right"
-                android:id="@+id/info_sun_azimuth_current"
+                android:id="@+id/info_sun_rightascension_current"
                 android:layout_marginLeft="2dp" android:layout_marginStart="2dp"
                 android:layout_marginRight="2dp" android:layout_marginEnd="2dp"
                 android:text="" tools:text="280" />
