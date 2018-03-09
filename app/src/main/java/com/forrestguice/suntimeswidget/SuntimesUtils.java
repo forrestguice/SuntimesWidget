@@ -50,6 +50,9 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewParent;
+import android.view.accessibility.AccessibilityEvent;
+import android.view.accessibility.AccessibilityManager;
 import android.widget.ImageView;
 
 import java.lang.reflect.Method;
@@ -1212,15 +1215,36 @@ public class SuntimesUtils
      */
     public static void announceForAccessibility(View view, String msg)
     {
-        if (view == null)
-            return;
-
-        if (Build.VERSION.SDK_INT >= 16)
+        if (view != null && msg != null)
         {
-            view.announceForAccessibility(msg);
+            if (Build.VERSION.SDK_INT >= 16)
+            {
+                view.announceForAccessibility(msg);
 
-        } //else {
-            // TODO
-        //}
+            } else {
+                Context context = view.getContext();
+                if (context != null)
+                {
+                    AccessibilityEvent event = AccessibilityEvent.obtain(AccessibilityEvent.TYPE_VIEW_FOCUSED);
+                    event.getText().add(msg);
+                    event.setEnabled(view.isEnabled());
+                    event.setClassName(view.getClass().getName());
+                    event.setPackageName(context.getPackageName());
+
+                    ViewParent parent = view.getParent();
+                    if (Build.VERSION.SDK_INT >= 14 && parent != null)
+                    {
+                        parent.requestSendAccessibilityEvent(view, event);
+
+                    } else {
+                        AccessibilityManager accesibility = (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
+                        if (accesibility != null && accesibility.isEnabled())
+                        {
+                            accesibility.sendAccessibilityEvent(event);
+                        }
+                    }
+                }
+            }
+        }
     }
 }
