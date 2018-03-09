@@ -6,6 +6,7 @@
 * adds widget title substitution; %dt and %dT are for time (of last widget update).
 * adds widget title substitution; %id is for appWidgetID (for debug purposes).
 * adds widget option "show labels"; show/hide superfluous labels.
+* updates dependency (Time4A 3.40-2018b). 
 * updates translations (eo, pl) (#171, #172); adds translated fastlane metadata.
 
 ### v0.7.1 (2018-02-28)
