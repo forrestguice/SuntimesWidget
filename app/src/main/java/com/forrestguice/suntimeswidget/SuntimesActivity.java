@@ -840,7 +840,9 @@ public class SuntimesActivity extends AppCompatActivity
 
         txt_time = (TextView) findViewById(R.id.text_time);
         txt_time_suffix = (TextView) findViewById(R.id.text_time_suffix);
+
         txt_timezone = (TextView) findViewById(R.id.text_timezone);
+        txt_timezone.setOnClickListener(onTimeZoneClick);
 
         float fontScale = getResources().getConfiguration().fontScale;
         if (fontScale > 1)
@@ -1808,6 +1810,15 @@ public class SuntimesActivity extends AppCompatActivity
         {
             setUserSwappedCard( false, "onPrevNoteClick" );
             notes.showPrevNote();
+        }
+    };
+
+    View.OnClickListener onTimeZoneClick = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View view)
+        {
+            configTimeZone();
         }
     };
 
