@@ -22,6 +22,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -50,6 +52,8 @@ public class AboutDialog extends DialogFragment
         initViews(getActivity(), dialogContent);
         return dialog;
     }
+
+    public static final String WEBSITE_URL = "https://forrestguice.github.io/SuntimesWidget/";
 
     public static final String CHANGELOG_URL = "https://github.com/forrestguice/SuntimesWidget/blob/master/CHANGELOG.md";
     public static String changelogAnchor(String text)
@@ -80,8 +84,28 @@ public class AboutDialog extends DialogFragment
         return getString(R.string.app_version, versionString);
     }
 
+    protected void openLink(String url)
+    {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        Activity activity = getActivity();
+        if (activity != null && intent.resolveActivity(activity.getPackageManager()) != null)
+        {
+            startActivity(intent);
+        }
+    }
+
     public void initViews(Context context, View dialogContent)
     {
+        TextView nameView = (TextView) dialogContent.findViewById(R.id.txt_about_name);
+        nameView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                openLink(WEBSITE_URL);
+            }
+        });
+
         TextView versionView = (TextView) dialogContent.findViewById(R.id.txt_about_version);
         versionView.setMovementMethod(LinkMovementMethod.getInstance());
         versionView.setText(SuntimesUtils.fromHtml(htmlVersionString()));

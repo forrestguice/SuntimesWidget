@@ -297,7 +297,7 @@ public class SuntimesActivity extends AppCompatActivity
             //Log.d("DEBUG", "LocationDialog listeners restored.");
         }
 
-        TimeDateDialog dateDialog = (TimeDateDialog) fragments.findFragmentByTag(DIALOGTAG_DATE);
+        TimeDateDialogEasy dateDialog = (TimeDateDialogEasy) fragments.findFragmentByTag(DIALOGTAG_DATE);
         if (dateDialog != null)
         {
             dateDialog.setOnAcceptedListener(onConfigDate);
@@ -840,7 +840,9 @@ public class SuntimesActivity extends AppCompatActivity
 
         txt_time = (TextView) findViewById(R.id.text_time);
         txt_time_suffix = (TextView) findViewById(R.id.text_time_suffix);
+
         txt_timezone = (TextView) findViewById(R.id.text_timezone);
+        txt_timezone.setOnClickListener(onTimeZoneClick);
 
         float fontScale = getResources().getConfiguration().fontScale;
         if (fontScale > 1)
@@ -978,7 +980,7 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private void configDate()
     {
-        final TimeDateDialog datePicker = new TimeDateDialog();
+        final TimeDateDialogEasy datePicker = new TimeDateDialogEasy();
         datePicker.setOnAcceptedListener(onConfigDate);
         datePicker.setOnCanceledListener(onCancelDate);
         datePicker.show(getSupportFragmentManager(), DIALOGTAG_DATE);
@@ -1617,6 +1619,10 @@ public class SuntimesActivity extends AppCompatActivity
                             case NOTHING:
                                 break;
 
+                            case TIMEZONE:
+                                configTimeZone();
+                                break;
+
                             case ALARM:
                                 scheduleAlarmFromNote();
                                 break;
@@ -1807,6 +1813,15 @@ public class SuntimesActivity extends AppCompatActivity
         }
     };
 
+    View.OnClickListener onTimeZoneClick = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View view)
+        {
+            configTimeZone();
+        }
+    };
+
     View.OnClickListener onClockClick = new View.OnClickListener()
     {
         @Override
@@ -1821,6 +1836,12 @@ public class SuntimesActivity extends AppCompatActivity
             if (action == AppSettings.ClockTapAction.ALARM)
             {
                 scheduleAlarm();
+                return;
+            }
+
+            if (action == AppSettings.ClockTapAction.TIMEZONE)
+            {
+                configTimeZone();
                 return;
             }
 

@@ -103,10 +103,10 @@
     <string name="untilEnd_civilTwilight">zmierzchu cywilnego</string>
     <string name="untilEnd_nauticalTwilight">zmierzchu żeglarskiego</string>
     <string name="untilEnd_astroTwilight">zmierzchu astronomicznego</string>
-    <string name="until_goldhour">złota godzina</string>
-    <string name="untilEnd_goldhour">złota godzina</string>
-    <string name="until_bluehour">błękitna godzina</string>
-    <string name="untilEnd_bluehour">błękitna godzina</string>
+    <string name="until_goldhour">złotej godziny</string>
+    <string name="untilEnd_goldhour">końca złotej godziny</string>
+    <string name="until_bluehour">błękitnej godziny</string>
+    <string name="untilEnd_bluehour">końca błękitnej godziny</string>
 
     <!-- Table -->
     <string name="sunrise">Wschód Słońca</string>                             <!-- contentDescription -->
@@ -150,10 +150,18 @@
     <!-- Widget Setting: general -->
     <string name="configLabel_general">Ustawienia ogólne</string>                <!-- group title -->
     <string name="configLabel_general_calculator">Źródło danych:</string>         <!-- spinner label -->
+
     <string name="configLabel_general_showSeconds">Wyświetl sekundy</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showSeconds_summary">Uwzględnij sekundy podczas wyświetlania czasów.</string>        <!-- checkbox label -->
+
+    <string name="configLabel_general_showTimeDate">Wyświetl godzinę przy datach</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showTimeDate_summary">Uwzględnij godziny podczas wyświetlania dat.</string>        <!-- checkbox label -->
 
     <string name="configLabel_general_showWeeks">Wyświetl tygodnie</string>        <!-- checkbox label -->
     <string name="configLabel_general_showWeeks_summary">Dziel przedziały czasu dłuższe niż 7 dni na tygodnie (np. 15d będzie 2tyg 1d).</string>        <!-- checkbox label -->
+
+    <string name="configLabel_general_showHours">Wyświetl godziny</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showHours_summary">Uwzględnij godziny i minuty dla okresów dłuższych niż dzień.</string>    <!-- checkbox label -->
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Ustawienia wyglądu</string>           <!-- group title -->
@@ -489,6 +497,7 @@
     <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
         <item>Nie rób nic</item>
         <item>Ustaw alarm</item>
+        <item>@string/configAction_setTimeZone</item>
         <item>Pokaż następną notatkę</item>
         <item>Pokaż poprzednią notatkę</item>
     </string-array>
@@ -683,7 +692,6 @@
     <string name="app_version"><![CDATA[<b>Wersja:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Wyświetla czasy świecenia Słońca i Księżyca.</string>
     <string name="app_support_url"><![CDATA[<b>Wsparcie:</b> odwiedź <a href="https://github.com/forrestguice/SuntimesWidget/issues">stronę trackera błędów</a> aby zgłosić błąd/sugestię.]]></string>
-    <string name="app_url"><xliff:g id="url"><![CDATA[<a href="https://github.com/forrestguice/SuntimesWidget">github.com/forrestguice/SuntimesWidget</a>]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[Prawo autorskie &#169 2014-2018 Forrest Guice <br />Kod źródłowy dostępny na licencji GPLv3.]]></string>
     <string name="app_legal2"><![CDATA[
         Niemieckie tłumaczenie: Henrik "HerHde" Hüttemann<br />

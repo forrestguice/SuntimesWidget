@@ -165,10 +165,18 @@
     <!-- Widget Setting: general -->
     <string name="configLabel_general">General Settings</string>                <!-- group title -->
     <string name="configLabel_general_calculator">Data Source:</string>         <!-- spinner label -->
+
     <string name="configLabel_general_showSeconds">Show Seconds</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showSeconds_summary">Include seconds when displaying times.</string>        <!-- checkbox label -->
+
+    <string name="configLabel_general_showTimeDate">Show Time (with dates)</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showTimeDate_summary">Include the time when displaying dates.</string>        <!-- checkbox label -->
 
     <string name="configLabel_general_showWeeks">Show Weeks</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showWeeks_summary">Divide time spans greater than 7 days into weeks (e.g. 15d becomes 2w 1d).</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showWeeks_summary">Divide time spans greater than 7 days into weeks (e.g. 15d becomes 2w 1d).</string>    <!-- checkbox label -->
+
+    <string name="configLabel_general_showHours">Show Hours</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showHours_summary">Include hours and minutes in time spans greater than a day.</string>    <!-- checkbox label -->
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Appearance Settings</string>           <!-- group title -->
@@ -541,13 +549,15 @@
     <!-- App Setting: Clock UI "on tap" action -->
     <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
         <item>Do nothing</item>
-        <item>Set an Alarm</item>
+        <item>@string/configAction_setAlarm</item>
+        <item>@string/configAction_setTimeZone</item>
         <item>Show next note</item>
         <item>Show previous note</item>
     </string-array>
     <string-array name="clockTapActions_values" translatable="false">  <!-- config values (one-to-one with clockTapActions_display) -->
         <item>NOTHING</item>
         <item>ALARM</item>
+        <item>TIMEZONE</item>
         <item>NEXT_NOTE</item>
         <item>PREV_NOTE</item>
     </string-array>
@@ -802,7 +812,7 @@
         <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a> to submit a request.
     ]]></string>
     <string name="app_url"><xliff:g id="url"><![CDATA[
-        <a href="https://github.com/forrestguice/SuntimesWidget">github.com/forrestguice/SuntimesWidget</a>
+        <a href="https://forrestguice.github.io/SuntimesWidget/">forrestguice.github.io/SuntimesWidget</a>
     ]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[
         <b>Source Code:</b><br />
@@ -834,6 +844,8 @@
                 * <b>%dd</b> for day (short) (e.g. Mon) <br/>
                 * <b>%dD</b> for day (long) (e.g. Monday) <br/>
                 * <b>%dY</b> for year (e.g. 2018) <br/>
+                * <b>%dt</b> for time (of last update) <br/>
+                * <b>%dT</b> for time with seconds (of last update) <br/>
                 <br/>
                 * <b>%loc</b> for label (e.g. Prescott) <br />
                 * <b>%lat</b> for latitude (e.g. 35.5409) <br />
@@ -841,6 +853,7 @@
                 <br/>
                 * <b>%s</b> for data source (e.g. sunrisesunsetlib) <br/>
                 * <b>%t</b> for time zone (id) (e.g. US/Arizona) <br/>
+                * <b>%id</b> for appWidgetID <br/>
          <br/>
          <b>Sun Widgets:</b> <br/>
                 * <b>%m</b> for mode (short) (e.g. Civil) <br/>
@@ -914,7 +927,9 @@
     <string name="def_appwidget_0_general_calculator" translatable="false">any</string>
     <string name="def_appwidget_0_appearance_timeformatmode" translatable="false">MODE_SYSTEM</string>
     <string name="def_appwidget_0_general_showweeks" translatable="false">false</string>
+    <string name="def_appwidget_0_general_showhours" translatable="false">true</string>
     <string name="def_appwidget_0_general_showseconds" translatable="false">false</string>
+    <string name="def_appwidget_0_general_showtimedate" translatable="false">true</string>
     <string name="def_appwidget_0_general_trackingmode" translatable="false">SOONEST</string>
 
     <string name="def_app_locale_mode" translatable="false">SYSTEM_LOCALE</string>
@@ -927,7 +942,7 @@
     <string name="def_app_ui_showequinox" translatable="false">true</string>
     <string name="def_app_ui_showlightmap" translatable="false">true</string>
     <string name="def_app_ui_showdatasource" translatable="false">true</string>
-    <string name="def_app_ui_datetapaction" translatable="false">SWAP_CARD</string>
+    <string name="def_app_ui_datetapaction" translatable="false">CONFIG_DATE</string>
     <string name="def_app_ui_notetapaction" translatable="false">NEXT_NOTE</string>
     <string name="def_app_ui_clocktapaction" translatable="false">ALARM</string>
     <string name="def_app_appearance_theme" translatable="false">dark</string>

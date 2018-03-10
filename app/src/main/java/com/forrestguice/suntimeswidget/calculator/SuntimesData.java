@@ -31,6 +31,16 @@ import java.util.TimeZone;
 public class SuntimesData
 {
     /**
+     * Property: appWidgetID
+     * The appWidgetID that was used to initialize from settings (cached), may be null.
+     */
+    protected Integer appWidgetID = null;
+    public Integer appWidgetID()
+    {
+        return appWidgetID;
+    }
+
+    /**
      * Property: date ("today" ..but not really, @see todayIs)
      */
     protected Date date = new Date();
@@ -148,6 +158,7 @@ public class SuntimesData
      */
     protected void initFromOther( SuntimesData other )
     {
+        this.appWidgetID = other.appWidgetID;
         this.calculatorMode = other.calculatorMode();
         this.locationMode = other.locationMode();
         this.timezoneMode = other.timezoneMode();
@@ -168,6 +179,7 @@ public class SuntimesData
      */
     protected void initFromSettings(Context context, int appWidgetId)
     {
+        this.appWidgetID = appWidgetId;
         calculated = false;
 
         // from general settings
@@ -239,6 +251,14 @@ public class SuntimesData
             midnight.set(Calendar.SECOND, 0);
         }
         return midnight;
+    }
+
+    /**
+     * @return
+     */
+    public Calendar now()
+    {
+        return Calendar.getInstance(TimeZone.getTimeZone(timezone().getID()));
     }
 
 }

@@ -366,7 +366,7 @@ public class EquinoxView extends LinearLayout
             for (EquinoxNote note : notes)
             {
                 note.setEnabled(false);
-                note.updateTime(context, null);
+                note.updateDate(context, null);
                 note.updateNote(context, null);
 
                 if (minimized)
@@ -386,22 +386,24 @@ public class EquinoxView extends LinearLayout
             titleNextYear.setText(nextYear.toString());
 
             boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
+            boolean showTime = WidgetSettings.loadShowTimeDatePref(context, 0);
 
-            note_equinox_vernal.updateTime(context, data.dataEquinoxVernal.eventCalendarThisYear(), showSeconds);
-            note_equinox_autumnal.updateTime(context, data.dataEquinoxAutumnal.eventCalendarThisYear(), showSeconds);
-            note_solstice_summer.updateTime(context, data.dataSolsticeSummer.eventCalendarThisYear(), showSeconds);
-            note_solstice_winter.updateTime(context, data.dataSolsticeWinter.eventCalendarThisYear(), showSeconds);
+            note_equinox_vernal.updateDate(context, data.dataEquinoxVernal.eventCalendarThisYear(), showTime, showSeconds);
+            note_equinox_autumnal.updateDate(context, data.dataEquinoxAutumnal.eventCalendarThisYear(), showTime, showSeconds);
+            note_solstice_summer.updateDate(context, data.dataSolsticeSummer.eventCalendarThisYear(), showTime, showSeconds);
+            note_solstice_winter.updateDate(context, data.dataSolsticeWinter.eventCalendarThisYear(), showTime, showSeconds);
 
-            note_equinox_vernal2.updateTime(context, data.dataEquinoxVernal.eventCalendarOtherYear(), showSeconds);
-            note_equinox_autumnal2.updateTime(context, data.dataEquinoxAutumnal.eventCalendarOtherYear(), showSeconds);
-            note_solstice_summer2.updateTime(context, data.dataSolsticeSummer.eventCalendarOtherYear(), showSeconds);
-            note_solstice_winter2.updateTime(context, data.dataSolsticeWinter.eventCalendarOtherYear(), showSeconds);
+            note_equinox_vernal2.updateDate(context, data.dataEquinoxVernal.eventCalendarOtherYear(), showTime, showSeconds);
+            note_equinox_autumnal2.updateDate(context, data.dataEquinoxAutumnal.eventCalendarOtherYear(), showTime, showSeconds);
+            note_solstice_summer2.updateDate(context, data.dataSolsticeSummer.eventCalendarOtherYear(), showTime, showSeconds);
+            note_solstice_winter2.updateDate(context, data.dataSolsticeWinter.eventCalendarOtherYear(), showTime, showSeconds);
 
             boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, 0);
+            boolean showHours = WidgetSettings.loadShowHoursPref(context, 0);
             for (EquinoxNote note : notes)
             {
                 note.setEnabled();
-                note.updateNote(context, data.now(), showWeeks);
+                note.updateNote(context, data.now(), showWeeks, showHours);
                 note.setVisible(!minimized);
             }
 
@@ -628,32 +630,32 @@ public class EquinoxView extends LinearLayout
             }
         }
 
-        public void updateTime( Context context, Calendar time )
+        public void updateDate( Context context, Calendar time )
         {
-            updateTime(context, time, false);
+            updateDate(context, time, true, false);
         }
-        public void updateTime( Context context, Calendar time, boolean showSeconds )
+        public void updateDate( Context context, Calendar time, boolean showTime, boolean showSeconds )
         {
             this.time = time;
             if (timeView != null)
             {
-                SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, time, showSeconds);
+                SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, time, showTime, showSeconds);
                 timeView.setText(timeText.toString());
             }
         }
 
         public void updateNote( Context context, Calendar now )
         {
-            updateTime(context, now, false);
+            updateDate(context, now, true, false);
         }
-        public void updateNote( Context context, Calendar now, boolean showWeeks )
+        public void updateNote( Context context, Calendar now, boolean showWeeks, boolean showHours )
         {
             this.now = now;
             if (noteView != null)
             {
                 if (now != null && time != null)
                 {
-                    String noteText = utils.timeDeltaDisplayString(now.getTime(), time.getTime(), showWeeks).toString();
+                    String noteText = utils.timeDeltaDisplayString(now.getTime(), time.getTime(), showWeeks, showHours).toString();
 
                     if (time.before(Calendar.getInstance()))
                     {

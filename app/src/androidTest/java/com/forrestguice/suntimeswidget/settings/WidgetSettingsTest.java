@@ -516,6 +516,23 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     }
 
     @Test
+    public void test_showHoursPref()
+    {
+        WidgetSettings.saveShowHoursPref(context, appWidgetId, true);
+        boolean showHours = WidgetSettings.loadShowHoursPref(context, appWidgetId);
+        assertTrue("showHours should be true but was " + showHours, showHours);
+
+        WidgetSettings.saveShowHoursPref(context, appWidgetId, false);
+        showHours = WidgetSettings.loadShowHoursPref(context, appWidgetId);
+        assertTrue("showHours should be false but was " + showHours, !showHours);
+
+        WidgetSettings.deleteShowHoursPref(context, appWidgetId);
+        showHours = WidgetSettings.loadShowHoursPref(context, appWidgetId);
+        assertTrue("showHours should be default (true) but was " + showHours, showHours && showHours == WidgetSettings.PREF_DEF_GENERAL_SHOWHOURS);
+    }
+
+
+    @Test
     public void test_showSecondsPref()
     {
         WidgetSettings.saveShowSecondsPref(context, appWidgetId, false);
@@ -530,5 +547,22 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
         assertTrue("showSeconds should be default (false) but was " + showSeconds, !showSeconds && showSeconds == WidgetSettings.PREF_DEF_GENERAL_SHOWSECONDS);
     }
+
+    @Test
+    public void test_showTimeDatePref()
+    {
+        WidgetSettings.saveShowTimeDatePref(context, appWidgetId, true);
+        boolean showTimeDate = WidgetSettings.loadShowHoursPref(context, appWidgetId);
+        assertTrue("showTimeDate should be true but was " + showTimeDate, showTimeDate);
+
+        WidgetSettings.saveShowTimeDatePref(context, appWidgetId, false);
+        showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
+        assertTrue("showTimeDate should be false but was " + showTimeDate, !showTimeDate);
+
+        WidgetSettings.deleteShowTimeDatePref(context, appWidgetId);
+        showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
+        assertTrue("showTimeDate should be default (true) but was " + showTimeDate, showTimeDate && showTimeDate == WidgetSettings.PREF_DEF_GENERAL_SHOWTIMEDATE);
+    }
+
 
 }

@@ -58,13 +58,14 @@ public class MoonLayout_2x1_0 extends MoonLayout
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesMoonData data)
     {
         super.updateViews(context, appWidgetId, views, data);
+        boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
         updateViewsMoonRiseSetText(context, views, data, showSeconds);
 
         NumberFormat percentage = NumberFormat.getPercentInstance();
         String illum = percentage.format(data.getMoonIlluminationToday());
         String illumNote = context.getString(R.string.moon_illumination, illum);
-        SpannableString illumNoteSpan = SuntimesUtils.createColorSpan(illumNote, illum, illumColor);
+        SpannableString illumNoteSpan = (boldTime ? SuntimesUtils.createBoldColorSpan(illumNote, illum, illumColor) : SuntimesUtils.createColorSpan(illumNote, illum, illumColor));
         views.setTextViewText(R.id.text_info_moonillum, illumNoteSpan);
 
         for (MoonPhaseDisplay moonPhase : MoonPhaseDisplay.values())
@@ -76,6 +77,7 @@ public class MoonLayout_2x1_0 extends MoonLayout
         if (phase != null)
         {
             views.setTextViewText(R.id.text_info_moonphase, phase.getLongDisplayString());
+            views.setViewVisibility(R.id.text_info_moonphase, (showLabels ? View.VISIBLE : View.GONE));
             views.setViewVisibility(phase.getView(), View.VISIBLE);
 
             Integer phaseColor = phaseColors.get(phase);
@@ -87,12 +89,14 @@ public class MoonLayout_2x1_0 extends MoonLayout
     }
 
     private int illumColor = Color.WHITE;
+    private boolean boldTime = false;
 
     @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         super.themeViews(context, views, theme);
         illumColor = theme.getTimeColor();
+        boldTime = theme.getTimeBold();
 
         themeViewsMoonPhase(context, views, theme);
         themeViewsMoonPhaseText(context, views, theme);

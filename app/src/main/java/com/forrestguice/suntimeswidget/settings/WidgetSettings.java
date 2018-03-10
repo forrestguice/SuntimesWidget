@@ -73,7 +73,7 @@ public class WidgetSettings
     public static final String PREF_DEF_APPEARANCE_TITLETEXT = "";
 
     public static final String PREF_KEY_APPEARANCE_SHOWLABELS = "showlabels";
-    public static final boolean PREF_DEF_APPEARANCE_SHOWLABELS = false;
+    public static final boolean PREF_DEF_APPEARANCE_SHOWLABELS = true;
 
     public static final String PREF_KEY_APPEARANCE_WIDGETMODE_SUN1x1 = "widgetmode_1x1";
     public static final WidgetModeSun1x1 PREF_DEF_APPEARANCE_WIDGETMODE_SUN1x1 = WidgetModeSun1x1.WIDGETMODE1x1_BOTH_1;
@@ -120,8 +120,14 @@ public class WidgetSettings
     public static final String PREF_KEY_GENERAL_SHOWWEEKS = "showweeks";
     public static final boolean PREF_DEF_GENERAL_SHOWWEEKS = false;
 
+    public static final String PREF_KEY_GENERAL_SHOWHOURS = "showhours";
+    public static final boolean PREF_DEF_GENERAL_SHOWHOURS = true;
+
     public static final String PREF_KEY_GENERAL_SHOWSECONDS = "showseconds";
     public static final boolean PREF_DEF_GENERAL_SHOWSECONDS = false;
+
+    public static final String PREF_KEY_GENERAL_SHOWTIMEDATE = "showtimedate";
+    public static final boolean PREF_DEF_GENERAL_SHOWTIMEDATE = true;
 
     public static final String PREF_KEY_ACTION_MODE = "action";
     public static final ActionMode PREF_DEF_ACTION_MODE = ActionMode.ONTAP_LAUNCH_CONFIG;
@@ -1827,6 +1833,28 @@ public class WidgetSettings
     }
 
 
+    public static void saveShowHoursPref(Context context, int appWidgetId, boolean showHours)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWHOURS, showHours);
+        prefs.apply();
+    }
+    public static boolean loadShowHoursPref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        return prefs.getBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWHOURS, PREF_DEF_GENERAL_SHOWHOURS);
+    }
+    public static void deleteShowHoursPref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_SHOWHOURS);
+        prefs.apply();
+    }
+
+
     public static void saveShowSecondsPref(Context context, int appWidgetId, boolean showSeconds)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
@@ -1848,6 +1876,27 @@ public class WidgetSettings
         prefs.apply();
     }
 
+
+    public static void saveShowTimeDatePref(Context context, int appWidgetId, boolean showTimeWithDates)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWTIMEDATE, showTimeWithDates);
+        prefs.apply();
+    }
+    public static boolean loadShowTimeDatePref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        return prefs.getBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWTIMEDATE, PREF_DEF_GENERAL_SHOWTIMEDATE);
+    }
+    public static void deleteShowTimeDatePref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_SHOWTIMEDATE);
+        prefs.apply();
+    }
 
 
     public static void saveTimeNoteRisePref(Context context, int appWidgetId, SolarEvents riseChoice)
@@ -1937,7 +1986,9 @@ public class WidgetSettings
         deleteShowComparePref(context, appWidgetId);
         deleteShowNoonPref(context, appWidgetId);
         deleteShowWeeksPref(context, appWidgetId);
+        deleteShowHoursPref(context, appWidgetId);
         deleteShowSecondsPref(context, appWidgetId);
+        deleteShowTimeDatePref(context, appWidgetId);
 
         deleteLocationModePref(context, appWidgetId);
         deleteLocationPref(context, appWidgetId);
