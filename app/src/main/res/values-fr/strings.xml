@@ -501,6 +501,7 @@
     <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
         <item>Ne rien faire</item>
         <item>Régler l\'alarme</item>
+        <item>@string/configAction_setTimeZone</item>
         <item>Affichage suivant</item>
         <item>Affichage précédent</item>
     </string-array>

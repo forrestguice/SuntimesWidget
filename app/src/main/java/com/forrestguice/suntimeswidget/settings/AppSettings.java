@@ -250,6 +250,7 @@ public class AppSettings
     {
         NOTHING("Do Nothing"),
         ALARM("Set an Alarm"),
+        TIMEZONE("Set Time Zone"),
         NEXT_NOTE("Show next note"),
         PREV_NOTE("Show previous note");
 
@@ -280,8 +281,9 @@ public class AppSettings
             String[] labels = context.getResources().getStringArray(R.array.clockTapActions_display);
             NOTHING.setDisplayString(labels[0]);
             ALARM.setDisplayString(labels[1]);
-            NEXT_NOTE.setDisplayString(labels[2]);
-            PREV_NOTE.setDisplayString(labels[3]);
+            TIMEZONE.setDisplayString(labels[2]);
+            NEXT_NOTE.setDisplayString(labels[3]);
+            PREV_NOTE.setDisplayString(labels[4]);
         }
     }
 

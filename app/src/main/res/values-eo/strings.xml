@@ -506,6 +506,7 @@
     <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
         <item>Fari nenion</item>
         <item>Agordi averton</item>
+        <item>@string/configAction_setTimeZone</item>
         <item>Montri sekvan noton</item>
         <item>Montri antaŭan noton</item>
     </string-array>

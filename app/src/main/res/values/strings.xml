@@ -549,13 +549,15 @@
     <!-- App Setting: Clock UI "on tap" action -->
     <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
         <item>Do nothing</item>
-        <item>Set an Alarm</item>
+        <item>@string/configAction_setAlarm</item>
+        <item>@string/configAction_setTimeZone</item>
         <item>Show next note</item>
         <item>Show previous note</item>
     </string-array>
     <string-array name="clockTapActions_values" translatable="false">  <!-- config values (one-to-one with clockTapActions_display) -->
         <item>NOTHING</item>
         <item>ALARM</item>
+        <item>TIMEZONE</item>
         <item>NEXT_NOTE</item>
         <item>PREV_NOTE</item>
     </string-array>

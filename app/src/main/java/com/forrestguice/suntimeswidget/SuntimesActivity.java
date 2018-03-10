@@ -1617,6 +1617,10 @@ public class SuntimesActivity extends AppCompatActivity
                             case NOTHING:
                                 break;
 
+                            case TIMEZONE:
+                                configTimeZone();
+                                break;
+
                             case ALARM:
                                 scheduleAlarmFromNote();
                                 break;
@@ -1821,6 +1825,12 @@ public class SuntimesActivity extends AppCompatActivity
             if (action == AppSettings.ClockTapAction.ALARM)
             {
                 scheduleAlarm();
+                return;
+            }
+
+            if (action == AppSettings.ClockTapAction.TIMEZONE)
+            {
+                configTimeZone();
                 return;
             }
 
