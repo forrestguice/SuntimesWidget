@@ -7,10 +7,10 @@
           android:color="@color/btn_tint_pressed" />
 
     <item android:state_pressed="true" android:state_enabled="false"
-          android:color="?android:textColorPrimary" />
+          android:color="@android:color/primary_text_dark" />
 
     <item android:state_enabled="false"
-          android:color="?android:textColorPrimary" />
+          android:color="@android:color/primary_text_dark" />
 
-    <item android:color="?android:textColorPrimary"/>
+    <item android:color="@android:color/primary_text_dark" />
 </selector>
