@@ -508,6 +508,7 @@
     <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
         <item>Semmit se tesz</item>
         <item>Emlékeztető beállítása</item>
+        <item>@string/configAction_setTimeZone</item>
         <item>Mutasd a következő bejegyzést</item>
         <item>Mutasd az előző bejegyzést</item>
     </string-array>

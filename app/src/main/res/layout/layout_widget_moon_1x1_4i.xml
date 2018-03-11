@@ -29,18 +29,19 @@
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:layout_marginBottom="2dp" android:orientation="vertical">
 
-        <TextView android:visibility="gone"
+        <TextView
             android:id="@+id/moonphase_major_label" android:layout_gravity="center"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            style="@style/SunsetTimeTextView2" tools:text="@string/timeMode_moon_new" />
+            style="@style/SunsetTimeTextView2" android:layout_marginBottom="0dp"
+            tools:text="@string/timeMode_moon_new" />
 
         <include layout="@layout/icons_moon_phases" />
 
         <TextView
             android:id="@+id/moonphase_major_date"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            style="@style/SunsetTimeTextView" tools:text="February 15, 8:00 AM"
-            android:layout_gravity="center" />
+            android:layout_marginTop="0dp"
+            style="@style/SunsetTimeTextView" tools:text="February 15, 8:00 AM" />
 
     </LinearLayout>
 

@@ -21,7 +21,6 @@ package com.forrestguice.suntimeswidget.layouts;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Build;
-import android.text.SpannableString;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;

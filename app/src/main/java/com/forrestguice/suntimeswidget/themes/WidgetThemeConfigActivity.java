@@ -802,6 +802,12 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             updateSizeFromChooser(previewMoonPhase, chooseTextSize);
         }
 
+        // Moon Labels
+        updatePreview_moonPhaseLabel((TextView)previewLayout.findViewById(R.id.moonphase_new_label));
+        updatePreview_moonPhaseLabel((TextView)previewLayout.findViewById(R.id.moonphase_firstquarter_label));
+        updatePreview_moonPhaseLabel((TextView)previewLayout.findViewById(R.id.moonphase_full_label));
+        updatePreview_moonPhaseLabel((TextView)previewLayout.findViewById(R.id.moonphase_thirdquarter_label));
+
         // Moon Icons
 
         ImageView previewMoonriseIcon = (ImageView)previewLayout.findViewById(R.id.icon_time_moonrise);
@@ -907,6 +913,16 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         if (previewMoonWaningQuarterIcon1 != null)
         {
             previewMoonWaningQuarterIcon1.setImageBitmap(SuntimesUtils.layerDrawableToBitmap(this, MoonPhaseDisplay.THIRD_QUARTER.getIcon(), colorWaning, colorWaning, 0));
+        }
+    }
+
+    private void updatePreview_moonPhaseLabel(TextView label)
+    {
+        if (label != null)
+        {
+            label.setTextColor(chooseColorText.getColor());
+            label.setTextSize(chooseTextSize.getValue());
+            label.setVisibility(View.VISIBLE);
         }
     }
 

@@ -103,9 +103,9 @@
     <string name="untilEnd_nauticalTwilight">naŭtika sunsubiro</string>
     <string name="untilEnd_astroTwilight">astronomia sunsubiro</string>
     <string name="until_goldhour">ora horo</string>
-    <string name="untilEnd_goldhour">ora horo</string>
+    <string name="untilEnd_goldhour">fino de ora horo</string>
     <string name="until_bluehour">blua horo</string>
-    <string name="untilEnd_bluehour">blua horo</string>
+    <string name="untilEnd_bluehour">fino de blua horo</string>
 
     <!-- Table -->
     <string name="sunrise">Sunleviĝo</string>                             <!-- contentDescription -->
@@ -151,16 +151,16 @@
     <string name="configLabel_general_calculator">Fonto de datumoj:</string>         <!-- spinner label -->
 
     <string name="configLabel_general_showSeconds">Montri sekundojn</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showSeconds_summary">Include seconds when displaying times.</string>        <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_general_showSeconds_summary">Ampleksi sekundojn dum montrado de horoj.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showTimeDate">Show Time (with dates)</string>        <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_general_showTimeDate_summary">Include the time when displaying dates.</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_showTimeDate">Montri horojn (ĉe datoj)</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showTimeDate_summary">Ampleksi la horon dum montrado de datoj.</string>        <!-- checkbox label -->
 
     <string name="configLabel_general_showWeeks">Montri semajnojn</string>        <!-- checkbox label -->
     <string name="configLabel_general_showWeeks_summary">Dividi temp-intervalojn longaj ol 7 tagoj inter semajnoj (ekz. 15t iĝas 2sem 1t).</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showHours">Show Hours</string>        <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_general_showHours_summary">Include hours and minutes in time spans greater than a day.</string>    <!-- checkbox label -->    <!-- TODO -->
+    <string name="configLabel_general_showHours">Montri horojn</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showHours_summary">Ampleksi horojn kaj minutojn por temp-intervaloj pli longaj ol tagnokto.</string>    <!-- checkbox label -->
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Agordoj de aspekto</string>           <!-- group title -->
@@ -506,6 +506,7 @@
     <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
         <item>Fari nenion</item>
         <item>Agordi averton</item>
+        <item>@string/configAction_setTimeZone</item>
         <item>Montri sekvan noton</item>
         <item>Montri antaŭan noton</item>
     </string-array>
