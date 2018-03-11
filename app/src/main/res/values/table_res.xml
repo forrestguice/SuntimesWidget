@@ -22,7 +22,7 @@
     <integer name="table_heading_date_maxlines">2</integer>
 
     <style name="TableHeadDateView">                                     <!-- date header text -->
-        <item name="android:textColor">@drawable/btn_datetxt</item>
+        <item name="android:textColor">?attr/date_buttonSelector</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/table_heading_date_fontsize</item>
         <item name="android:ellipsize">end</item>
