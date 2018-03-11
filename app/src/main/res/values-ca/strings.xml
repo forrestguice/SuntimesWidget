@@ -523,6 +523,7 @@
     <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
         <item>No fer res</item>
         <item>Posar una alarma</item>
+        <item>@string/configAction_setTimeZone</item>
         <item>Mostrar nota següent</item>
         <item>Mostrar nota anterior</item>
     </string-array>

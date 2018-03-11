@@ -53,7 +53,7 @@ public class AppSettings
     public static final String PREF_DEF_LOCALE = "en";
 
     public static final String PREF_KEY_UI_DATETAPACTION = "app_ui_datetapaction";
-    public static final DateTapAction PREF_DEF_UI_DATETAPACTION = DateTapAction.SWAP_CARD;
+    public static final DateTapAction PREF_DEF_UI_DATETAPACTION = DateTapAction.CONFIG_DATE;
 
     public static final String PREF_KEY_UI_CLOCKTAPACTION = "app_ui_clocktapaction";
     public static final ClockTapAction PREF_DEF_UI_CLOCKTAPACTION = ClockTapAction.ALARM;
@@ -253,6 +253,7 @@ public class AppSettings
     {
         NOTHING("Do Nothing"),
         ALARM("Set an Alarm"),
+        TIMEZONE("Set Time Zone"),
         NEXT_NOTE("Show next note"),
         PREV_NOTE("Show previous note");
 
@@ -283,8 +284,9 @@ public class AppSettings
             String[] labels = context.getResources().getStringArray(R.array.clockTapActions_display);
             NOTHING.setDisplayString(labels[0]);
             ALARM.setDisplayString(labels[1]);
-            NEXT_NOTE.setDisplayString(labels[2]);
-            PREV_NOTE.setDisplayString(labels[3]);
+            TIMEZONE.setDisplayString(labels[2]);
+            NEXT_NOTE.setDisplayString(labels[3]);
+            PREV_NOTE.setDisplayString(labels[4]);
         }
     }
 

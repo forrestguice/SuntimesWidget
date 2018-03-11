@@ -31,6 +31,7 @@ import android.text.SpannableString;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -61,7 +62,8 @@ public class LightMapDialog extends DialogFragment
         final Activity myParent = getActivity();
         LayoutInflater inflater = myParent.getLayoutInflater();
 
-        View dialogContent = inflater.inflate(R.layout.layout_dialog_lightmap, null);
+        final ViewGroup viewGroup = null;
+        View dialogContent = inflater.inflate(R.layout.layout_dialog_lightmap, viewGroup);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
         builder.setView(dialogContent);

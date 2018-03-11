@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true"
+          android:color="@color/btn_tint_pressed"/>
+
+    <item android:state_pressed="true" android:state_enabled="true"
+          android:color="@color/btn_tint_pressed" />
+
+    <item android:state_pressed="true" android:state_enabled="false"
+          android:color="@android:color/primary_text_light" />
+
+    <item android:state_enabled="false"
+          android:color="@android:color/primary_text_light" />
+
+    <item android:color="@android:color/primary_text_light" />
+</selector>

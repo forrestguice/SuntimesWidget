@@ -11,6 +11,9 @@
     <attr name="text_accentColor" format="reference" />
     <attr name="text_disabledColor" format="reference" />
 
+    <attr name="text_buttonSelector" format="reference" />
+    <attr name="date_buttonSelector" format="reference" />
+
     <attr name="graphColor_background" format="reference" />
     <attr name="graphColor_day" format="reference" />
     <attr name="graphColor_night" format="reference" />
