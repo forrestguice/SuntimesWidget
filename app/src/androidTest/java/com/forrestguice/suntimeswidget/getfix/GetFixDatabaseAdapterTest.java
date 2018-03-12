@@ -141,6 +141,28 @@ public class GetFixDatabaseAdapterTest
         db.close();
     }
 
+    @Test
+    public void test_getPlaceByName()
+    {
+        db.open();
+
+        long[] rowID = populateDatabase();
+        for (int i=0; i<locations.length; i++)     // get items by name
+        {
+            String placeName = locations[i].getLabel();
+            Cursor cursor = db.getPlace(placeName, true);
+
+            assertNotNull(cursor);
+            assertTrue("cursor should be at first", cursor.getPosition() == 0);
+            verifyPlace(cursor, true, rowID[i], locations[i]);
+        }
+
+        Cursor badCursor = db.getPlace("not in database", true);   // get invalid name (cursor should be empty)
+        assertNotNull(badCursor);
+        assertTrue("cursor should be empty", badCursor.getCount() == 0);
+
+        db.close();
+    }
 
     protected void verifyPlace(Cursor cursor, boolean fullEntry, long rowID, WidgetSettings.Location location)
     {
@@ -240,4 +262,17 @@ public class GetFixDatabaseAdapterTest
         db.close();
     }
 
+    @Test
+    public void test_updatePlace()
+    {
+        db.open();
+        long[] rowID = populateDatabase();
+        for (int i=0; i<rowID.length; i++)
+        {
+            WidgetSettings.Location location = new WidgetSettings.Location(locations[i].getLabel(), "0", "0", "0");  // update all values to 0
+            db.updatePlace(location);
+            verifyPlace(db.getPlace(rowID[i]), true, rowID[i], location);
+        }
+        db.close();
+    }
 }
