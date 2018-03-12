@@ -55,7 +55,7 @@ public class SunPosLayout_1X1_1 extends SunPosLayout
     }
 
     @Override
-    public void prepareForUpdate(SuntimesRiseSetDataset dataset)
+    public void prepareForUpdate(SuntimesRiseSetDataset dataset, int[] widgetSize)
     {
         dataset.dataActual.initCalculator();  // init calculator only; skipping full calculate()
     }

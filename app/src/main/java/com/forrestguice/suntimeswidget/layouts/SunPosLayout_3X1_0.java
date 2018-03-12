@@ -50,9 +50,11 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
     }
 
     @Override
-    public void prepareForUpdate(SuntimesRiseSetDataset dataset)
+    public void prepareForUpdate(SuntimesRiseSetDataset dataset, int[] widgetSize)
     {
-        dataset.calculateData();
+        super.prepareForUpdate(dataset, widgetSize);
+        this.dpWidth = widgetSize[0];
+        //this.dpHeight = widgetSize[1];
     }
 
     @Override
@@ -60,11 +62,12 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
     {
         super.updateViews(context, appWidgetId, views, dataset);
         LightMapView.LightMapTask drawTask = new LightMapView.LightMapTask();
-        Bitmap bitmap = drawTask.makeBitmap(dataset, SuntimesUtils.dpToPixels(context, 180), SuntimesUtils.dpToPixels(context, 16), colors);
+        Bitmap bitmap = drawTask.makeBitmap(dataset, SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), colors);
         views.setImageViewBitmap(R.id.info_time_lightmap, bitmap);
     }
 
     private LightMapView.LightMapColors colors;
+    private int dpWidth = 180, dpHeight = 24;
 
     @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)

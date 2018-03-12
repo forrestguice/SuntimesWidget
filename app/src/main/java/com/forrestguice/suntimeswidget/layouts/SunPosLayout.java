@@ -30,7 +30,7 @@ public abstract class SunPosLayout extends SuntimesLayout
 {
     protected static final SuntimesUtils utils = new SuntimesUtils();
 
-    public void prepareForUpdate(SuntimesRiseSetDataset dataset)
+    public void prepareForUpdate(SuntimesRiseSetDataset dataset, int[] widgetSize)
     {
         dataset.calculateData();
     }

@@ -369,6 +369,32 @@ public class SuntimesWidget0 extends AppWidgetProvider
         return mustFitWithinDp;
     }
 
+    protected static int[] widgetMaxSizeDp(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize)
+    {
+        int[] mustFitWithinDp = {defSize[0], defSize[1]};
+        //Log.d("widgetSizeDp", "0: must fit:  [" + mustFitWithinDp[0] + ", " + mustFitWithinDp[1] + "]");
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        {
+            Bundle widgetOptions = appWidgetManager.getAppWidgetOptions(appWidgetId);
+            int[]  sizePortrait = { widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH),   // dp values
+                    widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT) };
+            int[]  sizeLandscape = { widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH),
+                    widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT) };
+
+            //Log.d("widgetSizeDp", "portrait:  [" + sizePortrait[0] + ", " + sizePortrait[1] + "]");
+            //Log.d("widgetSizeDp", "landscape: [" + sizeLandscape[0] + ", " + sizeLandscape[1] + "]");
+            //Toast toast = Toast.makeText(context, "[" + sizePortrait[0] + ", " + sizePortrait[1] + "]; " + "[" + sizeLandscape[0] + ", " + sizeLandscape[1] + "]", Toast.LENGTH_SHORT);
+            //toast.show();
+
+            mustFitWithinDp[0] = Math.max( sizePortrait[0], sizeLandscape[0] );
+            mustFitWithinDp[1] = Math.max( sizePortrait[1], sizeLandscape[1] );
+            //Log.d("widgetSizeDp", "1: must fit:  [" + mustFitWithinDp[0] + ", " + mustFitWithinDp[1] + "]");
+        }
+        return mustFitWithinDp;
+    }
+
+
     /**
      * @param context the context
      * @param appWidgetManager a reference to the AppWidgetManager
