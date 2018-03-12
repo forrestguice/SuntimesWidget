@@ -1024,6 +1024,11 @@ public class SuntimesUtils
         return (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, spValue, context.getResources().getDisplayMetrics());
     }
 
+    public static int dpToPixels(Context context, float dpValue)
+    {
+        return (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpValue, context.getResources().getDisplayMetrics());
+    }
+
     public static ImageSpan createWarningSpan(Context context, int height)
     {
         //noinspection SuspiciousNameCombination
