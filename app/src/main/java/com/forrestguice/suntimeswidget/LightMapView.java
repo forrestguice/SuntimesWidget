@@ -222,7 +222,11 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 Log.w("LightmapTask", "Invalid params; using [null, 0, 0]");
                 return null;
             }
+            return makeBitmap(data, w, h, colors);
+        }
 
+        public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, LightMapColors colors )
+        {
             if (w <= 0 || h <= 0)
             {
                 return null;
@@ -233,6 +237,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 return null;
             }
 
+            this.colors = colors;
             Bitmap b = Bitmap.createBitmap(w, h, Bitmap.Config.RGB_565);
             Canvas c = new Canvas(b);
             Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -394,11 +399,11 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         }
 
         private LightMapTaskListener listener = null;
-        void setListener( LightMapTaskListener listener )
+        public void setListener( LightMapTaskListener listener )
         {
             this.listener = listener;
         }
-        void clearListener()
+        public void clearListener()
         {
             this.listener = null;
         }
