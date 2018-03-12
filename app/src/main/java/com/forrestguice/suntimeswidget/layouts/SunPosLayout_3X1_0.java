@@ -27,9 +27,10 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.themes.ThemeBackground;
 
 /**
- * A 3x1 layout the lightmap graph.
+ * A 3x1 layout with the lightmap graph.
  */
 public class SunPosLayout_3X1_0 extends SunPosLayout
 {
@@ -79,7 +80,9 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
     {
         super.themeViews(context, views, theme);
         colors = new LightMapView.LightMapColors();
-        colors.initDefaultDark(context);
+        if (theme.getBackgroundId() == ThemeBackground.LIGHT.getResID())
+            colors.initDefaultLight(context);
+        else colors.initDefaultDark(context);
     }
 
 }
