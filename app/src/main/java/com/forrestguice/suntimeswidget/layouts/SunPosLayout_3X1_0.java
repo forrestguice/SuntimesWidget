@@ -66,8 +66,13 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
         views.setImageViewBitmap(R.id.info_time_lightmap, bitmap);
     }
 
+    public static final int HEIGHT_TINY   = 16;
+    public static final int HEIGHT_SMALL  = 24;
+    public static final int HEIGHT_MEDIUM = 32;
+    public static final int HEIGHT_LARGE  = 40;
+
     private LightMapView.LightMapColors colors;
-    private int dpWidth = 180, dpHeight = 24;
+    private int dpWidth = 180, dpHeight = HEIGHT_LARGE;
 
     @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
