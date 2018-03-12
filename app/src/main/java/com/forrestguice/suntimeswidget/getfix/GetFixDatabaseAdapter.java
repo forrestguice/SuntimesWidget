@@ -121,8 +121,13 @@ public class GetFixDatabaseAdapter
     public Cursor getAllPlaces(int n, boolean fullEntry)
     {
         String[] QUERY = (fullEntry) ? QUERY_PLACES_FULLENTRY : QUERY_PLACES_MINENTRY;
-        return (n > 0) ? database.query( TABLE_PLACES, QUERY, null, null, null, null, "_id DESC", n+"" )
-                       : database.query( TABLE_PLACES, QUERY, null, null, null, null, "_id DESC" );
+        Cursor cursor =  (n > 0) ? database.query( TABLE_PLACES, QUERY, null, null, null, null, "_id DESC", n+"" )
+                                 : database.query( TABLE_PLACES, QUERY, null, null, null, null, "_id DESC" );
+        if (cursor != null)
+        {
+            cursor.moveToFirst();
+        }
+        return cursor;
     }
 
     /**
