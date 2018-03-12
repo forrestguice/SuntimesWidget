@@ -192,6 +192,69 @@ public class SuntimesUtilsTest
 
 
     @Test
+    public void test_calendarDateTimeDisplayString_12hr()
+    {
+        assertTrue("test precondition: english language", AppSettings.getLocale().getLanguage().equals("en"));
+        WidgetSettings.saveTimeFormatModePref(mockContext, 0, WidgetSettings.TimeFormatMode.MODE_12HR);
+        SuntimesUtils.initDisplayStrings(mockContext);
+
+        Calendar date0 = new GregorianCalendar(TimeZone.getTimeZone("US/Arizona"));
+        Calendar date1 = new GregorianCalendar(TimeZone.getTimeZone("US/Eastern"));
+        date0.setTimeInMillis(1493315892762L);   // april 27, 10:58 AM (arizona)
+        date1.setTimeInMillis(1493315892762L);   // april 27, 1:58 PM (eastern)
+
+        test_calendarDateTimeDisplayString(date0, "April 27, 2017, 10:58:12\u00A0AM", true, true, true);
+        test_calendarDateTimeDisplayString(date1, "April 27, 2017, 1:58:12\u00A0PM", true, true, true);
+
+        test_calendarDateTimeDisplayString(date0, "April 27, 2017, 10:58\u00A0AM", true, true, false);
+        test_calendarDateTimeDisplayString(date0, "April 27, 2017", true, false, false);
+        test_calendarDateTimeDisplayString(date0, "April 27", false, false, false);
+        test_calendarDateTimeDisplayString(date0, "April 27, 10:58\u00A0AM", false, true, false);
+        test_calendarDateTimeDisplayString(date0, "April 27, 10:58:12\u00A0AM", false, true, true);
+    }
+
+    @Test
+    public void test_calendarDateTimeDisplayString_24hr()
+    {
+        assertTrue("test precondition: english language", AppSettings.getLocale().getLanguage().equals("en"));
+        WidgetSettings.saveTimeFormatModePref(mockContext, 0, WidgetSettings.TimeFormatMode.MODE_24HR);
+        SuntimesUtils.initDisplayStrings(mockContext);
+
+        Calendar date0 = new GregorianCalendar(TimeZone.getTimeZone("US/Arizona"));
+        Calendar date1 = new GregorianCalendar(TimeZone.getTimeZone("US/Eastern"));
+        date0.setTimeInMillis(1493315892762L);   // april 27, 10:58 (arizona)
+        date1.setTimeInMillis(1493315892762L);   // april 27, 13:58 (eastern)
+
+        test_calendarDateTimeDisplayString(date0, "April 27, 2017, 10:58:12", true, true, true);
+        test_calendarDateTimeDisplayString(date1, "April 27, 2017, 13:58:12", true, true, true);
+
+        test_calendarDateTimeDisplayString(date0, "April 27, 2017, 10:58", true, true, false);
+        test_calendarDateTimeDisplayString(date0, "April 27, 2017", true, false, false);
+        test_calendarDateTimeDisplayString(date0, "April 27", false, false, false);
+        test_calendarDateTimeDisplayString(date0, "April 27, 10:58", false, true, false);
+        test_calendarDateTimeDisplayString(date0, "April 27, 10:58:12", false, true, true);
+    }
+
+    protected SuntimesUtils.TimeDisplayText test_calendarDateTimeDisplayString(Calendar date, String expected, boolean showTime, boolean showSeconds)
+    {
+        SuntimesUtils.TimeDisplayText text = utils.calendarDateTimeDisplayString(mockContext, date, showTime, showSeconds);
+        assertTrue("result should be " + expected + " but was " + text.toString(), text.toString().equals(expected));
+        assertTrue(text.getRawValue() == date.getTimeInMillis());
+        assertTrue(text.getSuffix().isEmpty());
+        return text;
+    }
+
+    protected SuntimesUtils.TimeDisplayText test_calendarDateTimeDisplayString(Calendar date, String expected, boolean showYear, boolean showTime, boolean showSeconds)
+    {
+        SuntimesUtils.TimeDisplayText text = utils.calendarDateTimeDisplayString(mockContext, date, showYear, showTime, showSeconds);
+        assertTrue("result should be " + expected + " but was " + text.toString(), text.toString().equals(expected));
+        assertTrue(text.getRawValue() == date.getTimeInMillis());
+        assertTrue(text.getSuffix().isEmpty());
+        return text;
+    }
+
+
+    @Test
     public void test_timeDeltaDisplayString()
     {
         assertTrue("test precondition: english language", AppSettings.getLocale().getLanguage().equals("en"));
