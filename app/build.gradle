@@ -23,8 +23,8 @@ android
         minSdkVersion 10
         //noinspection OldTargetApi
         targetSdkVersion 25
-        versionCode 21
-        versionName "0.7.2"
+        versionCode 22
+        versionName "0.7.3"
 
         buildConfigField "java.util.Date", "BUILD_TIME", "new java.util.Date(" + getDateAsMillis() + "L)"
         buildConfigField "String", "GIT_HASH", "\"${getGitHash()}\""
