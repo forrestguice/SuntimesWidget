@@ -1,5 +1,8 @@
 ### ~
 
+### v0.7.3 (2018-03-16)
+* fixes app crash when location name contains special characters (#177).
+
 ### v0.7.2 (2018-03-11)
 * adds clock tap action: "Set Time Zone"; timezone label now clickable (launches TimeZoneDialog).
 * default date tap action changed to "Set Date" (#173).
