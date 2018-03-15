@@ -91,6 +91,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.regex.Pattern;
 
 @SuppressWarnings("Convert2Diamond")
 public class SuntimesActivity extends AppCompatActivity
@@ -1486,7 +1487,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         if (showWarnings && timezoneWarning.shouldShow && !timezoneWarning.wasDismissed)
         {
-            timezoneWarning.initWarning(this, getString(R.string.timezoneWarning));
+            timezoneWarning.initWarning(this, txt_timezone, getString(R.string.timezoneWarning));
             timezoneWarning.snackbar.setAction(getString(R.string.configAction_setTimeZone), new View.OnClickListener()
             {
                 @Override
@@ -1501,7 +1502,7 @@ public class SuntimesActivity extends AppCompatActivity
 
         if (showWarnings && dateWarning.shouldShow && !dateWarning.wasDismissed)
         {
-            dateWarning.initWarning(this, getString(R.string.dateWarning));
+            dateWarning.initWarning(this, card_flipper, getString(R.string.dateWarning));
             dateWarning.snackbar.setAction(getString(R.string.configAction_setDate), new View.OnClickListener()
             {
                 @Override
@@ -2192,6 +2193,7 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private class SuntimesWarning
     {
+        public static final int ANNOUNCE_DELAY_MS = 500;
         public static final String KEY_WASDISMISSED = "userDismissedWarning";
 
         public SuntimesWarning(String id)
@@ -2204,23 +2206,20 @@ public class SuntimesActivity extends AppCompatActivity
         protected boolean shouldShow = false;
         protected boolean wasDismissed = false;
 
-        public void initWarning(Context context, String msg)
         protected String contentDescription = null;
+        protected View parentView = null;
 
+        public void initWarning(Context context, View view, String msg)
         {
+            this.parentView = view;
             ImageSpan warningIcon = SuntimesUtils.createWarningSpan(context, txt_date.getTextSize());
-            SpannableStringBuilder message = SuntimesUtils.createSpan(SuntimesActivity.this, msg, SPANTAG_WARNING, warningIcon);
-            this.contentDescription = msg.replaceAll(Pattern.quote(SPANTAG_WARNING), context.getString(R.string.spanTag_warning));
+            SpannableStringBuilder message = SuntimesUtils.createSpan(SuntimesActivity.this, msg, SuntimesUtils.SPANTAG_WARNING, warningIcon);
+            this.contentDescription = msg.replaceAll(Pattern.quote(SuntimesUtils.SPANTAG_WARNING), context.getString(R.string.spanTag_warning));
 
             wasDismissed = false;
             snackbar = Snackbar.make(card_flipper, message, Snackbar.LENGTH_INDEFINITE);
             snackbar.addCallback(snackbarListener);
-
-            TextView snackText = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-            if (snackText != null)
-            {
-                snackText.setContentDescription(contentDescription);
-            }
+            setContentDescription(contentDescription);
         }
 
         private Snackbar.Callback snackbarListener = new Snackbar.Callback()
@@ -2255,6 +2254,7 @@ public class SuntimesActivity extends AppCompatActivity
             {
                 snackbar.show();
             }
+            announceWarning();
         }
 
         public void dismiss()
@@ -2269,6 +2269,31 @@ public class SuntimesActivity extends AppCompatActivity
         {
             wasDismissed = false;
             shouldShow = false;
+        }
+
+        public void setContentDescription( String value )
+        {
+            this.contentDescription = value;
+            TextView snackText = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+            if (snackText != null)
+            {
+                snackText.setContentDescription(contentDescription);
+            }
+        }
+
+        public void announceWarning()
+        {
+            if (parentView != null && contentDescription != null)
+            {
+                parentView.postDelayed(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        SuntimesUtils.announceForAccessibility(parentView, contentDescription);
+                    }
+                }, ANNOUNCE_DELAY_MS);
+            }
         }
 
         public void save( Bundle outState )
