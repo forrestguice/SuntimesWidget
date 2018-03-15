@@ -28,6 +28,8 @@
     -->
     <string name="nextDay">Día siguiente</string>
     <string name="prevDay">Día anterior</string>
+    <string name="nextYear">Año siguiente</string>
+    <string name="prevYear">Año anterior</string>
 
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
