@@ -239,6 +239,7 @@ public class TimeZoneDialog extends DialogFragment
             WidgetSettings.TimezoneMode timezoneMode = timezoneModes[parent.getSelectedItemPosition()];
             setUseCustomTimezone((timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE));
             setUseSolarTime((timezoneMode == WidgetSettings.TimezoneMode.SOLAR_TIME));
+            SuntimesUtils.announceForAccessibility(spinner_timezoneMode, timezoneMode.getDisplayString());
         }
 
         public void onNothingSelected(AdapterView<?> parent) {}
