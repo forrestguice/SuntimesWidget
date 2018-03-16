@@ -1225,20 +1225,20 @@ public class SuntimesUtils
                 Context context = view.getContext();
                 if (context != null)
                 {
-                    AccessibilityEvent event = AccessibilityEvent.obtain(AccessibilityEvent.TYPE_VIEW_FOCUSED);
-                    event.getText().add(msg);
-                    event.setEnabled(view.isEnabled());
-                    event.setClassName(view.getClass().getName());
-                    event.setPackageName(context.getPackageName());
-
                     AccessibilityManager accesibility = (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
                     if (accesibility != null && accesibility.isEnabled())
                     {
+                        AccessibilityEvent event = AccessibilityEvent.obtain(AccessibilityEvent.TYPE_VIEW_FOCUSED);
+                        event.getText().add(msg);
+                        event.setEnabled(view.isEnabled());
+                        event.setClassName(view.getClass().getName());
+                        event.setPackageName(context.getPackageName());
+
                         ViewParent parent = view.getParent();
                         if (Build.VERSION.SDK_INT >= 14 && parent != null)
                         {
                             parent.requestSendAccessibilityEvent(view, event);
-                            
+
                         } else {
                             accesibility.sendAccessibilityEvent(event);
                         }
