@@ -171,7 +171,10 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         boolean themeChanged = false;
         if (icicle != null)
         {
-            String prevTheme = icicle.getString(AppSettings.PREF_KEY_APPEARANCE_THEME, appTheme);
+            String prevTheme = icicle.getString(AppSettings.PREF_KEY_APPEARANCE_THEME);
+            if (prevTheme == null) {
+                prevTheme = appTheme;
+            }
             themeChanged = !prevTheme.equals(appTheme);
         }
 
