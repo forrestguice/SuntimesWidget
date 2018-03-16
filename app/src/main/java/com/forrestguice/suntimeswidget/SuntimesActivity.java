@@ -1440,10 +1440,12 @@ public class SuntimesActivity extends AppCompatActivity
         String dateString = getString(R.string.dateField, thisString, dateFormat.format(data_date));
         SpannableStringBuilder dateSpan = SuntimesUtils.createSpan(this, dateString, SuntimesUtils.SPANTAG_WARNING, dateWarningIcon);
         txt_date.setText(dateSpan);
+        txt_date.setContentDescription(dateString.replaceAll(Pattern.quote(SuntimesUtils.SPANTAG_WARNING), ""));
 
         String date2String = getString(R.string.dateField, otherString, dateFormat.format(data_date2));
         SpannableStringBuilder date2Span = SuntimesUtils.createSpan(this, date2String, SuntimesUtils.SPANTAG_WARNING, dateWarningIcon);
         txt_date2.setText(date2Span);
+        txt_date2.setContentDescription(date2String.replaceAll(Pattern.quote(SuntimesUtils.SPANTAG_WARNING), ""));
 
         // timezone field
         TimeZone timezone = dataset.timezone();
@@ -1463,6 +1465,8 @@ public class SuntimesActivity extends AppCompatActivity
         String timezoneString = getString(R.string.timezoneField, timezone.getID());
         SpannableStringBuilder timezoneSpan = SuntimesUtils.createSpan(this, timezoneString, timezoneTags);
         txt_timezone.setText(timezoneSpan);
+        txt_timezone.setContentDescription(timezoneString.replaceAll(Pattern.quote(SuntimesUtils.SPANTAG_WARNING), "")
+                .replaceAll(Pattern.quote(SuntimesUtils.SPANTAG_DST), ""));
 
         // datasource ui
         if (txt_datasource != null)
@@ -1741,7 +1745,7 @@ public class SuntimesActivity extends AppCompatActivity
             card_flipper.setOutAnimation(anim_card_outNext);
             card_flipper.setInAnimation(anim_card_inNext);
             card_flipper.showNext();
-            SuntimesUtils.announceForAccessibility(card_flipper, txt_date2.getText().toString());
+            SuntimesUtils.announceForAccessibility(card_flipper, txt_date2.getContentDescription().toString());
             return true;
         }
         return false;
@@ -1763,7 +1767,7 @@ public class SuntimesActivity extends AppCompatActivity
             card_flipper.setOutAnimation(anim_card_outPrev);
             card_flipper.setInAnimation(anim_card_inPrev);
             card_flipper.showPrevious();
-            SuntimesUtils.announceForAccessibility(card_flipper, txt_date.getText().toString());
+            SuntimesUtils.announceForAccessibility(card_flipper, txt_date.getContentDescription().toString());
             return true;
         }
         return false;
