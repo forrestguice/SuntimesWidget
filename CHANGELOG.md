@@ -1,5 +1,11 @@
 ### ~
 
+### v0.7.3 (2018-03-16)
+* reorders user interfaces prefs (organized into categories).
+* fixes talkback accessibility issues; snackbar warning messages not announced, datetext and timezone fields announcing unused tags, timezone dialog announcing previous state on mode change.
+* fixes app crash (api14, api15) when accessibility settings are disabled.
+* fixes app crash when location name contains special characters (#177).
+
 ### v0.7.2 (2018-03-11)
 * adds clock tap action: "Set Time Zone"; timezone label now clickable (launches TimeZoneDialog).
 * default date tap action changed to "Set Date" (#173).
