@@ -28,6 +28,11 @@
     -->
     <string name="nextDay">Día siguiente</string>
     <string name="prevDay">Día anterior</string>
+    <string name="nextYear">Año siguiente</string>
+    <string name="prevYear">Año anterior</string>
+
+    <!-- Warnings -->
+    <string name="spanTag_warning">Warning!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->  <!-- TODO -->
 
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
