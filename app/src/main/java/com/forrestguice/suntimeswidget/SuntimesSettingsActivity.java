@@ -65,6 +65,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
     private Context context;
     private PlacesPrefsBase placesPrefBase = null;
+    private String appTheme = null;
 
     public SuntimesSettingsActivity()
     {
@@ -76,8 +77,10 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     {
         context = SuntimesSettingsActivity.this;
         setTheme(AppSettings.loadTheme(this));
+        appTheme = AppSettings.loadThemePref(this);
+
         super.onCreate(icicle);
-        initLocale();
+        initLocale(icicle);
         initLegacyPrefs();
     }
 
@@ -130,7 +133,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     public void onResume()
     {
         super.onResume();
-        initLocale();
+        initLocale(null);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         prefs.registerOnSharedPreferenceChangeListener(this);
 
@@ -158,7 +161,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         }
     }
 
-    private void initLocale()
+    private void initLocale(Bundle icicle)
     {
         boolean localeChanged = AppSettings.initLocale(this);
         WidgetSettings.initDefaults(context);
@@ -166,10 +169,27 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         AppSettings.initDisplayStrings(context);
         WidgetSettings.initDisplayStrings(context);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB && localeChanged)
+        boolean themeChanged = false;
+        if (icicle != null)
+        {
+            String prevTheme = icicle.getString(AppSettings.PREF_KEY_APPEARANCE_THEME);
+            if (prevTheme == null) {
+                prevTheme = appTheme;
+            }
+            themeChanged = !prevTheme.equals(appTheme);
+        }
+
+        if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) && (localeChanged || themeChanged))
         {
             invalidateHeaders();
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+        outState.putString(AppSettings.PREF_KEY_APPEARANCE_THEME, appTheme);
     }
 
     /**
@@ -216,7 +236,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
     {
-        if (key.equals(AppSettings.PREF_KEY_LOCALE) || key.equals(AppSettings.PREF_KEY_LOCALE_MODE))
+        if (key.equals(AppSettings.PREF_KEY_LOCALE) || key.equals(AppSettings.PREF_KEY_LOCALE_MODE)
+                || key.equals(AppSettings.PREF_KEY_APPEARANCE_THEME))
         {
             //Log.d("SettingsActivity", "Locale change detected; restarting activity");
             updateLocale();

@@ -30,6 +30,9 @@
     <string name="nextYear">Sekva jaro</string>
     <string name="prevYear">Antaŭa jaro</string>
 
+    <!-- Warnings -->
+    <string name="spanTag_warning">Warning!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->  <!-- TODO -->
+
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
     -->
