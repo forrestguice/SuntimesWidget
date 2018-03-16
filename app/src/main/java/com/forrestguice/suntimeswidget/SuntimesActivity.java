@@ -91,6 +91,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.regex.Pattern;
 
 @SuppressWarnings("Convert2Diamond")
 public class SuntimesActivity extends AppCompatActivity
@@ -297,7 +298,7 @@ public class SuntimesActivity extends AppCompatActivity
             //Log.d("DEBUG", "LocationDialog listeners restored.");
         }
 
-        TimeDateDialog dateDialog = (TimeDateDialog) fragments.findFragmentByTag(DIALOGTAG_DATE);
+        TimeDateDialogEasy dateDialog = (TimeDateDialogEasy) fragments.findFragmentByTag(DIALOGTAG_DATE);
         if (dateDialog != null)
         {
             dateDialog.setOnAcceptedListener(onConfigDate);
@@ -840,7 +841,9 @@ public class SuntimesActivity extends AppCompatActivity
 
         txt_time = (TextView) findViewById(R.id.text_time);
         txt_time_suffix = (TextView) findViewById(R.id.text_time_suffix);
+
         txt_timezone = (TextView) findViewById(R.id.text_timezone);
+        txt_timezone.setOnClickListener(onTimeZoneClick);
 
         float fontScale = getResources().getConfiguration().fontScale;
         if (fontScale > 1)
@@ -978,7 +981,7 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private void configDate()
     {
-        final TimeDateDialog datePicker = new TimeDateDialog();
+        final TimeDateDialogEasy datePicker = new TimeDateDialogEasy();
         datePicker.setOnAcceptedListener(onConfigDate);
         datePicker.setOnCanceledListener(onCancelDate);
         datePicker.show(getSupportFragmentManager(), DIALOGTAG_DATE);
@@ -1437,10 +1440,12 @@ public class SuntimesActivity extends AppCompatActivity
         String dateString = getString(R.string.dateField, thisString, dateFormat.format(data_date));
         SpannableStringBuilder dateSpan = SuntimesUtils.createSpan(this, dateString, SuntimesUtils.SPANTAG_WARNING, dateWarningIcon);
         txt_date.setText(dateSpan);
+        txt_date.setContentDescription(dateString.replaceAll(Pattern.quote(SuntimesUtils.SPANTAG_WARNING), ""));
 
         String date2String = getString(R.string.dateField, otherString, dateFormat.format(data_date2));
         SpannableStringBuilder date2Span = SuntimesUtils.createSpan(this, date2String, SuntimesUtils.SPANTAG_WARNING, dateWarningIcon);
         txt_date2.setText(date2Span);
+        txt_date2.setContentDescription(date2String.replaceAll(Pattern.quote(SuntimesUtils.SPANTAG_WARNING), ""));
 
         // timezone field
         TimeZone timezone = dataset.timezone();
@@ -1460,6 +1465,8 @@ public class SuntimesActivity extends AppCompatActivity
         String timezoneString = getString(R.string.timezoneField, timezone.getID());
         SpannableStringBuilder timezoneSpan = SuntimesUtils.createSpan(this, timezoneString, timezoneTags);
         txt_timezone.setText(timezoneSpan);
+        txt_timezone.setContentDescription(timezoneString.replaceAll(Pattern.quote(SuntimesUtils.SPANTAG_WARNING), "")
+                .replaceAll(Pattern.quote(SuntimesUtils.SPANTAG_DST), ""));
 
         // datasource ui
         if (txt_datasource != null)
@@ -1484,7 +1491,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         if (showWarnings && timezoneWarning.shouldShow && !timezoneWarning.wasDismissed)
         {
-            timezoneWarning.initWarning(this, getString(R.string.timezoneWarning));
+            timezoneWarning.initWarning(this, txt_timezone, getString(R.string.timezoneWarning));
             timezoneWarning.snackbar.setAction(getString(R.string.configAction_setTimeZone), new View.OnClickListener()
             {
                 @Override
@@ -1499,7 +1506,7 @@ public class SuntimesActivity extends AppCompatActivity
 
         if (showWarnings && dateWarning.shouldShow && !dateWarning.wasDismissed)
         {
-            dateWarning.initWarning(this, getString(R.string.dateWarning));
+            dateWarning.initWarning(this, card_flipper, getString(R.string.dateWarning));
             dateWarning.snackbar.setAction(getString(R.string.configAction_setDate), new View.OnClickListener()
             {
                 @Override
@@ -1615,6 +1622,10 @@ public class SuntimesActivity extends AppCompatActivity
                         switch (action)
                         {
                             case NOTHING:
+                                break;
+
+                            case TIMEZONE:
+                                configTimeZone();
                                 break;
 
                             case ALARM:
@@ -1734,7 +1745,7 @@ public class SuntimesActivity extends AppCompatActivity
             card_flipper.setOutAnimation(anim_card_outNext);
             card_flipper.setInAnimation(anim_card_inNext);
             card_flipper.showNext();
-            SuntimesUtils.announceForAccessibility(card_flipper, txt_date2.getText().toString());
+            SuntimesUtils.announceForAccessibility(card_flipper, txt_date2.getContentDescription().toString());
             return true;
         }
         return false;
@@ -1756,7 +1767,7 @@ public class SuntimesActivity extends AppCompatActivity
             card_flipper.setOutAnimation(anim_card_outPrev);
             card_flipper.setInAnimation(anim_card_inPrev);
             card_flipper.showPrevious();
-            SuntimesUtils.announceForAccessibility(card_flipper, txt_date.getText().toString());
+            SuntimesUtils.announceForAccessibility(card_flipper, txt_date.getContentDescription().toString());
             return true;
         }
         return false;
@@ -1807,6 +1818,15 @@ public class SuntimesActivity extends AppCompatActivity
         }
     };
 
+    View.OnClickListener onTimeZoneClick = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View view)
+        {
+            configTimeZone();
+        }
+    };
+
     View.OnClickListener onClockClick = new View.OnClickListener()
     {
         @Override
@@ -1821,6 +1841,12 @@ public class SuntimesActivity extends AppCompatActivity
             if (action == AppSettings.ClockTapAction.ALARM)
             {
                 scheduleAlarm();
+                return;
+            }
+
+            if (action == AppSettings.ClockTapAction.TIMEZONE)
+            {
+                configTimeZone();
                 return;
             }
 
@@ -2171,22 +2197,33 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private class SuntimesWarning
     {
+        public static final int ANNOUNCE_DELAY_MS = 500;
         public static final String KEY_WASDISMISSED = "userDismissedWarning";
 
-        public SuntimesWarning(String id) { this.id = id; }
+        public SuntimesWarning(String id)
+        {
+            this.id = id;
+        }
         protected String id = "";
+
         protected Snackbar snackbar = null;
         protected boolean shouldShow = false;
         protected boolean wasDismissed = false;
 
-        public void initWarning(Context context, String msg)
+        protected String contentDescription = null;
+        protected View parentView = null;
+
+        public void initWarning(Context context, View view, String msg)
         {
+            this.parentView = view;
             ImageSpan warningIcon = SuntimesUtils.createWarningSpan(context, txt_date.getTextSize());
             SpannableStringBuilder message = SuntimesUtils.createSpan(SuntimesActivity.this, msg, SuntimesUtils.SPANTAG_WARNING, warningIcon);
+            this.contentDescription = msg.replaceAll(Pattern.quote(SuntimesUtils.SPANTAG_WARNING), context.getString(R.string.spanTag_warning));
 
             wasDismissed = false;
             snackbar = Snackbar.make(card_flipper, message, Snackbar.LENGTH_INDEFINITE);
             snackbar.addCallback(snackbarListener);
+            setContentDescription(contentDescription);
         }
 
         private Snackbar.Callback snackbarListener = new Snackbar.Callback()
@@ -2221,6 +2258,7 @@ public class SuntimesActivity extends AppCompatActivity
             {
                 snackbar.show();
             }
+            announceWarning();
         }
 
         public void dismiss()
@@ -2235,6 +2273,31 @@ public class SuntimesActivity extends AppCompatActivity
         {
             wasDismissed = false;
             shouldShow = false;
+        }
+
+        public void setContentDescription( String value )
+        {
+            this.contentDescription = value;
+            TextView snackText = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+            if (snackText != null)
+            {
+                snackText.setContentDescription(contentDescription);
+            }
+        }
+
+        public void announceWarning()
+        {
+            if (parentView != null && contentDescription != null)
+            {
+                parentView.postDelayed(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        SuntimesUtils.announceForAccessibility(parentView, contentDescription);
+                    }
+                }, ANNOUNCE_DELAY_MS);
+            }
         }
 
         public void save( Bundle outState )

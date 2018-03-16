@@ -192,6 +192,69 @@ public class SuntimesUtilsTest
 
 
     @Test
+    public void test_calendarDateTimeDisplayString_12hr()
+    {
+        assertTrue("test precondition: english language", AppSettings.getLocale().getLanguage().equals("en"));
+        WidgetSettings.saveTimeFormatModePref(mockContext, 0, WidgetSettings.TimeFormatMode.MODE_12HR);
+        SuntimesUtils.initDisplayStrings(mockContext);
+
+        Calendar date0 = new GregorianCalendar(TimeZone.getTimeZone("US/Arizona"));
+        Calendar date1 = new GregorianCalendar(TimeZone.getTimeZone("US/Eastern"));
+        date0.setTimeInMillis(1493315892762L);   // april 27, 10:58 AM (arizona)
+        date1.setTimeInMillis(1493315892762L);   // april 27, 1:58 PM (eastern)
+
+        test_calendarDateTimeDisplayString(date0, "April 27, 2017, 10:58:12\u00A0AM", true, true, true);
+        test_calendarDateTimeDisplayString(date1, "April 27, 2017, 1:58:12\u00A0PM", true, true, true);
+
+        test_calendarDateTimeDisplayString(date0, "April 27, 2017, 10:58\u00A0AM", true, true, false);
+        test_calendarDateTimeDisplayString(date0, "April 27, 2017", true, false, false);
+        test_calendarDateTimeDisplayString(date0, "April 27", false, false, false);
+        test_calendarDateTimeDisplayString(date0, "April 27, 10:58\u00A0AM", false, true, false);
+        test_calendarDateTimeDisplayString(date0, "April 27, 10:58:12\u00A0AM", false, true, true);
+    }
+
+    @Test
+    public void test_calendarDateTimeDisplayString_24hr()
+    {
+        assertTrue("test precondition: english language", AppSettings.getLocale().getLanguage().equals("en"));
+        WidgetSettings.saveTimeFormatModePref(mockContext, 0, WidgetSettings.TimeFormatMode.MODE_24HR);
+        SuntimesUtils.initDisplayStrings(mockContext);
+
+        Calendar date0 = new GregorianCalendar(TimeZone.getTimeZone("US/Arizona"));
+        Calendar date1 = new GregorianCalendar(TimeZone.getTimeZone("US/Eastern"));
+        date0.setTimeInMillis(1493315892762L);   // april 27, 10:58 (arizona)
+        date1.setTimeInMillis(1493315892762L);   // april 27, 13:58 (eastern)
+
+        test_calendarDateTimeDisplayString(date0, "April 27, 2017, 10:58:12", true, true, true);
+        test_calendarDateTimeDisplayString(date1, "April 27, 2017, 13:58:12", true, true, true);
+
+        test_calendarDateTimeDisplayString(date0, "April 27, 2017, 10:58", true, true, false);
+        test_calendarDateTimeDisplayString(date0, "April 27, 2017", true, false, false);
+        test_calendarDateTimeDisplayString(date0, "April 27", false, false, false);
+        test_calendarDateTimeDisplayString(date0, "April 27, 10:58", false, true, false);
+        test_calendarDateTimeDisplayString(date0, "April 27, 10:58:12", false, true, true);
+    }
+
+    protected SuntimesUtils.TimeDisplayText test_calendarDateTimeDisplayString(Calendar date, String expected, boolean showTime, boolean showSeconds)
+    {
+        SuntimesUtils.TimeDisplayText text = utils.calendarDateTimeDisplayString(mockContext, date, showTime, showSeconds);
+        assertTrue("result should be " + expected + " but was " + text.toString(), text.toString().equals(expected));
+        assertTrue(text.getRawValue() == date.getTimeInMillis());
+        assertTrue(text.getSuffix().isEmpty());
+        return text;
+    }
+
+    protected SuntimesUtils.TimeDisplayText test_calendarDateTimeDisplayString(Calendar date, String expected, boolean showYear, boolean showTime, boolean showSeconds)
+    {
+        SuntimesUtils.TimeDisplayText text = utils.calendarDateTimeDisplayString(mockContext, date, showYear, showTime, showSeconds);
+        assertTrue("result should be " + expected + " but was " + text.toString(), text.toString().equals(expected));
+        assertTrue(text.getRawValue() == date.getTimeInMillis());
+        assertTrue(text.getSuffix().isEmpty());
+        return text;
+    }
+
+
+    @Test
     public void test_timeDeltaDisplayString()
     {
         assertTrue("test precondition: english language", AppSettings.getLocale().getLanguage().equals("en"));
@@ -207,19 +270,48 @@ public class SuntimesUtilsTest
         assertTrue("result should be empty (null date), but was " + text3.toString(), text3.toString().isEmpty());
 
         test_timeDeltaDisplayString(date1, 0, "1m");
-        test_timeDeltaDisplayString(date1, 1 * 60 * 1000, "1m");
-        test_timeDeltaDisplayString(date1, 2 * 60 * 1000, "2m");
-        test_timeDeltaDisplayString(date1, 59 * 60 * 1000, "59m");
-        test_timeDeltaDisplayString(date1, 60 * 60 * 1000, "1h");
-        test_timeDeltaDisplayString(date1, 61 * 60 * 1000, "1h\u00A01m");
-        test_timeDeltaDisplayString(date1, 1439 * 60 * 1000, "23h\u00A059m");
-        test_timeDeltaDisplayString(date1, 1440 * 60 * 1000, "1d");
-        test_timeDeltaDisplayString(date1, 1500 * 60 * 1000, "1d\u00A01h");
+        test_timeDeltaDisplayString(date1, 1 * MINUTE, "1m");
+        test_timeDeltaDisplayString(date1, 2 * MINUTE, "2m");
+        test_timeDeltaDisplayString(date1, 59 * MINUTE, "59m");
+        test_timeDeltaDisplayString(date1, 60 * MINUTE, "1h");
+        test_timeDeltaDisplayString(date1, 61 * MINUTE, "1h\u00A01m");
+        test_timeDeltaDisplayString(date1, 1439 * MINUTE, "23h\u00A059m");
+        test_timeDeltaDisplayString(date1, 1440 * MINUTE, "1d");
+        test_timeDeltaDisplayString(date1, 1500 * MINUTE, "1d\u00A01h");
+
+        test_timeDeltaDisplayString(date1, 59 * MINUTE, "59m", false, false);          // still 59m
+        test_timeDeltaDisplayString(date1, 61 * MINUTE, "1h\u00A01m", false, false);   // still 1h 1m
+        test_timeDeltaDisplayString(date1, 1500 * MINUTE, "1d\u00A01h", false, false);      // <2d so.. 1d 1h
+        test_timeDeltaDisplayString(date1, 2820 * MINUTE, "1d\u00A023h", false, false);     // <2d so.. 1d 23h
+        test_timeDeltaDisplayString(date1, 2940 * MINUTE, "2d", false, false);         // >=2d so.. 2d (not 2d 1h)
+
+        test_timeDeltaDisplayString(date1, 7 * 1500 * MINUTE, "7d", false, false);
+        test_timeDeltaDisplayString(date1, 7 * 1500 * MINUTE, "7d\u00A07h");
+        test_timeDeltaDisplayString(date1, 7 * 1500 * MINUTE, "7d\u00A07h", false, true);
+        test_timeDeltaDisplayString(date1, 7 * 1500 * MINUTE, "1w", true, false);
+        test_timeDeltaDisplayString(date1, 7 * 1500 * MINUTE, "1w", true, true);            // 1w (not 1w 7h)
+
+        test_timeDeltaDisplayString(date1, 15 * DAY + 15 * HOUR, "15d", false, false);
+        test_timeDeltaDisplayString(date1, 15 * DAY + 15 * HOUR, "15d\u00A015h", false, true);
+        test_timeDeltaDisplayString(date1, 16 * DAY + 16 * HOUR, "2w\u00A02d", true, false);  // not 2w 2d 16h (showHours ignored w/ weeks)
+        test_timeDeltaDisplayString(date1, 15 * DAY + 15 * HOUR, "2w\u00A01d", true, true);   // not 2w 1d 15h (showHours ignored w/ weeks)
     }
+
+    private static final int MINUTE = 60 * 1000;
+    private static final int HOUR = 60 * MINUTE;
+    private static final int DAY = 24 * HOUR;
 
     protected SuntimesUtils.TimeDisplayText test_timeDeltaDisplayString(Date date, long timeDelta, String expected)
     {
         SuntimesUtils.TimeDisplayText text = utils.timeDeltaDisplayString(date, new Date(date.getTime() + timeDelta));
+        assertTrue("result should be " + expected + " but was " + text.toString(), text.toString().equals(expected));
+        assertTrue(text.getRawValue() == timeDelta);
+        assertTrue(text.getSuffix().isEmpty());
+        return text;
+    }
+    protected SuntimesUtils.TimeDisplayText test_timeDeltaDisplayString(Date date, long timeDelta, String expected, boolean showWeeks, boolean showHours)
+    {
+        SuntimesUtils.TimeDisplayText text = utils.timeDeltaDisplayString(date, new Date(date.getTime() + timeDelta), showWeeks, showHours);
         assertTrue("result should be " + expected + " but was " + text.toString(), text.toString().equals(expected));
         assertTrue(text.getRawValue() == timeDelta);
         assertTrue(text.getSuffix().isEmpty());
@@ -236,17 +328,17 @@ public class SuntimesUtilsTest
         test_timeDeltaLongDisplayString(date1,-1000 * 30, "30s shorter", true);
         test_timeDeltaLongDisplayString(date1,1000 * 30, "30s longer", true);
         test_timeDeltaLongDisplayString(date1,1000 * 30, "1m longer", false);
-        test_timeDeltaLongDisplayString(date1,1 * 60 * 1000, "1m longer");
-        test_timeDeltaLongDisplayString(date1,2 * 60 * 1000, "2m longer");
-        test_timeDeltaLongDisplayString(date1,59 * 60 * 1000, "59m longer");
-        test_timeDeltaLongDisplayString(date1,60 * 60 * 1000, "1h longer");
-        test_timeDeltaLongDisplayString(date1,61 * 60 * 1000, "1h\u00A01m longer");
-        test_timeDeltaLongDisplayString(date1,1439 * 60 * 1000, "23h\u00A059m longer");
-        test_timeDeltaLongDisplayString(date1,1440 * 60 * 1000, "1d longer");
-        test_timeDeltaLongDisplayString(date1,1500 * 60 * 1000, "1d\u00A01h longer");
-        test_timeDeltaLongDisplayString(date1,30 * 60 * 1000 + 60 * 1000, "31m longer", true);
-        test_timeDeltaLongDisplayString(date1,30 * 60 * 1000 + 59 * 1000, "30m\u00A059s longer", true);
-        test_timeDeltaLongDisplayString(date1,660 * 60 * 1000 + 55 * 1000, "11h\u00A055s longer", true);
+        test_timeDeltaLongDisplayString(date1,1 * MINUTE, "1m longer");
+        test_timeDeltaLongDisplayString(date1,2 * MINUTE, "2m longer");
+        test_timeDeltaLongDisplayString(date1,59 * MINUTE, "59m longer");
+        test_timeDeltaLongDisplayString(date1,60 * MINUTE, "1h longer");
+        test_timeDeltaLongDisplayString(date1,61 * MINUTE, "1h\u00A01m longer");
+        test_timeDeltaLongDisplayString(date1,1439 * MINUTE, "23h\u00A059m longer");
+        test_timeDeltaLongDisplayString(date1,1440 * MINUTE, "1d longer");
+        test_timeDeltaLongDisplayString(date1,1500 * MINUTE, "1d\u00A01h longer");
+        test_timeDeltaLongDisplayString(date1,30 * MINUTE + MINUTE, "31m longer", true);
+        test_timeDeltaLongDisplayString(date1,30 * MINUTE + 59 * 1000, "30m\u00A059s longer", true);
+        test_timeDeltaLongDisplayString(date1,660 * MINUTE + 55 * 1000, "11h\u00A055s longer", true);
     }
 
     protected SuntimesUtils.TimeDisplayText test_timeDeltaLongDisplayString(long date, long timeDelta, String expected)

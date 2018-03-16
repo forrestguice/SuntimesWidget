@@ -28,6 +28,11 @@
     -->
     <string name="nextDay">Día siguiente</string>
     <string name="prevDay">Día anterior</string>
+    <string name="nextYear">Año siguiente</string>
+    <string name="prevYear">Año anterior</string>
+
+    <!-- Warnings -->
+    <string name="spanTag_warning">Warning!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->  <!-- TODO -->
 
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
@@ -157,15 +162,24 @@
     <!-- Widget Setting: general -->
     <string name="configLabel_general">Opciones generales</string>                <!-- group title -->
     <string name="configLabel_general_calculator">Fuente de datos:</string>         <!-- spinner label -->
+
     <string name="configLabel_general_showSeconds">Mostrar segundos</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showSeconds_summary">Include seconds when displaying times.</string>        <!-- checkbox label --> <!-- TODO -->
+
+    <string name="configLabel_general_showTimeDate">Show Time (with dates)</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_showTimeDate_summary">Include the time when displaying dates.</string>        <!-- checkbox label -->  <!-- TODO -->
 
     <string name="configLabel_general_showWeeks">Show Weeks</string>        <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_general_showWeeks_summary">Divide time spans greater than 7 days into weeks (e.g. 15d becomes 2w 1d).</string>        <!-- checkbox label -->  <!-- TODO -->
+
+    <string name="configLabel_general_showHours">Show Hours</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_showHours_summary">Include hours and minutes in time spans greater than a day.</string>    <!-- checkbox label -->    <!-- TODO -->
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Opciones de apariencia</string>           <!-- group title -->
     <string name="configLabel_appearance_theme">Tema:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Crece con espacio disponible (reescalable)</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_showLabels">Show Labels</string>          <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_appearance_showTitle">Mostrar título</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Título:</string>              <!-- edittext label -->
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
@@ -511,6 +525,7 @@
     <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
         <item>No hacer nada</item>
         <item>Poner una alarma</item>
+        <item>@string/configAction_setTimeZone</item>
         <item>Mostrar nota siguiente</item>
         <item>Mostrar nota anterior</item>
     </string-array>
@@ -719,9 +734,6 @@
         <b>Soporte:</b> visita el
         <a href="https://github.com/forrestguice/SuntimesWidget/issues">seguidor de cuestiones</a> para registrar una petición.
     ]]></string>
-    <string name="app_url"><xliff:g id="url"><![CDATA[
-        <a href="https://github.com/forrestguice/SuntimesWidget">github.com/forrestguice/SuntimesWidget</a>
-    ]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[
         <b>Código fuente:</b><br />
         Copyright &#169 2014-2018 Forrest Guice <br />

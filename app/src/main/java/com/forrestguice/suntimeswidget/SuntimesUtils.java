@@ -50,6 +50,9 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewParent;
+import android.view.accessibility.AccessibilityEvent;
+import android.view.accessibility.AccessibilityManager;
 import android.widget.ImageView;
 
 import java.lang.reflect.Method;
@@ -471,7 +474,7 @@ public class SuntimesUtils
     public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal)
     {
         Calendar now = Calendar.getInstance();
-        return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != now.get(Calendar.YEAR))), false);
+        return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != now.get(Calendar.YEAR))), true, false);
     }
     public TimeDisplayText calendarDateTimeDisplayString(Context context, long timestamp)
     {
@@ -479,12 +482,12 @@ public class SuntimesUtils
         cal.setTimeInMillis(timestamp);
         return calendarDateTimeDisplayString(context, cal);
     }
-    public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showSeconds)
+    public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showTime, boolean showSeconds)
     {
         Calendar now = Calendar.getInstance();
-        return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != now.get(Calendar.YEAR))), showSeconds);
+        return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != now.get(Calendar.YEAR))), showTime, showSeconds);
     }
-    public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showYear, boolean showSeconds)
+    public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showYear, boolean showTime, boolean showSeconds)
     {
         if (cal == null || context == null)
         {
@@ -493,11 +496,11 @@ public class SuntimesUtils
 
         Locale locale = getLocale();
         SimpleDateFormat dateTimeFormat;
-
-        if (showSeconds)
-            dateTimeFormat = new SimpleDateFormat((showYear ? strDateTimeLongFormatSec : strDateTimeShortFormatSec), locale);
-        else dateTimeFormat = new SimpleDateFormat((showYear ? strDateTimeLongFormat : strDateTimeShortFormat), locale);
-
+        if (showTime) {
+            if (showSeconds)
+                dateTimeFormat = new SimpleDateFormat((showYear ? strDateTimeLongFormatSec : strDateTimeShortFormatSec), locale);
+            else dateTimeFormat = new SimpleDateFormat((showYear ? strDateTimeLongFormat : strDateTimeShortFormat), locale);
+        } else dateTimeFormat = new SimpleDateFormat((showYear ? strDateLongFormat : strDateShortFormat), locale);
         //Log.d("DEBUG","DateTimeFormat: " + dateTimeFormat.toPattern() + " (" + locale.toString() + ")");
 
         dateTimeFormat.setTimeZone(cal.getTimeZone());
@@ -546,13 +549,13 @@ public class SuntimesUtils
      */
     public TimeDisplayText timeDeltaDisplayString(Date c1, Date c2)
     {
-        return timeDeltaDisplayString(c1, c2, false);
+        return timeDeltaDisplayString(c1, c2, false, true);
     }
-    public TimeDisplayText timeDeltaDisplayString(Date c1, Date c2, boolean showWeeks)
+    public TimeDisplayText timeDeltaDisplayString(Date c1, Date c2, boolean showWeeks, boolean showHours)
     {
         if (c1 != null && c2 != null)
         {
-            TimeDisplayText displayText = timeDeltaLongDisplayString(c1.getTime(), c2.getTime(), showWeeks, false);
+            TimeDisplayText displayText = timeDeltaLongDisplayString(c1.getTime(), c2.getTime(), showWeeks, showHours,false);
             displayText.setSuffix("");
             return displayText;
 
@@ -570,11 +573,11 @@ public class SuntimesUtils
      */
     public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2)
     {
-        return timeDeltaLongDisplayString(timeSpan1, timeSpan2, false, false);
+        return timeDeltaLongDisplayString(timeSpan1, timeSpan2, false, true, false);
     }
     public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2, boolean showSeconds)
     {
-        return timeDeltaLongDisplayString(timeSpan1, timeSpan2, false, showSeconds);
+        return timeDeltaLongDisplayString(timeSpan1, timeSpan2, false, true, showSeconds);
     }
 
     public TimeDisplayText timeDeltaLongDisplayString(long timeSpan, boolean showSeconds)
@@ -585,7 +588,7 @@ public class SuntimesUtils
     }
 
     @SuppressWarnings("ConstantConditions")
-    public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2, boolean showWeeks, boolean showSeconds)
+    public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2, boolean showWeeks, boolean showHours, boolean showSeconds)
     {
         String value = strEmpty;
         String units = strEmpty;
@@ -627,19 +630,23 @@ public class SuntimesUtils
                      String.format(strTimeDeltaFormat, remainingDays, strDays);
 
         boolean showingHours = (!showingYears && !showingWeeks && remainingHours > 0);
-        if (showingHours)
-            value += (showingYears || showingWeeks || showingDays ? strSpace : strEmpty) +
-                     String.format(strTimeDeltaFormat, remainingHours, strHours);
-
         boolean showingMinutes = (!showingDays && !showingWeeks && !showingYears && remainingMinutes > 0);
-        if (showingMinutes)
-            value += (showingYears || showingWeeks || showingDays || showingHours ? strSpace : strEmpty) +
-                     String.format(strTimeDeltaFormat, remainingMinutes, strMinutes);
-
         boolean showingSeconds = (showSeconds && !showingDays && !showingWeeks && !showingYears && (remainingSeconds > 0));
-        if (showingSeconds)
-            value += (showingHours || showingMinutes ? strSpace : strEmpty) +
-                     String.format(strTimeDeltaFormat, remainingSeconds, strSeconds);
+
+        if (showHours || !showingYears && !showingWeeks && remainingDays < 2)
+        {
+            if (showingHours)
+                value += (showingYears || showingWeeks || showingDays ? strSpace : strEmpty) +
+                        String.format(strTimeDeltaFormat, remainingHours, strHours);
+
+            if (showingMinutes)
+                value += (showingYears || showingWeeks || showingDays || showingHours ? strSpace : strEmpty) +
+                        String.format(strTimeDeltaFormat, remainingMinutes, strMinutes);
+
+            if (showingSeconds)
+                value += (showingHours || showingMinutes ? strSpace : strEmpty) +
+                        String.format(strTimeDeltaFormat, remainingSeconds, strSeconds);
+        }
 
         if (!showingSeconds && !showingMinutes && !showingHours && !showingDays && !showingWeeks && !showingYears)
         {
@@ -727,11 +734,15 @@ public class SuntimesUtils
         String dateYearPattern = "%dY";
         String dateDayPattern = "%dD";
         String dateDayPatternShort = "%dd";
+        String dateTimePattern = "%dT";
+        String dateTimePatternShort = "%dt";
+        String widgetIDPattern = "%id";
         String percentPattern = "%%";
 
         WidgetSettings.Location location = data.location();
         String timezoneID = data.timezone().getID();
         String datasource = (data.calculatorMode() == null) ? "" : data.calculatorMode().name();
+        String appWidgetID = (data.appWidgetID() != null ? String.format("%s", data.appWidgetID()) : "");
 
         String displayString = titlePattern;
         displayString = displayString.replaceAll(locPattern, location.getLabel());
@@ -739,9 +750,12 @@ public class SuntimesUtils
         displayString = displayString.replaceAll(lonPattern, location.getLongitude());
         displayString = displayString.replaceAll(timezoneIDPattern, timezoneID);
         displayString = displayString.replaceAll(datasourcePattern, datasource);
+        displayString = displayString.replaceAll(widgetIDPattern, appWidgetID);
 
         if (displayString.contains(datePattern))
         {
+            displayString = displayString.replaceAll(dateTimePatternShort, calendarTimeShortDisplayString(context, data.now(), false).toString());
+            displayString = displayString.replaceAll(dateTimePattern, calendarTimeShortDisplayString(context, data.now(), true).toString());
             displayString = displayString.replaceAll(dateDayPatternShort, calendarDayDisplayString(context, data.calendar(), true).toString());
             displayString = displayString.replaceAll(dateDayPattern, calendarDayDisplayString(context, data.calendar(), false).toString());
             displayString = displayString.replaceAll(dateYearPattern, calendarDateYearDisplayString(context, data.calendar()).toString());
@@ -1201,15 +1215,36 @@ public class SuntimesUtils
      */
     public static void announceForAccessibility(View view, String msg)
     {
-        if (view == null)
-            return;
-
-        if (Build.VERSION.SDK_INT >= 16)
+        if (view != null && msg != null)
         {
-            view.announceForAccessibility(msg);
+            if (Build.VERSION.SDK_INT >= 16)
+            {
+                view.announceForAccessibility(msg);
 
-        } //else {
-            // TODO
-        //}
+            } else {
+                Context context = view.getContext();
+                if (context != null)
+                {
+                    AccessibilityManager accesibility = (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
+                    if (accesibility != null && accesibility.isEnabled())
+                    {
+                        AccessibilityEvent event = AccessibilityEvent.obtain(AccessibilityEvent.TYPE_VIEW_FOCUSED);
+                        event.getText().add(msg);
+                        event.setEnabled(view.isEnabled());
+                        event.setClassName(view.getClass().getName());
+                        event.setPackageName(context.getPackageName());
+
+                        ViewParent parent = view.getParent();
+                        if (Build.VERSION.SDK_INT >= 14 && parent != null)
+                        {
+                            parent.requestSendAccessibilityEvent(view, event);
+
+                        } else {
+                            accesibility.sendAccessibilityEvent(event);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

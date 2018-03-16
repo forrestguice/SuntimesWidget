@@ -1,5 +1,25 @@
 ### ~
 
+### v0.7.3 (2018-03-16)
+* reorders user interfaces prefs (organized into categories).
+* fixes talkback accessibility issues; snackbar warning messages not announced, datetext and timezone fields announcing unused tags, timezone dialog announcing previous state on mode change.
+* fixes app crash (api14, api15) when accessibility settings are disabled.
+* fixes app crash when location name contains special characters (#177).
+
+### v0.7.2 (2018-03-11)
+* adds clock tap action: "Set Time Zone"; timezone label now clickable (launches TimeZoneDialog).
+* default date tap action changed to "Set Date" (#173).
+* enhances the "Set Date" dialog; adds "Today" button, quicker date selection (#173).
+* better support for talkback (announceForAccessibility api16 and under).
+* adds widget option "show time (with date)"; include the time when displaying dates.
+* adds widget option "show hours"; include hours/minutes in time spans greater than a day.
+* adds widget title substitution; %dt and %dT are for time (of last widget update).
+* adds widget title substitution; %id is for appWidgetID (for debug purposes).
+* adds widget option "show labels"; show/hide extra labels.
+* updates dependency (Time4A 3.40-2018b). 
+* updates url: AboutDialog now links https://forrestguice.github.io/SuntimesWidget/ 
+* updates translations (eo, pl) (#171, #172, #175); adds translated fastlane metadata.
+
 ### v0.7.1 (2018-02-28)
 * fixes bug #120 (widget icons don't use theme icons); now works for all api versions.
 * enhances the widget list; adds appWidgetID label to the list and widget (re)configure activity.
