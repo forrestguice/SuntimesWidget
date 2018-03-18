@@ -12,6 +12,44 @@ header h2 {
   color: #622300;
 }
 
+a {
+  color: #d7862f;
+}
+
+a:hover {
+  color: #dd974d;
+}
+
+#main-content h1:before {
+  color: #622300;
+  content: "/";
+}
+
+#main-content h2:before {
+  content: "//";
+  color: #622300;
+}
+
+#main-content h3:before {
+  content: "///";
+  color: #622300;
+}
+
+h4:before {
+  content: "////";
+  color: #622300;
+}
+
+h5:before {
+  content: "/////";
+  color: #622300;
+}
+
+h6:before {
+  content: "//////";
+  color: #622300;
+}
+
 header img.appIcon {
   width: auto;
   height: 62px;
