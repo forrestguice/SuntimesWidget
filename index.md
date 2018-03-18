@@ -1,6 +1,4 @@
-[![GitHub release](https://img.shields.io/github/release/forrestguice/SuntimesWidget.svg)](https://github.com/forrestguice/SuntimesWidget/releases)
-
-Displays sunrise and sunset, twilights, blue and golden hour, solstices and equinoxes, moonrise and moonset, moon phases and illumination.
+<a href="https://github.com/forrestguice/SuntimesWidget/releases"><img src="https://img.shields.io/github/release/forrestguice/SuntimesWidget.svg" alt="GitHub release" /></a>&nbsp; Displays sunrise and sunset, twilights, blue and golden hour, solstices and equinoxes, moonrise and moonset, moon phases and illumination.
 
 ## Donations
 Do you find value in this app? `Please pay as you feel.` [![paypal](https://www.paypalobjects.com/webstatic/en_US/i/btn/png/silver-rect-paypal-26px.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2) 
