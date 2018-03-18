@@ -3,6 +3,15 @@
 
 @import "{{ site.theme }}";
 
+header {
+  background: #d18430 url(../images/header-bg.jpg) 0 0 repeat-x;
+  border-bottom: solid 1px #d8a25e;
+}
+
+header h2 {
+  color: #622300;
+}
+
 header img.appIcon {
   width: auto;
   height: 62px;
