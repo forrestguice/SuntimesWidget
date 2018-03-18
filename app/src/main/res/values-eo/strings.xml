@@ -30,6 +30,9 @@
     <string name="nextYear">Sekva jaro</string>
     <string name="prevYear">Antaŭa jaro</string>
 
+    <!-- Warnings -->
+    <string name="spanTag_warning">Atentu!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
+
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
     -->
@@ -706,7 +709,7 @@
         Pola kaj Esperanta tradukoj de Verdulo. <br />
         Franca traduko de Jej. <br />
         Hungra traduko de Erci. <br />
-        Hispana kaj Kataluna tradukoj de <a href=https://github.com/Raulvo>Raulvo</a>
+        Hispana kaj Kataluna tradukoj de <a href=https://github.com/Raulvo>Raulvo</a>.
     ]]></string>
     <string name="app_legal3"><![CDATA[ <b>Bibliotekoj:</b><br/> ]]>
     <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
@@ -754,7 +757,7 @@
     ]]></string>
     <string name="help_general_daylength"><![CDATA[
         <b>Longo de tago:</b> kvanto da tempo inter sunleviĝo kaj sunsubiro.<br/><br/>
-        <b>Kiom da uzebla lumo:</b> kvanto da tempo inter civila sunleviĝo kaj civila sunsubiro.</br></br>
+        <b>Kiom da uzebla lumo:</b> kvanto da tempo inter civila sunleviĝo kaj civila sunsubiro.<br/><br/>
     ]]>
     </string>
     <string name="help_general_goldhour"><![CDATA[

@@ -31,6 +31,9 @@
     <string name="nextYear">Next Year</string>
     <string name="prevYear">Previous Year</string>
 
+    <!-- Warnings -->
+    <string name="spanTag_warning">Warning!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
+
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
     -->
@@ -941,6 +944,8 @@
     <string name="def_app_ui_showwarnings" translatable="false">true</string>
     <string name="def_app_ui_showequinox" translatable="false">true</string>
     <string name="def_app_ui_showlightmap" translatable="false">true</string>
+    <string name="def_app_ui_showgoldhour" translatable="false">true</string>
+    <string name="def_app_ui_showbluehour" translatable="false">false</string>
     <string name="def_app_ui_showdatasource" translatable="false">true</string>
     <string name="def_app_ui_datetapaction" translatable="false">CONFIG_DATE</string>
     <string name="def_app_ui_notetapaction" translatable="false">NEXT_NOTE</string>
