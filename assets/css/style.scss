@@ -3,9 +3,18 @@
 
 @import "{{ site.theme }}";
 
+body {
+  color: #666;
+  background: #050505 url(../images/body-bg.jpg) 0 0 repeat;
+}
+
 header {
   background: #d18430 url(../images/header-bg.jpg) 0 0 repeat-x;
   border-bottom: solid 1px #d8a25e;
+}
+
+header h1 {
+  color: #000;
 }
 
 header h2 {
@@ -18,6 +27,10 @@ a {
 
 a:hover {
   color: #dd974d;
+}
+
+a.button {
+  color: #000;
 }
 
 #main-content h1:before {
@@ -92,7 +105,7 @@ aside a.fDroidButton {
     margin-top: 15px;
     font-size: 13px;
     line-height: 1;
-    color: #2879d0;
+    color: #d7862f;
     text-align: center;
     background-image: none;
     border-radius: 5px;
