@@ -37,7 +37,6 @@ import net.time4j.tz.TZID;
 import net.time4j.tz.Timezone;
 import net.time4j.tz.ZonalOffset;
 
-import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
@@ -268,8 +267,9 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     protected PlainDate calendarToPlainDate(Calendar input)
     {
         Moment moment = TemporalType.JAVA_UTIL_DATE.translate(input.getTime());
-        ZonalOffset offset = ZonalOffset.atLongitude(new BigDecimal(this.solarTime.getLongitude()));
-        return moment.toZonalTimestamp(offset).toDate();
+        //ZonalOffset offset = ZonalOffset.atLongitude(new BigDecimal(this.solarTime.getLongitude()));
+        ZonalOffset zonalOffset = ZonalOffset.ofTotalSeconds(timezone.getOffset(input.getTimeInMillis()) / 1000);
+        return moment.toZonalTimestamp(zonalOffset).toDate();
     }
 
     protected Calendar momentToCalendar(Moment moment)
