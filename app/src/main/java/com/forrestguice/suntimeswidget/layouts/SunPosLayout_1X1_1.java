@@ -67,12 +67,20 @@ public class SunPosLayout_1X1_1 extends SunPosLayout
         SuntimesCalculator calculator = dataset.dataActual.calculator();
         SuntimesCalculator.SunPosition sunPosition = calculator.getSunPosition(dataset.now());
 
-        String rightAscString = utils.formatAsDegrees(sunPosition.rightAscension, 1);
+        SuntimesUtils.TimeDisplayText rightAscDisplay = utils.formatAsRightAscension(sunPosition.rightAscension, DECIMAL_PLACES);
+        String rightAscString = rightAscDisplay.toString();
+        String rightAscSymbol = rightAscDisplay.getSuffix();
         SpannableString rightAsc = SuntimesUtils.createColorSpan(null, rightAscString, rightAscString, highlightColor, boldTime);
+        rightAsc = SuntimesUtils.createBoldColorSpan(rightAsc, rightAscString, rightAscSymbol, suffixColor);
+        rightAsc = SuntimesUtils.createRelativeSpan(rightAsc, rightAscString, rightAscSymbol, SYMBOL_RELATIVE_SIZE);
         views.setTextViewText(R.id.info_sun_rightascension_current, rightAsc);
 
-        String declinationString = utils.formatAsDegrees(sunPosition.declination, 1);
-        CharSequence declination = SuntimesUtils.createColorSpan(null, declinationString, declinationString, highlightColor, boldTime);
+        SuntimesUtils.TimeDisplayText declinationDisplay = utils.formatAsDeclination(sunPosition.declination, DECIMAL_PLACES);
+        String declinationString = declinationDisplay.toString();
+        String declinationSymbol = declinationDisplay.getSuffix();
+        SpannableString declination = SuntimesUtils.createColorSpan(null, declinationString, declinationString, highlightColor, boldTime);
+        declination = SuntimesUtils.createBoldColorSpan(declination, declinationString, declinationSymbol, suffixColor);
+        declination = SuntimesUtils.createRelativeSpan(declination, declinationString, declinationSymbol, SYMBOL_RELATIVE_SIZE);
         views.setTextViewText(R.id.info_sun_declination_current, declination);
 
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
@@ -80,6 +88,9 @@ public class SunPosLayout_1X1_1 extends SunPosLayout
         views.setViewVisibility(R.id.info_sun_rightascension_current_label, visibility);
         views.setViewVisibility(R.id.info_sun_declination_current_label, visibility);
     }
+
+    private static final int DECIMAL_PLACES = 1;
+    private static final float SYMBOL_RELATIVE_SIZE = 0.85f;
 
     protected int highlightColor = Color.WHITE;
     protected boolean boldTime = false;

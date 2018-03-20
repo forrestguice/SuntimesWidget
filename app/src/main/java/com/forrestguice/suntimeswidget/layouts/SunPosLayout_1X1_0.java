@@ -67,17 +67,21 @@ public class SunPosLayout_1X1_0 extends SunPosLayout
         SuntimesCalculator calculator = dataset.dataActual.calculator();
         SuntimesCalculator.SunPosition sunPosition = calculator.getSunPosition(dataset.now());
 
-        SuntimesUtils.TimeDisplayText azimuthDisplay = utils.formatAsDirection2(sunPosition.azimuth, 1);
-        String azimuthString = utils.formatAsDirection(azimuthDisplay.getValue(), azimuthDisplay.getSuffix());
-
+        SuntimesUtils.TimeDisplayText azimuthDisplay = utils.formatAsDirection2(sunPosition.azimuth, DECIMAL_PLACES);
+        String azimuthSymbol = azimuthDisplay.getSuffix();
+        String azimuthString = utils.formatAsDirection(azimuthDisplay.getValue(), azimuthSymbol);
         SpannableString azimuth = SuntimesUtils.createColorSpan(null, azimuthString, azimuthDisplay.getValue(), highlightColor, boldTime);
-        azimuth = SuntimesUtils.createBoldColorSpan(azimuth, azimuthString, azimuthDisplay.getSuffix(), suffixColor);
-        azimuth = SuntimesUtils.createRelativeSpan(azimuth, azimuthString, azimuthDisplay.getSuffix(), 0.7f);
+        azimuth = SuntimesUtils.createBoldColorSpan(azimuth, azimuthString, azimuthSymbol, suffixColor);
+        azimuth = SuntimesUtils.createRelativeSpan(azimuth, azimuthString, azimuthSymbol, SYMBOL_RELATIVE_SIZE);
         //azimuth = SuntimesUtils.createAbsoluteSpan(azimuth, azimuthString, azimuthDisplay.getSuffix(), SuntimesUtils.spToPixels(context, suffixSp));
         views.setTextViewText(R.id.info_sun_azimuth_current, azimuth);
 
-        String elevationString = utils.formatAsDegrees(sunPosition.elevation, 1);
-        CharSequence elevation = SuntimesUtils.createColorSpan(null, elevationString, elevationString, highlightColor, boldTime);
+        SuntimesUtils.TimeDisplayText elevationDisplay = utils.formatAsElevation(sunPosition.elevation, DECIMAL_PLACES);
+        String elevationSymbol = elevationDisplay.getSuffix();
+        String elevationString = elevationDisplay.getValue() + elevationSymbol;
+        SpannableString elevation = SuntimesUtils.createColorSpan(null, elevationString, elevationString, highlightColor, boldTime);
+        elevation = SuntimesUtils.createBoldColorSpan(elevation, elevationString, elevationSymbol, suffixColor);
+        elevation = SuntimesUtils.createRelativeSpan(elevation, elevationString, elevationSymbol, SYMBOL_RELATIVE_SIZE);
         views.setTextViewText(R.id.info_sun_elevation_current, elevation);
 
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
@@ -85,6 +89,9 @@ public class SunPosLayout_1X1_0 extends SunPosLayout
         views.setViewVisibility(R.id.info_sun_azimuth_current_label, visibility);
         views.setViewVisibility(R.id.info_sun_elevation_current_label, visibility);
     }
+
+    private static final int DECIMAL_PLACES = 1;
+    private static final float SYMBOL_RELATIVE_SIZE = 0.7f;
 
     protected int highlightColor = Color.WHITE;
     protected boolean boldTime = false;

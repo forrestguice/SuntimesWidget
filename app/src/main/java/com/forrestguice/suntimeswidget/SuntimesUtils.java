@@ -821,6 +821,18 @@ public class SuntimesUtils
         CardinalDirection direction = CardinalDirection.getDirection(degreeValue);
         return new TimeDisplayText(degreeString, "", direction.getShortDisplayString());
     }
+    public TimeDisplayText formatAsElevation(double degreeValue, int places)
+    {
+        return new TimeDisplayText(formatAsDegrees(degreeValue, places), "", "∠");
+    }
+    public TimeDisplayText formatAsRightAscension(double degreeValue, int places)
+    {
+        return new TimeDisplayText(formatAsDegrees(degreeValue, places), "", "α");
+    }
+    public TimeDisplayText formatAsDeclination(double degreeValue, int places)
+    {
+        return new TimeDisplayText(formatAsDegrees(degreeValue, places), "", "δ");
+    }
 
     /**
      * Creates a title string from a given "title pattern".

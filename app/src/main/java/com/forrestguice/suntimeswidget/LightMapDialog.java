@@ -236,11 +236,11 @@ public class LightMapDialog extends DialogFragment
 
     private CharSequence styleElevationText(double elevation, int places)
     {
-        String elevationString = utils.formatAsDegrees(elevation, places);
+        SuntimesUtils.TimeDisplayText elevationText = utils.formatAsElevation(elevation, places);
+        String elevationString = elevationText.getValue() + elevationText.getSuffix();
         SpannableString span = null;
-        //if (elevation >= -18) {
-            span = SuntimesUtils.createColorSpan(span, elevationString, elevationString, getColorForElevation(elevation));
-        //}
+        span = SuntimesUtils.createRelativeSpan(span, elevationString, elevationText.getSuffix(), 0.7f);
+        span = SuntimesUtils.createColorSpan(span, elevationString, elevationString, getColorForElevation(elevation));
         return (span != null ? span : elevationString);
     }
 
