@@ -2117,6 +2117,7 @@ public class WidgetSettings
     {
         ActionMode.initDisplayStrings(context);
         WidgetModeSun1x1.initDisplayStrings(context);
+        WidgetModeSunPos1x1.initDisplayStrings(context);
         WidgetModeMoon1x1.initDisplayStrings(context);
         TrackingMode.initDisplayStrings(context);
         CompareMode.initDisplayStrings(context);
