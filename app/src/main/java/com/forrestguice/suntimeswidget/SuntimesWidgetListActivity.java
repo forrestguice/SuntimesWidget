@@ -466,14 +466,14 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget0.class, titlePattern0));
             items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget0_2x1.class, titlePattern0));
             items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget1.class, titlePattern0));
-            items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget2.class, titlePattern0));
-            items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget2_3x1.class, titlePattern0));
             items.addAll(createWidgetListItems(context, widgetManager, SolsticeWidget0.class, titlePattern0));
 
             String titlePattern1 = context.getString(R.string.configLabel_widgetList_itemTitlePattern1);
             items.addAll(createWidgetListItems(context, widgetManager, MoonWidget0.class, titlePattern1));
             items.addAll(createWidgetListItems(context, widgetManager, MoonWidget0_2x1.class, titlePattern1));
             items.addAll(createWidgetListItems(context, widgetManager, MoonWidget0_3x1.class, titlePattern1));
+            items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget2.class, titlePattern1));
+            items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget2_3x1.class, titlePattern1));
 
             return new WidgetListAdapter(context, items);
         }
