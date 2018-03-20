@@ -27,7 +27,6 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout_1X1_0;
-import com.forrestguice.suntimeswidget.layouts.SunPosLayout_2X1_0;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X1_0;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -112,9 +111,9 @@ public class SuntimesWidget2 extends SuntimesWidget0
         SunPosLayout layout;
         if (WidgetSettings.loadAllowResizePref(context, appWidgetId))
         {
-            //int minWidth3x1 = context.getResources().getInteger(R.integer.widget_size_minWidthDp3x1);
-            int minWidth2x1 = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
-            layout = (mustFitWithinDp[0] >= minWidth2x1) ? new SunPosLayout_3X1_0()
+            int minWidth3x1 = context.getResources().getInteger(R.integer.widget_size_minWidthDp3x1);
+            //int minWidth2x1 = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
+            layout = (mustFitWithinDp[0] >= minWidth3x1) ? new SunPosLayout_3X1_0()
                    //(mustFitWithinDp[0] >= minWidth2x1) ? new SunPosLayout_2X1_0()           // : new SunPosLayout_1X1_0();
                                                          : WidgetSettings.loadSunPos1x1ModePref_asLayout(context, appWidgetId);
         } else {
