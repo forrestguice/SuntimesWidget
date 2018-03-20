@@ -25,18 +25,18 @@
     android:orientation="vertical" android:gravity="start"
     android:padding="8dp" android:background="?graphColor_background">
 
-    <android.support.constraint.ConstraintLayout android:id="@+id/info_sun_layout"
-        android:layout_width="0dp" android:layout_height="wrap_content"
+    <TextView android:id="@+id/sundialog_title" style="@style/TableHeadTextView"
+        android:text="@string/configAction_sunDialog"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="0dp"
+        android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
-        <TextView android:id="@+id/sundialog_title" style="@style/TableHeadTextView"
-            android:text="@string/configAction_sunDialog"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="0dp"
-            android:layout_width="wrap_content" android:layout_height="wrap_content" />
+    <android.support.constraint.ConstraintLayout android:id="@+id/info_sun_layout"
+        android:layout_width="0dp" android:layout_height="wrap_content" android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/sundialog_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <!-- icons and dividers -->
         <ImageView android:id="@+id/sundialog_riseicon"
@@ -58,7 +58,7 @@
             android:labelFor="@+id/info_sun_elevation_current"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sundialog_title"
+            app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="8dp"
             android:text="@string/widgetLabel_altitude_short" />
 

@@ -61,6 +61,7 @@ public class LightMapDialog extends DialogFragment
     private int colorLabel;
     private boolean showSeconds = true;
     private int decimalPlaces = 1;
+    private View dialogContent = null;
 
     private SuntimesRiseSetDataset data;
     public void setData( SuntimesRiseSetDataset data )
@@ -77,7 +78,7 @@ public class LightMapDialog extends DialogFragment
         LayoutInflater inflater = myParent.getLayoutInflater();
 
         final ViewGroup viewGroup = null;
-        View dialogContent = inflater.inflate(R.layout.layout_dialog_lightmap, viewGroup);
+        dialogContent = inflater.inflate(R.layout.layout_dialog_lightmap, viewGroup);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
         builder.setView(dialogContent);
@@ -321,7 +322,14 @@ public class LightMapDialog extends DialogFragment
     {
         if (sunLayout != null)
         {
-            sunLayout.setVisibility(show ? View.VISIBLE : View.GONE);
+            int updatedVisibility = (show ? View.VISIBLE : View.GONE);
+            if (sunLayout.getVisibility() != updatedVisibility)
+            {
+                sunLayout.setVisibility(updatedVisibility);
+                if (dialogContent != null) {
+                    dialogContent.requestLayout();
+                }
+            }
         }
     }
 
