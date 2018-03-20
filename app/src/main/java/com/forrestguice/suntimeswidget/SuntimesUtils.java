@@ -981,8 +981,11 @@ public class SuntimesUtils
             span = new SpannableString(text);
         }
         int start = text.indexOf(toColorize);
-        int end = start + toColorize.length();
-        span.setSpan(new ForegroundColorSpan(color), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        if (start >= 0)
+        {
+            int end = start + toColorize.length();
+            span.setSpan(new ForegroundColorSpan(color), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
         return span;
     }
     public static SpannableString createColorSpan(SpannableString span, String text, String toColorize, int color, boolean bold)
@@ -999,8 +1002,11 @@ public class SuntimesUtils
             span = new SpannableString(text);
         }
         int start = text.indexOf(toBold);
-        int end = start + toBold.length();
-        span.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        if (start >= 0)
+        {
+            int end = start + toBold.length();
+            span.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
         return span;
     }
 
@@ -1015,8 +1021,11 @@ public class SuntimesUtils
             span = new SpannableString(text);
         }
         int start = text.indexOf(toRelative);
-        int end = start + toRelative.length();
-        span.setSpan(new RelativeSizeSpan(relativeSize), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        if (start >= 0)
+        {
+            int end = start + toRelative.length();
+            span.setSpan(new RelativeSizeSpan(relativeSize), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
         return span;
     }
 
@@ -1026,8 +1035,11 @@ public class SuntimesUtils
             span = new SpannableString(text);
         }
         int start = text.indexOf(toAbsolute);
-        int end = start + toAbsolute.length();
-        span.setSpan(new AbsoluteSizeSpan(pointSizePixels), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        if (start >= 0)
+        {
+            int end = start + toAbsolute.length();
+            span.setSpan(new AbsoluteSizeSpan(pointSizePixels), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
         return span;
     }
 
