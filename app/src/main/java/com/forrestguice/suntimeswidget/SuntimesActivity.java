@@ -19,11 +19,15 @@
 package com.forrestguice.suntimeswidget;
 
 import android.annotation.TargetApi;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
+import android.content.BroadcastReceiver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -96,6 +100,8 @@ import java.util.regex.Pattern;
 @SuppressWarnings("Convert2Diamond")
 public class SuntimesActivity extends AppCompatActivity
 {
+    public static final String SUNTIMES_APP_UPDATE = "suntimes.SUNTIMES_APP_UPDATE";
+
     public static final String KEY_UI_CARDISTOMORROW = "cardIsTomorrow";
     public static final String KEY_UI_USERSWAPPEDCARD = "userSwappedCard";
 
@@ -254,11 +260,14 @@ public class SuntimesActivity extends AppCompatActivity
     {
         super.onStart();
         calculateData(SuntimesActivity.this);
+        setUpdateAlarm(SuntimesActivity.this);
+
         if (onStart_resetNoteIndex)
         {
             notes.resetNoteIndex();
             onStart_resetNoteIndex = false;
         }
+
         updateViews(SuntimesActivity.this);
     }
     private boolean onStart_resetNoteIndex = false;
@@ -324,6 +333,58 @@ public class SuntimesActivity extends AppCompatActivity
     }
 
     /**
+     * Update app at midnight (start of tomorrow) using AlarmManager.
+     * @param context
+     */
+    protected void setUpdateAlarm( Context context )
+    {
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        if (alarmManager != null)
+        {
+            context.registerReceiver(updateReceiver, new IntentFilter(SUNTIMES_APP_UPDATE));
+            Calendar midnight = SuntimesRiseSetDataset.midnight(dataset.dataActual.getOtherCalendar());
+            PendingIntent alarmIntent = getUpdateIntent(context);
+            if (Build.VERSION.SDK_INT >= 19)
+                alarmManager.setExact(AlarmManager.RTC, midnight.getTimeInMillis(), alarmIntent);
+            else alarmManager.set(AlarmManager.RTC, midnight.getTimeInMillis(), alarmIntent);
+        }
+    }
+
+    protected void unsetUpdateAlarm( Context context )
+    {
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        if (alarmManager != null)
+        {
+            context.unregisterReceiver(updateReceiver);
+            PendingIntent alarmIntent = getUpdateIntent(context);
+            alarmManager.cancel(alarmIntent);
+        }
+    }
+
+    protected PendingIntent getUpdateIntent(Context context)
+    {
+        return PendingIntent.getBroadcast(context, 0, new Intent(SuntimesActivity.SUNTIMES_APP_UPDATE), 0);
+    }
+
+    private UpdateAlarmReceiver updateReceiver = new UpdateAlarmReceiver();
+    private class UpdateAlarmReceiver extends BroadcastReceiver
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            String action = intent.getAction();
+            if (action != null && action.equals(SUNTIMES_APP_UPDATE))
+            {
+                Log.d("DEBUG", "SUNTIMES_APP_UPDATE");
+                invalidateData(SuntimesActivity.this);
+                calculateData(SuntimesActivity.this);
+                setUpdateAlarm(SuntimesActivity.this);
+                updateViews(SuntimesActivity.this);
+            }
+        }
+    }
+
+    /**
      * OnPause: the user about to interact w/ another Activity
      */
     @Override
@@ -359,6 +420,7 @@ public class SuntimesActivity extends AppCompatActivity
     @Override
     public void onStop()
     {
+        unsetUpdateAlarm(SuntimesActivity.this);
         stopTimeTask();
         getFixHelper.cancelGetFix();
         super.onStop();
@@ -1069,6 +1131,7 @@ public class SuntimesActivity extends AppCompatActivity
         {
             timezoneWarning.reset();
             calculateData(SuntimesActivity.this);
+            setUpdateAlarm(SuntimesActivity.this);
             updateViews(SuntimesActivity.this);
         }
     };
