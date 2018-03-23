@@ -101,6 +101,7 @@ import java.util.regex.Pattern;
 public class SuntimesActivity extends AppCompatActivity
 {
     public static final String SUNTIMES_APP_UPDATE = "suntimes.SUNTIMES_APP_UPDATE";
+    public static final int SUNTIMES_SETTINGS_REQUEST = 10;
 
     public static final String KEY_UI_CARDISTOMORROW = "cardIsTomorrow";
     public static final String KEY_UI_USERSWAPPEDCARD = "userSwappedCard";
@@ -458,6 +459,23 @@ public class SuntimesActivity extends AppCompatActivity
         if (locationMode == WidgetSettings.LocationMode.CURRENT_LOCATION)
         {
             getFixHelper.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == SUNTIMES_SETTINGS_REQUEST && resultCode == RESULT_OK)
+        {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+            {
+                boolean themeChanged = !AppSettings.loadThemePref(SuntimesActivity.this).equals(appTheme);
+                if (themeChanged)
+                {
+                    Log.i("SuntimesActivity", "theme was changed; calling recreate");
+                    recreate();
+                }
+            }
         }
     }
 
@@ -1216,13 +1234,15 @@ public class SuntimesActivity extends AppCompatActivity
         aboutDialog.show(getSupportFragmentManager(), DIALOGTAG_ABOUT);
     }
 
+
+
     /**
      * Show application settings.
      */
     protected void showSettings()
     {
         Intent settingsIntent = new Intent(this, SuntimesSettingsActivity.class);
-        startActivity(settingsIntent);
+        startActivityForResult(settingsIntent, SUNTIMES_SETTINGS_REQUEST);
     }
     protected void showGeneralSettings()
     {
