@@ -75,8 +75,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     public void onCreate(Bundle icicle)
     {
         context = SuntimesSettingsActivity.this;
-        setTheme(AppSettings.loadTheme(this));
         appTheme = AppSettings.loadThemePref(this);
+        setTheme(AppSettings.themePrefToStyleId(this, appTheme));
 
         super.onCreate(icicle);
         initLocale(icicle);

@@ -121,6 +121,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     private ActionBar actionBar;
     private Menu actionBarMenu;
+    private String appTheme;
 
     private GetFixHelper getFixHelper;
 
@@ -212,7 +213,8 @@ public class SuntimesActivity extends AppCompatActivity
     public void onCreate(Bundle savedState)
     {
         Context context = SuntimesActivity.this;
-        setTheme(AppSettings.loadTheme(this));
+        appTheme = AppSettings.loadThemePref(this);
+        setTheme(AppSettings.themePrefToStyleId(this, appTheme, null));
         GetFixUI.themeIcons(this);
 
         super.onCreate(savedState);
