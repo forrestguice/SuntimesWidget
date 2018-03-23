@@ -156,16 +156,26 @@ public class AppSettings
     /**
      * @return true if locale was changed by init, false otherwise
      */
-    public static boolean initLocale( Context context )
+    public static boolean initLocale( Context context)
     {
-        AppSettings.LocaleMode localeMode = AppSettings.loadLocaleModePref(context);
-        if (localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE)
+        return initLocale(context, new LocaleInfo());
+    }
+    public static boolean initLocale( Context context, LocaleInfo resultInfo )
+    {
+        resultInfo.localeMode = AppSettings.loadLocaleModePref(context);
+        if (resultInfo.localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE)
         {
-            return AppSettings.loadLocale(context, AppSettings.loadLocalePref(context));
+            resultInfo.customLocale = AppSettings.loadLocalePref(context);
+            return AppSettings.loadLocale(context, resultInfo.customLocale);
 
         } else {
             return resetLocale(context);
         }
+    }
+    public static class LocaleInfo
+    {
+        public LocaleMode localeMode;
+        public String customLocale;
     }
 
     /**
