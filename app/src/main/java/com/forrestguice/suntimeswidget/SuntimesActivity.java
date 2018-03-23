@@ -96,6 +96,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
+import android.os.Handler;
 
 @SuppressWarnings("Convert2Diamond")
 public class SuntimesActivity extends AppCompatActivity
@@ -123,6 +124,7 @@ public class SuntimesActivity extends AppCompatActivity
     private ActionBar actionBar;
     private Menu actionBarMenu;
     private String appTheme;
+    private AppSettings.LocaleInfo localeInfo;
 
     private GetFixHelper getFixHelper;
 
@@ -242,7 +244,8 @@ public class SuntimesActivity extends AppCompatActivity
 
     private void initLocale( Context context )
     {
-        AppSettings.initLocale(this);
+        localeInfo = new AppSettings.LocaleInfo();
+        AppSettings.initLocale(this, localeInfo);
         isRtl = AppSettings.isLocaleRtl(this);
 
         WidgetSettings.initDefaults(context);        // locale specific defaults
@@ -469,11 +472,23 @@ public class SuntimesActivity extends AppCompatActivity
         {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
             {
-                boolean themeChanged = !AppSettings.loadThemePref(SuntimesActivity.this).equals(appTheme);
-                if (themeChanged)
+                boolean needsRecreate = ((!AppSettings.loadThemePref(SuntimesActivity.this).equals(appTheme))       // theme changed
+                        || (localeInfo.localeMode != AppSettings.loadLocaleModePref(SuntimesActivity.this))         // or localeMode changed
+                        || ((localeInfo.localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE                             // or customLocale changed
+                            && !AppSettings.loadLocalePref(SuntimesActivity.this).equals(localeInfo.customLocale))));
+
+                if (needsRecreate)
                 {
-                    Log.i("SuntimesActivity", "theme was changed; calling recreate");
-                    recreate();
+                    Log.i("SuntimesActivity", "theme/locale was changed; calling recreate");
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            recreate();
+                        }
+                    }, 0);    // post to end of execution queue (onResume must be allowed to finish before calling recreate)
                 }
             }
         }
