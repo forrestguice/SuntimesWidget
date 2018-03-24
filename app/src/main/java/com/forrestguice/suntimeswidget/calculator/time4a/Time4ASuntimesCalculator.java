@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.calculator.time4a;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -71,8 +72,23 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     @Override
     public void init(WidgetSettings.Location location, TimeZone timezone, Context context)
     {
-        this.solarTime = SolarTime.ofLocation(location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), location.getAltitudeAsInteger(), getCalculator());
+        this.solarTime = SolarTime.ofLocation(location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), clampAltitude(location.getAltitudeAsInteger()), getCalculator());
         this.timezone = timezone;
+    }
+
+    public static final int ALTITUDE_MIN = 0;
+    public static final int ALTITUDE_MAX = 11000;
+    public static int clampAltitude(int value)
+    {
+        if (value > ALTITUDE_MAX) {
+            Log.w("clampAltitude", "altitude of " + value + " is greater than " + ALTITUDE_MAX + "! clamping value..");
+            return ALTITUDE_MAX;
+
+        } else if (value < ALTITUDE_MIN) {
+            Log.w("clampAltitude", "altitude of " + value + " is less than " + ALTITUDE_MIN + "! clamping value..");
+            return ALTITUDE_MIN;
+        }
+        return value;
     }
 
     @Override

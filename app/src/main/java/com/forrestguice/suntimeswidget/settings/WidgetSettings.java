@@ -569,9 +569,9 @@ public class WidgetSettings
         public static String pattern_latLon = "#.#####";
 
         private String label;
-        private String latitude;
-        private String longitude;
-        private String altitude;   // meters
+        private String latitude;   // decimal degrees (DD)
+        private String longitude;  // decimal degrees (DD)
+        private String altitude;   // meters above the WGS 84 reference ellipsoid
 
         /**
          * @param latitude decimal degrees (DD) string
