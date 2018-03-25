@@ -470,26 +470,30 @@ public class SuntimesActivity extends AppCompatActivity
     {
         if (requestCode == SUNTIMES_SETTINGS_REQUEST && resultCode == RESULT_OK)
         {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-            {
-                boolean needsRecreate = ((!AppSettings.loadThemePref(SuntimesActivity.this).equals(appTheme))       // theme changed
-                        || (localeInfo.localeMode != AppSettings.loadLocaleModePref(SuntimesActivity.this))         // or localeMode changed
-                        || ((localeInfo.localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE                             // or customLocale changed
-                            && !AppSettings.loadLocalePref(SuntimesActivity.this).equals(localeInfo.customLocale))));
+            boolean needsRecreate = ((!AppSettings.loadThemePref(SuntimesActivity.this).equals(appTheme))       // theme changed
+                    || (localeInfo.localeMode != AppSettings.loadLocaleModePref(SuntimesActivity.this))         // or localeMode changed
+                    || ((localeInfo.localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE                             // or customLocale changed
+                    && !AppSettings.loadLocalePref(SuntimesActivity.this).equals(localeInfo.customLocale))));
 
-                if (needsRecreate)
+            if (needsRecreate)
+            {
+                Log.i("SuntimesActivity", "theme/locale was changed; calling recreate");
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable()
                 {
-                    Log.i("SuntimesActivity", "theme/locale was changed; calling recreate");
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable()
+                    @Override
+                    public void run()
                     {
-                        @Override
-                        public void run()
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
                         {
                             recreate();
+                            
+                        } else {
+                            finish();
+                            startActivity(getIntent());
                         }
-                    }, 0);    // post to end of execution queue (onResume must be allowed to finish before calling recreate)
-                }
+                    }
+                }, 0);    // post to end of execution queue (onResume must be allowed to finish before calling recreate)
             }
         }
     }
