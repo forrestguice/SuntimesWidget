@@ -1,5 +1,6 @@
 ### ~
 
+### v0.7.4 (2018-03-25)
 * fixes app crash when location supplied by GPS has negative altitude (some Samsung devices).
 * simplifies datepicker (removes mode spinner) (#173).
 * app automatically restarts on theme change or locale change.
