@@ -180,7 +180,8 @@
         <!-- Widget: Moon0 1x1 -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <receiver android:name=".MoonWidget0"
-            android:label="@string/app_name_moonwidget0">
+            android:label="@string/app_name_moonwidget0"
+            android:icon="@mipmap/ic_moontimes">
 
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -205,7 +206,8 @@
         <!-- Widget: Moon0 2x1 -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <receiver android:name=".MoonWidget0_2x1"
-            android:label="@string/app_name_moonwidget0">
+            android:label="@string/app_name_moonwidget0"
+            android:icon="@mipmap/ic_moontimes">
 
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -230,7 +232,8 @@
         <!-- Widget: Moon0 3x1 -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <receiver android:name=".MoonWidget0_3x1"
-            android:label="@string/app_name_moonwidget0">
+            android:label="@string/app_name_moonwidget0"
+            android:icon="@mipmap/ic_moontimes">
 
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
