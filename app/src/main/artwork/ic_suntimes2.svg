@@ -285,7 +285,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="5.6568542"
-     inkscape:cx="18.00176"
+     inkscape:cx="-10.724453"
      inkscape:cy="25.235876"
      inkscape:current-layer="layer3"
      showgrid="false"
@@ -333,16 +333,16 @@
      inkscape:label="baseplate"
      style="display:inline">
     <rect
-       style="opacity:1;fill:#2d2d2d;fill-opacity:1;fill-rule:evenodd;stroke:#ffcc00;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;display:inline;filter:url(#filter3365)"
+       style="opacity:1;fill:#2d2d2d;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;display:inline;filter:url(#filter3365)"
        id="rect3167"
        width="37.875"
        height="37.875"
        x="5.0625"
        y="5.0625"
        ry="4.848732"
-       inkscape:export-filename="C:\Users\Forrest\Documents\GitHub\SuntimesWidget\app\src\main\res\mipmap-xxhdpi\ic_suntimes2.png"
-       inkscape:export-xdpi="304.15842"
-       inkscape:export-ydpi="304.15842" />
+       inkscape:export-filename="C:\Users\Forrest\Documents\GitHub\SuntimesWidget\app\src\main\res\mipmap-mdpi\ic_suntimes2.png"
+       inkscape:export-xdpi="101.38614"
+       inkscape:export-ydpi="101.38614" />
     <path
        sodipodi:type="arc"
        style="fill:#ff9900;fill-opacity:1;fill-rule:evenodd;stroke:#ff9900;stroke-width:0.44284263;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
