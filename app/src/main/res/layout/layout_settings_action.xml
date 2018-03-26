@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -63,12 +63,13 @@
             <EditText android:id="@+id/appwidget_action_launch" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:layout_weight="1"
                 android:hint="@string/configHint_action_launch" android:text=""
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:inputType="textMultiLine|textNoSuggestions" />
 
             <ImageButton android:id="@+id/appwidget_action_launch_helpButton"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:src="@android:drawable/ic_menu_help"
+                android:src="?attr/icActionHelp"
                 android:scaleType="center"
                 android:cropToPadding="false"
                 android:adjustViewBounds="false"
