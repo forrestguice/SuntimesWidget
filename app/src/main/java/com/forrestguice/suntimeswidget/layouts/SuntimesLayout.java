@@ -28,6 +28,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.themes.ThemeBackground;
 
 public abstract class SuntimesLayout
 {
@@ -89,7 +90,8 @@ public abstract class SuntimesLayout
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         // theme background
-        views.setInt(R.id.widgetframe_inner, "setBackgroundResource", theme.getBackgroundId());
+        ThemeBackground background = theme.getBackground();
+        views.setInt(R.id.widgetframe_inner, "setBackgroundResource", background.getResID());
         // BUG: setting background screws up padding; pre jellybean versions can't correct for it!
         // either live w/ it, or move this call into if statement below .. however then the background
         // doesn't update for pre jellybean versions, confusing users into thinking themes don't work
