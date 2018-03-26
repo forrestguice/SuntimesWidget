@@ -61,7 +61,7 @@
             <ImageButton android:id="@+id/appwidget_general_timeMode_helpButton"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:src="@android:drawable/ic_menu_help"
+                android:src="?attr/icActionHelp"
                 android:scaleType="center"
                 android:cropToPadding="false"
                 android:adjustViewBounds="false"
