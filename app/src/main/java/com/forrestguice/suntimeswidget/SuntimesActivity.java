@@ -742,6 +742,7 @@ public class SuntimesActivity extends AppCompatActivity
                         errorMsg.show();
                     }
                     SuntimesActivity.this.calculateData(SuntimesActivity.this);
+                    SuntimesActivity.this.setUpdateAlarms(SuntimesActivity.this);
                     SuntimesActivity.this.updateViews(SuntimesActivity.this);
                 }
             }
@@ -1226,6 +1227,7 @@ public class SuntimesActivity extends AppCompatActivity
             public void onClick(DialogInterface dialogInterface, int i)
             {
                 calculateData(SuntimesActivity.this);
+                setUpdateAlarms(SuntimesActivity.this);
                 updateActionBar(SuntimesActivity.this);
                 updateViews(SuntimesActivity.this);
 
