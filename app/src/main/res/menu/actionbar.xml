@@ -33,7 +33,7 @@
           app:showAsAction="never" />
 
     <item android:id="@+id/action_equinox"
-          android:icon="?attr/icActionTime"
+          android:icon="?attr/icActionAbout"
           android:title="@string/configAction_equinoxDialog"
           app:showAsAction="never" />
 

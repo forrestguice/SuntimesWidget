@@ -66,6 +66,12 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
     }
 
     @Override
+    protected int getAboutIconID()
+    {
+        return R.mipmap.ic_moontimes;
+    }
+
+    @Override
     protected void initTimeMode( Context context )
     {
         // EMPTY

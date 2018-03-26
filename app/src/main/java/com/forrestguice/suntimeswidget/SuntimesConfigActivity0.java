@@ -1143,6 +1143,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0.class, minSize, defLayout);
     }
 
+    protected int getAboutIconID()
+    {
+        return R.mipmap.ic_suntimes;
+    }
+
     /**
      * Click handler executed when the "About" button is pressed.
      */
@@ -1153,6 +1158,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             AboutDialog aboutDialog = new AboutDialog();
             aboutDialog.show(getSupportFragmentManager(), DIALOGTAG_ABOUT);
+            aboutDialog.setIconID(getAboutIconID());
         }
     };
 

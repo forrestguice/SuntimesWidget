@@ -188,7 +188,7 @@ public class SuntimesThemeXML implements SuntimesThemeIO
                 xml.endTag(namespace, SuntimesTheme.THEME_PADDING_BOTTOM);
 
                 xml.startTag(namespace, SuntimesTheme.THEME_BACKGROUND);
-                xml.text(ThemeBackground.getThemeBackground(theme.getBackgroundId()).name());
+                xml.text(theme.getBackground().name());
                 xml.endTag(namespace, SuntimesTheme.THEME_BACKGROUND);
 
                 xml.startTag(namespace, SuntimesTheme.THEME_TEXTCOLOR);
@@ -449,7 +449,7 @@ public class SuntimesThemeXML implements SuntimesThemeIO
                     String value = parser.getText();
                     if (tag.equalsIgnoreCase(SuntimesTheme.THEME_BACKGROUND))
                     {
-                        theme.themeBackground = backgroundStringToId(value);
+                        theme.themeBackground = ThemeBackground.getThemeBackground(backgroundStringToId(value));
 
                     } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_PADDING_LEFT)) {
                         theme.themePadding[0] = Integer.parseInt(value);
