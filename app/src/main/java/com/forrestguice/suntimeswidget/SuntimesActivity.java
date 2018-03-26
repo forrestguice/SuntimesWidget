@@ -125,6 +125,7 @@ public class SuntimesActivity extends AppCompatActivity
     private ActionBar actionBar;
     private Menu actionBarMenu;
     private String appTheme;
+    private int appThemeResID;
     private AppSettings.LocaleInfo localeInfo;
 
     private GetFixHelper getFixHelper;
@@ -218,7 +219,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         Context context = SuntimesActivity.this;
         appTheme = AppSettings.loadThemePref(this);
-        setTheme(AppSettings.themePrefToStyleId(this, appTheme, null));
+        setTheme(appThemeResID = AppSettings.themePrefToStyleId(this, appTheme, null));
         GetFixUI.themeIcons(this);
 
         super.onCreate(savedState);
@@ -465,6 +466,19 @@ public class SuntimesActivity extends AppCompatActivity
             if (action != null && action.equals(SUNTIMES_APP_UPDATE_PARTIAL))
             {
                 Log.d("UpdateAlarms", "onReceive: " + SUNTIMES_APP_UPDATE_PARTIAL);
+
+                if (appTheme.equals(AppSettings.THEME_DAYNIGHT))
+                {
+                    boolean needsRecreate = dataset.isDay() ? (appThemeResID != R.style.AppTheme_Light)
+                                                            : (appThemeResID != R.style.AppTheme_Dark);
+                    if (needsRecreate)
+                    {
+                        Handler handler = new Handler();
+                        handler.postDelayed(recreateRunnable, 0);
+                        return;
+                    }
+                }
+
                 setPartialUpdateAlarm(SuntimesActivity.this);
                 if (!userSwappedCard) {
                     notes.resetNoteIndex();
@@ -565,24 +579,26 @@ public class SuntimesActivity extends AppCompatActivity
             {
                 Log.i("SuntimesActivity", "theme/locale was changed; calling recreate");
                 Handler handler = new Handler();
-                handler.postDelayed(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-                        {
-                            recreate();
-                            
-                        } else {
-                            finish();
-                            startActivity(getIntent());
-                        }
-                    }
-                }, 0);    // post to end of execution queue (onResume must be allowed to finish before calling recreate)
+                handler.postDelayed(recreateRunnable, 0);    // post to end of execution queue (onResume must be allowed to finish before calling recreate)
             }
         }
     }
+
+    private Runnable recreateRunnable = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+            {
+                recreate();
+
+            } else {
+                finish();
+                startActivity(getIntent());
+            }
+        }
+    };
 
     /**
      * initialize ui/views
