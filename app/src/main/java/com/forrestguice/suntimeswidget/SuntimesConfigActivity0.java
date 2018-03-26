@@ -1122,6 +1122,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
         // save: launch activity
         String launchString = text_launchActivity.getText().toString();
+        if (launchString.trim().isEmpty())
+        {
+            launchString = WidgetSettings.PREF_DEF_ACTION_LAUNCH;
+            Log.w("saveActionSettings", "empty launch string (using default)");
+        }
         WidgetSettings.saveActionLaunchPref(context, appWidgetId, launchString);
     }
 
