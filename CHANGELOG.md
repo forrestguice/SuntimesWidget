@@ -1,5 +1,7 @@
 ### ~
 
+* adds "restore defaults" button to "On Tap: Launch App" help dialog.
+* fixes widget config edittext auto-correct behavior (now disabled for title text, launch app).
 * adds moontimes icon (displayed by moon widgets in widget list).
 * fixes app crash when location supplied by GPS has negative altitude (some Samsung devices).
 * simplifies datepicker (removes mode spinner) (#173).
