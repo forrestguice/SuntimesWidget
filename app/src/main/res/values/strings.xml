@@ -156,6 +156,8 @@
          WIDGET CONFIG
     -->
 
+    <string name="configAction_restoreDefaults">Restore Defaults</string>   <!-- button / menu text -->
+
     <!-- WidgetConfig Activity -->
     <string name="configAction_addWidget">Add Widget</string>                   <!-- Button: Add -->
     <string name="configAction_reconfigWidget_short">Reconfigure</string>       <!-- Button: Reconfigure -->
