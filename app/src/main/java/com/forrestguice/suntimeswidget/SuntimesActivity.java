@@ -101,7 +101,8 @@ import android.os.Handler;
 @SuppressWarnings("Convert2Diamond")
 public class SuntimesActivity extends AppCompatActivity
 {
-    public static final String SUNTIMES_APP_UPDATE = "suntimes.SUNTIMES_APP_UPDATE";
+    public static final String SUNTIMES_APP_UPDATE_FULL = "suntimes.SUNTIMES_APP_UPDATE_FULL";
+    public static final String SUNTIMES_APP_UPDATE_PARTIAL = "suntimes.SUNTIMES_APP_UPDATE_PARTIAL";
     public static final int SUNTIMES_SETTINGS_REQUEST = 10;
 
     public static final String KEY_UI_CARDISTOMORROW = "cardIsTomorrow";
@@ -266,7 +267,9 @@ public class SuntimesActivity extends AppCompatActivity
     {
         super.onStart();
         calculateData(SuntimesActivity.this);
-        setUpdateAlarm(SuntimesActivity.this);
+
+        registerReceivers(SuntimesActivity.this);
+        setUpdateAlarms(SuntimesActivity.this);
 
         if (onStart_resetNoteIndex)
         {
@@ -339,56 +342,137 @@ public class SuntimesActivity extends AppCompatActivity
     }
 
     /**
-     * Update app at midnight (start of tomorrow) using AlarmManager.
      * @param context
      */
-    protected void setUpdateAlarm( Context context )
+    protected void registerReceivers(Context context)
+    {
+        unregisterReceivers(context);
+        context.registerReceiver(fullUpdateReceiver, new IntentFilter(SUNTIMES_APP_UPDATE_FULL));
+        context.registerReceiver(partialUpdateReceiver, new IntentFilter(SUNTIMES_APP_UPDATE_PARTIAL));
+    }
+    protected void unregisterReceivers(Context context)
+    {
+        try {
+            context.unregisterReceiver(fullUpdateReceiver);
+        } catch (IllegalArgumentException e) {
+            // EMPTY
+            //Log.w("UpdateAlarms", "unregisterReceiver: attempted to unregister non-registered receiver (SUNTIMES_APP_UPDATE_FULL)");
+        }
+
+        try {
+            context.unregisterReceiver(partialUpdateReceiver);
+        } catch (IllegalArgumentException e) {
+            // EMPTY
+            //Log.w("UpdateAlarms", "unregisterReceiver: attempted to unregister non-registered receiver (SUNTIMES_APP_UPDATE_PARTIAL)");
+        }
+    }
+
+    /**
+     * @param context
+     */
+    protected void setUpdateAlarms( Context context )
+    {
+        setFullUpdateAlarm(context);
+        setPartialUpdateAlarm(context);
+    }
+    protected void setFullUpdateAlarm(Context context)
     {
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         if (alarmManager != null)
         {
-            context.registerReceiver(updateReceiver, new IntentFilter(SUNTIMES_APP_UPDATE));
+            Calendar now = dataset.now();
             Calendar midnight = SuntimesRiseSetDataset.midnight(dataset.dataActual.getOtherCalendar());
-            PendingIntent alarmIntent = getUpdateIntent(context);
-            if (Build.VERSION.SDK_INT >= 19)
-                alarmManager.setExact(AlarmManager.RTC, midnight.getTimeInMillis(), alarmIntent);
-            else alarmManager.set(AlarmManager.RTC, midnight.getTimeInMillis(), alarmIntent);
+            Log.d("UpdateAlarms", "setAlarm (fullUpdate): " + utils.calendarDateTimeDisplayString(context, midnight).toString());
+
+            if (midnight.after(now))
+                setUpdateAlarm(alarmManager, midnight, getFullUpdateIntent(context));
+            //else Log.d("UpdateAlarms", "..skipping alarm fullUpdate (isPast)");
         }
     }
-
-    protected void unsetUpdateAlarm( Context context )
+    protected void setPartialUpdateAlarm(Context context)
     {
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         if (alarmManager != null)
         {
-            context.unregisterReceiver(updateReceiver);
-            PendingIntent alarmIntent = getUpdateIntent(context);
-            alarmManager.cancel(alarmIntent);
+            Calendar now = dataset.now();
+            Calendar updateTime = dataset.findNextEvent();
+            Log.d("UpdateAlarms", "setAlarm (partialUpdate): " + utils.calendarDateTimeDisplayString(context, updateTime).toString());
+
+            if (updateTime.after(now))
+                setUpdateAlarm(alarmManager, updateTime, getPartialUpdateIntent(context));
+            //else Log.d("UpdateAlarms", "..skipping alarm: partialUpdate (isPast)");
+        }
+    }
+    protected void setUpdateAlarm(@NonNull AlarmManager alarmManager, Calendar updateTime, PendingIntent alarmIntent)
+    {
+        if (Build.VERSION.SDK_INT >= 19)
+            alarmManager.setExact(AlarmManager.RTC, updateTime.getTimeInMillis(), alarmIntent);
+        else alarmManager.set(AlarmManager.RTC, updateTime.getTimeInMillis(), alarmIntent);
+    }
+
+    /**
+     * @param context
+     */
+    protected void unsetUpdateAlarms( Context context )
+    {
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        if (alarmManager != null)
+        {
+            alarmManager.cancel(getFullUpdateIntent(context));
+            alarmManager.cancel(getPartialUpdateIntent(context));
         }
     }
 
-    protected PendingIntent getUpdateIntent(Context context)
+    /**
+     * @param context
+     * @return
+     */
+    protected PendingIntent getFullUpdateIntent(Context context)
     {
-        return PendingIntent.getBroadcast(context, 0, new Intent(SuntimesActivity.SUNTIMES_APP_UPDATE), 0);
+        return PendingIntent.getBroadcast(context, 0, new Intent(SuntimesActivity.SUNTIMES_APP_UPDATE_FULL), 0);
     }
-
-    private UpdateAlarmReceiver updateReceiver = new UpdateAlarmReceiver();
-    private class UpdateAlarmReceiver extends BroadcastReceiver
+    private BroadcastReceiver fullUpdateReceiver = new BroadcastReceiver()
     {
         @Override
         public void onReceive(Context context, Intent intent)
         {
             String action = intent.getAction();
-            if (action != null && action.equals(SUNTIMES_APP_UPDATE))
+            if (action != null && action.equals(SUNTIMES_APP_UPDATE_FULL))
             {
-                Log.d("DEBUG", "SUNTIMES_APP_UPDATE");
+                Log.d("UpdateAlarms", "onReceive: " + SUNTIMES_APP_UPDATE_FULL);
                 invalidateData(SuntimesActivity.this);
                 calculateData(SuntimesActivity.this);
-                setUpdateAlarm(SuntimesActivity.this);
+                setFullUpdateAlarm(SuntimesActivity.this);
                 updateViews(SuntimesActivity.this);
             }
         }
+    };
+
+    /**
+     * @param context
+     * @return
+     */
+    protected PendingIntent getPartialUpdateIntent(Context context)
+    {
+        return PendingIntent.getBroadcast(context, 0, new Intent(SuntimesActivity.SUNTIMES_APP_UPDATE_PARTIAL), 0);
     }
+    private BroadcastReceiver partialUpdateReceiver = new BroadcastReceiver()
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            String action = intent.getAction();
+            if (action != null && action.equals(SUNTIMES_APP_UPDATE_PARTIAL))
+            {
+                Log.d("UpdateAlarms", "onReceive: " + SUNTIMES_APP_UPDATE_PARTIAL);
+                setPartialUpdateAlarm(SuntimesActivity.this);
+                if (!userSwappedCard) {
+                    notes.resetNoteIndex();
+                }
+                updateViews(SuntimesActivity.this);
+            }
+        }
+    };
 
     /**
      * OnPause: the user about to interact w/ another Activity
@@ -426,7 +510,9 @@ public class SuntimesActivity extends AppCompatActivity
     @Override
     public void onStop()
     {
-        unsetUpdateAlarm(SuntimesActivity.this);
+        unregisterReceivers(SuntimesActivity.this);
+        unsetUpdateAlarms(SuntimesActivity.this);
+
         stopTimeTask();
         getFixHelper.cancelGetFix();
         super.onStop();
@@ -1094,6 +1180,7 @@ public class SuntimesActivity extends AppCompatActivity
         {
             dateWarning.reset();
             calculateData(SuntimesActivity.this);
+            setUpdateAlarms(SuntimesActivity.this);
             updateViews(SuntimesActivity.this);
         }
     };
@@ -1170,7 +1257,7 @@ public class SuntimesActivity extends AppCompatActivity
         {
             timezoneWarning.reset();
             calculateData(SuntimesActivity.this);
-            setUpdateAlarm(SuntimesActivity.this);
+            setUpdateAlarms(SuntimesActivity.this);
             updateViews(SuntimesActivity.this);
         }
     };
