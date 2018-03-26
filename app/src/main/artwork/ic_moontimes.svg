@@ -19,8 +19,8 @@
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
    version="1.0"
    inkscape:export-filename="C:\Users\Forrest\Documents\GitHub\SuntimesWidget\app\src\main\res\mipmap-mdpi\ic_moontimes.png"
-   inkscape:export-xdpi="101.38614"
-   inkscape:export-ydpi="101.38614">
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
   <defs
      id="defs2385">
     <marker
@@ -285,8 +285,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.8284271"
-     inkscape:cx="-39.362453"
-     inkscape:cy="2.6900877"
+     inkscape:cx="-96.814879"
+     inkscape:cy="-25.594184"
      inkscape:current-layer="layer3"
      showgrid="false"
      inkscape:grid-bbox="true"
@@ -339,7 +339,7 @@
      inkscape:label="baseplate"
      style="display:inline">
     <rect
-       style="opacity:1;fill:#364e59;fill-opacity:1;fill-rule:evenodd;stroke:#9eabb0;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;display:inline;filter:url(#filter3365)"
+       style="opacity:1;fill:#2d2d2d;fill-opacity:1;fill-rule:evenodd;stroke:#9eabb0;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;display:inline;filter:url(#filter3365)"
        id="rect3167"
        width="37.875"
        height="37.875"
