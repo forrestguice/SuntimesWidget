@@ -23,6 +23,7 @@ import android.content.Context;
 
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
@@ -37,45 +38,50 @@ public class SuntimesRiseSetDataset
     public SuntimesRiseSetData dataGold;
     public SuntimesRiseSetData dataBlue8;
     public SuntimesRiseSetData dataBlue4;
+    private ArrayList<SuntimesRiseSetData> dataset = new ArrayList<>();
 
     public SuntimesRiseSetDataset(Context context)
     {
         dataActual = new SuntimesRiseSetData(context, AppWidgetManager.INVALID_APPWIDGET_ID);
         dataActual.setCompareMode(WidgetSettings.CompareMode.TOMORROW);
         dataActual.setTimeMode(WidgetSettings.TimeMode.OFFICIAL);
+        dataset.add(dataActual);
 
         dataCivil = new SuntimesRiseSetData(dataActual);
         dataCivil.setTimeMode(WidgetSettings.TimeMode.CIVIL);
+        dataset.add(dataCivil);
 
         dataNautical = new SuntimesRiseSetData(dataActual);
         dataNautical.setTimeMode(WidgetSettings.TimeMode.NAUTICAL);
+        dataset.add(dataNautical);
 
         dataAstro = new SuntimesRiseSetData(dataActual);
         dataAstro.setTimeMode(WidgetSettings.TimeMode.ASTRONOMICAL);
+        dataset.add(dataAstro);
 
         dataNoon = new SuntimesRiseSetData(dataActual);
         dataNoon.setTimeMode(WidgetSettings.TimeMode.NOON);
+        dataset.add(dataNoon);
 
         dataGold = new SuntimesRiseSetData(dataActual);
         dataGold.setTimeMode(WidgetSettings.TimeMode.GOLD);
+        dataset.add(dataGold);
 
         dataBlue8 = new SuntimesRiseSetData(dataActual);
         dataBlue8.setTimeMode(WidgetSettings.TimeMode.BLUE8);
+        dataset.add(dataBlue8);
 
         dataBlue4 = new SuntimesRiseSetData(dataActual);
         dataBlue4.setTimeMode(WidgetSettings.TimeMode.BLUE4);
+        dataset.add(dataBlue4);
     }
 
     public void calculateData()
     {
-        dataActual.calculate();
-        dataCivil.calculate();
-        dataNautical.calculate();
-        dataAstro.calculate();
-        dataNoon.calculate();
-        dataGold.calculate();
-        dataBlue8.calculate();
-        dataBlue4.calculate();
+        for (SuntimesRiseSetData data : dataset )
+        {
+            data.calculate();
+        }
     }
 
     public boolean isCalculated()
@@ -85,14 +91,10 @@ public class SuntimesRiseSetDataset
 
     public void invalidateCalculation()
     {
-        dataActual.invalidateCalculation();
-        dataCivil.invalidateCalculation();
-        dataNautical.invalidateCalculation();
-        dataAstro.invalidateCalculation();
-        dataNoon.invalidateCalculation();
-        dataGold.invalidateCalculation();
-        dataBlue8.invalidateCalculation();
-        dataBlue4.invalidateCalculation();
+        for (SuntimesRiseSetData data : dataset )
+        {
+            data.invalidateCalculation();
+        }
     }
 
     public Calendar todayIs()
