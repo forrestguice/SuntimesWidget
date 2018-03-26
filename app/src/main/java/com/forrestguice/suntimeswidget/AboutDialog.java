@@ -24,6 +24,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -118,7 +119,9 @@ public class AboutDialog extends DialogFragment
                 openLink(WEBSITE_URL);
             }
         });
-        nameView.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(context, param_iconID), null, null, null);
+        if (Build.VERSION.SDK_INT >= 17)
+            nameView.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(context, param_iconID), null, null, null);
+        else nameView.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context, param_iconID), null, null, null);
 
         TextView versionView = (TextView) dialogContent.findViewById(R.id.txt_about_version);
         versionView.setMovementMethod(LinkMovementMethod.getInstance());

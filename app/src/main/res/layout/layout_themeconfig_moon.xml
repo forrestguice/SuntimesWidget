@@ -91,7 +91,8 @@
                 android:nextFocusForward="@+id/editLabel_moonWaxingColor"
                 android:nextFocusDown="@+id/editLabel_moonWaningColor"
 
-                android:text="@string/configLabel_themeColorMoonset" />
+                android:text="@string/configLabel_themeColorMoonset"
+                tools:ignore="UnusedAttribute" />
 
             <EditText
                 android:id="@+id/edit_moonsetColor"
@@ -182,7 +183,8 @@
                 android:nextFocusForward="@+id/editLabel_moonNewColor"
                 android:nextFocusDown="@+id/editLabel_moonFullColor"
 
-                android:text="@string/configLabel_themeColorMoonWaning" />
+                android:text="@string/configLabel_themeColorMoonWaning"
+                tools:ignore="UnusedAttribute" />
 
             <EditText
                 android:id="@+id/edit_moonWaningColor"
@@ -273,7 +275,8 @@
                 android:nextFocusUp="@+id/editLabel_moonWaningColor"
                 android:nextFocusLeft="@+id/editLabel_moonNewColor"
 
-                android:text="@string/configLabel_themeColorMoonFull" />
+                android:text="@string/configLabel_themeColorMoonFull"
+                tools:ignore="UnusedAttribute" />
 
             <EditText
                 android:id="@+id/edit_moonFullColor"
