@@ -97,6 +97,32 @@ public class SuntimesRiseSetDataset
         }
     }
 
+    public Calendar findNextEvent()
+    {
+        Calendar now = now();
+        long nearestTime = -1;
+
+        Calendar nearest = dataset.get(0).sunriseCalendarToday();
+        for (SuntimesRiseSetData data : dataset)
+        {
+            Calendar[] events = new Calendar[] { data.sunriseCalendarToday(), data.sunriseCalendarOther(),
+                                                 data.sunsetCalendarToday(), data.sunsetCalendarOther() };
+            for (Calendar event : events)
+            {
+                if (event != null)
+                {
+                    long timeUntil = event.getTime().getTime() - now.getTime().getTime();
+                    if ((timeUntil > 0 && timeUntil < nearestTime) || nearestTime < 0)
+                    {
+                        nearestTime = timeUntil;
+                        nearest = event;
+                    }
+                }
+            }
+        }
+        return nearest;
+    }
+
     public Calendar todayIs()
     {
         return dataActual.todayIs();
