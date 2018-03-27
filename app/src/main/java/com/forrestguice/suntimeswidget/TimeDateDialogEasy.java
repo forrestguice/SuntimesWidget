@@ -129,7 +129,7 @@ public class TimeDateDialogEasy extends DialogFragment
         dialog.setOnShowListener(new DialogInterface.OnShowListener()
         {
             @Override
-            public void onShow(DialogInterface dialog)
+            public void onShow(final DialogInterface dialog)
             {
                 Button neutralButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_NEUTRAL);
                 neutralButton.setOnClickListener(new View.OnClickListener()
@@ -137,7 +137,11 @@ public class TimeDateDialogEasy extends DialogFragment
                     @Override
                     public void onClick(View view)
                     {
+                        boolean alreadyToday = isToday();
                         init(Calendar.getInstance());
+                        if (alreadyToday) {
+                            ((AlertDialog) dialog).getButton(DialogInterface.BUTTON_POSITIVE).performClick();
+                        }
                     }
                 });
             }
@@ -250,7 +254,7 @@ public class TimeDateDialogEasy extends DialogFragment
         return isToday(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH));
     }
 
-    public boolean isToday( int year, int month, int day)
+    public boolean isToday(int year, int month, int day)
     {
         return (year == picker.getYear() && month == picker.getMonth() && day == picker.getDayOfMonth());
     }
