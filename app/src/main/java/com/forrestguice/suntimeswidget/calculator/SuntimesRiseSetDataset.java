@@ -202,6 +202,11 @@ public class SuntimesRiseSetDataset
         return dataActual.date();
     }
 
+    public Calendar calendar()
+    {
+        return dataActual.calendar();
+    }
+
     public WidgetSettings.TimezoneMode timezoneMode()
     {
         return dataActual.timezoneMode();
