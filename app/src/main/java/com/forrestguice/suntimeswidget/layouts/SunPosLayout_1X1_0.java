@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2014-2018 Forrest Guice
+   Copyright (C) 2018 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -19,15 +19,10 @@
 package com.forrestguice.suntimeswidget.layouts;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.os.Build;
-import android.text.SpannableString;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -66,23 +61,7 @@ public class SunPosLayout_1X1_0 extends SunPosLayout
         super.updateViews(context, appWidgetId, views, dataset);
         SuntimesCalculator calculator = dataset.dataActual.calculator();
         SuntimesCalculator.SunPosition sunPosition = calculator.getSunPosition(dataset.now());
-
-        SuntimesUtils.TimeDisplayText azimuthDisplay = utils.formatAsDirection2(sunPosition.azimuth, DECIMAL_PLACES);
-        String azimuthSymbol = azimuthDisplay.getSuffix();
-        String azimuthString = utils.formatAsDirection(azimuthDisplay.getValue(), azimuthSymbol);
-        SpannableString azimuth = SuntimesUtils.createColorSpan(null, azimuthString, azimuthDisplay.getValue(), highlightColor, boldTime);
-        azimuth = SuntimesUtils.createBoldColorSpan(azimuth, azimuthString, azimuthSymbol, suffixColor);
-        azimuth = SuntimesUtils.createRelativeSpan(azimuth, azimuthString, azimuthSymbol, SYMBOL_RELATIVE_SIZE);
-        //azimuth = SuntimesUtils.createAbsoluteSpan(azimuth, azimuthString, azimuthDisplay.getSuffix(), SuntimesUtils.spToPixels(context, suffixSp));
-        views.setTextViewText(R.id.info_sun_azimuth_current, azimuth);
-
-        SuntimesUtils.TimeDisplayText elevationDisplay = utils.formatAsElevation(sunPosition.elevation, DECIMAL_PLACES);
-        String elevationSymbol = elevationDisplay.getSuffix();
-        String elevationString = elevationDisplay.getValue() + elevationSymbol;
-        SpannableString elevation = SuntimesUtils.createColorSpan(null, elevationString, elevationString, highlightColor, boldTime);
-        elevation = SuntimesUtils.createBoldColorSpan(elevation, elevationString, elevationSymbol, suffixColor);
-        elevation = SuntimesUtils.createRelativeSpan(elevation, elevationString, elevationSymbol, SYMBOL_RELATIVE_SIZE);
-        views.setTextViewText(R.id.info_sun_elevation_current, elevation);
+        updateViewsAzimuthElevationText(context, views, sunPosition, highlightColor, suffixColor);
 
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         int visibility = (showLabels ? View.VISIBLE : View.GONE);
@@ -90,38 +69,10 @@ public class SunPosLayout_1X1_0 extends SunPosLayout
         views.setViewVisibility(R.id.info_sun_elevation_current_label, visibility);
     }
 
-    private static final int DECIMAL_PLACES = 1;
-    private static final float SYMBOL_RELATIVE_SIZE = 0.7f;
-
-    protected int highlightColor = Color.WHITE;
-    protected boolean boldTime = false;
-    protected float suffixSp;
-    protected int suffixColor = Color.GRAY;
-
     @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         super.themeViews(context, views, theme);
-        highlightColor = theme.getTimeColor();
-        boldTime = theme.getTimeBold();
-        suffixSp = theme.getTimeSuffixSizeSp();
-        suffixColor = theme.getTimeSuffixColor();
-
-        int textColor = theme.getTextColor();
-        views.setTextColor(R.id.info_sun_azimuth_current_label, textColor);
-        views.setTextColor(R.id.info_sun_elevation_current_label, textColor);
-        views.setTextColor(R.id.info_sun_azimuth_current, textColor);
-        views.setTextColor(R.id.info_sun_elevation_current, textColor);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-        {
-            float textSize = theme.getTextSizeSp();
-            views.setTextViewTextSize(R.id.info_sun_azimuth_current_label, TypedValue.COMPLEX_UNIT_SP, textSize);
-            views.setTextViewTextSize(R.id.info_sun_elevation_current_label, TypedValue.COMPLEX_UNIT_SP, textSize);
-
-            float timeSize = theme.getTimeSizeSp();
-            views.setTextViewTextSize(R.id.info_sun_azimuth_current, TypedValue.COMPLEX_UNIT_SP, timeSize);
-            views.setTextViewTextSize(R.id.info_sun_elevation_current, TypedValue.COMPLEX_UNIT_SP, timeSize);
-        }
+        themeViewsAzimuthElevationText(context, views, theme);
     }
 }

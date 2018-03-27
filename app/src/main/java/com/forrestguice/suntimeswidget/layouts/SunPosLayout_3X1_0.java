@@ -20,12 +20,15 @@ package com.forrestguice.suntimeswidget.layouts;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.LightMapView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.ThemeBackground;
 
@@ -62,6 +65,14 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesRiseSetDataset dataset)
     {
         super.updateViews(context, appWidgetId, views, dataset);
+        SuntimesCalculator calculator = dataset.dataActual.calculator();
+        SuntimesCalculator.SunPosition sunPosition = calculator.getSunPosition(dataset.now());
+        updateViewsAzimuthElevationText(context, views, sunPosition, highlightColor, suffixColor);
+
+        boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
+        int visibility = (showLabels ? View.VISIBLE : View.GONE);
+        views.setViewVisibility(R.id.info_time_lightmap_labels, visibility);
+
         LightMapView.LightMapTask drawTask = new LightMapView.LightMapTask();
         Bitmap bitmap = drawTask.makeBitmap(dataset, SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), colors);
         views.setImageViewBitmap(R.id.info_time_lightmap, bitmap);
@@ -79,6 +90,8 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         super.themeViews(context, views, theme);
+        themeViewsAzimuthElevationText(context, views, theme);
+
         colors = new LightMapView.LightMapColors();
         if (theme.getBackground() == ThemeBackground.LIGHT)
             colors.initDefaultLight(context);
