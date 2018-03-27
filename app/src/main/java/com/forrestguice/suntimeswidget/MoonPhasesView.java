@@ -139,11 +139,13 @@ public class MoonPhasesView extends LinearLayout
         if (data.isCalculated())
         {
             boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, 0);
+            boolean showTime = WidgetSettings.loadShowTimeDatePref(context, 0);
+            boolean showHours = WidgetSettings.loadShowHoursPref(context, 0);
             boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
-            phaseNew.updateField(context, data.now(), data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.NEW), showWeeks, showSeconds);
-            phaseFirst.updateField(context, data.now(), data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FIRST_QUARTER), showWeeks, showSeconds);
-            phaseFull.updateField(context, data.now(), data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FULL), showWeeks, showSeconds);
-            phaseLast.updateField(context, data.now(), data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.THIRD_QUARTER), showWeeks, showSeconds);
+            phaseNew.updateField(context, data.now(), data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.NEW), showWeeks, showTime, showHours, showSeconds);
+            phaseFirst.updateField(context, data.now(), data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FIRST_QUARTER), showTime, showWeeks, showHours, showSeconds);
+            phaseFull.updateField(context, data.now(), data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FULL), showWeeks, showTime, showHours, showSeconds);
+            phaseLast.updateField(context, data.now(), data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.THIRD_QUARTER), showWeeks, showTime, showHours, showSeconds);
             reorderLayout(data.nextPhase(data.midnight()));
 
         } else {
@@ -234,16 +236,16 @@ public class MoonPhasesView extends LinearLayout
             note = (TextView)parent.findViewById(noteTextID);
         }
 
-        public void updateField(Context context, Calendar now, Calendar dateTime, boolean showWeeks, boolean showSeconds)
+        public void updateField(Context context, Calendar now, Calendar dateTime, boolean showWeeks, boolean showTime, boolean showHours, boolean showSeconds)
         {
             if (field != null)
             {
-                field.setText(utils.calendarDateTimeDisplayString(context, dateTime, showSeconds).getValue());
+                field.setText(utils.calendarDateTimeDisplayString(context, dateTime, showTime, showSeconds).getValue());
             }
 
             if (note != null)
             {
-                String noteText = utils.timeDeltaDisplayString(now.getTime(), dateTime.getTime(), showWeeks).toString();
+                String noteText = utils.timeDeltaDisplayString(now.getTime(), dateTime.getTime(), showWeeks, showHours).toString();
                 String noteString = now.after(dateTime) ? context.getString(R.string.ago, noteText) : context.getString(R.string.hence, noteText);
                 note.setText(SuntimesUtils.createBoldColorSpan(noteString, noteText, noteColor));
                 note.setVisibility(View.VISIBLE);

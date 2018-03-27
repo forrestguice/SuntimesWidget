@@ -2005,8 +2005,6 @@ public class WidgetSettings
         prefs.apply();
     }
 
->>>>>>> master
-
     public static void saveTimeNoteRisePref(Context context, int appWidgetId, SolarEvents riseChoice)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
