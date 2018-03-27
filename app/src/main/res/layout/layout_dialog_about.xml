@@ -36,7 +36,7 @@
             android:layout_marginTop="5dp"
             android:text="@string/app_name"
             android:gravity="center"
-            android:drawableStart="@mipmap/ic_suntimes" android:drawableLeft="@mipmap/ic_suntimes"
+
             android:drawablePadding="10dp"
             android:textColor="@drawable/btn_datetxt"
             android:textAppearance="?android:attr/textAppearanceLarge" />
