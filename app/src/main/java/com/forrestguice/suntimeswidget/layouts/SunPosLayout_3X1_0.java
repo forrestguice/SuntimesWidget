@@ -27,10 +27,13 @@ import com.forrestguice.suntimeswidget.LightMapView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.ThemeBackground;
+
+import java.util.Calendar;
 
 /**
  * A 3x1 layout with the lightmap graph.
@@ -65,9 +68,14 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesRiseSetDataset dataset)
     {
         super.updateViews(context, appWidgetId, views, dataset);
-        SuntimesCalculator calculator = dataset.dataActual.calculator();
+        SuntimesCalculator calculator = dataset.calculator();
         SuntimesCalculator.SunPosition sunPosition = calculator.getSunPosition(dataset.now());
-        updateViewsAzimuthElevationText(context, views, sunPosition, highlightColor, suffixColor);
+
+        SuntimesRiseSetData noonData = dataset.dataNoon;
+        Calendar noonTime = (noonData != null ? noonData.sunriseCalendarToday() : null);
+        SuntimesCalculator.SunPosition noonPosition = (noonTime != null && calculator != null ? calculator.getSunPosition(noonTime) : null);
+
+        updateViewsAzimuthElevationText(context, views, sunPosition, noonPosition);
 
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         int visibility = (showLabels ? View.VISIBLE : View.GONE);

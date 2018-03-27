@@ -24,9 +24,12 @@ import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+
+import java.util.Calendar;
 
 /**
  * A 1x1 layout that displays azimuth and elevation.
@@ -52,16 +55,22 @@ public class SunPosLayout_1X1_0 extends SunPosLayout
     @Override
     public void prepareForUpdate(SuntimesRiseSetDataset dataset, int[] widgetSize)
     {
-        dataset.dataActual.initCalculator();  // init calculator only; skipping full calculate()
+        dataset.dataActual.calculate();
+        dataset.dataNoon.calculate();
     }
 
     @Override
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesRiseSetDataset dataset)
     {
         super.updateViews(context, appWidgetId, views, dataset);
-        SuntimesCalculator calculator = dataset.dataActual.calculator();
+        SuntimesCalculator calculator = dataset.calculator();
         SuntimesCalculator.SunPosition sunPosition = calculator.getSunPosition(dataset.now());
-        updateViewsAzimuthElevationText(context, views, sunPosition, highlightColor, suffixColor);
+
+        SuntimesRiseSetData noonData = dataset.dataNoon;
+        Calendar noonTime = (noonData != null ? noonData.sunriseCalendarToday() : null);
+        SuntimesCalculator.SunPosition noonPosition = (noonTime != null && calculator != null ? calculator.getSunPosition(noonTime) : null);
+
+        updateViewsAzimuthElevationText(context, views, sunPosition, noonPosition);
 
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         int visibility = (showLabels ? View.VISIBLE : View.GONE);

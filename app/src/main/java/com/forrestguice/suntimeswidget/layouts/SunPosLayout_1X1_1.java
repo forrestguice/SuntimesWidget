@@ -59,9 +59,9 @@ public class SunPosLayout_1X1_1 extends SunPosLayout
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesRiseSetDataset dataset)
     {
         super.updateViews(context, appWidgetId, views, dataset);
-        SuntimesCalculator calculator = dataset.dataActual.calculator();
+        SuntimesCalculator calculator = dataset.calculator();
         SuntimesCalculator.SunPosition sunPosition = calculator.getSunPosition(dataset.now());
-        updateViewsRightAscDeclinationText(context, views, sunPosition, highlightColor, suffixColor);
+        updateViewsRightAscDeclinationText(context, views, sunPosition);
 
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         int visibility = (showLabels ? View.VISIBLE : View.GONE);

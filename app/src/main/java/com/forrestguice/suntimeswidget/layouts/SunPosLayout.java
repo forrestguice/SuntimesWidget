@@ -28,6 +28,7 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -61,7 +62,7 @@ public abstract class SunPosLayout extends SuntimesLayout
     protected static final int DECIMAL_PLACES = 1;
     protected static final float SYMBOL_RELATIVE_SIZE = 0.7f;
 
-    protected void updateViewsAzimuthElevationText(Context context, RemoteViews views, SuntimesCalculator.SunPosition sunPosition, int highlightColor, int suffixColor)
+    protected void updateViewsAzimuthElevationText(Context context, RemoteViews views, SuntimesCalculator.SunPosition sunPosition, SuntimesCalculator.SunPosition noonPosition)
     {
         SuntimesUtils.TimeDisplayText azimuthDisplay = utils.formatAsDirection2(sunPosition.azimuth, DECIMAL_PLACES);
         String azimuthSymbol = azimuthDisplay.getSuffix();
@@ -75,13 +76,15 @@ public abstract class SunPosLayout extends SuntimesLayout
         SuntimesUtils.TimeDisplayText elevationDisplay = utils.formatAsElevation(sunPosition.elevation, DECIMAL_PLACES);
         String elevationSymbol = elevationDisplay.getSuffix();
         String elevationString = elevationDisplay.getValue() + elevationSymbol;
-        SpannableString elevation = SuntimesUtils.createColorSpan(null, elevationString, elevationString, highlightColor, boldTime);
+        int elevationColor = (sunPosition.elevation <= 0 ? highlightColor :
+                (SuntimesRiseSetDataset.isRising(sunPosition, noonPosition) ? risingColor : settingColor));
+        SpannableString elevation = SuntimesUtils.createColorSpan(null, elevationString, elevationString, elevationColor, boldTime);
         elevation = SuntimesUtils.createBoldColorSpan(elevation, elevationString, elevationSymbol, suffixColor);
         elevation = SuntimesUtils.createRelativeSpan(elevation, elevationString, elevationSymbol, SYMBOL_RELATIVE_SIZE);
         views.setTextViewText(R.id.info_sun_elevation_current, elevation);
     }
 
-    protected void updateViewsRightAscDeclinationText(Context context, RemoteViews views, SuntimesCalculator.SunPosition sunPosition, int highlightColor, int suffixColor)
+    protected void updateViewsRightAscDeclinationText(Context context, RemoteViews views, SuntimesCalculator.SunPosition sunPosition)
     {
         SuntimesUtils.TimeDisplayText rightAscDisplay = utils.formatAsRightAscension(sunPosition.rightAscension, DECIMAL_PLACES);
         String rightAscString = rightAscDisplay.toString();
@@ -100,6 +103,8 @@ public abstract class SunPosLayout extends SuntimesLayout
         views.setTextViewText(R.id.info_sun_declination_current, declination);
     }
 
+    protected int risingColor = Color.YELLOW;
+    protected int settingColor = Color.RED;
     protected int highlightColor = Color.WHITE;
     protected float suffixSp;
     protected int suffixColor = Color.GRAY;
@@ -109,6 +114,8 @@ public abstract class SunPosLayout extends SuntimesLayout
     {
         super.themeViews(context, views, theme);
         highlightColor = theme.getTimeColor();
+        risingColor = theme.getSunriseTextColor();
+        settingColor = theme.getSunsetTextColor();
         boldTime = theme.getTimeBold();
         suffixSp = theme.getTimeSuffixSizeSp();
         suffixColor = theme.getTimeSuffixColor();

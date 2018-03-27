@@ -42,6 +42,7 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -234,25 +235,25 @@ public class LightMapDialog extends DialogFragment
         return azimuthSpan;
     }
 
-    private CharSequence styleElevationText(double elevation, int places)
+    private CharSequence styleElevationText(double elevation, Integer color, int places)
     {
         SuntimesUtils.TimeDisplayText elevationText = utils.formatAsElevation(elevation, places);
         String elevationString = elevationText.getValue() + elevationText.getSuffix();
         SpannableString span = null;
         span = SuntimesUtils.createRelativeSpan(span, elevationString, elevationText.getSuffix(), 0.7f);
-        span = SuntimesUtils.createColorSpan(span, elevationString, elevationString, getColorForElevation(elevation));
+        span = SuntimesUtils.createColorSpan(span, elevationString, elevationString, color);
         return (span != null ? span : elevationString);
     }
 
-    private int getColorForElevation(double elevation)
+    private int getColorForPosition(SuntimesCalculator.SunPosition position, SuntimesCalculator.SunPosition noonPosition)
     {
-        if (elevation >= 0)
-            return colorDay;
+        if (position.elevation >= 0)
+            return (SuntimesRiseSetDataset.isRising(position, noonPosition) ? colorRising : colorSetting);
 
-        if (elevation >= -6)
+        if (position.elevation >= -6)
             return colorCivil;
 
-        if (elevation >= -12)  //if (elevation >= -18)   // share color
+        if (position.elevation >= -12)  //if (elevation >= -18)   // share color
             return colorAstro;
 
         return colorLabel;
@@ -280,11 +281,15 @@ public class LightMapDialog extends DialogFragment
         SuntimesCalculator calculator = data.calculator();
         if (sunLayout != null)
         {
-            SuntimesCalculator.SunPosition currentPosition = (calculator != null ? calculator.getSunPosition(data.now()) : null);
+            SuntimesRiseSetData noonData = data.dataNoon;
+            Calendar noonTime = (noonData != null ? noonData.sunriseCalendarToday() : null);
+            SuntimesCalculator.SunPosition noonPosition = (noonTime != null && calculator != null ? calculator.getSunPosition(noonTime) : null);
+            SuntimesCalculator.SunPosition currentPosition = (calculator != null ? calculator.getSunPosition(data.nowThen(data.calendar())) : null);
+
             if (currentPosition != null)
             {
                 sunAzimuth.setText(styleAzimuthText(currentPosition.azimuth, null, 2));
-                sunElevation.setText(styleElevationText(currentPosition.elevation, 2));
+                sunElevation.setText(styleElevationText(currentPosition.elevation, getColorForPosition(currentPosition, noonPosition),2));
                 highlightLightmapKey(currentPosition.elevation);
 
             } else {
@@ -301,13 +306,10 @@ public class LightMapDialog extends DialogFragment
             SuntimesCalculator.SunPosition positionSetting = (setTime != null && calculator != null ? calculator.getSunPosition(setTime) : null);
             sunAzimuthSetting.setText(positionSetting != null ? styleAzimuthText(positionSetting.azimuth, colorSetting, decimalPlaces) : "");
 
-            SuntimesRiseSetData noonData = data.dataNoon;
-            Calendar noonTime = (noonData != null ? noonData.sunriseCalendarToday() : null);
-            SuntimesCalculator.SunPosition positionAtNoon = (noonTime != null && calculator != null ? calculator.getSunPosition(noonTime) : null);
-            if (positionAtNoon != null)
+            if (noonPosition != null)
             {
-                sunElevationAtNoon.setText(styleElevationText(positionAtNoon.elevation, decimalPlaces));
-                sunAzimuthAtNoon.setText(styleAzimuthText(positionAtNoon.azimuth, null, decimalPlaces));
+                sunElevationAtNoon.setText(styleElevationText(noonPosition.elevation, colorSetting, decimalPlaces));
+                sunAzimuthAtNoon.setText(styleAzimuthText(noonPosition.azimuth, null, decimalPlaces));
 
             } else {
                 sunElevationAtNoon.setText("");
