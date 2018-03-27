@@ -359,6 +359,26 @@ public class SuntimesRiseSetDataset
         }
     }
 
+    /**
+     * @param position current sunPosition
+     * @param noonPosition the sunPosition at noon
+     * @return true if rising (before noon) or if either position or noonPosition is null, false if setting (on or after noon)
+     */
+    public static boolean isRising(SuntimesCalculator.SunPosition position, SuntimesCalculator.SunPosition noonPosition)
+    {
+        if (position == null || noonPosition == null) {
+            return true;
+
+        } else if (noonPosition.azimuth > 90 && noonPosition.azimuth < 270) {    // noon is southward
+            return (position.azimuth < noonPosition.azimuth);
+
+        } else {                                                      // noon is northward
+            if (noonPosition.azimuth <= 90)
+                return (position.azimuth > noonPosition.azimuth && position.azimuth <= 180);
+            else return (position.azimuth > noonPosition.azimuth) || (position.azimuth <= 90);
+        }
+    }
+
 }
 
 
