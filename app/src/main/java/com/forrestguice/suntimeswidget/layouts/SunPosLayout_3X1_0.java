@@ -80,7 +80,7 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
     {
         super.themeViews(context, views, theme);
         colors = new LightMapView.LightMapColors();
-        if (theme.getBackgroundId() == ThemeBackground.LIGHT.getResID())
+        if (theme.getBackground() == ThemeBackground.LIGHT)
             colors.initDefaultLight(context);
         else colors.initDefaultDark(context);
     }

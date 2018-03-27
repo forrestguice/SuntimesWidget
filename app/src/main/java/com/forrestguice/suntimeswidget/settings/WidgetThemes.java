@@ -510,9 +510,9 @@ public class WidgetThemes
 
                 View layout = view.findViewById(R.id.widgetframe_inner);
                 try {
-                    layout.setBackgroundResource(theme.getBackgroundId());
+                    layout.setBackgroundResource(theme.getBackground().getResID());
                 } catch (Resources.NotFoundException e) {
-                    Log.w("ThemeGridAdapter", "background resource not found! " + theme.getBackgroundId());
+                    Log.w("ThemeGridAdapter", "background resource not found! " + theme.getBackground());
                 }
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)

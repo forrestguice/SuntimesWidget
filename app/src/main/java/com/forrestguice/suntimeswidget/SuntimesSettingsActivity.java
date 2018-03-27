@@ -74,13 +74,16 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     @Override
     public void onCreate(Bundle icicle)
     {
+        setResult(RESULT_OK);
         context = SuntimesSettingsActivity.this;
-        setTheme(AppSettings.loadTheme(this));
         appTheme = AppSettings.loadThemePref(this);
+        setTheme(AppSettings.themePrefToStyleId(this, appTheme));
 
         super.onCreate(icicle);
         initLocale(icicle);
         initLegacyPrefs();
+
+        PreferenceManager.getDefaultSharedPreferences(context).registerOnSharedPreferenceChangeListener(onChangedNeedingRebuild);
     }
 
     /**
@@ -133,8 +136,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     {
         super.onResume();
         initLocale(null);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        prefs.registerOnSharedPreferenceChangeListener(this);
+        PreferenceManager.getDefaultSharedPreferences(context).registerOnSharedPreferenceChangeListener(this);
 
         if (placesPrefBase != null)
         {
@@ -145,8 +147,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     @Override
     public void onPause()
     {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        prefs.unregisterOnSharedPreferenceChangeListener(this);
+        PreferenceManager.getDefaultSharedPreferences(context).unregisterOnSharedPreferenceChangeListener(this);
         super.onPause();
     }
 
@@ -158,6 +159,13 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         {
             placesPrefBase.onStop();
         }
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        PreferenceManager.getDefaultSharedPreferences(context).unregisterOnSharedPreferenceChangeListener(onChangedNeedingRebuild);
+        super.onDestroy();
     }
 
     private void initLocale(Bundle icicle)
@@ -231,19 +239,25 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                PlacesPrefsFragment.class.getName().equals(fragmentName);
     }
 
+    private SharedPreferences.OnSharedPreferenceChangeListener onChangedNeedingRebuild = new SharedPreferences.OnSharedPreferenceChangeListener()
+    {
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
+        {
+            if (key.equals(AppSettings.PREF_KEY_LOCALE) || key.equals(AppSettings.PREF_KEY_LOCALE_MODE)
+                    || key.equals(AppSettings.PREF_KEY_APPEARANCE_THEME))
+            {
+                //Log.d("SettingsActivity", "Locale change detected; restarting activity");
+                updateLocale();
+                rebuildActivity();
+            }
+        }
+    };
+
     @SuppressWarnings("UnnecessaryReturnStatement")
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
     {
-        if (key.equals(AppSettings.PREF_KEY_LOCALE) || key.equals(AppSettings.PREF_KEY_LOCALE_MODE)
-                || key.equals(AppSettings.PREF_KEY_APPEARANCE_THEME))
-        {
-            //Log.d("SettingsActivity", "Locale change detected; restarting activity");
-            updateLocale();
-            rebuildActivity();
-            return;
-        }
-
         if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_CALCULATOR))
         {
             // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,

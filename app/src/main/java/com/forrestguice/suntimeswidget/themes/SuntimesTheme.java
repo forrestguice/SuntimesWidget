@@ -118,7 +118,7 @@ public class SuntimesTheme
     protected boolean themeIsDefault;
     protected String themeDisplayString;
 
-    protected int themeBackground;
+    protected ThemeBackground themeBackground;
     protected int[] themePadding = {0, 0, 0, 0};
     private int[] themePaddingPixels = {-1, -1, -1, -1};
 
@@ -249,16 +249,16 @@ public class SuntimesTheme
             if (backgroundName != null)
             {
                 try {
-                    this.themeBackground = ThemeBackground.valueOf(backgroundName).getResID();
+                    this.themeBackground = ThemeBackground.valueOf(backgroundName);
                 } catch (IllegalArgumentException e) {
                     Log.w("initTheme", "unable to find theme background " + backgroundName);
-                    this.themeBackground = ThemeBackground.DARK.getResID();
+                    this.themeBackground = ThemeBackground.DARK;
                 }
             }
         } catch (ClassCastException e) {
             Log.w("initTheme", "legacy theme: " + themeName);
             int backgroundID = themes.getInt(theme + THEME_BACKGROUND, 0);
-            this.themeBackground = ThemeBackground.getThemeBackground(backgroundID).getResID();
+            this.themeBackground = ThemeBackground.getThemeBackground(backgroundID);
         }
 
         this.themePadding[0] = themes.getInt( theme + THEME_PADDING_LEFT, defaultTheme.themePadding[0] );
@@ -327,7 +327,7 @@ public class SuntimesTheme
         themePrefs.putBoolean(themePrefix + SuntimesTheme.THEME_ISDEFAULT, this.themeIsDefault);
         themePrefs.putString(themePrefix + SuntimesTheme.THEME_DISPLAYSTRING, this.themeDisplayString);
 
-        themePrefs.putString(themePrefix + SuntimesTheme.THEME_BACKGROUND, ThemeBackground.getThemeBackground(this.themeBackground).name());
+        themePrefs.putString(themePrefix + SuntimesTheme.THEME_BACKGROUND, this.themeBackground.name());
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_PADDING_LEFT, this.themePadding[0]);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_PADDING_TOP, this.themePadding[1]);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_PADDING_RIGHT, this.themePadding[2]);
@@ -719,7 +719,7 @@ public class SuntimesTheme
                 (themeTimeSuffixSize > THEME_TIMESUFFIXSIZE_MAX) ? THEME_TIMESUFFIXSIZE_MAX : themeTimeSuffixSize;
     }
 
-    public int getBackgroundId()
+    public ThemeBackground getBackground()
     {
         return themeBackground;
     }

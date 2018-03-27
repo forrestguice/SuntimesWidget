@@ -32,7 +32,7 @@
     <string name="prevYear">Poprzedni rok</string>
 
     <!-- Warnings -->
-    <string name="spanTag_warning">Warning!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->  <!-- TODO -->
+    <string name="spanTag_warning">Uwaga!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
 
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
@@ -141,6 +141,8 @@
     <!--
          WIDGET CONFIG
     -->
+
+    <string name="configAction_restoreDefaults">Restore Defaults</string>   <!-- button / menu text -->  <!-- TODO -->
 
     <!-- WidgetConfig Activity -->
     <string name="configAction_addWidget">Dodaj widżet</string>                   <!-- Button: Add -->
@@ -747,7 +749,7 @@
     ]]></string>
     <string name="help_general_daylength"><![CDATA[
         <b>Długość dnia:</b> czas pomiędzy wschodem i zachodem Słońca.<br/><br/>
-        <b>Okres użytecznego światła:</b> czas pomiędzy cywilnym świtem i zmierzchem.</br></br>
+        <b>Okres użytecznego światła:</b> czas pomiędzy cywilnym świtem i zmierzchem.<br/><br/>
     ]]>
     </string>
     <string name="help_general_goldhour"><![CDATA[

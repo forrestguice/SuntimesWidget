@@ -20,7 +20,6 @@ package com.forrestguice.suntimeswidget.themes;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.content.ContextCompat;
@@ -68,7 +67,7 @@ public class SuntimesThemeTest extends SuntimesActivityTestBase
         assertTrue("theme display should match", theme.themeDisplayString().equals(truth.themeDisplayString()));
         assertTrue("theme isDefault should match", theme.isDefault() == truth.isDefault());
 
-        assertTrue("theme backgroundID should match", theme.getBackgroundId() == truth.getBackgroundId());
+        assertTrue("theme backgroundID should match", theme.getBackground() == truth.getBackground());
         assertTrue("theme padding should match [0]", theme.getPadding()[0] == truth.getPadding()[0]);
         assertTrue("theme padding should match [1]", theme.getPadding()[1] == truth.getPadding()[1]);
         assertTrue("theme padding should match [2]", theme.getPadding()[2] == truth.getPadding()[2]);

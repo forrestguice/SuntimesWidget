@@ -19,11 +19,15 @@
 package com.forrestguice.suntimeswidget;
 
 import android.annotation.TargetApi;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
+import android.content.BroadcastReceiver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -92,10 +96,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
+import android.os.Handler;
 
 @SuppressWarnings("Convert2Diamond")
 public class SuntimesActivity extends AppCompatActivity
 {
+    public static final String SUNTIMES_APP_UPDATE_FULL = "suntimes.SUNTIMES_APP_UPDATE_FULL";
+    public static final String SUNTIMES_APP_UPDATE_PARTIAL = "suntimes.SUNTIMES_APP_UPDATE_PARTIAL";
+    public static final int SUNTIMES_SETTINGS_REQUEST = 10;
+
     public static final String KEY_UI_CARDISTOMORROW = "cardIsTomorrow";
     public static final String KEY_UI_USERSWAPPEDCARD = "userSwappedCard";
 
@@ -115,6 +124,9 @@ public class SuntimesActivity extends AppCompatActivity
 
     private ActionBar actionBar;
     private Menu actionBarMenu;
+    private String appTheme;
+    private int appThemeResID;
+    private AppSettings.LocaleInfo localeInfo;
 
     private GetFixHelper getFixHelper;
 
@@ -206,7 +218,8 @@ public class SuntimesActivity extends AppCompatActivity
     public void onCreate(Bundle savedState)
     {
         Context context = SuntimesActivity.this;
-        setTheme(AppSettings.loadTheme(this));
+        appTheme = AppSettings.loadThemePref(this);
+        setTheme(appThemeResID = AppSettings.themePrefToStyleId(this, appTheme, null));
         GetFixUI.themeIcons(this);
 
         super.onCreate(savedState);
@@ -233,7 +246,8 @@ public class SuntimesActivity extends AppCompatActivity
 
     private void initLocale( Context context )
     {
-        AppSettings.initLocale(this);
+        localeInfo = new AppSettings.LocaleInfo();
+        AppSettings.initLocale(this, localeInfo);
         isRtl = AppSettings.isLocaleRtl(this);
 
         WidgetSettings.initDefaults(context);        // locale specific defaults
@@ -254,11 +268,16 @@ public class SuntimesActivity extends AppCompatActivity
     {
         super.onStart();
         calculateData(SuntimesActivity.this);
+
+        registerReceivers(SuntimesActivity.this);
+        setUpdateAlarms(SuntimesActivity.this);
+
         if (onStart_resetNoteIndex)
         {
             notes.resetNoteIndex();
             onStart_resetNoteIndex = false;
         }
+
         updateViews(SuntimesActivity.this);
     }
     private boolean onStart_resetNoteIndex = false;
@@ -324,6 +343,152 @@ public class SuntimesActivity extends AppCompatActivity
     }
 
     /**
+     * @param context
+     */
+    protected void registerReceivers(Context context)
+    {
+        unregisterReceivers(context);
+        context.registerReceiver(fullUpdateReceiver, new IntentFilter(SUNTIMES_APP_UPDATE_FULL));
+        context.registerReceiver(partialUpdateReceiver, new IntentFilter(SUNTIMES_APP_UPDATE_PARTIAL));
+    }
+    protected void unregisterReceivers(Context context)
+    {
+        try {
+            context.unregisterReceiver(fullUpdateReceiver);
+        } catch (IllegalArgumentException e) {
+            // EMPTY
+            //Log.w("UpdateAlarms", "unregisterReceiver: attempted to unregister non-registered receiver (SUNTIMES_APP_UPDATE_FULL)");
+        }
+
+        try {
+            context.unregisterReceiver(partialUpdateReceiver);
+        } catch (IllegalArgumentException e) {
+            // EMPTY
+            //Log.w("UpdateAlarms", "unregisterReceiver: attempted to unregister non-registered receiver (SUNTIMES_APP_UPDATE_PARTIAL)");
+        }
+    }
+
+    /**
+     * @param context
+     */
+    protected void setUpdateAlarms( Context context )
+    {
+        setFullUpdateAlarm(context);
+        setPartialUpdateAlarm(context);
+    }
+    protected void setFullUpdateAlarm(Context context)
+    {
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        if (alarmManager != null)
+        {
+            Calendar now = dataset.now();
+            Calendar midnight = SuntimesRiseSetDataset.midnight(dataset.dataActual.getOtherCalendar());
+            Log.d("UpdateAlarms", "setAlarm (fullUpdate): " + utils.calendarDateTimeDisplayString(context, midnight).toString());
+
+            if (midnight.after(now))
+                setUpdateAlarm(alarmManager, midnight, getFullUpdateIntent(context));
+            //else Log.d("UpdateAlarms", "..skipping alarm fullUpdate (isPast)");
+        }
+    }
+    protected void setPartialUpdateAlarm(Context context)
+    {
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        if (alarmManager != null)
+        {
+            Calendar now = dataset.now();
+            Calendar updateTime = dataset.findNextEvent();
+            Log.d("UpdateAlarms", "setAlarm (partialUpdate): " + utils.calendarDateTimeDisplayString(context, updateTime).toString());
+
+            if (updateTime.after(now))
+                setUpdateAlarm(alarmManager, updateTime, getPartialUpdateIntent(context));
+            //else Log.d("UpdateAlarms", "..skipping alarm: partialUpdate (isPast)");
+        }
+    }
+    protected void setUpdateAlarm(@NonNull AlarmManager alarmManager, Calendar updateTime, PendingIntent alarmIntent)
+    {
+        if (Build.VERSION.SDK_INT >= 19)
+            alarmManager.setExact(AlarmManager.RTC, updateTime.getTimeInMillis(), alarmIntent);
+        else alarmManager.set(AlarmManager.RTC, updateTime.getTimeInMillis(), alarmIntent);
+    }
+
+    /**
+     * @param context
+     */
+    protected void unsetUpdateAlarms( Context context )
+    {
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        if (alarmManager != null)
+        {
+            alarmManager.cancel(getFullUpdateIntent(context));
+            alarmManager.cancel(getPartialUpdateIntent(context));
+        }
+    }
+
+    /**
+     * @param context
+     * @return
+     */
+    protected PendingIntent getFullUpdateIntent(Context context)
+    {
+        return PendingIntent.getBroadcast(context, 0, new Intent(SuntimesActivity.SUNTIMES_APP_UPDATE_FULL), 0);
+    }
+    private BroadcastReceiver fullUpdateReceiver = new BroadcastReceiver()
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            String action = intent.getAction();
+            if (action != null && action.equals(SUNTIMES_APP_UPDATE_FULL))
+            {
+                Log.d("UpdateAlarms", "onReceive: " + SUNTIMES_APP_UPDATE_FULL);
+                invalidateData(SuntimesActivity.this);
+                calculateData(SuntimesActivity.this);
+                setFullUpdateAlarm(SuntimesActivity.this);
+                updateViews(SuntimesActivity.this);
+            }
+        }
+    };
+
+    /**
+     * @param context
+     * @return
+     */
+    protected PendingIntent getPartialUpdateIntent(Context context)
+    {
+        return PendingIntent.getBroadcast(context, 0, new Intent(SuntimesActivity.SUNTIMES_APP_UPDATE_PARTIAL), 0);
+    }
+    private BroadcastReceiver partialUpdateReceiver = new BroadcastReceiver()
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            String action = intent.getAction();
+            if (action != null && action.equals(SUNTIMES_APP_UPDATE_PARTIAL))
+            {
+                Log.d("UpdateAlarms", "onReceive: " + SUNTIMES_APP_UPDATE_PARTIAL);
+
+                if (appTheme.equals(AppSettings.THEME_DAYNIGHT))
+                {
+                    boolean needsRecreate = dataset.isDay() ? (appThemeResID != R.style.AppTheme_Light)
+                                                            : (appThemeResID != R.style.AppTheme_Dark);
+                    if (needsRecreate)
+                    {
+                        Handler handler = new Handler();
+                        handler.postDelayed(recreateRunnable, 0);
+                        return;
+                    }
+                }
+
+                setPartialUpdateAlarm(SuntimesActivity.this);
+                if (!userSwappedCard) {
+                    notes.resetNoteIndex();
+                }
+                updateViews(SuntimesActivity.this);
+            }
+        }
+    };
+
+    /**
      * OnPause: the user about to interact w/ another Activity
      */
     @Override
@@ -359,6 +524,9 @@ public class SuntimesActivity extends AppCompatActivity
     @Override
     public void onStop()
     {
+        unregisterReceivers(SuntimesActivity.this);
+        unsetUpdateAlarms(SuntimesActivity.this);
+
         stopTimeTask();
         getFixHelper.cancelGetFix();
         super.onStop();
@@ -396,6 +564,41 @@ public class SuntimesActivity extends AppCompatActivity
             getFixHelper.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == SUNTIMES_SETTINGS_REQUEST && resultCode == RESULT_OK)
+        {
+            boolean needsRecreate = ((!AppSettings.loadThemePref(SuntimesActivity.this).equals(appTheme))       // theme changed
+                    || (localeInfo.localeMode != AppSettings.loadLocaleModePref(SuntimesActivity.this))         // or localeMode changed
+                    || ((localeInfo.localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE                             // or customLocale changed
+                    && !AppSettings.loadLocalePref(SuntimesActivity.this).equals(localeInfo.customLocale))));
+
+            if (needsRecreate)
+            {
+                Log.i("SuntimesActivity", "theme/locale was changed; calling recreate");
+                Handler handler = new Handler();
+                handler.postDelayed(recreateRunnable, 0);    // post to end of execution queue (onResume must be allowed to finish before calling recreate)
+            }
+        }
+    }
+
+    private Runnable recreateRunnable = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+            {
+                recreate();
+
+            } else {
+                finish();
+                startActivity(getIntent());
+            }
+        }
+    };
 
     /**
      * initialize ui/views
@@ -555,6 +758,7 @@ public class SuntimesActivity extends AppCompatActivity
                         errorMsg.show();
                     }
                     SuntimesActivity.this.calculateData(SuntimesActivity.this);
+                    SuntimesActivity.this.setUpdateAlarms(SuntimesActivity.this);
                     SuntimesActivity.this.updateViews(SuntimesActivity.this);
                 }
             }
@@ -997,6 +1201,7 @@ public class SuntimesActivity extends AppCompatActivity
         {
             dateWarning.reset();
             calculateData(SuntimesActivity.this);
+            setUpdateAlarms(SuntimesActivity.this);
             updateViews(SuntimesActivity.this);
         }
     };
@@ -1042,6 +1247,7 @@ public class SuntimesActivity extends AppCompatActivity
             public void onClick(DialogInterface dialogInterface, int i)
             {
                 calculateData(SuntimesActivity.this);
+                setUpdateAlarms(SuntimesActivity.this);
                 updateActionBar(SuntimesActivity.this);
                 updateViews(SuntimesActivity.this);
 
@@ -1073,6 +1279,7 @@ public class SuntimesActivity extends AppCompatActivity
         {
             timezoneWarning.reset();
             calculateData(SuntimesActivity.this);
+            setUpdateAlarms(SuntimesActivity.this);
             updateViews(SuntimesActivity.this);
         }
     };
@@ -1155,13 +1362,15 @@ public class SuntimesActivity extends AppCompatActivity
         aboutDialog.show(getSupportFragmentManager(), DIALOGTAG_ABOUT);
     }
 
+
+
     /**
      * Show application settings.
      */
     protected void showSettings()
     {
         Intent settingsIntent = new Intent(this, SuntimesSettingsActivity.class);
-        startActivity(settingsIntent);
+        startActivityForResult(settingsIntent, SUNTIMES_SETTINGS_REQUEST);
     }
     protected void showGeneralSettings()
     {
@@ -1413,6 +1622,7 @@ public class SuntimesActivity extends AppCompatActivity
 
         //DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());       // 4/11/2016
         DateFormat dateFormat = android.text.format.DateFormat.getMediumDateFormat(getApplicationContext());   // Apr 11, 2016
+        dateFormat.setTimeZone(dataset.timezone());
         //DateFormat dateFormat = android.text.format.DateFormat.getLongDateFormat(getApplicationContext());   // April 11, 2016
 
         String thisString = getString(R.string.today);
