@@ -32,7 +32,7 @@
     <string name="prevYear">Año anterior</string>
 
     <!-- Warnings -->
-    <string name="spanTag_warning">Warning!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->  <!-- TODO -->
+    <string name="spanTag_warning">¡atención!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->  <!-- TODO: verify -->
 
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
@@ -150,6 +150,8 @@
     <!--
          WIDGET CONFIG
     -->
+
+    <string name="configAction_restoreDefaults">Restore Defaults</string>   <!-- button / menu text -->  <!-- TODO -->
 
     <!-- WidgetConfig Activity -->
     <string name="configAction_addWidget">Añadir Widget</string>                   <!-- Button: Add -->

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2018 Forrest Guice
+    This file is part of SuntimesWidget.
+
+    SuntimesWidget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SuntimesWidget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent" android:layout_height="wrap_content"
+    android:orientation="vertical" style="@style/SunsetTimeWidget_dark"
+    android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
+    android:paddingTop="6dp" android:paddingBottom="10dp"
+    android:background="?attr/dialogBackground">
+
+    <DatePicker android:id="@+id/appwidget_date_custom"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:calendarViewShown="false" android:spinnersShown="true"
+        android:datePickerMode="spinner" android:layout_gravity="center"
+        tools:ignore="UnusedAttribute"/>
+
+</LinearLayout>
+

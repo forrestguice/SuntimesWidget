@@ -1,5 +1,17 @@
 ### ~
 
+* adds "restore defaults" button to "On Tap: Launch App" help dialog.
+* fixes widget config edittext auto-correct behavior (now disabled for title text, launch app).
+* adds moontimes icon (displayed by moon widgets in widget list).
+* fixes app crash when location supplied by GPS has negative altitude (some Samsung devices).
+* simplifies datepicker (removes mode spinner) (#173).
+* app automatically restarts on day/night change (when using nightmode theme).
+* app automatically restarts on theme change or locale change.
+* app automatically advances to next note (when card is unswapped) (registers/unregisters an alarm for next event).
+* app automatically updates on date change (registers/unregisters an alarm for midnight).
+* fixes bug where the date has advanced to the next day, but the displayed times have not (at midnight up to difference between local time and timezone).
+* fixes bug where the formatted date is off by a day (at midnight up to difference between local time and timezone).
+
 ### v0.7.3 (2018-03-16)
 * reorders user interfaces prefs (organized into categories).
 * fixes talkback accessibility issues; snackbar warning messages not announced, datetext and timezone fields announcing unused tags, timezone dialog announcing previous state on mode change.

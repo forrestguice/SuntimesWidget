@@ -24,9 +24,11 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
@@ -35,6 +37,13 @@ import android.widget.TextView;
 
 public class AboutDialog extends DialogFragment
 {
+    public static final String KEY_ICONID = "paramIconID";
+    private int param_iconID = R.mipmap.ic_suntimes;
+    public void setIconID( int resID )
+    {
+        param_iconID = resID;
+    }
+
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
@@ -48,6 +57,11 @@ public class AboutDialog extends DialogFragment
         AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
         builder.setView(dialogContent);
         AlertDialog dialog = builder.create();
+
+        if (savedInstanceState != null)
+        {
+            param_iconID = savedInstanceState.getInt(KEY_ICONID, param_iconID);
+        }
 
         initViews(getActivity(), dialogContent);
         return dialog;
@@ -105,6 +119,9 @@ public class AboutDialog extends DialogFragment
                 openLink(WEBSITE_URL);
             }
         });
+        if (Build.VERSION.SDK_INT >= 17)
+            nameView.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(context, param_iconID), null, null, null);
+        else nameView.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context, param_iconID), null, null, null);
 
         TextView versionView = (TextView) dialogContent.findViewById(R.id.txt_about_version);
         versionView.setMovementMethod(LinkMovementMethod.getInstance());
@@ -129,5 +146,12 @@ public class AboutDialog extends DialogFragment
         TextView legalView3 = (TextView) dialogContent.findViewById(R.id.txt_about_legal3);
         legalView3.setMovementMethod(LinkMovementMethod.getInstance());
         legalView3.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_legal3)));
+    }
+
+    @Override
+    public void onSaveInstanceState( Bundle outState )
+    {
+        outState.putInt(KEY_ICONID, param_iconID);
+        super.onSaveInstanceState(outState);
     }
 }

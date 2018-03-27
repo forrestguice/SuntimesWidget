@@ -185,17 +185,20 @@ public class SuntimesWidget0 extends AppWidgetProvider
         // OnTap: Launch an Activity
         if (action.equals(WidgetSettings.ActionMode.ONTAP_LAUNCH_ACTIVITY.name()))
         {
+            Intent launchIntent;
             String launchClassName = WidgetSettings.loadActionLaunchPref(context, appWidgetId);
             Class<?> launchClass;
             try {
                 launchClass = Class.forName(launchClassName);
+                launchIntent = new Intent(context, launchClass);
 
             } catch (ClassNotFoundException e) {
                 launchClass = getConfigClass();
+                launchIntent = new Intent(context, launchClass);
+                launchIntent.putExtra(WidgetSettings.ActionMode.ONTAP_LAUNCH_CONFIG.name(), true);
                 Log.e(TAG, "LaunchApp :: " + launchClassName + " cannot be found! " + e.toString());
             }
 
-            Intent launchIntent = new Intent(context, launchClass);
             launchIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
             launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(launchIntent);

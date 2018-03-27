@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.calculator.time4a;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -37,7 +38,6 @@ import net.time4j.tz.TZID;
 import net.time4j.tz.Timezone;
 import net.time4j.tz.ZonalOffset;
 
-import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
@@ -72,8 +72,23 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     @Override
     public void init(WidgetSettings.Location location, TimeZone timezone, Context context)
     {
-        this.solarTime = SolarTime.ofLocation(location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), location.getAltitudeAsInteger(), getCalculator());
+        this.solarTime = SolarTime.ofLocation(location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), clampAltitude(location.getAltitudeAsInteger()), getCalculator());
         this.timezone = timezone;
+    }
+
+    public static final int ALTITUDE_MIN = 0;
+    public static final int ALTITUDE_MAX = 11000;
+    public static int clampAltitude(int value)
+    {
+        if (value > ALTITUDE_MAX) {
+            Log.w("clampAltitude", "altitude of " + value + " is greater than " + ALTITUDE_MAX + "! clamping value..");
+            return ALTITUDE_MAX;
+
+        } else if (value < ALTITUDE_MIN) {
+            Log.w("clampAltitude", "altitude of " + value + " is less than " + ALTITUDE_MIN + "! clamping value..");
+            return ALTITUDE_MIN;
+        }
+        return value;
     }
 
     @Override
@@ -268,8 +283,9 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     protected PlainDate calendarToPlainDate(Calendar input)
     {
         Moment moment = TemporalType.JAVA_UTIL_DATE.translate(input.getTime());
-        ZonalOffset offset = ZonalOffset.atLongitude(new BigDecimal(this.solarTime.getLongitude()));
-        return moment.toZonalTimestamp(offset).toDate();
+        //ZonalOffset offset = ZonalOffset.atLongitude(new BigDecimal(this.solarTime.getLongitude()));
+        ZonalOffset zonalOffset = ZonalOffset.ofTotalSeconds(timezone.getOffset(input.getTimeInMillis()) / 1000);
+        return moment.toZonalTimestamp(zonalOffset).toDate();
     }
 
     protected Calendar momentToCalendar(Moment moment)

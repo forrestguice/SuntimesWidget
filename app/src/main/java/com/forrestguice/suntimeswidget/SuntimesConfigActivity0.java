@@ -20,11 +20,13 @@ package com.forrestguice.suntimeswidget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -176,6 +178,17 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         super.onDestroy();
     }
 
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+
+        /**FragmentManager fragments = getSupportFragmentManager();
+        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        if (helpDialog != null){   // TODO: restore listeners
+        }*/
+    }
+
     /**
      * Save settings (as represented by the state of the config UI).
      *
@@ -321,6 +334,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 {
                     HelpDialog helpDialog = new HelpDialog();
                     helpDialog.setContent(getString(R.string.help_action_launch));
+                    helpDialog.setShowNeutralButton(getString(R.string.configAction_restoreDefaults));
+                    helpDialog.setOnShowListener(helpDialogListener_launchApp);
                     helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
                 }
             });
@@ -595,6 +610,31 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             button_aboutWidget.setOnClickListener(onAboutButtonClickListener);
         }
     }
+
+    /**
+     * HelpDialog onShow (launch App)
+     */
+    private DialogInterface.OnShowListener helpDialogListener_launchApp = new DialogInterface.OnShowListener()
+    {
+        @Override
+        public void onShow(final DialogInterface dialog)
+        {
+            Button neutralButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_NEUTRAL);
+            neutralButton.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    if (text_launchActivity != null) {
+                        text_launchActivity.setText(WidgetSettings.PREF_DEF_ACTION_LAUNCH);
+                        text_launchActivity.selectAll();
+                        text_launchActivity.requestFocus();
+                    }
+                    dialog.dismiss();
+                }
+            });
+        }
+    };
 
     /**
      * @param context a context used to access resources
@@ -1082,6 +1122,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
         // save: launch activity
         String launchString = text_launchActivity.getText().toString();
+        if (launchString.trim().isEmpty())
+        {
+            launchString = WidgetSettings.PREF_DEF_ACTION_LAUNCH;
+            Log.w("saveActionSettings", "empty launch string (using default)");
+        }
         WidgetSettings.saveActionLaunchPref(context, appWidgetId, launchString);
     }
 
@@ -1143,6 +1188,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0.class, minSize, defLayout);
     }
 
+    protected int getAboutIconID()
+    {
+        return R.mipmap.ic_suntimes;
+    }
+
     /**
      * Click handler executed when the "About" button is pressed.
      */
@@ -1153,6 +1203,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             AboutDialog aboutDialog = new AboutDialog();
             aboutDialog.show(getSupportFragmentManager(), DIALOGTAG_ABOUT);
+            aboutDialog.setIconID(getAboutIconID());
         }
     };
 

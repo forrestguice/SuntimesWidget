@@ -1025,7 +1025,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         flipToPreview(savedState.getInt(PARAM_PREVIEWID, -1));
 
         ThemeBackground background = (ThemeBackground)spinBackground.getSelectedItem();
-        setSelectedBackground(savedState.getInt(SuntimesTheme.THEME_BACKGROUND, (background != null ? background.getResID() : DarkTheme.THEMEDEF_BACKGROUND_ID)));
+        setSelectedBackground(savedState.getInt(SuntimesTheme.THEME_BACKGROUND, (background != null ? background.getResID() : DarkTheme.THEMEDEF_BACKGROUND.getResID())));
 
         for (SizeChooser chooser : sizeChoosers)
         {
@@ -1169,7 +1169,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             chooseMoonStroke.setValue(theme.getMoonFullStroke());
 
             choosePadding.setPadding(theme.getPadding());
-            setSelectedBackground(theme.getBackgroundId());
+            setSelectedBackground(theme.getBackground().getResID());
 
         } catch (InvalidParameterException e) {
             Log.e("loadTheme", "unable to load theme: " + e);
@@ -1243,7 +1243,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 ThemeBackground backgroundItem = (ThemeBackground)spinBackground.getSelectedItem();
                 if (backgroundItem != null)
                 {
-                    this.themeBackground = backgroundItem.getResID();
+                    this.themeBackground = backgroundItem;
                 }
                 return this;
             }
