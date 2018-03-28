@@ -18,6 +18,7 @@
     <string name="configAction_setAlarm">Régler l\'alarme</string>
     <string name="configAction_setTimeZone">Choisir le fuseau horaire</string>
     <string name="configAction_setDate">Choisir la date</string>
+    <string name="configAction_sunDialog">Sun Position</string>   <!-- TODO -->
     <string name="configAction_equinoxDialog">Solstice / Equinox</string> <!-- TODO -->
     <string name="configAction_help">Aide</string>
     <string name="configAction_settings">Paramètres</string>

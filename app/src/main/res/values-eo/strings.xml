@@ -17,6 +17,7 @@
     <string name="configAction_setAlarm">Agordi averton</string>
     <string name="configAction_setTimeZone">Elekti horzonon</string>
     <string name="configAction_setDate">Elekti daton</string>
+    <string name="configAction_sunDialog">Sun Position</string>   <!-- TODO -->
     <string name="configAction_equinoxDialog">Solstico / ekvinokso</string>
     <string name="configAction_help">Helpo</string>
     <string name="configAction_settings">Agordoj</string>

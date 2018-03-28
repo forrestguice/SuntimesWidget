@@ -18,6 +18,7 @@
     <string name="configAction_setAlarm">Emlékeztető beállítása</string>
     <string name="configAction_setTimeZone">Időzóna beállítása</string>
     <string name="configAction_setDate">Dátum beállítása</string>
+    <string name="configAction_sunDialog">Sun Position</string>   <!-- TODO -->
     <string name="configAction_equinoxDialog">Solstice / Equinox</string> <!-- TODO -->
     <string name="configAction_help">Segítség</string>
     <string name="configAction_settings">Beállítások</string>

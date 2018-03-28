@@ -19,6 +19,7 @@
     <string name="configAction_setAlarm">Configurar alarma</string>
     <string name="configAction_setTimeZone">Configurar zona horària</string>
     <string name="configAction_setDate">Configurar data</string>
+    <string name="configAction_sunDialog">Sun Position</string>   <!-- TODO -->
     <string name="configAction_equinoxDialog">solstici / equinocci</string>
     <string name="configAction_help">Ajuda</string>
     <string name="configAction_settings">Configuració</string>

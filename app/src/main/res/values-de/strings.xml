@@ -21,6 +21,7 @@
   <string name="configAction_setAlarm">Alarm</string>
   <string name="configAction_setTimeZone">Zeitzone</string>
   <string name="configAction_setDate">Datum</string>
+  <string name="configAction_sunDialog">Sun Position</string>   <!-- TODO -->
   <string name="configAction_equinoxDialog">Solstice / Equinox</string> <!-- TODO -->
   <string name="configAction_help">Hilfe</string>
   <string name="configAction_settings">Einstellungen</string>
