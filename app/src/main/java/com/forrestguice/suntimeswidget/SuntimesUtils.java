@@ -96,6 +96,9 @@ public class SuntimesUtils
     private static String strHours = "h";
     private static String strMinutes = "m";
     private static String strSeconds = "s";
+    private static String strAltSymbol = "∠";
+    private static String strRaSymbol = "α";
+    private static String strDecSymbol = "δ";
     private static String strDegreesFormat = "%1$s\u00B0";
     private static String strDirectionFormat = "%1$s %2$s";
     private static String strTimeDeltaFormat = "%1$s"  + strEmpty + "%2$s";
@@ -139,6 +142,10 @@ public class SuntimesUtils
         strHours = context.getString(R.string.delta_hours);
         strMinutes = context.getString(R.string.delta_minutes);
         strSeconds = context.getString(R.string.delta_seconds);
+
+        strAltSymbol = context.getString(R.string.widgetLabel_altitude_symbol);
+        strRaSymbol = context.getString(R.string.widgetLabel_rightAscension_short);
+        strDecSymbol = context.getString(R.string.widgetLabel_declination_symbol);
 
         strDegreesFormat = context.getString(R.string.degrees_format);
         strDirectionFormat = context.getString(R.string.direction_format);
@@ -823,15 +830,15 @@ public class SuntimesUtils
     }
     public TimeDisplayText formatAsElevation(double degreeValue, int places)
     {
-        return new TimeDisplayText(formatAsDegrees(degreeValue, places), "", "∠");
+        return new TimeDisplayText(formatAsDegrees(degreeValue, places), "", strAltSymbol);
     }
     public TimeDisplayText formatAsRightAscension(double degreeValue, int places)
     {
-        return new TimeDisplayText(formatAsDegrees(degreeValue, places), "", "α");
+        return new TimeDisplayText(formatAsDegrees(degreeValue, places), "", strRaSymbol);
     }
     public TimeDisplayText formatAsDeclination(double degreeValue, int places)
     {
-        return new TimeDisplayText(formatAsDegrees(degreeValue, places), "", "δ");
+        return new TimeDisplayText(formatAsDegrees(degreeValue, places), "", strDecSymbol);
     }
 
     /**
