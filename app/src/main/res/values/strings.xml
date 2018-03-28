@@ -452,15 +452,18 @@
     <string name="configLabel_themeName">Display:</string>               <!-- edit label -->
     <string name="configHint_themeName">Label</string>                   <!-- edit hint -->
 
-    <string name="widgetLabel_azimuth">Azimuth</string>                   <!-- label -->  <!-- TODO: i18n -->
-    <string name="widgetLabel_azimuth_short">Az</string>                   <!-- label -->  <!-- TODO: i18n -->
-    <string name="widgetLabel_altitude">Altitude</string>               <!-- label -->  <!-- TODO: i18n -->
-    <string name="widgetLabel_altitude_short">Alt</string>               <!-- label -->  <!-- TODO: i18n -->
+    <string name="widgetLabel_azimuth">Azimuth</string>                   <!-- label -->
+    <string name="widgetLabel_azimuth_short">Az</string>                   <!-- label -->
+    <string name="widgetLabel_altitude">Altitude</string>               <!-- label -->
+    <string name="widgetLabel_altitude_short">Alt</string>               <!-- label -->
+    <string name="widgetLabel_altitude_symbol">∠</string>               <!-- label/suffix -->
 
-    <string name="widgetLabel_rightAscension">Right Ascension</string>    <!-- label -->  <!-- TODO: i18n -->
-    <string name="widgetLabel_rightAscension_short">RA</string>    <!-- label -->  <!-- TODO: i18n -->
-    <string name="widgetLabel_declination">Declination</string>           <!-- label -->  <!-- TODO: i18n -->
-    <string name="widgetLabel_declination_short">Dec</string>           <!-- label -->  <!-- TODO: i18n -->
+    <string name="widgetLabel_rightAscension">Right Ascension</string>    <!-- label -->
+    <string name="widgetLabel_rightAscension_short">RA</string>    <!-- label -->
+    <string name="widgetLabel_rightAscension_symbol">α</string>    <!-- label/suffix -->
+    <string name="widgetLabel_declination">Declination</string>           <!-- label -->
+    <string name="widgetLabel_declination_short">Dec</string>           <!-- label -->
+    <string name="widgetLabel_declination_symbol">δ</string>           <!-- label/suffix -->
 
     <!--
          APP SETTINGS

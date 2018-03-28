@@ -439,6 +439,16 @@
   <string name="configLabel_themeName">Display:</string>               <!-- edit label -->  <!-- TODO -->
   <string name="configHint_themeName">Label</string>                   <!-- edit hint -->  <!-- TODO -->
 
+  <string name="widgetLabel_azimuth">Azimuth</string>                   <!-- label -->  <!-- TODO -->
+  <string name="widgetLabel_azimuth_short">Az</string>                   <!-- label -->  <!-- TODO -->
+  <string name="widgetLabel_altitude">Altitude</string>               <!-- label -->  <!-- TODO -->
+  <string name="widgetLabel_altitude_short">Alt</string>               <!-- label -->  <!-- TODO -->
+
+  <string name="widgetLabel_rightAscension">Right Ascension</string>    <!-- label -->  <!-- TODO -->
+  <string name="widgetLabel_rightAscension_short">RA</string>    <!-- label -->  <!-- TODO -->
+  <string name="widgetLabel_declination">Declination</string>           <!-- label -->  <!-- TODO -->
+  <string name="widgetLabel_declination_short">Dec</string>           <!-- label -->  <!-- TODO -->
+
   <!--
        APP SETTINGS
   -->
