@@ -71,11 +71,19 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
         SuntimesCalculator calculator = dataset.calculator();
         SuntimesCalculator.SunPosition sunPosition = calculator.getSunPosition(dataset.now());
 
+        SuntimesRiseSetData riseSetData = dataset.dataActual;
+        Calendar riseTime = (riseSetData != null ? riseSetData.sunriseCalendarToday() : null);
+        SuntimesCalculator.SunPosition risingPosition = (riseTime != null && calculator != null ? calculator.getSunPosition(riseTime) : null);
+
         SuntimesRiseSetData noonData = dataset.dataNoon;
         Calendar noonTime = (noonData != null ? noonData.sunriseCalendarToday() : null);
         SuntimesCalculator.SunPosition noonPosition = (noonTime != null && calculator != null ? calculator.getSunPosition(noonTime) : null);
 
+        Calendar setTime = (riseSetData != null ? riseSetData.sunsetCalendarToday() : null);
+        SuntimesCalculator.SunPosition settingPosition = (setTime != null && calculator != null ? calculator.getSunPosition(setTime) : null);
+
         updateViewsAzimuthElevationText(context, views, sunPosition, noonPosition);
+        updateViewsAzimuthElevationText(context, views, sunPosition, risingPosition, noonPosition, settingPosition);
 
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         int visibility = (showLabels ? View.VISIBLE : View.GONE);

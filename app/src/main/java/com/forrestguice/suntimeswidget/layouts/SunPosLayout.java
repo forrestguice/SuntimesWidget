@@ -64,24 +64,34 @@ public abstract class SunPosLayout extends SuntimesLayout
 
     protected void updateViewsAzimuthElevationText(Context context, RemoteViews views, SuntimesCalculator.SunPosition sunPosition, SuntimesCalculator.SunPosition noonPosition)
     {
-        SuntimesUtils.TimeDisplayText azimuthDisplay = utils.formatAsDirection2(sunPosition.azimuth, DECIMAL_PLACES);
+        views.setTextViewText(R.id.info_sun_azimuth_current, styleAzimuthText(sunPosition.azimuth, highlightColor));
+
+        int elevationColor = (sunPosition.elevation <= 0 ? highlightColor :
+                (SuntimesRiseSetDataset.isRising(sunPosition, noonPosition) ? risingColor : settingColor));
+        views.setTextViewText(R.id.info_sun_elevation_current, styleElevationText(sunPosition.elevation, elevationColor));
+    }
+
+    protected SpannableString styleAzimuthText(double value, int color)
+    {
+        SuntimesUtils.TimeDisplayText azimuthDisplay = utils.formatAsDirection2(value, DECIMAL_PLACES);
         String azimuthSymbol = azimuthDisplay.getSuffix();
         String azimuthString = utils.formatAsDirection(azimuthDisplay.getValue(), azimuthSymbol);
-        SpannableString azimuth = SuntimesUtils.createColorSpan(null, azimuthString, azimuthDisplay.getValue(), highlightColor, boldTime);
+        SpannableString azimuth = SuntimesUtils.createColorSpan(null, azimuthString, azimuthDisplay.getValue(), color, boldTime);
         azimuth = SuntimesUtils.createBoldColorSpan(azimuth, azimuthString, azimuthSymbol, suffixColor);
         azimuth = SuntimesUtils.createRelativeSpan(azimuth, azimuthString, azimuthSymbol, SYMBOL_RELATIVE_SIZE);
         //azimuth = SuntimesUtils.createAbsoluteSpan(azimuth, azimuthString, azimuthDisplay.getSuffix(), SuntimesUtils.spToPixels(context, suffixSp));
-        views.setTextViewText(R.id.info_sun_azimuth_current, azimuth);
+        return azimuth;
+    }
 
-        SuntimesUtils.TimeDisplayText elevationDisplay = utils.formatAsElevation(sunPosition.elevation, DECIMAL_PLACES);
+    protected SpannableString styleElevationText(double value, int color)
+    {
+        SuntimesUtils.TimeDisplayText elevationDisplay = utils.formatAsElevation(value, DECIMAL_PLACES);
         String elevationSymbol = elevationDisplay.getSuffix();
         String elevationString = utils.formatAsElevation(elevationDisplay.getValue(), elevationSymbol);
-        int elevationColor = (sunPosition.elevation <= 0 ? highlightColor :
-                (SuntimesRiseSetDataset.isRising(sunPosition, noonPosition) ? risingColor : settingColor));
-        SpannableString elevation = SuntimesUtils.createColorSpan(null, elevationString, elevationString, elevationColor, boldTime);
+        SpannableString elevation = SuntimesUtils.createColorSpan(null, elevationString, elevationString, color, boldTime);
         elevation = SuntimesUtils.createBoldColorSpan(elevation, elevationString, elevationSymbol, suffixColor);
         elevation = SuntimesUtils.createRelativeSpan(elevation, elevationString, elevationSymbol, SYMBOL_RELATIVE_SIZE);
-        views.setTextViewText(R.id.info_sun_elevation_current, elevation);
+        return elevation;
     }
 
     protected void updateViewsRightAscDeclinationText(Context context, RemoteViews views, SuntimesCalculator.SunPosition sunPosition)
@@ -101,6 +111,13 @@ public abstract class SunPosLayout extends SuntimesLayout
         declination = SuntimesUtils.createBoldColorSpan(declination, declinationString, declinationSymbol, suffixColor);
         declination = SuntimesUtils.createRelativeSpan(declination, declinationString, declinationSymbol, SYMBOL_RELATIVE_SIZE);
         views.setTextViewText(R.id.info_sun_declination_current, declination);
+    }
+
+    protected void updateViewsAzimuthElevationText(Context context, RemoteViews views, SuntimesCalculator.SunPosition sunPosition, SuntimesCalculator.SunPosition risingPosition, SuntimesCalculator.SunPosition noonPosition, SuntimesCalculator.SunPosition settingPosition)
+    {
+        views.setTextViewText(R.id.info_sun_azimuth_rising, styleAzimuthText(risingPosition.azimuth, risingColor));
+        views.setTextViewText(R.id.info_sun_elevation_atnoon, styleElevationText(noonPosition.elevation, settingColor));
+        views.setTextViewText(R.id.info_sun_azimuth_setting, styleAzimuthText(settingPosition.azimuth, settingColor));
     }
 
     protected int risingColor = Color.YELLOW;
