@@ -236,6 +236,9 @@
   <string name="widgetMode1x1_both_1">Sonnenauf- &amp; -untergang (1)</string>  <!-- setting -->
   <string name="widgetMode1x1_both_2">Sonnenauf- &amp; -untergang (2)</string>  <!-- setting -->
 
+  <string name="widgetMode1x1_altaz">Altitude &amp; Azimuth</string>     <!-- setting -->  <!-- TODO -->
+  <string name="widgetMode1x1_decright">Declination &amp; Right Ascension</string>     <!-- setting -->  <!-- TODO -->
+
   <string name="widgetMode1x1_moonriseset">Moonrise &amp; moonset</string>     <!-- setting -->   <!-- TODO -->
   <string name="widgetMode1x1_moonphaseillum">Moon phase &amp; illumination</string>     <!-- setting -->  <!-- TODO -->
   <string name="widgetMode1x1_moonphase">Moon phase only</string>     <!-- setting -->  <!-- TODO -->
