@@ -75,7 +75,7 @@ public abstract class SunPosLayout extends SuntimesLayout
 
         SuntimesUtils.TimeDisplayText elevationDisplay = utils.formatAsElevation(sunPosition.elevation, DECIMAL_PLACES);
         String elevationSymbol = elevationDisplay.getSuffix();
-        String elevationString = elevationDisplay.getValue() + elevationSymbol;
+        String elevationString = utils.formatAsElevation(elevationDisplay.getValue(), elevationSymbol);
         int elevationColor = (sunPosition.elevation <= 0 ? highlightColor :
                 (SuntimesRiseSetDataset.isRising(sunPosition, noonPosition) ? risingColor : settingColor));
         SpannableString elevation = SuntimesUtils.createColorSpan(null, elevationString, elevationString, elevationColor, boldTime);
@@ -87,16 +87,16 @@ public abstract class SunPosLayout extends SuntimesLayout
     protected void updateViewsRightAscDeclinationText(Context context, RemoteViews views, SuntimesCalculator.SunPosition sunPosition)
     {
         SuntimesUtils.TimeDisplayText rightAscDisplay = utils.formatAsRightAscension(sunPosition.rightAscension, DECIMAL_PLACES);
-        String rightAscString = rightAscDisplay.toString();
         String rightAscSymbol = rightAscDisplay.getSuffix();
+        String rightAscString = utils.formatAsRightAscension(rightAscDisplay.getValue(), rightAscSymbol);
         SpannableString rightAsc = SuntimesUtils.createColorSpan(null, rightAscString, rightAscString, highlightColor, boldTime);
         rightAsc = SuntimesUtils.createBoldColorSpan(rightAsc, rightAscString, rightAscSymbol, suffixColor);
         rightAsc = SuntimesUtils.createRelativeSpan(rightAsc, rightAscString, rightAscSymbol, SYMBOL_RELATIVE_SIZE);
         views.setTextViewText(R.id.info_sun_rightascension_current, rightAsc);
 
         SuntimesUtils.TimeDisplayText declinationDisplay = utils.formatAsDeclination(sunPosition.declination, DECIMAL_PLACES);
-        String declinationString = declinationDisplay.toString();
         String declinationSymbol = declinationDisplay.getSuffix();
+        String declinationString = utils.formatAsDeclination(declinationDisplay.getValue(), declinationSymbol);
         SpannableString declination = SuntimesUtils.createColorSpan(null, declinationString, declinationString, highlightColor, boldTime);
         declination = SuntimesUtils.createBoldColorSpan(declination, declinationString, declinationSymbol, suffixColor);
         declination = SuntimesUtils.createRelativeSpan(declination, declinationString, declinationSymbol, SYMBOL_RELATIVE_SIZE);

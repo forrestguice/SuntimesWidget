@@ -96,11 +96,16 @@ public class SuntimesUtils
     private static String strHours = "h";
     private static String strMinutes = "m";
     private static String strSeconds = "s";
+
     private static String strAltSymbol = "∠";
     private static String strRaSymbol = "α";
     private static String strDecSymbol = "δ";
     private static String strDegreesFormat = "%1$s\u00B0";
     private static String strDirectionFormat = "%1$s %2$s";
+    private static String strElevationFormat = "%1$s%2$s";
+    private static String strDeclinationFormat = "%1$s %2$s";
+    private static String strRaFormat = "%1$s %2$s";
+
     private static String strTimeDeltaFormat = "%1$s"  + strEmpty + "%2$s";
     private static String strTimeShortFormat12 = "h:mm\u00A0a";
     private static String strTimeShortFormat12s = "h:mm:ss\u00A0a";
@@ -113,8 +118,6 @@ public class SuntimesUtils
     private static String strTimeLoading = "...";
     private static boolean is24 = true;
     private static boolean initialized = false;
-
-    private static String[] strDirections = {"N", };
 
     private static String strDateYearFormat = "yyyy";
     private static String strDateShortFormat = "MMMM d";
@@ -144,11 +147,14 @@ public class SuntimesUtils
         strSeconds = context.getString(R.string.delta_seconds);
 
         strAltSymbol = context.getString(R.string.widgetLabel_altitude_symbol);
-        strRaSymbol = context.getString(R.string.widgetLabel_rightAscension_short);
+        strRaSymbol = context.getString(R.string.widgetLabel_rightAscension_symbol);
         strDecSymbol = context.getString(R.string.widgetLabel_declination_symbol);
 
         strDegreesFormat = context.getString(R.string.degrees_format);
         strDirectionFormat = context.getString(R.string.direction_format);
+        strElevationFormat = context.getString(R.string.elevation_format);
+        strRaFormat = context.getString(R.string.rightascension_format);
+        strDeclinationFormat = context.getString(R.string.declination_format);
 
         strTimeDeltaFormat = context.getString(R.string.delta_format);
         strTimeVeryShortFormat12 = context.getString(R.string.time_format_12hr_veryshort);
@@ -828,13 +834,28 @@ public class SuntimesUtils
         CardinalDirection direction = CardinalDirection.getDirection(degreeValue);
         return new TimeDisplayText(degreeString, "", direction.getShortDisplayString());
     }
+
+    public String formatAsElevation(String degreeString, String altitudeSymbol)
+    {
+        return String.format(strElevationFormat, degreeString, altitudeSymbol);
+    }
     public TimeDisplayText formatAsElevation(double degreeValue, int places)
     {
         return new TimeDisplayText(formatAsDegrees(degreeValue, places), "", strAltSymbol);
     }
+
+    public String formatAsRightAscension(String degreeString, String raSymbol)
+    {
+        return String.format(strRaFormat, degreeString, raSymbol);
+    }
     public TimeDisplayText formatAsRightAscension(double degreeValue, int places)
     {
         return new TimeDisplayText(formatAsDegrees(degreeValue, places), "", strRaSymbol);
+    }
+
+    public String formatAsDeclination(String degreeString, String decSymbol)
+    {
+        return String.format(strDeclinationFormat, degreeString, decSymbol);
     }
     public TimeDisplayText formatAsDeclination(double degreeValue, int places)
     {

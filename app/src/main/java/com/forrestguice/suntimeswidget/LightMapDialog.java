@@ -238,7 +238,7 @@ public class LightMapDialog extends DialogFragment
     private CharSequence styleElevationText(double elevation, Integer color, int places)
     {
         SuntimesUtils.TimeDisplayText elevationText = utils.formatAsElevation(elevation, places);
-        String elevationString = elevationText.getValue() + elevationText.getSuffix();
+        String elevationString = utils.formatAsElevation(elevationText.getValue(), elevationText.getSuffix());
         SpannableString span = null;
         span = SuntimesUtils.createRelativeSpan(span, elevationString, elevationText.getSuffix(), 0.7f);
         span = SuntimesUtils.createColorSpan(span, elevationString, elevationString, color);
