@@ -2,3 +2,5 @@ theme: jekyll-theme-architect
 title: Suntimes
 show_downloads: false
 fdroid_link: https://f-droid.org/en/packages/com.forrestguice.suntimeswidget/
+plugins:
+  - jekyll-seo-tag
