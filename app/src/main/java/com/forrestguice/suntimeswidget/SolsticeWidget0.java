@@ -73,7 +73,7 @@ public class SolsticeWidget0 extends SuntimesWidget0
     protected long getUpdateTimeMillis()
     {
         Calendar updateTime = Calendar.getInstance();
-        updateTime.add(Calendar.SECOND, 1);
+        updateTime.add(Calendar.SECOND, (int)(getUpdateInterval() / 1000));
         return updateTime.getTimeInMillis();
     }
 

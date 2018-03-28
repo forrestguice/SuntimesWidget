@@ -18,7 +18,6 @@
 
 package com.forrestguice.suntimeswidget;
 
-import android.app.AlarmManager;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.view.View;
@@ -52,14 +51,14 @@ public class SuntimesWidget2 extends SuntimesWidget0
     @Override
     protected long getUpdateInterval()
     {
-        return AlarmManager.INTERVAL_FIFTEEN_MINUTES;
+        return 5 * 60 * 1000;  // 5 min
     }
 
     @Override
     protected long getUpdateTimeMillis()
     {
         Calendar updateTime = Calendar.getInstance();
-        updateTime.add(Calendar.SECOND, 1);
+        updateTime.add(Calendar.SECOND, (int)(getUpdateInterval() / 1000));
         return updateTime.getTimeInMillis();
     }
 
