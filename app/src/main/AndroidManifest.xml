@@ -154,7 +154,8 @@
         <!-- Widget 2: Sun Position (1x1) -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <receiver android:name=".SuntimesWidget2"
-            android:label="@string/app_name_widget2">
+            android:label="@string/app_name_widget2"
+            android:icon="@drawable/ic_noon_large">
 
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -180,7 +181,8 @@
         <!-- Widget 2: Sun Position (3x1) -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <receiver android:name=".SuntimesWidget2_3x1"
-            android:label="@string/app_name_widget2">
+            android:label="@string/app_name_widget2"
+            android:icon="@drawable/ic_noon_large">
 
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
