@@ -104,11 +104,14 @@ public class SuntimesWidget0 extends AppWidgetProvider
         if (action != null && action.equals(filter))
         {
             int alarmID = intent.getIntExtra(KEY_ALARMID, -1);
-            Log.d(TAG, "onReceive: " + filter + ": " + alarmID + ": " + getClass().toString());
-            updateWidgets(context);
-            if (Build.VERSION.SDK_INT >= 19) {
-                setUpdateAlarm(context);      // schedule next update
-            }  // api<19 uses a repeating alarm
+            if (alarmID == getUpdateAlarmId())
+            {
+                Log.d(TAG, "onReceive: " + filter + "(" + alarmID + "): " + getClass().toString());
+                updateWidgets(context);
+                if (Build.VERSION.SDK_INT >= 19) {
+                    setUpdateAlarm(context);      // schedule next update
+                }  // api<19 uses a repeating alarm
+            }
 
         } else if (isClickAction(action)) {
             Log.d(TAG, "onReceive: ClickAction :: " + action + ":" + getClass());
@@ -508,7 +511,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
             }
 
             SuntimesUtils.TimeDisplayText updateDebug = utils.calendarDateTimeDisplayString(context, updateTime);
-            Log.d(TAG, "setUpdateAlarm: set alarm: " + updateDebug + " --> " + getUpdateIntentFilter() + " :: " + updateInterval / (1000 * 60) + "min" );
+            Log.d(TAG, "setUpdateAlarm: " + updateDebug + " --> " + getUpdateIntentFilter() + "(" + getUpdateAlarmId() + ") :: " + utils.timeDeltaLongDisplayString(updateInterval, true) );
         }
     }
 
