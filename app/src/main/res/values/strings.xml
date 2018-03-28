@@ -865,7 +865,7 @@
     <string name="app_name">Suntimes</string>
     <string name="app_name_widget0">Suntimes Widget</string>
     <string name="app_name_widget1">Suntimes Widget (flippable)</string>
-    <string name="app_name_widget2">Sun Position Widget</string>   <!-- TODO: i18n -->
+    <string name="app_name_widget2">Sun Position Widget</string>
     <string name="app_name_solsticewidget0">Solstice Widget</string>
     <string name="app_name_moonwidget0">Moon Widget</string>
     <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
