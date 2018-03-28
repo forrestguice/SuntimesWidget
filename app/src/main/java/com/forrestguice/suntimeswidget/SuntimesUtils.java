@@ -623,7 +623,7 @@ public class SuntimesUtils
     {
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(timestamp);
-        return calendarDateTimeDisplayString(context, cal);
+        return calendarDateTimeDisplayString(context, cal, true, true);
     }
     public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showTime, boolean showSeconds)
     {
