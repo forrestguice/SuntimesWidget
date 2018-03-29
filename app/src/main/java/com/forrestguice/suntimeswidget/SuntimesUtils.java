@@ -828,11 +828,11 @@ public class SuntimesUtils
     {
         return String.format(strDirectionFormat, degreeString, directionString);
     }
-    public TimeDisplayText formatAsDirection2(double degreeValue, int places)
+    public TimeDisplayText formatAsDirection2(double degreeValue, int places, boolean longSuffix)
     {
         String degreeString = formatAsDegrees(degreeValue, places);
         CardinalDirection direction = CardinalDirection.getDirection(degreeValue);
-        return new TimeDisplayText(degreeString, "", direction.getShortDisplayString());
+        return new TimeDisplayText(degreeString, "", (longSuffix ? direction.getLongDisplayString() : direction.getShortDisplayString()));
     }
 
     public String formatAsElevation(String degreeString, String altitudeSymbol)
