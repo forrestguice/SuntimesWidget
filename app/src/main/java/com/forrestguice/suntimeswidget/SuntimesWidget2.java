@@ -78,7 +78,7 @@ public class SuntimesWidget2 extends SuntimesWidget0
     @Override
     protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
-        SunPosLayout deflayout = new SunPosLayout_1X1_0();
+        SunPosLayout deflayout = WidgetSettings.loadSunPos1x1ModePref_asLayout(context, appWidgetId);
         SuntimesWidget2.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget2.class, getMinSize(context), deflayout);
     }
 

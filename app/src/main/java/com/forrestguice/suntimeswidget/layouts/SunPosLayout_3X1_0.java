@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.layouts;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -60,8 +61,11 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
     public void prepareForUpdate(SuntimesRiseSetDataset dataset, int[] widgetSize)
     {
         super.prepareForUpdate(dataset, widgetSize);
-        this.dpWidth = widgetSize[0];
-        //this.dpHeight = widgetSize[1];
+        if (Build.VERSION.SDK_INT >= 16)
+        {
+            this.dpWidth = widgetSize[0];
+            //this.dpHeight = widgetSize[1];
+        }
     }
 
     @Override
@@ -100,7 +104,7 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
     public static final int HEIGHT_LARGE  = 40;
 
     private LightMapView.LightMapColors colors;
-    private int dpWidth = 180, dpHeight = HEIGHT_LARGE;
+    private int dpWidth = 320, dpHeight = HEIGHT_LARGE;
 
     @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
