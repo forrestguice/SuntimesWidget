@@ -72,8 +72,9 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesRiseSetDataset dataset)
     {
         super.updateViews(context, appWidgetId, views, dataset);
+        Calendar now = dataset.now();
         SuntimesCalculator calculator = dataset.calculator();
-        SuntimesCalculator.SunPosition sunPosition = calculator.getSunPosition(dataset.now());
+        SuntimesCalculator.SunPosition sunPosition = calculator.getSunPosition(now);
 
         SuntimesRiseSetData riseSetData = dataset.dataActual;
         Calendar riseTime = (riseSetData != null ? riseSetData.sunriseCalendarToday() : null);
@@ -96,6 +97,20 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
         LightMapView.LightMapTask drawTask = new LightMapView.LightMapTask();
         Bitmap bitmap = drawTask.makeBitmap(dataset, SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), colors);
         views.setImageViewBitmap(R.id.info_time_lightmap, bitmap);
+        views.setContentDescription(R.id.info_time_lightmap, buildContentDescription(context, now, sunPosition));
+    }
+
+    public static String buildContentDescription(Context context, Calendar now, SuntimesCalculator.SunPosition sunPosition)
+    {
+        String contentDescription = utils.calendarTimeShortDisplayString(context, now, false).toString();
+
+        SuntimesUtils.TimeDisplayText elevationDisplay = utils.formatAsElevation(sunPosition.elevation, DECIMAL_PLACES);
+        contentDescription += ", " + utils.formatAsElevation(elevationDisplay.getValue(), elevationDisplay.getSuffix());
+
+        SuntimesUtils.TimeDisplayText azimuthDisplay = utils.formatAsDirection2(sunPosition.azimuth, DECIMAL_PLACES, true);
+        contentDescription += ", " + utils.formatAsDirection(azimuthDisplay.getValue(), azimuthDisplay.getSuffix());
+
+        return contentDescription;        // time, elevation, azimuth
     }
 
     public static final int HEIGHT_TINY   = 16;

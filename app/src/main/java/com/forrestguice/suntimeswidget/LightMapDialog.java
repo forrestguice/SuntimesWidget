@@ -222,9 +222,9 @@ public class LightMapDialog extends DialogFragment
         }
     }
 
-    private SpannableString styleAzimuthText(double azimuth, Integer color, int places)
+    private void styleAzimuthText(TextView view, double azimuth, Integer color, int places)
     {
-        SuntimesUtils.TimeDisplayText azimuthText = utils.formatAsDirection2(azimuth, places);
+        SuntimesUtils.TimeDisplayText azimuthText = utils.formatAsDirection2(azimuth, places, false);
         String azimuthString = utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
         SpannableString azimuthSpan = null;
         if (color != null) {
@@ -232,7 +232,10 @@ public class LightMapDialog extends DialogFragment
         }
         azimuthSpan = SuntimesUtils.createRelativeSpan(azimuthSpan, azimuthString, azimuthText.getSuffix(), 0.7f);
         azimuthSpan = SuntimesUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
-        return azimuthSpan;
+        view.setText(azimuthSpan);
+
+        SuntimesUtils.TimeDisplayText azimuthDesc = utils.formatAsDirection2(azimuth, places, true);
+        view.setContentDescription(utils.formatAsDirection(azimuthDesc.getValue(), azimuthDesc.getSuffix()));
     }
 
     private CharSequence styleElevationText(double elevation, Integer color, int places)
@@ -288,32 +291,46 @@ public class LightMapDialog extends DialogFragment
 
             if (currentPosition != null)
             {
-                sunAzimuth.setText(styleAzimuthText(currentPosition.azimuth, null, 2));
+                styleAzimuthText(sunAzimuth, currentPosition.azimuth, null, 2);
                 sunElevation.setText(styleElevationText(currentPosition.elevation, getColorForPosition(currentPosition, noonPosition),2));
                 highlightLightmapKey(currentPosition.elevation);
 
             } else {
                 sunAzimuth.setText("");
+                sunAzimuth.setContentDescription("");
                 sunElevation.setText("");
             }
 
             SuntimesRiseSetData riseSetData = data.dataActual;
             Calendar riseTime = (riseSetData != null ? riseSetData.sunriseCalendarToday() : null);
             SuntimesCalculator.SunPosition positionRising = (riseTime != null && calculator != null ? calculator.getSunPosition(riseTime) : null);
-            sunAzimuthRising.setText(positionRising != null ? styleAzimuthText(positionRising.azimuth, colorRising, decimalPlaces) : "");
+            if (positionRising != null) {
+                styleAzimuthText(sunAzimuthRising, positionRising.azimuth, colorRising, decimalPlaces);
+
+            } else {
+                sunAzimuthRising.setText("");
+                sunAzimuthRising.setContentDescription("");
+            }
 
             Calendar setTime = (riseSetData != null ? riseSetData.sunsetCalendarToday() : null);
             SuntimesCalculator.SunPosition positionSetting = (setTime != null && calculator != null ? calculator.getSunPosition(setTime) : null);
-            sunAzimuthSetting.setText(positionSetting != null ? styleAzimuthText(positionSetting.azimuth, colorSetting, decimalPlaces) : "");
+            if (positionSetting != null) {
+                styleAzimuthText(sunAzimuthSetting, positionSetting.azimuth, colorSetting, decimalPlaces);
+
+            } else {
+                sunAzimuthSetting.setText("");
+                sunAzimuthSetting.setContentDescription("");
+            }
 
             if (noonPosition != null)
             {
                 sunElevationAtNoon.setText(styleElevationText(noonPosition.elevation, colorSetting, decimalPlaces));
-                sunAzimuthAtNoon.setText(styleAzimuthText(noonPosition.azimuth, null, decimalPlaces));
+                styleAzimuthText(sunAzimuthAtNoon, noonPosition.azimuth, null, decimalPlaces);
 
             } else {
                 sunElevationAtNoon.setText("");
                 sunAzimuthAtNoon.setText("");
+                sunAzimuthAtNoon.setContentDescription("");
             }
 
             showSunPosition(currentPosition != null);
