@@ -44,14 +44,16 @@
             app:layout_constraintStart_toStartOf="@+id/info_sun_azimuth_rising"
             app:layout_constraintEnd_toEndOf="@+id/info_sun_azimuth_rising"
             app:layout_constraintBottom_toTopOf="@+id/info_sun_azimuth_rising"
-            android:background="@drawable/ic_sunrise" />
+            android:labelFor="@+id/info_sun_azimuth_rising"
+            android:background="@drawable/ic_sunrise" android:contentDescription="@string/sunrise" />
 
         <ImageView android:id="@+id/sundialog_seticon" android:layout_marginBottom="2dp"
             android:layout_width="24dp" android:layout_height="8dp"
             app:layout_constraintStart_toStartOf="@+id/info_sun_azimuth_setting"
             app:layout_constraintEnd_toEndOf="@+id/info_sun_azimuth_setting"
             app:layout_constraintBottom_toTopOf="@+id/info_sun_azimuth_setting"
-            android:background="@drawable/ic_sunset" />
+            android:labelFor="@+id/info_sun_azimuth_setting"
+            android:background="@drawable/ic_sunset" android:contentDescription="@string/sunset" />
 
         <!-- elevation -->
         <TextView android:id="@+id/info_sun_elevation_current_label" style="@style/SunsetTimeTextView"
@@ -60,7 +62,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="8dp"
-            android:text="@string/widgetLabel_altitude_short" />
+            android:text="@string/widgetLabel_altitude_short" android:contentDescription="@string/widgetLabel_altitude" />
 
         <TextView
             android:id="@+id/info_sun_elevation_current"
@@ -89,7 +91,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/info_sun_azimuth_current"
             app:layout_constraintTop_toBottomOf="@+id/info_sun_elevation_current_label"  android:layout_marginTop="6dp"
-            android:text="@string/widgetLabel_azimuth_short" />
+            android:text="@string/widgetLabel_azimuth_short" android:contentDescription="@string/widgetLabel_azimuth" />
 
         <TextView android:id="@+id/info_sun_azimuth_current"
             style="@style/SunsetTimeTextView" android:textStyle="bold"
