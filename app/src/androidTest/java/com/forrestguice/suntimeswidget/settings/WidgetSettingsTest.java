@@ -565,6 +565,22 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     }
 
     @Test
+    public void test_observerHeightPref()
+    {
+        WidgetSettings.saveObserverHeightPref(context, appWidgetId, 1f);
+        float height0 = WidgetSettings.loadObserverHeightPref(context, appWidgetId);
+        assertTrue("height should be 1 but was " + height0, equals(height0, 1f));
+
+        WidgetSettings.saveObserverHeightPref(context, appWidgetId, 2.5f);
+        float height1 = WidgetSettings.loadObserverHeightPref(context, appWidgetId);
+        assertTrue("height should be 2.5 but was " + height1, equals(height1, 2.5f));
+
+        WidgetSettings.deleteObserverHeightPref(context, appWidgetId);
+        float height2 = WidgetSettings.loadObserverHeightPref(context, appWidgetId);
+        assertTrue("height should be default (1.8288) but was " + height2, equals(height2, 1.8288f) && equals(height2, WidgetSettings.PREF_DEF_GENERAL_OBSERVERHEIGHT));
+    }
+
+    @Test
     public void test_showTimeDatePref()
     {
         WidgetSettings.saveShowTimeDatePref(context, appWidgetId, true);
@@ -580,5 +596,10 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         assertTrue("showTimeDate should be default (true) but was " + showTimeDate, showTimeDate && showTimeDate == WidgetSettings.PREF_DEF_GENERAL_SHOWTIMEDATE);
     }
 
+    public static final float FLOAT_TOLERANCE = 0.01f;
+    protected boolean equals(float float1, float float2)
+    {
+        return (Math.abs(float1 - float2) < FLOAT_TOLERANCE);
+    }
 
 }

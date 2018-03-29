@@ -135,6 +135,9 @@ public class WidgetSettings
     public static final String PREF_KEY_GENERAL_SHOWTIMEDATE = "showtimedate";
     public static final boolean PREF_DEF_GENERAL_SHOWTIMEDATE = true;
 
+    public static final String PREF_KEY_GENERAL_OBSERVERHEIGHT = "observerheight";
+    public static final float PREF_DEF_GENERAL_OBSERVERHEIGHT = 1.8288f; // meters (6ft)
+
     public static final String PREF_KEY_ACTION_MODE = "action";
     public static final ActionMode PREF_DEF_ACTION_MODE = ActionMode.ONTAP_LAUNCH_CONFIG;
 
@@ -2000,6 +2003,29 @@ public class WidgetSettings
     }
 
 
+
+    public static void saveObserverHeightPref(Context context, int appWidgetId, float meters)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putFloat(prefs_prefix + PREF_KEY_GENERAL_OBSERVERHEIGHT, meters);
+        prefs.apply();
+    }
+    public static float loadObserverHeightPref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        return prefs.getFloat(prefs_prefix + PREF_KEY_GENERAL_OBSERVERHEIGHT, PREF_DEF_GENERAL_OBSERVERHEIGHT);
+    }
+    public static void deleteObserverHeightPref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_OBSERVERHEIGHT);
+        prefs.apply();
+    }
+
+
     public static void saveTimeNoteRisePref(Context context, int appWidgetId, SolarEvents riseChoice)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
@@ -2091,6 +2117,8 @@ public class WidgetSettings
         deleteShowHoursPref(context, appWidgetId);
         deleteShowSecondsPref(context, appWidgetId);
         deleteShowTimeDatePref(context, appWidgetId);
+
+        deleteObserverHeightPref(context, appWidgetId);
 
         deleteLocationModePref(context, appWidgetId);
         deleteLocationPref(context, appWidgetId);
