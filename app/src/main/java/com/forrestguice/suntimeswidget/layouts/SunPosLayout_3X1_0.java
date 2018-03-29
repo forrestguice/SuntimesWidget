@@ -97,7 +97,10 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
         LightMapView.LightMapTask drawTask = new LightMapView.LightMapTask();
         Bitmap bitmap = drawTask.makeBitmap(dataset, SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), colors);
         views.setImageViewBitmap(R.id.info_time_lightmap, bitmap);
-        views.setContentDescription(R.id.info_time_lightmap, buildContentDescription(context, now, sunPosition));
+
+        if (Build.VERSION.SDK_INT >= 15) {
+            views.setContentDescription(R.id.info_time_lightmap, buildContentDescription(context, now, sunPosition));
+        }
     }
 
     public static String buildContentDescription(Context context, Calendar now, SuntimesCalculator.SunPosition sunPosition)
