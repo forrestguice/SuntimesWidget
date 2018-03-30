@@ -32,6 +32,11 @@
           android:title="@string/configAction_setTimeZone"
           app:showAsAction="never" />
 
+    <item android:id="@+id/action_sunposition"
+          android:icon="?attr/icActionAbout"
+          android:title="@string/configAction_sunDialog"
+          app:showAsAction="never" />
+
     <item android:id="@+id/action_equinox"
           android:icon="?attr/icActionAbout"
           android:title="@string/configAction_equinoxDialog"

@@ -41,7 +41,7 @@ public abstract class SunLayout extends SuntimesLayout
         // update title
         String titlePattern = WidgetSettings.loadTitleTextPref(context, appWidgetId);
         String titleText = utils.displayStringForTitlePattern(context, titlePattern, data);
-        CharSequence title = (boldTitle ? SuntimesUtils.createBoldSpan(titleText, titleText) : titleText);
+        CharSequence title = (boldTitle ? SuntimesUtils.createBoldSpan(null, titleText, titleText) : titleText);
         views.setTextViewText(R.id.text_title, title);
         //Log.v("DEBUG", "title text: " + titleText);
     }
@@ -56,7 +56,7 @@ public abstract class SunLayout extends SuntimesLayout
     {
         SuntimesUtils.TimeDisplayText sunriseText = utils.calendarTimeShortDisplayString(context, data.sunriseCalendarToday(), showSeconds);
         String sunriseString = sunriseText.getValue();
-        CharSequence sunrise = (boldTime ? SuntimesUtils.createBoldSpan(sunriseString, sunriseString) : sunriseString);
+        CharSequence sunrise = (boldTime ? SuntimesUtils.createBoldSpan(null, sunriseString, sunriseString) : sunriseString);
         views.setTextViewText(R.id.text_time_rise, sunrise);
         views.setTextViewText(R.id.text_time_rise_suffix, sunriseText.getSuffix());
     }
@@ -65,7 +65,7 @@ public abstract class SunLayout extends SuntimesLayout
     {
         SuntimesUtils.TimeDisplayText sunsetText = utils.calendarTimeShortDisplayString(context, data.sunsetCalendarToday(), showSeconds);
         String sunsetString = sunsetText.getValue();
-        CharSequence sunset = (boldTime ? SuntimesUtils.createBoldSpan(sunsetString, sunsetString) : sunsetString);
+        CharSequence sunset = (boldTime ? SuntimesUtils.createBoldSpan(null, sunsetString, sunsetString) : sunsetString);
         views.setTextViewText(R.id.text_time_set, sunset);
         views.setTextViewText(R.id.text_time_set_suffix, sunsetText.getSuffix());
     }
@@ -74,7 +74,7 @@ public abstract class SunLayout extends SuntimesLayout
     {
         SuntimesUtils.TimeDisplayText noonText = utils.calendarTimeShortDisplayString(context, data.sunsetCalendarToday(), showSeconds);
         String noonString = noonText.getValue();
-        CharSequence noon = (boldTime ? SuntimesUtils.createBoldSpan(noonString, noonString) : noonString);
+        CharSequence noon = (boldTime ? SuntimesUtils.createBoldSpan(null, noonString, noonString) : noonString);
         views.setTextViewText(R.id.text_time_noon, noon);
         views.setTextViewText(R.id.text_time_noon_suffix, noonText.getSuffix());
     }

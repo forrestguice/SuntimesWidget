@@ -42,7 +42,17 @@ public class SuntimesRiseSetDataset
 
     public SuntimesRiseSetDataset(Context context)
     {
-        dataActual = new SuntimesRiseSetData(context, AppWidgetManager.INVALID_APPWIDGET_ID);
+        init(context, AppWidgetManager.INVALID_APPWIDGET_ID);
+    }
+
+    public SuntimesRiseSetDataset(Context context, int appWidgetID)
+    {
+        init(context, appWidgetID);
+    }
+
+    private void init(Context context, int appWidgetID)
+    {
+        dataActual = new SuntimesRiseSetData(context, appWidgetID);
         dataActual.setCompareMode(WidgetSettings.CompareMode.TOMORROW);
         dataActual.setTimeMode(WidgetSettings.TimeMode.OFFICIAL);
         dataset.add(dataActual);
@@ -123,6 +133,11 @@ public class SuntimesRiseSetDataset
         return nearest;
     }
 
+    public SuntimesCalculator calculator()
+    {
+        return dataActual.calculator();
+    }
+
     public Calendar todayIs()
     {
         return dataActual.todayIs();
@@ -187,6 +202,11 @@ public class SuntimesRiseSetDataset
         return dataActual.date();
     }
 
+    public Calendar calendar()
+    {
+        return dataActual.calendar();
+    }
+
     public WidgetSettings.TimezoneMode timezoneMode()
     {
         return dataActual.timezoneMode();
@@ -200,6 +220,15 @@ public class SuntimesRiseSetDataset
     public Calendar now()
     {
         return Calendar.getInstance(timezone());
+    }
+
+    public Calendar nowThen(Calendar date)
+    {
+        Calendar nowThen = now();
+        nowThen.set(Calendar.YEAR, date.get(Calendar.YEAR));
+        nowThen.set(Calendar.MONTH, date.get(Calendar.MONTH));
+        nowThen.set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH));
+        return nowThen;
     }
 
     public static Calendar midnight(Calendar date)
@@ -327,6 +356,26 @@ public class SuntimesRiseSetDataset
 
         } else {
             return 0;                                                                   //            twilight setting to next
+        }
+    }
+
+    /**
+     * @param position current sunPosition
+     * @param noonPosition the sunPosition at noon
+     * @return true if rising (before noon) or if either position or noonPosition is null, false if setting (on or after noon)
+     */
+    public static boolean isRising(SuntimesCalculator.SunPosition position, SuntimesCalculator.SunPosition noonPosition)
+    {
+        if (position == null || noonPosition == null) {
+            return true;
+
+        } else if (noonPosition.azimuth > 90 && noonPosition.azimuth < 270) {    // noon is southward
+            return (position.azimuth < noonPosition.azimuth);
+
+        } else {                                                      // noon is northward
+            if (noonPosition.azimuth <= 90)
+                return (position.azimuth > noonPosition.azimuth && position.azimuth <= 180);
+            else return (position.azimuth > noonPosition.azimuth) || (position.azimuth <= 90);
         }
     }
 

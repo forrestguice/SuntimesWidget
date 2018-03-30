@@ -246,5 +246,11 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
         return null;
     }
 
+    @Override
+    public SunPosition getSunPosition(Calendar dateTime)
+    {
+        return null;
+    }
+
 }
 

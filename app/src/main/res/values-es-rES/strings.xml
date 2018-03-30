@@ -18,6 +18,7 @@
     <string name="configAction_setAlarm">Configurar alarma</string>
     <string name="configAction_setTimeZone">Configurar zona horaria</string>
     <string name="configAction_setDate">Configurar fecha</string>
+    <string name="configAction_sunDialog">Sun Position</string>   <!-- TODO -->
     <string name="configAction_equinoxDialog">Solsticio / Equinocio</string>
     <string name="configAction_help">Ayuda</string>
     <string name="configAction_settings">Configuración</string>
@@ -159,7 +160,9 @@
     <string name="configAction_reconfigWidget">Reconfigurar Widget</string>      <!-- used as title when reconfiguring -->
     <string name="configLabel_title0">Widget de tiempo solar</string>                  <!-- used as title when adding -->
     <string name="configLabel_title1">Widget reversible</string>                 <!-- used as title when adding -->
-    <string name="configLabel_title2">Widget de solsticio</string>                  <!-- used as title when adding -->
+    <string name="configLabel_title2">@string/app_name_widget2</string>                  <!-- used as title when adding -->  <!-- TODO -->
+    <string name="configLabel_solsticewidget0">Widget de solsticio</string>                  <!-- used as title when adding -->
+    <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding --> <!-- TODO -->
 
     <!-- Widget Setting: general -->
     <string name="configLabel_general">Opciones generales</string>                <!-- group title -->
@@ -240,6 +243,9 @@
     <string name="widgetMode1x1_sunset">Sólo anochecer</string>               <!-- setting -->
     <string name="widgetMode1x1_both_1">Amanecer y anochecer (1)</string>  <!-- setting -->
     <string name="widgetMode1x1_both_2">Amanecer y anochecer (2)</string>  <!-- setting -->
+
+    <string name="widgetMode1x1_altaz">Altitude &amp; Azimuth</string>     <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode1x1_decright">Declination &amp; Right Ascension</string>     <!-- setting -->  <!-- TODO -->
 
     <string name="widgetMode1x1_moonriseset">Moonrise &amp; moonset</string>     <!-- setting -->   <!-- TODO -->
     <string name="widgetMode1x1_moonphaseillum">Moon phase &amp; illumination</string>     <!-- setting -->  <!-- TODO -->
@@ -441,6 +447,16 @@
     <string name="configLabel_themeName">Mostrar:</string>               <!-- edit label -->
     <string name="configHint_themeName">Etiqueta</string>                   <!-- edit hint -->
 
+    <string name="widgetLabel_azimuth">Azimuth</string>                   <!-- label -->  <!-- TODO -->
+    <string name="widgetLabel_azimuth_short">Az</string>                   <!-- label -->  <!-- TODO -->
+    <string name="widgetLabel_altitude">Altitude</string>               <!-- label -->  <!-- TODO -->
+    <string name="widgetLabel_altitude_short">Alt</string>               <!-- label -->  <!-- TODO -->
+
+    <string name="widgetLabel_rightAscension">Right Ascension</string>    <!-- label -->  <!-- TODO -->
+    <string name="widgetLabel_rightAscension_short">RA</string>    <!-- label -->  <!-- TODO -->
+    <string name="widgetLabel_declination">Declination</string>           <!-- label -->  <!-- TODO -->
+    <string name="widgetLabel_declination_short">Dec</string>           <!-- label -->  <!-- TODO -->
+
     <!--
          APP SETTINGS
     -->
@@ -605,6 +621,53 @@
         <item>Catalán</item>
     </string-array>
 
+    <!-- position formats -->
+    <string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
+    <string name="elevation_format"><xliff:g id="degrees" example="45">%1$s</xliff:g><xliff:g id="altSymbol" example="∠">%2$s</xliff:g></string>  <!-- e.g. 45°∠ -->
+    <string name="declination_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="decSymbol" example="δ">%2$s</xliff:g></string>  <!-- e.g. 5° δ -->
+    <string name="rightascension_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="raSymbol" example="δ">%2$s</xliff:g></string>  <!-- e.g. 5° α -->
+    <string name="direction_format"><xliff:g id="degrees" example="180°">%1$s</xliff:g> <xliff:g id="directions_short" example="S">%2$s</xliff:g></string>  <!-- e.g. 180°S -->
+
+    <!-- cardinal directions -->
+    <string-array name="directions_short">  <!-- one-to-one with directions_long -->   <!-- TODO -->
+        <item>N</item>
+        <item>NNE</item>
+        <item>NE</item>
+        <item>ENE</item>
+        <item>E</item>
+        <item>ESE</item>
+        <item>SE</item>
+        <item>SSE</item>
+        <item>S</item>
+        <item>SSW</item>
+        <item>SW</item>
+        <item>WSW</item>
+        <item>W</item>
+        <item>WNW</item>
+        <item>NW</item>
+        <item>NNW</item>
+        <item>N</item>
+    </string-array>
+    <string-array name="directions_long">   <!-- one-to-one with directions_short -->   <!-- TODO -->
+        <item>North</item>
+        <item>North North East</item>
+        <item>North East</item>
+        <item>East North East</item>
+        <item>East</item>
+        <item>East South East</item>
+        <item>South East</item>
+        <item>South South East</item>
+        <item>South</item>
+        <item>South South West</item>
+        <item>South West</item>
+        <item>West South West</item>
+        <item>West</item>
+        <item>West North West</item>
+        <item>North West</item>
+        <item>North North West</item>
+        <item>North</item>
+    </string-array>
+
     <!--
          DIALOGS
     -->
@@ -729,7 +792,9 @@
     <string name="app_name">Suntimes</string>
     <string name="app_name_widget0">Suntimes Widget</string>
     <string name="app_name_widget1">Suntimes Widget (flippable)</string>
-    <string name="app_name_widget2">Suntimes Solstice Widget</string>
+    <string name="app_name_widget2">Sun Position Widget</string>
+    <string name="app_name_solsticewidget0">Solstice Widget</string>
+    <string name="app_name_moonwidget0">Moon Widget</string>
     <string name="app_version"><![CDATA[<b>Versión:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Muestra las horas de amanecer, anochecer y luz crepuscular.</string>  <!-- TODO: needs update to mention the moon. default changed to -> "Displays sunlight and moonlight times" -->
     <string name="app_support_url"><![CDATA[

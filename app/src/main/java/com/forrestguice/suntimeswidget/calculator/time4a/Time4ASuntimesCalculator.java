@@ -28,9 +28,11 @@ import net.time4j.Moment;
 import net.time4j.PlainDate;
 import net.time4j.TemporalType;
 import net.time4j.calendar.astro.AstronomicalSeason;
+import net.time4j.calendar.astro.GeoLocation;
 import net.time4j.calendar.astro.LunarTime;
 import net.time4j.calendar.astro.SolarTime;
 import net.time4j.calendar.astro.StdSolarCalculator;
+import net.time4j.calendar.astro.SunPosition;
 import net.time4j.calendar.astro.Twilight;
 import net.time4j.engine.CalendarDate;
 import net.time4j.engine.ChronoFunction;
@@ -44,7 +46,7 @@ import java.util.TimeZone;
 
 public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
 {
-    public static final int[] FEATURES = new int[] { FEATURE_RISESET, FEATURE_SOLSTICE, FEATURE_GOLDBLUE };
+    public static final int[] FEATURES = new int[] { FEATURE_RISESET, FEATURE_SOLSTICE, FEATURE_GOLDBLUE, FEATURE_POSITION };
 
     public abstract StdSolarCalculator getCalculator();
 
@@ -348,6 +350,20 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
             case FULL:
             default: return net.time4j.calendar.astro.MoonPhase.FULL_MOON;
         }
+    }
+
+    @Override
+    public SunPosition getSunPosition(Calendar dateTime)
+    {
+        Moment moment = TemporalType.JAVA_UTIL_DATE.translate(dateTime.getTime());
+        net.time4j.calendar.astro.SunPosition position = net.time4j.calendar.astro.SunPosition.at(moment, solarTime);
+
+        SunPosition result = new SunPosition();
+        result.azimuth = position.getAzimuth();
+        result.elevation = position.getElevation();
+        result.rightAscension = position.getRightAscension();
+        result.declination = position.getDeclination();
+        return result;
     }
 
 }

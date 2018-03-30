@@ -1,5 +1,13 @@
 ### ~
 
+###
+* fixes widget update alarms (more precise); sun and moon widgets update at midnight, solstice widgets update every 3hr, and sun position widgets update every 5min.
+* adds 3x1 sun position widget; shows lightmap (and optional azimuth and elevation labels) (#107).
+* adds 1x1 sun position widget; shows right ascension and declination.
+* adds 1x1 sun position widget; shows azimuth and elevation angles (#169).
+* adds sun azimuth and elevation angles to lightmap dialog (#169).
+* adds "sun position" overflow menu item; shows lightmap dialog.
+
 ### v0.7.4 (2018-03-26)
 * adds "restore defaults" button to "On Tap: Launch App" help dialog.
 * fixes widget config edittext auto-correct behavior (now disabled for title text, launch app).
