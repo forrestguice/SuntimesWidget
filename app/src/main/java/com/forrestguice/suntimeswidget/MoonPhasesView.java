@@ -143,7 +143,7 @@ public class MoonPhasesView extends LinearLayout
             boolean showHours = WidgetSettings.loadShowHoursPref(context, 0);
             boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
             phaseNew.updateField(context, data.now(), data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.NEW), showWeeks, showTime, showHours, showSeconds);
-            phaseFirst.updateField(context, data.now(), data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FIRST_QUARTER), showTime, showWeeks, showHours, showSeconds);
+            phaseFirst.updateField(context, data.now(), data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FIRST_QUARTER), showWeeks, showTime, showHours, showSeconds);
             phaseFull.updateField(context, data.now(), data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FULL), showWeeks, showTime, showHours, showSeconds);
             phaseLast.updateField(context, data.now(), data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.THIRD_QUARTER), showWeeks, showTime, showHours, showSeconds);
             reorderLayout(data.nextPhase(data.midnight()));
