@@ -19,16 +19,15 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
 
     <FrameLayout
-        android:layout_width="match_parent" android:layout_height="wrap_content">
+        android:layout_width="wrap_content" android:layout_height="wrap_content">
 
         <LinearLayout android:id="@+id/moonriseset_layout"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="2dp" android:layout_marginBottom="2dp">
+            android:layout_width="wrap_content" android:layout_height="wrap_content">
 
             <LinearLayout android:id="@+id/moonrise_layout"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginLeft="8dp" android:layout_marginRight="8dp">
+                android:layout_marginLeft="4dp" android:layout_marginRight="4dp">
 
                 <ImageView
                     android:id="@+id/icon_time_moonrise"
@@ -43,13 +42,13 @@
                     style="@style/SunsetTimeTextView"
                     android:id="@+id/text_time_moonrise"
                     android:textColor="@color/moonIcon_color_rising"
-                    tools:text="11:00 AM" />
+                    tools:text="00:00 AM" />
             </LinearLayout>
 
             <LinearLayout android:id="@+id/moonset_layout"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginLeft="8dp" android:layout_marginRight="8dp">
+                android:layout_marginLeft="4dp" android:layout_marginRight="4dp">
 
                 <ImageView
                     android:id="@+id/icon_time_moonset"
@@ -64,7 +63,54 @@
                     style="@style/SunsetTimeTextView"
                     android:id="@+id/text_time_moonset"
                     android:textColor="@color/moonIcon_color_setting"
-                    tools:text="11:00 PM" />
+                    tools:text="00:00 PM" />
+            </LinearLayout>
+
+            <View android:id="@+id/divider_moon1"
+                android:layout_width="1dp" android:layout_height="match_parent"
+                android:layout_marginLeft="4dp" android:layout_marginRight="4dp"
+                android:background="?hrColor" />
+
+            <LinearLayout android:id="@+id/moonrise_layout1"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="4dp" android:layout_marginRight="4dp">
+
+                <ImageView
+                    android:id="@+id/icon_time_moonrise1"
+                    style="@style/TableHeadImageView"
+                    android:layout_width="@dimen/table_heading_iconsize"
+                    android:background="@drawable/ic_moon_rise"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_margin="0dp"
+                    tools:ignore="contentDescription"/>
+
+                <TextView
+                    style="@style/SunsetTimeTextView"
+                    android:id="@+id/text_time_moonrise1"
+                    android:textColor="@color/moonIcon_color_rising"
+                    tools:text="00:00 AM" />
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/moonset_layout1"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="4dp" android:layout_marginRight="4dp">
+
+                <ImageView
+                    android:id="@+id/icon_time_moonset1"
+                    style="@style/TableHeadImageView"
+                    android:layout_width="@dimen/table_heading_iconsize"
+                    android:background="@drawable/ic_moon_set"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_margin="0dp"
+                    tools:ignore="contentDescription"/>
+
+                <TextView
+                    style="@style/SunsetTimeTextView"
+                    android:id="@+id/text_time_moonset1"
+                    android:textColor="@color/moonIcon_color_setting"
+                    tools:text="00:00 PM" />
             </LinearLayout>
 
         </LinearLayout>

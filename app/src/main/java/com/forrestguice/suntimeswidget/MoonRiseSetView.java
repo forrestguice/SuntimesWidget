@@ -48,6 +48,8 @@ public class MoonRiseSetView extends LinearLayout
 
     private LinearLayout content;
     private MoonRiseSetField risingTextField, settingTextField;
+    private MoonRiseSetField risingTextField1, settingTextField1;
+    private View divider;
     private TextView empty;
 
     public MoonRiseSetView(Context context)
@@ -89,6 +91,9 @@ public class MoonRiseSetView extends LinearLayout
         content = (LinearLayout)findViewById(R.id.moonriseset_layout);
         risingTextField = new MoonRiseSetField(R.id.moonrise_layout , R.id.text_time_moonrise);
         settingTextField = new MoonRiseSetField(R.id.moonset_layout, R.id.text_time_moonset);
+        risingTextField1 = new MoonRiseSetField(R.id.moonrise_layout1 , R.id.text_time_moonrise1);
+        settingTextField1 = new MoonRiseSetField(R.id.moonset_layout1, R.id.text_time_moonset1);
+        divider = findViewById(R.id.divider_moon1);
 
         if (isInEditMode())
         {
@@ -136,6 +141,8 @@ public class MoonRiseSetView extends LinearLayout
             Calendar settingTime = data.moonsetCalendarToday();
             risingTextField.updateField(context, risingTime, showSeconds);
             settingTextField.updateField(context, settingTime, showSeconds);
+            risingTextField1.updateField(context, data.moonriseCalendarTomorrow(), showSeconds);
+            settingTextField1.updateField(context, data.moonsetCalendarTomorrow(), showSeconds);
             reorderLayout(risingTime, settingTime);
 
         } else {
@@ -168,6 +175,12 @@ public class MoonRiseSetView extends LinearLayout
     {
         risingTextField.removeFromLayout(content);
         settingTextField.removeFromLayout(content);
+        risingTextField1.removeFromLayout(content);
+        settingTextField1.removeFromLayout(content);
+
+        if (divider != null) {
+            content.removeView(divider);
+        }
     }
 
     private void reorderLayout( Calendar riseTime, Calendar setTime )
@@ -177,10 +190,18 @@ public class MoonRiseSetView extends LinearLayout
         {
             risingTextField.addToLayout(content);
             settingTextField.addToLayout(content);
+            if (divider != null) {
+                content.addView(divider);
+            }
+            risingTextField1.addToLayout(content);
 
         } else {
             settingTextField.addToLayout(content);
             risingTextField.addToLayout(content);
+            if (divider != null) {
+                content.addView(divider);
+            }
+            settingTextField1.addToLayout(content);
         }
     }
 
