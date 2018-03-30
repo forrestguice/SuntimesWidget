@@ -154,7 +154,7 @@ public class MoonPhaseView extends LinearLayout
             NumberFormat percentage = NumberFormat.getPercentInstance();
             String illum = percentage.format(illumination);
             String illumNote = context.getString(R.string.moon_illumination, illum);
-            SpannableString illumNoteSpan = SuntimesUtils.createColorSpan(illumNote, illum, noteColor);
+            SpannableString illumNoteSpan = SuntimesUtils.createColorSpan(null, illumNote, illum, noteColor);
             illumText.setText(illumNoteSpan);
 
         } else {

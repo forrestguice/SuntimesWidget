@@ -1177,15 +1177,27 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
+    /**
+     * Update all widgets of this type (direct update, no broadcast).
+     * @param context a context used to access resources
+     */
     protected void updateWidget(Context context)
+    {
+        SunLayout defLayout = WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId);
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0.class, minWidgetSize(context), defLayout);
+    }
+
+    /**
+     * @param context a context used to access resources
+     * @return [w,h] minSize array; minimum size required by this type of widget
+     */
+    protected int[] minWidgetSize(Context context)
     {
         int minSize[] = new int[2];
         minSize[0] = context.getResources().getInteger(R.integer.widget_size_minWidthDp);
         minSize[1] = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
-
-        SunLayout defLayout = WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId);
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0.class, minSize, defLayout);
+        return minSize;
     }
 
     protected int getAboutIconID()

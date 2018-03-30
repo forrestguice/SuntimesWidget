@@ -18,6 +18,7 @@
     <string name="configAction_setAlarm">Emlékeztető beállítása</string>
     <string name="configAction_setTimeZone">Időzóna beállítása</string>
     <string name="configAction_setDate">Dátum beállítása</string>
+    <string name="configAction_sunDialog">Sun Position</string>   <!-- TODO -->
     <string name="configAction_equinoxDialog">Solstice / Equinox</string> <!-- TODO -->
     <string name="configAction_help">Segítség</string>
     <string name="configAction_settings">Beállítások</string>
@@ -148,9 +149,11 @@
     <string name="configAction_addWidget">Widget hozzáadás</string>                   <!-- Button: Add -->
     <string name="configAction_reconfigWidget_short">Újrakonfigurál</string>       <!-- Button: Reconfigure -->
     <string name="configAction_reconfigWidget">Widget újrakonfigurálása</string>      <!-- used as title when reconfiguring -->
-    <string name="configLabel_title0">Suntimes Widget</string>                  <!-- used as title when adding -->
-    <string name="configLabel_title1">Flippable Widget</string>                 <!-- used as title when adding -->
-    <string name="configLabel_title2">Solstice Widget</string>                  <!-- used as title when adding -->  <!-- TODO -->
+    <string name="configLabel_title0">@string/app_name_widget0</string>         <!-- used as title when adding -->      <!-- TODO -->
+    <string name="configLabel_title1">Flippable Widget</string>                 <!-- used as title when adding -->  <!-- TODO -->
+    <string name="configLabel_title2">@string/app_name_widget2</string>                  <!-- used as title when adding -->  <!-- TODO -->
+    <string name="configLabel_solsticewidget0">@string/app_name_solsticewidget0</string>                  <!-- used as title when adding --> <!-- TODO -->
+    <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding --> <!-- TODO -->
 
     <!-- Widget Setting: general -->
     <string name="configLabel_general">Általános beállítások</string>                <!-- group title -->
@@ -231,6 +234,9 @@
     <string name="widgetMode1x1_sunset">Csak napnyugta</string>               <!-- setting -->
     <string name="widgetMode1x1_both_1">Napkelte &amp; napnyugta (1)</string>  <!-- setting -->
     <string name="widgetMode1x1_both_2">Napkelte &amp; napnyugta (2)</string>  <!-- setting -->
+
+    <string name="widgetMode1x1_altaz">Altitude &amp; Azimuth</string>     <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode1x1_decright">Declination &amp; Right Ascension</string>     <!-- setting -->  <!-- TODO -->
 
     <string name="widgetMode1x1_moonriseset">Moonrise &amp; moonset</string>     <!-- setting -->   <!-- TODO -->
     <string name="widgetMode1x1_moonphaseillum">Moon phase &amp; illumination</string>     <!-- setting -->  <!-- TODO -->
@@ -432,6 +438,16 @@
     <string name="configLabel_themeName">Display:</string>               <!-- edit label -->  <!-- TODO -->
     <string name="configHint_themeName">Label</string>                   <!-- edit hint -->  <!-- TODO -->
 
+    <string name="widgetLabel_azimuth">Azimuth</string>                   <!-- label -->  <!-- TODO -->
+    <string name="widgetLabel_azimuth_short">Az</string>                   <!-- label -->  <!-- TODO -->
+    <string name="widgetLabel_altitude">Altitude</string>               <!-- label -->  <!-- TODO -->
+    <string name="widgetLabel_altitude_short">Alt</string>               <!-- label -->  <!-- TODO -->
+
+    <string name="widgetLabel_rightAscension">Right Ascension</string>    <!-- label -->  <!-- TODO -->
+    <string name="widgetLabel_rightAscension_short">RA</string>    <!-- label -->  <!-- TODO -->
+    <string name="widgetLabel_declination">Declination</string>           <!-- label -->  <!-- TODO -->
+    <string name="widgetLabel_declination_short">Dec</string>           <!-- label -->  <!-- TODO -->
+
     <!--
          APP SETTINGS
     -->
@@ -591,6 +607,53 @@
         <item>Katalán</item>
     </string-array>
 
+    <!-- position formats -->
+    <string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
+    <string name="elevation_format"><xliff:g id="degrees" example="45">%1$s</xliff:g><xliff:g id="altSymbol" example="∠">%2$s</xliff:g></string>  <!-- e.g. 45°∠ -->
+    <string name="declination_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="decSymbol" example="δ">%2$s</xliff:g></string>  <!-- e.g. 5° δ -->
+    <string name="rightascension_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="raSymbol" example="δ">%2$s</xliff:g></string>  <!-- e.g. 5° α -->
+    <string name="direction_format"><xliff:g id="degrees" example="180°">%1$s</xliff:g> <xliff:g id="directions_short" example="S">%2$s</xliff:g></string>  <!-- e.g. 180°S -->
+
+    <!-- cardinal directions -->
+    <string-array name="directions_short">  <!-- one-to-one with directions_long -->   <!-- TODO -->
+        <item>N</item>
+        <item>NNE</item>
+        <item>NE</item>
+        <item>ENE</item>
+        <item>E</item>
+        <item>ESE</item>
+        <item>SE</item>
+        <item>SSE</item>
+        <item>S</item>
+        <item>SSW</item>
+        <item>SW</item>
+        <item>WSW</item>
+        <item>W</item>
+        <item>WNW</item>
+        <item>NW</item>
+        <item>NNW</item>
+        <item>N</item>
+    </string-array>
+    <string-array name="directions_long">   <!-- one-to-one with directions_short -->   <!-- TODO -->
+        <item>North</item>
+        <item>North North East</item>
+        <item>North East</item>
+        <item>East North East</item>
+        <item>East</item>
+        <item>East South East</item>
+        <item>South East</item>
+        <item>South South East</item>
+        <item>South</item>
+        <item>South South West</item>
+        <item>South West</item>
+        <item>West South West</item>
+        <item>West</item>
+        <item>West North West</item>
+        <item>North West</item>
+        <item>North North West</item>
+        <item>North</item>
+    </string-array>
+
     <!--
          DIALOGS
     -->
@@ -711,7 +774,9 @@
     <string name="app_name">Suntimes</string>
     <string name="app_name_widget0">Suntimes Widget</string>
     <string name="app_name_widget1">Suntimes Widget (flippable)</string>
-    <string name="app_name_widget2">Suntimes Solstice Widget</string>  <!-- TODO -->
+    <string name="app_name_widget2">Sun Position Widget</string>
+    <string name="app_name_solsticewidget0">Solstice Widget</string>
+    <string name="app_name_moonwidget0">Moon Widget</string>
     <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Megnézheti a napkelte, a napnyugta és a szürkület idejét.</string>  <!-- TODO: needs update to mention the moon. default changed to -> "Displays sunlight and moonlight times" -->
     <string name="app_support_url"><![CDATA[

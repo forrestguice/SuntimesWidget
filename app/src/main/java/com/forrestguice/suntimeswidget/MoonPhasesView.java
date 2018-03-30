@@ -247,7 +247,7 @@ public class MoonPhasesView extends LinearLayout
             {
                 String noteText = utils.timeDeltaDisplayString(now.getTime(), dateTime.getTime(), showWeeks, showHours).toString();
                 String noteString = now.after(dateTime) ? context.getString(R.string.ago, noteText) : context.getString(R.string.hence, noteText);
-                note.setText(SuntimesUtils.createBoldColorSpan(noteString, noteText, noteColor));
+                note.setText(SuntimesUtils.createBoldColorSpan(null, noteString, noteText, noteColor));
                 note.setVisibility(View.VISIBLE);
             }
         }

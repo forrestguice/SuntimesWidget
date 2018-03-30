@@ -1,16 +1,26 @@
 ### ~
 
+###
+* fixes widget update alarms (more precise); sun and moon widgets update at midnight, solstice widgets update every 3hr, and sun position widgets update every 5min.
+* adds 3x1 sun position widget; shows lightmap (and optional azimuth and elevation labels) (#107).
+* adds 1x1 sun position widget; shows right ascension and declination.
+* adds 1x1 sun position widget; shows azimuth and elevation angles (#169).
+* adds sun azimuth and elevation angles to lightmap dialog (#169).
+* adds "sun position" overflow menu item; shows lightmap dialog.
+
+### v0.7.4 (2018-03-26)
 * adds "restore defaults" button to "On Tap: Launch App" help dialog.
 * fixes widget config edittext auto-correct behavior (now disabled for title text, launch app).
-* adds moontimes icon (displayed by moon widgets in widget list).
 * fixes app crash when location supplied by GPS has negative altitude (some Samsung devices).
+* adds moontimes icon (displayed by moon widgets in widget list).
 * simplifies datepicker (removes mode spinner) (#173).
 * app automatically restarts on day/night change (when using nightmode theme).
 * app automatically restarts on theme change or locale change.
 * app automatically advances to next note (when card is unswapped) (registers/unregisters an alarm for next event).
 * app automatically updates on date change (registers/unregisters an alarm for midnight).
-* fixes bug where the date has advanced to the next day, but the displayed times have not (at midnight up to difference between local time and timezone).
-* fixes bug where the formatted date is off by a day (at midnight up to difference between local time and timezone).
+* fixes bug where the date has advanced to the next day but the displayed times have not (after midnight up to difference between local time and timezone).
+* fixes bug where the formatted date is off by a day (before midnight up to difference between local time and timezone).
+* updates translations (eo, pl) (#180).
 
 ### v0.7.3 (2018-03-16)
 * reorders user interfaces prefs (organized into categories).

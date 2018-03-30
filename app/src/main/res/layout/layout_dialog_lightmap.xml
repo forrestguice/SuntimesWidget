@@ -25,10 +25,129 @@
     android:orientation="vertical" android:gravity="start"
     android:padding="8dp" android:background="?graphColor_background">
 
+    <TextView android:id="@+id/sundialog_title" style="@style/TableHeadTextView"
+        android:text="@string/configAction_sunDialog"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="0dp"
+        android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+    <android.support.constraint.ConstraintLayout android:id="@+id/info_sun_layout"
+        android:layout_width="0dp" android:layout_height="wrap_content" android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/sundialog_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- icons and dividers -->
+        <ImageView android:id="@+id/sundialog_riseicon"
+            android:layout_width="24dp" android:layout_height="8dp" android:layout_marginBottom="2dp"
+            app:layout_constraintStart_toStartOf="@+id/info_sun_azimuth_rising"
+            app:layout_constraintEnd_toEndOf="@+id/info_sun_azimuth_rising"
+            app:layout_constraintBottom_toTopOf="@+id/info_sun_azimuth_rising"
+            android:labelFor="@+id/info_sun_azimuth_rising"
+            android:background="@drawable/ic_sunrise" android:contentDescription="@string/sunrise" />
+
+        <ImageView android:id="@+id/sundialog_seticon" android:layout_marginBottom="2dp"
+            android:layout_width="24dp" android:layout_height="8dp"
+            app:layout_constraintStart_toStartOf="@+id/info_sun_azimuth_setting"
+            app:layout_constraintEnd_toEndOf="@+id/info_sun_azimuth_setting"
+            app:layout_constraintBottom_toTopOf="@+id/info_sun_azimuth_setting"
+            android:labelFor="@+id/info_sun_azimuth_setting"
+            android:background="@drawable/ic_sunset" android:contentDescription="@string/sunset" />
+
+        <!-- elevation -->
+        <TextView android:id="@+id/info_sun_elevation_current_label" style="@style/SunsetTimeTextView"
+            android:labelFor="@+id/info_sun_elevation_current"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="8dp"
+            android:text="@string/widgetLabel_altitude_short" android:contentDescription="@string/widgetLabel_altitude" />
+
+        <TextView
+            android:id="@+id/info_sun_elevation_current"
+            style="@style/SunsetTimeTextView" android:textStyle="bold"
+            android:layout_width="0dp" android:layout_height="17dp"
+            android:gravity="start|left" android:layout_marginLeft="0dp" android:layout_marginRight="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/info_sun_elevation_current_label"
+            app:layout_constraintEnd_toEndOf="@+id/info_sun_azimuth_current"
+            app:layout_constraintStart_toStartOf="@+id/info_sun_azimuth_current"
+            app:layout_constraintTop_toTopOf="@+id/info_sun_elevation_current_label"
+            tools:text="00.00°∠" />
+
+        <TextView android:id="@+id/info_sun_elevation_atnoon" style="@style/SunsetTimeTextView"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/info_sun_azimuth_atnoon"
+            app:layout_constraintEnd_toEndOf="@+id/info_sun_azimuth_atnoon"
+            app:layout_constraintTop_toTopOf="@+id/info_sun_elevation_current"
+            app:layout_constraintBottom_toBottomOf="@+id/info_sun_elevation_current"
+            android:layout_margin="4dp"
+            tools:text="00.00°∠" />
+
+        <!-- azimuth -->
+        <TextView android:id="@+id/info_sun_azimuth_current_label" style="@style/SunsetTimeTextView"
+            android:labelFor="@+id/info_sun_azimuth_current"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/info_sun_azimuth_current"
+            app:layout_constraintTop_toBottomOf="@+id/info_sun_elevation_current_label"  android:layout_marginTop="6dp"
+            android:text="@string/widgetLabel_azimuth_short" android:contentDescription="@string/widgetLabel_azimuth" />
+
+        <TextView android:id="@+id/info_sun_azimuth_current"
+            style="@style/SunsetTimeTextView" android:textStyle="bold"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:minWidth="55dp" android:gravity="start|left"
+            app:layout_constraintStart_toEndOf="@+id/info_sun_azimuth_current_label"
+            app:layout_constraintEnd_toStartOf="@+id/sundialog_gutter0"
+            app:layout_constraintTop_toTopOf="@+id/info_sun_azimuth_current_label"
+            app:layout_constraintBottom_toBottomOf="@+id/info_sun_azimuth_current_label"
+            android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+            tools:text="000° WWW" />
+
+        <View android:id="@+id/sundialog_gutter0" android:layout_width="0dp" android:layout_height="1dp" app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/info_sun_azimuth_current"
+            app:layout_constraintEnd_toStartOf="@+id/info_sun_azimuth_rising"
+            app:layout_constraintTop_toTopOf="@+id/info_sun_azimuth_atnoon"
+            android:background="@color/transparent" android:visibility="invisible" />
+
+        <TextView android:id="@+id/info_sun_azimuth_rising" style="@style/SunsetTimeTextView"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/sundialog_gutter0"
+            app:layout_constraintEnd_toStartOf="@+id/info_sun_azimuth_atnoon"
+            app:layout_constraintTop_toTopOf="@+id/info_sun_azimuth_current"
+            app:layout_constraintBottom_toBottomOf="@+id/info_sun_azimuth_current"
+            android:layout_marginLeft="16dp" android:layout_marginStart="16dp"
+            tools:text="000° W" />
+
+        <TextView android:id="@+id/info_sun_azimuth_atnoon" style="@style/SunsetTimeTextView"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/info_sun_azimuth_rising"
+            app:layout_constraintEnd_toStartOf="@+id/info_sun_azimuth_setting"
+            app:layout_constraintTop_toTopOf="@+id/info_sun_azimuth_rising"
+            app:layout_constraintBottom_toBottomOf="@+id/info_sun_azimuth_rising"
+            android:paddingLeft="16dp" android:paddingRight="16dp"
+            tools:text="000° W" />
+
+        <TextView android:id="@+id/info_sun_azimuth_setting" style="@style/SunsetTimeTextView"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/info_sun_azimuth_atnoon"
+            app:layout_constraintEnd_toStartOf="@+id/sundialog_gutter1"
+            app:layout_constraintTop_toTopOf="@+id/info_sun_azimuth_atnoon"
+            app:layout_constraintBottom_toBottomOf="@+id/info_sun_azimuth_atnoon"
+            tools:text="000° W" />
+
+        <View android:id="@+id/sundialog_gutter1" android:layout_width="0dp" android:layout_height="1dp"  app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/info_sun_azimuth_setting"
+            app:layout_constraintTop_toTopOf="@+id/info_sun_azimuth_atnoon"
+            app:layout_constraintEnd_toEndOf="parent" android:background="@color/transparent" android:visibility="invisible" />
+
+    </android.support.constraint.ConstraintLayout>
+
     <com.forrestguice.suntimeswidget.LightMapView
         android:id="@+id/info_time_lightmap"
         android:layout_width="0dp" android:layout_height="32dp"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/info_sun_layout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -41,7 +160,7 @@
     <ImageView
         android:id="@+id/info_time_lightmap_key_night_icon"
         android:layout_width="16dp" android:layout_height="16dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="14dp"
         app:layout_constraintTop_toBottomOf="@+id/info_time_lightmap"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_gravity="center_vertical"

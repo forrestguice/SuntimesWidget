@@ -48,12 +48,16 @@ public class MoonWidget0ConfigActivity_3x1 extends MoonWidget0ConfigActivity
     @Override
     protected void updateWidget(Context context)
     {
+        MoonWidget0_3x1.updateAppWidget(context, AppWidgetManager.getInstance(context), appWidgetId, MoonWidget0_3x1.class, minWidgetSize(context), new MoonLayout_3x1_0());
+    }
+
+    @Override
+    protected int[] minWidgetSize( Context context )
+    {
         int minSize[] = new int[2];
         minSize[0] = context.getResources().getInteger(R.integer.widget_size_minWidthDp3x1);
         minSize[1] = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
-
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        MoonWidget0_3x1.updateAppWidget(context, appWidgetManager, appWidgetId, MoonWidget0_3x1.class, minSize, new MoonLayout_3x1_0());
+        return minSize;
     }
 
     @Override

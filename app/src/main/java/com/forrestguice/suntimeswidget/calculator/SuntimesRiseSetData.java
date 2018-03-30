@@ -230,6 +230,11 @@ public class SuntimesRiseSetData extends SuntimesData
         }
     }
 
+    public void initCalculator()
+    {
+        initCalculator(context);
+    }
+
     /**
      * Calculate
      */

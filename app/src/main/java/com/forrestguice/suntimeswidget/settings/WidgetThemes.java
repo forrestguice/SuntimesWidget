@@ -431,7 +431,7 @@ public class WidgetThemes
                 TextView riseView = (TextView) view.findViewById(R.id.text_time_rise);
                 riseView.setTextColor(theme.getSunriseTextColor());
                 String riseString = riseText.getValue();
-                CharSequence riseSequence = (boldTime ? SuntimesUtils.createBoldSpan(riseString, riseString) : riseString);
+                CharSequence riseSequence = (boldTime ? SuntimesUtils.createBoldSpan(null, riseString, riseString) : riseString);
                 riseView.setText(riseSequence);
 
                 TextView riseViewSuffix = (TextView) view.findViewById(R.id.text_time_rise_suffix);
@@ -441,7 +441,7 @@ public class WidgetThemes
                 TextView setView = (TextView) view.findViewById(R.id.text_time_set);
                 setView.setTextColor(theme.getSunsetTextColor());
                 String setString = setText.getValue();
-                CharSequence setSequence = (boldTime ? SuntimesUtils.createBoldSpan(setString, setString) : setString);
+                CharSequence setSequence = (boldTime ? SuntimesUtils.createBoldSpan(null, setString, setString) : setString);
                 setView.setText(setSequence);
 
                 TextView setViewSuffix = (TextView) view.findViewById(R.id.text_time_set_suffix);
@@ -456,7 +456,7 @@ public class WidgetThemes
 
                 TextView noonView = (TextView)view.findViewById(R.id.text_time_noon);
                 String noonString = noonText.getValue();
-                CharSequence noonSequence = (boldTime ? SuntimesUtils.createBoldSpan(noonString, noonString) : noonString);
+                CharSequence noonSequence = (boldTime ? SuntimesUtils.createBoldSpan(null, noonString, noonString) : noonString);
                 noonView.setText(noonSequence);
                 noonView.setTextColor(theme.getNoonTextColor());
 

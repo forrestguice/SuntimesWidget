@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.themes;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -110,7 +111,7 @@ public class SuntimesThemeTest extends SuntimesActivityTestBase
     public static final String TESTDEF_NAME = "test";
     public static final String TESTDEF_DISPLAYSTRING = "Test";
     public static final int TESTDEF_VERSION = 1;
-    public static final int TESTDEF_BACKGROUND_ID = R.drawable.bg_widget_dark;
+    public static final ThemeBackground TESTDEF_BACKGROUND = ThemeBackground.DARK;
     public static final int[] TESTDEF_PADDING = {1, 2, 3, 4};
     public static final float TESTDEF_TITLESIZE = 10;
     public static final float TESTDEF_TEXTSIZE = 10;
@@ -132,7 +133,7 @@ public class SuntimesThemeTest extends SuntimesActivityTestBase
             this.themeName = TESTDEF_NAME;
             this.themeIsDefault = true;
             this.themeDisplayString = TESTDEF_DISPLAYSTRING;
-            this.themeBackground = TESTDEF_BACKGROUND_ID;
+            this.themeBackground = TESTDEF_BACKGROUND;
             this.themePadding = TESTDEF_PADDING;
             this.themeTitleSize = TESTDEF_TITLESIZE;
             this.themeTextSize = TESTDEF_TEXTSIZE;
