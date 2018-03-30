@@ -40,6 +40,7 @@
 
         <View android:id="@+id/header_gutter3" android:background="@color/transparent" android:visibility="invisible"
             android:layout_width="0dp" android:layout_height="1dp"
+            app:layout_constraintHorizontal_weight="@integer/table_weight0"
             app:layout_constraintStart_toEndOf="@+id/moonphase_view"
             app:layout_constraintEnd_toStartOf="@+id/moonriseset_view"/>
 
@@ -53,6 +54,7 @@
 
         <View android:id="@+id/header_gutter2" android:background="@color/transparent" android:visibility="invisible"
             android:layout_width="0dp" android:layout_height="1dp"
+            app:layout_constraintHorizontal_weight="@integer/table_weight1"
             app:layout_constraintStart_toEndOf="@+id/moonriseset_view"
             app:layout_constraintEnd_toEndOf="parent"/>
 
