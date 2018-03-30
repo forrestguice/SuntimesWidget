@@ -14,7 +14,7 @@
 
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
-*/ 
+*/
 
 package com.forrestguice.suntimeswidget;
 
@@ -45,6 +45,7 @@ import android.text.Spanned;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
+import android.text.style.RelativeSizeSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -63,11 +64,14 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings.TimeFormatMode;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -92,7 +96,17 @@ public class SuntimesUtils
     private static String strHours = "h";
     private static String strMinutes = "m";
     private static String strSeconds = "s";
-    private static String strTimeDeltaFormat = "%1$s" + strEmpty + "%2$s";
+
+    private static String strAltSymbol = "∠";
+    private static String strRaSymbol = "α";
+    private static String strDecSymbol = "δ";
+    private static String strDegreesFormat = "%1$s\u00B0";
+    private static String strDirectionFormat = "%1$s %2$s";
+    private static String strElevationFormat = "%1$s%2$s";
+    private static String strDeclinationFormat = "%1$s %2$s";
+    private static String strRaFormat = "%1$s %2$s";
+
+    private static String strTimeDeltaFormat = "%1$s"  + strEmpty + "%2$s";
     private static String strTimeShortFormat12 = "h:mm\u00A0a";
     private static String strTimeShortFormat12s = "h:mm:ss\u00A0a";
     private static String strTimeVeryShortFormat12 = "h:mm";
@@ -132,6 +146,16 @@ public class SuntimesUtils
         strMinutes = context.getString(R.string.delta_minutes);
         strSeconds = context.getString(R.string.delta_seconds);
 
+        strAltSymbol = context.getString(R.string.widgetLabel_altitude_symbol);
+        strRaSymbol = context.getString(R.string.widgetLabel_rightAscension_symbol);
+        strDecSymbol = context.getString(R.string.widgetLabel_declination_symbol);
+
+        strDegreesFormat = context.getString(R.string.degrees_format);
+        strDirectionFormat = context.getString(R.string.direction_format);
+        strElevationFormat = context.getString(R.string.elevation_format);
+        strRaFormat = context.getString(R.string.rightascension_format);
+        strDeclinationFormat = context.getString(R.string.declination_format);
+
         strTimeDeltaFormat = context.getString(R.string.delta_format);
         strTimeVeryShortFormat12 = context.getString(R.string.time_format_12hr_veryshort);
         strTimeVeryShortFormat24 = context.getString(R.string.time_format_24hr_veryshort);
@@ -154,12 +178,131 @@ public class SuntimesUtils
         strDateShortFormat = context.getString(R.string.date_format_short);
         strDateLongFormat = context.getString(R.string.date_format_long);
 
+        CardinalDirection.initDisplayStrings(context);
         initialized = true;
     }
 
     public static boolean isInitialized()
     {
         return initialized;
+    }
+
+    /**
+     * CardinalDirection
+     */
+    public static enum CardinalDirection
+    {
+        NORTH(1,      "N",   "North"              , 0.0),
+        NORTH_NE(2,   "NNE", "North North East"   , 22.5),
+        NORTH_E(3,    "NE",  "North East"         , 45.0),
+
+        EAST_NE(4,    "ENE", "East North East"    , 67.5),
+        EAST(5,       "E",   "East"               , 90.0),
+        EAST_SE(6,    "ESE", "East South East"    , 112.5),
+
+        SOUTH_E(7,    "SE",  "South East"         , 135.0),
+        SOUTH_SE(8,   "SSE", "South South East"   , 157.5),
+        SOUTH(9,      "S",   "South"              , 180.0),
+        SOUTH_SW(10,  "SSW", "South South West"   , 202.5),
+        SOUTH_W(11,   "SW",  "South West"         , 225.0),
+
+        WEST_SW(12,   "WSW", "West South West"    , 247.5),
+        WEST(13,      "W",   "West"               , 270.0),
+        WEST_NW(14,   "WNW", "West North West"    , 292.5),
+
+        NORTH_W(15,   "NW",  "North West"         , 315.0),
+        NORTH_NW(16,  "NNW", "North North West"   , 337.5),
+        NORTH2(1,     "N",   "North"              , 360.0);
+
+        private int pointNum;
+        private String shortDisplayString;
+        private String longDisplayString;
+        private double degrees;
+
+        private CardinalDirection(int pointNum, String shortDisplayString, String longDisplayString, double degrees)
+        {
+            this.pointNum = pointNum;
+            this.shortDisplayString = shortDisplayString;
+            this.longDisplayString = longDisplayString;
+            this.degrees = degrees;
+        }
+
+        public static CardinalDirection getDirection(double degrees)
+        {
+            if (degrees > 360)
+                degrees = degrees % 360;
+
+            while (degrees < 0)
+                degrees += 360;
+
+            CardinalDirection result = NORTH;
+            double least = Double.MAX_VALUE;
+            for (CardinalDirection direction : values())
+            {
+                double directionDegrees = direction.getDegress();
+                double diff = Math.abs(directionDegrees - degrees);
+                if (diff < least)
+                {
+                    least = diff;
+                    result = direction;
+                }
+            }
+            return result;
+        }
+
+        public String toString()
+        {
+            return shortDisplayString;
+        }
+
+        public double getDegress()
+        {
+            return degrees;
+        }
+
+        public int getPoint()
+        {
+            return pointNum;
+        }
+
+        public String getShortDisplayString()
+        {
+            return shortDisplayString;
+        }
+
+        public String getLongDisplayString()
+        {
+            return longDisplayString;
+        }
+
+        public void setDisplayStrings(String shortDisplayString, String longDisplayString)
+        {
+            this.shortDisplayString = shortDisplayString;
+            this.longDisplayString = longDisplayString;
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            String[] modes_short = context.getResources().getStringArray(R.array.directions_short);
+            String[] modes_long = context.getResources().getStringArray(R.array.directions_long);
+            if (modes_long.length != modes_short.length)
+            {
+                Log.e("initDisplayStrings", "The size of directions_short and solarevents_long DOES NOT MATCH!");
+                return;
+            }
+
+            CardinalDirection[] values = values();
+            if (modes_long.length != values.length)
+            {
+                Log.e("initDisplayStrings", "The size of directions_long and SolarEvents DOES NOT MATCH!");
+                return;
+            }
+
+            for (int i = 0; i < values.length; i++)
+            {
+                values[i].setDisplayStrings(modes_short[i], modes_long[i]);
+            }
+        }
     }
 
     /**
@@ -480,7 +623,7 @@ public class SuntimesUtils
     {
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(timestamp);
-        return calendarDateTimeDisplayString(context, cal);
+        return calendarDateTimeDisplayString(context, cal, true, true);
     }
     public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showTime, boolean showSeconds)
     {
@@ -661,6 +804,65 @@ public class SuntimesUtils
     }
 
     /**
+     * @param value
+     * @return
+     */
+    public String formatAsDegrees(double value)
+    {
+        return String.format(strDegreesFormat, NumberFormat.getNumberInstance().format(value));
+    }
+    public String formatAsDegrees(double value, int places)
+    {
+        NumberFormat formatter = NumberFormat.getInstance();
+        formatter.setMinimumFractionDigits(places);
+        formatter.setMaximumFractionDigits(places);
+        return String.format(strDegreesFormat, formatter.format(value));
+    }
+    public String formatAsDirection(double degreeValue, int places)
+    {
+        String degreeString = formatAsDegrees(degreeValue, places);
+        CardinalDirection direction = CardinalDirection.getDirection(degreeValue);
+        return formatAsDirection(degreeString, direction.getShortDisplayString());
+    }
+    public String formatAsDirection(String degreeString, String directionString)
+    {
+        return String.format(strDirectionFormat, degreeString, directionString);
+    }
+    public TimeDisplayText formatAsDirection2(double degreeValue, int places, boolean longSuffix)
+    {
+        String degreeString = formatAsDegrees(degreeValue, places);
+        CardinalDirection direction = CardinalDirection.getDirection(degreeValue);
+        return new TimeDisplayText(degreeString, "", (longSuffix ? direction.getLongDisplayString() : direction.getShortDisplayString()));
+    }
+
+    public String formatAsElevation(String degreeString, String altitudeSymbol)
+    {
+        return String.format(strElevationFormat, degreeString, altitudeSymbol);
+    }
+    public TimeDisplayText formatAsElevation(double degreeValue, int places)
+    {
+        return new TimeDisplayText(formatAsDegrees(degreeValue, places), "", strAltSymbol);
+    }
+
+    public String formatAsRightAscension(String degreeString, String raSymbol)
+    {
+        return String.format(strRaFormat, degreeString, raSymbol);
+    }
+    public TimeDisplayText formatAsRightAscension(double degreeValue, int places)
+    {
+        return new TimeDisplayText(formatAsDegrees(degreeValue, places), "", strRaSymbol);
+    }
+
+    public String formatAsDeclination(String degreeString, String decSymbol)
+    {
+        return String.format(strDeclinationFormat, degreeString, decSymbol);
+    }
+    public TimeDisplayText formatAsDeclination(double degreeValue, int places)
+    {
+        return new TimeDisplayText(formatAsDegrees(degreeValue, places), "", strDecSymbol);
+    }
+
+    /**
      * Creates a title string from a given "title pattern".
      *
      * The following substitutions are supported:
@@ -691,7 +893,7 @@ public class SuntimesUtils
         displayString = displayString.replaceAll(modePattern, timeMode.getLongDisplayString());
         return displayString;
     }
-    
+
     public String displayStringForTitlePattern(Context context, String titlePattern, SuntimesMoonData data)
     {
         String displayString = displayStringForTitlePattern(context, titlePattern, (SuntimesData)data);
@@ -721,6 +923,12 @@ public class SuntimesUtils
         displayString = displayString.replaceAll(modePatternShort, timeMode.getShortDisplayString());
         displayString = displayString.replaceAll(modePattern, timeMode.getLongDisplayString());
         return displayString;
+    }
+
+    public String displayStringForTitlePattern(Context context, String titlePattern, SuntimesRiseSetDataset dataset)
+    {
+        // TODO
+        return displayStringForTitlePattern(context, titlePattern, dataset.dataActual);
     }
 
     public String displayStringForTitlePattern(Context context, String titlePattern, SuntimesData data)
@@ -795,48 +1003,82 @@ public class SuntimesUtils
         return span;
     }
 
-    public static SpannableString createColorSpan(String text, String toColorize, int color)
+    public static SpannableString createColorSpan(SpannableString span, String text, String toColorize, int color)
     {
-        SpannableString span = new SpannableString(text);
+        if (span == null) {
+            span = new SpannableString(text);
+        }
         int start = text.indexOf(toColorize);
-        int end = start + toColorize.length();
-        span.setSpan(new ForegroundColorSpan(color), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        if (start >= 0)
+        {
+            int end = start + toColorize.length();
+            span.setSpan(new ForegroundColorSpan(color), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
         return span;
     }
-
-    public static SpannableString createBoldSpan(String text, String toBold)
+    public static SpannableString createColorSpan(SpannableString span, String text, String toColorize, int color, boolean bold)
     {
-        SpannableString span = new SpannableString(text);
-        int start = text.indexOf(toBold);
-        int end = start + toBold.length();
-        span.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        return span;
+        if (bold) {
+            span = createBoldSpan(span, text, toColorize);
+        }
+        return createColorSpan(span, text, toColorize, color);
     }
 
-    public static SpannableString createBoldColorSpan(String text, String toBold, int color)
+    public static SpannableString createBoldSpan(SpannableString span, String text, String toBold)
     {
-        SpannableString span = new SpannableString(text);
+        if (span == null) {
+            span = new SpannableString(text);
+        }
         int start = text.indexOf(toBold);
-        int end = start + toBold.length();
-        span.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        span.setSpan(new ForegroundColorSpan(color), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        if (start >= 0)
+        {
+            int end = start + toBold.length();
+            span.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
         return span;
     }
 
-    public static SpannableString createBoldColorSpan(String text, String toBold, int color, int pointSizePixels)
+    public static SpannableString createBoldColorSpan(SpannableString span, String text, String toBold, int color)
     {
-        SpannableString span = new SpannableString(text);
-        int start = text.indexOf(toBold);
-        int end = start + toBold.length();
-        span.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        span.setSpan(new ForegroundColorSpan(color), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        span.setSpan(new AbsoluteSizeSpan(pointSizePixels), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return createColorSpan(createBoldSpan(span, text, toBold), text, toBold, color);
+    }
+
+    public static SpannableString createRelativeSpan(SpannableString span, String text, String toRelative, float relativeSize)
+    {
+        if (span == null) {
+            span = new SpannableString(text);
+        }
+        int start = text.indexOf(toRelative);
+        if (start >= 0)
+        {
+            int end = start + toRelative.length();
+            span.setSpan(new RelativeSizeSpan(relativeSize), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
         return span;
     }
 
-    public static int spToPixels(Context context, int spValue)
+    public static SpannableString createAbsoluteSpan(SpannableString span, String text, String toAbsolute, int pointSizePixels)
+    {
+        if (span == null) {
+            span = new SpannableString(text);
+        }
+        int start = text.indexOf(toAbsolute);
+        if (start >= 0)
+        {
+            int end = start + toAbsolute.length();
+            span.setSpan(new AbsoluteSizeSpan(pointSizePixels), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        return span;
+    }
+
+    public static int spToPixels(Context context, float spValue)
     {
         return (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, spValue, context.getResources().getDisplayMetrics());
+    }
+
+    public static int dpToPixels(Context context, float dpValue)
+    {
+        return (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpValue, context.getResources().getDisplayMetrics());
     }
 
     public static ImageSpan createWarningSpan(Context context, int height)
@@ -1247,4 +1489,5 @@ public class SuntimesUtils
             }
         }
     }
+
 }

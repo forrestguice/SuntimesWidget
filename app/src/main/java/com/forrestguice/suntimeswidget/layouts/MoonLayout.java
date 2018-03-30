@@ -63,7 +63,7 @@ public abstract class MoonLayout extends SuntimesLayout
         // update title
         String titlePattern = WidgetSettings.loadTitleTextPref(context, appWidgetId);
         String titleText = utils.displayStringForTitlePattern(context, titlePattern, data);
-        CharSequence title = (boldTitle ? SuntimesUtils.createBoldSpan(titleText, titleText) : titleText);
+        CharSequence title = (boldTitle ? SuntimesUtils.createBoldSpan(null, titleText, titleText) : titleText);
         views.setTextViewText(R.id.text_title, title);
         //Log.v("DEBUG", "title text: " + titleText);
     }
@@ -72,13 +72,13 @@ public abstract class MoonLayout extends SuntimesLayout
     {
         SuntimesUtils.TimeDisplayText riseText = utils.calendarTimeShortDisplayString(context, data.moonriseCalendarToday(), showSeconds);
         String riseString = riseText.getValue();
-        CharSequence riseSequence = (boldTime ? SuntimesUtils.createBoldSpan(riseString, riseString) : riseString);
+        CharSequence riseSequence = (boldTime ? SuntimesUtils.createBoldSpan(null, riseString, riseString) : riseString);
         views.setTextViewText(R.id.text_time_moonrise, riseSequence);
         views.setTextViewText(R.id.text_time_moonrise_suffix, riseText.getSuffix());
 
         SuntimesUtils.TimeDisplayText setText = utils.calendarTimeShortDisplayString(context, data.moonsetCalendarToday(), showSeconds);
         String setString = setText.getValue();
-        CharSequence setSequence = (boldTime ? SuntimesUtils.createBoldSpan(setString, setString) : setString);
+        CharSequence setSequence = (boldTime ? SuntimesUtils.createBoldSpan(null, setString, setString) : setString);
         views.setTextViewText(R.id.text_time_moonset, setSequence);
         views.setTextViewText(R.id.text_time_moonset_suffix, setText.getSuffix());
     }

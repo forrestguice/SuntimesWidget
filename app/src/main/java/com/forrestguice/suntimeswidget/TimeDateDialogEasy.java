@@ -31,11 +31,8 @@ import android.support.v7.app.AlertDialog;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.ScrollView;
-import android.widget.Spinner;
 
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -46,8 +43,6 @@ public class TimeDateDialogEasy extends DialogFragment
 {
     public static final String KEY_TIMEDATE_APPWIDGETID = "appwidgetid";
 
-    private Spinner spinner_dateMode;
-    private ScrollView scroll;
     private DatePicker picker;
 
     public void init(Calendar date)
@@ -60,14 +55,7 @@ public class TimeDateDialogEasy extends DialogFragment
     }
     public void init(int year, int month, int day)
     {
-        picker.init(year, month, day, new DatePicker.OnDateChangedListener() {
-            @Override
-            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth)
-            {
-                WidgetSettings.DateMode dateMode = (isToday() ? WidgetSettings.DateMode.CURRENT_DATE : WidgetSettings.DateMode.CUSTOM_DATE);
-                spinner_dateMode.setSelection(dateMode.ordinal());
-            }
-        });
+        picker.init(year, month, day, null);
     }
 
     /**
@@ -76,17 +64,7 @@ public class TimeDateDialogEasy extends DialogFragment
      */
     private void initViews(Context context, View dialogContent)
     {
-        ArrayAdapter<WidgetSettings.DateMode> spinner_dateModeAdapter;
-        spinner_dateModeAdapter = new ArrayAdapter<WidgetSettings.DateMode>(context, R.layout.layout_listitem_oneline, WidgetSettings.DateMode.values());
-        spinner_dateModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinner_dateMode = (Spinner) dialogContent.findViewById(R.id.appwidget_date_mode);
-        spinner_dateMode.setAdapter(spinner_dateModeAdapter);
-        spinner_dateMode.setEnabled(false);
-
         picker = (DatePicker) dialogContent.findViewById(R.id.appwidget_date_custom);
-        scroll = (ScrollView) dialogContent.findViewById(R.id.appwidget_date_scroll);
-        scroll.scrollTo(0, 0);
     }
 
     /**
@@ -103,7 +81,7 @@ public class TimeDateDialogEasy extends DialogFragment
 
         LayoutInflater inflater = myParent.getLayoutInflater();
         @SuppressLint("InflateParams")
-        View dialogContent = inflater.inflate(R.layout.layout_dialog_date, null);
+        View dialogContent = inflater.inflate(R.layout.layout_dialog_date1, null);
 
         Resources r = getResources();
         int padding = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, r.getDisplayMetrics());
@@ -151,7 +129,7 @@ public class TimeDateDialogEasy extends DialogFragment
         dialog.setOnShowListener(new DialogInterface.OnShowListener()
         {
             @Override
-            public void onShow(DialogInterface dialog)
+            public void onShow(final DialogInterface dialog)
             {
                 Button neutralButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_NEUTRAL);
                 neutralButton.setOnClickListener(new View.OnClickListener()
@@ -159,7 +137,11 @@ public class TimeDateDialogEasy extends DialogFragment
                     @Override
                     public void onClick(View view)
                     {
+                        boolean alreadyToday = isToday();
                         init(Calendar.getInstance());
+                        if (alreadyToday) {
+                            ((AlertDialog) dialog).getButton(DialogInterface.BUTTON_POSITIVE).performClick();
+                        }
                     }
                 });
             }
@@ -204,8 +186,6 @@ public class TimeDateDialogEasy extends DialogFragment
     protected void loadSettings(Context context)
     {
         WidgetSettings.DateMode mode = WidgetSettings.loadDateModePref(context, appWidgetId);
-        spinner_dateMode.setSelection(mode.ordinal());
-
         if (mode == WidgetSettings.DateMode.CURRENT_DATE)
         {
             init(Calendar.getInstance());
@@ -274,7 +254,7 @@ public class TimeDateDialogEasy extends DialogFragment
         return isToday(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH));
     }
 
-    public boolean isToday( int year, int month, int day)
+    public boolean isToday(int year, int month, int day)
     {
         return (year == picker.getYear() && month == picker.getMonth() && day == picker.getDayOfMonth());
     }

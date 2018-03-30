@@ -495,7 +495,7 @@ public class SuntimesNotes3 implements SuntimesNotes
             if (note.time != null)
             {
                 long timeUntil = note.time.getTime() - time.getTime();
-                if (timeUntil < nearestTime || nearestTime < 0)
+                if ((timeUntil > 0 && timeUntil < nearestTime) || nearestTime < 0)
                 {
                     nearestTime = timeUntil;
                     nearestNote = note;
@@ -503,7 +503,7 @@ public class SuntimesNotes3 implements SuntimesNotes
             }
         }
 
-        //Log.d("resetNoteIndex", "reset to " + nearestNote.noteMode);
+        //Log.d("DEBUG", "note reset to " + nearestNote.noteMode);
         WidgetSettings.saveTimeNoteRisePref(context, 0, nearestNote.noteMode);
     }
 

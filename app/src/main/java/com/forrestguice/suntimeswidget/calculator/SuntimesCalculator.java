@@ -29,7 +29,7 @@ import java.util.TimeZone;
  * An interface used when calculating sunrise and sunset times. Implementations
  * of this interface are intended to be thin wrappers around third party code.
  *
- * @version 1.3.0
+ * @version 1.4.0
  */
 public interface SuntimesCalculator
 {
@@ -38,6 +38,7 @@ public interface SuntimesCalculator
     int FEATURE_ALTITUDE = 20;    // feature: altitude based refinement
     int FEATURE_GOLDBLUE = 30;    // feature: gold, blue hour times
     int FEATURE_MOON = 40;        // feature: moonrise, moonset, phase, illumination
+    int FEATURE_POSITION = 50;    // feature: sun position (elevation, azimuth, etc)
 
     //
     // 1.0.0 sunrise, sunset, noon, twilight times
@@ -250,11 +251,11 @@ public interface SuntimesCalculator
 
     /**
      * MoonIllumination
-     * @param date a Calendar representing a given date
+     * @param dateTime a Calendar representing a given date
      * @return an illumination value [0,1] (0%-100%)
      * @since 1.3.0
      */
-    double getMoonIlluminationForDate(Calendar date);
+    double getMoonIlluminationForDate(Calendar dateTime);
 
     /**
      * Get the date of the next major moon phase.
@@ -270,4 +271,24 @@ public interface SuntimesCalculator
         private MoonPhase() {}
     }
 
+
+    //
+    // 1.4.0 sun position
+    //
+
+    /**
+     * Get the sun's azimuth and elevation (and/or rightAscension and declination).
+     * @param dateTime a Calendar representing a given date + time
+     * @return a SunPosition obj wrapping azimuth, elevation, etc
+     * @since 1.4.0
+     */
+    SunPosition getSunPosition(Calendar dateTime);
+    class SunPosition
+    {
+        public double azimuth;
+        public double elevation;
+
+        public double rightAscension;
+        public double declination;
+    }
 }

@@ -222,7 +222,11 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 Log.w("LightmapTask", "Invalid params; using [null, 0, 0]");
                 return null;
             }
+            return makeBitmap(data, w, h, colors);
+        }
 
+        public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, LightMapColors colors )
+        {
             if (w <= 0 || h <= 0)
             {
                 return null;
@@ -233,6 +237,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 return null;
             }
 
+            this.colors = colors;
             Bitmap b = Bitmap.createBitmap(w, h, Bitmap.Config.RGB_565);
             Canvas c = new Canvas(b);
             Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -394,11 +399,11 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         }
 
         private LightMapTaskListener listener = null;
-        void setListener( LightMapTaskListener listener )
+        public void setListener( LightMapTaskListener listener )
         {
             this.listener = listener;
         }
-        void clearListener()
+        public void clearListener()
         {
             this.listener = null;
         }
@@ -421,6 +426,10 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     {
         public int colorDay, colorCivil, colorNautical, colorAstro, colorNight;
         public int colorPointFill, colorPointStroke;
+
+        public LightMapColors()
+        {
+        }
 
         public LightMapColors( int colorDay, int colorCivil, int colorNautical, int colorAstro, int colorNight, int colorPointFill, int colorPointStroke )
         {
@@ -455,6 +464,28 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             colorPointStroke = ContextCompat.getColor(context, typedArray.getResourceId(6, def));
 
             typedArray.recycle();
+        }
+
+        public void initDefaultDark(Context context)
+        {
+            colorDay = ContextCompat.getColor(context, R.color.graphColor_day_dark);
+            colorCivil = ContextCompat.getColor(context, R.color.graphColor_civil_dark);
+            colorNautical = ContextCompat.getColor(context, R.color.graphColor_nautical_dark);
+            colorAstro = ContextCompat.getColor(context, R.color.graphColor_astronomical_dark);
+            colorNight = ContextCompat.getColor(context, R.color.graphColor_night_dark);
+            colorPointFill = ContextCompat.getColor(context, R.color.sunIcon_color_setting_dark);
+            colorPointStroke = ContextCompat.getColor(context, R.color.grey_800);
+        }
+
+        public void initDefaultLight(Context context)
+        {
+            colorDay = ContextCompat.getColor(context, R.color.graphColor_day_light);
+            colorCivil = ContextCompat.getColor(context, R.color.graphColor_civil_light);
+            colorNautical = ContextCompat.getColor(context, R.color.graphColor_nautical_light);
+            colorAstro = ContextCompat.getColor(context, R.color.graphColor_astronomical_light);
+            colorNight = ContextCompat.getColor(context, R.color.graphColor_night_light);
+            colorPointFill = ContextCompat.getColor(context, R.color.sunIcon_color_setting_light);
+            colorPointStroke = ContextCompat.getColor(context, R.color.grey_800);
         }
     }
 

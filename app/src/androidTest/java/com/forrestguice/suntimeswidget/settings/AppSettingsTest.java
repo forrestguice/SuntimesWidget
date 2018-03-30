@@ -79,7 +79,7 @@ public class AppSettingsTest extends SuntimesActivityTestBase
     public void test_showWarningsPref()
     {
         boolean defaultValue0 = AppSettings.PREF_DEF_UI_SHOWWARNINGS;
-        boolean defaultValue1 = new Boolean(context.getResources().getString(R.string.def_app_ui_showwarnings));
+        boolean defaultValue1 = Boolean.valueOf(context.getResources().getString(R.string.def_app_ui_showwarnings));
         assertTrue("defaults should match", defaultValue0 == defaultValue1);
 
         boolean value = AppSettings.loadShowWarningsPref(context);
@@ -101,7 +101,7 @@ public class AppSettingsTest extends SuntimesActivityTestBase
     public void test_showLightmapPref()
     {
         boolean defaultValue0 = AppSettings.PREF_DEF_UI_SHOWLIGHTMAP;
-        boolean defaultValue1 = new Boolean(context.getResources().getString(R.string.def_app_ui_showlightmap));
+        boolean defaultValue1 = Boolean.valueOf(context.getResources().getString(R.string.def_app_ui_showlightmap));
         assertTrue("defaults should match", defaultValue0 == defaultValue1);
 
         boolean value = AppSettings.loadShowLightmapPref(context);
@@ -111,7 +111,7 @@ public class AppSettingsTest extends SuntimesActivityTestBase
     public void test_showEquinoxPref()
     {
         boolean defaultValue0 = AppSettings.PREF_DEF_UI_SHOWEQUINOX;
-        boolean defaultValue1 = new Boolean(context.getResources().getString(R.string.def_app_ui_showequinox));
+        boolean defaultValue1 = Boolean.valueOf(context.getResources().getString(R.string.def_app_ui_showequinox));
         assertTrue("defaults should match", defaultValue0 == defaultValue1);
 
         boolean value = AppSettings.loadShowEquinoxPref(context);
@@ -121,7 +121,7 @@ public class AppSettingsTest extends SuntimesActivityTestBase
     public void test_showDataSourcePref()
     {
         boolean defaultValue0 = AppSettings.PREF_DEF_UI_SHOWDATASOURCE;
-        boolean defaultValue1 = new Boolean(context.getResources().getString(R.string.def_app_ui_showdatasource));
+        boolean defaultValue1 = Boolean.valueOf(context.getResources().getString(R.string.def_app_ui_showdatasource));
         assertTrue("defaults should match", defaultValue0 == defaultValue1);
 
         boolean value = AppSettings.loadDatasourceUIPref(context);

@@ -39,7 +39,7 @@ import java.util.Calendar;
  */
 public class SolsticeWidget0 extends SuntimesWidget0
 {
-    public static final String SUNTIMES_WIDGET_UPDATE2 = "suntimes.SOLSTICE_WIDGET_UPDATE";
+    public static final String SOLSTICE_WIDGET_UPDATE = "suntimes.SOLSTICE_WIDGET_UPDATE";
     private static final int UPDATEALARM_ID = 3;
 
     @Override
@@ -51,11 +51,11 @@ public class SolsticeWidget0 extends SuntimesWidget0
     @Override
     protected String getUpdateIntentFilter()
     {
-        return SolsticeWidget0.SUNTIMES_WIDGET_UPDATE2;
+        return SolsticeWidget0.SOLSTICE_WIDGET_UPDATE;
     }
 
     /**
-     * @return an update alarm identifier for this class (SolsticeWidget0: 2)
+     * @return an update alarm identifier for this class (SolsticeWidget0: 3)
      */
     @Override
     protected int getUpdateAlarmId()
@@ -73,7 +73,7 @@ public class SolsticeWidget0 extends SuntimesWidget0
     protected long getUpdateTimeMillis()
     {
         Calendar updateTime = Calendar.getInstance();
-        updateTime.add(Calendar.SECOND, 1);
+        updateTime.add(Calendar.SECOND, (int)(getUpdateInterval() / 1000));
         return updateTime.getTimeInMillis();
     }
 
