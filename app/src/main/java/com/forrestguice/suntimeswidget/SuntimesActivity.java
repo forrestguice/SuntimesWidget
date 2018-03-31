@@ -336,8 +336,8 @@ public class SuntimesActivity extends AppCompatActivity
         EquinoxDialog equinoxDialog = (EquinoxDialog) fragments.findFragmentByTag(DIALOGTAG_EQUINOX);
         if (equinoxDialog != null)
         {
-            equinoxDialog.setData(dataset2);
-            equinoxDialog.updateViews(dataset2);
+            equinoxDialog.setData((dataset2 != null) ? dataset2 : new SuntimesEquinoxSolsticeDataset(SuntimesActivity.this));
+            equinoxDialog.updateViews();
             //Log.d("DEBUG", "EquinoxDialog updated on restore.");
         }
     }
