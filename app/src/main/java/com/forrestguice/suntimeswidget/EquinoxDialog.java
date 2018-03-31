@@ -89,7 +89,7 @@ public class EquinoxDialog extends DialogFragment
         equinoxView = (EquinoxView) dialogView.findViewById(R.id.info_time_equinox);
     }
 
-    public void updateViews( SuntimesEquinoxSolsticeDataset data )
+    public void updateViews()
     {
         if (equinoxView != null)
         {
