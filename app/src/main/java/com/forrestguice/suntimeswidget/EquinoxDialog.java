@@ -40,6 +40,10 @@ public class EquinoxDialog extends DialogFragment
     private SuntimesEquinoxSolsticeDataset data;
     public void setData( SuntimesEquinoxSolsticeDataset data )
     {
+        if (data != null && !data.isCalculated() && data.isImplemented())
+        {
+            data.calculateData();
+        }
         this.data = data;
     }
 

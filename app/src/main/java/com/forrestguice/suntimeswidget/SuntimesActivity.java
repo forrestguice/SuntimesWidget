@@ -2128,7 +2128,7 @@ public class SuntimesActivity extends AppCompatActivity
     protected void showEquinoxDialog()
     {
         EquinoxDialog equinoxDialog = new EquinoxDialog();
-        equinoxDialog.setData(dataset2);
+        equinoxDialog.setData((dataset2 != null) ? dataset2 : new SuntimesEquinoxSolsticeDataset(SuntimesActivity.this));
         equinoxDialog.show(getSupportFragmentManager(), DIALOGTAG_EQUINOX);
     }
 
