@@ -159,7 +159,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/lightmap_height"
                     android:layout_gravity="top"
-                    tools:ignore="ContentDescription" />
+                    android:contentDescription="@string/configAction_sunDialog" />
 
                 <View
                     android:layout_width="match_parent" android:layout_height="6dp"
