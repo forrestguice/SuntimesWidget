@@ -1357,11 +1357,17 @@ public class SuntimesActivity extends AppCompatActivity
      */
     protected void showHelp()
     {
-        String topic1 = getString(R.string.help_general_timeMode);
-        String topic2 = getString(R.string.help_general_daylength);
-        String topic3 = getString(R.string.help_general_goldhour);
-        String topic4 = getString(R.string.help_general_bluehour);
-        String helpText = getString(R.string.help_general4, topic1, topic2, topic3, topic4);
+        String timeModes = getString(R.string.help_general_timeMode);
+        String dayLength = getString(R.string.help_general_daylength);
+        String timeText = getString(R.string.help_general2, timeModes, dayLength);
+
+        String goldHour = getString(R.string.help_general_goldhour);
+        String blueHour = getString(R.string.help_general_bluehour);
+        String blueGoldText = getString(R.string.help_general2, blueHour, goldHour);
+
+        String moonIllum = getString(R.string.help_general_moonillum);
+
+        String helpText = getString(R.string.help_general3, timeText, blueGoldText, moonIllum);
 
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(helpText);
