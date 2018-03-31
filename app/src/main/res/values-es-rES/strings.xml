@@ -167,6 +167,8 @@
     <!-- Widget Setting: general -->
     <string name="configLabel_general">Opciones generales</string>                <!-- group title -->
     <string name="configLabel_general_calculator">Fuente de datos:</string>         <!-- spinner label -->
+    <string name="configLabel_general_calculator_sun">Sun Data Source</string>         <!-- preference label -->  <!-- TODO -->
+    <string name="configLabel_general_calculator_moon">Moon Data Source</string>         <!-- preference label --> <!-- TODO -->
 
     <string name="configLabel_general_showSeconds">Mostrar segundos</string>        <!-- checkbox label -->
     <string name="configLabel_general_showSeconds_summary">Include seconds when displaying times.</string>        <!-- checkbox label --> <!-- TODO -->
@@ -305,7 +307,7 @@
     <string name="timeFormatMode_12hr">12 horas</string>                  <!-- setting -->
     <string name="timeFormatMode_24hr">24 horas</string>                  <!-- setting -->
 
-    <string name="configLabel_timeFormatMode">Formato de hora:</string>             <!-- spinner label -->
+    <string name="configLabel_timeFormatMode">Formato de hora</string>             <!-- preference label -->
     <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
 
     <!-- Widget Setting: date mode -->
