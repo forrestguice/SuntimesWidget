@@ -37,6 +37,10 @@ public class MoonDialog extends DialogFragment
     private SuntimesMoonData data;
     public void setData( SuntimesMoonData data )
     {
+        if (data != null && !data.isCalculated() && data.isImplemented())
+        {
+            data.calculate();
+        }
         this.data = data;
     }
 

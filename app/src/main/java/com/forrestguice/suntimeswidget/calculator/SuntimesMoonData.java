@@ -165,6 +165,14 @@ public class SuntimesMoonData extends SuntimesData
     }
 
     /**
+     * @return true the calculator has features needed to calculate the data, false otherwise
+     */
+    public boolean isImplemented()
+    {
+        return calculatorMode.hasRequestedFeature(SuntimesCalculator.FEATURE_MOON);
+    }
+
+    /**
      * calculate
      */
     public void calculate()
