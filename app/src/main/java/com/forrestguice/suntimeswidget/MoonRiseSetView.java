@@ -18,15 +18,12 @@
 package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.text.SpannableString;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,13 +31,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
-import java.text.NumberFormat;
 import java.util.Calendar;
 
 @SuppressWarnings("Convert2Diamond")
@@ -214,20 +208,62 @@ public class MoonRiseSetView extends LinearLayout
         }
     }
 
+    private Calendar midday(@NonNull Calendar other)
+    {
+        Calendar midday = (Calendar)other.clone();
+        midday.set(Calendar.HOUR_OF_DAY, 12);
+        midday.set(Calendar.MINUTE, 0);
+        midday.set(Calendar.SECOND, 0);
+        return midday;
+    }
+
     private void reorderLayout( Calendar riseTime, Calendar setTime )
     {
         clearLayout();
         updateMargins(getContext());
+
         if (tomorrowMode)
         {
-            if (riseTime.before(setTime))
+            if (riseTime == null && setTime == null)
+            {   // special case: no rise or set
                 addLayout0(settingTextField, risingTextField1, settingTextField1);
-            else addLayout0(risingTextField, settingTextField1, risingTextField1);
+
+            } else if (setTime == null) {    // special case: no set time
+                if (riseTime.before(midday(riseTime)))
+                    addLayout0(settingTextField, risingTextField1, settingTextField1);
+                else addLayout0(risingTextField, settingTextField1, risingTextField1);
+
+            } else if (riseTime == null) {    // special case: no rise time
+                if (setTime.before(midday(setTime)))
+                    addLayout0(risingTextField, settingTextField1, risingTextField1);
+                else addLayout0(settingTextField, risingTextField1, settingTextField1);
+
+            } else {
+                if (riseTime.before(setTime))
+                    addLayout0(settingTextField, risingTextField1, settingTextField1);
+                else addLayout0(risingTextField, settingTextField1, risingTextField1);
+            }
 
         } else {
-            if (riseTime.before(setTime))
+            if (riseTime == null && setTime == null)
+            {   // special case: no rise or set
                 addLayout1(risingTextField, settingTextField, risingTextField1);
-            else addLayout1(settingTextField, risingTextField, settingTextField1);
+
+            } else if (setTime == null) {    // special case: no set time
+                if (riseTime.before(midday(riseTime)))
+                    addLayout1(risingTextField, settingTextField, risingTextField1);
+                else addLayout1(settingTextField, risingTextField, settingTextField1);
+
+            } else if (riseTime == null) {    // special case: no rise time
+                if (setTime.before(midday(setTime)))
+                    addLayout1(settingTextField, risingTextField, settingTextField1);
+                else addLayout1(risingTextField, settingTextField, risingTextField1);
+
+            } else {
+                if (riseTime.before(setTime))
+                    addLayout1(risingTextField, settingTextField, risingTextField1);
+                else addLayout1(settingTextField, risingTextField, settingTextField1);
+            }
         }
     }
 
