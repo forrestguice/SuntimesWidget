@@ -29,7 +29,7 @@
         android:orientation="horizontal" android:layout_marginTop="4dp">
 
         <com.forrestguice.suntimeswidget.MoonPhaseView
-            android:id="@+id/moonphase_view"
+            android:id="@+id/moonphase_view" app:illuminationAtLunarNoon="false"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
             android:layout_marginBottom="4dp"
