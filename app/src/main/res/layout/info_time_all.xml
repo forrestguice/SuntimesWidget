@@ -396,6 +396,7 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toTopOf="@+id/text_time_label_moon"
+            app:layout_constraintBottom_toBottomOf="@+id/moonphase_view"
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunset" />
 
     </android.support.constraint.ConstraintLayout>
