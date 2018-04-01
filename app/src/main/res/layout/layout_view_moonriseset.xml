@@ -24,7 +24,7 @@
         <LinearLayout android:id="@+id/moonriseset_layout"
             android:layout_width="wrap_content" android:layout_height="wrap_content">
 
-            <LinearLayout android:id="@+id/moonrise_layout"
+            <LinearLayout android:id="@+id/moonrise_layout" android:visibility="gone"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginLeft="@dimen/table_set_leftMargin" android:layout_marginRight="0dp"
@@ -46,7 +46,7 @@
                     tools:text="00:00 AM" />
             </LinearLayout>
 
-            <LinearLayout android:id="@+id/moonset_layout"
+            <LinearLayout android:id="@+id/moonset_layout" android:visibility="gone"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginLeft="@dimen/table_set_leftMargin" android:layout_marginRight="0dp"
@@ -68,7 +68,7 @@
                     tools:text="00:00 PM" />
             </LinearLayout>
 
-            <View android:id="@+id/divider_moon1"
+            <View android:id="@+id/divider_moon1" android:visibility="gone"
                 android:layout_width="1dp" android:layout_height="match_parent"
                 android:layout_marginLeft="4dp" android:layout_marginRight="4dp"
                 android:background="?hrColor" />

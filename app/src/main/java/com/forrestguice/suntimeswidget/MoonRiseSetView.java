@@ -203,7 +203,9 @@ public class MoonRiseSetView extends LinearLayout
         risingTextField1.removeFromLayout(content);
         settingTextField1.removeFromLayout(content);
 
-        if (divider != null) {
+        if (divider != null)
+        {
+            divider.setVisibility(View.GONE);
             content.removeView(divider);
         }
     }
@@ -273,6 +275,7 @@ public class MoonRiseSetView extends LinearLayout
         {
             field1.addToLayout(content);
             if (divider != null) {
+                divider.setVisibility(View.VISIBLE);
                 content.addView(divider);
             }
         }
@@ -287,6 +290,7 @@ public class MoonRiseSetView extends LinearLayout
         if (showExtraField)
         {
             if (divider != null) {
+                divider.setVisibility(View.VISIBLE);
                 content.addView(divider);
             }
             field3.addToLayout(content);
@@ -346,13 +350,19 @@ public class MoonRiseSetView extends LinearLayout
         public void addToLayout(@NonNull LinearLayout parent)
         {
             if (layout != null)
+            {
+                layout.setVisibility(View.VISIBLE);
                 parent.addView(layout);
+            }
         }
 
         public void removeFromLayout(@NonNull LinearLayout parent)
         {
             if (layout != null)
+            {
                 parent.removeView(layout);
+                layout.setVisibility(View.GONE);
+            }
         }
 
     }
