@@ -106,6 +106,11 @@ public class SuntimesMoonData extends SuntimesData
     {
         return moonIlluminationToday;
     }
+    private double moonIlluminationTomorrow;
+    public double getMoonIlluminationTomorrow()
+    {
+        return moonIlluminationTomorrow;
+    }
     public double getMoonIlluminationNow()
     {
         return (calculator != null ? calculator.getMoonIlluminationForDate(now()) : -1);
@@ -114,7 +119,7 @@ public class SuntimesMoonData extends SuntimesData
     /**
      * result: moon transit time
      */
-    private Calendar noonToday;
+    private Calendar noonToday, noonTomorrow;
     public Calendar getLunarNoonToday()
     {
         return noonToday;
@@ -213,6 +218,14 @@ public class SuntimesMoonData extends SuntimesData
                 }
             }
         }
+
+        if (noonToday != null)
+        {
+            noonTomorrow = (Calendar)noonToday.clone();
+            noonTomorrow.add(Calendar.DAY_OF_MONTH, 1);
+            noonTomorrow.add(Calendar.MINUTE, 50);   // approximate noon tomorrow
+        }
+
         SuntimesUtils utils = new SuntimesUtils();
         //Log.d("DEBUG", "lunar noon at " + utils.calendarDateTimeDisplayString(context, noonToday));
 
@@ -223,6 +236,12 @@ public class SuntimesMoonData extends SuntimesData
         if (moonIllumination >= 0)
         {
             this.moonIlluminationToday = moonIllumination;
+        }
+
+        double moonIllumination1 = ((noonTomorrow != null) ? calculator.getMoonIlluminationForDate(noonTomorrow) : moonIllumination);
+        if (moonIllumination1 >= 0)
+        {
+            this.moonIlluminationTomorrow = moonIllumination1;
         }
 
         Calendar midnight = midnight();
