@@ -18,15 +18,19 @@
 package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -99,6 +103,16 @@ public class MoonRiseSetView extends LinearLayout
         {
             updateViews(context, null);
         }
+    }
+
+    private boolean showExtraField = true;
+    public void setShowExtraField( boolean value )
+    {
+        showExtraField = value;
+    }
+    public boolean showExtraField()
+    {
+        return showExtraField;
     }
 
     private int noteColor;
@@ -202,6 +216,15 @@ public class MoonRiseSetView extends LinearLayout
                 content.addView(divider);
             }
             settingTextField1.addToLayout(content);
+    private void updateMargins(Context context)
+    {
+        if (context != null && showExtraField)
+        {
+            int margins = SuntimesUtils.dpToPixels(context, getResources().getDimension(R.dimen.table_moon_startEndMargin));
+            risingTextField.setMarginStartEnd(margins, margins);
+            risingTextField1.setMarginStartEnd(margins, margins);
+            settingTextField.setMarginStartEnd(margins, margins);
+            settingTextField1.setMarginStartEnd(margins, margins);
         }
     }
 
@@ -223,6 +246,24 @@ public class MoonRiseSetView extends LinearLayout
         {
             SuntimesUtils.TimeDisplayText text = utils.calendarTimeShortDisplayString(context, dateTime, showSeconds);
             textView.setText(text.toString());
+        }
+
+        public void setMarginStartEnd( int startMargin, int endMargin )
+        {
+            if (layout.getLayoutParams() instanceof ViewGroup.MarginLayoutParams)
+            {
+                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) layout.getLayoutParams();
+                if (Build.VERSION.SDK_INT < 17)
+                {
+                    params.setMargins(startMargin, 0, endMargin, 0);
+
+                } else if (layout.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+                    params.setMarginStart(startMargin);
+                    params.setMarginEnd(endMargin);
+                }
+                layout.setLayoutParams(params);
+                layout.requestLayout();
+            }
         }
 
         public void addToLayout(@NonNull LinearLayout parent)
