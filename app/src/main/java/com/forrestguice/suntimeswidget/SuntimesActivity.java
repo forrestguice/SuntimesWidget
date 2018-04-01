@@ -185,6 +185,7 @@ public class SuntimesActivity extends AppCompatActivity
     private TextView txt_daylength,         txt_daylength2;
     private TextView txt_lightlength,       txt_lightlength2;
 
+    private TextView moonlabel,             moonlabel2;
     private MoonPhaseView moonphase,        moonphase2;
     private MoonRiseSetView moonrise,       moonrise2;
 
@@ -947,6 +948,7 @@ public class SuntimesActivity extends AppCompatActivity
             txt_daylength = (TextView) viewToday.findViewById(R.id.text_daylength);
             txt_lightlength = (TextView) viewToday.findViewById(R.id.text_lightlength);
 
+            moonlabel = (TextView) viewToday.findViewById(R.id.text_time_label_moon);
             moonphase = (MoonPhaseView) viewToday.findViewById(R.id.moonphase_view);
             moonrise = (MoonRiseSetView) viewToday.findViewById(R.id.moonriseset_view);
             moonrise.setShowExtraField(false);
@@ -1021,6 +1023,7 @@ public class SuntimesActivity extends AppCompatActivity
             txt_daylength2 = (TextView) viewTomorrow.findViewById(R.id.text_daylength);
             txt_lightlength2 = (TextView) viewTomorrow.findViewById(R.id.text_lightlength);
 
+            moonlabel2 = (TextView) viewTomorrow.findViewById(R.id.text_time_label_moon);
             moonphase2 = (MoonPhaseView) viewTomorrow.findViewById(R.id.moonphase_view);
             moonrise2 = (MoonRiseSetView) viewTomorrow.findViewById(R.id.moonriseset_view);
             moonrise2.setShowExtraField(false);
@@ -2157,8 +2160,13 @@ public class SuntimesActivity extends AppCompatActivity
      */
     protected void showMoonrise( boolean value )
     {
-        int visibility = (value ? View.VISIBLE : View.INVISIBLE);
-        // TODO
+        int visibility = (value ? View.VISIBLE : View.GONE);
+        moonlabel.setVisibility(visibility);
+        moonrise.setVisibility(visibility);
+        moonphase.setVisibility(visibility);
+        moonlabel2.setVisibility(visibility);
+        moonrise2.setVisibility(visibility);
+        moonphase2.setVisibility(visibility);
     }
 
     /**
