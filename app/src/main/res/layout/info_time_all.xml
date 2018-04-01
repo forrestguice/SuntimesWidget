@@ -375,6 +375,29 @@
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
             tools:text="12:20 PM"/>
 
+        <!-- Moon -->
+        <TextView
+            android:id="@+id/text_time_label_moon"
+            style="@style/SunsetTimeTextView"
+            android:layout_marginBottom="@dimen/table_cell_spacing"
+            android:layout_marginTop="@dimen/table_cell_spacing"
+            android:text="@string/timeMode_moon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_time_label_noon" />
+
+        <com.forrestguice.suntimeswidget.MoonPhaseView
+            android:id="@+id/moonphase_view"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_time_label_moon" />
+
+        <com.forrestguice.suntimeswidget.MoonRiseSetView
+            android:id="@+id/moonriseset_view"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="@+id/text_time_label_moon"
+            app:layout_constraintEnd_toEndOf="@+id/header_time_sunset" />
+
     </android.support.constraint.ConstraintLayout>
 
 </merge>

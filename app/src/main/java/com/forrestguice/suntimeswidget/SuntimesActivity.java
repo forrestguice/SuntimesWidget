@@ -185,6 +185,9 @@ public class SuntimesActivity extends AppCompatActivity
     private TextView txt_daylength,         txt_daylength2;
     private TextView txt_lightlength,       txt_lightlength2;
 
+    private MoonPhaseView moonphase,        moonphase2;
+    private MoonRiseSetView moonrise,       moonrise2;
+
     private EquinoxView card_equinoxSolstice;
     private View equinoxLayout;
 
@@ -206,6 +209,7 @@ public class SuntimesActivity extends AppCompatActivity
     private boolean showSeconds = WidgetSettings.PREF_DEF_GENERAL_SHOWSECONDS;
     private boolean showGold = AppSettings.PREF_DEF_UI_SHOWGOLDHOUR;
     private boolean showBlue = AppSettings.PREF_DEF_UI_SHOWBLUEHOUR;
+    private boolean showMoon = AppSettings.PREF_DEF_UI_SHOWMOON;
     private boolean verboseAccessibility = AppSettings.PREF_DEF_ACCESSIBILITY_VERBOSE;
 
     public SuntimesActivity()
@@ -943,6 +947,10 @@ public class SuntimesActivity extends AppCompatActivity
             txt_daylength = (TextView) viewToday.findViewById(R.id.text_daylength);
             txt_lightlength = (TextView) viewToday.findViewById(R.id.text_lightlength);
 
+            moonphase = (MoonPhaseView) viewToday.findViewById(R.id.moonphase_view);
+            moonrise = (MoonRiseSetView) viewToday.findViewById(R.id.moonriseset_view);
+            moonrise.setShowExtraField(false);
+
             btn_flipperNext_today = (ImageButton)viewToday.findViewById(R.id.info_time_nextbtn);
             btn_flipperNext_today.setOnClickListener(onNextCardClick);
             btn_flipperNext_today.setOnTouchListener(new View.OnTouchListener()
@@ -1012,6 +1020,11 @@ public class SuntimesActivity extends AppCompatActivity
             layout_daylength2 = (LinearLayout) viewTomorrow.findViewById(R.id.layout_daylength);
             txt_daylength2 = (TextView) viewTomorrow.findViewById(R.id.text_daylength);
             txt_lightlength2 = (TextView) viewTomorrow.findViewById(R.id.text_lightlength);
+
+            moonphase2 = (MoonPhaseView) viewTomorrow.findViewById(R.id.moonphase_view);
+            moonrise2 = (MoonRiseSetView) viewTomorrow.findViewById(R.id.moonriseset_view);
+            moonrise2.setShowExtraField(false);
+            moonrise2.setTomorrowMode(true);
 
             btn_flipperNext_tomorrow = (ImageButton)viewTomorrow.findViewById(R.id.info_time_nextbtn);
             btn_flipperNext_tomorrow.setOnClickListener(onNextCardClick);
@@ -1122,6 +1135,14 @@ public class SuntimesActivity extends AppCompatActivity
             }
         });
     }
+
+    private View.OnClickListener onMoonriseClick = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            showMoonDialog();
+        }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -1503,6 +1524,10 @@ public class SuntimesActivity extends AppCompatActivity
         showBlue = AppSettings.loadBlueHourPref(context) && supportsGoldBlue;
         showBlueTimes(showBlue);
 
+        boolean supportsMoon = (dataset3 != null);
+        showMoon = supportsMoon && AppSettings.loadShowMoonPref(context);
+        showMoonrise(showMoon);
+
         showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
 
         if (dataset.isCalculated())
@@ -1602,6 +1627,12 @@ public class SuntimesActivity extends AppCompatActivity
             String lightLength2 = lightLengthDisplay2.toString();
             String lightLength2_label = getString(R.string.length_light, lightLength2);
             txt_lightlength2.setText(SuntimesUtils.createBoldColorSpan(null, lightLength2_label, lightLength2, color_textTimeDelta));
+
+            moonphase.updateViews(SuntimesActivity.this, dataset3);
+            moonrise.updateViews(SuntimesActivity.this, dataset3);
+
+            moonphase2.updateViews(SuntimesActivity.this, dataset3);
+            moonrise2.updateViews(SuntimesActivity.this, dataset3);  // TODO
 
         } else {
             String notCalculated = getString(R.string.time_loading);
@@ -2119,6 +2150,15 @@ public class SuntimesActivity extends AppCompatActivity
     {
         layout_daylength.setVisibility( (value ? View.VISIBLE : View.INVISIBLE) );
         layout_daylength2.setVisibility( (value ? View.VISIBLE : View.INVISIBLE) );
+    }
+
+    /**
+     * @param value
+     */
+    protected void showMoonrise( boolean value )
+    {
+        int visibility = (value ? View.VISIBLE : View.INVISIBLE);
+        // TODO
     }
 
     /**
