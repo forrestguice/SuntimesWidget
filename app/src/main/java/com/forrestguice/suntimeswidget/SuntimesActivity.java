@@ -188,6 +188,7 @@ public class SuntimesActivity extends AppCompatActivity
     private TextView moonlabel,             moonlabel2;
     private MoonPhaseView moonphase,        moonphase2;
     private MoonRiseSetView moonrise,       moonrise2;
+    private View moonClickArea,             moonClickArea2;
 
     private EquinoxView card_equinoxSolstice;
     private View equinoxLayout;
@@ -953,6 +954,10 @@ public class SuntimesActivity extends AppCompatActivity
             moonrise = (MoonRiseSetView) viewToday.findViewById(R.id.moonriseset_view);
             moonrise.setShowExtraField(false);
 
+            moonClickArea = viewToday.findViewById(R.id.moonphase_clickArea);
+            moonClickArea.setOnClickListener(onMoonriseClick);
+            moonClickArea.setOnLongClickListener(onMoonriseLongClick);
+
             btn_flipperNext_today = (ImageButton)viewToday.findViewById(R.id.info_time_nextbtn);
             btn_flipperNext_today.setOnClickListener(onNextCardClick);
             btn_flipperNext_today.setOnTouchListener(new View.OnTouchListener()
@@ -1028,6 +1033,10 @@ public class SuntimesActivity extends AppCompatActivity
             moonrise2 = (MoonRiseSetView) viewTomorrow.findViewById(R.id.moonriseset_view);
             moonrise2.setShowExtraField(false);
             moonrise2.setTomorrowMode(true);
+
+            moonClickArea2 = viewTomorrow.findViewById(R.id.moonphase_clickArea);
+            moonClickArea2.setOnClickListener(onMoonriseClick);
+            moonClickArea2.setOnLongClickListener(onMoonriseLongClick);
 
             btn_flipperNext_tomorrow = (ImageButton)viewTomorrow.findViewById(R.id.info_time_nextbtn);
             btn_flipperNext_tomorrow.setOnClickListener(onNextCardClick);
@@ -1144,6 +1153,14 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public void onClick(View v) {
             showMoonDialog();
+        }
+    };
+    private View.OnLongClickListener onMoonriseLongClick = new View.OnLongClickListener()
+    {
+        @Override
+        public boolean onLongClick(View v) {
+            showMoonDialog();
+            return true;
         }
     };
 
@@ -2161,9 +2178,13 @@ public class SuntimesActivity extends AppCompatActivity
     protected void showMoonrise( boolean value )
     {
         int visibility = (value ? View.VISIBLE : View.GONE);
+
+        moonClickArea.setVisibility(visibility);
         moonlabel.setVisibility(visibility);
         moonrise.setVisibility(visibility);
         moonphase.setVisibility(visibility);
+
+        moonClickArea2.setVisibility(visibility);
         moonlabel2.setVisibility(visibility);
         moonrise2.setVisibility(visibility);
         moonphase2.setVisibility(visibility);
