@@ -104,6 +104,16 @@ public class MoonPhaseView extends LinearLayout
         typedArray.recycle();
     }
 
+    private boolean tomorrowMode = false;
+    public void setTomorrowMode( boolean value )
+    {
+        tomorrowMode = value;
+    }
+    public boolean isTomorrowMode()
+    {
+        return tomorrowMode;
+    }
+
     public void initLocale(Context context)
     {
         isRtl = AppSettings.isLocaleRtl(context);
@@ -150,7 +160,9 @@ public class MoonPhaseView extends LinearLayout
                 }*/
             }
 
-            double illumination = (illumAtNoon ? data.getMoonIlluminationToday() : data.getMoonIlluminationNow());
+            double illumination = (!illumAtNoon ? data.getMoonIlluminationNow()
+                                                : (tomorrowMode ? data.getMoonIlluminationTomorrow()
+                                                                : data.getMoonIlluminationToday()));
             NumberFormat percentage = NumberFormat.getPercentInstance();
             String illum = percentage.format(illumination);
             String illumNote = context.getString(R.string.moon_illumination, illum);

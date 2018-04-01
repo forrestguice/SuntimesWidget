@@ -951,6 +951,7 @@ public class SuntimesActivity extends AppCompatActivity
 
             moonlabel = (TextView) viewToday.findViewById(R.id.text_time_label_moon);
             moonphase = (MoonPhaseView) viewToday.findViewById(R.id.moonphase_view);
+
             moonrise = (MoonRiseSetView) viewToday.findViewById(R.id.moonriseset_view);
             moonrise.setShowExtraField(false);
 
@@ -1029,7 +1030,10 @@ public class SuntimesActivity extends AppCompatActivity
             txt_lightlength2 = (TextView) viewTomorrow.findViewById(R.id.text_lightlength);
 
             moonlabel2 = (TextView) viewTomorrow.findViewById(R.id.text_time_label_moon);
+
             moonphase2 = (MoonPhaseView) viewTomorrow.findViewById(R.id.moonphase_view);
+            moonphase2.setTomorrowMode(true);
+
             moonrise2 = (MoonRiseSetView) viewTomorrow.findViewById(R.id.moonriseset_view);
             moonrise2.setShowExtraField(false);
             moonrise2.setTomorrowMode(true);
