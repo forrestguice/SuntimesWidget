@@ -304,5 +304,6 @@ public interface SuntimesCalculator
         public double elevation;
         public double rightAscension;
         public double declination;
+        public double distance;
     }
 }

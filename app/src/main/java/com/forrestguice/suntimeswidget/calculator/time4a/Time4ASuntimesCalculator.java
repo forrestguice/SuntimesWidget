@@ -377,6 +377,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         result.elevation = position.getElevation();
         result.rightAscension = position.getRightAscension();
         result.declination = position.getDeclination();
+        result.distance = position.getDistance();
         return result;
     }
 
