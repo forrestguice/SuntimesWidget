@@ -23,6 +23,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.text.SpannableString;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -88,10 +90,10 @@ public class MoonRiseSetView extends LinearLayout
 
         empty = (TextView)findViewById(R.id.txt_empty);
         content = (LinearLayout)findViewById(R.id.moonriseset_layout);
-        risingTextField = new MoonRiseSetField(R.id.moonrise_layout , R.id.text_time_moonrise);
-        settingTextField = new MoonRiseSetField(R.id.moonset_layout, R.id.text_time_moonset);
-        risingTextField1 = new MoonRiseSetField(R.id.moonrise_layout1 , R.id.text_time_moonrise1);
-        settingTextField1 = new MoonRiseSetField(R.id.moonset_layout1, R.id.text_time_moonset1);
+        risingTextField = new MoonRiseSetField(R.id.moonrise_layout , R.id.text_time_moonrise, R.id.text_pos_moonrise);
+        settingTextField = new MoonRiseSetField(R.id.moonset_layout, R.id.text_time_moonset, R.id.text_pos_moonset);
+        risingTextField1 = new MoonRiseSetField(R.id.moonrise_layout1 , R.id.text_time_moonrise1, R.id.text_pos_moonrise1);
+        settingTextField1 = new MoonRiseSetField(R.id.moonset_layout1, R.id.text_time_moonset1, R.id.text_pos_moonset1);
         divider = findViewById(R.id.divider_moon1);
 
         if (isInEditMode())
@@ -167,6 +169,21 @@ public class MoonRiseSetView extends LinearLayout
             risingTextField1.updateField(context, risingTime1, showSeconds);
             settingTextField1.updateField(context, settingTime1, showSeconds);
 
+            if (showPosition)
+            {
+                SuntimesCalculator.MoonPosition moonPositionRising = data.calculator().getMoonPosition(risingTime);
+                SuntimesCalculator.MoonPosition moonPositionSetting = data.calculator().getMoonPosition(settingTime);
+                risingTextField.updateField(context, moonPositionRising);
+                settingTextField.updateField(context, moonPositionSetting);
+
+                SuntimesCalculator.MoonPosition moonPositionRising1 = data.calculator().getMoonPosition(risingTime1);
+                SuntimesCalculator.MoonPosition moonPositionSetting1 = data.calculator().getMoonPosition(settingTime1);
+                risingTextField1.updateField(context, moonPositionRising1);
+                settingTextField1.updateField(context, moonPositionSetting1);
+
+                setShowPosition(showPosition);
+            }
+
             if (tomorrowMode)
                 reorderLayout(risingTime1, settingTime1);
             else reorderLayout(risingTime, settingTime);
@@ -200,7 +217,18 @@ public class MoonRiseSetView extends LinearLayout
     private void setShowPosition(boolean value)
     {
         showPosition = value;
-        // TODO
+
+        if (risingTextField != null)
+            risingTextField.setShowPosition(showPosition);
+
+        if (settingTextField != null)
+            settingTextField.setShowPosition(showPosition);
+
+        if (risingTextField1 != null)
+            risingTextField1.setShowPosition(showPosition);
+
+        if (settingTextField1 != null)
+            settingTextField1.setShowPosition(showPosition);
     }
 
     private void clearLayout()
@@ -322,18 +350,37 @@ public class MoonRiseSetView extends LinearLayout
     private class MoonRiseSetField
     {
         protected View layout;
-        protected TextView textView;
+        protected TextView timeView;
+        protected TextView positionView;
 
-        public MoonRiseSetField(int layoutID, int textViewID)
+        public MoonRiseSetField(int layoutID, int timeViewID, int positionViewID)
         {
             layout = findViewById(layoutID);
-            textView = (TextView)findViewById(textViewID);
+            timeView = (TextView)findViewById(timeViewID);
+            positionView = (TextView)findViewById(positionViewID);
         }
 
         public void updateField(Context context, Calendar dateTime, boolean showSeconds)
         {
             SuntimesUtils.TimeDisplayText text = utils.calendarTimeShortDisplayString(context, dateTime, showSeconds);
-            textView.setText(text.toString());
+            timeView.setText(text.toString());
+        }
+
+        public void updateField(Context context, SuntimesCalculator.Position position)
+        {
+            SuntimesUtils.TimeDisplayText azimuthText = utils.formatAsDirection2(position.azimuth, 1, false);
+            String azimuthString = utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
+            SpannableString azimuthSpan = SuntimesUtils.createRelativeSpan(null, azimuthString, azimuthText.getSuffix(), 0.7f);
+            azimuthSpan = SuntimesUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
+            positionView.setText(azimuthSpan);
+
+            SuntimesUtils.TimeDisplayText azimuthDesc = utils.formatAsDirection2(position.azimuth, 1, true);
+            positionView.setContentDescription(utils.formatAsDirection(azimuthDesc.getValue(), azimuthDesc.getSuffix()));
+        }
+
+        public void setShowPosition( boolean value )
+        {
+            positionView.setVisibility((value ? View.VISIBLE : View.GONE));
         }
 
         public void setMarginStartEnd( int startMargin, int endMargin )

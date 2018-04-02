@@ -44,6 +44,13 @@
                     android:id="@+id/text_time_moonrise"
                     android:textColor="@color/moonIcon_color_rising"
                     tools:text="00:00 AM" />
+
+                <TextView android:visibility="gone"
+                    style="@style/SunsetTimeTextView2"
+                    android:id="@+id/text_pos_moonrise" android:gravity="center" android:layout_gravity="center"
+                    android:textColor="@color/moonIcon_color_rising"
+                    tools:text="270  W" />
+
             </LinearLayout>
 
             <LinearLayout android:id="@+id/moonset_layout" android:visibility="gone"
@@ -66,6 +73,14 @@
                     android:id="@+id/text_time_moonset"
                     android:textColor="@color/moonIcon_color_setting"
                     tools:text="00:00 PM" />
+
+                <TextView android:visibility="gone"
+                    style="@style/SunsetTimeTextView2"
+                    android:id="@+id/text_pos_moonset" android:gravity="center" android:layout_gravity="center"
+                    android:textColor="@color/moonIcon_color_setting"
+                    tools:text="270  W" />
+
+
             </LinearLayout>
 
             <View android:id="@+id/divider_moon1" android:visibility="gone"
@@ -93,6 +108,13 @@
                     android:id="@+id/text_time_moonrise1"
                     android:textColor="@color/moonIcon_color_rising"
                     tools:text="00:00 AM" />
+
+                <TextView android:visibility="gone"
+                    style="@style/SunsetTimeTextView2"
+                    android:id="@+id/text_pos_moonrise1" android:gravity="center" android:layout_gravity="center"
+                    android:textColor="@color/moonIcon_color_rising"
+                    tools:text="270  W" />
+
             </LinearLayout>
 
             <LinearLayout android:id="@+id/moonset_layout1"
@@ -115,6 +137,13 @@
                     android:id="@+id/text_time_moonset1"
                     android:textColor="@color/moonIcon_color_setting"
                     tools:text="00:00 PM" />
+
+                <TextView android:visibility="visible"
+                    style="@style/SunsetTimeTextView2"
+                    android:id="@+id/text_pos_moonset1" android:gravity="center" android:layout_gravity="center"
+                    android:textColor="@color/moonIcon_color_setting"
+                    tools:text="270  W" />
+
             </LinearLayout>
 
         </LinearLayout>
