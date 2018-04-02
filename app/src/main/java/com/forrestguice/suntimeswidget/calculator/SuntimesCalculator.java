@@ -273,7 +273,7 @@ public interface SuntimesCalculator
 
 
     //
-    // 1.4.0 sun position
+    // 1.4.0 sun, moon position
     //
 
     /**
@@ -287,7 +287,21 @@ public interface SuntimesCalculator
     {
         public double azimuth;
         public double elevation;
+        public double rightAscension;
+        public double declination;
+    }
 
+    /**
+     * Get the moon's azimuth and elevation.
+     * @param dateTime a Calendar representing a given date + time
+     * @return a MoonPosition obj wrapping azimuth, elevation, etc
+     * @since 1.4.0
+     */
+    MoonPosition getMoonPosition(Calendar dateTime);
+    class MoonPosition
+    {
+        public double azimuth;
+        public double elevation;
         public double rightAscension;
         public double declination;
     }

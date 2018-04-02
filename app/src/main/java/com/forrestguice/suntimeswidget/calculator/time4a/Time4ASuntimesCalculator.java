@@ -366,5 +366,20 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         return result;
     }
 
+    @Override
+    public MoonPosition getMoonPosition(Calendar dateTime)
+    {
+        Moment moment = TemporalType.JAVA_UTIL_DATE.translate(dateTime.getTime());
+        net.time4j.calendar.astro.MoonPosition position = net.time4j.calendar.astro.MoonPosition.at(moment, solarTime);
+
+        MoonPosition result = new MoonPosition();
+        result.azimuth = position.getAzimuth();
+        result.elevation = position.getElevation();
+        result.rightAscension = position.getRightAscension();
+        result.declination = position.getDeclination();
+        return result;
+    }
+
+
 }
 

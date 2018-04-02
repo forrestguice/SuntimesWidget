@@ -252,5 +252,10 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
         return null;
     }
 
+    @Override
+    public MoonPosition getMoonPosition(Calendar dateTime) {
+        return null;
+    }
+
 }
 
