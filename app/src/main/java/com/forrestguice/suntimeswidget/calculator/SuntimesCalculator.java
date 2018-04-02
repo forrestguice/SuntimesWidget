@@ -306,4 +306,11 @@ public interface SuntimesCalculator
         public double declination;
         public double distance;
     }
+
+    /**
+     * @param objHeight height of the obj (meters)
+     * @return length of shadow (meters) or infinity
+     */
+    public double getShadowLength( double objHeight, Calendar dateTime );
+
 }
