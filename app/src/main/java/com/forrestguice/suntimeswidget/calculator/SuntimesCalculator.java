@@ -287,8 +287,14 @@ public interface SuntimesCalculator
     {
         public double azimuth;
         public double elevation;
-
         public double rightAscension;
         public double declination;
     }
+
+    /**
+     * @param objHeight height of the obj (meters)
+     * @return length of shadow (meters) or infinity
+     */
+    public double getShadowLength( double objHeight, Calendar dateTime );
+
 }
