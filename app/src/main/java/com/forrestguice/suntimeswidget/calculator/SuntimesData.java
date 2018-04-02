@@ -271,6 +271,19 @@ public class SuntimesData
         return Calendar.getInstance(TimeZone.getTimeZone(timezone().getID()));
     }
 
+    /**
+     * @param date
+     * @return
+     */
+    public Calendar nowThen(Calendar date)
+    {
+        Calendar nowThen = now();
+        nowThen.set(Calendar.YEAR, date.get(Calendar.YEAR));
+        nowThen.set(Calendar.MONTH, date.get(Calendar.MONTH));
+        nowThen.set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH));
+        return nowThen;
+    }
+
 }
 
 
