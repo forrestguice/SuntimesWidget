@@ -145,7 +145,7 @@ public class MoonPhaseView extends LinearLayout
                 view.setVisibility(View.GONE);
             }
 
-            MoonPhaseDisplay phase = data.getMoonPhaseToday();
+            MoonPhaseDisplay phase = (tomorrowMode ? data.getMoonPhaseTomorrow() : data.getMoonPhaseToday());
             if (phase != null)
             {
                 phaseText.setText(phase.getLongDisplayString());

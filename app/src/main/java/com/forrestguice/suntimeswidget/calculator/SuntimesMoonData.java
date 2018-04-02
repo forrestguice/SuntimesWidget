@@ -135,6 +135,15 @@ public class SuntimesMoonData extends SuntimesData
     }
 
     /**
+     * result: phase tomorrow
+     */
+    private MoonPhaseDisplay moonPhaseTomorrow;
+    public MoonPhaseDisplay getMoonPhaseTomorrow()
+    {
+        return moonPhaseTomorrow;
+    }
+
+    /**
      * result: next major phase
      */
     private SuntimesCalculator.MoonPhase moonPhaseNext;
@@ -250,6 +259,10 @@ public class SuntimesMoonData extends SuntimesData
             moonPhases.put(phase, calculator.getMoonPhaseNextDate(phase, midnight));
         }
         moonPhaseToday = findPhaseOf(midnight, true);
+
+        Calendar midnight1 = (Calendar)midnight.clone();
+        midnight1.add(Calendar.DAY_OF_MONTH, 1);
+        moonPhaseTomorrow = findPhaseOf(midnight1);
 
         super.calculate();
     }
