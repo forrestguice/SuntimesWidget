@@ -18,7 +18,7 @@
     <string name="configAction_setAlarm">Ustaw alarm</string>
     <string name="configAction_setTimeZone">Ustaw strefę czasową</string>
     <string name="configAction_setDate">Ustaw datę</string>
-    <string name="configAction_sunDialog">Sun Position</string>   <!-- TODO -->
+    <string name="configAction_sunDialog">Pozycja Słońca</string>
     <string name="configAction_equinoxDialog">Przesilenie / równonoc</string>
     <string name="configAction_help">Pomoc</string>
     <string name="configAction_settings">Ustawienia</string>
@@ -143,7 +143,7 @@
          WIDGET CONFIG
     -->
 
-    <string name="configAction_restoreDefaults">Restore Defaults</string>   <!-- button / menu text -->  <!-- TODO -->
+    <string name="configAction_restoreDefaults">Przywróć domyślne</string>   <!-- button / menu text -->
 
     <!-- WidgetConfig Activity -->
     <string name="configAction_addWidget">Dodaj widżet</string>                   <!-- Button: Add -->
@@ -235,8 +235,8 @@
     <string name="widgetMode1x1_both_1">Wschód i zachód (1)</string>  <!-- setting -->
     <string name="widgetMode1x1_both_2">Wschód i zachód (2)</string>  <!-- setting -->
 
-    <string name="widgetMode1x1_altaz">Altitude &amp; Azimuth</string>     <!-- setting -->  <!-- TODO -->
-    <string name="widgetMode1x1_decright">Declination &amp; Right Ascension</string>     <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode1x1_altaz">Wysokość i azymut</string>     <!-- setting -->
+    <string name="widgetMode1x1_decright">Deklinacja i rekascensja</string>     <!-- setting -->
 
     <string name="widgetMode1x1_moonriseset">Wschód i zachód Księżyca</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphaseillum">Faza i oświetlenie Księżyca</string>     <!-- setting -->
@@ -435,15 +435,15 @@
     <string name="configLabel_themeName">Wyświetl:</string>               <!-- edit label -->
     <string name="configHint_themeName">Etykieta</string>                   <!-- edit hint -->
 
-    <string name="widgetLabel_azimuth">Azimuth</string>                   <!-- label -->  <!-- TODO -->
-    <string name="widgetLabel_azimuth_short">Az</string>                   <!-- label -->  <!-- TODO -->
-    <string name="widgetLabel_altitude">Altitude</string>               <!-- label -->  <!-- TODO -->
-    <string name="widgetLabel_altitude_short">Alt</string>               <!-- label -->  <!-- TODO -->
+    <string name="widgetLabel_azimuth">Azymut</string>                   <!-- label -->
+    <string name="widgetLabel_azimuth_short">Az.</string>                   <!-- label -->
+    <string name="widgetLabel_altitude">Wysokość astronomiczna</string>               <!-- label -->
+    <string name="widgetLabel_altitude_short">Wys.</string>               <!-- label -->
 
-    <string name="widgetLabel_rightAscension">Right Ascension</string>    <!-- label -->  <!-- TODO -->
-    <string name="widgetLabel_rightAscension_short">RA</string>    <!-- label -->  <!-- TODO -->
-    <string name="widgetLabel_declination">Declination</string>           <!-- label -->  <!-- TODO -->
-    <string name="widgetLabel_declination_short">Dec</string>           <!-- label -->  <!-- TODO -->
+    <string name="widgetLabel_rightAscension">Rektascensja</string>    <!-- label -->
+    <string name="widgetLabel_rightAscension_short">Rek.</string>    <!-- label -->
+    <string name="widgetLabel_declination">Deklinacja</string>           <!-- label -->
+    <string name="widgetLabel_declination_short">Dek.</string>           <!-- label -->
 
     <!--
          APP SETTINGS
@@ -616,24 +616,24 @@
         <item>NNW</item>
         <item>N</item>
     </string-array>
-    <string-array name="directions_long">   <!-- one-to-one with directions_short -->   <!-- TODO -->
-        <item>North</item>
-        <item>North North East</item>
-        <item>North East</item>
-        <item>East North East</item>
-        <item>East</item>
-        <item>East South East</item>
-        <item>South East</item>
-        <item>South South East</item>
-        <item>South</item>
-        <item>South South West</item>
-        <item>South West</item>
-        <item>West South West</item>
-        <item>West</item>
-        <item>West North West</item>
-        <item>North West</item>
-        <item>North North West</item>
-        <item>North</item>
+    <string-array name="directions_long">   <!-- one-to-one with directions_short -->
+        <item>północ</item>
+        <item>północny północny wschód</item>
+        <item>północny wschód</item>
+        <item>wschodni północny wschód</item>
+        <item>wschód</item>
+        <item>wschodni południowy wschód</item>
+        <item>południowy wschód</item>
+        <item>południowy południowy wschód</item>
+        <item>południe</item>
+        <item>południowy południowy zachód</item>
+        <item>południowy zachód</item>
+        <item>zachodni południowy zachód</item>
+        <item>zachód</item>
+        <item>zachodni północny zachód</item>
+        <item>północny zachód</item>
+        <item>północny północny zachód</item>
+        <item>północ</item>
     </string-array>
 
     <!--
@@ -756,9 +756,9 @@
     <string name="app_name">Zmierzchy i Świty</string>
     <string name="app_name_widget0">Zmierzchy/Świty Widżet</string>
     <string name="app_name_widget1">Zmierzchy/Świty Widżet (przełączalny)</string>
-    <string name="app_name_widget2">Sun Position Widget</string> <!-- TODO -->
+    <string name="app_name_widget2">Pozycja Słońca Widżet</string>
     <string name="app_name_solsticewidget0">Zmierzchy/Świty Widżet Przesilenia</string>
-    <string name="app_name_moonwidget0">Moon Widget</string> <!-- TODO -->
+    <string name="app_name_moonwidget0">Księżycowy Widżet</string>
     <string name="app_version"><![CDATA[<b>Wersja:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Wyświetla czasy świecenia Słońca i Księżyca.</string>
     <string name="app_support_url"><![CDATA[<b>Wsparcie:</b> odwiedź <a href="https://github.com/forrestguice/SuntimesWidget/issues">stronę trackera błędów</a> aby zgłosić błąd/sugestię.]]></string>
