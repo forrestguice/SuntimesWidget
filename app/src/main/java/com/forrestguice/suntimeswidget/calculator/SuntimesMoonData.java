@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 
@@ -223,16 +224,20 @@ public class SuntimesMoonData extends SuntimesData
                 if (noon.get(Calendar.DAY_OF_YEAR) == todaysCalendar.get(Calendar.DAY_OF_YEAR))
                 {
                     noonToday = noon;
-                    break;
+                }
+                if (noon.get(Calendar.DAY_OF_YEAR) == otherCalendar.get(Calendar.DAY_OF_YEAR))
+                {
+                    noonTomorrow = noon;
                 }
             }
         }
 
-        if (noonToday != null)
+        if (noonTomorrow == null && noonToday != null)
         {
             noonTomorrow = (Calendar)noonToday.clone();
             noonTomorrow.add(Calendar.DAY_OF_MONTH, 1);
             noonTomorrow.add(Calendar.MINUTE, 50);   // approximate noon tomorrow
+            //Log.d("DEBUG", "using approximate lunar noon tomorrow");
         }
 
         SuntimesUtils utils = new SuntimesUtils();
