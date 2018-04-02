@@ -25,8 +25,7 @@
         android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
     <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="horizontal" android:layout_marginTop="4dp">
+        android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp">
 
         <com.forrestguice.suntimeswidget.MoonPhaseView
             android:id="@+id/moonphase_view" app:illuminationAtLunarNoon="false"
@@ -35,7 +34,7 @@
             android:layout_marginBottom="4dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/header_gutter3"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintHorizontal_chainStyle="spread_inside"/>
 
         <View android:id="@+id/header_gutter3" android:background="@color/transparent" android:visibility="invisible"
