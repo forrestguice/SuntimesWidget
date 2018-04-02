@@ -593,7 +593,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
             boolean boldText = checkTitleBold.isChecked();
             if (boldText)
-                previewTitle.setText(SuntimesUtils.createBoldSpan(titleText, titleText));
+                previewTitle.setText(SuntimesUtils.createBoldSpan(null, titleText, titleText));
             else previewTitle.setText(titleText);
 
             updateSizeFromChooser(previewTitle, chooseTitleSize);
@@ -621,7 +621,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         if (previewNoon != null)
         {
             String noonString = noonText.getValue();
-            CharSequence noon = (checkTimeBold.isChecked() ? SuntimesUtils.createBoldSpan(noonString, noonString) : noonString);
+            CharSequence noon = (checkTimeBold.isChecked() ? SuntimesUtils.createBoldSpan(null, noonString, noonString) : noonString);
             previewNoon.setText(noon);
             previewNoon.setTextColor(chooseColorNoon.getColor());
             updateSizeFromChooser(previewNoon, chooseTimeSize);
@@ -641,7 +641,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         if (previewRise != null)
         {
             String riseString = riseText.getValue();
-            CharSequence rise = (checkTimeBold.isChecked() ? SuntimesUtils.createBoldSpan(riseString, riseString) : riseString);
+            CharSequence rise = (checkTimeBold.isChecked() ? SuntimesUtils.createBoldSpan(null, riseString, riseString) : riseString);
             previewRise.setText(rise);
             previewRise.setTextColor(chooseColorRise.getColor());
             updateSizeFromChooser(previewRise, chooseTimeSize);
@@ -661,7 +661,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         if (previewSet != null)
         {
             String setString = setText.getValue();
-            CharSequence set = (checkTimeBold.isChecked() ? SuntimesUtils.createBoldSpan(setString, setString) : setString);
+            CharSequence set = (checkTimeBold.isChecked() ? SuntimesUtils.createBoldSpan(null, setString, setString) : setString);
             previewSet.setText(set);
             previewSet.setTextColor(chooseColorSet.getColor());
             updateSizeFromChooser(previewSet, chooseTimeSize);
@@ -751,7 +751,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         if (previewMoonrise != null)
         {
             String riseString = moonriseText.getValue();
-            CharSequence rise = (checkTimeBold.isChecked() ? SuntimesUtils.createBoldSpan(riseString, riseString) : riseString);
+            CharSequence rise = (checkTimeBold.isChecked() ? SuntimesUtils.createBoldSpan(null, riseString, riseString) : riseString);
             previewMoonrise.setText(rise);
             previewMoonrise.setTextColor(chooseColorMoonrise.getColor());
             updateSizeFromChooser(previewMoonrise, chooseTimeSize);
@@ -771,7 +771,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         if (previewMoonset != null)
         {
             String setString = moonsetText.getValue();
-            CharSequence set = (checkTimeBold.isChecked() ? SuntimesUtils.createBoldSpan(setString, setString) : setString);
+            CharSequence set = (checkTimeBold.isChecked() ? SuntimesUtils.createBoldSpan(null, setString, setString) : setString);
             previewMoonset.setText(set);
             previewMoonset.setTextColor(chooseColorMoonset.getColor());
             updateSizeFromChooser(previewMoonset, chooseTimeSize);
@@ -1025,7 +1025,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         flipToPreview(savedState.getInt(PARAM_PREVIEWID, -1));
 
         ThemeBackground background = (ThemeBackground)spinBackground.getSelectedItem();
-        setSelectedBackground(savedState.getInt(SuntimesTheme.THEME_BACKGROUND, (background != null ? background.getResID() : DarkTheme.THEMEDEF_BACKGROUND_ID)));
+        setSelectedBackground(savedState.getInt(SuntimesTheme.THEME_BACKGROUND, (background != null ? background.getResID() : DarkTheme.THEMEDEF_BACKGROUND.getResID())));
 
         for (SizeChooser chooser : sizeChoosers)
         {
@@ -1169,7 +1169,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             chooseMoonStroke.setValue(theme.getMoonFullStroke());
 
             choosePadding.setPadding(theme.getPadding());
-            setSelectedBackground(theme.getBackgroundId());
+            setSelectedBackground(theme.getBackground().getResID());
 
         } catch (InvalidParameterException e) {
             Log.e("loadTheme", "unable to load theme: " + e);
@@ -1243,7 +1243,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 ThemeBackground backgroundItem = (ThemeBackground)spinBackground.getSelectedItem();
                 if (backgroundItem != null)
                 {
-                    this.themeBackground = backgroundItem.getResID();
+                    this.themeBackground = backgroundItem;
                 }
                 return this;
             }

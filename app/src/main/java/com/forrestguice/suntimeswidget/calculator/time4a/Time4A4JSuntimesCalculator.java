@@ -29,7 +29,7 @@ public class Time4A4JSuntimesCalculator extends Time4ASuntimesCalculator impleme
     public static final String NAME = "time4a-time4j";
     public static final String REF = "com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator";
     public static final String LINK = "time4j.net";
-    public static final int[] FEATURES = new int[] { FEATURE_RISESET, FEATURE_SOLSTICE, FEATURE_GOLDBLUE, FEATURE_ALTITUDE, FEATURE_MOON };
+    public static final int[] FEATURES = new int[] { FEATURE_RISESET, FEATURE_SOLSTICE, FEATURE_GOLDBLUE, FEATURE_POSITION, FEATURE_ALTITUDE, FEATURE_MOON };
 
     public Time4A4JSuntimesCalculator() { /* EMPTY */ }
 

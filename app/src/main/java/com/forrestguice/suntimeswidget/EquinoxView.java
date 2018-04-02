@@ -660,14 +660,14 @@ public class EquinoxView extends LinearLayout
                     if (time.before(Calendar.getInstance()))
                     {
                         String noteString = context.getString(R.string.ago, noteText);
-                        SpannableString noteSpan = (noteView.isEnabled() ? SuntimesUtils.createBoldColorSpan(noteString, noteText, noteColor)
-                                                                         : SuntimesUtils.createBoldSpan(noteString, noteText));
+                        SpannableString noteSpan = (noteView.isEnabled() ? SuntimesUtils.createBoldColorSpan(null, noteString, noteText, noteColor)
+                                                                         : SuntimesUtils.createBoldSpan(null, noteString, noteText));
                         noteView.setText(noteSpan);
 
                     } else {
                         String noteString = context.getString(R.string.hence, noteText);
-                        SpannableString noteSpan = (noteView.isEnabled() ? SuntimesUtils.createBoldColorSpan(noteString, noteText, noteColor)
-                                                                         : SuntimesUtils.createBoldSpan(noteString, noteText));
+                        SpannableString noteSpan = (noteView.isEnabled() ? SuntimesUtils.createBoldColorSpan(null, noteString, noteText, noteColor)
+                                                                         : SuntimesUtils.createBoldSpan(null, noteString, noteText));
                         noteView.setText(noteSpan);
                     }
                 } else {

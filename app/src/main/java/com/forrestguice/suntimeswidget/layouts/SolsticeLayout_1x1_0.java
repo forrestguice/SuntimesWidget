@@ -91,7 +91,7 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
 
                 String noteTime = utils.timeDeltaDisplayString(now.getTime(), event.getTime(), showWeeks, showHours).toString();
                 String noteString = context.getString(noteStringId, noteTime);
-                SpannableString noteSpan = (boldTime ? SuntimesUtils.createBoldColorSpan(noteString, noteTime, timeColor) : SuntimesUtils.createColorSpan(noteString, noteTime, timeColor));
+                SpannableString noteSpan = (boldTime ? SuntimesUtils.createBoldColorSpan(null, noteString, noteTime, timeColor) : SuntimesUtils.createColorSpan(null, noteString, noteTime, timeColor));
                 views.setTextViewText(R.id.text_time_event_note, noteSpan);
 
             } else {

@@ -40,6 +40,10 @@ public class EquinoxDialog extends DialogFragment
     private SuntimesEquinoxSolsticeDataset data;
     public void setData( SuntimesEquinoxSolsticeDataset data )
     {
+        if (data != null && !data.isCalculated() && data.isImplemented())
+        {
+            data.calculateData();
+        }
         this.data = data;
     }
 
@@ -85,7 +89,7 @@ public class EquinoxDialog extends DialogFragment
         equinoxView = (EquinoxView) dialogView.findViewById(R.id.info_time_equinox);
     }
 
-    public void updateViews( SuntimesEquinoxSolsticeDataset data )
+    public void updateViews()
     {
         if (equinoxView != null)
         {

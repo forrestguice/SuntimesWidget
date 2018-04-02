@@ -95,7 +95,8 @@
             <EditText android:id="@+id/appwidget_appearance_titleText" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:layout_weight="1"
                 android:hint="@string/configHint_appearance_titleText" android:text=""
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:inputType="textVisiblePassword" />
 
             <ImageButton android:id="@+id/appwidget_appearance_titleText_helpButton"
                 android:layout_height="wrap_content"
