@@ -283,13 +283,14 @@ public interface SuntimesCalculator
      * @since 1.4.0 FEATURE_POSITION, FEATURE_RISESET
      */
     SunPosition getSunPosition(Calendar dateTime);
-    class SunPosition
+    class Position
     {
         public double azimuth;
         public double elevation;
         public double rightAscension;
         public double declination;
     }
+    class SunPosition extends Position {}
 
     /**
      * Get the moon's azimuth and elevation.
@@ -298,12 +299,8 @@ public interface SuntimesCalculator
      * @since 1.4.0 FEATURE_POSITION, FEATURE_MOON
      */
     MoonPosition getMoonPosition(Calendar dateTime);
-    class MoonPosition
+    class MoonPosition extends Position
     {
-        public double azimuth;
-        public double elevation;
-        public double rightAscension;
-        public double declination;
         public double distance;
     }
 
