@@ -45,7 +45,7 @@
             app:layout_constraintEnd_toStartOf="@+id/moonriseset_view"/>
 
         <com.forrestguice.suntimeswidget.MoonRiseSetView
-            android:id="@+id/moonriseset_view"
+            android:id="@+id/moonriseset_view" app:showPosition="true"
             android:layout_marginStart="16dp" android:layout_marginLeft="16dp" android:layout_marginBottom="4dp"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@+id/header_gutter3"

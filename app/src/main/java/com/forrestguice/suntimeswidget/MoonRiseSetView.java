@@ -43,6 +43,7 @@ public class MoonRiseSetView extends LinearLayout
     private SuntimesUtils utils = new SuntimesUtils();
     private boolean isRtl = false;
     private boolean centered = false;
+    private boolean showPosition = false;
 
     private LinearLayout content;
     private MoonRiseSetField risingTextField, settingTextField;
@@ -65,12 +66,12 @@ public class MoonRiseSetView extends LinearLayout
 
     private void applyAttributes(Context context, AttributeSet attrs)
     {
-        /**TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.EquinoxView, 0, 0);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MoonRiseSetView, 0, 0);
         try {
-            setMinimized(a.getBoolean(R.styleable.EquinoxView_minimized, false));
+            setShowPosition(a.getBoolean(R.styleable.MoonRiseSetView_showPosition, false));
         } finally {
             a.recycle();
-        }*/
+        }
     }
 
     private void init(Context context, AttributeSet attrs)
@@ -194,6 +195,12 @@ public class MoonRiseSetView extends LinearLayout
     public void setOnLongClickListener( OnLongClickListener listener)
     {
         content.setOnLongClickListener(listener);
+    }
+
+    private void setShowPosition(boolean value)
+    {
+        showPosition = value;
+        // TODO
     }
 
     private void clearLayout()
