@@ -138,7 +138,7 @@
                     android:textColor="@color/moonIcon_color_setting"
                     tools:text="00:00 PM" />
 
-                <TextView android:visibility="visible"
+                <TextView android:visibility="gone"
                     style="@style/SunsetTimeTextView2"
                     android:id="@+id/text_pos_moonset1" android:gravity="center" android:layout_gravity="center"
                     android:textColor="@color/moonIcon_color_setting"
