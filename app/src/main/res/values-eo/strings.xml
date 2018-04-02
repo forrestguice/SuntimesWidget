@@ -17,7 +17,7 @@
     <string name="configAction_setAlarm">Agordi averton</string>
     <string name="configAction_setTimeZone">Elekti horzonon</string>
     <string name="configAction_setDate">Elekti daton</string>
-    <string name="configAction_sunDialog">Sun Position</string>   <!-- TODO -->
+    <string name="configAction_sunDialog">Pozicio de Suno</string>
     <string name="configAction_equinoxDialog">Solstico / ekvinokso</string>
     <string name="configAction_help">Helpo</string>
     <string name="configAction_settings">Agordoj</string>
@@ -142,7 +142,7 @@
          WIDGET CONFIG
     -->
 
-    <string name="configAction_restoreDefaults">Restore Defaults</string>   <!-- button / menu text -->  <!-- TODO -->
+    <string name="configAction_restoreDefaults">Restarigi normojn</string>   <!-- button / menu text -->
 
     <!-- WidgetConfig Activity -->
     <string name="configAction_addWidget">Aldoni fenestraĵon</string>                   <!-- Button: Add -->
@@ -234,8 +234,8 @@
     <string name="widgetMode1x1_both_1">Sunleviĝo kaj sunsubiro (1)</string>  <!-- setting -->
     <string name="widgetMode1x1_both_2">Sunleviĝo kaj sunsubiro (2)</string>  <!-- setting -->
 
-    <string name="widgetMode1x1_altaz">Altitude &amp; Azimuth</string>     <!-- setting -->  <!-- TODO -->
-    <string name="widgetMode1x1_decright">Declination &amp; Right Ascension</string>     <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode1x1_altaz">Altitudo kaj azimuto</string>     <!-- setting -->
+    <string name="widgetMode1x1_decright">Deklinacio kaj rektascensio</string>     <!-- setting -->
 
     <string name="widgetMode1x1_moonriseset">Lunleviĝo kaj lunsubiro</string>       <!-- setting -->
     <string name="widgetMode1x1_moonphaseillum">Lunfazo kaj prilumeco</string>    <!-- setting -->
@@ -444,15 +444,15 @@
     <string name="configLabel_themeName">Vidigi:</string>               <!-- edit label -->
     <string name="configHint_themeName">Etikedo</string>                   <!-- edit hint -->
 
-    <string name="widgetLabel_azimuth">Azimuth</string>                   <!-- label -->  <!-- TODO -->
-    <string name="widgetLabel_azimuth_short">Az</string>                   <!-- label -->  <!-- TODO -->
-    <string name="widgetLabel_altitude">Altitude</string>               <!-- label -->  <!-- TODO -->
-    <string name="widgetLabel_altitude_short">Alt</string>               <!-- label -->  <!-- TODO -->
+    <string name="widgetLabel_azimuth">Azimuto</string>                   <!-- label -->
+    <string name="widgetLabel_azimuth_short">Az.</string>                   <!-- label -->
+    <string name="widgetLabel_altitude">Altitudo</string>               <!-- label -->
+    <string name="widgetLabel_altitude_short">Alt.</string>               <!-- label -->
 
-    <string name="widgetLabel_rightAscension">Right Ascension</string>    <!-- label -->  <!-- TODO -->
-    <string name="widgetLabel_rightAscension_short">RA</string>    <!-- label -->  <!-- TODO -->
-    <string name="widgetLabel_declination">Declination</string>           <!-- label -->  <!-- TODO -->
-    <string name="widgetLabel_declination_short">Dec</string>           <!-- label -->  <!-- TODO -->
+    <string name="widgetLabel_rightAscension">Rektascensio</string>    <!-- label -->
+    <string name="widgetLabel_rightAscension_short">Rek.</string>    <!-- label -->
+    <string name="widgetLabel_declination">Deklinacio</string>           <!-- label -->
+    <string name="widgetLabel_declination_short">Dek.</string>           <!-- label -->
 
     <!--
          APP SETTINGS
@@ -666,24 +666,24 @@
         <item>NNW</item>
         <item>N</item>
     </string-array>
-    <string-array name="directions_long">   <!-- one-to-one with directions_short -->   <!-- TODO -->
-        <item>North</item>
-        <item>North North East</item>
-        <item>North East</item>
-        <item>East North East</item>
-        <item>East</item>
-        <item>East South East</item>
-        <item>South East</item>
-        <item>South South East</item>
-        <item>South</item>
-        <item>South South West</item>
-        <item>South West</item>
-        <item>West South West</item>
-        <item>West</item>
-        <item>West North West</item>
-        <item>North West</item>
-        <item>North North West</item>
-        <item>North</item>
+    <string-array name="directions_long">   <!-- one-to-one with directions_short -->
+        <item>nordo</item>
+        <item>nord-nord-oriento</item>
+        <item>nord-oriento</item>
+        <item>orient-nord-oriento</item>
+        <item>oriento</item>
+        <item>orient-sud-oriento</item>
+        <item>sud-oriento</item>
+        <item>sud-sud-oriento</item>
+        <item>sudo</item>
+        <item>sud-sud-okcidento</item>
+        <item>sud-okcidento</item>
+        <item>okcident-sud-okcidento</item>
+        <item>okcidento</item>
+        <item>okcident-nord-okcidento</item>
+        <item>nord-okcidento</item>
+        <item>nord-nord-okcidento</item>
+        <item>nordo</item>
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
@@ -758,9 +758,9 @@
     <string name="app_name">Suntempoj</string>
     <string name="app_name_widget0">Suntempoj Fenestraĵo</string>
     <string name="app_name_widget1">Suntempoj Fenestraĵo (baskulebla)</string>
-    <string name="app_name_widget2">Sun Position Widget</string>   <!-- TODO -->
+    <string name="app_name_widget2">Sun-pozicia Fenestraĵo</string>
     <string name="app_name_solsticewidget0">Suntempoj Solstica Fenestraĵo</string>
-    <string name="app_name_moonwidget0">Moon Widget</string> <!-- TODO -->
+    <string name="app_name_moonwidget0">Luna Fenestraĵo</string>
     <string name="app_version"><![CDATA[<b>Versio:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Montras tempojn de lumadoj de Suno kaj Luno.</string>
     <string name="app_support_url"><![CDATA[
