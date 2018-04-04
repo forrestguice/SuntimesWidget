@@ -90,10 +90,10 @@ public class MoonRiseSetView extends LinearLayout
 
         empty = (TextView)findViewById(R.id.txt_empty);
         content = (LinearLayout)findViewById(R.id.moonriseset_layout);
-        risingTextField = new MoonRiseSetField(R.id.moonrise_layout , R.id.text_time_moonrise, R.id.text_pos_moonrise);
-        settingTextField = new MoonRiseSetField(R.id.moonset_layout, R.id.text_time_moonset, R.id.text_pos_moonset);
-        risingTextField1 = new MoonRiseSetField(R.id.moonrise_layout1 , R.id.text_time_moonrise1, R.id.text_pos_moonrise1);
-        settingTextField1 = new MoonRiseSetField(R.id.moonset_layout1, R.id.text_time_moonset1, R.id.text_pos_moonset1);
+        risingTextField = new MoonRiseSetField(R.id.moonrise_layout , R.id.text_time_moonrise, R.id.text_info_moonrise);
+        settingTextField = new MoonRiseSetField(R.id.moonset_layout, R.id.text_time_moonset, R.id.text_info_moonset);
+        risingTextField1 = new MoonRiseSetField(R.id.moonrise_layout1 , R.id.text_time_moonrise1, R.id.text_info_moonrise1);
+        settingTextField1 = new MoonRiseSetField(R.id.moonset_layout1, R.id.text_time_moonset1, R.id.text_info_moonset1);
         divider = findViewById(R.id.divider_moon1);
 
         if (isInEditMode())

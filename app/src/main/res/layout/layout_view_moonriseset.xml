@@ -47,7 +47,7 @@
 
                 <TextView android:visibility="gone"
                     style="@style/SunsetTimeTextView2"
-                    android:id="@+id/text_pos_moonrise" android:gravity="center" android:layout_gravity="center"
+                    android:id="@+id/text_info_moonrise" android:gravity="center" android:layout_gravity="center"
                     android:textColor="@color/moonIcon_color_rising"
                     tools:text="270  W" />
 
@@ -76,7 +76,7 @@
 
                 <TextView android:visibility="gone"
                     style="@style/SunsetTimeTextView2"
-                    android:id="@+id/text_pos_moonset" android:gravity="center" android:layout_gravity="center"
+                    android:id="@+id/text_info_moonset" android:gravity="center" android:layout_gravity="center"
                     android:textColor="@color/moonIcon_color_setting"
                     tools:text="270  W" />
 
@@ -111,7 +111,7 @@
 
                 <TextView android:visibility="gone"
                     style="@style/SunsetTimeTextView2"
-                    android:id="@+id/text_pos_moonrise1" android:gravity="center" android:layout_gravity="center"
+                    android:id="@+id/text_info_moonrise1" android:gravity="center" android:layout_gravity="center"
                     android:textColor="@color/moonIcon_color_rising"
                     tools:text="270  W" />
 
@@ -140,7 +140,7 @@
 
                 <TextView android:visibility="gone"
                     style="@style/SunsetTimeTextView2"
-                    android:id="@+id/text_pos_moonset1" android:gravity="center" android:layout_gravity="center"
+                    android:id="@+id/text_info_moonset1" android:gravity="center" android:layout_gravity="center"
                     android:textColor="@color/moonIcon_color_setting"
                     tools:text="270  W" />
 
