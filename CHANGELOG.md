@@ -1,7 +1,7 @@
 ### ~
 
 ###
-* adds moon dialog to app; shows major phases, rising/setting times, rising/setting position, phase, and illumination (current).
+* adds moon dialog to app; shows major phases, rising/setting times, rising/setting position, current position, phase, and illumination (current).
 * adds moon info to app (main table); rise/set, phase, and illumination (at lunar noon).
 * adds "moon data source" to general settings.
 * fixes bug where solstice dialog is not correctly initialized (when "show solstice" option is false).
