@@ -185,10 +185,7 @@ public class MoonRiseSetView extends LinearLayout
 
                 setShowPosition(showPosition);
             }
-
-            if (tomorrowMode)
-                reorderLayout(risingTime1, settingTime1);
-            else reorderLayout(risingTime, settingTime);
+            reorderLayout(risingTime, settingTime, risingTime1, settingTime1);
 
         } else {
             showEmptyView(true);
@@ -256,52 +253,52 @@ public class MoonRiseSetView extends LinearLayout
         return midday;
     }
 
-    private void reorderLayout( Calendar riseTime, Calendar setTime )
+    private void reorderLayout( Calendar rising0, Calendar setting0, Calendar rising1, Calendar setting1 )
     {
         clearLayout();
         updateMargins(getContext());
 
         if (tomorrowMode)
         {
-            if (riseTime == null && setTime == null)
+            if (rising1 == null && setting1 == null)
             {   // special case: no rise or set
                 addLayout0(settingTextField, risingTextField1, settingTextField1);
 
-            } else if (setTime == null) {    // special case: no set time
-                if (riseTime.before(midday(riseTime)))
-                    addLayout0(settingTextField, risingTextField1, settingTextField1);
-                else addLayout0(risingTextField, settingTextField1, risingTextField1);
+            } else if (setting1 == null) {                                           // special case: no set time
+                if (rising1.before(midday(rising1)))
+                    addLayout0(settingTextField, risingTextField1, settingTextField1);   // i.e. set | rise none
+                else addLayout0(settingTextField, settingTextField1, risingTextField1);  // i.e. set | none rise
 
-            } else if (riseTime == null) {    // special case: no rise time
-                if (setTime.before(midday(setTime)))
-                    addLayout0(risingTextField, settingTextField1, risingTextField1);
-                else addLayout0(settingTextField, risingTextField1, settingTextField1);
+            } else if (rising1 == null) {                                            // special case: no rise time
+                if (setting1.before(midday(setting1)))
+                    addLayout0(risingTextField, settingTextField1, risingTextField1);    // i.e. rise | set none
+                else addLayout0(risingTextField, risingTextField1, settingTextField1);   // i.e. rise | none set
 
             } else {
-                if (riseTime.before(setTime))
-                    addLayout0(settingTextField, risingTextField1, settingTextField1);
-                else addLayout0(risingTextField, settingTextField1, risingTextField1);
+                if (rising1.before(setting1))
+                    addLayout0(settingTextField, risingTextField1, settingTextField1);   // i.e. set  | rise set
+                else addLayout0(risingTextField, settingTextField1, risingTextField1);   // i.e. rise | set rise
             }
 
         } else {
-            if (riseTime == null && setTime == null)
+            if (rising0 == null && setting0 == null)
             {   // special case: no rise or set
                 addLayout1(risingTextField, settingTextField, risingTextField1);
 
-            } else if (setTime == null) {    // special case: no set time
-                if (riseTime.before(midday(riseTime)))
-                    addLayout1(risingTextField, settingTextField, risingTextField1);
-                else addLayout1(settingTextField, risingTextField, settingTextField1);
+            } else if (setting0 == null) {                                           // special case: no set time
+                if (rising0.before(midday(rising0)))
+                    addLayout1(risingTextField, settingTextField, settingTextField1);    // i.e. rise none | set
+                else addLayout1(settingTextField, risingTextField, settingTextField1);   // i.e. none rise | set
 
-            } else if (riseTime == null) {    // special case: no rise time
-                if (setTime.before(midday(setTime)))
-                    addLayout1(settingTextField, risingTextField, settingTextField1);
-                else addLayout1(risingTextField, settingTextField, risingTextField1);
+            } else if (rising0 == null) {                                            // special case: no rise time
+                if (setting0.before(midday(setting0)))
+                    addLayout1(settingTextField, risingTextField, risingTextField1);     // i.e. set none | rise
+                else addLayout1(risingTextField, settingTextField, risingTextField1);    // i.e. none set | rise
 
             } else {
-                if (riseTime.before(setTime))
-                    addLayout1(risingTextField, settingTextField, risingTextField1);
-                else addLayout1(settingTextField, risingTextField, settingTextField1);
+                if (rising0.before(setting0))
+                    addLayout1(risingTextField, settingTextField, risingTextField1);     // i.e. rise set | rise
+                else addLayout1(settingTextField, risingTextField, settingTextField1);   // i.e. set rise | set
             }
         }
     }
