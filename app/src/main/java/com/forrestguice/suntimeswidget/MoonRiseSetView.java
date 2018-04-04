@@ -171,13 +171,15 @@ public class MoonRiseSetView extends LinearLayout
 
             if (showPosition)
             {
-                SuntimesCalculator.MoonPosition moonPositionRising = data.calculator().getMoonPosition(risingTime);
-                SuntimesCalculator.MoonPosition moonPositionSetting = data.calculator().getMoonPosition(settingTime);
+                SuntimesCalculator calculator = data.calculator();
+
+                SuntimesCalculator.MoonPosition moonPositionRising = (risingTime == null ? null : calculator.getMoonPosition(risingTime));
+                SuntimesCalculator.MoonPosition moonPositionSetting = (settingTime == null ? null : calculator.getMoonPosition(settingTime));
                 risingTextField.updateField(context, moonPositionRising);
                 settingTextField.updateField(context, moonPositionSetting);
 
-                SuntimesCalculator.MoonPosition moonPositionRising1 = data.calculator().getMoonPosition(risingTime1);
-                SuntimesCalculator.MoonPosition moonPositionSetting1 = data.calculator().getMoonPosition(settingTime1);
+                SuntimesCalculator.MoonPosition moonPositionRising1 = (risingTime1 == null ? null : calculator.getMoonPosition(risingTime1));
+                SuntimesCalculator.MoonPosition moonPositionSetting1 = (settingTime1 == null ? null : calculator.getMoonPosition(settingTime1));
                 risingTextField1.updateField(context, moonPositionRising1);
                 settingTextField1.updateField(context, moonPositionSetting1);
 
@@ -368,14 +370,21 @@ public class MoonRiseSetView extends LinearLayout
 
         public void updateField(Context context, SuntimesCalculator.Position position)
         {
-            SuntimesUtils.TimeDisplayText azimuthText = utils.formatAsDirection2(position.azimuth, 1, false);
-            String azimuthString = utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
-            SpannableString azimuthSpan = SuntimesUtils.createRelativeSpan(null, azimuthString, azimuthText.getSuffix(), 0.7f);
-            azimuthSpan = SuntimesUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
-            positionView.setText(azimuthSpan);
+            if (position == null)
+            {
+                positionView.setText("");
+                positionView.setContentDescription("");
 
-            SuntimesUtils.TimeDisplayText azimuthDesc = utils.formatAsDirection2(position.azimuth, 1, true);
-            positionView.setContentDescription(utils.formatAsDirection(azimuthDesc.getValue(), azimuthDesc.getSuffix()));
+            } else {
+                SuntimesUtils.TimeDisplayText azimuthText = utils.formatAsDirection2(position.azimuth, 1, false);
+                String azimuthString = utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
+                SpannableString azimuthSpan = SuntimesUtils.createRelativeSpan(null, azimuthString, azimuthText.getSuffix(), 0.7f);
+                azimuthSpan = SuntimesUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
+                positionView.setText(azimuthSpan);
+
+                SuntimesUtils.TimeDisplayText azimuthDesc = utils.formatAsDirection2(position.azimuth, 1, true);
+                positionView.setContentDescription(utils.formatAsDirection(azimuthDesc.getValue(), azimuthDesc.getSuffix()));
+            }
         }
 
         public void setShowPosition( boolean value )
