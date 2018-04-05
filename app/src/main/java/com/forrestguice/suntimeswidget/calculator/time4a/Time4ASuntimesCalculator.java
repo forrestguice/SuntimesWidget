@@ -330,7 +330,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     public double getMoonIlluminationForDate(Calendar date)
     {
         Moment moment = TemporalType.JAVA_UTIL_DATE.translate(date.getTime());
-        return net.time4j.calendar.astro.MoonPhase.getIllumination(moment);
+        return net.time4j.calendar.astro.MoonPhase.getIllumination(moment, 1);
     }
 
     @Override

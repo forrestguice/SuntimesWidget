@@ -114,7 +114,7 @@ public class SuntimesMoonData extends SuntimesData
     }
     public double getMoonIlluminationNow()
     {
-        return (calculator == null ? - 1 : calculator.getMoonIlluminationForDate( (todayIsNotToday() ? nowThen(calendar()) : now()) ));
+        return (calculator == null ? -1 : calculator.getMoonIlluminationForDate( (todayIsNotToday() ? nowThen(calendar()) : now()) ));
     }
 
     /**
