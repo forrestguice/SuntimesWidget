@@ -193,8 +193,6 @@ public class MoonPhaseView extends LinearLayout
             formatter.setMinimumFractionDigits(0);
             formatter.setMaximumFractionDigits((illumAtNoon ? 0 : 1));
 
-            Log.d("DEBUG", "illlum: " + illumination);
-
             String illum = formatter.format(illumination);
             String illumNote = (context == null ? illum : context.getString(R.string.moon_illumination, illum));
             SpannableString illumNoteSpan = SuntimesUtils.createColorSpan(null, illumNote, illum, noteColor);
