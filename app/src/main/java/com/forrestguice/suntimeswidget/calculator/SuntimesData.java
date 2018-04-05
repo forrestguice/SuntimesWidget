@@ -268,7 +268,7 @@ public class SuntimesData
      */
     public Calendar now()
     {
-        return Calendar.getInstance(TimeZone.getTimeZone(timezone().getID()));
+        return Calendar.getInstance(timezone());
     }
 
     /**
