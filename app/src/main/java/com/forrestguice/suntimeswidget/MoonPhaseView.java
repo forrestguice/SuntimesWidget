@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -134,8 +135,6 @@ public class MoonPhaseView extends LinearLayout
 
     protected void updateViews( Context context, SuntimesMoonData data )
     {
-        this.data = data;
-
         int positionVisibility = (showPosition ? View.VISIBLE : View.GONE);
         azimuthText.setVisibility(positionVisibility);
         elevationText.setVisibility(positionVisibility);
@@ -145,6 +144,7 @@ public class MoonPhaseView extends LinearLayout
             return;
         }
 
+        this.data = data;
         if (data == null)
         {
             return;
@@ -173,19 +173,35 @@ public class MoonPhaseView extends LinearLayout
                 }*/
             }
 
-            double illumination = (!illumAtNoon ? data.getMoonIlluminationNow()
-                                                : (tomorrowMode ? data.getMoonIlluminationTomorrow()
-                                                                : data.getMoonIlluminationToday()));
-            NumberFormat percentage = NumberFormat.getPercentInstance();
-            String illum = percentage.format(illumination);
-            String illumNote = context.getString(R.string.moon_illumination, illum);
-            SpannableString illumNoteSpan = SuntimesUtils.createColorSpan(null, illumNote, illum, noteColor);
-            illumText.setText(illumNoteSpan);
-
+            updateIllumination(context);
             updatePosition();
 
         } else {
             showEmptyView(true);
+        }
+    }
+
+    public void updateIllumination(Context context)
+    {
+        if (data != null && data.isCalculated())
+        {
+            double illumination = (!illumAtNoon ? data.getMoonIlluminationNow()
+                    : (tomorrowMode ? data.getMoonIlluminationTomorrow()
+                    : data.getMoonIlluminationToday()));
+
+            NumberFormat formatter = NumberFormat.getPercentInstance();
+            formatter.setMinimumFractionDigits(0);
+            formatter.setMaximumFractionDigits((illumAtNoon ? 0 : 1));
+
+            Log.d("DEBUG", "illlum: " + illumination);
+
+            String illum = formatter.format(illumination);
+            String illumNote = (context == null ? illum : context.getString(R.string.moon_illumination, illum));
+            SpannableString illumNoteSpan = SuntimesUtils.createColorSpan(null, illumNote, illum, noteColor);
+            illumText.setText(illumNoteSpan);
+
+        } else {
+            illumText.setText("");
         }
     }
 
@@ -221,20 +237,20 @@ public class MoonPhaseView extends LinearLayout
 
         if (azimuthText != null)
         {
-            SuntimesUtils.TimeDisplayText azimuthText = utils.formatAsDirection2(position.azimuth, 1, false);
+            SuntimesUtils.TimeDisplayText azimuthText = utils.formatAsDirection2(position.azimuth, 2, false);
             String azimuthString = utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
             SpannableString azimuthSpan = SuntimesUtils.createRelativeSpan(null, azimuthString, azimuthText.getSuffix(), 0.7f);
             azimuthSpan = SuntimesUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
             this.azimuthText.setText(azimuthSpan);
 
-            SuntimesUtils.TimeDisplayText azimuthDesc = utils.formatAsDirection2(position.azimuth, 1, true);
+            SuntimesUtils.TimeDisplayText azimuthDesc = utils.formatAsDirection2(position.azimuth, 2, true);
             this.azimuthText.setContentDescription(utils.formatAsDirection(azimuthDesc.getValue(), azimuthDesc.getSuffix()));
         }
 
         if (elevationText != null)
         {
             //int elevationColor = Color.WHITE;
-            SuntimesUtils.TimeDisplayText elevationText = utils.formatAsElevation(position.elevation, 1);
+            SuntimesUtils.TimeDisplayText elevationText = utils.formatAsElevation(position.elevation, 2);
             String elevationString = utils.formatAsElevation(elevationText.getValue(), elevationText.getSuffix());
             SpannableString elevationSpan = SuntimesUtils.createRelativeSpan(null, elevationString, elevationText.getSuffix(), 0.7f);
             //elevationSpan = SuntimesUtils.createColorSpan(elevationSpan, elevationString, elevationString, elevationColor);

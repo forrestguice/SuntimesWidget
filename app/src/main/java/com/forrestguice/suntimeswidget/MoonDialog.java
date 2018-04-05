@@ -76,11 +76,13 @@ public class MoonDialog extends DialogFragment
 
     private DialogInterface.OnShowListener onShowListener = new DialogInterface.OnShowListener() {
         @Override
-        public void onShow(DialogInterface dialogInterface) {
+        public void onShow(DialogInterface dialogInterface)
+        {
             Context context = getContext();
-            if (context != null)
+            if (context != null) {
                 updateViews();
-            else Log.w("MoonDialog.onShow", "null context! skipping update");
+            }
+            startUpdateTask();
         }
     };
 
@@ -93,10 +95,12 @@ public class MoonDialog extends DialogFragment
 
     public void updateViews()
     {
+        stopUpdateTask();
         Context context = getContext();
         moonriseset.updateViews(context, data);
         currentphase.updateViews(context, data);
         moonphases.updateViews(context, data);
+        startUpdateTask();
     }
 
     @Override
@@ -106,5 +110,57 @@ public class MoonDialog extends DialogFragment
         moonriseset.saveState(outState);
         currentphase.saveState(outState);
         moonphases.saveState(outState);
+    }
+
+    private void startUpdateTask()
+    {
+        stopUpdateTask();
+        if (currentphase != null) {
+            currentphase.post(updateTask0);
+            currentphase.post(updateTask1);
+        }
+    }
+
+    private void stopUpdateTask()
+    {
+        if (currentphase != null) {
+            currentphase.removeCallbacks(updateTask0);
+            currentphase.removeCallbacks(updateTask1);
+        }
+    }
+
+    public static final int UPDATE_RATE0 = 3 * 1000;       // 3sec
+    private Runnable updateTask0 = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            if (data != null && currentphase != null)
+            {
+                currentphase.updatePosition();
+                currentphase.postDelayed(this, UPDATE_RATE0);
+            }
+        }
+    };
+
+    public static final int UPDATE_RATE1 = 5 * 60 * 1000;  // 5min
+    private Runnable updateTask1 = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            if (data != null && currentphase != null)
+            {
+                currentphase.updateIllumination(getContext());
+                currentphase.postDelayed(this, UPDATE_RATE1);
+            }
+        }
+    };
+
+    @Override
+    public void onStop()
+    {
+        stopUpdateTask();
+        super.onStop();
     }
 }
