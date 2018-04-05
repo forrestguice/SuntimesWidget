@@ -302,6 +302,8 @@ public class SuntimesActivity extends AppCompatActivity
         getFixHelper.onResume();
 
         // restore open dialogs
+        updateDialogs(this);
+
         FragmentManager fragments = getSupportFragmentManager();
         TimeZoneDialog timezoneDialog = (TimeZoneDialog) fragments.findFragmentByTag(DIALOGTAG_TIMEZONE);
         if (timezoneDialog != null)
@@ -309,14 +311,6 @@ public class SuntimesActivity extends AppCompatActivity
             timezoneDialog.setOnAcceptedListener(onConfigTimeZone);
             timezoneDialog.setOnCanceledListener(onCancelTimeZone);
             //Log.d("DEBUG", "TimeZoneDialog listeners restored.");
-        }
-
-        AlarmDialog alarmDialog = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_ALARM);
-        if (alarmDialog != null)
-        {
-            alarmDialog.setData(this, dataset);
-            alarmDialog.setOnAcceptedListener(alarmDialog.scheduleAlarmClickListener);
-            //Log.d("DEBUG", "AlarmDialog listeners restored.");
         }
 
         LocationConfigDialog locationDialog = (LocationConfigDialog) fragments.findFragmentByTag(DIALOGTAG_LOCATION);
@@ -332,6 +326,19 @@ public class SuntimesActivity extends AppCompatActivity
             dateDialog.setOnAcceptedListener(onConfigDate);
             dateDialog.setOnCanceledListener(onCancelDate);
             //Log.d("DEBUG", "TimeDateDialog listeners restored.");
+        }
+    }
+
+    private void updateDialogs(Context context)
+    {
+        FragmentManager fragments = getSupportFragmentManager();
+
+        AlarmDialog alarmDialog = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_ALARM);
+        if (alarmDialog != null)
+        {
+            alarmDialog.setData(this, dataset);
+            alarmDialog.setOnAcceptedListener(alarmDialog.scheduleAlarmClickListener);
+            //Log.d("DEBUG", "AlarmDialog listeners restored.");
         }
 
         LightMapDialog lightMapDialog = (LightMapDialog) fragments.findFragmentByTag(DIALOGTAG_LIGHTMAP);
@@ -461,6 +468,7 @@ public class SuntimesActivity extends AppCompatActivity
                 invalidateData(SuntimesActivity.this);
                 calculateData(SuntimesActivity.this);
                 setFullUpdateAlarm(SuntimesActivity.this);
+                updateDialogs(SuntimesActivity.this);
                 updateViews(SuntimesActivity.this);
             }
         }
