@@ -117,6 +117,13 @@ public class LightMapDialog extends DialogFragment
             sunElevation.removeCallbacks(updateTask);
     }
 
+    @Override
+    public void onStop()
+    {
+        stopUpdateTask();
+        super.onStop();
+    }
+
     public static final int UPDATE_RATE = 3000;
     private Runnable updateTask = new Runnable()
     {
