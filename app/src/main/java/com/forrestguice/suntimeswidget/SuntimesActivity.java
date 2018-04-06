@@ -80,7 +80,7 @@ import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 import com.forrestguice.suntimeswidget.notes.NoteChangedListener;
 import com.forrestguice.suntimeswidget.notes.NoteData;
-import com.forrestguice.suntimeswidget.notes.SuntimesNotes3;
+import com.forrestguice.suntimeswidget.notes.SuntimesNotes;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -132,7 +132,7 @@ public class SuntimesActivity extends AppCompatActivity
     private GetFixHelper getFixHelper;
 
     private WidgetSettings.Location location;
-    protected SuntimesNotes3 notes;
+    protected SuntimesNotes notes;
     protected SuntimesRiseSetDataset dataset;
     protected SuntimesEquinoxSolsticeDataset dataset2;
     protected SuntimesMoonData dataset3;
@@ -1147,7 +1147,7 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private void initNotes()
     {
-        notes = new SuntimesNotes3();
+        notes = new SuntimesNotes();
         notes.init(this, dataset, dataset3);
         notes.setOnChangedListener(new NoteChangedListener()
         {

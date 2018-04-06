@@ -36,11 +36,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * The second implementation of SuntimesNotes; it does the same as the first (but hopefully a little cleaner).
- */
 @SuppressWarnings("Convert2Diamond")
-public class SuntimesNotes3
+public class SuntimesNotes
 {
     protected static final SuntimesUtils utils = new SuntimesUtils();
 
@@ -54,7 +51,7 @@ public class SuntimesNotes3
     private SuntimesRiseSetDataset dataset;
     private SuntimesMoonData moondata;         // may be null
 
-    public SuntimesNotes3()
+    public SuntimesNotes()
     {
         changedListener = new NoteChangedListener()
         {
