@@ -35,6 +35,7 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Calendar;
@@ -74,6 +75,20 @@ public class MoonRiseSetView extends LinearLayout
         } finally {
             a.recycle();
         }
+    }
+
+    public TextView[] getTimeViews(SolarEvents event)
+    {
+        switch (event)
+        {
+            case MOONRISE:
+                return new TextView[] {risingTextField.getTimeView(), risingTextField1.getTimeView()};
+
+            case MOONSET:
+            default:
+                return new TextView[] {settingTextField.getTimeView(), settingTextField1.getTimeView()};
+        }
+
     }
 
     private void init(Context context, AttributeSet attrs)
@@ -363,6 +378,11 @@ public class MoonRiseSetView extends LinearLayout
         {
             SuntimesUtils.TimeDisplayText text = utils.calendarTimeShortDisplayString(context, dateTime, showSeconds);
             timeView.setText(text.toString());
+        }
+
+        public TextView getTimeView()
+        {
+            return timeView;
         }
 
         public void updateField(Context context, SuntimesCalculator.Position position)
