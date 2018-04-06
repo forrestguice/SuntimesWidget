@@ -26,6 +26,7 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
@@ -51,6 +52,7 @@ public class SuntimesNotes3
 
     private Context context;
     private SuntimesRiseSetDataset dataset;
+    private SuntimesMoonData moondata;         // may be null
 
     public SuntimesNotes3()
     {
@@ -61,14 +63,18 @@ public class SuntimesNotes3
         };
     }
 
-    public void init(Context context, SuntimesRiseSetDataset dataset)
+    public void init(Context context, SuntimesRiseSetDataset sundata, SuntimesMoonData moondata)
     {
         this.context = context;
-        this.dataset = dataset;
+        this.dataset = sundata;
+        this.moondata = moondata;
 
         boolean hasGoldBlue = dataset.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_GOLDBLUE);
         boolean enabledGold = AppSettings.loadGoldHourPref(context);
         boolean enabledBlue = AppSettings.loadBlueHourPref(context);
+
+        boolean hasMoon = (moondata != null && moondata.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_MOON));
+        boolean enabledMoon = AppSettings.loadShowMoonPref(context);
 
         notesList = new ArrayList<NoteData>();
         for (SolarEvents event : SolarEvents.values())
@@ -76,6 +82,8 @@ public class SuntimesNotes3
             if ((!hasGoldBlue || !enabledGold) && (event.equals(SolarEvents.EVENING_GOLDEN) || event.equals(SolarEvents.MORNING_GOLDEN)))
                 continue;
             else if ((!hasGoldBlue || !enabledBlue) && (event.equals(SolarEvents.EVENING_BLUE8) || event.equals(SolarEvents.MORNING_BLUE8) || event.equals(SolarEvents.EVENING_BLUE4) || event.equals(SolarEvents.MORNING_BLUE4)))
+                continue;
+            else if ((!hasMoon || !enabledMoon) && (event.equals(SolarEvents.MOONRISE) || event.equals(SolarEvents.MOONSET)))
                 continue;
 
             NoteData note = createNote(event);
@@ -232,104 +240,84 @@ public class SuntimesNotes3
      */
     private NoteData createNote(SolarEvents event)
     {
-        int noteIcon;
+        int noteIcon = event.getIcon();
         int noteColor;
-        String untilString;
+        String untilString = prefixString(event, false);
         String noteString;
 
         switch (event)
         {
+            case MOONRISE:
+                noteColor = ContextCompat.getColor(context, R.color.moonIcon_color_rising);
+                noteString = context.getString(R.string.until_moonrise);
+                break;
+
+            case MOONSET:
+                noteColor = ContextCompat.getColor(context, R.color.moonIcon_color_setting);
+                noteString = context.getString(R.string.until_moonset);
+                break;
+
             case MORNING_ASTRONOMICAL:
-                noteIcon = R.drawable.ic_sunrise_large;
                 noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_rising);
-                untilString = context.getString(R.string.until);
                 noteString = context.getString(R.string.until_astroTwilight);
                 break;
             case MORNING_NAUTICAL:
-                noteIcon = R.drawable.ic_sunrise_large;
                 noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_rising);
-                untilString = context.getString(R.string.until);
                 noteString = context.getString(R.string.until_nauticalTwilight);
                 break;
             case MORNING_BLUE8:
-                noteIcon = R.drawable.ic_sunrise_large;
                 noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_rising);
-                untilString = context.getString(R.string.until);
                 noteString = context.getString(R.string.until_bluehour);
                 break;
             case MORNING_CIVIL:
-                noteIcon = R.drawable.ic_sunrise_large;
                 noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_rising);
-                untilString = context.getString(R.string.until);
                 noteString = context.getString(R.string.until_civilTwilight);
                 break;
             case MORNING_BLUE4:
-                noteIcon = R.drawable.ic_sunrise_large;
                 noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_rising);
-                untilString = context.getString(R.string.until_end);
                 noteString = context.getString(R.string.untilEnd_bluehour);
                 break;
             case SUNRISE:
-                noteIcon = R.drawable.ic_sunrise_large;
                 noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_rising);
-                untilString = context.getString(R.string.until);
                 noteString = context.getString(R.string.until_sunrise);
                 break;
             case MORNING_GOLDEN:
-                noteIcon = R.drawable.ic_sunrise_large;
                 noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_rising);
-                untilString = context.getString(R.string.until);
                 noteString = context.getString(R.string.untilEnd_goldhour);
                 break;
 
             case NOON:
-                noteIcon = R.drawable.ic_noon_large;
                 noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
-                untilString = context.getString(R.string.until);
                 noteString = context.getString(R.string.until_noon);
                 break;
 
             case EVENING_GOLDEN:
-                noteIcon = R.drawable.ic_sunset_large;
                 noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
-                untilString = context.getString(R.string.until);
                 noteString = context.getString(R.string.until_goldhour);
                 break;
             case SUNSET:
-                noteIcon = R.drawable.ic_sunset_large;
                 noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
-                untilString = context.getString(R.string.until);
                 noteString = context.getString(R.string.until_sunset);
                 break;
             case EVENING_BLUE4:
-                noteIcon = R.drawable.ic_sunset_large;
                 noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
-                untilString = context.getString(R.string.until);
                 noteString = context.getString(R.string.until_bluehour);
                 break;
             case EVENING_CIVIL:
-                noteIcon = R.drawable.ic_sunset_large;
                 noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
-                untilString = context.getString(R.string.until_end);
                 noteString = context.getString(R.string.untilEnd_civilTwilight);
                 break;
             case EVENING_BLUE8:
-                noteIcon = R.drawable.ic_sunset_large;
                 noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
-                untilString = context.getString(R.string.until_end);
                 noteString = context.getString(R.string.untilEnd_bluehour);
                 break;
             case EVENING_NAUTICAL:
-                noteIcon = R.drawable.ic_sunset_large;
                 noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
-                untilString = context.getString(R.string.until_end);
                 noteString = context.getString(R.string.untilEnd_nauticalTwilight);
                 break;
             case EVENING_ASTRONOMICAL:
             default:
-                noteIcon = R.drawable.ic_sunset_large;
                 noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
-                untilString = context.getString(R.string.until_end);
                 noteString = context.getString(R.string.untilEnd_astroTwilight);
                 break;
         }
@@ -348,6 +336,8 @@ public class SuntimesNotes3
         } else {
             switch (event)
             {
+                case MOONRISE:
+                case MOONSET:
                 case MORNING_ASTRONOMICAL:          // until
                 case MORNING_NAUTICAL:
                 case MORNING_BLUE8:
@@ -384,6 +374,20 @@ public class SuntimesNotes3
         Calendar date, dateOther;
         switch (note.noteMode)
         {
+            case MOONRISE:
+                if (moondata == null) {
+                    return;
+                }
+                date = moondata.moonriseCalendarToday();
+                dateOther = moondata.moonriseCalendarTomorrow();
+                break;
+            case MOONSET:
+                if (moondata == null) {
+                    return;
+                }
+                date = moondata.moonsetCalendarToday();
+                dateOther = moondata.moonsetCalendarTomorrow();
+                break;
             case MORNING_ASTRONOMICAL:
                 date = dataset.dataAstro.sunriseCalendarToday();
                 dateOther = dataset.dataAstro.sunriseCalendarOther();

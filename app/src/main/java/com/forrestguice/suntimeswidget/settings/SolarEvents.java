@@ -51,7 +51,10 @@ public enum SolarEvents
     EVENING_CIVIL("civil twilight", "evening civil twilight", R.drawable.ic_sunset_large),                       // 11
     EVENING_BLUE8("blue hour", "evening blue hour", R.drawable.ic_sunset_large),                                 // 12
     EVENING_NAUTICAL("nautical twilight", "evening nautical twilight", R.drawable.ic_sunset_large),              // 13
-    EVENING_ASTRONOMICAL("astronomical twilight", "evening astronomical twilight", R.drawable.ic_sunset_large);  // 14  .. R.array.solarevents_short/_long req same length/order
+    EVENING_ASTRONOMICAL("astronomical twilight", "evening astronomical twilight", R.drawable.ic_sunset_large),  // 14
+    MOONRISE("moonrise", "moonrise", R.drawable.ic_moon_rise),                                                   // 15
+    MOONSET("moonset", "mooonset", R.drawable.ic_moon_set);                                                      // 16
+                                                                                                                 // .. R.array.solarevents_short/_long req same length/order
 
     private int iconResource;
     private String shortDisplayString, longDisplayString;

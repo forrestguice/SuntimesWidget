@@ -117,6 +117,8 @@
     <string name="untilEnd_goldhour">golden hour</string>
     <string name="until_bluehour">blue hour</string>
     <string name="untilEnd_bluehour">blue hour</string>
+    <string name="until_moonrise">moonrise</string> <!-- TODO: i18n -->
+    <string name="until_moonset">moonset</string>  <!-- TODO: i18n -->
 
     <!-- Table -->
     <string name="sunrise">Sunrise</string>                             <!-- contentDescription -->
@@ -786,6 +788,8 @@
         <item>blue hour</item>
         <item>nautical twilight</item>
         <item>astronomical twilight</item>
+        <item>moonrise</item>
+        <item>moonset</item>                          <!-- TODO> i18n -->
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>morning astronomical twilight (start)</item>
@@ -803,6 +807,8 @@
         <item>evening blue hour (end)</item>
         <item>evening nautical twilight (end)</item>
         <item>evening astronomical twilight (end)</item>
+        <item>moonrise</item>
+        <item>moonset</item>
     </string-array>
 
     <!-- Dialog: Enable GPS? -->

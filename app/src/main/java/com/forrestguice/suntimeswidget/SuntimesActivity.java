@@ -1148,7 +1148,7 @@ public class SuntimesActivity extends AppCompatActivity
     private void initNotes()
     {
         notes = new SuntimesNotes3();
-        notes.init(this, dataset);
+        notes.init(this, dataset, dataset3);
         notes.setOnChangedListener(new NoteChangedListener()
         {
             @Override
