@@ -39,7 +39,7 @@ import java.util.Date;
  * The second implementation of SuntimesNotes; it does the same as the first (but hopefully a little cleaner).
  */
 @SuppressWarnings("Convert2Diamond")
-public class SuntimesNotes3 implements SuntimesNotes
+public class SuntimesNotes3
 {
     protected static final SuntimesUtils utils = new SuntimesUtils();
 
@@ -61,7 +61,6 @@ public class SuntimesNotes3 implements SuntimesNotes
         };
     }
 
-    @Override
     public void init(Context context, SuntimesRiseSetDataset dataset)
     {
         this.context = context;
@@ -85,19 +84,16 @@ public class SuntimesNotes3 implements SuntimesNotes
         updateNotes(dataset.now());
     }
 
-    @Override
     public boolean isInitialized()
     {
         return (context != null);
     }
 
-    @Override
     public int noteCount()
     {
         return notesList.size();
     }
 
-    @Override
     public int getNoteIndex()
     {
         if (currentNote != null)
@@ -107,7 +103,6 @@ public class SuntimesNotes3 implements SuntimesNotes
         return noteIndex;
     }
 
-    @Override
     public boolean setNoteIndex(int noteIndex)
     {
         if (noteIndex >=0 && noteIndex < notesList.size())
@@ -121,13 +116,11 @@ public class SuntimesNotes3 implements SuntimesNotes
         return false;
     }
 
-    @Override
     public boolean showNote( SolarEvents.SolarEventField forField )
     {
         return false;
     }
 
-    @Override
     public NoteData getNote()
     {
         if (currentNote != null)
@@ -137,7 +130,6 @@ public class SuntimesNotes3 implements SuntimesNotes
         return currentNote;
     }
 
-    @Override
     public NoteData getNote(int noteIndex)
     {
         if (noteIndex >=0 && noteIndex < notesList.size())
@@ -153,7 +145,6 @@ public class SuntimesNotes3 implements SuntimesNotes
      * Switch to the next note (in ordered set of notes).
      * @return true if the note was changed, false otherwise
      */
-    @Override
     public boolean showNextNote()
     {
         if (dataset.isCalculated())
@@ -182,7 +173,6 @@ public class SuntimesNotes3 implements SuntimesNotes
      * Switch to the previous note (in ordered set of notes).
      * @return true if the note was changed, false otherwise
      */
-    @Override
     public boolean showPrevNote()
     {
         if (dataset.isCalculated())
@@ -207,25 +197,21 @@ public class SuntimesNotes3 implements SuntimesNotes
         }
     }
 
-    @Override
     public boolean hasNextNote()
     {
         return noteIndex < notesList.size() - 1;
     }
 
-    @Override
     public boolean hasPrevNote()
     {
         return noteIndex > 0;
     }
 
-    @Override
     public void setOnChangedListener(NoteChangedListener listener)
     {
         changedListener = listener;
     }
 
-    @Override
     public NoteChangedListener getOnChangedListener()
     {
         return changedListener;
@@ -508,19 +494,16 @@ public class SuntimesNotes3 implements SuntimesNotes
     }
 
 
-    @Override
     public void updateNote(Context context)
     {
         updateNote(context, dataset.now(), NoteChangedListener.TRANSITION_NONE);
     }
 
-    @Override
     public void updateNote(Context context, Calendar now)
     {
         updateNote(context, now, NoteChangedListener.TRANSITION_NONE);
     }
 
-    @Override
     public void updateNote(Context context, Calendar now, int transition)
     {
         SolarEvents choice = WidgetSettings.loadTimeNoteRisePref(context, AppWidgetManager.INVALID_APPWIDGET_ID);
@@ -557,7 +540,6 @@ public class SuntimesNotes3 implements SuntimesNotes
         return -1;
     }
 
-    @Override
     public void setNote(NoteData note, int transition)
     {
         currentNote = note;
