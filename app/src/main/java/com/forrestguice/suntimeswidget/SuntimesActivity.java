@@ -961,6 +961,8 @@ public class SuntimesActivity extends AppCompatActivity
 
             moonrise = (MoonRiseSetView) viewToday.findViewById(R.id.moonriseset_view);
             moonrise.setShowExtraField(false);
+            timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MOONRISE, false), null);
+            timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MOONSET, false), null);
 
             moonClickArea = viewToday.findViewById(R.id.moonphase_clickArea);
             moonClickArea.setOnClickListener(onMoonriseClick);
@@ -1044,6 +1046,8 @@ public class SuntimesActivity extends AppCompatActivity
             moonrise2 = (MoonRiseSetView) viewTomorrow.findViewById(R.id.moonriseset_view);
             moonrise2.setShowExtraField(false);
             moonrise2.setTomorrowMode(true);
+            timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MOONRISE, true), null);
+            timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MOONSET, true), null);
 
             moonClickArea2 = viewTomorrow.findViewById(R.id.moonphase_clickArea);
             moonClickArea2.setOnClickListener(onMoonriseClick);
@@ -2341,25 +2345,38 @@ public class SuntimesActivity extends AppCompatActivity
 
         for (SolarEvents.SolarEventField field : timeFields.keySet())
         {
-            TextView txtField = timeFields.get(field);
-            if (txtField != null)
+            boolean isMoonField = (field.event == SolarEvents.MOONRISE || field.event == SolarEvents.MOONSET);
+            TextView[] txtFields;
+
+            if (isMoonField)
             {
-                if (field.equals(highlightField))
+                MoonRiseSetView moonView = (field.tomorrow ? moonrise2 : moonrise);
+                txtFields = moonView.getTimeViews(field.event);
+
+            } else {
+                txtFields = new TextView[] { timeFields.get(field) };
+            }
+
+            for (TextView txtField : txtFields)
+            {
+                if (txtField != null && txtField.getVisibility() == View.VISIBLE)
                 {
-                    txtField.setTypeface(txtField.getTypeface(), Typeface.BOLD);
-                    txtField.setPaintFlags(txtField.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-
-                    if (currentCard == 0 && field.tomorrow)
+                    if (field.equals(highlightField))
                     {
-                        nextCardOffset = 1;
+                        txtField.setTypeface(txtField.getTypeface(), Typeface.BOLD);
+                        txtField.setPaintFlags(txtField.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
-                    } else if (currentCard == 1 && !field.tomorrow) {
-                        nextCardOffset = -1;
+                        if (currentCard == 0 && field.tomorrow) {
+                            nextCardOffset = 1;
+
+                        } else if (currentCard == 1 && !field.tomorrow) {
+                            nextCardOffset = -1;
+                        }
+
+                    } else {
+                        txtField.setTypeface(Typeface.create(txtField.getTypeface(), Typeface.NORMAL), Typeface.NORMAL);
+                        txtField.setPaintFlags(txtField.getPaintFlags() & (~Paint.UNDERLINE_TEXT_FLAG));
                     }
-
-                } else {
-                    txtField.setTypeface(Typeface.create(txtField.getTypeface(), Typeface.NORMAL), Typeface.NORMAL);
-                    txtField.setPaintFlags(txtField.getPaintFlags() & (~Paint.UNDERLINE_TEXT_FLAG));
                 }
             }
         }
