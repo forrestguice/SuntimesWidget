@@ -40,7 +40,7 @@
             <TextView
                 style="@style/SunsetTimeTextView"
                 android:id="@+id/text_time_noon"
-                android:textColor="@color/sunIcon_color_setting"
+                android:textColor="@color/sunIcon_color_setting_dark"
                 tools:text="11:48" />
 
             <TextView

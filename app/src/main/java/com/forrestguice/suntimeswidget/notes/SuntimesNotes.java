@@ -68,15 +68,14 @@ public class SuntimesNotes
     @SuppressWarnings("ResourceType")
     private void initColors(Context context)
     {
-        int[] colorAttrs = { R.attr.moonriseColor, R.attr.moonsetColor};
+        int[] colorAttrs = { R.attr.sunriseColor, R.attr.sunsetColor, R.attr.moonriseColor, R.attr.moonsetColor };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         int def = R.color.transparent;
-        colorMoonrise = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
-        colorMoonset = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
+        colorSunrise = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
+        colorSunset = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
+        colorMoonrise = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
+        colorMoonset = ContextCompat.getColor(context, typedArray.getResourceId(3, def));
         typedArray.recycle();
-
-        colorSunrise = ContextCompat.getColor(context, R.color.sunIcon_color_rising);
-        colorSunset = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
     }
 
     public void init(Context context, SuntimesRiseSetDataset sundata, SuntimesMoonData moondata)
