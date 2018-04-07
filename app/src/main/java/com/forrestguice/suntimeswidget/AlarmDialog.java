@@ -55,6 +55,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -538,18 +539,24 @@ public class AlarmDialog extends DialogFragment
         @Override
         public void onClick(DialogInterface dialogInterface, int i)
         {
-            SolarEvents choice = getChoice();
-            String alarmLabel = choice.getShortDisplayString();
-            Calendar now = dataset.nowThen(dataset.calendar());
-            Calendar calendar = getCalendarForAlarmChoice(choice, now);
-            if (calendar != null)
+            Context context = getContext();
+            if (context != null)
             {
-                AlarmDialog.scheduleAlarm(getActivity(), alarmLabel, calendar);
+                SolarEvents choice = getChoice();
+                Calendar now = dataset.nowThen(dataset.calendar());
+                Calendar calendar = getCalendarForAlarmChoice(choice, now);
 
-            } else {
-                String alarmErrorTxt = getString(R.string.schedalarm_dialog_error) + "\n" + getString(R.string.schedalarm_dialog_note2, choice.getLongDisplayString());
-                Toast alarmError = Toast.makeText(getActivity(), alarmErrorTxt, Toast.LENGTH_LONG);
-                alarmError.show();
+                if (calendar != null)
+                {
+                    DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
+                    String alarmLabel = context.getString(R.string.schedalarm_labelformat, choice.getShortDisplayString(), dateFormat.format(calendar.getTime()));
+                    AlarmDialog.scheduleAlarm(getActivity(), alarmLabel, calendar);
+
+                } else {
+                    String alarmErrorTxt = getString(R.string.schedalarm_dialog_error) + "\n" + getString(R.string.schedalarm_dialog_note2, choice.getLongDisplayString());
+                    Toast alarmError = Toast.makeText(getActivity(), alarmErrorTxt, Toast.LENGTH_LONG);
+                    alarmError.show();
+                }
             }
         }
     };
