@@ -1,6 +1,8 @@
 ### ~
 
 ###
+* changes the default alarm label format (label now includes shortDate).
+* adds moonrise and moonset to the AlarmDialog.
 * adds moon dialog to app; shows major phases, rising/setting times, rising/setting position, current position, phase, and illumination (current).
 * adds moon info to app (main table); rise/set, phase, and illumination (at lunar noon).
 * adds "moon data source" to general settings.
