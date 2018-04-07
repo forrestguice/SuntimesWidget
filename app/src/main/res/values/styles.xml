@@ -29,7 +29,7 @@
 
         <item name="sunriseIcon">@drawable/ic_sunrise_large</item>
         <item name="sunriseColor">@color/sunIcon_color_rising_light</item>
-        <item name="sunsetIcon">@drawable/ic_sunrise_large</item>
+        <item name="sunsetIcon">@drawable/ic_sunset_large</item>
         <item name="sunsetColor">@color/sunIcon_color_setting_light</item>
         <item name="sunnoonIcon">@drawable/ic_noon_large</item>
 
@@ -100,7 +100,7 @@
 
         <item name="sunriseIcon">@drawable/ic_sunrise_large</item>
         <item name="sunriseColor">@color/sunIcon_color_rising_dark</item>
-        <item name="sunsetIcon">@drawable/ic_sunrise_large</item>
+        <item name="sunsetIcon">@drawable/ic_sunset_large</item>
         <item name="sunsetColor">@color/sunIcon_color_setting_dark</item>
         <item name="sunnoonIcon">@drawable/ic_noon_large</item>
 
