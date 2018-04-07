@@ -34,6 +34,8 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 
 @SuppressWarnings("Convert2Diamond")
@@ -86,6 +88,7 @@ public class SuntimesNotes
             NoteData note = createNote(event);
             notesList.add(note);
         }
+
         updateNotes(dataset.now());
     }
 
@@ -228,6 +231,27 @@ public class SuntimesNotes
         {
             updateNote(note, now);
         }
+
+        Collections.sort(notesList, new Comparator<NoteData>()
+        {
+            @Override
+            public int compare(NoteData o1, NoteData o2)
+            {
+                boolean o1Null = (o1 == null || o1.time == null);
+                boolean o2Null = (o2 == null || o2.time == null);
+
+                if (o1Null && o2Null)
+                    return 0;
+
+                else if (o1Null)
+                    return -1;
+
+                else if (o2Null)
+                    return 1;
+
+                else return o1.time.compareTo(o2.time);
+            }
+        });
     }
 
     /**
