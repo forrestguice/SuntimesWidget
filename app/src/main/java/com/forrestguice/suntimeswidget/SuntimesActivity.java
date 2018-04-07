@@ -917,6 +917,12 @@ public class SuntimesActivity extends AppCompatActivity
             txt_date = (TextView) viewToday.findViewById(R.id.text_date);
             txt_date.setOnClickListener(dateTapClickListener(false));
 
+            View sunriseHeader = viewToday.findViewById(R.id.header_time_sunrise);
+            sunriseHeader.setOnClickListener(onSunriseClick);
+
+            View sunsetHeader = viewToday.findViewById(R.id.header_time_sunset);
+            sunsetHeader.setOnClickListener(onSunsetClick);
+
             txt_sunrise_actual = (TextView) viewToday.findViewById(R.id.text_time_sunrise_actual);
             txt_sunset_actual = (TextView) viewToday.findViewById(R.id.text_time_sunset_actual);
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.SUNRISE, false), txt_sunrise_actual);
@@ -998,6 +1004,12 @@ public class SuntimesActivity extends AppCompatActivity
         {
             txt_date2 = (TextView) viewTomorrow.findViewById(R.id.text_date);
             txt_date2.setOnClickListener(dateTapClickListener(true));
+
+            View sunriseHeader2 = viewTomorrow.findViewById(R.id.header_time_sunrise);
+            sunriseHeader2.setOnClickListener(onSunriseClick);
+
+            View sunsetHeader2 = viewTomorrow.findViewById(R.id.header_time_sunset);
+            sunsetHeader2.setOnClickListener(onSunsetClick);
 
             txt_sunrise2_actual = (TextView) viewTomorrow.findViewById(R.id.text_time_sunrise_actual);
             txt_sunset2_actual = (TextView) viewTomorrow.findViewById(R.id.text_time_sunset_actual);
@@ -2124,6 +2136,22 @@ public class SuntimesActivity extends AppCompatActivity
         {
             setUserSwappedCard( false, "onPrevNoteClick" );
             notes.showPrevNote();
+        }
+    };
+
+    View.OnClickListener onSunriseClick = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+        }
+    };
+
+    View.OnClickListener onSunsetClick = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
         }
     };
 

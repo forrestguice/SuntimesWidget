@@ -57,6 +57,7 @@
         <!-- Header: sunrise -->
         <LinearLayout
             android:id="@+id/header_time_sunrise"
+            android:background="?attr/selectableItemBackground"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/table_rise_leftMargin" android:layout_marginStart="@dimen/table_rise_leftMargin"
             android:layout_marginTop="8dp"
@@ -85,6 +86,7 @@
         <!-- Header: sunset -->
         <LinearLayout
             android:id="@+id/header_time_sunset"
+            android:background="?attr/selectableItemBackground"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/table_set_leftMargin" android:layout_marginStart="@dimen/table_set_leftMargin"
             android:layout_marginTop="8dp"
