@@ -137,6 +137,7 @@ public class SuntimesNotes
             NoteData note = notesList.get(noteIndex);
             updateNote(note, dataset.now());
             setNote(note, NoteChangedListener.TRANSITION_NEXT);
+            WidgetSettings.saveTimeNoteRisePref(context, 0, note.noteMode);
             return true;
         }
         return false;
