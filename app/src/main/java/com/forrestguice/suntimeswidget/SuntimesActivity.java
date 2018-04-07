@@ -2144,6 +2144,8 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public void onClick(View v)
         {
+            setUserSwappedCard(false, "onSunriseClick");
+            notes.setNoteIndex(notes.getNoteIndex(SolarEvents.SUNRISE));
         }
     };
 
@@ -2152,6 +2154,8 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public void onClick(View v)
         {
+            setUserSwappedCard(false, "onSunsetClick");
+            notes.setNoteIndex(notes.getNoteIndex(SolarEvents.SUNSET));
         }
     };
 
