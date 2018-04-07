@@ -20,7 +20,9 @@ package com.forrestguice.suntimeswidget.settings;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +32,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -174,7 +177,7 @@ public enum SolarEvents
             Resources resources = icon.getContext().getResources();
             int iconWidth = (int)resources.getDimension(R.dimen.sunIconLarge_width);
             int iconHeight = (int)resources.getDimension(R.dimen.sunIconLarge_height);
-            if ( iconResource == R.drawable.ic_noon_large)
+            if (iconResource == R.drawable.ic_noon_large)
             {
                 //noinspection SuspiciousNameCombination
                 iconHeight = iconWidth;
@@ -184,7 +187,8 @@ public enum SolarEvents
             iconParams.width = iconWidth;
             iconParams.height = iconHeight;
 
-            icon.setImageResource(iconResource);
+            icon.setImageDrawable(null);
+            icon.setBackgroundResource(iconResource);
         }
     }
 

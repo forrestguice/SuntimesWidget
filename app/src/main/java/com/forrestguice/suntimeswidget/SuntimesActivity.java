@@ -335,7 +335,7 @@ public class SuntimesActivity extends AppCompatActivity
         AlarmDialog alarmDialog = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_ALARM);
         if (alarmDialog != null)
         {
-            alarmDialog.setData(this, dataset);
+            alarmDialog.setData(this, dataset, dataset3);
             alarmDialog.setOnAcceptedListener(alarmDialog.scheduleAlarmClickListener);
             //Log.d("DEBUG", "AlarmDialog listeners restored.");
         }
@@ -1475,7 +1475,7 @@ public class SuntimesActivity extends AppCompatActivity
         if (dataset.isCalculated())
         {
             AlarmDialog alarmDialog = new AlarmDialog();
-            alarmDialog.setData(this, dataset);
+            alarmDialog.setData(this, dataset, dataset3);
             alarmDialog.setChoice(selected);
             alarmDialog.setOnAcceptedListener(alarmDialog.scheduleAlarmClickListener);
             alarmDialog.show(getSupportFragmentManager(), DIALOGTAG_ALARM);

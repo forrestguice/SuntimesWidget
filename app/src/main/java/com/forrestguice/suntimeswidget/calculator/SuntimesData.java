@@ -284,6 +284,15 @@ public class SuntimesData
         return nowThen;
     }
 
+    public static Calendar nowThen(Calendar now, Calendar date)
+    {
+        Calendar nowThen = (Calendar)now.clone();
+        nowThen.set(Calendar.YEAR, date.get(Calendar.YEAR));
+        nowThen.set(Calendar.MONTH, date.get(Calendar.MONTH));
+        nowThen.set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH));
+        return nowThen;
+    }
+
 }
 
 
