@@ -34,7 +34,7 @@
                     android:id="@+id/icon_time_moonrise"
                     style="@style/TableHeadImageView"
                     android:layout_width="@dimen/table_heading_iconsize"
-                    android:background="@drawable/ic_moon_rise"
+                    android:background="?attr/moonriseIcon"
                     android:layout_gravity="bottom|center_horizontal"
                     android:layout_margin="0dp"
                     tools:ignore="contentDescription"/>
@@ -42,13 +42,13 @@
                 <TextView
                     style="@style/SunsetTimeTextView"
                     android:id="@+id/text_time_moonrise"
-                    android:textColor="@color/moonIcon_color_rising"
+                    android:textColor="?attr/moonriseColor"
                     tools:text="00:00 AM" />
 
                 <TextView android:visibility="gone"
                     style="@style/SunsetTimeTextView2"
                     android:id="@+id/text_info_moonrise" android:gravity="center" android:layout_gravity="center"
-                    android:textColor="@color/moonIcon_color_rising"
+                    android:textColor="?attr/moonriseColor"
                     tools:text="270  W" />
 
             </LinearLayout>
@@ -63,7 +63,7 @@
                     android:id="@+id/icon_time_moonset"
                     style="@style/TableHeadImageView"
                     android:layout_width="@dimen/table_heading_iconsize"
-                    android:background="@drawable/ic_moon_set"
+                    android:background="?attr/moonsetIcon"
                     android:layout_gravity="bottom|center_horizontal"
                     android:layout_margin="0dp"
                     tools:ignore="contentDescription"/>
@@ -71,13 +71,13 @@
                 <TextView
                     style="@style/SunsetTimeTextView"
                     android:id="@+id/text_time_moonset"
-                    android:textColor="@color/moonIcon_color_setting"
+                    android:textColor="?attr/moonsetColor"
                     tools:text="00:00 PM" />
 
                 <TextView android:visibility="gone"
                     style="@style/SunsetTimeTextView2"
                     android:id="@+id/text_info_moonset" android:gravity="center" android:layout_gravity="center"
-                    android:textColor="@color/moonIcon_color_setting"
+                    android:textColor="?attr/moonsetColor"
                     tools:text="270  W" />
 
 
@@ -98,7 +98,7 @@
                     android:id="@+id/icon_time_moonrise1"
                     style="@style/TableHeadImageView"
                     android:layout_width="@dimen/table_heading_iconsize"
-                    android:background="@drawable/ic_moon_rise"
+                    android:background="?attr/moonriseIcon"
                     android:layout_gravity="bottom|center_horizontal"
                     android:layout_margin="0dp"
                     tools:ignore="contentDescription"/>
@@ -106,13 +106,13 @@
                 <TextView
                     style="@style/SunsetTimeTextView"
                     android:id="@+id/text_time_moonrise1"
-                    android:textColor="@color/moonIcon_color_rising"
+                    android:textColor="?attr/moonriseColor"
                     tools:text="00:00 AM" />
 
                 <TextView android:visibility="gone"
                     style="@style/SunsetTimeTextView2"
                     android:id="@+id/text_info_moonrise1" android:gravity="center" android:layout_gravity="center"
-                    android:textColor="@color/moonIcon_color_rising"
+                    android:textColor="?attr/moonriseColor"
                     tools:text="270  W" />
 
             </LinearLayout>
@@ -127,7 +127,7 @@
                     android:id="@+id/icon_time_moonset1"
                     style="@style/TableHeadImageView"
                     android:layout_width="@dimen/table_heading_iconsize"
-                    android:background="@drawable/ic_moon_set"
+                    android:background="?attr/moonsetIcon"
                     android:layout_gravity="bottom|center_horizontal"
                     android:layout_margin="0dp"
                     tools:ignore="contentDescription"/>
@@ -135,13 +135,13 @@
                 <TextView
                     style="@style/SunsetTimeTextView"
                     android:id="@+id/text_time_moonset1"
-                    android:textColor="@color/moonIcon_color_setting"
+                    android:textColor="?attr/moonsetColor"
                     tools:text="00:00 PM" />
 
                 <TextView android:visibility="gone"
                     style="@style/SunsetTimeTextView2"
                     android:id="@+id/text_info_moonset1" android:gravity="center" android:layout_gravity="center"
-                    android:textColor="@color/moonIcon_color_setting"
+                    android:textColor="?attr/moonsetColor"
                     tools:text="270  W" />
 
             </LinearLayout>

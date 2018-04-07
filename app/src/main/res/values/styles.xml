@@ -27,6 +27,17 @@
         <item name="graphColor_pointFill">@color/sunIcon_color_setting</item>
         <item name="graphColor_pointStroke">@color/grey_800</item>
 
+        <item name="sunriseIcon">@drawable/ic_sunrise_large</item>
+        <item name="sunriseColor">@color/sunIcon_color_rising_light</item>
+        <item name="sunsetIcon">@drawable/ic_sunrise_large</item>
+        <item name="sunsetColor">@color/sunIcon_color_setting_light</item>
+        <item name="sunnoonIcon">@drawable/ic_noon_large</item>
+
+        <item name="moonriseIcon">@drawable/ic_moon_rise_light</item>
+        <item name="moonriseColor">@color/moonIcon_color_rising_light</item>
+        <item name="moonsetIcon">@drawable/ic_moon_set_light</item>
+        <item name="moonsetColor">@color/moonIcon_color_setting_light</item>
+
         <item name="springColor">@color/springColor_light</item>
         <item name="summerColor">@color/summerColor_light</item>
         <item name="fallColor">@color/fallColor_light</item>
@@ -86,6 +97,17 @@
         <item name="graphColor_astronomical">@color/graphColor_astronomical_dark</item>
         <item name="graphColor_pointFill">@color/sunIcon_color_setting</item>
         <item name="graphColor_pointStroke">@color/grey_800</item>
+
+        <item name="sunriseIcon">@drawable/ic_sunrise_large</item>
+        <item name="sunriseColor">@color/sunIcon_color_rising_dark</item>
+        <item name="sunsetIcon">@drawable/ic_sunrise_large</item>
+        <item name="sunsetColor">@color/sunIcon_color_setting_dark</item>
+        <item name="sunnoonIcon">@drawable/ic_noon_large</item>
+
+        <item name="moonriseIcon">@drawable/ic_moon_rise</item>
+        <item name="moonriseColor">@color/moonIcon_color_rising_dark</item>
+        <item name="moonsetIcon">@drawable/ic_moon_set</item>
+        <item name="moonsetColor">@color/moonIcon_color_setting_dark</item>
 
         <item name="springColor">@color/springColor_dark</item>
         <item name="summerColor">@color/summerColor_dark</item>

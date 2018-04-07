@@ -23,6 +23,17 @@
     <attr name="graphColor_pointFill" format="reference" />
     <attr name="graphColor_pointStroke" format="reference" />
 
+    <attr name="sunriseIcon" format="reference" />
+    <attr name="sunriseColor" format="reference" />
+    <attr name="sunsetIcon" format="reference" />
+    <attr name="sunsetColor" format="reference" />
+    <attr name="sunnoonIcon" format="reference" />
+
+    <attr name="moonriseIcon" format="reference" />
+    <attr name="moonriseColor" format="reference" />
+    <attr name="moonsetIcon" format="reference" />
+    <attr name="moonsetColor" format="reference" />
+
     <attr name="springColor" format="reference" />
     <attr name="summerColor" format="reference" />
     <attr name="fallColor" format="reference" />

@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.notes;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
@@ -53,6 +54,8 @@ public class SuntimesNotes
     private SuntimesRiseSetDataset dataset;
     private SuntimesMoonData moondata;         // may be null
 
+    private int colorSunrise, colorSunset, colorMoonrise, colorMoonset;
+
     public SuntimesNotes()
     {
         changedListener = new NoteChangedListener()
@@ -62,11 +65,27 @@ public class SuntimesNotes
         };
     }
 
+    @SuppressWarnings("ResourceType")
+    private void initColors(Context context)
+    {
+        int[] colorAttrs = { R.attr.moonriseColor, R.attr.moonsetColor};
+        TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+        int def = R.color.transparent;
+        colorMoonrise = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
+        colorMoonset = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
+        typedArray.recycle();
+
+        colorSunrise = ContextCompat.getColor(context, R.color.sunIcon_color_rising);
+        colorSunset = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
+    }
+
     public void init(Context context, SuntimesRiseSetDataset sundata, SuntimesMoonData moondata)
     {
         this.context = context;
         this.dataset = sundata;
         this.moondata = moondata;
+
+        initColors(context);
 
         boolean hasGoldBlue = dataset.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_GOLDBLUE);
         boolean enabledGold = AppSettings.loadGoldHourPref(context);
@@ -261,7 +280,12 @@ public class SuntimesNotes
      */
     private NoteData createNote(SolarEvents event)
     {
-        int noteIcon = event.getIcon();
+        int[] iconAttr = { event.getIcon() };
+        TypedArray typedArray = context.obtainStyledAttributes(iconAttr);
+        int def = R.drawable.ic_moon_rise;
+        int noteIcon = typedArray.getResourceId(0, def);
+        typedArray.recycle();
+
         int noteColor;
         String untilString = prefixString(event, false);
         String noteString;
@@ -269,76 +293,76 @@ public class SuntimesNotes
         switch (event)
         {
             case MOONRISE:
-                noteColor = ContextCompat.getColor(context, R.color.moonIcon_color_rising);
+                noteColor = colorMoonrise;
                 noteString = context.getString(R.string.until_moonrise);
                 break;
 
             case MOONSET:
-                noteColor = ContextCompat.getColor(context, R.color.moonIcon_color_setting);
+                noteColor = colorMoonset;
                 noteString = context.getString(R.string.until_moonset);
                 break;
 
             case MORNING_ASTRONOMICAL:
-                noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_rising);
+                noteColor = colorSunrise;
                 noteString = context.getString(R.string.until_astroTwilight);
                 break;
             case MORNING_NAUTICAL:
-                noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_rising);
+                noteColor = colorSunrise;
                 noteString = context.getString(R.string.until_nauticalTwilight);
                 break;
             case MORNING_BLUE8:
-                noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_rising);
+                noteColor = colorSunrise;
                 noteString = context.getString(R.string.until_bluehour);
                 break;
             case MORNING_CIVIL:
-                noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_rising);
+                noteColor = colorSunrise;
                 noteString = context.getString(R.string.until_civilTwilight);
                 break;
             case MORNING_BLUE4:
-                noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_rising);
+                noteColor = colorSunrise;
                 noteString = context.getString(R.string.untilEnd_bluehour);
                 break;
             case SUNRISE:
-                noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_rising);
+                noteColor = colorSunrise;
                 noteString = context.getString(R.string.until_sunrise);
                 break;
             case MORNING_GOLDEN:
-                noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_rising);
+                noteColor = colorSunrise;
                 noteString = context.getString(R.string.untilEnd_goldhour);
                 break;
 
             case NOON:
-                noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
+                noteColor = colorSunset;
                 noteString = context.getString(R.string.until_noon);
                 break;
 
             case EVENING_GOLDEN:
-                noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
+                noteColor = colorSunset;
                 noteString = context.getString(R.string.until_goldhour);
                 break;
             case SUNSET:
-                noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
+                noteColor = colorSunset;
                 noteString = context.getString(R.string.until_sunset);
                 break;
             case EVENING_BLUE4:
-                noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
+                noteColor = colorSunset;
                 noteString = context.getString(R.string.until_bluehour);
                 break;
             case EVENING_CIVIL:
-                noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
+                noteColor = colorSunset;
                 noteString = context.getString(R.string.untilEnd_civilTwilight);
                 break;
             case EVENING_BLUE8:
-                noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
+                noteColor = colorSunset;
                 noteString = context.getString(R.string.untilEnd_bluehour);
                 break;
             case EVENING_NAUTICAL:
-                noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
+                noteColor = colorSunset;
                 noteString = context.getString(R.string.untilEnd_nauticalTwilight);
                 break;
             case EVENING_ASTRONOMICAL:
             default:
-                noteColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting);
+                noteColor = colorSunset;
                 noteString = context.getString(R.string.untilEnd_astroTwilight);
                 break;
         }

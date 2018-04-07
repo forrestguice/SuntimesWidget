@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.settings;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -40,24 +41,24 @@ import java.util.Arrays;
 @SuppressWarnings("Convert2Diamond")
 public enum SolarEvents
 {
-    MORNING_ASTRONOMICAL("astronomical twilight", "morning astronomical twilight", R.drawable.ic_sunrise_large), // 0
-    MORNING_NAUTICAL("nautical twilight", "morning nautical twilight", R.drawable.ic_sunrise_large),             // 1
-    MORNING_BLUE8("blue hour", "morning blue hour", R.drawable.ic_sunrise_large),                                // 2
-    MORNING_CIVIL("civil twilight", "morning civil twilight", R.drawable.ic_sunrise_large),                      // 3
-    MORNING_BLUE4("blue hour", "morning blue hour", R.drawable.ic_sunrise_large),                                // 4
-    SUNRISE("sunrise", "sunrise", R.drawable.ic_sunrise_large),                                                  // 5
-    MORNING_GOLDEN("golden hour", "morning golden hour", R.drawable.ic_sunrise_large),                           // 6
-    NOON("solar noon", "solar noon", R.drawable.ic_noon_large),                                                  // 7
-    EVENING_GOLDEN("golden hour", "evening golden hour", R.drawable.ic_sunset_large),                            // 8
-    SUNSET("sunset", "sunset", R.drawable.ic_sunset_large),                                                      // 9
-    EVENING_BLUE4("blue hour", "evening blue hour", R.drawable.ic_sunset_large),                                 // 10
-    EVENING_CIVIL("civil twilight", "evening civil twilight", R.drawable.ic_sunset_large),                       // 11
-    EVENING_BLUE8("blue hour", "evening blue hour", R.drawable.ic_sunset_large),                                 // 12
-    EVENING_NAUTICAL("nautical twilight", "evening nautical twilight", R.drawable.ic_sunset_large),              // 13
-    EVENING_ASTRONOMICAL("astronomical twilight", "evening astronomical twilight", R.drawable.ic_sunset_large),  // 14
-    MOONRISE("moonrise", "moonrise", R.drawable.ic_moon_rise),                                                   // 15
-    MOONSET("moonset", "mooonset", R.drawable.ic_moon_set);                                                      // 16
-                                                                                                                 // .. R.array.solarevents_short/_long req same length/order
+    MORNING_ASTRONOMICAL("astronomical twilight", "morning astronomical twilight", R.attr.sunriseIcon), // 0
+    MORNING_NAUTICAL("nautical twilight", "morning nautical twilight", R.attr.sunriseIcon),             // 1
+    MORNING_BLUE8("blue hour", "morning blue hour", R.attr.sunriseIcon),                                // 2
+    MORNING_CIVIL("civil twilight", "morning civil twilight", R.attr.sunriseIcon),                      // 3
+    MORNING_BLUE4("blue hour", "morning blue hour", R.attr.sunriseIcon),                                // 4
+    SUNRISE("sunrise", "sunrise", R.attr.sunriseIcon),                                                  // 5
+    MORNING_GOLDEN("golden hour", "morning golden hour", R.attr.sunriseIcon),                           // 6
+    NOON("solar noon", "solar noon", R.attr.sunnoonIcon),                                               // 7
+    EVENING_GOLDEN("golden hour", "evening golden hour", R.attr.sunsetIcon),                            // 8
+    SUNSET("sunset", "sunset", R.attr.sunsetIcon),                                                      // 9
+    EVENING_BLUE4("blue hour", "evening blue hour", R.attr.sunsetIcon),                                 // 10
+    EVENING_CIVIL("civil twilight", "evening civil twilight", R.attr.sunsetIcon),                       // 11
+    EVENING_BLUE8("blue hour", "evening blue hour", R.attr.sunsetIcon),                                 // 12
+    EVENING_NAUTICAL("nautical twilight", "evening nautical twilight", R.attr.sunsetIcon),              // 13
+    EVENING_ASTRONOMICAL("astronomical twilight", "evening astronomical twilight", R.attr.sunsetIcon),  // 14
+    MOONRISE("moonrise", "moonrise", R.attr.moonriseIcon),                                              // 15
+    MOONSET("moonset", "mooonset", R.attr.moonsetIcon);                                                 // 16
+                                                                                                        // .. R.array.solarevents_short/_long req same length/order
 
     private int iconResource;
     private String shortDisplayString, longDisplayString;
@@ -162,8 +163,13 @@ public enum SolarEvents
                 view = inflater.inflate(R.layout.layout_listitem_solarevent, parent, false);
             }
 
+            int[] iconAttr = { choices.get(position).getIcon() };
+            TypedArray typedArray = context.obtainStyledAttributes(iconAttr);
+            int def = R.drawable.ic_moon_rise;
+            int iconResource = typedArray.getResourceId(0, def);
+            typedArray.recycle();
+
             ImageView icon = (ImageView) view.findViewById(android.R.id.icon1);
-            int iconResource = choices.get(position).getIcon();
             adjustIcon(iconResource, icon);
 
             TextView text = (TextView) view.findViewById(android.R.id.text1);
