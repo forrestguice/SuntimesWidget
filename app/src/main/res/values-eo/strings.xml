@@ -19,7 +19,7 @@
     <string name="configAction_setDate">Elekti daton</string>
     <string name="configAction_sunDialog">Pozicio de Suno</string>
     <string name="configAction_equinoxDialog">Solstico / ekvinokso</string>
-    <string name="configAction_moon">Moon</string>                            <!-- TODO -->
+    <string name="configAction_moon">Luno</string>
     <string name="configAction_help">Helpo</string>
     <string name="configAction_settings">Agordoj</string>
     <string name="configAction_aboutWidget">Pri</string>
@@ -111,8 +111,8 @@
     <string name="untilEnd_goldhour">fino de ora horo</string>
     <string name="until_bluehour">blua horo</string>
     <string name="untilEnd_bluehour">fino de blua horo</string>
-    <string name="until_moonrise">moonrise</string> <!-- TODO -->
-    <string name="until_moonset">moonset</string>  <!-- TODO -->
+    <string name="until_moonrise">lunleviĝo</string>
+    <string name="until_moonset">lunsubiro</string>
 
     <!-- Table -->
     <string name="sunrise">Sunleviĝo</string>                             <!-- contentDescription -->
@@ -160,8 +160,8 @@
     <!-- Widget Setting: general -->
     <string name="configLabel_general">Agordoj ĝeneralaj</string>                <!-- group title -->
     <string name="configLabel_general_calculator">Fonto de datumoj:</string>         <!-- spinner label -->
-    <string name="configLabel_general_calculator_sun">Sun Data Source</string>         <!-- preference label -->  <!-- TODO -->
-    <string name="configLabel_general_calculator_moon">Moon Data Source</string>         <!-- preference label --> <!-- TODO -->
+    <string name="configLabel_general_calculator_sun">Fonto de sunaj datumoj</string>         <!-- preference label -->
+    <string name="configLabel_general_calculator_moon">Fonot de lunaj datumoj</string>         <!-- preference label -->
 
     <string name="configLabel_general_showSeconds">Montri sekundojn</string>        <!-- checkbox label -->
     <string name="configLabel_general_showSeconds_summary">Ampleksi sekundojn dum montrado de horoj.</string>        <!-- checkbox label -->
@@ -493,14 +493,14 @@
     <string name="configLabel_ui_showLightmap_summary">Montri bastonan diagramon de periodoj de tago, nokto kaj krepusko.</string>
 
     <!-- App Setting: Show Moon -->
-    <string name="configLabel_ui_showmoon">Show Moon</string>  <!-- TODO -->
-    <string name="configLabel_ui_showmoon_summary">Show rise and set times, phase, and illumination.</string>  <!-- TODO -->
-    <string name="configLabel_ui_showmoon_notImplemented">Moon not implemented by this data source.</string>  <!-- TODO -->
+    <string name="configLabel_ui_showmoon">Montri lun-informojn</string>
+    <string name="configLabel_ui_showmoon_summary">Montri tempojn de lun-leviĝo, lun-subiro, fazon kaj prilumecon.</string>
+    <string name="configLabel_ui_showmoon_notImplemented">Lunaj informoj ne subtenataj de tiu ĉi datum-fonto.</string>
 
     <!-- App Setting: Show Equinox / Solstice -->
     <string name="configLabel_ui_showEquinox">Montri sunekstremon / tagnoktegalecon</string>
     <string name="configLabel_ui_showEquinox_summary">Montri tempon ĝis la sekvanta sunekstremo aŭ tagnoktegaleco.</string>
-    <string name="configLabel_ui_showEquinox_notImplemented">Sunekstremo kaj tagnoktegaleco ne estas ankoraŭ subtenataj de tiu ĉi fonto de datumoj.</string>
+    <string name="configLabel_ui_showEquinox_notImplemented">Sunekstremo kaj tagnoktegaleco ne estas ankoraŭ subtenataj de tiu ĉi datum-fonto.</string>
 
     <!-- App Setting: Solstice Tracking Mode -->
     <string name="configLabel_ui_solsticeTrackingMode">Spuri solsticon</string>
@@ -606,8 +606,8 @@
         <item>blua horo</item>
         <item>naŭtika sunsubiro</item>
         <item>astronomia sunsubiro</item>
-        <item>moonrise</item>                         <!-- TODO -->
-        <item>moonset</item>                          <!-- TODO -->
+        <item>lunleviĝo</item>
+        <item>lunsubiro</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>astronomia sunleviĝo</item>
@@ -625,8 +625,8 @@
         <item>vespera blua horo (fino)</item>
         <item>naŭtika sunsubiro</item>
         <item>astronomia sunsubiro</item>
-        <item>moonrise</item>    <!-- TODO -->
-        <item>moonset</item>     <!-- TODO -->
+        <item>lunleviĝo</item>
+        <item>lunsubiro</item>
     </string-array>
     
   <!-- App Setting: locale mode -->
@@ -842,8 +842,8 @@
     ]]>
     </string>
     <string name="help_general_moonillum"><![CDATA[
-        <b>Moon Illumination:</b> The moon widgets and main page display the moon\'s illumination at lunar noon (the midpoint between moonrise and moonset), while the moon dialog displays the moon\'s current illumination.<br/><br/>
-    ]]></string> <!-- TODO -->
+        <b>Prilumeco de Luno:</b> fenestraĵoj kaj la ĉefa paĝo vidigas prilumecon de la Luno je ĝia ekstremo (midpunkto inter lunleviĝo kaj lunsubiro), sed la ekrano de lun-informoj vidigas nunan prilumecon de la Luno.<br/><br/>
+    ]]></string>
     <string name="help_general_goldhour"><![CDATA[
         <b>Ora horo:</b> la Suno estas inter 6 gradoj sub kaj super la horizonto. Matene la ora horo komenciĝas kun civila krepusko kaj finiĝas baldaŭ post sunleviĝo. Vespere la ora horo komenciĝas tuj antaŭ sunsubiro kaj finiĝas kun civila krepusko.<br/>
     ]]></string>
