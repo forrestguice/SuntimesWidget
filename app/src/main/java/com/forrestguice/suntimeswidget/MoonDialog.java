@@ -29,6 +29,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 
@@ -55,7 +56,9 @@ public class MoonDialog extends DialogFragment
 
         final Activity myParent = getActivity();
         LayoutInflater inflater = myParent.getLayoutInflater();
-        View dialogContent = inflater.inflate(R.layout.layout_dialog_moon, null);
+
+        final ViewGroup viewGroup = null;
+        View dialogContent = inflater.inflate(R.layout.layout_dialog_moon, viewGroup);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
         builder.setView(dialogContent);
