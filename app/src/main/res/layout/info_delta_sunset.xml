@@ -24,7 +24,7 @@
         <TextView
             style="@style/SunsetTimeTextView"
             android:id="@+id/text_delta_sunset"
-            android:textColor="@color/sunIcon_color_setting"
+            android:textColor="@color/sunIcon_color_setting_dark"
             tools:text="+0:40" android:textSize="8sp"
             tools:ignore="SmallSp" />
 

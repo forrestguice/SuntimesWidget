@@ -6,10 +6,17 @@
 
         <com.forrestguice.suntimeswidget.settings.SummaryListPreference
             android:key="appwidget_0_general_calculator"
-            android:title="@string/configLabel_general_calculator"
-            android:dialogTitle="@string/configLabel_general_calculator"
+            android:title="@string/configLabel_general_calculator_sun"
+            android:dialogTitle="@string/configLabel_general_calculator_sun"
             android:summary="%s"
             android:entries="@null" android:entryValues="@null" android:defaultValue="@string/def_appwidget_0_general_calculator" />
+
+        <com.forrestguice.suntimeswidget.settings.SummaryListPreference
+            android:key="appwidget_0_general_calculator_moon"
+            android:title="@string/configLabel_general_calculator_moon"
+            android:dialogTitle="@string/configLabel_general_calculator_moon"
+            android:summary="%s"
+            android:entries="@null" android:entryValues="@null" android:defaultValue="@string/def_appwidget_0_general_calculator_moon" />
 
         <com.forrestguice.suntimeswidget.settings.ListPreference
             android:key="appwidget_0_appearance_timeformatmode"

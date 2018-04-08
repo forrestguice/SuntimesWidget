@@ -32,8 +32,13 @@
           android:title="@string/configAction_setTimeZone"
           app:showAsAction="never" />
 
+    <item android:id="@+id/action_moon"
+          android:icon="@drawable/ic_moon"
+          android:title="@string/configAction_moon"
+          app:showAsAction="never" />
+
     <item android:id="@+id/action_sunposition"
-          android:icon="?attr/icActionAbout"
+          android:icon="@drawable/ic_sun"
           android:title="@string/configAction_sunDialog"
           app:showAsAction="never" />
 

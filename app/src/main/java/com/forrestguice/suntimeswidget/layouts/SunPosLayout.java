@@ -28,15 +28,12 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
-public abstract class SunPosLayout extends SuntimesLayout
+public abstract class SunPosLayout extends PositionLayout
 {
-    protected static final SuntimesUtils utils = new SuntimesUtils();
-
     public void prepareForUpdate(SuntimesRiseSetDataset dataset, int[] widgetSize)
     {
         dataset.calculateData();
@@ -59,9 +56,6 @@ public abstract class SunPosLayout extends SuntimesLayout
         //Log.v("DEBUG", "title text: " + titleText);
     }
 
-    protected static final int DECIMAL_PLACES = 1;
-    protected static final float SYMBOL_RELATIVE_SIZE = 0.7f;
-
     protected void updateViewsAzimuthElevationText(Context context, RemoteViews views, SuntimesCalculator.SunPosition sunPosition, SuntimesCalculator.SunPosition noonPosition)
     {
         SuntimesUtils.TimeDisplayText azimuthDisplay = utils.formatAsDirection2(sunPosition.azimuth, DECIMAL_PLACES, false);
@@ -75,28 +69,6 @@ public abstract class SunPosLayout extends SuntimesLayout
         int elevationColor = (sunPosition.elevation <= 0 ? highlightColor :
                 (SuntimesRiseSetDataset.isRising(sunPosition, noonPosition) ? risingColor : settingColor));
         views.setTextViewText(R.id.info_sun_elevation_current, styleElevationText(sunPosition.elevation, elevationColor));
-    }
-
-    protected SpannableString styleAzimuthText(SuntimesUtils.TimeDisplayText azimuthDisplay, int color)
-    {
-        String azimuthSymbol = azimuthDisplay.getSuffix();
-        String azimuthString = utils.formatAsDirection(azimuthDisplay.getValue(), azimuthSymbol);
-        SpannableString azimuth = SuntimesUtils.createColorSpan(null, azimuthString, azimuthDisplay.getValue(), color, boldTime);
-        azimuth = SuntimesUtils.createBoldColorSpan(azimuth, azimuthString, azimuthSymbol, suffixColor);
-        azimuth = SuntimesUtils.createRelativeSpan(azimuth, azimuthString, azimuthSymbol, SYMBOL_RELATIVE_SIZE);
-        //azimuth = SuntimesUtils.createAbsoluteSpan(azimuth, azimuthString, azimuthDisplay.getSuffix(), SuntimesUtils.spToPixels(context, suffixSp));
-        return azimuth;
-    }
-
-    protected SpannableString styleElevationText(double value, int color)
-    {
-        SuntimesUtils.TimeDisplayText elevationDisplay = utils.formatAsElevation(value, DECIMAL_PLACES);
-        String elevationSymbol = elevationDisplay.getSuffix();
-        String elevationString = utils.formatAsElevation(elevationDisplay.getValue(), elevationSymbol);
-        SpannableString elevation = SuntimesUtils.createColorSpan(null, elevationString, elevationString, color, boldTime);
-        elevation = SuntimesUtils.createBoldColorSpan(elevation, elevationString, elevationSymbol, suffixColor);
-        elevation = SuntimesUtils.createRelativeSpan(elevation, elevationString, elevationSymbol, SYMBOL_RELATIVE_SIZE);
-        return elevation;
     }
 
     protected void updateViewsRightAscDeclinationText(Context context, RemoteViews views, SuntimesCalculator.SunPosition sunPosition)
@@ -141,20 +113,13 @@ public abstract class SunPosLayout extends SuntimesLayout
 
     protected int risingColor = Color.YELLOW;
     protected int settingColor = Color.RED;
-    protected int highlightColor = Color.WHITE;
-    protected float suffixSp;
-    protected int suffixColor = Color.GRAY;
 
     @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         super.themeViews(context, views, theme);
-        highlightColor = theme.getTimeColor();
         risingColor = theme.getSunriseTextColor();
         settingColor = theme.getSunsetTextColor();
-        boldTime = theme.getTimeBold();
-        suffixSp = theme.getTimeSuffixSizeSp();
-        suffixColor = theme.getTimeSuffixColor();
     }
 
     protected void themeViewsAzimuthElevationText(Context context, RemoteViews views, SuntimesTheme theme)
