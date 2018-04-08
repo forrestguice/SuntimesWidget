@@ -219,16 +219,12 @@ public class SuntimesRiseSetDataset
 
     public Calendar now()
     {
-        return Calendar.getInstance(timezone());
+        return dataActual.now();
     }
 
     public Calendar nowThen(Calendar date)
     {
-        Calendar nowThen = now();
-        nowThen.set(Calendar.YEAR, date.get(Calendar.YEAR));
-        nowThen.set(Calendar.MONTH, date.get(Calendar.MONTH));
-        nowThen.set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH));
-        return nowThen;
+        return dataActual.nowThen(date);
     }
 
     public static Calendar midnight(Calendar date)

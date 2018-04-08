@@ -42,7 +42,6 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -117,6 +116,13 @@ public class LightMapDialog extends DialogFragment
             sunElevation.removeCallbacks(updateTask);
     }
 
+    @Override
+    public void onStop()
+    {
+        stopUpdateTask();
+        super.onStop();
+    }
+
     public static final int UPDATE_RATE = 3000;
     private Runnable updateTask = new Runnable()
     {
@@ -160,7 +166,9 @@ public class LightMapDialog extends DialogFragment
                 R.attr.graphColor_astronomical,         // 1
                 R.attr.graphColor_nautical,             // 2
                 R.attr.graphColor_civil,                // 3
-                R.attr.graphColor_day                   // 4
+                R.attr.graphColor_day,                  // 4
+                R.attr.sunriseColor,                    // 5
+                R.attr.sunsetColor                      // 6
         };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         int def = R.color.transparent;
@@ -169,6 +177,8 @@ public class LightMapDialog extends DialogFragment
         colorNautical = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
         colorCivil = ContextCompat.getColor(context, typedArray.getResourceId(3, def));
         colorDay = ContextCompat.getColor(context, typedArray.getResourceId(4, def));
+        colorRising = ContextCompat.getColor(context, typedArray.getResourceId(5, def));
+        colorSetting = ContextCompat.getColor(context, typedArray.getResourceId(6, def));
         typedArray.recycle();
 
         SuntimesUtils.colorizeImageView(field_night.icon, colorNight);
@@ -178,8 +188,6 @@ public class LightMapDialog extends DialogFragment
         SuntimesUtils.colorizeImageView(field_day.icon, colorDay);
 
         colorLabel = field_night.label.getTextColors().getColorForState(new int[] { -android.R.attr.state_enabled }, Color.BLUE); // field_night.label.getCurrentTextColor()
-        colorRising = ContextCompat.getColor(context, R.color.sunIcon_color_rising_dark);
-        colorSetting = ContextCompat.getColor(context, R.color.sunIcon_color_setting_dark);
     }
 
     public void updateViews()

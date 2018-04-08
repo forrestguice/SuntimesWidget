@@ -35,6 +35,11 @@ public class SuntimesRiseSetData extends SuntimesData
         this.context = context;
         initFromSettings(context, appWidgetId);
     }
+    public SuntimesRiseSetData(Context context, int appWidgetId, String calculatorName)
+    {
+        this.context = context;
+        initFromSettings(context, appWidgetId, calculatorName);
+    }
     public SuntimesRiseSetData(SuntimesRiseSetData other)
     {
         this.context = other.context;
@@ -203,17 +208,11 @@ public class SuntimesRiseSetData extends SuntimesData
      * @param appWidgetId the widgetID to load settings from (0 for app)
      */
     @Override
-    protected void initFromSettings(Context context, int appWidgetId)
+    protected void initFromSettings(Context context, int appWidgetId, String calculatorName)
     {
-        super.initFromSettings(context, appWidgetId);
+        super.initFromSettings(context, appWidgetId, calculatorName);
         this.timeMode = WidgetSettings.loadTimeModePref(context, appWidgetId);
         this.compareMode = WidgetSettings.loadCompareModePref(context, appWidgetId);
-    }
-
-    public void initCalculator()
-    {
-        SuntimesCalculatorFactory calculatorFactory = new SuntimesCalculatorFactory(context, calculatorMode);
-        this.calculator = calculatorFactory.createCalculator(location, timezone);
     }
 
     public boolean isDay()
@@ -231,6 +230,11 @@ public class SuntimesRiseSetData extends SuntimesData
         }
     }
 
+    public void initCalculator()
+    {
+        initCalculator(context);
+    }
+
     /**
      * Calculate
      */
@@ -245,7 +249,7 @@ public class SuntimesRiseSetData extends SuntimesData
         //Log.v("SuntimesWidgetData", "timezone: " + timezone);
         //Log.v("SuntimesWidgetData", "compare mode: " + compareMode.name());
 
-        initCalculator();
+        initCalculator(context);
 
         todaysCalendar = Calendar.getInstance(timezone);
         otherCalendar = Calendar.getInstance(timezone);

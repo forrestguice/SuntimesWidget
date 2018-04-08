@@ -3,7 +3,7 @@
     <item android:bottom="-8dp">
         <shape android:shape="oval">
             <size android:width="18dp" android:height="8dp" />
-            <solid android:color="@color/moonIcon_color_rising" />
+            <solid android:color="@color/moonIcon_color_rising_dark" />
         </shape>
     </item>
 </layer-list>

@@ -5,7 +5,7 @@
             <solid android:color="#222222" />
 
             <stroke android:width="@dimen/sunIcon_width_risingBorder"
-                android:color="@color/sunIcon_color_risingBorder" />
+                android:color="@color/sunIcon_color_risingBorder_dark" />
 
             <corners android:radius="4dp" />
 

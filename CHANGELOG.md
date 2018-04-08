@@ -1,6 +1,12 @@
 ### ~
 
 ###
+* changes the default alarm label format (label now includes shortDate).
+* adds moonrise and moonset to the AlarmDialog.
+* adds moon dialog to app; shows major phases, rising/setting times, rising/setting position, current position, phase, and illumination (current).
+* adds moon info to app (main table); rise/set, phase, and illumination (at lunar noon).
+* adds "moon data source" to general settings.
+* fixes bug where solstice dialog is not correctly initialized (when "show solstice" option is false).
 * fixes widget update alarms (more precise); sun and moon widgets update at midnight, solstice widgets update every 3hr, and sun position widgets update every 5min.
 * adds 3x1 sun position widget; shows lightmap (and optional azimuth and elevation labels) (#107).
 * adds 1x1 sun position widget; shows right ascension and declination.

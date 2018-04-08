@@ -18,8 +18,9 @@
     <string name="configAction_setAlarm">Ustaw alarm</string>
     <string name="configAction_setTimeZone">Ustaw strefę czasową</string>
     <string name="configAction_setDate">Ustaw datę</string>
-    <string name="configAction_sunDialog">Sun Position</string>   <!-- TODO -->
+    <string name="configAction_sunDialog">Pozycja Słońca</string>
     <string name="configAction_equinoxDialog">Przesilenie / równonoc</string>
+    <string name="configAction_moon">Moon</string>                            <!-- TODO -->
     <string name="configAction_help">Pomoc</string>
     <string name="configAction_settings">Ustawienia</string>
     <string name="configAction_aboutWidget">O programie</string>
@@ -111,6 +112,8 @@
     <string name="untilEnd_goldhour">końca złotej godziny</string>
     <string name="until_bluehour">błękitnej godziny</string>
     <string name="untilEnd_bluehour">końca błękitnej godziny</string>
+    <string name="until_moonrise">moonrise</string> <!-- TODO -->
+    <string name="until_moonset">moonset</string>  <!-- TODO -->
 
     <!-- Table -->
     <string name="sunrise">Wschód Słońca</string>                             <!-- contentDescription -->
@@ -143,7 +146,7 @@
          WIDGET CONFIG
     -->
 
-    <string name="configAction_restoreDefaults">Restore Defaults</string>   <!-- button / menu text -->  <!-- TODO -->
+    <string name="configAction_restoreDefaults">Przywróć domyślne</string>   <!-- button / menu text -->
 
     <!-- WidgetConfig Activity -->
     <string name="configAction_addWidget">Dodaj widżet</string>                   <!-- Button: Add -->
@@ -158,6 +161,8 @@
     <!-- Widget Setting: general -->
     <string name="configLabel_general">Ustawienia ogólne</string>                <!-- group title -->
     <string name="configLabel_general_calculator">Źródło danych:</string>         <!-- spinner label -->
+    <string name="configLabel_general_calculator_sun">Sun Data Source</string>         <!-- preference label -->  <!-- TODO -->
+    <string name="configLabel_general_calculator_moon">Moon Data Source</string>         <!-- preference label --> <!-- TODO -->
 
     <string name="configLabel_general_showSeconds">Wyświetl sekundy</string>        <!-- checkbox label -->
     <string name="configLabel_general_showSeconds_summary">Uwzględnij sekundy podczas wyświetlania czasów.</string>        <!-- checkbox label -->
@@ -235,8 +240,8 @@
     <string name="widgetMode1x1_both_1">Wschód i zachód (1)</string>  <!-- setting -->
     <string name="widgetMode1x1_both_2">Wschód i zachód (2)</string>  <!-- setting -->
 
-    <string name="widgetMode1x1_altaz">Altitude &amp; Azimuth</string>     <!-- setting -->  <!-- TODO -->
-    <string name="widgetMode1x1_decright">Declination &amp; Right Ascension</string>     <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode1x1_altaz">Wysokość i azymut</string>     <!-- setting -->
+    <string name="widgetMode1x1_decright">Deklinacja i rekascensja</string>     <!-- setting -->
 
     <string name="widgetMode1x1_moonriseset">Wschód i zachód Księżyca</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphaseillum">Faza i oświetlenie Księżyca</string>     <!-- setting -->
@@ -296,7 +301,7 @@
     <string name="timeFormatMode_12hr">12-godzinny</string>
     <string name="timeFormatMode_24hr">24-godzinny</string>
 
-    <string name="configLabel_timeFormatMode">Format czasu:</string>             <!-- spinner label -->
+    <string name="configLabel_timeFormatMode">Format czasu</string>             <!-- preference label -->
     <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
 
     <!-- Widget Setting: date mode -->
@@ -435,15 +440,15 @@
     <string name="configLabel_themeName">Wyświetl:</string>               <!-- edit label -->
     <string name="configHint_themeName">Etykieta</string>                   <!-- edit hint -->
 
-    <string name="widgetLabel_azimuth">Azimuth</string>                   <!-- label -->  <!-- TODO -->
-    <string name="widgetLabel_azimuth_short">Az</string>                   <!-- label -->  <!-- TODO -->
-    <string name="widgetLabel_altitude">Altitude</string>               <!-- label -->  <!-- TODO -->
-    <string name="widgetLabel_altitude_short">Alt</string>               <!-- label -->  <!-- TODO -->
+    <string name="widgetLabel_azimuth">Azymut</string>                   <!-- label -->
+    <string name="widgetLabel_azimuth_short">Az.</string>                   <!-- label -->
+    <string name="widgetLabel_altitude">Wysokość astronomiczna</string>               <!-- label -->
+    <string name="widgetLabel_altitude_short">Wys.</string>               <!-- label -->
 
-    <string name="widgetLabel_rightAscension">Right Ascension</string>    <!-- label -->  <!-- TODO -->
-    <string name="widgetLabel_rightAscension_short">RA</string>    <!-- label -->  <!-- TODO -->
-    <string name="widgetLabel_declination">Declination</string>           <!-- label -->  <!-- TODO -->
-    <string name="widgetLabel_declination_short">Dec</string>           <!-- label -->  <!-- TODO -->
+    <string name="widgetLabel_rightAscension">Rektascensja</string>    <!-- label -->
+    <string name="widgetLabel_rightAscension_short">Rek.</string>    <!-- label -->
+    <string name="widgetLabel_declination">Deklinacja</string>           <!-- label -->
+    <string name="widgetLabel_declination_short">Dek.</string>           <!-- label -->
 
     <!--
          APP SETTINGS
@@ -477,6 +482,11 @@
     <!-- App Setting: Show Lightmap -->
     <string name="configLabel_ui_showLightmap">Pokaż mapę światła</string>
     <string name="configLabel_ui_showLightmap_summary">Wyświetla pasek obrazujący czas dnia, nocy, świtu i zmierzchu.</string>
+
+    <!-- App Setting: Show Moon -->
+    <string name="configLabel_ui_showmoon">Show Moon</string>  <!-- TODO -->
+    <string name="configLabel_ui_showmoon_summary">Show rise and set times, phase, and illumination.</string>  <!-- TODO -->
+    <string name="configLabel_ui_showmoon_notImplemented">Moon not implemented by this data source.</string>  <!-- TODO -->
 
     <!-- App Setting: Show Equinox / Solstice -->
     <string name="configLabel_ui_showEquinox">Pokaż przesilenie / równonoc</string>
@@ -616,24 +626,24 @@
         <item>NNW</item>
         <item>N</item>
     </string-array>
-    <string-array name="directions_long">   <!-- one-to-one with directions_short -->   <!-- TODO -->
-        <item>North</item>
-        <item>North North East</item>
-        <item>North East</item>
-        <item>East North East</item>
-        <item>East</item>
-        <item>East South East</item>
-        <item>South East</item>
-        <item>South South East</item>
-        <item>South</item>
-        <item>South South West</item>
-        <item>South West</item>
-        <item>West South West</item>
-        <item>West</item>
-        <item>West North West</item>
-        <item>North West</item>
-        <item>North North West</item>
-        <item>North</item>
+    <string-array name="directions_long">   <!-- one-to-one with directions_short -->
+        <item>północ</item>
+        <item>północny północny wschód</item>
+        <item>północny wschód</item>
+        <item>wschodni północny wschód</item>
+        <item>wschód</item>
+        <item>wschodni południowy wschód</item>
+        <item>południowy wschód</item>
+        <item>południowy południowy wschód</item>
+        <item>południe</item>
+        <item>południowy południowy zachód</item>
+        <item>południowy zachód</item>
+        <item>zachodni południowy zachód</item>
+        <item>zachód</item>
+        <item>zachodni północny zachód</item>
+        <item>północny zachód</item>
+        <item>północny północny zachód</item>
+        <item>północ</item>
     </string-array>
 
     <!--
@@ -665,6 +675,8 @@
         <item>błękitna godzina</item>
         <item>zmierzch żeglarski</item>
         <item>zmierzch astronomiczny</item>
+        <item>moonrise</item>                         <!-- TODO -->
+        <item>moonset</item>                          <!-- TODO -->
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>świt astronomiczny</item>
@@ -682,6 +694,8 @@
         <item>wieczorna złota godzina (koniec)</item>
         <item>zmierzch żeglarski</item>
         <item>zmierzch astronomiczny</item>
+        <item>moonrise</item>    <!-- TODO -->
+        <item>moonset</item>     <!-- TODO -->
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
@@ -756,9 +770,9 @@
     <string name="app_name">Zmierzchy i Świty</string>
     <string name="app_name_widget0">Zmierzchy/Świty Widżet</string>
     <string name="app_name_widget1">Zmierzchy/Świty Widżet (przełączalny)</string>
-    <string name="app_name_widget2">Sun Position Widget</string> <!-- TODO -->
+    <string name="app_name_widget2">Pozycja Słońca Widżet</string>
     <string name="app_name_solsticewidget0">Zmierzchy/Świty Widżet Przesilenia</string>
-    <string name="app_name_moonwidget0">Moon Widget</string> <!-- TODO -->
+    <string name="app_name_moonwidget0">Księżycowy Widżet</string>
     <string name="app_version"><![CDATA[<b>Wersja:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Wyświetla czasy świecenia Słońca i Księżyca.</string>
     <string name="app_support_url"><![CDATA[<b>Wsparcie:</b> odwiedź <a href="https://github.com/forrestguice/SuntimesWidget/issues">stronę trackera błędów</a> aby zgłosić błąd/sugestię.]]></string>
@@ -817,6 +831,9 @@
         <b>Okres użytecznego światła:</b> czas pomiędzy cywilnym świtem i zmierzchem.<br/><br/>
     ]]>
     </string>
+    <string name="help_general_moonillum"><![CDATA[
+        <b>Moon Illumination:</b> The moon widgets and main page display the moon\'s illumination at lunar noon (the midpoint between moonrise and moonset), while the moon dialog displays the moon\'s current illumination.<br/><br/>
+    ]]></string> <!-- TODO -->
     <string name="help_general_goldhour"><![CDATA[
         <b>Złota godzina:</b> Słońce znajduje się pomiędzy 6 stopniami nad i pod horyzontem. Ranem złota godzina zaczyna się wraz ze świtem cywilnym i kończy się wkrótce po wschodzie Słońca. Wieczorem złota godzina zaczyna się na krótko przed zachodem i kończy wraz ze zmierzchem cywilnym.<br/>
     ]]></string>

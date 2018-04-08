@@ -3,8 +3,7 @@
     <item android:bottom="-8dp">
         <shape android:shape="oval">
             <size android:width="18dp" android:height="8dp" />
-            <solid android:color="@color/sunIcon_color_rising_dark" />
-            <stroke android:width="@dimen/sunIcon_width_risingBorder" android:color="@color/sunIcon_color_risingBorder_dark" />
+            <solid android:color="@color/moonIcon_color_rising_light" />
         </shape>
     </item>
 </layer-list>

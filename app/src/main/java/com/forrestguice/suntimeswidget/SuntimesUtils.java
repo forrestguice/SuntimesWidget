@@ -70,8 +70,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings.TimeFormatMode;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;

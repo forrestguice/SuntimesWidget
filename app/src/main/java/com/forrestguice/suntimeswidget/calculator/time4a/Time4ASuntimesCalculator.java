@@ -28,11 +28,11 @@ import net.time4j.Moment;
 import net.time4j.PlainDate;
 import net.time4j.TemporalType;
 import net.time4j.calendar.astro.AstronomicalSeason;
-import net.time4j.calendar.astro.GeoLocation;
+
 import net.time4j.calendar.astro.LunarTime;
 import net.time4j.calendar.astro.SolarTime;
 import net.time4j.calendar.astro.StdSolarCalculator;
-import net.time4j.calendar.astro.SunPosition;
+
 import net.time4j.calendar.astro.Twilight;
 import net.time4j.engine.CalendarDate;
 import net.time4j.engine.ChronoFunction;
@@ -330,7 +330,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     public double getMoonIlluminationForDate(Calendar date)
     {
         Moment moment = TemporalType.JAVA_UTIL_DATE.translate(date.getTime());
-        return net.time4j.calendar.astro.MoonPhase.getIllumination(moment);
+        return net.time4j.calendar.astro.MoonPhase.getIllumination(moment, 1);
     }
 
     @Override
@@ -364,6 +364,29 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         result.rightAscension = position.getRightAscension();
         result.declination = position.getDeclination();
         return result;
+    }
+
+    @Override
+    public MoonPosition getMoonPosition(Calendar dateTime)
+    {
+        Moment moment = TemporalType.JAVA_UTIL_DATE.translate(dateTime.getTime());
+        net.time4j.calendar.astro.MoonPosition position = net.time4j.calendar.astro.MoonPosition.at(moment, solarTime);
+
+        MoonPosition result = new MoonPosition();
+        result.azimuth = position.getAzimuth();
+        result.elevation = position.getElevation();
+        result.rightAscension = position.getRightAscension();
+        result.declination = position.getDeclination();
+        result.distance = position.getDistance();
+        return result;
+    }
+
+    @Override
+    public double getShadowLength( double objHeight, Calendar dateTime )
+    {
+        Moment moment = TemporalType.JAVA_UTIL_DATE.translate(dateTime.getTime());
+        net.time4j.calendar.astro.SunPosition position = net.time4j.calendar.astro.SunPosition.at(moment, solarTime);
+        return position.getShadowLength(objHeight);
     }
 
 }

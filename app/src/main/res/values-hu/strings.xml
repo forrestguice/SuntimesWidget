@@ -20,6 +20,7 @@
     <string name="configAction_setDate">Dátum beállítása</string>
     <string name="configAction_sunDialog">Sun Position</string>   <!-- TODO -->
     <string name="configAction_equinoxDialog">Solstice / Equinox</string> <!-- TODO -->
+    <string name="configAction_moon">Moon</string>                            <!-- TODO -->
     <string name="configAction_help">Segítség</string>
     <string name="configAction_settings">Beállítások</string>
     <string name="configAction_aboutWidget">Rólunk</string>
@@ -110,6 +111,8 @@
     <string name="untilEnd_goldhour">golden hour</string> <!-- TODO -->
     <string name="until_bluehour">blue hour</string> <!-- TODO -->
     <string name="untilEnd_bluehour">blue hour</string> <!-- TODO -->
+    <string name="until_moonrise">moonrise</string> <!-- TODO -->
+    <string name="until_moonset">moonset</string>  <!-- TODO -->
 
     <!-- Table -->
     <string name="sunrise">Napkelte</string>                             <!-- contentDescription -->
@@ -158,6 +161,8 @@
     <!-- Widget Setting: general -->
     <string name="configLabel_general">Általános beállítások</string>                <!-- group title -->
     <string name="configLabel_general_calculator">Adatok forrása:</string>         <!-- spinner label -->
+    <string name="configLabel_general_calculator_sun">Sun Data Source</string>         <!-- preference label -->  <!-- TODO -->
+    <string name="configLabel_general_calculator_moon">Moon Data Source</string>         <!-- preference label --> <!-- TODO -->
 
     <string name="configLabel_general_showSeconds">Show seconds</string>        <!-- checkbox label --> <!-- TODO -->
     <string name="configLabel_general_showSeconds_summary">Include seconds when displaying times.</string>        <!-- checkbox label --> <!-- TODO -->
@@ -296,7 +301,7 @@
     <string name="timeFormatMode_12hr">12-órás</string>                  <!-- setting -->
     <string name="timeFormatMode_24hr">24-órás</string>                  <!-- setting -->
 
-    <string name="configLabel_timeFormatMode">Idő megjelenítése:</string>             <!-- spinner label -->
+    <string name="configLabel_timeFormatMode">Idő megjelenítése</string>             <!-- preference label -->
     <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
 
     <!-- Widget Setting: date mode -->
@@ -481,6 +486,11 @@
     <!-- App Setting: Show Lightmap -->
     <string name="configLabel_ui_showLightmap">Éjszakai fénytérkép megjelenítése</string>
     <string name="configLabel_ui_showLightmap_summary">Mutasd egy ábrán a napközbeni, éjjeli és szürkeleti időszakokat.</string>
+
+    <!-- App Setting: Show Moon -->
+    <string name="configLabel_ui_showmoon">Show Moon</string>  <!-- TODO -->
+    <string name="configLabel_ui_showmoon_summary">Show rise and set times, phase, and illumination.</string>  <!-- TODO -->
+    <string name="configLabel_ui_showmoon_notImplemented">Moon not implemented by this data source.</string>  <!-- TODO -->
 
     <!-- App Setting: Show Equinox / Solstice -->
     <string name="configLabel_ui_showEquinox">Show Solstice / Equinox</string>  <!-- TODO -->
@@ -683,6 +693,8 @@
         <item>blue hour</item>   <!-- TODO -->
         <item>hajózási szürkület</item>
         <item>csillagászati szürkület</item>
+        <item>moonrise</item>                         <!-- TODO -->
+        <item>moonset</item>                          <!-- TODO -->
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>reggel csillagászati szürkület (kezdete)</item>
@@ -700,6 +712,8 @@
         <item>evening blue hour (end)</item>  <!-- TODO -->
         <item>este hajózási szürkület (vége)</item>
         <item>este csillagászati szürkület (vége)</item>
+        <item>moonrise</item>    <!-- TODO -->
+        <item>moonset</item>     <!-- TODO -->
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
@@ -845,6 +859,9 @@
         <b>Usable light:</b> the amount of time between morning and evening civil twilight.</br>
     ]]>
     </string>
+    <string name="help_general_moonillum"><![CDATA[
+        <b>Moon Illumination:</b> The moon widgets and main page display the moon\'s illumination at lunar noon (the midpoint between moonrise and moonset), while the moon dialog displays the moon\'s current illumination.<br/><br/>
+    ]]></string> <!-- TODO -->
     <string name="help_general_goldhour"><![CDATA[
         <b>Golden Hour:</b> The sun is between 6 degrees above or below the horizon. In the morning the golden hour begins with civil twilight and ends a short time after sunrise. In the evening the golden hour begins a short time before sunset and ends with civil twilight.<br/>
     ]]></string>  <!-- TODO -->

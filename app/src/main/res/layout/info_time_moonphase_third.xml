@@ -39,4 +39,9 @@
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         style="@style/SunsetTimeTextView" tools:text="February 15, 8:00 AM" />
 
+    <TextView android:visibility="gone"
+        android:id="@+id/moonphase_thirdquarter_note" android:layout_gravity="center"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        style="@style/SunsetTimeTextView2" tools:text="about 9d from now" />
+
 </LinearLayout>

@@ -252,5 +252,14 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
         return null;
     }
 
+    @Override
+    public MoonPosition getMoonPosition(Calendar dateTime) {
+        return null;
+    }
+
+    @Override
+    public double getShadowLength(double objHeight, Calendar dateTime) {
+        return -1;
+    }
 }
 
