@@ -49,10 +49,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.SuntimesData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -73,13 +76,19 @@ public class AlarmDialog extends DialogFragment
     public void setAppWidgetId(int value) { appWidgetId = value; }
 
     /**
-     * The supporting dataset.
+     * The supporting datasets.
      */
     private SuntimesRiseSetDataset dataset;
+    private SuntimesMoonData moondata;
     public SuntimesRiseSetDataset getData() { return dataset; }
-    public void setData(Context context, SuntimesRiseSetDataset dataset)
+    public SuntimesMoonData getMoonData()
+    {
+        return moondata;
+    }
+    public void setData(Context context, SuntimesRiseSetDataset dataset, SuntimesMoonData moondata)
     {
         this.dataset = dataset;
+        this.moondata = moondata;
         updateAdapter(context);
         setChoice(choice);
     }
@@ -98,6 +107,13 @@ public class AlarmDialog extends DialogFragment
                 adapter.remove(SolarEvents.EVENING_BLUE8);
                 adapter.remove(SolarEvents.MORNING_GOLDEN);
                 adapter.remove(SolarEvents.EVENING_GOLDEN);
+            }
+
+            boolean supportsMoon = moondata != null && moondata.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_MOON);
+            if (!supportsMoon)
+            {
+                adapter.remove(SolarEvents.MOONRISE);
+                adapter.remove(SolarEvents.MOONSET);
             }
         }
 
@@ -253,11 +269,22 @@ public class AlarmDialog extends DialogFragment
                     {
                         choice = (SolarEvents)spinner_scheduleMode.getSelectedItem();
 
-                        Calendar now = dataset.now();
-                        Calendar alarmCalendar = getCalendarForAlarmChoice(choice, now);
-
+                        Calendar now0 = dataset.nowThen(dataset.calendar());
+                        Calendar alarmCalendar = getCalendarForAlarmChoice(choice, now0);
                         if (alarmCalendar != null)
                         {
+                            Calendar now = dataset.now();
+                            if (now.after(alarmCalendar))      // getCalendarForAlarmChoice should return a datetime in the future..
+                            {                                      // but supposing it doesn't (due to user defined date) then adjust alarmTime to be today
+                                alarmCalendar = SuntimesData.nowThen(alarmCalendar, now);  // and if that is also past, adjust alarmTime to be tomorrow
+                                if (now.after(alarmCalendar))
+                                {
+                                    Calendar tomorrow = (Calendar)now.clone();
+                                    tomorrow.add(Calendar.DAY_OF_YEAR, 1);
+                                    alarmCalendar = SuntimesData.nowThen(alarmCalendar, tomorrow);
+                                }
+                            }
+
                             String timeString =" " + utils.timeDeltaDisplayString(now.getTime(), alarmCalendar.getTime()).getValue() + " ";
                             String noteString = context.getString(R.string.schedalarm_dialog_note, timeString);
                             txt_note.setText(SuntimesUtils.createBoldColorSpan(null, noteString, timeString, color_textTimeDelta));
@@ -373,103 +400,121 @@ public class AlarmDialog extends DialogFragment
     public Calendar getCalendarForAlarmChoice( SolarEvents choice, Calendar now )
     {
         Date time = now.getTime();
-        Calendar calendar;
+        Calendar calendar = null;
         switch (choice)
         {
+            case MOONRISE:
+                if (moondata != null) {
+                    calendar = moondata.moonriseCalendarToday();
+                    if (calendar == null || time.after(calendar.getTime()))
+                    {
+                        calendar = moondata.moonriseCalendarTomorrow();
+                    }
+                }
+                break;
+            case MOONSET:
+                if (moondata != null) {
+                    calendar = moondata.moonsetCalendarToday();
+                    if (calendar == null || time.after(calendar.getTime()))
+                    {
+                        calendar = moondata.moonsetCalendarTomorrow();
+                    }
+                }
+                break;
             case MORNING_ASTRONOMICAL:
                 calendar = dataset.dataAstro.sunriseCalendarToday();
-                if (calendar != null && time.after(calendar.getTime()))
+                if (calendar == null || time.after(calendar.getTime()))
                 {
                     calendar = dataset.dataAstro.sunriseCalendarOther();
                 }
                 break;
             case MORNING_NAUTICAL:
                 calendar = dataset.dataNautical.sunriseCalendarToday();
-                if (calendar != null && time.after(calendar.getTime()))
+                if (calendar == null || time.after(calendar.getTime()))
                 {
                     calendar = dataset.dataNautical.sunriseCalendarOther();
                 }
                 break;
             case MORNING_BLUE8:
                 calendar = dataset.dataBlue8.sunriseCalendarToday();
-                if (calendar != null && time.after(calendar.getTime()))
+                if (calendar == null || time.after(calendar.getTime()))
                 {
                     calendar = dataset.dataBlue8.sunriseCalendarOther();
                 }
                 break;
             case MORNING_CIVIL:
                 calendar = dataset.dataCivil.sunriseCalendarToday();
-                if (calendar != null && time.after(calendar.getTime()))
+                if (calendar == null || time.after(calendar.getTime()))
                 {
                     calendar = dataset.dataCivil.sunriseCalendarOther();
                 }
                 break;
             case MORNING_BLUE4:
                 calendar = dataset.dataBlue4.sunriseCalendarToday();
-                if (calendar != null && time.after(calendar.getTime()))
+                if (calendar == null || time.after(calendar.getTime()))
                 {
                     calendar = dataset.dataBlue4.sunriseCalendarOther();
                 }
                 break;
             case MORNING_GOLDEN:
                 calendar = dataset.dataGold.sunriseCalendarToday();
-                if (calendar != null && time.after(calendar.getTime()))
+                if (calendar == null || time.after(calendar.getTime()))
                 {
                     calendar = dataset.dataGold.sunriseCalendarOther();
                 }
                 break;
             case NOON:
                 calendar = dataset.dataNoon.sunriseCalendarToday();
-                if (calendar != null && time.after(calendar.getTime()))
+                if (calendar == null || time.after(calendar.getTime()))
                 {
                     calendar = dataset.dataNoon.sunriseCalendarOther();
                 }
                 break;
             case SUNSET:
                 calendar = dataset.dataActual.sunsetCalendarToday();
-                if (calendar != null && time.after(calendar.getTime()))
+                if (calendar == null || time.after(calendar.getTime()))
                 {
                     calendar = dataset.dataActual.sunsetCalendarOther();
                 }
                 break;
             case EVENING_GOLDEN:
                 calendar = dataset.dataGold.sunsetCalendarToday();
-                if (calendar != null && time.after(calendar.getTime()))
+                if (calendar == null || time.after(calendar.getTime()))
                 {
                     calendar = dataset.dataGold.sunsetCalendarOther();
                 }
                 break;
             case EVENING_BLUE4:
                 calendar = dataset.dataBlue4.sunsetCalendarToday();
-                if (calendar != null && time.after(calendar.getTime()))
+                if (calendar == null || time.after(calendar.getTime()))
                 {
                     calendar = dataset.dataBlue4.sunsetCalendarOther();
                 }
                 break;
             case EVENING_CIVIL:
                 calendar = dataset.dataCivil.sunsetCalendarToday();
-                if (calendar != null && time.after(calendar.getTime()))
+                if (calendar == null || time.after(calendar.getTime()))
                 {
                     calendar = dataset.dataCivil.sunsetCalendarOther();
                 }
                 break;
             case EVENING_BLUE8:
                 calendar = dataset.dataBlue8.sunsetCalendarToday();
-                if (calendar != null && time.after(calendar.getTime()))
+                if (calendar == null || time.after(calendar.getTime()))
                 {
                     calendar = dataset.dataBlue8.sunsetCalendarOther();
                 }
                 break;
             case EVENING_NAUTICAL:
                 calendar = dataset.dataNautical.sunsetCalendarToday();
-                if (calendar != null && time.after(calendar.getTime()))
+                if (calendar == null || time.after(calendar.getTime()))
                 {
                     calendar = dataset.dataNautical.sunsetCalendarOther();
                 }
                 break;
             case EVENING_ASTRONOMICAL:
                 calendar = dataset.dataAstro.sunsetCalendarToday();
-                if (calendar != null && time.after(calendar.getTime()))
+                if (calendar == null || time.after(calendar.getTime()))
                 {
                     calendar = dataset.dataAstro.sunsetCalendarOther();
                 }
@@ -477,7 +522,7 @@ public class AlarmDialog extends DialogFragment
             case SUNRISE:
             default:
                 calendar = dataset.dataActual.sunriseCalendarToday();
-                if (calendar != null && time.after(calendar.getTime()))
+                if (calendar == null || time.after(calendar.getTime()))
                 {
                     calendar = dataset.dataActual.sunriseCalendarOther();
                 }
@@ -494,18 +539,24 @@ public class AlarmDialog extends DialogFragment
         @Override
         public void onClick(DialogInterface dialogInterface, int i)
         {
-            SolarEvents choice = getChoice();
-            String alarmLabel = choice.getShortDisplayString();
-            Calendar now = dataset.now();
-            Calendar calendar = getCalendarForAlarmChoice(choice, now);
-            if (calendar != null)
+            Context context = getContext();
+            if (context != null)
             {
-                AlarmDialog.scheduleAlarm(getActivity(), alarmLabel, calendar);
+                SolarEvents choice = getChoice();
+                Calendar now = dataset.nowThen(dataset.calendar());
+                Calendar calendar = getCalendarForAlarmChoice(choice, now);
 
-            } else {
-                String alarmErrorTxt = getString(R.string.schedalarm_dialog_error) + "\n" + getString(R.string.schedalarm_dialog_note2, choice.getLongDisplayString());
-                Toast alarmError = Toast.makeText(getActivity(), alarmErrorTxt, Toast.LENGTH_LONG);
-                alarmError.show();
+                if (calendar != null)
+                {
+                    DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
+                    String alarmLabel = context.getString(R.string.schedalarm_labelformat, choice.getShortDisplayString(), dateFormat.format(calendar.getTime()));
+                    AlarmDialog.scheduleAlarm(getActivity(), alarmLabel, calendar);
+
+                } else {
+                    String alarmErrorTxt = getString(R.string.schedalarm_dialog_error) + "\n" + getString(R.string.schedalarm_dialog_note2, choice.getLongDisplayString());
+                    Toast alarmError = Toast.makeText(getActivity(), alarmErrorTxt, Toast.LENGTH_LONG);
+                    alarmError.show();
+                }
             }
         }
     };

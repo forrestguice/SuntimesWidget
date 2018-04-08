@@ -32,7 +32,7 @@
         <TextView
             style="@style/SunsetTimeTextView"
             android:id="@+id/text_time_moonset"
-            android:textColor="@color/moonIcon_color_setting"
+            android:textColor="@color/moonIcon_color_setting_dark"
             tools:text="3:00" />
 
         <TextView

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <shape android:shape="oval" xmlns:android="http://schemas.android.com/apk/res/android">
     <size android:width="32dp" android:height="32dp" />
-    <solid android:color="@color/sunIcon_color_rising" />
+    <solid android:color="@color/sunIcon_color_rising_dark" />
 
     <stroke android:width="2dp"
-            android:color="@color/sunIcon_color_risingBorder" />
+            android:color="@color/sunIcon_color_risingBorder_dark" />
 </shape>

@@ -33,9 +33,6 @@
     <color name="dstTag_light">#ffcc00</color>
 
     <!-- moon icons (rising, setting) -->
-    <color name="moonIcon_color_rising">@color/moonIcon_color_rising_dark</color>
-    <color name="moonIcon_color_setting">@color/moonIcon_color_setting_dark</color>
-
     <color name="moonIcon_color_rising_dark">@color/grey_50</color>
     <color name="moonIcon_color_setting_dark">@color/grey_500</color>
     <color name="moonIcon_color_rising_light">@color/grey_400</color>
@@ -64,11 +61,6 @@
     <color name="moonIcon_color_full_border_light">@color/grey_600</color>
 
     <!-- sun icon -->
-    <color name="sunIcon_color_rising">@color/sunIcon_color_rising_dark</color>
-    <color name="sunIcon_color_setting">@color/sunIcon_color_setting_dark</color>
-    <color name="sunIcon_color_risingBorder">@color/sunIcon_color_risingBorder_dark</color>
-    <color name="sunIcon_color_settingBorder">@color/sunIcon_color_settingBorder_dark</color>
-
     <color name="sunIcon_color_rising_dark">#ffcc00</color>
     <color name="sunIcon_color_risingBorder_dark">#ff9900</color>
     <color name="sunIcon_color_setting_dark">#ff9900</color>

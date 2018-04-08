@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2018 Forrest Guice
+    This file is part of SuntimesWidget.
+
+    SuntimesWidget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SuntimesWidget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="vertical" android:padding="8dp">
+
+    <TextView android:id="@+id/moondialog_title" style="@style/TableHeadTextView"
+        android:text="@string/timeMode_moon"
+        android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp">
+
+        <com.forrestguice.suntimeswidget.MoonPhaseView
+            android:id="@+id/moonphase_view" app:illuminationAtLunarNoon="false" app:showPosition="true"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/header_gutter3"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"/>
+
+        <View android:id="@+id/header_gutter3" android:background="@color/transparent" android:visibility="invisible"
+            android:layout_width="0dp" android:layout_height="1dp"
+            app:layout_constraintHorizontal_weight="@integer/table_weight0"
+            app:layout_constraintStart_toEndOf="@+id/moonphase_view"
+            app:layout_constraintEnd_toStartOf="@+id/moonriseset_view"/>
+
+        <com.forrestguice.suntimeswidget.MoonRiseSetView
+            android:id="@+id/moonriseset_view" app:showPosition="true"
+            android:layout_marginStart="16dp" android:layout_marginLeft="16dp" android:layout_marginBottom="4dp"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/header_gutter3"
+            app:layout_constraintEnd_toStartOf="@+id/header_gutter2"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <View android:id="@+id/header_gutter2" android:background="@color/transparent" android:visibility="invisible"
+            android:layout_width="0dp" android:layout_height="1dp"
+            app:layout_constraintHorizontal_weight="@integer/table_weight1"
+            app:layout_constraintStart_toEndOf="@+id/moonriseset_view"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <View style="@style/SunsetTimeHorizontalRule"
+        android:layout_width="match_parent" android:layout_height="1dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="8dp"/>
+
+    <com.forrestguice.suntimeswidget.MoonPhasesView
+        android:id="@+id/moonphases_view"
+        android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+</LinearLayout>

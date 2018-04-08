@@ -3,8 +3,8 @@
     <item android:top="@dimen/sunIcon_inset">
         <shape android:shape="oval">
             <size android:width="@dimen/sunIconLarge_width" android:height="@dimen/sunIconLarge_height" />
-            <solid android:color="@color/sunIcon_color_setting" />
-            <stroke android:width="@dimen/sunIcon_width_settingBorder" android:color="@color/sunIcon_color_settingBorder" />
+            <solid android:color="@color/sunIcon_color_setting_dark" />
+            <stroke android:width="@dimen/sunIcon_width_settingBorder" android:color="@color/sunIcon_color_settingBorder_dark" />
         </shape>
     </item>
 </layer-list>

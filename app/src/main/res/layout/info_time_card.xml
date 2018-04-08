@@ -17,7 +17,7 @@
             <LinearLayout android:id="@+id/layout_daylength"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:orientation="vertical"
-                          android:layout_marginTop="8dp">
+                          android:layout_marginTop="7dp">
 
                 <include layout="@layout/info_time_daylength" />
 

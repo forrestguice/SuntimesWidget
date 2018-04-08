@@ -179,11 +179,15 @@ public class SuntimesData
      */
     protected void initFromSettings(Context context, int appWidgetId)
     {
+        initFromSettings(context, appWidgetId, "");
+    }
+    protected void initFromSettings(Context context, int appWidgetId, String calculatorName)
+    {
         this.appWidgetID = appWidgetId;
         calculated = false;
 
         // from general settings
-        calculatorMode = WidgetSettings.loadCalculatorModePref(context, appWidgetId);
+        calculatorMode = WidgetSettings.loadCalculatorModePref(context, appWidgetId, calculatorName);
 
         // from location settings
         location = WidgetSettings.loadLocationPref(context, appWidgetId);
@@ -237,6 +241,12 @@ public class SuntimesData
         }
     }
 
+    public void initCalculator(Context context)
+    {
+        SuntimesCalculatorFactory calculatorFactory = new SuntimesCalculatorFactory(context, calculatorMode);
+        this.calculator = calculatorFactory.createCalculator(location, timezone);
+    }
+
     /**
      * @return the start of today (@see calendar()), at 0h 0m 0s
      */
@@ -258,7 +268,29 @@ public class SuntimesData
      */
     public Calendar now()
     {
-        return Calendar.getInstance(TimeZone.getTimeZone(timezone().getID()));
+        return Calendar.getInstance(timezone());
+    }
+
+    /**
+     * @param date
+     * @return
+     */
+    public Calendar nowThen(Calendar date)
+    {
+        Calendar nowThen = now();
+        nowThen.set(Calendar.YEAR, date.get(Calendar.YEAR));
+        nowThen.set(Calendar.MONTH, date.get(Calendar.MONTH));
+        nowThen.set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH));
+        return nowThen;
+    }
+
+    public static Calendar nowThen(Calendar now, Calendar date)
+    {
+        Calendar nowThen = (Calendar)now.clone();
+        nowThen.set(Calendar.YEAR, date.get(Calendar.YEAR));
+        nowThen.set(Calendar.MONTH, date.get(Calendar.MONTH));
+        nowThen.set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH));
+        return nowThen;
     }
 
 }
