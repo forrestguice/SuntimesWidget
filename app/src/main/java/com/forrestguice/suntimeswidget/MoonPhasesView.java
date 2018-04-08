@@ -31,6 +31,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -111,6 +112,8 @@ public class MoonPhasesView extends LinearLayout
     public void initLocale(Context context)
     {
         isRtl = AppSettings.isLocaleRtl(context);
+        WidgetSettings.MoonPhaseMode.initDisplayStrings(context);
+        MoonPhaseDisplay.initDisplayStrings(context);
     }
 
     private void showEmptyView( boolean show )
