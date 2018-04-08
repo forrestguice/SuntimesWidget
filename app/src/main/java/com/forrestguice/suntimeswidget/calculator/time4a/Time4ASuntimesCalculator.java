@@ -28,11 +28,11 @@ import net.time4j.Moment;
 import net.time4j.PlainDate;
 import net.time4j.TemporalType;
 import net.time4j.calendar.astro.AstronomicalSeason;
-import net.time4j.calendar.astro.GeoLocation;
+
 import net.time4j.calendar.astro.LunarTime;
 import net.time4j.calendar.astro.SolarTime;
 import net.time4j.calendar.astro.StdSolarCalculator;
-import net.time4j.calendar.astro.SunPosition;
+
 import net.time4j.calendar.astro.Twilight;
 import net.time4j.engine.CalendarDate;
 import net.time4j.engine.ChronoFunction;

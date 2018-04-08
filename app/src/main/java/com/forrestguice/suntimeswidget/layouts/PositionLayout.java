@@ -20,16 +20,10 @@ package com.forrestguice.suntimeswidget.layouts;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Build;
 import android.text.SpannableString;
-import android.util.TypedValue;
 import android.widget.RemoteViews;
 
-import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 public abstract class PositionLayout extends SuntimesLayout

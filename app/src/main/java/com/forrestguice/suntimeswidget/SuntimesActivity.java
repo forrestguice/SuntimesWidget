@@ -1679,7 +1679,7 @@ public class SuntimesActivity extends AppCompatActivity
             moonrise.updateViews(SuntimesActivity.this, dataset3);
 
             moonphase2.updateViews(SuntimesActivity.this, dataset3);
-            moonrise2.updateViews(SuntimesActivity.this, dataset3);  // TODO
+            moonrise2.updateViews(SuntimesActivity.this, dataset3);
 
         } else {
             String notCalculated = getString(R.string.time_loading);

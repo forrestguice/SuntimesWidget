@@ -42,7 +42,6 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.ArrayList;
 import java.util.Calendar;
