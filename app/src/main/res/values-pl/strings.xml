@@ -326,6 +326,9 @@
     <!-- Widget Setting: timeMode override -->
     <string name="configLabel_general_timeMode_override">Śledzenie pomija trybT</string>     <!-- checkbox label -->
 
+    <!-- Widget Settings: noon -->
+    <string name="configLabel_general_showNoon">Show Solar Noon</string>        <!-- checkbox label -->   <!-- TODO -->
+
     <!-- Widget Setting: Launch App -->
     <string name="configLabel_action_launch">Akcja:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch"><xliff:g id="uri">com.forrestguice.suntimeswidget.SuntimesActivity</xliff:g></string> <!-- editText hint (and default) -->
