@@ -1,6 +1,7 @@
 ### ~
 
-###
+### v0.8.0 (2018-04-10)
+* adds click behavior to main table headers; clicking sunrise/sunset highlights next sunrise/sunset.
 * changes the default alarm label format (label now includes shortDate).
 * adds moonrise and moonset to the AlarmDialog.
 * adds moon dialog to app; shows major phases, rising/setting times, rising/setting position, current position, phase, and illumination (current).
