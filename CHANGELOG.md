@@ -1,6 +1,7 @@
 ### ~
 
 ###
+* fixes app crash (in ThemeConfigActivity) when the app is configured to use a calculator that lacks support for the moon feature.
 * changes the default alarm label format (label now includes shortDate).
 * adds moonrise and moonset to the AlarmDialog.
 * adds moon dialog to app; shows major phases, rising/setting times, rising/setting position, current position, phase, and illumination (current).
