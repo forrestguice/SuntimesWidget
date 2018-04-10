@@ -439,7 +439,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                         data = data0;
 
                     } else if (widgetClass == MoonWidget0.class || widgetClass == MoonWidget0_2x1.class || widgetClass == MoonWidget0_3x1.class) {
-                        SuntimesMoonData data0 =  new SuntimesMoonData(context, id);
+                        SuntimesMoonData data0 =  new SuntimesMoonData(context, id, "moon");
                         widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
                         data = data0;
 

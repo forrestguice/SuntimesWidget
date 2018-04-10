@@ -168,7 +168,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         noonData.calculate();
         data.linkData(noonData);
 
-        data2 = new SuntimesMoonData(context, 0);
+        data2 = new SuntimesMoonData(context, 0, "moon");
         data2.calculate();
     }
 
