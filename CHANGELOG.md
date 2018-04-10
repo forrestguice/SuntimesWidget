@@ -1,6 +1,7 @@
 ### ~
 
 ### v0.8.0 (2018-04-10)
+* fixes app crash (in ThemeConfigActivity) when the app is configured to use a calculator that lacks support for the moon feature.
 * adds click behavior to main table headers; clicking sunrise/sunset highlights next sunrise/sunset.
 * changes the default alarm label format (label now includes shortDate).
 * adds moonrise and moonset to the AlarmDialog.
