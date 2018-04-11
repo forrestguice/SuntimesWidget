@@ -20,7 +20,7 @@
     <string name="configAction_setDate">Ustaw datę</string>
     <string name="configAction_sunDialog">Pozycja Słońca</string>
     <string name="configAction_equinoxDialog">Przesilenie / równonoc</string>
-    <string name="configAction_moon">Moon</string>                            <!-- TODO -->
+    <string name="configAction_moon">Księżyc</string>
     <string name="configAction_help">Pomoc</string>
     <string name="configAction_settings">Ustawienia</string>
     <string name="configAction_aboutWidget">O programie</string>
@@ -112,8 +112,8 @@
     <string name="untilEnd_goldhour">końca złotej godziny</string>
     <string name="until_bluehour">błękitnej godziny</string>
     <string name="untilEnd_bluehour">końca błękitnej godziny</string>
-    <string name="until_moonrise">moonrise</string> <!-- TODO -->
-    <string name="until_moonset">moonset</string>  <!-- TODO -->
+    <string name="until_moonrise">wschodu Księżyca</string>
+    <string name="until_moonset">zachodu Księżyca</string>
 
     <!-- Table -->
     <string name="sunrise">Wschód Słońca</string>                             <!-- contentDescription -->
@@ -161,8 +161,8 @@
     <!-- Widget Setting: general -->
     <string name="configLabel_general">Ustawienia ogólne</string>                <!-- group title -->
     <string name="configLabel_general_calculator">Źródło danych:</string>         <!-- spinner label -->
-    <string name="configLabel_general_calculator_sun">Sun Data Source</string>         <!-- preference label -->  <!-- TODO -->
-    <string name="configLabel_general_calculator_moon">Moon Data Source</string>         <!-- preference label --> <!-- TODO -->
+    <string name="configLabel_general_calculator_sun">Źródło danych słonecznych</string>         <!-- preference label -->
+    <string name="configLabel_general_calculator_moon">Źródło danych księżycowych</string>         <!-- preference label -->
 
     <string name="configLabel_general_showSeconds">Wyświetl sekundy</string>        <!-- checkbox label -->
     <string name="configLabel_general_showSeconds_summary">Uwzględnij sekundy podczas wyświetlania czasów.</string>        <!-- checkbox label -->
@@ -326,6 +326,9 @@
     <!-- Widget Setting: timeMode override -->
     <string name="configLabel_general_timeMode_override">Śledzenie pomija trybT</string>     <!-- checkbox label -->
 
+    <!-- Widget Settings: noon -->
+    <string name="configLabel_general_showNoon">Show Solar Noon</string>        <!-- checkbox label -->   <!-- TODO -->
+
     <!-- Widget Setting: Launch App -->
     <string name="configLabel_action_launch">Akcja:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch"><xliff:g id="uri">com.forrestguice.suntimeswidget.SuntimesActivity</xliff:g></string> <!-- editText hint (and default) -->
@@ -484,9 +487,9 @@
     <string name="configLabel_ui_showLightmap_summary">Wyświetla pasek obrazujący czas dnia, nocy, świtu i zmierzchu.</string>
 
     <!-- App Setting: Show Moon -->
-    <string name="configLabel_ui_showmoon">Show Moon</string>  <!-- TODO -->
-    <string name="configLabel_ui_showmoon_summary">Show rise and set times, phase, and illumination.</string>  <!-- TODO -->
-    <string name="configLabel_ui_showmoon_notImplemented">Moon not implemented by this data source.</string>  <!-- TODO -->
+    <string name="configLabel_ui_showmoon">Pokaż dane Księżyca</string>
+    <string name="configLabel_ui_showmoon_summary">Wyświetla czasu wschodu i zachodu Księżyca, fazę i oświetlenie.</string>
+    <string name="configLabel_ui_showmoon_notImplemented">Dane Księżyca nie są wspierane przez to źródło danych.</string>
 
     <!-- App Setting: Show Equinox / Solstice -->
     <string name="configLabel_ui_showEquinox">Pokaż przesilenie / równonoc</string>
@@ -675,8 +678,8 @@
         <item>błękitna godzina</item>
         <item>zmierzch żeglarski</item>
         <item>zmierzch astronomiczny</item>
-        <item>moonrise</item>                         <!-- TODO -->
-        <item>moonset</item>                          <!-- TODO -->
+        <item>wschód Księżyca</item>
+        <item>zachód Księżyca</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>świt astronomiczny</item>
@@ -694,8 +697,8 @@
         <item>wieczorna złota godzina (koniec)</item>
         <item>zmierzch żeglarski</item>
         <item>zmierzch astronomiczny</item>
-        <item>moonrise</item>    <!-- TODO -->
-        <item>moonset</item>     <!-- TODO -->
+        <item>wschód Księżyca</item>
+        <item>zachód Księżyca</item>
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
@@ -832,8 +835,8 @@
     ]]>
     </string>
     <string name="help_general_moonillum"><![CDATA[
-        <b>Moon Illumination:</b> The moon widgets and main page display the moon\'s illumination at lunar noon (the midpoint between moonrise and moonset), while the moon dialog displays the moon\'s current illumination.<br/><br/>
-    ]]></string> <!-- TODO -->
+        <b>Oświetlenie Księżyca:</b> widżety księżycowe i ekran główny wyświetlają oświetlenie Księżyca w momencie jego górowania (punkt pomiędzy wschodem i zachodem Księżyca, podczas gdy okno informacji o Księżycu wyświetla jego obecne oświetlenie.<br/><br/>
+    ]]></string>
     <string name="help_general_goldhour"><![CDATA[
         <b>Złota godzina:</b> Słońce znajduje się pomiędzy 6 stopniami nad i pod horyzontem. Ranem złota godzina zaczyna się wraz ze świtem cywilnym i kończy się wkrótce po wschodzie Słońca. Wieczorem złota godzina zaczyna się na krótko przed zachodem i kończy wraz ze zmierzchem cywilnym.<br/>
     ]]></string>

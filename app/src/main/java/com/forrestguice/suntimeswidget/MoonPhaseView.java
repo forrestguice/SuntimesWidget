@@ -125,6 +125,7 @@ public class MoonPhaseView extends LinearLayout
     public void initLocale(Context context)
     {
         isRtl = AppSettings.isLocaleRtl(context);
+        MoonPhaseDisplay.initDisplayStrings(context);
     }
 
     private void showEmptyView( boolean show )

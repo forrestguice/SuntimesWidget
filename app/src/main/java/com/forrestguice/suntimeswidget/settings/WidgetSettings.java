@@ -2215,6 +2215,7 @@ public class WidgetSettings
         deleteTimeFormatModePref(context, appWidgetId);
 
         deleteCalculatorModePref(context, appWidgetId);
+        deleteCalculatorModePref(context, appWidgetId, "moon");
 
         deleteTimeModePref(context, appWidgetId);
         deleteTimeMode2Pref(context, appWidgetId);

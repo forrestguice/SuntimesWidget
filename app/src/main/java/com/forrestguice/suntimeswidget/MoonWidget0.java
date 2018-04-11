@@ -23,6 +23,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_2x1_0;
@@ -108,6 +109,7 @@ public class MoonWidget0 extends SuntimesWidget0
         AppSettings.initLocale(context);
         SuntimesUtils.initDisplayStrings(context);
         WidgetSettings.MoonPhaseMode.initDisplayStrings(context);
+        MoonPhaseDisplay.initDisplayStrings(context);
     }
 
 }

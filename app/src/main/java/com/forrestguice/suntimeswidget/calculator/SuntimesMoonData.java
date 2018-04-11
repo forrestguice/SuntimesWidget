@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 
@@ -281,6 +280,10 @@ public class SuntimesMoonData extends SuntimesData
         ArrayList<Calendar> noon = new ArrayList<>();
         for (int i=0; i<riseSet.length; i++)  // for yesterday [0], today [1], and tomorrow [2]
         {
+            if (riseSet[i] == null) {
+                continue;
+            }
+
             Calendar rise = riseSet[i].riseTime;
             if (rise != null)                          // check for moonrise..
             {
@@ -328,11 +331,14 @@ public class SuntimesMoonData extends SuntimesData
         for (SuntimesCalculator.MoonPhase phase : moonPhases.keySet())
         {
             Calendar phaseDate = moonPhases.get(phase);
-            long delta = phaseDate.getTimeInMillis() - date;
-            if (delta >= 0 && delta < least)
+            if (phaseDate != null)
             {
-                least = delta;
-                result = phase;
+                long delta = phaseDate.getTimeInMillis() - date;
+                if (delta >= 0 && delta < least)
+                {
+                    least = delta;
+                    result = phase;
+                }
             }
         }
         return result;
@@ -362,7 +368,8 @@ public class SuntimesMoonData extends SuntimesData
         }
 
         Calendar nextPhaseDate = moonPhases.get(nextPhase);
-        boolean nextPhaseIsToday = (calendar.get(Calendar.YEAR) == nextPhaseDate.get(Calendar.YEAR)) &&
+        boolean nextPhaseIsToday = (nextPhaseDate != null) &&
+                                   (calendar.get(Calendar.YEAR) == nextPhaseDate.get(Calendar.YEAR)) &&
                                    (calendar.get(Calendar.DAY_OF_YEAR) == nextPhaseDate.get(Calendar.DAY_OF_YEAR));
         return (nextPhaseIsToday ? toPhase(nextPhase) : prevMinorPhase(nextPhase));
     }
