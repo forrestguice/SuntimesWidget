@@ -70,7 +70,7 @@ public class SuntimesCalculatorFactory
 
         if (calculatorSetting == null)
         {
-            SuntimesCalculatorDescriptor desc = com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.getDescriptor();
+            SuntimesCalculatorDescriptor desc = getFallbackCalculatorDescriptor();
             SuntimesCalculatorDescriptor.addValue(desc);  // redundant
             this.current = desc;
 
@@ -106,5 +106,10 @@ public class SuntimesCalculatorFactory
         //long bench_end = System.nanoTime();
         //Log.d("DEBUG", "created " + calculator.name() + " :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
         return calculator;
+    }
+
+    public SuntimesCalculatorDescriptor getFallbackCalculatorDescriptor()
+    {
+        return com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.getDescriptor();
     }
 }
