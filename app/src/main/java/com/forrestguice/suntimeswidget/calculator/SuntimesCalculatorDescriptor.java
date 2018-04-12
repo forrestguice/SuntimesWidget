@@ -63,7 +63,7 @@ import java.util.Locale;
  *
  */
 @SuppressWarnings("Convert2Diamond")
-public class SuntimesCalculatorDescriptor implements Comparable
+public class SuntimesCalculatorDescriptor implements Comparable, SuntimesCalculatorInfo
 {
     private static ArrayList<Object> calculators = new ArrayList<Object>();
 
@@ -146,7 +146,7 @@ public class SuntimesCalculatorDescriptor implements Comparable
             for (int i=0; i<values.length; i++)
             {
                 SuntimesCalculatorDescriptor calculator = values[i];
-                if (calculator.name().equals(value) || value.equals("any"))
+                if (calculator.getName().equals(value) || value.equals("any"))
                 {
                     descriptor = calculator;
                     break;
@@ -211,7 +211,7 @@ public class SuntimesCalculatorDescriptor implements Comparable
         for (int i=0; i<values.length; i++)
         {
             SuntimesCalculatorDescriptor calculator = values[i];
-            if (calculator.name().equals(this.name))
+            if (calculator.getName().equals(this.name))
             {
                 ordinal = i;
                 break;
@@ -224,7 +224,7 @@ public class SuntimesCalculatorDescriptor implements Comparable
      * Get the calculator's name.
      * @return the name of the SuntimesCalculator this descriptor represents
      */
-    public String name()
+    public String getName()
     {
         return name;
     }
@@ -254,6 +254,11 @@ public class SuntimesCalculatorDescriptor implements Comparable
         return calculatorRef;
     }
 
+    @Override
+    public int getDisplayStringResID()
+    {
+        return resID;
+    }
 
     public int[] getSupportedFeatures()
     {
@@ -294,7 +299,7 @@ public class SuntimesCalculatorDescriptor implements Comparable
 
         } else {
             SuntimesCalculatorDescriptor otherDescriptor = (SuntimesCalculatorDescriptor) other;
-            return this.name().equals(otherDescriptor.name());
+            return this.getName().equals(otherDescriptor.getName());
         }
     }
 
@@ -302,7 +307,7 @@ public class SuntimesCalculatorDescriptor implements Comparable
     public int compareTo(@NonNull Object other)
     {
         SuntimesCalculatorDescriptor otherDescriptor = (SuntimesCalculatorDescriptor)other;
-        return this.name().compareTo(otherDescriptor.name());
+        return this.getName().compareTo(otherDescriptor.getName());
     }
 
     public void initDisplayStrings( Context context )
@@ -343,7 +348,7 @@ public class SuntimesCalculatorDescriptor implements Comparable
             SuntimesCalculatorDescriptor descriptor = getItem(position);
             if (descriptor != null)
             {
-                text.setText(descriptor.name());
+                text.setText(descriptor.getName());
                 if (summaryText != null)
                 {
                     summaryText.setText(descriptor.getDisplayString());
@@ -371,7 +376,7 @@ public class SuntimesCalculatorDescriptor implements Comparable
 
             SuntimesCalculatorDescriptor descriptor = getItem(position);
             TextView text = (TextView)view.findViewById(android.R.id.text1);
-            text.setText(descriptor != null ? descriptor.name() : "");
+            text.setText(descriptor != null ? descriptor.getName() : "");
             return view;
         }
 

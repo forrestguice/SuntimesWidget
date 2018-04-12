@@ -932,7 +932,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         for (SuntimesCalculatorDescriptor calculator : calculators)
         {
             calculator.initDisplayStrings(context);
-            calculatorEntries[i] = calculatorValues[i] = calculator.name();
+            calculatorEntries[i] = calculatorValues[i] = calculator.getName();
             calculatorSummaries[i] = calculator.getDisplayString();
             i++;
         }
@@ -950,7 +950,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         if (context != null && calculatorPref != null)
         {
             SuntimesCalculatorDescriptor currentMode = WidgetSettings.loadCalculatorModePref(context, 0, calculatorName);
-            int currentIndex = ((currentMode != null) ? calculatorPref.findIndexOfValue(currentMode.name()) : 0);
+            int currentIndex = ((currentMode != null) ? calculatorPref.findIndexOfValue(currentMode.getName()) : 0);
             calculatorPref.setValueIndex(currentIndex);
             //Log.d("SuntimesSettings", "current mode: " + currentMode + " (" + currentIndex + ")");
         }
