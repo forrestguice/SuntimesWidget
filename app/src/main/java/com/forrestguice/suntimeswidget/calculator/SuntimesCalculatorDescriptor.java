@@ -68,7 +68,7 @@ public class SuntimesCalculatorDescriptor implements Comparable
     private static ArrayList<Object> calculators = new ArrayList<Object>();
 
     protected static boolean initialized = false;
-    public static void initCalculators()
+    public static void initCalculators(Context context)
     {
         SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.getDescriptor());
         SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator.getDescriptor());
@@ -95,11 +95,11 @@ public class SuntimesCalculatorDescriptor implements Comparable
         calculators.remove(calculator);
     }
 
-    public static SuntimesCalculatorDescriptor[] values()
+    public static SuntimesCalculatorDescriptor[] values(Context context)
     {
         if (!initialized)
         {
-            initCalculators();
+            initCalculators(context);
         }
 
         SuntimesCalculatorDescriptor[] array = new SuntimesCalculatorDescriptor[calculators.size()];
@@ -110,11 +110,11 @@ public class SuntimesCalculatorDescriptor implements Comparable
         return array;
     }
 
-    public static SuntimesCalculatorDescriptor[] values( int[] requestedFeatures )
+    public static SuntimesCalculatorDescriptor[] values(Context context, int[] requestedFeatures )
     {
         if (!initialized)
         {
-            initCalculators();
+            initCalculators(context);
         }
 
         ArrayList<SuntimesCalculatorDescriptor> matchingCalculators = new ArrayList<>();
@@ -130,18 +130,18 @@ public class SuntimesCalculatorDescriptor implements Comparable
         return matchingCalculators.toArray(retValues);
     }
 
-    public static SuntimesCalculatorDescriptor valueOf(String value)
+    public static SuntimesCalculatorDescriptor valueOf(Context context, String value)
     {
         if (!initialized)
         {
-            initCalculators();
+            initCalculators(context);
         }
 
         SuntimesCalculatorDescriptor descriptor = null;
         if (value != null)
         {
             value = value.trim().toLowerCase(Locale.US);
-            SuntimesCalculatorDescriptor[] values = SuntimesCalculatorDescriptor.values();
+            SuntimesCalculatorDescriptor[] values = SuntimesCalculatorDescriptor.values(context);
             //noinspection ForLoopReplaceableByForEach
             for (int i=0; i<values.length; i++)
             {
@@ -200,9 +200,9 @@ public class SuntimesCalculatorDescriptor implements Comparable
      * Get the order of this descriptor within the static list of recognized descriptors.
      * @return the order of this descriptor within the descriptor list (or -1 if not in the list)
      */
-    public int ordinal()
+    public int ordinal(Context context)
     {
-        SuntimesCalculatorDescriptor[] values = SuntimesCalculatorDescriptor.values();
+        SuntimesCalculatorDescriptor[] values = SuntimesCalculatorDescriptor.values(context);
         return ordinal(values);
     }
     public int ordinal( SuntimesCalculatorDescriptor[] values )
@@ -377,7 +377,7 @@ public class SuntimesCalculatorDescriptor implements Comparable
 
         public void initDisplayStrings(Context context)
         {
-            for (SuntimesCalculatorDescriptor value : values())
+            for (SuntimesCalculatorDescriptor value : values(context))
             {
                 value.initDisplayStrings(context);
             }

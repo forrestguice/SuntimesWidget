@@ -65,7 +65,7 @@ public class SuntimesCalculatorFactory
         this.contextRef = new WeakReference<Context>(context);
         if (!SuntimesCalculatorDescriptor.initialized)
         {
-            SuntimesCalculatorDescriptor.initCalculators();
+            SuntimesCalculatorDescriptor.initCalculators(context);
         }
 
         if (calculatorSetting == null)

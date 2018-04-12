@@ -263,7 +263,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         {
             // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
             // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
-            WidgetSettings.saveCalculatorModePref(this, 0, SuntimesCalculatorDescriptor.valueOf(sharedPreferences.getString(key, "missing")));
+            WidgetSettings.saveCalculatorModePref(this, 0, SuntimesCalculatorDescriptor.valueOf(this, sharedPreferences.getString(key, "missing")));
             return;
         }
 
@@ -271,7 +271,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         {
             // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
             // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
-            WidgetSettings.saveCalculatorModePref(this, 0, "moon", SuntimesCalculatorDescriptor.valueOf(sharedPreferences.getString(key, "missing")));
+            WidgetSettings.saveCalculatorModePref(this, 0, "moon", SuntimesCalculatorDescriptor.valueOf(this, sharedPreferences.getString(key, "missing")));
             return;
         }
 
@@ -922,8 +922,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     }
     private static void initPref_calculator(Context context, final SummaryListPreference calculatorPref, int[] requestedFeatures)
     {
-        SuntimesCalculatorDescriptor[] calculators = (requestedFeatures == null ? SuntimesCalculatorDescriptor.values()
-                                                                                : SuntimesCalculatorDescriptor.values(requestedFeatures));
+        SuntimesCalculatorDescriptor[] calculators = (requestedFeatures == null ? SuntimesCalculatorDescriptor.values(context)
+                                                                                : SuntimesCalculatorDescriptor.values(context, requestedFeatures));
         String[] calculatorEntries = new String[calculators.length];
         String[] calculatorValues = new String[calculators.length];
         String[] calculatorSummaries = new String[calculators.length];
