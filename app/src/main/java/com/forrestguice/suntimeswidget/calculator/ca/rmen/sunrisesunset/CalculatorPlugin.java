@@ -16,45 +16,8 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset;
 
 import android.app.Activity;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorInfo;
-
-public class CalculatorPlugin extends Activity implements SuntimesCalculatorInfo
-{
-    private static final SuntimesCalculatorDescriptor descriptor = SunriseSunsetSuntimesCalculator.getDescriptor();
-
-    @Override
-    public String getName()
-    {
-        return descriptor.getName();
-    }
-
-    @Override
-    public String getDisplayString()
-    {
-        return descriptor.getDisplayString();
-    }
-
-    @Override
-    public String getReference()
-    {
-        return descriptor.getReference();
-    }
-
-    @Override
-    public int getDisplayStringResID()
-    {
-        return descriptor.getDisplayStringResID();
-    }
-
-    @Override
-    public int[] getSupportedFeatures()
-    {
-        return descriptor.getSupportedFeatures();
-    }
-}
+public class CalculatorPlugin extends Activity { /* EMPTY */ }

@@ -39,8 +39,13 @@
         </activity>
 
         <!-- Calculator Plugins -->
-        <activity
-            android:name=".calculator.ca.rmen.sunrisesunset.CalculatorPlugin">
+        <activity android:name=".calculator.ca.rmen.sunrisesunset.CalculatorPlugin">
+
+            <meta-data android:name="CalculatorName" android:value="ca.rmen.sunrisesunset" />
+            <meta-data android:name="CalculatorDisplayString" android:value="@string/calculator_displayString_caarmensunrisesunset" />
+            <meta-data android:name="CalculatorReference" android:value="com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator" />
+            <meta-data android:name="CalculatorFeatures" android:value="0,30" />
+
             <intent-filter>
                 <action android:name="android.intent.action.RUN" />
                 <category android:name="com.forrestguice.suntimeswidget.SUNTIMES_CALCULATOR" />

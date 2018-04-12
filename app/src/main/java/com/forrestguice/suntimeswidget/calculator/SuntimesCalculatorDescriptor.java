@@ -20,9 +20,11 @@ package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -70,6 +72,12 @@ import java.util.Locale;
 @SuppressWarnings("Convert2Diamond")
 public class SuntimesCalculatorDescriptor implements Comparable, SuntimesCalculatorInfo
 {
+    public static final String CATEGORY_SUNTIMES_CALCULATOR = "com.forrestguice.suntimeswidget.SUNTIMES_CALCULATOR";
+    public static final String KEY_NAME = "CalculatorName";
+    public static final String KEY_DISPLAYSTRING = "CalculatorDisplayString";
+    public static final String KEY_REFERENCE = "CalculatorReference";
+    public static final String KEY_FEATURES = "CalculatorFeatures";
+
     private static ArrayList<Object> calculators = new ArrayList<Object>();
 
     protected static boolean initialized = false;
@@ -85,29 +93,48 @@ public class SuntimesCalculatorDescriptor implements Comparable, SuntimesCalcula
 
         PackageManager packageManager = context.getPackageManager();
         Intent packageQuery = new Intent(Intent.ACTION_RUN);    // get a list of installed plugins
-        packageQuery.addCategory(SuntimesCalculator.CATEGORY_SUNTIMES_CALCULATOR);
+        packageQuery.addCategory(CATEGORY_SUNTIMES_CALCULATOR);
 
-        List<ResolveInfo> packages = packageManager.queryIntentActivities(packageQuery, 0);
+        List<ResolveInfo> packages = packageManager.queryIntentActivities(packageQuery, PackageManager.GET_META_DATA);
         for (ResolveInfo packageInfo : packages)
         {
-            if (packageInfo.activityInfo != null)
+            if (packageInfo.activityInfo != null
+                    && packageInfo.activityInfo.metaData != null)
             {
-                SuntimesCalculatorInfo calculatorInfo;
-                try {
-                    Class calculatorClass = Class.forName(packageInfo.activityInfo.name);
-                    calculatorInfo = (SuntimesCalculatorInfo)calculatorClass.newInstance();
-                    SuntimesCalculatorDescriptor descriptor = new SuntimesCalculatorDescriptor(calculatorInfo.getName(), calculatorInfo.getDisplayString(), calculatorInfo.getReference(), calculatorInfo.getDisplayStringResID(), calculatorInfo.getSupportedFeatures());
-                    SuntimesCalculatorDescriptor.addValue(descriptor);
-                    Log.d("DEBUG", "initialized calculator plugin: " + descriptor.toString());
+                String calculatorName = packageInfo.activityInfo.metaData.getString(KEY_NAME);
+                String calculatorDisplayString = packageInfo.activityInfo.metaData.getString(KEY_DISPLAYSTRING);
+                String calculatorDisplayReference = packageInfo.activityInfo.metaData.getString(KEY_REFERENCE);
+                int[] calculatorFeatures = parseFlags(packageInfo.activityInfo.metaData.getString(KEY_FEATURES));
 
-                } catch (Exception e1) {
-                    Log.e("scanCalculator", "fail! .oO( " + packageInfo.activityInfo.name + ")");
-                }
+                SuntimesCalculatorDescriptor descriptor = new SuntimesCalculatorDescriptor(calculatorName, calculatorDisplayString, calculatorDisplayReference, -1, calculatorFeatures);
+                SuntimesCalculatorDescriptor.addValue(descriptor);
+                Log.d("DEBUG", "initialized calculator plugin: " + descriptor.toString());
             }
         }
 
         initialized = true;
         //Log.d("CalculatorFactory", "Initialized suntimes calculator list.");
+    }
+
+    private static int[] parseFlags( String flagString )
+    {
+        ArrayList<Integer> flagList = new ArrayList<>();
+        String[] flags = flagString.split(",");
+        for (String flag : flags)
+        {
+            flag = flag.trim();
+            try {
+                flagList.add(Integer.parseInt(flag));
+            } catch (NumberFormatException e) {
+                Log.w("initCalculators", "ignoring invalid flag: " + flag);
+            }
+        }
+        int[] retValue = new int[flagList.size()];
+        for (int i=0; i<retValue.length; i++)
+        {
+            retValue[i] = flagList.get(i);
+        }
+        return retValue;
     }
 
     public static void addValue( SuntimesCalculatorDescriptor calculator )
