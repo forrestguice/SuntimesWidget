@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -41,11 +42,45 @@ import java.util.Locale;
  * will return the list as an array (suitable for use in an adaptor), and the valueOf(String)
  * method can be used to retrieve a descriptor from this list using its name. The ordinal() method
  * will return a descriptor's order within the list.
+ *
+ * The list of installed calculators should be initialized using the initCalculators() method. Using the
+ * SuntimesCalculatorDescriptor.values() and SuntimesCalculatorDescriptor.valueOf() methods will
+ * trigger lazy initialization.
+
+ * SuntimesCalculatorDescriptor knows about the following implementations:
+ *
+ *   * sunrisesunsetlib (fallback)
+ *     :: com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.class
+ *
+ *   * ca.rmen.sunrisesunset
+ *     :: com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator.class
+ *
+ *   * time4a
+ *     :: com.forrestguice.suntimeswidget.calculator.time4a.Time4ASimpleSuntimesCalculator.class
+ *     :: com.forrestguice.suntimeswidget.calculator.time4a.Time4ANOAASuntimesCalculator.class
+ *     :: com.forrestguice.suntimeswidget.calculator.time4a.Time4ACCSuntimesCalculator.class
+ *     :: com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator.class
+ *
  */
 @SuppressWarnings("Convert2Diamond")
 public class SuntimesCalculatorDescriptor implements Comparable
 {
     private static ArrayList<Object> calculators = new ArrayList<Object>();
+
+    protected static boolean initialized = false;
+    public static void initCalculators()
+    {
+        SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.getDescriptor());
+        SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator.getDescriptor());
+
+        SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.time4a.Time4ASimpleSuntimesCalculator.getDescriptor());
+        SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.time4a.Time4ANOAASuntimesCalculator.getDescriptor());
+        SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.time4a.Time4ACCSuntimesCalculator.getDescriptor());
+        SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator.getDescriptor());
+
+        initialized = true;
+        //Log.d("CalculatorFactory", "Initialized suntimes calculator list.");
+    }
 
     public static void addValue( SuntimesCalculatorDescriptor calculator )
     {
@@ -62,9 +97,9 @@ public class SuntimesCalculatorDescriptor implements Comparable
 
     public static SuntimesCalculatorDescriptor[] values()
     {
-        if (!SuntimesCalculatorFactory.initialized)
+        if (!initialized)
         {
-            SuntimesCalculatorFactory.initCalculators();
+            initCalculators();
         }
 
         SuntimesCalculatorDescriptor[] array = new SuntimesCalculatorDescriptor[calculators.size()];
@@ -77,9 +112,9 @@ public class SuntimesCalculatorDescriptor implements Comparable
 
     public static SuntimesCalculatorDescriptor[] values( int[] requestedFeatures )
     {
-        if (!SuntimesCalculatorFactory.initialized)
+        if (!initialized)
         {
-            SuntimesCalculatorFactory.initCalculators();
+            initCalculators();
         }
 
         ArrayList<SuntimesCalculatorDescriptor> matchingCalculators = new ArrayList<>();
@@ -97,9 +132,9 @@ public class SuntimesCalculatorDescriptor implements Comparable
 
     public static SuntimesCalculatorDescriptor valueOf(String value)
     {
-        if (!SuntimesCalculatorFactory.initialized)
+        if (!initialized)
         {
-            SuntimesCalculatorFactory.initCalculators();
+            initCalculators();
         }
 
         SuntimesCalculatorDescriptor descriptor = null;
