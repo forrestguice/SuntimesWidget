@@ -33,6 +33,8 @@ import java.util.TimeZone;
  */
 public interface SuntimesCalculator
 {
+    String CATEGORY_SUNTIMES_CALCULATOR = "com.forrestguice.suntimeswidget.SUNTIMES_CALCULATOR";
+
     int FEATURE_RISESET = 0;      // feature: rise, set, and twilight times (1.0.0)
     int FEATURE_SOLSTICE = 10;    // feature: solstice/equinox times (1.2.0)
     int FEATURE_ALTITUDE = 20;    // feature: altitude based refinement (1.0.0)

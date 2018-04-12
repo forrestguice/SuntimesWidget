@@ -78,6 +78,29 @@ public class SuntimesCalculatorDescriptor implements Comparable, SuntimesCalcula
         SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.time4a.Time4ACCSuntimesCalculator.getDescriptor());
         SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator.getDescriptor());
 
+        PackageManager packageManager = context.getPackageManager();
+        Intent packageQuery = new Intent(Intent.ACTION_RUN);    // get a list of installed plugins
+        packageQuery.addCategory(SuntimesCalculator.CATEGORY_SUNTIMES_CALCULATOR);
+
+        List<ResolveInfo> packages = packageManager.queryIntentActivities(packageQuery, 0);
+        for (ResolveInfo packageInfo : packages)
+        {
+            if (packageInfo.activityInfo != null)
+            {
+                SuntimesCalculatorInfo calculatorInfo;
+                try {
+                    Class calculatorClass = Class.forName(packageInfo.activityInfo.name);
+                    calculatorInfo = (SuntimesCalculatorInfo)calculatorClass.newInstance();
+                    SuntimesCalculatorDescriptor descriptor = new SuntimesCalculatorDescriptor(calculatorInfo.getName(), calculatorInfo.getDisplayString(), calculatorInfo.getReference(), calculatorInfo.getDisplayStringResID(), calculatorInfo.getSupportedFeatures());
+                    SuntimesCalculatorDescriptor.addValue(descriptor);
+                    Log.d("DEBUG", "initialized calculator plugin: " + descriptor.toString());
+
+                } catch (Exception e1) {
+                    Log.e("scanCalculator", "fail! .oO( " + packageInfo.activityInfo.name + ")");
+                }
+            }
+        }
+
         initialized = true;
         //Log.d("CalculatorFactory", "Initialized suntimes calculator list.");
     }
