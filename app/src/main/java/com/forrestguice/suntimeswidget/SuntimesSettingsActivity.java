@@ -950,9 +950,16 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         if (context != null && calculatorPref != null)
         {
             SuntimesCalculatorDescriptor currentMode = WidgetSettings.loadCalculatorModePref(context, 0, calculatorName);
-            int currentIndex = ((currentMode != null) ? calculatorPref.findIndexOfValue(currentMode.name()) : 0);
-            calculatorPref.setValueIndex(currentIndex);
-            //Log.d("SuntimesSettings", "current mode: " + currentMode + " (" + currentIndex + ")");
+            int currentIndex = ((currentMode != null) ? calculatorPref.findIndexOfValue(currentMode.name()) : -1);
+            if (currentIndex >= 0)
+            {
+                calculatorPref.setValueIndex(currentIndex);
+                //Log.d("SuntimesSettings", "current mode: " + currentMode + " (" + currentIndex + ")");
+
+            } else {    // the descriptor loaded successfully (not null), but for whatever reason its not in our list..
+                Log.w("loadPref", "Unable to load calculator preference! The list is missing an entry for the descriptor: " + currentMode);
+                calculatorPref.setValue(null);  // reset to null (so subsequent selection by user gets saved and fixes this condition)
+            }
         }
     }
 
