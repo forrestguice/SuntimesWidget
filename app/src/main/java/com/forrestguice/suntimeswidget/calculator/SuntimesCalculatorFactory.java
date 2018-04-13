@@ -70,7 +70,7 @@ public class SuntimesCalculatorFactory
 
         if (calculatorSetting == null)
         {
-            SuntimesCalculatorDescriptor desc = getFallbackCalculatorDescriptor();
+            SuntimesCalculatorDescriptor desc = fallbackCalculatorDescriptor();
             SuntimesCalculatorDescriptor.addValue(desc);  // redundant
             this.current = desc;
 
@@ -108,7 +108,7 @@ public class SuntimesCalculatorFactory
         return calculator;
     }
 
-    public SuntimesCalculatorDescriptor getFallbackCalculatorDescriptor()
+    public SuntimesCalculatorDescriptor fallbackCalculatorDescriptor()
     {
         return com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.getDescriptor();
     }

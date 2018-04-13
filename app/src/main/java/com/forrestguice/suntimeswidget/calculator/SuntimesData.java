@@ -245,7 +245,7 @@ public class SuntimesData
     {
         SuntimesCalculatorFactory calculatorFactory = new SuntimesCalculatorFactory(context, calculatorMode);
         if (calculatorMode == null) {
-            calculatorMode = calculatorFactory.getFallbackCalculatorDescriptor();
+            calculatorMode = calculatorFactory.fallbackCalculatorDescriptor();
         }
         this.calculator = calculatorFactory.createCalculator(location, timezone);
     }
