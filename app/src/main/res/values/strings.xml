@@ -700,6 +700,7 @@
         <item>Polish</item>
         <item>Spanish</item>
         <item>Catalan</item>
+        <item>Basque</item>
     </string-array>
     <string-array name="locale_values" translatable="false">  <!-- one-to-one with locale_display -->
         <item>en</item>
@@ -710,6 +711,7 @@
         <item>pl</item>
         <item>es_ES</item>
         <item>ca</item>
+        <item>eu</item>
     </string-array>
 
     <!-- position formats -->
