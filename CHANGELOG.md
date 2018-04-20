@@ -1,5 +1,11 @@
 ### ~
 
+###
+* fixes column alignment of moonrise/moonset in main table; now aligns w/ the sunrise column.
+* changes label alignment of 3x1 SunPosition widget; now centered (#188).
+* adds translation to Basque (eu) (contributed by beriain) (#193).
+* updates translation to German (de) (contributed by Wolkenschieber) (#191, #192).
+
 ### v0.8.0 (2018-04-10)
 * fixes app crash (in ThemeConfigActivity) when the app is configured to use a calculator that lacks support for the moon feature.
 * adds click behavior to main table headers; clicking sunrise/sunset highlights next sunrise/sunset.
@@ -145,7 +151,7 @@
 * fixes data source setting not honored (#104).
 
 ### v0.4.0 (2017-06-12)
-* adds translation to French (contributed by Jej) (#92).
+* adds translation to French (fr) (contributed by Jej) (#92).
 * adds time format option (12hr / 24hr time) (#22).
 * adds daylight savings time warning (#90).
 * automatic backups now disabled.
