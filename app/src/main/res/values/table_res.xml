@@ -15,7 +15,7 @@
     <dimen name="table_set_leftMargin">28dp</dimen>  <!-- margins: set column -->
     <dimen name="table_set_rightMargin">0dp</dimen>
 
-    <dimen name="table_moon_startEndMargin">4dp</dimen>
+    <dimen name="table_moon_startEndMargin">6dp</dimen>
 
     <!-- table heading: date field (col 0) -->
     <dimen name="table_heading_date_fontsize">14sp</dimen>
