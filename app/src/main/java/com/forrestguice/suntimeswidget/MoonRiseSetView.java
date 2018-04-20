@@ -25,6 +25,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -271,90 +272,133 @@ public class MoonRiseSetView extends LinearLayout
     private void reorderLayout( Calendar rising0, Calendar setting0, Calendar rising1, Calendar setting1 )
     {
         clearLayout();
-        updateMargins(getContext());
 
+        MoonRiseSetFieldLayoutSet fields = determineLayout(rising0, setting0, rising1, setting1);
+        updateMargins(getContext(), fields);
+
+        if (fields.tomorrowMode)
+            addLayout0(fields);
+        else addLayout1(fields);
+    }
+
+    private MoonRiseSetFieldLayoutSet determineLayout( Calendar rising0, Calendar setting0, Calendar rising1, Calendar setting1 )
+    {
         if (tomorrowMode)
         {
             if (rising1 == null && setting1 == null)
             {   // special case: no rise or set
-                addLayout0(settingTextField, risingTextField1, settingTextField1);
+                return new MoonRiseSetFieldLayoutSet(settingTextField, risingTextField1, settingTextField1, tomorrowMode);
 
             } else if (setting1 == null) {                                           // special case: no set time
                 if (rising1.before(midday(rising1)))
-                    addLayout0(settingTextField, risingTextField1, settingTextField1);   // i.e. set | rise none
-                else addLayout0(settingTextField, settingTextField1, risingTextField1);  // i.e. set | none rise
+                    return new MoonRiseSetFieldLayoutSet(settingTextField, risingTextField1, settingTextField1, tomorrowMode);   // i.e. set | rise none
+                else return new MoonRiseSetFieldLayoutSet(settingTextField, settingTextField1, risingTextField1, tomorrowMode);  // i.e. set | none rise
 
             } else if (rising1 == null) {                                            // special case: no rise time
                 if (setting1.before(midday(setting1)))
-                    addLayout0(risingTextField, settingTextField1, risingTextField1);    // i.e. rise | set none
-                else addLayout0(risingTextField, risingTextField1, settingTextField1);   // i.e. rise | none set
+                    return new MoonRiseSetFieldLayoutSet(risingTextField, settingTextField1, risingTextField1, tomorrowMode);    // i.e. rise | set none
+                else return new MoonRiseSetFieldLayoutSet(risingTextField, risingTextField1, settingTextField1, tomorrowMode);   // i.e. rise | none set
 
             } else {
                 if (rising1.before(setting1))
-                    addLayout0(settingTextField, risingTextField1, settingTextField1);   // i.e. set  | rise set
-                else addLayout0(risingTextField, settingTextField1, risingTextField1);   // i.e. rise | set rise
+                    return new MoonRiseSetFieldLayoutSet(settingTextField, risingTextField1, settingTextField1, tomorrowMode);   // i.e. set  | rise set
+                else return new MoonRiseSetFieldLayoutSet(risingTextField, settingTextField1, risingTextField1, tomorrowMode);   // i.e. rise | set rise
             }
 
         } else {
             if (rising0 == null && setting0 == null)
             {   // special case: no rise or set
-                addLayout1(risingTextField, settingTextField, risingTextField1);
+                return new MoonRiseSetFieldLayoutSet(risingTextField, settingTextField, risingTextField1, tomorrowMode);
 
             } else if (setting0 == null) {                                           // special case: no set time
                 if (rising0.before(midday(rising0)))
-                    addLayout1(risingTextField, settingTextField, settingTextField1);    // i.e. rise none | set
-                else addLayout1(settingTextField, risingTextField, settingTextField1);   // i.e. none rise | set
+                    return new MoonRiseSetFieldLayoutSet(risingTextField, settingTextField, settingTextField1, tomorrowMode);    // i.e. rise none | set
+                else return new MoonRiseSetFieldLayoutSet(settingTextField, risingTextField, settingTextField1, tomorrowMode);   // i.e. none rise | set
 
             } else if (rising0 == null) {                                            // special case: no rise time
                 if (setting0.before(midday(setting0)))
-                    addLayout1(settingTextField, risingTextField, risingTextField1);     // i.e. set none | rise
-                else addLayout1(risingTextField, settingTextField, risingTextField1);    // i.e. none set | rise
+                    return new MoonRiseSetFieldLayoutSet(settingTextField, risingTextField, risingTextField1, tomorrowMode);     // i.e. set none | rise
+                else return new MoonRiseSetFieldLayoutSet(risingTextField, settingTextField, risingTextField1, tomorrowMode);    // i.e. none set | rise
 
             } else {
                 if (rising0.before(setting0))
-                    addLayout1(risingTextField, settingTextField, risingTextField1);     // i.e. rise set | rise
-                else addLayout1(settingTextField, risingTextField, settingTextField1);   // i.e. set rise | set
+                    return new MoonRiseSetFieldLayoutSet(risingTextField, settingTextField, risingTextField1, tomorrowMode);     // i.e. rise set | rise
+                else return new MoonRiseSetFieldLayoutSet(settingTextField, risingTextField, settingTextField1, tomorrowMode);   // i.e. set rise | set
             }
         }
     }
 
-    private void addLayout0(MoonRiseSetField field1, MoonRiseSetField field2, MoonRiseSetField field3)
+    private void addLayout0(MoonRiseSetFieldLayoutSet fields)
     {
         if (showExtraField)
         {
-            field1.addToLayout(content);
+            fields.field1.addToLayout(content);
             if (divider != null) {
                 divider.setVisibility(View.VISIBLE);
                 content.addView(divider);
             }
         }
-        field2.addToLayout(content);
-        field3.addToLayout(content);
+        fields.field2.addToLayout(content);
+        fields.field3.addToLayout(content);
     }
 
-    private void addLayout1(MoonRiseSetField field1, MoonRiseSetField field2, MoonRiseSetField field3)
+    private void addLayout1(MoonRiseSetFieldLayoutSet fields)
     {
-        field1.addToLayout(content);
-        field2.addToLayout(content);
+        fields.field1.addToLayout(content);
+        fields.field2.addToLayout(content);
         if (showExtraField)
         {
             if (divider != null) {
                 divider.setVisibility(View.VISIBLE);
                 content.addView(divider);
             }
-            field3.addToLayout(content);
+            fields.field3.addToLayout(content);
         }
     }
 
-    private void updateMargins(Context context)
+    private void updateMargins(Context context, MoonRiseSetFieldLayoutSet fields)
     {
         if (context != null && showExtraField)
         {
-            int margins = SuntimesUtils.dpToPixels(context, getResources().getDimension(R.dimen.table_moon_startEndMargin));
+            int margins = getResources().getDimensionPixelSize(R.dimen.table_moon_startEndMargin);
             risingTextField.setMarginStartEnd(margins, margins);
             risingTextField1.setMarginStartEnd(margins, margins);
             settingTextField.setMarginStartEnd(margins, margins);
             settingTextField1.setMarginStartEnd(margins, margins);
+
+        } else {
+            TextView v = (fields.tomorrowMode) ? fields.field3.getTimeView() : fields.field2.getTimeView();
+            v.measure(0, 0);
+
+            int startMargin = getResources().getDimensionPixelSize(R.dimen.table_set_leftMargin);
+            startMargin -= (v.getMeasuredWidth() - matchColumnWidthPx);
+
+            risingTextField.setMarginStartEnd(startMargin, 0);
+            risingTextField1.setMarginStartEnd(startMargin, 0);
+            settingTextField.setMarginStartEnd(startMargin, 0);
+            settingTextField1.setMarginStartEnd(startMargin, 0);
+        }
+    }
+
+    private int matchColumnWidthPx = 0;
+    public void adjustColumnWidth(Context context, int columnWidthPx)
+    {
+        this.matchColumnWidthPx = columnWidthPx;
+    }
+
+    /**
+     * MoonRiseSetFieldLayoutSet
+     */
+    private class MoonRiseSetFieldLayoutSet
+    {
+        public boolean tomorrowMode = false;
+        public MoonRiseSetField field1, field2, field3;
+        public MoonRiseSetFieldLayoutSet(MoonRiseSetField field1, MoonRiseSetField field2, MoonRiseSetField field3, boolean tomorrowMode)
+        {
+            this.field1 = field1;
+            this.field2 = field2;
+            this.field3 = field3;
+            this.tomorrowMode = tomorrowMode;
         }
     }
 

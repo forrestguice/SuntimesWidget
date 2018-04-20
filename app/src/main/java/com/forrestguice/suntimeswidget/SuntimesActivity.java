@@ -165,6 +165,9 @@ public class SuntimesActivity extends AppCompatActivity
     private ImageButton btn_flipperNext_tomorrow;
     private ImageButton btn_flipperPrev_tomorrow;
 
+    private View sunriseHeader, sunriseHeader2;
+    private View sunsetHeader, sunsetHeader2;
+
     private TextView txt_date,              txt_date2;
     private TextView txt_sunrise_actual,    txt_sunrise2_actual;
     private TextView txt_sunrise_civil,     txt_sunrise2_civil;
@@ -917,10 +920,10 @@ public class SuntimesActivity extends AppCompatActivity
             txt_date = (TextView) viewToday.findViewById(R.id.text_date);
             txt_date.setOnClickListener(dateTapClickListener(false));
 
-            View sunriseHeader = viewToday.findViewById(R.id.header_time_sunrise);
+            sunriseHeader = viewToday.findViewById(R.id.header_time_sunrise);
             sunriseHeader.setOnClickListener(onSunriseClick);
 
-            View sunsetHeader = viewToday.findViewById(R.id.header_time_sunset);
+            sunsetHeader = viewToday.findViewById(R.id.header_time_sunset);
             sunsetHeader.setOnClickListener(onSunsetClick);
 
             txt_sunrise_actual = (TextView) viewToday.findViewById(R.id.text_time_sunrise_actual);
@@ -1005,10 +1008,10 @@ public class SuntimesActivity extends AppCompatActivity
             txt_date2 = (TextView) viewTomorrow.findViewById(R.id.text_date);
             txt_date2.setOnClickListener(dateTapClickListener(true));
 
-            View sunriseHeader2 = viewTomorrow.findViewById(R.id.header_time_sunrise);
+            sunriseHeader2 = viewTomorrow.findViewById(R.id.header_time_sunrise);
             sunriseHeader2.setOnClickListener(onSunriseClick);
 
-            View sunsetHeader2 = viewTomorrow.findViewById(R.id.header_time_sunset);
+            sunsetHeader2 = viewTomorrow.findViewById(R.id.header_time_sunset);
             sunsetHeader2.setOnClickListener(onSunsetClick);
 
             txt_sunrise2_actual = (TextView) viewTomorrow.findViewById(R.id.text_time_sunrise_actual);
@@ -1674,6 +1677,11 @@ public class SuntimesActivity extends AppCompatActivity
             String lightLength2 = lightLengthDisplay2.toString();
             String lightLength2_label = getString(R.string.length_light, lightLength2);
             txt_lightlength2.setText(SuntimesUtils.createBoldColorSpan(null, lightLength2_label, lightLength2, color_textTimeDelta));
+
+            sunsetHeader.measure(0, 0);      // adjust moonrise/moonset columns to match width of sunrise/sunset columns
+            int sunsetHeaderWidth = sunsetHeader.getMeasuredWidth();
+            moonrise.adjustColumnWidth(SuntimesActivity.this, sunsetHeaderWidth);
+            moonrise2.adjustColumnWidth(SuntimesActivity.this, sunsetHeaderWidth);
 
             moonphase.updateViews(SuntimesActivity.this, dataset3);
             moonrise.updateViews(SuntimesActivity.this, dataset3);

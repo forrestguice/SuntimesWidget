@@ -67,9 +67,9 @@ Widgets are resizable and include...
 <img height="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/sunposwidget0_1x1_preview.png" align="center"></img>
 <img height="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/sunposwidget1_1x1_preview.png" align="center"></img>
 <img height="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/sunposwidget0_3x1_preview.png" align="center"></img>
-<br />Additional screenshots can be found on the <a href="https://github.com/forrestguice/SuntimesWidget/wiki/Screenshots">project wiki</a> and in the <a href="https://github.com/forrestguice/SuntimesWidget/tree/docs/doc/screenshots">docs branch</a>.
+<br />Additional screenshots can be found on the <a href="https://github.com/forrestguice/SuntimesWidget/wiki/Screenshots">project wiki</a> and in the <a href="https://github.com/forrestguice/SuntimesWidget/tree/gh-pages/doc/screenshots">gh-pages branch</a>.
 
-<img alt="screenshot1" src='https://github.com/forrestguice/SuntimesWidget/blob/docs/doc/screenshots/v0.8.0/en/activity-main0-dark.png' width="280px" />&nbsp;&nbsp;<img alt="screenshot1" src='https://github.com/forrestguice/SuntimesWidget/blob/docs/doc/screenshots/v0.8.0/en/activity-main0-light.png' width="280px" />
+<img alt="screenshot1" src='https://github.com/forrestguice/SuntimesWidget/blob/gh-pages/doc/screenshots/v0.8.0/en/activity-main0-dark.png' width="280px" />&nbsp;&nbsp;<img alt="screenshot1" src='https://github.com/forrestguice/SuntimesWidget/blob/gh-pages/doc/screenshots/v0.8.0/en/activity-main0-light.png' width="280px" />
 
 ## Donations ##
 
