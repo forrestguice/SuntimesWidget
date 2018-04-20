@@ -1,8 +1,945 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="http://schemas.android.com/tools">
 
-    <string name="default_location_label">Madrid</string>
-    <string name="default_location_latitude">40.4378</string>    <!-- decimal degrees (DD) -->
-    <string name="default_location_longitude">-3.8196</string>   <!-- decimal degrees (DD) -->
+    <string name="default_location_label">Euskal Herriko erdigunea</string>
+    <string name="default_location_latitude">42.88300833</string>      <!-- decimal degrees (DD) -->
+    <string name="default_location_longitude">-1.93549167</string>   <!-- decimal degrees (DD) -->
 
+    <!-- MAIN ACTIVITY -->
+
+    <!-- Action Bar
+         The text that appears in the overflow menu / menuItem contentDescription.
+    -->
+    <string name="configAction_refreshLocation">Freskatu</string>
+    <string name="configAction_addLocation">Kokapena</string>
+    <string name="configAction_mapLocation">Mapa erakutsi</string>
+    <string name="configAction_mapLocation_chooser">Kokapena aplikazio honekin ikusi</string>
+    <string name="configAction_mapLocation_noapp">Ezin izan da mapen aplikaziorik aurkitu!</string>
+    <string name="configAction_setAlarm">Alarma ezarri</string>
+    <string name="configAction_setTimeZone">Ordu eremua ezarri</string>
+    <string name="configAction_setDate">Data ezarri</string>
+    <string name="configAction_sunDialog">Eguzkiaren kokapena</string>
+    <string name="configAction_equinoxDialog">Solstizioak / Ekinokzioak</string>
+    <string name="configAction_moon">Ilargia</string>
+    <string name="configAction_help">Laguntza</string>
+    <string name="configAction_settings">Ezarpenak</string>
+    <string name="configAction_aboutWidget">Honi buruz</string>
+
+    <!-- Button: Next/Prev Date
+         The next/prev button contentDescription (accessibility).
+    -->
+    <string name="nextDay">Hurrengo eguna</string>
+    <string name="prevDay">Aurreko eguna</string>
+    <string name="nextYear">Hurrengo urtea</string>
+    <string name="prevYear">Aurreko urtea</string>
+
+    <!-- Warnings -->
+    <string name="spanTag_warning">Kontuz!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
+
+    <!-- Field: timezone
+         The time zone field that appears below the clock (main activity).
+    -->
+    <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
+    <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> Ordu eremua okerra izan liteke kokapen honetarako.</string>  <!-- snackbar message -->
+
+    <!-- Field: date
+         The date field that appears above the table (main activity).
+         e.g. [dateDesc] \n [date]
+             where [dateDesc] is a yesterday/today/tomorrow, past_, or future_ string.
+             where [date] is a dateString formatted by app using user's locale
+    -->
+    <string name="dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
+    <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> Data gaur ez den egun batean ezarri da.</string>  <!-- snackbar message -->
+
+    <!-- DateDesc: some day in the past (appears in dateField) -->
+    <string name="past_yesterday">Iragana (-1)</string>
+    <string name="past_today">Iragana</string>
+    <string name="past_tomorrow">Iragana (+1)</string>
+
+    <!-- DateDesc: yesterday/today/tomorrow (appears in dateField) -->
+    <string name="yesterday">Atzo</string>
+    <string name="today">Gaur</string>
+    <string name="tomorrow">Bihar</string>
+
+    <!-- DateDesc: some day in the future (appears in dateField) -->
+    <string name="future_yesterday">Geroa (-1)</string>
+    <string name="future_today">Geroa</string>
+    <string name="future_tomorrow">Geroa (+1)</string>
+
+    <!-- Field: length of day
+         The hours in the day field(s) that appears below the table (main activity)
+    -->
+    <string name="length_day">Egunaren iraupena <xliff:g id="timeSpan" example="12h">%1$s</xliff:g></string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
+    <string name="length_light">Argi erabilgarria <xliff:g id="timeSpan" example="12h 50m">%1$s</xliff:g></string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
+    <string name="length_twilight1"><xliff:g id="timeSpan1" example="10h 5m">%1$s</xliff:g></string>
+    <string name="length_twilight1e_pos"><xliff:g id="timeSpan1" example="10h 5m">%1$s</xliff:g> [+<xliff:g id="timeSpan1" example="+30s">%2$s</xliff:g>]</string>
+    <string name="length_twilight1e_neg"><xliff:g id="timeSpan1" example="10h 5m">%1$s</xliff:g> [-<xliff:g id="timeSpan1" example="+30s">%2$s</xliff:g>]</string>
+    <string name="length_twilight2"><xliff:g id="timeSpan1" example="30m">%1$s</xliff:g> | <xliff:g id="timeSpan2" example="30m">%2$s</xliff:g></string>
+    <string name="length_delimiter">|</string>
+
+    <!-- Field: moon illumination (as seen in moon widget) -->
+    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> argituta</string>  <!-- used in 2x1 widget -->
+    <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- used in 1x1 widget -->
+
+    <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
+         e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
+         The relative order is defined by the layout (layout/info_time_daydelta.xml).
+    -->
+    <string name="delta_day_tomorrow">Bihar</string>
+    <string name="delta_day_yesterday">Atzo</string>
+    <string name="delta_day_shorter">laburragoa</string>
+    <string name="delta_day_longer">luzeagoa</string>
+
+    <!-- NotePrefix: since/until/untilEnd
+         The note prefix text. e.g.
+                  4 hr
+                 until
+                  sunset
+         The relative order is defined by the layout (layout/info_time_note.xml).
+    -->
+    <string name="since">lehenago</string>
+    <string name="until">barru</string>
+    <string name="until_end">barru amaituko da</string>
+
+    <!-- NoteBody: sunset/sunrise/twilight string
+         The note body text; appears next to the prefix (layout/info_time_note.xml)
+    -->
+    <string name="until_astroTwilight">krepuskulu astronomikoa</string>
+    <string name="until_civilTwilight">krepuskulu zibila</string>
+    <string name="until_nauticalTwilight">itsas krepuskulua</string>
+    <string name="until_sunrise">egunsentia</string>
+    <string name="until_noon">eguzki eguerdia</string>
+    <string name="until_sunset">ilunabarra</string>
+    <string name="untilEnd_civilTwilight">krepuskulu zibila</string>
+    <string name="untilEnd_nauticalTwilight">itsas krepuskulua</string>
+    <string name="untilEnd_astroTwilight">krepuskulu astronomikoa</string>
+    <string name="until_goldhour">urrezko ordua</string>
+    <string name="untilEnd_goldhour">urrezko ordua</string>
+    <string name="until_bluehour">ordu urdina</string>
+    <string name="untilEnd_bluehour">ordu urdina</string>
+    <string name="until_moonrise">ilargiaren irteera</string>
+    <string name="until_moonset">ilargia ezkutatzea</string>
+
+    <!-- Table -->
+    <string name="sunrise">Egunsentia</string>                             <!-- contentDescription -->
+    <string name="sunrise_short">Egunsentia</string>                          <!-- table title -->
+    <string name="sunset">Ilunabarra</string>                               <!-- contentDescription -->
+    <string name="sunset_short">Ilunabarra</string>                            <!-- table title -->
+    <string name="moonrise">Ilargiaren irteera</string>                             <!-- contentDescription -->
+    <string name="moonrise_short">Ilargiaren irteera</string>                             <!-- table title -->
+    <string name="moonset">Ilargia ezkutatzea</string>                             <!-- contentDescription -->
+    <string name="moonset_short">Ilargia ezkutatzea</string>                             <!-- table title -->
+
+    <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
+    <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
+    <string name="delta_years">u</string>    <!-- e.g. 1y -->
+    <string name="delta_weeks">a</string>    <!-- e.g. 2w -->
+    <string name="delta_days">e</string>     <!-- e.g. 1d -->
+    <string name="delta_hours">o</string>    <!-- e.g. 2h -->
+    <string name="delta_minutes">m</string>  <!-- e.g. 3m -->
+    <string name="delta_seconds">s</string>  <!-- e.g. 4s -->
+
+    <string name="hence"><xliff:g id="timeSpan">%1$s</xliff:g>  barru</string>  <!-- e.g. 15d 23h from now -->
+    <string name="ago">Orain dela  <xliff:g id="timeSpan">%1$s</xliff:g></string>         <!-- e.g. 1y 15d 12h ago -->
+
+    <!-- misc time values: might be displayed in a timeField in place of an actual time -->
+    <string name="time_none">bat ere ez</string>  <!-- no time / time does not occur -->
+    <string name="time_loading">…</string>  <!-- calculating / time is loading -->
+    <string name="time_format_12hr_veryshort"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- shortest 12hr time format; should omit am/pm -->
+    <string name="time_format_12hr_veryshort_withseconds"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  <!-- shortest 12hr time format (w/ seconds); should omit am/pm -->
+    <string name="time_format_24hr_veryshort"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- 24hr time format -->
+    <string name="time_format_24hr_veryshort_withseconds"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  <!-- 24hr time format (w/ seconds) -->
+    <string name="time_format_12hr_short"><xliff:g id="hoursMinutes">%1$s</xliff:g> <xliff:g id="suffix">%2$s</xliff:g></string>
+    <string name="date_format_short"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>                                           <!-- MMMM d ... e.g. December 3 -->
+    <string name="date_format_long"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g>, <xliff:g id="patternYear">yyyy</xliff:g></string>  <!-- MMMM d, yyyy ... e.g. December 3, 2017 -->
+    <string name="datetime_format_short"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>           <!-- longDate, time ... e.g. December 3, 2017, 11:00 am -->
+    <string name="datetime_format_long"><xliff:g id="monthYear">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>        <!-- shortDate, time ... e.g. December 3, 11:00 am -->
+    <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
+
+    <!--
+         WIDGET CONFIG
+    -->
+
+    <string name="configAction_restoreDefaults">Lehenetsiak berrezarri</string>   <!-- button / menu text -->
+
+    <!-- WidgetConfig Activity -->
+    <string name="configAction_addWidget">Widgeta gehitu</string>                   <!-- Button: Add -->
+    <string name="configAction_reconfigWidget_short">Birkonfiguratu</string>       <!-- Button: Reconfigure -->
+    <string name="configAction_reconfigWidget">Widgeta birkonfiguratu</string>      <!-- used as title when reconfiguring -->
+    <string name="configLabel_title0">@string/app_name_widget0</string>         <!-- used as title when adding -->
+    <string name="configLabel_title1">Widget aldagarria</string>                 <!-- used as title when adding -->
+    <string name="configLabel_title2">@string/app_name_widget2</string>                  <!-- used as title when adding -->
+    <string name="configLabel_solsticewidget0">@string/app_name_solsticewidget0</string>                  <!-- used as title when adding -->
+    <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
+
+    <!-- Widget Setting: general -->
+    <string name="configLabel_general">Ezarpen orokorrak</string>                <!-- group title -->
+    <string name="configLabel_general_calculator">Datuen jatorria:</string>         <!-- spinner label -->
+    <string name="configLabel_general_calculator_sun">Eguzkiaren datuen jatorria</string>         <!-- preference label -->
+    <string name="configLabel_general_calculator_moon">Ilargiaren datuen jatorria</string>         <!-- preference label -->
+
+    <string name="configLabel_general_showSeconds">Segunduak erakutsi</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showSeconds_summary">Gehitu segunduak denborak erakusterakoan.</string>        <!-- checkbox label -->
+
+    <string name="configLabel_general_showTimeDate">Ordua erakutsi (datekin)</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showTimeDate_summary">Gehitu ordua datak erakusterakoan.</string>        <!-- checkbox label -->
+
+    <string name="configLabel_general_showWeeks">Asteak erakutsi</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showWeeks_summary">7 egun baino luzeagoak diren denbora tarteak asteetan zatitu (adib. 15e bihurtzen da 2a 1e).</string>    <!-- checkbox label -->
+
+    <string name="configLabel_general_showHours">Orduak erakutsi</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showHours_summary">Egun bat baino luzeagoak diren denbora tarteetan orduak eta minutuak gehitu.</string>    <!-- checkbox label -->
+
+    <!-- Widget Setting: appearance -->
+    <string name="configLabel_appearance">Itxuraren ezarpenak</string>           <!-- group title -->
+    <string name="configLabel_appearance_theme">Gaia:</string>                  <!-- spinner label -->
+    <string name="configLabel_appearance_allowResize">Handitu lekuaren arabera (neurriz aldagarria)</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_showLabels">Etiketak erakutsi</string>          <!-- checkbox label -->
+    <string name="configLabel_appearance_showTitle">Izenburua erakutsi</string>          <!-- checkbox label -->
+    <string name="configLabel_appearance_titleText">Izenburua:</string>              <!-- edittext label -->
+    <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
+
+    <!-- Widget Setting: time mode -->
+    <string name="timeMode_noon_short">Eguerdia</string>                    <!-- setting -->
+    <string name="timeMode_noon">Eguzki eguerdia</string>                    <!-- setting -->
+    <string name="timeMode_official_short">Benetakoa</string>              <!-- setting -->
+    <string name="timeMode_official">Benetako ordua</string>               <!-- setting -->
+    <string name="timeMode_civil_short">Zibila</string>                  <!-- setting -->
+    <string name="timeMode_civil">Krepuskulu zibila</string>               <!-- setting -->
+    <string name="timeMode_nautical_short">Itsasekoa</string>            <!-- setting -->
+    <string name="timeMode_nautical">Itsas krepuskulua</string>         <!-- setting -->
+    <string name="timeMode_astronomical_short">Astronomikoa</string>    <!-- setting -->
+    <string name="timeMode_astronomical">Krepuskulu astronomikoa</string> <!-- setting -->
+    <string name="timeMode_night">Gaua</string>                   <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_day">Eguna</string>                       <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_golden_short">Urrezkoa</string>                <!-- setting -->
+    <string name="timeMode_golden">Urrezko ordua</string>                 <!-- setting -->
+    <string name="timeMode_blue8_short">Urdina (8\u00B0)</string>                    <!-- setting -->
+    <string name="timeMode_blue8">Ordu urdina (8\u00B0)</string>                     <!-- setting -->
+    <string name="timeMode_blue4_short">Urdina (4\u00B0)</string>                    <!-- setting -->
+    <string name="timeMode_blue4">Ordu urdina (4\u00B0)</string>                     <!-- setting -->
+
+    <string name="timeMode_equinox_vernal">Udaberriko ekinokzioa</string>      <!-- setting -->
+    <string name="timeMode_equinox_vernal_short">Ekinokzioa</string>       <!-- setting -->
+    <string name="timeMode_equinox_autumnal">Udazkeneko ekinokzioa</string>  <!-- setting -->
+    <string name="timeMode_equinox_autumnal_short">Ekinokzioa</string>     <!-- setting -->
+    <string name="timeMode_solstice_summer">Udako solstizioa</string>    <!-- setting -->
+    <string name="timeMode_solstice_summer_short">Solstizioa</string>     <!-- setting -->
+    <string name="timeMode_solstice_winter">Neguko solstizioa</string>    <!-- setting -->
+    <string name="timeMode_solstice_winter_short">Solstizioa</string>     <!-- setting -->
+
+    <string name="timeMode_moon">Ilargia</string>                               <!-- label -->
+    <string name="timeMode_moon_new">Ilberria</string>                               <!-- setting -->
+    <string name="timeMode_moon_new_short">Berria</string>                              <!-- setting -->
+    <string name="timeMode_moon_waxingcrescent_short">Ilgora</string>               <!-- label -->
+    <string name="timeMode_moon_waxingcrescent">Ilgora</string>                     <!-- label -->
+    <string name="timeMode_moon_firstquarter">Lehen laurdena</string>                 <!-- setting -->
+    <string name="timeMode_moon_firstquarter_short">Lehen laurdena</string>           <!-- setting -->
+    <string name="timeMode_moon_waxinggibbous_short">Ilbehera</string>               <!-- label -->
+    <string name="timeMode_moon_waxinggibbous">Ilbehera</string>                     <!-- label -->
+    <string name="timeMode_moon_full">Ilbetea</string>                             <!-- setting -->
+    <string name="timeMode_moon_full_short">Ilbetea</string>                            <!-- setting -->
+    <string name="timeMode_moon_waninggibbous_short">Ilbehera</string>               <!-- label -->
+    <string name="timeMode_moon_waninggibbous">Ilbehera</string>                     <!-- label -->
+    <string name="timeMode_moon_thirdquarter">Hirugarren laurdena</string>                 <!-- setting -->
+    <string name="timeMode_moon_thirdquarter_short">Hirugarren laurdena</string>           <!-- setting -->
+    <string name="timeMode_moon_waningcrescent_short">Ilbehera</string>               <!-- label -->
+    <string name="timeMode_moon_waningcrescent">Ilbehera</string>                     <!-- label -->
+
+    <string name="configLabel_general_timeMode">Modua:</string>          <!-- spinner label -->
+
+    <!-- Widget Setting: layout mode -->
+    <string name="widgetMode1x1_sunrise">Egunsentia soilik</string>             <!-- setting -->
+    <string name="widgetMode1x1_sunset">Ilunabarra soilik</string>               <!-- setting -->
+    <string name="widgetMode1x1_both_1">Egunsentia eta ilunabarra (1)</string>  <!-- setting -->
+    <string name="widgetMode1x1_both_2">Egunsentia eta ilunabarra (2)</string>  <!-- setting -->
+
+    <string name="widgetMode1x1_altaz">Altitudea eta azimut</string>     <!-- setting -->
+    <string name="widgetMode1x1_decright">Deklinazioa eta igoera zuzena</string>     <!-- setting -->
+
+    <string name="widgetMode1x1_moonriseset">Ilargiaren irteera eta ezkutatzea</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonphaseillum">Ilargialdia eta argiztapena</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonphase">Ilargialdia soilik</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonillum">Ilargiaren argitazpena soilik</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonphasenext">Hurrengo ilargialdi nagusia</string>     <!-- setting -->
+
+    <string name="configLabel_appearance_1x1mode">1x1 diseinua:</string>     <!-- spinner label -->
+
+    <!-- Widget Setting: widget tap action -->
+    <string name="actionMode_doNothing">Ez egin ezer</string>           <!-- setting -->
+    <string name="actionMode_update">Widgeta eguneratu</string>           <!-- setting -->
+    <string name="actionMode_config">Widgeta birkonfiguratu</string>      <!-- setting -->
+    <string name="actionMode_launchActivity">Aplikazioa ireki</string>      <!-- setting -->
+    <string name="actionMode_flipToNextItem">Ikuspegiak aldatu</string>      <!-- setting -->
+
+    <string name="configLabel_action">Ekintzen ezarpenak</string>                  <!-- group title -->
+    <string name="configLabel_action_onTap">Ukitzerakoan:</string>                    <!-- spinner label -->
+    <string name="configLabel_action_onClockTap">Erlojua ukitzerakoan:</string>         <!-- spinner label -->
+    <string name="configLabel_action_onNoteTap">Oharra ukitzerakoan:</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap">Data ukitzerakoan:</string>           <!-- spinner label -->
+
+    <!-- Widget Setting: location -->
+    <string name="locationMode_current">Oraingoa (azken ezaguna)</string>  <!-- setting -->
+    <string name="locationMode_custom">Erabiltzaileak ezarritakoa</string>           <!-- setting -->
+
+    <string name="configLabel_location">Kokapenaren ezarpenak</string>               <!-- group title -->
+    <string name="configLabel_location_mode">Modua:</string>                      <!-- spinner label -->
+    <string name="configLabel_location_lat">Latitudea:</string>                   <!-- edittext label -->
+    <string name="configHint_location_lat">gradu hamartarrak</string>      <!-- edittext hint -->
+    <string name="configLabel_location_lon">Longitudea:</string>                          <!-- edittext label -->
+    <string name="configHint_location_lon">gradu hamartarrak</string> <!-- edittext hint -->
+    <string name="configLabel_location_name">Izena:</string>                      <!-- edittext label -->
+    <string name="configHint_location_name">(hautazkoa)</string>                  <!-- edittext hint -->
+
+    <string name="configAction_getFix">Kokapena lortu</string>    <!-- button (contentDescription) -->
+    <string name="configAction_editPlace">Editatu</string>         <!-- button (contentDescription) -->
+    <string name="configAction_savePlace">Gorde</string>         <!-- button (contentDescription) -->
+
+    <!-- Widget Setting: timezone -->
+    <string name="timezoneMode_solar">Eguzkiaren ordua</string>                       <!-- setting -->
+    <string name="timezoneMode_current">Sistemaren ordu eremua</string>               <!-- setting -->
+    <string name="timezoneMode_custom">Erabiltzaileak ezarria</string>                    <!-- setting -->
+
+    <string name="solartime_localMean">Batez besteko tokiko ordua</string>                 <!-- setting / custom timezone id -->
+    <string name="solartime_apparent">Itxurako eguzkiaren ordua</string>              <!-- setting / custom timezone id -->
+    <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
+    <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
+
+    <string name="configLabel_timezone">Ordu eremuen ezarpenak</string>             <!-- group title -->
+    <string name="configLabel_timezone_mode">Modua:</string>                     <!-- spinner label -->
+    <string name="configLabel_timezone_custom">Ordu eremua:</string>              <!-- spinner label -->
+    <string name="configLabel_solartime">Eguzkiaren ordua:</string>                   <!-- spinner label -->
+
+    <!-- Widget Setting: timeFormat mode -->
+    <string name="timeFormatMode_system">Sistemaren formatua</string>          <!-- setting -->
+    <string name="timeFormatMode_12hr">12 ordu</string>                  <!-- setting -->
+    <string name="timeFormatMode_24hr">24 ordu</string>                  <!-- setting -->
+
+    <string name="configLabel_timeFormatMode">Orduaren formatua</string>             <!-- preference label -->
+    <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
+
+    <!-- Widget Setting: date mode -->
+    <string name="dateMode_current">Gaur</string>                  <!-- setting -->
+    <string name="dateMode_custom">Erabiltzaileak ezarria</string>            <!-- setting -->
+
+    <string name="configLabel_date">Dataren ezarpenak</string>                      <!-- group title -->
+    <string name="configLabel_date_mode">Modua:</string>                         <!-- spinner label -->
+    <string name="configLabel_date_custom">Data:</string>                       <!-- dateSelector label -->
+
+    <!-- Widget Setting: compare mode -->
+    <string name="compareMode_yesterday">Atzo</string>                     <!-- setting -->
+    <string name="compareMode_tomorrow">Bihar</string>                       <!-- setting -->
+    <string name="configLabel_general_compareMode">Honekin alderatu:</string>    <!-- spinner label -->
+    <string name="configLabel_general_showComparison">Konparazioa erakutsi</string>  <!-- checkbox label -->
+
+    <!-- Widget Setting: tracking mode -->
+    <string name="trackingMode_closest">Gertakizun hurbilena</string>                 <!-- setting -->
+    <string name="trackingMode_soonest">Datorren gertaera</string>                <!-- setting -->
+    <string name="configLabel_general_trackingMode">Jarraipena egin:</string>            <!-- spinner label -->
+
+    <!-- Widget Setting: timeMode override -->
+    <string name="configLabel_general_timeMode_override">Jarraipena egiteak modua baliogabetzen du</string>     <!-- checkbox label -->
+
+    <!-- Widget Settings: noon -->
+    <string name="configLabel_general_showNoon">Eguerdia erakutsi</string>        <!-- checkbox label -->
+
+    <!-- Widget Setting: Launch App -->
+    <string name="configLabel_action_launch">Activity:</string>                 <!-- edittext label -->
+    <string name="configHint_action_launch"><xliff:g id="uri">com.forrestguice.suntimeswidget.SuntimesActivity</xliff:g></string> <!-- editText hint (and default) -->
+
+    <!-- App Setting: WidgetThemes -->
+    <string name="configLabel_widgetThemeList">Widgeten itxurak</string>
+    <string name="configLabel_widgetThemeListSelect">Itxura bat hautatu</string>
+    <string name="configAction_addTheme">Gehitu</string>           <!-- button (contentDescription) -->
+    <string name="configAction_selectTheme">Hautatu</string>     <!-- button (contentDescription) -->
+    <string name="configAction_editTheme">Editatu</string>         <!-- button (contentDescription) -->
+    <string name="configAction_deleteTheme">Ezabatu</string>     <!-- button (contentDescription) -->
+    <string name="configAction_copyTheme">Kopiatu</string>         <!-- button (contentDescription) -->
+    <string name="configAction_exportThemes">Esportatu</string>    <!-- button (contentDescription) -->
+    <string name="configAction_importThemes">Inportatu</string>    <!-- button (contentDescription) -->
+
+    <string name="addtheme_custname">itxura_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
+    <string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_kopia<xliff:g id="#">%2$s</xliff:g></string>   <!-- copied theme id -->
+    <string name="addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g> (kopia)</string>                            <!-- copied theme name (display string) -->
+
+    <string name="addtheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g> gehitu da.</string>          <!-- toast msg -->
+    <string name="edittheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g> gorde da.</string>         <!-- toast msg -->
+    <string name="deletetheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g> ezabatu egin da.</string> <!-- toast msg -->
+
+    <string name="edittheme_error_themeName_empty">IDa bakarra izan daiteke (beharrezkoa).</string>        <!-- error hint (themeName empty) -->
+    <string name="edittheme_error_themeName_unique">IDa bakarra izan daiteke (dagoeneko erabilita).</string>  <!-- error hint (themeName taken) -->
+    <string name="edittheme_error_displaytext">Ikusiko den testua ezin da hutsik egon.</string>  <!-- error hint (display text is empty) -->
+    <string name="edittheme_error_textsize_min">Neurria zenbaki oso bat izan behar da &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->
+    <string name="edittheme_error_textsize_max">Neurria zenbaki oso bat izan behar da &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->
+    <string name="edittheme_flag_default">lehenetsia</string>  <!-- content description -->
+
+    <string name="deletetheme_dialog_title">Itxura ezabatu</string>        <!-- dialog title -->
+    <string name="deletetheme_dialog_message">Ziur al zaude <xliff:g id="themeName">%1$s</xliff:g> ezabatu nahi duzulaz?</string>   <!-- dialog msg -->
+    <string name="deletetheme_dialog_ok">Ezabatu</string>        <!-- button -->
+    <string name="deletetheme_dialog_cancel">Utzi</string>    <!-- button -->
+
+    <string name="configLabel_widgetThemeAdd">Itxura gehitu</string>     <!-- title text -->
+    <string name="configLabel_widgetThemeEdit">Itxura editatu</string>   <!-- title text -->
+    <string name="configAction_saveTheme">Gorde</string>           <!-- button (contentDescription) -->
+    <string name="configAction_chooseColor">Kolorea hautatu</string> <!-- button (contentDescription) -->
+
+    <string name="configLabel_themeBackgroundId">Oinarria:</string>    <!-- spinner label -->
+    <string name="configLabel_themeBackground_light">Argia</string>        <!-- light background -->
+    <string name="configLabel_themeBackground_dark">Iluna</string>          <!-- dark background -->
+    <string name="configLabel_themeBackground_trans">Gardena</string>  <!-- transparent background -->
+
+    <string name="configLabel_themeColorTitle">Izenburuaren kolorea:</string>     <!-- color label -->
+    <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->
+
+    <string name="configLabel_themeColorText">Testuaren kolorea:</string>       <!-- color label -->
+    <string name="configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->
+
+    <string name="configLabel_themeColorSpring">Udaberriaren kolorea:</string> <!-- color label -->
+    <string name="configLabel_themeColorSummer">Udaren kolorea:</string> <!-- color label -->
+    <string name="configLabel_themeColorFall">Udazkenaren kolorea:</string> <!-- color label -->
+    <string name="configLabel_themeColorWinter">Neguaren kolorea:</string> <!-- color label -->
+
+    <string name="configLabel_themeColorMoonrise">Ilargiaren irteeraren kolorea:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonset">Ilargiaren ezkutatzearen kolorea:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaxing">Ilgoraren kolorea:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaning">Ilbeheraren kolorea:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonFull">Ilbetearen kolorea:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonNew">Ilberriaren kolorea:</string> <!-- color label -->
+
+    <string name="configLabel_themeColorSunrise">Egunsentiaren kolorea:</string> <!-- color label -->
+    <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
+
+    <string name="configLabel_themeColorSunset">Ilunabarraren kolorea:</string>   <!-- color label -->
+    <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
+
+    <string name="configLabel_themeColorNoon">Eguerdiaren kolorea:</string>      <!-- color label -->
+    <string name="configHint_themeColorNoon">#FFFFFFFF</string>         <!-- color hint -->
+
+    <string name="configLabel_themeColorFill">Bete:</string>         <!-- color label -->
+    <string name="configHint_themeColorFill">#FFFFFFFF</string>        <!-- color hint -->
+
+    <string name="configLabel_themeColorBorder">Ertza:</string>         <!-- color label -->
+    <string name="configHint_themeColorBorder">#FFFFFFFF</string>        <!-- color hint -->
+
+    <string name="configLabel_themeBorderWidthRiseSet">Ertzaren zabalera (egunsentia/ilunabarra):</string>  <!-- size label -->
+    <string name="configHint_themeBorderWidthRiseSet">2</string>                          <!-- size hint -->
+    <string name="configLabel_themeBorderWidthNoon">Ertzaren zabalera (eguerdia):</string>         <!-- size label -->
+    <string name="configHint_themeBorderWidthNoon">3</string>                             <!-- size hint -->
+
+    <string name="configLabel_themeColorSuffix">Atzizkiaren kolorea:</string>   <!-- color label -->
+    <string name="configHint_themeColorSuffix">#FFFFFFFF</string>        <!-- color hint -->
+
+    <string name="configLabel_themeColorTime">Testuaren bigarren kolorea:</string>      <!-- color label -->
+    <string name="configHint_themeColorTime">#FFFFFFFF</string>          <!-- color hint -->
+
+    <string name="configLabel_themeSizeTitle">Izenburuaren neurria:</string>  <!-- edit label -->
+    <string name="configHint_themeSizeTitle">14</string>                 <!-- edit hint -->
+
+    <string name="configLabel_themeBoldTitle">Lodia</string>          <!-- checkbox label -->
+
+    <string name="configLabel_themeSizeText">Testuaren neurria:</string>    <!-- edit label -->
+    <string name="configHint_themeSizeText">10</string>                  <!-- edit hint -->
+
+    <string name="configLabel_themeSizeTime">Orduaren neurria:</string>    <!-- edit label -->
+    <string name="configHint_themeSizeTime">12</string>                  <!-- edit hint -->
+
+    <string name="configLabel_themeBoldTime">Lodia</string>          <!-- checkbox label -->
+
+    <string name="configLabel_themeSizeSuffix">Atzizkiaren neurria:</string> <!-- edit label -->
+    <string name="configHint_themeSizeSuffix">8</string>                  <!-- edit hint -->
+
+    <string name="configLabel_themePadding">Betea:</string>            <!-- edit label -->
+    <string name="configHint_themePadding">[ezkerra, goia, eskuina, behea]</string> <!-- edit hint -->
+
+    <string name="configLabel_themeID">IDa:</string>                      <!-- edit label -->
+    <string name="configHint_themeID">Itxuraren IDa</string>                  <!-- edit hint -->
+
+    <string name="configLabel_themeName">Erakutsi:</string>               <!-- edit label -->
+    <string name="configHint_themeName">Etiketa</string>                   <!-- edit hint -->
+
+    <string name="widgetLabel_azimuth">Azimut</string>                   <!-- label -->
+    <string name="widgetLabel_azimuth_short">Az</string>                   <!-- label -->
+    <string name="widgetLabel_altitude">Altitudea</string>               <!-- label -->
+    <string name="widgetLabel_altitude_short">Alt</string>               <!-- label -->
+    <string name="widgetLabel_altitude_symbol">∠</string>               <!-- label/suffix -->
+
+    <string name="widgetLabel_rightAscension">Igoera zuzena</string>    <!-- label -->
+    <string name="widgetLabel_rightAscension_short">IZ</string>    <!-- label -->
+    <string name="widgetLabel_rightAscension_symbol">α</string>    <!-- label/suffix -->
+    <string name="widgetLabel_declination">Deklinazioa</string>           <!-- label -->
+    <string name="widgetLabel_declination_short">Dek</string>           <!-- label -->
+    <string name="widgetLabel_declination_symbol">δ</string>           <!-- label/suffix -->
+
+    <!--
+         APP SETTINGS
+    -->
+
+    <!--App Setting: WidgetList -->
+    <string name="configLabel_widgetList">Widgetak</string>               <!-- group title -->
+    <string name="configLabel_widgetList_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
+    <string name="configLabel_widgetList_itemTitlePattern" formatted="false"><xliff:g id="titlePattern"><![CDATA[%M (%loc) [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
+    <string name="configLabel_widgetList_itemTitlePattern1" formatted="false"><xliff:g id="titlePattern"><![CDATA[%loc [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
+    <string name="configLabel_widgetList_itemSummaryPattern"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
+    <string name="configLabel_widgetListHelp_title">Laguntza</string>               <!-- always the first item in the widgetList -->
+    <string name="configLabel_widgetListHelp_summary">Widgetaren laguntza erakutsi</string>
+
+    <!-- App Setting: Places -->
+    <string name="configLabel_places">Tokiak</string>                           <!-- group title -->
+    <string name="configLabel_places_export">Tokiak esportatu</string>
+    <string name="configLabel_places_clear">Tokiak garbitu</string>
+    <string name="configLabel_places_build">Munduko tokiak gehitu</string>
+    <string name="configLabel_places_build_summary">Hizkuntzak eskaneatu eta hiriak datu basera gehitu.</string>
+
+    <!-- App Setting: UI -->
+    <string name="configLabel_ui">Erabiltzailearen interfazea</string>                       <!-- group title -->
+
+    <!-- App Setting: Verbose Accessibility -->
+    <string name="configLabel_accessibility_verbose">TalkBack hitzontzia</string>
+    <string name="configLabel_accessibility_verbose_summary">Erabiltzaile interfazearen aldaketa automatikoen berri eman.</string>
+
+    <!-- App Setting: UI Warnings -->
+    <string name="configLabel_ui_showWarnings">Abisuak erakutsi</string>
+    <string name="configLabel_ui_showWarnings_summary">Konfigurazioaren abisuen mezuak erakutsi.</string>
+
+    <!-- App Setting: Show Lightmap -->
+    <string name="configLabel_ui_showLightmap">Argiaren mapa erakutsi</string>
+    <string name="configLabel_ui_showLightmap_summary">Eguna, gaua, eta ilunabar tarteen barra pilatuen grafikoa erakutsi.</string>
+
+    <!-- App Setting: Show Moon -->
+    <string name="configLabel_ui_showmoon">Ilargia erakutsi</string>
+    <string name="configLabel_ui_showmoon_summary">Irteera, ezkutatze, ilargialdi eta argiztapena erakutsi.</string>
+    <string name="configLabel_ui_showmoon_notImplemented">Datuen jatorri honetan ez dago ilargia inplementatuta.</string>
+
+    <!-- App Setting: Show Equinox / Solstice -->
+    <string name="configLabel_ui_showEquinox">Solstizioa / Ekinokzioa erakutsi</string>
+    <string name="configLabel_ui_showEquinox_summary">Hurrengo solstizioa edo ekinokzioa heldu arte falta den denbora erakutsi.</string>
+    <string name="configLabel_ui_showEquinox_notImplemented">Solstizioa eta ekinokzioa ez daude inplementatuta datu iturri honetan.</string>
+
+    <!-- App Setting: Solstice Tracking Mode -->
+    <string name="configLabel_ui_solsticeTrackingMode">Solstizioaren jarraipena</string>
+    <string name="configLabel_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Upcoming Event">%s</xliff:g></string>
+
+    <!-- App Setting: show data source -->
+    <string name="configLabel_ui_showdatasource">Datuen iturria erakutsi</string>
+    <string name="configLabel_ui_showdatasource_summary">Oraingo konfigurazioa erakusten duen etiketa bat erakutsi.</string>
+
+    <!-- App Setting: show golden hour -->
+    <string name="configLabel_ui_showgoldhour">Urrezko ordua erakutsi</string>
+    <string name="configLabel_ui_showgoldhour_summary">Urrezko orduak erakutsi.</string>
+
+    <!-- App Setting: show blue hour -->
+    <string name="configLabel_ui_showbluehour">Ordu urdina erakutsi</string>
+    <string name="configLabel_ui_showbluehour_summary">Ordu urdinak erakutsi.</string>
+
+    <!-- App Setting: UI Theme -->
+    <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
+        <item>Itxura argia</item>
+        <item>Itxura iluna</item>
+        <item>Itxura argia / Itxura iluna (Gau modua)</item>
+    </string-array>
+
+    <!-- App Setting: time format -->
+    <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
+        <item>@string/timeFormatMode_system</item>
+        <item>@string/timeFormatMode_12hr</item>
+        <item>@string/timeFormatMode_24hr</item>
+    </string-array>
+
+    <!-- App Setting: solstice tracking mode -->
+    <string-array name="solsticeTrackingMode_display">                      <!-- one-to-one with solsticeTrackingMode_values -->
+        <item>@string/trackingMode_closest</item>
+        <item>@string/trackingMode_soonest</item>
+    </string-array>
+
+    <!-- App Setting: Date "on tap" action -->
+    <string-array name="dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
+        <item>Ez egin ezer</item>
+        <item>Fitxak alderantzikatu (gaur/bihar)</item>
+        <item>Egutegiaren aplikazioa erakutsi</item>
+        <item>Data pertsonalizatua ezarri</item>
+    </string-array>
+
+    <!-- App Setting: Clock UI "on tap" action -->
+    <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
+        <item>Ez egin ezer</item>
+        <item>@string/configAction_setAlarm</item>
+        <item>@string/configAction_setTimeZone</item>
+        <item>Hurrengo oharra erakutsi</item>
+        <item>Aurreko oharra erakutsi</item>
+    </string-array>
+
+    <!-- App Setting: Note UI "on tap" action -->
+    <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
+        <item>Ez egin ezer</item>
+        <item>Alarma ezarri oharrarentzako</item>
+        <item>Hurrengo oharra erakutsi</item>
+        <item>Aurreko oharra erakutsi</item>
+    </string-array>
+
+    <!-- App Setting: time zone sort modes -->
+    <string name="timezone_sort_byOffset">konpentsazioaren arabera</string>
+    <string name="timezone_sort_byId">identifikazioaren arabera</string>
+    <string name="timezone_sort_byName">izenaren arabera</string>
+
+    <string-array name="timezoneSort_display">  <!-- display values (one-to-one with timezoneSort_values) -->
+        <item>@string/timezone_sort_byOffset</item>
+        <item>@string/timezone_sort_byId</item>
+        <item>@string/timezone_sort_byName</item>
+    </string-array>
+
+    <string name="timezone_sort_contextAction">Eremuak ordenatu</string>           <!-- action bar title -->
+    <string name="timezone_sort_msg">Ordu eremuak ordenatu dira (%1$s).</string>      <!-- toast msg -->
+
+    <!-- App Setting: GPS fix time limit -->
+    <string name="configLabel_getFix_maxElapse">GPSaren denbora muga</string>
+    <string name="configLabel_getFix_maxElapse_summary"><xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g> pasa ondoren bertan behera utzi</string>
+    <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
+        <item>15 segundu</item>
+        <item>30 segundu</item>
+        <item>Minutu 1</item>
+        <item>5 minutu</item>
+        <item>10 minutu</item>
+    </string-array>
+
+    <!-- App Setting: GPS fix max age -->
+    <string name="configLabel_getFix_maxAge">GPSaren berritasunaren gehienezko adina</string>
+    <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> berritzat hartzen da</string>
+    <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
+        <item>Minutu 1</item>
+        <item>5 minutu</item>
+        <item>15 minutu</item>
+        <item>Ordu 1</item>
+        <item>4 ordu</item>
+        <item>12 ordu</item>
+        <item>egun bat (24 ordu)</item>
+        <item>bi egun (48 ordu)</item>
+        <item>aste bat (168 ordu)</item>
+        <item>hilabete bat (672 ordu)</item>
+    </string-array>
+
+    <!-- App Setting: locale mode -->
+    <string name="configLabel_locale">Hizkuntzaren ezarpenak</string>   <!-- group title -->
+
+    <string name="configLabel_localeMode">Modua</string>
+    <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
+    <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
+        <item>Sistema</item>
+        <item>Erabiltzaileak ezarria</item>
+    </string-array>
+
+    <!-- App Setting: custom Locale -->
+    <string name="configLabel_localeSelect">Hizkuntza</string>
+    <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
+    <string-array name="locale_display">                      <!-- one-to-one with locale_values -->
+        <item>Ingelesa</item>
+        <item>Esperantoa</item>
+        <item>Frantsesa</item>
+        <item>Alemana</item>
+        <item>Hungariera</item>
+        <item>Poloniera</item>
+        <item>Gaztelania</item>
+        <item>Katalana</item>
+    </string-array>
+
+    <!-- position formats -->
+    <string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
+    <string name="elevation_format"><xliff:g id="degrees" example="45">%1$s</xliff:g><xliff:g id="altSymbol" example="∠">%2$s</xliff:g></string>  <!-- e.g. 45°∠ -->
+    <string name="declination_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="decSymbol" example="δ">%2$s</xliff:g></string>  <!-- e.g. 5° δ -->
+    <string name="rightascension_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="raSymbol" example="δ">%2$s</xliff:g></string>  <!-- e.g. 5° α -->
+    <string name="direction_format"><xliff:g id="degrees" example="180°">%1$s</xliff:g> <xliff:g id="directions_short" example="S">%2$s</xliff:g></string>  <!-- e.g. 180°S -->
+
+    <!-- cardinal directions -->
+    <string-array name="directions_short">  <!-- one-to-one with directions_long -->
+        <item>I</item>
+        <item>IIE</item>
+        <item>IE</item>
+        <item>EIE</item>
+        <item>E</item>
+        <item>EHE</item>
+        <item>HE</item>
+        <item>HHE</item>
+        <item>H</item>
+        <item>HHM</item>
+        <item>HM</item>
+        <item>MHM</item>
+        <item>M</item>
+        <item>MIM</item>
+        <item>IM</item>
+        <item>IIM</item>
+        <item>I</item>
+    </string-array>
+    <string-array name="directions_long">   <!-- one-to-one with directions_short -->
+        <item>Iparra</item>
+        <item>Iparra ipar ekialdea</item>
+        <item>Ipar ekialdea</item>
+        <item>Ekialdea ipar ekialdea</item>
+        <item>Ekialdea</item>
+        <item>Ekialdea hego ekialdea</item>
+        <item>Hego ekialdea</item>
+        <item>Hego hego ekialdea</item>
+        <item>Hegoaldea></item>
+        <item>Hego hego mendebaldea</item>
+        <item>Hego mendebaldea</item>
+        <item>Mendebaldea hego mendebaldea</item>
+        <item>Mendebaldea</item>
+        <item>Mendebaldea ipar mendebaldea</item>
+        <item>Ipar mendebaldea</item>
+        <item>Ipar ipar mendebaldea</item>
+        <item>Iparra</item>
+    </string-array>
+
+    <!--
+      DIALOGS
+    -->
+
+    <!-- Dialog: Set Alarm -->
+    <string name="configLabel_schedalarm_mode">Alarma bat programatu honetarako</string>
+    <string name="schedalarm_dialog_title">Alarma ezarri</string>
+    <string name="schedalarm_dialog_ok">Alarma ezarri</string>
+    <string name="schedalarm_dialog_cancel">Utzi</string>
+    <string name="schedalarm_dialog_error">Alarma ez da ezarri…</string>
+    <string name="schedalarm_dialog_error2">Ezin da alarm ezarri…</string>
+    <string name="schedalarm_dialog_note"><xliff:g id="timetext" example="6h 30m">%s</xliff:g> barru.</string>
+    <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="nautical twilight">%s</xliff:g> ez da gertatzen.</string>
+    <string name="schedalarm_labelformat"><xliff:g id="solarevents_short" example="sunrise">%1$s</xliff:g> (<xliff:g id="shortDate" example="4/6/2018">%2$s</xliff:g>)</string>
+    <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
+        <item>krepuskulu astronomikoa</item>
+        <item>itsas krepuskulua</item>
+        <item>ordu urdina</item>
+        <item>krepuskulu zibila</item>
+        <item>ordu urdina</item>
+        <item>egunsentia</item>
+        <item>urrezko ordua</item>
+        <item>eguzki eguerdia</item>
+        <item>urrezko ordua</item>
+        <item>ilunabarra</item>
+        <item>ordu urdina</item>
+        <item>krepuskulu zibila</item>
+        <item>ordu urdina</item>
+        <item>itsas krepuskulua</item>
+        <item>krepuskulu astronomikoa</item>
+        <item>ilargiaren irteera</item>
+        <item>ilargia ezkutatzea</item>
+    </string-array>
+    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
+        <item>goizeko krepuskulu astronomikoa (hasiera)</item>
+        <item>goizeko itsas krepuskulua (hasiera)</item>
+        <item>goizeko ordu urdina (hasiera)</item>
+        <item>goizeko krepuskulu zibila (hasiera)</item>
+        <item>goizeko ordu urdina (amaiera)</item>
+        <item>egunsentia</item>
+        <item>goizeko urrezko ordua (amaiera)</item>
+        <item>eguzki eguerdia</item>
+        <item>arratsaldeko urrezko ordua (hasiera)</item>
+        <item>ilunabarra</item>
+        <item>arratsaldeko ordu urdina (hasiera)</item>
+        <item>arratsaldeko krepuskulu zibila (amaiera)</item>
+        <item>arratsaldeko ordu urdina (amaiera)</item>
+        <item>arratsaldeko itsas krepuskulua (amaiera)</item>
+        <item>arratsaldeko krepuskulu astronomikoa (amaiera)</item>
+        <item>ilargiaren irteera</item>
+        <item>ilargia ezkutatzea</item>
+    </string-array>
+
+    <!-- Dialog: Enable GPS? -->
+    <string name="gps_dialog_msg">GPSa ezgaituta dago. Gaitu?</string>
+    <string name="gps_dialog_ok">Bai</string>
+    <string name="gps_dialog_cancel">Ez</string>
+
+    <!-- gps_lastfix (current location mode) -->
+    <string name="gps_lastfix_title_set">Kokapena ezarri</string>               <!-- may appear as place name when location set by intent -->
+    <string name="gps_lastfix_title_found">Azken kokapena</string>            <!-- may appear as place name when location set by gps -->
+    <string name="gps_lastfix_title_searching">Kokapena eskuratzen</string>     <!-- may appear in ActionBar title while gps in progress -->
+    <string name="gps_lastfix_toast_notfound">GPS failed to get location; falling back to last known position.</string>  <!-- displayed briefly after gps has failed to get a location -->
+    <string name="gps_lastfix_toast_cancelled">GPS update cancelled.</string> <!-- displayed briefly when gps refresh cancelled -->
+
+    <!-- Dialog: KeepTrying GPS? -->
+    <string name="gps_keeptrying_title">Kokapenik ez</string>
+    <string name="gps_keeptrying_msg">Ezin da kokapenik lortu.</string>
+    <string name="gps_keeptrying_ok">Jarraitu saiatzen</string>
+    <string name="gps_keeptrying_cancel">Bertan behera utzi</string>
+
+    <!-- Dialog: Use Date -->
+    <string name="timedate_dialog_title">Data ezarri</string>
+    <string name="timedate_dialog_ok">Ezarri</string>
+    <string name="timedate_dialog_cancel">Utzi</string>
+
+    <!-- Dialog: Use Timezone -->
+    <string name="timezone_dialog_title">Ordu eremua</string>
+    <string name="timezone_dialog_ok">Ezarri</string>
+    <string name="timezone_dialog_cancel">Utzi</string>
+
+    <!-- Dialog: Set Location -->
+    <string name="location_dialog_title">Kokapena</string>
+    <string name="location_dialog_ok">Eguneratu</string>
+    <string name="location_dialog_cancel">Utzi</string>
+    <string name="location_dialog_error_lat">Hau ez da latitude baliodun bat.</string>
+    <string name="location_dialog_error_lon">Hau ez da longitude baliodun bat.</string>
+
+    <string name="location_dialog_toast_copied">Arbelera kopiatu da<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
+
+    <!-- Dialog: Clear Places -->
+    <string name="locationclear_dialog_title">Tokiak garbitu?</string>
+    <string name="locationclear_dialog_message">Ziur al zaude tokien datu basea garbitu nahi duzulaz?</string>
+    <string name="locationclear_dialog_ok">Garbitu</string>
+    <string name="locationclear_dialog_cancel">Utzi</string>
+
+    <!-- Dialog: Clear Places (progress) -->
+    <string name="locationcleared_dialog_title">Tokiak garbitzen</string>
+    <string name="locationcleared_dialog_message">Datu basea garbitzen…</string>
+    <string name="locationcleared_toast_success">Tokien datu basea garbitu egin da.</string>
+
+    <!-- Dialog: Build Places List (progress) -->
+    <string name="locationbuild_dialog_title">Datu basea eraikitzen</string>
+    <string name="locationbuild_dialog_message">Tokien datu base bat eraikitzen…</string>
+    <string name="locationbuild_toast_success"><xliff:g id="n">%1$s</xliff:g> toki datu basera gehitu dira.</string>
+
+    <!-- Dialog: Export Places -->
+    <string name="locationexport_dialog_title">Tokiak esportatzen</string>
+    <string name="locationexport_dialog_message">Datu basea csv fitxategi batean esportatzen.</string>
+
+    <!-- Dialog: Export Themes -->
+    <string name="themesexport_dialog_title">Itxurak esportatzen</string>
+    <string name="themesexport_dialog_message">Itxurak fitxategi batean esportatzen.</string>
+
+    <!-- Dialog: Export -->
+    <string name="msg_export_success">Aldi baterako kopia bat hemen <xliff:g id="filepath">%s</xliff:g></string>
+    <string name="msg_export_failure"><xliff:g id="filepath">%s</xliff:g>(e)ra esportatzeak huts egin du!</string>
+    <string name="msg_export_to">Esportatu honekin</string>  <!-- title displayed over "share action" chooser -->
+
+    <!-- Dialog: Color -->
+    <string name="color_dialog_msg">Kolorea hautatu</string>
+    <string name="color_dialog_ok">Hautatu</string>
+    <string name="color_dialog_cancel">Utzi</string>
+
+    <!-- Dialog: About -->
+    <string name="about_dialog_title">Honi buruz</string>
+    <string name="app_name">Suntimes</string>
+    <string name="app_name_widget0">Suntimes widgeta</string>
+    <string name="app_name_widget1">Suntimes Widgeta (aldagarria)</string>
+    <string name="app_name_widget2">Eguzkiaren kokapenaren widgeta</string>
+    <string name="app_name_solsticewidget0">Solstizioaren widgeta</string>
+    <string name="app_name_moonwidget0">Ilargiaren widgeta</string>
+    <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
+    <string name="app_shortdesc">Eguzki eta ilargiaren argiaren denborak erakusten ditu.</string>
+    <string name="app_support_url"><![CDATA[
+        <b>Laguntza:</b> joan zaitez
+        <a href="https://github.com/forrestguice/SuntimesWidget/issues">arazoen jarraitzailera</a> eskaera bat bidaltzeko.
+    ]]></string>
+    <string name="app_url"><xliff:g id="url"><![CDATA[
+        <a href="https://forrestguice.github.io/SuntimesWidget/">forrestguice.github.io/SuntimesWidget</a>
+    ]]></xliff:g></string>
+    <string name="app_legal1"><![CDATA[
+        <b>Iturburu kodea:</b><br />
+        Copyright &#169 2014-2018 Forrest Guice <br />
+        Iturburu kodea GPLv3 lizentziapean eskuragarri dago.
+    ]]></string>
+    <string name="app_legal2"><![CDATA[
+        <b>Itzulpenak:</b><br/>
+        Alemanezko itzulpena Henrik "HerHde" Hüttemann eta Wolkenschieberek egina. <br />
+        Polonierazko eta esperantozko itzulpenak Verdulok eginak. <br />
+        Frantsesezko itzulpena Jejek egina. <br />
+        Hungarierazko itzulpena Ercik egina. <br />
+        Gaztelerazko eta katalanazko itzulpenak <a href=https://github.com/Raulvo>Raulvo</a>k eginak.
+        Euskarazko itzulpena beriainek egina.
+    ]]></string>
+    <string name="app_legal3"><![CDATA[ <b>Liburutegiak:</b><br/> ]]>
+    <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
+    <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>
+    <![CDATA[ github.com/caarmen/SunriseSunset ]]> <![CDATA[ <br /> ]]>
+    <![CDATA[ github.com/QuadFlask/colorpicker ]]>
+    </string>
+
+    <!-- Dialog: Help -->
+    <string name="help_dialog_title">Laguntza</string>
+    <string name="help_appearance_title"><![CDATA[
+        Hurrengo izenburu ordezkoak onartzen dira:<br/>
+        <br/>
+        <b>Widget guztiak:</b> <br />
+                * <b>%d</b> datarako (adib. Otsailak 12) <br/>
+                * <b>%dd</b> egunerako (laburra) (adib. Al) <br/>
+                * <b>%dD</b> egunerako (luzea) (adib. Astelehena) <br/>
+                * <b>%dY</b> urterako (adib. 2018) <br/>
+                * <b>%dt</b> ordurako (azken eguneraketarena) <br/>
+                * <b>%dT</b> ordurako, segunduekin (azken eguneraketarena) <br/>
+                <br/>
+                * <b>%loc</b> etiketarako (adib. Prescott) <br />
+                * <b>%lat</b> latituderako (adib. 35.5409) <br />
+                * <b>%lon</b> longituderako (adib. -112.4691) <br/>
+                <br/>
+                * <b>%s</b> datuen jatorrirako (adib. sunrisesunsetlib) <br/>
+                * <b>%t</b> ordu eremurako (id) (adib. US/Arizona) <br/>
+                * <b>%id</b> appWidgetIDrako <br/>
+         <br/>
+         <b>Eguzkiaren widgetak:</b> <br/>
+                * <b>%m</b> modurako (laburra) (adib. Zibila) <br/>
+                * <b>%M</b> modurako (luzea) (adib. Krepuskulu zibila) <br/>
+         <br/>
+         <b>Ilargiaren widgetak:</b> <br/>
+                * <b>%i</b> ilargiaren argiztapenerako (adib. 25%) <br/>
+                * <b>%M</b> ilargialdirako (adib. Ilgora) <br/>
+         <br/>
+         <b>Solstizioaren widgetak:</b> <br/>
+                * <b>%m</b> modurako (laburra) (adib. Solstizioa) <br/>
+                * <b>%M</b> modurako (luzea) (adib. Neguko solstizioa) <br/>
+    ]]></string>
+
+    <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
+        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic2">%2$s</xliff:g>
+    </string>
+    <string name="help_general3">  <!-- general app help; composites a couple help topics together. -->
+        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic2">%2$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic3">%3$s</xliff:g>
+    </string>
+    <string name="help_general4">  <!-- general app help; composites a couple help topics together. -->
+        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic2">%2$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic3">%3$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic4">%4$s</xliff:g>
+    </string>
+
+    <string name="help_general_timeMode"><![CDATA[
+          <b>Benetako ordua:</b> Eguzkia zeruertzean dago; hau da gutxi gorabehera egunsentiaren eta ilunabarraren ordua.<br/><br/>
+          <b>Krepuskulu zibila:</b> Eguzkia 6 gradu zeruertzaren azpitik dago; izar argitsuenak ikusi daitezke. Argi nahikoa dago kanpoko jardueretarako argi bat erabili behar gabe.<br/><br/>
+          <b>Itsas krepuskulua:</b> Eguzkia 8 gradu zeruertzaren azpitik dago; objektuen ingerada eta zeruertza gero eta bereizezinagoak dira. Ez dago argi nahikorik kanpoko jarduera gehienetarako argi bat erabili behar gabe.<br/><br/>
+          <b>Krepuskulu astronomikoa:</b> Eguzkia 18 gradu zeruertzaren azpitik dago. Gauaren iluntasuneik hurbil.<br/>
+    ]]></string>
+
+    <string name="help_general_timeMode2"><![CDATA[
+          <b>Udaberriko ekinokzioa:</b> TODO.<br/><br/>
+          <b>Udako solstizioa:</b> TODO.<br/><br/>
+          <b>Udazkeneko ekinokzioa:</b> TODO.<br/><br/>
+          <b>Negu solstizioa:</b> TODO.<br/>
+    ]]></string>
+    <string name="help_general_daylength"><![CDATA[
+        <b>Egunaren iraupena:</b> Egunsentiaren eta ilunabarraren arteko denbora.<br/><br/>
+        <b>Argi erabilgarria:</b> Goizeko eta arratsaldeko krepuskulu zibilen arteko denbora.<br/>
+    ]]></string>
+    <string name="help_general_moonillum"><![CDATA[
+        <b>Ilargiaren argiztapena:</b> Ilargiaren widgetak eta orri nagusiak ilargiaren argiztapena gauerdian erakusten dute (ilargiaren irteera eta ilargia ezkutatzearen erdiko puntua), eta ilargiaren dialogoak ilargiaren oraingo argiztapena erakusten du aldiz.<br/><br/>
+    ]]></string>
+    <string name="help_general_goldhour"><![CDATA[
+        <b>Urrezko ordua:</b> Eguzkia 6 gradu zeruertzaren gainetik edo azpitik tartean dago. Goizean urrezko ordua krepuskulu zibilarekin hasten da eta egunsentitik gutxira amaitzen da. Arratsaldean urrezko ordua ilunabarra baino zertxobait lehenago hasten da eta krepuskulu zibilarekin amaitzen da.<br/>
+    ]]></string>
+    <string name="help_general_bluehour"><![CDATA[
+        <b>Ordu urdina:</b> Eguzkia zeruertzaren azpitik 8 eta 4 gradu artean dago. Ordu urdinaren hasiera eta amaiera itsas krepuskuluaren eta krepuskulu zibilaren artean gertatzen dira.<br/>
+    ]]></string>
+    <string name="help_action_launch"><![CDATA[
+        Abiaraziko den Activityaren klase izen guztiz egokia.<br/>
+    ]]></string>
+    <string name="help_widgetlist"><![CDATA[
+          <b>Widget berri bat</b> gehitzeko etxeko pantailara jo behar duzu.<br/><br/>
+          <b>Existitzen den widget bat birkonfiguratzeko</b> hurrengo zerrendatik hautatu dezakezu.<br/>
+    ]]></string>
+
+    <!-- calculator implementations -->
+    <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
+    <string name="calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
+    <string name="calculator_displayString_time4a_simple">Kalkulagailu arrunt, azkar samarra, baina ez zehatza.</string>
+    <string name="calculator_displayString_time4a_noaa">National Oceanic and Atmospheric Administrationek argitaratutako algoritmoak jarraitzen ditu.</string>
+    <string name="calculator_displayString_time4a_cc">Dershowitz/Reingoldek haien "Calendrical Calculations" (hirugarren edizioa) liburuan argitaratutako algoritmoak jarraitzen ditu.</string>
+    <string name="calculator_displayString_time4a_4j">Jean Meeusek bere "Astronomical Algorithms" (bigarren edizioa) liburuan argitaratutako kalkulu astronomikoetan oinarrituta.</string>
+    
 </resources>
