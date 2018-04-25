@@ -27,6 +27,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -257,16 +258,17 @@ public class MoonPhaseView extends LinearLayout
         }
     }
 
+    public void adjustColumnWidth(int columnWidthPx)
+    {
+        phaseText.setMaxWidth(columnWidthPx);
+    }
+
     public boolean saveState(Bundle bundle)
     {
-        //bundle.putBoolean(MoonPhaseView.KEY_UI_MINIMIZED, minimized);
         return true;
     }
 
-    public void loadState(Bundle bundle)
-    {
-        //minimized = bundle.getBoolean(MoonPhaseView.KEY_UI_MINIMIZED, minimized);
-    }
+    public void loadState(Bundle bundle) {}
 
     public void setOnClickListener( OnClickListener listener )
     {
