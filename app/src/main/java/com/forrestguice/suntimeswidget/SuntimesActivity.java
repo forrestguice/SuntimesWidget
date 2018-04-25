@@ -1727,6 +1727,7 @@ public class SuntimesActivity extends AppCompatActivity
         showEquinoxView(enableEquinox && dataset2 != null && dataset2.isImplemented());
         card_equinoxSolstice.setTrackingMode(WidgetSettings.loadTrackingModePref(context, AppWidgetManager.INVALID_APPWIDGET_ID));
         card_equinoxSolstice.updateViews(SuntimesActivity.this, dataset2);
+        card_equinoxSolstice.post(updateEquinoxViewColumnWidth);
 
         //
         // clock & date
@@ -1815,6 +1816,21 @@ public class SuntimesActivity extends AppCompatActivity
 
         startTimeTask();
     }
+
+    private Runnable updateEquinoxViewColumnWidth = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            View card = findViewById(R.id.info_time_all_today);
+            if (card != null) {
+                View column = card.findViewById(R.id.header_column);
+                if (column != null) {
+                    card_equinoxSolstice.adjustColumnWidth(SuntimesActivity.this, column.getMeasuredWidth());
+                }
+            }
+        }
+    };
 
     private void showWarnings()
     {

@@ -30,6 +30,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
@@ -597,6 +598,14 @@ public class EquinoxView extends LinearLayout
         }
     };
 
+    public void adjustColumnWidth(Context context, int columnWidthPx)
+    {
+        for (EquinoxNote note : notes)
+        {
+            note.adjustLabelWidth(columnWidthPx);
+        }
+    }
+
     /**
      * EquinoxNote
      */
@@ -628,6 +637,13 @@ public class EquinoxView extends LinearLayout
                     }
                 });
             }
+        }
+
+        public void adjustLabelWidth( int labelWidthPx )
+        {
+            ViewGroup.LayoutParams layoutParams = labelView.getLayoutParams();
+            layoutParams.width = labelWidthPx;
+            labelView.setLayoutParams(layoutParams);
         }
 
         public void updateDate( Context context, Calendar time )
