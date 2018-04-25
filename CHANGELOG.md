@@ -5,6 +5,7 @@
 * fixes column alignment of solstice/equinox in main table; now aligns w/ the sunrise column.
 * fixes column alignment of moonrise/moonset in main table; now aligns w/ the sunrise column.
 * changes label alignment of 3x1 SunPosition widget; now centered (#188).
+* adds enhancements to the language selector; now sorted alphabetically, now displays name of language in that language (and displays localized language name in parenthesis).
 * adds translation to Basque (eu) (contributed by beriain) (#193, #194).
 * updates translation to German (de) (contributed by Wolkenschieber) (#191, #192).
 
