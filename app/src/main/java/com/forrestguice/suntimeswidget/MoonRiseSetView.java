@@ -54,7 +54,6 @@ public class MoonRiseSetView extends LinearLayout
     private MoonRiseSetField risingTextField1, settingTextField1;
     private ArrayList<MoonRiseSetField> f = new ArrayList<>();
     private View divider;
-    private TextView empty;
 
     public MoonRiseSetView(Context context)
     {
@@ -105,7 +104,6 @@ public class MoonRiseSetView extends LinearLayout
             centered = ((lp.gravity == Gravity.CENTER) || (lp.gravity == Gravity.CENTER_HORIZONTAL));
         }
 
-        empty = (TextView)findViewById(R.id.txt_empty);
         content = (LinearLayout)findViewById(R.id.moonriseset_layout);
 
         f.clear();
@@ -155,12 +153,6 @@ public class MoonRiseSetView extends LinearLayout
     public void initLocale(Context context)
     {
         isRtl = AppSettings.isLocaleRtl(context);
-    }
-
-    private void showEmptyView( boolean show )
-    {
-        empty.setVisibility(show ? View.VISIBLE : View.GONE);
-        content.setVisibility(show ? View.GONE : View.VISIBLE);
     }
 
     protected void updateViews( Context context, SuntimesMoonData data )

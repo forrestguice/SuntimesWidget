@@ -23,11 +23,9 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -49,7 +47,6 @@ public class MoonPhaseView extends LinearLayout
 
     private LinearLayout content;
     private TextView phaseText, illumText, azimuthText, elevationText;
-    private TextView empty;
 
     protected SuntimesMoonData data = null;  // cached
 
@@ -89,7 +86,6 @@ public class MoonPhaseView extends LinearLayout
             centered = ((lp.gravity == Gravity.CENTER) || (lp.gravity == Gravity.CENTER_HORIZONTAL));
         }
 
-        empty = (TextView)findViewById(R.id.txt_empty);
         content = (LinearLayout)findViewById(R.id.moonphase_layout);
 
         phaseText = (TextView)findViewById(R.id.text_info_moonphase);
@@ -127,12 +123,6 @@ public class MoonPhaseView extends LinearLayout
     {
         isRtl = AppSettings.isLocaleRtl(context);
         MoonPhaseDisplay.initDisplayStrings(context);
-    }
-
-    private void showEmptyView( boolean show )
-    {
-        empty.setVisibility(show ? View.VISIBLE : View.GONE);
-        content.setVisibility(show ? View.GONE : View.VISIBLE);
     }
 
     protected void updateViews( Context context, SuntimesMoonData data )
