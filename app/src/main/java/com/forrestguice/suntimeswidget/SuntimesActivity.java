@@ -1678,17 +1678,6 @@ public class SuntimesActivity extends AppCompatActivity
             String lightLength2_label = getString(R.string.length_light, lightLength2);
             txt_lightlength2.setText(SuntimesUtils.createBoldColorSpan(null, lightLength2_label, lightLength2, color_textTimeDelta));
 
-            sunsetHeader.measure(0, 0);      // adjust moonrise/moonset columns to match width of sunrise/sunset columns
-            int sunsetHeaderWidth = sunsetHeader.getMeasuredWidth();
-            moonrise.adjustColumnWidth(SuntimesActivity.this, sunsetHeaderWidth);
-            moonrise2.adjustColumnWidth(SuntimesActivity.this, sunsetHeaderWidth);
-
-            moonphase.updateViews(SuntimesActivity.this, dataset3);
-            moonrise.updateViews(SuntimesActivity.this, dataset3);
-
-            moonphase2.updateViews(SuntimesActivity.this, dataset3);
-            moonrise2.updateViews(SuntimesActivity.this, dataset3);
-
         } else {
             String notCalculated = getString(R.string.time_loading);
             txt_sunrise_actual.setText(notCalculated);
@@ -1719,6 +1708,19 @@ public class SuntimesActivity extends AppCompatActivity
             row_blue8_2.updateFields(notCalculated, notCalculated);
             row_blue4_2.updateFields(notCalculated, notCalculated);
         }
+
+        //
+        // moon
+        //
+        sunsetHeader.measure(0, 0);      // adjust moonrise/moonset columns to match width of sunrise/sunset columns
+        int sunsetHeaderWidth = sunsetHeader.getMeasuredWidth();
+        moonrise.adjustColumnWidth(SuntimesActivity.this, sunsetHeaderWidth);
+        moonrise2.adjustColumnWidth(SuntimesActivity.this, sunsetHeaderWidth);
+
+        moonphase.updateViews(SuntimesActivity.this, dataset3);
+        moonphase2.updateViews(SuntimesActivity.this, dataset3);
+        moonrise.updateViews(SuntimesActivity.this, dataset3);
+        moonrise2.updateViews(SuntimesActivity.this, dataset3);
 
         //
         // equinox and solstice

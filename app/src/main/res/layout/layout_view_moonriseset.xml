@@ -18,152 +18,139 @@
 -->
 <merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
+    <LinearLayout android:id="@+id/moonriseset_layout"
         android:layout_width="wrap_content" android:layout_height="wrap_content">
 
-        <LinearLayout android:id="@+id/moonriseset_layout"
-            android:layout_width="wrap_content" android:layout_height="wrap_content">
+        <LinearLayout android:id="@+id/moonrise_layout" android:visibility="gone"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/table_set_leftMargin" android:layout_marginRight="0dp"
+            android:layout_marginStart="@dimen/table_set_leftMargin" android:layout_marginEnd="0dp">
 
-            <LinearLayout android:id="@+id/moonrise_layout" android:visibility="gone"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginLeft="@dimen/table_set_leftMargin" android:layout_marginRight="0dp"
-                android:layout_marginStart="@dimen/table_set_leftMargin" android:layout_marginEnd="0dp">
+            <ImageView
+                android:id="@+id/icon_time_moonrise"
+                style="@style/TableHeadImageView"
+                android:layout_width="@dimen/table_heading_iconsize"
+                android:background="?attr/moonriseIcon"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_margin="0dp"
+                tools:ignore="contentDescription"/>
 
-                <ImageView
-                    android:id="@+id/icon_time_moonrise"
-                    style="@style/TableHeadImageView"
-                    android:layout_width="@dimen/table_heading_iconsize"
-                    android:background="?attr/moonriseIcon"
-                    android:layout_gravity="bottom|center_horizontal"
-                    android:layout_margin="0dp"
-                    tools:ignore="contentDescription"/>
+            <TextView
+                style="@style/SunsetTimeTextView"
+                android:id="@+id/text_time_moonrise"
+                android:textColor="?attr/moonriseColor" android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="2dp" android:layout_marginBottom="2dp"
+                tools:text="00:00 AM" />
 
-                <TextView
-                    style="@style/SunsetTimeTextView"
-                    android:id="@+id/text_time_moonrise"
-                    android:textColor="?attr/moonriseColor" android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="2dp" android:layout_marginBottom="2dp"
-                    tools:text="00:00 AM" />
-
-                <TextView android:visibility="gone"
-                    style="@style/SunsetTimeTextView2"
-                    android:id="@+id/text_info_moonrise" android:gravity="center" android:layout_gravity="center"
-                    android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="2dp" android:layout_marginBottom="2dp"
-                    android:textColor="?attr/moonriseColor"
-                    tools:text="270  W" />
-
-            </LinearLayout>
-
-            <LinearLayout android:id="@+id/moonset_layout" android:visibility="gone"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginLeft="@dimen/table_set_leftMargin" android:layout_marginRight="0dp"
-                android:layout_marginStart="@dimen/table_set_leftMargin" android:layout_marginEnd="0dp">
-
-                <ImageView
-                    android:id="@+id/icon_time_moonset"
-                    style="@style/TableHeadImageView"
-                    android:layout_width="@dimen/table_heading_iconsize"
-                    android:background="?attr/moonsetIcon"
-                    android:layout_gravity="bottom|center_horizontal"
-                    android:layout_margin="0dp"
-                    tools:ignore="contentDescription"/>
-
-                <TextView
-                    style="@style/SunsetTimeTextView"
-                    android:id="@+id/text_time_moonset"
-                    android:textColor="?attr/moonsetColor" android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="2dp" android:layout_marginBottom="2dp"
-                    tools:text="00:00 PM" />
-
-                <TextView android:visibility="gone"
-                    style="@style/SunsetTimeTextView2"
-                    android:id="@+id/text_info_moonset" android:gravity="center" android:layout_gravity="center"
-                    android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="2dp" android:layout_marginBottom="2dp"
-                    android:textColor="?attr/moonsetColor"
-                    tools:text="270  W" />
-
-
-            </LinearLayout>
-
-            <View android:id="@+id/divider_moon1" android:visibility="gone"
-                android:layout_width="1dp" android:layout_height="match_parent"
-                android:layout_marginLeft="4dp" android:layout_marginRight="4dp"
-                android:background="?hrColor" />
-
-            <LinearLayout android:id="@+id/moonrise_layout1"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginLeft="@dimen/table_set_leftMargin" android:layout_marginRight="0dp"
-                android:layout_marginStart="@dimen/table_set_leftMargin" android:layout_marginEnd="0dp">
-
-                <ImageView
-                    android:id="@+id/icon_time_moonrise1"
-                    style="@style/TableHeadImageView"
-                    android:layout_width="@dimen/table_heading_iconsize"
-                    android:background="?attr/moonriseIcon"
-                    android:layout_gravity="bottom|center_horizontal"
-                    android:layout_margin="0dp"
-                    tools:ignore="contentDescription"/>
-
-                <TextView
-                    style="@style/SunsetTimeTextView"
-                    android:id="@+id/text_time_moonrise1"
-                    android:textColor="?attr/moonriseColor" android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="2dp" android:layout_marginBottom="2dp"
-                    tools:text="1:11" />
-
-                <TextView android:visibility="gone"
-                    style="@style/SunsetTimeTextView2"
-                    android:id="@+id/text_info_moonrise1" android:gravity="center" android:layout_gravity="center"
-                    android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="2dp" android:layout_marginBottom="2dp"
-                    android:textColor="?attr/moonriseColor"
-                    tools:text="270  W" />
-
-            </LinearLayout>
-
-            <LinearLayout android:id="@+id/moonset_layout1"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginLeft="@dimen/table_set_leftMargin" android:layout_marginRight="0dp"
-                android:layout_marginStart="@dimen/table_set_leftMargin" android:layout_marginEnd="0dp">
-
-                <ImageView
-                    android:id="@+id/icon_time_moonset1"
-                    style="@style/TableHeadImageView"
-                    android:layout_width="@dimen/table_heading_iconsize"
-                    android:background="?attr/moonsetIcon"
-                    android:layout_gravity="bottom|center_horizontal"
-                    android:layout_margin="0dp"
-                    tools:ignore="contentDescription"/>
-
-                <TextView
-                    style="@style/SunsetTimeTextView"
-                    android:id="@+id/text_time_moonset1"
-                    android:textColor="?attr/moonsetColor" android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="2dp" android:layout_marginBottom="2dp"
-                    tools:text="1:11" />
-
-                <TextView android:visibility="gone"
-                    style="@style/SunsetTimeTextView2"
-                    android:id="@+id/text_info_moonset1" android:gravity="center" android:layout_gravity="center"
-                    android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="2dp" android:layout_marginBottom="2dp"
-                    android:textColor="?attr/moonsetColor"
-                    tools:text="270  W" />
-
-            </LinearLayout>
+            <TextView android:visibility="gone"
+                style="@style/SunsetTimeTextView2"
+                android:id="@+id/text_info_moonrise" android:gravity="center" android:layout_gravity="center"
+                android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="2dp" android:layout_marginBottom="2dp"
+                android:textColor="?attr/moonriseColor"
+                tools:text="270  W" />
 
         </LinearLayout>
 
-        <TextView android:id="@+id/txt_empty"
-                  android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:gravity="center" android:layout_gravity="center"
-                  android:visibility="gone"
-                  android:layout_margin="16dp"
-                  android:textSize="12sp"
-                  android:text="@string/configLabel_ui_showmoon_notImplemented" />
+        <LinearLayout android:id="@+id/moonset_layout" android:visibility="gone"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/table_set_leftMargin" android:layout_marginRight="0dp"
+            android:layout_marginStart="@dimen/table_set_leftMargin" android:layout_marginEnd="0dp">
 
-    </FrameLayout>
+            <ImageView
+                android:id="@+id/icon_time_moonset"
+                style="@style/TableHeadImageView"
+                android:layout_width="@dimen/table_heading_iconsize"
+                android:background="?attr/moonsetIcon"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_margin="0dp"
+                tools:ignore="contentDescription"/>
+
+            <TextView
+                style="@style/SunsetTimeTextView"
+                android:id="@+id/text_time_moonset"
+                android:textColor="?attr/moonsetColor" android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="2dp" android:layout_marginBottom="2dp"
+                tools:text="00:00 PM" />
+
+            <TextView android:visibility="gone"
+                style="@style/SunsetTimeTextView2"
+                android:id="@+id/text_info_moonset" android:gravity="center" android:layout_gravity="center"
+                android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="2dp" android:layout_marginBottom="2dp"
+                android:textColor="?attr/moonsetColor"
+                tools:text="270  W" />
+
+
+        </LinearLayout>
+
+        <View android:id="@+id/divider_moon1" android:visibility="gone"
+            android:layout_width="1dp" android:layout_height="match_parent"
+            android:layout_marginLeft="4dp" android:layout_marginRight="4dp"
+            android:background="?hrColor" />
+
+        <LinearLayout android:id="@+id/moonrise_layout1"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/table_set_leftMargin" android:layout_marginRight="0dp"
+            android:layout_marginStart="@dimen/table_set_leftMargin" android:layout_marginEnd="0dp">
+
+            <ImageView
+                android:id="@+id/icon_time_moonrise1"
+                style="@style/TableHeadImageView"
+                android:layout_width="@dimen/table_heading_iconsize"
+                android:background="?attr/moonriseIcon"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_margin="0dp"
+                tools:ignore="contentDescription"/>
+
+            <TextView
+                style="@style/SunsetTimeTextView"
+                android:id="@+id/text_time_moonrise1"
+                android:textColor="?attr/moonriseColor" android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="2dp" android:layout_marginBottom="2dp"
+                tools:text="1:11" />
+
+            <TextView android:visibility="gone"
+                style="@style/SunsetTimeTextView2"
+                android:id="@+id/text_info_moonrise1" android:gravity="center" android:layout_gravity="center"
+                android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="2dp" android:layout_marginBottom="2dp"
+                android:textColor="?attr/moonriseColor"
+                tools:text="270  W" />
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/moonset_layout1"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/table_set_leftMargin" android:layout_marginRight="0dp"
+            android:layout_marginStart="@dimen/table_set_leftMargin" android:layout_marginEnd="0dp">
+
+            <ImageView
+                android:id="@+id/icon_time_moonset1"
+                style="@style/TableHeadImageView"
+                android:layout_width="@dimen/table_heading_iconsize"
+                android:background="?attr/moonsetIcon"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_margin="0dp"
+                tools:ignore="contentDescription"/>
+
+            <TextView
+                style="@style/SunsetTimeTextView"
+                android:id="@+id/text_time_moonset1"
+                android:textColor="?attr/moonsetColor" android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="2dp" android:layout_marginBottom="2dp"
+                tools:text="1:11" />
+
+            <TextView android:visibility="gone"
+                style="@style/SunsetTimeTextView2"
+                android:id="@+id/text_info_moonset1" android:gravity="center" android:layout_gravity="center"
+                android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="2dp" android:layout_marginBottom="2dp"
+                android:textColor="?attr/moonsetColor"
+                tools:text="270  W" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </merge>
