@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="http://schemas.android.com/tools">
-  <!-- German translation, almost complete. Some strings need to be identified,
-    understood and translated, identified by: -->
-  <!-- todo -->
 
   <string name="default_location_label">Berlin</string>
   <string name="default_location_latitude">52.5243</string>    <!-- decimal degrees (DD) -->
@@ -78,7 +75,7 @@
   <string name="length_light"><xliff:g id="timeSpan" example="12h 50m">%1$s</xliff:g> nutzbares Licht</string>
 
   <!-- Field: moon illumination (as seen in moon widget) -->
-  <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> illuminiert</string>  <!-- "50% illuminated" .. used in 2x1 widget --> <!-- TODO -->
+  <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> illuminiert</string>  <!-- "50% illuminated" .. used in 2x1 widget -->
   <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- "50%" .. used in 1x1 widget -->
 
   <!-- Field: today/tomorrow time delta
@@ -112,12 +109,12 @@
   <string name="untilEnd_civilTwilight">bürgerlichen Dämmerung</string>
   <string name="untilEnd_nauticalTwilight">nautischen Dämmerung</string>
   <string name="untilEnd_astroTwilight">astronomischen Dämmerung</string>
-  <string name="until_goldhour">Goldene Stunde</string> <!-- TODO -->
-  <string name="untilEnd_goldhour">Goldene Stunde</string> <!-- TODO -->
-  <string name="until_bluehour">Blaue Stunde</string> <!-- TODO -->
-  <string name="untilEnd_bluehour">Blaue Stunde</string> <!-- TODO -->
-  <string name="until_moonrise">Mondaufgang</string> <!-- TODO -->
-  <string name="until_moonset">Monduntergang</string>  <!-- TODO -->
+  <string name="until_goldhour">Goldene Stunde</string>
+  <string name="untilEnd_goldhour">Goldene Stunde</string>
+  <string name="until_bluehour">Blaue Stunde</string>
+  <string name="untilEnd_bluehour">Blaue Stunde</string>
+  <string name="until_moonrise">Mondaufgang</string>
+  <string name="until_moonset">Monduntergang</string>
 
   <!-- Table -->
   <string name="sunrise">Sonnenaufgang</string>                             <!-- contentDescription -->
@@ -155,11 +152,11 @@
   <string name="configAction_addWidget">Widget hinzufügen</string>                   <!-- Button: Add -->
   <string name="configAction_reconfigWidget_short">Speichern</string>       <!-- Button: Reconfigure -->
   <string name="configAction_reconfigWidget">Widget Einstellen</string>      <!-- used as title when reconfiguring -->
-  <string name="configLabel_title0">@string/app_name_widget0</string>         <!-- used as title when adding -->      <!-- TODO -->
+  <string name="configLabel_title0">@string/app_name_widget0</string>         <!-- used as title when adding -->
   <string name="configLabel_title1">Umschaltbares Widget</string>                 <!-- used as title when adding -->
-  <string name="configLabel_title2">@string/app_name_widget2</string>                  <!-- used as title when adding -->  <!-- TODO -->
-  <string name="configLabel_solsticewidget0">@string/app_name_solsticewidget0</string>                  <!-- used as title when adding --> <!-- TODO -->
-  <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding --> <!-- TODO -->
+  <string name="configLabel_title2">@string/app_name_widget2</string>                  <!-- used as title when adding -->
+  <string name="configLabel_solsticewidget0">@string/app_name_solsticewidget0</string>                  <!-- used as title when adding -->
+  <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
   <!-- Widget Setting: general -->
   <string name="configLabel_general">Allgemeine Einstellungen</string>                <!-- group title -->
@@ -174,7 +171,7 @@
   <string name="configLabel_general_showTimeDate_summary">Bei Datum Uhrzeit anzeigen.</string>        <!-- checkbox label -->
 
   <string name="configLabel_general_showWeeks">Wochen anzeigen</string>        <!-- checkbox label -->
-  <!-- checkbox label -->  <!-- TODO -->
+  <string name="configLabel_general_showWeeks_summary">Zeiträume länger als 7 Tage in Wochen aufteilen (z.B. aus 15d werden 2w 1d).</string>
 
   <string name="configLabel_general_showHours">Stunden anzeigen</string>        <!-- checkbox label -->
   <string name="configLabel_general_showHours_summary">Bei Zeiträumen länger als einem Tag, Stunden und Minuten anzeigen.</string>    <!-- checkbox label -->
@@ -199,8 +196,8 @@
   <string name="timeMode_nautical">Nautische Dämmerung</string>         <!-- setting -->
   <string name="timeMode_astronomical_short">Astronomisch</string>    <!-- setting -->
   <string name="timeMode_astronomical">Astronomische Dämmerung</string> <!-- setting -->
-  <string name="timeMode_night">Nacht</string>                   <!-- a label (not an actual timeMode setting) --> <!-- TODO: confirm this is right / fix -->
-  <string name="timeMode_day">Tag</string>                       <!-- a label (not an actual timeMode setting) --> <!-- TODO: confirm this is right / fix -->
+  <string name="timeMode_night">Nacht</string>                   <!-- a label (not an actual timeMode setting) -->
+  <string name="timeMode_day">Tag</string>                       <!-- a label (not an actual timeMode setting) -->
   <string name="timeMode_golden_short">Goldene</string>                <!-- setting -->
   <string name="timeMode_golden">Goldene Stunde</string>                 <!-- setting -->
   <string name="timeMode_blue8_short">Blaue (8°)</string>                    <!-- setting -->
@@ -350,7 +347,7 @@
   <!--<string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>-->                                        <!-- suggested new theme id -->
   <!--<string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_copy<xliff:g id="#">%2$s</xliff:g></string>-->   <!-- copied theme id -->
   <string name="addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g> (Kopie)</string>
-  <!-- copied theme name (display string) --> <!-- TODO -->
+  <!-- copied theme name (display string) -->
 
   <string name="addtheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g> hinzugefügt.</string>          <!-- toast
    msg -->
@@ -485,7 +482,7 @@
   <string name="configLabel_places">Orte</string>                           <!-- group title -->
   <string name="configLabel_places_export">Exportiere Orte</string>
   <string name="configLabel_places_clear">Lösche Orte</string>
-  <string name="configLabel_places_build">Orte hinzufügen</string>  <!-- TODO -->
+  <string name="configLabel_places_build">Orte hinzufügen</string>
   <string name="configLabel_places_build_summary">Untersuche Gebietsschemata und füge Städe zur Datenbank hinzu.</string>
 
   <!-- App Setting: UI -->
@@ -500,7 +497,7 @@
   <string name="configLabel_ui_showWarnings_summary">Zeige Konfigurationswarnmeldungen</string>
 
   <!-- App Setting: Show Lightmap -->
-  <string name="configLabel_ui_showLightmap">Zeige Lichtkarte</string>  <!-- TODO -->
+  <string name="configLabel_ui_showLightmap">Zeige Lichtkarte</string>
   <string name="configLabel_ui_showLightmap_summary">Zeige ein gestapeltes Balkendiagramm aus Tag, Nacht und
       Dämmerung.</string>
 
@@ -520,7 +517,7 @@
   <string name="configLabel_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Upcoming Event">%s</xliff:g></string>
 
   <!-- App Setting: show data source -->
-  <string name="configLabel_ui_showdatasource">Zeige Datenquelle</string>  <!-- TODO -->
+  <string name="configLabel_ui_showdatasource">Zeige Datenquelle</string>
   <string name="configLabel_ui_showdatasource_summary">Zeige eine Beschriftung mit der aktuellen Konfiguration.</string>
 
   <!-- App Setting: show golden hour -->
@@ -598,7 +595,7 @@
   </string-array>
 
   <!-- App Setting: locale mode -->
-  <string name="configLabel_locale">Spracheinstellungen</string>   <!-- group title --> <!-- TODO: verify translation / fix -->
+  <string name="configLabel_locale">Spracheinstellungen</string>   <!-- group title -->
 
   <string name="configLabel_localeMode">Modus:</string>
   <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
@@ -608,17 +605,18 @@
   </string-array>
 
   <!-- App Setting: custom Locale -->
-  <string name="configLabel_localeSelect">Sprache</string> <!-- TODO: verify translation / fix -->
+  <string name="configLabel_localeSelect">Sprache</string>
   <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
   <string-array name="locale_display">                      <!-- one-to-one with locale_values -->
       <item>Englisch</item>
       <item>Esperanto</item>
       <item>Französisch</item>
       <item>Deutsche</item>
-      <item>Ungarisch</item>   <!-- TODO: confirm translation -->
+      <item>Ungarisch</item>
       <item>Polieren</item>
       <item>Spanisch</item>
       <item>Katalanisch</item>
+      <item>Baskisch</item>
   </string-array>
 
   <!--
@@ -774,8 +772,8 @@
 
   <!-- Dialog: Help -->
   <string name="help_dialog_title">Hilfe</string>
-  <!-- TODO: needs update (see values\strings.xml) -->
-  <string name="help_appearance_title"><![CDATA[
+
+  <!--<string name="help_appearance_title"><![CDATA[
       Es werden folgende Platzhalter unterstützt: <br />
               * <b>%loc</b> für den Ort <br />
               * <b>%lat</b> für den Breitengrad <br />
@@ -784,7 +782,39 @@
               * <b>%M</b> für den Zeitmodus (Langform) (z.B. "Astronomische Abenddämmerung (Ende)") <br/>
               * <b>%s</b> für den Datenquelle (z.B. "sunrisesunsetlib") <br/>
               * <b>%t</b> Die Zeitzone (id) (z.B. "Europe/Berlin") <br/>
-  ]]></string>  <!-- TODO: confirm translation for %s / fix  -->
+  ]]></string>-->  <!-- translation for previous version -->
+  <string name="help_appearance_title"><![CDATA[
+        Es werden folgende Platzhalter unterstützt: <br />
+        <br/>
+        <b>All Widgets:</b> <br />
+                * <b>%d</b> for date (e.g. February 12) <br/>
+                * <b>%dd</b> for day (short) (e.g. Mon) <br/>
+                * <b>%dD</b> for day (long) (e.g. Monday) <br/>
+                * <b>%dY</b> for year (e.g. 2018) <br/>
+                * <b>%dt</b> for time (of last update) <br/>
+                * <b>%dT</b> for time with seconds (of last update) <br/>
+                <br/>
+                * <b>%loc</b> für den Ort <br />
+                * <b>%lat</b> für den Breitengrad <br />
+                * <b>%lon</b> für den Längengrad <br/>
+                <br/>
+                * <b>%s</b> für den Datenquelle (z.B. "sunrisesunsetlib") <br/>
+                * <b>%t</b> Die Zeitzone (id) (z.B. "Europe/Berlin") <br/>
+                * <b>%id</b> for appWidgetID <br/>
+         <br/>
+         <b>Sun Widgets:</b> <br/>
+                * <b>%m</b> für den Zeitmodus (Kurzform) (z.B. "Astron. Abend") <br/>
+                * <b>%M</b> für den Zeitmodus (Langform) (z.B. "Astronomische Abenddämmerung (Ende)") <br/>
+         <br/>
+         <b>Moon Widgets:</b> <br/>
+                * <b>%i</b> for moon illumination (e.g. 25%) <br/>
+                * <b>%M</b> for moon phase (e.g. Waxing Crescent) <br/>
+         <br/>
+         <b>Solstice Widgets:</b> <br/>
+                * <b>%m</b> for mode (short) (e.g. Solstice) <br/>
+                * <b>%M</b> for mode (long) (e.g. Winter Solstice) <br/>
+    ]]></string>  <!-- TODO -->
+
   <string name="help_general_timeMode"><![CDATA[
         <b>Tatsächlicher Sonnenauf-/Untergang:</b> Die Sonnenscheibe steht ungefähr mittig am Horizont.<br/><br/>
         <b>Bürgerliche Dämmerung:</b> Die Sonne steht 6 Grad unter dem Horizont; Nur die hellsten Himmelskörper sind erkennbar. Unter freiem Himmel ist es hell genug für die meisten Aktivitäten, wie beispielsweise Lesen ohne Beleuchtung. (Auch zivile Dämmerung genannt.)<br/><br/>
@@ -798,13 +828,13 @@
   </string>
   <string name="help_general_moonillum"><![CDATA[
         <b>Mondillumination:</b> Die Mond Widgets und die Hauptseite zeigen die Mondillumination am Mondmittag (Mittelpunkt zwischen Mondaufgang und -untergang) an. Der Monddialog hingegen zeigt die aktuelle Illumination an.<br/><br/>
-    ]]></string> <!-- TODO -->
+    ]]></string>
   <string name="help_general_goldhour"><![CDATA[
         <b>Goldene Stunde:</b> Die Sonne steht 6 Grad unter oder &uuml;ber dem Horizont. Am Morgen beginnt die Goldene Stunde mit der b&uuml;rgerlichen D&auml;mmerung und endet kurze Zeit nach Sonnenaufgang. Am Abend beginnt die Goldene Stunde kurze Zeit vor Sonnenuntergang und endet mit der b&uuml;rgerlichen D&auml;mmerung.<br/>
-    ]]></string>  <!-- TODO -->
+    ]]></string>
   <string name="help_general_bluehour"><![CDATA[
         <b>Blaue Stunde:</b> Die Sonne steht zwischen 8 Grad und 4 Grad unter dem Horizont. Der Beginn und das Ende der Blauen Stunde liegt zwischen nautischer und b&uuml;rgerlicher D&auml;mmerung.<br/>
-    ]]></string>  <!-- TODO -->
+    ]]></string>
   <string name="help_action_launch"><![CDATA[
       Der "fully qualified class name" der Android-Activity, die gestartet werden soll.
   ]]></string>
@@ -823,6 +853,5 @@
       deren Buch "Calendrical Calculations" (dritte Auflage).</string>
   <string name="calculator_displayString_time4a_4j">Basiert auf astronomischen Berechnungen, veröffentlicht von
       Jean Meeus in dessen Buch "Astronomical Algorithms" (zweite Auflage).</string>
-  <string name="configLabel_general_showWeeks_summary">Zeiträume länger als 7 Tage in Wochen aufteilen (z.B. aus 15d werden 2w 1d).</string>
 
 </resources>

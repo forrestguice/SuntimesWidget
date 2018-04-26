@@ -54,6 +54,12 @@
             android:orientation="vertical">
         </LinearLayout>
 
+        <View android:id="@+id/header_column" android:elevation="0dp"
+            android:layout_width="0dp" android:layout_height="2dp"
+            android:background="@color/transparent" android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/text_time_sunrise_actual" app:layout_constraintBottom_toBottomOf="parent" />
+
         <!-- Header: sunrise -->
         <LinearLayout
             android:id="@+id/header_time_sunrise"
@@ -389,8 +395,9 @@
 
         <com.forrestguice.suntimeswidget.MoonPhaseView
             android:id="@+id/moonphase_view" app:illuminationAtLunarNoon="true"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_width="0dp" android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/moonriseset_view"
             app:layout_constraintTop_toBottomOf="@+id/text_time_label_moon" />
 
         <com.forrestguice.suntimeswidget.MoonRiseSetView
@@ -403,7 +410,7 @@
 
         <LinearLayout
             android:id="@+id/moonphase_clickArea" android:orientation="horizontal"
-            android:layout_width="0dp" android:layout_height="0dp" android:elevation="0dp"
+            android:layout_width="0dp" android:layout_height="0dp" android:elevation="2dp"
             android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

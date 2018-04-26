@@ -49,6 +49,8 @@ import com.forrestguice.suntimeswidget.settings.SummaryListPreference;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -496,15 +498,64 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private static void initPref_locale(PreferenceFragment fragment)
     {
-        Preference localePref = fragment.findPreference(AppSettings.PREF_KEY_LOCALE);
+        ListPreference localePref = (ListPreference)fragment.findPreference(AppSettings.PREF_KEY_LOCALE);
         initPref_locale(fragment.getActivity(), localePref);
     }
-    private static void initPref_locale(Activity activity, Preference localePref)
+    private static void initPref_locale(Activity activity, ListPreference localePref)
     {
+        final String[] localeDisplay = activity.getResources().getStringArray(R.array.locale_display);
+        final String[] localeDisplayNative = activity.getResources().getStringArray(R.array.locale_display_native);
+        final String[] localeValues = activity.getResources().getStringArray(R.array.locale_values);
+
+        Integer[] index = getSortedOrder(localeDisplayNative);
+        CharSequence[] entries = new CharSequence[localeDisplay.length];
+        CharSequence[] values = new CharSequence[localeValues.length];
+        for (int i=0; i<index.length; i++)
+        {
+            int j = index[i];
+            CharSequence formattedDisplayString;
+            if (localeDisplay[j].equals(localeDisplayNative[j]))
+            {
+                formattedDisplayString = localeDisplayNative[j];
+
+            } else {
+                String localizedName = "(" + localeDisplay[j] + ")";
+                String displayString = localeDisplayNative[j] + " " + localizedName;
+                formattedDisplayString = SuntimesUtils.createRelativeSpan(null, displayString, localizedName, 0.7f);
+            }
+
+            entries[i] = formattedDisplayString;
+            values[i] = localeValues[j];
+        }
+
+        localePref.setEntries(entries);
+        localePref.setEntryValues(values);
+
         AppSettings.LocaleMode localeMode = AppSettings.loadLocaleModePref(activity);
         localePref.setEnabled(localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE);
     }
 
+    /**
+     * @param stringArray array to perform sort on
+     * @return a sorted array of indices pointing into stringArray
+     */
+    private static Integer[] getSortedOrder(final String[] stringArray)
+    {
+        Integer[] index = new Integer[stringArray.length];
+        for (int i=0; i < index.length; i++)
+        {
+            index[i] = i;
+        }
+        Arrays.sort(index, new Comparator<Integer>()
+        {
+            public int compare(Integer i1, Integer i2)
+            {
+                return stringArray[i1].compareTo(stringArray[i2]);
+            }
+        });
+        return index;
+    }
+    
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////
 
