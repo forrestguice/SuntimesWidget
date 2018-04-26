@@ -147,18 +147,9 @@ public class MoonPhaseView extends LinearLayout
         }
 
         this.data = data;
-        if (data == null)
+        if (data != null && data.isCalculated())
         {
-            return;
-        }
-
-        if (data.isCalculated())
-        {
-            for (MoonPhaseDisplay moonPhase : MoonPhaseDisplay.values())
-            {
-                View view = findViewById(moonPhase.getView());
-                view.setVisibility(View.GONE);
-            }
+            hideIcons();
 
             MoonPhaseDisplay phase = (tomorrowMode ? data.getMoonPhaseTomorrow() : data.getMoonPhaseToday());
             if (phase != null)
@@ -166,7 +157,9 @@ public class MoonPhaseView extends LinearLayout
                 phaseText.setText(phase.getLongDisplayString());
 
                 View phaseIcon = findViewById(phase.getView());
-                phaseIcon.setVisibility(View.VISIBLE);
+                if (phaseIcon != null) {
+                    phaseIcon.setVisibility(View.VISIBLE);
+                }
 
                 /**Integer phaseColor = phaseColors.get(phase);
                 if (phaseColor != null)
@@ -179,7 +172,22 @@ public class MoonPhaseView extends LinearLayout
             updatePosition();
 
         } else {
-            showEmptyView(true);
+            phaseText.setText("");
+            illumText.setText("");
+            azimuthText.setText("");
+            elevationText.setText("");
+            hideIcons();
+        }
+    }
+
+    private void hideIcons()
+    {
+        for (MoonPhaseDisplay moonPhase : MoonPhaseDisplay.values())
+        {
+            View view = findViewById(moonPhase.getView());
+            if (view != null) {
+                view.setVisibility(View.GONE);
+            }
         }
     }
 

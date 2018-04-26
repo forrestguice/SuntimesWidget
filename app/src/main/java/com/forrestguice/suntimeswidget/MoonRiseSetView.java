@@ -25,7 +25,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -171,12 +170,7 @@ public class MoonRiseSetView extends LinearLayout
             return;
         }
 
-        if (data == null)
-        {
-            return;
-        }
-
-        if (data.isCalculated())
+        if (data != null && data.isCalculated())
         {
             boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
 
@@ -209,7 +203,7 @@ public class MoonRiseSetView extends LinearLayout
             reorderLayout(risingTime, settingTime, risingTime1, settingTime1);
 
         } else {
-            showEmptyView(true);
+            clearLayout();
         }
     }
 
@@ -237,26 +231,21 @@ public class MoonRiseSetView extends LinearLayout
     private void setShowPosition(boolean value)
     {
         showPosition = value;
-
-        if (risingTextField != null)
-            risingTextField.setShowPosition(showPosition);
-
-        if (settingTextField != null)
-            settingTextField.setShowPosition(showPosition);
-
-        if (risingTextField1 != null)
-            risingTextField1.setShowPosition(showPosition);
-
-        if (settingTextField1 != null)
-            settingTextField1.setShowPosition(showPosition);
+        for (MoonRiseSetField field : f)
+        {
+            if (field != null)
+            {
+                field.setShowPosition(showPosition);
+            }
+        }
     }
 
     private void clearLayout()
     {
-        risingTextField.removeFromLayout(content);
-        settingTextField.removeFromLayout(content);
-        risingTextField1.removeFromLayout(content);
-        settingTextField1.removeFromLayout(content);
+        for (MoonRiseSetField field : f)
+        {
+            field.removeFromLayout(content);
+        }
 
         if (divider != null)
         {
@@ -432,6 +421,11 @@ public class MoonRiseSetView extends LinearLayout
             layout = findViewById(layoutID);
             timeView = (TextView)findViewById(timeViewID);
             positionView = (TextView)findViewById(positionViewID);
+        }
+
+        public void updateField(String timeText)
+        {
+            timeView.setText(timeText);
         }
 
         public void updateField(Context context, Calendar dateTime, boolean showSeconds)
