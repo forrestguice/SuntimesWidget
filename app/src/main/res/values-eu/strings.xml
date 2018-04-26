@@ -235,8 +235,8 @@
     <string name="timeMode_moon_waxingcrescent">Ilgora</string>                     <!-- label -->
     <string name="timeMode_moon_firstquarter">Lehen laurdena</string>                 <!-- setting -->
     <string name="timeMode_moon_firstquarter_short">Lehen laurdena</string>           <!-- setting -->
-    <string name="timeMode_moon_waxinggibbous_short">Ilbehera</string>               <!-- label -->
-    <string name="timeMode_moon_waxinggibbous">Ilbehera</string>                     <!-- label -->
+    <string name="timeMode_moon_waxinggibbous_short">Ilgora</string>               <!-- label -->
+    <string name="timeMode_moon_waxinggibbous">Ilgora</string>                     <!-- label -->
     <string name="timeMode_moon_full">Ilbetea</string>                             <!-- setting -->
     <string name="timeMode_moon_full_short">Ilbetea</string>                            <!-- setting -->
     <string name="timeMode_moon_waninggibbous_short">Ilbehera</string>               <!-- label -->
@@ -639,6 +639,7 @@
         <item>Poloniera</item>
         <item>Gaztelania</item>
         <item>Katalana</item>
+        <item>Euskara</item>
     </string-array>
 
     <!-- position formats -->
@@ -904,7 +905,7 @@
           <b>Benetako ordua:</b> Eguzkia zeruertzean dago; hau da gutxi gorabehera egunsentiaren eta ilunabarraren ordua.<br/><br/>
           <b>Krepuskulu zibila:</b> Eguzkia 6 gradu zeruertzaren azpitik dago; izar argitsuenak ikusi daitezke. Argi nahikoa dago kanpoko jardueretarako argi bat erabili behar gabe.<br/><br/>
           <b>Itsas krepuskulua:</b> Eguzkia 8 gradu zeruertzaren azpitik dago; objektuen ingerada eta zeruertza gero eta bereizezinagoak dira. Ez dago argi nahikorik kanpoko jarduera gehienetarako argi bat erabili behar gabe.<br/><br/>
-          <b>Krepuskulu astronomikoa:</b> Eguzkia 18 gradu zeruertzaren azpitik dago. Gauaren iluntasuneik hurbil.<br/>
+          <b>Krepuskulu astronomikoa:</b> Eguzkia 18 gradu zeruertzaren azpitik dago. Gauaren iluntasunetik hurbil.<br/>
     ]]></string>
 
     <string name="help_general_timeMode2"><![CDATA[

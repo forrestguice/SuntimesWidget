@@ -94,6 +94,11 @@ public class MoonDialog extends DialogFragment
         moonriseset = (MoonRiseSetView) dialogView.findViewById(R.id.moonriseset_view);
         currentphase = (MoonPhaseView) dialogView.findViewById(R.id.moonphase_view);
         moonphases = (MoonPhasesView) dialogView.findViewById(R.id.moonphases_view);
+
+        Context context = dialogView.getContext();
+        if (context != null) {
+            currentphase.adjustColumnWidth(context.getResources().getDimensionPixelSize(R.dimen.moonphase_column0_width));
+        }
     }
 
     public void updateViews()

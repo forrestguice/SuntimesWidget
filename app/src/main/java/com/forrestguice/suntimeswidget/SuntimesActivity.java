@@ -1678,17 +1678,6 @@ public class SuntimesActivity extends AppCompatActivity
             String lightLength2_label = getString(R.string.length_light, lightLength2);
             txt_lightlength2.setText(SuntimesUtils.createBoldColorSpan(null, lightLength2_label, lightLength2, color_textTimeDelta));
 
-            sunsetHeader.measure(0, 0);      // adjust moonrise/moonset columns to match width of sunrise/sunset columns
-            int sunsetHeaderWidth = sunsetHeader.getMeasuredWidth();
-            moonrise.adjustColumnWidth(SuntimesActivity.this, sunsetHeaderWidth);
-            moonrise2.adjustColumnWidth(SuntimesActivity.this, sunsetHeaderWidth);
-
-            moonphase.updateViews(SuntimesActivity.this, dataset3);
-            moonrise.updateViews(SuntimesActivity.this, dataset3);
-
-            moonphase2.updateViews(SuntimesActivity.this, dataset3);
-            moonrise2.updateViews(SuntimesActivity.this, dataset3);
-
         } else {
             String notCalculated = getString(R.string.time_loading);
             txt_sunrise_actual.setText(notCalculated);
@@ -1721,12 +1710,26 @@ public class SuntimesActivity extends AppCompatActivity
         }
 
         //
+        // moon
+        //
+        sunsetHeader.measure(0, 0);      // adjust moonrise/moonset columns to match width of sunrise/sunset columns
+        int sunsetHeaderWidth = sunsetHeader.getMeasuredWidth();
+        moonrise.adjustColumnWidth(SuntimesActivity.this, sunsetHeaderWidth);
+        moonrise2.adjustColumnWidth(SuntimesActivity.this, sunsetHeaderWidth);
+
+        moonphase.updateViews(SuntimesActivity.this, dataset3);
+        moonphase2.updateViews(SuntimesActivity.this, dataset3);
+        moonrise.updateViews(SuntimesActivity.this, dataset3);
+        moonrise2.updateViews(SuntimesActivity.this, dataset3);
+
+        //
         // equinox and solstice
         //
         boolean enableEquinox = AppSettings.loadShowEquinoxPref(this);
         showEquinoxView(enableEquinox && dataset2 != null && dataset2.isImplemented());
         card_equinoxSolstice.setTrackingMode(WidgetSettings.loadTrackingModePref(context, AppWidgetManager.INVALID_APPWIDGET_ID));
         card_equinoxSolstice.updateViews(SuntimesActivity.this, dataset2);
+        card_equinoxSolstice.post(updateEquinoxViewColumnWidth);
 
         //
         // clock & date
@@ -1815,6 +1818,21 @@ public class SuntimesActivity extends AppCompatActivity
 
         startTimeTask();
     }
+
+    private Runnable updateEquinoxViewColumnWidth = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            View card = findViewById(R.id.info_time_all_today);
+            if (card != null) {
+                View column = card.findViewById(R.id.header_column);
+                if (column != null) {
+                    card_equinoxSolstice.adjustColumnWidth(SuntimesActivity.this, column.getMeasuredWidth());
+                }
+            }
+        }
+    };
 
     private void showWarnings()
     {

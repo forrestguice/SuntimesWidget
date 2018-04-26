@@ -25,7 +25,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +38,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 @SuppressWarnings("Convert2Diamond")
@@ -52,8 +52,8 @@ public class MoonRiseSetView extends LinearLayout
     private LinearLayout content;
     private MoonRiseSetField risingTextField, settingTextField;
     private MoonRiseSetField risingTextField1, settingTextField1;
+    private ArrayList<MoonRiseSetField> f = new ArrayList<>();
     private View divider;
-    private TextView empty;
 
     public MoonRiseSetView(Context context)
     {
@@ -104,12 +104,14 @@ public class MoonRiseSetView extends LinearLayout
             centered = ((lp.gravity == Gravity.CENTER) || (lp.gravity == Gravity.CENTER_HORIZONTAL));
         }
 
-        empty = (TextView)findViewById(R.id.txt_empty);
         content = (LinearLayout)findViewById(R.id.moonriseset_layout);
-        risingTextField = new MoonRiseSetField(R.id.moonrise_layout , R.id.text_time_moonrise, R.id.text_info_moonrise);
-        settingTextField = new MoonRiseSetField(R.id.moonset_layout, R.id.text_time_moonset, R.id.text_info_moonset);
-        risingTextField1 = new MoonRiseSetField(R.id.moonrise_layout1 , R.id.text_time_moonrise1, R.id.text_info_moonrise1);
-        settingTextField1 = new MoonRiseSetField(R.id.moonset_layout1, R.id.text_time_moonset1, R.id.text_info_moonset1);
+
+        f.clear();
+        f.add(risingTextField = new MoonRiseSetField(R.id.moonrise_layout , R.id.text_time_moonrise, R.id.text_info_moonrise));
+        f.add(settingTextField = new MoonRiseSetField(R.id.moonset_layout, R.id.text_time_moonset, R.id.text_info_moonset));
+        f.add(risingTextField1 = new MoonRiseSetField(R.id.moonrise_layout1 , R.id.text_time_moonrise1, R.id.text_info_moonrise1));
+        f.add(settingTextField1 = new MoonRiseSetField(R.id.moonset_layout1, R.id.text_time_moonset1, R.id.text_info_moonset1));
+
         divider = findViewById(R.id.divider_moon1);
 
         if (isInEditMode())
@@ -153,12 +155,6 @@ public class MoonRiseSetView extends LinearLayout
         isRtl = AppSettings.isLocaleRtl(context);
     }
 
-    private void showEmptyView( boolean show )
-    {
-        empty.setVisibility(show ? View.VISIBLE : View.GONE);
-        content.setVisibility(show ? View.GONE : View.VISIBLE);
-    }
-
     protected void updateViews( Context context, SuntimesMoonData data )
     {
         if (isInEditMode())
@@ -166,12 +162,7 @@ public class MoonRiseSetView extends LinearLayout
             return;
         }
 
-        if (data == null)
-        {
-            return;
-        }
-
-        if (data.isCalculated())
+        if (data != null && data.isCalculated())
         {
             boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
 
@@ -204,7 +195,7 @@ public class MoonRiseSetView extends LinearLayout
             reorderLayout(risingTime, settingTime, risingTime1, settingTime1);
 
         } else {
-            showEmptyView(true);
+            clearLayout();
         }
     }
 
@@ -232,26 +223,21 @@ public class MoonRiseSetView extends LinearLayout
     private void setShowPosition(boolean value)
     {
         showPosition = value;
-
-        if (risingTextField != null)
-            risingTextField.setShowPosition(showPosition);
-
-        if (settingTextField != null)
-            settingTextField.setShowPosition(showPosition);
-
-        if (risingTextField1 != null)
-            risingTextField1.setShowPosition(showPosition);
-
-        if (settingTextField1 != null)
-            settingTextField1.setShowPosition(showPosition);
+        for (MoonRiseSetField field : f)
+        {
+            if (field != null)
+            {
+                field.setShowPosition(showPosition);
+            }
+        }
     }
 
     private void clearLayout()
     {
-        risingTextField.removeFromLayout(content);
-        settingTextField.removeFromLayout(content);
-        risingTextField1.removeFromLayout(content);
-        settingTextField1.removeFromLayout(content);
+        for (MoonRiseSetField field : f)
+        {
+            field.removeFromLayout(content);
+        }
 
         if (divider != null)
         {
@@ -358,25 +344,36 @@ public class MoonRiseSetView extends LinearLayout
 
     private void updateMargins(Context context, MoonRiseSetFieldLayoutSet fields)
     {
+        int defaultMargin = getResources().getDimensionPixelSize(R.dimen.table_moon_startEndMargin);
+
         if (context != null && showExtraField)
         {
-            int margins = getResources().getDimensionPixelSize(R.dimen.table_moon_startEndMargin);
-            risingTextField.setMarginStartEnd(margins, margins);
-            risingTextField1.setMarginStartEnd(margins, margins);
-            settingTextField.setMarginStartEnd(margins, margins);
-            settingTextField1.setMarginStartEnd(margins, margins);
+            for (MoonRiseSetField field : f)
+            {
+                field.setMarginStartEnd(defaultMargin, defaultMargin);
+            }
 
         } else {
-            TextView v = (fields.tomorrowMode) ? fields.field3.getTimeView() : fields.field2.getTimeView();
+            MoonRiseSetField startField, endField;
+            if (fields.tomorrowMode)
+            {
+                startField = fields.field2;
+                endField = fields.field3;
+            } else {
+                startField = fields.field1;
+                endField = fields.field2;
+            }
+            TextView v = endField.getTimeView();
             v.measure(0, 0);
 
-            int startMargin = getResources().getDimensionPixelSize(R.dimen.table_set_leftMargin);
-            startMargin -= (v.getMeasuredWidth() - matchColumnWidthPx);
+            int margin = getResources().getDimensionPixelSize(R.dimen.table_set_leftMargin);
+            margin -= (v.getMeasuredWidth() - matchColumnWidthPx);
 
-            risingTextField.setMarginStartEnd(startMargin, 0);
-            risingTextField1.setMarginStartEnd(startMargin, 0);
-            settingTextField.setMarginStartEnd(startMargin, 0);
-            settingTextField1.setMarginStartEnd(startMargin, 0);
+            for (MoonRiseSetField field : f)
+            {
+                int startMargin = (((field == startField) ? defaultMargin : (field == endField) ? margin : 0));
+                field.setMarginStartEnd( startMargin, 0);
+            }
         }
     }
 
@@ -416,6 +413,11 @@ public class MoonRiseSetView extends LinearLayout
             layout = findViewById(layoutID);
             timeView = (TextView)findViewById(timeViewID);
             positionView = (TextView)findViewById(positionViewID);
+        }
+
+        public void updateField(String timeText)
+        {
+            timeView.setText(timeText);
         }
 
         public void updateField(Context context, Calendar dateTime, boolean showSeconds)
