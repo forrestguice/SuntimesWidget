@@ -4,9 +4,17 @@
           package="com.forrestguice.suntimeswidget" >
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="18" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />     <!-- needed to get location using GPS -->
+
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />      <!-- needed to interact w/ AlarmClock -->
+
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />           <!-- needed to interact w/ Calendar -->
+
+    <uses-permission android:name="android.permission.READ_SYNC_STATS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />      <!-- needed to add new Calendars (via SyncAdapter) -->
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="18" />  <!-- needed by "export" features (e.g. "export places" to file) -->
 
     <uses-sdk tools:overrideLibrary="com.flask.colorpicker" />
 
