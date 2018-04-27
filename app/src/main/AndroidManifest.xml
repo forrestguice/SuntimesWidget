@@ -46,6 +46,16 @@
 
         </activity>
 
+        <service
+            android:name="com.forrestguice.suntimeswidget.calendar.SuntimesSyncService"
+            android:exported="true"
+            android:process=":sync">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter"/>
+            </intent-filter>
+            <meta-data android:name="android.content.SyncAdapter" android:resource="@xml/syncadapter" />
+        </service>
+
         <!-- Settings Activity -->
         <activity
             android:name=".SuntimesSettingsActivity"
