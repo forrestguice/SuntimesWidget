@@ -57,10 +57,49 @@ public class SuntimesCalendarActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                initMoonPhaseCalendar();
             }
         });
     }
 
+    private void initMoonPhaseCalendar()
+    {
+        int calendarPermission = ActivityCompat.checkSelfPermission(SuntimesCalendarActivity.this, Manifest.permission.WRITE_CALENDAR);
+        if (calendarPermission != PackageManager.PERMISSION_GRANTED)
+        {
+            ActivityCompat.requestPermissions(SuntimesCalendarActivity.this, new String[] { Manifest.permission.WRITE_CALENDAR }, 0);
+        }
+
+        Uri uri = SuntimesSyncAdapter.asSyncAdapter(CalendarContract.Calendars.CONTENT_URI);
+        ContentValues contentValues = createCalendarContentValues();
+        SuntimesCalendarActivity.this.getContentResolver().insert(uri, contentValues);
+    }
+
+    @TargetApi(15)
+    public static ContentValues createCalendarContentValues()
+    {
+        String calendarName = "suntimesWidgetMoonPhases";
+        String calendarDisplayName = "Moon Phases";
+        String calendarColor = "123213";
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(CalendarContract.Calendars.ACCOUNT_NAME, SuntimesSyncAdapter.ACCOUNT_NAME);
+        contentValues.put(CalendarContract.Calendars.ACCOUNT_TYPE, CalendarContract.ACCOUNT_TYPE_LOCAL);
+        contentValues.put(CalendarContract.Calendars.OWNER_ACCOUNT, SuntimesSyncAdapter.ACCOUNT_NAME);
+        contentValues.put(CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL, CalendarContract.Calendars.CAL_ACCESS_OWNER);
+
+        contentValues.put(CalendarContract.Calendars.NAME, calendarName);
+        contentValues.put(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME, calendarDisplayName);
+        contentValues.put(CalendarContract.Calendars.CALENDAR_COLOR, calendarColor);
+        contentValues.put(CalendarContract.Calendars.VISIBLE, 1);
+        contentValues.put(CalendarContract.Calendars.SYNC_EVENTS, 1);
+
+        contentValues.put(CalendarContract.Calendars.ALLOWED_REMINDERS, "METHOD_ALERT, METHOD_EMAIL, METHOD_ALARM");
+        contentValues.put(CalendarContract.Calendars.ALLOWED_ATTENDEE_TYPES, "TYPE_OPTIONAL, TYPE_REQUIRED, TYPE_RESOURCE");
+        contentValues.put(CalendarContract.Calendars.ALLOWED_AVAILABILITY, "AVAILABILITY_BUSY, AVAILABILITY_FREE, AVAILABILITY_TENTATIVE");
+
+        return contentValues;
+    }
 
     private void initLocale(Context context)
     {
