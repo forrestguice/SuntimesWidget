@@ -34,6 +34,15 @@
     </header>
 
     <header android:icon="?attr/icActionSettings"
+        android:title="Create Calendar"
+        android:summary="">
+
+        <intent android:targetPackage="com.forrestguice.suntimeswidget"
+            android:targetClass="com.forrestguice.suntimeswidget.SuntimesCalendarActivity" />
+
+    </header>
+
+    <header android:icon="?attr/icActionSettings"
             android:title="@string/configLabel_widgetList"
             android:summary="">
 
