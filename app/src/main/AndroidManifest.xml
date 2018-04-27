@@ -52,6 +52,12 @@
             android:label="@string/app_name"
             android:icon="@mipmap/ic_suntimes">
         </activity>
+
+        <provider
+            android:name="com.forrestguice.suntimeswidget.calendar.SuntimesContentProvider"
+            android:authorities="com.forrestguice.suntimeswidget.datasync.provider"
+            android:exported="false"
+            android:syncable="true"/>
         <service
             android:name="com.forrestguice.suntimeswidget.calendar.SuntimesSyncService"
             android:exported="true"
