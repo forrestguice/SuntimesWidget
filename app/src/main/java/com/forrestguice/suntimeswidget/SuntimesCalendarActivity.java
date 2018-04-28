@@ -19,20 +19,17 @@
 package com.forrestguice.suntimeswidget;
 
 import android.Manifest;
-import android.annotation.TargetApi;
-import android.content.ContentValues;
+import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.CalendarContract;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.forrestguice.suntimeswidget.calendar.SuntimesSyncAdapter;
+import com.forrestguice.suntimeswidget.calendar.SuntimesCalendarAdapter;
+import com.forrestguice.suntimeswidget.calendar.SuntimesCalendarTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 
 public class SuntimesCalendarActivity extends AppCompatActivity
@@ -57,48 +54,28 @@ public class SuntimesCalendarActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                initMoonPhaseCalendar();
+                if (checkPermissions(SuntimesCalendarActivity.this))
+                {
+                    SuntimesCalendarTask calendarTask = new SuntimesCalendarTask(SuntimesCalendarActivity.this);
+                    calendarTask.execute();
+                }
             }
         });
-    }
 
-    private void initMoonPhaseCalendar()
-    {
-        int calendarPermission = ActivityCompat.checkSelfPermission(SuntimesCalendarActivity.this, Manifest.permission.WRITE_CALENDAR);
-        if (calendarPermission != PackageManager.PERMISSION_GRANTED)
+        Button btnDelete = (Button)findViewById(R.id.btn_deletecalendar);
+        btnDelete.setOnClickListener(new View.OnClickListener()
         {
-            ActivityCompat.requestPermissions(SuntimesCalendarActivity.this, new String[] { Manifest.permission.WRITE_CALENDAR }, 0);
-        }
-
-        Uri uri = SuntimesSyncAdapter.asSyncAdapter(CalendarContract.Calendars.CONTENT_URI);
-        ContentValues contentValues = createCalendarContentValues();
-        SuntimesCalendarActivity.this.getContentResolver().insert(uri, contentValues);
-    }
-
-    @TargetApi(15)
-    public static ContentValues createCalendarContentValues()
-    {
-        String calendarName = "suntimesWidgetMoonPhases";
-        String calendarDisplayName = "Moon Phases";
-        String calendarColor = "123213";
-
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(CalendarContract.Calendars.ACCOUNT_NAME, SuntimesSyncAdapter.ACCOUNT_NAME);
-        contentValues.put(CalendarContract.Calendars.ACCOUNT_TYPE, CalendarContract.ACCOUNT_TYPE_LOCAL);
-        contentValues.put(CalendarContract.Calendars.OWNER_ACCOUNT, SuntimesSyncAdapter.ACCOUNT_NAME);
-        contentValues.put(CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL, CalendarContract.Calendars.CAL_ACCESS_OWNER);
-
-        contentValues.put(CalendarContract.Calendars.NAME, calendarName);
-        contentValues.put(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME, calendarDisplayName);
-        contentValues.put(CalendarContract.Calendars.CALENDAR_COLOR, calendarColor);
-        contentValues.put(CalendarContract.Calendars.VISIBLE, 1);
-        contentValues.put(CalendarContract.Calendars.SYNC_EVENTS, 1);
-
-        contentValues.put(CalendarContract.Calendars.ALLOWED_REMINDERS, "METHOD_ALERT, METHOD_EMAIL, METHOD_ALARM");
-        contentValues.put(CalendarContract.Calendars.ALLOWED_ATTENDEE_TYPES, "TYPE_OPTIONAL, TYPE_REQUIRED, TYPE_RESOURCE");
-        contentValues.put(CalendarContract.Calendars.ALLOWED_AVAILABILITY, "AVAILABILITY_BUSY, AVAILABILITY_FREE, AVAILABILITY_TENTATIVE");
-
-        return contentValues;
+            @Override
+            public void onClick(View v)
+            {
+                if (checkPermissions(SuntimesCalendarActivity.this))
+                {
+                    SuntimesCalendarTask calendarTask = new SuntimesCalendarTask(SuntimesCalendarActivity.this);
+                    calendarTask.setFlagClearCalendars(true);
+                    calendarTask.execute();
+                }
+            }
+        });
     }
 
     private void initLocale(Context context)
@@ -107,5 +84,15 @@ public class SuntimesCalendarActivity extends AppCompatActivity
         SuntimesUtils.initDisplayStrings(context);
     }
 
+    private boolean checkPermissions(Activity context)
+    {
+        int calendarPermission = ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_CALENDAR);
+        if (calendarPermission != PackageManager.PERMISSION_GRANTED)
+        {
+            ActivityCompat.requestPermissions(context, new String[] { Manifest.permission.WRITE_CALENDAR }, 0);
+            return false;
+        }
+        return true;
+    }
 
 }

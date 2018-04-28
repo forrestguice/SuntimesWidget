@@ -24,15 +24,21 @@ import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.SyncResult;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.CalendarContract;
+
+import java.util.Calendar;
 
 public class SuntimesSyncAdapter extends AbstractThreadedSyncAdapter
 {
     public static final String ACCOUNT_NAME = "Suntimes";
+
+    public static final String PREF_KEY_CALENDAR_LASTSYNC = "lastCalendarSync";
 
     public SuntimesSyncAdapter(Context context, boolean autoInitialize)
     {
@@ -44,10 +50,25 @@ public class SuntimesSyncAdapter extends AbstractThreadedSyncAdapter
         super(context, autoInitialize, allowParallelSyncs);
     }
 
+    public static long readLastSyncTime(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getLong(PREF_KEY_CALENDAR_LASTSYNC, -1L);
+    }
+
+    public static void writeLastSyncTime(Context context, Calendar calendar)
+    {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putLong(PREF_KEY_CALENDAR_LASTSYNC, calendar.getTimeInMillis());
+        prefs.apply();
+    }
+
+
+
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult)
     {
-        // EMPTY
+        // TODO: add/remove calendar events
     }
 
     @TargetApi(15)
