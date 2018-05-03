@@ -1,5 +1,10 @@
 ### ~
 
+### ~
+* enhances calculator fallback behavior; e.g. SuntimesMoonData now overrides the default (sunrisesunsetlib -> Time4A4J).
+* fixes bug where solstice/equinox card fails to hide when calculator lacks support (and fallback was supplied).
+* fixes app crash (MoonDialog) if calculator failed to load (and fallback was supplied). 
+
 ### v0.8.1 (2018-04-26)
 * misc layout changes (improvements for locales w/ long strings).
 * fixes column alignment of solstice/equinox in main table; now aligns w/ the sunrise column.
