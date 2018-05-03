@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -26,21 +27,25 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.util.TypedValue;
 import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.calendar.SuntimesCalendarTask;
 import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.ClearPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
@@ -60,6 +65,7 @@ import java.util.List;
 public class SuntimesSettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener
 {
     final static String ACTION_PREFS_GENERAL = "com.forrestguice.suntimeswidget.PREFS_GENERAL";
+    final static String ACTION_PREFS_CALENDAR = "com.forrestguice.suntimeswidget.PREFS_CALENDAR";
     final static String ACTION_PREFS_LOCALE = "com.forrestguice.suntimeswidget.PREFS_LOCALE";
     final static String ACTION_PREFS_UI = "com.forrestguice.suntimeswidget.PREFS_UI";
     final static String ACTION_PREFS_WIDGETLIST = "com.forrestguice.suntimeswidget.PREFS_WIDGETLIST";
@@ -103,6 +109,10 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 //noinspection deprecation
                 addPreferencesFromResource(R.xml.preference_general);
                 initPref_general();
+
+            } else if (action.equals(ACTION_PREFS_CALENDAR)) {
+                addPreferencesFromResource(R.xml.preference_calendars);
+                initPref_calendars();
 
             } else if (action.equals(ACTION_PREFS_LOCALE)) {
                 //noinspection deprecation
@@ -237,6 +247,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     protected boolean isValidFragment(String fragmentName)
     {
         return GeneralPrefsFragment.class.getName().equals(fragmentName) ||
+               CalendarPrefsFragment.class.getName().equals(fragmentName) ||
                LocalePrefsFragment.class.getName().equals(fragmentName) ||
                UIPrefsFragment.class.getName().equals(fragmentName) ||
                PlacesPrefsFragment.class.getName().equals(fragmentName);
@@ -454,6 +465,64 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         String key_timeFormat = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + WidgetSettings.PREF_KEY_APPEARANCE_TIMEFORMATMODE;
         Preference timeformatPref = fragment.findPreference(key_timeFormat);
         initPref_timeFormat(fragment.getActivity(), timeformatPref);
+    }
+
+
+    //////////////////////////////////////////////////
+    //////////////////////////////////////////////////
+
+    public static class CalendarPrefsFragment extends PreferenceFragment
+    {
+        @Override
+        public void onCreate(Bundle savedInstanceState)
+        {
+            super.onCreate(savedInstanceState);
+            AppSettings.initLocale(getActivity());
+            Log.i("CalendarPrefsFragment", "Arguments: " + getArguments());
+
+            PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_calendars, false);
+            addPreferencesFromResource(R.xml.preference_calendars);
+
+            initPref_calendars(CalendarPrefsFragment.this);
+        }
+    }
+
+    private void initPref_calendars()
+    {
+        CheckBoxPreference calendarsEnabledPref = (CheckBoxPreference) findPreference(AppSettings.PREF_KEY_CALENDARS_ENABLED);
+        initPref_calendars(this, calendarsEnabledPref);
+    }
+
+    private static void initPref_calendars(PreferenceFragment fragment)
+    {
+        CheckBoxPreference calendarsEnabledPref = (CheckBoxPreference) fragment.findPreference(AppSettings.PREF_KEY_CALENDARS_ENABLED);
+        initPref_calendars(fragment.getActivity(), calendarsEnabledPref);
+    }
+
+    private static void initPref_calendars(final Activity activity, final CheckBoxPreference enabledPref )
+    {
+        enabledPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
+        {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue)
+            {
+                int calendarPermission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_CALENDAR);
+                if (calendarPermission != PackageManager.PERMISSION_GRANTED)
+                {
+                    ActivityCompat.requestPermissions(activity, new String[] { Manifest.permission.WRITE_CALENDAR }, 0);
+                    return false;
+
+                } else {
+                    SuntimesCalendarTask calendarTask = new SuntimesCalendarTask(activity);
+                    Boolean enabled = (Boolean)newValue ;
+                    if (!enabled) {
+                        calendarTask.setFlagClearCalendars(true);
+                    }
+                    calendarTask.execute();
+                    return true;
+                }
+            }
+        });
     }
 
     //////////////////////////////////////////////////
