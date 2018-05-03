@@ -1,5 +1,11 @@
 ### ~
 
+### ~
+* adds app pref "On Date Long Press"; defaults to "Show Calendar".
+* adds permissions READ_CALENDAR, WRITE_CALENDAR; needed to interact w/ Calendar app (add/remove events in custom calendars).
+* adds permissions READ_SYNC_STATS, WRITE_SYNC_SETTINGS; needed to provide custom calendars (add/remove calendars via SyncAdapter).
+* adds a SyncAdapter (LOCAL account) to provide the Calendar app with custom calendars.
+
 ### v0.8.1 (2018-04-26)
 * misc layout changes (improvements for locales w/ long strings).
 * fixes column alignment of solstice/equinox in main table; now aligns w/ the sunrise column.
