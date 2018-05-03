@@ -63,8 +63,6 @@ public class SuntimesSyncAdapter extends AbstractThreadedSyncAdapter
         prefs.apply();
     }
 
-
-
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult)
     {
