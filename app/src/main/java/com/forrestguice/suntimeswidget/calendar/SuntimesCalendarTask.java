@@ -26,6 +26,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
@@ -134,7 +135,11 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
             {
                 SuntimesSyncAdapter.writeLastSyncTime(context, Calendar.getInstance());
             }
-        }
+
+            if (flag_clear)
+                Log.i("SuntimesCalendarTask", "Cleared Suntimes Calendars...");
+            else Log.i("SuntimesCalendarTask", "Added / updated Suntimes Calendars...");
+        } else Log.w("SuntimesCalendarTask", "Failed to complete task!");
     }
 
     public static long readCalendarWindow(Context context)
