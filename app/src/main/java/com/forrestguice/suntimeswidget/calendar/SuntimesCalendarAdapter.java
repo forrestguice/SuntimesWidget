@@ -24,11 +24,13 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.CalendarContract;
 import android.util.Log;
 
 import java.util.Calendar;
 
+@TargetApi(14)
 public class SuntimesCalendarAdapter
 {
     public static final String CALENDAR_SOLSTICE = "solsticeCalendar";
@@ -79,7 +81,6 @@ public class SuntimesCalendarAdapter
      * @param description the event description
      * @param time the startTime of the event (endTime is the same)
      */
-    @TargetApi(14)
     public void createCalendarEvent(long calendarID, String title, String description, Calendar time) throws SecurityException
     {
         ContentValues contentValues = SuntimesCalendarAdapter.createEventContentValues(calendarID, title, description, time);
@@ -89,7 +90,6 @@ public class SuntimesCalendarAdapter
     /**
      * @return a Cursor to all calendars managed by the "Suntimes" local account
      */
-    @TargetApi(14)
     public Cursor queryCalendars()
     {
         Uri uri = SuntimesSyncAdapter.asSyncAdapter(CalendarContract.Calendars.CONTENT_URI);
@@ -102,7 +102,6 @@ public class SuntimesCalendarAdapter
      * @param calendarName the calendar's name
      * @return a Cursor to the calendar w/ the given name managed by the "Suntimes" local account.
      */
-    @TargetApi(14)
     public Cursor queryCalendar(String calendarName)
     {
         Uri uri = SuntimesSyncAdapter.asSyncAdapter(CalendarContract.Calendars.CONTENT_URI);
@@ -151,7 +150,6 @@ public class SuntimesCalendarAdapter
      * @param calendarColor
      * @return
      */
-    @TargetApi(15)
     public static ContentValues createCalendarContentValues(String calendarName, String displayName, int calendarColor)
     {
         ContentValues v = new ContentValues();
@@ -165,10 +163,13 @@ public class SuntimesCalendarAdapter
         v.put(CalendarContract.Calendars.CALENDAR_COLOR, calendarColor);
         v.put(CalendarContract.Calendars.VISIBLE, 1);
         v.put(CalendarContract.Calendars.SYNC_EVENTS, 1);
-
         v.put(CalendarContract.Calendars.ALLOWED_REMINDERS, "METHOD_ALERT, METHOD_EMAIL, METHOD_ALARM");
-        //v.put(CalendarContract.Calendars.ALLOWED_ATTENDEE_TYPES, "TYPE_OPTIONAL, TYPE_REQUIRED, TYPE_RESOURCE");
-        v.put(CalendarContract.Calendars.ALLOWED_AVAILABILITY, "AVAILABILITY_BUSY, AVAILABILITY_FREE, AVAILABILITY_TENTATIVE");
+
+        if (Build.VERSION.SDK_INT >= 15)
+        {
+            v.put(CalendarContract.Calendars.ALLOWED_AVAILABILITY, "AVAILABILITY_BUSY, AVAILABILITY_FREE, AVAILABILITY_TENTATIVE");
+            //v.put(CalendarContract.Calendars.ALLOWED_ATTENDEE_TYPES, "TYPE_OPTIONAL, TYPE_REQUIRED, TYPE_RESOURCE");
+        }
 
         return v;
     }
@@ -180,7 +181,6 @@ public class SuntimesCalendarAdapter
      * @param time
      * @return
      */
-    @TargetApi(14)
     public static ContentValues createEventContentValues(long calendarID, String title, String description, Calendar time)
     {
         ContentValues v = new ContentValues();

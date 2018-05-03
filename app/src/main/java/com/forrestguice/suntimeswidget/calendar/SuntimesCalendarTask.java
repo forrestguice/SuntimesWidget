@@ -18,10 +18,12 @@
 
 package com.forrestguice.suntimeswidget.calendar;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 
@@ -100,6 +102,9 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
     @Override
     protected Boolean doInBackground(Void... params)
     {
+        if (Build.VERSION.SDK_INT < 14)
+            return false;
+
         boolean retValue = adapter.removeCalendars();
         if (!flag_clear)
         {
