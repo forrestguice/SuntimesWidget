@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2017 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -133,6 +133,7 @@ public class SuntimesCalculatorFactory
 
         } catch (Exception e1) {
             calculator = fallbackCalculator();
+            signalCreatedFallback(fallbackCalculatorDescriptor());
             Log.e("createCalculator", "fail! .oO( " + current.getReference() + "), so instantiating default: " + calculator.getClass().getName() + " :: " + timezone);
         }
         calculator.init(location, timezone, context);
@@ -149,5 +150,30 @@ public class SuntimesCalculatorFactory
     public SuntimesCalculatorDescriptor fallbackCalculatorDescriptor()
     {
         return com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.getDescriptor();
+    }
+
+    /**
+     * FactoryListener
+     */
+    public static abstract class FactoryListener
+    {
+        public void onCreateFallback(SuntimesCalculatorDescriptor descriptor) {}
+    }
+
+    protected FactoryListener factoryListener = null;
+    public void setFactoryListener( FactoryListener listener )
+    {
+        factoryListener = listener;
+    }
+    public void clearFactoryListener()
+    {
+        factoryListener = null;
+    }
+    private void signalCreatedFallback(SuntimesCalculatorDescriptor descriptor)
+    {
+        if (factoryListener != null)
+        {
+            factoryListener.onCreateFallback(descriptor);
+        }
     }
 }
