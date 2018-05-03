@@ -55,6 +55,9 @@ public class AppSettings
     public static final String PREF_KEY_UI_DATETAPACTION = "app_ui_datetapaction";
     public static final DateTapAction PREF_DEF_UI_DATETAPACTION = DateTapAction.CONFIG_DATE;
 
+    public static final String PREF_KEY_UI_DATETAPACTION1 = "app_ui_datetapaction1";
+    public static final DateTapAction PREF_DEF_UI_DATETAPACTION1 = DateTapAction.SHOW_CALENDAR;
+
     public static final String PREF_KEY_UI_CLOCKTAPACTION = "app_ui_clocktapaction";
     public static final ClockTapAction PREF_DEF_UI_CLOCKTAPACTION = ClockTapAction.ALARM;
 
@@ -444,6 +447,24 @@ public class AppSettings
 
         } catch (IllegalArgumentException e) {
             actionMode = PREF_DEF_UI_DATETAPACTION;
+        }
+        return actionMode;
+    }
+
+    /**
+     * Preference: the action that is performed when the date field is long-clicked
+     */
+    public static DateTapAction loadDateTapAction1Pref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        String modeString = pref.getString(PREF_KEY_UI_DATETAPACTION1, PREF_DEF_UI_DATETAPACTION1.name());
+
+        DateTapAction actionMode;
+        try {
+            actionMode = DateTapAction.valueOf(modeString);
+
+        } catch (IllegalArgumentException e) {
+            actionMode = PREF_DEF_UI_DATETAPACTION1;
         }
         return actionMode;
     }
