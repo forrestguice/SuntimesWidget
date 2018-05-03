@@ -243,7 +243,7 @@ public class SuntimesData
 
     public void initCalculator(Context context)
     {
-        final SuntimesCalculatorFactory calculatorFactory = new SuntimesCalculatorFactory(context, calculatorMode);
+        final SuntimesCalculatorFactory calculatorFactory = initFactory(context);
         calculatorFactory.setFactoryListener(new SuntimesCalculatorFactory.FactoryListener()
         {
             @Override
@@ -258,6 +258,11 @@ public class SuntimesData
             calculatorMode = calculatorFactory.fallbackCalculatorDescriptor();
         }
         this.calculator = calculatorFactory.createCalculator(location, timezone);
+    }
+
+    public SuntimesCalculatorFactory initFactory(Context context)
+    {
+        return new SuntimesCalculatorFactory(context, calculatorMode);
     }
 
     /**
