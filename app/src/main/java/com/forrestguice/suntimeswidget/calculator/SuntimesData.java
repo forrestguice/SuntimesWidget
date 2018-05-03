@@ -241,8 +241,17 @@ public class SuntimesData
         }
     }
 
+    public void setCalculator(SuntimesCalculator calculator, SuntimesCalculatorDescriptor descriptor)
+    {
+        this.calculator = calculator;
+        this.calculatorMode = descriptor;
+    }
+
     public void initCalculator(Context context)
     {
+        if (this.calculator != null)
+            return;
+
         final SuntimesCalculatorFactory calculatorFactory = initFactory(context);
         calculatorFactory.setFactoryListener(new SuntimesCalculatorFactory.FactoryListener()
         {
