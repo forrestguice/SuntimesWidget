@@ -774,6 +774,12 @@
     </string-array>
 
     <!--
+      CALENDARS
+    -->
+    <string name="calendar_solstice_displayName">Solstices and Equinoxes</string>  <!-- TODO: i18n -->
+    <string name="calendar_moonPhase_displayName">Moon Phases</string>  <!-- TODO: i18n -->
+
+    <!--
       DIALOGS
     -->
 

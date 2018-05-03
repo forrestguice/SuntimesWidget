@@ -64,7 +64,7 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
 
         // solstice calendar resources
         solsticeData = new SuntimesEquinoxSolsticeDataset(context);
-        calendarDisplay.put(SuntimesCalendarAdapter.CALENDAR_SOLSTICE, "Solstices and Equinoxes");  // TODO: i18n
+        calendarDisplay.put(SuntimesCalendarAdapter.CALENDAR_SOLSTICE, context.getString(R.string.calendar_solstice_displayName));
         calendarColors.put(SuntimesCalendarAdapter.CALENDAR_SOLSTICE, ContextCompat.getColor(context, R.color.winterColor_light));
 
         solsticeStrings[0] = context.getString(R.string.timeMode_equinox_vernal);
@@ -79,7 +79,7 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
 
         // moon phase calendar resources
         moonData = new SuntimesMoonData(context, 0, "moon");
-        calendarDisplay.put(SuntimesCalendarAdapter.CALENDAR_MOONPHASE, "Moon Phases");  // TODO: i18n
+        calendarDisplay.put(SuntimesCalendarAdapter.CALENDAR_MOONPHASE, context.getString(R.string.calendar_moonPhase_displayName));
         calendarColors.put(SuntimesCalendarAdapter.CALENDAR_MOONPHASE, ContextCompat.getColor(context, R.color.moonIcon_color_rising_light));
         MoonPhaseDisplay.initDisplayStrings(context);
     }
