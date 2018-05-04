@@ -141,8 +141,7 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
 
     public void initCalculator()
     {
-        SuntimesCalculatorFactory calculatorFactory = new SuntimesCalculatorFactory(context, calculatorMode);
-        this.calculator = calculatorFactory.createCalculator(location, timezone);
+        initCalculator(context);
     }
 
     public void calculate()
