@@ -93,6 +93,11 @@ public class SuntimesEquinoxSolsticeDataset
         }
     }
 
+    public SuntimesCalculator calculator()
+    {
+        return dataEquinoxVernal.calculator();
+    }
+
     public void calculateData()
     {
         dataEquinoxVernal.calculate();
