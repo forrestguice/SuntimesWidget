@@ -110,6 +110,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private ColorChooser chooseColorNoon, chooseColorNoonIconFill, chooseColorNoonIconStroke;
     private ColorChooser chooseColorSet, chooseColorSetIconFill, chooseColorSetIconStroke;
     private ColorChooser chooseColorTitle, chooseColorText, chooseColorTime, chooseColorSuffix;
+    private ColorChooser chooseColorDay, chooseColorCivil, chooseColorNautical, chooseColorAstro, chooseColorNight;
     private ColorChooser chooseColorSpring, chooseColorSummer, chooseColorFall, chooseColorWinter;
     private ColorChooser chooseColorMoonrise, chooseColorMoonset;
     private ColorChooser chooseColorMoonWaning, chooseColorMoonNew, chooseColorMoonWaxing, chooseColorMoonFull;
@@ -266,6 +267,13 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         chooseColorSet = createColorChooser(this, R.id.editLabel_sunsetColor, R.id.edit_sunsetColor, R.id.editButton_sunsetColor, SuntimesTheme.THEME_SUNSETCOLOR);
         chooseColorSetIconFill = createColorChooser(this, R.id.editLabel_sunsetFillColor, R.id.edit_sunsetFillColor, R.id.editButton_sunsetFillColor, SuntimesTheme.THEME_SETICON_FILL_COLOR);
         chooseColorSetIconStroke = createColorChooser(this, R.id.editLabel_sunsetStrokeColor, R.id.edit_sunsetStrokeColor, R.id.editButton_sunsetStrokeColor, SuntimesTheme.THEME_SETICON_STROKE_COLOR);
+
+        // graph colors
+        chooseColorDay = createColorChooser(context, null, null, null, SuntimesTheme.THEME_DAYCOLOR);  // TODO
+        chooseColorCivil = createColorChooser(context, null, null, null, SuntimesTheme.THEME_CIVILCOLOR);  // TODO
+        chooseColorNautical = createColorChooser(context, null, null, null, SuntimesTheme.THEME_NAUTICALCOLOR);  // TODO
+        chooseColorAstro = createColorChooser(context, null, null, null, SuntimesTheme.THEME_ASTROCOLOR);  // TODO
+        chooseColorNight = createColorChooser(context, null, null, null, SuntimesTheme.THEME_NIGHTCOLOR);  // TODO
 
         // season colors
         chooseColorSpring = createColorChooser(this, R.id.editLabel_springColor, R.id.edit_springColor, R.id.editButton_springColor, SuntimesTheme.THEME_SPRINGCOLOR );
@@ -1154,6 +1162,12 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             chooseColorSetIconFill.setColor(theme.getSunsetIconColor());
             chooseColorSetIconStroke.setColor(theme.getSunsetIconStrokeColor());
 
+            chooseColorDay.setColor(theme.getDayColor());
+            chooseColorCivil.setColor(theme.getCivilColor());
+            chooseColorNautical.setColor(theme.getNauticalColor());
+            chooseColorAstro.setColor(theme.getAstroColor());
+            chooseColorNight.setColor(theme.getNightColor());
+
             chooseColorSpring.setColor(theme.getSpringColor());
             chooseColorSummer.setColor(theme.getSummerColor());
             chooseColorFall.setColor(theme.getFallColor());
@@ -1223,6 +1237,12 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 this.themeSunsetIconColor = chooseColorSetIconFill.getColor();
                 this.themeSunsetIconStrokeColor = chooseColorSetIconStroke.getColor();
                 this.themeSunsetIconStrokeWidth = chooseIconStroke.getValue();
+
+                this.themeDayColor = chooseColorDay.getColor();
+                this.themeCivilColor = chooseColorCivil.getColor();
+                this.themeNauticalColor = chooseColorNautical.getColor();
+                this.themeAstroColor = chooseColorAstro.getColor();
+                this.themeNightColor = chooseColorNight.getColor();
 
                 this.themeSpringColor = chooseColorSpring.getColor();
                 this.themeSummerColor = chooseColorSummer.getColor();
