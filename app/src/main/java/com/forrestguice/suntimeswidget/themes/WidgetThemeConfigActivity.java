@@ -270,11 +270,11 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         chooseColorSetIconStroke = createColorChooser(this, R.id.editLabel_sunsetStrokeColor, R.id.edit_sunsetStrokeColor, R.id.editButton_sunsetStrokeColor, SuntimesTheme.THEME_SETICON_STROKE_COLOR);
 
         // graph colors
-        chooseColorDay = createColorChooser(context, null, null, null, SuntimesTheme.THEME_DAYCOLOR);  // TODO
-        chooseColorCivil = createColorChooser(context, null, null, null, SuntimesTheme.THEME_CIVILCOLOR);  // TODO
-        chooseColorNautical = createColorChooser(context, null, null, null, SuntimesTheme.THEME_NAUTICALCOLOR);  // TODO
-        chooseColorAstro = createColorChooser(context, null, null, null, SuntimesTheme.THEME_ASTROCOLOR);  // TODO
-        chooseColorNight = createColorChooser(context, null, null, null, SuntimesTheme.THEME_NIGHTCOLOR);  // TODO
+        chooseColorDay = createColorChooser(context, R.id.editLabel_dayColor, R.id.edit_dayColor, R.id.editButton_dayColor, SuntimesTheme.THEME_DAYCOLOR);
+        chooseColorCivil = createColorChooser(context, R.id.editLabel_civilColor, R.id.edit_civilColor, R.id.editButton_civilColor, SuntimesTheme.THEME_CIVILCOLOR);
+        chooseColorNautical = createColorChooser(context, R.id.editLabel_nauticalColor, R.id.edit_nauticalColor, R.id.editButton_nauticalColor, SuntimesTheme.THEME_NAUTICALCOLOR);
+        chooseColorAstro = createColorChooser(context, R.id.editLabel_astroColor, R.id.edit_astroColor, R.id.editButton_astroColor, SuntimesTheme.THEME_ASTROCOLOR);
+        chooseColorNight = createColorChooser(context, R.id.editLabel_nightColor, R.id.edit_nightColor, R.id.editButton_nightColor, SuntimesTheme.THEME_NIGHTCOLOR);
 
         // season colors
         chooseColorSpring = createColorChooser(this, R.id.editLabel_springColor, R.id.edit_springColor, R.id.editButton_springColor, SuntimesTheme.THEME_SPRINGCOLOR );
