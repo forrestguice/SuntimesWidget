@@ -131,15 +131,15 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
         themeViewsAzimuthElevationText(context, views, theme);
 
         colors = new LightMapView.LightMapColors();
+        if (theme.getBackground() == ThemeBackground.LIGHT)
+            colors.initDefaultLight(context);
+        else colors.initDefaultDark(context);
+
         colors.colorDay = theme.getDayColor();
         colors.colorCivil = theme.getCivilColor();
         colors.colorNautical = theme.getNauticalColor();
         colors.colorAstro = theme.getAstroColor();
         colors.colorNight = theme.getNightColor();
-
-        //if (theme.getBackground() == ThemeBackground.LIGHT)
-            //colors.initDefaultLight(context);
-        //else colors.initDefaultDark(context);
     }
 
 }
