@@ -63,6 +63,12 @@ public class DarkTheme extends SuntimesTheme
     public static final int THEMEDEF_MOONRISECOLOR_ID = R.color.moonIcon_color_rising_dark;
     public static final int THEMEDEF_MOONSETCOLOR_ID = R.color.moonIcon_color_setting_dark;
 
+    public static final int THEMEDEF_DAYCOLOR_ID = R.color.graphColor_day_dark;
+    public static final int THEMEDEF_CIVILCOLOR_ID = R.color.graphColor_civil_dark;
+    public static final int THEMEDEF_NAUTICALCOLOR_ID = R.color.graphColor_nautical_dark;
+    public static final int THEMEDEF_ASTROCOLOR_ID = R.color.graphColor_astronomical_dark;
+    public static final int THEMEDEF_NIGHTCOLOR_ID = R.color.graphColor_night_dark;
+
     public static final int THEMEDEF_SPRINGCOLOR_ID = R.color.springColor_dark;
     public static final int THEMEDEF_SUMMERCOLOR_ID = R.color.summerColor_dark;
     public static final int THEMEDEF_FALLCOLOR_ID = R.color.fallColor_dark;
@@ -118,6 +124,12 @@ public class DarkTheme extends SuntimesTheme
 
         this.themeMoonFullStroke = THEMEDEF_MOONFULL_STROKEWIDTH;
         this.themeMoonNewStroke = THEMEDEF_MOONNEW_STROKEWIDTH;
+
+        this.themeDayColor = ContextCompat.getColor(context, THEMEDEF_DAYCOLOR_ID);
+        this.themeCivilColor = ContextCompat.getColor(context, THEMEDEF_CIVILCOLOR_ID);
+        this.themeNauticalColor = ContextCompat.getColor(context, THEMEDEF_NAUTICALCOLOR_ID);
+        this.themeAstroColor = ContextCompat.getColor(context, THEMEDEF_ASTROCOLOR_ID);
+        this.themeNightColor = ContextCompat.getColor(context, THEMEDEF_NIGHTCOLOR_ID);
 
         this.themeSpringColor = ContextCompat.getColor(context, THEMEDEF_SPRINGCOLOR_ID);
         this.themeSummerColor = ContextCompat.getColor(context, THEMEDEF_SUMMERCOLOR_ID);
