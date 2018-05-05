@@ -81,6 +81,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     public static final int PREVIEWID_SUN_2x1 = 0;
     public static final int PREVIEWID_MOON_2x1 = 1;
     public static final int PREVIEWID_MOON_3x1 = 2;
+    public static final int PREVIEWID_SUNPOS_3x1 = 3;
 
     public static final int ADD_THEME_REQUEST = 0;
     public static final int EDIT_THEME_REQUEST = 1;
@@ -609,6 +610,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         updatePreview_sun(previewLayout);
         updatePreview_solstice(previewLayout);
+        updatePreview_position(previewLayout);
         updatePreview_moon(previewLayout);
     }
 
@@ -743,6 +745,20 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         //chooseColorFall.getColor();
         // TODO: winter color
         //chooseColorWinter.getColor();
+    }
+
+    protected void updatePreview_position(View previewLayout)
+    {
+        // TODO: day color
+        //chooseColorDay.getColor();
+        // TODO: civil color
+        //chooseColorCivil.getColor();
+        // TODO: nautical color
+        //chooseColorNautical.getColor();
+        // TODO: astro color
+        //chooseColorAstro.getColor();
+        // TODO: night color
+        //chooseColorNight.getColor();
     }
 
     /**
