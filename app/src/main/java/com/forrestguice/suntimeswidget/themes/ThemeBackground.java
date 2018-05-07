@@ -28,10 +28,10 @@ import com.forrestguice.suntimeswidget.R;
  */
 public enum ThemeBackground
 {
+    CUSTOM(-1, "Custom", true),
     DARK(R.drawable.bg_widget_dark, "Dark", false),
     LIGHT(R.drawable.bg_widget, "Light", false),
-    TRANSPARENT(android.R.color.transparent, "Transparent", false),
-    CUSTOM(R.drawable.bg_widget_dark, "Custom", true);
+    TRANSPARENT(android.R.color.transparent, "Transparent", false);
 
     private int resID;
     private String displayString;
