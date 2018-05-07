@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.themes;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
@@ -84,6 +85,7 @@ public class LightTheme extends SuntimesTheme
         this.themeDisplayString = THEMEDEF_DISPLAYSTRING;
 
         this.themeBackground = THEMEDEF_BACKGROUND;
+        this.themeBackgroundColor = Color.WHITE;
         this.themePadding = THEMEDEF_PADDING;
 
         this.themeTitleSize = THEMEDEF_TITLESIZE;

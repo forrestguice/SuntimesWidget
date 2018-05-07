@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.themes;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -127,7 +128,7 @@ public class SuntimesTheme
     protected String themeDisplayString;
 
     protected ThemeBackground themeBackground;
-    protected int themeBackgroundColor = -1;
+    protected int themeBackgroundColor = Color.DKGRAY;
     protected int[] themePadding = {0, 0, 0, 0};
     private int[] themePaddingPixels = {-1, -1, -1, -1};
 
