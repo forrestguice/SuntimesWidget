@@ -1,6 +1,9 @@
 ### ~
 
 ### ~
+* adds to theming; custom background option (simple background color with transparency).
+
+### ~
 * adds to theming; graph colors; day, civil, nautical, astronomical, and night colors.
 
 ### v0.8.1 (2018-04-26)
