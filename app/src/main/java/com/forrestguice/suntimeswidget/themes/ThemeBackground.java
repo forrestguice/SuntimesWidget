@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -28,22 +28,30 @@ import com.forrestguice.suntimeswidget.R;
  */
 public enum ThemeBackground
 {
-    DARK(R.drawable.bg_widget_dark, "Dark"),
-    LIGHT(R.drawable.bg_widget, "Light"),
-    TRANSPARENT(android.R.color.transparent, "Transparent");
+    DARK(R.drawable.bg_widget_dark, "Dark", false),
+    LIGHT(R.drawable.bg_widget, "Light", false),
+    TRANSPARENT(android.R.color.transparent, "Transparent", false),
+    CUSTOM(R.drawable.bg_widget_dark, "Custom", true);
 
     private int resID;
     private String displayString;
+    private boolean customColors = false;
 
-    private ThemeBackground(int resId, String displayString )
+    private ThemeBackground(int resId, String displayString, boolean customColors )
     {
         this.resID = resId;
         this.displayString = displayString;
+        this.customColors = customColors;
     }
 
     public int getResID()
     {
         return resID;
+    }
+
+    public boolean supportsCustomColors()
+    {
+        return customColors;
     }
 
     public String getDisplayString()
@@ -66,6 +74,7 @@ public enum ThemeBackground
         DARK.setDisplayString(context.getString(R.string.configLabel_themeBackground_dark));
         LIGHT.setDisplayString(context.getString(R.string.configLabel_themeBackground_light));
         TRANSPARENT.setDisplayString(context.getString(R.string.configLabel_themeBackground_trans));
+        CUSTOM.setDisplayString(context.getString(R.string.configLabel_themeBackground_custom));
     }
 
     public static int ordinal(ThemeBackground[] backgrounds, int resID)

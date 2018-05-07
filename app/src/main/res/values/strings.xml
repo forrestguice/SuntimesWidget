@@ -387,6 +387,7 @@
     <string name="configLabel_themeBackground_light">Light</string>        <!-- light background -->
     <string name="configLabel_themeBackground_dark">Dark</string>          <!-- dark background -->
     <string name="configLabel_themeBackground_trans">Transparent</string>  <!-- transparent background -->
+    <string name="configLabel_themeBackground_custom">Custom</string>      <!-- custom background -->
 
     <string name="configLabel_themeColorTitle">Title Colour:</string>     <!-- color label -->
     <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->
