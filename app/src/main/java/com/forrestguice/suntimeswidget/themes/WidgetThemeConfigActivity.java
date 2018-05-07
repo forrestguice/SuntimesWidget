@@ -212,6 +212,13 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
             {
                 updatePreview();
+
+                ThemeBackground background = spinBackground_adapter.getItem(i);
+                View backgroundColorLayout = findViewById(R.id.layout_backgroundColor);
+                if (backgroundColorLayout != null && background != null)
+                {
+                    backgroundColorLayout.setVisibility(background.supportsCustomColors() ? View.VISIBLE : View.GONE);
+                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView)
@@ -220,7 +227,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             }
         });
 
-        chooseColorBackground = createColorChooser(context, null, null, null, THEME_BACKGROUND_COLOR);
+        chooseColorBackground = createColorChooser(context, R.id.editLabel_backgroundColor, R.id.edit_backgroundColor, R.id.editButton_backgroundColor, THEME_BACKGROUND_COLOR);
+        chooseColorBackground.setShowAlpha(true);
 
         EditText editName = (EditText)findViewById(R.id.edit_themeName);
         chooseName = new ThemeNameChooser(editName);
