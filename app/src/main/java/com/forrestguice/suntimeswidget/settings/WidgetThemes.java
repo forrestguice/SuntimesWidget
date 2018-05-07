@@ -53,6 +53,7 @@ import com.forrestguice.suntimeswidget.themes.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.DarkThemeTrans;
 import com.forrestguice.suntimeswidget.themes.LightTheme;
 import com.forrestguice.suntimeswidget.themes.LightThemeTrans;
+import com.forrestguice.suntimeswidget.themes.ThemeBackground;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -510,7 +511,11 @@ public class WidgetThemes
 
                 View layout = view.findViewById(R.id.widgetframe_inner);
                 try {
-                    layout.setBackgroundResource(theme.getBackground().getResID());
+                    ThemeBackground background = theme.getBackground();
+                    if (background.supportsCustomColors())
+                        layout.setBackgroundColor(theme.getBackgroundColor());
+                    else layout.setBackgroundResource(background.getResID());
+
                 } catch (Resources.NotFoundException e) {
                     Log.w("ThemeGridAdapter", "background resource not found! " + theme.getBackground());
                 }
