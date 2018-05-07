@@ -77,24 +77,6 @@ public enum ThemeBackground
         CUSTOM.setDisplayString(context.getString(R.string.configLabel_themeBackground_custom));
     }
 
-    public static int ordinal(ThemeBackground[] backgrounds, int resID)
-    {
-        for (int i=0; i<backgrounds.length; i++)
-        {
-            if (backgrounds[i] != null && backgrounds[i].getResID() == resID)
-            {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    public static int ordinal(int resID)
-    {
-        ThemeBackground[] backgrounds = ThemeBackground.values();
-        return ThemeBackground.ordinal(backgrounds, resID);
-    }
-
     @NonNull
     public static ThemeBackground getThemeBackground( int resID )
     {
