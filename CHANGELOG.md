@@ -1,5 +1,8 @@
 ### ~
 
+### ~
+* fixes bug where user-defined language fails to override locale (api26) (#197).
+
 ### v0.8.1 (2018-04-26)
 * misc layout changes (improvements for locales w/ long strings).
 * fixes column alignment of solstice/equinox in main table; now aligns w/ the sunrise column.
