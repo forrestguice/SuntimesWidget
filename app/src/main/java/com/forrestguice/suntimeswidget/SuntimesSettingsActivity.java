@@ -173,7 +173,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
     private void initLocale(Bundle icicle)
     {
-        boolean localeChanged = AppSettings.initLocale(this);
+        boolean localeChanged = (this != AppSettings.initLocale(this));
         WidgetSettings.initDefaults(context);
 
         AppSettings.initDisplayStrings(context);
