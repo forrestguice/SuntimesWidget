@@ -49,6 +49,7 @@ import com.forrestguice.suntimeswidget.settings.SummaryListPreference;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.io.File;
+import java.security.InvalidParameterException;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -263,17 +264,29 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     {
         if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_CALCULATOR))
         {
-            // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
-            // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
-            WidgetSettings.saveCalculatorModePref(this, 0, SuntimesCalculatorDescriptor.valueOf(sharedPreferences.getString(key, "missing")));
+            try {
+                // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
+                // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
+                SuntimesCalculatorDescriptor descriptor = SuntimesCalculatorDescriptor.valueOf(sharedPreferences.getString(key, null));
+                WidgetSettings.saveCalculatorModePref(this, 0, descriptor);
+
+            } catch (InvalidParameterException e) {
+                Log.e("onPreferenceChanged", "Failed to persist sun calculator pref! " + e);
+            }
             return;
         }
 
         if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_CALCULATOR + "_moon"))
         {
-            // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
-            // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
-            WidgetSettings.saveCalculatorModePref(this, 0, "moon", SuntimesCalculatorDescriptor.valueOf(sharedPreferences.getString(key, "missing")));
+            try {
+                // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
+                // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
+                SuntimesCalculatorDescriptor descriptor = SuntimesCalculatorDescriptor.valueOf(sharedPreferences.getString(key, null));
+                WidgetSettings.saveCalculatorModePref(this, 0, "moon", descriptor);
+
+            } catch (InvalidParameterException e) {
+                Log.e("onPreferenceChanged", "Failed to persist moon calculator pref! " + e);
+            }
             return;
         }
 
