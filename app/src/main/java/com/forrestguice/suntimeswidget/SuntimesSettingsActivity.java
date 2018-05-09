@@ -75,6 +75,13 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     }
 
     @Override
+    protected void attachBaseContext(Context newBase)
+    {
+        Context context = AppSettings.initLocale(newBase);
+        super.attachBaseContext(context);
+    }
+
+    @Override
     public void onCreate(Bundle icicle)
     {
         setResult(RESULT_OK);
@@ -173,7 +180,6 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
     private void initLocale(Bundle icicle)
     {
-        boolean localeChanged = (this != AppSettings.initLocale(this));
         WidgetSettings.initDefaults(context);
 
         AppSettings.initDisplayStrings(context);
@@ -189,7 +195,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             themeChanged = !prevTheme.equals(appTheme);
         }
 
-        if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) && (localeChanged || themeChanged))
+        if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) && (themeChanged))
         {
             invalidateHeaders();
         }
