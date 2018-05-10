@@ -427,39 +427,26 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         public int colorDay, colorCivil, colorNautical, colorAstro, colorNight;
         public int colorPointFill, colorPointStroke;
 
-        public LightMapColors()
-        {
-        }
-
-        public LightMapColors( int colorDay, int colorCivil, int colorNautical, int colorAstro, int colorNight, int colorPointFill, int colorPointStroke )
-        {
-            this.colorDay = colorDay;
-            this.colorCivil = colorCivil;
-            this.colorNautical = colorNautical;
-            this.colorAstro = colorAstro;
-            this.colorNight = colorNight;
-            this.colorPointFill = colorPointFill;
-            this.colorPointStroke = colorPointStroke;
-        }
+        public LightMapColors() {}
 
         @SuppressWarnings("ResourceType")
         public LightMapColors(Context context)
         {
-            int[] colorAttrs = { R.attr.graphColor_night,   // 0
-                    R.attr.graphColor_astronomical,         // 1
+            int[] colorAttrs = { R.attr.graphColor_day,     // 0
+                    R.attr.graphColor_civil,                // 1
                     R.attr.graphColor_nautical,             // 2
-                    R.attr.graphColor_civil,                // 3
-                    R.attr.graphColor_day,                  // 4
+                    R.attr.graphColor_astronomical,         // 3
+                    R.attr.graphColor_night,                // 4
                     R.attr.graphColor_pointFill,            // 5
                     R.attr.graphColor_pointStroke };        // 6
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
             int def = R.color.transparent;
 
-            colorNight = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
-            colorAstro = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
+            colorDay = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
+            colorCivil = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
             colorNautical = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
-            colorCivil = ContextCompat.getColor(context, typedArray.getResourceId(3, def));
-            colorDay = ContextCompat.getColor(context, typedArray.getResourceId(4, def));
+            colorAstro = ContextCompat.getColor(context, typedArray.getResourceId(3, def));
+            colorNight = ContextCompat.getColor(context, typedArray.getResourceId(4, def));
             colorPointFill = ContextCompat.getColor(context, typedArray.getResourceId(5, def));
             colorPointStroke = ContextCompat.getColor(context, typedArray.getResourceId(6, def));
 
