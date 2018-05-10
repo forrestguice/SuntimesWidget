@@ -132,6 +132,13 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     }
 
     @Override
+    protected void attachBaseContext(Context newBase)
+    {
+        Context context = AppSettings.initLocale(newBase);
+        super.attachBaseContext(context);
+    }
+
+    @Override
     public void onCreate(Bundle icicle)
     {
         setTheme(AppSettings.loadTheme(this));
@@ -176,7 +183,6 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
     private void initLocale()
     {
-        AppSettings.initLocale(this);
         WidgetSettings.initDefaults(this);
         WidgetSettings.initDisplayStrings(this);
         ThemeBackground.initDisplayStrings(this);
