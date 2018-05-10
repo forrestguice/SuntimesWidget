@@ -60,6 +60,8 @@ import java.util.List;
  */
 public class SuntimesSettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener
 {
+    public static final String LOG_TAG = "SuntimesSettings";
+
     final static String ACTION_PREFS_GENERAL = "com.forrestguice.suntimeswidget.PREFS_GENERAL";
     final static String ACTION_PREFS_LOCALE = "com.forrestguice.suntimeswidget.PREFS_LOCALE";
     final static String ACTION_PREFS_UI = "com.forrestguice.suntimeswidget.PREFS_UI";
@@ -105,6 +107,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         String action = getIntent().getAction();
         if (action != null)
         {
+            Log.i(LOG_TAG, "initLegacyPrefs: action: " + action);
+
             //noinspection IfCanBeSwitch
             if (action.equals(ACTION_PREFS_GENERAL))
             {
@@ -133,7 +137,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 finish();
 
             } else {
-                Log.w("initLegacyPrefs", "unhandled action: " + action);
+                Log.w(LOG_TAG, "initLegacyPrefs: unhandled action: " + action);
             }
 
         } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
@@ -268,16 +272,20 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
     {
+        Log.i(LOG_TAG, "onSharedPreferenceChanged: key: " + key);
+
         if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_CALCULATOR))
         {
             try {
                 // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
                 // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
-                SuntimesCalculatorDescriptor descriptor = SuntimesCalculatorDescriptor.valueOf(sharedPreferences.getString(key, null));
+                String calcName = sharedPreferences.getString(key, null);
+                SuntimesCalculatorDescriptor descriptor = SuntimesCalculatorDescriptor.valueOf(calcName);
                 WidgetSettings.saveCalculatorModePref(this, 0, descriptor);
+                Log.i(LOG_TAG, "onSharedPreferenceChanged: value: " + calcName + " :: " + descriptor);
 
             } catch (InvalidParameterException e) {
-                Log.e("onPreferenceChanged", "Failed to persist sun calculator pref! " + e);
+                Log.e(LOG_TAG, "onPreferenceChanged: Failed to persist sun calculator pref! " + e);
             }
             return;
         }
@@ -287,11 +295,13 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             try {
                 // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
                 // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
-                SuntimesCalculatorDescriptor descriptor = SuntimesCalculatorDescriptor.valueOf(sharedPreferences.getString(key, null));
+                String calcName = sharedPreferences.getString(key, null);
+                SuntimesCalculatorDescriptor descriptor = SuntimesCalculatorDescriptor.valueOf(calcName);
                 WidgetSettings.saveCalculatorModePref(this, 0, "moon", descriptor);
+                Log.i(LOG_TAG, "onSharedPreferenceChanged: value: " + calcName + " :: " + descriptor);
 
             } catch (InvalidParameterException e) {
-                Log.e("onPreferenceChanged", "Failed to persist moon calculator pref! " + e);
+                Log.e(LOG_TAG, "onPreferenceChanged: Failed to persist moon calculator pref! " + e);
             }
             return;
         }
@@ -394,7 +404,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         {
             super.onCreate(savedInstanceState);
             AppSettings.initLocale(getActivity());
-            Log.i("GeneralPrefsFragment", "Arguments: " + getArguments());
+            Log.i(LOG_TAG, "GeneralPrefsFragment: Arguments: " + getArguments());
 
             PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_general, false);
             addPreferencesFromResource(R.xml.preference_general);
@@ -427,6 +437,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
      */
     private void initPref_general()
     {
+        Log.i(LOG_TAG, "initPref_general (legacy)");
         String key_sunCalc = WidgetSettings.keyCalculatorModePref(0);
         //noinspection deprecation
         SummaryListPreference sunCalculatorPref = (SummaryListPreference)findPreference(key_sunCalc);
@@ -452,6 +463,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private static void initPref_general(PreferenceFragment fragment)
     {
+        Log.i(LOG_TAG, "initPref_general (fragment)");
         Context context = fragment.getActivity();
 
         String key_sunCalc = WidgetSettings.keyCalculatorModePref(0);
@@ -489,7 +501,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         {
             super.onCreate(savedInstanceState);
             AppSettings.initLocale(getActivity());
-            Log.i("LocalePrefsFragment", "Arguments: " + getArguments());
+            Log.i(LOG_TAG, "LocalePrefsFragment: Arguments: " + getArguments());
 
             PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_locale, false);
             addPreferencesFromResource(R.xml.preference_locale);
@@ -591,7 +603,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         {
             super.onCreate(savedInstanceState);
             AppSettings.initLocale(getActivity());
-            Log.i("PlacesPrefsFragment", "Arguments: " + getArguments());
+            Log.i(LOG_TAG, "PlacesPrefsFragment: Arguments: " + getArguments());
             setRetainInstance(true);
 
             PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_places, false);
@@ -931,7 +943,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         {
             super.onCreate(savedInstanceState);
             AppSettings.initLocale(getActivity());
-            Log.i("UIPrefsFragment", "Arguments: " + getArguments());
+            Log.i(LOG_TAG, "UIPrefsFragment: Arguments: " + getArguments());
 
             PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_userinterface, false);
             addPreferencesFromResource(R.xml.preference_userinterface);
@@ -1027,7 +1039,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 //Log.d("SuntimesSettings", "current mode: " + currentMode + " (" + currentIndex + ")");
 
             } else {    // the descriptor loaded successfully (not null), but for whatever reason its not in our list..
-                Log.w("loadPref", "Unable to load calculator preference! The list is missing an entry for the descriptor: " + currentMode);
+                Log.w(LOG_TAG, "loadPref: Unable to load calculator preference! The list is missing an entry for the descriptor: " + currentMode);
                 calculatorPref.setValue(null);  // reset to null (so subsequent selection by user gets saved and fixes this condition)
             }
         }
