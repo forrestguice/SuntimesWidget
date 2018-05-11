@@ -106,6 +106,7 @@ public class ExportPlacesTask extends ExportTask
             ExportProgress progressObj = new ExportProgress(i, numEntries, msg);
             publishProgress(progressObj);
         }
+        out.flush();
         return true;
     }
 
