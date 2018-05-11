@@ -1,6 +1,6 @@
 ### ~
 
-### ~
+### v0.8.2 (2018-05-11)
 * adds to theming; graph colors; day, civil, nautical, astronomical, and night colors.
 * fixes bug where "export places" creates an empty file (#204).
 * enhances calculator fallback behavior; e.g. SuntimesMoonData now overrides the default (sunrisesunsetlib -> Time4A4J).
