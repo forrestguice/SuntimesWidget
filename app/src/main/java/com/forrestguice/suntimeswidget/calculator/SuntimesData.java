@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -241,13 +241,37 @@ public class SuntimesData
         }
     }
 
+    public void setCalculator(SuntimesCalculator calculator, SuntimesCalculatorDescriptor descriptor)
+    {
+        this.calculator = calculator;
+        this.calculatorMode = descriptor;
+    }
+
     public void initCalculator(Context context)
     {
-        SuntimesCalculatorFactory calculatorFactory = new SuntimesCalculatorFactory(context, calculatorMode);
+        if (this.calculator != null)
+            return;
+
+        final SuntimesCalculatorFactory calculatorFactory = initFactory(context);
+        calculatorFactory.setFactoryListener(new SuntimesCalculatorFactory.FactoryListener()
+        {
+            @Override
+            public void onCreateFallback(SuntimesCalculatorDescriptor descriptor)
+            {
+                Log.w("initCalculator",  "failed to initCalculator; using fallback...");
+                calculatorMode = descriptor;
+            }
+        });
+
         if (calculatorMode == null) {
             calculatorMode = calculatorFactory.fallbackCalculatorDescriptor();
         }
         this.calculator = calculatorFactory.createCalculator(location, timezone);
+    }
+
+    public SuntimesCalculatorFactory initFactory(Context context)
+    {
+        return new SuntimesCalculatorFactory(context, calculatorMode);
     }
 
     /**

@@ -32,13 +32,16 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.FileUriExposedException;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -102,6 +105,13 @@ public class WidgetThemeListActivity extends AppCompatActivity
     }
 
     @Override
+    protected void attachBaseContext(Context newBase)
+    {
+        Context context = AppSettings.initLocale(newBase);
+        super.attachBaseContext(context);
+    }
+
+    @Override
     public void onCreate(Bundle icicle)
     {
         setTheme(AppSettings.loadTheme(this));
@@ -148,7 +158,6 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
     private void initLocale()
     {
-        AppSettings.initLocale(this);
         WidgetSettings.initDefaults(this);
         WidgetSettings.initDisplayStrings(this);
     }
@@ -348,21 +357,31 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
             if (results.getResult())
             {
-                String successMessage = getString(R.string.msg_export_success, results.getExportFile().getAbsolutePath());
-                Toast.makeText(getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
-
                 Intent shareIntent = new Intent();
                 shareIntent.setAction(Intent.ACTION_SEND);
-                shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(results.getExportFile()));
                 shareIntent.setType("text/plain");
-                startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.msg_export_to)));
+                shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-            } else {
-                File file = results.getExportFile();
-                String path = ((file != null) ? file.getAbsolutePath() : "<path>");
-                String failureMessage = getString(R.string.msg_export_failure, path);
-                Toast.makeText(getApplicationContext(), failureMessage, Toast.LENGTH_LONG).show();
+                try {
+                    //Uri shareURI = Uri.fromFile(results.getExportFile());  // this URI works until api26 (throws FileUriExposedException)
+                    Uri shareURI = FileProvider.getUriForFile(WidgetThemeListActivity.this, "com.forrestguice.suntimeswidget.fileprovider", results.getExportFile());
+                    shareIntent.putExtra(Intent.EXTRA_STREAM, shareURI);
+
+                    String successMessage = getString(R.string.msg_export_success, results.getExportFile().getAbsolutePath());
+                    Toast.makeText(getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
+
+                    startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.msg_export_to)));
+                    return;     // successful export ends here...
+
+                } catch (Exception e) {
+                    Log.e("ExportThemes", "Failed to share file URI! " + e);
+                }
             }
+
+            File file = results.getExportFile();   // export failed
+            String path = ((file != null) ? file.getAbsolutePath() : "<path>");
+            String failureMessage = getString(R.string.msg_export_failure, path);
+            Toast.makeText(getApplicationContext(), failureMessage, Toast.LENGTH_LONG).show();
         }
     };
 

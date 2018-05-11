@@ -1,5 +1,14 @@
 ### ~
 
+### v0.8.2 (2018-05-11)
+* adds to theming; graph colors; day, civil, nautical, astronomical, and night colors.
+* fixes bug where "export places" creates an empty file (#204).
+* enhances calculator fallback behavior; e.g. SuntimesMoonData now overrides the default (sunrisesunsetlib -> Time4A4J).
+* fixes bug where solstice/equinox card fails to hide when calculator lacks support (and fallback was supplied).
+* fixes app crash (MoonDialog) if calculator failed to load (and fallback was supplied) (#198).
+* fixes app crash (General Settings) when initializing defaults (api26) (#198).
+* fixes bug where user-defined language fails to override locale (api26) (#197).
+
 ### v0.8.1 (2018-04-26)
 * misc layout changes (improvements for locales w/ long strings).
 * fixes column alignment of solstice/equinox in main table; now aligns w/ the sunrise column.
