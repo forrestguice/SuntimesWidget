@@ -88,9 +88,22 @@ public class SuntimesRiseSetDataset
 
     public void calculateData()
     {
+        SuntimesCalculator calculator = null;
+        SuntimesCalculatorDescriptor descriptor = null;
+        boolean first = true;
         for (SuntimesRiseSetData data : dataset )
         {
-            data.calculate();
+            if (first)
+            {
+                data.calculate();
+                calculator = data.calculator();
+                descriptor = data.calculatorMode();
+                first = false;
+
+            } else {
+                data.setCalculator(calculator, descriptor);
+                data.calculate();
+            }
         }
     }
 

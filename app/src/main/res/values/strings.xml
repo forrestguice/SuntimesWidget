@@ -1029,8 +1029,8 @@
     <string name="calculator_displayString_time4a_4j">Based on astronomical calculations published by Jean Meeus in his book "Astronomical Algorithms" (second edition).</string>
 
     <!-- pref defaults -->
-    <string name="def_appwidget_0_general_calculator" translatable="false">any</string>
-    <string name="def_appwidget_0_general_calculator_moon" translatable="false">any</string>
+    <string name="def_appwidget_0_general_calculator" translatable="false">time4a-noaa</string>
+    <string name="def_appwidget_0_general_calculator_moon" translatable="false">time4a-time4j</string>
     <string name="def_appwidget_0_appearance_timeformatmode" translatable="false">MODE_SYSTEM</string>
     <string name="def_appwidget_0_general_showweeks" translatable="false">false</string>
     <string name="def_appwidget_0_general_showhours" translatable="false">true</string>

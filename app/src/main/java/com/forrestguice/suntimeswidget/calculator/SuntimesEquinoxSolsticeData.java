@@ -139,12 +139,6 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
         return eventCalendarOtherYear;
     }
 
-    public void initCalculator()
-    {
-        SuntimesCalculatorFactory calculatorFactory = new SuntimesCalculatorFactory(context, calculatorMode);
-        this.calculator = calculatorFactory.createCalculator(location, timezone);
-    }
-
     public void calculate()
     {
         //Log.v("SuntimesWidgetData", "time mode: " + timeMode);
