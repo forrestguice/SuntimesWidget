@@ -2,6 +2,7 @@
 
 ### ~
 * adds to theming; graph colors; day, civil, nautical, astronomical, and night colors.
+* fixes bug where "export places" creates an empty file (#204).
 * enhances calculator fallback behavior; e.g. SuntimesMoonData now overrides the default (sunrisesunsetlib -> Time4A4J).
 * fixes bug where solstice/equinox card fails to hide when calculator lacks support (and fallback was supplied).
 * fixes app crash (MoonDialog) if calculator failed to load (and fallback was supplied) (#198).
