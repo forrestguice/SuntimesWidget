@@ -66,6 +66,13 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         super();
     }
 
+    @Override
+    protected void attachBaseContext(Context newBase)
+    {
+        Context context = AppSettings.initLocale(newBase);
+        super.attachBaseContext(context);
+    }
+
     /**
      * OnCreate: the Activity initially created
      * @param icicle a Bundle containing saved state
@@ -75,18 +82,12 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     {
         setTheme(AppSettings.loadTheme(this));
         super.onCreate(icicle);
-        initLocale(this);
+        SuntimesUtils.initDisplayStrings(this);
 
         setResult(RESULT_CANCELED);
         setContentView(R.layout.layout_widgetlist);
         initViews(this);
         updateWidgetAlarms(this);
-    }
-
-    private void initLocale(Context context)
-    {
-        AppSettings.initLocale(context);
-        SuntimesUtils.initDisplayStrings(context);
     }
 
     /**

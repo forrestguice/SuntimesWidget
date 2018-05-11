@@ -80,6 +80,17 @@
             android:icon="@mipmap/ic_suntimes">
         </activity>
 
+        <!-- FileProvider (export to file; places, themes) -->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.forrestguice.suntimeswidget.fileprovider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/fileprovider_paths"/>
+        </provider>
+
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget 0_1x1: Resizable (falls back to static 1x1 for api less than 14) -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->

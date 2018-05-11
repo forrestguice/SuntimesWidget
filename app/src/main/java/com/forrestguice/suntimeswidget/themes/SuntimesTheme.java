@@ -84,6 +84,12 @@ public class SuntimesTheme
     public static final float THEME_SETICON_STROKE_WIDTH_DEF = 0.0f;
     public static final float THEME_SETICON_STROKE_WIDTH_MAX = 7.0f;
 
+    public static final String THEME_DAYCOLOR = "daycolor";
+    public static final String THEME_CIVILCOLOR = "civilcolor";
+    public static final String THEME_NAUTICALCOLOR = "nauticalcolor";
+    public static final String THEME_ASTROCOLOR = "astrocolor";
+    public static final String THEME_NIGHTCOLOR = "nightcolor";
+
     public static final String THEME_SPRINGCOLOR = "springcolor";
     public static final String THEME_SUMMERCOLOR = "summercolor";
     public static final String THEME_FALLCOLOR = "fallcolor";
@@ -144,6 +150,12 @@ public class SuntimesTheme
     protected int themeSunsetIconStrokeColor;
     protected int themeSunsetIconStrokeWidth;
     protected int themeSunsetIconStrokePixels = -1;
+
+    protected int themeDayColor;
+    protected int themeCivilColor;
+    protected int themeNauticalColor;
+    protected int themeAstroColor;
+    protected int themeNightColor;
 
     protected int themeSpringColor;
     protected int themeSummerColor;
@@ -218,6 +230,12 @@ public class SuntimesTheme
         this.themeMoonFullStroke = otherTheme.themeMoonFullStroke;
         this.themeMoonNewStroke = otherTheme.themeMoonNewStroke;
 
+        this.themeDayColor = otherTheme.themeDayColor;
+        this.themeCivilColor = otherTheme.themeCivilColor;
+        this.themeNauticalColor = otherTheme.themeNauticalColor;
+        this.themeAstroColor = otherTheme.themeAstroColor;
+        this.themeNightColor = otherTheme.themeNightColor;
+
         this.themeSpringColor = otherTheme.themeSpringColor;
         this.themeSummerColor = otherTheme.themeSummerColor;
         this.themeFallColor = otherTheme.themeFallColor;
@@ -234,6 +252,8 @@ public class SuntimesTheme
 
     public boolean initTheme( Context context, String themesPrefix, String themeName, SuntimesTheme defaultTheme )
     {
+        long bench_start = System.nanoTime();
+
         SharedPreferences themes = context.getSharedPreferences(themesPrefix, Context.MODE_PRIVATE);
         String theme = themePrefix(themeName);
 
@@ -296,6 +316,12 @@ public class SuntimesTheme
         this.themeMoonFullStroke = themes.getInt( theme + THEME_MOONFULL_STROKE_WIDTH, defaultTheme.themeMoonFullStroke );
         this.themeMoonNewStroke = themes.getInt( theme + THEME_MOONNEW_STROKE_WIDTH, defaultTheme.themeMoonNewStroke );
 
+        this.themeDayColor = themes.getInt( theme + THEME_DAYCOLOR, defaultTheme.themeDayColor );
+        this.themeCivilColor = themes.getInt( theme + THEME_CIVILCOLOR, defaultTheme.themeCivilColor );
+        this.themeNauticalColor = themes.getInt( theme + THEME_NAUTICALCOLOR, defaultTheme.themeNauticalColor );
+        this.themeAstroColor = themes.getInt( theme + THEME_ASTROCOLOR, defaultTheme.themeAstroColor );
+        this.themeNightColor = themes.getInt( theme + THEME_NIGHTCOLOR, defaultTheme.themeNightColor );
+
         this.themeSpringColor = themes.getInt( theme + THEME_SPRINGCOLOR, defaultTheme.themeSpringColor );
         this.themeSummerColor = themes.getInt( theme + THEME_SUMMERCOLOR, defaultTheme.themeSummerColor );
         this.themeFallColor = themes.getInt( theme + THEME_FALLCOLOR, defaultTheme.themeFallColor );
@@ -309,6 +335,8 @@ public class SuntimesTheme
         this.themeTitleBold = themes.getBoolean( theme + THEME_TITLEBOLD, defaultTheme.themeTitleBold );
         this.themeTimeBold = themes.getBoolean( theme + THEME_TIMEBOLD, defaultTheme.themeTimeBold );
 
+        long bench_end = System.nanoTime();
+        Log.d("DEBUG", "init theme: " + this.themeName() + " :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
         return true;
     }
 
@@ -362,6 +390,12 @@ public class SuntimesTheme
 
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_MOONFULL_STROKE_WIDTH, this.themeMoonFullStroke);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_MOONNEW_STROKE_WIDTH, this.themeMoonNewStroke);
+
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_DAYCOLOR, this.themeDayColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_CIVILCOLOR, this.themeCivilColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_NAUTICALCOLOR, this.themeNauticalColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_ASTROCOLOR, this.themeAstroColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_NIGHTCOLOR, this.themeNightColor);
 
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_SPRINGCOLOR, this.themeSpringColor);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_SUMMERCOLOR, this.themeSummerColor);
@@ -438,6 +472,12 @@ public class SuntimesTheme
 
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_MOONFULL_STROKE_WIDTH);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_MOONNEW_STROKE_WIDTH);
+
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_DAYCOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_CIVILCOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_NAUTICALCOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_ASTROCOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_NIGHTCOLOR);
 
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_SPRINGCOLOR);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_SUMMERCOLOR);
@@ -661,6 +701,27 @@ public class SuntimesTheme
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
         themeMoonNewStrokePixels = (int)((metrics.density * getMoonNewStroke()) + 0.5f);
         return themeMoonNewStrokePixels;
+    }
+
+    public int getDayColor()
+    {
+        return themeDayColor;
+    }
+    public int getCivilColor()
+    {
+        return themeCivilColor;
+    }
+    public int getNauticalColor()
+    {
+        return themeNauticalColor;
+    }
+    public int getAstroColor()
+    {
+        return themeAstroColor;
+    }
+    public int getNightColor()
+    {
+        return themeNightColor;
     }
 
     public int getSpringColor()

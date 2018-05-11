@@ -96,8 +96,16 @@ public class SuntimesEquinoxSolsticeDataset
     public void calculateData()
     {
         dataEquinoxVernal.calculate();
+        SuntimesCalculator calculator = dataEquinoxVernal.calculator();
+        SuntimesCalculatorDescriptor descriptor = dataEquinoxVernal.calculatorMode();
+
+        dataSolsticeSummer.setCalculator(calculator, descriptor);
         dataSolsticeSummer.calculate();
+
+        dataEquinoxAutumnal.setCalculator(calculator, descriptor);
         dataEquinoxAutumnal.calculate();
+        
+        dataSolsticeWinter.setCalculator(calculator, descriptor);
         dataSolsticeWinter.calculate();
     }
 

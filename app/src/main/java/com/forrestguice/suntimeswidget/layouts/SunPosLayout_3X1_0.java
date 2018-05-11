@@ -134,6 +134,12 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
         if (theme.getBackground() == ThemeBackground.LIGHT)
             colors.initDefaultLight(context);
         else colors.initDefaultDark(context);
+
+        colors.colorDay = theme.getDayColor();
+        colors.colorCivil = theme.getCivilColor();
+        colors.colorNautical = theme.getNauticalColor();
+        colors.colorAstro = theme.getAstroColor();
+        colors.colorNight = theme.getNightColor();
     }
 
 }

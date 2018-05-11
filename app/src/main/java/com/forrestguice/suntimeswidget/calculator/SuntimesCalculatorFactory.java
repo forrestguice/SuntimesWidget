@@ -98,7 +98,8 @@ public class SuntimesCalculatorFactory
             //Log.d("createCalculator", "using .oO( " + calculator.name() + " ): " + timezone);
 
         } catch (Exception e1) {
-            calculator = new com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator();
+            calculator = fallbackCalculator();
+            signalCreatedFallback(fallbackCalculatorDescriptor());
             Log.e("createCalculator", "fail! .oO( " + current.getReference() + "), so instantiating default: " + calculator.getClass().getName() + " :: " + timezone);
         }
         calculator.init(location, timezone, contextRef.get());
@@ -108,8 +109,37 @@ public class SuntimesCalculatorFactory
         return calculator;
     }
 
+    public SuntimesCalculator fallbackCalculator()
+    {
+        return new com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator();
+    }
     public SuntimesCalculatorDescriptor fallbackCalculatorDescriptor()
     {
         return com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.getDescriptor();
+    }
+
+    /**
+     * FactoryListener
+     */
+    public static abstract class FactoryListener
+    {
+        public void onCreateFallback(SuntimesCalculatorDescriptor descriptor) {}
+    }
+
+    protected FactoryListener factoryListener = null;
+    public void setFactoryListener( FactoryListener listener )
+    {
+        factoryListener = listener;
+    }
+    public void clearFactoryListener()
+    {
+        factoryListener = null;
+    }
+    private void signalCreatedFallback(SuntimesCalculatorDescriptor descriptor)
+    {
+        if (factoryListener != null)
+        {
+            factoryListener.onCreateFallback(descriptor);
+        }
     }
 }
