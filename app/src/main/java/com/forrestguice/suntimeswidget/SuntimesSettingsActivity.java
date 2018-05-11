@@ -35,6 +35,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.util.TypedValue;
 import android.widget.Toast;
@@ -795,21 +796,31 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
                 if (results.getResult())
                 {
-                    String successMessage = myParent.getString(R.string.msg_export_success, results.getExportFile().getAbsolutePath());
-                    Toast.makeText(myParent.getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
-
                     Intent shareIntent = new Intent();
                     shareIntent.setAction(Intent.ACTION_SEND);
-                    shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(results.getExportFile()));
                     shareIntent.setType("text/csv");
-                    myParent.startActivity(Intent.createChooser(shareIntent, myParent.getResources().getText(R.string.msg_export_to)));
+                    shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-                } else {
-                    File file = results.getExportFile();
-                    String path = ((file != null) ? file.getAbsolutePath() : "<path>");
-                    String failureMessage = myParent.getString(R.string.msg_export_failure, path);
-                    Toast.makeText(myParent.getApplicationContext(), failureMessage, Toast.LENGTH_LONG).show();
+                    try {
+                        //Uri shareURI = Uri.fromFile(results.getExportFile());  // this URI works until api26 (throws FileUriExposedException)
+                        Uri shareURI = FileProvider.getUriForFile(myParent, "com.forrestguice.suntimeswidget.fileprovider", results.getExportFile());
+                        shareIntent.putExtra(Intent.EXTRA_STREAM, shareURI);
+
+                        String successMessage = myParent.getString(R.string.msg_export_success, results.getExportFile().getAbsolutePath());
+                        Toast.makeText(myParent.getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
+
+                        myParent.startActivity(Intent.createChooser(shareIntent, myParent.getResources().getText(R.string.msg_export_to)));
+                        return;   // successful export ends here...
+
+                    } catch (Exception e) {
+                        Log.e("ExportPlaces", "Failed to share file URI! " + e);
+                    }
                 }
+
+                File file = results.getExportFile();    // export failed
+                String path = ((file != null) ? file.getAbsolutePath() : "<path>");
+                String failureMessage = myParent.getString(R.string.msg_export_failure, path);
+                Toast.makeText(myParent.getApplicationContext(), failureMessage, Toast.LENGTH_LONG).show();
             }
         };
 
