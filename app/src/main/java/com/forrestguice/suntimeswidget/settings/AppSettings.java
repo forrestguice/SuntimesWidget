@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.settings;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -171,11 +172,11 @@ public class AppSettings
     /**
      * @return true if locale was changed by init, false otherwise
      */
-    public static boolean initLocale( Context context)
+    public static Context initLocale( Context context)
     {
         return initLocale(context, new LocaleInfo());
     }
-    public static boolean initLocale( Context context, LocaleInfo resultInfo )
+    public static Context initLocale( Context context, LocaleInfo resultInfo )
     {
         resultInfo.localeMode = AppSettings.loadLocaleModePref(context);
         if (resultInfo.localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE)
@@ -196,7 +197,7 @@ public class AppSettings
     /**
      * @return true if the locale was changed by reset, false otherwise
      */
-    public static boolean resetLocale( Context context )
+    public static Context resetLocale( Context context )
     {
         //noinspection SimplifiableIfStatement
         if (systemLocale != null)
@@ -204,7 +205,7 @@ public class AppSettings
             //Log.d("resetLocale", "locale reset to " + systemLocale);
             return loadLocale(context, systemLocale);
         }
-        return false;
+        return context;
     }
 
     private static String systemLocale = null;  // null until locale is overridden w/ loadLocale
@@ -221,24 +222,31 @@ public class AppSettings
         return Locale.getDefault();
     }
 
-    public static boolean loadLocale( Context context, String languageTag )
+    public static Context loadLocale( Context context, String languageTag )
     {
-        Resources resources = context.getApplicationContext().getResources();
-        Configuration config = resources.getConfiguration();
-        DisplayMetrics metrics = resources.getDisplayMetrics();
-
-        if (systemLocale == null)
-        {
+        if (systemLocale == null) {
             systemLocale = Locale.getDefault().getLanguage();
         }
 
         Locale customLocale = localeForLanguageTag(languageTag);
         Locale.setDefault(customLocale);
-        config.locale = customLocale;
-        resources.updateConfiguration(config, metrics);
-
         Log.i("loadLocale", languageTag);
-        return true;
+
+        Resources resources = context.getApplicationContext().getResources();
+        Configuration config = resources.getConfiguration();
+
+        if (Build.VERSION.SDK_INT >= 17)
+            config.setLocale(customLocale);
+        else config.locale = customLocale;
+
+        if (Build.VERSION.SDK_INT >= 25) {
+            return new ContextWrapper(context.createConfigurationContext(config));
+
+        } else {
+            DisplayMetrics metrics = resources.getDisplayMetrics();
+            resources.updateConfiguration(config, metrics);
+            return new ContextWrapper(context);
+        }
     }
 
     private static @NonNull Locale localeForLanguageTag(@NonNull String languageTag)

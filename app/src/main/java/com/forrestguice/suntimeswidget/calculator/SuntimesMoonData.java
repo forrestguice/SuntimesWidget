@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 
@@ -186,9 +187,26 @@ public class SuntimesMoonData extends SuntimesData
         return calculatorMode.hasRequestedFeature(SuntimesCalculator.FEATURE_MOON);
     }
 
+
     public void initCalculator()
     {
         initCalculator(context);
+    }
+
+    @Override
+    public SuntimesCalculatorFactory initFactory(Context context)
+    {
+        return new SuntimesCalculatorFactory(context, calculatorMode)
+        {
+            public SuntimesCalculator fallbackCalculator()
+            {
+                return new com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator();
+            }
+            public SuntimesCalculatorDescriptor fallbackCalculatorDescriptor()
+            {
+                return com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator.getDescriptor();
+            }
+        };
     }
 
     /**

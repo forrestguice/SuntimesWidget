@@ -221,6 +221,14 @@ public class SuntimesActivity extends AppCompatActivity
         super();
     }
 
+    @Override
+    protected void attachBaseContext(Context newBase)
+    {
+        Context context = AppSettings.initLocale(newBase, localeInfo = new AppSettings.LocaleInfo());
+        isRtl = AppSettings.isLocaleRtl(context);
+        super.attachBaseContext(context);
+    }
+
     /**
      * OnCreate: the Activity initially created
      * @param savedState a Bundle containing previously saved application state
@@ -257,10 +265,6 @@ public class SuntimesActivity extends AppCompatActivity
 
     private void initLocale( Context context )
     {
-        localeInfo = new AppSettings.LocaleInfo();
-        AppSettings.initLocale(this, localeInfo);
-        isRtl = AppSettings.isLocaleRtl(this);
-
         WidgetSettings.initDefaults(context);        // locale specific defaults
 
         SuntimesUtils.initDisplayStrings(context);   // locale specific strings

@@ -143,7 +143,7 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
     {
         initCalculator(context);
     }
-
+    
     public void calculate()
     {
         //Log.v("SuntimesWidgetData", "time mode: " + timeMode);
