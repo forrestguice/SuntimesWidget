@@ -200,7 +200,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
 
         WidgetSettings.saveTimezoneModePref(context, appWidgetId, WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE);
         WidgetSettings.TimezoneMode mode1 = WidgetSettings.loadTimezoneModePref(context, appWidgetId);
-        assertTrue("mode should be CUSTOM but was " + mode1, mode1 == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE);
+        assertTrue("mode should be COLOR but was " + mode1, mode1 == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE);
 
         WidgetSettings.deleteTimezoneModePref(context, appWidgetId);
         WidgetSettings.TimezoneMode mode0 = WidgetSettings.loadTimezoneModePref(context, appWidgetId);
@@ -249,7 +249,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     {
         WidgetSettings.saveLocationModePref(context, appWidgetId, WidgetSettings.LocationMode.CUSTOM_LOCATION);
         WidgetSettings.LocationMode mode2 = WidgetSettings.loadLocationModePref(context, appWidgetId);
-        assertTrue("mode should be CUSTOM but was " + mode2, mode2 == WidgetSettings.LocationMode.CUSTOM_LOCATION);
+        assertTrue("mode should be COLOR but was " + mode2, mode2 == WidgetSettings.LocationMode.CUSTOM_LOCATION);
 
         WidgetSettings.saveLocationModePref(context, appWidgetId, WidgetSettings.LocationMode.CURRENT_LOCATION);
         WidgetSettings.LocationMode mode1 = WidgetSettings.loadLocationModePref(context, appWidgetId);
@@ -257,7 +257,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
 
         WidgetSettings.deleteLocationModePref(context, appWidgetId);
         WidgetSettings.LocationMode mode0 = WidgetSettings.loadLocationModePref(context, appWidgetId);
-        assertTrue("mode should be default (CUSTOM) but was " + mode0, mode0 == WidgetSettings.PREF_DEF_LOCATION_MODE && mode0 == WidgetSettings.LocationMode.CUSTOM_LOCATION);
+        assertTrue("mode should be default (COLOR) but was " + mode0, mode0 == WidgetSettings.PREF_DEF_LOCATION_MODE && mode0 == WidgetSettings.LocationMode.CUSTOM_LOCATION);
     }
 
     @Test public void test_locationPref()

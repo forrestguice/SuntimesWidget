@@ -28,7 +28,7 @@ import com.forrestguice.suntimeswidget.R;
  */
 public enum ThemeBackground
 {
-    CUSTOM(-1, "Custom", true),
+    COLOR(-1, "Colour", true),
     DARK(R.drawable.bg_widget_dark, "Dark", false),
     LIGHT(R.drawable.bg_widget, "Light", false),
     TRANSPARENT(android.R.color.transparent, "Transparent", false);
@@ -74,7 +74,7 @@ public enum ThemeBackground
         DARK.setDisplayString(context.getString(R.string.configLabel_themeBackground_dark));
         LIGHT.setDisplayString(context.getString(R.string.configLabel_themeBackground_light));
         TRANSPARENT.setDisplayString(context.getString(R.string.configLabel_themeBackground_trans));
-        CUSTOM.setDisplayString(context.getString(R.string.configLabel_themeBackground_custom));
+        COLOR.setDisplayString(context.getString(R.string.configLabel_themeBackground_color));
     }
 
     @NonNull
