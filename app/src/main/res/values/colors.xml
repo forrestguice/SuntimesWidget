@@ -8,6 +8,7 @@
     <color name="text_primary">#cccccc</color>
     <color name="btn_tint_pressed">#ff9900</color>
     <color name="text_alertDialogListItem">#000000</color>
+    <color name="grid_selected">#81009688</color>
 
     <color name="text_disabled_dark">#4Dffffff</color>
     <color name="text_accent_dark">@color/deep_teal_200</color>
