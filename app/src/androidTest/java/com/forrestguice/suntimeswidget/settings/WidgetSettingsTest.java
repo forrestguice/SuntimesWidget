@@ -602,4 +602,20 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         return (Math.abs(float1 - float2) < FLOAT_TOLERANCE);
     }
 
+    @Test
+    public void test_riseSetOrderPref()
+    {
+        WidgetSettings.saveRiseSetOrderPref(context, appWidgetId, WidgetSettings.RiseSetOrder.TODAY);
+        WidgetSettings.RiseSetOrder mode = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
+        assertTrue("riseSetOrder should be TODAY but was " + mode, mode == WidgetSettings.RiseSetOrder.TODAY);
+
+        WidgetSettings.saveRiseSetOrderPref(context, appWidgetId, WidgetSettings.RiseSetOrder.LASTNEXT);
+        mode = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
+        assertTrue("riseSetOrder should be LASTNEXT but was " + mode, mode == WidgetSettings.RiseSetOrder.LASTNEXT);
+
+        WidgetSettings.deleteRiseSetOrderPref(context, appWidgetId);
+        mode = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
+        assertTrue("riseSetOrder should be default (TODAY) but was " + mode, mode == WidgetSettings.RiseSetOrder.TODAY && mode == WidgetSettings.PREF_DEF_GENERAL_RISESETORDER);
+    }
+
 }

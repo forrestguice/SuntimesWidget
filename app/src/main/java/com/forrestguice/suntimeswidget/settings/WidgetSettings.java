@@ -96,6 +96,9 @@ public class WidgetSettings
     public static final String PREF_KEY_APPEARANCE_TIMEFORMATMODE = "timeformatmode";
     public static final TimeFormatMode PREF_DEF_APPEARANCE_TIMEFORMATMODE = TimeFormatMode.MODE_SYSTEM;
 
+    public static final String PREF_KEY_GENERAL_RISESETORDER = "risesetorder";
+    public static final RiseSetOrder PREF_DEF_GENERAL_RISESETORDER = RiseSetOrder.TODAY;
+
     public static final String PREF_KEY_GENERAL_TIMEMODE = "timemode";
     public static final TimeMode PREF_DEF_GENERAL_TIMEMODE = TimeMode.OFFICIAL;
 
@@ -1053,6 +1056,76 @@ public class WidgetSettings
             BLUE4.setDisplayStrings( context.getString(R.string.timeMode_blue4_short),
                     context.getString(R.string.timeMode_blue4) );
         }
+    }
+
+
+    /**
+     * RiseSetOrder
+     */
+    public static enum RiseSetOrder
+    {
+        TODAY("Today"),
+        LASTNEXT("Last / Next"),
+        FUTURE("Future");
+
+        private String displayString;
+
+        private RiseSetOrder(String displayString)
+        {
+            this.displayString = displayString;
+        }
+
+        public String toString()
+        {
+            return displayString;
+        }
+
+        public void setDisplayString(String displayString)
+        {
+            this.displayString = displayString;
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            TODAY.setDisplayString( context.getString(R.string.risesetorder_today) );
+            LASTNEXT.setDisplayString( context.getString(R.string.risesetorder_lastnext) );
+            FUTURE.setDisplayString( context.getString(R.string.risesetorder_future) );
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void saveRiseSetOrderPref(Context context, int appWidgetId, RiseSetOrder mode)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putString(prefs_prefix + PREF_KEY_GENERAL_RISESETORDER, mode.name());
+        prefs.apply();
+    }
+    public static RiseSetOrder loadRiseSetOrderPref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_RISESETORDER, PREF_DEF_GENERAL_RISESETORDER.name());
+
+        RiseSetOrder mode;
+        try
+        {
+            mode = RiseSetOrder.valueOf(modeString);
+
+        } catch (IllegalArgumentException e) {
+            mode = PREF_DEF_GENERAL_RISESETORDER;
+            Log.w("loadRiseSetOrder", "Failed to load value '" + modeString + "'; using default '" + PREF_DEF_GENERAL_RISESETORDER.name() + "'.");
+        }
+        return mode;
+    }
+    public static void deleteRiseSetOrderPref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_RISESETORDER);
+        prefs.apply();
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -2221,6 +2294,7 @@ public class WidgetSettings
         deleteTimeMode2Pref(context, appWidgetId);
         deleteTimeMode3Pref(context, appWidgetId);
 
+        deleteRiseSetOrderPref(context, appWidgetId);
         deleteCompareModePref(context, appWidgetId);
         deleteShowComparePref(context, appWidgetId);
         deleteShowNoonPref(context, appWidgetId);
@@ -2268,5 +2342,6 @@ public class WidgetSettings
         SolarTimeMode.initDisplayStrings(context);
         DateMode.initDisplayStrings(context);
         TimeFormatMode.initDisplayStrings(context);
+        RiseSetOrder.initDisplayStrings(context);
     }
 }
