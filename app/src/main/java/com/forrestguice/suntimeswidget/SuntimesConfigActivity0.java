@@ -89,6 +89,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected CheckBox checkbox_showWeeks;
     protected CheckBox checkbox_showHours;
 
+    protected Spinner spinner_riseSetOrder;
+
     protected Spinner spinner_onTap;
     protected EditText text_launchActivity;
 
@@ -278,6 +280,13 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         return adapter;
     }
 
+    protected ArrayAdapter<WidgetSettings.RiseSetOrder> createAdapter_riseSetOrder()
+    {
+        ArrayAdapter<WidgetSettings.RiseSetOrder> adapter = new ArrayAdapter<WidgetSettings.RiseSetOrder>(this, R.layout.layout_listitem_oneline, WidgetSettings.RiseSetOrder.values());
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        return adapter;
+    }
+
     protected WidgetSettings.ActionMode defaultActionMode()
     {
         return WidgetSettings.PREF_DEF_ACTION_MODE;
@@ -394,6 +403,15 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             spinner_timezoneMode.setAdapter(createAdapter_timezoneMode());
             spinner_timezoneMode.setOnItemSelectedListener(onTimezoneModeListener);
+        }
+
+        //
+        // widget: riseSetOrder
+        //
+        spinner_riseSetOrder = (Spinner) findViewById(R.id.appwidget_general_riseSetOrder);
+        if (spinner_riseSetOrder != null)
+        {
+            spinner_riseSetOrder.setAdapter(createAdapter_riseSetOrder());
         }
 
         //
@@ -988,6 +1006,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         WidgetSettings.CompareMode compareMode = compareModes[spinner_compareMode.getSelectedItemPosition()];
         WidgetSettings.saveCompareModePref(context, appWidgetId, compareMode);
 
+        // save: riseSetOrder
+        final WidgetSettings.RiseSetOrder[] riseSetOrders = WidgetSettings.RiseSetOrder.values();
+        WidgetSettings.RiseSetOrder riseSetOrder = (WidgetSettings.RiseSetOrder)spinner_riseSetOrder.getSelectedItem();
+        WidgetSettings.saveRiseSetOrderPref(context, appWidgetId, riseSetOrder);
+
         // save: showNoon
         boolean showNoon = checkbox_showNoon.isChecked();
         WidgetSettings.saveShowNoonPref(context, appWidgetId, showNoon);
@@ -1041,6 +1064,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         boolean showCompare = WidgetSettings.loadShowComparePref(context, appWidgetId);
         checkbox_showCompare.setChecked(showCompare);
         showCompareUI(showCompare);
+
+        // load: riseSetOrder
+        WidgetSettings.RiseSetOrder riseSetOrder = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
+        spinner_riseSetOrder.setSelection(riseSetOrder.ordinal());
 
         // load: showNoon
         boolean showNoon = WidgetSettings.loadShowNoonPref(context, appWidgetId);
@@ -1349,6 +1376,18 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (layout_trackingMode != null)
         {
             layout_trackingMode.setVisibility((showUI ? View.VISIBLE : View.GONE));
+        }
+    }
+
+    /**
+     * @param showUI true show option, false hide option
+     */
+    protected void showOptionRiseSetOrder(boolean showUI)
+    {
+        View layout_riseSetOrder = findViewById(R.id.appwidget_general_riseSetOrder_layout);
+        if (layout_riseSetOrder != null)
+        {
+            layout_riseSetOrder.setVisibility((showUI ? View.VISIBLE : View.GONE));
         }
     }
 

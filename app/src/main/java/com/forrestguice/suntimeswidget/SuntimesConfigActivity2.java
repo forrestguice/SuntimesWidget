@@ -40,6 +40,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     {
         super.initViews(context);
         setConfigActivityTitle(getString(R.string.configLabel_title2));
+        showOptionRiseSetOrder(false);
         hideOptionCompareAgainst();
         showTimeMode(false);
         showOptionShowNoon(false);
