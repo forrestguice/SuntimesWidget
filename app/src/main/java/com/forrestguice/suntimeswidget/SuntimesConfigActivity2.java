@@ -28,6 +28,9 @@ import com.forrestguice.suntimeswidget.layouts.SunPosLayout;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout_1X1_0;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+/**
+ * ConfigActivity for SunPosition widgets (SuntimesWidget2)
+ */
 public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
 {
     public SuntimesConfigActivity2()
@@ -40,6 +43,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     {
         super.initViews(context);
         setConfigActivityTitle(getString(R.string.configLabel_title2));
+        hideOptionShowSeconds();
         showOptionRiseSetOrder(false);
         hideOptionCompareAgainst();
         showTimeMode(false);
