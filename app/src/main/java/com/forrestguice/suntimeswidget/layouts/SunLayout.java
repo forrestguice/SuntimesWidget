@@ -30,6 +30,16 @@ public abstract class SunLayout extends SuntimesLayout
     protected static final SuntimesUtils utils = new SuntimesUtils();
 
     /**
+     * Called by widget before themeViews and updateViews to give the layout obj an opportunity to
+     * modify its state based on the supplied data.
+     * @param data the data object (should be the same as supplied to updateViews)
+     */
+    public void prepareForUpdate(SuntimesRiseSetData data)
+    {
+        // EMPTY
+    }
+
+    /**
      * Apply the provided data to the RemoteViews this layout knows about.
      * @param context the android application context
      * @param appWidgetId the android widget ID to update
