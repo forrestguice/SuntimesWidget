@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2017-2018 Forrest Guice
+    This file is part of SuntimesWidget.
+
+    SuntimesWidget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SuntimesWidget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/info_time_lightmap_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" android:minHeight="125dp"
+    android:orientation="vertical" android:gravity="start"
+    android:padding="8dp" android:background="?graphColor_background">
+
+    <TextView android:id="@+id/worldmapdialog_title" style="@style/TableHeadTextView"
+        android:text="TODO"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="0dp"
+        android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+
+</android.support.constraint.ConstraintLayout>
+
