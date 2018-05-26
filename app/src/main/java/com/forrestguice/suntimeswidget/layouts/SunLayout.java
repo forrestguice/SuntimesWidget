@@ -34,7 +34,7 @@ public abstract class SunLayout extends SuntimesLayout
      * modify its state based on the supplied data.
      * @param data the data object (should be the same as supplied to updateViews)
      */
-    public void prepareForUpdate(SuntimesRiseSetData data)
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesRiseSetData data)
     {
         // EMPTY
     }

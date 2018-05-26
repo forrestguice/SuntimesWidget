@@ -459,7 +459,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
             data.linkData(noonData);
         }
 
-        layout.prepareForUpdate(data);
+        layout.prepareForUpdate(context, appWidgetId, data);
 
         RemoteViews views = layout.getViews(context);
         views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, widgetClass));
