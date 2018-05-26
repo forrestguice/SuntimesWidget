@@ -53,7 +53,7 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
     @Override
     public void initLayoutID()
     {
-        this.layoutID = R.layout.layout_widget_1x1eq_0;
+        this.layoutID = R.layout.layout_widget_solstice_1x1_0;
     }
 
     @Override

@@ -38,7 +38,7 @@ public class SunPosLayout_2X1_0 extends SunPosLayout_1X1_0
     @Override
     public void initLayoutID()
     {
-        this.layoutID = R.layout.layout_widget_2x1_5;
+        this.layoutID = R.layout.layout_widget_sunpos_2x1_5;
     }
 
 }
