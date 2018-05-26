@@ -19,6 +19,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
     style="@style/SunsetTimeWidgetFrame">
 
-    <include layout="@layout/layout_widget_1x1_6i" />
+    <include layout="@layout/layout_widget_sunpos_2x1_5i" />
 
 </FrameLayout>
