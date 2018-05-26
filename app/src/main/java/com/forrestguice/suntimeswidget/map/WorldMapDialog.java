@@ -39,7 +39,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 public class WorldMapDialog extends DialogFragment
 {
     //private static SuntimesUtils utils = new SuntimesUtils();
-    //private WorldMapView worldmap;
+    private WorldMapView worldmap;
 
     private View dialogContent = null;
 
@@ -120,7 +120,7 @@ public class WorldMapDialog extends DialogFragment
 
     public void initViews(View dialogView)
     {
-        //worldmap = (WorldMapView)dialogView.findViewById(R.id.info_time_worldmap);
+        worldmap = (WorldMapView)dialogView.findViewById(R.id.info_time_worldmap);
     }
 
     @SuppressWarnings("ResourceType")
@@ -137,7 +137,7 @@ public class WorldMapDialog extends DialogFragment
     protected void updateViews( @NonNull SuntimesRiseSetDataset data )
     {
         stopUpdateTask();
-        // TODO: initial update
+        worldmap.updateViews(data);
         startUpdateTask();
     }
 
