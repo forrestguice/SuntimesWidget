@@ -1269,6 +1269,9 @@ public class SuntimesActivity extends AppCompatActivity
                 showLightMapDialog();
                 return true;
 
+            case R.id.action_worldmap:
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
