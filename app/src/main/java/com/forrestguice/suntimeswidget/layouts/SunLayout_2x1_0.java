@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2014 Forrest Guice
+   Copyright (C) 2014-2018 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -38,6 +38,15 @@ public class SunLayout_2x1_0 extends SunLayout
     public void initLayoutID()
     {
         this.layoutID = R.layout.layout_widget_2x1_0;
+    }
+
+    private WidgetSettings.RiseSetOrder order = WidgetSettings.RiseSetOrder.TODAY;
+
+    @Override
+    public void prepareForUpdate(Context context, int appWidgetID, SuntimesRiseSetData data)
+    {
+        order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetID);
+        this.layoutID = chooseSunLayout(R.layout.layout_widget_2x1_0, R.layout.layout_widget_2x1_01, data, order);
     }
 
     @Override

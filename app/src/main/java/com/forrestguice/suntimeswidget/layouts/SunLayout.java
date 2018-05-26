@@ -89,4 +89,14 @@ public abstract class SunLayout extends SuntimesLayout
         views.setTextViewText(R.id.text_time_noon_suffix, noonText.getSuffix());
     }
 
+    protected int chooseSunLayout(int layout1, int layout2, SuntimesRiseSetData data, WidgetSettings.RiseSetOrder order)
+    {
+        switch (order)
+        {
+            case TODAY:
+            default:
+                return layout1;
+        }
+    }
+
 }
