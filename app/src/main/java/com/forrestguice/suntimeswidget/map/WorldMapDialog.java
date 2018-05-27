@@ -80,6 +80,7 @@ public class WorldMapDialog extends DialogFragment
         @Override
         public void onShow(DialogInterface dialog)
         {
+            updateViews();
             startUpdateTask();
         }
     };
