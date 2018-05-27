@@ -34,9 +34,10 @@
 
     <com.forrestguice.suntimeswidget.map.WorldMapView
         android:id="@+id/info_time_worldmap"
-        android:layout_width="0dp" android:layout_height="150dp"
+        android:layout_width="0dp" android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/worldmapdialog_title" />
+        app:layout_constraintTop_toBottomOf="@+id/worldmapdialog_title"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
 
