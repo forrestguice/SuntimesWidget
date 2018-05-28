@@ -34,9 +34,9 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import java.util.Calendar;
-import java.util.TimeZone;
 
 public class WorldMapView extends android.support.v7.widget.AppCompatImageView
 {
@@ -195,14 +195,14 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     {
         private Drawable map;
         private int shadowColor = Color.GRAY;
-        private int backgroundColor = Color.GREEN;
+        private int backgroundColor = Color.DKGRAY;
 
         private int sunFillColor, sunStrokeColor;
-        private int sunRadius = 8;
+        private int sunRadius = 6;
         private int sunStroke = 2;
 
         private int moonFillColor, moonStrokeColor;
-        private int moonRadius = 8;
+        private int moonRadius = 5;
         private int moonStroke = 2;
 
         @SuppressLint("ResourceType")
@@ -267,6 +267,10 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                 return null;
             }
 
+            double[] mid = new double[2];
+            mid[0] = w/2d;
+            mid[1] = h/2d;
+
             Bitmap b = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
             Canvas c = new Canvas(b);
             Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -285,9 +289,32 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
 
             if (data != null)
             {
-                //Calendar now = data.now();
-                //TimeZone timeZone = now.getTimeZone();
-                //SuntimesCalculator calculator = data.calculator();
+                Calendar now = data.now();
+                SuntimesCalculator calculator = data.calculator();
+                SuntimesCalculator.SunPosition sunPos = calculator.getSunPosition(now);
+                SuntimesCalculator.MoonPosition moonPos = calculator.getMoonPosition(now);
+
+                //Calendar vernalEquinox = calculator.getVernalEquinoxForYear(now);
+                //long gstMillis = vernalEquinox.getTimeInMillis() + (long)(WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(now.get(Calendar.MONTH)) * 60 * 1000);
+                //double gst = ((((gstMillis / 1000d) / 60d) / 60d) % 24d) * 15d;
+                //double gha2 = ((360 - sunPos.rightAscension) + gst) % 360;
+                //Log.d("DEBUG", "gha2 is " + gha2 + ", ra is " + sunPos.rightAscension + ", gst is " + gst);
+                // TODO: determine ghaSun using sidereal time and right ascension
+
+                long gmtMillis = now.getTimeInMillis() + (long)(WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(now.get(Calendar.MONTH)) * 60 * 1000);
+                double gmtHours = (((gmtMillis / 1000d) / 60d) / 60d) % 24d;
+                double gmtArc = gmtHours * 15d;
+
+                double ghaSun = gmtArc;            // [0, 360] west
+                if (ghaSun < 180)
+                    ghaSun += 180;
+                else if (ghaSun > 180)
+                    ghaSun -= 180;
+
+                double ghaSun180 = ghaSun;         // gha adjusted to [180, -180] west
+                if (ghaSun180 > 180)
+                    ghaSun180 = ghaSun180 - 360;
+                Log.d("DEBUG", "gmtHours is " + gmtHours + ", gmtArc is " + gmtArc + ", ghaSun is " + ghaSun + ", ghaSun180 is " + ghaSun180);
 
                 p.setColor(shadowColor);
                 for (int i=0; i<w; i++)                // draw shadow
@@ -301,8 +328,8 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                 }
 
                 // draw sun
-                int sunX = w/2;  // TODO
-                int sunY = h/2;  // TODO
+                int sunX = (int)(mid[0] - ((ghaSun180 / 180d) * mid[0]));
+                int sunY = (int)(mid[1] - ((sunPos.declination / 90d) * mid[1]));
 
                 p.setStyle(Paint.Style.FILL);
                 p.setColor(sunFillColor);
@@ -315,7 +342,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
 
                 // draw moon
                 int moonX = w/4;  // TODO
-                int moonY = h/4;  // TODO
+                int moonY = (int)(mid[1] - ((moonPos.declination / 90d) * mid[1]));
 
                 p.setStyle(Paint.Style.FILL);
                 p.setColor(moonFillColor);
