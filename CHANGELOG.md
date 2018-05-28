@@ -1,5 +1,8 @@
 ### ~
 
+### v0.8.3 (2018-05-31)
+* adds translation to Norwegian (nb) (contributed by FTno) (#206).
+
 ### v0.8.2 (2018-05-11)
 * adds to theming; graph colors; day, civil, nautical, astronomical, and night colors.
 * fixes bug where "export places" creates an empty file (#204).
