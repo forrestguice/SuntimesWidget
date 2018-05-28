@@ -34,6 +34,7 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import java.util.Calendar;
@@ -253,7 +254,49 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         }
 
         /**
-         * TODO: for better approach see https://gis.stackexchange.com/questions/17184/method-to-shade-or-overlay-a-raster-map-to-reflect-time-of-day-and-ambient-light
+         * Implemented using algorithm found at
+         * http://129.79.46.40/~foxd/cdrom/musings/formulas/formulas.htm (Useful Formulas for Amateur SETI)
+         * "Hour Angle(HA) and Declination(DE) given the Altitude(AL) and Azimuth(AZ) of a star and the observers Latitude(LA) and Longitude(LO)"
+         *
+         * 1. Convert Azimuth(AZ) and Altitude(AL) to decimal degrees.
+         * 2. Compute sin(DE)=(sin(AL)*sin(LA))+(cos(AL)*cos(LA)*cos(AZ)).
+         * 3. Take the inverse sine of sin(DE) to get the declination.
+         * 4. Compute cos(HA)=(sin(AL)-(sin(LA)*sin(DE)))/(cos(LA)*cos(DE)).
+         * 5. Take the inverse cosine of cos(HA).
+         * 6. Take the sine of AZ. If it is positive then HA=360-HA.
+         *
+         * @param location latitude and longitude
+         * @param pos azimuth and altitude
+         * @return greenwich hour angle
+         */
+        private double gha(WidgetSettings.Location location, SuntimesCalculator.Position pos)
+        {
+            double radLat = Math.toRadians(location.getLatitudeAsDouble());
+            double sinLat = Math.sin(radLat);
+            double cosLat = Math.cos(radLat);
+
+            double radAlt = Math.toRadians(pos.elevation);
+            double sinAlt = Math.sin(radAlt);
+            double cosAlt = Math.cos(radAlt);
+
+            double radAz = Math.toRadians(pos.azimuth);
+            double sinAz = Math.sin(radAz);
+            double cosAz = Math.cos(radAz);
+
+            double sinDec = (sinAlt * sinLat) + (cosAlt * cosLat * cosAz);
+            double dec = Math.asin(sinDec);  // radians
+
+            double cosHourAngle = (sinAlt - (sinLat * sinDec)) / (cosLat * Math.cos(dec));
+            double hourAngle = Math.toDegrees(Math.acos(cosHourAngle));  // local hour angle (degrees)
+            if (Math.toDegrees(sinAz) > 0)
+                hourAngle = 360 - hourAngle;
+
+            hourAngle = (hourAngle - location.getLongitudeAsDouble()) % 360; // greenwich hour angle (degrees)
+            Log.d("DEBUG", "hourAngle is " + hourAngle + ", dec is " + Math.toDegrees(dec) + " (" + pos.declination + ")");
+            return hourAngle;
+        }
+
+        /**
          * @param data
          * @param w
          * @param h
@@ -275,7 +318,9 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
             Canvas c = new Canvas(b);
             Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-            p.setColor(backgroundColor);                // draw background
+            ////////////////
+            // draw background
+            p.setColor(backgroundColor);
             c.drawRect(0, 0, w, h, p);
 
             if (map != null)
@@ -293,14 +338,25 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                 SuntimesCalculator calculator = data.calculator();
                 SuntimesCalculator.SunPosition sunPos = calculator.getSunPosition(now);
                 SuntimesCalculator.MoonPosition moonPos = calculator.getMoonPosition(now);
+                WidgetSettings.Location location = data.location();
 
-                //Calendar vernalEquinox = calculator.getVernalEquinoxForYear(now);
-                //long gstMillis = vernalEquinox.getTimeInMillis() + (long)(WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(now.get(Calendar.MONTH)) * 60 * 1000);
-                //double gst = ((((gstMillis / 1000d) / 60d) / 60d) % 24d) * 15d;
-                //double gha2 = ((360 - sunPos.rightAscension) + gst) % 360;
-                //Log.d("DEBUG", "gha2 is " + gha2 + ", ra is " + sunPos.rightAscension + ", gst is " + gst);
-                // TODO: determine ghaSun using sidereal time and right ascension
+                ////////////////
+                // draw sun shadow
 
+                //TODO: for algorithm see https://gis.stackexchange.com/questions/17184/method-to-shade-or-overlay-a-raster-map-to-reflect-time-of-day-and-ambient-light
+                /**p.setColor(shadowColor);
+                 for (int i=0; i<w; i++)
+                 {
+                 double lon = (((double)i / (double)w) * 360d) - 180d;  // i in [0,w] to [0,360] to [-180,180]
+                 for (int j=0; j<h; j++)
+                 {
+                 double lat = (((double)j / (double)h) * 180d) - 90d;      // j in [0,h] to [0,180] to [-90,90]
+                 // TODO
+                 }
+                 }*/
+
+                ////////////////
+                // draw sun
                 long gmtMillis = now.getTimeInMillis() + (long)(WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(now.get(Calendar.MONTH)) * 60 * 1000);
                 double gmtHours = (((gmtMillis / 1000d) / 60d) / 60d) % 24d;
                 double gmtArc = gmtHours * 15d;
@@ -314,20 +370,10 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                 double ghaSun180 = ghaSun;         // gha adjusted to [180, -180] west
                 if (ghaSun180 > 180)
                     ghaSun180 = ghaSun180 - 360;
-                Log.d("DEBUG", "gmtHours is " + gmtHours + ", gmtArc is " + gmtArc + ", ghaSun is " + ghaSun + ", ghaSun180 is " + ghaSun180);
 
-                p.setColor(shadowColor);
-                for (int i=0; i<w; i++)                // draw shadow
-                {
-                    double lon = (((double)i / (double)w) * 360d) - 180d;  // i in [0,w] to [0,360] to [-180,180]
-                    for (int j=0; j<h; j++)
-                    {
-                        double lat = (((double)j / (double)h) * 180d) - 90d;      // j in [0,h] to [0,180] to [-90,90]
-                        // TODO
-                    }
-                }
+                double sunHourAngle = gha(location, sunPos);
+                Log.d("DEBUG", "gmtHours is " + gmtHours + ", gmtArc is " + gmtArc + ", ghaSun is " + ghaSun + " (" + sunHourAngle + "), ghaSun180 is " + ghaSun180);
 
-                // draw sun
                 int sunX = (int)(mid[0] - ((ghaSun180 / 180d) * mid[0]));
                 int sunY = (int)(mid[1] - ((sunPos.declination / 90d) * mid[1]));
 
@@ -340,8 +386,18 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                 p.setColor(sunStrokeColor);
                 c.drawCircle(sunX, sunY, sunRadius, p);
 
+                ////////////////
+                // draw moon shadow
+
+                // TODO
+
+                ////////////////
                 // draw moon
-                int moonX = w/4;  // TODO
+                double ghaMoon180 = gha(location, moonPos);                        // [180, -180] west
+                if (ghaMoon180 > 180)
+                    ghaMoon180 = ghaMoon180 - 360;
+
+                int moonX = (int)(mid[0] - ((ghaMoon180 / 180d) * mid[0]));
                 int moonY = (int)(mid[1] - ((moonPos.declination / 90d) * mid[1]));
 
                 p.setStyle(Paint.Style.FILL);
