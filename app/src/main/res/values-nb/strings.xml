@@ -627,18 +627,8 @@
         <item>Spanish</item>
         <item>Catalan</item>
         <item>Basque</item>
-    </string-array>
-    <string-array name="locale_display_native">             <!-- one-to-one with locale_values -->
-        <item>English</item>
-        <item>Esperanto</item>
-        <item>Français</item>
-        <item>Deutsche</item>
-        <item>Magyar</item>
-        <item>Polski</item>
-        <item>Español</item>
-        <item>Català</item>
-        <item>Euskara</item>
-    </string-array>
+        <item>Norsk</item>
+    </string-array>  <!-- TODO: language names into norwegian -->
 
     <!-- position formats -->
     <string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
