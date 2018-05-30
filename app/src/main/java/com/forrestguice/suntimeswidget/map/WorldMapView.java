@@ -195,13 +195,16 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     public static class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
     {
         private Drawable map;
-        private int shadowColor = Color.GRAY;
-        private int backgroundColor = Color.DKGRAY;
+        private int sunShadowColor = Color.GRAY;
+        private int moonLightColor = Color.LTGRAY;
+        private int backgroundColor = Color.BLUE;
 
+        private boolean showSunPosition = true, showSunShadow = true;
         private int sunFillColor, sunStrokeColor;
         private int sunRadius = 6;
         private int sunStroke = 2;
 
+        private boolean showMoonPosition = true, showMoonLight = true;
         private int moonFillColor, moonStrokeColor;
         private int moonRadius = 5;
         private int moonStroke = 2;
@@ -225,7 +228,8 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
 
             typedArray.recycle();
 
-            shadowColor = ContextCompat.getColor(context, R.color.card_bg_darktrans);
+            sunShadowColor = ContextCompat.getColor(context, R.color.card_bg_darktrans);
+            moonLightColor = ContextCompat.getColor(context, R.color.card_bg_lighttrans);
         }
 
         /**
@@ -296,6 +300,19 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
             return new double[] { hourAngle, Math.toDegrees(dec) };
         }
 
+        private double[] unitVector( double lat, double lon )
+        {
+            double radLon = Math.toRadians(lon);
+            double radLat = Math.toRadians(lat);
+            double cosLat = Math.cos(radLat);
+                                                      // spherical coordinates to unit vector
+            double[] retValue = new double[3];            // v[3] = { (cos(lon)cos(lat), sin(lon)cos(lat), sin(lat)) }
+            retValue[0] = Math.cos(radLon) * cosLat;
+            retValue[1] = Math.sin(radLon) * cosLat;
+            retValue[2] = Math.sin(radLat);
+            return retValue;
+        }
+
         /**
          * @param data
          * @param w
@@ -358,81 +375,82 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                 Log.d("DEBUG", "gmtHours is " + gmtHours + ", gmtArc is " + gmtArc + ", ghaSun is " + ghaSun + " (" + sunPos2[0] + "), ghaSun180 is " + ghaSun180);
 
                 double sunLon = -1 * ghaSun180;  // gha180 adjusted to [-180, 180] east
-                double radSunLon = Math.toRadians(sunLon);
-
                 double sunLat = sunPos2[1];
-                double radSunLat = Math.toRadians(sunLat);
-                double cosSunLat = Math.cos(radSunLat);
-                Log.d("DEBUG", "sunLat is " + sunLat + ", sunLon is " + sunLon);
+                double[] sunUp = unitVector(sunLat, sunLon);
 
-                double[] sunUp = new double[3];
-                sunUp[0] = Math.cos(radSunLon) * cosSunLat;
-                sunUp[1] = Math.sin(radSunLon) * cosSunLat;
-                sunUp[2] = Math.sin(radSunLat);
+                double[] moonPos2 = gha(location, moonPos);                        // [180, -180] west
+                if (moonPos2[0] > 180)
+                    moonPos2[0] = moonPos2[0] - 360;
+
+                double moonLon = -1 * moonPos2[0];
+                double moonLat = moonPos2[1];
+                double[] moonUp = unitVector(moonLat, moonLon);
 
                 ////////////////
                 // draw sun shadow
                 // algorithm described at https://gis.stackexchange.com/questions/17184/method-to-shade-or-overlay-a-raster-map-to-reflect-time-of-day-and-ambient-light
-                p.setColor(shadowColor);
-                for (int i=0; i<w; i++)
+                if (showSunPosition || showMoonPosition)
                 {
-                    double lon = (((double)i / (double)w) * 360d) - 180d;  // i in [0,w] to [0,360] to [-180,180]
-                    double radLon = Math.toRadians(lon);
-
-                    for (int j=0; j<h; j++)
+                    for (int i = 0; i < w; i++)
                     {
-                        double lat = -1 * ((((double)j / (double)h) * 180d) - 90d);      // j in [0,h] to [0,180] to [-90,90] (inverted to canvas)
-                        double radLat = Math.toRadians(lat);
-                        double cosLat = Math.cos(radLat);
-                                                                 // spherical coordinates to unit vector
-                        double[] v = new double[3];              // v[3] = { (cos(lon)cos(lat), sin(lon)cos(lat), sin(lat)) }
-                        v[0] = Math.cos(radLon) * cosLat;
-                        v[1] = Math.sin(radLon) * cosLat;
-                        v[2] = Math.sin(radLat);
+                        double lon = (((double) i / (double) w) * 360d) - 180d;  // i in [0,w] to [0,360] to [-180,180]
+                        for (int j = 0; j < h; j++)
+                        {
+                            double lat = -1 * ((((double) j / (double) h) * 180d) - 90d);      // j in [0,h] to [0,180] to [-90,90] (inverted to canvas)
+                            double[] v = unitVector(lat, lon);
 
-                        double intensity = (sunUp[0] * v[0]) + (sunUp[1] * v[1]) + (sunUp[2] * v[2]);    // intensity = up.dotProduct(v)
-                        if (intensity <= 0) {                                                               // values less eqaul 0 are in shadow
-                            c.drawPoint(i, j, p);
+                            if (showSunShadow) {
+                                double sunIntensity = (sunUp[0] * v[0]) + (sunUp[1] * v[1]) + (sunUp[2] * v[2]);    // intensity = up.dotProduct(v)
+                                if (sunIntensity <= 0) {                                                               // values less equal 0 are in shadow
+                                    p.setColor(sunShadowColor);
+                                    c.drawPoint(i, j, p);
+                                }
+                            }
+
+                            if (showMoonLight) {
+                                double moonIntensity = (moonUp[0] * v[0]) + (moonUp[1] * v[1]) + (moonUp[2] * v[2]);
+                                if (moonIntensity > 0) {
+                                    p.setColor(moonLightColor);
+                                    c.drawPoint(i, j, p);
+                                }
+                            }
                         }
                     }
                 }
 
                 ////////////////
                 // draw sun
-                int sunX = (int)(mid[0] - ((ghaSun180 / 180d) * mid[0]));
-                int sunY = (int)(mid[1] - ((sunPos.declination / 90d) * mid[1]));
+                if (showSunPosition)
+                {
+                    int sunX = (int) (mid[0] - ((ghaSun180 / 180d) * mid[0]));
+                    int sunY = (int) (mid[1] - ((sunPos.declination / 90d) * mid[1]));
 
-                p.setStyle(Paint.Style.FILL);
-                p.setColor(sunFillColor);
-                c.drawCircle(sunX, sunY, sunRadius, p);
+                    p.setStyle(Paint.Style.FILL);
+                    p.setColor(sunFillColor);
+                    c.drawCircle(sunX, sunY, sunRadius, p);
 
-                p.setStyle(Paint.Style.STROKE);
-                p.setStrokeWidth(sunStroke);
-                p.setColor(sunStrokeColor);
-                c.drawCircle(sunX, sunY, sunRadius, p);
-
-                ////////////////
-                // draw moon shadow
-
-                // TODO
+                    p.setStyle(Paint.Style.STROKE);
+                    p.setStrokeWidth(sunStroke);
+                    p.setColor(sunStrokeColor);
+                    c.drawCircle(sunX, sunY, sunRadius, p);
+                }
 
                 ////////////////
                 // draw moon
-                double[] moonPos2 = gha(location, moonPos);                        // [180, -180] west
-                if (moonPos2[0] > 180)
-                    moonPos2[0] = moonPos2[0] - 360;
+                if (showMoonPosition)
+                {
+                    int moonX = (int) (mid[0] - ((moonPos2[0] / 180d) * mid[0]));
+                    int moonY = (int) (mid[1] - ((moonPos2[1] / 90d) * mid[1]));
 
-                int moonX = (int)(mid[0] - ((moonPos2[0] / 180d) * mid[0]));
-                int moonY = (int)(mid[1] - ((moonPos2[1] / 90d) * mid[1]));
+                    p.setStyle(Paint.Style.FILL);
+                    p.setColor(moonFillColor);
+                    c.drawCircle(moonX, moonY, moonRadius, p);
 
-                p.setStyle(Paint.Style.FILL);
-                p.setColor(moonFillColor);
-                c.drawCircle(moonX, moonY, moonRadius, p);
-
-                p.setStyle(Paint.Style.STROKE);
-                p.setStrokeWidth(moonStroke);
-                p.setColor(moonStrokeColor);
-                c.drawCircle(moonX, moonY, moonRadius, p);
+                    p.setStyle(Paint.Style.STROKE);
+                    p.setStrokeWidth(moonStroke);
+                    p.setColor(moonStrokeColor);
+                    c.drawCircle(moonX, moonY, moonRadius, p);
+                }
             }
 
             long bench_end = System.nanoTime();
