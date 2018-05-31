@@ -32,6 +32,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -44,13 +45,14 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     public static final int DEFAULT_MAX_UPDATE_RATE = 15 * 1000;  // ms value; once every 15s
 
     private WorldMapTask drawTask;
-    private Drawable background;
+    private WorldMapOptions options = new WorldMapOptions();
 
     private int maxUpdateRate = DEFAULT_MAX_UPDATE_RATE;
 
     private SuntimesRiseSetDataset data = null;
     private long lastUpdate = 0;
     private boolean resizable = true;
+
 
 
     public WorldMapView(Context context)
@@ -68,6 +70,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     /**
      * @param context a context used to access resources
      */
+    @SuppressLint("ResourceType")
     private void init(Context context)
     {
         if (isInEditMode())
@@ -75,7 +78,37 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
             setBackgroundColor(Color.WHITE);
         }
 
-        background = ContextCompat.getDrawable(context, R.drawable.world_map_blank_without_borders);
+        options.map = ContextCompat.getDrawable(context, R.drawable.world_map_blank_without_borders);
+        options.backgroundColor = ContextCompat.getColor(context, R.color.map_background);
+        options.foregroundColor = ContextCompat.getColor(context, R.color.map_foreground);
+        options.sunShadowColor = ContextCompat.getColor(context, R.color.card_bg_darktrans);
+        options.moonLightColor = ContextCompat.getColor(context, R.color.card_bg_lighttrans);
+
+        int[] colorAttrs = {
+                R.attr.graphColor_pointFill,            // 0
+                R.attr.graphColor_pointStroke,          // 1
+                R.attr.moonriseColor,                   // 2
+                R.attr.moonsetColor                     // 3
+        };
+        TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+        int def = R.color.transparent;
+
+        options.sunFillColor = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
+        options.sunStrokeColor = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
+        options.moonFillColor = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
+        options.moonStrokeColor = ContextCompat.getColor(context, typedArray.getResourceId(3, def));
+
+        typedArray.recycle();
+    }
+
+    public WorldMapOptions getOptions()
+    {
+        return options;
+    }
+
+    public void setOptions( WorldMapOptions options )
+    {
+        this.options = options;
     }
 
     public int getMaxUpdateRate()
@@ -135,7 +168,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         {
             drawTask.cancel(true);
         }
-        drawTask = new WorldMapTask(getContext());
+        drawTask = new WorldMapTask();
         drawTask.setListener(new WorldMapTaskListener()
         {
             @Override
@@ -144,7 +177,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                 setImageBitmap(result);
             }
         });
-        drawTask.execute(data, background.getIntrinsicWidth(), background.getIntrinsicHeight(), background);
+        drawTask.execute(data, options.map.getIntrinsicWidth(), options.map.getIntrinsicHeight(), options);
     }
 
     /**
@@ -190,46 +223,42 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     }
 
     /**
+     * WorldMapOptions
+     */
+    public static class WorldMapOptions
+    {
+        public Drawable map = null;
+        public int backgroundColor = Color.BLUE;
+        public int foregroundColor = Color.TRANSPARENT;
+
+        public boolean showSunPosition = true;
+        public int sunFillColor = Color.YELLOW;
+        public int sunStrokeColor = Color.BLACK;
+        public int sunRadius = 6;
+        public int sunStroke = 2;
+
+        public boolean showSunShadow = true;
+        public int sunShadowColor = Color.GRAY;
+
+        public boolean showMoonPosition = true;
+        public int moonFillColor = Color.WHITE;
+        public int moonStrokeColor = Color.BLACK;
+        public int moonRadius = 5;
+        public int moonStroke = 2;
+
+        public boolean showMoonLight = true;
+        public int moonLightColor = Color.LTGRAY;
+    }
+
+    /**
      * WorldMapTask
      */
     public static class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
     {
-        private Drawable map;
-        private int sunShadowColor = Color.GRAY;
-        private int moonLightColor = Color.LTGRAY;
-        private int backgroundColor = Color.BLUE;
+        private WorldMapOptions options = new WorldMapOptions();
 
-        private boolean showSunPosition = true, showSunShadow = true;
-        private int sunFillColor, sunStrokeColor;
-        private int sunRadius = 6;
-        private int sunStroke = 2;
-
-        private boolean showMoonPosition = true, showMoonLight = true;
-        private int moonFillColor, moonStrokeColor;
-        private int moonRadius = 5;
-        private int moonStroke = 2;
-
-        @SuppressLint("ResourceType")
-        public WorldMapTask(Context context)
+        public WorldMapTask()
         {
-            int[] colorAttrs = {
-                    R.attr.graphColor_pointFill,            // 0
-                    R.attr.graphColor_pointStroke,          // 1
-                    R.attr.moonriseColor,                   // 2
-                    R.attr.moonsetColor                     // 3
-            };
-            TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
-            int def = R.color.transparent;
-
-            sunFillColor = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
-            sunStrokeColor = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
-            moonFillColor = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
-            moonStrokeColor = ContextCompat.getColor(context, typedArray.getResourceId(3, def));
-
-            typedArray.recycle();
-
-            sunShadowColor = ContextCompat.getColor(context, R.color.card_bg_darktrans);
-            moonLightColor = ContextCompat.getColor(context, R.color.card_bg_lighttrans);
         }
 
         /**
@@ -248,7 +277,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                 data = (SuntimesRiseSetDataset)params[0];
                 w = (Integer)params[1];
                 h = (Integer)params[2];
-                map = (Drawable)params[3];
+                options = (WorldMapOptions)params[3];
 
             } catch (ClassCastException e) {
                 Log.w("WorldMapTask", "Invalid params; using [null, 0, 0]");
@@ -337,15 +366,19 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
 
             ////////////////
             // draw background
-            p.setColor(backgroundColor);
+            p.setColor(options.backgroundColor);
             c.drawRect(0, 0, w, h, p);
 
-            if (map != null)
+            if (options.map != null)
             {
                 Bitmap mapBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
                 Canvas mapCanvas = new Canvas(mapBitmap);
-                map.setBounds(0, 0, mapCanvas.getWidth(), mapCanvas.getHeight());
-                map.draw(mapCanvas);
+                options.map.setBounds(0, 0, mapCanvas.getWidth(), mapCanvas.getHeight());
+                options.map.draw(mapCanvas);
+
+                if (options.foregroundColor != Color.TRANSPARENT) {
+                    mapBitmap = SuntimesUtils.tintBitmap(mapBitmap, options.foregroundColor);
+                }
                 c.drawBitmap(mapBitmap, 0, 0, p);
             }
 
@@ -387,9 +420,9 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                 double[] moonUp = unitVector(moonLat, moonLon);
 
                 ////////////////
-                // draw sun shadow
+                // draw sunlight / moonlight
                 // algorithm described at https://gis.stackexchange.com/questions/17184/method-to-shade-or-overlay-a-raster-map-to-reflect-time-of-day-and-ambient-light
-                if (showSunPosition || showMoonPosition)
+                if (options.showSunPosition || options.showMoonPosition)
                 {
                     for (int i = 0; i < w; i++)
                     {
@@ -399,18 +432,20 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                             double lat = -1 * ((((double) j / (double) h) * 180d) - 90d);      // j in [0,h] to [0,180] to [-90,90] (inverted to canvas)
                             double[] v = unitVector(lat, lon);
 
-                            if (showSunShadow) {
+                            if (options.showSunShadow)
+                            {
                                 double sunIntensity = (sunUp[0] * v[0]) + (sunUp[1] * v[1]) + (sunUp[2] * v[2]);    // intensity = up.dotProduct(v)
                                 if (sunIntensity <= 0) {                                                               // values less equal 0 are in shadow
-                                    p.setColor(sunShadowColor);
+                                    p.setColor(options.sunShadowColor);
                                     c.drawPoint(i, j, p);
                                 }
                             }
 
-                            if (showMoonLight) {
+                            if (options.showMoonLight)
+                            {
                                 double moonIntensity = (moonUp[0] * v[0]) + (moonUp[1] * v[1]) + (moonUp[2] * v[2]);
                                 if (moonIntensity > 0) {
-                                    p.setColor(moonLightColor);
+                                    p.setColor(options.moonLightColor);
                                     c.drawPoint(i, j, p);
                                 }
                             }
@@ -420,36 +455,36 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
 
                 ////////////////
                 // draw sun
-                if (showSunPosition)
+                if (options.showSunPosition)
                 {
                     int sunX = (int) (mid[0] - ((ghaSun180 / 180d) * mid[0]));
                     int sunY = (int) (mid[1] - ((sunPos.declination / 90d) * mid[1]));
 
                     p.setStyle(Paint.Style.FILL);
-                    p.setColor(sunFillColor);
-                    c.drawCircle(sunX, sunY, sunRadius, p);
+                    p.setColor(options.sunFillColor);
+                    c.drawCircle(sunX, sunY, options.sunRadius, p);
 
                     p.setStyle(Paint.Style.STROKE);
-                    p.setStrokeWidth(sunStroke);
-                    p.setColor(sunStrokeColor);
-                    c.drawCircle(sunX, sunY, sunRadius, p);
+                    p.setStrokeWidth(options.sunStroke);
+                    p.setColor(options.sunStrokeColor);
+                    c.drawCircle(sunX, sunY, options.sunRadius, p);
                 }
 
                 ////////////////
                 // draw moon
-                if (showMoonPosition)
+                if (options.showMoonPosition)
                 {
                     int moonX = (int) (mid[0] - ((moonPos2[0] / 180d) * mid[0]));
                     int moonY = (int) (mid[1] - ((moonPos2[1] / 90d) * mid[1]));
 
                     p.setStyle(Paint.Style.FILL);
-                    p.setColor(moonFillColor);
-                    c.drawCircle(moonX, moonY, moonRadius, p);
+                    p.setColor(options.moonFillColor);
+                    c.drawCircle(moonX, moonY, options.moonRadius, p);
 
                     p.setStyle(Paint.Style.STROKE);
-                    p.setStrokeWidth(moonStroke);
-                    p.setColor(moonStrokeColor);
-                    c.drawCircle(moonX, moonY, moonRadius, p);
+                    p.setStrokeWidth(options.moonStroke);
+                    p.setColor(options.moonStrokeColor);
+                    c.drawCircle(moonX, moonY, options.moonRadius, p);
                 }
             }
 

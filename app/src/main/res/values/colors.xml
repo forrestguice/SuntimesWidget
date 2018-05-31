@@ -120,4 +120,6 @@
     <color name="grey_900">#ff212121</color>
     <color name="deep_teal_200">#ff80cbc4</color>
     <color name="deep_teal_500">#ff009688</color>
+    <color name="map_background">#5c6bc0</color>
+    <color name="map_foreground">#c6ff00</color>
 </resources>
