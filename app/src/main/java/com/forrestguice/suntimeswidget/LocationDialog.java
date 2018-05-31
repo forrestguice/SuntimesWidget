@@ -206,9 +206,9 @@ public class LocationDialog extends Dialog
         loadSettings(myParent);
     }
 
-    public void onPrepareDialog()
+    /**public void onPrepareDialog()
     {
-    }
+    }*/
 
     protected void loadSettings(Context context)
     {

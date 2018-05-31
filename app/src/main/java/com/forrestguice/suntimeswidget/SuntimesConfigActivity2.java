@@ -50,11 +50,11 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
         showOptionLabels(true);
     }
 
-    @Override
+    /**@Override
     protected void loadAppearanceSettings(Context context)
     {
         super.loadAppearanceSettings(context);
-    }
+    }*/
 
     @Override
     protected WidgetSettings.ActionMode defaultActionMode()
