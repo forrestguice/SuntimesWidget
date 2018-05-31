@@ -1094,7 +1094,7 @@ public class SuntimesActivity extends AppCompatActivity
                 }
             });
 
-            initTimeFields();
+            //initTimeFields();
 
         } else {
             Log.w("initCardViews", "Failed to init card layout2; was null!");
@@ -2378,14 +2378,14 @@ public class SuntimesActivity extends AppCompatActivity
         };
     }
 
-    private void initTimeFields()
-    {
+    //private void initTimeFields()
+    //{
         /**for (SolarEvents.SolarEventField key : timeFields.keySet())
         {
             TextView field = timeFields.get(key);
             field.setOnClickListener(createTimeFieldClickListener(key));
         }*/
-    }
+    //}
 
     private View.OnClickListener createTimeFieldClickListener( final SolarEvents.SolarEventField event )
     {

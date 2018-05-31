@@ -43,10 +43,10 @@ public class MoonLayout_2x1_0 extends MoonLayout
         super();
     }
 
-    public MoonLayout_2x1_0(int layoutID)
+    /**public MoonLayout_2x1_0(int layoutID)
     {
         this.layoutID = layoutID;
-    }
+    }*/
 
     @Override
     public void initLayoutID()

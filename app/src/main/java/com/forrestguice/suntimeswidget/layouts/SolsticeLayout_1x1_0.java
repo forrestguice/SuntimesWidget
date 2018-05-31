@@ -45,10 +45,10 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
         super();
     }
 
-    public SolsticeLayout_1x1_0(int layoutID)
+    /**public SolsticeLayout_1x1_0(int layoutID)
     {
         this.layoutID = layoutID;
-    }
+    }*/
 
     @Override
     public void initLayoutID()

@@ -400,10 +400,10 @@ public class WidgetThemeListActivity extends AppCompatActivity
     /**
      * @param context a context used to access resources
      */
-    private void importThemes( Context context )
+    /**private void importThemes( Context context )
     {
         // TODO
-    }
+    }*/
 
     @Override
     public void onBackPressed()
