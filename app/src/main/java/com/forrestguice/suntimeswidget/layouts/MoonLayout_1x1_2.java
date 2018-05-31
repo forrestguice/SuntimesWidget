@@ -18,12 +18,12 @@
 
 package com.forrestguice.suntimeswidget.layouts;
 
-import android.content.Context;
-import android.widget.RemoteViews;
+//import android.content.Context;
+//import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
-import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+//import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
+//import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 /**
  * Moon Phase (1x1)
@@ -35,10 +35,10 @@ public class MoonLayout_1x1_2 extends MoonLayout_1x1_1
         super();
     }
 
-    public MoonLayout_1x1_2(int layoutID)
+    /**public MoonLayout_1x1_2(int layoutID)
     {
         this.layoutID = layoutID;
-    }
+    }*/
 
     @Override
     public void initLayoutID()
@@ -46,21 +46,21 @@ public class MoonLayout_1x1_2 extends MoonLayout_1x1_1
         this.layoutID = R.layout.layout_widget_moon_1x1_2;
     }
 
-    @Override
+    /**@Override
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesMoonData data)
     {
         super.updateViews(context, appWidgetId, views, data);
-    }
+    }*/
 
-    @Override
+    /**@Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         super.themeViews(context, views, theme);
-    }
+    }*/
 
-    @Override
+    /**@Override
     public void prepareForUpdate(SuntimesMoonData data)
     {
         super.prepareForUpdate(data);
-    }
+    }*/
 }

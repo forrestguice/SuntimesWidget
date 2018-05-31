@@ -23,7 +23,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.AsyncTask;
-import android.os.Bundle;
+//import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 
 import android.util.AttributeSet;
@@ -166,31 +166,31 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
      * @param context a context used to access resources
      * @param bundle a Bundle used to load state
      */
-    protected void loadSettings(Context context, Bundle bundle )
+    /**protected void loadSettings(Context context, Bundle bundle )
     {
         //Log.d("DEBUG", "LightMapView loadSettings (bundle)");
-    }
+    }*/
 
 
     /**
      * @param context a context used to access shared prefs
      * @return true settings were saved
      */
-    protected boolean saveSettings(Context context)
+    /**protected boolean saveSettings(Context context)
     {
         //Log.d("DEBUG", "LightMap loadSettings (prefs)");
         return true;
-    }
+    }*/
 
     /**
      * @param bundle a Bundle used to save state
      * @return true settings were saved
      */
-    protected boolean saveSettings(Bundle bundle)
+    /**protected boolean saveSettings(Bundle bundle)
     {
         //Log.d("DEBUG", "LightMapView saveSettings (bundle)");
         return true;
-    }
+    }*/
 
     /**
      * LightMapTask

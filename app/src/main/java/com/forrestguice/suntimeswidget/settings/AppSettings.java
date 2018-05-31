@@ -232,6 +232,7 @@ public class AppSettings
 
         } else {
             DisplayMetrics metrics = resources.getDisplayMetrics();
+            //noinspection deprecation
             resources.updateConfiguration(config, metrics);
             return new ContextWrapper(context);
         }
