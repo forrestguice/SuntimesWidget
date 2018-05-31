@@ -32,7 +32,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.FileUriExposedException;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
@@ -118,7 +117,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         super.onCreate(icicle);
         initLocale();
         setResult(RESULT_CANCELED);
-        setContentView(R.layout.layout_themelist);
+        setContentView(R.layout.layout_activity_themelist);
 
         Intent intent = getIntent();
         previewID = intent.getIntExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, previewID);
@@ -401,10 +400,10 @@ public class WidgetThemeListActivity extends AppCompatActivity
     /**
      * @param context a context used to access resources
      */
-    private void importThemes( Context context )
+    /**private void importThemes( Context context )
     {
         // TODO
-    }
+    }*/
 
     @Override
     public void onBackPressed()

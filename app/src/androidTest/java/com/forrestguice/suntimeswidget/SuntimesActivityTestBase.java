@@ -22,7 +22,7 @@ import android.app.Activity;
 import android.content.pm.ActivityInfo;
 
 import android.media.MediaScannerConnection;
-import android.os.Environment;
+//import android.os.Environment;
 import android.support.test.espresso.FailureHandler;
 import android.support.test.espresso.ViewAssertion;
 import android.support.test.espresso.ViewInteraction;
