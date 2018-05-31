@@ -36,8 +36,31 @@
         android:id="@+id/info_time_worldmap"
         android:layout_width="0dp" android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/worldmapdialog_title"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/worldmapdialog_title" />
+
+    <RadioGroup
+        android:layout_width="fill_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/info_time_worldmap">
+
+        <RadioButton android:id="@+id/radio_sun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Sunlight" />
+
+        <RadioButton android:id="@+id/radio_moon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Moonlight" />
+
+        <RadioButton android:id="@+id/radio_sunmoon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Both" />
+    </RadioGroup>
 
 </android.support.constraint.ConstraintLayout>
 

@@ -23,7 +23,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
@@ -32,15 +34,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 
 public class WorldMapDialog extends DialogFragment
 {
-    //private static SuntimesUtils utils = new SuntimesUtils();
-    private WorldMapView worldmap;
+    public static final String PREF_KEY_UI_MAP_SUNSHADOW = "map_showsunshadow";
+    public static final boolean PREF_DEF_UI_MAP_SUNSHADOW = true;
 
+    public static final String PREF_KEY_UI_MAP_MOONLIGHT = "map_showmoonlight";
+    public static final boolean PREF_DEF_UI_MAP_MOONLIGHT = true;
+
+    private WorldMapView worldmap;
     private View dialogContent = null;
 
     private SuntimesRiseSetDataset data;
@@ -122,6 +129,22 @@ public class WorldMapDialog extends DialogFragment
     public void initViews(View dialogView)
     {
         worldmap = (WorldMapView)dialogView.findViewById(R.id.info_time_worldmap);
+        RadioButton option_sun = (RadioButton)dialogView.findViewById(R.id.radio_sun);
+        RadioButton option_moon = (RadioButton)dialogView.findViewById(R.id.radio_moon);
+        RadioButton option_sunmoon = (RadioButton)dialogView.findViewById(R.id.radio_sunmoon);
+
+        WorldMapView.WorldMapOptions options = worldmap.getOptions();
+        updateOptions(getContext());
+
+        if (options.showSunShadow && options.showMoonLight)
+            option_sunmoon.setChecked(true);
+        else if (options.showSunShadow)
+            option_sun.setChecked(true);
+        else option_moon.setChecked(true);
+
+        option_sun.setOnClickListener(onRadioButtonClicked);
+        option_moon.setOnClickListener(onRadioButtonClicked);
+        option_sunmoon.setOnClickListener(onRadioButtonClicked);
     }
 
     @SuppressWarnings("ResourceType")
@@ -129,8 +152,20 @@ public class WorldMapDialog extends DialogFragment
     {
     }
 
+    public void updateOptions(Context context)
+    {
+        if (context != null)
+        {
+            WorldMapView.WorldMapOptions options = worldmap.getOptions();
+            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+            options.showSunShadow = pref.getBoolean(PREF_KEY_UI_MAP_SUNSHADOW, PREF_DEF_UI_MAP_SUNSHADOW);
+            options.showMoonLight = pref.getBoolean(PREF_KEY_UI_MAP_MOONLIGHT, PREF_DEF_UI_MAP_MOONLIGHT);
+        }
+    }
+
     public void updateViews()
     {
+        updateOptions(getContext());
         if (data != null)
             updateViews(data);
     }
@@ -142,4 +177,33 @@ public class WorldMapDialog extends DialogFragment
         startUpdateTask();
     }
 
+    private View.OnClickListener onRadioButtonClicked = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+            SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
+            //boolean checked = ((RadioButton) view).isChecked();
+            switch(v.getId())
+            {
+                case R.id.radio_sun:
+                    pref.putBoolean(PREF_KEY_UI_MAP_SUNSHADOW, true);
+                    pref.putBoolean(PREF_KEY_UI_MAP_MOONLIGHT, false);
+                    break;
+
+                case R.id.radio_moon:
+                    pref.putBoolean(PREF_KEY_UI_MAP_SUNSHADOW, false);
+                    pref.putBoolean(PREF_KEY_UI_MAP_MOONLIGHT, true);
+                    break;
+
+                case R.id.radio_sunmoon:
+                default:
+                    pref.putBoolean(PREF_KEY_UI_MAP_SUNSHADOW, true);
+                    pref.putBoolean(PREF_KEY_UI_MAP_MOONLIGHT, true);
+                    break;
+            }
+            pref.apply();
+            updateViews();
+        }
+    };
 }
