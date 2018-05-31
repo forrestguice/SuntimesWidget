@@ -108,7 +108,8 @@ Polish and Esperanto translations by <u>Verdulo</u>.<br/>
 French translation by <u>Jej</u>.<br/>
 Hungarian translation by <u>Erci</u>.<br/>
 Catalan and Spanish translations by <u><a href="https://github.com/Raulvo">Raulvo</a></u>.<br/>
-Basque translation by <u>beriain</u>.
+Basque translation by <u>beriain</u>.<br/>
+Norwegian translation by <u>FTno</u>.
 
 [Contributions to the project](CONTRIBUTING.md) are welcome.
 

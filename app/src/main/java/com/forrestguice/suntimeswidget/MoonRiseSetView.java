@@ -267,7 +267,8 @@ public class MoonRiseSetView extends LinearLayout
         else addLayout1(fields);
     }
 
-    private MoonRiseSetFieldLayoutSet determineLayout( Calendar rising0, Calendar setting0, Calendar rising1, Calendar setting1 )
+    @SuppressWarnings("ConstantConditions")
+    private MoonRiseSetFieldLayoutSet determineLayout(Calendar rising0, Calendar setting0, Calendar rising1, Calendar setting1 )
     {
         if (tomorrowMode)
         {
