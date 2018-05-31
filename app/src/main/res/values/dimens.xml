@@ -53,8 +53,6 @@
     <integer name="anim_slideout_fade_duration">700</integer>
     <integer name="anim_slideout_move_duration">700</integer>
     <fraction name="anim_slideout_move_fromDelta">0%</fraction>
-    <fraction name="anim_slideout_move_top_toDelta">-110%</fraction>
-    <fraction name="anim_slideout_move_bottom_toDelta">110%</fraction>
     <fraction name="anim_slideout_move_left_toDelta">-110%</fraction>
     <fraction name="anim_slideout_move_right_toDelta">110%</fraction>
 
