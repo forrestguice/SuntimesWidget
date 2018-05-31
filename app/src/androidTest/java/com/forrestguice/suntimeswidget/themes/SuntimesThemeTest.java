@@ -19,7 +19,7 @@
 package com.forrestguice.suntimeswidget.themes;
 
 import android.content.Context;
-import android.content.res.Resources;
+//import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;

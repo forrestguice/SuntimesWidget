@@ -615,8 +615,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         }
 
         updatePreview_sun(previewLayout);
-        updatePreview_solstice(previewLayout);
-        updatePreview_position(previewLayout);
+        //updatePreview_solstice(previewLayout);  // TODO
+        //updatePreview_position(previewLayout);  // TODO
         updatePreview_moon(previewLayout);
     }
 
@@ -741,7 +741,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
      * Update the provided preview layout.
      * @param previewLayout the layout to update
      */
-    protected void updatePreview_solstice(View previewLayout)
+    /**protected void updatePreview_solstice(View previewLayout)
     {
         // TODO: spring color
         //chooseColorSpring.getColor();
@@ -751,9 +751,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         //chooseColorFall.getColor();
         // TODO: winter color
         //chooseColorWinter.getColor();
-    }
+    }*/
 
-    protected void updatePreview_position(View previewLayout)
+    /**protected void updatePreview_position(View previewLayout)
     {
         // TODO: day color
         //chooseColorDay.getColor();
@@ -765,7 +765,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         //chooseColorAstro.getColor();
         // TODO: night color
         //chooseColorNight.getColor();
-    }
+    }*/
 
     /**
      * Update the provided preview layout.
@@ -991,11 +991,11 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         }
     }
 
-    @Override
+    /**@Override
     public void onDestroy()
     {
         super.onDestroy();
-    }
+    }*/
 
     @Override
     public void onResume()

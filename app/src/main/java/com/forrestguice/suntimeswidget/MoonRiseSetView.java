@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
-import android.os.Bundle;
+//import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
@@ -199,16 +199,16 @@ public class MoonRiseSetView extends LinearLayout
         }
     }
 
-    public boolean saveState(Bundle bundle)
+    /**public boolean saveState(Bundle bundle)
     {
         //bundle.putBoolean(MoonPhaseView.KEY_UI_MINIMIZED, minimized);
         return true;
-    }
+    }*/
 
-    public void loadState(Bundle bundle)
+    /**public void loadState(Bundle bundle)
     {
         //minimized = bundle.getBoolean(MoonPhaseView.KEY_UI_MINIMIZED, minimized);
-    }
+    }*/
 
     public void setOnClickListener( OnClickListener listener )
     {
@@ -267,7 +267,8 @@ public class MoonRiseSetView extends LinearLayout
         else addLayout1(fields);
     }
 
-    private MoonRiseSetFieldLayoutSet determineLayout( Calendar rising0, Calendar setting0, Calendar rising1, Calendar setting1 )
+    @SuppressWarnings("ConstantConditions")
+    private MoonRiseSetFieldLayoutSet determineLayout(Calendar rising0, Calendar setting0, Calendar rising1, Calendar setting1 )
     {
         if (tomorrowMode)
         {
