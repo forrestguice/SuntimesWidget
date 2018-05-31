@@ -83,11 +83,11 @@ public abstract class MoonLayout extends SuntimesLayout
         views.setTextViewText(R.id.text_time_moonset_suffix, setText.getSuffix());
     }
 
-    @Override
+    /**@Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         super.themeViews(context, views, theme);
-    }
+    }*/
 
     protected HashMap<MoonPhaseDisplay, Integer> phaseColors = new HashMap<>();
 

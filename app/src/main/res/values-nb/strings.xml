@@ -5,7 +5,930 @@
     <string name="default_location_latitude">59.8937</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">10.6450</string>   <!-- decimal degrees (DD) -->
 
-    <string name="time_format_12hr_veryshort"><xliff:g id="patternHours">h</xliff:g>.<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- shortest 12hr time format; should omit am/pm -->
-    <string name="time_format_24hr_veryshort"><xliff:g id="patternHours">HH</xliff:g>.<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- 24hr time format -->
+    <!-- MAIN ACTIVITY -->
 
+    <!-- Action Bar
+         The text that appears in the overflow menu / menuItem contentDescription.
+    -->
+    <string name="configAction_refreshLocation">Gjenoppfrisk</string>
+    <string name="configAction_addLocation">Sted</string>
+    <string name="configAction_mapLocation">Vis kart</string>
+    <string name="configAction_mapLocation_chooser">Vis sted med</string>
+    <string name="configAction_mapLocation_noapp">Kan ikke finne kartprogram!</string>
+    <string name="configAction_setAlarm">Alarm</string>
+    <string name="configAction_setTimeZone">Tidssone</string>
+    <string name="configAction_setDate">Dato</string>
+    <string name="configAction_sunDialog">Solens posisjon</string>
+    <string name="configAction_equinoxDialog">Solverv / Jevndøgn</string>
+    <string name="configAction_moon">Månen</string>
+    <string name="configAction_help">Hjelp</string>
+    <string name="configAction_settings">Innstillinger</string>
+    <string name="configAction_aboutWidget">Om</string>
+
+    <!-- Button: Next/Prev Date
+         The next/prev button contentDescription (accessibility).
+    -->
+    <string name="nextDay">Neste dag</string>
+    <string name="prevDay">Forrige dag</string>
+    <string name="nextYear">Neste år</string>
+    <string name="prevYear">Forrige år</string>
+
+    <!-- Warnings -->
+    <string name="spanTag_warning">Advarsel!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
+
+    <!-- Field: timezone
+         The time zone field that appears below the clock (main activity).
+    -->
+    <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
+    <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> The time zone may be wrong for this location.</string>  <!-- snackbar message -->
+
+    <!-- Field: date
+         The date field that appears above the table (main activity).
+         e.g. [dateDesc] \n [date]
+             where [dateDesc] is a yesterday/today/tomorrow, past_, or future_ string.
+             where [date] is a dateString formatted by app using user's locale
+    -->
+    <string name="dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
+    <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> The date is set to a day other than today.</string>  <!-- snackbar message -->
+
+    <!-- DateDesc: some day in the past (appears in dateField) -->
+    <string name="past_yesterday">Past (-1)</string>
+    <string name="past_today">Past</string>
+    <string name="past_tomorrow">Past (+1)</string>
+
+    <!-- DateDesc: yesterday/today/tomorrow (appears in dateField) -->
+    <string name="yesterday">I går</string>
+    <string name="today">I dag</string>
+    <string name="tomorrow">I morgen</string>
+
+    <!-- DateDesc: some day in the future (appears in dateField) -->
+    <string name="future_yesterday">Future (-1)</string>
+    <string name="future_today">Future</string>
+    <string name="future_tomorrow">Future (+1)</string>
+
+    <!-- Field: length of day
+         The hours in the day field(s) that appears below the table (main activity)
+    -->
+    <string name="length_day"><xliff:g id="timeSpan" example="12h">%1$s</xliff:g> daglengde</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
+    <string name="length_light"><xliff:g id="timeSpan" example="12h 50m">%1$s</xliff:g> brukbart lys</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
+    <string name="length_twilight1"><xliff:g id="timeSpan1" example="10h 5m">%1$s</xliff:g></string>
+    <string name="length_twilight1e_pos"><xliff:g id="timeSpan1" example="10h 5m">%1$s</xliff:g> [+<xliff:g id="timeSpan1" example="+30s">%2$s</xliff:g>]</string>
+    <string name="length_twilight1e_neg"><xliff:g id="timeSpan1" example="10h 5m">%1$s</xliff:g> [-<xliff:g id="timeSpan1" example="+30s">%2$s</xliff:g>]</string>
+    <string name="length_twilight2"><xliff:g id="timeSpan1" example="30m">%1$s</xliff:g> | <xliff:g id="timeSpan2" example="30m">%2$s</xliff:g></string>
+    <string name="length_delimiter">|</string>
+
+    <!-- Field: moon illumination (as seen in moon widget) -->
+    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> opplyst</string>  <!-- used in 2x1 widget -->
+    <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- used in 1x1 widget -->
+
+    <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
+         e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
+         The relative order is defined by the layout (layout/info_time_daydelta.xml).
+    -->
+    <string name="delta_day_tomorrow">I morgen blir</string>
+    <string name="delta_day_yesterday">I går var</string>
+    <string name="delta_day_shorter">kortere</string>
+    <string name="delta_day_longer">lengre</string>
+
+    <!-- NotePrefix: since/until/untilEnd
+         The note prefix text. e.g.
+                  4 hr
+                 until
+                  sunset
+         The relative order is defined by the layout (layout/info_time_note.xml).
+    -->
+    <string name="since">siden</string>
+    <string name="until">til</string>
+    <string name="until_end">til slutten av</string>
+
+    <!-- NoteBody: sunset/sunrise/twilight string
+         The note body text; appears next to the prefix (layout/info_time_note.xml)
+    -->
+    <string name="until_astroTwilight">astronomisk tussmørke</string>
+    <string name="until_civilTwilight">alminnelig tussmørke</string>
+    <string name="until_nauticalTwilight">nautisk tussmørke</string>
+    <string name="until_sunrise">soloppgang</string>
+    <string name="until_noon">middag</string>
+    <string name="until_sunset">solnedgang</string>
+    <string name="untilEnd_civilTwilight">alminnelig tussmørke</string>
+    <string name="untilEnd_nauticalTwilight">nautisk tussmørke</string>
+    <string name="untilEnd_astroTwilight">astronomisk tussmørke</string>
+    <string name="until_goldhour">gylne time</string>
+    <string name="untilEnd_goldhour">gylne time</string>
+    <string name="until_bluehour">blå time</string>
+    <string name="untilEnd_bluehour">blå time</string>
+    <string name="until_moonrise">måneoppgang</string>
+    <string name="until_moonset">månenedgang</string>
+
+    <!-- Table -->
+    <string name="sunrise">Soloppgang</string>                             <!-- contentDescription -->
+    <string name="sunrise_short">Soloppgang</string>                          <!-- table title -->
+    <string name="sunset">Solnedgang</string>                               <!-- contentDescription -->
+    <string name="sunset_short">Solnedgang</string>                            <!-- table title -->
+    <string name="moonrise">Måneoppgang</string>                             <!-- contentDescription -->
+    <string name="moonrise_short">Måneoppgang</string>                             <!-- table title -->
+    <string name="moonset">Månenedgang</string>                             <!-- contentDescription -->
+    <string name="moonset_short">Månenedgang</string>                             <!-- table title -->
+
+    <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
+    <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
+    <string name="delta_years">å</string>    <!-- e.g. 1y -->
+    <string name="delta_weeks">u</string>    <!-- e.g. 2w -->
+    <string name="delta_days">d</string>     <!-- e.g. 1d -->
+    <string name="delta_hours">t</string>    <!-- e.g. 2h -->
+    <string name="delta_minutes">m</string>  <!-- e.g. 3m -->
+    <string name="delta_seconds">s</string>  <!-- e.g. 4s -->
+
+    <string name="hence"><xliff:g id="timeSpan">%1$s</xliff:g>  fra nå</string>  <!-- e.g. 15d 23h from now -->
+    <string name="ago"><xliff:g id="timeSpan">%1$s</xliff:g>  siden</string>         <!-- e.g. 1y 15d 12h ago -->
+
+    <!-- misc time values: might be displayed in a timeField in place of an actual time -->
+    <string name="time_none">ingen</string>  <!-- no time / time does not occur -->
+    <string name="time_loading">…</string>  <!-- calculating / time is loading -->
+    <string name="time_format_12hr_veryshort"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- shortest 12hr time format; should omit am/pm -->
+    <string name="time_format_12hr_veryshort_withseconds"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  <!-- shortest 12hr time format (w/ seconds); should omit am/pm -->
+    <string name="time_format_24hr_veryshort"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- 24hr time format -->
+    <string name="time_format_24hr_veryshort_withseconds"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  <!-- 24hr time format (w/ seconds) -->
+    <string name="time_format_12hr_short"><xliff:g id="hoursMinutes">%1$s</xliff:g> <xliff:g id="suffix">%2$s</xliff:g></string>
+    <string name="date_format_short"><xliff:g id="patternDay">d</xliff:g>. <xliff:g id="patternMonth">MMMM</xliff:g></string>                                           <!-- MMMM d ... e.g. December 3 -->
+    <string name="date_format_long"><xliff:g id="patternDay">d</xliff:g>. <xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternYear">yyyy</xliff:g></string>  <!-- MMMM d, yyyy ... e.g. December 3, 2017 -->
+    <string name="datetime_format_short"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>           <!-- longDate, time ... e.g. December 3, 2017, 11:00 am -->
+    <string name="datetime_format_long"><xliff:g id="monthYear">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>        <!-- shortDate, time ... e.g. December 3, 11:00 am -->
+    <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
+
+    <!--
+         WIDGET CONFIG
+    -->
+
+    <string name="configAction_restoreDefaults">Restore Defaults</string>   <!-- button / menu text -->
+
+    <!-- WidgetConfig Activity -->
+    <string name="configAction_addWidget">Add Widget</string>                   <!-- Button: Add -->
+    <string name="configAction_reconfigWidget_short">Reconfigure</string>       <!-- Button: Reconfigure -->
+    <string name="configAction_reconfigWidget">Reconfigure Widget</string>      <!-- used as title when reconfiguring -->
+    <string name="configLabel_title0">@string/app_name_widget0</string>         <!-- used as title when adding -->
+    <string name="configLabel_title1">Flippable Widget</string>                 <!-- used as title when adding -->
+    <string name="configLabel_title2">@string/app_name_widget2</string>                  <!-- used as title when adding -->
+    <string name="configLabel_solsticewidget0">@string/app_name_solsticewidget0</string>                  <!-- used as title when adding -->
+    <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
+
+    <!-- Widget Setting: general -->
+    <string name="configLabel_general">Generelle innstillinger</string>                <!-- group title -->
+    <string name="configLabel_general_calculator">Datakilde:</string>         <!-- spinner label -->
+    <string name="configLabel_general_calculator_sun">Soldatakilde</string>         <!-- preference label -->
+    <string name="configLabel_general_calculator_moon">Månedatakilde</string>         <!-- preference label -->
+
+    <string name="configLabel_general_showSeconds">Vis sekunder</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showSeconds_summary">Inkluder sekunder ved visning av tid.</string>        <!-- checkbox label -->
+
+    <string name="configLabel_general_showTimeDate">Vis tid (med datoer)</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showTimeDate_summary">Inkluder tiden ved visning av datoer.</string>        <!-- checkbox label -->
+
+    <string name="configLabel_general_showWeeks">Vis uker</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showWeeks_summary">Divide time spans greater than 7 days into weeks (e.g. 15d becomes 2w 1d).</string>    <!-- checkbox label -->
+
+    <string name="configLabel_general_showHours">Vis timer</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showHours_summary">Include hours and minutes in time spans greater than a day.</string>    <!-- checkbox label -->
+
+    <!-- Widget Setting: appearance -->
+    <string name="configLabel_appearance">Appearance Settings</string>           <!-- group title -->
+    <string name="configLabel_appearance_theme">Theme:</string>                  <!-- spinner label -->
+    <string name="configLabel_appearance_allowResize">Grow with available space (resizeable)</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_showLabels">Show Labels</string>          <!-- checkbox label -->
+    <string name="configLabel_appearance_showTitle">Show Title</string>          <!-- checkbox label -->
+    <string name="configLabel_appearance_titleText">Title:</string>              <!-- edittext label -->
+    <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
+
+    <!-- Widget Setting: time mode -->
+    <string name="timeMode_noon_short">Middag</string>                    <!-- setting -->
+    <string name="timeMode_noon">Middag</string>                    <!-- setting -->
+    <string name="timeMode_official_short">Faktisk</string>              <!-- setting -->
+    <string name="timeMode_official">Faktisk tid</string>               <!-- setting -->
+    <string name="timeMode_civil_short">Alminnelig</string>                  <!-- setting -->
+    <string name="timeMode_civil">Alminnelig tussmørke</string>               <!-- setting -->
+    <string name="timeMode_nautical_short">Nautisk</string>            <!-- setting -->
+    <string name="timeMode_nautical">Nautisk tussmørke</string>         <!-- setting -->
+    <string name="timeMode_astronomical_short">Astronomisk</string>    <!-- setting -->
+    <string name="timeMode_astronomical">Astronomisk tussmørke</string> <!-- setting -->
+    <string name="timeMode_night">Natt</string>                   <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_day">Dag</string>                       <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_golden_short">Gylne</string>                <!-- setting -->
+    <string name="timeMode_golden">Gylne time</string>                 <!-- setting -->
+    <string name="timeMode_blue8_short">Blue (8\u00B0)</string>                    <!-- setting -->
+    <string name="timeMode_blue8">Blue Hour (8\u00B0)</string>                     <!-- setting -->
+    <string name="timeMode_blue4_short">Blue (4\u00B0)</string>                    <!-- setting -->
+    <string name="timeMode_blue4">Blue Hour (4\u00B0)</string>                     <!-- setting -->
+
+    <string name="timeMode_equinox_vernal">Vårjevndøgn</string>      <!-- setting -->
+    <string name="timeMode_equinox_vernal_short">Jevndøgn</string>       <!-- setting -->
+    <string name="timeMode_equinox_autumnal">Høstjevndøgn</string>  <!-- setting -->
+    <string name="timeMode_equinox_autumnal_short">Jevndøgn</string>     <!-- setting -->
+    <string name="timeMode_solstice_summer">Sommersolverv</string>    <!-- setting -->
+    <string name="timeMode_solstice_summer_short">Solverv</string>     <!-- setting -->
+    <string name="timeMode_solstice_winter">Vintersolverv</string>    <!-- setting -->
+    <string name="timeMode_solstice_winter_short">Solverv</string>     <!-- setting -->
+
+    <string name="timeMode_moon">Månen</string>                               <!-- label -->
+    <string name="timeMode_moon_new">Nymåne</string>                               <!-- setting -->
+    <string name="timeMode_moon_new_short">Ny</string>                              <!-- setting -->
+    <string name="timeMode_moon_waxingcrescent_short">Waxing Crescent</string>               <!-- label -->
+    <string name="timeMode_moon_waxingcrescent">Waxing Crescent</string>                     <!-- label -->
+    <string name="timeMode_moon_firstquarter">First Quarter</string>                 <!-- setting -->
+    <string name="timeMode_moon_firstquarter_short">First Quarter</string>           <!-- setting -->
+    <string name="timeMode_moon_waxinggibbous_short">Waxing Gibbous</string>               <!-- label -->
+    <string name="timeMode_moon_waxinggibbous">Waxing Gibbous</string>                     <!-- label -->
+    <string name="timeMode_moon_full">Fullmåne</string>                             <!-- setting -->
+    <string name="timeMode_moon_full_short">Full</string>                            <!-- setting -->
+    <string name="timeMode_moon_waninggibbous_short">Waning Gibbous</string>               <!-- label -->
+    <string name="timeMode_moon_waninggibbous">Waning Gibbous</string>                     <!-- label -->
+    <string name="timeMode_moon_thirdquarter">Third Quarter</string>                 <!-- setting -->
+    <string name="timeMode_moon_thirdquarter_short">Third Quarter</string>           <!-- setting -->
+    <string name="timeMode_moon_waningcrescent_short">Waning Crescent</string>               <!-- label -->
+    <string name="timeMode_moon_waningcrescent">Waning Crescent</string>                     <!-- label -->
+
+    <string name="configLabel_general_timeMode">Modus:</string>          <!-- spinner label -->
+
+    <!-- Widget Setting: layout mode -->
+    <string name="widgetMode1x1_sunrise">Sunrise only</string>             <!-- setting -->
+    <string name="widgetMode1x1_sunset">Sunset only</string>               <!-- setting -->
+    <string name="widgetMode1x1_both_1">Sunrise &amp; Sunset (1)</string>  <!-- setting -->
+    <string name="widgetMode1x1_both_2">Sunrise &amp; Sunset (2)</string>  <!-- setting -->
+
+    <string name="widgetMode1x1_altaz">Altitude &amp; Azimuth</string>     <!-- setting -->
+    <string name="widgetMode1x1_decright">Declination &amp; Right Ascension</string>     <!-- setting -->
+
+    <string name="widgetMode1x1_moonriseset">Moonrise &amp; moonset</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonphaseillum">Moon phase &amp; illumination</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonphase">Moon phase only</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonillum">Moon illumination only</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonphasenext">Next major phase</string>     <!-- setting -->
+
+    <string name="configLabel_appearance_1x1mode">1x1 Layout:</string>     <!-- spinner label -->
+
+    <!-- Widget Setting: widget tap action -->
+    <string name="actionMode_doNothing">Do Nothing</string>           <!-- setting -->
+    <string name="actionMode_update">Update Widget</string>           <!-- setting -->
+    <string name="actionMode_config">Reconfigure Widget</string>      <!-- setting -->
+    <string name="actionMode_launchActivity">Launch App</string>      <!-- setting -->
+    <string name="actionMode_flipToNextItem">Flip Views</string>      <!-- setting -->
+
+    <string name="configLabel_action">Action Settings</string>                  <!-- group title -->
+    <string name="configLabel_action_onTap">On Tap:</string>                    <!-- spinner label -->
+    <string name="configLabel_action_onClockTap">On Clock Tap:</string>         <!-- spinner label -->
+    <string name="configLabel_action_onNoteTap">On Note Tap:</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap">On Date Tap:</string>           <!-- spinner label -->
+
+    <!-- Widget Setting: location -->
+    <string name="locationMode_current">Gjeldende (sist kjente)</string>  <!-- setting -->
+    <string name="locationMode_custom">Brukerdefinert</string>           <!-- setting -->
+
+    <string name="configLabel_location">Location Settings</string>               <!-- group title -->
+    <string name="configLabel_location_mode">Modus:</string>                      <!-- spinner label -->
+    <string name="configLabel_location_lat">Breddegrad:</string>                   <!-- edittext label -->
+    <string name="configHint_location_lat">desimalgrader</string>      <!-- edittext hint -->
+    <string name="configLabel_location_lon">Lengdegrad:</string>                          <!-- edittext label -->
+    <string name="configHint_location_lon">desimalgrader</string> <!-- edittext hint -->
+    <string name="configLabel_location_name">Navn:</string>                      <!-- edittext label -->
+    <string name="configHint_location_name">(optional)</string>                  <!-- edittext hint -->
+
+    <string name="configAction_getFix">Get Location</string>    <!-- button (contentDescription) -->
+    <string name="configAction_editPlace">Edit</string>         <!-- button (contentDescription) -->
+    <string name="configAction_savePlace">Save</string>         <!-- button (contentDescription) -->
+
+    <!-- Widget Setting: timezone -->
+    <string name="timezoneMode_solar">Solar Time</string>                       <!-- setting -->
+    <string name="timezoneMode_current">System Time Zone</string>               <!-- setting -->
+    <string name="timezoneMode_custom">User Defined</string>                    <!-- setting -->
+
+    <string name="solartime_localMean">Local Mean Time</string>                 <!-- setting / custom timezone id -->
+    <string name="solartime_apparent">Apparent Solar Time</string>              <!-- setting / custom timezone id -->
+    <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
+    <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
+
+    <string name="configLabel_timezone">Time Zone Settings</string>             <!-- group title -->
+    <string name="configLabel_timezone_mode">Mode:</string>                     <!-- spinner label -->
+    <string name="configLabel_timezone_custom">Time Zone:</string>              <!-- spinner label -->
+    <string name="configLabel_solartime">Solar Time:</string>                   <!-- spinner label -->
+
+    <!-- Widget Setting: timeFormat mode -->
+    <string name="timeFormatMode_system">Systemformat</string>          <!-- setting -->
+    <string name="timeFormatMode_12hr">12-timer</string>                  <!-- setting -->
+    <string name="timeFormatMode_24hr">24-timer</string>                  <!-- setting -->
+
+    <string name="configLabel_timeFormatMode">Tidsformat</string>             <!-- preference label -->
+    <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
+
+    <!-- Widget Setting: date mode -->
+    <string name="dateMode_current">I dag</string>                  <!-- setting -->
+    <string name="dateMode_custom">Brukerdefinert</string>            <!-- setting -->
+
+    <string name="configLabel_date">Datoinnstillinger</string>                      <!-- group title -->
+    <string name="configLabel_date_mode">Modus:</string>                         <!-- spinner label -->
+    <string name="configLabel_date_custom">Dato:</string>                       <!-- dateSelector label -->
+
+    <!-- Widget Setting: compare mode -->
+    <string name="compareMode_yesterday">I går</string>                     <!-- setting -->
+    <string name="compareMode_tomorrow">I morgen</string>                       <!-- setting -->
+    <string name="configLabel_general_compareMode">Compare Against:</string>    <!-- spinner label -->
+    <string name="configLabel_general_showComparison">Show Comparison</string>  <!-- checkbox label -->
+
+    <!-- Widget Setting: tracking mode -->
+    <string name="trackingMode_closest">Closest Event</string>                 <!-- setting -->
+    <string name="trackingMode_soonest">Upcoming Event</string>                <!-- setting -->
+    <string name="configLabel_general_trackingMode">Track:</string>            <!-- spinner label -->
+
+    <!-- Widget Setting: timeMode override -->
+    <string name="configLabel_general_timeMode_override">Tracking overrides mode</string>     <!-- checkbox label -->
+
+    <!-- Widget Settings: noon -->
+    <string name="configLabel_general_showNoon">Show Solar Noon</string>        <!-- checkbox label -->
+
+    <!-- Widget Setting: Launch App -->
+    <string name="configLabel_action_launch">Activity:</string>                 <!-- edittext label -->
+    <string name="configHint_action_launch"><xliff:g id="uri">com.forrestguice.suntimeswidget.SuntimesActivity</xliff:g></string> <!-- editText hint (and default) -->
+
+    <!-- App Setting: WidgetThemes -->
+    <string name="configLabel_widgetThemeList">Widget Themes</string>
+    <string name="configLabel_widgetThemeListSelect">Select a theme</string>
+    <string name="configAction_addTheme">Add</string>           <!-- button (contentDescription) -->
+    <string name="configAction_selectTheme">Select</string>     <!-- button (contentDescription) -->
+    <string name="configAction_editTheme">Edit</string>         <!-- button (contentDescription) -->
+    <string name="configAction_deleteTheme">Delete</string>     <!-- button (contentDescription) -->
+    <string name="configAction_copyTheme">Copy</string>         <!-- button (contentDescription) -->
+    <string name="configAction_exportThemes">Export</string>    <!-- button (contentDescription) -->
+    <string name="configAction_importThemes">Import</string>    <!-- button (contentDescription) -->
+
+    <string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
+    <string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_copy<xliff:g id="#">%2$s</xliff:g></string>   <!-- copied theme id -->
+    <string name="addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g> (copy)</string>                            <!-- copied theme name (display string) -->
+
+    <string name="addtheme_toast_success">Added <xliff:g id="themeName">%1$s</xliff:g>.</string>          <!-- toast msg -->
+    <string name="edittheme_toast_success">Saved <xliff:g id="themeName">%1$s</xliff:g>.</string>         <!-- toast msg -->
+    <string name="deletetheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g> was deleted.</string> <!-- toast msg -->
+
+    <string name="edittheme_error_themeName_empty">ID must be unique (required).</string>        <!-- error hint (themeName empty) -->
+    <string name="edittheme_error_themeName_unique">ID must be unique (already taken).</string>  <!-- error hint (themeName taken) -->
+    <string name="edittheme_error_displaytext">Display string must not be empty.</string>  <!-- error hint (display text is empty) -->
+    <string name="edittheme_error_textsize_min">Size must be an integer &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->
+    <string name="edittheme_error_textsize_max">Size must be an integer &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->
+    <string name="edittheme_flag_default">default</string>  <!-- content description -->
+
+    <string name="deletetheme_dialog_title">Delete Theme</string>        <!-- dialog title -->
+    <string name="deletetheme_dialog_message">Are you sure you want to delete <xliff:g id="themeName">%1$s</xliff:g>?</string>   <!-- dialog msg -->
+    <string name="deletetheme_dialog_ok">Delete</string>        <!-- button -->
+    <string name="deletetheme_dialog_cancel">Cancel</string>    <!-- button -->
+
+    <string name="configLabel_widgetThemeAdd">Add Theme</string>     <!-- title text -->
+    <string name="configLabel_widgetThemeEdit">Edit Theme</string>   <!-- title text -->
+    <string name="configAction_saveTheme">Save</string>           <!-- button (contentDescription) -->
+    <string name="configAction_chooseColor">Choose Colour</string> <!-- button (contentDescription) -->
+
+    <string name="configLabel_themeBackgroundId">Base:</string>    <!-- spinner label -->
+    <string name="configLabel_themeBackground_light">Light</string>        <!-- light background -->
+    <string name="configLabel_themeBackground_dark">Dark</string>          <!-- dark background -->
+    <string name="configLabel_themeBackground_trans">Transparent</string>  <!-- transparent background -->
+
+    <string name="configLabel_themeColorTitle">Title Colour:</string>     <!-- color label -->
+    <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->
+
+    <string name="configLabel_themeColorText">Text Colour:</string>       <!-- color label -->
+    <string name="configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->
+
+    <string name="configLabel_themeColorSpring">Spring Colour:</string> <!-- color label -->
+    <string name="configLabel_themeColorSummer">Summer Colour:</string> <!-- color label -->
+    <string name="configLabel_themeColorFall">Autumn Colour:</string> <!-- color label -->
+    <string name="configLabel_themeColorWinter">Winter Colour:</string> <!-- color label -->
+
+    <string name="configLabel_themeColorMoonrise">Moonrise Colour:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonset">Moonset Colour:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaxing">Waxing Colour:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaning">Waning Colour:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonFull">Full Colour:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonNew">New Colour:</string> <!-- color label -->
+
+    <string name="configLabel_themeColorSunrise">Sunrise Colour:</string> <!-- color label -->
+    <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
+
+    <string name="configLabel_themeColorSunset">Sunset Colour:</string>   <!-- color label -->
+    <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
+
+    <string name="configLabel_themeColorNoon">Noon Colour:</string>      <!-- color label -->
+    <string name="configHint_themeColorNoon">#FFFFFFFF</string>         <!-- color hint -->
+
+    <string name="configLabel_themeColorFill">Fill:</string>         <!-- color label -->
+    <string name="configHint_themeColorFill">#FFFFFFFF</string>        <!-- color hint -->
+
+    <string name="configLabel_themeColorBorder">Border:</string>         <!-- color label -->
+    <string name="configHint_themeColorBorder">#FFFFFFFF</string>        <!-- color hint -->
+
+    <string name="configLabel_themeBorderWidthRiseSet">Border Width (rise/set):</string>  <!-- size label -->
+    <string name="configHint_themeBorderWidthRiseSet">2</string>                          <!-- size hint -->
+    <string name="configLabel_themeBorderWidthNoon">Border Width (noon):</string>         <!-- size label -->
+    <string name="configHint_themeBorderWidthNoon">3</string>                             <!-- size hint -->
+
+    <string name="configLabel_themeColorSuffix">Suffix Colour:</string>   <!-- color label -->
+    <string name="configHint_themeColorSuffix">#FFFFFFFF</string>        <!-- color hint -->
+
+    <string name="configLabel_themeColorTime">Text Colour2:</string>      <!-- color label -->
+    <string name="configHint_themeColorTime">#FFFFFFFF</string>          <!-- color hint -->
+
+    <string name="configLabel_themeSizeTitle">Title Size:</string>  <!-- edit label -->
+    <string name="configHint_themeSizeTitle">14</string>                 <!-- edit hint -->
+
+    <string name="configLabel_themeBoldTitle">Bold</string>          <!-- checkbox label -->
+
+    <string name="configLabel_themeSizeText">Text Size:</string>    <!-- edit label -->
+    <string name="configHint_themeSizeText">10</string>                  <!-- edit hint -->
+
+    <string name="configLabel_themeSizeTime">Time Size:</string>    <!-- edit label -->
+    <string name="configHint_themeSizeTime">12</string>                  <!-- edit hint -->
+
+    <string name="configLabel_themeBoldTime">Bold</string>          <!-- checkbox label -->
+
+    <string name="configLabel_themeSizeSuffix">Suffix Size:</string> <!-- edit label -->
+    <string name="configHint_themeSizeSuffix">8</string>                  <!-- edit hint -->
+
+    <string name="configLabel_themePadding">Padding:</string>            <!-- edit label -->
+    <string name="configHint_themePadding">[left, top, right, bottom]</string> <!-- edit hint -->
+
+    <string name="configLabel_themeID">ID:</string>                      <!-- edit label -->
+    <string name="configHint_themeID">Theme ID</string>                  <!-- edit hint -->
+
+    <string name="configLabel_themeName">Display:</string>               <!-- edit label -->
+    <string name="configHint_themeName">Label</string>                   <!-- edit hint -->
+
+    <string name="widgetLabel_azimuth">Azimuth</string>                   <!-- label -->
+    <string name="widgetLabel_azimuth_short">Az</string>                   <!-- label -->
+    <string name="widgetLabel_altitude">Altitude</string>               <!-- label -->
+    <string name="widgetLabel_altitude_short">Alt</string>               <!-- label -->
+    <string name="widgetLabel_altitude_symbol">∠</string>               <!-- label/suffix -->
+
+    <string name="widgetLabel_rightAscension">Right Ascension</string>    <!-- label -->
+    <string name="widgetLabel_rightAscension_short">RA</string>    <!-- label -->
+    <string name="widgetLabel_rightAscension_symbol">α</string>    <!-- label/suffix -->
+    <string name="widgetLabel_declination">Declination</string>           <!-- label -->
+    <string name="widgetLabel_declination_short">Dec</string>           <!-- label -->
+    <string name="widgetLabel_declination_symbol">δ</string>           <!-- label/suffix -->
+
+    <!--
+         APP SETTINGS
+    -->
+
+    <!--App Setting: WidgetList -->
+    <string name="configLabel_widgetList">Moduler</string>               <!-- group title -->
+    <string name="configLabel_widgetList_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
+    <string name="configLabel_widgetList_itemTitlePattern" formatted="false"><xliff:g id="titlePattern"><![CDATA[%M (%loc) [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
+    <string name="configLabel_widgetList_itemTitlePattern1" formatted="false"><xliff:g id="titlePattern"><![CDATA[%loc [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
+    <string name="configLabel_widgetList_itemSummaryPattern"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
+    <string name="configLabel_widgetListHelp_title">Hjelp</string>               <!-- always the first item in the widgetList -->
+    <string name="configLabel_widgetListHelp_summary">Vis modulhjelp</string>
+
+    <!-- App Setting: Places -->
+    <string name="configLabel_places">Steder</string>                           <!-- group title -->
+    <string name="configLabel_places_export">Eksporter steder</string>
+    <string name="configLabel_places_clear">Slett steder</string>
+    <string name="configLabel_places_build">Legg til steder</string>
+    <string name="configLabel_places_build_summary">Scan locales and add cities to the database.</string>
+
+    <!-- App Setting: UI -->
+    <string name="configLabel_ui">Brukerflate</string>                       <!-- group title -->
+
+    <!-- App Setting: Verbose Accessibility -->
+    <string name="configLabel_accessibility_verbose">Verbose TalkBack</string>
+    <string name="configLabel_accessibility_verbose_summary">Announce automated changes to the UI.</string>
+
+    <!-- App Setting: UI Warnings -->
+    <string name="configLabel_ui_showWarnings">Show Warnings</string>
+    <string name="configLabel_ui_showWarnings_summary">Show configuration warning messages.</string>
+
+    <!-- App Setting: Show Lightmap -->
+    <string name="configLabel_ui_showLightmap">Show Light Map</string>
+    <string name="configLabel_ui_showLightmap_summary">Show a stacked bar chart of day, night, and twilight periods.</string>
+
+    <!-- App Setting: Show Moon -->
+    <string name="configLabel_ui_showmoon">Vis månen</string>
+    <string name="configLabel_ui_showmoon_summary">Vis oppgang- og nedgangstider, fase og belysning.</string>
+    <string name="configLabel_ui_showmoon_notImplemented">Moon not implemented by this data source.</string>
+
+    <!-- App Setting: Show Equinox / Solstice -->
+    <string name="configLabel_ui_showEquinox">Vis Solverv / Jevndøgn</string>
+    <string name="configLabel_ui_showEquinox_summary">Vis tid til neste solverv eller jevndøgn.</string>
+    <string name="configLabel_ui_showEquinox_notImplemented">Solstice and equinox not implemented by this data source.</string>
+
+    <!-- App Setting: Solstice Tracking Mode -->
+    <string name="configLabel_ui_solsticeTrackingMode">Solvervsporing</string>
+    <string name="configLabel_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Upcoming Event">%s</xliff:g></string>
+
+    <!-- App Setting: show data source -->
+    <string name="configLabel_ui_showdatasource">Vis datakilde</string>
+    <string name="configLabel_ui_showdatasource_summary">Show a label indicating the current configuration.</string>
+
+    <!-- App Setting: show golden hour -->
+    <string name="configLabel_ui_showgoldhour">Vis gylne time</string>
+    <string name="configLabel_ui_showgoldhour_summary">Vis tider for gylne time.</string>
+
+    <!-- App Setting: show blue hour -->
+    <string name="configLabel_ui_showbluehour">Vis blå time</string>
+    <string name="configLabel_ui_showbluehour_summary">Vis tider for blå time.</string>
+
+    <!-- App Setting: UI Theme -->
+    <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
+        <item>Lyst tema</item>
+        <item>Mørkt tema</item>
+        <item>Lyst tema / Mørkt tema (nattmodus)</item>
+    </string-array>
+    
+    <!-- App Setting: Date "on tap" action -->
+    <string-array name="dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
+        <item>Do nothing</item>
+        <item>Swap cards (today/tomorrow)</item>
+        <item>Show calendar app</item>
+        <item>Set custom date</item>
+    </string-array>
+
+    <!-- App Setting: Clock UI "on tap" action -->
+    <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
+        <item>Do nothing</item>
+        <item>@string/configAction_setAlarm</item>
+        <item>@string/configAction_setTimeZone</item>
+        <item>Show next note</item>
+        <item>Show previous note</item>
+    </string-array>
+
+    <!-- App Setting: Note UI "on tap" action -->
+    <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
+        <item>Do nothing</item>
+        <item>Set alarm for note</item>
+        <item>Show next note</item>
+        <item>Show previous note</item>
+    </string-array>
+
+    <!-- App Setting: time zone sort modes -->
+    <string name="timezone_sort_byOffset">by offset</string>
+    <string name="timezone_sort_byId">by id</string>
+    <string name="timezone_sort_byName">by name</string>
+
+    <string-array name="timezoneSort_display">  <!-- display values (one-to-one with timezoneSort_values) -->
+        <item>@string/timezone_sort_byOffset</item>
+        <item>@string/timezone_sort_byId</item>
+        <item>@string/timezone_sort_byName</item>
+    </string-array>
+
+    <string name="timezone_sort_contextAction">Sort zones</string>           <!-- action bar title -->
+    <string name="timezone_sort_msg">Time zones sorted (%1$s).</string>      <!-- toast msg -->
+
+    <!-- App Setting: GPS fix time limit -->
+    <string name="configLabel_getFix_maxElapse">GPS time limit</string>
+    <string name="configLabel_getFix_maxElapse_summary">Give up after <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
+    <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
+        <item>15 seconds</item>
+        <item>30 seconds</item>
+        <item>1 minute</item>
+        <item>5 minutes</item>
+        <item>10 minutes</item>
+    </string-array>
+
+    <!-- App Setting: GPS fix max age -->
+    <string name="configLabel_getFix_maxAge">GPS recent max age</string>
+    <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> considered recent</string>
+    <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
+        <item>1 minute</item>
+        <item>5 minutes</item>
+        <item>15 minutes</item>
+        <item>1 hour</item>
+        <item>4 hours</item>
+        <item>12 hours</item>
+        <item>one day (24 hours)</item>
+        <item>two days (48 hours)</item>
+        <item>one week (168 hours)</item>
+        <item>one month (672 hours)</item>
+    </string-array>
+
+    <!-- App Setting: locale mode -->
+    <string name="configLabel_locale">Språkinnstillinger</string>   <!-- group title -->
+
+    <string name="configLabel_localeMode">Modus</string>
+    <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
+    <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
+        <item>System</item>
+        <item>Brukerdefinert</item>
+    </string-array>
+
+    <!-- App Setting: custom Locale -->
+    <string name="configLabel_localeSelect">Språk</string>
+    <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
+    <string-array name="locale_display">                      <!-- one-to-one with locale_values -->
+        <item>English</item>
+        <item>Esperanto</item>
+        <item>French</item>
+        <item>German</item>
+        <item>Hungarian</item>
+        <item>Polish</item>
+        <item>Spanish</item>
+        <item>Catalan</item>
+        <item>Basque</item>
+        <item>Norsk</item>
+    </string-array>  <!-- TODO: language names into norwegian -->
+
+    <!-- position formats -->
+    <string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
+    <string name="elevation_format"><xliff:g id="degrees" example="45">%1$s</xliff:g><xliff:g id="altSymbol" example="∠">%2$s</xliff:g></string>  <!-- e.g. 45°∠ -->
+    <string name="declination_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="decSymbol" example="δ">%2$s</xliff:g></string>  <!-- e.g. 5° δ -->
+    <string name="rightascension_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="raSymbol" example="δ">%2$s</xliff:g></string>  <!-- e.g. 5° α -->
+    <string name="direction_format"><xliff:g id="degrees" example="180°">%1$s</xliff:g> <xliff:g id="directions_short" example="S">%2$s</xliff:g></string>  <!-- e.g. 180°S -->
+
+    <!-- cardinal directions -->
+    <string-array name="directions_short">  <!-- one-to-one with directions_long -->
+        <item>N</item>
+        <item>NNØ</item>
+        <item>NØ</item>
+        <item>ØNØ</item>
+        <item>Ø</item>
+        <item>ØSØ</item>
+        <item>SØ</item>
+        <item>SSØ</item>
+        <item>S</item>
+        <item>SSV</item>
+        <item>SV</item>
+        <item>VSV</item>
+        <item>V</item>
+        <item>VNV</item>
+        <item>NV</item>
+        <item>NNV</item>
+        <item>N</item>
+    </string-array>
+    <string-array name="directions_long">   <!-- one-to-one with directions_short -->
+        <item>Nord</item>
+        <item>Nord-nordøst</item>
+        <item>Nordøst</item>
+        <item>Øst-nordøst</item>
+        <item>Øst</item>
+        <item>Øst-sørøst</item>
+        <item>Sørøst</item>
+        <item>Sør-sørøst</item>
+        <item>Sør</item>
+        <item>Sør-sørvest</item>
+        <item>Sørvest</item>
+        <item>Vest-sørvest</item>
+        <item>Vest</item>
+        <item>Vest-nordvest</item>
+        <item>Nordvest</item>
+        <item>Nord-nordvest</item>
+        <item>Nord</item>
+    </string-array>
+
+    <!--
+      DIALOGS
+    -->
+
+    <!-- Dialog: Set Alarm -->
+    <string name="configLabel_schedalarm_mode">Planlegg en alarm for</string>
+    <string name="schedalarm_dialog_title">Still inn alarm</string>
+    <string name="schedalarm_dialog_ok">OK</string>
+    <string name="schedalarm_dialog_cancel">Avbryt</string>
+    <string name="schedalarm_dialog_error">Alarm was not set…</string>
+    <string name="schedalarm_dialog_error2">Alarm cannot be set…</string>
+    <string name="schedalarm_dialog_note">ca. <xliff:g id="timetext" example="6h 30m">%s</xliff:g> fra nå.</string>
+    <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="nautical twilight">%s</xliff:g> does not occur.</string>
+    <string name="schedalarm_labelformat"><xliff:g id="solarevents_short" example="sunrise">%1$s</xliff:g> (<xliff:g id="shortDate" example="4/6/2018">%2$s</xliff:g>)</string>
+    <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
+        <item>astronomisk tussmørke</item>
+        <item>nautisk tussmørke</item>
+        <item>blå time</item>
+        <item>alminnelig tussmørke</item>
+        <item>blå time</item>
+        <item>soloppgang</item>
+        <item>gylne time</item>
+        <item>middag</item>
+        <item>gylne time</item>
+        <item>solnedgang</item>
+        <item>blå time</item>
+        <item>alminnelig tussmørke</item>
+        <item>blå time</item>
+        <item>nautisk tussmørke</item>
+        <item>astronomisk tussmørke</item>
+        <item>måneoppgang</item>
+        <item>månenedgang</item>
+    </string-array>
+    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
+        <item>morning astronomical twilight (start)</item>
+        <item>morning nautical twilight (start)</item>
+        <item>morning blue hour (start)</item>
+        <item>morning civil twilight (start)</item>
+        <item>morning blue hour (end)</item>
+        <item>sunrise</item>
+        <item>morning golden hour (end)</item>
+        <item>solar noon</item>
+        <item>evening golden hour (start)</item>
+        <item>sunset</item>
+        <item>evening blue hour (start)</item>
+        <item>evening civil twilight (end)</item>
+        <item>evening blue hour (end)</item>
+        <item>evening nautical twilight (end)</item>
+        <item>evening astronomical twilight (end)</item>
+        <item>moonrise</item>
+        <item>moonset</item>
+    </string-array>
+
+    <!-- Dialog: Enable GPS? -->
+    <string name="gps_dialog_msg">GPS is disabled. Enable it?</string>
+    <string name="gps_dialog_ok">Ja</string>
+    <string name="gps_dialog_cancel">Nei</string>
+
+    <!-- gps_lastfix (current location mode) -->
+    <string name="gps_lastfix_title_set">Set Position</string>               <!-- may appear as place name when location set by intent -->
+    <string name="gps_lastfix_title_found">Siste posisjon</string>            <!-- may appear as place name when location set by gps -->
+    <string name="gps_lastfix_title_searching">Henter posisjon</string>     <!-- may appear in ActionBar title while gps in progress -->
+    <string name="gps_lastfix_toast_notfound">GPS failed to get location; falling back to last known position.</string>  <!-- displayed briefly after gps has failed to get a location -->
+    <string name="gps_lastfix_toast_cancelled">GPS update cancelled.</string> <!-- displayed briefly when gps refresh cancelled -->
+
+    <!-- Dialog: KeepTrying GPS? -->
+    <string name="gps_keeptrying_title">No Fix</string>
+    <string name="gps_keeptrying_msg">Unable to get a fix.</string>
+    <string name="gps_keeptrying_ok">Keep Trying</string>
+    <string name="gps_keeptrying_cancel">Give Up</string>
+
+    <!-- Dialog: Use Date -->
+    <string name="timedate_dialog_title">Still inn dato</string>
+    <string name="timedate_dialog_ok">OK</string>
+    <string name="timedate_dialog_cancel">Avbryt</string>
+
+    <!-- Dialog: Use Timezone -->
+    <string name="timezone_dialog_title">Still inn tidssone</string>
+    <string name="timezone_dialog_ok">OK</string>
+    <string name="timezone_dialog_cancel">Avbryt</string>
+
+    <!-- Dialog: Set Location -->
+    <string name="location_dialog_title">Still inn sted</string>
+    <string name="location_dialog_ok">Oppdater</string>
+    <string name="location_dialog_cancel">Avbryt</string>
+    <string name="location_dialog_error_lat">Dette er ikke en gyldig breddegrad.</string>
+    <string name="location_dialog_error_lon">Dette er ikke en gyldig lengdegrad.</string>
+
+    <string name="location_dialog_toast_copied">Kopiert til utklippstavle<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
+
+    <!-- Dialog: Clear Places -->
+    <string name="locationclear_dialog_title">Clear Places?</string>
+    <string name="locationclear_dialog_message">Are you sure you want to clear the database of places?</string>
+    <string name="locationclear_dialog_ok">Clear</string>
+    <string name="locationclear_dialog_cancel">Avbryt</string>
+
+    <!-- Dialog: Clear Places (progress) -->
+    <string name="locationcleared_dialog_title">Clearing Places</string>
+    <string name="locationcleared_dialog_message">Clearing the database…</string>
+    <string name="locationcleared_toast_success">The database of places has been cleared.</string>
+
+    <!-- Dialog: Build Places List (progress) -->
+    <string name="locationbuild_dialog_title">Building Database</string>
+    <string name="locationbuild_dialog_message">Building a database of places…</string>
+    <string name="locationbuild_toast_success">Added <xliff:g id="n">%1$s</xliff:g> places to the database.</string>
+
+    <!-- Dialog: Export Places -->
+    <string name="locationexport_dialog_title">Exporting Places</string>
+    <string name="locationexport_dialog_message">Exporting the database to csv file.</string>
+
+    <!-- Dialog: Export Themes -->
+    <string name="themesexport_dialog_title">Exporting Themes</string>
+    <string name="themesexport_dialog_message">Exporting themes to file.</string>
+
+    <!-- Dialog: Export -->
+    <string name="msg_export_success">Temporary copy at <xliff:g id="filepath">%s</xliff:g></string>
+    <string name="msg_export_failure">Export to <xliff:g id="filepath">%s</xliff:g> failed!</string>
+    <string name="msg_export_to">Export with</string>  <!-- title displayed over "share action" chooser -->
+
+    <!-- Dialog: Color -->
+    <string name="color_dialog_msg">Velg farge</string>
+    <string name="color_dialog_ok">OK</string>
+    <string name="color_dialog_cancel">Avbryt</string>
+
+    <!-- Dialog: About -->
+    <string name="about_dialog_title">Om</string>
+    <string name="app_name">Suntimes</string>
+    <string name="app_name_widget0">Suntimes Widget</string>
+    <string name="app_name_widget1">Suntimes Widget (flippable)</string>
+    <string name="app_name_widget2">Sun Position Widget</string>
+    <string name="app_name_solsticewidget0">Solstice Widget</string>
+    <string name="app_name_moonwidget0">Moon Widget</string>
+    <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
+    <string name="app_shortdesc">Displays sunlight and moonlight times.</string>
+    <string name="app_support_url"><![CDATA[
+        <b>Support:</b> visit the
+        <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a> to submit a request.
+    ]]></string>
+    <string name="app_url"><xliff:g id="url"><![CDATA[
+        <a href="https://forrestguice.github.io/SuntimesWidget/">forrestguice.github.io/SuntimesWidget</a>
+    ]]></xliff:g></string>
+    <string name="app_legal1"><![CDATA[
+        <b>Source Code:</b><br />
+        Copyright &#169 2014-2018 Forrest Guice <br />
+        Source code available under GPLv3.
+    ]]></string>
+    <string name="app_legal2"><![CDATA[
+        <b>Translations:</b><br/>
+        German translation by Henrik "HerHde" Hüttemann and Wolkenschieber. <br />
+        Polish and Esperanto translation by Verdulo. <br />
+        French translation by Jej. <br />
+        Hungarian translation by Erci. <br />
+        Spanish and Catalan translation by <a href=https://github.com/Raulvo>Raulvo</a>. <br />
+        Basque translation by beriain.
+    ]]></string>
+    <string name="app_legal3"><![CDATA[ <b>Libraries:</b><br/> ]]>
+    <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
+    <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>
+    <![CDATA[ github.com/caarmen/SunriseSunset ]]> <![CDATA[ <br /> ]]>
+    <![CDATA[ github.com/QuadFlask/colorpicker ]]>
+    </string>
+
+    <!-- Dialog: Help -->
+    <string name="help_dialog_title">Hjelp</string>
+    <string name="help_appearance_title"><![CDATA[
+        The following title substitutions are supported:<br/>
+        <br/>
+        <b>All Widgets:</b> <br />
+                * <b>%d</b> for date (e.g. February 12) <br/>
+                * <b>%dd</b> for day (short) (e.g. Mon) <br/>
+                * <b>%dD</b> for day (long) (e.g. Monday) <br/>
+                * <b>%dY</b> for year (e.g. 2018) <br/>
+                * <b>%dt</b> for time (of last update) <br/>
+                * <b>%dT</b> for time with seconds (of last update) <br/>
+                <br/>
+                * <b>%loc</b> for label (e.g. Prescott) <br />
+                * <b>%lat</b> for latitude (e.g. 35.5409) <br />
+                * <b>%lon</b> for longitude (e.g. -112.4691) <br/>
+                <br/>
+                * <b>%s</b> for data source (e.g. sunrisesunsetlib) <br/>
+                * <b>%t</b> for time zone (id) (e.g. US/Arizona) <br/>
+                * <b>%id</b> for appWidgetID <br/>
+         <br/>
+         <b>Sun Widgets:</b> <br/>
+                * <b>%m</b> for mode (short) (e.g. Civil) <br/>
+                * <b>%M</b> for mode (long) (e.g. Civil Twilight) <br/>
+         <br/>
+         <b>Moon Widgets:</b> <br/>
+                * <b>%i</b> for moon illumination (e.g. 25%) <br/>
+                * <b>%M</b> for moon phase (e.g. Waxing Crescent) <br/>
+         <br/>
+         <b>Solstice Widgets:</b> <br/>
+                * <b>%m</b> for mode (short) (e.g. Solstice) <br/>
+                * <b>%M</b> for mode (long) (e.g. Winter Solstice) <br/>
+    ]]></string>
+
+    <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
+        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic2">%2$s</xliff:g>
+    </string>
+    <string name="help_general3">  <!-- general app help; composites a couple help topics together. -->
+        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic2">%2$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic3">%3$s</xliff:g>
+    </string>
+    <string name="help_general4">  <!-- general app help; composites a couple help topics together. -->
+        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic2">%2$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic3">%3$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic4">%4$s</xliff:g>
+    </string>
+
+    <string name="help_general_timeMode"><![CDATA[
+          <b>Actual Time:</b> The sun is on the horizon; this is the approximate time of sunrise and sunset.<br/><br/>
+          <b>Civil Twilight:</b> The sun is 6 degrees below the horizon; the brightest stars are visible. There is enough light for most outdoor activities without requiring a light.<br/><br/>
+          <b>Nautical Twilight:</b> The sun is 12 degrees below the horizon; object outlines and the horizon are increasingly indistinct. There isn\'t enough light for most outdoor activities without requiring a light.<br/><br/>
+          <b>Astronomical Twilight:</b> The sun is 18 degrees below the horizon. Near darkness of night.<br/>
+    ]]></string>
+
+    <string name="help_general_timeMode2"><![CDATA[
+          <b>Spring Equinox:</b> TODO.<br/><br/>
+          <b>Summer Solstice:</b> TODO.<br/><br/>
+          <b>Autumn Equinox:</b> TODO.<br/><br/>
+          <b>Winter Solstice:</b> TODO.<br/>
+    ]]></string>
+    <string name="help_general_daylength"><![CDATA[
+        <b>Length of day:</b> The amount of time between sunrise and sunset.<br/><br/>
+        <b>Usable light:</b> The amount of time between morning and evening civil twilight.<br/>
+    ]]></string>
+    <string name="help_general_moonillum"><![CDATA[
+        <b>Moon Illumination:</b> The moon widgets and main page display the moon\'s illumination at lunar noon (the midpoint between moonrise and moonset), while the moon dialog displays the moon\'s current illumination.<br/><br/>
+    ]]></string>
+    <string name="help_general_goldhour"><![CDATA[
+        <b>Golden Hour:</b> The sun is between 6 degrees above or below the horizon. In the morning the golden hour begins with civil twilight and ends a short time after sunrise. In the evening the golden hour begins a short time before sunset and ends with civil twilight.<br/>
+    ]]></string>
+    <string name="help_general_bluehour"><![CDATA[
+        <b>Blue Hour:</b> The sun is between 8 degrees and 4 degrees below the horizon. The start and end of the blue hour falls between nautical and civil twilight.<br/>
+    ]]></string>
+    <string name="help_action_launch"><![CDATA[
+        The fully qualified class name of the Activity to be launched.<br/>
+    ]]></string>
+    <string name="help_widgetlist"><![CDATA[
+          To <b>add a new widget</b> you must navigate to the home screen.<br/><br/>
+          To <b>reconfigure an existing widget</b> you can select from the following list.<br/>
+    ]]></string>
+
+    <!-- calculator implementations -->
+    <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
+    <string name="calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
+    <string name="calculator_displayString_time4a_simple">A simple, relatively fast, but imprecise calculator.</string>
+    <string name="calculator_displayString_time4a_noaa">Follows algorithms published by the National Oceanic and Atmospheric Administration.</string>
+    <string name="calculator_displayString_time4a_cc">Follows algorithms published by Dershowitz/Reingold in their book "Calendrical Calculations" (third edition).</string>
+    <string name="calculator_displayString_time4a_4j">Based on astronomical calculations published by Jean Meeus in his book "Astronomical Algorithms" (second edition).</string>
+    
 </resources>

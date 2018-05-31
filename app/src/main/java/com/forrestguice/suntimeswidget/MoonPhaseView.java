@@ -19,7 +19,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.os.Bundle;
+//import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.util.AttributeSet;
@@ -261,12 +261,12 @@ public class MoonPhaseView extends LinearLayout
         phaseText.setMaxWidth(columnWidthPx);
     }
 
-    public boolean saveState(Bundle bundle)
+    /**public boolean saveState(Bundle bundle)
     {
         return true;
-    }
+    }*/
 
-    public void loadState(Bundle bundle) {}
+    /**public void loadState(Bundle bundle) {}*/
 
     public void setOnClickListener( OnClickListener listener )
     {
