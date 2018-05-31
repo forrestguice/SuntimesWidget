@@ -125,7 +125,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             } else if (action.equals(ACTION_PREFS_UI)) {
                 //noinspection deprecation
                 addPreferencesFromResource(R.xml.preference_userinterface);
-                initPref_ui();
+                //initPref_ui();
 
             } else if (action.equals(ACTION_PREFS_PLACES)) {
                 //noinspection deprecation
@@ -657,9 +657,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
      */
     private static class PlacesPrefsBase
     {
-        public static final String KEY_ISBUILDING = "isbuilding";
-        public static final String KEY_ISCLEARING = "isclearing";
-        public static final String KEY_ISEXPORTING = "isexporting";
+        //public static final String KEY_ISBUILDING = "isbuilding";
+        //public static final String KEY_ISCLEARING = "isclearing";
+        //public static final String KEY_ISEXPORTING = "isexporting";
 
         private Context myParent;
         private ProgressDialog progress;
@@ -959,21 +959,21 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_userinterface, false);
             addPreferencesFromResource(R.xml.preference_userinterface);
 
-            initPref_ui(UIPrefsFragment.this);
+            //initPref_ui(UIPrefsFragment.this);
         }
     }
 
     /**
      * init legacy prefs
      */
-    private void initPref_ui()
+    /**private void initPref_ui()
     {
-    }
+    }*/
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    /**@TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private static void initPref_ui(PreferenceFragment fragment)
     {
-    }
+    }*/
 
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////

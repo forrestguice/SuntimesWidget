@@ -1370,6 +1370,18 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     /**
      *
      */
+    protected void hideOptionShowSeconds()
+    {
+        View layout_showSeconds = findViewById(R.id.appwidget_general_showSeconds_layout);
+        if (layout_showSeconds != null)
+        {
+            layout_showSeconds.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     *
+     */
     protected void hideOption1x1LayoutMode()
     {
         View layout_1x1mode = findViewById(R.id.appwidget_appearance_1x1mode_layout);

@@ -68,9 +68,9 @@ public class MoonDialog extends DialogFragment
         if (savedInstanceState != null)
         {
             Log.d("DEBUG", "MoonDialog onCreate (restoreState)");
-            currentphase.loadState(savedInstanceState);
-            moonphases.loadState(savedInstanceState);
-            moonriseset.loadState(savedInstanceState);
+            //currentphase.loadState(savedInstanceState);
+            //moonphases.loadState(savedInstanceState);
+            //moonriseset.loadState(savedInstanceState);
         }
 
         dialog.setOnShowListener(onShowListener);
@@ -111,14 +111,14 @@ public class MoonDialog extends DialogFragment
         startUpdateTask();
     }
 
-    @Override
+    /**@Override
     public void onSaveInstanceState( Bundle outState )
     {
         super.onSaveInstanceState(outState);
-        moonriseset.saveState(outState);
-        currentphase.saveState(outState);
-        moonphases.saveState(outState);
-    }
+        //moonriseset.saveState(outState);
+        //currentphase.saveState(outState);
+        //moonphases.saveState(outState);
+    }*/
 
     private void startUpdateTask()
     {

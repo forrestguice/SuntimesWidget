@@ -85,7 +85,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         SuntimesUtils.initDisplayStrings(this);
 
         setResult(RESULT_CANCELED);
-        setContentView(R.layout.layout_widgetlist);
+        setContentView(R.layout.layout_activity_widgetlist);
         initViews(this);
         updateWidgetAlarms(this);
     }

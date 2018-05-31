@@ -295,8 +295,8 @@ public class WidgetSettings
      */
     public static enum WidgetModeSunPos1x1
     {
-        MODE1x1_ALTAZ("Altitude & Azimuth", R.layout.layout_widget_1x1_5),
-        MODE1x1_DECRIGHT("Declination & Right Ascension", R.layout.layout_widget_1x1_6);
+        MODE1x1_ALTAZ("Altitude & Azimuth", R.layout.layout_widget_sunpos_1x1_5),
+        MODE1x1_DECRIGHT("Declination & Right Ascension", R.layout.layout_widget_sunpos_1x1_6);
 
         private final int layoutID;
         private String displayString;

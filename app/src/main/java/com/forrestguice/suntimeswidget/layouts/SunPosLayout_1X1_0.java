@@ -41,15 +41,15 @@ public class SunPosLayout_1X1_0 extends SunPosLayout
         super();
     }
 
-    public SunPosLayout_1X1_0(int layoutID )
+    /**public SunPosLayout_1X1_0(int layoutID )
     {
         this.layoutID = layoutID;
-    }
+    }*/
 
     @Override
     public void initLayoutID()
     {
-        this.layoutID = R.layout.layout_widget_1x1_5;
+        this.layoutID = R.layout.layout_widget_sunpos_1x1_5;
     }
 
     @Override
