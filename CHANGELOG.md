@@ -3,6 +3,10 @@
 ### ~
 * adds to theming; custom background option (simple background color with transparency).
 
+### v0.8.3 (2018-05-31)
+* adds translation to Norwegian (nb) (contributed by FTno) (#206).
+* removes unused option "show seconds" from sun position widgets.
+
 ### v0.8.2 (2018-05-11)
 * adds to theming; graph colors; day, civil, nautical, astronomical, and night colors.
 * fixes bug where "export places" creates an empty file (#204).

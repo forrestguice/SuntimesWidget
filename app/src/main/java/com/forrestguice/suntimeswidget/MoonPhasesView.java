@@ -19,7 +19,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.os.Bundle;
+//import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
@@ -59,19 +59,19 @@ public class MoonPhasesView extends LinearLayout
     public MoonPhasesView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
-        applyAttributes(context, attrs);
+        //applyAttributes(context, attrs);
         init(context, attrs);
     }
 
-    private void applyAttributes(Context context, AttributeSet attrs)
+    /**private void applyAttributes(Context context, AttributeSet attrs)
     {
-        /**TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.EquinoxView, 0, 0);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.EquinoxView, 0, 0);
         try {
             setMinimized(a.getBoolean(R.styleable.EquinoxView_minimized, false));
         } finally {
             a.recycle();
-        }*/
-    }
+        }
+    }*/
 
     private void init(Context context, AttributeSet attrs)
     {
@@ -200,16 +200,16 @@ public class MoonPhasesView extends LinearLayout
         }
     }
 
-    public boolean saveState(Bundle bundle)
+    /**public boolean saveState(Bundle bundle)
     {
         //bundle.putBoolean(MoonPhaseView.KEY_UI_MINIMIZED, minimized);
         return true;
-    }
+    }*/
 
-    public void loadState(Bundle bundle)
+    /**public void loadState(Bundle bundle)
     {
         //minimized = bundle.getBoolean(MoonPhaseView.KEY_UI_MINIMIZED, minimized);
-    }
+    }*/
 
     public void setOnClickListener( View.OnClickListener listener )
     {

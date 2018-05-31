@@ -38,6 +38,7 @@ import java.util.Calendar;
 
 import static junit.framework.Assert.assertTrue;
 
+@SuppressWarnings("ConstantConditions")
 @RunWith(AndroidJUnit4.class)
 public class WidgetSettingsTest extends SuntimesActivityTestBase
 {
