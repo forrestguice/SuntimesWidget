@@ -18,21 +18,18 @@
 
 package com.forrestguice.suntimeswidget.layouts;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Build;
-import android.view.View;
+import android.support.v4.content.ContextCompat;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.map.WorldMapView;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
-
-import java.util.Calendar;
 
 /**
  * A 3x2 layout with world map.
@@ -70,31 +67,39 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesRiseSetDataset dataset)
     {
         super.updateViews(context, appWidgetId, views, dataset);
-        Calendar now = dataset.now();
-        SuntimesCalculator calculator = dataset.calculator();
 
-        boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
-        int labelVisibility = (showLabels ? View.VISIBLE : View.GONE);
-        //views.setViewVisibility(R.id.info_time_lightmap_labels, visibility);   // TODO
+        //boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
+        //int labelVisibility = (showLabels ? View.VISIBLE : View.GONE);
+        //views.setViewVisibility(R.id.info_time_worldmap_labels, visibility);   // TODO
 
         WorldMapView.WorldMapTask drawTask = new WorldMapView.WorldMapTask();
-        WorldMapView.WorldMapOptions options = new WorldMapView.WorldMapOptions();
         Bitmap bitmap = drawTask.makeBitmap(dataset, SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), options);
         views.setImageViewBitmap(R.id.info_time_worldmap, bitmap);
 
-        if (Build.VERSION.SDK_INT >= 15) {
+        //if (Build.VERSION.SDK_INT >= 15) {
             //views.setContentDescription(R.id.info_time_worldmap, buildContentDescription(context, now, sunPosition));
             // TODO
-        }
+        //}
     }
 
+    private WorldMapView.WorldMapOptions options;
     private int dpWidth = 512, dpHeight = 285;
 
+    @SuppressLint("ResourceType")
     @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         super.themeViews(context, views, theme);
-        // TODO
+        options = new WorldMapView.WorldMapOptions();     // TODO: themable
+        options.map = ContextCompat.getDrawable(context, R.drawable.world_map_blank_without_borders);
+        options.backgroundColor = ContextCompat.getColor(context, R.color.map_background);
+        options.foregroundColor = ContextCompat.getColor(context, R.color.map_foreground);
+        options.sunShadowColor = ContextCompat.getColor(context, R.color.card_bg_darktrans);
+        options.moonLightColor = ContextCompat.getColor(context, R.color.card_bg_lighttrans);
+        options.sunFillColor = ContextCompat.getColor(context, R.color.sunIcon_color_rising_dark);
+        options.sunStrokeColor = ContextCompat.getColor(context, R.color.sunIcon_color_risingBorder_dark);
+        options.moonFillColor = ContextCompat.getColor(context, R.color.moonIcon_color_full_dark);
+        options.moonStrokeColor = ContextCompat.getColor(context, R.color.moonIcon_color_full_border_dark);
     }
 
 }
