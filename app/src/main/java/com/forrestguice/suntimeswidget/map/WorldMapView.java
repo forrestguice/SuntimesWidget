@@ -283,7 +283,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                 Log.w("WorldMapTask", "Invalid params; using [null, 0, 0]");
                 return null;
             }
-            return makeBitmap(data, w, h);
+            return makeBitmap(data, w, h, options);
         }
 
         /**
@@ -348,7 +348,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
          * @param h
          * @return
          */
-        public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h)
+        public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapOptions options)
         {
             long bench_start = System.nanoTime();
             if (w <= 0 || h <= 0)
