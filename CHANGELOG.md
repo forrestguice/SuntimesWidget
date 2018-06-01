@@ -1,5 +1,9 @@
 ### ~
 
+###
+* adds 3x2 SunPosition widget showing world map.
+* adds world map dialog to app; shows sunlight (day/night) and moonlight over an equirectangular map.
+
 ### v0.8.3 (2018-05-31)
 * adds translation to Norwegian (nb) (contributed by FTno) (#206).
 * removes unused option "show seconds" from sun position widgets.
