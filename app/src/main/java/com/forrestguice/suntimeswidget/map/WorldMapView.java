@@ -79,6 +79,9 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         if (isInEditMode())
         {
             setBackgroundColor(Color.WHITE);
+
+            Bitmap b = Bitmap.createBitmap(512, 256, Bitmap.Config.ARGB_8888);
+            setImageBitmap(b);
         }
 
         options.map = ContextCompat.getDrawable(context, R.drawable.world_map_blank_without_borders);
@@ -176,16 +179,23 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         {
             drawTask.cancel(true);
         }
-        drawTask = new WorldMapTask();
-        drawTask.setListener(new WorldMapTaskListener()
+
+        int w = getWidth();
+        if (w > 0)
         {
-            @Override
-            public void onFinished(Bitmap result)
+            drawTask = new WorldMapTask();
+            drawTask.setListener(new WorldMapTaskListener()
             {
-                setImageBitmap(result);
-            }
-        });
-        drawTask.execute(data, options.map.getIntrinsicWidth(), options.map.getIntrinsicHeight(), options);
+                @Override
+                public void onFinished(Bitmap result)
+                {
+                    setImageBitmap(result);
+                }
+            });
+
+            int h = (int)(w * ((double)options.map.getIntrinsicHeight() / (double)options.map.getIntrinsicWidth()));
+            drawTask.execute(data, w, h, options);
+        }
     }
 
     /**
