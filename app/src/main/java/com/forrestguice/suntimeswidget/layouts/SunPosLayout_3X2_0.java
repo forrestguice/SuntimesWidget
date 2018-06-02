@@ -91,7 +91,9 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
     {
         super.themeViews(context, views, theme);
         options = new WorldMapView.WorldMapOptions();     // TODO: themable
-        options.map = ContextCompat.getDrawable(context, R.drawable.world_map_blank_without_borders);
+
+        //options.map = ContextCompat.getDrawable(context, R.drawable.land_shallow_topo_1024);
+        options.map = ContextCompat.getDrawable(context, R.drawable.worldmap);
         options.backgroundColor = ContextCompat.getColor(context, R.color.map_background);
         options.foregroundColor = ContextCompat.getColor(context, R.color.map_foreground);
         options.sunShadowColor = ContextCompat.getColor(context, R.color.card_bg_darktrans);

@@ -84,7 +84,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
             setImageBitmap(b);
         }
 
-        options.map = ContextCompat.getDrawable(context, R.drawable.world_map_blank_without_borders);
+        options.map = ContextCompat.getDrawable(context, R.drawable.worldmap);
         options.backgroundColor = ContextCompat.getColor(context, R.color.map_background);
         //options.foregroundColor = ContextCompat.getColor(context, R.color.map_foreground);
 
