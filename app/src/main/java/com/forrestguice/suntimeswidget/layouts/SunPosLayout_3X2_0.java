@@ -21,8 +21,10 @@ package com.forrestguice.suntimeswidget.layouts;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
@@ -76,6 +78,7 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
         Bitmap bitmap = drawTask.makeBitmap(dataset, SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), options);
         views.setImageViewBitmap(R.id.info_time_worldmap, bitmap);
 
+        Log.d("DEBUG", "map is " + bitmap.getWidth() + " x " + bitmap.getHeight());
         //if (Build.VERSION.SDK_INT >= 15) {
             //views.setContentDescription(R.id.info_time_worldmap, buildContentDescription(context, now, sunPosition));
             // TODO
@@ -96,12 +99,14 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
         options.map = ContextCompat.getDrawable(context, R.drawable.worldmap);
         options.backgroundColor = ContextCompat.getColor(context, R.color.map_background);
         options.foregroundColor = ContextCompat.getColor(context, R.color.map_foreground);
-        options.sunShadowColor = ContextCompat.getColor(context, R.color.card_bg_darktrans);
-        options.moonLightColor = ContextCompat.getColor(context, R.color.card_bg_lighttrans);
+        options.sunShadowColor = ContextCompat.getColor(context, R.color.map_sunshadow);
+        options.moonLightColor = ContextCompat.getColor(context, R.color.map_moonlight);
         options.sunFillColor = ContextCompat.getColor(context, R.color.sunIcon_color_rising_dark);
         options.sunStrokeColor = ContextCompat.getColor(context, R.color.sunIcon_color_risingBorder_dark);
         options.moonFillColor = ContextCompat.getColor(context, R.color.moonIcon_color_full_dark);
         options.moonStrokeColor = ContextCompat.getColor(context, R.color.moonIcon_color_full_border_dark);
+        options.showMoonLight = false;
+        options.showMajorLatitudes = false;
     }
 
 }

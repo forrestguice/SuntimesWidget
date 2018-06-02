@@ -96,7 +96,7 @@
     <color name="graphColor_astronomical_light">#ff0000ff</color>
     <color name="graphColor_night_light">#ff757575</color>
 
-    <color name="map_sunshadow">#d9000000</color>
+    <color name="map_sunshadow">#bf000000</color>
     <color name="map_moonlight">#1affffff</color>
     <color name="map_background">#5c6bc0</color>
     <color name="map_foreground">#c6ff00</color>

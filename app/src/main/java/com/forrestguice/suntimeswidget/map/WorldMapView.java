@@ -85,6 +85,9 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         }
 
         options.map = ContextCompat.getDrawable(context, R.drawable.worldmap);
+        //options.map = ContextCompat.getDrawable(context, R.drawable.land_shallow_topo_1024);
+        options.foregroundColor = ContextCompat.getColor(context, R.color.map_moonlight);
+
         options.backgroundColor = ContextCompat.getColor(context, R.color.map_background);
         //options.foregroundColor = ContextCompat.getColor(context, R.color.map_foreground);
 
@@ -253,7 +256,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         public int gridXColor = Color.LTGRAY;
         public int gridYColor = Color.WHITE;
 
-        public boolean showMajorLatitudes = true;
+        public boolean showMajorLatitudes = false;
         public int[] latitudeColors = { Color.BLACK, Color.BLUE, Color.BLUE };
 
         public boolean showSunPosition = true;
