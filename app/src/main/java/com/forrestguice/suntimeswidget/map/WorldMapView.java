@@ -459,7 +459,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
 
             if (data != null)
             {
-                Calendar now = data.now();
+                Calendar now = data.nowThen(data.calendar());
                 SuntimesCalculator calculator = data.calculator();
                 SuntimesCalculator.SunPosition sunPos = calculator.getSunPosition(now);
                 SuntimesCalculator.MoonPosition moonPos = calculator.getMoonPosition(now);
