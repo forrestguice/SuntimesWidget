@@ -85,7 +85,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         }
 
         options.map = ContextCompat.getDrawable(context, R.drawable.worldmap);
-        //options.map = ContextCompat.getDrawable(context, R.drawable.land_shallow_topo_1024);
+        options.map = ContextCompat.getDrawable(context, R.drawable.land_shallow_topo_1024);
         options.foregroundColor = ContextCompat.getColor(context, R.color.map_moonlight);
 
         options.backgroundColor = ContextCompat.getColor(context, R.color.map_background);
