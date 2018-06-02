@@ -24,6 +24,9 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Xfermode;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -424,33 +427,64 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                 // algorithm described at https://gis.stackexchange.com/questions/17184/method-to-shade-or-overlay-a-raster-map-to-reflect-time-of-day-and-ambient-light
                 if (options.showSunPosition || options.showMoonPosition)
                 {
-                    for (int i = 0; i < w; i++)
+                    int w0 = 512;
+                    int h0 = 256;
+                    double iw0 = (1d / w0) * 360d;
+                    double ih0 = (1d / h0) * 180d;
+
+                    Bitmap lightBitmap = Bitmap.createBitmap(w0, h0, Bitmap.Config.ARGB_8888);
+                    Canvas lightCanvas = new Canvas(lightBitmap);
+
+                    Paint paintShadow = new Paint();
+                    paintShadow.setColor(options.sunShadowColor);
+                    paintShadow.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
+
+                    Paint paintMoonlight = new Paint();
+                    paintMoonlight.setColor(options.moonLightColor);
+                    paintMoonlight.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
+
+                    double radLon, cosLon, sinLon;
+                    double radLat, cosLat;
+                    double[] v = new double[3];
+                    double sunIntensity, moonIntensity;
+
+                    for (int i = 0; i < w0; i++)
                     {
-                        double lon = (((double) i / (double) w) * 360d) - 180d;  // i in [0,w] to [0,360] to [-180,180]
-                        for (int j = 0; j < h; j++)
+                        radLon = Math.toRadians( ((double) i * iw0) - 180d );  // i in [0,w] to [0,360] to [-180,180]
+                        cosLon = Math.cos(radLon);
+                        sinLon = Math.sin(radLon);
+
+                        for (int j = 0; j < h0; j++)
                         {
-                            double lat = -1 * ((((double) j / (double) h) * 180d) - 90d);      // j in [0,h] to [0,180] to [-90,90] (inverted to canvas)
-                            double[] v = unitVector(lat, lon);
+                            radLat = Math.toRadians( -1 * (((double) j * ih0) - 90d) );      // j in [0,h] to [0,180] to [-90,90] (inverted to canvas)
+                            cosLat = Math.cos(radLat);
+
+                            v[0] = cosLon * cosLat;
+                            v[1] = sinLon * cosLat;
+                            v[2] = Math.sin(radLat);
 
                             if (options.showSunShadow)
                             {
-                                double sunIntensity = (sunUp[0] * v[0]) + (sunUp[1] * v[1]) + (sunUp[2] * v[2]);    // intensity = up.dotProduct(v)
+                                sunIntensity = (sunUp[0] * v[0]) + (sunUp[1] * v[1]) + (sunUp[2] * v[2]);    // intensity = up.dotProduct(v)
                                 if (sunIntensity <= 0) {                                                               // values less equal 0 are in shadow
-                                    p.setColor(options.sunShadowColor);
-                                    c.drawPoint(i, j, p);
+                                    lightCanvas.drawPoint(i, j, paintShadow);
                                 }
                             }
 
                             if (options.showMoonLight)
                             {
-                                double moonIntensity = (moonUp[0] * v[0]) + (moonUp[1] * v[1]) + (moonUp[2] * v[2]);
+                                moonIntensity = (moonUp[0] * v[0]) + (moonUp[1] * v[1]) + (moonUp[2] * v[2]);
                                 if (moonIntensity > 0) {
-                                    p.setColor(options.moonLightColor);
-                                    c.drawPoint(i, j, p);
+                                    lightCanvas.drawPoint(i, j, paintMoonlight);
                                 }
                             }
                         }
                     }
+
+                    Bitmap scaledLightBitmap = Bitmap.createScaledBitmap(lightBitmap, w, h, true);
+                    c.drawBitmap(scaledLightBitmap, 0, 0, p);
+                    scaledLightBitmap.recycle();
+                    lightBitmap.recycle();
                 }
 
                 ////////////////
