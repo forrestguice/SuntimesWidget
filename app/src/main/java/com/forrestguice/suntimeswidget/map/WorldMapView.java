@@ -83,9 +83,14 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
 
         options.map = ContextCompat.getDrawable(context, R.drawable.world_map_blank_without_borders);
         options.backgroundColor = ContextCompat.getColor(context, R.color.map_background);
-        options.foregroundColor = ContextCompat.getColor(context, R.color.map_foreground);
-        options.sunShadowColor = ContextCompat.getColor(context, R.color.card_bg_darktrans);
-        options.moonLightColor = ContextCompat.getColor(context, R.color.card_bg_lighttrans);
+        //options.foregroundColor = ContextCompat.getColor(context, R.color.map_foreground);
+
+        options.sunShadowColor = ContextCompat.getColor(context, R.color.map_sunshadow);
+        options.moonLightColor = ContextCompat.getColor(context, R.color.map_moonlight);
+        options.gridXColor = options.moonLightColor;
+        options.gridYColor = options.moonLightColor;
+
+        options.showMajorLatitudes = false;
 
         int[] colorAttrs = {
                 R.attr.graphColor_pointFill,            // 0
@@ -234,6 +239,13 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         public int backgroundColor = Color.BLUE;
         public int foregroundColor = Color.TRANSPARENT;
 
+        public boolean showGrid = false;
+        public int gridXColor = Color.LTGRAY;
+        public int gridYColor = Color.WHITE;
+
+        public boolean showMajorLatitudes = true;
+        public int[] latitudeColors = { Color.BLACK, Color.BLUE, Color.BLUE };
+
         public boolean showSunPosition = true;
         public int sunFillColor = Color.YELLOW;
         public int sunStrokeColor = Color.BLACK;
@@ -241,7 +253,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         public int sunStroke = 2;
 
         public boolean showSunShadow = true;
-        public int sunShadowColor = Color.GRAY;
+        public int sunShadowColor = Color.BLACK;
 
         public boolean showMoonPosition = true;
         public int moonFillColor = Color.WHITE;
@@ -366,6 +378,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
             Bitmap b = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
             Canvas c = new Canvas(b);
             Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+            p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
 
             ////////////////
             // draw background
@@ -383,6 +396,52 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                     mapBitmap = SuntimesUtils.tintBitmap(mapBitmap, options.foregroundColor);
                 }
                 c.drawBitmap(mapBitmap, 0, 0, p);
+                mapBitmap.recycle();
+            }
+
+            ////////////////
+            // draw grid
+            if (options.showGrid)
+            {
+                p.setColor(options.gridXColor);
+                for (int i=0; i < 180; i = i + 15)
+                {
+                    double offset = (i / 180d) * mid[0];
+                    int eastX = (int)(mid[0] + offset);
+                    int westX = (int)(mid[0] - offset);
+                    c.drawLine(eastX, 0, eastX, h, p);
+                    c.drawLine(westX, 0, westX, h, p);
+                }
+
+                p.setColor(options.gridYColor);
+                for (int i=0; i < 90; i = i + 15)
+                {
+                    double offset = (i / 90d) * mid[1];
+                    int northY = (int)(mid[1] + offset);
+                    int southY = (int)(mid[1] - offset);
+                    c.drawLine(0, northY, w, northY, p);
+                    c.drawLine(0, southY, w, southY, p);
+                }
+            }
+
+            if (options.showMajorLatitudes)
+            {
+                p.setColor(options.latitudeColors[0]);                    // equator
+                c.drawLine(0, (int)mid[1], w, (int)mid[1], p);
+
+                double tropics = (23.439444 / 90d) * mid[1];
+                int tropicsY0 = (int)(mid[1] + tropics);
+                int tropicsY1 = (int)(mid[1] - tropics);
+                p.setColor(options.latitudeColors[1]);                    // tropics
+                c.drawLine(0, tropicsY0, w, tropicsY0, p);
+                c.drawLine(0, tropicsY1, w, tropicsY1, p);
+
+                double polar = (66.560833 / 90d) * mid[1];
+                int polarY0 = (int)(mid[1] + polar);
+                int polarY1 = (int)(mid[1] - polar);
+                p.setColor(options.latitudeColors[2]);                    // polar
+                c.drawLine(0, polarY0, w, polarY0, p);
+                c.drawLine(0, polarY1, w, polarY1, p);
             }
 
             if (data != null)
