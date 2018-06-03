@@ -21,7 +21,6 @@ package com.forrestguice.suntimeswidget.layouts;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -30,6 +29,7 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.map.WorldMapTask;
 import com.forrestguice.suntimeswidget.map.WorldMapView;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
@@ -74,7 +74,7 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
         //int labelVisibility = (showLabels ? View.VISIBLE : View.GONE);
         //views.setViewVisibility(R.id.info_time_worldmap_labels, visibility);   // TODO
 
-        WorldMapView.WorldMapTask drawTask = new WorldMapView.WorldMapTask();
+        WorldMapTask drawTask = new WorldMapTask();
         Bitmap bitmap = drawTask.makeBitmap(dataset, SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), options);
         views.setImageViewBitmap(R.id.info_time_worldmap, bitmap);
 
@@ -85,7 +85,7 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
         //}
     }
 
-    private WorldMapView.WorldMapOptions options;
+    private WorldMapTask.WorldMapOptions options;
     private int dpWidth = 512, dpHeight = 285;
 
     @SuppressLint("ResourceType")
@@ -93,7 +93,7 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         super.themeViews(context, views, theme);
-        options = new WorldMapView.WorldMapOptions();     // TODO: themable
+        options = new WorldMapTask.WorldMapOptions();     // TODO: themable
 
         //options.map = ContextCompat.getDrawable(context, R.drawable.land_shallow_topo_1024);
         options.map = ContextCompat.getDrawable(context, R.drawable.worldmap);

@@ -39,6 +39,7 @@ import com.forrestguice.suntimeswidget.layouts.SunLayout_1x1_2;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout_1X1_0;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout_1X1_1;
+
 import com.forrestguice.suntimeswidget.themes.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
@@ -86,9 +87,6 @@ public class WidgetSettings
 
     public static final String PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS1x1 = "widgetmode_sunpos1x1";
     public static final WidgetModeSunPos1x1 PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOS1x1 = WidgetModeSunPos1x1.MODE1x1_ALTAZ;
-
-    public static final String PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOSMAP = "widgetmode_sunposmap";
-    public static final WidgetModeSunPosMap PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOSMAP = WidgetModeSunPosMap.EQUIRECTANGULAR_SIMPLE;
 
     public static final String PREF_KEY_APPEARANCE_WIDGETMODE_MOON1x1 = "widgetmode_moon1x1";
     public static final WidgetModeMoon1x1 PREF_DEF_APPEARANCE_WIDGETMODE_MOON1x1 = WidgetModeMoon1x1.MODE1x1_RISESET;
@@ -337,47 +335,6 @@ public class WidgetSettings
         }
     }
 
-
-    /**
-     * WidgetModeSunPosMap
-     */
-    public static enum WidgetModeSunPosMap
-    {
-        EQUIRECTANGULAR_SIMPLE("Simple", R.layout.layout_widget_sunpos_3x2_0),
-        EQUIRECTANGULAR_BLUEMARBLE("Blue Marble", R.layout.layout_widget_sunpos_3x2_0),
-        EQUIAZIMUTHAL_SIMPLE("Polar", R.layout.layout_widget_sunpos_3x2_0);
-
-        private final int layoutID;
-        private String displayString;
-
-        private WidgetModeSunPosMap(String displayString, int layoutID)
-        {
-            this.displayString = displayString;
-            this.layoutID = layoutID;
-        }
-
-        public String toString()
-        {
-            return displayString;
-        }
-
-        public String getDisplayString()
-        {
-            return displayString;
-        }
-
-        public void setDisplayString( String displayString )
-        {
-            this.displayString = displayString;
-        }
-
-        public static void initDisplayStrings( Context context )
-        {
-            EQUIAZIMUTHAL_SIMPLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simpleazimuthal));
-            EQUIRECTANGULAR_SIMPLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simplerectangular));
-            EQUIRECTANGULAR_BLUEMARBLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_bluemarble));
-        }
-    }
 
     /**
      * WidgetModeMoon1x1
@@ -1227,38 +1184,6 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
         prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS1x1);
-        prefs.apply();
-    }
-
-
-    public static void saveSunPosMapModePref(Context context, int appWidgetId, WidgetModeSunPosMap mode)
-    {
-        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
-        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
-        prefs.putString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOSMAP, mode.name());
-        prefs.apply();
-    }
-    public static WidgetModeSunPosMap loadSunPosMapModePref(Context context, int appWidgetId)
-    {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
-        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
-        String modeString = prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOSMAP, PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOSMAP.name());
-
-        WidgetModeSunPosMap widgetMode;
-        try {
-            widgetMode = WidgetModeSunPosMap.valueOf(modeString);
-
-        } catch (IllegalArgumentException e) {
-            widgetMode = PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOSMAP;
-            Log.w("loadSunPosMapModePref", "Failed to load value '" + modeString + "'; using default '" + PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOSMAP.name() + "'.");
-        }
-        return widgetMode;
-    }
-    public static void deleteSunPosMapModePref(Context context, int appWidgetId)
-    {
-        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
-        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
-        prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOSMAP);
         prefs.apply();
     }
 
@@ -2280,7 +2205,6 @@ public class WidgetSettings
 
         deleteSun1x1ModePref(context, appWidgetId);
         deleteSunPos1x1ModePref(context, appWidgetId);
-        deleteSunPosMapModePref(context, appWidgetId);
         deleteMoon1x1ModePref(context, appWidgetId);
         deleteAllowResizePref(context, appWidgetId);
 
@@ -2334,7 +2258,6 @@ public class WidgetSettings
         WidgetModeSun1x1.initDisplayStrings(context);
         WidgetModeSunPos1x1.initDisplayStrings(context);
         WidgetModeMoon1x1.initDisplayStrings(context);
-        WidgetModeSunPosMap.initDisplayStrings(context);
         TrackingMode.initDisplayStrings(context);
         CompareMode.initDisplayStrings(context);
         TimeMode.initDisplayStrings(context);

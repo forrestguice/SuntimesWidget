@@ -43,7 +43,6 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -152,20 +151,20 @@ public class WorldMapDialog extends DialogFragment
         utcTime = (TextView)dialogView.findViewById(R.id.info_time_utc);
         worldmap = (WorldMapView)dialogView.findViewById(R.id.info_time_worldmap);
 
-        ArrayAdapter<WidgetSettings.WidgetModeSunPosMap> mapAdapter = new ArrayAdapter<WidgetSettings.WidgetModeSunPosMap>(context, R.layout.layout_listitem_oneline_alt, WidgetSettings.WidgetModeSunPosMap.values());
+        ArrayAdapter<WorldMapWidgetSettings.WorldMapWidgetMode> mapAdapter = new ArrayAdapter<WorldMapWidgetSettings.WorldMapWidgetMode>(context, R.layout.layout_listitem_oneline_alt, WorldMapWidgetSettings.WorldMapWidgetMode.values());
         mapAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         mapSelector = (Spinner)dialogView.findViewById(R.id.worldmap_selector);
         mapSelector.setAdapter(mapAdapter);
 
-        WidgetSettings.WidgetModeSunPosMap mode = WidgetSettings.loadSunPosMapModePref(context, 0);
+        WorldMapWidgetSettings.WorldMapWidgetMode mode = WorldMapWidgetSettings.loadSunPosMapModePref(context, 0);
         int modePosition = mapAdapter.getPosition(mode);
         mapSelector.setSelection((modePosition >= 0) ? modePosition : 0);
-        worldmap.setMapMode(context, (WidgetSettings.WidgetModeSunPosMap) mapSelector.getSelectedItem());
+        worldmap.setMapMode(context, (WorldMapWidgetSettings.WorldMapWidgetMode) mapSelector.getSelectedItem());
 
         mapSelector.setOnItemSelectedListener(onMapSelected);
 
-        WorldMapView.WorldMapOptions options = worldmap.getOptions();
+        WorldMapTask.WorldMapOptions options = worldmap.getOptions();
         updateOptions(getContext());
 
         RadioButton option_sun = (RadioButton)dialogView.findViewById(R.id.radio_sun);
@@ -192,7 +191,7 @@ public class WorldMapDialog extends DialogFragment
     {
         if (context != null)
         {
-            WorldMapView.WorldMapOptions options = worldmap.getOptions();
+            WorldMapTask.WorldMapOptions options = worldmap.getOptions();
             SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
             options.showSunShadow = pref.getBoolean(PREF_KEY_UI_MAP_SUNSHADOW, PREF_DEF_UI_MAP_SUNSHADOW);
             options.showMoonLight = pref.getBoolean(PREF_KEY_UI_MAP_MOONLIGHT, PREF_DEF_UI_MAP_MOONLIGHT);
@@ -221,8 +220,8 @@ public class WorldMapDialog extends DialogFragment
             Context context = getContext();
             if (context != null)
             {
-                WidgetSettings.WidgetModeSunPosMap mode = (WidgetSettings.WidgetModeSunPosMap) parent.getItemAtPosition(position);
-                WidgetSettings.saveSunPosMapModePref(context, 0, mode);
+                WorldMapWidgetSettings.WorldMapWidgetMode mode = (WorldMapWidgetSettings.WorldMapWidgetMode) parent.getItemAtPosition(position);
+                WorldMapWidgetSettings.saveSunPosMapModePref(context, 0, mode);
                 worldmap.setMapMode(context, mode);
                 updateViews();
             }
