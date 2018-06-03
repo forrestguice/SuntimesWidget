@@ -32,12 +32,20 @@
         android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="0dp"
         android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
+    <TextView
+        style="@style/SunsetTimeTextView"
+        android:id="@+id/info_time_utc"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        tools:text="Today\n6:00 PM\nUTC" android:gravity="end|right"
+        app:layout_constraintEnd_toEndOf="@+id/info_time_worldmap"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.forrestguice.suntimeswidget.map.WorldMapView
         android:id="@+id/info_time_worldmap"
         android:layout_width="0dp" android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/worldmapdialog_title" />
+        app:layout_constraintTop_toBottomOf="@+id/info_time_utc" />
 
     <RadioGroup
         android:layout_width="fill_parent" android:layout_height="wrap_content"

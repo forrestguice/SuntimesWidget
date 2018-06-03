@@ -35,9 +35,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+
+import java.util.Calendar;
+import java.util.SimpleTimeZone;
+import java.util.TimeZone;
 
 public class WorldMapDialog extends DialogFragment
 {
@@ -49,7 +55,9 @@ public class WorldMapDialog extends DialogFragment
 
     private WorldMapView worldmap;
     private View dialogContent = null;
+    private TextView utcTime;
 
+    private SuntimesUtils utils = new SuntimesUtils();
     private SuntimesRiseSetDataset data;
     public void setData( SuntimesRiseSetDataset data )
     {
@@ -119,6 +127,15 @@ public class WorldMapDialog extends DialogFragment
         {
             if (data != null)
             {
+                Context context = getContext();
+                if (utcTime != null && context != null)
+                {
+                    Calendar now = data.nowThen(data.calendar());
+                    Calendar nowUtc = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+                    nowUtc.setTimeInMillis(now.getTimeInMillis());
+                    SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, nowUtc); // utils.calendarTimeShortDisplayString(context, nowUtc);
+                    utcTime.setText("UTC\n" + timeText.toString());
+                }
                 // TODO: periodic update
             }
             if (dialogContent != null)
@@ -132,6 +149,8 @@ public class WorldMapDialog extends DialogFragment
         RadioButton option_sun = (RadioButton)dialogView.findViewById(R.id.radio_sun);
         RadioButton option_moon = (RadioButton)dialogView.findViewById(R.id.radio_moon);
         RadioButton option_sunmoon = (RadioButton)dialogView.findViewById(R.id.radio_sunmoon);
+
+        utcTime = (TextView)dialogView.findViewById(R.id.info_time_utc);
 
         WorldMapView.WorldMapOptions options = worldmap.getOptions();
         updateOptions(getContext());
