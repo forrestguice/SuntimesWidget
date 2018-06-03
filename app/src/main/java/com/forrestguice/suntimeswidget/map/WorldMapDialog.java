@@ -34,15 +34,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Calendar;
-import java.util.SimpleTimeZone;
 import java.util.TimeZone;
 
 public class WorldMapDialog extends DialogFragment
@@ -56,6 +59,7 @@ public class WorldMapDialog extends DialogFragment
     private WorldMapView worldmap;
     private View dialogContent = null;
     private TextView utcTime;
+    private Spinner mapSelector;
 
     private SuntimesUtils utils = new SuntimesUtils();
     private SuntimesRiseSetDataset data;
@@ -79,7 +83,7 @@ public class WorldMapDialog extends DialogFragment
         builder.setView(dialogContent);
         AlertDialog dialog = builder.create();
 
-        initViews(dialogContent);
+        initViews(getContext(), dialogContent);
         if (savedInstanceState != null)
         {
             Log.d("DEBUG", "WorldMapDialog onCreate (restoreState)");
@@ -134,26 +138,39 @@ public class WorldMapDialog extends DialogFragment
                     Calendar nowUtc = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
                     nowUtc.setTimeInMillis(now.getTimeInMillis());
                     SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, nowUtc); // utils.calendarTimeShortDisplayString(context, nowUtc);
-                    utcTime.setText("UTC\n" + timeText.toString());
+                    utcTime.setText(timeText.toString() + " " + nowUtc.getTimeZone().getDisplayName());  // TODO: i18n
                 }
-                // TODO: periodic update
+                // TODO: periodic update bitmap
             }
             if (dialogContent != null)
                 dialogContent.postDelayed(this, UPDATE_RATE);
         }
     };
 
-    public void initViews(View dialogView)
+    public void initViews(Context context, View dialogView)
     {
-        worldmap = (WorldMapView)dialogView.findViewById(R.id.info_time_worldmap);
-        RadioButton option_sun = (RadioButton)dialogView.findViewById(R.id.radio_sun);
-        RadioButton option_moon = (RadioButton)dialogView.findViewById(R.id.radio_moon);
-        RadioButton option_sunmoon = (RadioButton)dialogView.findViewById(R.id.radio_sunmoon);
-
         utcTime = (TextView)dialogView.findViewById(R.id.info_time_utc);
+        worldmap = (WorldMapView)dialogView.findViewById(R.id.info_time_worldmap);
+
+        ArrayAdapter<WidgetSettings.WidgetModeSunPosMap> mapAdapter = new ArrayAdapter<WidgetSettings.WidgetModeSunPosMap>(context, R.layout.layout_listitem_oneline_alt, WidgetSettings.WidgetModeSunPosMap.values());
+        mapAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        mapSelector = (Spinner)dialogView.findViewById(R.id.worldmap_selector);
+        mapSelector.setAdapter(mapAdapter);
+
+        WidgetSettings.WidgetModeSunPosMap mode = WidgetSettings.loadSunPosMapModePref(context, 0);
+        int modePosition = mapAdapter.getPosition(mode);
+        mapSelector.setSelection((modePosition >= 0) ? modePosition : 0);
+        worldmap.setMapMode(context, (WidgetSettings.WidgetModeSunPosMap) mapSelector.getSelectedItem());
+
+        mapSelector.setOnItemSelectedListener(onMapSelected);
 
         WorldMapView.WorldMapOptions options = worldmap.getOptions();
         updateOptions(getContext());
+
+        RadioButton option_sun = (RadioButton)dialogView.findViewById(R.id.radio_sun);
+        RadioButton option_moon = (RadioButton)dialogView.findViewById(R.id.radio_moon);
+        RadioButton option_sunmoon = (RadioButton)dialogView.findViewById(R.id.radio_sunmoon);
 
         if (options.showSunShadow && options.showMoonLight)
             option_sunmoon.setChecked(true);
@@ -195,6 +212,25 @@ public class WorldMapDialog extends DialogFragment
         worldmap.updateViews(data);
         startUpdateTask();
     }
+
+    private AdapterView.OnItemSelectedListener onMapSelected = new AdapterView.OnItemSelectedListener()
+    {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+        {
+            Context context = getContext();
+            if (context != null)
+            {
+                WidgetSettings.WidgetModeSunPosMap mode = (WidgetSettings.WidgetModeSunPosMap) parent.getItemAtPosition(position);
+                WidgetSettings.saveSunPosMapModePref(context, 0, mode);
+                worldmap.setMapMode(context, mode);
+                updateViews();
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {}
+    };
 
     private View.OnClickListener onRadioButtonClicked = new View.OnClickListener()
     {

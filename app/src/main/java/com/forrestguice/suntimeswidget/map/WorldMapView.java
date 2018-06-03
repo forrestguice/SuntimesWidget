@@ -50,14 +50,13 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
 
     private WorldMapTask drawTask;
     private WorldMapOptions options = new WorldMapOptions();
+    private WidgetSettings.WidgetModeSunPosMap mode = WidgetSettings.WidgetModeSunPosMap.EQUIRECTANGULAR_SIMPLE;
 
     private int maxUpdateRate = DEFAULT_MAX_UPDATE_RATE;
 
     private SuntimesRiseSetDataset data = null;
     private long lastUpdate = 0;
     private boolean resizable = true;
-
-
 
     public WorldMapView(Context context)
     {
@@ -80,18 +79,41 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         if (isInEditMode())
         {
             setBackgroundColor(Color.WHITE);
-
             Bitmap b = Bitmap.createBitmap(512, 256, Bitmap.Config.ARGB_8888);
             setImageBitmap(b);
         }
+        setMapMode(context, mode);
+    }
 
-        options.map = ContextCompat.getDrawable(context, R.drawable.worldmap2);
-        options.foregroundColor = ContextCompat.getColor(context, R.color.map_foreground);
+    public WidgetSettings.WidgetModeSunPosMap getMapMode()
+    {
+        return mode;
+    }
 
-        //options.map = ContextCompat.getDrawable(context, R.drawable.land_shallow_topo_1024);
-        //options.foregroundColor = ContextCompat.getColor(context, R.color.map_moonlight);
+    @SuppressLint("ResourceType")
+    public void setMapMode(Context context, WidgetSettings.WidgetModeSunPosMap mode )
+    {
+        this.mode = mode;
+        switch (mode)
+        {
+            case EQUIAZIMUTHAL_SIMPLE:
+                options.map = ContextCompat.getDrawable(context, R.drawable.worldmap2);
+                options.foregroundColor = ContextCompat.getColor(context, R.color.map_foreground);
+                break;
+
+            case EQUIRECTANGULAR_BLUEMARBLE:
+                options.map = ContextCompat.getDrawable(context, R.drawable.land_shallow_topo_1024);
+                options.foregroundColor = Color.TRANSPARENT;
+                break;
+
+            case EQUIRECTANGULAR_SIMPLE:
+            default:
+                options.map = ContextCompat.getDrawable(context, R.drawable.worldmap);
+                options.foregroundColor = ContextCompat.getColor(context, R.color.map_foreground);
+                break;
+        }
+
         options.backgroundColor = ContextCompat.getColor(context, R.color.map_background);
-
         options.sunShadowColor = ContextCompat.getColor(context, R.color.map_sunshadow);
         options.moonLightColor = ContextCompat.getColor(context, R.color.map_moonlight);
         options.gridXColor = options.moonLightColor;
@@ -107,12 +129,10 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         int def = R.color.transparent;
-
         options.sunFillColor = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
         options.sunStrokeColor = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
         options.moonFillColor = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
         options.moonStrokeColor = ContextCompat.getColor(context, typedArray.getResourceId(3, def));
-
         typedArray.recycle();
     }
 
@@ -198,8 +218,21 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
             });
 
             int h = (int)(w * ((double)options.map.getIntrinsicHeight() / (double)options.map.getIntrinsicWidth()));
-            drawTask.execute(data, w, h, options, new EquiazimuthalProjection());
-            //drawTask.execute(data, w, h, options);
+            WorldMapProjection projection = getProjection(mode);
+            drawTask.execute(data, w, h, options, projection);
+        }
+    }
+
+    private WorldMapProjection getProjection(WidgetSettings.WidgetModeSunPosMap mode)
+    {
+        switch (mode)
+        {
+            case EQUIAZIMUTHAL_SIMPLE:
+                return new EquiazimuthalProjection();
+            case EQUIRECTANGULAR_BLUEMARBLE:
+            case EQUIRECTANGULAR_SIMPLE:
+            default:
+                return new EquirectangularProjection();
         }
     }
 

@@ -36,20 +36,28 @@
         style="@style/SunsetTimeTextView"
         android:id="@+id/info_time_utc"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        tools:text="Today\n6:00 PM\nUTC" android:gravity="end|right"
-        app:layout_constraintEnd_toEndOf="@+id/info_time_worldmap"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:text="June 3, 6:00 PM UTC" android:gravity="end|right"
+        app:layout_constraintStart_toStartOf="@+id/info_time_worldmap"
+        app:layout_constraintTop_toBottomOf="@+id/worldmapdialog_title" />
+
+    <Spinner
+        android:id="@+id/worldmap_selector"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/info_time_utc"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="4dp" />
 
     <com.forrestguice.suntimeswidget.map.WorldMapView
         android:id="@+id/info_time_worldmap"
         android:layout_width="0dp" android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/info_time_utc" />
 
-    <RadioGroup
-        android:layout_width="fill_parent" android:layout_height="wrap_content"
-        android:orientation="horizontal" android:layout_marginTop="4dp"
+    <RadioGroup android:id="@+id/radio_group"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:layout_marginTop="12dp"
         app:layout_constraintTop_toBottomOf="@+id/info_time_worldmap">
 
         <RadioButton android:id="@+id/radio_sun"
