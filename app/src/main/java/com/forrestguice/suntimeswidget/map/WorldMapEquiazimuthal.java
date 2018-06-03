@@ -164,7 +164,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
                 ghaSun180 = ghaSun180 - 360;
 
             double[] sunPos2 = gha(location, sunPos);
-            Log.d("DEBUG", "gmtHours is " + gmtHours + ", gmtArc is " + gmtArc + ", ghaSun is " + ghaSun + " (" + sunPos2[0] + "), ghaSun180 is " + ghaSun180);
+            //Log.d("DEBUG", "gmtHours is " + gmtHours + ", gmtArc is " + gmtArc + ", ghaSun is " + ghaSun + " (" + sunPos2[0] + "), ghaSun180 is " + ghaSun180);
 
             double sunLon = -1 * ghaSun180;  // gha180 adjusted to [-180, 180] east
             double sunLat = sunPos2[1];
@@ -187,7 +187,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
                 int h0 = 360;
 
                 double iw0 = (1d / w0) * 360d;
-                double ih0 = (1d / h0) * 180d;
+                double ih0 = (1d / h0) * 360d;
 
                 Bitmap lightBitmap = Bitmap.createBitmap(w0, h0, Bitmap.Config.ARGB_8888);
                 Canvas lightCanvas = new Canvas(lightBitmap);
@@ -204,36 +204,33 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
                 double radLat, cosLat;
                 double[] v = new double[3];
                 double sunIntensity, moonIntensity;
+                double squareR = (0.5 * w0 + 1) * (0.5 * w0 + 1);
+                double[] polar = new double[2];
 
+                double x, y;
                 for (int i = 0; i < w0; i++)
                 {
-                    double x = (((double)i / w0) * 360) - 180d;   // [-180,180]
-                    if (x == 0)
-                    {
+                    x = ((double)i * iw0) - 180d;   // [-180,180]
+                    double squareX = x * x;
+                    if (x == 0) {
                         x += 0.0001;
                     }
                     for (int j = 0; j < h0; j++)
                     {
-                        double y = (((double)(h0 - j) / h0) * 360) - 180d;   // [-180,180]
+                        y = ((double)(h0 - j) * ih0) - 180d;   // [-180,180]
+                        if ((squareX + y*y) > squareR)
+                            continue;
                         //Log.d("DEBUG", "pX: " + x + ", pY: " + y);
 
-                        if ((x*x + y*y) > (181 * 181))
-                            continue;
-
-                        double[] polar = new double[2];
-                        polar[0] = Math.toDegrees(Math.atan(x / -y));
-                        polar[1] = x / Math.sin(Math.toRadians(polar[0]));
+                        polar[0] = -1 * Math.atan(x / y);
+                        radLon = polar[0];
+                        sinLon = Math.sin(radLon);
+                        polar[1] = x / sinLon;
                         //Log.d("DEBUG", "angle: " + polar[0] + ", dist: " + polar[1]);
 
-                        double lon = polar[0];
-                        double lat = 90 - polar[1];
-
-                        radLon = Math.toRadians(lon);
-                        cosLon = Math.cos(radLon);
-                        sinLon = Math.sin(radLon);
-
-                        radLat = Math.toRadians(lat);
+                        radLat = Math.toRadians(90 - polar[1]);
                         cosLat = Math.cos(radLat);
+                        cosLon = Math.cos(radLon);
 
                         v[0] = cosLon * cosLat;
                         v[1] = sinLon * cosLat;

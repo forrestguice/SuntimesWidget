@@ -133,7 +133,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
                 ghaSun180 = ghaSun180 - 360;
 
             double[] sunPos2 = gha(location, sunPos);
-            Log.d("DEBUG", "gmtHours is " + gmtHours + ", gmtArc is " + gmtArc + ", ghaSun is " + ghaSun + " (" + sunPos2[0] + "), ghaSun180 is " + ghaSun180);
+            //Log.d("DEBUG", "gmtHours is " + gmtHours + ", gmtArc is " + gmtArc + ", ghaSun is " + ghaSun + " (" + sunPos2[0] + "), ghaSun180 is " + ghaSun180);
 
             double sunLon = -1 * ghaSun180;  // gha180 adjusted to [-180, 180] east
             double sunLat = sunPos2[1];
