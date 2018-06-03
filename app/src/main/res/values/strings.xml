@@ -258,6 +258,10 @@
     <string name="widgetMode1x1_altaz">Altitude &amp; Azimuth</string>     <!-- setting -->
     <string name="widgetMode1x1_decright">Declination &amp; Right Ascension</string>     <!-- setting -->
 
+    <string name="widgetMode_sunPosMap_simplerectangular">Basic</string>  <!-- setting -->  <!-- TODO: i18n -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal">Polar</string>     <!-- setting -->  <!-- TODO: i18n -->
+    <string name="widgetMode_sunPosMap_bluemarble">Blue Marble</string>    <!-- setting -->  <!-- TODO: i18n -->
+
     <string name="widgetMode1x1_moonriseset">Moonrise &amp; moonset</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphaseillum">Moon phase &amp; illumination</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphase">Moon phase only</string>     <!-- setting -->
