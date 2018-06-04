@@ -98,8 +98,14 @@
 
     <color name="map_sunshadow">#bf000000</color>
     <color name="map_moonlight">#1affffff</color>
-    <color name="map_background">#5c6bc0</color>
-    <color name="map_foreground">#c6ff00</color>
+    <color name="map_background">@color/map_background_dark</color>
+    <color name="map_foreground">@color/map_foreground_dark</color>
+
+    <color name="map_background_dark">#5c6bc0</color>
+    <color name="map_foreground_dark">#c6ff00</color>
+
+    <color name="map_background_light">#5c6bc0</color> <!-- TODO: light colors -->
+    <color name="map_foreground_light">#c6ff00</color>
 
     <color name="springColor_dark">#8BC34A</color>
     <color name="summerColor_dark">#ffffcc00</color>

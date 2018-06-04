@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2018 Forrest Guice
+    This file is part of SuntimesWidget.
+
+    SuntimesWidget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SuntimesWidget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_colors_map"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Map Background Color -->
+        <LinearLayout
+            android:id="@+id/layout_mapBackgroundColor"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView android:labelFor="@+id/edit_mapBackgroundColor"
+                android:id="@+id/editLabel_mapBackgroundColor"
+                style="@style/ColorEditLabel"
+                android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                android:nextFocusRight="@+id/editLabel_mapForegroundColor"
+                android:nextFocusForward="@+id/editLabel_mapForegroundColor"
+
+                android:text="@string/configLabel_themeColorMapBackground"
+                tools:ignore="UnusedAttribute" />
+
+            <EditText
+                android:id="@+id/edit_mapBackgroundColor"
+                style="@style/ColorEdit" android:visibility="gone"
+                android:fontFamily="monospace"
+
+                android:nextFocusRight="@+id/editLabel_mapForegroundColor"
+                android:nextFocusForward="@+id/editLabel_mapForegroundColor"
+
+                android:text="" android:hint="@string/configHint_themeColorSunrise"
+                tools:ignore="UnusedAttribute" />
+
+            <ImageButton
+                android:id="@+id/editButton_mapBackgroundColor"
+                style="@style/ColorEditButton"
+                android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                android:contentDescription="@string/configLabel_themeColorMapBackground" />
+
+        </LinearLayout>
+
+        <!-- Map Foreground Color -->
+        <LinearLayout
+            android:id="@+id/layout_mapForegroundColor"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/layout_mapBackgroundColor"
+            app:layout_constraintStart_toEndOf="@+id/layout_mapBackgroundColor"
+            android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+            android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
+
+            <TextView android:labelFor="@+id/edit_mapForegroundColor"
+                android:id="@+id/editLabel_mapForegroundColor"
+                style="@style/ColorEditLabel"
+                android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                android:nextFocusUp="@+id/editLabel_mapBackgroundColor"
+                android:nextFocusLeft="@+id/editLabel_mapBackgroundColor"
+
+                android:text="@string/configLabel_themeColorMapForeground"
+                tools:ignore="UnusedAttribute" />
+
+            <EditText
+                android:id="@+id/edit_mapForegroundColor"
+                style="@style/ColorEdit" android:visibility="gone"
+                android:fontFamily="monospace"
+
+                android:nextFocusUp="@+id/editLabel_mapBackgroundColor"
+                android:nextFocusLeft="@+id/editLabel_mapBackgroundColor"
+
+                android:text="" android:hint="@string/configHint_themeColorSunset"
+                tools:ignore="UnusedAttribute" />
+
+            <ImageButton
+                android:id="@+id/editButton_mapForegroundColor"
+                style="@style/ColorEditButton"
+                android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                android:contentDescription="@string/configLabel_themeColorMapForeground" />
+
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+</merge>

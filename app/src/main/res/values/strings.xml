@@ -405,6 +405,9 @@
     <string name="configLabel_themeColorFall">Autumn Colour:</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Winter Colour:</string> <!-- color label -->
 
+    <string name="configLabel_themeColorMapBackground">Map Background:</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorMapForeground">Map Foreground:</string> <!-- color label --> <!-- TODO -->
+
     <string name="configLabel_themeColorMoonrise">Moonrise Colour:</string> <!-- color label -->
     <string name="configLabel_themeColorMoonset">Moonset Colour:</string> <!-- color label -->
     <string name="configLabel_themeColorMoonWaxing">Waxing Colour:</string> <!-- color label -->

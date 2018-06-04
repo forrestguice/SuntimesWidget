@@ -80,7 +80,6 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
         {
             case EQUIAZIMUTHAL_SIMPLE:
                 options.map = ContextCompat.getDrawable(context, R.drawable.worldmap2);
-                options.foregroundColor = ContextCompat.getColor(context, R.color.map_foreground);
                 projection = new WorldMapEquiazimuthal();
                 break;
 
@@ -93,7 +92,6 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
             case EQUIRECTANGULAR_SIMPLE:
             default:
                 options.map = ContextCompat.getDrawable(context, R.drawable.worldmap);
-                options.foregroundColor = ContextCompat.getColor(context, R.color.map_foreground);
                 projection = new WorldMapEquirectangular();
                 break;
         }
@@ -113,23 +111,27 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
     }
 
     private WorldMapTask.WorldMapOptions options;
-    private int dpWidth = 512, dpHeight = 285;
+    private int dpWidth = 512, dpHeight = 256;
 
     @SuppressLint("ResourceType")
     @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         super.themeViews(context, views, theme);
+        options = new WorldMapTask.WorldMapOptions();
 
-        options = new WorldMapTask.WorldMapOptions();     // TODO: themable
-        options.backgroundColor = ContextCompat.getColor(context, R.color.map_background);
-        options.foregroundColor = ContextCompat.getColor(context, R.color.map_foreground);
-        options.sunShadowColor = ContextCompat.getColor(context, R.color.map_sunshadow);
-        options.moonLightColor = ContextCompat.getColor(context, R.color.map_moonlight);
-        options.sunFillColor = ContextCompat.getColor(context, R.color.sunIcon_color_rising_dark);
-        options.sunStrokeColor = ContextCompat.getColor(context, R.color.sunIcon_color_risingBorder_dark);
-        options.moonFillColor = ContextCompat.getColor(context, R.color.moonIcon_color_full_dark);
-        options.moonStrokeColor = ContextCompat.getColor(context, R.color.moonIcon_color_full_border_dark);
+        options.backgroundColor = theme.getMapBackgroundColor();
+        options.foregroundColor = theme.getMapForegroundColor();
+
+        options.sunShadowColor = ContextCompat.getColor(context, R.color.map_sunshadow);  // TODO
+        options.moonLightColor = ContextCompat.getColor(context, R.color.map_moonlight);  // TODO
+
+        options.sunFillColor = theme.getNoonIconColor();
+        options.sunStrokeColor = theme.getNoonIconStrokeColor();
+
+        options.moonFillColor = theme.getMoonFullColor();
+        options.moonStrokeColor = theme.getMoonWaningColor();
+
         options.showMoonLight = false;
         options.showMajorLatitudes = false;
     }
