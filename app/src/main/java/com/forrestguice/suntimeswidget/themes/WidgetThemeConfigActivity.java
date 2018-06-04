@@ -285,6 +285,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         // map colors
         chooseColorMapBackground = createColorChooser(context, R.id.editLabel_mapBackgroundColor, R.id.edit_mapBackgroundColor, R.id.editButton_mapBackgroundColor, SuntimesTheme.THEME_MAP_BACKGROUNDCOLOR);
+        chooseColorMapBackground.setShowAlpha(true);
+
         chooseColorMapForeground = createColorChooser(context, R.id.editLabel_mapForegroundColor, R.id.edit_mapForegroundColor, R.id.editButton_mapForegroundColor, SuntimesTheme.THEME_MAP_FOREGROUNDCOLOR);
 
         // season colors
