@@ -26,6 +26,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout_1X1_0;
+import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 /**
@@ -48,6 +49,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
         showTimeMode(false);
         showOptionShowNoon(false);
         showOptionLabels(true);
+        showOption3x2LayoutMode(true);
     }
 
     /**@Override
@@ -87,15 +89,10 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     {
         if (spinner_1x1mode != null)
         {
-            spinner_1x1mode.setAdapter(createAdapter_widgetModeSunPos1x1());
+            ArrayAdapter<WidgetSettings.WidgetModeSunPos1x1> adapter = new ArrayAdapter<WidgetSettings.WidgetModeSunPos1x1>(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSunPos1x1.values());
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner_1x1mode.setAdapter(adapter);
         }
-    }
-
-    protected ArrayAdapter<WidgetSettings.WidgetModeSunPos1x1> createAdapter_widgetModeSunPos1x1()
-    {
-        ArrayAdapter<WidgetSettings.WidgetModeSunPos1x1> adapter = new ArrayAdapter<WidgetSettings.WidgetModeSunPos1x1>(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSunPos1x1.values());
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        return adapter;
     }
 
     @Override
@@ -112,6 +109,37 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     {
         WidgetSettings.WidgetModeSunPos1x1 mode1x1 = WidgetSettings.loadSunPos1x1ModePref(context, appWidgetId);
         spinner_1x1mode.setSelection(mode1x1.ordinal());
+    }
+
+    @Override
+    protected void initWidgetMode3x2(Context context)
+    {
+        if (spinner_3x2mode != null)
+        {
+            ArrayAdapter<WorldMapWidgetSettings.WorldMapWidgetMode> adapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, WorldMapWidgetSettings.WorldMapWidgetMode.values());
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner_3x2mode.setAdapter(adapter);
+        }
+    }
+
+    @Override
+    protected void saveWidgetMode3x2(Context context)
+    {
+        if (spinner_3x2mode != null)
+        {
+            WorldMapWidgetSettings.WorldMapWidgetMode mode = (WorldMapWidgetSettings.WorldMapWidgetMode) spinner_3x2mode.getSelectedItem();
+            WorldMapWidgetSettings.saveSunPosMapModePref(context, appWidgetId, mode);
+        }
+    }
+
+    @Override
+    protected void loadWidgetMode3x2(Context context)
+    {
+        if (spinner_3x2mode != null)
+        {
+            WorldMapWidgetSettings.WorldMapWidgetMode mode = WorldMapWidgetSettings.loadSunPosMapModePref(context, appWidgetId);
+            spinner_3x2mode.setSelection(mode.ordinal());
+        }
     }
 
 }
