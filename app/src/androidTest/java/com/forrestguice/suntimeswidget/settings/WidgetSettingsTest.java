@@ -254,7 +254,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
 
         WidgetSettings.Location loc1 = new WidgetSettings.Location("90", "180");
         assertEquals(90d, loc1.getLatitudeAsDouble());
-        assertEquals(180d, loc1.getLongitudeAsDouble());
+        assertEquals(-180d, loc1.getLongitudeAsDouble());
 
         WidgetSettings.Location loc2 = new WidgetSettings.Location("-90", "-180");
         assertEquals(-90d, loc2.getLatitudeAsDouble());

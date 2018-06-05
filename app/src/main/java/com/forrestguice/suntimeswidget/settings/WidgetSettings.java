@@ -728,8 +728,11 @@ public class WidgetSettings
             {
                 double s = Math.signum(longitudeDouble);
                 double adjusted = (longitudeDouble % (s * 180)) - (s * 180);
-                Log.w("Location", "longitude is out of range! adjusting.. " + longitudeDouble + "->" + adjusted);
+                Log.w("Location", "longitude is out of range! adjusting.. " + longitudeDouble + " -> " + adjusted);
                 longitudeDouble = adjusted;
+            }
+            if (longitudeDouble == 180d) {
+                longitudeDouble = -180d;
             }
             return longitudeDouble;
         }
