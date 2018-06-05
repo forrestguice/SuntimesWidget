@@ -256,9 +256,6 @@ public class SuntimesMoonData extends SuntimesData
             //Log.d("DEBUG", "using approximate lunar noon tomorrow");
         }
 
-        SuntimesUtils utils = new SuntimesUtils();
-        //Log.d("DEBUG", "lunar noon at " + utils.calendarDateTimeDisplayString(context, noonToday));
-
         double moonIllumination = ((noonToday != null)
                 ? calculator.getMoonIlluminationForDate(noonToday)            // prefer illumination at "noon"
                 : calculator.getMoonIlluminationForDate(todaysCalendar));         // fallback to illumination "right now"

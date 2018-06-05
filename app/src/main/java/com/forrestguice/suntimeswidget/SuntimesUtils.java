@@ -117,6 +117,7 @@ public class SuntimesUtils
     private static String strTimeLoading = "...";
     private static boolean is24 = true;
     private static boolean initialized = false;
+    //private static int initCount = 0;
 
     private static String strDateYearFormat = "yyyy";
     private static String strDateShortFormat = "MMMM d";
@@ -132,6 +133,8 @@ public class SuntimesUtils
 
     public static void initDisplayStrings(Context context)
     {
+        //long bench_start = System.nanoTime();
+
         WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
         is24 = (mode == TimeFormatMode.MODE_SYSTEM) ? android.text.format.DateFormat.is24HourFormat(context)
                                                     : (mode == TimeFormatMode.MODE_24HR);
@@ -178,7 +181,11 @@ public class SuntimesUtils
         strDateLongFormat = context.getString(R.string.date_format_long);
 
         CardinalDirection.initDisplayStrings(context);
+
         initialized = true;
+        ///initCount++;
+        //long bench_end = System.nanoTime();
+        //Log.d("DEBUG", "SuntimesUtils initialized: " + initCount + " :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
     }
 
     public static boolean isInitialized()

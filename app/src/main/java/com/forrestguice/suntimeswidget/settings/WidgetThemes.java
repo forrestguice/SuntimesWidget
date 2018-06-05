@@ -345,7 +345,9 @@ public class WidgetThemes
             setTime = set;
             noonTime = noon;
 
+            SuntimesUtils.initDisplayStrings(context);
             SuntimesUtils utils = new SuntimesUtils();
+
             riseText = utils.calendarTimeShortDisplayString(context, riseTime);
             setText = utils.calendarTimeShortDisplayString(context, setTime);
             noonText = utils.calendarTimeShortDisplayString(context, noonTime);

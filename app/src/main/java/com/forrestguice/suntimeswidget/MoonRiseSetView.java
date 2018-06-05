@@ -152,6 +152,7 @@ public class MoonRiseSetView extends LinearLayout
 
     public void initLocale(Context context)
     {
+        SuntimesUtils.initDisplayStrings(context);
         isRtl = AppSettings.isLocaleRtl(context);
     }
 
