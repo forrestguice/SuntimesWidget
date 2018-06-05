@@ -685,7 +685,7 @@ public class LocationConfigView extends LinearLayout
         String latitude = text_locationLat.getText().toString();
         try {
             BigDecimal lat = new BigDecimal(latitude);
-            if (lat.intValue() < -90 || lat.intValue() > 90)
+            if (lat.doubleValue() < -90d || lat.doubleValue() > 90d)
             {
                 isValid = false;
                 text_locationLat.setError(myParent.getString(R.string.location_dialog_error_lat));
@@ -699,7 +699,7 @@ public class LocationConfigView extends LinearLayout
         String longitude = text_locationLon.getText().toString();
         try {
             BigDecimal lon = new BigDecimal(longitude);
-            if (lon.intValue() < -180 || lon.intValue() > 180)
+            if (lon.doubleValue() < -180d || lon.doubleValue() > 180d)
             {
                 isValid = false;
                 text_locationLon.setError(myParent.getString(R.string.location_dialog_error_lon));
