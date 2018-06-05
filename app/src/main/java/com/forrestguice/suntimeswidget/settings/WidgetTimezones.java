@@ -54,10 +54,6 @@ import java.util.TimeZone;
 
 public class WidgetTimezones
 {
-    public static boolean isProbablyNotLocal( String timezoneID, WidgetSettings.Location atLocation, Date onDate )
-    {
-        return isProbablyNotLocal(TimeZone.getTimeZone(timezoneID), atLocation, onDate);
-    }
     public static boolean isProbablyNotLocal( TimeZone timezone, WidgetSettings.Location atLocation, Date onDate )
     {
         double zoneOffset = timezone.getOffset(onDate.getTime()) / (1000 * 60 * 60);   // timezone offset in hrs
