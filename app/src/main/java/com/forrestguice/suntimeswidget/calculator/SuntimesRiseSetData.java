@@ -335,13 +335,38 @@ public class SuntimesRiseSetData extends SuntimesData
                 break;
         }
 
-        dayLengthToday = (sunsetCalendarToday == null || sunriseCalendarToday == null)
-                ? 0 : sunsetCalendarToday.getTimeInMillis() - sunriseCalendarToday.getTimeInMillis();
-
-        dayLengthOther = ((sunriseCalendarOther == null || sunsetCalendarOther == null))
-                ? 0 : sunsetCalendarOther.getTimeInMillis() - sunriseCalendarOther.getTimeInMillis();
+        dayLengthToday = determineDayLength(sunriseCalendarToday, sunsetCalendarToday);
+        dayLengthOther = determineDayLength(sunriseCalendarOther, sunsetCalendarOther);
 
         super.calculate();
+    }
+
+    /**
+     * @param sunrise
+     * @param sunset
+     * @return
+     */
+    private long determineDayLength(Calendar sunrise, Calendar sunset)
+    {
+        if (sunrise != null && sunset != null) {
+            // average case: rises and sets
+            return sunset.getTimeInMillis() - sunrise.getTimeInMillis();
+
+        } else if (sunrise == null && sunset == null) {
+            // edge case: no rise or set
+            return (isDay() ? DAY_MILLIS : 0);
+
+        } else if (sunrise != null) {
+            // edge case.. rises but doesn't set
+            Calendar midnight1 = midnight();
+            midnight1.add(Calendar.DAY_OF_YEAR, 1);
+            return midnight1.getTimeInMillis() - sunrise.getTimeInMillis();
+
+        } else {
+            // edge case.. sets but doesn't rise
+            Calendar midnight0 = midnight();
+            return sunset.getTimeInMillis() - midnight0.getTimeInMillis();
+        }
     }
 }
 
