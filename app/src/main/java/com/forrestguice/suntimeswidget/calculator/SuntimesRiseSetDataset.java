@@ -91,6 +91,7 @@ public class SuntimesRiseSetDataset
         SuntimesCalculator calculator = null;
         SuntimesCalculatorDescriptor descriptor = null;
         boolean first = true;
+        boolean[] hasEvents = { false, false };
         for (SuntimesRiseSetData data : dataset )
         {
             if (first)
@@ -104,6 +105,30 @@ public class SuntimesRiseSetDataset
                 data.setCalculator(calculator, descriptor);
                 data.calculate();
             }
+
+            WidgetSettings.TimeMode mode = data.timeMode();
+            if (mode == WidgetSettings.TimeMode.NOON || mode == WidgetSettings.TimeMode.GOLD
+                    || mode == WidgetSettings.TimeMode.BLUE4 || mode == WidgetSettings.TimeMode.BLUE8)
+                continue;
+
+            if (data.sunriseCalendarToday() != null || data.sunsetCalendarToday() != null) {
+                hasEvents[0] = true;
+            }
+
+            if (data.sunriseCalendarOther() != null || data.sunsetCalendarOther() != null) {
+                hasEvents[1] = true;
+            }
+        }
+
+        if (!hasEvents[0])
+        {
+            dataActual.dayLengthToday = (isDay(nowThen(dataActual.calendar())) ? SuntimesData.DAY_MILLIS : 0);
+            dataCivil.dayLengthToday = dataActual.dayLengthToday;
+        }
+        if (!hasEvents[1])
+        {
+            dataActual.dayLengthOther = (isDay(nowThen(dataActual.calendar())) ? SuntimesData.DAY_MILLIS : 0);
+            dataCivil.dayLengthOther = dataActual.dayLengthOther;
         }
     }
 

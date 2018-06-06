@@ -154,7 +154,7 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * Property: day length ("today")
      */
-    private long dayLengthToday = 0L;
+    protected long dayLengthToday = 0L;
     public long dayLengthToday()
     {
         return dayLengthToday;
@@ -163,7 +163,7 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * Property: day length ("other")
      */
-    private long dayLengthOther = 0L;
+    protected long dayLengthOther = 0L;
     public long dayLengthOther()
     {
         return dayLengthOther;
@@ -354,7 +354,7 @@ public class SuntimesRiseSetData extends SuntimesData
 
         } else if (sunrise == null && sunset == null) {
             // edge case: no rise or set
-            return (isDay() ? DAY_MILLIS : 0);
+            return 0;
 
         } else if (sunrise != null) {
             // edge case.. rises but doesn't set
