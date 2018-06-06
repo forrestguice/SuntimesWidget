@@ -72,6 +72,7 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
@@ -427,10 +428,10 @@ public class SuntimesActivity extends AppCompatActivity
         {
             Calendar now = dataset.now();
             Calendar updateTime = dataset.findNextEvent();
-            Log.d("UpdateAlarms", "setAlarm (partialUpdate): " + utils.calendarDateTimeDisplayString(context, updateTime).toString());
-
-            if (updateTime.after(now))
+            if (updateTime != null && updateTime.after(now)) {
+                Log.d("UpdateAlarms", "setAlarm (partialUpdate): " + utils.calendarDateTimeDisplayString(context, updateTime).toString());
                 setUpdateAlarm(alarmManager, updateTime, getPartialUpdateIntent(context));
+            }
             //else Log.d("UpdateAlarms", "..skipping alarm: partialUpdate (isPast)");
         }
     }
@@ -1658,29 +1659,11 @@ public class SuntimesActivity extends AppCompatActivity
                 row_gold2.updateFields(sunriseString_gold2, sunsetString_gold2);
             }
 
-            SuntimesUtils.TimeDisplayText dayLengthDisplay = utils.timeDeltaLongDisplayString(0, dataset.dataActual.dayLengthToday(), showSeconds);
-            dayLengthDisplay.setSuffix("");
-            String dayLength = dayLengthDisplay.toString();
-            String dayLength_label = getString(R.string.length_day, dayLength);
-            txt_daylength.setText(SuntimesUtils.createBoldColorSpan(null, dayLength_label, dayLength, color_textTimeDelta));
+            updateDayLengthViews(txt_daylength, dataset.dataActual.dayLengthToday(), R.string.length_day);
+            updateDayLengthViews(txt_lightlength, dataset.dataCivil.dayLengthToday(), R.string.length_light);
 
-            SuntimesUtils.TimeDisplayText dayLengthDisplay2 = utils.timeDeltaLongDisplayString(0, dataset.dataActual.dayLengthOther(), showSeconds);
-            dayLengthDisplay2.setSuffix("");
-            String dayLength2 = dayLengthDisplay2.toString();
-            String dayLength2_label = getString(R.string.length_day, dayLength2);
-            txt_daylength2.setText(SuntimesUtils.createBoldColorSpan(null, dayLength2_label, dayLength2, color_textTimeDelta));
-
-            SuntimesUtils.TimeDisplayText lightLengthDisplay = utils.timeDeltaLongDisplayString(0, dataset.dataCivil.dayLengthToday(), showSeconds);
-            lightLengthDisplay.setSuffix("");
-            String lightLength = lightLengthDisplay.toString();
-            String lightLength_label = getString(R.string.length_light, lightLength);
-            txt_lightlength.setText(SuntimesUtils.createBoldColorSpan(null, lightLength_label, lightLength, color_textTimeDelta));
-
-            SuntimesUtils.TimeDisplayText lightLengthDisplay2 = utils.timeDeltaLongDisplayString(0, dataset.dataCivil.dayLengthOther(), showSeconds);
-            lightLengthDisplay2.setSuffix("");
-            String lightLength2 = lightLengthDisplay2.toString();
-            String lightLength2_label = getString(R.string.length_light, lightLength2);
-            txt_lightlength2.setText(SuntimesUtils.createBoldColorSpan(null, lightLength2_label, lightLength2, color_textTimeDelta));
+            updateDayLengthViews(txt_daylength2, dataset.dataActual.dayLengthOther(), R.string.length_day);
+            updateDayLengthViews(txt_lightlength2, dataset.dataCivil.dayLengthOther(), R.string.length_light);
 
         } else {
             String notCalculated = getString(R.string.time_loading);
@@ -1821,6 +1804,21 @@ public class SuntimesActivity extends AppCompatActivity
         showWarnings();
 
         startTimeTask();
+    }
+
+    private void updateDayLengthViews(TextView textView, long dayLength, int labelID)
+    {
+        SuntimesUtils.TimeDisplayText dayLengthDisplay;
+        if (dayLength <= 0)
+            dayLengthDisplay = new SuntimesUtils.TimeDisplayText(String.format(SuntimesUtils.strTimeDeltaFormat, 0, (showSeconds ? SuntimesUtils.strSeconds : SuntimesUtils.strMinutes)), SuntimesUtils.strEmpty, SuntimesUtils.strEmpty);
+        else if (dayLength >= SuntimesData.DAY_MILLIS)
+            dayLengthDisplay = new SuntimesUtils.TimeDisplayText(String.format(SuntimesUtils.strTimeDeltaFormat, 24, SuntimesUtils.strHours), SuntimesUtils.strEmpty, SuntimesUtils.strEmpty);
+        else dayLengthDisplay = utils.timeDeltaLongDisplayString(0, dayLength, showSeconds);
+
+        dayLengthDisplay.setSuffix("");
+        String dayLengthStr = dayLengthDisplay.toString();
+        String dayLength_label = getString(labelID, dayLengthStr);
+        textView.setText(SuntimesUtils.createBoldColorSpan(null, dayLength_label, dayLengthStr, color_textTimeDelta));
     }
 
     private Runnable updateEquinoxViewColumnWidth = new Runnable()

@@ -285,7 +285,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 if (!drawRect(data.dataActual, c, p))
                 {
                     boolean noLayers = !layer_astro && !layer_nautical && !layer_civil;
-                    if (noLayers && data.isDay())
+                    if (noLayers && data.isDay(data.nowThen(data.calendar())))
                     {
                         drawRect(c, p);
                     }
@@ -343,16 +343,28 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             int left = 0;
             if (riseTime != null)
             {
+                int dayDiff = riseTime.get(Calendar.DAY_OF_YEAR) - data.calendar().get(Calendar.DAY_OF_YEAR);  // average case: 0; edge cases: -1, 1
                 double riseMinute = riseTime.get(Calendar.HOUR_OF_DAY) * 60 + riseTime.get(Calendar.MINUTE);
-                double riseR = riseMinute / MINUTES_IN_DAY;
+                double riseR = ((dayDiff * 60 * 24) + riseMinute) / MINUTES_IN_DAY;
+                if (riseR > 1) {
+                    riseR = 1;
+                } else if (riseR < 0) {
+                    riseR = 0;
+                }
                 left = (int) Math.round(riseR * w);
             }
 
             int right = w;
             if (setTime != null)
             {
+                int dayDiff = setTime.get(Calendar.DAY_OF_YEAR) - data.calendar().get(Calendar.DAY_OF_YEAR);  // average case: 0; edge cases: -1, 1
                 double setMinute = setTime.get(Calendar.HOUR_OF_DAY) * 60 + setTime.get(Calendar.MINUTE);
-                double setR = setMinute / MINUTES_IN_DAY;
+                double setR = ((dayDiff * 60 * 24) + setMinute) / MINUTES_IN_DAY;
+                if (setR > 1) {
+                    setR = 1;
+                } else if (setR < 0) {
+                    setR = 0;
+                }
                 right = (int) Math.round(setR * w);
             }
 
