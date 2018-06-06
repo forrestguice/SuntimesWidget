@@ -285,7 +285,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 if (!drawRect(data.dataActual, c, p))
                 {
                     boolean noLayers = !layer_astro && !layer_nautical && !layer_civil;
-                    if (noLayers && data.isDay())
+                    if (noLayers && data.isDay(data.nowThen(data.calendar())))
                     {
                         drawRect(c, p);
                     }
