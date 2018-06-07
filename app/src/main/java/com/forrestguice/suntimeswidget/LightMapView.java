@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -123,6 +123,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         if (forceUpdate || timeSinceLastUpdate >= maxUpdateRate)
         {
             updateViews(data);
+            lastUpdate = System.currentTimeMillis();
         }
     }
 
