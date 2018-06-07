@@ -326,7 +326,7 @@ public class SuntimesRiseSetDataset
     {
         Calendar startRise = data0.sunriseCalendarToday();  // twilight is starting (rising)
         Calendar endRise = data1.sunriseCalendarToday();    // twilight is ending (rising next twilight)
-        Calendar endSet = null;                             // twilight is ending (setting)
+        Calendar endSet;
 
         if (startRise != null && endRise != null)
         {
@@ -372,7 +372,7 @@ public class SuntimesRiseSetDataset
     {
         Calendar startSet = data0.sunsetCalendarToday();  // civil
         Calendar endSet = data1.sunsetCalendarToday();    // nautical
-        Calendar startRise = null;
+        Calendar startRise;
 
         if (startSet != null && endSet != null)
         {

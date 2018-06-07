@@ -131,7 +131,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_timeMode3Pref()
     {
-        assertTrue("STUB", true == false);  // TODO
+        assertTrue("STUB", false);  // TODO
     }
 
     @Test
