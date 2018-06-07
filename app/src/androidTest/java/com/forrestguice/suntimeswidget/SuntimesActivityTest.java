@@ -308,9 +308,9 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         } else if (tapAction == AppSettings.ClockTapAction.NEXT_NOTE) {
             verifyOnNoteNext(activity, noteIndex);
 
-        } else {
+        } /**else {
             // TODO
-        }
+        }*/
     }
 
     /**
@@ -357,9 +357,9 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         } else if (tapAction == AppSettings.ClockTapAction.PREV_NOTE) {
             verifyOnNotePrev(activity, noteIndex);
 
-        } else {
+        } /**else {
             // TODO
-        }
+        }*/
     }
 
     public static void clickOnNote()
@@ -425,12 +425,12 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
                 verifyTimeCard_today();
             else verifyTimeCard_tomorrow();
 
-        } else if (tapAction == AppSettings.DateTapAction.SHOW_CALENDAR) {
+        } /**else if (tapAction == AppSettings.DateTapAction.SHOW_CALENDAR) {
             // TODO
 
         } else {   // DO_NOTHING
             // TODO
-        }
+        }*/
     }
 
     /**

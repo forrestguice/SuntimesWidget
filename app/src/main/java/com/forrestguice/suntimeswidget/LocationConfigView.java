@@ -260,7 +260,7 @@ public class LocationConfigView extends LinearLayout
     private TextView labl_locationLon;
     private EditText text_locationLon;
 
-    private LinearLayout layout_locationName;
+    //private LinearLayout layout_locationName;
     private TextView labl_locationName;
     private Spinner spin_locationName;
     private EditText text_locationName;
@@ -304,7 +304,7 @@ public class LocationConfigView extends LinearLayout
         spinner_locationMode.setAdapter(spinner_locationModeAdapter);
         spinner_locationMode.setOnItemSelectedListener(onLocationModeSelected);
 
-        layout_locationName = (LinearLayout) findViewById(R.id.appwidget_location_name_layout);
+        //layout_locationName = (LinearLayout) findViewById(R.id.appwidget_location_name_layout);
         labl_locationName = (TextView) findViewById(R.id.appwidget_location_name_label);
         text_locationName = (EditText) findViewById(R.id.appwidget_location_name);
 

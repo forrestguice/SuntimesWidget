@@ -116,13 +116,13 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
         return contentDescription;        // time, elevation, azimuth
     }
 
-    public static final int HEIGHT_TINY   = 16;
-    public static final int HEIGHT_SMALL  = 24;
-    public static final int HEIGHT_MEDIUM = 32;
-    public static final int HEIGHT_LARGE  = 40;
+    //public static final int HEIGHT_TINY   = 16;
+    //public static final int HEIGHT_SMALL  = 24;
+    //public static final int HEIGHT_MEDIUM = 32;
+    //public static final int HEIGHT_LARGE  = 40;
 
     private LightMapView.LightMapColors colors;
-    private int dpWidth = 320, dpHeight = HEIGHT_LARGE;
+    private int dpWidth = 320, dpHeight = 40;
 
     @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
