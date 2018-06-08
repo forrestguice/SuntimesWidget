@@ -89,6 +89,8 @@ public abstract class SuntimesLayout
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
+        SuntimesUtils.initDisplayStrings(context);
+
         // theme background
         ThemeBackground background = theme.getBackground();
         views.setInt(R.id.widgetframe_inner, "setBackgroundResource", background.getResID());

@@ -45,8 +45,8 @@ import java.util.Calendar;
 public class MoonRiseSetView extends LinearLayout
 {
     private SuntimesUtils utils = new SuntimesUtils();
-    private boolean isRtl = false;
-    private boolean centered = false;
+    //private boolean isRtl = false;
+    //private boolean centered = false;
     private boolean showPosition = false;
 
     private LinearLayout content;
@@ -95,14 +95,14 @@ public class MoonRiseSetView extends LinearLayout
     private void init(Context context, AttributeSet attrs)
     {
         initLocale(context);
-        initColors(context);
+        //initColors(context);
         LayoutInflater.from(context).inflate(R.layout.layout_view_moonriseset, this, true);
 
-        if (attrs != null)
-        {
-            LayoutParams lp = generateLayoutParams(attrs);
-            centered = ((lp.gravity == Gravity.CENTER) || (lp.gravity == Gravity.CENTER_HORIZONTAL));
-        }
+        //if (attrs != null)
+        //{
+            //LayoutParams lp = generateLayoutParams(attrs);
+            //centered = ((lp.gravity == Gravity.CENTER) || (lp.gravity == Gravity.CENTER_HORIZONTAL));
+        //}
 
         content = (LinearLayout)findViewById(R.id.moonriseset_layout);
 
@@ -125,22 +125,22 @@ public class MoonRiseSetView extends LinearLayout
     {
         tomorrowMode = value;
     }
-    public boolean isTomorrowMode()
+    /**public boolean isTomorrowMode()
     {
         return tomorrowMode;
-    }
+    }*/
 
     private boolean showExtraField = true;
     public void setShowExtraField( boolean value )
     {
         showExtraField = value;
     }
-    public boolean showExtraField()
+    /**public boolean showExtraField()
     {
         return showExtraField;
-    }
+    }*/
 
-    private int noteColor;
+    /**private int noteColor;
     private void initColors(Context context)
     {
         int[] colorAttrs = { android.R.attr.textColorPrimary }; //, R.attr.springColor, R.attr.summerColor, R.attr.fallColor, R.attr.winterColor };
@@ -148,11 +148,12 @@ public class MoonRiseSetView extends LinearLayout
         int def = R.color.transparent;
         noteColor = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
         typedArray.recycle();
-    }
+    }*/
 
     public void initLocale(Context context)
     {
-        isRtl = AppSettings.isLocaleRtl(context);
+        SuntimesUtils.initDisplayStrings(context);
+        //isRtl = AppSettings.isLocaleRtl(context);
     }
 
     protected void updateViews( Context context, SuntimesMoonData data )

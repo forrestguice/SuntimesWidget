@@ -180,24 +180,33 @@ public abstract class SuntimesActivityTestBase
 
         // saves to..
         //     SD card\Android\data\com.forrestguice.suntimeswidget\files\Pictures\test-screenshots\subdir
-        String dirPath = activity.getExternalFilesDir(DIRECTORY_PICTURES).getAbsolutePath() + "/" + SCREENSHOT_DIR + subdir;
-
-        File dir = new File(dirPath);
-        dir.mkdirs();
-
-        String path = dirPath + "/" + name + ".png";
-        File file = new File(path);
-        if (file.exists())
+        File d = activity.getExternalFilesDir(DIRECTORY_PICTURES);
+        if (d != null)
         {
-            file.delete();
-        }
+            String dirPath = d.getAbsolutePath() + "/" + SCREENSHOT_DIR + subdir;
 
-        try {
-            Falcon.takeScreenshot(activity, file);
-            MediaScannerConnection.scanFile(activity, new String[]{file.getAbsolutePath()}, null, null);
+            File dir = new File(dirPath);
+            boolean dirCreated = dir.mkdirs();
 
-        } catch (Exception e1) {
-            Log.e("captureScreenshot", "Failed to write file! " + e1);
+            String path = dirPath + "/" + name + ".png";
+            File file = new File(path);
+            if (file.exists())
+            {
+                boolean fileDeleted = file.delete();
+                if (!fileDeleted) {
+                    Log.w("captureScreenshot", "Failed to delete file! " + path);
+                }
+            }
+
+            try {
+                Falcon.takeScreenshot(activity, file);
+                MediaScannerConnection.scanFile(activity, new String[]{file.getAbsolutePath()}, null, null);
+
+            } catch (Exception e1) {
+                Log.e("captureScreenshot", "Failed to write file! " + e1);
+            }
+        } else {
+            Log.e("captureScreenshot", "Failed to write file! getExternalFilesDir() returns null..");
         }
     }
 
