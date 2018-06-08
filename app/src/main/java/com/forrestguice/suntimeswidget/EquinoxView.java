@@ -240,6 +240,7 @@ public class EquinoxView extends LinearLayout
 
     public void initLocale(Context context)
     {
+        SuntimesUtils.initDisplayStrings(context);
         isRtl = AppSettings.isLocaleRtl(context);
         initAnimations(context);
     }

@@ -309,6 +309,6 @@ public interface SuntimesCalculator
      * @return length of shadow (meters) or infinity
      * @since 1.4.0 FEATURE_POSITION, FEATURE_RISESET
      */
-    public double getShadowLength( double objHeight, Calendar dateTime );
+    double getShadowLength( double objHeight, Calendar dateTime );
 
 }

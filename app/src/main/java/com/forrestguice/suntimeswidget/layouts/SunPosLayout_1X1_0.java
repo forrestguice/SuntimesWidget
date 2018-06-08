@@ -64,7 +64,7 @@ public class SunPosLayout_1X1_0 extends SunPosLayout
     {
         super.updateViews(context, appWidgetId, views, dataset);
         SuntimesCalculator calculator = dataset.calculator();
-        SuntimesCalculator.SunPosition sunPosition = calculator.getSunPosition(dataset.now());
+        SuntimesCalculator.SunPosition sunPosition = (calculator != null ? calculator.getSunPosition(dataset.now()) : null);
 
         SuntimesRiseSetData noonData = dataset.dataNoon;
         Calendar noonTime = (noonData != null ? noonData.sunriseCalendarToday() : null);

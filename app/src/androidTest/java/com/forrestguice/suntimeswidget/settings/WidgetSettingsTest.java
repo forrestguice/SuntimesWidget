@@ -36,6 +36,7 @@ import org.junit.runner.RunWith;
 
 import java.util.Calendar;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
 @SuppressWarnings("ConstantConditions")
@@ -130,7 +131,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_timeMode3Pref()
     {
-        assertTrue("STUB", true == false);  // TODO
+        assertTrue("STUB", false);  // TODO
     }
 
     @Test
@@ -244,6 +245,37 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     }
 
     ///////////////////////////////////////////////////////////////////////////
+
+    @Test public void test_location()
+    {
+        WidgetSettings.Location loc0 = new WidgetSettings.Location("0", "0");
+        assertEquals(0d, loc0.getLatitudeAsDouble());
+        assertEquals(0d, loc0.getLongitudeAsDouble());
+
+        WidgetSettings.Location loc1 = new WidgetSettings.Location("90", "180");
+        assertEquals(90d, loc1.getLatitudeAsDouble());
+        assertEquals(-180d, loc1.getLongitudeAsDouble());
+
+        WidgetSettings.Location loc2 = new WidgetSettings.Location("-90", "-180");
+        assertEquals(-90d, loc2.getLatitudeAsDouble());
+        assertEquals(-180d, loc2.getLongitudeAsDouble());
+
+        WidgetSettings.Location loc3 = new WidgetSettings.Location("91", "181");
+        assertEquals(89d, loc3.getLatitudeAsDouble());
+        assertEquals(-179d, loc3.getLongitudeAsDouble());
+
+        WidgetSettings.Location loc4 = new WidgetSettings.Location("181", "359");
+        assertEquals(89d, loc4.getLatitudeAsDouble());
+        assertEquals(-1d, loc4.getLongitudeAsDouble());
+
+        WidgetSettings.Location loc5 = new WidgetSettings.Location("-91", "-181");
+        assertEquals(-89d, loc5.getLatitudeAsDouble());
+        assertEquals(179d, loc5.getLongitudeAsDouble());
+
+        WidgetSettings.Location loc6 = new WidgetSettings.Location("-179", "-359");
+        assertEquals(-1d, loc6.getLatitudeAsDouble());
+        assertEquals(1d, loc6.getLongitudeAsDouble());
+    }
 
     @Test
     public void test_locationModePref()

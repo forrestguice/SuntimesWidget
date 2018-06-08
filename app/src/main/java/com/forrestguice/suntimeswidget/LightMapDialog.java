@@ -84,6 +84,7 @@ public class LightMapDialog extends DialogFragment
         builder.setView(dialogContent);
         AlertDialog dialog = builder.create();
 
+        SuntimesUtils.initDisplayStrings(myParent);
         initViews(dialogContent);
         if (savedInstanceState != null)
         {

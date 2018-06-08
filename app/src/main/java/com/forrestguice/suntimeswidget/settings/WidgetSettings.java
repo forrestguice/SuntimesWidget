@@ -702,7 +702,15 @@ public class WidgetSettings
 
         public Double getLatitudeAsDouble()
         {
-            return Double.parseDouble(latitude);
+            double latitudeDouble = Double.parseDouble(latitude);
+            if (latitudeDouble > 90 || latitudeDouble < -90)
+            {
+                double s = Math.signum(latitudeDouble);
+                double adjusted = (s * 90) - (latitudeDouble % (s * 90));
+                Log.w("Location", "latitude is out of range! adjusting.. " + latitudeDouble + " -> " + adjusted);
+                latitudeDouble = adjusted;
+            }
+            return latitudeDouble;
         }
 
         /**
@@ -715,7 +723,18 @@ public class WidgetSettings
 
         public Double getLongitudeAsDouble()
         {
-            return Double.parseDouble(longitude);
+            Double longitudeDouble = Double.parseDouble(longitude);
+            if (longitudeDouble > 180 || longitudeDouble < -180)
+            {
+                double s = Math.signum(longitudeDouble);
+                double adjusted = (longitudeDouble % (s * 180)) - (s * 180);
+                Log.w("Location", "longitude is out of range! adjusting.. " + longitudeDouble + " -> " + adjusted);
+                longitudeDouble = adjusted;
+            }
+            if (longitudeDouble == 180d) {
+                longitudeDouble = -180d;
+            }
+            return longitudeDouble;
         }
 
         /**

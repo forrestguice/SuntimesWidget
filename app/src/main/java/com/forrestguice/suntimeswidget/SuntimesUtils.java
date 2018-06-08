@@ -85,46 +85,47 @@ public class SuntimesUtils
     public static final int DEF_ERROR_DRAWABLE = R.drawable.ic_action_error;
     public static final int DEF_DST_DRAWABLE = R.drawable.ic_weather_sunny;
 
-    private static String strTimeShorter = "shorter";
-    private static String strTimeLonger = "longer";
-    private static String strSpace = "\u00A0";
-    private static String strEmpty = "";
-    private static String strYears = "y";
-    private static String strWeeks = "w";
-    private static String strDays = "d";
-    private static String strHours = "h";
-    private static String strMinutes = "m";
-    private static String strSeconds = "s";
+    protected static String strTimeShorter = "shorter";
+    protected static String strTimeLonger = "longer";
+    protected static String strSpace = "\u00A0";
+    protected static String strEmpty = "";
+    protected static String strYears = "y";
+    protected static String strWeeks = "w";
+    protected static String strDays = "d";
+    protected static String strHours = "h";
+    protected static String strMinutes = "m";
+    protected static String strSeconds = "s";
 
-    private static String strAltSymbol = "∠";
-    private static String strRaSymbol = "α";
-    private static String strDecSymbol = "δ";
-    private static String strDegreesFormat = "%1$s\u00B0";
-    private static String strDirectionFormat = "%1$s %2$s";
-    private static String strElevationFormat = "%1$s%2$s";
-    private static String strDeclinationFormat = "%1$s %2$s";
-    private static String strRaFormat = "%1$s %2$s";
+    protected static String strAltSymbol = "∠";
+    protected static String strRaSymbol = "α";
+    protected static String strDecSymbol = "δ";
+    protected static String strDegreesFormat = "%1$s\u00B0";
+    protected static String strDirectionFormat = "%1$s %2$s";
+    protected static String strElevationFormat = "%1$s%2$s";
+    protected static String strDeclinationFormat = "%1$s %2$s";
+    protected static String strRaFormat = "%1$s %2$s";
 
-    private static String strTimeDeltaFormat = "%1$s"  + strEmpty + "%2$s";
-    private static String strTimeShortFormat12 = "h:mm\u00A0a";
-    private static String strTimeShortFormat12s = "h:mm:ss\u00A0a";
-    private static String strTimeVeryShortFormat12 = "h:mm";
-    private static String strTimeVeryShortFormat24 = "HH:mm";
-    private static String strTimeVeryShortFormat12s = "h:mm:ss";
-    private static String strTimeVeryShortFormat24s = "HH:mm:ss";
-    private static String strTimeSuffixFormat = "a";
-    private static String strTimeNone = "none";
-    private static String strTimeLoading = "...";
-    private static boolean is24 = true;
-    private static boolean initialized = false;
+    protected static String strTimeDeltaFormat = "%1$s"  + strEmpty + "%2$s";
+    protected static String strTimeShortFormat12 = "h:mm\u00A0a";
+    protected static String strTimeShortFormat12s = "h:mm:ss\u00A0a";
+    protected static String strTimeVeryShortFormat12 = "h:mm";
+    protected static String strTimeVeryShortFormat24 = "HH:mm";
+    protected static String strTimeVeryShortFormat12s = "h:mm:ss";
+    protected static String strTimeVeryShortFormat24s = "HH:mm:ss";
+    protected static String strTimeSuffixFormat = "a";
+    protected static String strTimeNone = "none";
+    protected static String strTimeLoading = "...";
+    protected static boolean is24 = true;
+    protected static boolean initialized = false;
+    //private static int initCount = 0;
 
-    private static String strDateYearFormat = "yyyy";
-    private static String strDateShortFormat = "MMMM d";
-    private static String strDateLongFormat = "MMMM d, yyyy";
-    private static String strDateTimeShortFormat = "MMMM d, h:mm\u00A0a";
-    private static String strDateTimeLongFormat = "MMMM d, yyyy, h:mm\u00A0a";
-    private static String strDateTimeShortFormatSec = "MMMM d, h:mm:ss\u00A0a";
-    private static String strDateTimeLongFormatSec = "MMMM d, yyyy, h:mm:ss\u00A0a";
+    protected static String strDateYearFormat = "yyyy";
+    protected static String strDateShortFormat = "MMMM d";
+    protected static String strDateLongFormat = "MMMM d, yyyy";
+    protected static String strDateTimeShortFormat = "MMMM d, h:mm\u00A0a";
+    protected static String strDateTimeLongFormat = "MMMM d, yyyy, h:mm\u00A0a";
+    protected static String strDateTimeShortFormatSec = "MMMM d, h:mm:ss\u00A0a";
+    protected static String strDateTimeLongFormatSec = "MMMM d, yyyy, h:mm:ss\u00A0a";
 
     public SuntimesUtils()
     {
@@ -132,6 +133,8 @@ public class SuntimesUtils
 
     public static void initDisplayStrings(Context context)
     {
+        //long bench_start = System.nanoTime();
+
         WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
         is24 = (mode == TimeFormatMode.MODE_SYSTEM) ? android.text.format.DateFormat.is24HourFormat(context)
                                                     : (mode == TimeFormatMode.MODE_24HR);
@@ -178,7 +181,11 @@ public class SuntimesUtils
         strDateLongFormat = context.getString(R.string.date_format_long);
 
         CardinalDirection.initDisplayStrings(context);
+
         initialized = true;
+        ///initCount++;
+        //long bench_end = System.nanoTime();
+        //Log.d("DEBUG", "SuntimesUtils initialized: " + initCount + " :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
     }
 
     public static boolean isInitialized()
