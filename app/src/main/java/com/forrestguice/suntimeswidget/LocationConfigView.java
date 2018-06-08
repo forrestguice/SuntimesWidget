@@ -260,7 +260,7 @@ public class LocationConfigView extends LinearLayout
     private TextView labl_locationLon;
     private EditText text_locationLon;
 
-    private LinearLayout layout_locationName;
+    //private LinearLayout layout_locationName;
     private TextView labl_locationName;
     private Spinner spin_locationName;
     private EditText text_locationName;
@@ -304,7 +304,7 @@ public class LocationConfigView extends LinearLayout
         spinner_locationMode.setAdapter(spinner_locationModeAdapter);
         spinner_locationMode.setOnItemSelectedListener(onLocationModeSelected);
 
-        layout_locationName = (LinearLayout) findViewById(R.id.appwidget_location_name_layout);
+        //layout_locationName = (LinearLayout) findViewById(R.id.appwidget_location_name_layout);
         labl_locationName = (TextView) findViewById(R.id.appwidget_location_name_label);
         text_locationName = (EditText) findViewById(R.id.appwidget_location_name);
 
@@ -685,7 +685,7 @@ public class LocationConfigView extends LinearLayout
         String latitude = text_locationLat.getText().toString();
         try {
             BigDecimal lat = new BigDecimal(latitude);
-            if (lat.intValue() < -90 || lat.intValue() > 90)
+            if (lat.doubleValue() < -90d || lat.doubleValue() > 90d)
             {
                 isValid = false;
                 text_locationLat.setError(myParent.getString(R.string.location_dialog_error_lat));
@@ -699,7 +699,7 @@ public class LocationConfigView extends LinearLayout
         String longitude = text_locationLon.getText().toString();
         try {
             BigDecimal lon = new BigDecimal(longitude);
-            if (lon.intValue() < -180 || lon.intValue() > 180)
+            if (lon.doubleValue() < -180d || lon.doubleValue() > 180d)
             {
                 isValid = false;
                 text_locationLon.setError(myParent.getString(R.string.location_dialog_error_lon));
