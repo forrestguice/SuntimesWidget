@@ -19,9 +19,6 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
-//import android.util.Log;
-
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -255,9 +252,6 @@ public class SuntimesMoonData extends SuntimesData
             noonTomorrow.add(Calendar.MINUTE, 50);   // approximate noon tomorrow
             //Log.d("DEBUG", "using approximate lunar noon tomorrow");
         }
-
-        SuntimesUtils utils = new SuntimesUtils();
-        //Log.d("DEBUG", "lunar noon at " + utils.calendarDateTimeDisplayString(context, noonToday));
 
         double moonIllumination = ((noonToday != null)
                 ? calculator.getMoonIlluminationForDate(noonToday)            // prefer illumination at "noon"
