@@ -30,6 +30,8 @@ import java.util.TimeZone;
 
 public class SuntimesData
 {
+    public static final long DAY_MILLIS = 24 * 60 * 60 * 1000;
+
     /**
      * Property: appWidgetID
      * The appWidgetID that was used to initialize from settings (cached), may be null.

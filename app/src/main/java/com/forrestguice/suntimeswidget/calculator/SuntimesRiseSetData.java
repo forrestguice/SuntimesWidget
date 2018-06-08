@@ -154,7 +154,7 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * Property: day length ("today")
      */
-    private long dayLengthToday = 0L;
+    protected long dayLengthToday = 0L;
     public long dayLengthToday()
     {
         return dayLengthToday;
@@ -163,7 +163,7 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * Property: day length ("other")
      */
-    private long dayLengthOther = 0L;
+    protected long dayLengthOther = 0L;
     public long dayLengthOther()
     {
         return dayLengthOther;
@@ -335,13 +335,38 @@ public class SuntimesRiseSetData extends SuntimesData
                 break;
         }
 
-        dayLengthToday = (sunsetCalendarToday == null || sunriseCalendarToday == null)
-                ? 0 : sunsetCalendarToday.getTimeInMillis() - sunriseCalendarToday.getTimeInMillis();
-
-        dayLengthOther = ((sunriseCalendarOther == null || sunsetCalendarOther == null))
-                ? 0 : sunsetCalendarOther.getTimeInMillis() - sunriseCalendarOther.getTimeInMillis();
+        dayLengthToday = determineDayLength(sunriseCalendarToday, sunsetCalendarToday);
+        dayLengthOther = determineDayLength(sunriseCalendarOther, sunsetCalendarOther);
 
         super.calculate();
+    }
+
+    /**
+     * @param sunrise
+     * @param sunset
+     * @return
+     */
+    private long determineDayLength(Calendar sunrise, Calendar sunset)
+    {
+        if (sunrise != null && sunset != null) {
+            // average case: rises and sets
+            return sunset.getTimeInMillis() - sunrise.getTimeInMillis();
+
+        } else if (sunrise == null && sunset == null) {
+            // edge case: no rise or set
+            return 0;
+
+        } else if (sunrise != null) {
+            // edge case.. rises but doesn't set
+            Calendar midnight1 = midnight();
+            midnight1.add(Calendar.DAY_OF_YEAR, 1);
+            return midnight1.getTimeInMillis() - sunrise.getTimeInMillis();
+
+        } else {
+            // edge case.. sets but doesn't rise
+            Calendar midnight0 = midnight();
+            return sunset.getTimeInMillis() - midnight0.getTimeInMillis();
+        }
     }
 }
 

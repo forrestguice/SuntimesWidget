@@ -27,8 +27,6 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 public abstract class SunLayout extends SuntimesLayout
 {
-    protected static final SuntimesUtils utils = new SuntimesUtils();
-
     /**
      * Called by widget before themeViews and updateViews to give the layout obj an opportunity to
      * modify its state based on the supplied data.
