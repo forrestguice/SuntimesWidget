@@ -1,5 +1,13 @@
 ### ~
 
+### v0.8.4 (2018-06-07)
+* fixes polar regions usable hours bug (#209).
+* fixes app crash on polar regions when no rise/set events (#212).
+* fixes lightmap polar regions bugs where wrong color is shown during perpetual day/night (#209).
+* fixes lightmap bug where durations are drawn incorrectly (near boundaries up to timezone offset).
+* fixes lat/lon input validation bug (#211).
+* fixes date format localization bug (#210).
+
 ### v0.8.3 (2018-05-31)
 * adds translation to Norwegian (nb) (contributed by FTno) (#206).
 * removes unused option "show seconds" from sun position widgets.
