@@ -29,6 +29,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 
@@ -286,9 +287,36 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 if (!drawRect(data.dataActual, c, p))
                 {
                     boolean noLayers = !layer_astro && !layer_nautical && !layer_civil;
-                    if (noLayers && data.isDay(data.nowThen(data.calendar())))
+                    if (noLayers)
                     {
-                        drawRect(c, p);
+                        Calendar calendar = data.nowThen(data.dataNoon.calendar());
+                        SuntimesCalculator calculator = data.calculator();
+                        SuntimesCalculator.SunPosition position = (calculator != null ? calculator.getSunPosition(calendar) : null);
+
+                        if (position == null)
+                        {
+                            if (calculator != null && calculator.isDay(calendar))
+                            {
+                                p.setColor(colors.colorDay);
+                                drawRect(c, p);
+                            }
+
+                        } else if (position.elevation > 0) {
+                            p.setColor(colors.colorDay);
+                            drawRect(c, p);
+
+                        } else if (position.elevation > -6) {
+                            p.setColor(colors.colorCivil);
+                            drawRect(c, p);
+
+                        } else if (position.elevation > -12) {
+                            p.setColor(colors.colorNautical);
+                            drawRect(c, p);
+
+                        } else if (position.elevation > -18) {
+                            p.setColor(colors.colorAstro);
+                            drawRect(c, p);
+                        }
                     }
                 }
 
