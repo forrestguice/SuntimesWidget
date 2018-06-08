@@ -27,8 +27,6 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 public abstract class SunLayout extends SuntimesLayout
 {
-    protected static final SuntimesUtils utils = new SuntimesUtils();
-
     /**
      * Apply the provided data to the RemoteViews this layout knows about.
      * @param context the android application context

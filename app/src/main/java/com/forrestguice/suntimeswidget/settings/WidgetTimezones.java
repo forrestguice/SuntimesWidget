@@ -54,10 +54,6 @@ import java.util.TimeZone;
 
 public class WidgetTimezones
 {
-    public static boolean isProbablyNotLocal( String timezoneID, WidgetSettings.Location atLocation, Date onDate )
-    {
-        return isProbablyNotLocal(TimeZone.getTimeZone(timezoneID), atLocation, onDate);
-    }
     public static boolean isProbablyNotLocal( TimeZone timezone, WidgetSettings.Location atLocation, Date onDate )
     {
         double zoneOffset = timezone.getOffset(onDate.getTime()) / (1000 * 60 * 60);   // timezone offset in hrs
@@ -99,12 +95,12 @@ public class WidgetTimezones
 
     public static TimeZone localMeanTime( Context context, WidgetSettings.Location location )
     {
-        return new LocalMeanTime(location.getLongitude(), context.getString(R.string.solartime_localMean));
+        return new LocalMeanTime(location.getLongitudeAsDouble(), context.getString(R.string.solartime_localMean));
     }
 
     public static TimeZone apparentSolarTime( Context context, WidgetSettings.Location location )
     {
-        return new ApparentSolarTime(location.getLongitude(), context.getString(R.string.solartime_apparent));
+        return new ApparentSolarTime(location.getLongitudeAsDouble(), context.getString(R.string.solartime_apparent));
     }
 
     /**
@@ -115,27 +111,6 @@ public class WidgetTimezones
         public static final String TIMEZONEID = "Local Mean Time";
 
         private int rawOffset = 0;
-
-        public LocalMeanTime(String longitude)
-        {
-            super();
-            setID(TIMEZONEID);
-            setRawOffset(findOffset(Double.parseDouble(longitude)));
-        }
-
-        public LocalMeanTime(double longitude)
-        {
-            super();
-            setID(TIMEZONEID);
-            setRawOffset(findOffset(longitude));
-        }
-
-        public LocalMeanTime(String longitude, String name)
-        {
-            super();
-            setID(name);
-            setRawOffset(findOffset(Double.parseDouble(longitude)));
-        }
 
         public LocalMeanTime(double longitude, String name)
         {
@@ -206,21 +181,6 @@ public class WidgetTimezones
     public static class ApparentSolarTime extends LocalMeanTime
     {
         public static final String TIMEZONEID = "Apparent Solar Time";
-
-        public ApparentSolarTime(String longitude)
-        {
-            super(longitude, TIMEZONEID);
-        }
-
-        public ApparentSolarTime(double longitude)
-        {
-            super(longitude, TIMEZONEID);
-        }
-
-        public ApparentSolarTime(String longitude, String name)
-        {
-            super(longitude, name);
-        }
 
         public ApparentSolarTime(double longitude, String name)
         {
