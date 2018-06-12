@@ -162,6 +162,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     {
         super.onSizeChanged(w, h, oldw, oldh);
         if (resizable)
+        Log.w(LOGTAG, "onSizeChanged: " + oldw + ", " + oldh + " => " + w + ", " + h );
         {
             updateViews(true);
         }
@@ -218,10 +219,13 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                     projection = new WorldMapEquirectangular();
                     break;
             }
+
+            Log.w(LOGTAG, "updateViews: " + w + ", " + h );
             drawTask.execute(data, w, h, options, projection);
         }
     }
 
+    public static final String LOGTAG = "WorldMap";
     /**
      * @param context a context used to access shared prefs
      */

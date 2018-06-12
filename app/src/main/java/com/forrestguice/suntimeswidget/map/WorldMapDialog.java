@@ -55,12 +55,15 @@ public class WorldMapDialog extends DialogFragment
     public static final String PREF_KEY_UI_MAP_MOONLIGHT = "map_showmoonlight";
     public static final boolean PREF_DEF_UI_MAP_MOONLIGHT = true;
 
+    public static final String LOGTAG = "WorldMapDialog";
+
     private WorldMapView worldmap;
     private View dialogContent = null;
     private TextView utcTime;
     private Spinner mapSelector;
 
     private SuntimesUtils utils = new SuntimesUtils();
+
     private SuntimesRiseSetDataset data;
     public void setData( SuntimesRiseSetDataset data )
     {
@@ -85,7 +88,7 @@ public class WorldMapDialog extends DialogFragment
         initViews(getContext(), dialogContent);
         if (savedInstanceState != null)
         {
-            Log.d("DEBUG", "WorldMapDialog onCreate (restoreState)");
+            Log.d(LOGTAG, "WorldMapDialog onCreate (restoreState)");
         }
 
         dialog.setOnShowListener(onShowDialogListener);
@@ -98,6 +101,7 @@ public class WorldMapDialog extends DialogFragment
         @Override
         public void onShow(DialogInterface dialog)
         {
+            Log.d(WorldMapView.LOGTAG, "onShowDialog: triggering update...");
             updateViews();
             startUpdateTask();
         }
@@ -223,6 +227,7 @@ public class WorldMapDialog extends DialogFragment
                 WorldMapWidgetSettings.WorldMapWidgetMode mode = (WorldMapWidgetSettings.WorldMapWidgetMode) parent.getItemAtPosition(position);
                 WorldMapWidgetSettings.saveSunPosMapModePref(context, 0, mode);
                 worldmap.setMapMode(context, mode);
+                Log.d(WorldMapView.LOGTAG, "onMapSelected: mapMode changed so triggering update...");
                 updateViews();
             }
         }
@@ -257,6 +262,7 @@ public class WorldMapDialog extends DialogFragment
                     break;
             }
             pref.apply();
+            Log.d(WorldMapView.LOGTAG, "onOptionSelected: sunlight/moonlight option changed so triggering update...");
             updateViews();
         }
     };

@@ -51,7 +51,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         double[] polar = new double[2];
         polar[0] = lon;
         polar[1] = 90 - lat;
-        Log.d("DEBUG", "toPolar: [" + lat + ", " + lon + "] -> [" + polar[0] + ", " + polar[1] + "]");
+        //Log.d(WorldMapView.LOGTAG, "toPolar: [" + lat + ", " + lon + "] -> [" + polar[0] + ", " + polar[1] + "]");
         return polar;
     }
 
@@ -65,7 +65,6 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         double[] point = new double[2];
         point[0] = polar[1] * Math.sin(Math.toRadians(polar[0]));
         point[1] = -1d * polar[1] * Math.cos(Math.toRadians(polar[0]));
-        Log.d("DEBUG", "toCartesian: [" + polar[0] + ", " + polar[1] + "] -> [" + point[0] + ", " + point[1] + "]");
         return point;
     }
 
@@ -290,7 +289,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         }
 
         long bench_end = System.nanoTime();
-        Log.d("DEBUG", "make world map :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
+        Log.d(WorldMapView.LOGTAG, "make equiazimuthal world map :: " + ((bench_end - bench_start) / 1000000.0) + " ms; " + w + ", " + h);
         return b;
     }
 

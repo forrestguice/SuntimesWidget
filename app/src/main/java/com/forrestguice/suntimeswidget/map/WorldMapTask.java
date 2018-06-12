@@ -201,7 +201,7 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
                 hourAngle = 360 - hourAngle;
 
             hourAngle = (hourAngle - location.getLongitudeAsDouble()) % 360; // greenwich hour angle (degrees)
-            Log.d("DEBUG", "hourAngle is " + hourAngle + ", dec is " + Math.toDegrees(dec) + " (" + pos.declination + ")");
+            //Log.d(WorldMapView.LOGTAG, "hourAngle is " + hourAngle + ", dec is " + Math.toDegrees(dec) + " (" + pos.declination + ")");
             return new double[] { hourAngle, Math.toDegrees(dec) };
         }
 

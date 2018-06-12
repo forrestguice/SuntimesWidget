@@ -232,7 +232,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         }
 
         long bench_end = System.nanoTime();
-        Log.d("DEBUG", "make world map :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
+        Log.d(WorldMapView.LOGTAG, "make equirectangular world map :: " + ((bench_end - bench_start) / 1000000.0) + " ms; " + w + ", " + h);
         return b;
     }
 }
