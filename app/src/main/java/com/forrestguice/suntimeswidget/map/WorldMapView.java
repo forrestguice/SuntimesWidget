@@ -33,17 +33,18 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 
 public class WorldMapView extends android.support.v7.widget.AppCompatImageView
 {
-    public static final int DEFAULT_MAX_UPDATE_RATE = 15 * 1000;  // ms value; once every 15s
+    public static final String LOGTAG = "WorldMap";
+    public static final int DEFAULT_MAX_UPDATE_RATE = 1 * 1000;  // ms value; once a second
 
     private WorldMapTask drawTask;
     private WorldMapTask.WorldMapOptions options = new WorldMapTask.WorldMapOptions();
     private WorldMapWidgetSettings.WorldMapWidgetMode mode = WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE;
 
-    private int maxUpdateRate = DEFAULT_MAX_UPDATE_RATE;
-
     private SuntimesRiseSetDataset data = null;
     private long lastUpdate = 0;
     private boolean resizable = true;
+    private int mapW = 0, mapH = 0;
+    private int maxUpdateRate = DEFAULT_MAX_UPDATE_RATE;
 
     public WorldMapView(Context context)
     {
@@ -161,9 +162,11 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     public void onSizeChanged (int w, int h, int oldw, int oldh)
     {
         super.onSizeChanged(w, h, oldw, oldh);
-        if (resizable)
         Log.w(LOGTAG, "onSizeChanged: " + oldw + ", " + oldh + " => " + w + ", " + h );
+
+        if (resizable && w > 0 && h > 0)
         {
+            Log.w(LOGTAG, "onSizeChanged: valid dimensions, triggering update...");
             updateViews(true);
         }
     }
@@ -185,6 +188,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
      */
     public void updateViews(SuntimesRiseSetDataset data)
     {
+        boolean sameData = (this.data == data);
         this.data = data;
 
         if (drawTask != null && drawTask.getStatus() == AsyncTask.Status.RUNNING)
@@ -193,19 +197,33 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         }
 
         int w = getWidth();
-        if (w > 0)
+        int h = (int)(w * ((double)options.map.getIntrinsicHeight() / (double)options.map.getIntrinsicWidth()));
+
+        if (w > 0 && h > 0)
         {
+            boolean sameDimensions = (w == mapW && h == mapH);
+            boolean sameOptions = !options.modified;
+            boolean throttleUpdate = ((System.currentTimeMillis() - lastUpdate) < maxUpdateRate);
+
+            boolean skipUpdate = (sameData && sameDimensions && sameOptions && throttleUpdate);
+            if (skipUpdate)
+            {
+                Log.w(LOGTAG, "updateViews: " + w + ", " + h + " (image is unchanged; skipping)");
+                return;
+            }
+
             drawTask = new WorldMapTask();
             drawTask.setListener(new WorldMapTaskListener()
             {
                 @Override
                 public void onFinished(Bitmap result)
                 {
+                    mapW = result.getWidth();
+                    mapH = result.getHeight();
                     setImageBitmap(result);
                 }
             });
 
-            int h = (int)(w * ((double)options.map.getIntrinsicHeight() / (double)options.map.getIntrinsicWidth()));
             WorldMapTask.WorldMapProjection projection;
             switch (mode)
             {
@@ -222,10 +240,11 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
 
             Log.w(LOGTAG, "updateViews: " + w + ", " + h );
             drawTask.execute(data, w, h, options, projection);
+            options.modified = false;
+            lastUpdate = System.currentTimeMillis();
         }
     }
 
-    public static final String LOGTAG = "WorldMap";
     /**
      * @param context a context used to access shared prefs
      */
