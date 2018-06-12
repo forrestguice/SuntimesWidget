@@ -199,6 +199,7 @@ public class WorldMapDialog extends DialogFragment
             SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
             options.showSunShadow = pref.getBoolean(PREF_KEY_UI_MAP_SUNSHADOW, PREF_DEF_UI_MAP_SUNSHADOW);
             options.showMoonLight = pref.getBoolean(PREF_KEY_UI_MAP_MOONLIGHT, PREF_DEF_UI_MAP_MOONLIGHT);
+            options.modified = true;
         }
     }
 

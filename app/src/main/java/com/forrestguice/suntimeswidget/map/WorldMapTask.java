@@ -123,6 +123,8 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
      */
     public static class WorldMapOptions
     {
+        public boolean modified = false;
+
         public Drawable map = null;
         public int backgroundColor = Color.BLUE;
         public int foregroundColor = Color.TRANSPARENT;
