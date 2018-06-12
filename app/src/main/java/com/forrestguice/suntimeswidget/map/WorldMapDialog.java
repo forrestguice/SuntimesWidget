@@ -61,6 +61,7 @@ public class WorldMapDialog extends DialogFragment
     private View dialogContent = null;
     private TextView utcTime;
     private Spinner mapSelector;
+    private WorldMapWidgetSettings.WorldMapWidgetMode mapMode = null;
 
     private SuntimesUtils utils = new SuntimesUtils();
 
@@ -161,8 +162,8 @@ public class WorldMapDialog extends DialogFragment
         mapSelector = (Spinner)dialogView.findViewById(R.id.worldmap_selector);
         mapSelector.setAdapter(mapAdapter);
 
-        WorldMapWidgetSettings.WorldMapWidgetMode mode = WorldMapWidgetSettings.loadSunPosMapModePref(context, 0);
-        int modePosition = mapAdapter.getPosition(mode);
+        mapMode = WorldMapWidgetSettings.loadSunPosMapModePref(context, 0);
+        int modePosition = mapAdapter.getPosition(mapMode);
         mapSelector.setSelection((modePosition >= 0) ? modePosition : 0);
         worldmap.setMapMode(context, (WorldMapWidgetSettings.WorldMapWidgetMode) mapSelector.getSelectedItem());
 
@@ -222,12 +223,13 @@ public class WorldMapDialog extends DialogFragment
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
         {
+            WorldMapWidgetSettings.WorldMapWidgetMode mode = (WorldMapWidgetSettings.WorldMapWidgetMode) parent.getItemAtPosition(position);
             Context context = getContext();
-            if (context != null)
+            if (context != null && mode != mapMode)
             {
-                WorldMapWidgetSettings.WorldMapWidgetMode mode = (WorldMapWidgetSettings.WorldMapWidgetMode) parent.getItemAtPosition(position);
-                WorldMapWidgetSettings.saveSunPosMapModePref(context, 0, mode);
-                worldmap.setMapMode(context, mode);
+                mapMode = mode;
+                WorldMapWidgetSettings.saveSunPosMapModePref(context, 0, mapMode);
+                worldmap.setMapMode(context, mapMode);
                 Log.d(WorldMapView.LOGTAG, "onMapSelected: mapMode changed so triggering update...");
                 updateViews();
             }
