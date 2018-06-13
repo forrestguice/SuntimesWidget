@@ -65,6 +65,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         double[] point = new double[2];
         point[0] = polar[1] * Math.sin(Math.toRadians(polar[0]));
         point[1] = -1d * polar[1] * Math.cos(Math.toRadians(polar[0]));
+        //Log.d(WorldMapView.LOGTAG, "toCartesian: [" + polar[0] + ", " + polar[1] + "] -> [" + point[0] + ", " + point[1] + "]");
         return point;
     }
 
