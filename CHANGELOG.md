@@ -1,5 +1,8 @@
 ### ~
 
+### v0.8.5 (2018-06-16)
+* updates translation to Norwegian (nb) (#214).
+
 ### v0.8.4 (2018-06-07)
 * fixes polar regions usable hours bug (#209).
 * fixes app crash on polar regions when no rise/set events (#212).
