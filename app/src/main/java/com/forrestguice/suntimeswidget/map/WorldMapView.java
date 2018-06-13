@@ -19,6 +19,7 @@ package com.forrestguice.suntimeswidget.map;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -67,7 +68,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         if (isInEditMode())
         {
             setBackgroundColor(Color.WHITE);
-            Bitmap b = Bitmap.createBitmap(512, 256, Bitmap.Config.ARGB_8888);
+            Bitmap b = Bitmap.createBitmap(256, 256, Bitmap.Config.ARGB_8888);
             setImageBitmap(b);
         }
         setMapMode(context, mode);
@@ -197,7 +198,39 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         }
 
         int w = getWidth();
-        int h = (int)(w * ((double)options.map.getIntrinsicHeight() / (double)options.map.getIntrinsicWidth()));
+        int h = getHeight();
+        WorldMapTask.WorldMapProjection projection;
+        switch (mode)
+        {
+            case EQUIAZIMUTHAL_SIMPLE:
+
+                //int orientation = getResources().getConfiguration().orientation;
+                projection = new WorldMapEquiazimuthal();
+                //w = h = (orientation == Configuration.ORIENTATION_PORTRAIT) ? Math.max(getWidth(), getHeight()) : Math.min(getWidth(), getHeight());
+                if (w > 0)
+                {
+                    if (h > 0)
+                    {
+                        // has width and height, use smallest
+                        w = h = Math.min(w, h);
+                    } else {
+                        // has width but no height; match width
+                        h = w;
+                    }
+                } else if (h > 0) {
+                    // has height but no width
+                    w = h;
+                }
+                break;
+
+            case EQUIRECTANGULAR_BLUEMARBLE:
+            case EQUIRECTANGULAR_SIMPLE:
+            default:
+                projection = new WorldMapEquirectangular();
+                w = getWidth();
+                h = (int)(w * ((double)options.map.getIntrinsicHeight() / (double)options.map.getIntrinsicWidth()));
+                break;
+        }
 
         if (w > 0 && h > 0)
         {
@@ -223,20 +256,6 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                     setImageBitmap(result);
                 }
             });
-
-            WorldMapTask.WorldMapProjection projection;
-            switch (mode)
-            {
-                case EQUIAZIMUTHAL_SIMPLE:
-                    projection = new WorldMapEquiazimuthal();
-                    break;
-
-                case EQUIRECTANGULAR_BLUEMARBLE:
-                case EQUIRECTANGULAR_SIMPLE:
-                default:
-                    projection = new WorldMapEquirectangular();
-                    break;
-            }
 
             Log.w(LOGTAG, "updateViews: " + w + ", " + h );
             drawTask.execute(data, w, h, options, projection);
