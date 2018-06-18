@@ -327,7 +327,7 @@ public class SuntimesActivity extends AppCompatActivity
             //Log.d("DEBUG", "LocationConfigDialog listeners restored.");
         }
 
-        TimeDateDialogEasy dateDialog = (TimeDateDialogEasy) fragments.findFragmentByTag(DIALOGTAG_DATE);
+        TimeDateDialog dateDialog = (TimeDateDialog) fragments.findFragmentByTag(DIALOGTAG_DATE);
         if (dateDialog != null)
         {
             dateDialog.setOnAcceptedListener(onConfigDate);
@@ -1280,7 +1280,7 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private void configDate()
     {
-        final TimeDateDialogEasy datePicker = new TimeDateDialogEasy();
+        final TimeDateDialog datePicker = new TimeDateDialog();
         datePicker.setOnAcceptedListener(onConfigDate);
         datePicker.setOnCanceledListener(onCancelDate);
         datePicker.show(getSupportFragmentManager(), DIALOGTAG_DATE);
