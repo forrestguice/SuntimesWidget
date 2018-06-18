@@ -53,7 +53,6 @@ import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
 import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.getfix.GetFixTask;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
-import com.forrestguice.suntimeswidget.getfix.GetFixUI1;
 import com.forrestguice.suntimeswidget.getfix.LocationListTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -272,7 +271,45 @@ public class LocationConfigView extends LinearLayout
 
     private ImageButton button_getfix;
     private ProgressBar progress_getfix;
-    private GetFixUI getFixUI_editMode;
+    private GetFixUI getFixUI_editMode = new GetFixUI()
+    {
+        @Override
+        public void enableUI(boolean value)
+        {
+            text_locationName.requestFocus();
+            text_locationLat.setEnabled(value);
+            text_locationLon.setEnabled(value);
+            text_locationName.setEnabled(value);
+        }
+
+        @Override
+        public void updateUI(Location... locations)
+        {
+            DecimalFormat formatter = WidgetSettings.Location.decimalDegreesFormatter();
+            text_locationLat.setText( formatter.format(locations[0].getLatitude()) );
+            text_locationLon.setText( formatter.format(locations[0].getLongitude()) );
+        }
+
+        @Override
+        public void showProgress(boolean showProgress)
+        {
+            progress_getfix.setVisibility((showProgress ? View.VISIBLE : View.GONE));
+        }
+
+        @Override
+        public void onStart()
+        {
+            button_getfix.setVisibility(View.GONE);
+        }
+
+        @Override
+        public void onResult(Location result, boolean wasCancelled)
+        {
+            button_getfix.setImageResource((result == null) ? ICON_GPS_SEARCHING : ICON_GPS_FOUND);
+            button_getfix.setVisibility(View.VISIBLE);
+            button_getfix.setEnabled(true);
+        }
+    };
 
     private ImageButton button_auto;
     private ProgressBar progress_auto;
@@ -392,8 +429,6 @@ public class LocationConfigView extends LinearLayout
         progress_getfix.setVisibility(View.GONE);
 
         button_getfix = (ImageButton)findViewById(R.id.appwidget_location_getfix);
-        getFixUI_editMode = new GetFixUI1(text_locationName, text_locationLat, text_locationLon, progress_getfix, button_getfix);
-
         button_getfix.setOnClickListener(new View.OnClickListener()
         {
             @Override
