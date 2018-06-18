@@ -324,7 +324,7 @@ public class SuntimesActivity extends AppCompatActivity
         if (locationDialog != null)
         {
             locationDialog.setOnAcceptedListener( onConfigLocation(locationDialog) );
-            //Log.d("DEBUG", "LocationDialog listeners restored.");
+            //Log.d("DEBUG", "LocationConfigDialog listeners restored.");
         }
 
         TimeDateDialogEasy dateDialog = (TimeDateDialogEasy) fragments.findFragmentByTag(DIALOGTAG_DATE);
