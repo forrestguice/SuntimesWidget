@@ -674,8 +674,9 @@
         <item>2419200000</item>
     </string-array>
 
-    <string name="configLabel_getFix_passiveMode">Passive Location</string>  <!-- TODO: i18n -->
-    <string name="configLabel_getFix_passiveMode_summary">Use the passive location provider (don\'t prompt to enable GPS).</string> <!-- TODO: i18n -->
+    <!-- App Setting: passive location mode -->
+    <string name="configLabel_getFix_passiveMode">Passive Location</string>
+    <string name="configLabel_getFix_passiveMode_summary">Use the passive location provider.</string>
 
     <!-- App Setting: locale mode -->
     <string name="configLabel_locale">Language Settings</string>   <!-- group title -->

@@ -604,6 +604,10 @@
         <item>en måned (672 timer)</item>
     </string-array>
 
+    <!-- App Setting: passive location mode -->
+    <string name="configLabel_getFix_passiveMode">Passive Location</string>  <!-- TODO -->
+    <string name="configLabel_getFix_passiveMode_summary">Use the passive location provider.</string> <!-- TODO -->
+
     <!-- App Setting: locale mode -->
     <string name="configLabel_locale">Språkinnstillinger</string>   <!-- group title -->
 
