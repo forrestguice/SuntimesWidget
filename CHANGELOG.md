@@ -1,7 +1,9 @@
 ### ~
 
 ### v0.8.5 (2018-06-16)
-* updates translation to Norwegian (nb) (#214).
+* add gps pref "Passive Location"; use the passive location provider (use a separate app to manage location updates).
+* fixes bug where the "GPS is disabled. Enable it?" dialog is not shown.
+* updates translation to Norwegian (nb) (#214, #215).
 
 ### v0.8.4 (2018-06-07)
 * fixes polar regions usable hours bug (#209).
