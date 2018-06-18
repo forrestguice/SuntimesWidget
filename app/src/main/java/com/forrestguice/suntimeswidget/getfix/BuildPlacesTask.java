@@ -65,11 +65,9 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
         db = new GetFixDatabaseAdapter(context.getApplicationContext());
     }
 
-    @Override
-    protected Integer doInBackground(Object... params)
+    private int buildPlaces()
     {
         int result = 0;
-        long startTime = System.currentTimeMillis();
         ArrayList<WidgetSettings.Location> locations = new ArrayList<>();
         try {
             Context context = contextRef.get();
@@ -122,6 +120,16 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
             Log.e("BuildPlacesTask", "Failed to access database: " + e);
             result = -1;
         }
+        return result;
+    }
+
+    @Override
+    protected Integer doInBackground(Object... params)
+    {
+        long startTime = System.currentTimeMillis();
+
+        int result = buildPlaces();
+
         long endTime = System.currentTimeMillis();
         while ((endTime - startTime) < MIN_WAIT_TIME || isPaused)
         {
