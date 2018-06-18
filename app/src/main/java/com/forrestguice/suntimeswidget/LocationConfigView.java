@@ -456,7 +456,7 @@ public class LocationConfigView extends LinearLayout
         int icon = GetFixUI.ICON_GPS_SEARCHING;
         if (!isInEditMode())
         {
-            if (!getFixHelper.isLocationEnabled())
+            if (!getFixHelper.isLocationEnabled(getContext()))
             {
                 icon = GetFixUI.ICON_GPS_DISABLED;
 

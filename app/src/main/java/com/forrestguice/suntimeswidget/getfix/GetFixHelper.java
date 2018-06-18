@@ -87,7 +87,7 @@ public class GetFixHelper
         {
             if (hasGPSPermissions(myParent, REQUEST_GETFIX_LOCATION))
             {
-                if (isLocationEnabled())
+                if (isLocationEnabled(myParent))
                 {
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(myParent);
                     getFixTask = new GetFixTask(myParent, this);
@@ -390,9 +390,10 @@ public class GetFixHelper
         }
     }
 
-    public boolean isLocationEnabled()
+    public boolean isLocationEnabled(Context context)
     {
-        return isNetProviderEnabled(myParent) || isGPSProviderEnabled(myParent) || isPassiveProviderEnabled(myParent);
+        boolean allowPassive = AppSettings.loadPrefGpsPassiveMode(context);
+        return isNetProviderEnabled(myParent) || isGPSProviderEnabled(myParent) || (allowPassive && isPassiveProviderEnabled(myParent));
     }
 
     public static boolean isGPSProviderEnabled(Context context)
