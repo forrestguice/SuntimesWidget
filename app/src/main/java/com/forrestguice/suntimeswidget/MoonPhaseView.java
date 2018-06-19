@@ -19,11 +19,10 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.os.Bundle;
+//import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,7 +47,6 @@ public class MoonPhaseView extends LinearLayout
 
     private LinearLayout content;
     private TextView phaseText, illumText, azimuthText, elevationText;
-    private TextView empty;
 
     protected SuntimesMoonData data = null;  // cached
 
@@ -88,7 +86,6 @@ public class MoonPhaseView extends LinearLayout
             centered = ((lp.gravity == Gravity.CENTER) || (lp.gravity == Gravity.CENTER_HORIZONTAL));
         }
 
-        empty = (TextView)findViewById(R.id.txt_empty);
         content = (LinearLayout)findViewById(R.id.moonphase_layout);
 
         phaseText = (TextView)findViewById(R.id.text_info_moonphase);
@@ -125,12 +122,8 @@ public class MoonPhaseView extends LinearLayout
     public void initLocale(Context context)
     {
         isRtl = AppSettings.isLocaleRtl(context);
-    }
-
-    private void showEmptyView( boolean show )
-    {
-        empty.setVisibility(show ? View.VISIBLE : View.GONE);
-        content.setVisibility(show ? View.GONE : View.VISIBLE);
+        SuntimesUtils.initDisplayStrings(context);
+        MoonPhaseDisplay.initDisplayStrings(context);
     }
 
     protected void updateViews( Context context, SuntimesMoonData data )
@@ -145,18 +138,9 @@ public class MoonPhaseView extends LinearLayout
         }
 
         this.data = data;
-        if (data == null)
+        if (data != null && data.isCalculated())
         {
-            return;
-        }
-
-        if (data.isCalculated())
-        {
-            for (MoonPhaseDisplay moonPhase : MoonPhaseDisplay.values())
-            {
-                View view = findViewById(moonPhase.getView());
-                view.setVisibility(View.GONE);
-            }
+            hideIcons();
 
             MoonPhaseDisplay phase = (tomorrowMode ? data.getMoonPhaseTomorrow() : data.getMoonPhaseToday());
             if (phase != null)
@@ -164,7 +148,9 @@ public class MoonPhaseView extends LinearLayout
                 phaseText.setText(phase.getLongDisplayString());
 
                 View phaseIcon = findViewById(phase.getView());
-                phaseIcon.setVisibility(View.VISIBLE);
+                if (phaseIcon != null) {
+                    phaseIcon.setVisibility(View.VISIBLE);
+                }
 
                 /**Integer phaseColor = phaseColors.get(phase);
                 if (phaseColor != null)
@@ -177,7 +163,22 @@ public class MoonPhaseView extends LinearLayout
             updatePosition();
 
         } else {
-            showEmptyView(true);
+            phaseText.setText("");
+            illumText.setText("");
+            azimuthText.setText("");
+            elevationText.setText("");
+            hideIcons();
+        }
+    }
+
+    private void hideIcons()
+    {
+        for (MoonPhaseDisplay moonPhase : MoonPhaseDisplay.values())
+        {
+            View view = findViewById(moonPhase.getView());
+            if (view != null) {
+                view.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -256,16 +257,17 @@ public class MoonPhaseView extends LinearLayout
         }
     }
 
-    public boolean saveState(Bundle bundle)
+    public void adjustColumnWidth(int columnWidthPx)
     {
-        //bundle.putBoolean(MoonPhaseView.KEY_UI_MINIMIZED, minimized);
-        return true;
+        phaseText.setMaxWidth(columnWidthPx);
     }
 
-    public void loadState(Bundle bundle)
+    /**public boolean saveState(Bundle bundle)
     {
-        //minimized = bundle.getBoolean(MoonPhaseView.KEY_UI_MINIMIZED, minimized);
-    }
+        return true;
+    }*/
+
+    /**public void loadState(Bundle bundle) {}*/
 
     public void setOnClickListener( OnClickListener listener )
     {

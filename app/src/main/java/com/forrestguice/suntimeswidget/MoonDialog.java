@@ -68,9 +68,9 @@ public class MoonDialog extends DialogFragment
         if (savedInstanceState != null)
         {
             Log.d("DEBUG", "MoonDialog onCreate (restoreState)");
-            currentphase.loadState(savedInstanceState);
-            moonphases.loadState(savedInstanceState);
-            moonriseset.loadState(savedInstanceState);
+            //currentphase.loadState(savedInstanceState);
+            //moonphases.loadState(savedInstanceState);
+            //moonriseset.loadState(savedInstanceState);
         }
 
         dialog.setOnShowListener(onShowListener);
@@ -94,6 +94,11 @@ public class MoonDialog extends DialogFragment
         moonriseset = (MoonRiseSetView) dialogView.findViewById(R.id.moonriseset_view);
         currentphase = (MoonPhaseView) dialogView.findViewById(R.id.moonphase_view);
         moonphases = (MoonPhasesView) dialogView.findViewById(R.id.moonphases_view);
+
+        Context context = dialogView.getContext();
+        if (context != null) {
+            currentphase.adjustColumnWidth(context.getResources().getDimensionPixelSize(R.dimen.moonphase_column0_width));
+        }
     }
 
     public void updateViews()
@@ -106,14 +111,14 @@ public class MoonDialog extends DialogFragment
         startUpdateTask();
     }
 
-    @Override
+    /**@Override
     public void onSaveInstanceState( Bundle outState )
     {
         super.onSaveInstanceState(outState);
-        moonriseset.saveState(outState);
-        currentphase.saveState(outState);
-        moonphases.saveState(outState);
-    }
+        //moonriseset.saveState(outState);
+        //currentphase.saveState(outState);
+        //moonphases.saveState(outState);
+    }*/
 
     private void startUpdateTask()
     {

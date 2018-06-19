@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -23,12 +23,13 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.AsyncTask;
-import android.os.Bundle;
+//import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 
 import android.util.AttributeSet;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 
@@ -123,6 +124,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         if (forceUpdate || timeSinceLastUpdate >= maxUpdateRate)
         {
             updateViews(data);
+            lastUpdate = System.currentTimeMillis();
         }
     }
 
@@ -166,31 +168,31 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
      * @param context a context used to access resources
      * @param bundle a Bundle used to load state
      */
-    protected void loadSettings(Context context, Bundle bundle )
+    /**protected void loadSettings(Context context, Bundle bundle )
     {
         //Log.d("DEBUG", "LightMapView loadSettings (bundle)");
-    }
+    }*/
 
 
     /**
      * @param context a context used to access shared prefs
      * @return true settings were saved
      */
-    protected boolean saveSettings(Context context)
+    /**protected boolean saveSettings(Context context)
     {
         //Log.d("DEBUG", "LightMap loadSettings (prefs)");
         return true;
-    }
+    }*/
 
     /**
      * @param bundle a Bundle used to save state
      * @return true settings were saved
      */
-    protected boolean saveSettings(Bundle bundle)
+    /**protected boolean saveSettings(Bundle bundle)
     {
         //Log.d("DEBUG", "LightMapView saveSettings (bundle)");
         return true;
-    }
+    }*/
 
     /**
      * LightMapTask
@@ -285,9 +287,36 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 if (!drawRect(data.dataActual, c, p))
                 {
                     boolean noLayers = !layer_astro && !layer_nautical && !layer_civil;
-                    if (noLayers && data.isDay())
+                    if (noLayers)
                     {
-                        drawRect(c, p);
+                        Calendar calendar = data.nowThen(data.dataNoon.calendar());
+                        SuntimesCalculator calculator = data.calculator();
+                        SuntimesCalculator.SunPosition position = (calculator != null ? calculator.getSunPosition(calendar) : null);
+
+                        if (position == null)
+                        {
+                            if (calculator != null && calculator.isDay(calendar))
+                            {
+                                p.setColor(colors.colorDay);
+                                drawRect(c, p);
+                            }
+
+                        } else if (position.elevation > 0) {
+                            p.setColor(colors.colorDay);
+                            drawRect(c, p);
+
+                        } else if (position.elevation > -6) {
+                            p.setColor(colors.colorCivil);
+                            drawRect(c, p);
+
+                        } else if (position.elevation > -12) {
+                            p.setColor(colors.colorNautical);
+                            drawRect(c, p);
+
+                        } else if (position.elevation > -18) {
+                            p.setColor(colors.colorAstro);
+                            drawRect(c, p);
+                        }
                     }
                 }
 
@@ -343,16 +372,28 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             int left = 0;
             if (riseTime != null)
             {
+                int dayDiff = riseTime.get(Calendar.DAY_OF_YEAR) - data.calendar().get(Calendar.DAY_OF_YEAR);  // average case: 0; edge cases: -1, 1
                 double riseMinute = riseTime.get(Calendar.HOUR_OF_DAY) * 60 + riseTime.get(Calendar.MINUTE);
-                double riseR = riseMinute / MINUTES_IN_DAY;
+                double riseR = ((dayDiff * 60 * 24) + riseMinute) / MINUTES_IN_DAY;
+                if (riseR > 1) {
+                    riseR = 1;
+                } else if (riseR < 0) {
+                    riseR = 0;
+                }
                 left = (int) Math.round(riseR * w);
             }
 
             int right = w;
             if (setTime != null)
             {
+                int dayDiff = setTime.get(Calendar.DAY_OF_YEAR) - data.calendar().get(Calendar.DAY_OF_YEAR);  // average case: 0; edge cases: -1, 1
                 double setMinute = setTime.get(Calendar.HOUR_OF_DAY) * 60 + setTime.get(Calendar.MINUTE);
-                double setR = setMinute / MINUTES_IN_DAY;
+                double setR = ((dayDiff * 60 * 24) + setMinute) / MINUTES_IN_DAY;
+                if (setR > 1) {
+                    setR = 1;
+                } else if (setR < 0) {
+                    setR = 0;
+                }
                 right = (int) Math.round(setR * w);
             }
 
@@ -427,39 +468,26 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         public int colorDay, colorCivil, colorNautical, colorAstro, colorNight;
         public int colorPointFill, colorPointStroke;
 
-        public LightMapColors()
-        {
-        }
-
-        public LightMapColors( int colorDay, int colorCivil, int colorNautical, int colorAstro, int colorNight, int colorPointFill, int colorPointStroke )
-        {
-            this.colorDay = colorDay;
-            this.colorCivil = colorCivil;
-            this.colorNautical = colorNautical;
-            this.colorAstro = colorAstro;
-            this.colorNight = colorNight;
-            this.colorPointFill = colorPointFill;
-            this.colorPointStroke = colorPointStroke;
-        }
+        public LightMapColors() {}
 
         @SuppressWarnings("ResourceType")
         public LightMapColors(Context context)
         {
-            int[] colorAttrs = { R.attr.graphColor_night,   // 0
-                    R.attr.graphColor_astronomical,         // 1
+            int[] colorAttrs = { R.attr.graphColor_day,     // 0
+                    R.attr.graphColor_civil,                // 1
                     R.attr.graphColor_nautical,             // 2
-                    R.attr.graphColor_civil,                // 3
-                    R.attr.graphColor_day,                  // 4
+                    R.attr.graphColor_astronomical,         // 3
+                    R.attr.graphColor_night,                // 4
                     R.attr.graphColor_pointFill,            // 5
                     R.attr.graphColor_pointStroke };        // 6
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
             int def = R.color.transparent;
 
-            colorNight = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
-            colorAstro = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
+            colorDay = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
+            colorCivil = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
             colorNautical = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
-            colorCivil = ContextCompat.getColor(context, typedArray.getResourceId(3, def));
-            colorDay = ContextCompat.getColor(context, typedArray.getResourceId(4, def));
+            colorAstro = ContextCompat.getColor(context, typedArray.getResourceId(3, def));
+            colorNight = ContextCompat.getColor(context, typedArray.getResourceId(4, def));
             colorPointFill = ContextCompat.getColor(context, typedArray.getResourceId(5, def));
             colorPointStroke = ContextCompat.getColor(context, typedArray.getResourceId(6, def));
 

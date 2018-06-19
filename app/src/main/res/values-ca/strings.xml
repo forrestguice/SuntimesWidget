@@ -608,6 +608,10 @@
         <item>un mes (672 hores)</item>
     </string-array>
 
+    <!-- App Setting: passive location mode -->
+    <string name="configLabel_getFix_passiveMode">Passive Location</string>  <!-- TODO -->
+    <string name="configLabel_getFix_passiveMode_summary">Use the passive location provider.</string> <!-- TODO -->
+
     <!-- App Setting: locale mode -->
     <string name="configLabel_locale">Opcions d\'idioma</string>   <!-- group title -->
 
@@ -630,6 +634,8 @@
         <item>Polonès</item>
         <item>Espanyol</item>
         <item>Català</item>
+        <item>Basc</item>
+        <item>Noruec</item>
     </string-array>
 
     <!-- position formats -->

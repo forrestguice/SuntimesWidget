@@ -83,6 +83,7 @@ public class SuntimesNotes
         this.context = context;
         this.dataset = sundata;
         this.moondata = moondata;
+        SuntimesUtils.initDisplayStrings(context);
 
         initColors(context);
 

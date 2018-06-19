@@ -127,6 +127,13 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     }
 
     @Override
+    protected void attachBaseContext(Context newBase)
+    {
+        Context context = AppSettings.initLocale(newBase);
+        super.attachBaseContext(context);
+    }
+
+    @Override
     public void onCreate(Bundle icicle)
     {
         setTheme(AppSettings.loadTheme(this));
@@ -165,7 +172,6 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     private void initLocale()
     {
-        AppSettings.initLocale(this);
         WidgetSettings.initDefaults(this);
         WidgetSettings.initDisplayStrings(this);
         WidgetTimezones.TimeZoneSort.initDisplayStrings(this);
@@ -1360,6 +1366,18 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         showCompareUI(false);
     }
     private boolean hideCompareAgainst = false;
+
+    /**
+     *
+     */
+    protected void hideOptionShowSeconds()
+    {
+        View layout_showSeconds = findViewById(R.id.appwidget_general_showSeconds_layout);
+        if (layout_showSeconds != null)
+        {
+            layout_showSeconds.setVisibility(View.GONE);
+        }
+    }
 
     /**
      *

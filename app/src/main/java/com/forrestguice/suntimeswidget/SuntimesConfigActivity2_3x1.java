@@ -20,9 +20,13 @@ package com.forrestguice.suntimeswidget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X1_0;
+import com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity;
+
+import static com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity.PICK_THEME_REQUEST;
 
 public class SuntimesConfigActivity2_3x1 extends SuntimesConfigActivity2
 {
@@ -54,6 +58,14 @@ public class SuntimesConfigActivity2_3x1 extends SuntimesConfigActivity2
         minSize[0] = context.getResources().getInteger(R.integer.widget_size_minWidthDp3x1);
         minSize[1] = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
         return minSize;
+    }
+
+    @Override
+    protected void launchThemeEditor(Context context)
+    {
+        Intent configThemesIntent = themeEditorIntent(context);
+        configThemesIntent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, WidgetThemeConfigActivity.PREVIEWID_SUNPOS_3x1);
+        startActivityForResult(configThemesIntent, PICK_THEME_REQUEST);
     }
 
 }

@@ -42,10 +42,10 @@ public class MoonLayout_1x1_4 extends MoonLayout
         super();
     }
 
-    public MoonLayout_1x1_4(int layoutID)
+    /**public MoonLayout_1x1_4(int layoutID)
     {
         this.layoutID = layoutID;
-    }
+    }*/
 
     @Override
     public void initLayoutID()
@@ -102,10 +102,10 @@ public class MoonLayout_1x1_4 extends MoonLayout
         }
     }
 
-    @Override
+    /**@Override
     public void prepareForUpdate(SuntimesMoonData data)
     {
         // EMPTY
-    }
+    }*/
 }
 

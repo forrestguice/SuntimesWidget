@@ -84,6 +84,7 @@ public class LightMapDialog extends DialogFragment
         builder.setView(dialogContent);
         AlertDialog dialog = builder.create();
 
+        SuntimesUtils.initDisplayStrings(myParent);
         initViews(dialogContent);
         if (savedInstanceState != null)
         {
@@ -236,6 +237,7 @@ public class LightMapDialog extends DialogFragment
         String azimuthString = utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
         SpannableString azimuthSpan = null;
         if (color != null) {
+            //noinspection ConstantConditions
             azimuthSpan = SuntimesUtils.createColorSpan(azimuthSpan, azimuthString, azimuthString, color);
         }
         azimuthSpan = SuntimesUtils.createRelativeSpan(azimuthSpan, azimuthString, azimuthText.getSuffix(), 0.7f);
@@ -251,6 +253,7 @@ public class LightMapDialog extends DialogFragment
         SuntimesUtils.TimeDisplayText elevationText = utils.formatAsElevation(elevation, places);
         String elevationString = utils.formatAsElevation(elevationText.getValue(), elevationText.getSuffix());
         SpannableString span = null;
+        //noinspection ConstantConditions
         span = SuntimesUtils.createRelativeSpan(span, elevationString, elevationText.getSuffix(), 0.7f);
         span = SuntimesUtils.createColorSpan(span, elevationString, elevationString, color);
         return (span != null ? span : elevationString);

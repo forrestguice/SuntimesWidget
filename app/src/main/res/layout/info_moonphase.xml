@@ -31,7 +31,7 @@
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:gravity="start|bottom" android:maxLines="2" android:ellipsize="end"
                 android:layout_marginTop="0dp" android:layout_marginBottom="0dp"
-                tools:text="Waning Crescent" />
+                tools:text="Zunehmender Dreiviertelmond" />
 
             <TextView
                 android:id="@+id/text_info_moonillum" style="@style/SunsetTimeTextView2"

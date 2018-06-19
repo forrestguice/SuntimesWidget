@@ -42,6 +42,7 @@ import java.util.TimeZone;
 
 import static org.junit.Assert.assertTrue;
 
+@SuppressWarnings("ALL")
 @RunWith(AndroidJUnit4.class)
 public class SuntimesUtilsTest
 {

@@ -326,6 +326,9 @@
     <!-- Widget Setting: timeMode override -->
     <string name="configLabel_general_timeMode_override">Śledzenie pomija trybT</string>     <!-- checkbox label -->
 
+    <!-- Widget Settings: noon -->
+    <string name="configLabel_general_showNoon">Show Solar Noon</string>        <!-- checkbox label -->   <!-- TODO -->
+
     <!-- Widget Setting: Launch App -->
     <string name="configLabel_action_launch">Akcja:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch"><xliff:g id="uri">com.forrestguice.suntimeswidget.SuntimesActivity</xliff:g></string> <!-- editText hint (and default) -->
@@ -575,6 +578,10 @@
         <item>miesiąc (672 godziny)</item>
     </string-array>
 
+    <!-- App Setting: passive location mode -->
+    <string name="configLabel_getFix_passiveMode">Passive Location</string>  <!-- TODO -->
+    <string name="configLabel_getFix_passiveMode_summary">Use the passive location provider.</string> <!-- TODO -->
+
     <!-- App Setting: locale mode -->
     <string name="configLabel_locale">Ustawienia języka</string>   <!-- group title -->
 
@@ -597,6 +604,8 @@
         <item>Polski</item>
         <item>Hiszpański</item>
         <item>Kataloński</item>
+        <item>Baskijski</item>
+        <item>Norweski</item>
     </string-array>
 
     <!-- position formats -->

@@ -46,10 +46,10 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
         super();
     }
 
-    public SunPosLayout_3X1_0(int layoutID )
+    /**public SunPosLayout_3X1_0(int layoutID )
     {
         this.layoutID = layoutID;
-    }
+    }*/
 
     @Override
     public void initLayoutID()
@@ -74,7 +74,7 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
         super.updateViews(context, appWidgetId, views, dataset);
         Calendar now = dataset.now();
         SuntimesCalculator calculator = dataset.calculator();
-        SuntimesCalculator.SunPosition sunPosition = calculator.getSunPosition(now);
+        SuntimesCalculator.SunPosition sunPosition = (calculator != null ? calculator.getSunPosition(now) : null);
 
         SuntimesRiseSetData riseSetData = dataset.dataActual;
         Calendar riseTime = (riseSetData != null ? riseSetData.sunriseCalendarToday() : null);
@@ -116,13 +116,13 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
         return contentDescription;        // time, elevation, azimuth
     }
 
-    public static final int HEIGHT_TINY   = 16;
-    public static final int HEIGHT_SMALL  = 24;
-    public static final int HEIGHT_MEDIUM = 32;
-    public static final int HEIGHT_LARGE  = 40;
+    //public static final int HEIGHT_TINY   = 16;
+    //public static final int HEIGHT_SMALL  = 24;
+    //public static final int HEIGHT_MEDIUM = 32;
+    //public static final int HEIGHT_LARGE  = 40;
 
     private LightMapView.LightMapColors colors;
-    private int dpWidth = 320, dpHeight = HEIGHT_LARGE;
+    private int dpWidth = 320, dpHeight = 40;
 
     @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
@@ -134,6 +134,12 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
         if (theme.getBackground() == ThemeBackground.LIGHT)
             colors.initDefaultLight(context);
         else colors.initDefaultDark(context);
+
+        colors.colorDay = theme.getDayColor();
+        colors.colorCivil = theme.getCivilColor();
+        colors.colorNautical = theme.getNauticalColor();
+        colors.colorAstro = theme.getAstroColor();
+        colors.colorNight = theme.getNightColor();
     }
 
 }

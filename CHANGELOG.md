@@ -1,10 +1,47 @@
 ### ~
 
-###
+### v0.8.5 (2018-06-18)
+* add gps pref "Passive Location"; use the passive location provider (use a separate app to manage location updates).
+* fixes bug where the "GPS is disabled. Enable it?" dialog is not shown.
+* updates translation to Norwegian (nb) (#214, #215).
+
+### v0.8.4 (2018-06-07)
+* fixes polar regions usable hours bug (#209).
+* fixes app crash on polar regions when no rise/set events (#212).
+* fixes lightmap polar regions bugs where wrong color is shown during perpetual day/night (#209).
+* fixes lightmap bug where durations are drawn incorrectly (near boundaries up to timezone offset).
+* fixes lat/lon input validation bug (#211).
+* fixes date format localization bug (#210).
+
+### v0.8.3 (2018-05-31)
+* adds translation to Norwegian (nb) (contributed by FTno) (#206).
+* removes unused option "show seconds" from sun position widgets.
+
+### v0.8.2 (2018-05-11)
+* adds to theming; graph colors; day, civil, nautical, astronomical, and night colors.
+* fixes bug where "export places" creates an empty file (#204).
+* enhances calculator fallback behavior; e.g. SuntimesMoonData now overrides the default (sunrisesunsetlib -> Time4A4J).
+* fixes bug where solstice/equinox card fails to hide when calculator lacks support (and fallback was supplied).
+* fixes app crash (MoonDialog) if calculator failed to load (and fallback was supplied) (#198).
+* fixes app crash (General Settings) when initializing defaults (api26) (#198).
+* fixes bug where user-defined language fails to override locale (api26) (#197).
+
+### v0.8.1 (2018-04-26)
+* misc layout changes (improvements for locales w/ long strings).
+* fixes column alignment of solstice/equinox in main table; now aligns w/ the sunrise column.
+* fixes column alignment of moonrise/moonset in main table; now aligns w/ the sunrise column.
+* changes label alignment of 3x1 SunPosition widget; now centered (#188).
+* adds enhancements to the language selector; now sorted alphabetically, now displays name of language in that language (and displays localized language name in parenthesis).
+* adds translation to Basque (eu) (contributed by beriain) (#193, #194).
+* updates translation to German (de) (contributed by Wolkenschieber) (#191, #192).
+
+### v0.8.0 (2018-04-10)
+* fixes app crash (in ThemeConfigActivity) when the app is configured to use a calculator that lacks support for the moon feature.
+* adds click behavior to main table headers; clicking sunrise/sunset highlights next sunrise/sunset.
 * changes the default alarm label format (label now includes shortDate).
 * adds moonrise and moonset to the AlarmDialog.
 * adds moon dialog to app; shows major phases, rising/setting times, rising/setting position, current position, phase, and illumination (current).
-* adds moon info to app (main table); rise/set, phase, and illumination (at lunar noon).
+* adds moon info to app (main table); rise/set, phase, and illumination (at lunar noon) (#52, #183).
 * adds "moon data source" to general settings.
 * fixes bug where solstice dialog is not correctly initialized (when "show solstice" option is false).
 * fixes widget update alarms (more precise); sun and moon widgets update at midnight, solstice widgets update every 3hr, and sun position widgets update every 5min.
@@ -13,6 +50,7 @@
 * adds 1x1 sun position widget; shows azimuth and elevation angles (#169).
 * adds sun azimuth and elevation angles to lightmap dialog (#169).
 * adds "sun position" overflow menu item; shows lightmap dialog.
+* updates translations (eo, pl) (#184, #186).
 
 ### v0.7.4 (2018-03-26)
 * adds "restore defaults" button to "On Tap: Launch App" help dialog.
@@ -142,7 +180,7 @@
 * fixes data source setting not honored (#104).
 
 ### v0.4.0 (2017-06-12)
-* adds translation to French (contributed by Jej) (#92).
+* adds translation to French (fr) (contributed by Jej) (#92).
 * adds time format option (12hr / 24hr time) (#22).
 * adds daylight savings time warning (#90).
 * automatic backups now disabled.

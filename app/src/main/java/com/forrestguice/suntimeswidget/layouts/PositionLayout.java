@@ -31,9 +31,6 @@ public abstract class PositionLayout extends SuntimesLayout
     protected static final int DECIMAL_PLACES = 1;
     protected static final float SYMBOL_RELATIVE_SIZE = 0.7f;
 
-    protected static final SuntimesUtils utils = new SuntimesUtils();
-
-
     protected int highlightColor = Color.WHITE;
     protected float suffixSp;
     protected int suffixColor = Color.GRAY;

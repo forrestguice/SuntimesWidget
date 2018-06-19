@@ -674,6 +674,10 @@
         <item>2419200000</item>
     </string-array>
 
+    <!-- App Setting: passive location mode -->
+    <string name="configLabel_getFix_passiveMode">Passive Location</string>
+    <string name="configLabel_getFix_passiveMode_summary">Use the passive location provider.</string>
+
     <!-- App Setting: locale mode -->
     <string name="configLabel_locale">Language Settings</string>   <!-- group title -->
 
@@ -700,6 +704,20 @@
         <item>Polish</item>
         <item>Spanish</item>
         <item>Catalan</item>
+        <item>Basque</item>
+        <item>Norwegian</item>
+    </string-array>
+    <string-array name="locale_display_native" translatable="false">             <!-- one-to-one with locale_values -->
+        <item>English</item>
+        <item>Esperanto</item>
+        <item>Français</item>
+        <item>Deutsche</item>
+        <item>Magyar</item>
+        <item>Polski</item>
+        <item>Español</item>
+        <item>Català</item>
+        <item>Euskara</item>
+        <item>Norsk</item>
     </string-array>
     <string-array name="locale_values" translatable="false">  <!-- one-to-one with locale_display -->
         <item>en</item>
@@ -710,6 +728,8 @@
         <item>pl</item>
         <item>es_ES</item>
         <item>ca</item>
+        <item>eu</item>
+        <item>nb</item>
     </string-array>
 
     <!-- position formats -->
@@ -907,11 +927,13 @@
     ]]></string>
     <string name="app_legal2"><![CDATA[
         <b>Translations:</b><br/>
-        German translation by Henrik "HerHde" Hüttemann. <br />
+        German translation by Henrik "HerHde" Hüttemann and Wolkenschieber. <br />
         Polish and Esperanto translation by Verdulo. <br />
         French translation by Jej. <br />
         Hungarian translation by Erci. <br />
-        Spanish and Catalan translation by <a href=https://github.com/Raulvo>Raulvo</a>.
+        Spanish and Catalan translation by <a href=https://github.com/Raulvo>Raulvo</a>. <br />
+        Basque translation by beriain. <br />
+        Norwegian translation by FTno.
     ]]></string>
     <string name="app_legal3"><![CDATA[ <b>Libraries:</b><br/> ]]>
     <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
@@ -1013,8 +1035,8 @@
     <string name="calculator_displayString_time4a_4j">Based on astronomical calculations published by Jean Meeus in his book "Astronomical Algorithms" (second edition).</string>
 
     <!-- pref defaults -->
-    <string name="def_appwidget_0_general_calculator" translatable="false">any</string>
-    <string name="def_appwidget_0_general_calculator_moon" translatable="false">any</string>
+    <string name="def_appwidget_0_general_calculator" translatable="false">time4a-noaa</string>
+    <string name="def_appwidget_0_general_calculator_moon" translatable="false">time4a-time4j</string>
     <string name="def_appwidget_0_appearance_timeformatmode" translatable="false">MODE_SYSTEM</string>
     <string name="def_appwidget_0_general_showweeks" translatable="false">false</string>
     <string name="def_appwidget_0_general_showhours" translatable="false">true</string>
@@ -1027,6 +1049,7 @@
 
     <string name="def_getFix_maxElapsed" translatable="false">60000</string>
     <string name="def_getFix_maxAge" translatable="false">300000</string>
+    <string name="def_getFix_passiveMode" translatable="false">false</string>
 
     <string name="def_app_ui_showwarnings" translatable="false">true</string>
     <string name="def_app_ui_showmoon" translatable="false">true</string>

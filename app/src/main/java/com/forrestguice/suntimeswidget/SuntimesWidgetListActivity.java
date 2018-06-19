@@ -66,6 +66,13 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         super();
     }
 
+    @Override
+    protected void attachBaseContext(Context newBase)
+    {
+        Context context = AppSettings.initLocale(newBase);
+        super.attachBaseContext(context);
+    }
+
     /**
      * OnCreate: the Activity initially created
      * @param icicle a Bundle containing saved state
@@ -75,18 +82,12 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     {
         setTheme(AppSettings.loadTheme(this));
         super.onCreate(icicle);
-        initLocale(this);
+        SuntimesUtils.initDisplayStrings(this);
 
         setResult(RESULT_CANCELED);
-        setContentView(R.layout.layout_widgetlist);
+        setContentView(R.layout.layout_activity_widgetlist);
         initViews(this);
         updateWidgetAlarms(this);
-    }
-
-    private void initLocale(Context context)
-    {
-        AppSettings.initLocale(context);
-        SuntimesUtils.initDisplayStrings(context);
     }
 
     /**
@@ -439,7 +440,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                         data = data0;
 
                     } else if (widgetClass == MoonWidget0.class || widgetClass == MoonWidget0_2x1.class || widgetClass == MoonWidget0_3x1.class) {
-                        SuntimesMoonData data0 =  new SuntimesMoonData(context, id);
+                        SuntimesMoonData data0 =  new SuntimesMoonData(context, id, "moon");
                         widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
                         data = data0;
 
