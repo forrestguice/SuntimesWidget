@@ -1,6 +1,6 @@
 ### ~
 
-### v0.8.5 (2018-06-16)
+### v0.8.5 (2018-06-18)
 * add gps pref "Passive Location"; use the passive location provider (use a separate app to manage location updates).
 * fixes bug where the "GPS is disabled. Enable it?" dialog is not shown.
 * updates translation to Norwegian (nb) (#214, #215).
