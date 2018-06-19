@@ -578,8 +578,8 @@
     </string-array>
 
     <!-- App Setting: passive location mode -->
-    <string name="configLabel_getFix_passiveMode">Passive Location</string>  <!-- TODO -->
-    <string name="configLabel_getFix_passiveMode_summary">Use the passive location provider.</string> <!-- TODO -->
+    <string name="configLabel_getFix_passiveMode">Pasiva pozici-trovado</string>
+    <string name="configLabel_getFix_passiveMode_summary">Uzi la pasivan servon por determini pozicion.</string>
 
     <!--
          DIALOGS
