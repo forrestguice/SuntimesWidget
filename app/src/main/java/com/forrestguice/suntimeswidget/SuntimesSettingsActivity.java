@@ -38,6 +38,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
@@ -74,6 +75,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     final static String ACTION_PREFS_UI = "com.forrestguice.suntimeswidget.PREFS_UI";
     final static String ACTION_PREFS_WIDGETLIST = "com.forrestguice.suntimeswidget.PREFS_WIDGETLIST";
     final static String ACTION_PREFS_PLACES = "com.forrestguice.suntimeswidget.PREFS_PLACES";
+
+    public static final int REQUEST_CALENDARPREFSFRAGMENT_ENABLED = 2;
+    public static final int REQUEST_CALENDARPREFSFRAGMENT_DISABLED = 4;
 
     private Context context;
     private PlacesPrefsBase placesPrefBase = null;
@@ -214,6 +218,29 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) && (themeChanged))
         {
             invalidateHeaders();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult (int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
+        if (grantResults.length > 0 && permissions.length > 0)
+        {
+            switch (requestCode)
+            {
+                case REQUEST_CALENDARPREFSFRAGMENT_ENABLED:
+                case REQUEST_CALENDARPREFSFRAGMENT_DISABLED:
+                    if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                    {
+                        boolean enabled = requestCode == (REQUEST_CALENDARPREFSFRAGMENT_ENABLED);
+                        runCalendarTask(SuntimesSettingsActivity.this, enabled);
+
+                        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+                        pref.putBoolean(AppSettings.PREF_KEY_CALENDARS_ENABLED, enabled);
+                        pref.apply();
+                    }
+                    break;
+            }
         }
     }
 
@@ -538,23 +565,29 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue)
             {
+                boolean enabled = (Boolean)newValue;
                 int calendarPermission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_CALENDAR);
                 if (calendarPermission != PackageManager.PERMISSION_GRANTED)
                 {
-                    ActivityCompat.requestPermissions(activity, new String[] { Manifest.permission.WRITE_CALENDAR }, 0);
+                    int requestCode = (enabled ? REQUEST_CALENDARPREFSFRAGMENT_ENABLED : REQUEST_CALENDARPREFSFRAGMENT_DISABLED);
+                    ActivityCompat.requestPermissions(activity, new String[] { Manifest.permission.WRITE_CALENDAR }, requestCode);
                     return false;
 
                 } else {
-                    SuntimesCalendarTask calendarTask = new SuntimesCalendarTask(activity);
-                    Boolean enabled = (Boolean)newValue ;
-                    if (!enabled) {
-                        calendarTask.setFlagClearCalendars(true);
-                    }
-                    calendarTask.execute();
+                    runCalendarTask(activity, enabled);
                     return true;
                 }
             }
         });
+    }
+
+    private static void runCalendarTask(final Activity activity, boolean enabled)
+    {
+        SuntimesCalendarTask calendarTask = new SuntimesCalendarTask(activity);
+        if (!enabled) {
+            calendarTask.setFlagClearCalendars(true);
+        }
+        calendarTask.execute();
     }
 
     //////////////////////////////////////////////////
