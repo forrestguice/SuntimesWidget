@@ -22,7 +22,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
@@ -54,6 +56,15 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
     private long lastSync = -1;
     private long calendarWindow0 = -1, calendarWindow1 = -1;
 
+    private NotificationManagerCompat notificationManager;
+    private NotificationCompat.Builder notificationBuilder;
+
+    public static final int NOTIFICATION_ID = 1000;
+    private String notificationTitle;
+    private String notificationMsgAdding, notificationMsgAdded;
+    private String notificationMsgClearing, notificationMsgCleared;
+    private int notificationIcon = R.drawable.ic_action_time;
+
     public SuntimesCalendarTask(Activity context)
     {
         contextRef = new WeakReference<Context>(context);
@@ -81,6 +92,14 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
         calendarDisplay.put(SuntimesCalendarAdapter.CALENDAR_MOONPHASE, context.getString(R.string.calendar_moonPhase_displayName));
         calendarColors.put(SuntimesCalendarAdapter.CALENDAR_MOONPHASE, ContextCompat.getColor(context, R.color.moonIcon_color_rising_light));
         MoonPhaseDisplay.initDisplayStrings(context);
+
+        notificationManager = NotificationManagerCompat.from(context);
+        notificationBuilder = new NotificationCompat.Builder(context);
+        notificationTitle = context.getString(R.string.app_name);
+        notificationMsgAdding = "Adding calendars"; // TODO
+        notificationMsgAdded = "Added calendars"; // TODO
+        notificationMsgClearing = "Clearing calendars"; // TODO
+        notificationMsgCleared = "Cleared calendars"; // TODO
     }
 
     private boolean flag_clear = false;
@@ -93,8 +112,16 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
     protected void onPreExecute()
     {
         Context context = contextRef.get();
-        if (context != null) {
+        if (context != null)
+        {
             lastSync = SuntimesSyncAdapter.readLastSyncTime(context);
+
+            notificationBuilder.setContentTitle(notificationTitle)
+                    .setContentText((flag_clear ? notificationMsgClearing : notificationMsgAdding))
+                    .setSmallIcon(notificationIcon)
+                    .setPriority(NotificationCompat.PRIORITY_LOW)
+                    .setProgress(0, 0, true);
+            notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
         }
     }
 
@@ -146,10 +173,21 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
                 SuntimesSyncAdapter.writeLastSyncTime(context, Calendar.getInstance());
             }
 
+            notificationBuilder.setContentTitle(notificationTitle)
+                    .setContentText((flag_clear ? notificationMsgCleared : notificationMsgAdded))
+                    .setSmallIcon(notificationIcon)
+                    .setPriority(NotificationCompat.PRIORITY_LOW)
+                    .setProgress(0, 0, false);
+            notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
+
             if (flag_clear)
                 Log.i("SuntimesCalendarTask", "Cleared Suntimes Calendars...");
             else Log.i("SuntimesCalendarTask", "Added / updated Suntimes Calendars...");
-        } else Log.w("SuntimesCalendarTask", "Failed to complete task!");
+
+        } else {
+            Log.w("SuntimesCalendarTask", "Failed to complete task!");
+            notificationManager.cancel(NOTIFICATION_ID);
+        }
     }
 
     private boolean initSolsticeCalendar( Calendar startDate, Calendar endDate )
