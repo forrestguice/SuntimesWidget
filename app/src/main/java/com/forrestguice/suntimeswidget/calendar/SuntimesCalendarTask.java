@@ -19,9 +19,14 @@
 package com.forrestguice.suntimeswidget.calendar;
 
 import android.app.Activity;
+import android.app.PendingIntent;
+import android.content.ContentUris;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.provider.CalendarContract;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.NotificationCompat;
@@ -64,6 +69,7 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
     private String notificationMsgAdding, notificationMsgAdded;
     private String notificationMsgClearing, notificationMsgCleared;
     private int notificationIcon = R.drawable.ic_action_time;
+    private PendingIntent notificationIntent;
 
     public SuntimesCalendarTask(Activity context)
     {
@@ -100,6 +106,17 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
         notificationMsgAdded = "Added calendars"; // TODO
         notificationMsgClearing = "Clearing calendars"; // TODO
         notificationMsgCleared = "Cleared calendars"; // TODO
+
+        Uri.Builder uriBuilder = CalendarContract.CONTENT_URI.buildUpon();
+        uriBuilder.appendPath("time");
+        ContentUris.appendId(uriBuilder, System.currentTimeMillis());
+        Intent intent = new Intent(Intent.ACTION_VIEW).setData(uriBuilder.build());
+
+        if (Build.VERSION.SDK_INT >= 11)
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        notificationIntent = PendingIntent.getActivity(context, 0, intent, 0);
     }
 
     private boolean flag_clear = false;
@@ -120,6 +137,7 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
                     .setContentText((flag_clear ? notificationMsgClearing : notificationMsgAdding))
                     .setSmallIcon(notificationIcon)
                     .setPriority(NotificationCompat.PRIORITY_LOW)
+                    .setContentIntent(null).setAutoCancel(false)
                     .setProgress(0, 0, true);
             notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
         }
@@ -177,6 +195,7 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
                     .setContentText((flag_clear ? notificationMsgCleared : notificationMsgAdded))
                     .setSmallIcon(notificationIcon)
                     .setPriority(NotificationCompat.PRIORITY_LOW)
+                    .setContentIntent(notificationIntent).setAutoCancel(true)
                     .setProgress(0, 0, false);
             notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
 
