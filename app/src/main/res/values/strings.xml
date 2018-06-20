@@ -674,7 +674,7 @@
         <item>604800000</item>
         <item>2419200000</item>
     </string-array>
-
+    
     <!-- App Setting: calendars -->
     <string name="configLabel_calendars">Calendars</string>   <!-- group title -->  <!-- TODO: i18n -->
 
@@ -699,6 +699,10 @@
         <item>157680000000</item>
         <item>315360000000</item>
     </string-array>
+
+    <!-- App Setting: passive location mode -->
+    <string name="configLabel_getFix_passiveMode">Passive Location</string>
+    <string name="configLabel_getFix_passiveMode_summary">Use the passive location provider.</string>
 
     <!-- App Setting: locale mode -->
     <string name="configLabel_locale">Language Settings</string>   <!-- group title -->
@@ -1079,6 +1083,7 @@
 
     <string name="def_getFix_maxElapsed" translatable="false">60000</string>
     <string name="def_getFix_maxAge" translatable="false">300000</string>
+    <string name="def_getFix_passiveMode" translatable="false">false</string>
 
     <string name="def_calendars_window0" translatable="false">31536000000</string>
     <string name="def_calendars_window1" translatable="false">63072000000</string>

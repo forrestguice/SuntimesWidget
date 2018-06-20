@@ -42,7 +42,7 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 
 /**
- * Automated UI tests for the LocationDialog.
+ * Automated UI tests for the LocationConfigDialog.
  */
 @LargeTest
 @RunWith(AndroidJUnit4.class)

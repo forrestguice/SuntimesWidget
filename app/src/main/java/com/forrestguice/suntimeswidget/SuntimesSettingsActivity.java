@@ -49,7 +49,6 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calendar.SuntimesCalendarTask;
 import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
-import com.forrestguice.suntimeswidget.getfix.ClearPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SummaryListPreference;
@@ -769,7 +768,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         private BuildPlacesTask buildPlacesTask = null;
         private boolean isBuilding = false;
 
-        private ClearPlacesTask clearPlacesTask = null;
+        private BuildPlacesTask clearPlacesTask = null;
         private boolean isClearing = false;
 
         private ExportPlacesTask exportPlacesTask = null;
@@ -943,9 +942,10 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                             {
                                 public void onClick(DialogInterface dialog, int whichButton)
                                 {
-                                    clearPlacesTask = new ClearPlacesTask(myParent);
+                                    clearPlacesTask = new BuildPlacesTask(myParent);
                                     clearPlacesTask.setTaskListener(clearPlacesListener);
-                                    clearPlacesTask.execute((Object[]) null);
+                                    boolean clearFlag = true;
+                                    clearPlacesTask.execute(clearFlag);
                                 }
                             })
                             .setNegativeButton(myParent.getString(R.string.locationclear_dialog_cancel), null);
@@ -960,7 +960,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         /**
          * Clear Places (task handler)
          */
-        private ClearPlacesTask.TaskListener clearPlacesListener = new ClearPlacesTask.TaskListener()
+        private BuildPlacesTask.TaskListener clearPlacesListener = new BuildPlacesTask.TaskListener()
         {
             @Override
             public void onStarted()
@@ -970,7 +970,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             }
 
             @Override
-            public void onFinished(Boolean result)
+            public void onFinished(Integer result)
             {
                 clearPlacesTask = null;
                 isClearing = false;
