@@ -4,6 +4,11 @@
 * adds 3x2 SunPosition widget showing world map.
 * adds world map dialog to app; shows sunlight (day/night) and moonlight over an equirectangular map.
 
+### v0.8.5 (2018-06-18)
+* add gps pref "Passive Location"; use the passive location provider (use a separate app to manage location updates).
+* fixes bug where the "GPS is disabled. Enable it?" dialog is not shown.
+* updates translation to Norwegian (nb) (#214, #215).
+
 ### v0.8.4 (2018-06-07)
 * fixes polar regions usable hours bug (#209).
 * fixes app crash on polar regions when no rise/set events (#212).

@@ -577,6 +577,10 @@
         <item>unu monato (672 horoj)</item>
     </string-array>
 
+    <!-- App Setting: passive location mode -->
+    <string name="configLabel_getFix_passiveMode">Pasiva pozici-trovado</string>
+    <string name="configLabel_getFix_passiveMode_summary">Uzi la pasivan servon por determini pozicion.</string>
+
     <!--
          DIALOGS
     -->

@@ -93,6 +93,9 @@ public class AppSettings
     public static final String PREF_KEY_GETFIX_MAXELAPSED = "getFix_maxElapsed";
     public static final String PREF_KEY_GETFIX_MAXAGE = "getFix_maxAge";
 
+    public static final String PREF_KEY_GETFIX_PASSIVE = "getFix_passiveMode";
+    public static final boolean PREF_DEF_GETFIX_PASSIVE = false;
+
     /**
      * Language modes (system, user defined)
      */
@@ -575,6 +578,15 @@ public class AppSettings
             retValue = defaultValue;
         }
         return retValue;
+    }
+
+    /**
+     * @return true use the passive provider (don't prompt when other providers are disabled), false use the gps/network provider (prompt when disabled)
+     */
+    public static boolean loadPrefGpsPassiveMode( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_GETFIX_PASSIVE, PREF_DEF_GETFIX_PASSIVE);
     }
 
     /**

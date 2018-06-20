@@ -27,6 +27,12 @@
             android:entries="@array/getFix_maxAge_display" android:entryValues="@array/getFix_maxAge_values"
             android:defaultValue="@string/def_getFix_maxAge" />
 
+        <CheckBoxPreference
+            android:key="getFix_passiveMode"
+            android:title="@string/configLabel_getFix_passiveMode"
+            android:summary="@string/configLabel_getFix_passiveMode_summary"
+            android:defaultValue="@string/def_getFix_passiveMode" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

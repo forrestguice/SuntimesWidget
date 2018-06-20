@@ -683,6 +683,10 @@
         <item>2419200000</item>
     </string-array>
 
+    <!-- App Setting: passive location mode -->
+    <string name="configLabel_getFix_passiveMode">Passive Location</string>
+    <string name="configLabel_getFix_passiveMode_summary">Use the passive location provider.</string>
+
     <!-- App Setting: locale mode -->
     <string name="configLabel_locale">Language Settings</string>   <!-- group title -->
 
@@ -1054,6 +1058,7 @@
 
     <string name="def_getFix_maxElapsed" translatable="false">60000</string>
     <string name="def_getFix_maxAge" translatable="false">300000</string>
+    <string name="def_getFix_passiveMode" translatable="false">false</string>
 
     <string name="def_app_ui_showwarnings" translatable="false">true</string>
     <string name="def_app_ui_showmoon" translatable="false">true</string>

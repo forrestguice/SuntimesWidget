@@ -326,10 +326,10 @@ public class SuntimesActivity extends AppCompatActivity
         if (locationDialog != null)
         {
             locationDialog.setOnAcceptedListener( onConfigLocation(locationDialog) );
-            //Log.d("DEBUG", "LocationDialog listeners restored.");
+            //Log.d("DEBUG", "LocationConfigDialog listeners restored.");
         }
 
-        TimeDateDialogEasy dateDialog = (TimeDateDialogEasy) fragments.findFragmentByTag(DIALOGTAG_DATE);
+        TimeDateDialog dateDialog = (TimeDateDialog) fragments.findFragmentByTag(DIALOGTAG_DATE);
         if (dateDialog != null)
         {
             dateDialog.setOnAcceptedListener(onConfigDate);
@@ -786,8 +786,8 @@ public class SuntimesActivity extends AppCompatActivity
                 if (refreshItem != null)
                 {
                     refreshItem.setIcon((result != null) ? ICON_GPS_FOUND :
-                            (getFixHelper.isLocationEnabled() ? ICON_GPS_FOUND
-                                                              : ICON_GPS_DISABLED));
+                            (getFixHelper.isLocationEnabled(SuntimesActivity.this) ? ICON_GPS_FOUND
+                                                                                           : ICON_GPS_DISABLED));
 
                     if (result != null)
                     {
@@ -823,7 +823,7 @@ public class SuntimesActivity extends AppCompatActivity
                     refreshItem.setVisible(false);
 
                 } else {
-                    refreshItem.setIcon((getFixHelper.isLocationEnabled() ? GetFixUI.ICON_GPS_FOUND : GetFixUI.ICON_GPS_DISABLED));
+                    refreshItem.setIcon((getFixHelper.isLocationEnabled(SuntimesActivity.this) ? GetFixUI.ICON_GPS_FOUND : GetFixUI.ICON_GPS_DISABLED));
                     refreshItem.setVisible(true);
                 }
             }
@@ -1294,7 +1294,7 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private void configDate()
     {
-        final TimeDateDialogEasy datePicker = new TimeDateDialogEasy();
+        final TimeDateDialog datePicker = new TimeDateDialog();
         datePicker.setOnAcceptedListener(onConfigDate);
         datePicker.setOnCanceledListener(onCancelDate);
         datePicker.show(getSupportFragmentManager(), DIALOGTAG_DATE);
