@@ -674,7 +674,7 @@
         <item>604800000</item>
         <item>2419200000</item>
     </string-array>
-    
+
     <!-- App Setting: calendars -->
     <string name="configLabel_calendars">Calendars</string>   <!-- group title -->  <!-- TODO: i18n -->
 
@@ -682,10 +682,16 @@
     <string name="configLabel_calendars_enabled_summary">Provide events to the Calendar app (moon phases, solstices and equinoxes).</string>  <!-- TODO: i18n -->
 
     <string name="configLabel_calendars_window0">Window (start)</string>  <!-- TODO: i18n -->
-    <string name="configLabel_calendars_window0_summary">A period starting <xliff:g id="calendars_window_display" example="1 year">%s</xliff:g> ago</string>  <!-- TODO: i18n -->
+    <string name="configLabel_calendars_window0_summary">A period starting <xliff:g id="calendars_window_display" example="one year">%s</xliff:g> ago</string>  <!-- TODO: i18n -->
 
     <string name="configLabel_calendars_window1">Window (end)</string>  <!-- TODO: i18n -->
-    <string name="configLabel_calendars_window1_summary">A period ending <xliff:g id="calendars_window_display" example="2 years">%s</xliff:g> from now</string>  <!-- TODO: i18n -->
+    <string name="configLabel_calendars_window1_summary">A period ending <xliff:g id="calendars_window_display" example="two years">%s</xliff:g> from now</string>  <!-- TODO: i18n -->
+
+    <string name="calendars_notification_adding">Adding calendars…</string>  <!-- TODO: i18n -->
+    <string name="calendars_notification_added">Calendars have been added.</string>  <!-- TODO: i18n -->
+
+    <string name="calendars_notification_clearing">Clearing calendars…</string>  <!-- TODO: i18n -->
+    <string name="calendars_notification_cleared">Calendars have been cleared.</string>  <!-- TODO: i18n -->
 
     <string-array name="calendars_window_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>one year</item>
