@@ -58,6 +58,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     private static final String KEY_LISTVIEW_TOP = "widgetlisttop";
     private static final String KEY_LISTVIEW_INDEX = "widgetlistindex";
 
+    private ActionBar actionBar;
     private ListView widgetList;
     private static final SuntimesUtils utils = new SuntimesUtils();
 
@@ -187,6 +188,15 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     {
         SuntimesUtils.initDisplayStrings(context);
 
+        Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
+        setSupportActionBar(menuBar);
+        actionBar = getSupportActionBar();
+        if (actionBar != null)
+        {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
         widgetList = (ListView)findViewById(R.id.widgetList);
         widgetList.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
@@ -197,73 +207,12 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                 reconfigureWidget(widgetItem);
             }
         });
-
-        initItem(R.id.item1, R.string.configLabel_widgetListHelp_title, R.string.configLabel_widgetListHelp_summary, R.attr.icActionHelp, helpClickListener);
-        initItem(R.id.item2, R.string.configLabel_widgetThemeList, 0, R.attr.icActionSettings, themesClickListener);
     }
 
     protected void updateViews(Context context)
     {
         widgetList.setAdapter(WidgetListAdapter.createWidgetListAdapter(context));
     }
-
-    private void initItem(int viewID, int titleTextID, int summaryTextID, int iconAttrID, View.OnClickListener clickListener)
-    {
-        View item = findViewById(viewID);
-        if (item != null)
-        {
-            View itemLayout = item.findViewById(R.id.itemLayout);
-            if (itemLayout != null)
-            {
-                itemLayout.setOnClickListener(clickListener);
-
-                TypedArray a = getTheme().obtainStyledAttributes(new int[] {iconAttrID});
-                int resID = a.getResourceId(0, 0);
-                Drawable icon = getResources().getDrawable(resID);
-                a.recycle();
-
-                ImageView iconView = (ImageView) itemLayout.findViewById(android.R.id.icon1);
-                if (iconAttrID > 0) {
-                    iconView.setImageDrawable(icon);
-                    iconView.setVisibility(View.VISIBLE);
-                } else iconView.setVisibility(View.GONE);
-
-                TextView titleView = (TextView) itemLayout.findViewById(android.R.id.text1);
-                if (titleTextID > 0) {
-                    titleView.setText(getString(titleTextID));
-                    titleView.setVisibility(View.VISIBLE);
-                } else titleView.setVisibility(View.GONE);
-
-                TextView summaryView = (TextView) itemLayout.findViewById(android.R.id.text2);
-                if (summaryTextID > 0) {
-                    summaryView.setText(getString(summaryTextID));
-                    summaryView.setVisibility(View.VISIBLE);
-                }else summaryView.setVisibility(View.GONE);
-
-                TextView text3 = (TextView) itemLayout.findViewById(R.id.text3);
-                if (text3 != null)
-                    text3.setVisibility(View.GONE);
-            }
-        }
-    }
-
-    private View.OnClickListener helpClickListener = new View.OnClickListener()
-    {
-        @Override
-        public void onClick(View view)
-        {
-            showHelp();
-        }
-    };
-
-    private View.OnClickListener themesClickListener = new View.OnClickListener()
-    {
-        @Override
-        public void onClick(View view)
-        {
-            launchThemeEditor(SuntimesWidgetListActivity.this);
-        }
-    };
 
     /**
      *
@@ -273,6 +222,15 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(getString(R.string.help_widgetlist));
         helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
+    }
+
+    /**
+     *
+     */
+    protected void showAbout()
+    {
+        AboutDialog aboutDialog = new AboutDialog();
+        aboutDialog.show(getSupportFragmentManager(), DIALOGTAG_ABOUT);
     }
 
     /**
@@ -508,6 +466,48 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             return context.getString(R.string.app_name_widget0);
         }
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.widgetlist, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.action_themes:
+                launchThemeEditor(SuntimesWidgetListActivity.this);
+                return true;
+
+            case R.id.action_help:
+                showHelp();
+                return true;
+
+            case R.id.action_about:
+                showAbout();
+                return true;
+
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @SuppressWarnings("RestrictedApi")
+    @Override
+    protected boolean onPrepareOptionsPanel(View view, Menu menu)
+    {
+        SuntimesUtils.forceActionBarIcons(menu);
+        return super.onPrepareOptionsPanel(view, menu);
     }
 
 }
