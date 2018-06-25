@@ -165,15 +165,15 @@
     <string name="configLabel_general_calculator_moon">Source de données pour la lune</string>         <!-- preference label -->
 
     <string name="configLabel_general_showSeconds">Afficher les secondes</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showSeconds_summary">Ajoute les secondes dans l'affichage des heures.</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showSeconds_summary">Ajoute les secondes dans l\'affichage des heures.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showTimeDate">Afficher l'heure (avec la date)</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showTimeDate_summary">Ajoute l'heure dans l'affichage des dates.</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showTimeDate">Afficher l\'heure (avec la date)</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showTimeDate_summary">Ajoute l\'heure dans l\'affichage des dates.</string>        <!-- checkbox label -->
 
     <string name="configLabel_general_showWeeks">Afficher les semaines</string>        <!-- checkbox label -->
     <string name="configLabel_general_showWeeks_summary">Divise les durées supérieures à 7 jours en semaines (ex: 15j devient 2s 1j).</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showHours">Afficher les heures</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_showHours">Afficher les heures</string>        <!-- checkbox label -->
     <string name="configLabel_general_showHours_summary">Ajoute les heures et les minutes dans les durées supérieures à un jour.</string>    <!-- checkbox label -->
 
     <!-- Widget Setting: appearance -->
@@ -207,11 +207,11 @@
 
     <string name="timeMode_equinox_vernal">Équinoxe du printemps</string>      <!-- setting -->
     <string name="timeMode_equinox_vernal_short">Équinoxe</string>       <!-- setting -->
-    <string name="timeMode_equinox_autumnal">Équinoxe d'automne</string>  <!-- setting -->
+    <string name="timeMode_equinox_autumnal">Équinoxe d\'automne</string>  <!-- setting -->
     <string name="timeMode_equinox_autumnal_short">Équinoxe</string>     <!-- setting -->
-    <string name="timeMode_solstice_summer">Solstice d'été</string>    <!-- setting -->
+    <string name="timeMode_solstice_summer">Solstice d\'été</string>    <!-- setting -->
     <string name="timeMode_solstice_summer_short">Solstice</string>     <!-- setting -->
-    <string name="timeMode_solstice_winter">Solstice d'hiver</string>    <!-- setting -->
+    <string name="timeMode_solstice_winter">Solstice d\'hiver</string>    <!-- setting -->
     <string name="timeMode_solstice_winter_short">Solstice</string>     <!-- setting -->
 
     <string name="timeMode_moon">Lune</string>                               <!-- label -->
@@ -297,11 +297,11 @@
     <string name="configLabel_solartime">Temps solaire :</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: timeFormat mode -->
-    <string name="timeFormatMode_system">Format de l'heure</string>          <!-- setting -->
+    <string name="timeFormatMode_system">Format de l\'heure</string>          <!-- setting -->
     <string name="timeFormatMode_12hr">12 heures</string>                  <!-- setting -->
     <string name="timeFormatMode_24hr">24 heures</string>                  <!-- setting -->
 
-    <string name="configLabel_timeFormatMode">Format de l'heure</string>             <!-- preference label -->
+    <string name="configLabel_timeFormatMode">Format de l\'heure</string>             <!-- preference label -->
     <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
 
     <!-- Widget Setting: date mode -->
@@ -316,18 +316,18 @@
     <string name="compareMode_yesterday">Hier</string>                     <!-- setting -->
     <string name="compareMode_tomorrow">Demain</string>                       <!-- setting -->
     <string name="configLabel_general_compareMode">Comparer avec :</string>    <!-- spinner label -->
-    <string name="configLabel_general_showComparison">Show Comparison</string>  <!-- checkbox label -->
+    <string name="configLabel_general_showComparison">Afficher la comparaison</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
-    <string name="trackingMode_closest">Closest Event</string>                 <!-- setting --> <!-- TODO -->
-    <string name="trackingMode_soonest">Upcoming Event</string>                <!-- setting -->  <!-- TODO -->
-    <string name="configLabel_general_trackingMode">Track:</string>            <!-- spinner label -->  <!-- TODO -->
+    <string name="trackingMode_closest">Événement le plus proche</string>                 <!-- setting -->
+    <string name="trackingMode_soonest">Prochain événement</string>                <!-- setting -->
+    <string name="configLabel_general_trackingMode">Suivi :</string>            <!-- spinner label -->
 
     <!-- Widget Setting: timeMode override -->
     <string name="configLabel_general_timeMode_override">Tracking overrides mode</string>     <!-- checkbox label -->  <!-- TODO -->
 
     <!-- Widget Settings: noon -->
-    <string name="configLabel_general_showNoon">Show Solar Noon</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showNoon">Afficher le zénith du soleil</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: Launch App -->
     <string name="configLabel_action_launch">Activité :</string>                 <!-- edittext label -->
@@ -426,7 +426,7 @@
     <string name="configLabel_themeSizeText">Taille du texte :</string>    <!-- edit label --> 
     <string name="configHint_themeSizeText">10</string>                  <!-- edit hint --> 
 
-    <string name="configLabel_themeSizeTime">Taille de l'heure:</string>    <!-- edit label --> 
+    <string name="configLabel_themeSizeTime">Taille de l\'heure:</string>    <!-- edit label --> 
     <string name="configHint_themeSizeTime">12</string>                  <!-- edit hint --> 
 
     <string name="configLabel_themeBoldTime">Gras</string>          <!-- checkbox label -->  
@@ -489,8 +489,8 @@
 
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Afficher la lune</string>  
-    <string name="configLabel_ui_showmoon_summary">Affiche les heures de lever et de coucher, la phase actuelle et l'illumination.</string>  
-    <string name="configLabel_ui_showmoon_notImplemented">La lune n'est pas implémentée par cette source de données.</string>  
+    <string name="configLabel_ui_showmoon_summary">Affiche les heures de lever et de coucher, la phase actuelle et l\'illumination.</string>  
+    <string name="configLabel_ui_showmoon_notImplemented">La lune n\'est pas implémentée par cette source de données.</string>  
 
     <!-- App Setting: Show Equinox / Solstice -->
     <string name="configLabel_ui_showEquinox">Afficher Solstice / Équinoxe</string>  
@@ -765,7 +765,7 @@
 
     <!-- Dialog: Build Places List (progress) -->
     <string name="locationbuild_dialog_title">Construction de la base de données</string>  
-    <string name="locationbuild_dialog_message">Construction d'une base de données d'emplacements…</string>  
+    <string name="locationbuild_dialog_message">Construction d\'une base de données d\'emplacements…</string>  
     <string name="locationbuild_toast_success"><xliff:g id="n">%1$s</xliff:g> emplacements ajoutés à la base de données.</string>  
 
     <!-- Dialog: Export Places -->
@@ -825,9 +825,9 @@
                 * <b>%d</b> pour la date (ex. February 12) <br/>
                 * <b>%dd</b> pour le jour (court) (ex. Mon) <br/>
                 * <b>%dD</b> pour le jour (long) (ex. Monday) <br/>
-                * <b>%dY</b> pour l'année (ex. 2018) <br/>
-                * <b>%dt</b> pour l'heure (de la dernière mise à jour) <br/>
-                * <b>%dT</b> pour l'heure avec les secondes (de la dernière mise à jour) <br/>
+                * <b>%dY</b> pour l\'année (ex. 2018) <br/>
+                * <b>%dt</b> pour l\'heure (de la dernière mise à jour) <br/>
+                * <b>%dT</b> pour l\'heure avec les secondes (de la dernière mise à jour) <br/>
                 <br/>
                 * <b>%loc</b> pour le libellé (ex. Prescott) <br />
                 * <b>%lat</b> pour la latitude (ex. 35.5409) <br />
@@ -842,12 +842,12 @@
                 * <b>%M</b> pour le mode temporel (long) (ex. Crépuscule civil) <br/>
          <br/>
          <b>Widgets de la lune :</b> <br/>
-                * <b>%i</b> pour l'illumination de la lune (ex. 25%) <br/>
+                * <b>%i</b> pour l\'illumination de la lune (ex. 25%) <br/>
                 * <b>%M</b> pour la phase de la lune (ex. Premier croissant) <br/>
          <br/>
          <b>Widgets des solstices :</b> <br/>
                 * <b>%m</b> pour le mode temporel (court) (ex. Solstice) <br/>
-                * <b>%M</b> pour le mode temporel (long) (ex. Solstice d'hiver) <br/>
+                * <b>%M</b> pour le mode temporel (long) (ex. Solstice d\'hiver) <br/>
     ]]></string>
 
     <string name="help_general_timeMode"><![CDATA[
@@ -858,17 +858,17 @@
     ]]></string>
     <string name="help_general_daylength"><![CDATA[
         <b>Longueur de jour :</b> espace de temps entre le lever et le coucher du soleil.<br/><br/>
-        <b>Lumière utile :</b> espace de temps entre les crépuscules civils du matin et du soir.</br>
+        <b>Lumière utile :</b> espace de temps entre les crépuscules civils du matin et du soir.<br/>
     ]]>
     </string>
     <string name="help_general_moonillum"><![CDATA[
-        <b>Illumination de la lune :</b> Le widget de la lune et la page principale affiche l'illumination de la lune au zénith lunaire (le milieu entre le lever et le coucher de la lune), tandis que la fenêtre de la lune affiche l'illumination actuelle de la lune.<br/><br/>
+        <b>Illumination de la lune :</b> Le widget de la lune et la page principale affiche l\'illumination de la lune au zénith lunaire (le milieu entre le lever et le coucher de la lune), tandis que la fenêtre de la lune affiche l\'illumination actuelle de la lune.<br/><br/>
     ]]></string>
     <string name="help_general_goldhour"><![CDATA[
-        <b>Heure dorée :</b> Le soleil est entre 6 degrés en dessous ou au-dessus de l'horizon. Le matin, l'heure dorée débute avec l'aube civil et termine peu de temps après le lever du soleil. Le soir, l'heure dorée débute peu de temps avant le coucher du soleil et se termine avec le crépuscule civil.<br/>
+        <b>Heure dorée :</b> Le soleil est entre 6 degrés en dessous ou au-dessus de l\'horizon. Le matin, l\'heure dorée débute avec l\'aube civil et termine peu de temps après le lever du soleil. Le soir, l\'heure dorée débute peu de temps avant le coucher du soleil et se termine avec le crépuscule civil.<br/>
     ]]></string>
     <string name="help_general_bluehour"><![CDATA[
-        <b>Heure bleue :</b> Le soleil est entre 8 degrés et 4 degrés en dessous de l'horizon. Le début et la fin de l'heure bleue se situe entre le crépuscule nautique et civil.<br/>
+        <b>Heure bleue :</b> Le soleil est entre 8 degrés et 4 degrés en dessous de l\'horizon. Le début et la fin de l\'heure bleue se situe entre le crépuscule nautique et civil.<br/>
     ]]></string>
     <string name="help_action_launch"><![CDATA[
         Nom complet de la classe (Activity) à lancer.<br/>
