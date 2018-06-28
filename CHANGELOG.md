@@ -1,5 +1,9 @@
 ### ~
 
+### v0.8.6 (2018-06-30)
+* updates translation to French (fr) (#220 by Aloha68).
+* updates translations to Polish and Esperanto (eo, pl) (#217 by Verdulo).
+
 ### v0.8.5 (2018-06-18)
 * add gps pref "Passive Location"; use the passive location provider (use a separate app to manage location updates).
 * fixes bug where the "GPS is disabled. Enable it?" dialog is not shown.
