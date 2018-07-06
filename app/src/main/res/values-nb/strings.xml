@@ -49,7 +49,7 @@
              where [date] is a dateString formatted by app using user's locale
     -->
     <string name="dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
-    <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> The date is set to a day other than today.</string>  <!-- snackbar message -->
+    <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> Datoen er satt til en annen dag enn i dag.</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
     <string name="past_yesterday">Fortid (-1)</string>
@@ -605,8 +605,8 @@
     </string-array>
 
     <!-- App Setting: passive location mode -->
-    <string name="configLabel_getFix_passiveMode">Passive Location</string>  <!-- TODO -->
-    <string name="configLabel_getFix_passiveMode_summary">Use the passive location provider.</string> <!-- TODO -->
+    <string name="configLabel_getFix_passiveMode">Passiv posisjon</string>
+    <string name="configLabel_getFix_passiveMode_summary">Bruk den passive posisjonsleverandøren.</string>
 
     <!-- App Setting: locale mode -->
     <string name="configLabel_locale">Språkinnstillinger</string>   <!-- group title -->
@@ -622,17 +622,17 @@
     <string name="configLabel_localeSelect">Språk</string>
     <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
     <string-array name="locale_display">                      <!-- one-to-one with locale_values -->
-        <item>English</item>
+        <item>Engelsk</item>
         <item>Esperanto</item>
-        <item>French</item>
-        <item>German</item>
-        <item>Hungarian</item>
-        <item>Polish</item>
-        <item>Spanish</item>
-        <item>Catalan</item>
-        <item>Basque</item>
+        <item>Fransk</item>
+        <item>Tysk</item>
+        <item>Ungarsk</item>
+        <item>Polsk</item>
+        <item>Spansk</item>
+        <item>Katalansk</item>
+        <item>Baskisk</item>
         <item>Norsk</item>
-    </string-array>  <!-- TODO: language names into norwegian -->
+    </string-array>
 
     <!-- position formats -->
     <string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
