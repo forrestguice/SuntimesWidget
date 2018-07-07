@@ -486,9 +486,9 @@
     <!-- App Setting: Places -->
     <string name="configLabel_places">Steder</string>                           <!-- group title -->
     <string name="configLabel_places_export">Eksporter steder</string>
-    <string name="configLabel_places_clear">Slett steder</string>
+    <string name="configLabel_places_clear">Fjern steder</string>
     <string name="configLabel_places_build">Legg til steder</string>
-    <string name="configLabel_places_build_summary">Scan locales and add cities to the database.</string>
+    <string name="configLabel_places_build_summary">Skann standardsteder og legg til byer i databasen.</string>
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Brukerflate</string>                       <!-- group title -->
@@ -589,8 +589,8 @@
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
-    <string name="configLabel_getFix_maxAge">GPS recent max age</string>
-    <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> considered recent</string>
+    <string name="configLabel_getFix_maxAge">Maks tid for siste GPS</string>
+    <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> betraktet som siste</string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>1 minutt</item>
         <item>5 minutter</item>
@@ -743,14 +743,14 @@
     <string name="gps_lastfix_title_set">Bestem posisjon</string>               <!-- may appear as place name when location set by intent -->
     <string name="gps_lastfix_title_found">Siste posisjon</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">Henter posisjon</string>     <!-- may appear in ActionBar title while gps in progress -->
-    <string name="gps_lastfix_toast_notfound">GPS failed to get location; falling back to last known position.</string>  <!-- displayed briefly after gps has failed to get a location -->
-    <string name="gps_lastfix_toast_cancelled">GPS update cancelled.</string> <!-- displayed briefly when gps refresh cancelled -->
+    <string name="gps_lastfix_toast_notfound">GPS mislyktes i å hente posisjon; faller tilbake til sist kjente posisjon.</string>  <!-- displayed briefly after gps has failed to get a location -->
+    <string name="gps_lastfix_toast_cancelled">GPS-oppdatering avbrutt.</string> <!-- displayed briefly when gps refresh cancelled -->
 
     <!-- Dialog: KeepTrying GPS? -->
-    <string name="gps_keeptrying_title">No Fix</string>
-    <string name="gps_keeptrying_msg">Unable to get a fix.</string>
-    <string name="gps_keeptrying_ok">Keep Trying</string>
-    <string name="gps_keeptrying_cancel">Give Up</string>
+    <string name="gps_keeptrying_title">Ingen posisjonsfastsettelse</string>
+    <string name="gps_keeptrying_msg">Ikke i stand til å oppnå en posisjonsfastsettelse.</string>
+    <string name="gps_keeptrying_ok">Fortsett å prøve</string>
+    <string name="gps_keeptrying_cancel">Gi opp</string>
 
     <!-- Dialog: Use Date -->
     <string name="timedate_dialog_title">Still inn dato</string>
@@ -772,33 +772,33 @@
     <string name="location_dialog_toast_copied">Kopiert til utklippstavle<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
 
     <!-- Dialog: Clear Places -->
-    <string name="locationclear_dialog_title">Clear Places?</string>
-    <string name="locationclear_dialog_message">Are you sure you want to clear the database of places?</string>
-    <string name="locationclear_dialog_ok">Clear</string>
+    <string name="locationclear_dialog_title">Fjerne steder?</string>
+    <string name="locationclear_dialog_message">Er du sikker på at du vil tømme stedsdatabasen?</string>
+    <string name="locationclear_dialog_ok">Fjern</string>
     <string name="locationclear_dialog_cancel">Avbryt</string>
 
     <!-- Dialog: Clear Places (progress) -->
-    <string name="locationcleared_dialog_title">Clearing Places</string>
-    <string name="locationcleared_dialog_message">Clearing the database…</string>
-    <string name="locationcleared_toast_success">The database of places has been cleared.</string>
+    <string name="locationcleared_dialog_title">Fjerner steder</string>
+    <string name="locationcleared_dialog_message">Tømmer databasen…</string>
+    <string name="locationcleared_toast_success">Stedsdatabasen er tømt.</string>
 
     <!-- Dialog: Build Places List (progress) -->
-    <string name="locationbuild_dialog_title">Building Database</string>
-    <string name="locationbuild_dialog_message">Building a database of places…</string>
-    <string name="locationbuild_toast_success">Added <xliff:g id="n">%1$s</xliff:g> places to the database.</string>
+    <string name="locationbuild_dialog_title">Genererer database</string>
+    <string name="locationbuild_dialog_message">Genererer en stedsdatabase…</string>
+    <string name="locationbuild_toast_success">Lagt til <xliff:g id="n">%1$s</xliff:g> steder i databasen.</string>
 
     <!-- Dialog: Export Places -->
-    <string name="locationexport_dialog_title">Exporting Places</string>
-    <string name="locationexport_dialog_message">Exporting the database to csv file.</string>
+    <string name="locationexport_dialog_title">Eksporterer steder</string>
+    <string name="locationexport_dialog_message">Eksporterer databasen til csv-fil.</string>
 
     <!-- Dialog: Export Themes -->
-    <string name="themesexport_dialog_title">Exporting Themes</string>
-    <string name="themesexport_dialog_message">Exporting themes to file.</string>
+    <string name="themesexport_dialog_title">Eksporterer temaer</string>
+    <string name="themesexport_dialog_message">Eksporterer temaer til fil.</string>
 
     <!-- Dialog: Export -->
-    <string name="msg_export_success">Temporary copy at <xliff:g id="filepath">%s</xliff:g></string>
-    <string name="msg_export_failure">Export to <xliff:g id="filepath">%s</xliff:g> failed!</string>
-    <string name="msg_export_to">Export with</string>  <!-- title displayed over "share action" chooser -->
+    <string name="msg_export_success">Midlertidig kopi: <xliff:g id="filepath">%s</xliff:g></string>
+    <string name="msg_export_failure">Eksport til <xliff:g id="filepath">%s</xliff:g> mislyktes!</string>
+    <string name="msg_export_to">Eksporter med</string>  <!-- title displayed over "share action" chooser -->
 
     <!-- Dialog: Color -->
     <string name="color_dialog_msg">Velg farge</string>
@@ -834,7 +834,8 @@
         French translation by Jej. <br />
         Hungarian translation by Erci. <br />
         Spanish and Catalan translation by <a href=https://github.com/Raulvo>Raulvo</a>. <br />
-        Basque translation by beriain.
+        Basque translation by beriain. <br />
+        Norwegian translation by FTno.
     ]]></string>
     <string name="app_legal3"><![CDATA[ <b>Libraries:</b><br/> ]]>
     <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
@@ -894,10 +895,10 @@
     </string>
 
     <string name="help_general_timeMode"><![CDATA[
-          <b>Actual Time:</b> The sun is on the horizon; this is the approximate time of sunrise and sunset.<br/><br/>
-          <b>Civil Twilight:</b> The sun is 6 degrees below the horizon; the brightest stars are visible. There is enough light for most outdoor activities without requiring a light.<br/><br/>
-          <b>Nautical Twilight:</b> The sun is 12 degrees below the horizon; object outlines and the horizon are increasingly indistinct. There isn\'t enough light for most outdoor activities without requiring a light.<br/><br/>
-          <b>Astronomical Twilight:</b> The sun is 18 degrees below the horizon. Near darkness of night.<br/>
+          <b>Faktisk tid:</b> Solen er i horisonten; dette er den omtrentlige tiden for soloppgang og solnedgang.<br/><br/>
+          <b>Alminnelig tussmørke:</b> Solen er 6 grader under horisonten; de lyseste stjernene er synlige. Det er nok lys for de fleste utendørsaktiviteter uten å kreve ekstra lys.<br/><br/>
+          <b>Nautisk tussmørke:</b> Solen er 12 grader under horisonten; objektomriss og horisonten blir stadig mer utydelig. Det er ikke nok lys for de fleste utendørsaktiviteter uten å kreve ekstra lys.<br/><br/>
+          <b>Astronomisk tussmørke:</b> Solen er 18 grader under horisonten. Nær nattens mørke.<br/>
     ]]></string>
 
     <string name="help_general_timeMode2"><![CDATA[
@@ -907,17 +908,17 @@
           <b>Winter Solstice:</b> TODO.<br/>
     ]]></string>
     <string name="help_general_daylength"><![CDATA[
-        <b>Length of day:</b> The amount of time between sunrise and sunset.<br/><br/>
-        <b>Usable light:</b> The amount of time between morning and evening civil twilight.<br/>
+        <b>Daglengde:</b> Tiden mellom soloppgang og solnedgang.<br/><br/>
+        <b>Brukbart lys:</b> Tiden mellom alminnelig tussmørke morgen og kveld.<br/>
     ]]></string>
     <string name="help_general_moonillum"><![CDATA[
-        <b>Moon Illumination:</b> The moon widgets and main page display the moon\'s illumination at lunar noon (the midpoint between moonrise and moonset), while the moon dialog displays the moon\'s current illumination.<br/><br/>
+        <b>Måneilluminasjon:</b> Månemodulene og hovedsiden viser i hvor stor grad månen er opplyst ved månens senit (midtpunktet mellom måneoppgang og månenedgang), mens månedialogen viser i hvor stor grad månen er opplyst nå.<br/><br/>
     ]]></string>
     <string name="help_general_goldhour"><![CDATA[
-        <b>Golden Hour:</b> The sun is between 6 degrees above or below the horizon. In the morning the golden hour begins with civil twilight and ends a short time after sunrise. In the evening the golden hour begins a short time before sunset and ends with civil twilight.<br/>
+        <b>Gylne time:</b> Solen er mellom 6 grader over eller under horisonten. Om morgenen begynner den gylne timen med alminnelig tussmørke og slutter kort tid etter soloppgang. Om kvelden begynner den gylne timen kort tid før solnedgang og slutter med alminnelig tussmørke.<br/>
     ]]></string>
     <string name="help_general_bluehour"><![CDATA[
-        <b>Blue Hour:</b> The sun is between 8 degrees and 4 degrees below the horizon. The start and end of the blue hour falls between nautical and civil twilight.<br/>
+        <b>Blå time:</b> Solen er mellom 8 grader og 4 grader under horisonten. Starten og slutten på den blå timen faller mellom nautisk og alminnelig tussmørke.<br/>
     ]]></string>
     <string name="help_action_launch"><![CDATA[
         The fully qualified class name of the Activity to be launched.<br/>
