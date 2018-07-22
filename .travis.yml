@@ -14,5 +14,9 @@ before_install:
   - mkdir "$ANDROID_HOME/licenses" || true
   - cp ./google-licenses/* "$ANDROID_HOME/licenses/"
 
+after_success: 
+  - chmod +x ./travis-debug-apk.sh
+  - ./travis-debug-apk.sh
+
 script:
   - ./gradlew clean assemble
