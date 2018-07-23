@@ -46,6 +46,7 @@ import java.util.Set;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
+import com.forrestguice.suntimeswidget.themes.DarkThemeTranslucent;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
 
@@ -112,6 +113,13 @@ public class WidgetThemes
         if (!SuntimesTheme.isInstalled(themePref, DarkThemeTrans.THEMEDEF_DESCRIPTOR))
         {
             DarkThemeTrans theme = new DarkThemeTrans(context);
+            theme.saveTheme(themePref);
+        }
+
+        added = addValue(DarkThemeTranslucent.THEMEDEF_DESCRIPTOR) || added;  // add default (if missing)
+        if (!SuntimesTheme.isInstalled(themePref, DarkThemeTranslucent.THEMEDEF_DESCRIPTOR))
+        {
+            DarkThemeTranslucent theme = new DarkThemeTranslucent(context);
             theme.saveTheme(themePref);
         }
 
