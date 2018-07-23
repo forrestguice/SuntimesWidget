@@ -142,7 +142,7 @@ public class WorldMapDialog extends DialogFragment
                     Calendar nowUtc = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
                     nowUtc.setTimeInMillis(now.getTimeInMillis());
                     SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, nowUtc); // utils.calendarTimeShortDisplayString(context, nowUtc);
-                    utcTime.setText(timeText.toString() + " " + nowUtc.getTimeZone().getDisplayName());  // TODO: i18n
+                    utcTime.setText(getString(R.string.datetime_format_verylong, timeText.toString(), nowUtc.getTimeZone().getDisplayName()));
                 }
                 // TODO: periodic update bitmap
             }
