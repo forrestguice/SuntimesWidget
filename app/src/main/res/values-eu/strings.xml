@@ -387,6 +387,8 @@
     <string name="configLabel_themeBackground_light">Argia</string>        <!-- light background -->
     <string name="configLabel_themeBackground_dark">Iluna</string>          <!-- dark background -->
     <string name="configLabel_themeBackground_trans">Gardena</string>  <!-- transparent background -->
+    <string name="configLabel_themeBackground_color">Kolorea</string>      <!-- custom background -->
+    <string name="configLabel_themeColorBackground">Kolorea:</string>      <!-- color label -->
 
     <string name="configLabel_themeColorTitle">Izenburuaren kolorea:</string>     <!-- color label -->
     <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->
