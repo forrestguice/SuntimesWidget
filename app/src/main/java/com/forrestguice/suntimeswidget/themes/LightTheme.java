@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget.themes;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
