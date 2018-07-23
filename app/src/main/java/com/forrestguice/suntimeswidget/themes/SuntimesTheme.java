@@ -285,9 +285,8 @@ public class SuntimesTheme
             int backgroundID = themes.getInt(theme + THEME_BACKGROUND, 0);
             this.themeBackground = ThemeBackground.getThemeBackground(backgroundID);
         }
-        if (this.themeBackground.supportsCustomColors()) {
-            this.themeBackgroundColor = themes.getInt( theme + THEME_BACKGROUND_COLOR, defaultTheme.getBackgroundColor() );
-        }
+
+        this.themeBackgroundColor = themes.getInt( theme + THEME_BACKGROUND_COLOR, defaultTheme.getBackgroundColor() );
 
         this.themePadding[0] = themes.getInt( theme + THEME_PADDING_LEFT, defaultTheme.themePadding[0] );
         this.themePadding[1] = themes.getInt( theme + THEME_PADDING_TOP, defaultTheme.themePadding[1] );
