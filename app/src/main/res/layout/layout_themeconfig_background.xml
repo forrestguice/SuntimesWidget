@@ -36,10 +36,9 @@
         <Spinner
             android:id="@+id/editSpin_background"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_marginTop="4dp" android:layout_marginBottom="4dp"
+            android:layout_marginTop="12dp" android:layout_marginBottom="4dp"
             app:layout_constraintStart_toEndOf="@+id/editLabel_background"
-            app:layout_constraintTop_toTopOf="@+id/layout_backgroundColor"
-            app:layout_constraintBottom_toBottomOf="@+id/layout_backgroundColor"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Background Color -->
         <LinearLayout
@@ -49,7 +48,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@+id/editSpin_background">
 
-            <TextView android:labelFor="@+id/edit_backgroundColor"
+            <TextView android:visibility="invisible"
+                android:labelFor="@+id/edit_backgroundColor"
                 android:id="@+id/editLabel_backgroundColor"
                 style="@style/ColorEditLabel"
                 android:paddingStart="8dp" android:paddingEnd="8dp"
@@ -77,7 +77,7 @@
                 android:text="" android:hint="@string/configHint_themeColorSunrise"
                 tools:ignore="UnusedAttribute" />
 
-            <ImageButton
+            <ImageButton android:visibility="invisible"
                 android:id="@+id/editButton_backgroundColor"
                 style="@style/ColorEditButton"
                 android:layout_marginEnd="4dp" android:layout_marginRight="4dp"

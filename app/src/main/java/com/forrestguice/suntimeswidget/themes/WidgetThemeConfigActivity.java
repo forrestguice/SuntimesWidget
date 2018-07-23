@@ -219,7 +219,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             {
                 updatePreview();
                 ThemeBackground background = spinBackground_adapter.getItem(i);
-                chooseColorBackground.setEnabled(background != null && background.supportsCustomColors());
+                boolean enabled = (background != null && background.supportsCustomColors());
+                //chooseColorBackground.setEnabled(enabled);
+                chooseColorBackground.setVisibility(enabled ? View.VISIBLE : View.INVISIBLE);
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView)
