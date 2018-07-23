@@ -44,6 +44,8 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -151,12 +153,16 @@ public class WorldMapDialog extends DialogFragment
         }
     };
 
+
     public void initViews(Context context, View dialogView)
     {
         utcTime = (TextView)dialogView.findViewById(R.id.info_time_utc);
         worldmap = (WorldMapView)dialogView.findViewById(R.id.info_time_worldmap);
 
-        ArrayAdapter<WorldMapWidgetSettings.WorldMapWidgetMode> mapAdapter = new ArrayAdapter<WorldMapWidgetSettings.WorldMapWidgetMode>(context, R.layout.layout_listitem_oneline_alt, WorldMapWidgetSettings.WorldMapWidgetMode.values());
+        ArrayList<WorldMapWidgetSettings.WorldMapWidgetMode> modes = new ArrayList<>(Arrays.asList(WorldMapWidgetSettings.WorldMapWidgetMode.values()));
+        modes.remove(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE);  // option disabled; TODO: fix layout issues
+
+        ArrayAdapter<WorldMapWidgetSettings.WorldMapWidgetMode> mapAdapter = new ArrayAdapter<WorldMapWidgetSettings.WorldMapWidgetMode>(context, R.layout.layout_listitem_oneline_alt, modes);
         mapAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         mapSelector = (Spinner)dialogView.findViewById(R.id.worldmap_selector);
