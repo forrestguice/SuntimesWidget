@@ -16,7 +16,7 @@
     <color name="dialog_bg_dark">@color/grey_850</color>
     <color name="card_bg_dark">@color/grey_800</color>
     <color name="card_bg_darktrans">#aa212121</color>
-    <color name="widget_bg_dark">@color/card_bg_darktrans</color>
+    <color name="widget_bg_dark">#82212121</color>
 
     <color name="text_disabled_light">#39000000</color>
     <color name="text_accent_light">@color/deep_teal_500</color>
