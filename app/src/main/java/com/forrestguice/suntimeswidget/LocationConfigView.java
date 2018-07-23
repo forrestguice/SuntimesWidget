@@ -24,6 +24,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -52,12 +53,11 @@ import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
 import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.getfix.GetFixTask;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
-import com.forrestguice.suntimeswidget.getfix.GetFixUI1;
-import com.forrestguice.suntimeswidget.getfix.GetFixUI2;
 import com.forrestguice.suntimeswidget.getfix.LocationListTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.regex.Pattern;
@@ -271,11 +271,86 @@ public class LocationConfigView extends LinearLayout
 
     private ImageButton button_getfix;
     private ProgressBar progress_getfix;
-    private GetFixUI getFixUI_editMode;
+    private GetFixUI getFixUI_editMode = new GetFixUI()
+    {
+        @Override
+        public void enableUI(boolean value)
+        {
+            text_locationName.requestFocus();
+            text_locationLat.setEnabled(value);
+            text_locationLon.setEnabled(value);
+            text_locationName.setEnabled(value);
+        }
+
+        @Override
+        public void updateUI(Location... locations)
+        {
+            DecimalFormat formatter = WidgetSettings.Location.decimalDegreesFormatter();
+            text_locationLat.setText( formatter.format(locations[0].getLatitude()) );
+            text_locationLon.setText( formatter.format(locations[0].getLongitude()) );
+        }
+
+        @Override
+        public void showProgress(boolean showProgress)
+        {
+            progress_getfix.setVisibility((showProgress ? View.VISIBLE : View.GONE));
+        }
+
+        @Override
+        public void onStart()
+        {
+            button_getfix.setVisibility(View.GONE);
+        }
+
+        @Override
+        public void onResult(Location result, boolean wasCancelled)
+        {
+            button_getfix.setImageResource((result == null) ? ICON_GPS_SEARCHING : ICON_GPS_FOUND);
+            button_getfix.setVisibility(View.VISIBLE);
+            button_getfix.setEnabled(true);
+        }
+    };
 
     private ImageButton button_auto;
     private ProgressBar progress_auto;
-    private GetFixUI getFixUI_autoMode;
+    private GetFixUI getFixUI_autoMode = new GetFixUI()
+    {
+        @Override
+        public void enableUI(boolean value)
+        {
+            text_locationLat.setEnabled(false);
+            text_locationLon.setEnabled(false);
+            text_locationName.setEnabled(false);
+        }
+
+        @Override
+        public void updateUI(Location... locations)
+        {
+            DecimalFormat formatter = WidgetSettings.Location.decimalDegreesFormatter();
+            text_locationLat.setText( formatter.format(locations[0].getLatitude()) );
+            text_locationLon.setText( formatter.format(locations[0].getLongitude()) );
+        }
+
+        @Override
+        public void showProgress(boolean showProgress)
+        {
+            progress_auto.setVisibility((showProgress ? View.VISIBLE : View.GONE));
+        }
+
+        @Override
+        public void onStart()
+        {
+            button_auto.setVisibility(View.GONE);
+        }
+
+        @Override
+        public void onResult(Location result, boolean wasCancelled)
+        {
+            button_auto.setImageResource((result == null) ? ICON_GPS_SEARCHING : ICON_GPS_FOUND);
+            button_auto.setVisibility(View.VISIBLE);
+            button_auto.setEnabled(true);
+        }
+    };
 
     private GetFixHelper getFixHelper;
     private SimpleCursorAdapter getFixAdapter;
@@ -354,8 +429,6 @@ public class LocationConfigView extends LinearLayout
         progress_getfix.setVisibility(View.GONE);
 
         button_getfix = (ImageButton)findViewById(R.id.appwidget_location_getfix);
-        getFixUI_editMode = new GetFixUI1(text_locationName, text_locationLat, text_locationLon, progress_getfix, button_getfix);
-
         button_getfix.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -370,7 +443,6 @@ public class LocationConfigView extends LinearLayout
         progress_auto.setVisibility(View.GONE);
 
         button_auto = (ImageButton)findViewById(R.id.appwidget_location_auto);
-        getFixUI_autoMode = new GetFixUI2(text_locationName, text_locationLat, text_locationLon, progress_auto, button_auto);
         button_auto.setOnClickListener(onAutoButtonClicked);
 
         getFixHelper = new GetFixHelper(myParent, getFixUI_editMode);    // 0; getFixUI_editMode
@@ -378,12 +450,13 @@ public class LocationConfigView extends LinearLayout
         updateGPSButtonIcons();
     }
 
+
     public void updateGPSButtonIcons()
     {
         int icon = GetFixUI.ICON_GPS_SEARCHING;
         if (!isInEditMode())
         {
-            if (!getFixHelper.isLocationEnabled())
+            if (!getFixHelper.isLocationEnabled(getContext()))
             {
                 icon = GetFixUI.ICON_GPS_DISABLED;
 

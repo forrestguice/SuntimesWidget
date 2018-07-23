@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -65,11 +65,19 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
         db = new GetFixDatabaseAdapter(context.getApplicationContext());
     }
 
-    @Override
-    protected Integer doInBackground(Object... params)
+    private int clearPlaces()
+    {
+        db.open();
+        boolean result = db.clearPlaces();
+        db.close();
+
+        Log.i("BuildPlacesTask", "clearPlaces: " + result);
+        return (result ? 1 : 0);
+    }
+
+    private int buildPlaces()
     {
         int result = 0;
-        long startTime = System.currentTimeMillis();
         ArrayList<WidgetSettings.Location> locations = new ArrayList<>();
         try {
             Context context = contextRef.get();
@@ -116,12 +124,29 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
                 }
             }
 
+            Log.i("BuildPlacesTask", "buildPlaces: " + result);
             db.close();
 
         } catch (SQLException e) {
             Log.e("BuildPlacesTask", "Failed to access database: " + e);
             result = -1;
         }
+        return result;
+    }
+
+    @Override
+    protected Integer doInBackground(Object... params)
+    {
+        long startTime = System.currentTimeMillis();
+
+        boolean param_clearPlaces = false;
+        if (params.length > 0) {
+            param_clearPlaces = (Boolean)params[0];
+        }
+
+        int result = param_clearPlaces ? clearPlaces()
+                                       : buildPlaces();
+
         long endTime = System.currentTimeMillis();
         while ((endTime - startTime) < MIN_WAIT_TIME || isPaused)
         {
