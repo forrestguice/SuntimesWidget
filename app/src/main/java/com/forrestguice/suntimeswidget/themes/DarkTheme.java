@@ -33,6 +33,7 @@ public class DarkTheme extends SuntimesTheme
     public static final ThemeDescriptor THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, THEMEDEF_DISPLAYSTRING, THEMEDEF_VERSION);
 
     public static final ThemeBackground THEMEDEF_BACKGROUND = ThemeBackground.DARK;
+    public static final int THEMEDEF_BACKGROUND_COLOR_ID = R.color.widget_bg_dark;
     public static final int[] THEMEDEF_PADDING = {2, 4, 4, 4};
 
     public static final float THEMEDEF_TITLESIZE = 10;
@@ -85,7 +86,7 @@ public class DarkTheme extends SuntimesTheme
         this.themeDisplayString = THEMEDEF_DISPLAYSTRING;
 
         this.themeBackground = THEMEDEF_BACKGROUND;
-        this.themeBackgroundColor = Color.BLACK;
+        this.themeBackgroundColor = ContextCompat.getColor(context, THEMEDEF_BACKGROUND_COLOR_ID);
         this.themePadding = THEMEDEF_PADDING;
 
         this.themeTitleSize = THEMEDEF_TITLESIZE;
