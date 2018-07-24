@@ -63,6 +63,7 @@ public class WorldMapDialog extends DialogFragment
     private View dialogContent = null;
     private TextView utcTime;
     private Spinner mapSelector;
+    private ArrayAdapter<WorldMapWidgetSettings.WorldMapWidgetMode> mapAdapter;
     private WorldMapWidgetSettings.WorldMapWidgetMode mapMode = null;
 
     private SuntimesUtils utils = new SuntimesUtils();
@@ -153,16 +154,33 @@ public class WorldMapDialog extends DialogFragment
         }
     };
 
+    private int tapCount = 0;
 
     public void initViews(Context context, View dialogView)
     {
         utcTime = (TextView)dialogView.findViewById(R.id.info_time_utc);
         worldmap = (WorldMapView)dialogView.findViewById(R.id.info_time_worldmap);
+        worldmap.setOnLongClickListener(new View.OnLongClickListener()
+        {
+            @Override
+            public boolean onLongClick(View view)
+            {
+                tapCount++;
+                if (tapCount == 3)
+                {
+                    mapAdapter.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE);
+                    mapAdapter.notifyDataSetChanged();
+                    mapSelector.setSelection(mapAdapter.getPosition(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE), true);
+                    return true;
+                }
+                return false;
+            }
+        });
 
         ArrayList<WorldMapWidgetSettings.WorldMapWidgetMode> modes = new ArrayList<>(Arrays.asList(WorldMapWidgetSettings.WorldMapWidgetMode.values()));
         modes.remove(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE);  // option disabled; TODO: fix layout issues
 
-        ArrayAdapter<WorldMapWidgetSettings.WorldMapWidgetMode> mapAdapter = new ArrayAdapter<WorldMapWidgetSettings.WorldMapWidgetMode>(context, R.layout.layout_listitem_oneline_alt, modes);
+        mapAdapter = new ArrayAdapter<WorldMapWidgetSettings.WorldMapWidgetMode>(context, R.layout.layout_listitem_oneline_alt, modes);
         mapAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         mapSelector = (Spinner)dialogView.findViewById(R.id.worldmap_selector);
