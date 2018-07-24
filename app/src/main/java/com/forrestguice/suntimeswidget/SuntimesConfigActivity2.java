@@ -29,6 +29,9 @@ import com.forrestguice.suntimeswidget.layouts.SunPosLayout_1X1_0;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * ConfigActivity for SunPosition widgets (SuntimesWidget2)
  */
@@ -116,7 +119,9 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     {
         if (spinner_3x2mode != null)
         {
-            ArrayAdapter<WorldMapWidgetSettings.WorldMapWidgetMode> adapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, WorldMapWidgetSettings.WorldMapWidgetMode.values());
+            ArrayList<WorldMapWidgetSettings.WorldMapWidgetMode> modes = new ArrayList<>(Arrays.asList(WorldMapWidgetSettings.WorldMapWidgetMode.values()));
+            modes.remove(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE);
+            ArrayAdapter<WorldMapWidgetSettings.WorldMapWidgetMode> adapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, modes);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner_3x2mode.setAdapter(adapter);
         }
