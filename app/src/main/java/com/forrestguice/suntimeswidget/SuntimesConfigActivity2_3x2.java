@@ -64,7 +64,7 @@ public class SuntimesConfigActivity2_3x2 extends SuntimesConfigActivity2
     protected void launchThemeEditor(Context context)
     {
         Intent configThemesIntent = themeEditorIntent(context);
-        configThemesIntent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, WidgetThemeConfigActivity.PREVIEWID_SUNPOS_3x1);  // TODO
+        configThemesIntent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, WidgetThemeConfigActivity.PREVIEWID_SUNPOS_3x2);
         startActivityForResult(configThemesIntent, PICK_THEME_REQUEST);
     }
 
