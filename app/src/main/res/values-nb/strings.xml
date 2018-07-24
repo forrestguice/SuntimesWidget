@@ -20,6 +20,7 @@
     <string name="configAction_setDate">Dato</string>
     <string name="configAction_sunDialog">Solens posisjon</string>
     <string name="configAction_equinoxDialog">Solverv / Jevndøgn</string>
+    <string name="configAction_worldMap">World Map</string>  <!-- TODO -->
     <string name="configAction_moon">Månen</string>
     <string name="configAction_help">Hjelp</string>
     <string name="configAction_settings">Innstillinger</string>
@@ -257,6 +258,10 @@
     <string name="widgetMode1x1_altaz">Høyde &amp; Asimut</string>     <!-- setting -->
     <string name="widgetMode1x1_decright">Deklinasjon &amp; Rektasensjon</string>     <!-- setting -->
 
+    <string name="widgetMode_sunPosMap_simplerectangular">Basic</string>  <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal">Polar</string>     <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode_sunPosMap_bluemarble">Blue Marble</string>    <!-- setting -->  <!-- TODO -->
+
     <string name="widgetMode1x1_moonriseset">Måneoppgang &amp; månenedgang</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphaseillum">Månefase &amp; illuminasjon</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphase">Bare månefase</string>     <!-- setting -->
@@ -264,6 +269,7 @@
     <string name="widgetMode1x1_moonphasenext">Neste hovedfase</string>     <!-- setting -->
 
     <string name="configLabel_appearance_1x1mode">1x1 Layout:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_3x2mode">3x2 Layout:</string>     <!-- spinner label -->
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Ikke gjør noe</string>           <!-- setting -->
@@ -398,6 +404,11 @@
     <string name="configLabel_themeColorSummer">Sommerfarge:</string> <!-- color label -->
     <string name="configLabel_themeColorFall">Høstfarge:</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Vinterfarge:</string> <!-- color label -->
+
+    <string name="configLabel_themeColorMapBackground">Map Background</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorMapForeground">Map Foreground</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorMapSunShadow">Shadow</string> <!-- color label -->          <!-- TODO -->
+    <string name="configLabel_themeColorMapMoonHighlight">Highlight</string> <!-- color label -->   <!-- TODO -->
 
     <string name="configLabel_themeColorMoonrise">Måneoppgangsfarge:</string> <!-- color label -->
     <string name="configLabel_themeColorMoonset">Månenedgangsfarge:</string> <!-- color label -->

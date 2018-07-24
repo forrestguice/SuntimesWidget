@@ -20,6 +20,7 @@
     <string name="configAction_setDate">Ustaw datę</string>
     <string name="configAction_sunDialog">Pozycja Słońca</string>
     <string name="configAction_equinoxDialog">Przesilenie / równonoc</string>
+    <string name="configAction_worldMap">World Map</string>  <!-- TODO -->
     <string name="configAction_moon">Księżyc</string>
     <string name="configAction_help">Pomoc</string>
     <string name="configAction_settings">Ustawienia</string>
@@ -243,6 +244,10 @@
     <string name="widgetMode1x1_altaz">Wysokość i azymut</string>     <!-- setting -->
     <string name="widgetMode1x1_decright">Deklinacja i rekascensja</string>     <!-- setting -->
 
+    <string name="widgetMode_sunPosMap_simplerectangular">Basic</string>  <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal">Polar</string>     <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode_sunPosMap_bluemarble">Blue Marble</string>    <!-- setting -->  <!-- TODO -->
+
     <string name="widgetMode1x1_moonriseset">Wschód i zachód Księżyca</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphaseillum">Faza i oświetlenie Księżyca</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphase">Tylko faza Księżyca</string>     <!-- setting -->
@@ -250,6 +255,7 @@
     <string name="widgetMode1x1_moonphasenext">Następna faza główna</string>     <!-- setting -->
 
     <string name="configLabel_appearance_1x1mode">Wymiar 1x1:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_3x2mode">Wymiar 3x2:</string>     <!-- spinner label -->
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Nic nie rób</string>           <!-- setting -->
@@ -384,6 +390,11 @@
     <string name="configLabel_themeColorSummer">Letni kolor:</string> <!-- color label -->
     <string name="configLabel_themeColorFall">Jesienny kolor:</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Zimowy kolor:</string> <!-- color label -->
+
+    <string name="configLabel_themeColorMapBackground">Map Background</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorMapForeground">Map Foreground</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorMapSunShadow">Shadow</string> <!-- color label -->          <!-- TODO -->
+    <string name="configLabel_themeColorMapMoonHighlight">Highlight</string> <!-- color label -->   <!-- TODO -->
 
     <string name="configLabel_themeColorMoonrise">Kolor wschodu Księżyca:</string> <!-- color label -->
     <string name="configLabel_themeColorMoonset">Kolor zachodu Księżyca:</string> <!-- color label -->
