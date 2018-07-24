@@ -96,14 +96,18 @@
     <color name="graphColor_astronomical_light">#ff0000ff</color>
     <color name="graphColor_night_light">#ff757575</color>
 
-    <color name="map_sunshadow">#bf000000</color>
-    <color name="map_moonlight">#1affffff</color>
+    <color name="map_sunshadow">@color/map_sunshadow_dark</color>
+    <color name="map_moonlight">@color/map_moonlight_dark</color>
     <color name="map_background">@color/map_background_dark</color>
     <color name="map_foreground">@color/map_foreground_dark</color>
 
+    <color name="map_sunshadow_dark">#bf000000</color>
+    <color name="map_moonlight_dark">#1affffff</color>
     <color name="map_background_dark">#5c6bc0</color>
     <color name="map_foreground_dark">#c6ff00</color>
 
+    <color name="map_sunshadow_light">#bf000000</color>
+    <color name="map_moonlight_light">#1affffff</color>>
     <color name="map_background_light">#5c6bc0</color> <!-- TODO: light colors -->
     <color name="map_foreground_light">#c6ff00</color>
 
