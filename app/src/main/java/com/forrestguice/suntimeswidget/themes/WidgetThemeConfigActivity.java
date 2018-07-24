@@ -662,7 +662,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             colors.colorAstro = chooseColorAstro.getColor();
             colors.colorNight = chooseColorNight.getColor();
 
-            int dpWidth = 128;
+            int dpWidth = 256;
             int dpHeight = 64;
             LightMapView.LightMapTask drawTask = new LightMapView.LightMapTask();
             drawTask.setListener(new LightMapView.LightMapTaskListener()
