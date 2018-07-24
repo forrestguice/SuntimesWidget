@@ -152,8 +152,9 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
             // algorithm described at https://gis.stackexchange.com/questions/17184/method-to-shade-or-overlay-a-raster-map-to-reflect-time-of-day-and-ambient-light
             if (options.showSunPosition || options.showMoonPosition)
             {
-                int w0 = 512;
-                int h0 = 256;
+                int w0 = (w < 512 ? w : 512);
+                int h0 = w0 / 2;
+
                 double iw0 = (1d / w0) * 360d;
                 double ih0 = (1d / h0) * 180d;
 
