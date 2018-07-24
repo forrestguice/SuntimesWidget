@@ -115,7 +115,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private ColorChooser chooseColorSpring, chooseColorSummer, chooseColorFall, chooseColorWinter;
     private ColorChooser chooseColorMoonrise, chooseColorMoonset;
     private ColorChooser chooseColorMoonWaning, chooseColorMoonNew, chooseColorMoonWaxing, chooseColorMoonFull;
-    private ColorChooser chooseColorMapBackground, chooseColorMapForeground;
+    private ColorChooser chooseColorMapBackground, chooseColorMapForeground, chooseColorMapShadow, chooseColorMapHighlight;
     private ArrayList<ColorChooser> colorChoosers;
     private CheckBox checkUseFill, checkUseStroke, checkUseNoon;
 
@@ -288,6 +288,12 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         chooseColorMapBackground.setShowAlpha(true);
 
         chooseColorMapForeground = createColorChooser(context, R.id.editLabel_mapForegroundColor, R.id.edit_mapForegroundColor, R.id.editButton_mapForegroundColor, SuntimesTheme.THEME_MAP_FOREGROUNDCOLOR);
+
+        chooseColorMapShadow = createColorChooser(context, R.id.editLabel_mapSunShadowColor, R.id.edit_mapSunShadowColor, R.id.editButton_mapSunShadowColor, SuntimesTheme.THEME_MAP_SHADOWCOLOR);
+        chooseColorMapShadow.setShowAlpha(true);
+
+        chooseColorMapHighlight = createColorChooser(context, R.id.editLabel_mapMoonHighlightColor, R.id.edit_mapMoonHighlightColor, R.id.editButton_mapMoonHighlightColor, SuntimesTheme.THEME_MAP_HIGHLIGHTCOLOR);
+        chooseColorMapHighlight.setShowAlpha(true);
 
         // season colors
         chooseColorSpring = createColorChooser(this, R.id.editLabel_springColor, R.id.edit_springColor, R.id.editButton_springColor, SuntimesTheme.THEME_SPRINGCOLOR );
@@ -1204,6 +1210,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
             chooseColorMapBackground.setColor(theme.getMapBackgroundColor());
             chooseColorMapForeground.setColor(theme.getMapForegroundColor());
+            chooseColorMapShadow.setColor(theme.getMapShadowColor());
+            chooseColorMapHighlight.setColor(theme.getMapHighlightColor());
 
             chooseColorMoonrise.setColor(theme.getMoonriseTextColor());
             chooseColorMoonset.setColor(theme.getMoonsetTextColor());
@@ -1283,6 +1291,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
                 this.themeMapBackgroundColor = chooseColorMapBackground.getColor();
                 this.themeMapForegroundColor = chooseColorMapForeground.getColor();
+                this.themeMapShadowColor = chooseColorMapShadow.getColor();
+                this.themeMapHighlightColor = chooseColorMapHighlight.getColor();
 
                 this.themeMoonriseTextColor = chooseColorMoonrise.getColor();
                 this.themeMoonsetTextColor = chooseColorMoonset.getColor();

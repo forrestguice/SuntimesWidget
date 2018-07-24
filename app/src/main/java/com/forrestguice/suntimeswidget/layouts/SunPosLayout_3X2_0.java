@@ -123,8 +123,8 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
         options.backgroundColor = theme.getMapBackgroundColor();
         options.foregroundColor = theme.getMapForegroundColor();
 
-        options.sunShadowColor = ContextCompat.getColor(context, R.color.map_sunshadow);  // TODO
-        options.moonLightColor = ContextCompat.getColor(context, R.color.map_moonlight);  // TODO
+        options.sunShadowColor = theme.getMapShadowColor();
+        options.moonLightColor = theme.getMapHighlightColor();
 
         options.sunFillColor = theme.getNoonIconColor();
         options.sunStrokeColor = theme.getNoonIconStrokeColor();
@@ -132,7 +132,7 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
         options.moonFillColor = theme.getMoonFullColor();
         options.moonStrokeColor = theme.getMoonWaningColor();
 
-        options.showMoonLight = false;
+        options.showMoonLight = true;
         options.showMajorLatitudes = false;
     }
 

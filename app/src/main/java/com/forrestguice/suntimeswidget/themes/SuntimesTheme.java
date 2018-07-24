@@ -97,6 +97,8 @@ public class SuntimesTheme
 
     public static final String THEME_MAP_BACKGROUNDCOLOR = "mapbackgroundcolor";
     public static final String THEME_MAP_FOREGROUNDCOLOR = "mapforegroundcolor";
+    public static final String THEME_MAP_SHADOWCOLOR = "mapshadowcolor";
+    public static final String THEME_MAP_HIGHLIGHTCOLOR = "maphighlightcolor";
 
     public static final String THEME_TITLESIZE = "titlesize";
     public static final float THEME_TITLESIZE_MIN = 6.0f;
@@ -167,6 +169,8 @@ public class SuntimesTheme
 
     protected int themeMapBackgroundColor;
     protected int themeMapForegroundColor;
+    protected int themeMapShadowColor;
+    protected int themeMapHighlightColor;
 
     protected int themeMoonriseTextColor;
     protected int themeMoonsetTextColor;
@@ -249,6 +253,8 @@ public class SuntimesTheme
 
         this.themeMapBackgroundColor = otherTheme.themeMapBackgroundColor;
         this.themeMapForegroundColor = otherTheme.themeMapForegroundColor;
+        this.themeMapShadowColor = otherTheme.themeMapShadowColor;
+        this.themeMapHighlightColor = otherTheme.themeMapHighlightColor;
 
         this.themeTitleSize = otherTheme.themeTitleSize;
         this.themeTextSize = otherTheme.themeTextSize;
@@ -338,6 +344,8 @@ public class SuntimesTheme
 
         this.themeMapBackgroundColor = themes.getInt(theme + THEME_MAP_BACKGROUNDCOLOR, defaultTheme.themeMapBackgroundColor);
         this.themeMapForegroundColor = themes.getInt(theme + THEME_MAP_FOREGROUNDCOLOR, defaultTheme.themeMapForegroundColor);
+        this.themeMapShadowColor = themes.getInt(theme + THEME_MAP_SHADOWCOLOR, defaultTheme.themeMapShadowColor);
+        this.themeMapHighlightColor = themes.getInt(theme + THEME_MAP_HIGHLIGHTCOLOR, defaultTheme.themeMapHighlightColor);
 
         this.themeTitleSize = themes.getFloat( theme + THEME_TITLESIZE, defaultTheme.themeTitleSize );
         this.themeTextSize = themes.getFloat( theme + THEME_TEXTSIZE, defaultTheme.themeTextSize );
@@ -416,6 +424,8 @@ public class SuntimesTheme
 
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_MAP_BACKGROUNDCOLOR, this.themeMapBackgroundColor);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_MAP_FOREGROUNDCOLOR, this.themeMapForegroundColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_MAP_SHADOWCOLOR, this.themeMapShadowColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_MAP_HIGHLIGHTCOLOR, this.themeMapHighlightColor);
 
         themePrefs.putFloat(themePrefix + SuntimesTheme.THEME_TITLESIZE, this.themeTitleSize);
         themePrefs.putFloat(themePrefix + SuntimesTheme.THEME_TEXTSIZE, this.themeTextSize);
@@ -782,6 +792,16 @@ public class SuntimesTheme
     public int getMapForegroundColor()
     {
         return themeMapForegroundColor;
+    }
+
+    public int getMapShadowColor()
+    {
+        return themeMapShadowColor;
+    }
+
+    public int getMapHighlightColor()
+    {
+        return themeMapHighlightColor;
     }
 
     public float getTitleSizeSp()
