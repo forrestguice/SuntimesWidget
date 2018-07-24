@@ -39,6 +39,7 @@
                 style="@style/ColorEditLabel"
                 android:paddingStart="8dp" android:paddingEnd="8dp"
 
+                android:nextFocusDown="@+id/editLabel_mapSunShadowColor"
                 android:nextFocusRight="@+id/editLabel_mapForegroundColor"
                 android:nextFocusForward="@+id/editLabel_mapForegroundColor"
 
@@ -50,6 +51,7 @@
                 style="@style/ColorEdit" android:visibility="gone"
                 android:fontFamily="monospace"
 
+                android:nextFocusDown="@+id/editLabel_mapSunShadowColor"
                 android:nextFocusRight="@+id/editLabel_mapForegroundColor"
                 android:nextFocusForward="@+id/editLabel_mapForegroundColor"
 
@@ -80,6 +82,7 @@
                 android:paddingStart="8dp" android:paddingEnd="8dp"
 
                 android:nextFocusUp="@+id/editLabel_mapBackgroundColor"
+                android:nextFocusDown="@+id/editLabel_mapMoonHighlightColor"
                 android:nextFocusLeft="@+id/editLabel_mapBackgroundColor"
 
                 android:text="@string/configLabel_themeColorMapForeground"
@@ -91,6 +94,7 @@
                 android:fontFamily="monospace"
 
                 android:nextFocusUp="@+id/editLabel_mapBackgroundColor"
+                android:nextFocusDown="@+id/editLabel_mapMoonHighlightColor"
                 android:nextFocusLeft="@+id/editLabel_mapBackgroundColor"
 
                 android:text="" android:hint="@string/configHint_themeColorSunset"
@@ -101,6 +105,86 @@
                 style="@style/ColorEditButton"
                 android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
                 android:contentDescription="@string/configLabel_themeColorMapForeground" />
+
+        </LinearLayout>
+
+        <!-- Sun Shadow Color -->
+        <LinearLayout
+            android:id="@+id/layout_mapSunShadowColor"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/layout_mapBackgroundColor"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView android:labelFor="@+id/edit_mapSunShadowColor"
+                android:id="@+id/editLabel_mapSunShadowColor"
+                style="@style/ColorEditLabel"
+                android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                android:nextFocusUp="@+id/editLabel_mapBackgroundColor"
+                android:nextFocusRight="@+id/editLabel_mapMoonHighlightColor"
+                android:nextFocusForward="@+id/editLabel_mapMoonHighlightColor"
+
+                android:text="@string/configLabel_themeColorMapSunShadow"
+                tools:ignore="UnusedAttribute" />
+
+            <EditText
+                android:id="@+id/edit_mapSunShadowColor"
+                style="@style/ColorEdit" android:visibility="gone"
+                android:fontFamily="monospace"
+
+                android:nextFocusUp="@+id/editLabel_mapBackgroundColor"
+                android:nextFocusRight="@+id/editLabel_mapMoonHighlightColor"
+                android:nextFocusForward="@+id/editLabel_mapMoonHighlightColor"
+
+                android:text="" android:hint="@string/configHint_themeColorSunrise"
+                tools:ignore="UnusedAttribute" />
+
+            <ImageButton
+                android:id="@+id/editButton_mapSunShadowColor"
+                style="@style/ColorEditButton"
+                android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                android:contentDescription="@string/configLabel_themeColorMapSunShadow" />
+
+        </LinearLayout>
+
+        <!-- Map Moon Highlight Color -->
+        <LinearLayout
+            android:id="@+id/layout_mapMoonHighlightColor"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/layout_mapSunShadowColor"
+            app:layout_constraintStart_toEndOf="@+id/layout_mapSunShadowColor"
+            android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+            android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
+
+            <TextView android:labelFor="@+id/edit_mapMoonHighlightColor"
+                android:id="@+id/editLabel_mapMoonHighlightColor"
+                style="@style/ColorEditLabel"
+                android:paddingStart="8dp" android:paddingEnd="8dp"
+
+                android:nextFocusUp="@+id/editLabel_mapForegroundColor"
+                android:nextFocusLeft="@+id/editLabel_mapSunShadowColor"
+
+                android:text="@string/configLabel_themeColorMapMoonHighlight"
+                tools:ignore="UnusedAttribute" />
+
+            <EditText
+                android:id="@+id/edit_mapMoonHighlightColor"
+                style="@style/ColorEdit" android:visibility="gone"
+                android:fontFamily="monospace"
+
+                android:nextFocusUp="@+id/editLabel_mapForegroundColor"
+                android:nextFocusLeft="@+id/editLabel_mapSunShadowColor"
+
+                android:text="" android:hint="@string/configHint_themeColorSunset"
+                tools:ignore="UnusedAttribute" />
+
+            <ImageButton
+                android:id="@+id/editButton_mapMoonHighlightColor"
+                style="@style/ColorEditButton"
+                android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
+                android:contentDescription="@string/configLabel_themeColorMapMoonHighlight" />
 
         </LinearLayout>
 
