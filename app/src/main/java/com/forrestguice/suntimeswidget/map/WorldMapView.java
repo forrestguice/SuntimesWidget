@@ -211,8 +211,13 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                 {
                     if (h > 0)
                     {
+                        // fit smallest
                         // has width and height, use smallest
-                        w = h = Math.min(w, h);
+                        //w = h = Math.min(w, h);
+
+                        // fit larger
+                        // has width and height, use larger
+                        w = h = Math.max(w, h);
                     } else {
                         // has width but no height; match width
                         h = w;
