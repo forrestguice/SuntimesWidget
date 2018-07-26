@@ -166,14 +166,18 @@ public class WorldMapDialog extends DialogFragment
             public boolean onLongClick(View view)
             {
                 tapCount++;
-                if (tapCount == 3)
-                {
+                if (tapCount < 3) {
+                    return true;
+
+                } else if (tapCount == 3) {
                     mapAdapter.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE);
                     mapAdapter.notifyDataSetChanged();
                     mapSelector.setSelection(mapAdapter.getPosition(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE), true);
                     return true;
+
+                } else {
+                    return false;
                 }
-                return false;
             }
         });
 
