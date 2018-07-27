@@ -157,7 +157,7 @@ public class WidgetSettings
     public static String PREF_DEF_LOCATION_LATITUDE = "34.5409";         // reassigned later by initDefaults
 
     public static final String PREF_KEY_LOCATION_ALTITUDE = "altitude";
-    public static String PREF_DEF_LOCATION_ALTITUDE = "";
+    public static String PREF_DEF_LOCATION_ALTITUDE = "0";               // reassigned later by initDefaults
 
     public static final String PREF_KEY_LOCATION_LABEL = "label";
     public static String PREF_DEF_LOCATION_LABEL = "Prescott, AZ";       // reassigned later by initDefaults
@@ -2269,6 +2269,7 @@ public class WidgetSettings
         PREF_DEF_LOCATION_LABEL = context.getString(R.string.default_location_label);
         PREF_DEF_LOCATION_LATITUDE = context.getString(R.string.default_location_latitude);
         PREF_DEF_LOCATION_LONGITUDE = context.getString(R.string.default_location_longitude);
+        PREF_DEF_LOCATION_ALTITUDE = context.getString(R.string.default_location_altitude);
     }
 
     public static void initDisplayStrings( Context context )
