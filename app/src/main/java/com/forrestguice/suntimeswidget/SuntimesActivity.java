@@ -50,6 +50,7 @@ import android.support.v7.app.ActionBar;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.ImageSpan;
@@ -1564,7 +1565,18 @@ public class SuntimesActivity extends AppCompatActivity
 
         location = WidgetSettings.loadLocationPref(context, AppWidgetManager.INVALID_APPWIDGET_ID);
         String locationTitle = location.getLabel();
-        String locationSubtitle = location.toString();
+
+        SpannableString locationSubtitle;
+        String locationString = location.getLatitude() + ", " + location.getLongitude();  // TODO
+        boolean supportsAltitude = dataset.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_ALTITUDE);
+        if (supportsAltitude && location.getAltitudeAsInteger() != 0)
+        {
+            String altitudeString = "[" + location.getAltitude() + "m]";  // TODO
+            String displayString = locationString + " " + altitudeString;  // TODO
+            locationSubtitle = SuntimesUtils.createRelativeSpan(null, displayString, altitudeString, 0.5f);
+        } else {
+            locationSubtitle = new SpannableString(locationString);
+        }
 
         if (actionBar != null)
         {

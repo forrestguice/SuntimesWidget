@@ -44,6 +44,7 @@ public class LocationListTask extends AsyncTask<Object, Object, LocationListTask
         String selectedPlaceName = selected.getLabel();
         String selectedPlaceLat = selected.getLatitude();
         String selectedPlaceLon = selected.getLongitude();
+        String selectedPlaceAlt = selected.getAltitude();
 
         db.open();
         Cursor cursor = db.getAllPlaces(0, true);
@@ -57,7 +58,8 @@ public class LocationListTask extends AsyncTask<Object, Object, LocationListTask
         Cursor selectedCursor = db.getPlace(selectedPlaceName, true);
         String selectedLat = selectedCursor.getString(2);
         String selectedLon = selectedCursor.getString(3);
-        if (!selectedLat.equals(selectedPlaceLat) || !selectedLon.equals(selectedPlaceLon))
+        String selectedAlt = selectedCursor.getString(4);
+        if (!selectedLat.equals(selectedPlaceLat) || !selectedLon.equals(selectedPlaceLon) || !selectedAlt.equals(selectedPlaceAlt))
         {
             db.updatePlace(selected);
             cursor = db.getAllPlaces(0, true);
