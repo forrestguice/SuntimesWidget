@@ -64,7 +64,7 @@ public class WidgetSettings
     public static final String PREF_PREFIX_KEY_ACTION = "_action_";
 
     public static final String PREF_KEY_GENERAL_CALCULATOR = "calculator";
-    public static final String PREF_DEF_GENERAL_CALCULATOR = "time4a-noaa";
+    public static final String PREF_DEF_GENERAL_CALCULATOR = "time4a-time4j";
     public static final String PREF_DEF_GENERAL_CALCULATOR_MOON = "time4a-time4j";
     public static final String[][] PREF_DEF_GENERAL_CALCULATORS = new String[][] { new String[] {"",     PREF_DEF_GENERAL_CALCULATOR},
                                                                                    new String[] {"moon", PREF_DEF_GENERAL_CALCULATOR_MOON} };
