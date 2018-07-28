@@ -179,6 +179,9 @@
     <string name="configLabel_general_calculator_sun">Sun Data Source</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Moon Data Source</string>         <!-- preference label -->
 
+    <string name="configLabel_general_altitude_enabled">Use Altitude</string>        <!-- checkbox label --> <!-- TODO: i18n -->
+    <string name="configLabel_general_altitude_enabled_summary">Apply altitude based refinements.</string>        <!-- checkbox label --> <!-- TODO: i18n -->
+
     <string name="configLabel_general_showSeconds">Show Seconds</string>        <!-- checkbox label -->
     <string name="configLabel_general_showSeconds_summary">Include seconds when displaying times.</string>        <!-- checkbox label -->
 
@@ -1041,6 +1044,7 @@
     <!-- pref defaults -->
     <string name="def_appwidget_0_general_calculator" translatable="false">time4a-time4j</string>
     <string name="def_appwidget_0_general_calculator_moon" translatable="false">time4a-time4j</string>
+    <string name="def_appwidget_0_general_altitude_enabled" translatable="false">true</string>
     <string name="def_appwidget_0_appearance_timeformatmode" translatable="false">MODE_SYSTEM</string>
     <string name="def_appwidget_0_general_showweeks" translatable="false">false</string>
     <string name="def_appwidget_0_general_showhours" translatable="false">true</string>

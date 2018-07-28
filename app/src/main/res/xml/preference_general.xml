@@ -18,6 +18,11 @@
             android:summary="%s"
             android:entries="@null" android:entryValues="@null" android:defaultValue="@string/def_appwidget_0_general_calculator_moon" />
 
+        <CheckBoxPreference
+            android:key="appwidget_0_general_location_altitude_enabled"
+            android:title="@string/configLabel_general_altitude_enabled"
+            android:summary="@string/configLabel_general_altitude_enabled_summary" android:defaultValue="@string/def_appwidget_0_general_altitude_enabled" />
+
         <com.forrestguice.suntimeswidget.settings.ListPreference
             android:key="appwidget_0_appearance_timeformatmode"
             android:title="@string/configLabel_timeFormatMode"
@@ -35,7 +40,6 @@
             android:key="appwidget_0_general_showtimedate"
             android:title="@string/configLabel_general_showTimeDate"
             android:summary="@string/configLabel_general_showTimeDate_summary" android:defaultValue="@string/def_appwidget_0_general_showtimedate" />
-
 
     </PreferenceCategory>
 

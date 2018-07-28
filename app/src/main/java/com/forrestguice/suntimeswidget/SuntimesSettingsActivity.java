@@ -306,6 +306,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             return;
         }
 
+        if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_LOCATION_ALTITUDE_ENABLED))
+	{
+            // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
+            // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
+	    WidgetSettings.saveLocationAltitudeEnabledPref(this, 0, sharedPreferences.getBoolean(key, WidgetSettings.PREF_DEF_GENERAL_LOCATION_ALTITUDE_ENABLED));
+	    return;
+	}
+
         if (key.endsWith(WidgetSettings.PREF_KEY_APPEARANCE_TIMEFORMATMODE))
         {
             // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
@@ -320,7 +328,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
             // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
             WidgetSettings.saveTrackingModePref(this, 0, WidgetSettings.TrackingMode.valueOf(sharedPreferences.getString(key, WidgetSettings.PREF_DEF_GENERAL_TRACKINGMODE.name())));
-	        return;
+	    return;
         }
 
         if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_SHOWSECONDS))

@@ -159,6 +159,9 @@ public class WidgetSettings
     public static final String PREF_KEY_LOCATION_ALTITUDE = "altitude";
     public static String PREF_DEF_LOCATION_ALTITUDE = "0";               // reassigned later by initDefaults
 
+    public static final String PREF_KEY_LOCATION_ALTITUDE_ENABLED = "altitude_enabled";
+    public static final boolean PREF_DEF_LOCATION_ALTITUDE_ENABLED = true;
+
     public static final String PREF_KEY_LOCATION_LABEL = "label";
     public static String PREF_DEF_LOCATION_LABEL = "Prescott, AZ";       // reassigned later by initDefaults
 
@@ -1881,7 +1884,6 @@ public class WidgetSettings
         String latString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_LATITUDE, PREF_DEF_LOCATION_LATITUDE);
         String nameString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_LABEL, PREF_DEF_LOCATION_LABEL);
         return new Location(nameString, latString, lonString, altString);
-
     }
     public static void deleteLocationPref(Context context, int appWidgetId)
     {
@@ -1891,6 +1893,31 @@ public class WidgetSettings
         prefs.remove(prefs_prefix + PREF_KEY_LOCATION_LONGITUDE);
         prefs.remove(prefs_prefix + PREF_KEY_LOCATION_LATITUDE);
         prefs.remove(prefs_prefix + PREF_KEY_LOCATION_LABEL);
+        prefs.apply();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void saveLocationAltitudeEnabledPref(Context context, int appWidgetId, boolean enabled)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_LOCATION;
+        prefs.putBoolean(prefs_prefix + PREF_KEY_LOCATION_ALTITUDE_ENABLED, enabled);
+        prefs.apply();
+    }
+    public static boolean loadLocationAltitudeEnabledPref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_LOCATION;
+        boolean enabled = prefs.getBoolean(prefs_prefix + PREF_KEY_LOCATION_ALTITUDE_ENABLED, PREF_DEF_LOCATION_ALTITUDE_ENABLED);
+        return enabled;
+    }
+    public static void deleteLocationAltitudeEnabledPref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_LOCATION;
+        prefs.remove(prefs_prefix + PREF_KEY_LOCATION_ALTITUDE_ENABLED);
         prefs.apply();
     }
 
@@ -2251,6 +2278,7 @@ public class WidgetSettings
         deleteObserverHeightPref(context, appWidgetId);
 
         deleteLocationModePref(context, appWidgetId);
+	deleteLocationAltitudeEnabledPref(context, appWidgetId);
         deleteLocationPref(context, appWidgetId);
 
         deleteTimezoneModePref(context, appWidgetId);
