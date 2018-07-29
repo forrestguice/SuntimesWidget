@@ -635,6 +635,7 @@ public class WidgetSettings
         private String latitude;   // decimal degrees (DD)
         private String longitude;  // decimal degrees (DD)
         private String altitude;   // meters above the WGS 84 reference ellipsoid
+        private boolean useAltitude = true;
 
         /**
          * @param latitude decimal degrees (DD) string
@@ -743,17 +744,28 @@ public class WidgetSettings
         /**
          * @return altitude in meters
          */
-        public String getAltitude() { return altitude; }
+        public String getAltitude()
+        {
+            if (!useAltitude)
+                return "";
+            else return altitude;
+        }
 
         public Double getAltitudeAsDouble()
         {
-            if (altitude.isEmpty())
+            if (!useAltitude || altitude.isEmpty())
                 return 0.0;
             else return Double.parseDouble(altitude);
         }
         public Integer getAltitudeAsInteger()
         {
-            return getAltitudeAsDouble().intValue();
+            if (!useAltitude || altitude.isEmpty())
+                return 0;
+            else return getAltitudeAsDouble().intValue();
+        }
+        public void setUseAltitude( boolean enabled )
+        {
+            useAltitude = enabled;
         }
 
         /**
@@ -1883,7 +1895,10 @@ public class WidgetSettings
         String lonString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_LONGITUDE, PREF_DEF_LOCATION_LONGITUDE);
         String latString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_LATITUDE, PREF_DEF_LOCATION_LATITUDE);
         String nameString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_LABEL, PREF_DEF_LOCATION_LABEL);
-        return new Location(nameString, latString, lonString, altString);
+
+        Location location = new Location(nameString, latString, lonString, altString);
+        location.setUseAltitude(prefs.getBoolean(prefs_prefix + PREF_KEY_LOCATION_ALTITUDE_ENABLED, PREF_DEF_LOCATION_ALTITUDE_ENABLED));
+        return location;
     }
     public static void deleteLocationPref(Context context, int appWidgetId)
     {

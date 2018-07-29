@@ -30,6 +30,7 @@ import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -306,13 +307,13 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             return;
         }
 
-        if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_LOCATION_ALTITUDE_ENABLED))
-	{
+        if (key.endsWith(WidgetSettings.PREF_KEY_LOCATION_ALTITUDE_ENABLED))
+        {
             // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
             // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
-	    WidgetSettings.saveLocationAltitudeEnabledPref(this, 0, sharedPreferences.getBoolean(key, WidgetSettings.PREF_DEF_GENERAL_LOCATION_ALTITUDE_ENABLED));
-	    return;
-	}
+            WidgetSettings.saveLocationAltitudeEnabledPref(this, 0, sharedPreferences.getBoolean(key, WidgetSettings.PREF_DEF_LOCATION_ALTITUDE_ENABLED));
+            return;
+        }
 
         if (key.endsWith(WidgetSettings.PREF_KEY_APPEARANCE_TIMEFORMATMODE))
         {
@@ -328,7 +329,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
             // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
             WidgetSettings.saveTrackingModePref(this, 0, WidgetSettings.TrackingMode.valueOf(sharedPreferences.getString(key, WidgetSettings.PREF_DEF_GENERAL_TRACKINGMODE.name())));
-	    return;
+	        return;
         }
 
         if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_SHOWSECONDS))
@@ -406,6 +407,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     public static class GeneralPrefsFragment extends PreferenceFragment
     {
         private SummaryListPreference sunCalculatorPref, moonCalculatorPref;
+        private CheckBoxPreference useAltitudePref;
 
         @Override
         public void onCreate(Bundle savedInstanceState)
@@ -419,6 +421,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
             sunCalculatorPref = (SummaryListPreference) findPreference(WidgetSettings.keyCalculatorModePref(0));
             moonCalculatorPref = (SummaryListPreference) findPreference(WidgetSettings.keyCalculatorModePref(0, "moon"));
+
             initPref_general(GeneralPrefsFragment.this);
         }
 
@@ -446,6 +449,15 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     private void initPref_general()
     {
         Log.i(LOG_TAG, "initPref_general (legacy)");
+
+        String key_timeFormat = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + WidgetSettings.PREF_KEY_APPEARANCE_TIMEFORMATMODE;
+        ListPreference timeformatPref = (ListPreference)findPreference(key_timeFormat);
+        initPref_timeFormat(this, timeformatPref);
+
+        String key_altitudePref = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_LOCATION + WidgetSettings.PREF_KEY_LOCATION_ALTITUDE_ENABLED;
+        CheckBoxPreference altitudePref = (CheckBoxPreference)findPreference(key_altitudePref);
+        initPref_altitude(this, altitudePref);
+
         String key_sunCalc = WidgetSettings.keyCalculatorModePref(0);
         //noinspection deprecation
         SummaryListPreference sunCalculatorPref = (SummaryListPreference)findPreference(key_sunCalc);
@@ -461,18 +473,22 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         if (moonCalculatorPref != null)
         {
             initPref_calculator(this, moonCalculatorPref, new int[] {SuntimesCalculator.FEATURE_MOON});
-            loadPref_calculator(this, moonCalculatorPref, "moon");
+            loadPref_calculator(this, moonCalculatorPref,"moon");
         }
-
-        String key_timeFormat = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + WidgetSettings.PREF_KEY_APPEARANCE_TIMEFORMATMODE;
-        ListPreference timeformatPref = (ListPreference)findPreference(key_timeFormat);
-        initPref_timeFormat(this, timeformatPref);
     }
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private static void initPref_general(PreferenceFragment fragment)
     {
         Log.i(LOG_TAG, "initPref_general (fragment)");
         Context context = fragment.getActivity();
+
+        String key_timeFormat = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + WidgetSettings.PREF_KEY_APPEARANCE_TIMEFORMATMODE;
+        Preference timeformatPref = fragment.findPreference(key_timeFormat);
+        initPref_timeFormat(fragment.getActivity(), timeformatPref);
+
+        String key_altitudePref = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_LOCATION + WidgetSettings.PREF_KEY_LOCATION_ALTITUDE_ENABLED;
+        CheckBoxPreference altitudePref = (CheckBoxPreference)fragment.findPreference(key_altitudePref);
+        initPref_altitude(fragment.getActivity(), altitudePref);
 
         String key_sunCalc = WidgetSettings.keyCalculatorModePref(0);
         SummaryListPreference calculatorPref = (SummaryListPreference) fragment.findPreference(key_sunCalc);
@@ -489,10 +505,6 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             initPref_calculator(context, moonCalculatorPref, new int[] {SuntimesCalculator.FEATURE_MOON});
             loadPref_calculator(context, moonCalculatorPref, "moon");
         }
-
-        String key_timeFormat = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + WidgetSettings.PREF_KEY_APPEARANCE_TIMEFORMATMODE;
-        Preference timeformatPref = fragment.findPreference(key_timeFormat);
-        initPref_timeFormat(fragment.getActivity(), timeformatPref);
     }
 
     //////////////////////////////////////////////////
@@ -986,6 +998,11 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////
 
+    private static void initPref_altitude(final Activity context, final CheckBoxPreference altitudePref)
+    {
+        // TODO
+    }
+
     private static void initPref_timeFormat(final Activity context, final Preference timeformatPref)
     {
         WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
@@ -1055,9 +1072,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             if (currentIndex >= 0)
             {
                 calculatorPref.setValueIndex(currentIndex);
-                //Log.d("SuntimesSettings", "current mode: " + currentMode + " (" + currentIndex + ")");
 
-            } else {    // the descriptor loaded successfully (not null), but for whatever reason its not in our list..
+            } else {
                 Log.w(LOG_TAG, "loadPref: Unable to load calculator preference! The list is missing an entry for the descriptor: " + currentMode);
                 calculatorPref.setValue(null);  // reset to null (so subsequent selection by user gets saved and fixes this condition)
             }

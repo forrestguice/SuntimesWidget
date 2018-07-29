@@ -88,6 +88,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected CheckBox checkbox_showTimeDate;
     protected CheckBox checkbox_showWeeks;
     protected CheckBox checkbox_showHours;
+    protected CheckBox checkbox_useAltitude;
 
     protected Spinner spinner_onTap;
     protected EditText text_launchActivity;
@@ -608,6 +609,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         showOptionHours(false);
 
         //
+        // widget: useAltitude
+        //
+        checkbox_useAltitude = (CheckBox)findViewById(R.id.appwidget_general_useAltitude);
+
+        //
         // widget: about button
         //
         Button button_aboutWidget = (Button) findViewById(R.id.about_button);
@@ -1012,6 +1018,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         boolean showHours = checkbox_showHours.isChecked();
         WidgetSettings.saveShowHoursPref(context, appWidgetId, showHours);
 
+        // save: useAltitude
+        boolean useAltitude = checkbox_useAltitude.isChecked();
+        WidgetSettings.saveLocationAltitudeEnabledPref(context, appWidgetId, useAltitude);
+
         // save: time mode
         saveTimeMode(context);
         saveTimeModeOverride(context);
@@ -1061,6 +1071,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // load: showHours
         boolean showHours = WidgetSettings.loadShowHoursPref(context, appWidgetId);
         checkbox_showHours.setChecked(showHours);
+
+        // load: useAltitude
+        boolean useAltitude = WidgetSettings.loadLocationAltitudeEnabledPref(context, appWidgetId);
+        checkbox_useAltitude.setChecked(useAltitude);
 
         // load: time mode
         loadTimeMode(context);
@@ -1366,6 +1380,18 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         showCompareUI(false);
     }
     private boolean hideCompareAgainst = false;
+
+    /**
+     *
+     */
+    protected void hideOptionUseAltitude()
+    {
+        View layout_useAltitude = findViewById(R.id.appwidget_general_useAltitude_layout);
+        if (layout_useAltitude != null)
+        {
+            layout_useAltitude.setVisibility(View.GONE);
+        }
+    }
 
     /**
      *
