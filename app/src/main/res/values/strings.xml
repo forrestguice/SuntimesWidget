@@ -179,7 +179,7 @@
     <string name="configLabel_general_calculator_sun">Sun Data Source</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Moon Data Source</string>         <!-- preference label -->
 
-    <string name="configLabel_general_altitude_enabled">Use Altitude</string>        <!-- checkbox label --> <!-- TODO: i18n -->
+    <string name="configLabel_general_altitude_enabled">Use Elevation</string>        <!-- checkbox label --> <!-- TODO: i18n -->
     <string name="configLabel_general_altitude_enabled_summary">Apply altitude based refinements.</string>        <!-- checkbox label --> <!-- TODO: i18n -->
 
     <string name="configLabel_general_showSeconds">Show Seconds</string>        <!-- checkbox label -->
@@ -292,7 +292,7 @@
     <string name="configHint_location_lat">decimal degrees</string>      <!-- edittext hint -->
     <string name="configLabel_location_lon">Longitude:</string>                          <!-- edittext label -->
     <string name="configHint_location_lon">decimal degrees</string> <!-- edittext hint -->
-    <string name="configLabel_location_alt">Altitude:</string>                          <!-- edittext label -->   <!-- TODO -->
+    <string name="configLabel_location_alt">Elevation:</string>                          <!-- edittext label -->   <!-- TODO -->
     <string name="configHint_location_alt">meters</string> <!-- edittext hint -->                                 <!-- TODO -->
     <string name="configLabel_location_name">Name:</string>                      <!-- edittext label -->
     <string name="configHint_location_name">(optional)</string>                  <!-- edittext hint -->
@@ -872,7 +872,7 @@
     <string name="location_dialog_cancel">Cancel</string>
     <string name="location_dialog_error_lat">This is not a valid latitude.</string>
     <string name="location_dialog_error_lon">This is not a valid longitude.</string>
-    <string name="location_dialog_error_alt">This is not a valid altitude.</string>  <!-- TODO: i18n -->
+    <string name="location_dialog_error_alt">This is not a valid elevation.</string>  <!-- TODO: i18n -->
 
     <string name="location_dialog_toast_copied">Copied to clipboard<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
 
