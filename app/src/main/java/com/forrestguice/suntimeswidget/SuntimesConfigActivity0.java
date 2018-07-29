@@ -43,6 +43,7 @@ import android.widget.TextView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 
@@ -377,6 +378,18 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (spinner_calculatorMode != null)
         {
             spinner_calculatorMode.setAdapter(createAdapter_calculators());
+            spinner_calculatorMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+            {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+                {
+                    SuntimesCalculatorDescriptor descriptor = (SuntimesCalculatorDescriptor)adapterView.getItemAtPosition(i);
+                    checkbox_useAltitude.setEnabled(descriptor.hasRequestedFeature(SuntimesCalculator.FEATURE_ALTITUDE));
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {}
+            });
         }
 
         //
