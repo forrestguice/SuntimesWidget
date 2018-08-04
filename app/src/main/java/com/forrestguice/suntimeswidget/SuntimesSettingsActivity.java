@@ -274,6 +274,13 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     {
         Log.i(LOG_TAG, "onSharedPreferenceChanged: key: " + key);
 
+        if (key.endsWith(AppSettings.PREF_KEY_PLUGINS_ENABLESCAN))
+        {
+            SuntimesCalculatorDescriptor.reinitCalculators(this);
+            rebuildActivity();
+            return;
+        }
+
         if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_CALCULATOR))
         {
             try {

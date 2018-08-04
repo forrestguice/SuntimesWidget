@@ -124,6 +124,12 @@ public class SuntimesCalculatorDescriptor implements Comparable, SuntimesCalcula
         //Log.d("CalculatorFactory", "Initialized suntimes calculator list.");
     }
 
+    public static void reinitCalculators(Context context)
+    {
+        calculators.clear();
+        initCalculators(context);
+    }
+
     private static int[] parseFlags( String flagString )
     {
         ArrayList<Integer> flagList = new ArrayList<>();
