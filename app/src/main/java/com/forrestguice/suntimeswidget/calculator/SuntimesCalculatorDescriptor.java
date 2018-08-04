@@ -34,6 +34,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.settings.AppSettings;
+
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
@@ -80,35 +82,41 @@ public class SuntimesCalculatorDescriptor implements Comparable, SuntimesCalcula
 
     private static ArrayList<Object> calculators = new ArrayList<Object>();
 
+    public static final String LOGTAG = "CalculatorDescriptor";
+
     protected static boolean initialized = false;
     public static void initCalculators(Context context)
     {
         SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.getDescriptor());
-        //SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator.getDescriptor());
-
+        //SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator.getDescriptor());  // commented to test as plugin
         SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.time4a.Time4ASimpleSuntimesCalculator.getDescriptor());
         SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.time4a.Time4ANOAASuntimesCalculator.getDescriptor());
         SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.time4a.Time4ACCSuntimesCalculator.getDescriptor());
         SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator.getDescriptor());
 
-        PackageManager packageManager = context.getPackageManager();
-        Intent packageQuery = new Intent(Intent.ACTION_RUN);    // get a list of installed plugins
-        packageQuery.addCategory(CATEGORY_SUNTIMES_CALCULATOR);
-
-        List<ResolveInfo> packages = packageManager.queryIntentActivities(packageQuery, PackageManager.GET_META_DATA);
-        for (ResolveInfo packageInfo : packages)
+        boolean scanForPlugins = AppSettings.loadScanForPluginsPref(context);
+        if (scanForPlugins)
         {
-            if (packageInfo.activityInfo != null
-                    && packageInfo.activityInfo.metaData != null)
-            {
-                String calculatorName = packageInfo.activityInfo.metaData.getString(KEY_NAME);
-                String calculatorDisplayString = packageInfo.activityInfo.metaData.getString(KEY_DISPLAYSTRING);
-                String calculatorDisplayReference = packageInfo.activityInfo.metaData.getString(KEY_REFERENCE);
-                int[] calculatorFeatures = parseFlags(packageInfo.activityInfo.metaData.getString(KEY_FEATURES));
+            PackageManager packageManager = context.getPackageManager();
+            Intent packageQuery = new Intent(Intent.ACTION_RUN);    // get a list of installed plugins
+            packageQuery.addCategory(CATEGORY_SUNTIMES_CALCULATOR);
+            List<ResolveInfo> packages = packageManager.queryIntentActivities(packageQuery, PackageManager.GET_META_DATA);
+            Log.i(LOGTAG, "Scanning for calculator plugins... found " + packages.size());
 
-                SuntimesCalculatorDescriptor descriptor = new SuntimesCalculatorDescriptor(calculatorName, calculatorDisplayString, calculatorDisplayReference, -1, calculatorFeatures);
-                SuntimesCalculatorDescriptor.addValue(descriptor);
-                Log.d("DEBUG", "initialized calculator plugin: " + descriptor.toString());
+            for (ResolveInfo packageInfo : packages)
+            {
+                if (packageInfo.activityInfo != null
+                        && packageInfo.activityInfo.metaData != null)
+                {
+                    String calculatorName = packageInfo.activityInfo.metaData.getString(KEY_NAME);
+                    String calculatorDisplayString = packageInfo.activityInfo.metaData.getString(KEY_DISPLAYSTRING);
+                    String calculatorDisplayReference = packageInfo.activityInfo.metaData.getString(KEY_REFERENCE);
+                    int[] calculatorFeatures = parseFlags(packageInfo.activityInfo.metaData.getString(KEY_FEATURES));
+
+                    SuntimesCalculatorDescriptor descriptor = new SuntimesCalculatorDescriptor(calculatorName, calculatorDisplayString, calculatorDisplayReference, -1, calculatorFeatures);
+                    SuntimesCalculatorDescriptor.addValue(descriptor);
+                    Log.i(LOGTAG, "..initialized calculator plugin: " + descriptor.toString());
+                }
             }
         }
 
@@ -119,7 +127,7 @@ public class SuntimesCalculatorDescriptor implements Comparable, SuntimesCalcula
     private static int[] parseFlags( String flagString )
     {
         ArrayList<Integer> flagList = new ArrayList<>();
-        String[] flags = flagString.split(",");
+        String[] flags = (flagString != null ? flagString.split(",") : new String[0]);
         for (String flag : flags)
         {
             flag = flag.trim();
