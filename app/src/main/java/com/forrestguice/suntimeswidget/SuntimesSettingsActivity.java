@@ -274,13 +274,20 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     {
         Log.i(LOG_TAG, "onSharedPreferenceChanged: key: " + key);
 
+        if (key.endsWith(AppSettings.PREF_KEY_PLUGINS_ENABLESCAN))
+        {
+            SuntimesCalculatorDescriptor.reinitCalculators(this);
+            rebuildActivity();
+            return;
+        }
+
         if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_CALCULATOR))
         {
             try {
                 // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
                 // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
                 String calcName = sharedPreferences.getString(key, null);
-                SuntimesCalculatorDescriptor descriptor = SuntimesCalculatorDescriptor.valueOf(calcName);
+                SuntimesCalculatorDescriptor descriptor = SuntimesCalculatorDescriptor.valueOf(this, calcName);
                 WidgetSettings.saveCalculatorModePref(this, 0, descriptor);
                 Log.i(LOG_TAG, "onSharedPreferenceChanged: value: " + calcName + " :: " + descriptor);
 
@@ -296,7 +303,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
                 // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
                 String calcName = sharedPreferences.getString(key, null);
-                SuntimesCalculatorDescriptor descriptor = SuntimesCalculatorDescriptor.valueOf(calcName);
+                SuntimesCalculatorDescriptor descriptor = SuntimesCalculatorDescriptor.valueOf(this, calcName);
                 WidgetSettings.saveCalculatorModePref(this, 0, "moon", descriptor);
                 Log.i(LOG_TAG, "onSharedPreferenceChanged: value: " + calcName + " :: " + descriptor);
 
@@ -1015,8 +1022,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     }
     private static void initPref_calculator(Context context, final SummaryListPreference calculatorPref, int[] requestedFeatures)
     {
-        SuntimesCalculatorDescriptor[] calculators = (requestedFeatures == null ? SuntimesCalculatorDescriptor.values()
-                                                                                : SuntimesCalculatorDescriptor.values(requestedFeatures));
+        SuntimesCalculatorDescriptor[] calculators = (requestedFeatures == null ? SuntimesCalculatorDescriptor.values(context)
+                                                                                : SuntimesCalculatorDescriptor.values(context, requestedFeatures));
         String[] calculatorEntries = new String[calculators.length];
         String[] calculatorValues = new String[calculators.length];
         String[] calculatorSummaries = new String[calculators.length];
@@ -1025,7 +1032,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         for (SuntimesCalculatorDescriptor calculator : calculators)
         {
             calculator.initDisplayStrings(context);
-            calculatorEntries[i] = calculatorValues[i] = calculator.name();
+            calculatorEntries[i] = calculatorValues[i] = calculator.getName();
             calculatorSummaries[i] = calculator.getDisplayString();
             i++;
         }
@@ -1043,7 +1050,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         if (context != null && calculatorPref != null)
         {
             SuntimesCalculatorDescriptor currentMode = WidgetSettings.loadCalculatorModePref(context, 0, calculatorName);
-            int currentIndex = ((currentMode != null) ? calculatorPref.findIndexOfValue(currentMode.name()) : -1);
+            int currentIndex = ((currentMode != null) ? calculatorPref.findIndexOfValue(currentMode.getName()) : -1);
             if (currentIndex >= 0)
             {
                 calculatorPref.setValueIndex(currentIndex);

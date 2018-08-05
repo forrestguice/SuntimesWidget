@@ -19,16 +19,26 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.settings.AppSettings;
+
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -41,11 +51,105 @@ import java.util.Locale;
  * will return the list as an array (suitable for use in an adaptor), and the valueOf(String)
  * method can be used to retrieve a descriptor from this list using its name. The ordinal() method
  * will return a descriptor's order within the list.
+ *
+ * The list of installed calculators should be initialized using the initCalculators() method. Using the
+ * SuntimesCalculatorDescriptor.values() and SuntimesCalculatorDescriptor.valueOf() methods will
+ * trigger lazy initialization.
+
+ * SuntimesCalculatorDescriptor knows about the following implementations:
+ *
+ *   * sunrisesunsetlib (fallback)
+ *     :: com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.class
+ *
+ *   * ca.rmen.sunrisesunset
+ *     :: com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator.class
+ *
+ *   * time4a
+ *     :: com.forrestguice.suntimeswidget.calculator.time4a.Time4ASimpleSuntimesCalculator.class
+ *     :: com.forrestguice.suntimeswidget.calculator.time4a.Time4ANOAASuntimesCalculator.class
+ *     :: com.forrestguice.suntimeswidget.calculator.time4a.Time4ACCSuntimesCalculator.class
+ *     :: com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator.class
+ *
  */
 @SuppressWarnings("Convert2Diamond")
-public class SuntimesCalculatorDescriptor implements Comparable
+public class SuntimesCalculatorDescriptor implements Comparable, SuntimesCalculatorInfo
 {
+    public static final String CATEGORY_SUNTIMES_CALCULATOR = "com.forrestguice.suntimeswidget.SUNTIMES_CALCULATOR";
+    public static final String KEY_NAME = "CalculatorName";
+    public static final String KEY_DISPLAYSTRING = "CalculatorDisplayString";
+    public static final String KEY_REFERENCE = "CalculatorReference";
+    public static final String KEY_FEATURES = "CalculatorFeatures";
+
     private static ArrayList<Object> calculators = new ArrayList<Object>();
+
+    public static final String LOGTAG = "CalculatorDescriptor";
+
+    protected static boolean initialized = false;
+    public static void initCalculators(Context context)
+    {
+        SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.getDescriptor());
+        SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator.getDescriptor());
+        SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.time4a.Time4ASimpleSuntimesCalculator.getDescriptor());
+        SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.time4a.Time4ANOAASuntimesCalculator.getDescriptor());
+        SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.time4a.Time4ACCSuntimesCalculator.getDescriptor());
+        SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator.getDescriptor());
+
+        boolean scanForPlugins = AppSettings.loadScanForPluginsPref(context);
+        if (scanForPlugins)
+        {
+            PackageManager packageManager = context.getPackageManager();
+            Intent packageQuery = new Intent(Intent.ACTION_RUN);    // get a list of installed plugins
+            packageQuery.addCategory(CATEGORY_SUNTIMES_CALCULATOR);
+            List<ResolveInfo> packages = packageManager.queryIntentActivities(packageQuery, PackageManager.GET_META_DATA);
+            Log.i(LOGTAG, "Scanning for calculator plugins... found " + packages.size());
+
+            for (ResolveInfo packageInfo : packages)
+            {
+                if (packageInfo.activityInfo != null
+                        && packageInfo.activityInfo.metaData != null)
+                {
+                    String calculatorName = packageInfo.activityInfo.metaData.getString(KEY_NAME);
+                    String calculatorDisplayString = packageInfo.activityInfo.metaData.getString(KEY_DISPLAYSTRING);
+                    String calculatorDisplayReference = packageInfo.activityInfo.metaData.getString(KEY_REFERENCE);
+                    int[] calculatorFeatures = parseFlags(packageInfo.activityInfo.metaData.getString(KEY_FEATURES));
+
+                    SuntimesCalculatorDescriptor descriptor = new SuntimesCalculatorDescriptor(calculatorName, calculatorDisplayString, calculatorDisplayReference, -1, calculatorFeatures);
+                    SuntimesCalculatorDescriptor.addValue(descriptor);
+                    Log.i(LOGTAG, "..initialized calculator plugin: " + descriptor.toString());
+                }
+            }
+        }
+
+        initialized = true;
+        //Log.d("CalculatorFactory", "Initialized suntimes calculator list.");
+    }
+
+    public static void reinitCalculators(Context context)
+    {
+        calculators.clear();
+        initCalculators(context);
+    }
+
+    private static int[] parseFlags( String flagString )
+    {
+        ArrayList<Integer> flagList = new ArrayList<>();
+        String[] flags = (flagString != null ? flagString.split(",") : new String[0]);
+        for (String flag : flags)
+        {
+            flag = flag.trim();
+            try {
+                flagList.add(Integer.parseInt(flag));
+            } catch (NumberFormatException e) {
+                Log.w("initCalculators", "ignoring invalid flag: " + flag);
+            }
+        }
+        int[] retValue = new int[flagList.size()];
+        for (int i=0; i<retValue.length; i++)
+        {
+            retValue[i] = flagList.get(i);
+        }
+        return retValue;
+    }
 
     public static void addValue( SuntimesCalculatorDescriptor calculator )
     {
@@ -60,11 +164,11 @@ public class SuntimesCalculatorDescriptor implements Comparable
         calculators.remove(calculator);
     }
 
-    public static SuntimesCalculatorDescriptor[] values()
+    public static SuntimesCalculatorDescriptor[] values(Context context)
     {
-        if (!SuntimesCalculatorFactory.initialized)
+        if (!initialized)
         {
-            SuntimesCalculatorFactory.initCalculators();
+            initCalculators(context);
         }
 
         SuntimesCalculatorDescriptor[] array = new SuntimesCalculatorDescriptor[calculators.size()];
@@ -75,11 +179,11 @@ public class SuntimesCalculatorDescriptor implements Comparable
         return array;
     }
 
-    public static SuntimesCalculatorDescriptor[] values( int[] requestedFeatures )
+    public static SuntimesCalculatorDescriptor[] values(Context context, int[] requestedFeatures )
     {
-        if (!SuntimesCalculatorFactory.initialized)
+        if (!initialized)
         {
-            SuntimesCalculatorFactory.initCalculators();
+            initCalculators(context);
         }
 
         ArrayList<SuntimesCalculatorDescriptor> matchingCalculators = new ArrayList<>();
@@ -95,23 +199,23 @@ public class SuntimesCalculatorDescriptor implements Comparable
         return matchingCalculators.toArray(retValues);
     }
 
-    public static SuntimesCalculatorDescriptor valueOf(String value)
+    public static SuntimesCalculatorDescriptor valueOf(Context context, String value)
     {
-        if (!SuntimesCalculatorFactory.initialized)
+        if (!initialized)
         {
-            SuntimesCalculatorFactory.initCalculators();
+            initCalculators(context);
         }
 
         SuntimesCalculatorDescriptor descriptor = null;
         if (value != null)
         {
             value = value.trim().toLowerCase(Locale.US);
-            SuntimesCalculatorDescriptor[] values = SuntimesCalculatorDescriptor.values();
+            SuntimesCalculatorDescriptor[] values = SuntimesCalculatorDescriptor.values(context);
             //noinspection ForLoopReplaceableByForEach
             for (int i=0; i<values.length; i++)
             {
                 SuntimesCalculatorDescriptor calculator = values[i];
-                if (calculator.name().equals(value) || value.equals("any"))
+                if (calculator.getName().equals(value) || value.equals("any"))
                 {
                     descriptor = calculator;
                     break;
@@ -165,9 +269,9 @@ public class SuntimesCalculatorDescriptor implements Comparable
      * Get the order of this descriptor within the static list of recognized descriptors.
      * @return the order of this descriptor within the descriptor list (or -1 if not in the list)
      */
-    public int ordinal()
+    public int ordinal(Context context)
     {
-        SuntimesCalculatorDescriptor[] values = SuntimesCalculatorDescriptor.values();
+        SuntimesCalculatorDescriptor[] values = SuntimesCalculatorDescriptor.values(context);
         return ordinal(values);
     }
     public int ordinal( SuntimesCalculatorDescriptor[] values )
@@ -176,7 +280,7 @@ public class SuntimesCalculatorDescriptor implements Comparable
         for (int i=0; i<values.length; i++)
         {
             SuntimesCalculatorDescriptor calculator = values[i];
-            if (calculator.name().equals(this.name))
+            if (calculator.getName().equals(this.name))
             {
                 ordinal = i;
                 break;
@@ -189,7 +293,7 @@ public class SuntimesCalculatorDescriptor implements Comparable
      * Get the calculator's name.
      * @return the name of the SuntimesCalculator this descriptor represents
      */
-    public String name()
+    public String getName()
     {
         return name;
     }
@@ -219,6 +323,11 @@ public class SuntimesCalculatorDescriptor implements Comparable
         return calculatorRef;
     }
 
+    @Override
+    public int getDisplayStringResID()
+    {
+        return resID;
+    }
 
     public int[] getSupportedFeatures()
     {
@@ -259,7 +368,7 @@ public class SuntimesCalculatorDescriptor implements Comparable
 
         } else {
             SuntimesCalculatorDescriptor otherDescriptor = (SuntimesCalculatorDescriptor) other;
-            return this.name().equals(otherDescriptor.name());
+            return this.getName().equals(otherDescriptor.getName());
         }
     }
 
@@ -267,7 +376,7 @@ public class SuntimesCalculatorDescriptor implements Comparable
     public int compareTo(@NonNull Object other)
     {
         SuntimesCalculatorDescriptor otherDescriptor = (SuntimesCalculatorDescriptor)other;
-        return this.name().compareTo(otherDescriptor.name());
+        return this.getName().compareTo(otherDescriptor.getName());
     }
 
     public void initDisplayStrings( Context context )
@@ -308,7 +417,7 @@ public class SuntimesCalculatorDescriptor implements Comparable
             SuntimesCalculatorDescriptor descriptor = getItem(position);
             if (descriptor != null)
             {
-                text.setText(descriptor.name());
+                text.setText(descriptor.getName());
                 if (summaryText != null)
                 {
                     summaryText.setText(descriptor.getDisplayString());
@@ -336,13 +445,13 @@ public class SuntimesCalculatorDescriptor implements Comparable
 
             SuntimesCalculatorDescriptor descriptor = getItem(position);
             TextView text = (TextView)view.findViewById(android.R.id.text1);
-            text.setText(descriptor != null ? descriptor.name() : "");
+            text.setText(descriptor != null ? descriptor.getName() : "");
             return view;
         }
 
         public void initDisplayStrings(Context context)
         {
-            for (SuntimesCalculatorDescriptor value : values())
+            for (SuntimesCalculatorDescriptor value : values(context))
             {
                 value.initDisplayStrings(context);
             }
