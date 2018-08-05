@@ -79,6 +79,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
+import com.forrestguice.suntimeswidget.map.WorldMapDialog;
 import com.forrestguice.suntimeswidget.notes.NoteChangedListener;
 import com.forrestguice.suntimeswidget.notes.NoteData;
 import com.forrestguice.suntimeswidget.notes.SuntimesNotes;
@@ -119,6 +120,7 @@ public class SuntimesActivity extends AppCompatActivity
     private static final String DIALOGTAG_LOCATION = "location";
     private static final String DIALOGTAG_DATE = "dateselect";
     private static final String DIALOGTAG_LIGHTMAP = "lightmap";
+    private static final String DIALOGTAG_WORLDMAP = "worldmap";
     private static final String DIALOGTAG_EQUINOX = "equinox";
     private static final String DIALOGTAG_MOON = "moon";
 
@@ -354,6 +356,14 @@ public class SuntimesActivity extends AppCompatActivity
             lightMapDialog.setData(dataset);
             lightMapDialog.updateViews();
             //Log.d("DEBUG", "LightMapDialog updated on restore.");
+        }
+
+        WorldMapDialog worldMapDialog = (WorldMapDialog) fragments.findFragmentByTag(DIALOGTAG_WORLDMAP);
+        if (worldMapDialog != null)
+        {
+            worldMapDialog.setData(dataset);
+            worldMapDialog.updateViews();
+            //Log.d("DEBUG", "WorldMapDialog updated on restore.");
         }
 
         EquinoxDialog equinoxDialog = (EquinoxDialog) fragments.findFragmentByTag(DIALOGTAG_EQUINOX);
@@ -1268,6 +1278,10 @@ public class SuntimesActivity extends AppCompatActivity
 
             case R.id.action_sunposition:
                 showLightMapDialog();
+                return true;
+
+            case R.id.action_worldmap:
+                showWorldMapDialog();
                 return true;
 
             default:
@@ -2291,6 +2305,13 @@ public class SuntimesActivity extends AppCompatActivity
         final LightMapDialog lightMapDialog = new LightMapDialog();
         lightMapDialog.setData(dataset);
         lightMapDialog.show(getSupportFragmentManager(), DIALOGTAG_LIGHTMAP);
+    }
+
+    protected void showWorldMapDialog()
+    {
+        WorldMapDialog worldMapDialog = new WorldMapDialog();
+        worldMapDialog.setData(dataset);
+        worldMapDialog.show(getSupportFragmentManager(), DIALOGTAG_WORLDMAP);
     }
 
     protected void showEquinoxView( boolean value )

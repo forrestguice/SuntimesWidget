@@ -75,6 +75,11 @@ public class LightTheme extends SuntimesTheme
     public static final int THEMEDEF_FALLCOLOR_ID = R.color.fallColor_light;
     public static final int THEMEDEF_WINTERCOLOR_ID = R.color.winterColor_light;
 
+    public static final int THEMEDEF_MAP_BACKGROUNDCOLOR_ID = R.color.map_background_light;
+    public static final int THEMEDEF_MAP_FOREGROUNDCOLOR_ID = R.color.map_foreground_light;
+    public static final int THEMEDEF_MAP_SHADOWCOLOR_ID = R.color.map_sunshadow_light;
+    public static final int THEMEDEF_MAP_HIGHLIGHTCOLOR_ID = R.color.map_moonlight_light;
+
     public LightTheme(Context context)
     {
         super();
@@ -137,6 +142,11 @@ public class LightTheme extends SuntimesTheme
         this.themeSummerColor = ContextCompat.getColor(context, THEMEDEF_SUMMERCOLOR_ID);
         this.themeFallColor = ContextCompat.getColor(context, THEMEDEF_FALLCOLOR_ID);
         this.themeWinterColor = ContextCompat.getColor(context, THEMEDEF_WINTERCOLOR_ID);
+
+        this.themeMapBackgroundColor = ContextCompat.getColor(context, THEMEDEF_MAP_BACKGROUNDCOLOR_ID);
+        this.themeMapForegroundColor = ContextCompat.getColor(context, THEMEDEF_MAP_FOREGROUNDCOLOR_ID);
+        this.themeMapShadowColor = ContextCompat.getColor(context, THEMEDEF_MAP_SHADOWCOLOR_ID);
+        this.themeMapHighlightColor = ContextCompat.getColor(context, THEMEDEF_MAP_HIGHLIGHTCOLOR_ID);
     }
 
     public ThemeDescriptor themeDescriptor()
