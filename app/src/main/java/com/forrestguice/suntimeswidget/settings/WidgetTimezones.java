@@ -217,7 +217,7 @@ public class WidgetTimezones
          * @param n day of year (n=1 is january 1)
          * @return equation of time correction in decimal minutes
          */
-        private double equationOfTimeOffset(int n)
+        public static double equationOfTimeOffset(int n)
         {
             while (n <= 0)    // n in range [1, 365]
             {

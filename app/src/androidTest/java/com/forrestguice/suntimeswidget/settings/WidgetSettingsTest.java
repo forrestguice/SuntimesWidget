@@ -469,6 +469,22 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     }
 
     @Test
+    public void test_sunPosMapModePref()
+    {
+        WidgetSettings.saveSunPosMapModePref(context, appWidgetId, WidgetSettings.WidgetModeSunPosMap.EQUIAZIMUTHAL_SIMPLE);
+        WidgetSettings.WidgetModeSunPosMap pref2 = WidgetSettings.loadSunPosMapModePref(context, appWidgetId);
+        assertTrue("pref should be EQUIAZIMUTHAL_SIMPLE but was " + pref2, pref2.equals(WidgetSettings.WidgetModeSunPosMap.EQUIAZIMUTHAL_SIMPLE));
+
+        WidgetSettings.saveSunPosMapModePref(context, appWidgetId, WidgetSettings.WidgetModeSunPosMap.EQUIRECTANGULAR_BLUEMARBLE);
+        WidgetSettings.WidgetModeSunPosMap pref1 = WidgetSettings.loadSunPosMapModePref(context, appWidgetId);
+        assertTrue("pref should be EQUIRECTANGULAR_BLUEMARBLE but was " + pref1, pref1.equals(WidgetSettings.WidgetModeSunPosMap.EQUIRECTANGULAR_BLUEMARBLE));
+
+        WidgetSettings.deleteSunPosMapModePref(context, appWidgetId);
+        WidgetSettings.WidgetModeSunPosMap pref0 = WidgetSettings.loadSunPosMapModePref(context, appWidgetId);
+        assertTrue("pref should be default (EQUIRECTANGULAR_SIMPLE) but was " + pref0, pref0.equals(WidgetSettings.PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOSMAP) && pref0.equals(WidgetSettings.WidgetModeSunPosMap.EQUIRECTANGULAR_SIMPLE));
+    }
+
+    @Test
     public void test_1x1MoonModePref()
     {
         WidgetSettings.saveMoon1x1ModePref(context, appWidgetId, WidgetSettings.WidgetModeMoon1x1.MODE1x1_RISESET);
