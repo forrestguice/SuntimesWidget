@@ -8,6 +8,7 @@
     <color name="text_primary">#cccccc</color>
     <color name="btn_tint_pressed">#ff9900</color>
     <color name="text_alertDialogListItem">#000000</color>
+    <color name="grid_selected">#81009688</color>
 
     <color name="text_disabled_dark">#4Dffffff</color>
     <color name="text_accent_dark">@color/deep_teal_200</color>
@@ -15,6 +16,7 @@
     <color name="dialog_bg_dark">@color/grey_850</color>
     <color name="card_bg_dark">@color/grey_800</color>
     <color name="card_bg_darktrans">#aa212121</color>
+    <color name="widget_bg_dark">#82212121</color>
 
     <color name="text_disabled_light">#39000000</color>
     <color name="text_accent_light">@color/deep_teal_500</color>
@@ -22,6 +24,7 @@
     <color name="dialog_bg_light">@color/grey_50</color>
     <color name="card_bg_light">@android:color/white</color>
     <color name="card_bg_lighttrans">#aaffffff</color>
+    <color name="widget_bg_light">@color/card_bg_lighttrans</color>
 
     <!-- tags -->
     <color name="warningTag_dark">#ff9900</color>

@@ -393,6 +393,8 @@
     <string name="configLabel_themeBackground_light">Lys</string>        <!-- light background -->
     <string name="configLabel_themeBackground_dark">Mørk</string>          <!-- dark background -->
     <string name="configLabel_themeBackground_trans">Gjennomsiktig</string>  <!-- transparent background -->
+    <string name="configLabel_themeBackground_color">Farge</string>      <!-- custom background -->
+    <string name="configLabel_themeColorBackground">Farge:</string>      <!-- color label -->
 
     <string name="configLabel_themeColorTitle">Tittelfarge:</string>     <!-- color label -->
     <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->

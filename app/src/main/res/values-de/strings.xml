@@ -393,6 +393,8 @@
   <string name="configLabel_themeBackground_light">Hell</string>        <!-- light background -->
   <string name="configLabel_themeBackground_dark">Dunkel</string>          <!-- dark background -->
   <string name="configLabel_themeBackground_trans">Transparent</string>  <!-- transparent background -->
+  <string name="configLabel_themeBackground_color">Farbe</string>      <!-- custom background -->
+  <string name="configLabel_themeColorBackground">Farbe:</string>      <!-- color label -->
 
   <string name="configLabel_themeColorTitle">Titelfarbe:</string>     <!-- color label -->
   <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->

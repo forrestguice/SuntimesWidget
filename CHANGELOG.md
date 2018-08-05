@@ -4,6 +4,8 @@
 * adds 3x1 and 3x2 SunPosition previews to theme editor.
 * adds 3x2 SunPosition widget showing world map.
 * adds world map dialog to app; shows sunlight (day/night) and moonlight over an equirectangular map.
+* adds theme "Dark (translucent)"; default theme with semitransparent widget background.
+* adds to theming; custom background option (simple background color supporting transparency).
 
 ### v0.8.6 (2018-07-05)
 * updates translation to French (fr) (#220 by Aloha68).

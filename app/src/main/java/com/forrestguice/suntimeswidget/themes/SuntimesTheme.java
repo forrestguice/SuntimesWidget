@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.themes;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -35,6 +36,8 @@ public class SuntimesTheme
     public static final String THEME_DISPLAYSTRING = "display";
 
     public static final String THEME_BACKGROUND = "backgroundID";
+    public static final String THEME_BACKGROUND_COLOR = "backgroundColor";
+
     public static final String THEME_PADDING = "padding";
     public static final String THEME_PADDING_LEFT = "padding_left";
     public static final String THEME_PADDING_TOP = "padding_top";
@@ -130,6 +133,7 @@ public class SuntimesTheme
     protected String themeDisplayString;
 
     protected ThemeBackground themeBackground;
+    protected int themeBackgroundColor = Color.DKGRAY;
     protected int[] themePadding = {0, 0, 0, 0};
     private int[] themePaddingPixels = {-1, -1, -1, -1};
 
@@ -205,6 +209,7 @@ public class SuntimesTheme
         this.themeDisplayString = otherTheme.themeDisplayString;
 
         this.themeBackground = otherTheme.themeBackground;
+        this.themeBackgroundColor = otherTheme.themeBackgroundColor;
         this.themePadding[0] = otherTheme.themePadding[0];
         this.themePadding[1] = otherTheme.themePadding[1];
         this.themePadding[2] = otherTheme.themePadding[2];
@@ -296,6 +301,8 @@ public class SuntimesTheme
             this.themeBackground = ThemeBackground.getThemeBackground(backgroundID);
         }
 
+        this.themeBackgroundColor = themes.getInt( theme + THEME_BACKGROUND_COLOR, defaultTheme.getBackgroundColor() );
+
         this.themePadding[0] = themes.getInt( theme + THEME_PADDING_LEFT, defaultTheme.themePadding[0] );
         this.themePadding[1] = themes.getInt( theme + THEME_PADDING_TOP, defaultTheme.themePadding[1] );
         this.themePadding[2] = themes.getInt( theme + THEME_PADDING_RIGHT, defaultTheme.themePadding[2] );
@@ -376,6 +383,8 @@ public class SuntimesTheme
         themePrefs.putString(themePrefix + SuntimesTheme.THEME_DISPLAYSTRING, this.themeDisplayString);
 
         themePrefs.putString(themePrefix + SuntimesTheme.THEME_BACKGROUND, this.themeBackground.name());
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_BACKGROUND_COLOR, this.themeBackgroundColor);
+
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_PADDING_LEFT, this.themePadding[0]);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_PADDING_TOP, this.themePadding[1]);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_PADDING_RIGHT, this.themePadding[2]);
@@ -463,6 +472,7 @@ public class SuntimesTheme
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_DISPLAYSTRING);
 
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_BACKGROUND);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_BACKGROUND_COLOR);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_PADDING_LEFT);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_PADDING_TOP);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_PADDING_RIGHT);
@@ -831,6 +841,11 @@ public class SuntimesTheme
     public ThemeBackground getBackground()
     {
         return themeBackground;
+    }
+
+    public int getBackgroundColor()
+    {
+        return themeBackgroundColor;
     }
 
     public int[] getPadding()

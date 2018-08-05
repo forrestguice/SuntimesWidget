@@ -76,6 +76,7 @@ import java.security.InvalidParameterException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
+import static com.forrestguice.suntimeswidget.themes.SuntimesTheme.THEME_BACKGROUND_COLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesTheme.THEME_NAME;
 
 public class WidgetThemeConfigActivity extends AppCompatActivity
@@ -131,6 +132,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private CheckBox checkTitleBold, checkTimeBold;
 
     private Spinner spinBackground;
+    private ArrayAdapter<ThemeBackground> spinBackground_adapter;
+    private ColorChooser chooseColorBackground;
 
     private ViewFlipper preview;
 
@@ -215,7 +218,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        ArrayAdapter<ThemeBackground> spinBackground_adapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, ThemeBackground.values());
+        spinBackground_adapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, ThemeBackground.values());
         spinBackground_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinBackground = (Spinner)findViewById(R.id.editSpin_background);
         spinBackground.setAdapter(spinBackground_adapter);
@@ -225,6 +228,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
             {
                 updatePreview();
+                ThemeBackground background = spinBackground_adapter.getItem(i);
+                boolean enabled = (background != null && background.supportsCustomColors());
+                //chooseColorBackground.setEnabled(enabled);
+                chooseColorBackground.setVisibility(enabled ? View.VISIBLE : View.INVISIBLE);
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView)
@@ -232,6 +239,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 updatePreview();
             }
         });
+
+        chooseColorBackground = createColorChooser(context, R.id.editLabel_backgroundColor, R.id.edit_backgroundColor, R.id.editButton_backgroundColor, THEME_BACKGROUND_COLOR);
+        chooseColorBackground.setShowAlpha(true);
 
         EditText editName = (EditText)findViewById(R.id.edit_themeName);
         chooseName = new ThemeNameChooser(editName);
@@ -614,8 +624,11 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             ThemeBackground background = (ThemeBackground)spinBackground.getSelectedItem();
             if (background != null)
             {
+                if (background.supportsCustomColors())
+                    previewBackground.setBackgroundColor(chooseColorBackground.getColor());
+                else previewBackground.setBackgroundResource(background.getResID());
+
                 int[] padding = choosePadding.getPaddingPixels(this);
-                previewBackground.setBackgroundResource(background.getResID());
                 previewBackground.setPadding(padding[0], padding[1], padding[2], padding[3]);
             }
         }
@@ -1122,7 +1135,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         ThemeBackground background = (ThemeBackground)spinBackground.getSelectedItem();
         if (background != null)
         {
-            outState.putInt(SuntimesTheme.THEME_BACKGROUND, background.getResID());
+            outState.putString(SuntimesTheme.THEME_BACKGROUND, background.name());
         }
 
         for (SizeChooser chooser : sizeChoosers)
@@ -1152,7 +1165,13 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         flipToPreview(savedState.getInt(PARAM_PREVIEWID, -1));
 
         ThemeBackground background = (ThemeBackground)spinBackground.getSelectedItem();
-        setSelectedBackground(savedState.getInt(SuntimesTheme.THEME_BACKGROUND, (background != null ? background.getResID() : DarkTheme.THEMEDEF_BACKGROUND.getResID())));
+        String backgroundName = savedState.getString(SuntimesTheme.THEME_BACKGROUND, (background != null ? background.name() : DarkTheme.THEMEDEF_BACKGROUND.name()));
+        try {
+            setSelectedBackground(ThemeBackground.valueOf(backgroundName));
+        } catch (IllegalArgumentException e) {
+            Log.e("setBackground", "Unable to resolve ThemeBackground " + backgroundName);
+            spinBackground.setSelection(0);
+        }
 
         for (SizeChooser chooser : sizeChoosers)
         {
@@ -1307,7 +1326,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             chooseMoonStroke.setValue(theme.getMoonFullStroke());
 
             choosePadding.setPadding(theme.getPadding());
-            setSelectedBackground(theme.getBackground().getResID());
+            setSelectedBackground(theme.getBackground());
+            chooseColorBackground.setColor(theme.getBackgroundColor());
 
         } catch (InvalidParameterException e) {
             Log.e("loadTheme", "unable to load theme: " + e);
@@ -1318,9 +1338,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         toggleNoonIconColor(usingNoonIconColor(), true);
     }
 
-    private void setSelectedBackground(int resId)
+    private void setSelectedBackground(ThemeBackground themeBackground)
     {
-        int backgroundPos = ThemeBackground.ordinal(resId);
+        int backgroundPos = spinBackground_adapter.getPosition(themeBackground);
         spinBackground.setSelection( backgroundPos < 0 ? 0 : backgroundPos );
     }
 
@@ -1394,6 +1414,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 {
                     this.themeBackground = backgroundItem;
                 }
+                this.themeBackgroundColor = chooseColorBackground.getColor();
                 return this;
             }
         }.init();

@@ -385,6 +385,8 @@
     <string name="configLabel_themeBackground_light">Hela</string>        <!-- light background -->
     <string name="configLabel_themeBackground_dark">Malhela</string>          <!-- dark background -->
     <string name="configLabel_themeBackground_trans">Travidebla</string>  <!-- transparent background -->
+    <string name="configLabel_themeBackground_color">Koloro</string>      <!-- custom background -->
+    <string name="configLabel_themeColorBackground">Koloro:</string>      <!-- color label -->
 
     <string name="configLabel_themeColorTitle">Koloro de titolo:</string>     <!-- color label -->
     <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->

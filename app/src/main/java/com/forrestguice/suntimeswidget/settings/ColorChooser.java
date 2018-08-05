@@ -242,6 +242,23 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
         }
     }
 
+    public void setVisibility( int visibility )
+    {
+        if (label != null)
+        {
+            label.setVisibility(visibility);
+        }
+        if (edit != null)
+        {
+            edit.setVisibility(visibility);
+        }
+        if (button != null)
+        {
+            button.setVisibility(visibility);
+        }
+        setCollapsed(true);
+    }
+
     private void updateViews()
     {
         if (edit != null)

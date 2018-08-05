@@ -63,6 +63,7 @@ public class ColorDialog extends DialogFragment
         if (savedState != null)
         {
             setColor(savedState.getInt("color", getColor()));
+            showAlpha = savedState.getBoolean("showAlpha", showAlpha);
         }
 
         Context context = getContext();
@@ -120,6 +121,7 @@ public class ColorDialog extends DialogFragment
     {
         super.onSaveInstanceState(outState);
         outState.putInt("color", getColor());
+        outState.putBoolean("showAlpha", showAlpha);
     }
 
     /**
