@@ -108,6 +108,9 @@ public class AppSettings
     public static final String PREF_KEY_GETFIX_PASSIVE = "getFix_passiveMode";
     public static final boolean PREF_DEF_GETFIX_PASSIVE = false;
 
+    public static final String PREF_KEY_PLUGINS_ENABLESCAN = "app_plugins_enabled";
+    public static final boolean PREF_DEF_PLUGINS_ENABLESCAN = false;
+
     /**
      * Language modes (system, user defined)
      */
@@ -462,6 +465,11 @@ public class AppSettings
         return Long.parseLong(prefs.getString(PREF_KEY_CALENDAR_WINDOW1, PREF_DEF_CALENDAR_WINDOW1));
     }
 
+    public static boolean loadScanForPluginsPref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_PLUGINS_ENABLESCAN, PREF_DEF_PLUGINS_ENABLESCAN);
+    }
 
     /**
      * Preference: the action that is performed when the clock ui is clicked/tapped

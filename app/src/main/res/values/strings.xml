@@ -192,6 +192,12 @@
     <string name="configLabel_general_showHours">Show Hours</string>        <!-- checkbox label -->
     <string name="configLabel_general_showHours_summary">Include hours and minutes in time spans greater than a day.</string>    <!-- checkbox label -->
 
+    <!-- Widget Setting: advanced / experimental -->
+    <string name="configLabel_advanced">Advanced Settings</string>                        <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_experimental">Experimental Settings</string>                <!-- group title --> <!-- TODO -->
+    <string name="configLabel_general_scanPlugins">Data Source Plugins</string>                                          <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_general_scanPlugins_summary">Scan for and load third party plugins.</string>   <!-- pref summary --> <!-- TODO -->
+
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Appearance Settings</string>           <!-- group title -->
     <string name="configLabel_appearance_theme">Theme:</string>                  <!-- spinner label -->
@@ -1097,6 +1103,7 @@
     <string name="def_appwidget_0_general_trackingmode" translatable="false">SOONEST</string>
 
     <string name="def_app_calendars_enabled" translatable="false">false</string>
+    <string name="def_app_plugins_enabled" translatable="false">false</string>
 
     <string name="def_app_locale_mode" translatable="false">SYSTEM_LOCALE</string>
     <string name="def_app_locale" translatable="false">en</string>
