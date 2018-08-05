@@ -1339,7 +1339,7 @@ public class WidgetSettings
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String key = keyCalculatorModePref(appWidgetId, calculatorName);
-        prefs.putString(key, mode.name());
+        prefs.putString(key, mode.getName());
         prefs.apply();
     }
 
@@ -1382,7 +1382,7 @@ public class WidgetSettings
         //noinspection UnusedAssignment
         SuntimesCalculatorDescriptor calculatorMode = null;
         try {
-            calculatorMode = SuntimesCalculatorDescriptor.valueOf(modeString);
+            calculatorMode = SuntimesCalculatorDescriptor.valueOf(context, modeString);
 
         } catch (IllegalArgumentException e) {
             Log.e("loadCalculatorModePref", e.toString() + " ... It looks like " + modeString + " isn't in our list of calculators.");

@@ -956,7 +956,7 @@ public class SuntimesUtils
 
         WidgetSettings.Location location = data.location();
         String timezoneID = data.timezone().getID();
-        String datasource = (data.calculatorMode() == null) ? "" : data.calculatorMode().name();
+        String datasource = (data.calculatorMode() == null) ? "" : data.calculatorMode().getName();
         String appWidgetID = (data.appWidgetID() != null ? String.format("%s", data.appWidgetID()) : "");
 
         String displayString = titlePattern;
