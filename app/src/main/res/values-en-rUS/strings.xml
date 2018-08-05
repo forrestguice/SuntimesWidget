@@ -11,6 +11,8 @@
 
     <!-- App Setting: WidgetThemes -->
     <string name="configAction_chooseColor">Choose Color</string> <!-- button (contentDescription) -->
+    <string name="configLabel_themeBackground_color">Color</string>      <!-- custom background -->
+    <string name="configLabel_themeColorBackground">Color:</string>      <!-- color label -->
 
     <string name="configLabel_themeColorTitle">Title Color:</string>     <!-- color label -->
     <string name="configLabel_themeColorText">Text Color:</string>       <!-- color label -->

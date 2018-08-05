@@ -1,5 +1,9 @@
 ### ~
 
+### ~
+* adds theme "Dark (translucent)"; default theme with semitransparent widget background.
+* adds to theming; custom background option (simple background color supporting transparency).
+
 ### v0.8.6 (2018-07-05)
 * updates translation to French (fr) (#220 by Aloha68).
 * updates translation to Norwegian (nb) (#221 by FTno).
