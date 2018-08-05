@@ -382,6 +382,8 @@
     <string name="configLabel_themeBackground_light">Claro</string>        <!-- light background -->
     <string name="configLabel_themeBackground_dark">Oscuro</string>          <!-- dark background -->
     <string name="configLabel_themeBackground_trans">Transparente</string>  <!-- transparent background -->
+    <string name="configLabel_themeBackground_color">Color</string>      <!-- custom background -->
+    <string name="configLabel_themeColorBackground">Color:</string>      <!-- color label -->
 
     <string name="configLabel_themeColorTitle">Color de título:</string>     <!-- color label -->
     <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->
@@ -606,6 +608,10 @@
         <item>una semana (168 horas)</item>
         <item>un mes (672 horas)</item>
     </string-array>
+
+    <!-- App Setting: passive location mode -->
+    <string name="configLabel_getFix_passiveMode">Passive Location</string>  <!-- TODO -->
+    <string name="configLabel_getFix_passiveMode_summary">Use the passive location provider.</string> <!-- TODO -->
 
     <!-- App Setting: locale mode -->
     <string name="configLabel_locale">Opciones de idioma</string>   <!-- group title -->
