@@ -373,6 +373,8 @@
     <string name="configLabel_themeBackground_light">Light</string>        <!-- light background -->  <!-- TODO -->
     <string name="configLabel_themeBackground_dark">Dark</string>          <!-- dark background -->  <!-- TODO -->
     <string name="configLabel_themeBackground_trans">Transparent</string>  <!-- transparent background --> <!-- TODO -->
+    <string name="configLabel_themeBackground_color">Color</string>      <!-- custom background -->  <!-- TODO -->
+    <string name="configLabel_themeColorBackground">Color:</string>      <!-- color label -->   <!-- TODO -->
 
     <string name="configLabel_themeColorTitle">Title Color:</string>     <!-- color label -->  <!-- TODO -->
     <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->  <!-- TODO -->
@@ -592,6 +594,10 @@
         <item>1 hét (168 óra)</item>
         <item>1 hónap (672 óra)</item>
     </string-array>
+
+    <!-- App Setting: passive location mode -->
+    <string name="configLabel_getFix_passiveMode">Passive Location</string>  <!-- TODO -->
+    <string name="configLabel_getFix_passiveMode_summary">Use the passive location provider.</string> <!-- TODO -->
 
     <!-- App Setting: locale mode -->
     <string name="configLabel_locale">Nyelvbeállítások</string>   <!-- group title -->

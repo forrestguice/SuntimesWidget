@@ -52,6 +52,7 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
     private int color;
     private boolean isRunning = false, isRemoving = false;
     private boolean isCollapsed = false;
+    private boolean showAlpha = false;
 
     public static final char[] alphabet = {'#', '0', '1', '2', '3', '4', '5', '6', '7','8', '9', 'a', 'A', 'b', 'B', 'c', 'C', 'd', 'D', 'e', 'E', 'f', 'F'};
     protected final HashSet<Character> inputSet;
@@ -216,6 +217,11 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
         updateViews();
     }
 
+    public void setShowAlpha(boolean value)
+    {
+        showAlpha = value;
+    }
+
     public void setEnabled( boolean value )
     {
         if (label != null)
@@ -234,6 +240,23 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
         {
             setCollapsed(true);
         }
+    }
+
+    public void setVisibility( int visibility )
+    {
+        if (label != null)
+        {
+            label.setVisibility(visibility);
+        }
+        if (edit != null)
+        {
+            edit.setVisibility(visibility);
+        }
+        if (button != null)
+        {
+            button.setVisibility(visibility);
+        }
+        setCollapsed(true);
     }
 
     private void updateViews()
@@ -374,6 +397,7 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
     private void showColorPicker(Context context)
     {
         ColorDialog colorDialog = new ColorDialog();
+        colorDialog.setShowAlpha(showAlpha);
         colorDialog.setColor(getColor());
         colorDialog.setColorChangeListener(colorDialogChangeListener);
         if (fragmentManager != null)

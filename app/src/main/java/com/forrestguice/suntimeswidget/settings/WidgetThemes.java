@@ -46,6 +46,7 @@ import java.util.Set;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
+import com.forrestguice.suntimeswidget.themes.DarkThemeTranslucent;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
 
@@ -53,6 +54,7 @@ import com.forrestguice.suntimeswidget.themes.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.DarkThemeTrans;
 import com.forrestguice.suntimeswidget.themes.LightTheme;
 import com.forrestguice.suntimeswidget.themes.LightThemeTrans;
+import com.forrestguice.suntimeswidget.themes.ThemeBackground;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -111,6 +113,13 @@ public class WidgetThemes
         if (!SuntimesTheme.isInstalled(themePref, DarkThemeTrans.THEMEDEF_DESCRIPTOR))
         {
             DarkThemeTrans theme = new DarkThemeTrans(context);
+            theme.saveTheme(themePref);
+        }
+
+        added = addValue(DarkThemeTranslucent.THEMEDEF_DESCRIPTOR) || added;  // add default (if missing)
+        if (!SuntimesTheme.isInstalled(themePref, DarkThemeTranslucent.THEMEDEF_DESCRIPTOR))
+        {
+            DarkThemeTranslucent theme = new DarkThemeTranslucent(context);
             theme.saveTheme(themePref);
         }
 
@@ -293,7 +302,7 @@ public class WidgetThemes
     {
         private final Context context;
         private final SuntimesTheme.ThemeDescriptor[] themes;
-        private int selectedResourceID = R.color.deep_teal_200;
+        private int selectedResourceID = R.color.grid_selected;
         private int nonselectedResourceID = R.color.transparent;
 
         public ThemeGridAdapter(Context context, SuntimesTheme.ThemeDescriptor[] themes)
@@ -512,7 +521,11 @@ public class WidgetThemes
 
                 View layout = view.findViewById(R.id.widgetframe_inner);
                 try {
-                    layout.setBackgroundResource(theme.getBackground().getResID());
+                    ThemeBackground background = theme.getBackground();
+                    if (background.supportsCustomColors())
+                        layout.setBackgroundColor(theme.getBackgroundColor());
+                    else layout.setBackgroundResource(background.getResID());
+
                 } catch (Resources.NotFoundException e) {
                     Log.w("ThemeGridAdapter", "background resource not found! " + theme.getBackground());
                 }
