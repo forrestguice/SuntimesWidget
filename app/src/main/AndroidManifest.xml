@@ -39,6 +39,7 @@
         </activity>
 
         <!-- Calculator Plugins -->
+        <!--EXAMPLE:
         <activity android:name=".calculator.ca.rmen.sunrisesunset.CalculatorPlugin">
 
             <meta-data android:name="CalculatorName" android:value="ca.rmen.sunrisesunset" />
@@ -50,7 +51,7 @@
                 <action android:name="android.intent.action.RUN" />
                 <category android:name="com.forrestguice.suntimeswidget.SUNTIMES_CALCULATOR" />
             </intent-filter>
-        </activity>
+        </activity>-->
 
         <!-- Settings Activity -->
         <activity
