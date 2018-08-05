@@ -96,6 +96,9 @@ public class AppSettings
     public static final String PREF_KEY_GETFIX_PASSIVE = "getFix_passiveMode";
     public static final boolean PREF_DEF_GETFIX_PASSIVE = false;
 
+    public static final String PREF_KEY_PLUGINS_ENABLESCAN = "app_plugins_enabled";
+    public static final boolean PREF_DEF_PLUGINS_ENABLESCAN = false;
+
     /**
      * Language modes (system, user defined)
      */
@@ -422,6 +425,12 @@ public class AppSettings
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getBoolean(PREF_KEY_ACCESSIBILITY_VERBOSE, PREF_DEF_ACCESSIBILITY_VERBOSE);
+    }
+
+    public static boolean loadScanForPluginsPref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_PLUGINS_ENABLESCAN, PREF_DEF_PLUGINS_ENABLESCAN);
     }
 
     /**

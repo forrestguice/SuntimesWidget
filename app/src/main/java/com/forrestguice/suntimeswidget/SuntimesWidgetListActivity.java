@@ -382,7 +382,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         {
             AppWidgetProviderInfo info = widgetManager.getAppWidgetInfo(appWidgetId);
             String title = context.getString(R.string.configLabel_widgetList_itemTitle, widgetTitle);
-            String source = ((data.calculatorMode() == null) ? "def" : data.calculatorMode().name());
+            String source = ((data.calculatorMode() == null) ? "def" : data.calculatorMode().getName());
             String summary = context.getString(R.string.configLabel_widgetList_itemSummaryPattern, type, source);
             return new WidgetListItem(appWidgetId, info.icon, title, summary, Class.forName(info.configure.getClassName()) );
         }

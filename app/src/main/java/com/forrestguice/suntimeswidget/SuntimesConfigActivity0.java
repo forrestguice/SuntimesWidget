@@ -231,7 +231,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected SuntimesCalculatorDescriptor[] supportingCalculators()
     {
-        return SuntimesCalculatorDescriptor.values();
+        return SuntimesCalculatorDescriptor.values(this);
     }
 
     protected ArrayAdapter<WidgetSettings.TimezoneMode> createAdapter_timezoneMode()
