@@ -121,6 +121,20 @@
                 <include layout="@layout/layout_widget_moon_3x1_0" tools:ignore="DuplicateIncludedIds" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/preview3"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="center">
+                <include layout="@layout/layout_widget_sunpos_3x1_0" tools:ignore="DuplicateIncludedIds" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/preview4"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="center">
+                <include layout="@layout/layout_widget_sunpos_3x2_0" tools:ignore="DuplicateIncludedIds" />
+            </LinearLayout>
+
         </ViewFlipper>
 
     </android.support.constraint.ConstraintLayout>

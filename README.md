@@ -90,10 +90,11 @@ When submitting a bug please be detailed and specific. What did you expect the a
 
 The goal of this project is an app that is free and open-source (FOSS). The source code is available under *GPLv3* (https://github.com/forrestguice/SuntimesWidget).
 
-Icons borrowed from:
+Icons and images from:
 * "Google Android Design Icons 20131120" [Apache License 2.0]
 * "Google Material Icons" [Apache License 2.0] (https://material.io/icons/)
 * "Material Design Icons" [SIL Open Font License 1.1] (https://materialdesignicons.com)
+* "NASA Visible Earth: Blue Marble" [Public Domain] (https://visibleearth.nasa.gov/view_cat.php?categoryID=1484)
 
 Libraries used:
 * Time4A [LGPL-2.1] (http://github.com/MenoData/Time4A) 
