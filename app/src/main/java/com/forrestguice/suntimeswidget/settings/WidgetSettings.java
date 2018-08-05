@@ -39,6 +39,7 @@ import com.forrestguice.suntimeswidget.layouts.SunLayout_1x1_2;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout_1X1_0;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout_1X1_1;
+
 import com.forrestguice.suntimeswidget.themes.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
@@ -1204,7 +1205,6 @@ public class WidgetSettings
         prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS1x1);
         prefs.apply();
     }
-
 
 
     public static void saveMoon1x1ModePref(Context context, int appWidgetId, WidgetModeMoon1x1 mode)

@@ -20,6 +20,7 @@
     <string name="configAction_setDate">Choisir la date</string>
     <string name="configAction_sunDialog">Position du soleil</string>
     <string name="configAction_equinoxDialog">Solstice / Équinoxe</string>
+    <string name="configAction_worldMap">World Map</string>  <!-- TODO -->
     <string name="configAction_moon">Lune</string>
     <string name="configAction_help">Aide</string>
     <string name="configAction_settings">Paramètres</string>
@@ -245,6 +246,10 @@
     <string name="widgetMode1x1_altaz">Altitude &amp; Azimut</string>     <!-- setting -->
     <string name="widgetMode1x1_decright">Déclination &amp; Ascension droite</string>     <!-- setting -->
 
+    <string name="widgetMode_sunPosMap_simplerectangular">Basic</string>  <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal">Polar</string>     <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode_sunPosMap_bluemarble">Blue Marble</string>    <!-- setting -->  <!-- TODO -->
+
     <string name="widgetMode1x1_moonriseset">Lever &amp; coucher de la lune</string>     <!-- setting -->   
     <string name="widgetMode1x1_moonphaseillum">Phase de la lune &amp; illumination</string>     <!-- setting -->  
     <string name="widgetMode1x1_moonphase">Seulement phase de la lune</string>     <!-- setting -->
@@ -252,6 +257,7 @@
     <string name="widgetMode1x1_moonphasenext">Prochaine phase majeure</string>     <!-- setting -->  
 
     <string name="configLabel_appearance_1x1mode">Taille 1x1 :</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_3x2mode">Taille 3x2 :</string>     <!-- spinner label -->
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Ne rien faire</string>           <!-- setting -->
@@ -388,6 +394,11 @@
     <string name="configLabel_themeColorSummer">Été:</string> <!-- color label -->
     <string name="configLabel_themeColorFall">Automne :</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Hiver :</string> <!-- color label -->
+
+    <string name="configLabel_themeColorMapBackground">Map Background</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorMapForeground">Map Foreground</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorMapSunShadow">Shadow</string> <!-- color label -->          <!-- TODO -->
+    <string name="configLabel_themeColorMapMoonHighlight">Highlight</string> <!-- color label -->   <!-- TODO -->
 
     <string name="configLabel_themeColorMoonrise">Lever de lune :</string> <!-- color label -->
     <string name="configLabel_themeColorMoonset">Coucher de lune :</string> <!-- color label -->
