@@ -4,7 +4,7 @@
     <group android:checkableBehavior="none">
 
         <item android:id="@+id/action_themes"
-            android:icon="?attr/icActionSettings"
+            android:icon="?attr/icActionAppearance"
             android:title="@string/configLabel_widgetThemeList"
             app:showAsAction="ifRoom" />
 
