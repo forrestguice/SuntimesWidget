@@ -159,6 +159,20 @@
     <string name="datetime_format_verylong"><xliff:g id="dateFormat">%1$s</xliff:g> [<xliff:g id="tzID" example="UTC">%2$s</xliff:g>]</string>  <!-- datetime_format and timezone -->
     <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
 
+    <!-- distances (meters, feet, etc) -->
+    <string name="units_feet">feet</string>   <!-- TODO -->
+    <string name="units_feet_short">ft</string>   <!-- TODO -->
+    <!--<plurals name="units_feet_long">
+        <item quantity="one">%d foot</item>
+        <item quantity="other">%d feet</item>
+    </plurals>-->
+    <string name="units_meters">meters</string>  <!-- TODO -->
+    <string name="units_meters_short">m</string>  <!-- TODO -->
+    <!--<plurals name="units_meters_long">
+        <item quantity="one">%d meter</item>
+        <item quantity="other">%d meters</item>
+    </plurals>-->
+
     <!--
          WIDGET CONFIG
     -->
@@ -306,7 +320,7 @@
     <string name="configLabel_location_lon">Longitude:</string>                          <!-- edittext label -->
     <string name="configHint_location_lon">decimal degrees</string> <!-- edittext hint -->
     <string name="configLabel_location_alt">Elevation:</string>                          <!-- edittext label -->   <!-- TODO -->
-    <string name="configHint_location_alt">meters</string> <!-- edittext hint -->                                 <!-- TODO -->
+    <string name="configHint_location_alt">0</string> <!-- edittext hint -->                                 <!-- TODO -->
     <string name="configLabel_location_name">Name:</string>                      <!-- edittext label -->
     <string name="configHint_location_name">(optional)</string>                  <!-- edittext hint -->
 
