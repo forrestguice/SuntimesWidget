@@ -6,6 +6,7 @@
 * adds world map dialog to app; shows sunlight (day/night) and moonlight over an equirectangular map.
 * adds theme "Dark (translucent)"; default theme with semitransparent widget background.
 * adds to theming; custom background option (simple background color supporting transparency).
+* updates dependency (Time4A 3.44.2-2018b). 
 
 ### v0.8.6 (2018-07-05)
 * updates translation to French (fr) (#220 by Aloha68).
