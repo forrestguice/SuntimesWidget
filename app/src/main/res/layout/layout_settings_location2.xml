@@ -184,9 +184,14 @@
 
                         <EditText android:id="@+id/appwidget_location_alt"
                             android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_vertical"
-                            android:inputType="numberDecimal|numberSigned"
+                            android:inputType="numberDecimal|numberSigned" android:minEms="2"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:hint="@string/configHint_location_alt" android:enabled="false" />
+
+                        <TextView android:id="@+id/appwidget_location_alt_units"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/units_meters" android:enabled="false" />
                     </LinearLayout>
 
                 </LinearLayout>
