@@ -20,19 +20,10 @@ package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.os.Bundle;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 
@@ -399,74 +390,4 @@ public class SuntimesCalculatorDescriptor implements Comparable, SuntimesCalcula
         }
     }
 
-    /**
-     * SuntimesCalculatorDescriptorListAdapter
-     */
-    public static class SuntimesCalculatorDescriptorListAdapter extends ArrayAdapter<SuntimesCalculatorDescriptor>
-    {
-        private int layoutID, dropDownLayoutID;
-
-        public SuntimesCalculatorDescriptorListAdapter(@NonNull Context context, @LayoutRes int resource, @LayoutRes int dropDownResource, @NonNull SuntimesCalculatorDescriptor[] entries)
-        {
-            super(context, resource, entries);
-            this.layoutID = resource;
-            this.dropDownLayoutID = dropDownResource;
-            initDisplayStrings(context);
-        }
-
-        @Override
-        public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent)
-        {
-            View view = convertView;
-            if (view == null)
-            {
-                LayoutInflater inflater = LayoutInflater.from(getContext());
-                view = inflater.inflate(this.dropDownLayoutID, parent, false);
-            }
-            TextView text = (TextView) view.findViewById(android.R.id.text1);
-            TextView summaryText = (TextView) view.findViewById(android.R.id.text2);
-
-            SuntimesCalculatorDescriptor descriptor = getItem(position);
-            if (descriptor != null)
-            {
-                text.setText(descriptor.getName());
-                if (summaryText != null)
-                {
-                    summaryText.setText(descriptor.getDisplayString());
-                }
-
-            } else {
-                text.setText("");
-                if (summaryText != null)
-                {
-                    summaryText.setText("");
-                }
-            }
-            return view;
-        }
-
-        @NonNull
-        public View getView(int position, View convertView, @NonNull ViewGroup parent)
-        {
-            View view = convertView;
-            if (view == null)
-            {
-                LayoutInflater inflater = LayoutInflater.from(getContext());
-                view = inflater.inflate(this.layoutID, parent, false);
-            }
-
-            SuntimesCalculatorDescriptor descriptor = getItem(position);
-            TextView text = (TextView)view.findViewById(android.R.id.text1);
-            text.setText(descriptor != null ? descriptor.getName() : "");
-            return view;
-        }
-
-        public void initDisplayStrings(Context context)
-        {
-            for (SuntimesCalculatorDescriptor value : values(context))
-            {
-                value.initDisplayStrings(context);
-            }
-        }
-    }
 }

@@ -45,6 +45,7 @@ import android.support.v7.view.ActionMode;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptorListAdapter;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 
 import com.forrestguice.suntimeswidget.layouts.SunLayout;
@@ -228,7 +229,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected ArrayAdapter<SuntimesCalculatorDescriptor> createAdapter_calculators()
     {
         SuntimesCalculatorDescriptor[] calculators = supportingCalculators();
-        return new SuntimesCalculatorDescriptor.SuntimesCalculatorDescriptorListAdapter(this, R.layout.layout_listitem_oneline, R.layout.layout_listitem_twoline, calculators);
+        SuntimesCalculatorDescriptorListAdapter adapter= new SuntimesCalculatorDescriptorListAdapter(this, R.layout.layout_listitem_oneline, R.layout.layout_listitem_twoline, calculators);
+        adapter.setDefaultValue(defaultCalculator());
+        return adapter;
+    }
+
+    protected String defaultCalculator()
+    {
+        return WidgetSettings.PREF_DEF_GENERAL_CALCULATOR;
     }
 
     protected SuntimesCalculatorDescriptor[] supportingCalculators()
