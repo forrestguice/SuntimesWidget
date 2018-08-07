@@ -83,6 +83,16 @@ public class AppSettings
     public static final String PREF_KEY_UI_SHOWBLUEHOUR = "app_ui_showbluehour";
     public static final boolean PREF_DEF_UI_SHOWBLUEHOUR = false;
 
+    public static final String PREF_KEY_UI_SHOWFIELDS = "app_ui_showfields";
+    public static final byte PREF_DEF_UI_SHOWFIELDS = 0b00000001;
+    public static final int FIELD_ACTUAL = 0;
+    public static final int FIELD_CIVIL = 1;
+    public static final int FIELD_NAUTICAL = 2;
+    public static final int FIELD_ASTRO = 3;
+    public static final int FIELD_NOON = 4;
+    public static final int FIELD_GOLD = 5;
+    public static final int FIELD_BLUE = 6;
+
     public static final String PREF_KEY_ACCESSIBILITY_VERBOSE = "app_accessibility_verbose";
     public static final boolean PREF_DEF_ACCESSIBILITY_VERBOSE = false;
 
@@ -419,6 +429,17 @@ public class AppSettings
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getBoolean(PREF_KEY_UI_SHOWGOLDHOUR, PREF_DEF_UI_SHOWGOLDHOUR);
+    public static boolean[] loadShowFieldsPref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        int showFields = pref.getInt(PREF_KEY_UI_SHOWFIELDS, PREF_DEF_UI_SHOWFIELDS);
+
+        boolean[] retValue = new boolean[8];
+        for (int i=0; i<retValue.length; i++)
+        {
+            retValue[i] = (((showFields >> i) & 1) == 1);
+        }
+        return retValue;
     }
 
     public static boolean loadVerboseAccessibilityPref( Context context )
