@@ -1,6 +1,7 @@
 ### ~
 
 ###
+* refactors widgetlist activity to use ActionBar (#230).
 * adds 3x1 and 3x2 SunPosition previews to theme editor.
 * adds 3x2 SunPosition widget showing world map.
 * adds world map dialog to app; shows sunlight (day/night) and moonlight over an equirectangular map.
