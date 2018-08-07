@@ -179,6 +179,9 @@
 
     <string name="configAction_restoreDefaults">Restore Defaults</string>   <!-- button / menu text -->
 
+    <string name="configLabel_tagDefault">[default]</string>                <!-- TODO -->
+    <string name="configLabel_prefSummaryTag"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->  <!-- TODO -->
+
     <!-- WidgetConfig Activity -->
     <string name="configAction_addWidget">Add Widget</string>                   <!-- Button: Add -->
     <string name="configAction_reconfigWidget_short">Reconfigure</string>       <!-- Button: Reconfigure -->

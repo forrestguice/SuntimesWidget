@@ -36,7 +36,9 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.text.SpannableString;
 import android.util.Log;
 import android.util.TypedValue;
 import android.widget.Toast;
@@ -470,7 +472,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         SummaryListPreference sunCalculatorPref = (SummaryListPreference)findPreference(key_sunCalc);
         if (sunCalculatorPref != null)
         {
-            initPref_calculator(this, sunCalculatorPref);
+            initPref_calculator(this, sunCalculatorPref, WidgetSettings.PREF_DEF_GENERAL_CALCULATOR);
             loadPref_calculator(this, sunCalculatorPref);
         }
 
@@ -479,7 +481,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         SummaryListPreference moonCalculatorPref = (SummaryListPreference)findPreference(key_moonCalc);
         if (moonCalculatorPref != null)
         {
-            initPref_calculator(this, moonCalculatorPref, new int[] {SuntimesCalculator.FEATURE_MOON});
+            initPref_calculator(this, moonCalculatorPref, new int[] {SuntimesCalculator.FEATURE_MOON}, WidgetSettings.PREF_DEF_GENERAL_CALCULATOR_MOON);
             loadPref_calculator(this, moonCalculatorPref,"moon");
         }
     }
@@ -501,7 +503,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         SummaryListPreference calculatorPref = (SummaryListPreference) fragment.findPreference(key_sunCalc);
         if (calculatorPref != null)
         {
-            initPref_calculator(context, calculatorPref);
+            initPref_calculator(context, calculatorPref, WidgetSettings.PREF_DEF_GENERAL_CALCULATOR);
             loadPref_calculator(context, calculatorPref);
         }
 
@@ -509,7 +511,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         SummaryListPreference moonCalculatorPref = (SummaryListPreference) fragment.findPreference(key_moonCalc);
         if (moonCalculatorPref != null)
         {
-            initPref_calculator(context, moonCalculatorPref, new int[] {SuntimesCalculator.FEATURE_MOON});
+            initPref_calculator(context, moonCalculatorPref, new int[] {SuntimesCalculator.FEATURE_MOON}, WidgetSettings.PREF_DEF_GENERAL_CALCULATOR_MOON);
             loadPref_calculator(context, moonCalculatorPref, "moon");
         }
     }
@@ -1041,24 +1043,35 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////
 
-    private static void initPref_calculator(Context context, final SummaryListPreference calculatorPref)
+    private static void initPref_calculator(Context context, final SummaryListPreference calculatorPref, String defaultCalculator)
     {
-        initPref_calculator(context, calculatorPref, null);
+        initPref_calculator(context, calculatorPref, null, defaultCalculator);
     }
-    private static void initPref_calculator(Context context, final SummaryListPreference calculatorPref, int[] requestedFeatures)
+    private static void initPref_calculator(Context context, final SummaryListPreference calculatorPref, int[] requestedFeatures, String defaultCalculator)
     {
+        String tagDefault = context.getString(R.string.configLabel_tagDefault);
+        int[] colorAttrs = { R.attr.text_accentColor };
+        TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+        int colorDefault = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.text_accent_dark));
+        typedArray.recycle();
+
         SuntimesCalculatorDescriptor[] calculators = (requestedFeatures == null ? SuntimesCalculatorDescriptor.values(context)
                                                                                 : SuntimesCalculatorDescriptor.values(context, requestedFeatures));
         String[] calculatorEntries = new String[calculators.length];
         String[] calculatorValues = new String[calculators.length];
-        String[] calculatorSummaries = new String[calculators.length];
+        CharSequence[] calculatorSummaries = new CharSequence[calculators.length];
 
         int i = 0;
         for (SuntimesCalculatorDescriptor calculator : calculators)
         {
             calculator.initDisplayStrings(context);
             calculatorEntries[i] = calculatorValues[i] = calculator.getName();
-            calculatorSummaries[i] = calculator.getDisplayString();
+
+            String displayString = (calculator.getName().equalsIgnoreCase(defaultCalculator))
+                                 ? context.getString(R.string.configLabel_prefSummaryDefault, calculator.getDisplayString(), tagDefault)
+                                 : calculator.getDisplayString();
+            SpannableString defaultTag = SuntimesUtils.createBoldColorSpan(null, displayString, tagDefault, colorDefault);
+            calculatorSummaries[i] = SuntimesUtils.createRelativeSpan(defaultTag, displayString, tagDefault, 1.15f);
             i++;
         }
 
