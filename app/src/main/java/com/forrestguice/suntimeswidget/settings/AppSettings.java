@@ -77,12 +77,6 @@ public class AppSettings
     public static final String PREF_KEY_UI_SHOWDATASOURCE = "app_ui_showdatasource";
     public static final boolean PREF_DEF_UI_SHOWDATASOURCE = true;
 
-    public static final String PREF_KEY_UI_SHOWGOLDHOUR = "app_ui_showgoldhour";
-    public static final boolean PREF_DEF_UI_SHOWGOLDHOUR = true;
-
-    public static final String PREF_KEY_UI_SHOWBLUEHOUR = "app_ui_showbluehour";
-    public static final boolean PREF_DEF_UI_SHOWBLUEHOUR = false;
-
     public static final String PREF_KEY_UI_SHOWFIELDS = "app_ui_showfields";
     public static final byte PREF_DEF_UI_SHOWFIELDS = 0b00000001;
     public static final int FIELD_ACTUAL = 0;
@@ -419,7 +413,7 @@ public class AppSettings
         return pref.getBoolean(PREF_KEY_UI_SHOWDATASOURCE, PREF_DEF_UI_SHOWDATASOURCE);
     }
 
-    public static boolean loadBlueHourPref( Context context )
+    /**public static boolean loadBlueHourPref( Context context )
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getBoolean(PREF_KEY_UI_SHOWBLUEHOUR, PREF_DEF_UI_SHOWBLUEHOUR);
@@ -429,6 +423,8 @@ public class AppSettings
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getBoolean(PREF_KEY_UI_SHOWGOLDHOUR, PREF_DEF_UI_SHOWGOLDHOUR);
+    }*/
+
     public static boolean[] loadShowFieldsPref( Context context )
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
