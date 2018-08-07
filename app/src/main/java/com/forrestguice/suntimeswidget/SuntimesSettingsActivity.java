@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -1050,9 +1051,12 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     private static void initPref_calculator(Context context, final SummaryListPreference calculatorPref, int[] requestedFeatures, String defaultCalculator)
     {
         String tagDefault = context.getString(R.string.configLabel_tagDefault);
-        int[] colorAttrs = { R.attr.text_accentColor };
+        String tagPlugin = context.getString(R.string.configLabel_tagPlugin);
+
+        int[] colorAttrs = { R.attr.text_accentColor, R.attr.tagColor_warning };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         int colorDefault = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.text_accent_dark));
+        @SuppressLint("ResourceType") int colorPlugin = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.warningTag_dark));
         typedArray.recycle();
 
         SuntimesCalculatorDescriptor[] calculators = (requestedFeatures == null ? SuntimesCalculatorDescriptor.values(context)
@@ -1068,10 +1072,20 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             calculatorEntries[i] = calculatorValues[i] = calculator.getName();
 
             String displayString = (calculator.getName().equalsIgnoreCase(defaultCalculator))
-                                 ? context.getString(R.string.configLabel_prefSummaryDefault, calculator.getDisplayString(), tagDefault)
+                                 ? context.getString(R.string.configLabel_prefSummaryTagged, calculator.getDisplayString(), tagDefault)
                                  : calculator.getDisplayString();
-            SpannableString defaultTag = SuntimesUtils.createBoldColorSpan(null, displayString, tagDefault, colorDefault);
-            calculatorSummaries[i] = SuntimesUtils.createRelativeSpan(defaultTag, displayString, tagDefault, 1.15f);
+
+            if (calculator.isPlugin()) {
+                displayString = context.getString(R.string.configLabel_prefSummaryTagged, displayString, tagPlugin);
+            }
+
+            SpannableString styledSummary = SuntimesUtils.createBoldColorSpan(null, displayString, tagDefault, colorDefault);
+            styledSummary = SuntimesUtils.createRelativeSpan(styledSummary, displayString, tagDefault, 1.15f);
+
+            styledSummary = SuntimesUtils.createBoldColorSpan(styledSummary, displayString, tagPlugin, colorPlugin);
+            styledSummary = SuntimesUtils.createRelativeSpan(styledSummary, displayString, tagPlugin, 1.15f);
+
+            calculatorSummaries[i] = styledSummary;
             i++;
         }
 

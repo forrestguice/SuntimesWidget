@@ -114,6 +114,7 @@ public class SuntimesCalculatorDescriptor implements Comparable, SuntimesCalcula
                     int[] calculatorFeatures = parseFlags(packageInfo.activityInfo.metaData.getString(KEY_FEATURES));
 
                     SuntimesCalculatorDescriptor descriptor = new SuntimesCalculatorDescriptor(calculatorName, calculatorDisplayString, calculatorDisplayReference, -1, calculatorFeatures);
+                    descriptor.setIsPlugin(true);
                     SuntimesCalculatorDescriptor.addValue(descriptor);
                     Log.i(LOGTAG, "..initialized calculator plugin: " + descriptor.toString());
                 }
@@ -236,6 +237,7 @@ public class SuntimesCalculatorDescriptor implements Comparable, SuntimesCalcula
     private final String calculatorRef;
     private int resID = -1;
     private int[] features = new int[] { SuntimesCalculator.FEATURE_RISESET };
+    private boolean isPlugin = false;
 
     /**
      * Create a SuntimesCalculatorDescriptor object.
@@ -357,6 +359,16 @@ public class SuntimesCalculatorDescriptor implements Comparable, SuntimesCalcula
                 return false;
         }
         return true;
+    }
+
+    public boolean isPlugin()
+    {
+        return isPlugin;
+    }
+
+    public void setIsPlugin( boolean value )
+    {
+        isPlugin = value;
     }
 
     @Override
