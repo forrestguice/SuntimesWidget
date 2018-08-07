@@ -87,9 +87,16 @@ public class SuntimesNotes
 
         initColors(context);
 
+        boolean[] showFields = AppSettings.loadShowFieldsPref(context);
+        boolean enabledActual = showFields[AppSettings.FIELD_ACTUAL];
+        boolean enabledCivil = showFields[AppSettings.FIELD_CIVIL];
+        boolean enabledNautical = showFields[AppSettings.FIELD_NAUTICAL];
+        boolean enabledAstro = showFields[AppSettings.FIELD_ASTRO];
+        boolean enabledNoon = showFields[AppSettings.FIELD_NOON];
+
         boolean hasGoldBlue = dataset.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_GOLDBLUE);
-        boolean enabledGold = AppSettings.loadGoldHourPref(context);
-        boolean enabledBlue = AppSettings.loadBlueHourPref(context);
+        boolean enabledGold = showFields[AppSettings.FIELD_GOLD];
+        boolean enabledBlue = showFields[AppSettings.FIELD_BLUE];
 
         boolean hasMoon = (moondata != null && moondata.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_MOON));
         boolean enabledMoon = AppSettings.loadShowMoonPref(context);
@@ -102,6 +109,16 @@ public class SuntimesNotes
             else if ((!hasGoldBlue || !enabledBlue) && (event.equals(SolarEvents.EVENING_BLUE8) || event.equals(SolarEvents.MORNING_BLUE8) || event.equals(SolarEvents.EVENING_BLUE4) || event.equals(SolarEvents.MORNING_BLUE4)))
                 continue;
             else if ((!hasMoon || !enabledMoon) && (event.equals(SolarEvents.MOONRISE) || event.equals(SolarEvents.MOONSET)))
+                continue;
+            else if (!enabledNoon && (event.equals(SolarEvents.NOON)))
+                continue;
+            else if (!enabledAstro && (event.equals(SolarEvents.EVENING_ASTRONOMICAL) || event.equals(SolarEvents.MORNING_ASTRONOMICAL)))
+                continue;
+            else if (!enabledNautical && (event.equals(SolarEvents.EVENING_NAUTICAL) || event.equals(SolarEvents.MORNING_NAUTICAL)))
+                continue;
+            else if (!enabledCivil && (event.equals(SolarEvents.EVENING_CIVIL) || event.equals(SolarEvents.MORNING_CIVIL)))
+                continue;
+            else if (!enabledActual && (event.equals(SolarEvents.SUNSET) || event.equals(SolarEvents.SUNRISE)))
                 continue;
 
             NoteData note = createNote(event);
