@@ -820,12 +820,15 @@ public class LocationConfigView extends LinearLayout
         }
 
         String altitude = text_locationAlt.getText().toString();
-        try {
-            BigDecimal alt = new BigDecimal(altitude);
+        if (!altitude.trim().isEmpty())
+        {
+            try {
+                BigDecimal alt = new BigDecimal(altitude);
 
-        } catch (NumberFormatException e3) {
-            isValid = false;
-            text_locationAlt.setError(myParent.getString(R.string.location_dialog_error_alt));
+            } catch (NumberFormatException e3) {
+                isValid = false;
+                text_locationAlt.setError(myParent.getString(R.string.location_dialog_error_alt));
+            }
         }
 
         return isValid;
