@@ -43,6 +43,8 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory android:layout="@layout/divider_pref" />
+
     <PreferenceCategory
         android:title="@string/configLabel_experimental">
 
