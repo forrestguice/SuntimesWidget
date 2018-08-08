@@ -192,6 +192,9 @@ public class SuntimesNotes
      */
     public boolean showNextNote()
     {
+        if (notesList.size() <= 0)
+            return false;
+
         if (dataset.isCalculated())
         {
             SolarEvents currentNoteMode = WidgetSettings.loadTimeNoteRisePref(context, 0);
@@ -220,6 +223,9 @@ public class SuntimesNotes
      */
     public boolean showPrevNote()
     {
+        if (notesList.size() <= 0)
+            return false;
+
         if (dataset.isCalculated())
         {
             SolarEvents currentNoteMode = WidgetSettings.loadTimeNoteRisePref(context, AppWidgetManager.INVALID_APPWIDGET_ID);
@@ -538,7 +544,7 @@ public class SuntimesNotes
 
     public void resetNoteIndex()
     {
-        if (notesList.size() == 0)
+        if (notesList.size() <= 0)
             return;
 
         Calendar now = dataset.now();
