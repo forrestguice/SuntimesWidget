@@ -30,6 +30,7 @@ import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -124,7 +125,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             } else if (action.equals(ACTION_PREFS_UI)) {
                 //noinspection deprecation
                 addPreferencesFromResource(R.xml.preference_userinterface);
-                //initPref_ui();
+                initPref_ui();
 
             } else if (action.equals(ACTION_PREFS_PLACES)) {
                 //noinspection deprecation
@@ -966,21 +967,53 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_userinterface, false);
             addPreferencesFromResource(R.xml.preference_userinterface);
 
-            //initPref_ui(UIPrefsFragment.this);
+            initPref_ui(UIPrefsFragment.this);
         }
     }
 
     /**
      * init legacy prefs
      */
-    /**private void initPref_ui()
+    private void initPref_ui()
     {
-    }*/
+        boolean[] showFields = AppSettings.loadShowFieldsPref(this);
+        for (int i = 0; i<AppSettings.NUM_FIELDS; i++)
+        {
+            CheckBoxPreference field = (CheckBoxPreference)findPreference(AppSettings.PREF_KEY_UI_SHOWFIELDS + "_" + i);
+            if (field != null) {
+                initPref_ui_field(field, this, i, showFields[i]);
+            }
+        }
+    }
 
-    /**@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    private static void initPref_ui(PreferenceFragment fragment)
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    private static void initPref_ui(final PreferenceFragment fragment)
     {
-    }*/
+        boolean[] showFields = AppSettings.loadShowFieldsPref(fragment.getActivity());
+        for (int i = 0; i<AppSettings.NUM_FIELDS; i++)
+        {
+            CheckBoxPreference field = (CheckBoxPreference)fragment.findPreference(AppSettings.PREF_KEY_UI_SHOWFIELDS + "_" + i);
+            if (field != null) {
+                initPref_ui_field(field, fragment.getActivity(), i, showFields[i]);
+            }
+        }
+    }
+
+    private static void initPref_ui_field(CheckBoxPreference field, final Context context, final int k, boolean value)
+    {
+        field.setChecked(value);
+        field.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
+        {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o)
+            {
+                if (context != null) {
+                    AppSettings.saveShowFieldsPref(context, k, (Boolean) o);
+                    return true;
+                } else return false;
+            }
+        });
+    }
 
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////
