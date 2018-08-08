@@ -78,14 +78,15 @@ public class AppSettings
     public static final boolean PREF_DEF_UI_SHOWDATASOURCE = true;
 
     public static final String PREF_KEY_UI_SHOWFIELDS = "app_ui_showfields";
-    public static final byte PREF_DEF_UI_SHOWFIELDS = 0b00000001;
-    public static final int FIELD_ACTUAL = 0;
+    public static final byte PREF_DEF_UI_SHOWFIELDS = 0b00111111;
+    public static final int FIELD_ACTUAL = 0;  // bit positions
     public static final int FIELD_CIVIL = 1;
     public static final int FIELD_NAUTICAL = 2;
     public static final int FIELD_ASTRO = 3;
     public static final int FIELD_NOON = 4;
     public static final int FIELD_GOLD = 5;
     public static final int FIELD_BLUE = 6;
+    public static final int MAX_FIELDS = 7;
 
     public static final String PREF_KEY_ACCESSIBILITY_VERBOSE = "app_accessibility_verbose";
     public static final boolean PREF_DEF_ACCESSIBILITY_VERBOSE = false;
@@ -436,6 +437,20 @@ public class AppSettings
             retValue[i] = (((showFields >> i) & 1) == 1);
         }
         return retValue;
+    }
+
+    public static void saveShowFieldsPref( Context context, int k, boolean value )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        int showFields = pref.getInt(PREF_KEY_UI_SHOWFIELDS, PREF_DEF_UI_SHOWFIELDS);
+
+        if (value)
+            showFields |= (1 << k);  // true; OR position k to 1
+        else showFields &= ~(1 << k);  // false; AND position k to 0
+
+        SharedPreferences.Editor prefs = pref.edit();
+        prefs.putInt(PREF_KEY_UI_SHOWFIELDS, showFields);
+        prefs.apply();
     }
 
     public static boolean loadVerboseAccessibilityPref( Context context )
