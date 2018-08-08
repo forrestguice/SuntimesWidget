@@ -977,7 +977,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     private void initPref_ui()
     {
         boolean[] showFields = AppSettings.loadShowFieldsPref(this);
-        for (int i=0; i<AppSettings.MAX_FIELDS; i++)
+        for (int i = 0; i<AppSettings.NUM_FIELDS; i++)
         {
             CheckBoxPreference field = (CheckBoxPreference)findPreference(AppSettings.PREF_KEY_UI_SHOWFIELDS + "_" + i);
             if (field != null) {
@@ -990,7 +990,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     private static void initPref_ui(final PreferenceFragment fragment)
     {
         boolean[] showFields = AppSettings.loadShowFieldsPref(fragment.getActivity());
-        for (int i=0; i<AppSettings.MAX_FIELDS; i++)
+        for (int i = 0; i<AppSettings.NUM_FIELDS; i++)
         {
             CheckBoxPreference field = (CheckBoxPreference)fragment.findPreference(AppSettings.PREF_KEY_UI_SHOWFIELDS + "_" + i);
             if (field != null) {

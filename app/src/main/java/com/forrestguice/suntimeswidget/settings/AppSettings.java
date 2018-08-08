@@ -86,7 +86,7 @@ public class AppSettings
     public static final int FIELD_NOON = 4;
     public static final int FIELD_GOLD = 5;
     public static final int FIELD_BLUE = 6;
-    public static final int MAX_FIELDS = 7;
+    public static final int NUM_FIELDS = 7;
 
     public static final String PREF_KEY_ACCESSIBILITY_VERBOSE = "app_accessibility_verbose";
     public static final boolean PREF_DEF_ACCESSIBILITY_VERBOSE = false;
