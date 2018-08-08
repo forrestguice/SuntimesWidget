@@ -39,4 +39,16 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory android:layout="@layout/divider_pref" />
+
+    <PreferenceCategory
+        android:title="@string/configLabel_experimental">
+
+        <CheckBoxPreference
+            android:key="app_plugins_enabled"
+            android:title="@string/configLabel_general_scanPlugins"
+            android:summary="@string/configLabel_general_scanPlugins_summary" android:defaultValue="@string/def_app_plugins_enabled" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>
