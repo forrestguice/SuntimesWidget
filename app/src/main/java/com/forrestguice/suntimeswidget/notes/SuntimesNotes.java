@@ -538,11 +538,14 @@ public class SuntimesNotes
 
     public void resetNoteIndex()
     {
+        if (notesList.size() == 0)
+            return;
+
         Calendar now = dataset.now();
         Date time = now.getTime();
         long nearestTime = -1;
-        NoteData nearestNote = notesList.get(0);
 
+        NoteData nearestNote = notesList.get(0);
         for (NoteData note : notesList)
         {
             if (note.time != null)
