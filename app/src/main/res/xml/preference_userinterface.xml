@@ -15,7 +15,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="Visible Fields">
+        android:title="@string/configLabel_ui">
 
         <CheckBoxPreference
             android:key="app_ui_showfields_3"
@@ -46,6 +46,10 @@
             android:key="app_ui_showfields_4"
             android:title="@string/timeMode_noon"
             android:defaultValue="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/configLabel_ui">
 
         <CheckBoxPreference
             android:key="app_ui_showfields_6"
