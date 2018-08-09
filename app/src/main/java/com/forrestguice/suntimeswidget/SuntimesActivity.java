@@ -1572,13 +1572,15 @@ public class SuntimesActivity extends AppCompatActivity
         String locationTitle = location.getLabel();
 
         SpannableString locationSubtitle;
-        String locationString = location.getLatitude() + ", " + location.getLongitude();  // TODO
+        String locationString = getString(R.string.location_format_latlon, location.getLatitude(), location.getLongitude());
         boolean supportsAltitude = dataset.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_ALTITUDE);
         if (supportsAltitude && location.getAltitudeAsInteger() != 0)
         {
-            String altitudeString = "[" + location.getAltitude() + "m]";  // TODO
-            String displayString = locationString + " " + altitudeString;  // TODO
-            locationSubtitle = SuntimesUtils.createRelativeSpan(null, displayString, altitudeString, 0.5f);
+            String altitudeUnits = getString(R.string.units_meters_short);    // TODO: support display in feet
+            String altitudeString = getString(R.string.location_format_alt, ("" + location.getAltitudeAsInteger()), altitudeUnits);
+            String altitudeTag = getString(R.string.location_format_alttag, altitudeString);
+            String displayString = getString(R.string.location_format_latlonalt, locationString, altitudeTag);
+            locationSubtitle = SuntimesUtils.createRelativeSpan(null, displayString, altitudeTag, 0.5f);
         } else {
             locationSubtitle = new SpannableString(locationString);
         }
