@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -26,6 +27,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Build;
@@ -36,6 +38,8 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.util.TypedValue;
@@ -43,6 +47,7 @@ import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.calendar.SuntimesCalendarTask;
 import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -64,10 +69,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     public static final String LOG_TAG = "SuntimesSettings";
 
     final static String ACTION_PREFS_GENERAL = "com.forrestguice.suntimeswidget.PREFS_GENERAL";
+    final static String ACTION_PREFS_CALENDAR = "com.forrestguice.suntimeswidget.PREFS_CALENDAR";
     final static String ACTION_PREFS_LOCALE = "com.forrestguice.suntimeswidget.PREFS_LOCALE";
     final static String ACTION_PREFS_UI = "com.forrestguice.suntimeswidget.PREFS_UI";
     final static String ACTION_PREFS_WIDGETLIST = "com.forrestguice.suntimeswidget.PREFS_WIDGETLIST";
     final static String ACTION_PREFS_PLACES = "com.forrestguice.suntimeswidget.PREFS_PLACES";
+
+    public static final int REQUEST_CALENDARPREFSFRAGMENT_ENABLED = 2;
+    public static final int REQUEST_CALENDARPREFSFRAGMENT_DISABLED = 4;
 
     private Context context;
     private PlacesPrefsBase placesPrefBase = null;
@@ -116,6 +125,10 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 //noinspection deprecation
                 addPreferencesFromResource(R.xml.preference_general);
                 initPref_general();
+
+            } else if (action.equals(ACTION_PREFS_CALENDAR)) {
+                addPreferencesFromResource(R.xml.preference_calendars);
+                initPref_calendars();
 
             } else if (action.equals(ACTION_PREFS_LOCALE)) {
                 //noinspection deprecation
@@ -208,6 +221,35 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
+        if (grantResults.length > 0 && permissions.length > 0)
+        {
+            switch (requestCode)
+            {
+                case REQUEST_CALENDARPREFSFRAGMENT_ENABLED:
+                case REQUEST_CALENDARPREFSFRAGMENT_DISABLED:
+                    if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                    {
+                        boolean enabled = requestCode == (REQUEST_CALENDARPREFSFRAGMENT_ENABLED);
+                        runCalendarTask(SuntimesSettingsActivity.this, enabled);
+
+                        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+                        pref.putBoolean(AppSettings.PREF_KEY_CALENDARS_ENABLED, enabled);
+                        pref.apply();
+
+                        if (tmp_calendarPref != null)
+                        {
+                            tmp_calendarPref.setChecked(enabled);
+                            tmp_calendarPref = null;
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState)
     {
         super.onSaveInstanceState(outState);
@@ -249,6 +291,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     protected boolean isValidFragment(String fragmentName)
     {
         return GeneralPrefsFragment.class.getName().equals(fragmentName) ||
+               CalendarPrefsFragment.class.getName().equals(fragmentName) ||
                LocalePrefsFragment.class.getName().equals(fragmentName) ||
                UIPrefsFragment.class.getName().equals(fragmentName) ||
                PlacesPrefsFragment.class.getName().equals(fragmentName);
@@ -493,6 +536,73 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         String key_timeFormat = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + WidgetSettings.PREF_KEY_APPEARANCE_TIMEFORMATMODE;
         Preference timeformatPref = fragment.findPreference(key_timeFormat);
         initPref_timeFormat(fragment.getActivity(), timeformatPref);
+    }
+
+
+    //////////////////////////////////////////////////
+    //////////////////////////////////////////////////
+
+    public static class CalendarPrefsFragment extends PreferenceFragment
+    {
+        @Override
+        public void onCreate(Bundle savedInstanceState)
+        {
+            super.onCreate(savedInstanceState);
+            AppSettings.initLocale(getActivity());
+            Log.i("CalendarPrefsFragment", "Arguments: " + getArguments());
+
+            PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_calendars, false);
+            addPreferencesFromResource(R.xml.preference_calendars);
+
+            initPref_calendars(CalendarPrefsFragment.this);
+        }
+    }
+
+    private void initPref_calendars()
+    {
+        CheckBoxPreference calendarsEnabledPref = (CheckBoxPreference) findPreference(AppSettings.PREF_KEY_CALENDARS_ENABLED);
+        initPref_calendars(this, calendarsEnabledPref);
+    }
+
+    private static void initPref_calendars(PreferenceFragment fragment)
+    {
+        CheckBoxPreference calendarsEnabledPref = (CheckBoxPreference) fragment.findPreference(AppSettings.PREF_KEY_CALENDARS_ENABLED);
+        initPref_calendars(fragment.getActivity(), calendarsEnabledPref);
+    }
+
+    private static void initPref_calendars(final Activity activity, final CheckBoxPreference enabledPref )
+    {
+        final Preference.OnPreferenceChangeListener onPreferenceChanged0 = new Preference.OnPreferenceChangeListener()
+        {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue)
+            {
+                boolean enabled = (Boolean)newValue;
+                int calendarPermission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_CALENDAR);
+                if (calendarPermission != PackageManager.PERMISSION_GRANTED)
+                {
+                    int requestCode = (enabled ? REQUEST_CALENDARPREFSFRAGMENT_ENABLED : REQUEST_CALENDARPREFSFRAGMENT_DISABLED);
+                    ActivityCompat.requestPermissions(activity, new String[] { Manifest.permission.WRITE_CALENDAR }, requestCode);
+                    tmp_calendarPref = enabledPref;
+                    return false;
+
+                } else {
+                    runCalendarTask(activity, enabled);
+                    return true;
+                }
+            }
+        };
+        enabledPref.setOnPreferenceChangeListener(onPreferenceChanged0);
+    }
+    private static CheckBoxPreference tmp_calendarPref = null;
+
+    private static void runCalendarTask(final Activity activity, boolean enabled)
+    {
+        SuntimesCalendarTask calendarTask = new SuntimesCalendarTask(activity);
+        if (!enabled) {
+            calendarTask.setFlagClearCalendars(true);
+        }
+        calendarTask.execute();
     }
 
     //////////////////////////////////////////////////
