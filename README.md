@@ -73,23 +73,18 @@ Widgets are resizable and include...
 
 ## Permissions ##
 
-To get current location:
-* ACCESS_COARSE_LOCATION
-* ACCESS_FINE_LOCATION
+The app requires the following permissions...
 
-To export data (places, themes, etc) to file:
-* WRITE_EXTERNAL_STORAGE (Android versions 18 and under)
-    
-To interact with the AlarmClock app:
-* SET_ALARM
-
-To interact with the Calendar app (add/remove events):
-* READ_CALENDAR
-* WRITE_CALENDAR
-
-To interact with the Calendar app (add custom calendars):
-* READ_SYNC_STATS
-* WRITE_SYNC_SETTINGS
+|Permission||Since Version|
+|---|---|---|
+|ACCESS_COARSE_LOCATION|To get current location.|v0.1.0|
+|ACCESS_FINE_LOCATION|To get current location (GPS).|v0.1.0|
+|SET_ALARM|To interact with the AlarmClock app.|v0.1.0|
+|WRITE_EXTERNAL_STORAGE|To export data (places, themes, etc) to file.|v0.2.2 (api<=18)|
+|READ_CALENDAR|To interact with the Calendar app (access events).|v0.9.0|
+|WRITE_CALENDAR|To interact with the Calendar app (add/remove events).|v0.9.0|
+|READ_SYNC_STATS|To interact with the Calendar app (access custom calendars).|v0.9.0|
+|WRITE_SYNC_SETTINGS|To interact with the Calendar app (add/remove custom calendars).|v0.9.0|
 
 ## Donations ##
 
