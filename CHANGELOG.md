@@ -5,6 +5,7 @@
 * adds permissions READ_CALENDAR, WRITE_CALENDAR; needed to interact w/ Calendar app (add/remove events in custom calendars).
 * adds permissions READ_SYNC_STATS, WRITE_SYNC_SETTINGS; needed to provide custom calendars (add/remove calendars via SyncAdapter).
 * adds a SyncAdapter (LOCAL account) to provide the Calendar app with custom calendars.
+* adds options to toggle visibility of twilight times displayed by the app (hide fields).   
 * refactors widgetlist activity to use ActionBar (#230).
 * adds 3x1 and 3x2 SunPosition previews to theme editor.
 * adds 3x2 SunPosition widget showing world map.
