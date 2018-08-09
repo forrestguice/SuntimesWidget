@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -56,6 +56,9 @@ public class AppSettings
     public static final String PREF_KEY_UI_DATETAPACTION = "app_ui_datetapaction";
     public static final DateTapAction PREF_DEF_UI_DATETAPACTION = DateTapAction.CONFIG_DATE;
 
+    public static final String PREF_KEY_UI_DATETAPACTION1 = "app_ui_datetapaction1";
+    public static final DateTapAction PREF_DEF_UI_DATETAPACTION1 = DateTapAction.SHOW_CALENDAR;
+
     public static final String PREF_KEY_UI_CLOCKTAPACTION = "app_ui_clocktapaction";
     public static final ClockTapAction PREF_DEF_UI_CLOCKTAPACTION = ClockTapAction.ALARM;
 
@@ -90,6 +93,15 @@ public class AppSettings
 
     public static final String PREF_KEY_ACCESSIBILITY_VERBOSE = "app_accessibility_verbose";
     public static final boolean PREF_DEF_ACCESSIBILITY_VERBOSE = false;
+
+    public static final String PREF_KEY_CALENDARS_ENABLED = "app_calendars_enabled";
+    public static final boolean PREF_DEF_CALENDARS_ENABLED = false;
+
+    public static final String PREF_KEY_CALENDAR_WINDOW0 = "app_calendars_window0";
+    public static final String PREF_DEF_CALENDAR_WINDOW0 = "31536000000";  // 1 year
+
+    public static final String PREF_KEY_CALENDAR_WINDOW1 = "app_calendars_window1";
+    public static final String PREF_DEF_CALENDAR_WINDOW1 = "63072000000";  // 2 years
 
     public static final String PREF_KEY_UI_TIMEZONESORT = "app_ui_timezonesort";
     public static final WidgetTimezones.TimeZoneSort PREF_DEF_UI_TIMEZONESORT = WidgetTimezones.TimeZoneSort.SORT_BY_ID;
@@ -459,6 +471,32 @@ public class AppSettings
         return pref.getBoolean(PREF_KEY_ACCESSIBILITY_VERBOSE, PREF_DEF_ACCESSIBILITY_VERBOSE);
     }
 
+    public static boolean loadCalendarsEnabledPref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_CALENDARS_ENABLED, PREF_DEF_CALENDARS_ENABLED);
+    }
+
+    /**
+     * @param context context used to access preferences
+     * @return calendarWindow pref (ms value) [past]
+     */
+    public static long loadPrefCalendarWindow0(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return Long.parseLong(prefs.getString(PREF_KEY_CALENDAR_WINDOW0, PREF_DEF_CALENDAR_WINDOW0));
+    }
+
+    /**
+     * @param context context used to access preferences
+     * @return calendarWindow pref (ms value) [future]
+     */
+    public static long loadPrefCalendarWindow1(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return Long.parseLong(prefs.getString(PREF_KEY_CALENDAR_WINDOW1, PREF_DEF_CALENDAR_WINDOW1));
+    }
+
     public static boolean loadScanForPluginsPref( Context context )
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
@@ -497,6 +535,24 @@ public class AppSettings
 
         } catch (IllegalArgumentException e) {
             actionMode = PREF_DEF_UI_DATETAPACTION;
+        }
+        return actionMode;
+    }
+
+    /**
+     * Preference: the action that is performed when the date field is long-clicked
+     */
+    public static DateTapAction loadDateTapAction1Pref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        String modeString = pref.getString(PREF_KEY_UI_DATETAPACTION1, PREF_DEF_UI_DATETAPACTION1.name());
+
+        DateTapAction actionMode;
+        try {
+            actionMode = DateTapAction.valueOf(modeString);
+
+        } catch (IllegalArgumentException e) {
+            actionMode = PREF_DEF_UI_DATETAPACTION1;
         }
         return actionMode;
     }
