@@ -221,7 +221,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     }
 
     @Override
-    public void onRequestPermissionsResult (int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
     {
         if (grantResults.length > 0 && permissions.length > 0)
         {
@@ -237,6 +237,12 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                         SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
                         pref.putBoolean(AppSettings.PREF_KEY_CALENDARS_ENABLED, enabled);
                         pref.apply();
+
+                        if (tmp_calendarPref != null)
+                        {
+                            tmp_calendarPref.setChecked(enabled);
+                            tmp_calendarPref = null;
+                        }
                     }
                     break;
             }
@@ -566,7 +572,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
     private static void initPref_calendars(final Activity activity, final CheckBoxPreference enabledPref )
     {
-        enabledPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
+        final Preference.OnPreferenceChangeListener onPreferenceChanged0 = new Preference.OnPreferenceChangeListener()
         {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue)
@@ -577,6 +583,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 {
                     int requestCode = (enabled ? REQUEST_CALENDARPREFSFRAGMENT_ENABLED : REQUEST_CALENDARPREFSFRAGMENT_DISABLED);
                     ActivityCompat.requestPermissions(activity, new String[] { Manifest.permission.WRITE_CALENDAR }, requestCode);
+                    tmp_calendarPref = enabledPref;
                     return false;
 
                 } else {
@@ -584,8 +591,10 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                     return true;
                 }
             }
-        });
+        };
+        enabledPref.setOnPreferenceChangeListener(onPreferenceChanged0);
     }
+    private static CheckBoxPreference tmp_calendarPref = null;
 
     private static void runCalendarTask(final Activity activity, boolean enabled)
     {
