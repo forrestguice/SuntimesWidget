@@ -312,6 +312,7 @@
     <string name="configLabel_action_onClockTap">On Clock Tap:</string>         <!-- spinner label -->
     <string name="configLabel_action_onNoteTap">On Note Tap:</string>           <!-- spinner label -->
     <string name="configLabel_action_onDateTap">On Date Tap:</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap1">On Date Long Press:</string>   <!-- spinner label -->  <!-- TODO: i18n -->
 
     <!-- Widget Setting: location -->
     <string name="locationMode_current">Current (last known)</string>  <!-- setting -->
@@ -718,6 +719,37 @@
         <item>2419200000</item>
     </string-array>
 
+    <!-- App Setting: calendars -->
+    <string name="configLabel_calendars">Calendars</string>   <!-- group title -->  <!-- TODO: i18n -->
+
+    <string name="configLabel_calendars_enabled">Calendar Integration</string>  <!-- TODO: i18n -->
+    <string name="configLabel_calendars_enabled_summary">Supply events to the Calendar app (moon phases, solstices, and equinoxes).</string>  <!-- TODO: i18n -->
+
+    <string name="configLabel_calendars_window0">Window (start)</string>  <!-- TODO: i18n -->
+    <string name="configLabel_calendars_window0_summary">A period starting <xliff:g id="calendars_window_display" example="one year">%s</xliff:g> ago</string>  <!-- TODO: i18n -->
+
+    <string name="configLabel_calendars_window1">Window (end)</string>  <!-- TODO: i18n -->
+    <string name="configLabel_calendars_window1_summary">A period ending <xliff:g id="calendars_window_display" example="two years">%s</xliff:g> from now</string>  <!-- TODO: i18n -->
+
+    <string name="calendars_notification_adding">Adding calendars…</string>  <!-- TODO: i18n -->
+    <string name="calendars_notification_added">Calendars have been added.</string>  <!-- TODO: i18n -->
+
+    <string name="calendars_notification_clearing">Clearing calendars…</string>  <!-- TODO: i18n -->
+    <string name="calendars_notification_cleared">Calendars have been cleared.</string>  <!-- TODO: i18n -->
+
+    <string-array name="calendars_window_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
+        <item>one year</item>
+        <item>two years</item>
+        <item>five years</item>
+        <item>ten years</item>
+    </string-array>  <!-- TODO: i18n -->
+    <string-array name="calendars_window_values" translatable="false">     <!-- ms config values (one-to-one with getFix_maxAge_display) -->
+        <item>31536000000</item>
+        <item>63072000000</item>
+        <item>157680000000</item>
+        <item>315360000000</item>
+    </string-array>
+
     <!-- App Setting: passive location mode -->
     <string name="configLabel_getFix_passiveMode">Passive Location</string>
     <string name="configLabel_getFix_passiveMode_summary">Use the passive location provider.</string>
@@ -822,6 +854,12 @@
         <item>North North West</item>
         <item>North</item>
     </string-array>
+
+    <!--
+      CALENDARS
+    -->
+    <string name="calendar_solstice_displayName">Solstices and Equinoxes</string>  <!-- TODO: i18n -->
+    <string name="calendar_moonPhase_displayName">Moon Phases</string>  <!-- TODO: i18n -->
 
     <!--
       DIALOGS
@@ -1090,6 +1128,7 @@
     <string name="def_appwidget_0_general_showtimedate" translatable="false">true</string>
     <string name="def_appwidget_0_general_trackingmode" translatable="false">SOONEST</string>
 
+    <string name="def_app_calendars_enabled" translatable="false">false</string>
     <string name="def_app_plugins_enabled" translatable="false">false</string>
 
     <string name="def_app_locale_mode" translatable="false">SYSTEM_LOCALE</string>
@@ -1099,6 +1138,9 @@
     <string name="def_getFix_maxAge" translatable="false">300000</string>
     <string name="def_getFix_passiveMode" translatable="false">false</string>
 
+    <string name="def_calendars_window0" translatable="false">31536000000</string>
+    <string name="def_calendars_window1" translatable="false">63072000000</string>
+
     <string name="def_app_ui_showwarnings" translatable="false">true</string>
     <string name="def_app_ui_showmoon" translatable="false">true</string>
     <string name="def_app_ui_showequinox" translatable="false">true</string>
@@ -1107,6 +1149,7 @@
     <string name="def_app_ui_showbluehour" translatable="false">false</string>
     <string name="def_app_ui_showdatasource" translatable="false">true</string>
     <string name="def_app_ui_datetapaction" translatable="false">CONFIG_DATE</string>
+    <string name="def_app_ui_datetapaction1" translatable="false">SHOW_CALENDAR</string>
     <string name="def_app_ui_notetapaction" translatable="false">NEXT_NOTE</string>
     <string name="def_app_ui_clocktapaction" translatable="false">ALARM</string>
     <string name="def_app_appearance_theme" translatable="false">dark</string>

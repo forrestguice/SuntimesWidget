@@ -932,6 +932,7 @@ public class SuntimesActivity extends AppCompatActivity
         {
             txt_date = (TextView) viewToday.findViewById(R.id.text_date);
             txt_date.setOnClickListener(dateTapClickListener(false));
+            txt_date.setOnLongClickListener(dateTapLongClickListener(false));
 
             sunriseHeader = viewToday.findViewById(R.id.header_time_sunrise);
             sunriseHeader.setOnClickListener(onSunriseClick);
@@ -1016,6 +1017,7 @@ public class SuntimesActivity extends AppCompatActivity
         {
             txt_date2 = (TextView) viewTomorrow.findViewById(R.id.text_date);
             txt_date2.setOnClickListener(dateTapClickListener(true));
+            txt_date2.setOnLongClickListener(dateTapLongClickListener(true));
 
             sunriseHeader2 = viewTomorrow.findViewById(R.id.header_time_sunrise);
             sunriseHeader2.setOnClickListener(onSunriseClick);
@@ -2379,31 +2381,54 @@ public class SuntimesActivity extends AppCompatActivity
             public void onClick(View view)
             {
                 AppSettings.DateTapAction action = AppSettings.loadDateTapActionPref(SuntimesActivity.this);
-                switch (action)
-                {
-                    case NOTHING:
-                        break;
-
-                    case CONFIG_DATE:
-                        configDate();
-                        break;
-
-                    case SHOW_CALENDAR:
-                        showCalendar();
-                        break;
-
-                    case SWAP_CARD:
-                    default:
-                        if (tomorrow)
-                        {
-                            setUserSwappedCard( showPreviousCard(), "onDateTapClick (prevCard)" );
-                        } else {
-                            setUserSwappedCard( showNextCard(), "onDateTapClick (nextCard)" );
-                        }
-                        break;
-                }
+                onDateTapAction(action, tomorrow);
             }
         };
+    }
+
+    /**
+     * @param tomorrow true is "tomorrow" date field, false is "today" date field
+     * @return an OnLongClickListener for the specified date field
+     */
+    private View.OnLongClickListener dateTapLongClickListener( final boolean tomorrow )
+    {
+        return new View.OnLongClickListener()
+        {
+            @Override
+            public boolean onLongClick(View v)
+            {
+                AppSettings.DateTapAction action = AppSettings.loadDateTapAction1Pref(SuntimesActivity.this);
+                onDateTapAction(action, tomorrow);
+                return true;
+            }
+        };
+    }
+
+    private void onDateTapAction( AppSettings.DateTapAction action, boolean tomorrow )
+    {
+        switch (action)
+        {
+            case NOTHING:
+                break;
+
+            case CONFIG_DATE:
+                configDate();
+                break;
+
+            case SHOW_CALENDAR:
+                showCalendar(tomorrow);
+                break;
+
+            case SWAP_CARD:
+            default:
+                if (tomorrow)
+                {
+                    setUserSwappedCard( showPreviousCard(), "onDateTapClick (prevCard)" );
+                } else {
+                    setUserSwappedCard( showNextCard(), "onDateTapClick (nextCard)" );
+                }
+                break;
+        }
     }
 
     //private void initTimeFields()
@@ -2485,11 +2510,11 @@ public class SuntimesActivity extends AppCompatActivity
     }
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-    private void showCalendar()
+    private void showCalendar(boolean tomorrow)
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH)
         {
-            long startMillis = dataset.now().getTimeInMillis();
+            long startMillis = (tomorrow ? dataset.otherCalendar().getTimeInMillis() : dataset.calendar().getTimeInMillis());
             Uri.Builder builder = CalendarContract.CONTENT_URI.buildUpon();
             builder.appendPath("time");
             ContentUris.appendId(builder, startMillis);
