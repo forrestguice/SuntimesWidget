@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="http://schemas.android.com/tools">
 
-    <string name="default_location_label">Prescott, AZ</string>
-    <string name="default_location_latitude">34.5409</string>      <!-- decimal degrees (DD) -->
-    <string name="default_location_longitude">-112.4691</string>   <!-- decimal degrees (DD) -->
-    <string name="default_location_altitude">1600</string>         <!-- meters -->
+    <string name="default_location_label">Phoenix</string>
+    <string name="default_location_latitude">33.45579</string>      <!-- decimal degrees (DD) -->
+    <string name="default_location_longitude">-111.94580</string>   <!-- decimal degrees (DD) -->
+    <string name="default_location_altitude">385</string>           <!-- meters -->
 
     <!-- Widget Setting: time mode -->
     <string name="timeMode_equinox_autumnal">Fall Equinox</string>  <!-- setting -->

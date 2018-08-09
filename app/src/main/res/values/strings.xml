@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="http://schemas.android.com/tools">
 
-    <string name="default_location_label">McMurdo Station</string>
-    <string name="default_location_latitude">-77.85135</string>      <!-- decimal degrees (DD) -->
-    <string name="default_location_longitude">166.6712518</string>   <!-- decimal degrees (DD) -->
+    <string name="default_location_label">New York City</string>
+    <string name="default_location_latitude">40.68620</string>      <!-- decimal degrees (DD) -->
+    <string name="default_location_longitude">-74.02619</string>   <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">0</string>         <!-- meters -->
 
     <!-- MAIN ACTIVITY -->
