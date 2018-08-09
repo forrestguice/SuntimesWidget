@@ -71,6 +71,26 @@ Widgets are resizable and include...
 
 <img alt="screenshot1" src='https://github.com/forrestguice/SuntimesWidget/blob/gh-pages/doc/screenshots/v0.8.1/en/activity-main0-dark.png' width="280px" />&nbsp;&nbsp;<img alt="screenshot1" src='https://github.com/forrestguice/SuntimesWidget/blob/gh-pages/doc/screenshots/v0.8.1/en/activity-main0-light.png' width="280px" />
 
+## Permissions ##
+
+To get current location:
+* ACCESS_COARSE_LOCATION
+* ACCESS_FINE_LOCATION
+
+To export data (places, themes, etc) to file:
+* WRITE_EXTERNAL_STORAGE (Android versions 18 and under)
+    
+To interact with the AlarmClock app:
+* SET_ALARM
+
+To interact with the Calendar app (add/remove events):
+* READ_CALENDAR
+* WRITE_CALENDAR
+
+To interact with the Calendar app (add custom calendars):
+* READ_SYNC_STATS
+* WRITE_SYNC_SETTINGS
+
 ## Donations ##
 
 Do you find value in this software? Pay as you feel. 
