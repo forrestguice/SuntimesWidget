@@ -1,6 +1,7 @@
 ### ~
 
 ###
+* adds options to toggle visibility of twilight times displayed by the app (hide fields).   
 * refactors widgetlist activity to use ActionBar (#230).
 * adds 3x1 and 3x2 SunPosition previews to theme editor.
 * adds 3x2 SunPosition widget showing world map.
