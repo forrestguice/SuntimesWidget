@@ -54,7 +54,7 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
     private HashMap<String, Integer> calendarColors = new HashMap<>();
 
     private String[] solsticeStrings = new String[4];
-    private int[] solsticeColors = new int[4];
+    //private int[] solsticeColors = new int[4];
     private SuntimesEquinoxSolsticeData solsticeData;
     private SuntimesMoonData moonData;
 
@@ -89,10 +89,10 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
         solsticeStrings[2] = context.getString(R.string.timeMode_equinox_autumnal);
         solsticeStrings[3] = context.getString(R.string.timeMode_solstice_winter);
 
-        solsticeColors[0] = ContextCompat.getColor(context, R.color.springColor_light);
-        solsticeColors[1] = ContextCompat.getColor(context, R.color.summerColor_light);
-        solsticeColors[2] = ContextCompat.getColor(context, R.color.fallColor_light);
-        solsticeColors[3] = ContextCompat.getColor(context, R.color.winterColor_light);
+        //solsticeColors[0] = ContextCompat.getColor(context, R.color.springColor_light);
+        //solsticeColors[1] = ContextCompat.getColor(context, R.color.summerColor_light);
+        //solsticeColors[2] = ContextCompat.getColor(context, R.color.fallColor_light);
+        //solsticeColors[3] = ContextCompat.getColor(context, R.color.winterColor_light);
 
         // moon phase calendar resources
         moonData = new SuntimesMoonData(context, 0, "moon");
