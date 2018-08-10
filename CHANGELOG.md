@@ -1,6 +1,12 @@
 ### ~
 
 ### ~
+
+* changes default sun data source to time4a-time4j (supporting altitude based refinements).
+* enhances the data source selector; now tags the default source, and sources loaded via plugin.
+* adds elevation to all default locations; default 'en' location changed to New York City, default 'en-US' location changed to Phoenix.  
+* adds elevation UI to Location settings, main ActionBar, and widget title substitutions. 
+* adds app pref "Use Elevation"; apply altitude based refinements; defaults true.
 * adds app pref "On Date Long Press"; defaults to "Show Calendar".
 * adds permissions READ_CALENDAR, WRITE_CALENDAR; needed to interact w/ Calendar app (add/remove events in custom calendars).
 * adds permissions READ_SYNC_STATS, WRITE_SYNC_SETTINGS; needed to provide custom calendars (add/remove calendars via SyncAdapter).
