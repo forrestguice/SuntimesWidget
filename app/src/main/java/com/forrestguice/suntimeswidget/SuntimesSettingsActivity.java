@@ -960,8 +960,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                                 {
                                     clearPlacesTask = new BuildPlacesTask(myParent);
                                     clearPlacesTask.setTaskListener(clearPlacesListener);
-                                    boolean clearFlag = true;
-                                    clearPlacesTask.execute(clearFlag);
+                                    clearPlacesTask.execute(true);   // clearFlag set to true
                                 }
                             })
                             .setNegativeButton(myParent.getString(R.string.locationclear_dialog_cancel), null);
