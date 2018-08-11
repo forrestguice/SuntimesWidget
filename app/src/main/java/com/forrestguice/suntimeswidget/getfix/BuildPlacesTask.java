@@ -94,7 +94,8 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
                     String label = resources.getString(R.string.default_location_label);
                     String lat = resources.getString(R.string.default_location_latitude);
                     String lon = resources.getString(R.string.default_location_longitude);
-                    location = new WidgetSettings.Location(label, lat, lon);
+                    String alt = resources.getString(R.string.default_location_altitude);
+                    location = new WidgetSettings.Location(label, lat, lon, alt);
                 } // else    // TODO: legacy support
 
                 if (location != null && !locations.contains(location))

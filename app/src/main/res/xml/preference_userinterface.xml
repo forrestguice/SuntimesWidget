@@ -18,22 +18,50 @@
         android:title="@string/configLabel_ui">
 
         <CheckBoxPreference
-            android:key="app_ui_showdatasource"
-            android:title="@string/configLabel_ui_showdatasource"
-            android:summary="@string/configLabel_ui_showdatasource_summary"
-            android:defaultValue="@string/def_app_ui_showdatasource" />
+            android:key="app_ui_showfields_3"
+            android:title="@string/timeMode_astronomical"
+            android:defaultValue="true" />
 
         <CheckBoxPreference
-            android:key="app_ui_showbluehour"
+            android:key="app_ui_showfields_2"
+            android:title="@string/timeMode_nautical"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
+            android:key="app_ui_showfields_1"
+            android:title="@string/timeMode_civil"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
+            android:key="app_ui_showfields_0"
+            android:title="@string/timeMode_official"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
+            android:key="app_ui_showfields_5"
+            android:title="@string/timeMode_golden"
+            android:defaultValue="@string/def_app_ui_showgoldhour" />
+
+        <CheckBoxPreference
+            android:key="app_ui_showfields_4"
+            android:title="@string/timeMode_noon"
+            android:defaultValue="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/configLabel_ui">
+
+        <CheckBoxPreference
+            android:key="app_ui_showfields_6"
             android:title="@string/configLabel_ui_showbluehour"
             android:summary="@string/configLabel_ui_showbluehour_summary"
             android:defaultValue="@string/def_app_ui_showbluehour" />
 
         <CheckBoxPreference
-            android:key="app_ui_showgoldhour"
-            android:title="@string/configLabel_ui_showgoldhour"
-            android:summary="@string/configLabel_ui_showgoldhour_summary"
-            android:defaultValue="@string/def_app_ui_showgoldhour" />
+            android:key="app_ui_showdatasource"
+            android:title="@string/configLabel_ui_showdatasource"
+            android:summary="@string/configLabel_ui_showdatasource_summary"
+            android:defaultValue="@string/def_app_ui_showdatasource" />
 
         <CheckBoxPreference
             android:key="app_ui_showlightmap"
@@ -46,6 +74,18 @@
             android:title="@string/configLabel_ui_showmoon"
             android:summary="@string/configLabel_ui_showmoon_summary"
             android:defaultValue="@string/def_app_ui_showmoon" />
+
+        <CheckBoxPreference
+            android:key="app_ui_showequinox"
+            android:title="@string/configLabel_ui_showEquinox"
+            android:summary="@string/configLabel_ui_showEquinox_summary"
+            android:defaultValue="@string/def_app_ui_showequinox" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/configLabel_ui">
+
 
         <CheckBoxPreference
             android:key="app_ui_showwarnings"
@@ -72,24 +112,6 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/configAction_equinoxDialog">
-
-        <CheckBoxPreference
-            android:key="app_ui_showequinox"
-            android:title="@string/configLabel_ui_showEquinox"
-            android:summary="@string/configLabel_ui_showEquinox_summary"
-            android:defaultValue="@string/def_app_ui_showequinox" />
-
-        <com.forrestguice.suntimeswidget.settings.ListPreference
-            android:key="appwidget_0_general_trackingmode"
-            android:title="@string/configLabel_ui_solsticeTrackingMode"
-            android:summary="@string/configLabel_ui_solsticeTrackingMode_summary"
-            android:entries="@array/solsticeTrackingMode_display" android:entryValues="@array/solsticeTrackingMode_values"
-            android:defaultValue="@string/def_appwidget_0_general_trackingmode" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
         android:title="@string/configLabel_action">
 
         <com.forrestguice.suntimeswidget.settings.ListPreference
@@ -109,12 +131,32 @@
             android:defaultValue="@string/def_app_ui_datetapaction" />
 
         <com.forrestguice.suntimeswidget.settings.ListPreference
+            android:key="app_ui_datetapaction1"
+            android:title="@string/configLabel_action_onDateTap1"
+            android:dialogTitle="@string/configLabel_action_onDateTap1"
+            android:summary="%s"
+            android:entries="@array/dateTapActions_display" android:entryValues="@array/dateTapActions_values"
+            android:defaultValue="@string/def_app_ui_datetapaction1" />
+
+        <com.forrestguice.suntimeswidget.settings.ListPreference
             android:key="app_ui_notetapaction"
             android:title="@string/configLabel_action_onNoteTap"
             android:dialogTitle="@string/configLabel_action_onNoteTap"
             android:summary="%s"
             android:entries="@array/noteTapActions_display" android:entryValues="@array/noteTapActions_values"
             android:defaultValue="@string/def_app_ui_notetapaction" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/configAction_equinoxDialog">
+
+        <com.forrestguice.suntimeswidget.settings.ListPreference
+            android:key="appwidget_0_general_trackingmode"
+            android:title="@string/configLabel_ui_solsticeTrackingMode"
+            android:summary="@string/configLabel_ui_solsticeTrackingMode_summary"
+            android:entries="@array/solsticeTrackingMode_display" android:entryValues="@array/solsticeTrackingMode_values"
+            android:defaultValue="@string/def_appwidget_0_general_trackingmode" />
 
     </PreferenceCategory>
 

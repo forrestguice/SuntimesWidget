@@ -184,6 +184,12 @@ public class SuntimesMoonData extends SuntimesData
         return calculatorMode.hasRequestedFeature(SuntimesCalculator.FEATURE_MOON);
     }
 
+
+    public void initCalculator()
+    {
+        initCalculator(context);
+    }
+
     @Override
     public SuntimesCalculatorFactory initFactory(Context context)
     {

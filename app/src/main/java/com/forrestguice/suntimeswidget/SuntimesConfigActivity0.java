@@ -43,7 +43,9 @@ import android.widget.TextView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptorListAdapter;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 
 import com.forrestguice.suntimeswidget.layouts.SunLayout;
@@ -88,6 +90,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected CheckBox checkbox_showTimeDate;
     protected CheckBox checkbox_showWeeks;
     protected CheckBox checkbox_showHours;
+    protected CheckBox checkbox_useAltitude;
 
     protected Spinner spinner_onTap;
     protected EditText text_launchActivity;
@@ -96,7 +99,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     private WidgetThemes.ThemeListAdapter spinner_themeAdapter;
     protected Spinner spinner_theme;
 
-    protected Spinner spinner_1x1mode;
+    protected Spinner spinner_1x1mode, spinner_3x2mode;
     protected CheckBox checkbox_allowResize;
     protected CheckBox checkbox_showTitle;
     protected TextView label_titleText;
@@ -226,12 +229,19 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected ArrayAdapter<SuntimesCalculatorDescriptor> createAdapter_calculators()
     {
         SuntimesCalculatorDescriptor[] calculators = supportingCalculators();
-        return new SuntimesCalculatorDescriptor.SuntimesCalculatorDescriptorListAdapter(this, R.layout.layout_listitem_oneline, R.layout.layout_listitem_twoline, calculators);
+        SuntimesCalculatorDescriptorListAdapter adapter= new SuntimesCalculatorDescriptorListAdapter(this, R.layout.layout_listitem_oneline, R.layout.layout_listitem_twoline, calculators);
+        adapter.setDefaultValue(defaultCalculator());
+        return adapter;
+    }
+
+    protected String defaultCalculator()
+    {
+        return WidgetSettings.PREF_DEF_GENERAL_CALCULATOR;
     }
 
     protected SuntimesCalculatorDescriptor[] supportingCalculators()
     {
-        return SuntimesCalculatorDescriptor.values();
+        return SuntimesCalculatorDescriptor.values(this);
     }
 
     protected ArrayAdapter<WidgetSettings.TimezoneMode> createAdapter_timezoneMode()
@@ -376,6 +386,18 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (spinner_calculatorMode != null)
         {
             spinner_calculatorMode.setAdapter(createAdapter_calculators());
+            spinner_calculatorMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+            {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+                {
+                    SuntimesCalculatorDescriptor descriptor = (SuntimesCalculatorDescriptor)adapterView.getItemAtPosition(i);
+                    checkbox_useAltitude.setEnabled(descriptor.hasRequestedFeature(SuntimesCalculator.FEATURE_ALTITUDE));
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {}
+            });
         }
 
         //
@@ -497,10 +519,13 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
 
         //
-        // widget: 1x1 widget mode
+        // widget: 1x1 widget mode, 3x2 widget mode
         //
         spinner_1x1mode = (Spinner) findViewById(R.id.appwidget_appearance_1x1mode);
         initWidgetMode1x1(context);
+
+        spinner_3x2mode = (Spinner) findViewById(R.id.appwidget_appearance_3x2mode);
+        initWidgetMode3x2(context);
 
         //
         // widget: title text
@@ -608,6 +633,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         showOptionHours(false);
 
         //
+        // widget: useAltitude
+        //
+        checkbox_useAltitude = (CheckBox)findViewById(R.id.appwidget_general_useAltitude);
+
+        //
         // widget: about button
         //
         Button button_aboutWidget = (Button) findViewById(R.id.about_button);
@@ -680,6 +710,30 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         WidgetSettings.WidgetModeSun1x1 mode1x1 = WidgetSettings.loadSun1x1ModePref(context, appWidgetId);
         spinner_1x1mode.setSelection(mode1x1.ordinal());
+    }
+
+    /**
+     * @param context a context used to access resources
+     */
+    protected void initWidgetMode3x2(Context context)
+    {
+        // EMPTY
+    }
+
+    /**
+     * @param context a context used to access resources
+     */
+    protected void saveWidgetMode3x2(Context context)
+    {
+        // EMPTY
+    }
+
+    /**
+     * @param context a context used to access resources
+     */
+    protected void loadWidgetMode3x2(Context context)
+    {
+        // EMPTY
     }
 
     /**
@@ -883,8 +937,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      */
     protected void saveAppearanceSettings(Context context)
     {
-        // save: widgetmode_1x1
+        // save: widgetmode_1x1, 3x2
         saveWidgetMode1x1(context);
+        saveWidgetMode3x2(context);
 
         // save: theme
         ThemeDescriptor theme = (ThemeDescriptor)spinner_theme.getSelectedItem();
@@ -915,8 +970,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      */
     protected void loadAppearanceSettings(Context context)
     {
-        // load: widgetmode_1x1
+        // load: widgetmode_1x1, 3x2
         loadWidgetMode1x1(context);
+        loadWidgetMode3x2(context);
 
         // load: theme
         SuntimesTheme theme = WidgetSettings.loadThemePref(context, appWidgetId);
@@ -1012,6 +1068,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         boolean showHours = checkbox_showHours.isChecked();
         WidgetSettings.saveShowHoursPref(context, appWidgetId, showHours);
 
+        // save: useAltitude
+        boolean useAltitude = checkbox_useAltitude.isChecked();
+        WidgetSettings.saveLocationAltitudeEnabledPref(context, appWidgetId, useAltitude);
+
         // save: time mode
         saveTimeMode(context);
         saveTimeModeOverride(context);
@@ -1061,6 +1121,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // load: showHours
         boolean showHours = WidgetSettings.loadShowHoursPref(context, appWidgetId);
         checkbox_showHours.setChecked(showHours);
+
+        // load: useAltitude
+        boolean useAltitude = WidgetSettings.loadLocationAltitudeEnabledPref(context, appWidgetId);
+        checkbox_useAltitude.setChecked(useAltitude);
 
         // load: time mode
         loadTimeMode(context);
@@ -1370,6 +1434,18 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     /**
      *
      */
+    protected void hideOptionUseAltitude()
+    {
+        View layout_useAltitude = findViewById(R.id.appwidget_general_useAltitude_layout);
+        if (layout_useAltitude != null)
+        {
+            layout_useAltitude.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     *
+     */
     protected void hideOptionShowSeconds()
     {
         View layout_showSeconds = findViewById(R.id.appwidget_general_showSeconds_layout);
@@ -1388,6 +1464,19 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (layout_1x1mode != null)
         {
             layout_1x1mode.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     *
+     * @param show true show option, false hide option (default hidden)
+     */
+    protected void showOption3x2LayoutMode(boolean show)
+    {
+        View layout_1x1mode = findViewById(R.id.appwidget_appearance_3x2mode_layout);
+        if (layout_1x1mode != null)
+        {
+            layout_1x1mode.setVisibility(show ? View.VISIBLE : View.GONE);
         }
     }
 

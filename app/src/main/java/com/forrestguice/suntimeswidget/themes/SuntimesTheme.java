@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.themes;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -35,6 +36,8 @@ public class SuntimesTheme
     public static final String THEME_DISPLAYSTRING = "display";
 
     public static final String THEME_BACKGROUND = "backgroundID";
+    public static final String THEME_BACKGROUND_COLOR = "backgroundColor";
+
     public static final String THEME_PADDING = "padding";
     public static final String THEME_PADDING_LEFT = "padding_left";
     public static final String THEME_PADDING_TOP = "padding_top";
@@ -95,6 +98,11 @@ public class SuntimesTheme
     public static final String THEME_FALLCOLOR = "fallcolor";
     public static final String THEME_WINTERCOLOR = "wintercolor";
 
+    public static final String THEME_MAP_BACKGROUNDCOLOR = "mapbackgroundcolor";
+    public static final String THEME_MAP_FOREGROUNDCOLOR = "mapforegroundcolor";
+    public static final String THEME_MAP_SHADOWCOLOR = "mapshadowcolor";
+    public static final String THEME_MAP_HIGHLIGHTCOLOR = "maphighlightcolor";
+
     public static final String THEME_TITLESIZE = "titlesize";
     public static final float THEME_TITLESIZE_MIN = 6.0f;
     public static final float THEME_TITLESIZE_DEF = 10.0f;
@@ -125,6 +133,7 @@ public class SuntimesTheme
     protected String themeDisplayString;
 
     protected ThemeBackground themeBackground;
+    protected int themeBackgroundColor = Color.DKGRAY;
     protected int[] themePadding = {0, 0, 0, 0};
     private int[] themePaddingPixels = {-1, -1, -1, -1};
 
@@ -162,6 +171,11 @@ public class SuntimesTheme
     protected int themeFallColor;
     protected int themeWinterColor;
 
+    protected int themeMapBackgroundColor;
+    protected int themeMapForegroundColor;
+    protected int themeMapShadowColor;
+    protected int themeMapHighlightColor;
+
     protected int themeMoonriseTextColor;
     protected int themeMoonsetTextColor;
     protected int themeMoonWaningColor;
@@ -195,6 +209,7 @@ public class SuntimesTheme
         this.themeDisplayString = otherTheme.themeDisplayString;
 
         this.themeBackground = otherTheme.themeBackground;
+        this.themeBackgroundColor = otherTheme.themeBackgroundColor;
         this.themePadding[0] = otherTheme.themePadding[0];
         this.themePadding[1] = otherTheme.themePadding[1];
         this.themePadding[2] = otherTheme.themePadding[2];
@@ -241,6 +256,11 @@ public class SuntimesTheme
         this.themeFallColor = otherTheme.themeFallColor;
         this.themeWinterColor = otherTheme.themeWinterColor;
 
+        this.themeMapBackgroundColor = otherTheme.themeMapBackgroundColor;
+        this.themeMapForegroundColor = otherTheme.themeMapForegroundColor;
+        this.themeMapShadowColor = otherTheme.themeMapShadowColor;
+        this.themeMapHighlightColor = otherTheme.themeMapHighlightColor;
+
         this.themeTitleSize = otherTheme.themeTitleSize;
         this.themeTextSize = otherTheme.themeTextSize;
         this.themeTimeSize = otherTheme.themeTimeSize;
@@ -280,6 +300,8 @@ public class SuntimesTheme
             int backgroundID = themes.getInt(theme + THEME_BACKGROUND, 0);
             this.themeBackground = ThemeBackground.getThemeBackground(backgroundID);
         }
+
+        this.themeBackgroundColor = themes.getInt( theme + THEME_BACKGROUND_COLOR, defaultTheme.getBackgroundColor() );
 
         this.themePadding[0] = themes.getInt( theme + THEME_PADDING_LEFT, defaultTheme.themePadding[0] );
         this.themePadding[1] = themes.getInt( theme + THEME_PADDING_TOP, defaultTheme.themePadding[1] );
@@ -327,6 +349,11 @@ public class SuntimesTheme
         this.themeFallColor = themes.getInt( theme + THEME_FALLCOLOR, defaultTheme.themeFallColor );
         this.themeWinterColor = themes.getInt( theme + THEME_WINTERCOLOR, defaultTheme.themeWinterColor );
 
+        this.themeMapBackgroundColor = themes.getInt(theme + THEME_MAP_BACKGROUNDCOLOR, defaultTheme.themeMapBackgroundColor);
+        this.themeMapForegroundColor = themes.getInt(theme + THEME_MAP_FOREGROUNDCOLOR, defaultTheme.themeMapForegroundColor);
+        this.themeMapShadowColor = themes.getInt(theme + THEME_MAP_SHADOWCOLOR, defaultTheme.themeMapShadowColor);
+        this.themeMapHighlightColor = themes.getInt(theme + THEME_MAP_HIGHLIGHTCOLOR, defaultTheme.themeMapHighlightColor);
+
         this.themeTitleSize = themes.getFloat( theme + THEME_TITLESIZE, defaultTheme.themeTitleSize );
         this.themeTextSize = themes.getFloat( theme + THEME_TEXTSIZE, defaultTheme.themeTextSize );
         this.themeTimeSize = themes.getFloat( theme + THEME_TIMESIZE, defaultTheme.themeTimeSize );
@@ -356,6 +383,8 @@ public class SuntimesTheme
         themePrefs.putString(themePrefix + SuntimesTheme.THEME_DISPLAYSTRING, this.themeDisplayString);
 
         themePrefs.putString(themePrefix + SuntimesTheme.THEME_BACKGROUND, this.themeBackground.name());
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_BACKGROUND_COLOR, this.themeBackgroundColor);
+
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_PADDING_LEFT, this.themePadding[0]);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_PADDING_TOP, this.themePadding[1]);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_PADDING_RIGHT, this.themePadding[2]);
@@ -402,6 +431,11 @@ public class SuntimesTheme
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_FALLCOLOR, this.themeFallColor);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_WINTERCOLOR, this.themeWinterColor);
 
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_MAP_BACKGROUNDCOLOR, this.themeMapBackgroundColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_MAP_FOREGROUNDCOLOR, this.themeMapForegroundColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_MAP_SHADOWCOLOR, this.themeMapShadowColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_MAP_HIGHLIGHTCOLOR, this.themeMapHighlightColor);
+
         themePrefs.putFloat(themePrefix + SuntimesTheme.THEME_TITLESIZE, this.themeTitleSize);
         themePrefs.putFloat(themePrefix + SuntimesTheme.THEME_TEXTSIZE, this.themeTextSize);
         themePrefs.putFloat(themePrefix + SuntimesTheme.THEME_TIMESIZE, this.themeTimeSize);
@@ -438,6 +472,7 @@ public class SuntimesTheme
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_DISPLAYSTRING);
 
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_BACKGROUND);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_BACKGROUND_COLOR);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_PADDING_LEFT);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_PADDING_TOP);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_PADDING_RIGHT);
@@ -483,6 +518,9 @@ public class SuntimesTheme
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_SUMMERCOLOR);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_FALLCOLOR);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_WINTERCOLOR);
+
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_MAP_BACKGROUNDCOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_MAP_FOREGROUNDCOLOR);
 
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_TITLESIZE);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_TEXTSIZE);
@@ -756,6 +794,26 @@ public class SuntimesTheme
         }
     }
 
+    public int getMapBackgroundColor()
+    {
+        return themeMapBackgroundColor;
+    }
+
+    public int getMapForegroundColor()
+    {
+        return themeMapForegroundColor;
+    }
+
+    public int getMapShadowColor()
+    {
+        return themeMapShadowColor;
+    }
+
+    public int getMapHighlightColor()
+    {
+        return themeMapHighlightColor;
+    }
+
     public float getTitleSizeSp()
     {
         return (themeTitleSize < THEME_TITLESIZE_MIN) ? THEME_TITLESIZE_DEF :
@@ -783,6 +841,11 @@ public class SuntimesTheme
     public ThemeBackground getBackground()
     {
         return themeBackground;
+    }
+
+    public int getBackgroundColor()
+    {
+        return themeBackgroundColor;
     }
 
     public int[] getPadding()

@@ -4,6 +4,7 @@
     <string name="default_location_label">Budapest</string>
     <string name="default_location_latitude">47.4811</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">18.9902</string>   <!-- decimal degrees (DD) -->
+    <string name="default_location_altitude">225</string>         <!-- meters -->
 
 <!-- MAIN ACTIVITY -->
 
@@ -20,6 +21,7 @@
     <string name="configAction_setDate">Dátum beállítása</string>
     <string name="configAction_sunDialog">Sun Position</string>   <!-- TODO -->
     <string name="configAction_equinoxDialog">Solstice / Equinox</string> <!-- TODO -->
+    <string name="configAction_worldMap">World Map</string>  <!-- TODO -->
     <string name="configAction_moon">Moon</string>                            <!-- TODO -->
     <string name="configAction_help">Segítség</string>
     <string name="configAction_settings">Beállítások</string>
@@ -243,6 +245,10 @@
     <string name="widgetMode1x1_altaz">Altitude &amp; Azimuth</string>     <!-- setting -->  <!-- TODO -->
     <string name="widgetMode1x1_decright">Declination &amp; Right Ascension</string>     <!-- setting -->  <!-- TODO -->
 
+    <string name="widgetMode_sunPosMap_simplerectangular">Basic</string>  <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal">Polar</string>     <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode_sunPosMap_bluemarble">Blue Marble</string>    <!-- setting -->  <!-- TODO -->
+
     <string name="widgetMode1x1_moonriseset">Moonrise &amp; moonset</string>     <!-- setting -->   <!-- TODO -->
     <string name="widgetMode1x1_moonphaseillum">Moon phase &amp; illumination</string>     <!-- setting -->  <!-- TODO -->
     <string name="widgetMode1x1_moonphase">Moon phase only</string>     <!-- setting -->  <!-- TODO -->
@@ -250,6 +256,7 @@
     <string name="widgetMode1x1_moonphasenext">Next major phase</string>     <!-- setting -->  <!-- TODO -->
 
     <string name="configLabel_appearance_1x1mode">1x1 megjelenítés:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_3x2mode">3x2 megjelenítés:</string>     <!-- spinner label -->
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Ne tegyen semmit</string>           <!-- setting -->
@@ -373,6 +380,8 @@
     <string name="configLabel_themeBackground_light">Light</string>        <!-- light background -->  <!-- TODO -->
     <string name="configLabel_themeBackground_dark">Dark</string>          <!-- dark background -->  <!-- TODO -->
     <string name="configLabel_themeBackground_trans">Transparent</string>  <!-- transparent background --> <!-- TODO -->
+    <string name="configLabel_themeBackground_color">Color</string>      <!-- custom background -->  <!-- TODO -->
+    <string name="configLabel_themeColorBackground">Color:</string>      <!-- color label -->   <!-- TODO -->
 
     <string name="configLabel_themeColorTitle">Title Color:</string>     <!-- color label -->  <!-- TODO -->
     <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->  <!-- TODO -->
@@ -384,6 +393,11 @@
     <string name="configLabel_themeColorSummer">Summer Color:</string> <!-- color label -->  <!-- TODO -->
     <string name="configLabel_themeColorFall">Fall Color:</string> <!-- color label --> <!-- TODO -->
     <string name="configLabel_themeColorWinter">Winter Color:</string> <!-- color label -->  <!-- TODO -->
+
+    <string name="configLabel_themeColorMapBackground">Map Background</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorMapForeground">Map Foreground</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorMapSunShadow">Shadow</string> <!-- color label -->          <!-- TODO -->
+    <string name="configLabel_themeColorMapMoonHighlight">Highlight</string> <!-- color label -->   <!-- TODO -->
 
     <string name="configLabel_themeColorMoonrise">Moonrise Color:</string> <!-- color label -->  <!-- TODO -->
     <string name="configLabel_themeColorMoonset">Moonset Color:</string> <!-- color label -->    <!-- TODO -->

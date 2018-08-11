@@ -2,8 +2,9 @@
 <resources xmlns:xliff="http://schemas.android.com/tools">
 
     <string name="default_location_label">Euskal Herriko erdigunea</string>
-    <string name="default_location_latitude">42.88300833</string>      <!-- decimal degrees (DD) -->
-    <string name="default_location_longitude">-1.93549167</string>   <!-- decimal degrees (DD) -->
+    <string name="default_location_latitude">42.883008</string>    <!-- decimal degrees (DD) -->
+    <string name="default_location_longitude">-1.935491</string>   <!-- decimal degrees (DD) -->
+    <string name="default_location_altitude">1258</string>         <!-- meters -->
 
     <!-- MAIN ACTIVITY -->
 
@@ -20,6 +21,7 @@
     <string name="configAction_setDate">Data ezarri</string>
     <string name="configAction_sunDialog">Eguzkiaren kokapena</string>
     <string name="configAction_equinoxDialog">Solstizioak / Ekinokzioak</string>
+    <string name="configAction_worldMap">World Map</string>  <!-- TODO -->
     <string name="configAction_moon">Ilargia</string>
     <string name="configAction_help">Laguntza</string>
     <string name="configAction_settings">Ezarpenak</string>
@@ -257,6 +259,10 @@
     <string name="widgetMode1x1_altaz">Altitudea eta azimut</string>     <!-- setting -->
     <string name="widgetMode1x1_decright">Deklinazioa eta igoera zuzena</string>     <!-- setting -->
 
+    <string name="widgetMode_sunPosMap_simplerectangular">Basic</string>  <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal">Polar</string>     <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode_sunPosMap_bluemarble">Blue Marble</string>    <!-- setting -->  <!-- TODO -->
+
     <string name="widgetMode1x1_moonriseset">Ilargiaren irteera eta ezkutatzea</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphaseillum">Ilargialdia eta argiztapena</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphase">Ilargialdia soilik</string>     <!-- setting -->
@@ -264,6 +270,7 @@
     <string name="widgetMode1x1_moonphasenext">Hurrengo ilargialdi nagusia</string>     <!-- setting -->
 
     <string name="configLabel_appearance_1x1mode">1x1 diseinua:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_3x2mode">3x2 diseinua:</string>     <!-- spinner label -->
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Ez egin ezer</string>           <!-- setting -->
@@ -387,6 +394,8 @@
     <string name="configLabel_themeBackground_light">Argia</string>        <!-- light background -->
     <string name="configLabel_themeBackground_dark">Iluna</string>          <!-- dark background -->
     <string name="configLabel_themeBackground_trans">Gardena</string>  <!-- transparent background -->
+    <string name="configLabel_themeBackground_color">Kolorea</string>      <!-- custom background -->
+    <string name="configLabel_themeColorBackground">Kolorea:</string>      <!-- color label -->
 
     <string name="configLabel_themeColorTitle">Izenburuaren kolorea:</string>     <!-- color label -->
     <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->
@@ -398,6 +407,11 @@
     <string name="configLabel_themeColorSummer">Udaren kolorea:</string> <!-- color label -->
     <string name="configLabel_themeColorFall">Udazkenaren kolorea:</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Neguaren kolorea:</string> <!-- color label -->
+
+    <string name="configLabel_themeColorMapBackground">Map Background</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorMapForeground">Map Foreground</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorMapSunShadow">Shadow</string> <!-- color label -->          <!-- TODO -->
+    <string name="configLabel_themeColorMapMoonHighlight">Highlight</string> <!-- color label -->   <!-- TODO -->
 
     <string name="configLabel_themeColorMoonrise">Ilargiaren irteeraren kolorea:</string> <!-- color label -->
     <string name="configLabel_themeColorMoonset">Ilargiaren ezkutatzearen kolorea:</string> <!-- color label -->

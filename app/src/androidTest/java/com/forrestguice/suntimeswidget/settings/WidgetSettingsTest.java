@@ -202,7 +202,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
 
         WidgetSettings.saveTimezoneModePref(context, appWidgetId, WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE);
         WidgetSettings.TimezoneMode mode1 = WidgetSettings.loadTimezoneModePref(context, appWidgetId);
-        assertTrue("mode should be CUSTOM but was " + mode1, mode1 == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE);
+        assertTrue("mode should be COLOR but was " + mode1, mode1 == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE);
 
         WidgetSettings.deleteTimezoneModePref(context, appWidgetId);
         WidgetSettings.TimezoneMode mode0 = WidgetSettings.loadTimezoneModePref(context, appWidgetId);
@@ -282,7 +282,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     {
         WidgetSettings.saveLocationModePref(context, appWidgetId, WidgetSettings.LocationMode.CUSTOM_LOCATION);
         WidgetSettings.LocationMode mode2 = WidgetSettings.loadLocationModePref(context, appWidgetId);
-        assertTrue("mode should be CUSTOM but was " + mode2, mode2 == WidgetSettings.LocationMode.CUSTOM_LOCATION);
+        assertTrue("mode should be COLOR but was " + mode2, mode2 == WidgetSettings.LocationMode.CUSTOM_LOCATION);
 
         WidgetSettings.saveLocationModePref(context, appWidgetId, WidgetSettings.LocationMode.CURRENT_LOCATION);
         WidgetSettings.LocationMode mode1 = WidgetSettings.loadLocationModePref(context, appWidgetId);
@@ -290,7 +290,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
 
         WidgetSettings.deleteLocationModePref(context, appWidgetId);
         WidgetSettings.LocationMode mode0 = WidgetSettings.loadLocationModePref(context, appWidgetId);
-        assertTrue("mode should be default (CUSTOM) but was " + mode0, mode0 == WidgetSettings.PREF_DEF_LOCATION_MODE && mode0 == WidgetSettings.LocationMode.CUSTOM_LOCATION);
+        assertTrue("mode should be default (COLOR) but was " + mode0, mode0 == WidgetSettings.PREF_DEF_LOCATION_MODE && mode0 == WidgetSettings.LocationMode.CUSTOM_LOCATION);
     }
 
     @Test public void test_locationPref()
@@ -309,6 +309,21 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         WidgetSettings.deleteLocationPref(context, appWidgetId);
         WidgetSettings.Location pref0 = WidgetSettings.loadLocationPref(context, appWidgetId);
         assertTrue("location does not match default! " + pref0, pref0.equals(testloc0));
+    }
+
+    @Test public void test_locationAltitudeEnabledPref()
+    {
+	WidgetSettings.saveLocationAltitudeEnabledPref(context, appWidgetId, true);
+	boolean isEnabled0 = WidgetSettings.loadLocationAltitudeEnabledPref(context, appWidgetId);
+	assertTrue("value does not match! " + isEnabled0, isEnabled0);
+
+	WidgetSettings.saveLocationAltitudeEnabledPref(context, appWidgetId, false);
+	boolean isEnabled1 = WidgetSettings.loadLocationAltitudeEnabledPref(context, appWidgetId);
+	assertTrue("value does not match! " + isEnabled1, !isEnabled1);
+
+	WidgetSettings.deleteLocationAltitudeEnabledPref(context, appWidgetId);
+	boolean isEnabled2 = WidgetSettings.loadLocationAltitudeEnabledPref(context, appWidgetId);
+	assertTrue("value does not match! " + isEnabled2, isEnabled2 == WidgetSettings.PREF_DEF_LOCATOION_ALTITUDE_ENABLED);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -466,6 +481,22 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         WidgetSettings.deleteSunPos1x1ModePref(context, appWidgetId);
         WidgetSettings.WidgetModeSunPos1x1 pref0 = WidgetSettings.loadSunPos1x1ModePref(context, appWidgetId);
         assertTrue("pref should be default (ALTAZ) but was " + pref0, pref0.equals(WidgetSettings.PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOS1x1) && pref0.equals(WidgetSettings.WidgetModeSunPos1x1.MODE1x1_ALTAZ));
+    }
+
+    @Test
+    public void test_sunPosMapModePref()
+    {
+        WidgetSettings.saveSunPosMapModePref(context, appWidgetId, WidgetSettings.WidgetModeSunPosMap.EQUIAZIMUTHAL_SIMPLE);
+        WidgetSettings.WidgetModeSunPosMap pref2 = WidgetSettings.loadSunPosMapModePref(context, appWidgetId);
+        assertTrue("pref should be EQUIAZIMUTHAL_SIMPLE but was " + pref2, pref2.equals(WidgetSettings.WidgetModeSunPosMap.EQUIAZIMUTHAL_SIMPLE));
+
+        WidgetSettings.saveSunPosMapModePref(context, appWidgetId, WidgetSettings.WidgetModeSunPosMap.EQUIRECTANGULAR_BLUEMARBLE);
+        WidgetSettings.WidgetModeSunPosMap pref1 = WidgetSettings.loadSunPosMapModePref(context, appWidgetId);
+        assertTrue("pref should be EQUIRECTANGULAR_BLUEMARBLE but was " + pref1, pref1.equals(WidgetSettings.WidgetModeSunPosMap.EQUIRECTANGULAR_BLUEMARBLE));
+
+        WidgetSettings.deleteSunPosMapModePref(context, appWidgetId);
+        WidgetSettings.WidgetModeSunPosMap pref0 = WidgetSettings.loadSunPosMapModePref(context, appWidgetId);
+        assertTrue("pref should be default (EQUIRECTANGULAR_SIMPLE) but was " + pref0, pref0.equals(WidgetSettings.PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOSMAP) && pref0.equals(WidgetSettings.WidgetModeSunPosMap.EQUIRECTANGULAR_SIMPLE));
     }
 
     @Test

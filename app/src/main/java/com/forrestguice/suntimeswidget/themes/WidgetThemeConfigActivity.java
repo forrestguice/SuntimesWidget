@@ -24,11 +24,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -53,12 +55,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import com.forrestguice.suntimeswidget.LightMapView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
+import com.forrestguice.suntimeswidget.map.WorldMapTask;
+import com.forrestguice.suntimeswidget.map.WorldMapView;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.PaddingChooser;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -68,6 +75,7 @@ import java.security.InvalidParameterException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
+import static com.forrestguice.suntimeswidget.themes.SuntimesTheme.THEME_BACKGROUND_COLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesTheme.THEME_NAME;
 
 public class WidgetThemeConfigActivity extends AppCompatActivity
@@ -82,6 +90,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     public static final int PREVIEWID_MOON_2x1 = 1;
     public static final int PREVIEWID_MOON_3x1 = 2;
     public static final int PREVIEWID_SUNPOS_3x1 = 3;
+    public static final int PREVIEWID_SUNPOS_3x2 = 4;
 
     public static final int ADD_THEME_REQUEST = 0;
     public static final int EDIT_THEME_REQUEST = 1;
@@ -115,12 +124,15 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private ColorChooser chooseColorSpring, chooseColorSummer, chooseColorFall, chooseColorWinter;
     private ColorChooser chooseColorMoonrise, chooseColorMoonset;
     private ColorChooser chooseColorMoonWaning, chooseColorMoonNew, chooseColorMoonWaxing, chooseColorMoonFull;
+    private ColorChooser chooseColorMapBackground, chooseColorMapForeground, chooseColorMapShadow, chooseColorMapHighlight;
     private ArrayList<ColorChooser> colorChoosers;
     private CheckBox checkUseFill, checkUseStroke, checkUseNoon;
 
     private CheckBox checkTitleBold, checkTimeBold;
 
     private Spinner spinBackground;
+    private ArrayAdapter<ThemeBackground> spinBackground_adapter;
+    private ColorChooser chooseColorBackground;
 
     private ViewFlipper preview;
 
@@ -163,19 +175,19 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         updatePreview();
     }
 
-    private SuntimesRiseSetData data;
+    private SuntimesRiseSetDataset data0;
+    private SuntimesRiseSetData data1;
     private SuntimesMoonData data2;
     private void initData(Context context)
     {
-        data = new SuntimesRiseSetData(context, 0);   // use app configuration
-        data.setCompareMode(WidgetSettings.CompareMode.TOMORROW);
-        data.setTimeMode(WidgetSettings.TimeMode.OFFICIAL);
-        data.calculate();
+        data0 = new SuntimesRiseSetDataset(context, 0);  // use app configuration
+        data0.calculateData();
 
-        SuntimesRiseSetData noonData = new SuntimesRiseSetData(data);
+        data1 = data0.dataActual;
+        SuntimesRiseSetData noonData = new SuntimesRiseSetData(data1);
         noonData.setTimeMode(WidgetSettings.TimeMode.NOON);
         noonData.calculate();
-        data.linkData(noonData);
+        data1.linkData(noonData);
 
         data2 = new SuntimesMoonData(context, 0, "moon");
         data2.calculate();
@@ -205,7 +217,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        ArrayAdapter<ThemeBackground> spinBackground_adapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, ThemeBackground.values());
+        spinBackground_adapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, ThemeBackground.values());
         spinBackground_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinBackground = (Spinner)findViewById(R.id.editSpin_background);
         spinBackground.setAdapter(spinBackground_adapter);
@@ -215,6 +227,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
             {
                 updatePreview();
+                ThemeBackground background = spinBackground_adapter.getItem(i);
+                boolean enabled = (background != null && background.supportsCustomColors());
+                //chooseColorBackground.setEnabled(enabled);
+                chooseColorBackground.setVisibility(enabled ? View.VISIBLE : View.INVISIBLE);
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView)
@@ -222,6 +238,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 updatePreview();
             }
         });
+
+        chooseColorBackground = createColorChooser(context, R.id.editLabel_backgroundColor, R.id.edit_backgroundColor, R.id.editButton_backgroundColor, THEME_BACKGROUND_COLOR);
+        chooseColorBackground.setShowAlpha(true);
 
         EditText editName = (EditText)findViewById(R.id.edit_themeName);
         chooseName = new ThemeNameChooser(editName);
@@ -281,6 +300,18 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         chooseColorNautical = createColorChooser(context, R.id.editLabel_nauticalColor, R.id.edit_nauticalColor, R.id.editButton_nauticalColor, SuntimesTheme.THEME_NAUTICALCOLOR);
         chooseColorAstro = createColorChooser(context, R.id.editLabel_astroColor, R.id.edit_astroColor, R.id.editButton_astroColor, SuntimesTheme.THEME_ASTROCOLOR);
         chooseColorNight = createColorChooser(context, R.id.editLabel_nightColor, R.id.edit_nightColor, R.id.editButton_nightColor, SuntimesTheme.THEME_NIGHTCOLOR);
+
+        // map colors
+        chooseColorMapBackground = createColorChooser(context, R.id.editLabel_mapBackgroundColor, R.id.edit_mapBackgroundColor, R.id.editButton_mapBackgroundColor, SuntimesTheme.THEME_MAP_BACKGROUNDCOLOR);
+        chooseColorMapBackground.setShowAlpha(true);
+
+        chooseColorMapForeground = createColorChooser(context, R.id.editLabel_mapForegroundColor, R.id.edit_mapForegroundColor, R.id.editButton_mapForegroundColor, SuntimesTheme.THEME_MAP_FOREGROUNDCOLOR);
+
+        chooseColorMapShadow = createColorChooser(context, R.id.editLabel_mapSunShadowColor, R.id.edit_mapSunShadowColor, R.id.editButton_mapSunShadowColor, SuntimesTheme.THEME_MAP_SHADOWCOLOR);
+        chooseColorMapShadow.setShowAlpha(true);
+
+        chooseColorMapHighlight = createColorChooser(context, R.id.editLabel_mapMoonHighlightColor, R.id.edit_mapMoonHighlightColor, R.id.editButton_mapMoonHighlightColor, SuntimesTheme.THEME_MAP_HIGHLIGHTCOLOR);
+        chooseColorMapHighlight.setShowAlpha(true);
 
         // season colors
         chooseColorSpring = createColorChooser(this, R.id.editLabel_springColor, R.id.edit_springColor, R.id.editButton_springColor, SuntimesTheme.THEME_SPRINGCOLOR );
@@ -592,8 +623,11 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             ThemeBackground background = (ThemeBackground)spinBackground.getSelectedItem();
             if (background != null)
             {
+                if (background.supportsCustomColors())
+                    previewBackground.setBackgroundColor(chooseColorBackground.getColor());
+                else previewBackground.setBackgroundResource(background.getResID());
+
                 int[] padding = choosePadding.getPaddingPixels(this);
-                previewBackground.setBackgroundResource(background.getResID());
                 previewBackground.setPadding(padding[0], padding[1], padding[2], padding[3]);
             }
         }
@@ -615,9 +649,84 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         }
 
         updatePreview_sun(previewLayout);
-        //updatePreview_solstice(previewLayout);  // TODO
-        //updatePreview_position(previewLayout);  // TODO
         updatePreview_moon(previewLayout);
+
+        int displayed = preview.getDisplayedChild();
+        if (displayed == PREVIEWID_SUNPOS_3x1)
+            updatePreview_position0(previewLayout);
+        else if (displayed == PREVIEWID_SUNPOS_3x2)
+            updatePreview_position1(previewLayout);
+
+        //updatePreview_solstice(previewLayout);  // TODO
+    }
+
+    protected void updatePreview_position0(View previewLayout)
+    {
+        final ImageView view = (ImageView)previewLayout.findViewById(R.id.info_time_lightmap);
+        if (view != null)
+        {
+            LightMapView.LightMapColors colors = new LightMapView.LightMapColors();
+            colors.initDefaultDark(this);
+
+            colors.colorDay = chooseColorDay.getColor();
+            colors.colorCivil = chooseColorCivil.getColor();
+            colors.colorNautical = chooseColorNautical.getColor();
+            colors.colorAstro = chooseColorAstro.getColor();
+            colors.colorNight = chooseColorNight.getColor();
+
+            int dpWidth = 256;
+            int dpHeight = 64;
+            LightMapView.LightMapTask drawTask = new LightMapView.LightMapTask();
+            drawTask.setListener(new LightMapView.LightMapTaskListener()
+            {
+                @Override
+                public void onFinished(Bitmap result)
+                {
+                    super.onFinished(result);
+                    view.setImageBitmap(result);
+                }
+            });
+            drawTask.execute(data0, SuntimesUtils.dpToPixels(this, dpWidth), SuntimesUtils.dpToPixels(this, dpHeight), colors);
+        }
+    }
+
+    protected void updatePreview_position1(View previewLayout)
+    {
+        final ImageView view = (ImageView)previewLayout.findViewById(R.id.info_time_worldmap);
+        if (view != null)
+        {
+            WorldMapTask.WorldMapOptions options = new WorldMapTask.WorldMapOptions();
+            options.map = ContextCompat.getDrawable(this, R.drawable.worldmap);
+            options.backgroundColor = chooseColorMapBackground.getColor();
+            options.foregroundColor = chooseColorMapForeground.getColor();
+            options.sunShadowColor = chooseColorMapShadow.getColor();
+            options.moonLightColor = chooseColorMapHighlight.getColor();
+
+            options.sunFillColor = chooseColorNoonIconFill.getColor();
+            options.sunStrokeColor = chooseColorNoonIconStroke.getColor();
+            options.sunRadius = 4;
+            options.sunStroke = 2;
+
+            options.moonFillColor = chooseColorMoonFull.getColor();
+            options.moonStrokeColor = chooseColorMoonWaning.getColor();
+            options.moonRadius = 3;
+            options.moonStroke = 2;
+
+            int dpWidth = 128;
+            int dpHeight = 64;
+            WorldMapTask.WorldMapProjection projection = new WorldMapEquirectangular();
+            WorldMapTask drawTask = new WorldMapTask();
+            drawTask.setListener(new WorldMapView.WorldMapTaskListener()
+            {
+                @Override
+                public void onFinished(Bitmap result)
+                {
+                    super.onFinished(result);
+                    view.setImageBitmap(result);
+                }
+            });
+            drawTask.execute(data0,  SuntimesUtils.dpToPixels(this, dpWidth), SuntimesUtils.dpToPixels(this, dpHeight), options, projection);
+        }
     }
 
     /**
@@ -630,7 +739,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         TextView previewNoon = (TextView)previewLayout.findViewById(R.id.text_time_noon);
         TextView previewNoonSuffix = (TextView)previewLayout.findViewById(R.id.text_time_noon_suffix);
 
-        SuntimesRiseSetData noonData = data.getLinked();
+        SuntimesRiseSetData noonData = data1.getLinked();
         SuntimesUtils.TimeDisplayText noonText = ((noonData != null)
                 ? utils.calendarTimeShortDisplayString(this, noonData.sunriseCalendarToday())
                 : new SuntimesUtils.TimeDisplayText("12:00"));
@@ -653,7 +762,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         TextView previewRise = (TextView)previewLayout.findViewById(R.id.text_time_rise);
         TextView previewRiseSuffix = (TextView)previewLayout.findViewById(R.id.text_time_rise_suffix);
 
-        SuntimesUtils.TimeDisplayText riseText = utils.calendarTimeShortDisplayString(this, data.sunriseCalendarToday());
+        SuntimesUtils.TimeDisplayText riseText = utils.calendarTimeShortDisplayString(this, data1.sunriseCalendarToday());
         if (previewRise != null)
         {
             String riseString = riseText.getValue();
@@ -673,7 +782,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         TextView previewSet = (TextView)previewLayout.findViewById(R.id.text_time_set);
         TextView previewSetSuffix = (TextView)previewLayout.findViewById(R.id.text_time_set_suffix);
 
-        SuntimesUtils.TimeDisplayText setText = utils.calendarTimeShortDisplayString(this, data.sunsetCalendarToday());
+        SuntimesUtils.TimeDisplayText setText = utils.calendarTimeShortDisplayString(this, data1.sunsetCalendarToday());
         if (previewSet != null)
         {
             String setString = setText.getValue();
@@ -696,7 +805,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         if (previewTimeDelta != null)
         {
-            previewTimeDelta.setText(utils.timeDeltaLongDisplayString(data.dayLengthToday(), data.dayLengthOther()).getValue());
+            previewTimeDelta.setText(utils.timeDeltaLongDisplayString(data1.dayLengthToday(), data1.dayLengthOther()).getValue());
             previewTimeDelta.setTextColor(chooseColorTime.getColor());
             updateSizeFromChooser(previewTimeDelta, chooseTextSize);
         }
@@ -1025,7 +1134,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         ThemeBackground background = (ThemeBackground)spinBackground.getSelectedItem();
         if (background != null)
         {
-            outState.putInt(SuntimesTheme.THEME_BACKGROUND, background.getResID());
+            outState.putString(SuntimesTheme.THEME_BACKGROUND, background.name());
         }
 
         for (SizeChooser chooser : sizeChoosers)
@@ -1055,7 +1164,18 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         flipToPreview(savedState.getInt(PARAM_PREVIEWID, -1));
 
         ThemeBackground background = (ThemeBackground)spinBackground.getSelectedItem();
-        setSelectedBackground(savedState.getInt(SuntimesTheme.THEME_BACKGROUND, (background != null ? background.getResID() : DarkTheme.THEMEDEF_BACKGROUND.getResID())));
+        String backgroundName = savedState.getString(SuntimesTheme.THEME_BACKGROUND);
+        if (backgroundName == null)
+        {
+            backgroundName = (background != null ? background.name() : DarkTheme.THEMEDEF_BACKGROUND.name());
+        }
+
+        try {
+            setSelectedBackground(ThemeBackground.valueOf(backgroundName));
+        } catch (IllegalArgumentException e) {
+            Log.e("setBackground", "Unable to resolve ThemeBackground " + backgroundName);
+            spinBackground.setSelection(0);
+        }
 
         for (SizeChooser chooser : sizeChoosers)
         {
@@ -1195,6 +1315,11 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             chooseColorFall.setColor(theme.getFallColor());
             chooseColorWinter.setColor(theme.getWinterColor());
 
+            chooseColorMapBackground.setColor(theme.getMapBackgroundColor());
+            chooseColorMapForeground.setColor(theme.getMapForegroundColor());
+            chooseColorMapShadow.setColor(theme.getMapShadowColor());
+            chooseColorMapHighlight.setColor(theme.getMapHighlightColor());
+
             chooseColorMoonrise.setColor(theme.getMoonriseTextColor());
             chooseColorMoonset.setColor(theme.getMoonsetTextColor());
             chooseColorMoonWaning.setColor(theme.getMoonWaningColor());
@@ -1205,7 +1330,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             chooseMoonStroke.setValue(theme.getMoonFullStroke());
 
             choosePadding.setPadding(theme.getPadding());
-            setSelectedBackground(theme.getBackground().getResID());
+            setSelectedBackground(theme.getBackground());
+            chooseColorBackground.setColor(theme.getBackgroundColor());
 
         } catch (InvalidParameterException e) {
             Log.e("loadTheme", "unable to load theme: " + e);
@@ -1216,9 +1342,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         toggleNoonIconColor(usingNoonIconColor(), true);
     }
 
-    private void setSelectedBackground(int resId)
+    private void setSelectedBackground(ThemeBackground themeBackground)
     {
-        int backgroundPos = ThemeBackground.ordinal(resId);
+        int backgroundPos = spinBackground_adapter.getPosition(themeBackground);
         spinBackground.setSelection( backgroundPos < 0 ? 0 : backgroundPos );
     }
 
@@ -1271,6 +1397,11 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 this.themeFallColor = chooseColorFall.getColor();
                 this.themeWinterColor = chooseColorWinter.getColor();
 
+                this.themeMapBackgroundColor = chooseColorMapBackground.getColor();
+                this.themeMapForegroundColor = chooseColorMapForeground.getColor();
+                this.themeMapShadowColor = chooseColorMapShadow.getColor();
+                this.themeMapHighlightColor = chooseColorMapHighlight.getColor();
+
                 this.themeMoonriseTextColor = chooseColorMoonrise.getColor();
                 this.themeMoonsetTextColor = chooseColorMoonset.getColor();
                 this.themeMoonWaningColor = chooseColorMoonWaning.getColor();
@@ -1287,6 +1418,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 {
                     this.themeBackground = backgroundItem;
                 }
+                this.themeBackgroundColor = chooseColorBackground.getColor();
                 return this;
             }
         }.init();

@@ -93,11 +93,17 @@ public abstract class SuntimesLayout
 
         // theme background
         ThemeBackground background = theme.getBackground();
-        views.setInt(R.id.widgetframe_inner, "setBackgroundResource", background.getResID());
-        // BUG: setting background screws up padding; pre jellybean versions can't correct for it!
-        // either live w/ it, or move this call into if statement below .. however then the background
-        // doesn't update for pre jellybean versions, confusing users into thinking themes don't work
-        // at all (and they really don't considering the background is 90% of the theme).
+        if (background.supportsCustomColors())
+        {
+            views.setInt(R.id.widgetframe_inner, "setBackgroundColor", theme.getBackgroundColor());
+
+        } else {
+            views.setInt(R.id.widgetframe_inner, "setBackgroundResource", background.getResID());
+            // BUG: setting background screws up padding; pre jellybean versions can't correct for it!
+            // either live w/ it, or move this call into if statement below .. however then the background
+            // doesn't update for pre jellybean versions, confusing users into thinking themes don't work
+            // at all (and they really don't considering the background is 90% of the theme).
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {

@@ -4,9 +4,17 @@
           package="com.forrestguice.suntimeswidget" >
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="18" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />     <!-- needed to get location using GPS -->
+
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />      <!-- needed to interact w/ AlarmClock -->
+
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />           <!-- needed to interact w/ Calendar -->
+
+    <uses-permission android:name="android.permission.READ_SYNC_STATS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />      <!-- needed to add new Calendars (via SyncAdapter) -->
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="18" />  <!-- needed by "export" features (e.g. "export places" to file) -->
 
     <uses-sdk tools:overrideLibrary="com.flask.colorpicker" />
 
@@ -37,6 +45,37 @@
             </intent-filter>
 
         </activity>
+
+        <!-- Calendar Provider -->
+        <provider
+            android:name="com.forrestguice.suntimeswidget.calendar.SuntimesContentProvider"
+            android:authorities="com.forrestguice.suntimeswidget.datasync.provider"
+            android:exported="false"
+            android:syncable="true"/>
+        <service
+            android:name="com.forrestguice.suntimeswidget.calendar.SuntimesSyncService"
+            android:exported="true" android:permission="signature"
+            android:process=":sync">  <!-- TODO: lint security warning.. exported="false" or define a permission? -->
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter"/>
+            </intent-filter>
+            <meta-data android:name="android.content.SyncAdapter" android:resource="@xml/syncadapter" />
+        </service>
+
+        <!-- Calculator Plugins -->
+        <!--EXAMPLE:
+        <activity android:name=".calculator.ca.rmen.sunrisesunset.CalculatorPlugin">  ..where CalculatorPlugin is an empty activity
+
+            <meta-data android:name="CalculatorName" android:value="ca.rmen.sunrisesunset" />
+            <meta-data android:name="CalculatorDisplayString" android:value="@string/calculator_displayString_caarmensunrisesunset" />
+            <meta-data android:name="CalculatorReference" android:value="com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator" />
+            <meta-data android:name="CalculatorFeatures" android:value="0,30" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.RUN" />
+                <category android:name="com.forrestguice.suntimeswidget.SUNTIMES_CALCULATOR" />
+            </intent-filter>
+        </activity>-->
 
         <!-- Settings Activity -->
         <activity
@@ -210,6 +249,33 @@
         <!-- Widget Configuration Activity -->
         <activity
             android:name=".SuntimesConfigActivity2_3x1" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <!-- Widget 2: Sun Position (3x2) -->
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <receiver android:name=".SuntimesWidget2_3x2"
+            android:label="@string/app_name_widget2"
+            android:icon="@drawable/ic_action_map">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="suntimes.SUNTIMES_WIDGET_UPDATE2" />
+                <action android:name="suntimes.SUNTIMES_THEME_UPDATE" />
+                <action android:name="suntimes.SUNTIMES_ALARM_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_sun2_3x2" />
+        </receiver>
+
+        <!-- Widget Configuration Activity -->
+        <activity
+            android:name=".SuntimesConfigActivity2_3x2" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>

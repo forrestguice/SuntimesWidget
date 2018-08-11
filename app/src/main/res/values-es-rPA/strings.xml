@@ -4,5 +4,6 @@
     <string name="default_location_label">Panama City</string>
     <string name="default_location_latitude">9.0831</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">-79.5924</string>   <!-- decimal degrees (DD) -->
+    <string name="default_location_altitude">98</string>         <!-- meters -->
 
 </resources>

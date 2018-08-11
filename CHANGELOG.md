@@ -1,9 +1,36 @@
 ### ~
 
+### v0.9.0 (2018-08-11)
+* changes default sun data source to time4a-time4j (supporting altitude based refinements).
+* changes default 'en' location to New York City, and default 'en-US' location to Phoenix.
+* enhances the data source selector; now tags the default source, and sources loaded via plugin.
+* enhances data sources (plugins); support for loading external sources (not included with app) (#229).
+* adds elevation to all default locations; default 'en' location changed to New York City, default 'en-US' location changed to Phoenix.  
+* adds elevation UI to Location settings, main ActionBar, and widget title substitutions. 
+* adds app pref "Use Elevation"; apply altitude based refinements; defaults true.
+* adds app pref "On Date Long Press"; defaults to "Show Calendar".
+* adds permissions READ_CALENDAR, WRITE_CALENDAR; needed to interact w/ Calendar app (add/remove events in custom calendars).
+* adds permissions READ_SYNC_STATS, WRITE_SYNC_SETTINGS; needed to provide custom calendars (add/remove calendars via SyncAdapter).
+* adds a SyncAdapter (LOCAL account) to provide the Calendar app with custom calendars.
+* adds options to toggle visibility of twilight times displayed by the app (hide fields).   
+* refactors widgetlist activity to use ActionBar (#230).
+* adds 3x1 and 3x2 SunPosition previews to theme editor.
+* adds 3x2 SunPosition widget showing world map.
+* adds world map dialog to app; shows sunlight (day/night) and moonlight over an equirectangular map.
+* adds theme "Dark (translucent)"; default theme with semitransparent widget background.
+* adds to theming; custom background option (simple background color supporting transparency).
+* updates dependency (Time4A 3.44.2-2018b).
+* updates translation to Norwegian (nb) (#224 by FTno). 
+
+### v0.8.6 (2018-07-05)
+* updates translation to French (fr) (#220 by Aloha68).
+* updates translation to Norwegian (nb) (#221 by FTno).
+* updates translations to Polish and Esperanto (eo, pl) (#217 by Verdulo).
+
 ### v0.8.5 (2018-06-18)
 * add gps pref "Passive Location"; use the passive location provider (use a separate app to manage location updates).
 * fixes bug where the "GPS is disabled. Enable it?" dialog is not shown.
-* updates translation to Norwegian (nb) (#214, #215).
+* updates translation to Norwegian (nb) (#214, #215 by FTno).
 
 ### v0.8.4 (2018-06-07)
 * fixes polar regions usable hours bug (#209).
@@ -25,6 +52,7 @@
 * fixes app crash (MoonDialog) if calculator failed to load (and fallback was supplied) (#198).
 * fixes app crash (General Settings) when initializing defaults (api26) (#198).
 * fixes bug where user-defined language fails to override locale (api26) (#197).
+
 
 ### v0.8.1 (2018-04-26)
 * misc layout changes (improvements for locales w/ long strings).
@@ -50,7 +78,7 @@
 * adds 1x1 sun position widget; shows azimuth and elevation angles (#169).
 * adds sun azimuth and elevation angles to lightmap dialog (#169).
 * adds "sun position" overflow menu item; shows lightmap dialog.
-* updates translations (eo, pl) (#184, #186).
+* updates translations (eo, pl) (#184, #186 by Verdulo).
 
 ### v0.7.4 (2018-03-26)
 * adds "restore defaults" button to "On Tap: Launch App" help dialog.
@@ -64,7 +92,7 @@
 * app automatically updates on date change (registers/unregisters an alarm for midnight).
 * fixes bug where the date has advanced to the next day but the displayed times have not (after midnight up to difference between local time and timezone).
 * fixes bug where the formatted date is off by a day (before midnight up to difference between local time and timezone).
-* updates translations (eo, pl) (#180).
+* updates translations (eo, pl) (#180 by Verdulo).
 
 ### v0.7.3 (2018-03-16)
 * reorders user interfaces prefs (organized into categories).
@@ -84,7 +112,7 @@
 * adds widget option "show labels"; show/hide extra labels.
 * updates dependency (Time4A 3.40-2018b). 
 * updates url: AboutDialog now links https://forrestguice.github.io/SuntimesWidget/ 
-* updates translations (eo, pl) (#171, #172, #175); adds translated fastlane metadata.
+* updates translations (eo, pl) (#171, #172, #175 by Verdulo); adds translated fastlane metadata.
 
 ### v0.7.1 (2018-02-28)
 * fixes bug #120 (widget icons don't use theme icons); now works for all api versions.
@@ -114,7 +142,7 @@
 * adds "show golden hour" option to app (#127).
 * adds golden hour, blue hour (8deg), and blue hour (4deg) to rise/set times (#127).
 * fixes en localization; e.g. "Fall" is better known as "Autumn" (#159), "color" vs "colour", etc.
-* updates translations (eo, pl) (#160, #162, #163).
+* updates translations (eo, pl) (#160, #162, #163 by Verdulo).
 
 ### v0.6.2 (2018-02-03)
 * adds option "verbose accessibility"; better support for TalkBack. 
@@ -122,7 +150,7 @@
 * misc layout fixes (improved accessibility); better support for "large text".
 * fixes bug "solstice/equinox dates not localized" (#146).
 * adds "adaptive" launcher icon (used by api26+).
-* updates translations (eo, pl) (#148, #149).
+* updates translations (eo, pl) (#148, #149 by Verdulo).
  
 ### v0.6.1 (2018-01-23)
 * adds translations to Catalan (ca) and Spanish (es-ES) (contributed by Raulvo) (#141).
@@ -130,7 +158,7 @@
 * enhances the calculator selector used by widget configuration (now shows descriptive text).
 * misc accessibility fixes (labelFor, dropDownVerticalOffset).
 * adds web links in the About Dialog to the changelog and version commit.  
-* updates translations (eo, pl) (#137).
+* updates translations (eo, pl) (#137 by Verdulo).
 
 ### v0.6.0 (2017-12-27)
 * adds solstice/equinox tracking to app (#13).
@@ -149,7 +177,7 @@
 * fixes theme icons don't use theme colors (api22+) (#120).
 * fixes crash when adding widgets (api22+) (#126).
 * updates dependency (Time4A 3.38-2017c).
-* updates translations (eo, pl) (#123, #124).
+* updates translations (eo, pl) (#123, #124 by Verdulo).
 
 ### v0.5.1 (2017-12-03)
 * changes default data source to time4a-noaa (fallback remains sunrisesunsetlib).
@@ -164,7 +192,7 @@
 * lists 2x1 widget (previously only accessible by resizing 1x1 widget).
 * fixes 2x1 layout for api versions <= 15 (previously inaccessible).
 * updates dependency (Time4A 3.37-2017c).
-* updates translations (eo, pl) (#115, #116).
+* updates translations (eo, pl) (#115, #116 by Verdulo).
 
 ### v0.5.0 (2017-11-18)
 * auto-backup reenabled.
@@ -174,7 +202,7 @@
 * adds widget option "show comparison" (show/hide comparison field on 1x3 widgets).
 * adds option to show data source label in app UI / misc data source related UI enhancements.
 * adds translation to Hungarian (hu) (contributed by Erci) (#106).
-* updates translations (eo, pl) (#110).
+* updates translations (eo, pl) (#110 by Verdulo).
 
 ### v0.4.1 (2017-10-31)
 * fixes data source setting not honored (#104).
@@ -186,14 +214,14 @@
 * automatic backups now disabled.
 * fixes app layout; times unreadable when using large font setting (related to #43).
 * fixes lightmap rendering (now optimized to do work off the UI thread).
-* updates translations (eo, pl) (#93, #94, #96, #97).
+* updates translations (eo, pl) (#93, #94, #96, #97 by Verdulo).
 
 ### v0.3.1 (2017-04-15)
 * misc UI tweaks, styles, and strings.
 * fixes widget preview images.
 * fixes ui bug "table switches unintentionally" (#20).
 * fixes "allow resize" option (disabled for api 16 and under).
-* updates translations (eo, pl) (#86, #87).
+* updates translations (eo, pl) (#86, #87 by Verdulo).
 * adds Junit and Espresso UI testing to the project.
 
 ### v0.3.0 (2017-02-23)
@@ -209,7 +237,7 @@
 * fixes time zone selector loading (now loads asynchronously).
 * fixes widget layout update bug / widget resizes itself after update (#77).
 * fixes widget update behavior (now updates at midnight) (#77).
-* updates translations (eo, pl) (#69, #72, #73, #79, #80, #83, #84).
+* updates translations (eo, pl) (#69, #72, #73, #79, #80, #83, #84 by Verdulo).
 
 ### v0.2.3 (2016-11-07)
 * fixes alarm set incorrectly w/ user-defined timezones (#64).
@@ -223,13 +251,13 @@
 * fixes app crash on SettingsActivity (api14, api15) (#55).
 * fixes app crash on ExportPlaces (api18) (adds permission EXTERNAL_STORAGE) (#67).
 * fixes misc SettingsActivity bugs (api10, api15) (#57, #58, #59, #60).
-* updates translations (eo, pl) (#51).
+* updates translations (eo, pl) (#51 by Verdulo).
 
 ### v0.2.1 (2016-08-30)
 * fixes unreadable app layouts when using non-english locales (#43).
 * fixes missing actionbar overflow icons.
 * fixes lat/lon input; touch dialog fields to begin editing (#37).
-* updates translations (eo, pl) (#46, #47).
+* updates translations (eo, pl) (#46, #47 by Verdulo).
 
 ### v0.2.0 (2016-08-13)
 * adds translation to Polish (pl) and Esperanto (eo) (contributed by Verdulo) (#24, #26, #31, #35, #36).
