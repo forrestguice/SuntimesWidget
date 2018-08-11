@@ -115,6 +115,12 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
     }
 
     @Override
+    protected String defaultCalculator()
+    {
+        return WidgetSettings.PREF_DEF_GENERAL_CALCULATOR_MOON;
+    }
+
+    @Override
     protected SuntimesCalculatorDescriptor[] supportingCalculators()
     {
         return SuntimesCalculatorDescriptor.values(this, requiredFeatures);

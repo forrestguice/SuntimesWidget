@@ -45,6 +45,7 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
         super.initViews(context);
         setConfigActivityTitle(getString(R.string.configLabel_solsticewidget0));
 
+        hideOptionUseAltitude();
         hideOptionCompareAgainst();
         hideOption1x1LayoutMode();
         showOptionWeeks(true);
