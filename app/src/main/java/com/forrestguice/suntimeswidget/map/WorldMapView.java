@@ -19,7 +19,6 @@ package com.forrestguice.suntimeswidget.map;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -35,7 +34,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 public class WorldMapView extends android.support.v7.widget.AppCompatImageView
 {
     public static final String LOGTAG = "WorldMap";
-    public static final int DEFAULT_MAX_UPDATE_RATE = 1 * 1000;  // ms value; once a second
+    public static final int DEFAULT_MAX_UPDATE_RATE = 1000;  // ms value; once a second
 
     private WorldMapTask drawTask;
     private WorldMapTask.WorldMapOptions options = new WorldMapTask.WorldMapOptions();

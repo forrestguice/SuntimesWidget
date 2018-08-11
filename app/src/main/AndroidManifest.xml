@@ -55,7 +55,7 @@
         <service
             android:name="com.forrestguice.suntimeswidget.calendar.SuntimesSyncService"
             android:exported="true"
-            android:process=":sync">
+            android:process=":sync">  <!-- TODO: lint security warning.. exported="false" or define a permission? -->
             <intent-filter>
                 <action android:name="android.content.SyncAdapter"/>
             </intent-filter>
@@ -64,7 +64,7 @@
 
         <!-- Calculator Plugins -->
         <!--EXAMPLE:
-        <activity android:name=".calculator.ca.rmen.sunrisesunset.CalculatorPlugin">
+        <activity android:name=".calculator.ca.rmen.sunrisesunset.CalculatorPlugin">  ..where CalculatorPlugin is an empty activity
 
             <meta-data android:name="CalculatorName" android:value="ca.rmen.sunrisesunset" />
             <meta-data android:name="CalculatorDisplayString" android:value="@string/calculator_displayString_caarmensunrisesunset" />

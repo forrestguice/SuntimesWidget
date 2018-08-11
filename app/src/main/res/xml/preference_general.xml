@@ -36,6 +36,10 @@
             android:title="@string/configLabel_general_showTimeDate"
             android:summary="@string/configLabel_general_showTimeDate_summary" android:defaultValue="@string/def_appwidget_0_general_showtimedate" />
 
+        <CheckBoxPreference
+            android:key="appwidget_0_location_altitude_enabled"
+            android:title="@string/configLabel_general_altitude_enabled"
+            android:summary="@string/configLabel_general_altitude_enabled_summary" android:defaultValue="@string/def_appwidget_0_general_altitude_enabled" />
 
     </PreferenceCategory>
 
