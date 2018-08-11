@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="http://schemas.android.com/tools">
 
-    <string name="default_location_label">Prescott, AZ</string>
-    <string name="default_location_latitude">34.5409</string>      <!-- decimal degrees (DD) -->
-    <string name="default_location_longitude">-112.4691</string>   <!-- decimal degrees (DD) -->
+    <string name="default_location_label">New York City</string>
+    <string name="default_location_latitude">40.68620</string>      <!-- decimal degrees (DD) -->
+    <string name="default_location_longitude">-74.02619</string>   <!-- decimal degrees (DD) -->
+    <string name="default_location_altitude">0</string>         <!-- meters -->
 
     <!-- MAIN ACTIVITY -->
 
@@ -158,11 +159,35 @@
     <string name="datetime_format_verylong"><xliff:g id="dateFormat">%1$s</xliff:g> [<xliff:g id="tzID" example="UTC">%2$s</xliff:g>]</string>  <!-- datetime_format and timezone -->
     <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
 
+    <!-- location display formats -->
+    <string name="location_format_alt"><xliff:g id="altitude">%1$s</xliff:g><xliff:g id="distanceUnit" example="m">%2$s</xliff:g></string>  <!-- altitude, e.g. 1600m -->
+    <string name="location_format_alttag">[<xliff:g id="altitudeString">%1$s</xliff:g>]</string>                                            <!-- altitude as a tag, e.g. [1600m] -->
+    <string name="location_format_latlon"><xliff:g id="latitude">%1$s</xliff:g>, <xliff:g id="longitude">%2$s</xliff:g></string>            <!-- latitude, longitude -->
+    <string name="location_format_latlonalt"><xliff:g id="latlon">%1$s</xliff:g> <xliff:g id="altitudeTag">%2$s</xliff:g></string>        <!-- latitude, longitude [altitude] -->
+
+    <!-- distances (meters, feet, etc) -->
+    <string name="units_feet">feet</string>   <!-- TODO -->
+    <string name="units_feet_short">ft</string>   <!-- TODO -->
+    <!--<plurals name="units_feet_long">
+        <item quantity="one">%d foot</item>
+        <item quantity="other">%d feet</item>
+    </plurals>-->
+    <string name="units_meters">meters</string>  <!-- TODO -->
+    <string name="units_meters_short">m</string>  <!-- TODO -->
+    <!--<plurals name="units_meters_long">
+        <item quantity="one">%d meter</item>
+        <item quantity="other">%d meters</item>
+    </plurals>-->
+
     <!--
          WIDGET CONFIG
     -->
 
     <string name="configAction_restoreDefaults">Restore Defaults</string>   <!-- button / menu text -->
+
+    <string name="configLabel_tagDefault">[default]</string>                <!-- TODO -->
+    <string name="configLabel_tagPlugin">[plugin]</string>                <!-- TODO -->
+    <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->  <!-- TODO -->
 
     <!-- WidgetConfig Activity -->
     <string name="configAction_addWidget">Add Widget</string>                   <!-- Button: Add -->
@@ -179,6 +204,9 @@
     <string name="configLabel_general_calculator">Data Source:</string>         <!-- spinner label -->
     <string name="configLabel_general_calculator_sun">Sun Data Source</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Moon Data Source</string>         <!-- preference label -->
+
+    <string name="configLabel_general_altitude_enabled">Use Elevation</string>        <!-- checkbox label --> <!-- TODO: i18n -->
+    <string name="configLabel_general_altitude_enabled_summary">Apply altitude based refinements.</string>        <!-- checkbox label --> <!-- TODO: i18n -->
 
     <string name="configLabel_general_showSeconds">Show Seconds</string>        <!-- checkbox label -->
     <string name="configLabel_general_showSeconds_summary">Include seconds when displaying times.</string>        <!-- checkbox label -->
@@ -308,6 +336,8 @@
     <string name="configHint_location_lat">decimal degrees</string>      <!-- edittext hint -->
     <string name="configLabel_location_lon">Longitude:</string>                          <!-- edittext label -->
     <string name="configHint_location_lon">decimal degrees</string> <!-- edittext hint -->
+    <string name="configLabel_location_alt">Elevation:</string>                          <!-- edittext label -->   <!-- TODO -->
+    <string name="configHint_location_alt">0</string> <!-- edittext hint -->                                 <!-- TODO -->
     <string name="configLabel_location_name">Name:</string>                      <!-- edittext label -->
     <string name="configHint_location_name">(optional)</string>                  <!-- edittext hint -->
 
@@ -930,6 +960,7 @@
     <string name="location_dialog_cancel">Cancel</string>
     <string name="location_dialog_error_lat">This is not a valid latitude.</string>
     <string name="location_dialog_error_lon">This is not a valid longitude.</string>
+    <string name="location_dialog_error_alt">This is not a valid elevation.</string>  <!-- TODO: i18n -->
 
     <string name="location_dialog_toast_copied">Copied to clipboard<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
 
@@ -1099,8 +1130,9 @@
     <string name="calculator_displayString_time4a_4j">Based on astronomical calculations published by Jean Meeus in his book "Astronomical Algorithms" (second edition).</string>
 
     <!-- pref defaults -->
-    <string name="def_appwidget_0_general_calculator" translatable="false">time4a-noaa</string>
+    <string name="def_appwidget_0_general_calculator" translatable="false">time4a-time4j</string>
     <string name="def_appwidget_0_general_calculator_moon" translatable="false">time4a-time4j</string>
+    <string name="def_appwidget_0_general_altitude_enabled" translatable="false">true</string>
     <string name="def_appwidget_0_appearance_timeformatmode" translatable="false">MODE_SYSTEM</string>
     <string name="def_appwidget_0_general_showweeks" translatable="false">false</string>
     <string name="def_appwidget_0_general_showhours" translatable="false">true</string>

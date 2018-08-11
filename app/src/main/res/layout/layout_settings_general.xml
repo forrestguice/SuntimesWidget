@@ -117,6 +117,17 @@
 
         </LinearLayout>
 
+        <LinearLayout android:id="@+id/appwidget_general_useAltitude_layout"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
+
+            <CheckBox android:id="@+id/appwidget_general_useAltitude"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/configLabel_general_altitude_enabled" />
+
+        </LinearLayout>
+
         <LinearLayout android:id="@+id/appwidget_general_showWeeks_layout"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal"

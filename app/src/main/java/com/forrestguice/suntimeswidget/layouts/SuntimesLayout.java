@@ -20,9 +20,7 @@ package com.forrestguice.suntimeswidget.layouts;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 

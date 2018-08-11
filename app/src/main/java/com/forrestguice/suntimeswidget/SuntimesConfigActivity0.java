@@ -43,7 +43,9 @@ import android.widget.TextView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptorListAdapter;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 
 import com.forrestguice.suntimeswidget.layouts.SunLayout;
@@ -88,6 +90,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected CheckBox checkbox_showTimeDate;
     protected CheckBox checkbox_showWeeks;
     protected CheckBox checkbox_showHours;
+    protected CheckBox checkbox_useAltitude;
 
     protected Spinner spinner_riseSetOrder;
 
@@ -228,7 +231,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected ArrayAdapter<SuntimesCalculatorDescriptor> createAdapter_calculators()
     {
         SuntimesCalculatorDescriptor[] calculators = supportingCalculators();
-        return new SuntimesCalculatorDescriptor.SuntimesCalculatorDescriptorListAdapter(this, R.layout.layout_listitem_oneline, R.layout.layout_listitem_twoline, calculators);
+        SuntimesCalculatorDescriptorListAdapter adapter= new SuntimesCalculatorDescriptorListAdapter(this, R.layout.layout_listitem_oneline, R.layout.layout_listitem_twoline, calculators);
+        adapter.setDefaultValue(defaultCalculator());
+        return adapter;
+    }
+
+    protected String defaultCalculator()
+    {
+        return WidgetSettings.PREF_DEF_GENERAL_CALCULATOR;
     }
 
     protected SuntimesCalculatorDescriptor[] supportingCalculators()
@@ -385,6 +395,18 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (spinner_calculatorMode != null)
         {
             spinner_calculatorMode.setAdapter(createAdapter_calculators());
+            spinner_calculatorMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+            {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+                {
+                    SuntimesCalculatorDescriptor descriptor = (SuntimesCalculatorDescriptor)adapterView.getItemAtPosition(i);
+                    checkbox_useAltitude.setEnabled(descriptor.hasRequestedFeature(SuntimesCalculator.FEATURE_ALTITUDE));
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {}
+            });
         }
 
         //
@@ -627,6 +649,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         //
         checkbox_showHours = (CheckBox)findViewById(R.id.appwidget_general_showHours);
         showOptionHours(false);
+
+        //
+        // widget: useAltitude
+        //
+        checkbox_useAltitude = (CheckBox)findViewById(R.id.appwidget_general_useAltitude);
 
         //
         // widget: about button
@@ -1064,6 +1091,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         boolean showHours = checkbox_showHours.isChecked();
         WidgetSettings.saveShowHoursPref(context, appWidgetId, showHours);
 
+        // save: useAltitude
+        boolean useAltitude = checkbox_useAltitude.isChecked();
+        WidgetSettings.saveLocationAltitudeEnabledPref(context, appWidgetId, useAltitude);
+
         // save: time mode
         saveTimeMode(context);
         saveTimeModeOverride(context);
@@ -1117,6 +1148,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // load: showHours
         boolean showHours = WidgetSettings.loadShowHoursPref(context, appWidgetId);
         checkbox_showHours.setChecked(showHours);
+
+        // load: useAltitude
+        boolean useAltitude = WidgetSettings.loadLocationAltitudeEnabledPref(context, appWidgetId);
+        checkbox_useAltitude.setChecked(useAltitude);
 
         // load: time mode
         loadTimeMode(context);
@@ -1434,6 +1469,18 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         showCompareUI(false);
     }
     private boolean hideCompareAgainst = false;
+
+    /**
+     *
+     */
+    protected void hideOptionUseAltitude()
+    {
+        View layout_useAltitude = findViewById(R.id.appwidget_general_useAltitude_layout);
+        if (layout_useAltitude != null)
+        {
+            layout_useAltitude.setVisibility(View.GONE);
+        }
+    }
 
     /**
      *

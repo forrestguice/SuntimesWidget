@@ -311,6 +311,21 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         assertTrue("location does not match default! " + pref0, pref0.equals(testloc0));
     }
 
+    @Test public void test_locationAltitudeEnabledPref()
+    {
+	WidgetSettings.saveLocationAltitudeEnabledPref(context, appWidgetId, true);
+	boolean isEnabled0 = WidgetSettings.loadLocationAltitudeEnabledPref(context, appWidgetId);
+	assertTrue("value does not match! " + isEnabled0, isEnabled0);
+
+	WidgetSettings.saveLocationAltitudeEnabledPref(context, appWidgetId, false);
+	boolean isEnabled1 = WidgetSettings.loadLocationAltitudeEnabledPref(context, appWidgetId);
+	assertTrue("value does not match! " + isEnabled1, !isEnabled1);
+
+	WidgetSettings.deleteLocationAltitudeEnabledPref(context, appWidgetId);
+	boolean isEnabled2 = WidgetSettings.loadLocationAltitudeEnabledPref(context, appWidgetId);
+	assertTrue("value does not match! " + isEnabled2, isEnabled2 == WidgetSettings.PREF_DEF_LOCATOION_ALTITUDE_ENABLED);
+    }
+
     ///////////////////////////////////////////////////////////////////////////
 
     @Test

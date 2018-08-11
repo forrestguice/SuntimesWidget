@@ -65,7 +65,7 @@ public class WidgetSettings
     public static final String PREF_PREFIX_KEY_ACTION = "_action_";
 
     public static final String PREF_KEY_GENERAL_CALCULATOR = "calculator";
-    public static final String PREF_DEF_GENERAL_CALCULATOR = "time4a-noaa";
+    public static final String PREF_DEF_GENERAL_CALCULATOR = "time4a-time4j";
     public static final String PREF_DEF_GENERAL_CALCULATOR_MOON = "time4a-time4j";
     public static final String[][] PREF_DEF_GENERAL_CALCULATORS = new String[][] { new String[] {"",     PREF_DEF_GENERAL_CALCULATOR},
                                                                                    new String[] {"moon", PREF_DEF_GENERAL_CALCULATOR_MOON} };
@@ -161,7 +161,10 @@ public class WidgetSettings
     public static String PREF_DEF_LOCATION_LATITUDE = "34.5409";         // reassigned later by initDefaults
 
     public static final String PREF_KEY_LOCATION_ALTITUDE = "altitude";
-    public static String PREF_DEF_LOCATION_ALTITUDE = "";
+    public static String PREF_DEF_LOCATION_ALTITUDE = "0";               // reassigned later by initDefaults
+
+    public static final String PREF_KEY_LOCATION_ALTITUDE_ENABLED = "altitude_enabled";
+    public static final boolean PREF_DEF_LOCATION_ALTITUDE_ENABLED = true;
 
     public static final String PREF_KEY_LOCATION_LABEL = "label";
     public static String PREF_DEF_LOCATION_LABEL = "Prescott, AZ";       // reassigned later by initDefaults
@@ -636,6 +639,7 @@ public class WidgetSettings
         private String latitude;   // decimal degrees (DD)
         private String longitude;  // decimal degrees (DD)
         private String altitude;   // meters above the WGS 84 reference ellipsoid
+        private boolean useAltitude = true;
 
         /**
          * @param latitude decimal degrees (DD) string
@@ -744,17 +748,28 @@ public class WidgetSettings
         /**
          * @return altitude in meters
          */
-        public String getAltitude() { return altitude; }
+        public String getAltitude()
+        {
+            if (!useAltitude)
+                return "";
+            else return altitude;
+        }
 
         public Double getAltitudeAsDouble()
         {
-            if (altitude.isEmpty())
+            if (!useAltitude || altitude.isEmpty())
                 return 0.0;
             else return Double.parseDouble(altitude);
         }
         public Integer getAltitudeAsInteger()
         {
-            return getAltitudeAsDouble().intValue();
+            if (!useAltitude || altitude.isEmpty())
+                return 0;
+            else return getAltitudeAsDouble().intValue();
+        }
+        public void setUseAltitude( boolean enabled )
+        {
+            useAltitude = enabled;
         }
 
         /**
@@ -1953,8 +1968,10 @@ public class WidgetSettings
         String lonString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_LONGITUDE, PREF_DEF_LOCATION_LONGITUDE);
         String latString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_LATITUDE, PREF_DEF_LOCATION_LATITUDE);
         String nameString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_LABEL, PREF_DEF_LOCATION_LABEL);
-        return new Location(nameString, latString, lonString, altString);
 
+        Location location = new Location(nameString, latString, lonString, altString);
+        location.setUseAltitude(prefs.getBoolean(prefs_prefix + PREF_KEY_LOCATION_ALTITUDE_ENABLED, PREF_DEF_LOCATION_ALTITUDE_ENABLED));
+        return location;
     }
     public static void deleteLocationPref(Context context, int appWidgetId)
     {
@@ -1964,6 +1981,31 @@ public class WidgetSettings
         prefs.remove(prefs_prefix + PREF_KEY_LOCATION_LONGITUDE);
         prefs.remove(prefs_prefix + PREF_KEY_LOCATION_LATITUDE);
         prefs.remove(prefs_prefix + PREF_KEY_LOCATION_LABEL);
+        prefs.apply();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void saveLocationAltitudeEnabledPref(Context context, int appWidgetId, boolean enabled)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_LOCATION;
+        prefs.putBoolean(prefs_prefix + PREF_KEY_LOCATION_ALTITUDE_ENABLED, enabled);
+        prefs.apply();
+    }
+    public static boolean loadLocationAltitudeEnabledPref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_LOCATION;
+        boolean enabled = prefs.getBoolean(prefs_prefix + PREF_KEY_LOCATION_ALTITUDE_ENABLED, PREF_DEF_LOCATION_ALTITUDE_ENABLED);
+        return enabled;
+    }
+    public static void deleteLocationAltitudeEnabledPref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_LOCATION;
+        prefs.remove(prefs_prefix + PREF_KEY_LOCATION_ALTITUDE_ENABLED);
         prefs.apply();
     }
 
@@ -2325,6 +2367,7 @@ public class WidgetSettings
         deleteObserverHeightPref(context, appWidgetId);
 
         deleteLocationModePref(context, appWidgetId);
+	deleteLocationAltitudeEnabledPref(context, appWidgetId);
         deleteLocationPref(context, appWidgetId);
 
         deleteTimezoneModePref(context, appWidgetId);
@@ -2343,6 +2386,7 @@ public class WidgetSettings
         PREF_DEF_LOCATION_LABEL = context.getString(R.string.default_location_label);
         PREF_DEF_LOCATION_LATITUDE = context.getString(R.string.default_location_latitude);
         PREF_DEF_LOCATION_LONGITUDE = context.getString(R.string.default_location_longitude);
+        PREF_DEF_LOCATION_ALTITUDE = context.getString(R.string.default_location_altitude);
     }
 
     public static void initDisplayStrings( Context context )
