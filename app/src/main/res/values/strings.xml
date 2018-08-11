@@ -871,6 +871,12 @@
       DIALOGS
     -->
 
+    <!-- Dialog: World Map -->
+    <string name="worldmap_dialog_title">@string/configAction_worldMap</string>   <!-- TODO -->
+    <string name="worldmap_dialog_option_sunlight">Sunlight</string>              <!-- TODO -->
+    <string name="worldmap_dialog_option_moonlight">Moonlight</string>            <!-- TODO -->
+    <string name="worldmap_dialog_option_all">Both</string>                       <!-- TODO -->
+
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Schedule an alarm for</string>
     <string name="schedalarm_dialog_title">Set Alarm</string>
