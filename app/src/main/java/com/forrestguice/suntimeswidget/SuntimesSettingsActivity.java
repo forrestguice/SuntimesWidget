@@ -564,6 +564,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class CalendarPrefsFragment extends PreferenceFragment
     {
         @Override
@@ -585,13 +586,12 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         CheckBoxPreference calendarsEnabledPref = (CheckBoxPreference) findPreference(AppSettings.PREF_KEY_CALENDARS_ENABLED);
         initPref_calendars(this, calendarsEnabledPref);
     }
-
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private static void initPref_calendars(PreferenceFragment fragment)
     {
         CheckBoxPreference calendarsEnabledPref = (CheckBoxPreference) fragment.findPreference(AppSettings.PREF_KEY_CALENDARS_ENABLED);
         initPref_calendars(fragment.getActivity(), calendarsEnabledPref);
     }
-
     private static void initPref_calendars(final Activity activity, final CheckBoxPreference enabledPref )
     {
         final Preference.OnPreferenceChangeListener onPreferenceChanged0 = new Preference.OnPreferenceChangeListener()
