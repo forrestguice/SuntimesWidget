@@ -20,7 +20,7 @@
     <string name="configAction_setDate">Elekti daton</string>
     <string name="configAction_sunDialog">Pozicio de Suno</string>
     <string name="configAction_equinoxDialog">Solstico / ekvinokso</string>
-    <string name="configAction_worldMap">World Map</string>  <!-- TODO -->
+    <string name="configAction_worldMap">Mondmapo</string>
     <string name="configAction_moon">Luno</string>
     <string name="configAction_help">Helpo</string>
     <string name="configAction_settings">Agordoj</string>
@@ -271,9 +271,9 @@
     <string name="widgetMode1x1_altaz">Altitudo kaj azimuto</string>     <!-- setting -->
     <string name="widgetMode1x1_decright">Deklinacio kaj rektascensio</string>     <!-- setting -->
 
-    <string name="widgetMode_sunPosMap_simplerectangular">Basic</string>  <!-- setting -->  <!-- TODO -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal">Polar</string>     <!-- setting -->  <!-- TODO -->
-    <string name="widgetMode_sunPosMap_bluemarble">Blue Marble</string>    <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode_sunPosMap_simplerectangular">Cilindra</string>  <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal">Ebena polusa</string>     <!-- setting -->
+    <string name="widgetMode_sunPosMap_bluemarble">Ebena ekvatora</string>    <!-- setting -->
 
     <string name="widgetMode1x1_moonriseset">Lunleviĝo kaj lunsubiro</string>       <!-- setting -->
     <string name="widgetMode1x1_moonphaseillum">Lunfazo kaj prilumeco</string>    <!-- setting -->
@@ -430,10 +430,10 @@
     <string name="configLabel_themeColorFall">Aŭtuna koloro:</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Vintra koloro:</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMapBackground">Map Background</string> <!-- color label --> <!-- TODO -->
-    <string name="configLabel_themeColorMapForeground">Map Foreground</string> <!-- color label --> <!-- TODO -->
-    <string name="configLabel_themeColorMapSunShadow">Shadow</string> <!-- color label -->          <!-- TODO -->
-    <string name="configLabel_themeColorMapMoonHighlight">Highlight</string> <!-- color label -->   <!-- TODO -->
+    <string name="configLabel_themeColorMapBackground">Fono de mapo</string> <!-- color label -->
+    <string name="configLabel_themeColorMapForeground">Malfono de mapo</string> <!-- color label -->
+    <string name="configLabel_themeColorMapSunShadow">Ombro</string> <!-- color label -->
+    <string name="configLabel_themeColorMapMoonHighlight">Prilumo</string> <!-- color label -->
 
     <string name="configLabel_themeColorMoonrise">Koloro de lunleviĝo:</string> <!-- color label -->
     <string name="configLabel_themeColorMoonset">Koloro de lunsubiro:</string>  <!-- color label -->
