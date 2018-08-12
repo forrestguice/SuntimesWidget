@@ -942,7 +942,7 @@ public class SuntimesUtils
         String locPattern = "%loc";
         String latPattern = "%lat";
         String lonPattern = "%lon";
-        String altPattern = "%alt";        // TODO: add to help
+        String altPattern = "%lel";
         String timezoneIDPattern = "%t";
         String datasourcePattern = "%s";
         String datePattern = "%d";
@@ -963,7 +963,7 @@ public class SuntimesUtils
         displayString = displayString.replaceAll(locPattern, location.getLabel());
         displayString = displayString.replaceAll(latPattern, location.getLatitude());
         displayString = displayString.replaceAll(lonPattern, location.getLongitude());
-        displayString = displayString.replaceAll(altPattern, location.getAltitude());
+        displayString = displayString.replaceAll(altPattern, "" + location.getAltitudeAsInteger());
         displayString = displayString.replaceAll(timezoneIDPattern, timezoneID);
         displayString = displayString.replaceAll(datasourcePattern, datasource);
         displayString = displayString.replaceAll(widgetIDPattern, appWidgetID);

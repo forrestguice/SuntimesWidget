@@ -1050,6 +1050,7 @@
                 * <b>%loc</b> for label (e.g. Prescott) <br />
                 * <b>%lat</b> for latitude (e.g. 35.5409) <br />
                 * <b>%lon</b> for longitude (e.g. -112.4691) <br/>
+                * <b>%lel</b> for elevation (e.g. 385 meters) <br/>
                 <br/>
                 * <b>%s</b> for data source (e.g. sunrisesunsetlib) <br/>
                 * <b>%t</b> for time zone (id) (e.g. US/Arizona) <br/>
