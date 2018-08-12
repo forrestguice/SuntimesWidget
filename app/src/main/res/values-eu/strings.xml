@@ -957,6 +957,7 @@
                 * <b>%loc</b> etiketarako (adib. Prescott) <br />
                 * <b>%lat</b> latituderako (adib. 35.5409) <br />
                 * <b>%lon</b> longituderako (adib. -112.4691) <br/>
+                * <b>%lel</b> for elevation (e.g. 385 meters) <br/>
                 <br/>
                 * <b>%s</b> datuen jatorrirako (adib. sunrisesunsetlib) <br/>
                 * <b>%t</b> ordu eremurako (id) (adib. US/Arizona) <br/>
@@ -973,7 +974,7 @@
          <b>Solstizioaren widgetak:</b> <br/>
                 * <b>%m</b> modurako (laburra) (adib. Solstizioa) <br/>
                 * <b>%M</b> modurako (luzea) (adib. Neguko solstizioa) <br/>
-    ]]></string>
+    ]]></string>  <!-- TODO: %lel -->
 
     <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>

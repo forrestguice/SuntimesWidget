@@ -919,6 +919,7 @@
                 * <b>%loc</b> pour le libellé (ex. Prescott) <br />
                 * <b>%lat</b> pour la latitude (ex. 35.5409) <br />
                 * <b>%lon</b> pour la longitude (ex. -112.4691) <br/>
+                * <b>%lel</b> for elevation (e.g. 385 meters) <br/>
                 <br/>
                 * <b>%s</b> pour la source de donnée (ex. sunrisesunsetlib) <br/>
                 * <b>%t</b> pour le fuseau horaire (id) (ex. EU/Paris) <br/>
@@ -935,7 +936,7 @@
          <b>Widgets des solstices :</b> <br/>
                 * <b>%m</b> pour le mode temporel (court) (ex. Solstice) <br/>
                 * <b>%M</b> pour le mode temporel (long) (ex. Solstice d\'hiver) <br/>
-    ]]></string>
+    ]]></string>  <!-- TODO: %lel -->
 
     <string name="help_general_timeMode"><![CDATA[
           <b>Heure réelle :</b> Le soleil est à l\'horizon. C\'est l\'heure (approximative) du lever et du coucher du soleil.<br/><br/>

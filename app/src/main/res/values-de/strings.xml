@@ -887,6 +887,7 @@
                 * <b>%loc</b> für den Ort <br />
                 * <b>%lat</b> für den Breitengrad <br />
                 * <b>%lon</b> für den Längengrad <br/>
+                * <b>%lel</b> for elevation (e.g. 385 meters) <br/>
                 <br/>
                 * <b>%s</b> für den Datenquelle (z.B. "sunrisesunsetlib") <br/>
                 * <b>%t</b> Die Zeitzone (id) (z.B. "Europe/Berlin") <br/>

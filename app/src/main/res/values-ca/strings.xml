@@ -930,6 +930,7 @@
 
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Ajuda</string>
+    <!-- TODO: needs update (see values\strings.xml) -->
     <string name="help_appearance_title"><![CDATA[
     Les següents substitucions estàn soportades: <br />
             * <b>%loc</b> per a etiqueta <br />
