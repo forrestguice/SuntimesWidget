@@ -646,12 +646,6 @@
         <item>five years</item>
         <item>ten years</item>
     </string-array>  <!-- TODO -->
-    <string-array name="calendars_window_values" translatable="false">     <!-- ms config values (one-to-one with getFix_maxAge_display) -->
-        <item>31536000000</item>
-        <item>63072000000</item>
-        <item>157680000000</item>
-        <item>315360000000</item>
-    </string-array>
 
     <string name="calendar_solstice_displayName">Solstices and Equinoxes</string>  <!-- TODO -->
     <string name="calendar_moonPhase_displayName">Moon Phases</string>  <!-- TODO -->
