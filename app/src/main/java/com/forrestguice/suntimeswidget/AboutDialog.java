@@ -30,6 +30,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -146,6 +148,17 @@ public class AboutDialog extends DialogFragment
         TextView legalView3 = (TextView) dialogContent.findViewById(R.id.txt_about_legal3);
         legalView3.setMovementMethod(LinkMovementMethod.getInstance());
         legalView3.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_legal3)));
+
+        TextView legalView4 = (TextView) dialogContent.findViewById(R.id.txt_about_legal4);
+
+        String appName = context.getString(R.string.app_name);
+        String permissionsExplained = context.getString(R.string.privacy_permission_location, appName) + "<br/><br/>" +
+                                      context.getString(R.string.privacy_permission_calendar, appName);
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            permissionsExplained += "<br/><br/>" + context.getString(R.string.privacy_permission_storage, appName);
+        }
+        String privacy = context.getString(R.string.privacy_policy, appName, permissionsExplained);
+        legalView4.setText(SuntimesUtils.fromHtml(privacy));
     }
 
     @Override

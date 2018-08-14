@@ -28,12 +28,14 @@ import android.content.SharedPreferences;
 import android.content.SyncResult;
 
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.CalendarContract;
 
 import java.util.Calendar;
 
+@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class SuntimesSyncAdapter extends AbstractThreadedSyncAdapter
 {
     public static final String ACCOUNT_NAME = "Suntimes";

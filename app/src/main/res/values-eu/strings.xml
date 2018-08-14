@@ -158,11 +158,29 @@
     <string name="datetime_format_long"><xliff:g id="monthYear">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>        <!-- shortDate, time ... e.g. December 3, 11:00 am -->
     <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
 
+    <!-- distances (meters, feet, etc) -->
+    <string name="units_feet">feet</string>   <!-- TODO -->
+    <string name="units_feet_short">ft</string>   <!-- TODO -->
+    <!--<plurals name="units_feet_long">
+      <item quantity="one">%d foot</item>
+      <item quantity="other">%d feet</item>
+    </plurals>-->
+    <string name="units_meters">meters</string>  <!-- TODO -->
+    <string name="units_meters_short">m</string>  <!-- TODO -->
+    <!--<plurals name="units_meters_long">
+      <item quantity="one">%d meter</item>
+      <item quantity="other">%d meters</item>
+    </plurals>-->
+
     <!--
          WIDGET CONFIG
     -->
 
     <string name="configAction_restoreDefaults">Lehenetsiak berrezarri</string>   <!-- button / menu text -->
+
+    <string name="configLabel_tagDefault">[default]</string>                <!-- TODO -->
+    <string name="configLabel_tagPlugin">[plugin]</string>                <!-- TODO -->
+    <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->  <!-- TODO -->
 
     <!-- WidgetConfig Activity -->
     <string name="configAction_addWidget">Widgeta gehitu</string>                   <!-- Button: Add -->
@@ -180,6 +198,9 @@
     <string name="configLabel_general_calculator_sun">Eguzkiaren datuen jatorria</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Ilargiaren datuen jatorria</string>         <!-- preference label -->
 
+    <string name="configLabel_general_altitude_enabled">Use Elevation</string>        <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_general_altitude_enabled_summary">Apply altitude based refinements.</string>        <!-- checkbox label --> <!-- TODO -->
+
     <string name="configLabel_general_showSeconds">Segunduak erakutsi</string>        <!-- checkbox label -->
     <string name="configLabel_general_showSeconds_summary">Gehitu segunduak denborak erakusterakoan.</string>        <!-- checkbox label -->
 
@@ -191,6 +212,12 @@
 
     <string name="configLabel_general_showHours">Orduak erakutsi</string>        <!-- checkbox label -->
     <string name="configLabel_general_showHours_summary">Egun bat baino luzeagoak diren denbora tarteetan orduak eta minutuak gehitu.</string>    <!-- checkbox label -->
+
+    <!-- Widget Setting: advanced / experimental -->
+    <string name="configLabel_advanced">Advanced Settings</string>                        <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_experimental">Experimental Settings</string>                <!-- group title --> <!-- TODO -->
+    <string name="configLabel_general_scanPlugins">Data Source Plugins</string>                                <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_general_scanPlugins_summary">Scan for and load third party plugins.</string>   <!-- pref summary --> <!-- TODO -->
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Itxuraren ezarpenak</string>           <!-- group title -->
@@ -284,6 +311,7 @@
     <string name="configLabel_action_onClockTap">Erlojua ukitzerakoan:</string>         <!-- spinner label -->
     <string name="configLabel_action_onNoteTap">Oharra ukitzerakoan:</string>           <!-- spinner label -->
     <string name="configLabel_action_onDateTap">Data ukitzerakoan:</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap1">On Date Long Press:</string>   <!-- spinner label -->  <!-- TODO -->
 
     <!-- Widget Setting: location -->
     <string name="locationMode_current">Oraingoa (azken ezaguna)</string>  <!-- setting -->
@@ -295,6 +323,8 @@
     <string name="configHint_location_lat">gradu hamartarrak</string>      <!-- edittext hint -->
     <string name="configLabel_location_lon">Longitudea:</string>                          <!-- edittext label -->
     <string name="configHint_location_lon">gradu hamartarrak</string> <!-- edittext hint -->
+    <string name="configLabel_location_alt">Elevation:</string>                          <!-- edittext label -->   <!-- TODO -->
+    <string name="configHint_location_alt">0</string> <!-- edittext hint -->                                 <!-- TODO -->
     <string name="configLabel_location_name">Izena:</string>                      <!-- edittext label -->
     <string name="configHint_location_name">(hautazkoa)</string>                  <!-- edittext hint -->
 
@@ -631,6 +661,38 @@
         <item>hilabete bat (672 ordu)</item>
     </string-array>
 
+    <!-- App Setting: calendars -->
+    <string name="configLabel_calendars">Calendars</string>   <!-- group title -->  <!-- TODO -->
+
+    <string name="configLabel_calendars_enabled">Calendar Integration</string>  <!-- TODO -->
+    <string name="configLabel_calendars_enabled_summary">Supply events to the Calendar app (moon phases, solstices, and equinoxes).</string>  <!-- TODO -->
+
+    <string name="configLabel_calendars_window0">Window (start)</string>  <!-- TODO -->
+    <string name="configLabel_calendars_window0_summary">A period starting <xliff:g id="calendars_window_display" example="one year">%s</xliff:g> ago</string>  <!-- TODO -->
+
+    <string name="configLabel_calendars_window1">Window (end)</string>  <!-- TODO -->
+    <string name="configLabel_calendars_window1_summary">A period ending <xliff:g id="calendars_window_display" example="two years">%s</xliff:g> from now</string>  <!-- TODO -->
+
+    <string name="calendars_notification_adding">Adding calendars…</string>  <!-- TODO -->
+    <string name="calendars_notification_added">Calendars have been added.</string>  <!-- TODO -->
+
+    <string name="calendars_notification_clearing">Clearing calendars…</string>  <!-- TODO -->
+    <string name="calendars_notification_cleared">Calendars have been cleared.</string>  <!-- TODO -->
+
+    <string-array name="calendars_window_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
+        <item>one year</item>
+        <item>two years</item>
+        <item>five years</item>
+        <item>ten years</item>
+    </string-array>  <!-- TODO -->
+
+    <string name="calendar_solstice_displayName">Solstices and Equinoxes</string>  <!-- TODO -->
+    <string name="calendar_moonPhase_displayName">Moon Phases</string>  <!-- TODO -->
+
+    <!-- App Setting: passive location mode -->
+    <string name="configLabel_getFix_passiveMode">Passive Location</string>  <!-- TODO -->
+    <string name="configLabel_getFix_passiveMode_summary">Use the passive location provider.</string> <!-- TODO -->
+
     <!-- App Setting: locale mode -->
     <string name="configLabel_locale">Hizkuntzaren ezarpenak</string>   <!-- group title -->
 
@@ -707,6 +769,12 @@
     <!--
       DIALOGS
     -->
+
+    <!-- Dialog: World Map -->
+    <string name="worldmap_dialog_title">@string/configAction_worldMap</string>   <!-- TODO -->
+    <string name="worldmap_dialog_option_sunlight">Sunlight</string>              <!-- TODO -->
+    <string name="worldmap_dialog_option_moonlight">Moonlight</string>            <!-- TODO -->
+    <string name="worldmap_dialog_option_all">Both</string>                       <!-- TODO -->
 
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Alarma bat programatu honetarako</string>
@@ -791,6 +859,7 @@
     <string name="location_dialog_cancel">Utzi</string>
     <string name="location_dialog_error_lat">Hau ez da latitude baliodun bat.</string>
     <string name="location_dialog_error_lon">Hau ez da longitude baliodun bat.</string>
+    <string name="location_dialog_error_alt">This is not a valid elevation.</string>  <!-- TODO -->
 
     <string name="location_dialog_toast_copied">Arbelera kopiatu da<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
 
@@ -882,6 +951,7 @@
                 * <b>%loc</b> etiketarako (adib. Prescott) <br />
                 * <b>%lat</b> latituderako (adib. 35.5409) <br />
                 * <b>%lon</b> longituderako (adib. -112.4691) <br/>
+                * <b>%lel</b> for elevation (e.g. 385 meters) <br/>
                 <br/>
                 * <b>%s</b> datuen jatorrirako (adib. sunrisesunsetlib) <br/>
                 * <b>%t</b> ordu eremurako (id) (adib. US/Arizona) <br/>
@@ -898,7 +968,7 @@
          <b>Solstizioaren widgetak:</b> <br/>
                 * <b>%m</b> modurako (laburra) (adib. Solstizioa) <br/>
                 * <b>%M</b> modurako (luzea) (adib. Neguko solstizioa) <br/>
-    ]]></string>
+    ]]></string>  <!-- TODO: %lel -->
 
     <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
