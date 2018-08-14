@@ -68,6 +68,7 @@ public class LocationConfigView extends LinearLayout
     public static final String KEY_LOCATION_MODE = "locationMode";
     public static final String KEY_LOCATION_LATITUDE = "locationLatitude";
     public static final String KEY_LOCATION_LONGITUDE = "locationLongitude";
+    public static final String KEY_LOCATION_ALTITUDE = "locationAltitude";
     public static final String KEY_LOCATION_LABEL = "locationLabel";
 
     private FragmentActivity myParent;
@@ -110,6 +111,12 @@ public class LocationConfigView extends LinearLayout
         String latitude = text_locationLat.getText().toString();
         String longitude = text_locationLon.getText().toString();
 
+        String altitude = text_locationAlt.getText().toString();
+        if (altitude.trim().isEmpty()) {
+            altitude = "0";
+            Log.w("LocationConfigView", "empty altitude, supplying 0");
+        }
+
         try {
             @SuppressWarnings("UnusedAssignment")
             BigDecimal lat = new BigDecimal(latitude);
@@ -117,14 +124,18 @@ public class LocationConfigView extends LinearLayout
             @SuppressWarnings("UnusedAssignment")
             BigDecimal lon = new BigDecimal(longitude);
 
+            @SuppressWarnings("UnusedAssignment")
+            BigDecimal alt = new BigDecimal(altitude);
+
         } catch (NumberFormatException e) {
             Log.e("getLocation", "invalid location! falling back to default; " + e.toString());
             name = WidgetSettings.PREF_DEF_LOCATION_LABEL;
             latitude = WidgetSettings.PREF_DEF_LOCATION_LATITUDE;
             longitude = WidgetSettings.PREF_DEF_LOCATION_LONGITUDE;
+            altitude = WidgetSettings.PREF_DEF_LOCATION_ALTITUDE;
         }
 
-        return new WidgetSettings.Location(name, latitude, longitude);
+        return new WidgetSettings.Location(name, latitude, longitude, altitude);
     }
 
     public WidgetSettings.LocationMode getLocationMode()
@@ -195,6 +206,8 @@ public class LocationConfigView extends LinearLayout
                 text_locationLon.setEnabled(false);
                 labl_locationLat.setEnabled(false);
                 text_locationLat.setEnabled(false);
+                labl_locationAlt.setEnabled(false);
+                text_locationAlt.setEnabled(false);
                 inputOverlay.setVisibility(View.VISIBLE);
 
                 labl_locationName.setEnabled(false);
@@ -216,6 +229,8 @@ public class LocationConfigView extends LinearLayout
                 text_locationLon.setEnabled(true);
                 labl_locationLat.setEnabled(true);
                 text_locationLat.setEnabled(true);
+                labl_locationAlt.setEnabled(true);
+                text_locationAlt.setEnabled(true);
                 inputOverlay.setVisibility(View.GONE);
 
                 labl_locationName.setEnabled(true);
@@ -236,6 +251,8 @@ public class LocationConfigView extends LinearLayout
                 text_locationLon.setEnabled(false);
                 labl_locationLat.setEnabled(false);
                 text_locationLat.setEnabled(false);
+                labl_locationAlt.setEnabled(false);
+                text_locationAlt.setEnabled(false);
                 inputOverlay.setVisibility(View.VISIBLE);
 
                 labl_locationName.setEnabled(true);
@@ -253,6 +270,9 @@ public class LocationConfigView extends LinearLayout
 
     private ViewFlipper flipper, flipper2;
     private Spinner spinner_locationMode;
+
+    private TextView labl_locationAlt;
+    private EditText text_locationAlt;
 
     private TextView labl_locationLat;
     private EditText text_locationLat;
@@ -279,6 +299,7 @@ public class LocationConfigView extends LinearLayout
             text_locationName.requestFocus();
             text_locationLat.setEnabled(value);
             text_locationLon.setEnabled(value);
+            text_locationAlt.setEnabled(value);
             text_locationName.setEnabled(value);
         }
 
@@ -288,6 +309,7 @@ public class LocationConfigView extends LinearLayout
             DecimalFormat formatter = WidgetSettings.Location.decimalDegreesFormatter();
             text_locationLat.setText( formatter.format(locations[0].getLatitude()) );
             text_locationLon.setText( formatter.format(locations[0].getLongitude()) );
+            text_locationAlt.setText( formatter.format(locations[0].getAltitude()) );
         }
 
         @Override
@@ -320,6 +342,7 @@ public class LocationConfigView extends LinearLayout
         {
             text_locationLat.setEnabled(false);
             text_locationLon.setEnabled(false);
+            text_locationAlt.setEnabled(false);
             text_locationName.setEnabled(false);
         }
 
@@ -329,6 +352,7 @@ public class LocationConfigView extends LinearLayout
             DecimalFormat formatter = WidgetSettings.Location.decimalDegreesFormatter();
             text_locationLat.setText( formatter.format(locations[0].getLatitude()) );
             text_locationLon.setText( formatter.format(locations[0].getLongitude()) );
+            text_locationAlt.setText( formatter.format(locations[0].getAltitude()) );
         }
 
         @Override
@@ -396,9 +420,6 @@ public class LocationConfigView extends LinearLayout
         spin_locationName.setAdapter(getFixAdapter);
         spin_locationName.setOnItemSelectedListener(onCustomLocationSelected);
 
-        labl_locationLat = (TextView)findViewById(R.id.appwidget_location_lat_label);
-        text_locationLat = (EditText)findViewById(R.id.appwidget_location_lat);
-
         inputOverlay = findViewById(R.id.appwidget_location_latlon_overlay);
         inputOverlay.setVisibility(View.GONE);
         inputOverlay.setOnClickListener(new OnClickListener()
@@ -413,8 +434,14 @@ public class LocationConfigView extends LinearLayout
             }
         });
 
+        labl_locationLat = (TextView)findViewById(R.id.appwidget_location_lat_label);
+        text_locationLat = (EditText)findViewById(R.id.appwidget_location_lat);
+
         labl_locationLon = (TextView)findViewById(R.id.appwidget_location_lon_label);
         text_locationLon = (EditText)findViewById(R.id.appwidget_location_lon);
+
+        labl_locationAlt = (TextView)findViewById(R.id.appwidget_location_alt_label);
+        text_locationAlt = (EditText)findViewById(R.id.appwidget_location_alt);
 
         // custom mode: toggle edit mode
         button_edit = (ImageButton)findViewById(R.id.appwidget_location_edit);
@@ -483,6 +510,7 @@ public class LocationConfigView extends LinearLayout
         text_locationLat.setText(location.getLatitude());
         text_locationLon.setText(location.getLongitude());
         text_locationName.setText(location.getLabel());
+        text_locationAlt.setText(location.getAltitude());
     }
 
     /**
@@ -534,10 +562,13 @@ public class LocationConfigView extends LinearLayout
         String label = bundle.getString(KEY_LOCATION_LABEL);
         String longitude = bundle.getString(KEY_LOCATION_LONGITUDE);
         String latitude = bundle.getString(KEY_LOCATION_LATITUDE);
+        String altitude = bundle.getString(KEY_LOCATION_ALTITUDE);
         WidgetSettings.Location location;
         if (longitude != null && latitude != null)
         {
-            location = new WidgetSettings.Location(label, latitude, longitude);
+            if (altitude != null)
+                location = new WidgetSettings.Location(label, latitude, longitude, altitude);
+            else location = new WidgetSettings.Location(label, latitude, longitude);
 
         } else {
             Log.w("LocationConfigView", "Bundle contained null lat or lon; falling back to saved prefs.");
@@ -586,8 +617,9 @@ public class LocationConfigView extends LinearLayout
         {
             String latitude = text_locationLat.getText().toString();
             String longitude = text_locationLon.getText().toString();
+            String altitude = text_locationAlt.getText().toString();
             String name = text_locationName.getText().toString();
-            WidgetSettings.Location location = new WidgetSettings.Location(name, latitude, longitude);
+            WidgetSettings.Location location = new WidgetSettings.Location(name, latitude, longitude, altitude);
             WidgetSettings.saveLocationPref(context, appWidgetId, location);
             return true;
         }
@@ -605,12 +637,14 @@ public class LocationConfigView extends LinearLayout
         WidgetSettings.LocationMode locationMode = getLocationMode();
         String latitude = text_locationLat.getText().toString();
         String longitude = text_locationLon.getText().toString();
+        String altitude = text_locationAlt.getText().toString();
         String name = text_locationName.getText().toString();
 
         bundle.putString(KEY_DIALOGMODE, mode.name());
         bundle.putString(KEY_LOCATION_MODE, locationMode.name());
         bundle.putString(KEY_LOCATION_LATITUDE, latitude);
         bundle.putString(KEY_LOCATION_LONGITUDE, longitude);
+        bundle.putString(KEY_LOCATION_ALTITUDE, altitude);
         bundle.putString(KEY_LOCATION_LABEL, name);
 
         getFixHelper.saveSettings(bundle);
@@ -621,6 +655,7 @@ public class LocationConfigView extends LinearLayout
     {
         String lat = "";
         String lon = "";
+        String alt = "";
 
         if (data.getScheme().equals("geo"))
         {
@@ -634,6 +669,11 @@ public class LocationConfigView extends LinearLayout
                 {
                     lat = geoParts[0];
                     lon = geoParts[1];
+
+                    if (geoParts.length >= 3)
+                    {
+                        alt = geoParts[2];
+                    }
                 }
             }
         }
@@ -643,6 +683,7 @@ public class LocationConfigView extends LinearLayout
         bundle.putString(KEY_LOCATION_MODE, WidgetSettings.LocationMode.CUSTOM_LOCATION.name());
         bundle.putString(KEY_LOCATION_LATITUDE, lat);
         bundle.putString(KEY_LOCATION_LONGITUDE, lon);
+        bundle.putString(KEY_LOCATION_ALTITUDE, alt);
         bundle.putString(KEY_LOCATION_LABEL, label);
         return bundle;
     }
@@ -783,6 +824,18 @@ public class LocationConfigView extends LinearLayout
             text_locationLon.setError(myParent.getString(R.string.location_dialog_error_lon));
         }
 
+        String altitude = text_locationAlt.getText().toString();
+        if (!altitude.trim().isEmpty())
+        {
+            try {
+                BigDecimal alt = new BigDecimal(altitude);
+
+            } catch (NumberFormatException e3) {
+                isValid = false;
+                text_locationAlt.setError(myParent.getString(R.string.location_dialog_error_alt));
+            }
+        }
+
         return isValid;
     }
 
@@ -895,9 +948,9 @@ public class LocationConfigView extends LinearLayout
             Cursor cursor = getFixAdapter.getCursor();
             cursor.moveToPosition(position);
 
-            if (cursor.getColumnCount() >= 3)
+            if (cursor.getColumnCount() >= 4)
             {
-                updateViews(new WidgetSettings.Location(cursor.getString(1), cursor.getString(2), cursor.getString(3)));
+                updateViews(new WidgetSettings.Location(cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4)));
             }
         }
         public void onNothingSelected(AdapterView<?> parent) {}

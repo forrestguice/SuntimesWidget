@@ -36,6 +36,22 @@
             android:title="@string/configLabel_general_showTimeDate"
             android:summary="@string/configLabel_general_showTimeDate_summary" android:defaultValue="@string/def_appwidget_0_general_showtimedate" />
 
+        <CheckBoxPreference
+            android:key="appwidget_0_location_altitude_enabled"
+            android:title="@string/configLabel_general_altitude_enabled"
+            android:summary="@string/configLabel_general_altitude_enabled_summary" android:defaultValue="@string/def_appwidget_0_general_altitude_enabled" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:layout="@layout/divider_pref" />
+
+    <PreferenceCategory
+        android:title="@string/configLabel_experimental">
+
+        <CheckBoxPreference
+            android:key="app_plugins_enabled"
+            android:title="@string/configLabel_general_scanPlugins"
+            android:summary="@string/configLabel_general_scanPlugins_summary" android:defaultValue="@string/def_app_plugins_enabled" />
 
     </PreferenceCategory>
 

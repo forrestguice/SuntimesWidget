@@ -4,6 +4,7 @@
     <string name="default_location_label">Oslo</string>
     <string name="default_location_latitude">59.8937</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">10.6450</string>   <!-- decimal degrees (DD) -->
+    <string name="default_location_altitude">0</string>         <!-- meters -->
 
     <!-- MAIN ACTIVITY -->
 
@@ -20,6 +21,7 @@
     <string name="configAction_setDate">Dato</string>
     <string name="configAction_sunDialog">Solens posisjon</string>
     <string name="configAction_equinoxDialog">Solverv / Jevndøgn</string>
+    <string name="configAction_worldMap">World Map</string>  <!-- TODO -->
     <string name="configAction_moon">Månen</string>
     <string name="configAction_help">Hjelp</string>
     <string name="configAction_settings">Innstillinger</string>
@@ -156,11 +158,29 @@
     <string name="datetime_format_long"><xliff:g id="monthYear">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>        <!-- shortDate, time ... e.g. December 3, 11:00 am -->
     <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
 
+    <!-- distances (meters, feet, etc) -->
+    <string name="units_feet">feet</string>   <!-- TODO -->
+    <string name="units_feet_short">ft</string>   <!-- TODO -->
+    <!--<plurals name="units_feet_long">
+      <item quantity="one">%d foot</item>
+      <item quantity="other">%d feet</item>
+    </plurals>-->
+    <string name="units_meters">meters</string>  <!-- TODO -->
+    <string name="units_meters_short">m</string>  <!-- TODO -->
+    <!--<plurals name="units_meters_long">
+      <item quantity="one">%d meter</item>
+      <item quantity="other">%d meters</item>
+    </plurals>-->
+
     <!--
          WIDGET CONFIG
     -->
 
     <string name="configAction_restoreDefaults">Restore Defaults</string>   <!-- button / menu text -->
+
+    <string name="configLabel_tagDefault">[default]</string>                <!-- TODO -->
+    <string name="configLabel_tagPlugin">[plugin]</string>                <!-- TODO -->
+    <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->  <!-- TODO -->
 
     <!-- WidgetConfig Activity -->
     <string name="configAction_addWidget">Add Widget</string>                   <!-- Button: Add -->
@@ -178,6 +198,9 @@
     <string name="configLabel_general_calculator_sun">Soldatakilde</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Månedatakilde</string>         <!-- preference label -->
 
+    <string name="configLabel_general_altitude_enabled">Use Elevation</string>        <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_general_altitude_enabled_summary">Apply altitude based refinements.</string>        <!-- checkbox label --> <!-- TODO -->
+
     <string name="configLabel_general_showSeconds">Vis sekunder</string>        <!-- checkbox label -->
     <string name="configLabel_general_showSeconds_summary">Inkluder sekunder ved visning av tid.</string>        <!-- checkbox label -->
 
@@ -189,6 +212,12 @@
 
     <string name="configLabel_general_showHours">Vis timer</string>        <!-- checkbox label -->
     <string name="configLabel_general_showHours_summary">Inkluder timer og minutter ved lengre tidsrom enn en dag.</string>    <!-- checkbox label -->
+
+    <!-- Widget Setting: advanced / experimental -->
+    <string name="configLabel_advanced">Advanced Settings</string>                        <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_experimental">Experimental Settings</string>                <!-- group title --> <!-- TODO -->
+    <string name="configLabel_general_scanPlugins">Data Source Plugins</string>                                <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_general_scanPlugins_summary">Scan for and load third party plugins.</string>   <!-- pref summary --> <!-- TODO -->
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Utseende-innstillinger</string>           <!-- group title -->
@@ -257,6 +286,10 @@
     <string name="widgetMode1x1_altaz">Høyde &amp; Asimut</string>     <!-- setting -->
     <string name="widgetMode1x1_decright">Deklinasjon &amp; Rektasensjon</string>     <!-- setting -->
 
+    <string name="widgetMode_sunPosMap_simplerectangular">Basic</string>  <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal">Polar</string>     <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode_sunPosMap_bluemarble">Blue Marble</string>    <!-- setting -->  <!-- TODO -->
+
     <string name="widgetMode1x1_moonriseset">Måneoppgang &amp; månenedgang</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphaseillum">Månefase &amp; illuminasjon</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphase">Bare månefase</string>     <!-- setting -->
@@ -264,6 +297,7 @@
     <string name="widgetMode1x1_moonphasenext">Neste hovedfase</string>     <!-- setting -->
 
     <string name="configLabel_appearance_1x1mode">1x1 Layout:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_3x2mode">3x2 Layout:</string>     <!-- spinner label -->
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Ikke gjør noe</string>           <!-- setting -->
@@ -277,6 +311,7 @@
     <string name="configLabel_action_onClockTap">Ved trykk på klokke:</string>         <!-- spinner label -->
     <string name="configLabel_action_onNoteTap">Ved trykk på notis:</string>           <!-- spinner label -->
     <string name="configLabel_action_onDateTap">Ved trykk på dato:</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap1">On Date Long Press:</string>   <!-- spinner label -->  <!-- TODO -->
 
     <!-- Widget Setting: location -->
     <string name="locationMode_current">Gjeldende (sist kjente)</string>  <!-- setting -->
@@ -288,6 +323,8 @@
     <string name="configHint_location_lat">desimalgrader</string>      <!-- edittext hint -->
     <string name="configLabel_location_lon">Lengdegrad:</string>                          <!-- edittext label -->
     <string name="configHint_location_lon">desimalgrader</string> <!-- edittext hint -->
+    <string name="configLabel_location_alt">Elevation:</string>                          <!-- edittext label -->   <!-- TODO -->
+    <string name="configHint_location_alt">0</string> <!-- edittext hint -->                                 <!-- TODO -->
     <string name="configLabel_location_name">Navn:</string>                      <!-- edittext label -->
     <string name="configHint_location_name">(valgfri)</string>                  <!-- edittext hint -->
 
@@ -387,6 +424,8 @@
     <string name="configLabel_themeBackground_light">Lys</string>        <!-- light background -->
     <string name="configLabel_themeBackground_dark">Mørk</string>          <!-- dark background -->
     <string name="configLabel_themeBackground_trans">Gjennomsiktig</string>  <!-- transparent background -->
+    <string name="configLabel_themeBackground_color">Farge</string>      <!-- custom background -->
+    <string name="configLabel_themeColorBackground">Farge:</string>      <!-- color label -->
 
     <string name="configLabel_themeColorTitle">Tittelfarge:</string>     <!-- color label -->
     <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->
@@ -398,6 +437,11 @@
     <string name="configLabel_themeColorSummer">Sommerfarge:</string> <!-- color label -->
     <string name="configLabel_themeColorFall">Høstfarge:</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Vinterfarge:</string> <!-- color label -->
+
+    <string name="configLabel_themeColorMapBackground">Map Background</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorMapForeground">Map Foreground</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorMapSunShadow">Shadow</string> <!-- color label -->          <!-- TODO -->
+    <string name="configLabel_themeColorMapMoonHighlight">Highlight</string> <!-- color label -->   <!-- TODO -->
 
     <string name="configLabel_themeColorMoonrise">Måneoppgangsfarge:</string> <!-- color label -->
     <string name="configLabel_themeColorMoonset">Månenedgangsfarge:</string> <!-- color label -->
@@ -604,6 +648,34 @@
         <item>en måned (672 timer)</item>
     </string-array>
 
+    <!-- App Setting: calendars -->
+    <string name="configLabel_calendars">Calendars</string>   <!-- group title -->  <!-- TODO -->
+
+    <string name="configLabel_calendars_enabled">Calendar Integration</string>  <!-- TODO -->
+    <string name="configLabel_calendars_enabled_summary">Supply events to the Calendar app (moon phases, solstices, and equinoxes).</string>  <!-- TODO -->
+
+    <string name="configLabel_calendars_window0">Window (start)</string>  <!-- TODO -->
+    <string name="configLabel_calendars_window0_summary">A period starting <xliff:g id="calendars_window_display" example="one year">%s</xliff:g> ago</string>  <!-- TODO -->
+
+    <string name="configLabel_calendars_window1">Window (end)</string>  <!-- TODO -->
+    <string name="configLabel_calendars_window1_summary">A period ending <xliff:g id="calendars_window_display" example="two years">%s</xliff:g> from now</string>  <!-- TODO -->
+
+    <string name="calendars_notification_adding">Adding calendars…</string>  <!-- TODO -->
+    <string name="calendars_notification_added">Calendars have been added.</string>  <!-- TODO -->
+
+    <string name="calendars_notification_clearing">Clearing calendars…</string>  <!-- TODO -->
+    <string name="calendars_notification_cleared">Calendars have been cleared.</string>  <!-- TODO -->
+
+    <string-array name="calendars_window_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
+        <item>one year</item>
+        <item>two years</item>
+        <item>five years</item>
+        <item>ten years</item>
+    </string-array>  <!-- TODO -->
+
+    <string name="calendar_solstice_displayName">Solstices and Equinoxes</string>  <!-- TODO -->
+    <string name="calendar_moonPhase_displayName">Moon Phases</string>  <!-- TODO -->
+
     <!-- App Setting: passive location mode -->
     <string name="configLabel_getFix_passiveMode">Passiv posisjon</string>
     <string name="configLabel_getFix_passiveMode_summary">Bruk den passive posisjonsleverandøren.</string>
@@ -684,6 +756,12 @@
     <!--
       DIALOGS
     -->
+
+    <!-- Dialog: World Map -->
+    <string name="worldmap_dialog_title">@string/configAction_worldMap</string>   <!-- TODO -->
+    <string name="worldmap_dialog_option_sunlight">Sunlight</string>              <!-- TODO -->
+    <string name="worldmap_dialog_option_moonlight">Moonlight</string>            <!-- TODO -->
+    <string name="worldmap_dialog_option_all">Both</string>                       <!-- TODO -->
 
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Planlegg en alarm for</string>
@@ -768,6 +846,7 @@
     <string name="location_dialog_cancel">Avbryt</string>
     <string name="location_dialog_error_lat">Dette er ikke en gyldig breddegrad.</string>
     <string name="location_dialog_error_lon">Dette er ikke en gyldig lengdegrad.</string>
+    <string name="location_dialog_error_alt">This is not a valid elevation.</string>  <!-- TODO -->
 
     <string name="location_dialog_toast_copied">Kopiert til utklippstavle<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
 
@@ -860,6 +939,7 @@
                 * <b>%loc</b> for label (e.g. Prescott) <br />
                 * <b>%lat</b> for latitude (e.g. 35.5409) <br />
                 * <b>%lon</b> for longitude (e.g. -112.4691) <br/>
+                * <b>%lel</b> for elevation (e.g. 385 meters) <br/>
                 <br/>
                 * <b>%s</b> for data source (e.g. sunrisesunsetlib) <br/>
                 * <b>%t</b> for time zone (id) (e.g. US/Arizona) <br/>

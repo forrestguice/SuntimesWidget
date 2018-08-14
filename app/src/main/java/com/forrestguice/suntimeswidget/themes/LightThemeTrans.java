@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.themes;
 
 import android.content.Context;
+import android.graphics.Color;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
 
@@ -41,6 +42,7 @@ public class LightThemeTrans extends LightTheme
         this.themeIsDefault = true;
         this.themeDisplayString = THEMEDEF_DISPLAYSTRING;
         this.themeBackground = THEMEDEF_BACKGROUND;
+        this.themeBackgroundColor = Color.TRANSPARENT;
         this.themeTitleBold = THEMEDEF_TITLEBOLD;
         this.themeTimeBold = THEMEDEF_TIMEBOLD;
     }

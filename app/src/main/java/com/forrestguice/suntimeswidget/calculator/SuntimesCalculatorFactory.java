@@ -23,6 +23,7 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import java.lang.ref.WeakReference;
 import java.util.TimeZone;
 
 /**
@@ -34,46 +35,11 @@ import java.util.TimeZone;
  * using reflection when the createCalculator method is called. The descriptor identifies the
  * calculator using name(), the class to instantiate using getReference(), and the value to display
  * in the UI using getDisplayString().
- *
- * SuntimesCalculatorDescriptor keeps a static list of installed calculators that SuntimesCalculatorFactory
- * must initialize - initialization is performed using the SuntimesCalculatorFactory.initCalculators() method.
- * Using the SuntimesCalculatorDescriptor.values() and SuntimesCalculatorDescriptor.valueOf() methods will
- * trigger lazy initialization by the factory class.
- *
- * This factory knows about the following implementations:
- *
- *   * sunrisesunsetlib (fallback)
- *     :: com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.class
- *
- *   * ca.rmen.sunrisesunset
- *     :: com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator.class
- *
- *   * time4a
- *     :: com.forrestguice.suntimeswidget.calculator.time4a.Time4ASimpleSuntimesCalculator.class
- *     :: com.forrestguice.suntimeswidget.calculator.time4a.Time4ANOAASuntimesCalculator.class
- *     :: com.forrestguice.suntimeswidget.calculator.time4a.Time4ACCSuntimesCalculator.class
- *     :: com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator.class
- *
  */
 public class SuntimesCalculatorFactory
 {
-    protected static boolean initialized = false;
-    public static void initCalculators()
-    {
-        SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.getDescriptor());
-        SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator.getDescriptor());
-
-        SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.time4a.Time4ASimpleSuntimesCalculator.getDescriptor());
-        SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.time4a.Time4ANOAASuntimesCalculator.getDescriptor());
-        SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.time4a.Time4ACCSuntimesCalculator.getDescriptor());
-        SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator.getDescriptor());
-
-        initialized = true;
-        //Log.d("CalculatorFactory", "Initialized suntimes calculator list.");
-    }
-
     private SuntimesCalculatorDescriptor current;
-    private Context context;
+    private WeakReference<Context> contextRef;
 
     /**
      * Create a SuntimesCalculatorFactory object with default implementation.
@@ -96,10 +62,10 @@ public class SuntimesCalculatorFactory
 
     private void init(Context context, SuntimesCalculatorDescriptor calculatorSetting)
     {
-        this.context = context;
-        if (!initialized)
+        this.contextRef = new WeakReference<Context>(context);
+        if (!SuntimesCalculatorDescriptor.initialized)
         {
-            SuntimesCalculatorFactory.initCalculators();
+            SuntimesCalculatorDescriptor.initCalculators(context);
         }
 
         if (calculatorSetting == null)
@@ -136,7 +102,7 @@ public class SuntimesCalculatorFactory
             signalCreatedFallback(fallbackCalculatorDescriptor());
             Log.e("createCalculator", "fail! .oO( " + current.getReference() + "), so instantiating default: " + calculator.getClass().getName() + " :: " + timezone);
         }
-        calculator.init(location, timezone, context);
+        calculator.init(location, timezone, contextRef.get());
 
         //long bench_end = System.nanoTime();
         //Log.d("DEBUG", "created " + calculator.name() + " :: " + ((bench_end - bench_start) / 1000000.0) + " ms");

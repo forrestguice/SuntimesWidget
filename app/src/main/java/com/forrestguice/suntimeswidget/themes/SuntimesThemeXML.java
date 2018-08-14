@@ -191,6 +191,10 @@ public class SuntimesThemeXML implements SuntimesThemeIO
                 xml.text(theme.getBackground().name());
                 xml.endTag(namespace, SuntimesTheme.THEME_BACKGROUND);
 
+                xml.startTag(namespace, SuntimesTheme.THEME_BACKGROUND_COLOR);
+                xml.text(Integer.toString(theme.getBackgroundColor()));
+                xml.endTag(namespace, SuntimesTheme.THEME_BACKGROUND_COLOR);
+
                 xml.startTag(namespace, SuntimesTheme.THEME_TEXTCOLOR);
                 xml.text(colorToString(theme.getTextColor()));
                 xml.endTag(namespace, SuntimesTheme.THEME_TEXTCOLOR);
@@ -335,6 +339,22 @@ public class SuntimesThemeXML implements SuntimesThemeIO
                 xml.text(Float.toString(theme.getTitleSizeSp()));
                 xml.endTag(namespace, SuntimesTheme.THEME_TITLESIZE);
 
+                xml.startTag(namespace, SuntimesTheme.THEME_MAP_BACKGROUNDCOLOR);
+                xml.text(Integer.toString(theme.getMapBackgroundColor()));
+                xml.endTag(namespace, SuntimesTheme.THEME_MAP_BACKGROUNDCOLOR);
+
+                xml.startTag(namespace, SuntimesTheme.THEME_MAP_FOREGROUNDCOLOR);
+                xml.text(Integer.toString(theme.getMapForegroundColor()));
+                xml.endTag(namespace, SuntimesTheme.THEME_MAP_FOREGROUNDCOLOR);
+
+                xml.startTag(namespace, SuntimesTheme.THEME_MAP_SHADOWCOLOR);
+                xml.text(Integer.toString(theme.getMapShadowColor()));
+                xml.endTag(namespace, SuntimesTheme.THEME_MAP_SHADOWCOLOR);
+
+                xml.startTag(namespace, SuntimesTheme.THEME_MAP_HIGHLIGHTCOLOR);
+                xml.text(Integer.toString(theme.getMapHighlightColor()));
+                xml.endTag(namespace, SuntimesTheme.THEME_MAP_HIGHLIGHTCOLOR);
+
                 xml.endTag(null, KEY_THEME);
                 signalExportProgress(theme, i, n);
                 i++;
@@ -470,6 +490,8 @@ public class SuntimesThemeXML implements SuntimesThemeIO
                     if (tag.equalsIgnoreCase(SuntimesTheme.THEME_BACKGROUND))
                     {
                         theme.themeBackground = ThemeBackground.getThemeBackground(backgroundStringToId(value));
+                    } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_BACKGROUND_COLOR)) {
+                        theme.themeBackgroundColor = colorStringToInt(value);
 
                     } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_PADDING_LEFT)) {
                         theme.themePadding[0] = Integer.parseInt(value);
@@ -553,6 +575,15 @@ public class SuntimesThemeXML implements SuntimesThemeIO
                         theme.themeMoonFullStroke = Integer.parseInt(value);
                     } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_MOONNEW_STROKE_WIDTH)) {
                         theme.themeMoonNewStroke = Integer.parseInt(value);
+
+                    } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_MAP_BACKGROUNDCOLOR)) {
+                        theme.themeMapBackgroundColor = colorStringToInt(value);
+                    } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_MAP_FOREGROUNDCOLOR)) {
+                        theme.themeMapForegroundColor = colorStringToInt(value);
+                    } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_MAP_SHADOWCOLOR)) {
+                        theme.themeMapShadowColor = colorStringToInt(value);
+                    } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_MAP_HIGHLIGHTCOLOR)) {
+                        theme.themeMapHighlightColor = colorStringToInt(value);
 
                     } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_TIMEBOLD)) {
                         theme.themeTimeBold = Boolean.parseBoolean(value);

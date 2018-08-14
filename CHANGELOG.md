@@ -1,5 +1,28 @@
 ### ~
 
+### v0.9.0 (2018-08-14)
+* changes default sun data source to time4a-time4j (supporting altitude based refinements).
+* changes default 'en' location to New York City, and default 'en-US' location to Phoenix.
+* enhances the data source selector; now tags the default source, and sources loaded via plugin.
+* enhances data sources (plugins); support for loading external sources (not included with app) (#229).
+* adds elevation to all default locations; default 'en' location changed to New York City, default 'en-US' location changed to Phoenix.  
+* adds elevation UI to Location settings, main ActionBar, and widget title substitutions. 
+* adds app pref "Use Elevation"; apply altitude based refinements; defaults true.
+* adds app pref "On Date Long Press"; defaults to "Show Calendar".
+* adds permissions READ_CALENDAR, WRITE_CALENDAR; needed to interact w/ Calendar app (add/remove events in custom calendars).
+* adds permissions READ_SYNC_STATS, WRITE_SYNC_SETTINGS; needed to provide custom calendars (add/remove calendars via SyncAdapter).
+* adds a SyncAdapter (LOCAL account) to provide the Calendar app with custom calendars.
+* adds options to toggle visibility of twilight times displayed by the app (hide fields).   
+* refactors widgetlist activity to use ActionBar (#230).
+* adds 3x1 and 3x2 SunPosition previews to theme editor.
+* adds 3x2 SunPosition widget showing world map.
+* adds world map dialog to app; shows sunlight (day/night) and moonlight over an equirectangular map.
+* adds theme "Dark (translucent)"; default theme with semitransparent widget background.
+* adds to theming; custom background option (simple background color supporting transparency).
+* updates translation to Polish and Esperanto (eo, pl) (#235 by Verdulo).
+* updates translation to Norwegian (nb) (#224 by FTno).
+* updates dependency (Time4A 3.44.2-2018b). 
+
 ### v0.8.6 (2018-07-05)
 * updates translation to French (fr) (#220 by Aloha68).
 * updates translation to Norwegian (nb) (#221 by FTno).
@@ -30,6 +53,7 @@
 * fixes app crash (MoonDialog) if calculator failed to load (and fallback was supplied) (#198).
 * fixes app crash (General Settings) when initializing defaults (api26) (#198).
 * fixes bug where user-defined language fails to override locale (api26) (#197).
+
 
 ### v0.8.1 (2018-04-26)
 * misc layout changes (improvements for locales w/ long strings).

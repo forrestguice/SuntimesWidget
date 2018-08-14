@@ -45,6 +45,7 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
         super.initViews(context);
         setConfigActivityTitle(getString(R.string.configLabel_solsticewidget0));
 
+        hideOptionUseAltitude();
         hideOptionCompareAgainst();
         hideOption1x1LayoutMode();
         showOptionWeeks(true);
@@ -117,7 +118,7 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
     @Override
     protected SuntimesCalculatorDescriptor[] supportingCalculators()
     {
-        return SuntimesCalculatorDescriptor.values(requiredFeatures);
+        return SuntimesCalculatorDescriptor.values(this, requiredFeatures);
     }
     private static int[] requiredFeatures = new int[] { SuntimesCalculator.FEATURE_SOLSTICE };
 

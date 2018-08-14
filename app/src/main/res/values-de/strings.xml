@@ -4,6 +4,7 @@
   <string name="default_location_label">Berlin</string>
   <string name="default_location_latitude">52.5243</string>    <!-- decimal degrees (DD) -->
   <string name="default_location_longitude">13.4105</string>   <!-- decimal degrees (DD) -->
+  <string name="default_location_altitude">40</string>         <!-- meters -->
 
   <!-- MAIN ACTIVITY -->
 
@@ -20,6 +21,7 @@
   <string name="configAction_setDate">Datum</string>
   <string name="configAction_sunDialog">Sonnenstand</string>
   <string name="configAction_equinoxDialog">Sonnenwende / Tag-Nacht-Gleiche</string>
+  <string name="configAction_worldMap">World Map</string>  <!-- TODO -->
   <string name="configAction_moon">Mond</string>
   <string name="configAction_help">Hilfe</string>
   <string name="configAction_settings">Einstellungen</string>
@@ -142,11 +144,29 @@
   <string name="time_none">keine</string>  <!-- no time / time does not occur -->
   <string name="time_loading">…</string>  <!-- calculating / time is loading -->
 
+  <!-- distances (meters, feet, etc) -->
+  <string name="units_feet">feet</string>   <!-- TODO -->
+  <string name="units_feet_short">ft</string>   <!-- TODO -->
+  <!--<plurals name="units_feet_long">
+    <item quantity="one">%d foot</item>
+    <item quantity="other">%d feet</item>
+  </plurals>-->
+  <string name="units_meters">meters</string>  <!-- TODO -->
+  <string name="units_meters_short">m</string>  <!-- TODO -->
+  <!--<plurals name="units_meters_long">
+    <item quantity="one">%d meter</item>
+    <item quantity="other">%d meters</item>
+  </plurals>-->
+
   <!--
        WIDGET CONFIG
   -->
 
   <string name="configAction_restoreDefaults">Standardeinstellungen wiederherstellen</string>   <!-- button / menu text -->
+
+  <string name="configLabel_tagDefault">[default]</string>                <!-- TODO -->
+  <string name="configLabel_tagPlugin">[plugin]</string>                <!-- TODO -->
+  <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->  <!-- TODO -->
 
   <!-- WidgetConfig Activity -->
   <string name="configAction_addWidget">Widget hinzufügen</string>                   <!-- Button: Add -->
@@ -164,6 +184,9 @@
   <string name="configLabel_general_calculator_sun">Sonnendatenquelle</string>         <!-- preference label -->
   <string name="configLabel_general_calculator_moon">Monddatenquelle</string>         <!-- preference label -->
 
+  <string name="configLabel_general_altitude_enabled">Use Elevation</string>        <!-- checkbox label --> <!-- TODO -->
+  <string name="configLabel_general_altitude_enabled_summary">Apply altitude based refinements.</string>        <!-- checkbox label --> <!-- TODO -->
+
   <string name="configLabel_general_showSeconds">Sekunden anzeigen</string>        <!-- checkbox label -->
   <string name="configLabel_general_showSeconds_summary">Bei Uhrzeiten Sekunden anzeigen.</string>        <!-- checkbox label -->
 
@@ -175,6 +198,12 @@
 
   <string name="configLabel_general_showHours">Stunden anzeigen</string>        <!-- checkbox label -->
   <string name="configLabel_general_showHours_summary">Bei Zeiträumen länger als einem Tag, Stunden und Minuten anzeigen.</string>    <!-- checkbox label -->
+
+  <!-- Widget Setting: advanced / experimental -->
+  <string name="configLabel_advanced">Advanced Settings</string>                        <!-- group title -->  <!-- TODO -->
+  <string name="configLabel_experimental">Experimental Settings</string>                <!-- group title --> <!-- TODO -->
+  <string name="configLabel_general_scanPlugins">Data Source Plugins</string>                                <!-- checkbox label --> <!-- TODO -->
+  <string name="configLabel_general_scanPlugins_summary">Scan for and load third party plugins.</string>   <!-- pref summary --> <!-- TODO -->
 
   <!-- Widget Setting: appearance -->
   <string name="configLabel_appearance">Darstellung</string>           <!-- group title -->
@@ -243,6 +272,10 @@
   <string name="widgetMode1x1_altaz">Zenit &amp; Azimut</string>     <!-- setting -->
   <string name="widgetMode1x1_decright">Deklination &amp; Rektaszension</string>     <!-- setting -->
 
+  <string name="widgetMode_sunPosMap_simplerectangular">Basic</string>  <!-- setting -->  <!-- TODO -->
+  <string name="widgetMode_sunPosMap_simpleazimuthal">Polar</string>     <!-- setting -->  <!-- TODO -->
+  <string name="widgetMode_sunPosMap_bluemarble">Blue Marble</string>    <!-- setting -->  <!-- TODO -->
+
   <string name="widgetMode1x1_moonriseset">Mondaufgang &amp; Monduntergang</string>     <!-- setting -->
   <string name="widgetMode1x1_moonphaseillum">Mondphase &amp; Illumination</string>     <!-- setting -->
   <string name="widgetMode1x1_moonphase">Nur Mondphase</string>     <!-- setting -->
@@ -250,6 +283,7 @@
   <string name="widgetMode1x1_moonphasenext">Nächste Hauptphase</string>     <!-- setting -->
 
   <string name="configLabel_appearance_1x1mode">1x1 Layout:</string>     <!-- spinner label -->
+  <string name="configLabel_appearance_3x2mode">3x2 Layout:</string>     <!-- spinner label -->
 
   <!-- Widget Setting: widget tap action -->
   <string name="actionMode_doNothing">Nichts tun</string>           <!-- setting -->
@@ -263,6 +297,7 @@
   <string name="configLabel_action_onClockTap">Bei Antippen der Uhr:</string>         <!-- spinner label -->
   <string name="configLabel_action_onNoteTap">Bei Antippen der Kurzinfo:</string>           <!-- spinner label -->
   <string name="configLabel_action_onDateTap">Bei Antippen des Datums:</string>           <!-- spinner label -->
+  <string name="configLabel_action_onDateTap1">On Date Long Press:</string>   <!-- spinner label -->  <!-- TODO -->
 
   <!-- Widget Setting: location -->
   <string name="locationMode_current">Aktueller Standort</string>  <!-- setting -->
@@ -274,6 +309,8 @@
   <string name="configHint_location_lat">34.54</string>                       <!-- edittext hint -->
   <string name="configLabel_location_lon">Längengrad (Lon.):</string>                 <!-- edittext label -->
   <string name="configHint_location_lon">-112.46777</string>                <!-- edittext hint -->
+  <string name="configLabel_location_alt">Elevation:</string>                          <!-- edittext label -->   <!-- TODO -->
+  <string name="configHint_location_alt">0</string> <!-- edittext hint -->                                 <!-- TODO -->
   <string name="configLabel_location_name">Name:</string>                     <!-- edittext label -->
   <string name="configHint_location_name">(optional)</string>                 <!-- edittext hint -->
 
@@ -387,6 +424,8 @@
   <string name="configLabel_themeBackground_light">Hell</string>        <!-- light background -->
   <string name="configLabel_themeBackground_dark">Dunkel</string>          <!-- dark background -->
   <string name="configLabel_themeBackground_trans">Transparent</string>  <!-- transparent background -->
+  <string name="configLabel_themeBackground_color">Farbe</string>      <!-- custom background -->
+  <string name="configLabel_themeColorBackground">Farbe:</string>      <!-- color label -->
 
   <string name="configLabel_themeColorTitle">Titelfarbe:</string>     <!-- color label -->
   <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->
@@ -398,6 +437,11 @@
   <string name="configLabel_themeColorSummer">Sommerfarbe:</string> <!-- color label -->
   <string name="configLabel_themeColorFall">Herbstfarbe:</string> <!-- color label -->
   <string name="configLabel_themeColorWinter">Winterfarbe:</string> <!-- color label -->
+
+  <string name="configLabel_themeColorMapBackground">Map Background</string> <!-- color label --> <!-- TODO -->
+  <string name="configLabel_themeColorMapForeground">Map Foreground</string> <!-- color label --> <!-- TODO -->
+  <string name="configLabel_themeColorMapSunShadow">Shadow</string> <!-- color label -->          <!-- TODO -->
+  <string name="configLabel_themeColorMapMoonHighlight">Highlight</string> <!-- color label -->   <!-- TODO -->
 
   <string name="configLabel_themeColorMoonrise">Mondaufgangsfarbe:</string> <!-- color label -->
   <string name="configLabel_themeColorMoonset">Monduntergangsfarbe:</string> <!-- color label -->
@@ -594,6 +638,34 @@
       <item>1 Monat (672 Stunden)</item>
   </string-array>
 
+  <!-- App Setting: calendars -->
+  <string name="configLabel_calendars">Calendars</string>   <!-- group title -->  <!-- TODO -->
+
+  <string name="configLabel_calendars_enabled">Calendar Integration</string>  <!-- TODO -->
+  <string name="configLabel_calendars_enabled_summary">Supply events to the Calendar app (moon phases, solstices, and equinoxes).</string>  <!-- TODO -->
+
+  <string name="configLabel_calendars_window0">Window (start)</string>  <!-- TODO -->
+  <string name="configLabel_calendars_window0_summary">A period starting <xliff:g id="calendars_window_display" example="one year">%s</xliff:g> ago</string>  <!-- TODO -->
+
+  <string name="configLabel_calendars_window1">Window (end)</string>  <!-- TODO -->
+  <string name="configLabel_calendars_window1_summary">A period ending <xliff:g id="calendars_window_display" example="two years">%s</xliff:g> from now</string>  <!-- TODO -->
+
+  <string name="calendars_notification_adding">Adding calendars…</string>  <!-- TODO -->
+  <string name="calendars_notification_added">Calendars have been added.</string>  <!-- TODO -->
+
+  <string name="calendars_notification_clearing">Clearing calendars…</string>  <!-- TODO -->
+  <string name="calendars_notification_cleared">Calendars have been cleared.</string>  <!-- TODO -->
+
+  <string-array name="calendars_window_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
+    <item>one year</item>
+    <item>two years</item>
+    <item>five years</item>
+    <item>ten years</item>
+  </string-array>  <!-- TODO -->
+
+  <string name="calendar_solstice_displayName">Solstices and Equinoxes</string>  <!-- TODO -->
+  <string name="calendar_moonPhase_displayName">Moon Phases</string>  <!-- TODO -->
+
   <!-- App Setting: passive location mode -->
   <string name="configLabel_getFix_passiveMode">Passive Location</string>  <!-- TODO -->
   <string name="configLabel_getFix_passiveMode_summary">Use the passive location provider.</string> <!-- TODO -->
@@ -627,6 +699,12 @@
   <!--
        DIALOGS
   -->
+
+  <!-- Dialog: World Map -->
+  <string name="worldmap_dialog_title">@string/configAction_worldMap</string>   <!-- TODO -->
+  <string name="worldmap_dialog_option_sunlight">Sunlight</string>              <!-- TODO -->
+  <string name="worldmap_dialog_option_moonlight">Moonlight</string>            <!-- TODO -->
+  <string name="worldmap_dialog_option_all">Both</string>                       <!-- TODO -->
 
   <!-- Dialog: Set Alarm -->
   <string name="configLabel_schedalarm_mode">Plane einen Alarm für</string>
@@ -709,6 +787,7 @@
   <string name="location_dialog_cancel">Abbrechen</string>
   <string name="location_dialog_error_lat">Dies ist kein gültiger Breitengrad.</string>
   <string name="location_dialog_error_lon">Dies ist kein gültiger Längengrad.</string>
+  <string name="location_dialog_error_alt">This is not a valid elevation.</string>  <!-- TODO -->
 
   <string name="location_dialog_toast_copied">In die Zwischenablage kopiert<![CDATA[<br
   />]]><xliff:g id="value">%1$s</xliff:g></string>
@@ -802,6 +881,7 @@
                 * <b>%loc</b> für den Ort <br />
                 * <b>%lat</b> für den Breitengrad <br />
                 * <b>%lon</b> für den Längengrad <br/>
+                * <b>%lel</b> for elevation (e.g. 385 meters) <br/>
                 <br/>
                 * <b>%s</b> für den Datenquelle (z.B. "sunrisesunsetlib") <br/>
                 * <b>%t</b> Die Zeitzone (id) (z.B. "Europe/Berlin") <br/>

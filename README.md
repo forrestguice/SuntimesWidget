@@ -71,6 +71,21 @@ Widgets are resizable and include...
 
 <img alt="screenshot1" src='https://github.com/forrestguice/SuntimesWidget/blob/gh-pages/doc/screenshots/v0.8.1/en/activity-main0-dark.png' width="280px" />&nbsp;&nbsp;<img alt="screenshot1" src='https://github.com/forrestguice/SuntimesWidget/blob/gh-pages/doc/screenshots/v0.8.1/en/activity-main0-light.png' width="280px" />
 
+## Permissions ##
+
+The app requires the following permissions...
+
+|Permission||Since Version|
+|---|---|---|
+|ACCESS_COARSE_LOCATION|To get current location.|v0.1.0|
+|ACCESS_FINE_LOCATION|To get current location (GPS).|v0.1.0|
+|SET_ALARM|To interact with the AlarmClock app.|v0.1.0|
+|WRITE_EXTERNAL_STORAGE|To export data (places, themes, etc) to file.|v0.2.2 (api<=18)|
+|READ_CALENDAR|To interact with the Calendar app (access events).|v0.9.0|
+|WRITE_CALENDAR|To interact with the Calendar app (add/remove events).|v0.9.0|
+|READ_SYNC_STATS|To interact with the Calendar app (access custom calendars).|v0.9.0|
+|WRITE_SYNC_SETTINGS|To interact with the Calendar app (add/remove custom calendars).|v0.9.0|
+
 ## Donations ##
 
 Do you find value in this software? Pay as you feel. 
@@ -90,10 +105,11 @@ When submitting a bug please be detailed and specific. What did you expect the a
 
 The goal of this project is an app that is free and open-source (FOSS). The source code is available under *GPLv3* (https://github.com/forrestguice/SuntimesWidget).
 
-Icons borrowed from:
+Icons and images from:
 * "Google Android Design Icons 20131120" [Apache License 2.0]
 * "Google Material Icons" [Apache License 2.0] (https://material.io/icons/)
 * "Material Design Icons" [SIL Open Font License 1.1] (https://materialdesignicons.com)
+* "NASA Visible Earth: Blue Marble" [Public Domain] (https://visibleearth.nasa.gov/view_cat.php?categoryID=1484)
 
 Libraries used:
 * Time4A [LGPL-2.1] (http://github.com/MenoData/Time4A) 

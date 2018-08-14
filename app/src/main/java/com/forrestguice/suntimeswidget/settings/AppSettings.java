@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -56,6 +56,9 @@ public class AppSettings
     public static final String PREF_KEY_UI_DATETAPACTION = "app_ui_datetapaction";
     public static final DateTapAction PREF_DEF_UI_DATETAPACTION = DateTapAction.CONFIG_DATE;
 
+    public static final String PREF_KEY_UI_DATETAPACTION1 = "app_ui_datetapaction1";
+    public static final DateTapAction PREF_DEF_UI_DATETAPACTION1 = DateTapAction.SHOW_CALENDAR;
+
     public static final String PREF_KEY_UI_CLOCKTAPACTION = "app_ui_clocktapaction";
     public static final ClockTapAction PREF_DEF_UI_CLOCKTAPACTION = ClockTapAction.ALARM;
 
@@ -77,14 +80,28 @@ public class AppSettings
     public static final String PREF_KEY_UI_SHOWDATASOURCE = "app_ui_showdatasource";
     public static final boolean PREF_DEF_UI_SHOWDATASOURCE = true;
 
-    public static final String PREF_KEY_UI_SHOWGOLDHOUR = "app_ui_showgoldhour";
-    public static final boolean PREF_DEF_UI_SHOWGOLDHOUR = true;
-
-    public static final String PREF_KEY_UI_SHOWBLUEHOUR = "app_ui_showbluehour";
-    public static final boolean PREF_DEF_UI_SHOWBLUEHOUR = false;
+    public static final String PREF_KEY_UI_SHOWFIELDS = "app_ui_showfields";
+    public static final byte PREF_DEF_UI_SHOWFIELDS = 0b00111111;
+    public static final int FIELD_ACTUAL = 0;  // bit positions
+    public static final int FIELD_CIVIL = 1;
+    public static final int FIELD_NAUTICAL = 2;
+    public static final int FIELD_ASTRO = 3;
+    public static final int FIELD_NOON = 4;
+    public static final int FIELD_GOLD = 5;
+    public static final int FIELD_BLUE = 6;
+    public static final int NUM_FIELDS = 7;
 
     public static final String PREF_KEY_ACCESSIBILITY_VERBOSE = "app_accessibility_verbose";
     public static final boolean PREF_DEF_ACCESSIBILITY_VERBOSE = false;
+
+    public static final String PREF_KEY_CALENDARS_ENABLED = "app_calendars_enabled";
+    public static final boolean PREF_DEF_CALENDARS_ENABLED = false;
+
+    public static final String PREF_KEY_CALENDAR_WINDOW0 = "app_calendars_window0";
+    public static final String PREF_DEF_CALENDAR_WINDOW0 = "31536000000";  // 1 year
+
+    public static final String PREF_KEY_CALENDAR_WINDOW1 = "app_calendars_window1";
+    public static final String PREF_DEF_CALENDAR_WINDOW1 = "63072000000";  // 2 years
 
     public static final String PREF_KEY_UI_TIMEZONESORT = "app_ui_timezonesort";
     public static final WidgetTimezones.TimeZoneSort PREF_DEF_UI_TIMEZONESORT = WidgetTimezones.TimeZoneSort.SORT_BY_ID;
@@ -95,6 +112,9 @@ public class AppSettings
 
     public static final String PREF_KEY_GETFIX_PASSIVE = "getFix_passiveMode";
     public static final boolean PREF_DEF_GETFIX_PASSIVE = false;
+
+    public static final String PREF_KEY_PLUGINS_ENABLESCAN = "app_plugins_enabled";
+    public static final boolean PREF_DEF_PLUGINS_ENABLESCAN = false;
 
     /**
      * Language modes (system, user defined)
@@ -406,7 +426,7 @@ public class AppSettings
         return pref.getBoolean(PREF_KEY_UI_SHOWDATASOURCE, PREF_DEF_UI_SHOWDATASOURCE);
     }
 
-    public static boolean loadBlueHourPref( Context context )
+    /**public static boolean loadBlueHourPref( Context context )
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getBoolean(PREF_KEY_UI_SHOWBLUEHOUR, PREF_DEF_UI_SHOWBLUEHOUR);
@@ -416,12 +436,71 @@ public class AppSettings
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getBoolean(PREF_KEY_UI_SHOWGOLDHOUR, PREF_DEF_UI_SHOWGOLDHOUR);
+    }*/
+
+    public static boolean[] loadShowFieldsPref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        int showFields = pref.getInt(PREF_KEY_UI_SHOWFIELDS, PREF_DEF_UI_SHOWFIELDS);
+
+        boolean[] retValue = new boolean[8];
+        for (int i=0; i<retValue.length; i++)
+        {
+            retValue[i] = (((showFields >> i) & 1) == 1);
+        }
+        return retValue;
+    }
+
+    public static void saveShowFieldsPref( Context context, int k, boolean value )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        int showFields = pref.getInt(PREF_KEY_UI_SHOWFIELDS, PREF_DEF_UI_SHOWFIELDS);
+
+        if (value)
+            showFields |= (1 << k);  // true; OR position k to 1
+        else showFields &= ~(1 << k);  // false; AND position k to 0
+
+        SharedPreferences.Editor prefs = pref.edit();
+        prefs.putInt(PREF_KEY_UI_SHOWFIELDS, showFields);
+        prefs.apply();
     }
 
     public static boolean loadVerboseAccessibilityPref( Context context )
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getBoolean(PREF_KEY_ACCESSIBILITY_VERBOSE, PREF_DEF_ACCESSIBILITY_VERBOSE);
+    }
+
+    public static boolean loadCalendarsEnabledPref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_CALENDARS_ENABLED, PREF_DEF_CALENDARS_ENABLED);
+    }
+
+    /**
+     * @param context context used to access preferences
+     * @return calendarWindow pref (ms value) [past]
+     */
+    public static long loadPrefCalendarWindow0(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return Long.parseLong(prefs.getString(PREF_KEY_CALENDAR_WINDOW0, PREF_DEF_CALENDAR_WINDOW0));
+    }
+
+    /**
+     * @param context context used to access preferences
+     * @return calendarWindow pref (ms value) [future]
+     */
+    public static long loadPrefCalendarWindow1(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return Long.parseLong(prefs.getString(PREF_KEY_CALENDAR_WINDOW1, PREF_DEF_CALENDAR_WINDOW1));
+    }
+
+    public static boolean loadScanForPluginsPref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_PLUGINS_ENABLESCAN, PREF_DEF_PLUGINS_ENABLESCAN);
     }
 
     /**
@@ -456,6 +535,24 @@ public class AppSettings
 
         } catch (IllegalArgumentException e) {
             actionMode = PREF_DEF_UI_DATETAPACTION;
+        }
+        return actionMode;
+    }
+
+    /**
+     * Preference: the action that is performed when the date field is long-clicked
+     */
+    public static DateTapAction loadDateTapAction1Pref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        String modeString = pref.getString(PREF_KEY_UI_DATETAPACTION1, PREF_DEF_UI_DATETAPACTION1.name());
+
+        DateTapAction actionMode;
+        try {
+            actionMode = DateTapAction.valueOf(modeString);
+
+        } catch (IllegalArgumentException e) {
+            actionMode = PREF_DEF_UI_DATETAPACTION1;
         }
         return actionMode;
     }
