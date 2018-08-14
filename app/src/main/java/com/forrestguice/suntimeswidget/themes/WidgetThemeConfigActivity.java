@@ -1164,7 +1164,12 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         flipToPreview(savedState.getInt(PARAM_PREVIEWID, -1));
 
         ThemeBackground background = (ThemeBackground)spinBackground.getSelectedItem();
-        String backgroundName = savedState.getString(SuntimesTheme.THEME_BACKGROUND, (background != null ? background.name() : DarkTheme.THEMEDEF_BACKGROUND.name()));
+        String backgroundName = savedState.getString(SuntimesTheme.THEME_BACKGROUND);
+        if (backgroundName == null)
+        {
+            backgroundName = (background != null ? background.name() : DarkTheme.THEMEDEF_BACKGROUND.name());
+        }
+
         try {
             setSelectedBackground(ThemeBackground.valueOf(backgroundName));
         } catch (IllegalArgumentException e) {

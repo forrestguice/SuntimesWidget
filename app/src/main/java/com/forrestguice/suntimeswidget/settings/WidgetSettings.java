@@ -750,9 +750,7 @@ public class WidgetSettings
          */
         public String getAltitude()
         {
-            if (!useAltitude)
-                return "";
-            else return altitude;
+            return altitude;
         }
 
         public Double getAltitudeAsDouble()

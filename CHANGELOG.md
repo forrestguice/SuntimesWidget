@@ -1,9 +1,10 @@
 ### ~
 
-### ~
-
+### v0.9.0 (2018-08-14)
 * changes default sun data source to time4a-time4j (supporting altitude based refinements).
+* changes default 'en' location to New York City, and default 'en-US' location to Phoenix.
 * enhances the data source selector; now tags the default source, and sources loaded via plugin.
+* enhances data sources (plugins); support for loading external sources (not included with app) (#229).
 * adds elevation to all default locations; default 'en' location changed to New York City, default 'en-US' location changed to Phoenix.  
 * adds elevation UI to Location settings, main ActionBar, and widget title substitutions. 
 * adds app pref "Use Elevation"; apply altitude based refinements; defaults true.
@@ -18,6 +19,8 @@
 * adds world map dialog to app; shows sunlight (day/night) and moonlight over an equirectangular map.
 * adds theme "Dark (translucent)"; default theme with semitransparent widget background.
 * adds to theming; custom background option (simple background color supporting transparency).
+* updates translation to Polish and Esperanto (eo, pl) (#235 by Verdulo).
+* updates translation to Norwegian (nb) (#224 by FTno).
 * updates dependency (Time4A 3.44.2-2018b). 
 
 ### v0.8.6 (2018-07-05)

@@ -54,7 +54,7 @@
             android:syncable="true"/>
         <service
             android:name="com.forrestguice.suntimeswidget.calendar.SuntimesSyncService"
-            android:exported="true"
+            android:exported="true" android:permission="signature"
             android:process=":sync">  <!-- TODO: lint security warning.. exported="false" or define a permission? -->
             <intent-filter>
                 <action android:name="android.content.SyncAdapter"/>
