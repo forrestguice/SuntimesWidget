@@ -143,11 +143,29 @@
     <string name="time_loading">…</string>  <!-- calculating / time is loading -->
     <string name="time_format_12hr_veryshort"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- shortest 12hr time format; should omit am/pm -->
 
+    <!-- distances (meters, feet, etc) -->
+    <string name="units_feet">feet</string>   <!-- TODO -->
+    <string name="units_feet_short">ft</string>   <!-- TODO -->
+    <!--<plurals name="units_feet_long">
+      <item quantity="one">%d foot</item>
+      <item quantity="other">%d feet</item>
+    </plurals>-->
+    <string name="units_meters">meters</string>  <!-- TODO -->
+    <string name="units_meters_short">m</string>  <!-- TODO -->
+    <!--<plurals name="units_meters_long">
+      <item quantity="one">%d meter</item>
+      <item quantity="other">%d meters</item>
+    </plurals>-->
+
     <!--
          WIDGET CONFIG
     -->
 
     <string name="configAction_restoreDefaults">Restarigi normojn</string>   <!-- button / menu text -->
+
+    <string name="configLabel_tagDefault">[default]</string>                <!-- TODO -->
+    <string name="configLabel_tagPlugin">[plugin]</string>                <!-- TODO -->
+    <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->  <!-- TODO -->
 
     <!-- WidgetConfig Activity -->
     <string name="configAction_addWidget">Aldoni fenestraĵon</string>                   <!-- Button: Add -->
@@ -165,6 +183,9 @@
     <string name="configLabel_general_calculator_sun">Fonto de sunaj datumoj</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Fonot de lunaj datumoj</string>         <!-- preference label -->
 
+    <string name="configLabel_general_altitude_enabled">Use Elevation</string>        <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_general_altitude_enabled_summary">Apply altitude based refinements.</string>        <!-- checkbox label --> <!-- TODO -->
+
     <string name="configLabel_general_showSeconds">Montri sekundojn</string>        <!-- checkbox label -->
     <string name="configLabel_general_showSeconds_summary">Ampleksi sekundojn dum montrado de horoj.</string>        <!-- checkbox label -->
 
@@ -176,6 +197,12 @@
 
     <string name="configLabel_general_showHours">Montri horojn</string>        <!-- checkbox label -->
     <string name="configLabel_general_showHours_summary">Ampleksi horojn kaj minutojn por temp-intervaloj pli longaj ol tagnokto.</string>    <!-- checkbox label -->
+
+    <!-- Widget Setting: advanced / experimental -->
+    <string name="configLabel_advanced">Advanced Settings</string>                        <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_experimental">Experimental Settings</string>                <!-- group title --> <!-- TODO -->
+    <string name="configLabel_general_scanPlugins">Data Source Plugins</string>                                <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_general_scanPlugins_summary">Scan for and load third party plugins.</string>   <!-- pref summary --> <!-- TODO -->
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Agordoj de aspekto</string>           <!-- group title -->
@@ -269,6 +296,7 @@
     <string name="configLabel_action_onClockTap">Dum tuŝeto sur horloĝo:</string>         <!-- spinner label -->
     <string name="configLabel_action_onNoteTap">Dum tuŝeto sur noto:</string>           <!-- spinner label -->
     <string name="configLabel_action_onDateTap">Dum tuŝeto sur dato:</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap1">On Date Long Press:</string>   <!-- spinner label -->  <!-- TODO -->
 
     <!-- App Setting: time zone sort -->
     <string name="timezone_sort_byOffset">laŭ deŝovo</string>
@@ -287,6 +315,8 @@
     <string name="configHint_location_lat">53.1324</string>                       <!-- edittext hint -->
     <string name="configLabel_location_lon">Longitudo:</string>                 <!-- edittext label -->
     <string name="configHint_location_lon">23.1592</string>                <!-- edittext hint -->
+    <string name="configLabel_location_alt">Elevation:</string>                          <!-- edittext label -->   <!-- TODO -->
+    <string name="configHint_location_alt">0</string> <!-- edittext hint -->                                 <!-- TODO -->
     <string name="configLabel_location_name">Nomo:</string>                     <!-- edittext label -->
     <string name="configHint_location_name">(malnepra)</string>                 <!-- edittext hint -->
 
@@ -591,6 +621,34 @@
         <item>unu monato (672 horoj)</item>
     </string-array>
 
+    <!-- App Setting: calendars -->
+    <string name="configLabel_calendars">Calendars</string>   <!-- group title -->  <!-- TODO -->
+
+    <string name="configLabel_calendars_enabled">Calendar Integration</string>  <!-- TODO -->
+    <string name="configLabel_calendars_enabled_summary">Supply events to the Calendar app (moon phases, solstices, and equinoxes).</string>  <!-- TODO -->
+
+    <string name="configLabel_calendars_window0">Window (start)</string>  <!-- TODO -->
+    <string name="configLabel_calendars_window0_summary">A period starting <xliff:g id="calendars_window_display" example="one year">%s</xliff:g> ago</string>  <!-- TODO -->
+
+    <string name="configLabel_calendars_window1">Window (end)</string>  <!-- TODO -->
+    <string name="configLabel_calendars_window1_summary">A period ending <xliff:g id="calendars_window_display" example="two years">%s</xliff:g> from now</string>  <!-- TODO -->
+
+    <string name="calendars_notification_adding">Adding calendars…</string>  <!-- TODO -->
+    <string name="calendars_notification_added">Calendars have been added.</string>  <!-- TODO -->
+
+    <string name="calendars_notification_clearing">Clearing calendars…</string>  <!-- TODO -->
+    <string name="calendars_notification_cleared">Calendars have been cleared.</string>  <!-- TODO -->
+
+    <string-array name="calendars_window_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
+        <item>one year</item>
+        <item>two years</item>
+        <item>five years</item>
+        <item>ten years</item>
+    </string-array>  <!-- TODO -->
+
+    <string name="calendar_solstice_displayName">Solstices and Equinoxes</string>  <!-- TODO -->
+    <string name="calendar_moonPhase_displayName">Moon Phases</string>  <!-- TODO -->
+
     <!-- App Setting: passive location mode -->
     <string name="configLabel_getFix_passiveMode">Pasiva pozici-trovado</string>
     <string name="configLabel_getFix_passiveMode_summary">Uzi la pasivan servon por determini pozicion.</string>
@@ -598,6 +656,12 @@
     <!--
          DIALOGS
     -->
+
+    <!-- Dialog: World Map -->
+    <string name="worldmap_dialog_title">@string/configAction_worldMap</string>   <!-- TODO -->
+    <string name="worldmap_dialog_option_sunlight">Sunlight</string>              <!-- TODO -->
+    <string name="worldmap_dialog_option_moonlight">Moonlight</string>            <!-- TODO -->
+    <string name="worldmap_dialog_option_all">Both</string>                       <!-- TODO -->
 
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Plani averton por</string>
@@ -754,6 +818,7 @@
     <string name="location_dialog_cancel">Nuligi</string>
     <string name="location_dialog_error_lat">Latitudo erara.</string>
     <string name="location_dialog_error_lon">Longitudo erara.</string>
+    <string name="location_dialog_error_alt">This is not a valid elevation.</string>  <!-- TODO -->
 
     <string name="location_dialog_toast_copied">Enpoŝigita<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
 
@@ -829,13 +894,17 @@
                 * <b>%dd</b> por tago (mallonge) (ekz. lu) <br/>
                 * <b>%dD</b> por tago (longe) (ekz. lundo) <br/>
                 * <b>%dY</b> por jaro (ekz. 2018) <br/>
+                * <b>%dt</b> for time (of last update) <br/>
+                * <b>%dT</b> for time with seconds (of last update) <br/>
                 <br/>
                 * <b>%loc</b> por etikedo (ekz. Prescott) <br />
                 * <b>%lat</b> por latitudo (ekz. 35.5409) <br />
                 * <b>%lon</b> por longitudo (ekz. -112.4691) <br/>
+                * <b>%lel</b> for elevation (e.g. 385 meters) <br/>
                 <br/>
                 * <b>%s</b> por datum-fonto (ekz. sunrisesunsetlib) <br/>
                 * <b>%t</b> por horzono (id) (ekz. US/Arizona) <br/>
+                * <b>%id</b> for appWidgetID <br/>
          <br/>
          <b>Sunaj fenestraĵoj:</b> <br/>
                 * <b>%m</b> por reĝimo (mallonge) (ekz. civila) <br/>
