@@ -145,17 +145,19 @@
     <string name="time_format_12hr_veryshort"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- shortest 12hr time format; should omit am/pm -->
 
     <!-- distances (meters, feet, etc) -->
-    <string name="units_feet">feet</string>   <!-- TODO -->
-    <string name="units_feet_short">ft</string>   <!-- TODO -->
+    <string name="units_feet">stopy</string>
+    <string name="units_feet_short">ft</string>
     <!--<plurals name="units_feet_long">
-      <item quantity="one">%d foot</item>
-      <item quantity="other">%d feet</item>
+      <item quantity="one">%d stopa</item>
+      <item quantity="few">%d stopy</item>
+      <item quantity="other">%d stóp</item>
     </plurals>-->
-    <string name="units_meters">meters</string>  <!-- TODO -->
-    <string name="units_meters_short">m</string>  <!-- TODO -->
+    <string name="units_meters">metry</string>
+    <string name="units_meters_short">m</string>
     <!--<plurals name="units_meters_long">
-      <item quantity="one">%d meter</item>
-      <item quantity="other">%d meters</item>
+      <item quantity="one">%d metr</item>
+      <item quantity="few">%d metry</item>
+      <item quantity="other">%d metrów</item>
     </plurals>-->
 
     <!--
@@ -164,9 +166,9 @@
 
     <string name="configAction_restoreDefaults">Przywróć domyślne</string>   <!-- button / menu text -->
 
-    <string name="configLabel_tagDefault">[default]</string>                <!-- TODO -->
-    <string name="configLabel_tagPlugin">[plugin]</string>                <!-- TODO -->
-    <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->  <!-- TODO -->
+    <string name="configLabel_tagDefault">[domyślne]</string>
+    <string name="configLabel_tagPlugin">[wtyczka]</string>
+    <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[domyślne]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->
 
     <!-- WidgetConfig Activity -->
     <string name="configAction_addWidget">Dodaj widżet</string>                   <!-- Button: Add -->
@@ -184,8 +186,8 @@
     <string name="configLabel_general_calculator_sun">Źródło danych słonecznych</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Źródło danych księżycowych</string>         <!-- preference label -->
 
-    <string name="configLabel_general_altitude_enabled">Use Elevation</string>        <!-- checkbox label --> <!-- TODO -->
-    <string name="configLabel_general_altitude_enabled_summary">Apply altitude based refinements.</string>        <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_general_altitude_enabled">Użyj wysokości</string>        <!-- checkbox label -->
+    <string name="configLabel_general_altitude_enabled_summary">Zastosuj poprawki uwzględniające wysokość n.p.m.</string>        <!-- checkbox label -->
 
     <string name="configLabel_general_showSeconds">Wyświetl sekundy</string>        <!-- checkbox label -->
     <string name="configLabel_general_showSeconds_summary">Uwzględnij sekundy podczas wyświetlania czasów.</string>        <!-- checkbox label -->
@@ -200,17 +202,17 @@
     <string name="configLabel_general_showHours_summary">Uwzględnij godziny i minuty dla okresów dłuższych niż dzień.</string>    <!-- checkbox label -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">Advanced Settings</string>                        <!-- group title -->  <!-- TODO -->
-    <string name="configLabel_experimental">Experimental Settings</string>                <!-- group title --> <!-- TODO -->
-    <string name="configLabel_general_scanPlugins">Data Source Plugins</string>                                <!-- checkbox label --> <!-- TODO -->
-    <string name="configLabel_general_scanPlugins_summary">Scan for and load third party plugins.</string>   <!-- pref summary --> <!-- TODO -->
+    <string name="configLabel_advanced">Zaawansowane ustawienia</string>                        <!-- group title -->
+    <string name="configLabel_experimental">Eksperymentalne ustawienia</string>                <!-- group title -->
+    <string name="configLabel_general_scanPlugins">Wtyczki żródeł danych</string>                                <!-- checkbox label -->
+    <string name="configLabel_general_scanPlugins_summary">Skanuj i załaduj zewnętrzne wtyczki.</string>   <!-- pref summary -->
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Ustawienia wyglądu</string>           <!-- group title -->
     <string name="configLabel_appearance_theme">Skórka:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Poszerz do dostępnej przestrzeni (rozciągalne)</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_showLabels">Wyświetl etykiety</string>          <!-- checkbox label -->
-    <string name="configLabel_appearance_showTitle">Pokaż tytuł</string>          <!-- checkbox label -->
+    <string name="configLabel_appearance_showTitle">Wyświetl tytuł</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Tytuł:</string>              <!-- edittext label -->
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
 
@@ -272,8 +274,8 @@
     <string name="widgetMode1x1_altaz">Wysokość i azymut</string>     <!-- setting -->
     <string name="widgetMode1x1_decright">Deklinacja i rekascensja</string>     <!-- setting -->
 
-    <string name="widgetMode_sunPosMap_simplerectangular">Cylindryczna</string>  <!-- setting -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal">Azymutalna biegunowa</string>     <!-- setting -->
+    <string name="widgetMode_sunPosMap_simplerectangular">Zwykła</string>  <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal">Biegunowa</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_bluemarble">Blue Marble</string>    <!-- setting -->
 
     <string name="widgetMode1x1_moonriseset">Wschód i zachód Księżyca</string>     <!-- setting -->
@@ -297,7 +299,7 @@
     <string name="configLabel_action_onClockTap">Przy kliknięciu zegara:</string>         <!-- spinner label -->
     <string name="configLabel_action_onNoteTap">Przy kliknięciu notatki:</string>           <!-- spinner label -->
     <string name="configLabel_action_onDateTap">Przy kliknięciu daty:</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap1">On Date Long Press:</string>   <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_action_onDateTap1">Przy przytrzymaniu daty:</string>   <!-- spinner label -->
 
     <!-- Widget Setting: location -->
     <string name="locationMode_current">Obecna (ostatnia znana)</string>  <!-- setting -->
@@ -309,8 +311,8 @@
     <string name="configHint_location_lat">52.2319</string>                       <!-- edittext hint -->
     <string name="configLabel_location_lon">Długość:</string>                 <!-- edittext label -->
     <string name="configHint_location_lon">21.0067</string>                <!-- edittext hint -->
-    <string name="configLabel_location_alt">Elevation:</string>                          <!-- edittext label -->   <!-- TODO -->
-    <string name="configHint_location_alt">0</string> <!-- edittext hint -->                                 <!-- TODO -->
+    <string name="configLabel_location_alt">Wysokość n.p.m.:</string>                          <!-- edittext label -->
+    <string name="configHint_location_alt">143</string> <!-- edittext hint -->
     <string name="configLabel_location_name">Nazwa:</string>                     <!-- edittext label -->
     <string name="configHint_location_name">(opcjonalne)</string>                 <!-- edittext hint -->
 
@@ -623,32 +625,32 @@
     </string-array>
 
     <!-- App Setting: calendars -->
-    <string name="configLabel_calendars">Calendars</string>   <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_calendars">Kalendarz</string>   <!-- group title -->
 
-    <string name="configLabel_calendars_enabled">Calendar Integration</string>  <!-- TODO -->
-    <string name="configLabel_calendars_enabled_summary">Supply events to the Calendar app (moon phases, solstices, and equinoxes).</string>  <!-- TODO -->
+    <string name="configLabel_calendars_enabled">Integracja z kalendarzem</string>
+    <string name="configLabel_calendars_enabled_summary">Dodaj wydarzenia do aplikacji kalendarza (fazy Księżyca, przesilenia i równonoce).</string>
 
-    <string name="configLabel_calendars_window0">Window (start)</string>  <!-- TODO -->
-    <string name="configLabel_calendars_window0_summary">A period starting <xliff:g id="calendars_window_display" example="one year">%s</xliff:g> ago</string>  <!-- TODO -->
+    <string name="configLabel_calendars_window0">Początek zakresu</string>
+    <string name="configLabel_calendars_window0_summary">Dodaj wydarzenia począwszy od <xliff:g id="calendars_window_display" example="roku">%s</xliff:g> temu</string>
 
-    <string name="configLabel_calendars_window1">Window (end)</string>  <!-- TODO -->
-    <string name="configLabel_calendars_window1_summary">A period ending <xliff:g id="calendars_window_display" example="two years">%s</xliff:g> from now</string>  <!-- TODO -->
+    <string name="configLabel_calendars_window1">Koniec zakresu</string>
+    <string name="configLabel_calendars_window1_summary">Dodaj wydarzenia do <xliff:g id="calendars_window_display" example="dwóch lat">%s</xliff:g> w przyszłość</string>
 
-    <string name="calendars_notification_adding">Adding calendars…</string>  <!-- TODO -->
-    <string name="calendars_notification_added">Calendars have been added.</string>  <!-- TODO -->
+    <string name="calendars_notification_adding">Dodawanie do kalendarza…</string>
+    <string name="calendars_notification_added">Dodano wydarzenia do kalendarza.</string>
 
-    <string name="calendars_notification_clearing">Clearing calendars…</string>  <!-- TODO -->
-    <string name="calendars_notification_cleared">Calendars have been cleared.</string>  <!-- TODO -->
+    <string name="calendars_notification_clearing">Czyszczenie kalendarza…</string>
+    <string name="calendars_notification_cleared">Usunięto wydarzenia z kalendarza.</string>
 
     <string-array name="calendars_window_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
-        <item>one year</item>
-        <item>two years</item>
-        <item>five years</item>
-        <item>ten years</item>
-    </string-array>  <!-- TODO -->
+        <item>roku</item>
+        <item>dwóch lat</item>
+        <item>pięciu lat</item>
+        <item>dziesięciu lat</item>
+    </string-array>
 
-    <string name="calendar_solstice_displayName">Solstices and Equinoxes</string>  <!-- TODO -->
-    <string name="calendar_moonPhase_displayName">Moon Phases</string>  <!-- TODO -->
+    <string name="calendar_solstice_displayName">Przesilenia i równonoce</string>
+    <string name="calendar_moonPhase_displayName">Fazy Księżyca</string>
 
     <!-- App Setting: passive location mode -->
     <string name="configLabel_getFix_passiveMode">Pasywna lokalizacja</string>
@@ -732,10 +734,10 @@
     -->
 
     <!-- Dialog: World Map -->
-    <string name="worldmap_dialog_title">@string/configAction_worldMap</string>   <!-- TODO -->
-    <string name="worldmap_dialog_option_sunlight">Sunlight</string>              <!-- TODO -->
-    <string name="worldmap_dialog_option_moonlight">Moonlight</string>            <!-- TODO -->
-    <string name="worldmap_dialog_option_all">Both</string>                       <!-- TODO -->
+    <string name="worldmap_dialog_title">@string/configAction_worldMap</string>
+    <string name="worldmap_dialog_option_sunlight">Słońce</string>
+    <string name="worldmap_dialog_option_moonlight">Księżyc</string>
+    <string name="worldmap_dialog_option_all">Oba</string>
 
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Ustaw alarm na</string>
@@ -819,7 +821,7 @@
     <string name="location_dialog_cancel">Anuluj</string>
     <string name="location_dialog_error_lat">Nieprawidłowa szerokość geograficzna.</string>
     <string name="location_dialog_error_lon">Nieprawidłowa długość geograficzna.</string>
-    <string name="location_dialog_error_alt">This is not a valid elevation.</string>  <!-- TODO -->
+    <string name="location_dialog_error_alt">Nieprawidłowa wysokość n.p.m.</string>
 
     <string name="location_dialog_toast_copied">Skopiowano do schowka<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
 
@@ -888,17 +890,17 @@
                 * <b>%dd</b> dla dnia (skrót) (np. pon) <br/>
                 * <b>%dD</b> dla dnia (np. poniedziałek) <br/>
                 * <b>%dY</b> dla roku (np. 2018) <br/>
-                * <b>%dt</b> for time (of last update) <br/>
-                * <b>%dT</b> for time with seconds (of last update) <br/>
+                * <b>%dt</b> dla czasu ostatniej aktualizacji <br/>
+                * <b>%dT</b> dla czasu ostatniej aktualizacji (uwzględniając sekundy) <br/>
                 <br/>
                 * <b>%loc</b> dla etykiety (np. Prescott) <br />
                 * <b>%lat</b> dla szerokości geograficznej (np. 35.5409) <br />
                 * <b>%lon</b> dla długości geograficznej (np. -112.4691) <br/>
-                * <b>%lel</b> for elevation (e.g. 385 meters) <br/>
+                * <b>%lel</b> dla wysokości n.p.m. (np. 385) <br/>
                 <br/>
                 * <b>%s</b> dla źródła danych (np. sunrisesunsetlib) <br/>
                 * <b>%t</b> dla strefy czasowej (id) (np. US/Arizona) <br/>
-                * <b>%id</b> for appWidgetID <br/>
+                * <b>%id</b> dla ID widżetu <br/>
          <br/>
          <b>Widżety Słońca:</b> <br/>
                 * <b>%m</b> dla trybu (skrót) (np. cywilny) <br/>
@@ -911,7 +913,7 @@
          <b>Widżety przesilenia:</b> <br/>
                 * <b>%m</b> dla trybu (skrót) (np. przesilenie) <br/>
                 * <b>%M</b> dla trybu (pełny) (np. zimowe przesilenie) <br/>
-    ]]></string>  <!-- TODO: %dt, %dT, %lel, %id -->
+    ]]></string>
     <string name="help_general_timeMode"><![CDATA[
           <b>Rzeczywisty wschód/zachód:</b> Słońce znajduje się na linii horyzontu, jest to przybliżony czas wschodu lub zachodu Słońca.<br/><br/>
           <b>Świt/zmierzch cywilny:</b> Słońce znajduje się 6 stopni pod horyzontem, widoczne są najjaśniejsze gwiazdy. Jest wystarczająco jasno na wykonywanie większości czynności na dworze bez potrzeby korzystania ze sztucznego oświetlenia.<br/><br/>
@@ -939,6 +941,11 @@
           Przejdź do ekranu głównego, aby <b>dodać nowy widżet</b>.<br/><br/>
           Aby <b>edytować istniejący widżet</b>, wybierz go z poniższej listy.<br/>
     ]]></string>
+
+    <string name="privacy_policy"><![CDATA[<b>Prywatność:</b><br/>Aplikacja <xliff:g id="appName">%1$s</xliff:g> nie zbiera, przechowuje i przesyła osobistych danych użytkownika. Ta aplikacja nie zawiera reklam, narzędzi analitycznych i zbędnych uprawnień.<br/><br/>Aplikacja konfiguruje się używając danych lokalizacji; te dane (i inne używane przez program) są zapisywane lokalnie i nie opuszczają urządzenia.<br/><br/><xliff:g id="permissionsExplained">%2$s</xliff:g>]]></string>
+    <string name="privacy_permission_location"><![CDATA[Uprawnienie <b>określenia lokalizacji</b> jest używane do ustalenia bieżącej szerokości i długości geograficznej. To uprawnienie jest opcjonalne; położenie domyślnie jest wpisywane ręcznie.]]></string>
+    <string name="privacy_permission_calendar"><![CDATA[Uprawnienie do <b>odczytu kalendarza</b> jest używane do integracji z aplikacją kalendarza. Pozwala to na dodanie własnych wydarzeń do kalendarza. Jest ono także wymagane, aby wyłączyć integrację z kalendarzem (lub usunąć własne kalendarze).]]></string>
+    <string name="privacy_permission_storage"><![CDATA[Uprawnienie <b>dostępu do pamięci zewnętrznej</b> jest wymagane do wyeksportowania danych do pliku (np. miejsc, skórek).]]></string>
 
     <!-- calculator implemenations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
