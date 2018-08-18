@@ -271,9 +271,9 @@
     <string name="widgetMode1x1_altaz">Altitudo kaj azimuto</string>     <!-- setting -->
     <string name="widgetMode1x1_decright">Deklinacio kaj rektascensio</string>     <!-- setting -->
 
-    <string name="widgetMode_sunPosMap_simplerectangular">Cilindra</string>  <!-- setting -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal">Ebena polusa</string>     <!-- setting -->
-    <string name="widgetMode_sunPosMap_bluemarble">Ebena ekvatora</string>    <!-- setting -->
+    <string name="widgetMode_sunPosMap_simplerectangular">Norma</string>  <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal">Polusa</string>     <!-- setting -->
+    <string name="widgetMode_sunPosMap_bluemarble">Blua Globeto</string>    <!-- setting -->
 
     <string name="widgetMode1x1_moonriseset">Lunleviĝo kaj lunsubiro</string>       <!-- setting -->
     <string name="widgetMode1x1_moonphaseillum">Lunfazo kaj prilumeco</string>    <!-- setting -->
@@ -316,7 +316,7 @@
     <string name="configLabel_location_lon">Longitudo:</string>                 <!-- edittext label -->
     <string name="configHint_location_lon">23.1592</string>                <!-- edittext hint -->
     <string name="configLabel_location_alt">Altitudo:</string>                          <!-- edittext label -->
-    <string name="configHint_location_alt">130</string> <!-- edittext hint -->
+    <string name="configHint_location_alt">139</string> <!-- edittext hint -->
     <string name="configLabel_location_name">Nomo:</string>                     <!-- edittext label -->
     <string name="configHint_location_name">(malnepra)</string>                 <!-- edittext hint -->
 
@@ -537,7 +537,7 @@
     <string name="configLabel_ui_showLightmap_summary">Montri bastonan diagramon de periodoj de tago, nokto kaj krepusko.</string>
 
     <!-- App Setting: Show Moon -->
-    <string name="configLabel_ui_showmoon">Montri lun-informojn</string>
+    <string name="configLabel_ui_showmoon">Montri lunajn informojn</string>
     <string name="configLabel_ui_showmoon_summary">Montri tempojn de lun-leviĝo, lun-subiro, fazon kaj prilumecon.</string>
     <string name="configLabel_ui_showmoon_notImplemented">Lunaj informoj ne subtenataj de tiu ĉi datum-fonto.</string>
 
@@ -622,22 +622,22 @@
     </string-array>
 
     <!-- App Setting: calendars -->
-    <string name="configLabel_calendars">Kalendaroj</string>   <!-- group title -->
+    <string name="configLabel_calendars">Kalendaro</string>   <!-- group title -->
 
     <string name="configLabel_calendars_enabled">Interagi kun kalendaro</string>
     <string name="configLabel_calendars_enabled_summary">Enmeti okazaĵojn al la aplikaĵo kalendaro (lunfazojn, sunekstremojn kaj tagnoktegalecojn).</string>
 
-    <string name="configLabel_calendars_window0">Komenco</string>
+    <string name="configLabel_calendars_window0">Komenco de tempintervalo</string>
     <string name="configLabel_calendars_window0_summary">Periodo komenciĝas antaŭ <xliff:g id="calendars_window_display" example="unu jaro">%s</xliff:g></string>
 
-    <string name="configLabel_calendars_window1">Fino</string>
+    <string name="configLabel_calendars_window1">Fino de tempintervalo</string>
     <string name="configLabel_calendars_window1_summary">Periodo finiĝas post <xliff:g id="calendars_window_display" example="du jaroj">%s</xliff:g></string>
 
-    <string name="calendars_notification_adding">Aldonado de kalendaroj…</string>
-    <string name="calendars_notification_added">Aldonis kalendarojn.</string>
+    <string name="calendars_notification_adding">Aldonado al kalendaro…</string>
+    <string name="calendars_notification_added">Aldonis okazaĵojn al la kalendaro.</string>
 
-    <string name="calendars_notification_clearing">Forviŝado de kalendaroj…</string>
-    <string name="calendars_notification_cleared">Forviŝis kalendarojn.</string>
+    <string name="calendars_notification_clearing">Forviŝado el kalendaroj…</string>
+    <string name="calendars_notification_cleared">Forigis okazaĵojn el la kalendaro.</string>
 
     <string-array name="calendars_window_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>unu jaro</item>
@@ -659,8 +659,8 @@
 
     <!-- Dialog: World Map -->
     <string name="worldmap_dialog_title">@string/configAction_worldMap</string>
-    <string name="worldmap_dialog_option_sunlight">Suna lumo</string>
-    <string name="worldmap_dialog_option_moonlight">Luna lumo</string>
+    <string name="worldmap_dialog_option_sunlight">Suno</string>
+    <string name="worldmap_dialog_option_moonlight">Luno</string>
     <string name="worldmap_dialog_option_all">Ambaŭ</string>
 
     <!-- Dialog: Set Alarm -->
@@ -927,7 +927,7 @@
     ]]></string>
     <string name="help_general_daylength"><![CDATA[
         <b>Longo de tago:</b> kvanto da tempo inter sunleviĝo kaj sunsubiro.<br/><br/>
-        <b>Kiom da uzebla lumo:</b> kvanto da tempo inter civila sunleviĝo kaj civila sunsubiro.<br/><br/>
+        <b>Kiom da uzebla lumo:</b> kvanto da tempo inter civila sunleviĝo kaj civila sunsubiro.<br/>
     ]]>
     </string>
     <string name="help_general_moonillum"><![CDATA[
@@ -946,6 +946,11 @@
           Por <b>aldoni novan fenestraĵon</b>, iru al la ĉefekrano.<br/><br/>
           Por <b>reagordi ekzistan fenestraĵon</b>, elektu ĝin el la jena listo.<br/>
     ]]></string>
+
+    <string name="privacy_policy"><![CDATA[<b>Privateco:</b><br/>La aplikaĵo <xliff:g id="appName">%1$s</xliff:g> ne kolektas, konservas aŭ transigas personajn informojn de la uzanto. Ĝi enhavas <b>neniujn reklamojn</b>, <b>neniujn analizilojn</b>, <b>neniujn spurilojn</b> kaj <b>neniujn malnecesajn permesojn</b>. <br/><br/>La aplikaĵo agordiĝas de lokaj datumoj. Tiuj ĉi informoj (kaj aliaj agordoj uzataj de la aplikaĵo) estas konservataj loke kaj ne eliras el la aparato.<br/><br/><xliff:g id="permissionsExplained">%2$s</xliff:g>]]></string>
+    <string name="privacy_permission_location"><![CDATA[La permeso por <b>determini pozicion</b> estas uzata por trovi vian nunan longitudon kaj latitudon. Tiu ĉi permeso estas malnepra, pozicio estas implicite agordita permane.]]></string>
+    <string name="privacy_permission_calendar"><![CDATA[La <b>kalendaraj</b> permesoj estas uzataj por interagi kun la aplikaĵo de kalendaro. Ili estas bezonataj por krei proprajn kalendarojn kaj okazaĵojn. Ili estas ankaŭ bezonataj por elŝalti interagon kun la kalendaro (aŭ forigi proprajn kalendarojn).]]></string>
+    <string name="privacy_permission_storage"><![CDATA[La permeso por aliri <b>eksteran konservejon</b> estas uzato por elpori/sekurkopii datumojn al dosieroj (ekz. lokojn, etosojn).]]></string>
 
     <!-- calculator implemenations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
