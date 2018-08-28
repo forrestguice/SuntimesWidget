@@ -71,9 +71,12 @@ Widgets are resizable and include...
 
 <img alt="screenshot1" src='https://github.com/forrestguice/SuntimesWidget/blob/gh-pages/doc/screenshots/v0.8.1/en/activity-main0-dark.png' width="280px" />&nbsp;&nbsp;<img alt="screenshot1" src='https://github.com/forrestguice/SuntimesWidget/blob/gh-pages/doc/screenshots/v0.8.1/en/activity-main0-light.png' width="280px" />
 
-## Permissions ##
+## Privacy and Permissions ##
 
-The app requires the following permissions...
+Suntimes does not collect, store, or transmit personal user data. It contains <b>no advertising</b>, <b>no analytics</b>, <b>no trackers</b>, and <b>no unnecessary permissions</b>. 
+[https://github.com/forrestguice/SuntimesWidget/wiki/Privacy](https://github.com/forrestguice/SuntimesWidget/wiki/Privacy)
+    
+The app needs the following permissions...
 
 |Permission||Since Version|
 |---|---|---|
