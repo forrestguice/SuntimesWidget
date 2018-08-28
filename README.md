@@ -4,6 +4,12 @@ Android app (and widget collection) that displays sunlight and moonlight times f
 [![GitHub release](https://img.shields.io/github/release/forrestguice/SuntimesWidget.svg)](https://github.com/forrestguice/SuntimesWidget/releases)
 [![Build Status](https://travis-ci.org/forrestguice/SuntimesWidget.svg?branch=master)](https://travis-ci.org/forrestguice/SuntimesWidget)
 
+* [Privacy and Permissions](#privacy-and-permissions)
+* [Donations](#donations)
+* [Bug Reports](#bug-reports)
+* [Legal Stuff](#legal-stuff)
+* [Contributions](#project-contributions)
+
 Displays sunrise and sunset, twilights (civil / nautical / astronomical), blue and golden hour, solstices and equinoxes, moonrise and moonset, moon phases and illumination. 
 
 <a href="https://f-droid.org/repository/browse/?fdid=com.forrestguice.suntimeswidget" target="_blank">
