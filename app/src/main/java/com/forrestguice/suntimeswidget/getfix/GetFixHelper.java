@@ -176,7 +176,7 @@ public class GetFixHelper
             {
                 String permissionMessage = activity.getString(R.string.privacy_permission_location);
                 AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                builder.setTitle(activity.getString(R.string.privacy_dialog_title))
+                builder.setTitle(activity.getString(R.string.privacy_permissiondialog_title))
                         .setMessage(SuntimesUtils.fromHtml(permissionMessage))
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
                         {
