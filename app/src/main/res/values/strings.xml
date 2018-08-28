@@ -1124,6 +1124,9 @@
     <string name="privacy_permission_calendar"><![CDATA[Suntimes uses <b>calendar</b> permissions to integrate with the Calendar app. These permissions allow the app to create custom calendars and events.<br/><br/>Permissions are also required when disabling calendar integration (to remove custom calendars).]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes uses <b>external storage</b> permissions to backup/export data to file (e.g. places, themes).]]></string>
     <string name="privacy_permissiondialog_title">Permissions</string>
+    <string name="privacy_url"><xliff:g id="url"><![CDATA[
+        <a href="https://github.com/forrestguice/SuntimesWidget/wiki/Privacy">github.com/forrestguice/SuntimesWidget/wiki/Privacy</a>
+    ]]></xliff:g></string>
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
