@@ -603,10 +603,34 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 int calendarPermission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_CALENDAR);
                 if (calendarPermission != PackageManager.PERMISSION_GRANTED)
                 {
-                    int requestCode = (enabled ? REQUEST_CALENDARPREFSFRAGMENT_ENABLED : REQUEST_CALENDARPREFSFRAGMENT_DISABLED);
-                    ActivityCompat.requestPermissions(activity, new String[] { Manifest.permission.WRITE_CALENDAR }, requestCode);
-                    tmp_calendarPref = enabledPref;
-                    return false;
+                    final int requestCode = (enabled ? REQUEST_CALENDARPREFSFRAGMENT_ENABLED : REQUEST_CALENDARPREFSFRAGMENT_DISABLED);
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_CALENDAR))
+                    {
+                        String permissionMessage = activity.getString(R.string.privacy_permission_calendar);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                        builder.setTitle(activity.getString(R.string.privacy_dialog_title))
+                                .setMessage(SuntimesUtils.fromHtml(permissionMessage))
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
+                                {
+                                    public void onClick(DialogInterface dialog, int which)
+                                    {
+                                        ActivityCompat.requestPermissions(activity, new String[] { Manifest.permission.WRITE_CALENDAR }, requestCode);
+                                        tmp_calendarPref = enabledPref;
+                                    }
+                                });
+
+                        if (Build.VERSION.SDK_INT >= 11)
+                            builder.setIconAttribute(R.attr.icActionWarning);
+                        else builder.setIcon(R.drawable.ic_action_warning);
+
+                        builder.show();
+                        return false;
+
+                    } else {
+                        ActivityCompat.requestPermissions(activity, new String[] { Manifest.permission.WRITE_CALENDAR }, requestCode);
+                        tmp_calendarPref = enabledPref;
+                        return false;
+                    }
 
                 } else {
                     runCalendarTask(activity, enabled);
