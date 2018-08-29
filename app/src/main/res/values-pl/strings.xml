@@ -946,7 +946,7 @@
     <string name="privacy_permission_location"><![CDATA[Uprawnienie <b>określenia lokalizacji</b> jest używane do ustalenia bieżącej szerokości i długości geograficznej. To uprawnienie jest opcjonalne; położenie domyślnie jest wpisywane ręcznie.]]></string>
     <string name="privacy_permission_calendar"><![CDATA[Uprawnienie do <b>odczytu kalendarza</b> jest używane do integracji z aplikacją kalendarza. Pozwala to na dodanie własnych wydarzeń do kalendarza. Jest ono także wymagane, aby wyłączyć integrację z kalendarzem (lub usunąć własne kalendarze).]]></string>
     <string name="privacy_permission_storage"><![CDATA[Uprawnienie <b>dostępu do pamięci zewnętrznej</b> jest wymagane do wyeksportowania danych do pliku (np. miejsc, skórek).]]></string>
-    <string name="privacy_permissiondialog_title">Permissions</string>  <!-- TODO -->
+    <string name="privacy_permissiondialog_title">Uprawnienia</string>
 
     <!-- calculator implemenations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
