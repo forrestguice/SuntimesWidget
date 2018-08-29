@@ -80,8 +80,9 @@ public class WorldMapDialog extends DialogFragment
         super.onCreate(savedInstanceState);
 
         final Activity myParent = getActivity();
-        LayoutInflater inflater = myParent.getLayoutInflater();
+        WorldMapWidgetSettings.initDisplayStrings(myParent);
 
+        LayoutInflater inflater = myParent.getLayoutInflater();
         final ViewGroup viewGroup = null;
         dialogContent = inflater.inflate(R.layout.layout_dialog_worldmap, viewGroup);
 
