@@ -1,4 +1,11 @@
 ### ~
+* fixes bug "export places; commas in place names break csv output bug" (#240).
+* fixes bug "momentary hang/pause when adding or reconfiguring sunposition widgets (3x1 and 3x2)".
+* adds permission explanations to fastlane app description.
+* adds runtime permission explanations (a dialog displayed prior to each permission request).
+* adds privacy link to about dialog (links to https://github.com/forrestguice/SuntimesWidget/wiki/Privacy); added privacy statement to readme.
+* updates translation to Polish and Esperanto (eo, pl) (#238, #241 by Verdulo).
+* updates translation to Norwegian (nb) (#236 by FTno).
 
 ### v0.9.0 (2018-08-14)
 * changes default sun data source to time4a-time4j (supporting altitude based refinements).
