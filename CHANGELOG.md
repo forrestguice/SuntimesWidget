@@ -1,4 +1,6 @@
 ### ~
+
+### v0.9.1 (2018-08-30)
 * fixes bug "export places; commas in place names break csv output bug" (#240).
 * fixes bug "momentary hang/pause when adding or reconfiguring sunposition widgets (3x1 and 3x2)".
 * adds permission explanations to fastlane app description.
