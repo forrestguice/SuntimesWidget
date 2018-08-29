@@ -19,10 +19,12 @@ The app:
 * displays the current time (system timezone, custom timezone, or solar time), and notes the time until the next rising/setting event.
 * displays the sunrise and sunset, blue and golden hour, and twilight times (civil / nautical / astronomical).
 * displays the current moon phase, illumination, moonrise and moonset times, and major phase dates.
+* displays the current sunlight and moonlight projected over a world map (basic equirectangular, blue marble).
 * displays the solstices and equinoxes, and notes the time until the next event.
 * displays the sun's current position, and its position at sunrise, sunset, and noon.
 * displays the moon's current position, and its position at moonrise and moonset.
 * can set an alarm for the next sunrise or sunset (or other rising/setting event).
+* can provide the Calendar app with custom calendars (moon phase, solstice, and equinox events).
 * can display the configured location on a map (requires a map application), and configure the location from a map (using geo intent).
 
 The app:
@@ -30,14 +32,14 @@ The app:
 * *does not* require network connectivity (or other unnecessary permissions). All calculations are performed locally on the device. 
 
 Widgets are (re)configurable:
-* location (latitude / longitude).
+* location (latitude, longitude, elevation).
 * timezone (system / custom), or solar time (local mean time, apparent solar time).
 * user-defined titles (supporting limited substitutions).
-* misc options: "show seconds", "show noon", and "show comparison", etc.
+* misc options: "use elevation", "show seconds", "show noon", and "show comparison", etc.
 
 Widgets are themeable and provide:
 * a theme editor and support for basic custom themes.
-* a (default) dark theme (and dark w/ transparent background).
+* a (default) dark theme (and dark w/ semi-transparent background).
 * a (default) light theme (and light w/ transparent background).
 
 Widgets are resizable and include...
@@ -62,6 +64,7 @@ Widgets are resizable and include...
 * 1x1 sun position widget that tracks the sun's altitude and azimuth.
 * 1x1 sun position widget that tracks the sun's declination and right ascension.
 * 3x1 sun position widget that displays the lightmap graph, and tracks the sun's altitude and azimuth (current, sunrise/sunset, and at noon).
+* 3x2 sun position widget that displays current sunlight and moonlight projected over a world map.
 
 <img width="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/widget1_preview.png" align="center"></img>
 <img width="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/widget0_1x1_preview.png" align="center"></img>
@@ -73,6 +76,7 @@ Widgets are resizable and include...
 <img height="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/sunposwidget0_1x1_preview.png" align="center"></img>
 <img height="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/sunposwidget1_1x1_preview.png" align="center"></img>
 <img height="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/sunposwidget0_3x1_preview.png" align="center"></img>
+<img height="256px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/sunposwidget0_3x2_preview.png" align="center"></img>
 <br />Additional screenshots can be found on the <a href="https://github.com/forrestguice/SuntimesWidget/wiki/Screenshots">project wiki</a> and in the <a href="https://github.com/forrestguice/SuntimesWidget/tree/gh-pages/doc/screenshots">gh-pages branch</a>.
 
 <img alt="screenshot1" src='https://github.com/forrestguice/SuntimesWidget/blob/gh-pages/doc/screenshots/v0.8.1/en/activity-main0-dark.png' width="280px" />&nbsp;&nbsp;<img alt="screenshot1" src='https://github.com/forrestguice/SuntimesWidget/blob/gh-pages/doc/screenshots/v0.8.1/en/activity-main0-light.png' width="280px" />
