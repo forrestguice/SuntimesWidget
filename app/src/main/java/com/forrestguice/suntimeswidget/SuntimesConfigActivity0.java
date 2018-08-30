@@ -145,7 +145,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         GetFixUI.themeIcons(this);
 
         super.onCreate(icicle);
-        initLocale();
+        initLocale(this);
         setResult(RESULT_CANCELED);
         setContentView(R.layout.layout_settings);
 
@@ -175,11 +175,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         loadSettings(context);
     }
 
-    private void initLocale()
+    protected void initLocale(Context context)
     {
-        WidgetSettings.initDefaults(this);
-        WidgetSettings.initDisplayStrings(this);
-        WidgetTimezones.TimeZoneSort.initDisplayStrings(this);
+        WidgetSettings.initDefaults(context);
+        WidgetSettings.initDisplayStrings(context);
+        WidgetTimezones.TimeZoneSort.initDisplayStrings(context);
     }
 
     @Override

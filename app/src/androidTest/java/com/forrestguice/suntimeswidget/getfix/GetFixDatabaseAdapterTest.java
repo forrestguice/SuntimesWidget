@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.getfix;
 
+import android.content.ContentValues;
 import android.content.Context;
 
 import android.database.Cursor;
@@ -33,6 +34,11 @@ import org.junit.runner.RunWith;
 
 import java.util.HashMap;
 
+import static com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter.KEY_PLACE_ALTITUDE;
+import static com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter.KEY_PLACE_COMMENT;
+import static com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter.KEY_PLACE_LATITUDE;
+import static com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter.KEY_PLACE_LONGITUDE;
+import static com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter.KEY_PLACE_NAME;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -46,7 +52,8 @@ public class GetFixDatabaseAdapterTest
             new WidgetSettings.Location("Test Loc1", "36", "-111", "1"),
             new WidgetSettings.Location("Test's Loc2", "37", "-110", "2"),    // name contains '
             new WidgetSettings.Location("Test\"s Loc3", "38", "-109", "3"),   // name contains "
-            new WidgetSettings.Location("Test`s Loc4", "38", "-109", "3")     // name contains `
+            new WidgetSettings.Location("Test`s Loc4", "38", "-109", "3"),    // name contains `
+            new WidgetSettings.Location("Test, Loc5", "-10", "10", "5")       // name contains ,
     };
 
     @Before
@@ -74,6 +81,28 @@ public class GetFixDatabaseAdapterTest
             assertTrue("database should contain " + count + " entry (contained " + n + ")", db.getPlaceCount() == count);
         }
         db.close();
+    }
+
+    @Test
+    public void test_addPlaceCSV()
+    {
+        String csvHeader = db.addPlaceCSV_header();
+        String expectedHeader = "name, latitude, longitude, altitude, comment";
+        assertTrue("unexpected header: " + csvHeader + " ||vs|| " + expectedHeader, csvHeader.equals(expectedHeader));
+
+        for (int i=0; i<locations.length; i++)
+        {
+            ContentValues place = new ContentValues();
+            place.put(KEY_PLACE_NAME, locations[i].getLabel());
+            place.put(KEY_PLACE_LATITUDE, locations[i].getLatitude());
+            place.put(KEY_PLACE_LONGITUDE, locations[i].getLongitude());
+            place.put(KEY_PLACE_ALTITUDE, locations[i].getAltitude());
+            place.put(KEY_PLACE_COMMENT, "");
+
+            String csvRow = db.addPlaceCSV_row(place);
+            String expectedRow = "\"" + locations[i].getLabel() + "\", " + locations[i].getLatitude() + ", " + locations[i].getLongitude() + ", " + locations[i].getAltitude() + ", ";
+            assertTrue("unexpected row: " + csvRow + " ||vs|| " + expectedRow, csvRow.equals(expectedRow));
+        }
     }
 
     protected long[] populateDatabase()
@@ -275,4 +304,5 @@ public class GetFixDatabaseAdapterTest
         }
         db.close();
     }
+
 }

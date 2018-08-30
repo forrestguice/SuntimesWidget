@@ -56,6 +56,13 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
         showOption3x2LayoutMode(true);
     }
 
+    @Override
+    protected void initLocale(Context context)
+    {
+        super.initLocale(context);
+        WorldMapWidgetSettings.initDisplayStrings(context);
+    }
+
     /**@Override
     protected void loadAppearanceSettings(Context context)
     {
