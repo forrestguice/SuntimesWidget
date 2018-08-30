@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Build;
 
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X1_0;
@@ -48,7 +49,34 @@ public class SuntimesConfigActivity2_3x1 extends SuntimesConfigActivity2
     @Override
     protected void updateWidget(Context context)
     {
-        SuntimesWidget2_3x1.updateAppWidget(context, AppWidgetManager.getInstance(context), appWidgetId, SuntimesWidget2_3x1.class, minWidgetSize(context), new SunPosLayout_3X1_0());
+        UpdateTask updateTask = new UpdateTask(appWidgetId, minWidgetSize(context));
+        updateTask.execute(this);
+    }
+
+    private static class UpdateTask extends AsyncTask<Object, Void, Void>
+    {
+        int appWidgetId;
+        int[] minWidgetSize;
+
+        public UpdateTask(int appWidgetId, int[] minWidgetSize)
+        {
+            this.appWidgetId = appWidgetId;
+            this.minWidgetSize = minWidgetSize;
+        }
+
+        @Override
+        protected Void doInBackground(Object... objects)
+        {
+            if (objects.length > 0)
+            {
+                Context context = (Context)objects[0];
+                if (context != null)
+                {
+                    SuntimesWidget2_3x1.updateAppWidget(context, AppWidgetManager.getInstance(context), appWidgetId, SuntimesWidget2_3x1.class, minWidgetSize, new SunPosLayout_3X1_0());
+                }
+            }
+            return null;
+        }
     }
 
     @Override

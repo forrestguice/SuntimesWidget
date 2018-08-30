@@ -72,7 +72,7 @@ public class SuntimesCalculatorTest
         SuntimesCalculatorFactory calculatorFactory = new SuntimesCalculatorFactory(mockContext, descriptor);
         SuntimesCalculator calculator = calculatorFactory.createCalculator(location, timezone);
         assertNotNull(calculator);
-        assertTrue("calculator name (" + calculator.name() + ") should match descriptor (" + descriptor.name() + ")", calculator.name().equals(descriptor.name()));
+        assertTrue("calculator name (" + calculator.name() + ") should match descriptor (" + descriptor.getName() + ")", calculator.name().equals(descriptor.getName()));
     }
 
 }

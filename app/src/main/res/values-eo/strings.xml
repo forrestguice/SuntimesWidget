@@ -144,17 +144,17 @@
     <string name="time_format_12hr_veryshort"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- shortest 12hr time format; should omit am/pm -->
 
     <!-- distances (meters, feet, etc) -->
-    <string name="units_feet">feet</string>   <!-- TODO -->
-    <string name="units_feet_short">ft</string>   <!-- TODO -->
+    <string name="units_feet">futoj</string>
+    <string name="units_feet_short">ft</string>
     <!--<plurals name="units_feet_long">
-      <item quantity="one">%d foot</item>
-      <item quantity="other">%d feet</item>
+      <item quantity="one">%d futo</item>
+      <item quantity="other">%d futoj</item>
     </plurals>-->
-    <string name="units_meters">meters</string>  <!-- TODO -->
-    <string name="units_meters_short">m</string>  <!-- TODO -->
+    <string name="units_meters">metroj</string>
+    <string name="units_meters_short">m</string>
     <!--<plurals name="units_meters_long">
-      <item quantity="one">%d meter</item>
-      <item quantity="other">%d meters</item>
+      <item quantity="one">%d metro</item>
+      <item quantity="other">%d metroj</item>
     </plurals>-->
 
     <!--
@@ -163,9 +163,9 @@
 
     <string name="configAction_restoreDefaults">Restarigi normojn</string>   <!-- button / menu text -->
 
-    <string name="configLabel_tagDefault">[default]</string>                <!-- TODO -->
-    <string name="configLabel_tagPlugin">[plugin]</string>                <!-- TODO -->
-    <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->  <!-- TODO -->
+    <string name="configLabel_tagDefault">[implicita]</string>
+    <string name="configLabel_tagPlugin">[kromprogramo]</string>
+    <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[implicita]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->
 
     <!-- WidgetConfig Activity -->
     <string name="configAction_addWidget">Aldoni fenestraĵon</string>                   <!-- Button: Add -->
@@ -181,10 +181,10 @@
     <string name="configLabel_general">Agordoj ĝeneralaj</string>                <!-- group title -->
     <string name="configLabel_general_calculator">Fonto de datumoj:</string>         <!-- spinner label -->
     <string name="configLabel_general_calculator_sun">Fonto de sunaj datumoj</string>         <!-- preference label -->
-    <string name="configLabel_general_calculator_moon">Fonot de lunaj datumoj</string>         <!-- preference label -->
+    <string name="configLabel_general_calculator_moon">Fonto de lunaj datumoj</string>         <!-- preference label -->
 
-    <string name="configLabel_general_altitude_enabled">Use Elevation</string>        <!-- checkbox label --> <!-- TODO -->
-    <string name="configLabel_general_altitude_enabled_summary">Apply altitude based refinements.</string>        <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_general_altitude_enabled">Uzi altitudon</string>        <!-- checkbox label -->
+    <string name="configLabel_general_altitude_enabled_summary">Apliki plibonigojn surbaze de altitudo.</string>        <!-- checkbox label -->
 
     <string name="configLabel_general_showSeconds">Montri sekundojn</string>        <!-- checkbox label -->
     <string name="configLabel_general_showSeconds_summary">Ampleksi sekundojn dum montrado de horoj.</string>        <!-- checkbox label -->
@@ -199,10 +199,10 @@
     <string name="configLabel_general_showHours_summary">Ampleksi horojn kaj minutojn por temp-intervaloj pli longaj ol tagnokto.</string>    <!-- checkbox label -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">Advanced Settings</string>                        <!-- group title -->  <!-- TODO -->
-    <string name="configLabel_experimental">Experimental Settings</string>                <!-- group title --> <!-- TODO -->
-    <string name="configLabel_general_scanPlugins">Data Source Plugins</string>                                <!-- checkbox label --> <!-- TODO -->
-    <string name="configLabel_general_scanPlugins_summary">Scan for and load third party plugins.</string>   <!-- pref summary --> <!-- TODO -->
+    <string name="configLabel_advanced">Spertaj agordoj</string>                        <!-- group title -->
+    <string name="configLabel_experimental">Altnivelaj agordoj</string>                <!-- group title -->
+    <string name="configLabel_general_scanPlugins">Kromprogramoj de datum-fontoj</string>                                <!-- checkbox label -->
+    <string name="configLabel_general_scanPlugins_summary">Skani kaj enlegi eksterajn kromprogramojn.</string>   <!-- pref summary -->
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Agordoj de aspekto</string>           <!-- group title -->
@@ -271,9 +271,9 @@
     <string name="widgetMode1x1_altaz">Altitudo kaj azimuto</string>     <!-- setting -->
     <string name="widgetMode1x1_decright">Deklinacio kaj rektascensio</string>     <!-- setting -->
 
-    <string name="widgetMode_sunPosMap_simplerectangular">Cilindra</string>  <!-- setting -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal">Ebena polusa</string>     <!-- setting -->
-    <string name="widgetMode_sunPosMap_bluemarble">Ebena ekvatora</string>    <!-- setting -->
+    <string name="widgetMode_sunPosMap_simplerectangular">Norma</string>  <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal">Polusa</string>     <!-- setting -->
+    <string name="widgetMode_sunPosMap_bluemarble">Blua Globeto</string>    <!-- setting -->
 
     <string name="widgetMode1x1_moonriseset">Lunleviĝo kaj lunsubiro</string>       <!-- setting -->
     <string name="widgetMode1x1_moonphaseillum">Lunfazo kaj prilumeco</string>    <!-- setting -->
@@ -292,11 +292,11 @@
     <string name="actionMode_flipToNextItem">Baskuli vidon</string>      <!-- setting -->
 
     <string name="configLabel_action">Agordoj de agoj</string>                  <!-- group title -->
-    <string name="configLabel_action_onTap">Dum tuŝeto:</string>                    <!-- spinner label -->
-    <string name="configLabel_action_onClockTap">Dum tuŝeto sur horloĝo:</string>         <!-- spinner label -->
-    <string name="configLabel_action_onNoteTap">Dum tuŝeto sur noto:</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap">Dum tuŝeto sur dato:</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap1">On Date Long Press:</string>   <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_action_onTap">Je frapeto:</string>                    <!-- spinner label -->
+    <string name="configLabel_action_onClockTap">Je frapeto sur horloĝo:</string>         <!-- spinner label -->
+    <string name="configLabel_action_onNoteTap">Je frapeto sur noto:</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap">Je frapeto sur dato:</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap1">Je frapetado sur dato:</string>   <!-- spinner label -->
 
     <!-- App Setting: time zone sort -->
     <string name="timezone_sort_byOffset">laŭ deŝovo</string>
@@ -315,8 +315,8 @@
     <string name="configHint_location_lat">53.1324</string>                       <!-- edittext hint -->
     <string name="configLabel_location_lon">Longitudo:</string>                 <!-- edittext label -->
     <string name="configHint_location_lon">23.1592</string>                <!-- edittext hint -->
-    <string name="configLabel_location_alt">Elevation:</string>                          <!-- edittext label -->   <!-- TODO -->
-    <string name="configHint_location_alt">0</string> <!-- edittext hint -->                                 <!-- TODO -->
+    <string name="configLabel_location_alt">Altitudo:</string>                          <!-- edittext label -->
+    <string name="configHint_location_alt">139</string> <!-- edittext hint -->
     <string name="configLabel_location_name">Nomo:</string>                     <!-- edittext label -->
     <string name="configHint_location_name">(malnepra)</string>                 <!-- edittext hint -->
 
@@ -537,7 +537,7 @@
     <string name="configLabel_ui_showLightmap_summary">Montri bastonan diagramon de periodoj de tago, nokto kaj krepusko.</string>
 
     <!-- App Setting: Show Moon -->
-    <string name="configLabel_ui_showmoon">Montri lun-informojn</string>
+    <string name="configLabel_ui_showmoon">Montri lunajn informojn</string>
     <string name="configLabel_ui_showmoon_summary">Montri tempojn de lun-leviĝo, lun-subiro, fazon kaj prilumecon.</string>
     <string name="configLabel_ui_showmoon_notImplemented">Lunaj informoj ne subtenataj de tiu ĉi datum-fonto.</string>
 
@@ -547,7 +547,7 @@
     <string name="configLabel_ui_showEquinox_notImplemented">Sunekstremo kaj tagnoktegaleco ne estas ankoraŭ subtenataj de tiu ĉi datum-fonto.</string>
 
     <!-- App Setting: Solstice Tracking Mode -->
-    <string name="configLabel_ui_solsticeTrackingMode">Spuri solsticon</string>
+    <string name="configLabel_ui_solsticeTrackingMode">Spuri sunekstremon / tagnoktegalecon</string>
     <string name="configLabel_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Sekvanta okazaĵo">%s</xliff:g></string>
 
     <!-- App Setting: show data source -->
@@ -622,32 +622,32 @@
     </string-array>
 
     <!-- App Setting: calendars -->
-    <string name="configLabel_calendars">Calendars</string>   <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_calendars">Kalendaro</string>   <!-- group title -->
 
-    <string name="configLabel_calendars_enabled">Calendar Integration</string>  <!-- TODO -->
-    <string name="configLabel_calendars_enabled_summary">Supply events to the Calendar app (moon phases, solstices, and equinoxes).</string>  <!-- TODO -->
+    <string name="configLabel_calendars_enabled">Interagi kun kalendaro</string>
+    <string name="configLabel_calendars_enabled_summary">Enmeti okazaĵojn al la aplikaĵo kalendaro (lunfazojn, sunekstremojn kaj tagnoktegalecojn).</string>
 
-    <string name="configLabel_calendars_window0">Window (start)</string>  <!-- TODO -->
-    <string name="configLabel_calendars_window0_summary">A period starting <xliff:g id="calendars_window_display" example="one year">%s</xliff:g> ago</string>  <!-- TODO -->
+    <string name="configLabel_calendars_window0">Komenco de tempintervalo</string>
+    <string name="configLabel_calendars_window0_summary">Periodo komenciĝas antaŭ <xliff:g id="calendars_window_display" example="unu jaro">%s</xliff:g></string>
 
-    <string name="configLabel_calendars_window1">Window (end)</string>  <!-- TODO -->
-    <string name="configLabel_calendars_window1_summary">A period ending <xliff:g id="calendars_window_display" example="two years">%s</xliff:g> from now</string>  <!-- TODO -->
+    <string name="configLabel_calendars_window1">Fino de tempintervalo</string>
+    <string name="configLabel_calendars_window1_summary">Periodo finiĝas post <xliff:g id="calendars_window_display" example="du jaroj">%s</xliff:g></string>
 
-    <string name="calendars_notification_adding">Adding calendars…</string>  <!-- TODO -->
-    <string name="calendars_notification_added">Calendars have been added.</string>  <!-- TODO -->
+    <string name="calendars_notification_adding">Aldonado al kalendaro…</string>
+    <string name="calendars_notification_added">Aldonis okazaĵojn al la kalendaro.</string>
 
-    <string name="calendars_notification_clearing">Clearing calendars…</string>  <!-- TODO -->
-    <string name="calendars_notification_cleared">Calendars have been cleared.</string>  <!-- TODO -->
+    <string name="calendars_notification_clearing">Forviŝado el kalendaroj…</string>
+    <string name="calendars_notification_cleared">Forigis okazaĵojn el la kalendaro.</string>
 
     <string-array name="calendars_window_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
-        <item>one year</item>
-        <item>two years</item>
-        <item>five years</item>
-        <item>ten years</item>
-    </string-array>  <!-- TODO -->
+        <item>unu jaro</item>
+        <item>du jaroj</item>
+        <item>kvin jaroj</item>
+        <item>dek jaroj</item>
+    </string-array>
 
-    <string name="calendar_solstice_displayName">Solstices and Equinoxes</string>  <!-- TODO -->
-    <string name="calendar_moonPhase_displayName">Moon Phases</string>  <!-- TODO -->
+    <string name="calendar_solstice_displayName">Sunekstremoj kaj tagnoktegalecoj</string>
+    <string name="calendar_moonPhase_displayName">Lunfazoj</string>
 
     <!-- App Setting: passive location mode -->
     <string name="configLabel_getFix_passiveMode">Pasiva pozici-trovado</string>
@@ -658,10 +658,10 @@
     -->
 
     <!-- Dialog: World Map -->
-    <string name="worldmap_dialog_title">@string/configAction_worldMap</string>   <!-- TODO -->
-    <string name="worldmap_dialog_option_sunlight">Sunlight</string>              <!-- TODO -->
-    <string name="worldmap_dialog_option_moonlight">Moonlight</string>            <!-- TODO -->
-    <string name="worldmap_dialog_option_all">Both</string>                       <!-- TODO -->
+    <string name="worldmap_dialog_title">@string/configAction_worldMap</string>
+    <string name="worldmap_dialog_option_sunlight">Suno</string>
+    <string name="worldmap_dialog_option_moonlight">Luno</string>
+    <string name="worldmap_dialog_option_all">Ambaŭ</string>
 
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Plani averton por</string>
@@ -671,7 +671,7 @@
     <string name="schedalarm_dialog_error">Averto ne agordita…</string>
     <string name="schedalarm_dialog_error2">Ne povis agordi averton…</string>
     <string name="schedalarm_dialog_note">post <xliff:g id="timetext" example="6h 30m">%s</xliff:g> de nun.</string>
-    <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="nautical twilight">%s</xliff:g> ne okazos.</string>
+    <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="naŭtika krepusko">%s</xliff:g> ne okazos.</string>
     <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
         <item>astronomia sunleviĝo</item>
         <item>naŭtika sunleviĝo</item>
@@ -818,7 +818,7 @@
     <string name="location_dialog_cancel">Nuligi</string>
     <string name="location_dialog_error_lat">Latitudo erara.</string>
     <string name="location_dialog_error_lon">Longitudo erara.</string>
-    <string name="location_dialog_error_alt">This is not a valid elevation.</string>  <!-- TODO -->
+    <string name="location_dialog_error_alt">Altitudo erara.</string>
 
     <string name="location_dialog_toast_copied">Enpoŝigita<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
 
@@ -927,7 +927,7 @@
     ]]></string>
     <string name="help_general_daylength"><![CDATA[
         <b>Longo de tago:</b> kvanto da tempo inter sunleviĝo kaj sunsubiro.<br/><br/>
-        <b>Kiom da uzebla lumo:</b> kvanto da tempo inter civila sunleviĝo kaj civila sunsubiro.<br/><br/>
+        <b>Kiom da uzebla lumo:</b> kvanto da tempo inter civila sunleviĝo kaj civila sunsubiro.<br/>
     ]]>
     </string>
     <string name="help_general_moonillum"><![CDATA[
@@ -946,6 +946,12 @@
           Por <b>aldoni novan fenestraĵon</b>, iru al la ĉefekrano.<br/><br/>
           Por <b>reagordi ekzistan fenestraĵon</b>, elektu ĝin el la jena listo.<br/>
     ]]></string>
+
+    <string name="privacy_policy"><![CDATA[<b>Privateco:</b><br/>La aplikaĵo Suntempoj ne kolektas, konservas aŭ transigas personajn informojn de la uzanto. Ĝi enhavas <b>neniujn reklamojn</b>, <b>neniujn analizilojn</b>, <b>neniujn spurilojn</b> kaj <b>neniujn malnecesajn permesojn</b>. <br/><br/>La aplikaĵo agordiĝas de lokaj datumoj. Tiuj ĉi informoj (kaj aliaj agordoj uzataj de la aplikaĵo) estas konservataj loke kaj ne eliras el la aparato.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
+    <string name="privacy_permission_location"><![CDATA[La permeso por <b>determini pozicion</b> estas uzata por trovi vian nunan longitudon kaj latitudon. Tiu ĉi permeso estas malnepra, pozicio estas implicite agordita permane.]]></string>
+    <string name="privacy_permission_calendar"><![CDATA[La <b>kalendaraj</b> permesoj estas uzataj por interagi kun la aplikaĵo de kalendaro. Ili estas bezonataj por krei proprajn kalendarojn kaj okazaĵojn. Ili estas ankaŭ bezonataj por elŝalti interagon kun la kalendaro (aŭ forigi proprajn kalendarojn).]]></string>
+    <string name="privacy_permission_storage"><![CDATA[La permeso por aliri <b>eksteran konservejon</b> estas uzato por elpori/sekurkopii datumojn al dosieroj (ekz. lokojn, etosojn).]]></string>
+    <string name="privacy_permissiondialog_title">Permesoj</string>
 
     <!-- calculator implemenations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
