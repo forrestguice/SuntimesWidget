@@ -79,7 +79,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     }
 
     public static final int ALTITUDE_MIN = 0;
-    public static final int ALTITUDE_MAX = 11000;
+    public static final int ALTITUDE_MAX = 10999;
     public static int clampAltitude(int value)
     {
         if (value > ALTITUDE_MAX) {
