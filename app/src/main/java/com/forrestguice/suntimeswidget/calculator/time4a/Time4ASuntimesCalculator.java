@@ -161,7 +161,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     public Calendar[] getMorningBlueHourForDate(Calendar date)
     {
         SolarTime.Calculator calculator = solarTime.getCalculator();
-        int altitude = solarTime.getAltitude();
+        int altitude = clampAltitude(solarTime.getAltitude());
         double latitude = solarTime.getLatitude();
         double longitude = solarTime.getLongitude();
         double geodeticAngle = calculator.getGeodeticAngle(latitude, altitude);
@@ -178,7 +178,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     public Calendar[] getEveningBlueHourForDate(Calendar date)
     {
         SolarTime.Calculator calculator = solarTime.getCalculator();
-        int altitude = solarTime.getAltitude();
+        int altitude = clampAltitude(solarTime.getAltitude());
         double latitude = solarTime.getLatitude();
         double longitude = solarTime.getLongitude();
         double geodeticAngle = calculator.getGeodeticAngle(latitude, altitude);
@@ -195,7 +195,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     public Calendar getMorningGoldenHourForDate(Calendar date)
     {
         SolarTime.Calculator calculator = solarTime.getCalculator();
-        int altitude = solarTime.getAltitude();
+        int altitude = clampAltitude(solarTime.getAltitude());
         double latitude = solarTime.getLatitude();
         double longitude = solarTime.getLongitude();
         double geodeticAngle = calculator.getGeodeticAngle(latitude, altitude);
@@ -210,7 +210,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     public Calendar getEveningGoldenHourForDate(Calendar date)
     {
         SolarTime.Calculator calculator = solarTime.getCalculator();
-        int altitude = solarTime.getAltitude();
+        int altitude = clampAltitude(solarTime.getAltitude());
         double latitude = solarTime.getLatitude();
         double longitude = solarTime.getLongitude();
         double geodeticAngle = calculator.getGeodeticAngle(latitude, altitude);
