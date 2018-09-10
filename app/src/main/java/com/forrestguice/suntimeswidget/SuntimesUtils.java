@@ -942,7 +942,7 @@ public class SuntimesUtils
         String locPattern = "%loc";
         String latPattern = "%lat";
         String lonPattern = "%lon";
-        String altPattern = "%alt";        // TODO: add to help
+        String altPattern = "%lel";
         String timezoneIDPattern = "%t";
         String datasourcePattern = "%s";
         String datePattern = "%d";
@@ -963,7 +963,7 @@ public class SuntimesUtils
         displayString = displayString.replaceAll(locPattern, location.getLabel());
         displayString = displayString.replaceAll(latPattern, location.getLatitude());
         displayString = displayString.replaceAll(lonPattern, location.getLongitude());
-        displayString = displayString.replaceAll(altPattern, location.getAltitude());
+        displayString = displayString.replaceAll(altPattern, "" + location.getAltitudeAsInteger());
         displayString = displayString.replaceAll(timezoneIDPattern, timezoneID);
         displayString = displayString.replaceAll(datasourcePattern, datasource);
         displayString = displayString.replaceAll(widgetIDPattern, appWidgetID);
@@ -1393,15 +1393,20 @@ public class SuntimesUtils
 
     public static Drawable tintDrawable(GradientDrawable drawable, int fillColor, int strokeColor, int strokePixels)
     {
-        drawable.setStroke(strokePixels, strokeColor);
-        drawable.setColor(fillColor);
+        if (drawable != null)
+        {
+            drawable.setStroke(strokePixels, strokeColor);
+            drawable.setColor(fillColor);
+        }
         return drawable;
     }
 
     public static Drawable tintDrawable(LayerDrawable drawable, int fillColor, int strokeColor, int strokePixels)
     {
-        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-        //{
+        if (drawable != null)
+        {
+            //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+            //{
             try {
                 GradientDrawable gradient = (GradientDrawable)drawable.getDrawable(0);
                 if (gradient != null)
@@ -1417,10 +1422,11 @@ public class SuntimesUtils
                 Log.w("tintDrawable", "failed to apply color! " + e);
                 return drawable;
             }
-        //} else {
+            //} else {
             //Log.w("tintDrawable", "failed to apply color! InsetDrawable.getDrawable requires api 19+");
             //return drawable;   // not supported
-        //}
+            //}
+        } else return null;
     }
 
     /**
@@ -1454,8 +1460,11 @@ public class SuntimesUtils
 
         Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawable.draw(canvas);
+        if (drawable != null)
+        {
+            drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+            drawable.draw(canvas);
+        }
         return bitmap;
     }
 

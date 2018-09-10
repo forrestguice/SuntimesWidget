@@ -26,7 +26,7 @@
     android:padding="8dp" android:background="?graphColor_background">
 
     <TextView android:id="@+id/worldmapdialog_title" style="@style/TableHeadTextView"
-        android:text="World Map"
+        android:text="@string/worldmap_dialog_title"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="0dp"
@@ -64,19 +64,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Sunlight" />
+            android:text="@string/worldmap_dialog_option_sunlight" />
 
         <RadioButton android:id="@+id/radio_moon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Moonlight" />
+            android:text="@string/worldmap_dialog_option_moonlight" />
 
         <RadioButton android:id="@+id/radio_sunmoon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Both" />
+            android:text="@string/worldmap_dialog_option_all" />
     </RadioGroup>
 
 </android.support.constraint.ConstraintLayout>

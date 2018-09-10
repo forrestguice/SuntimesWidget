@@ -116,5 +116,35 @@
             android:text="@string/app_legal3"
             android:autoLink="web" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp" android:background="?attr/hrColor" android:layout_marginTop="4dp" android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/txt_about_legal4"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            tools:text="Privacy:"
+            android:autoLink="web" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp" android:background="?attr/hrColor" android:layout_marginTop="4dp" android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/txt_about_legal5"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/privacy_url"
+            android:autoLink="web" />
+
     </LinearLayout>
 </ScrollView>

@@ -110,7 +110,12 @@ public class LocationConfigView extends LinearLayout
         String name = text_locationName.getText().toString();
         String latitude = text_locationLat.getText().toString();
         String longitude = text_locationLon.getText().toString();
+
         String altitude = text_locationAlt.getText().toString();
+        if (altitude.trim().isEmpty()) {
+            altitude = "0";
+            Log.w("LocationConfigView", "empty altitude, supplying 0");
+        }
 
         try {
             @SuppressWarnings("UnusedAssignment")

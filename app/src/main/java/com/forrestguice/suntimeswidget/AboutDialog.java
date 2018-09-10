@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2017 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -37,6 +37,11 @@ import android.widget.TextView;
 
 public class AboutDialog extends DialogFragment
 {
+    public static final String WEBSITE_URL = "https://forrestguice.github.io/SuntimesWidget/";
+    public static final String PRIVACY_URL = "https://github.com/forrestguice/SuntimesWidget/wiki/Privacy";
+    public static final String CHANGELOG_URL = "https://github.com/forrestguice/SuntimesWidget/blob/master/CHANGELOG.md";
+    public static final String COMMIT_URL = "https://github.com/forrestguice/SuntimesWidget/commit/";
+
     public static final String KEY_ICONID = "paramIconID";
     private int param_iconID = R.mipmap.ic_suntimes;
     public void setIconID( int resID )
@@ -67,19 +72,9 @@ public class AboutDialog extends DialogFragment
         return dialog;
     }
 
-    public static final String WEBSITE_URL = "https://forrestguice.github.io/SuntimesWidget/";
-
-    public static final String CHANGELOG_URL = "https://github.com/forrestguice/SuntimesWidget/blob/master/CHANGELOG.md";
-    public static String changelogAnchor(String text)
+    public static String anchor(String url, String text)
     {
-        return "<a href=\"" + CHANGELOG_URL + "\">" + text + "</a>";
-    }
-
-    public static final String COMMIT_URL = "https://github.com/forrestguice/SuntimesWidget/commit/";
-    protected static String gitCommitAnchor(String gitHash)
-    {
-        String commitUrl = COMMIT_URL + gitHash;
-        return "<a href=\"" + commitUrl + "\">" + gitHash + "</a>";
+        return "<a href=\"" + url + "\">" + text + "</a>";
     }
 
     protected static String smallText(String text)
@@ -89,8 +84,8 @@ public class AboutDialog extends DialogFragment
 
     public String htmlVersionString()
     {
-        String buildString = gitCommitAnchor(BuildConfig.GIT_HASH) + "@" + BuildConfig.BUILD_TIME.getTime();
-        String versionString = changelogAnchor(BuildConfig.VERSION_NAME) + " " + smallText("(" + buildString + ")");
+        String buildString = anchor(COMMIT_URL + BuildConfig.GIT_HASH, BuildConfig.GIT_HASH) + "@" + BuildConfig.BUILD_TIME.getTime();
+        String versionString = anchor(CHANGELOG_URL, BuildConfig.VERSION_NAME) + " " + smallText("(" + buildString + ")");
         if (BuildConfig.DEBUG)
         {
             versionString += " " + smallText("[" + BuildConfig.BUILD_TYPE + "]");
@@ -146,6 +141,19 @@ public class AboutDialog extends DialogFragment
         TextView legalView3 = (TextView) dialogContent.findViewById(R.id.txt_about_legal3);
         legalView3.setMovementMethod(LinkMovementMethod.getInstance());
         legalView3.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_legal3)));
+
+        TextView legalView4 = (TextView) dialogContent.findViewById(R.id.txt_about_legal4);
+        String permissionsExplained = context.getString(R.string.privacy_permission_location) + "<br/><br/>" +
+                                      context.getString(R.string.privacy_permission_calendar);
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            permissionsExplained += "<br/><br/>" + context.getString(R.string.privacy_permission_storage);
+        }
+        String privacy = context.getString(R.string.privacy_policy, permissionsExplained);
+        legalView4.setText(SuntimesUtils.fromHtml(privacy));
+
+        TextView legalView5 = (TextView) dialogContent.findViewById(R.id.txt_about_legal5);
+        legalView5.setMovementMethod(LinkMovementMethod.getInstance());
+        legalView5.setText(SuntimesUtils.fromHtml(context.getString(R.string.privacy_url)));
     }
 
     @Override

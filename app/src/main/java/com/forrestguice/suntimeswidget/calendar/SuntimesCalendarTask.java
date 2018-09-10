@@ -54,7 +54,7 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
     private HashMap<String, Integer> calendarColors = new HashMap<>();
 
     private String[] solsticeStrings = new String[4];
-    private int[] solsticeColors = new int[4];
+    //private int[] solsticeColors = new int[4];
     private SuntimesEquinoxSolsticeData solsticeData;
     private SuntimesMoonData moonData;
 
@@ -89,10 +89,10 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
         solsticeStrings[2] = context.getString(R.string.timeMode_equinox_autumnal);
         solsticeStrings[3] = context.getString(R.string.timeMode_solstice_winter);
 
-        solsticeColors[0] = ContextCompat.getColor(context, R.color.springColor_light);
-        solsticeColors[1] = ContextCompat.getColor(context, R.color.summerColor_light);
-        solsticeColors[2] = ContextCompat.getColor(context, R.color.fallColor_light);
-        solsticeColors[3] = ContextCompat.getColor(context, R.color.winterColor_light);
+        //solsticeColors[0] = ContextCompat.getColor(context, R.color.springColor_light);
+        //solsticeColors[1] = ContextCompat.getColor(context, R.color.summerColor_light);
+        //solsticeColors[2] = ContextCompat.getColor(context, R.color.fallColor_light);
+        //solsticeColors[3] = ContextCompat.getColor(context, R.color.winterColor_light);
 
         // moon phase calendar resources
         moonData = new SuntimesMoonData(context, 0, "moon");
@@ -108,13 +108,18 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
         notificationMsgClearing = context.getString(R.string.calendars_notification_clearing);
         notificationMsgCleared = context.getString(R.string.calendars_notification_cleared);
 
-        Uri.Builder uriBuilder = CalendarContract.CONTENT_URI.buildUpon();
-        uriBuilder.appendPath("time");
-        ContentUris.appendId(uriBuilder, System.currentTimeMillis());
-        Intent intent = new Intent(Intent.ACTION_VIEW).setData(uriBuilder.build());
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+        {
+            Uri.Builder uriBuilder = CalendarContract.CONTENT_URI.buildUpon();
+            uriBuilder.appendPath("time");
+            ContentUris.appendId(uriBuilder, System.currentTimeMillis());
+            intent = intent.setData(uriBuilder.build());
+        }
 
-        if (Build.VERSION.SDK_INT >= 11)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        }
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         notificationIntent = PendingIntent.getActivity(context, 0, intent, 0);

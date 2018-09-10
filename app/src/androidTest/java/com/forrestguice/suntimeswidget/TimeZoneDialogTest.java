@@ -90,6 +90,9 @@ public class TimeZoneDialogTest extends SuntimesActivityTestBase
 
     public static void verifyTimezoneDialog(Context context, WidgetSettings.TimezoneMode mode )
     {
+        if (mode == null)
+            return;
+
         switch (mode)
         {
             case SOLAR_TIME:

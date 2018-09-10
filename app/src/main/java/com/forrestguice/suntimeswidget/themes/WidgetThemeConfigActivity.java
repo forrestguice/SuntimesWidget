@@ -63,7 +63,6 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
-import com.forrestguice.suntimeswidget.layouts.SunPosLayout;
 import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
 import com.forrestguice.suntimeswidget.map.WorldMapTask;
 import com.forrestguice.suntimeswidget.map.WorldMapView;
@@ -1165,7 +1164,12 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         flipToPreview(savedState.getInt(PARAM_PREVIEWID, -1));
 
         ThemeBackground background = (ThemeBackground)spinBackground.getSelectedItem();
-        String backgroundName = savedState.getString(SuntimesTheme.THEME_BACKGROUND, (background != null ? background.name() : DarkTheme.THEMEDEF_BACKGROUND.name()));
+        String backgroundName = savedState.getString(SuntimesTheme.THEME_BACKGROUND);
+        if (backgroundName == null)
+        {
+            backgroundName = (background != null ? background.name() : DarkTheme.THEMEDEF_BACKGROUND.name());
+        }
+
         try {
             setSelectedBackground(ThemeBackground.valueOf(backgroundName));
         } catch (IllegalArgumentException e) {

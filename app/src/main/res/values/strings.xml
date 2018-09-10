@@ -166,18 +166,18 @@
     <string name="location_format_latlonalt"><xliff:g id="latlon">%1$s</xliff:g> <xliff:g id="altitudeTag">%2$s</xliff:g></string>        <!-- latitude, longitude [altitude] -->
 
     <!-- distances (meters, feet, etc) -->
-    <string name="units_feet">feet</string>   <!-- TODO -->
-    <string name="units_feet_short">ft</string>   <!-- TODO -->
-    <!--<plurals name="units_feet_long">
+    <string name="units_feet">feet</string>
+    <string name="units_feet_short">ft</string>
+    <plurals name="units_feet_long">
         <item quantity="one">%d foot</item>
         <item quantity="other">%d feet</item>
-    </plurals>-->
-    <string name="units_meters">meters</string>  <!-- TODO -->
-    <string name="units_meters_short">m</string>  <!-- TODO -->
-    <!--<plurals name="units_meters_long">
+    </plurals>
+    <string name="units_meters">meters</string>
+    <string name="units_meters_short">m</string>
+    <plurals name="units_meters_long">
         <item quantity="one">%d meter</item>
         <item quantity="other">%d meters</item>
-    </plurals>-->
+    </plurals>
 
     <!--
          WIDGET CONFIG
@@ -185,9 +185,9 @@
 
     <string name="configAction_restoreDefaults">Restore Defaults</string>   <!-- button / menu text -->
 
-    <string name="configLabel_tagDefault">[default]</string>                <!-- TODO -->
-    <string name="configLabel_tagPlugin">[plugin]</string>                <!-- TODO -->
-    <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->  <!-- TODO -->
+    <string name="configLabel_tagDefault">[default]</string>
+    <string name="configLabel_tagPlugin">[plugin]</string>
+    <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->
 
     <!-- WidgetConfig Activity -->
     <string name="configAction_addWidget">Add Widget</string>                   <!-- Button: Add -->
@@ -205,8 +205,8 @@
     <string name="configLabel_general_calculator_sun">Sun Data Source</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Moon Data Source</string>         <!-- preference label -->
 
-    <string name="configLabel_general_altitude_enabled">Use Elevation</string>        <!-- checkbox label --> <!-- TODO: i18n -->
-    <string name="configLabel_general_altitude_enabled_summary">Apply altitude based refinements.</string>        <!-- checkbox label --> <!-- TODO: i18n -->
+    <string name="configLabel_general_altitude_enabled">Use Elevation</string>        <!-- checkbox label -->
+    <string name="configLabel_general_altitude_enabled_summary">Apply altitude based refinements.</string>        <!-- checkbox label -->
 
     <string name="configLabel_general_showSeconds">Show Seconds</string>        <!-- checkbox label -->
     <string name="configLabel_general_showSeconds_summary">Include seconds when displaying times.</string>        <!-- checkbox label -->
@@ -221,10 +221,10 @@
     <string name="configLabel_general_showHours_summary">Include hours and minutes in time spans greater than a day.</string>    <!-- checkbox label -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">Advanced Settings</string>                        <!-- group title -->  <!-- TODO -->
-    <string name="configLabel_experimental">Experimental Settings</string>                <!-- group title --> <!-- TODO -->
-    <string name="configLabel_general_scanPlugins">Data Source Plugins</string>                                          <!-- checkbox label --> <!-- TODO -->
-    <string name="configLabel_general_scanPlugins_summary">Scan for and load third party plugins.</string>   <!-- pref summary --> <!-- TODO -->
+    <string name="configLabel_advanced">Advanced Settings</string>                        <!-- group title -->
+    <string name="configLabel_experimental">Experimental Settings</string>                <!-- group title -->
+    <string name="configLabel_general_scanPlugins">Data Source Plugins</string>                                <!-- checkbox label -->
+    <string name="configLabel_general_scanPlugins_summary">Scan for and load third party plugins.</string>   <!-- pref summary -->
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Appearance Settings</string>           <!-- group title -->
@@ -318,7 +318,7 @@
     <string name="configLabel_action_onClockTap">On Clock Tap:</string>         <!-- spinner label -->
     <string name="configLabel_action_onNoteTap">On Note Tap:</string>           <!-- spinner label -->
     <string name="configLabel_action_onDateTap">On Date Tap:</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap1">On Date Long Press:</string>   <!-- spinner label -->  <!-- TODO: i18n -->
+    <string name="configLabel_action_onDateTap1">On Date Long Press:</string>   <!-- spinner label -->
 
     <!-- Widget Setting: location -->
     <string name="locationMode_current">Current (last known)</string>  <!-- setting -->
@@ -330,8 +330,8 @@
     <string name="configHint_location_lat">decimal degrees</string>      <!-- edittext hint -->
     <string name="configLabel_location_lon">Longitude:</string>                          <!-- edittext label -->
     <string name="configHint_location_lon">decimal degrees</string> <!-- edittext hint -->
-    <string name="configLabel_location_alt">Elevation:</string>                          <!-- edittext label -->   <!-- TODO -->
-    <string name="configHint_location_alt">0</string> <!-- edittext hint -->                                 <!-- TODO -->
+    <string name="configLabel_location_alt">Elevation:</string>                          <!-- edittext label -->
+    <string name="configHint_location_alt">0</string>                                    <!-- edittext hint -->
     <string name="configLabel_location_name">Name:</string>                      <!-- edittext label -->
     <string name="configHint_location_name">(optional)</string>                  <!-- edittext hint -->
 
@@ -726,35 +726,38 @@
     </string-array>
 
     <!-- App Setting: calendars -->
-    <string name="configLabel_calendars">Calendars</string>   <!-- group title -->  <!-- TODO: i18n -->
+    <string name="configLabel_calendars">Calendars</string>   <!-- group title -->
 
-    <string name="configLabel_calendars_enabled">Calendar Integration</string>  <!-- TODO: i18n -->
-    <string name="configLabel_calendars_enabled_summary">Supply events to the Calendar app (moon phases, solstices, and equinoxes).</string>  <!-- TODO: i18n -->
+    <string name="configLabel_calendars_enabled">Calendar Integration</string>
+    <string name="configLabel_calendars_enabled_summary">Supply events to the Calendar app (moon phases, solstices, and equinoxes).</string>
 
-    <string name="configLabel_calendars_window0">Window (start)</string>  <!-- TODO: i18n -->
-    <string name="configLabel_calendars_window0_summary">A period starting <xliff:g id="calendars_window_display" example="one year">%s</xliff:g> ago</string>  <!-- TODO: i18n -->
+    <string name="configLabel_calendars_window0">Window (start)</string>
+    <string name="configLabel_calendars_window0_summary">A period starting <xliff:g id="calendars_window_display" example="one year">%s</xliff:g> ago</string>
 
-    <string name="configLabel_calendars_window1">Window (end)</string>  <!-- TODO: i18n -->
-    <string name="configLabel_calendars_window1_summary">A period ending <xliff:g id="calendars_window_display" example="two years">%s</xliff:g> from now</string>  <!-- TODO: i18n -->
+    <string name="configLabel_calendars_window1">Window (end)</string>
+    <string name="configLabel_calendars_window1_summary">A period ending <xliff:g id="calendars_window_display" example="two years">%s</xliff:g> from now</string>
 
-    <string name="calendars_notification_adding">Adding calendars…</string>  <!-- TODO: i18n -->
-    <string name="calendars_notification_added">Calendars have been added.</string>  <!-- TODO: i18n -->
+    <string name="calendars_notification_adding">Adding calendars…</string>
+    <string name="calendars_notification_added">Calendars have been added.</string>
 
-    <string name="calendars_notification_clearing">Clearing calendars…</string>  <!-- TODO: i18n -->
-    <string name="calendars_notification_cleared">Calendars have been cleared.</string>  <!-- TODO: i18n -->
+    <string name="calendars_notification_clearing">Clearing calendars…</string>
+    <string name="calendars_notification_cleared">Calendars have been cleared.</string>
 
     <string-array name="calendars_window_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>one year</item>
         <item>two years</item>
         <item>five years</item>
         <item>ten years</item>
-    </string-array>  <!-- TODO: i18n -->
+    </string-array>
     <string-array name="calendars_window_values" translatable="false">     <!-- ms config values (one-to-one with getFix_maxAge_display) -->
         <item>31536000000</item>
         <item>63072000000</item>
         <item>157680000000</item>
         <item>315360000000</item>
     </string-array>
+
+    <string name="calendar_solstice_displayName">Solstices and Equinoxes</string>
+    <string name="calendar_moonPhase_displayName">Moon Phases</string>
 
     <!-- App Setting: passive location mode -->
     <string name="configLabel_getFix_passiveMode">Passive Location</string>
@@ -862,14 +865,14 @@
     </string-array>
 
     <!--
-      CALENDARS
-    -->
-    <string name="calendar_solstice_displayName">Solstices and Equinoxes</string>  <!-- TODO: i18n -->
-    <string name="calendar_moonPhase_displayName">Moon Phases</string>  <!-- TODO: i18n -->
-
-    <!--
       DIALOGS
     -->
+
+    <!-- Dialog: World Map -->
+    <string name="worldmap_dialog_title">@string/configAction_worldMap</string>
+    <string name="worldmap_dialog_option_sunlight">Sunlight</string>
+    <string name="worldmap_dialog_option_moonlight">Moonlight</string>
+    <string name="worldmap_dialog_option_all">Both</string>
 
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Schedule an alarm for</string>
@@ -954,7 +957,7 @@
     <string name="location_dialog_cancel">Cancel</string>
     <string name="location_dialog_error_lat">This is not a valid latitude.</string>
     <string name="location_dialog_error_lon">This is not a valid longitude.</string>
-    <string name="location_dialog_error_alt">This is not a valid elevation.</string>  <!-- TODO: i18n -->
+    <string name="location_dialog_error_alt">This is not a valid elevation.</string>
 
     <string name="location_dialog_toast_copied">Copied to clipboard<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
 
@@ -1047,6 +1050,7 @@
                 * <b>%loc</b> for label (e.g. Prescott) <br />
                 * <b>%lat</b> for latitude (e.g. 35.5409) <br />
                 * <b>%lon</b> for longitude (e.g. -112.4691) <br/>
+                * <b>%lel</b> for elevation (e.g. 385 meters) <br/>
                 <br/>
                 * <b>%s</b> for data source (e.g. sunrisesunsetlib) <br/>
                 * <b>%t</b> for time zone (id) (e.g. US/Arizona) <br/>
@@ -1114,6 +1118,15 @@
           To <b>add a new widget</b> you must navigate to the home screen.<br/><br/>
           To <b>reconfigure an existing widget</b> you can select from the following list.<br/>
     ]]></string>
+
+    <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>Suntimes does not collect, store, or transmit personal user data. It contains <b>no advertising</b>, <b>no analytics</b>, <b>no trackers</b>, and <b>no unnecessary permissions</b>. <br/><br/>The app is configured from location data. This information (and other configuration data used by the app) is stored locally and does not leave the device.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
+    <string name="privacy_permission_location"><![CDATA[Suntimes uses the <b>location</b> permission to determine your current longitude and latitude.<br/><br/>This permission is optional; the location is manually configured by default.]]></string>
+    <string name="privacy_permission_calendar"><![CDATA[Suntimes uses <b>calendar</b> permissions to integrate with the Calendar app. These permissions allow the app to create custom calendars and events.<br/><br/>Permissions are also required when disabling calendar integration (to remove custom calendars).]]></string>
+    <string name="privacy_permission_storage"><![CDATA[Suntimes uses <b>external storage</b> permissions to backup/export data to file (e.g. places, themes).]]></string>
+    <string name="privacy_permissiondialog_title">Permissions</string>
+    <string name="privacy_url"><xliff:g id="url"><![CDATA[
+        <a href="https://github.com/forrestguice/SuntimesWidget/wiki/Privacy">github.com/forrestguice/SuntimesWidget/wiki/Privacy</a>
+    ]]></xliff:g></string>
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>

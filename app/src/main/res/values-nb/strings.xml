@@ -21,7 +21,7 @@
     <string name="configAction_setDate">Dato</string>
     <string name="configAction_sunDialog">Solens posisjon</string>
     <string name="configAction_equinoxDialog">Solverv / Jevndøgn</string>
-    <string name="configAction_worldMap">World Map</string>  <!-- TODO -->
+    <string name="configAction_worldMap">Verdenskart</string>
     <string name="configAction_moon">Månen</string>
     <string name="configAction_help">Hjelp</string>
     <string name="configAction_settings">Innstillinger</string>
@@ -158,11 +158,29 @@
     <string name="datetime_format_long"><xliff:g id="monthYear">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>        <!-- shortDate, time ... e.g. December 3, 11:00 am -->
     <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
 
+    <!-- distances (meters, feet, etc) -->
+    <string name="units_feet">fot</string>
+    <string name="units_feet_short">ft</string>
+    <!--<plurals name="units_feet_long">
+      <item quantity="one">%d foot</item>
+      <item quantity="other">%d feet</item>
+    </plurals>-->
+    <string name="units_meters">meter</string>
+    <string name="units_meters_short">m</string>
+    <!--<plurals name="units_meters_long">
+      <item quantity="one">%d meter</item>
+      <item quantity="other">%d meters</item>
+    </plurals>-->
+
     <!--
          WIDGET CONFIG
     -->
 
     <string name="configAction_restoreDefaults">Restore Defaults</string>   <!-- button / menu text -->
+
+    <string name="configLabel_tagDefault">[default]</string>                <!-- TODO -->
+    <string name="configLabel_tagPlugin">[plugin]</string>                <!-- TODO -->
+    <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->  <!-- TODO -->
 
     <!-- WidgetConfig Activity -->
     <string name="configAction_addWidget">Add Widget</string>                   <!-- Button: Add -->
@@ -180,6 +198,9 @@
     <string name="configLabel_general_calculator_sun">Soldatakilde</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Månedatakilde</string>         <!-- preference label -->
 
+    <string name="configLabel_general_altitude_enabled">Bruk høyde</string>        <!-- checkbox label -->
+    <string name="configLabel_general_altitude_enabled_summary">Bruk høydebaserte forbedringer.</string>        <!-- checkbox label -->
+
     <string name="configLabel_general_showSeconds">Vis sekunder</string>        <!-- checkbox label -->
     <string name="configLabel_general_showSeconds_summary">Inkluder sekunder ved visning av tid.</string>        <!-- checkbox label -->
 
@@ -191,6 +212,12 @@
 
     <string name="configLabel_general_showHours">Vis timer</string>        <!-- checkbox label -->
     <string name="configLabel_general_showHours_summary">Inkluder timer og minutter ved lengre tidsrom enn en dag.</string>    <!-- checkbox label -->
+
+    <!-- Widget Setting: advanced / experimental -->
+    <string name="configLabel_advanced">Advanced Settings</string>                        <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_experimental">Experimental Settings</string>                <!-- group title --> <!-- TODO -->
+    <string name="configLabel_general_scanPlugins">Data Source Plugins</string>                                <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_general_scanPlugins_summary">Scan for and load third party plugins.</string>   <!-- pref summary --> <!-- TODO -->
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Utseende-innstillinger</string>           <!-- group title -->
@@ -259,9 +286,9 @@
     <string name="widgetMode1x1_altaz">Høyde &amp; Asimut</string>     <!-- setting -->
     <string name="widgetMode1x1_decright">Deklinasjon &amp; Rektasensjon</string>     <!-- setting -->
 
-    <string name="widgetMode_sunPosMap_simplerectangular">Basic</string>  <!-- setting -->  <!-- TODO -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal">Polar</string>     <!-- setting -->  <!-- TODO -->
-    <string name="widgetMode_sunPosMap_bluemarble">Blue Marble</string>    <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode_sunPosMap_simplerectangular">Enkelt</string>  <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal">Polar</string>     <!-- setting -->
+    <string name="widgetMode_sunPosMap_bluemarble">Blue Marble</string>    <!-- setting -->
 
     <string name="widgetMode1x1_moonriseset">Måneoppgang &amp; månenedgang</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphaseillum">Månefase &amp; illuminasjon</string>     <!-- setting -->
@@ -284,6 +311,7 @@
     <string name="configLabel_action_onClockTap">Ved trykk på klokke:</string>         <!-- spinner label -->
     <string name="configLabel_action_onNoteTap">Ved trykk på notis:</string>           <!-- spinner label -->
     <string name="configLabel_action_onDateTap">Ved trykk på dato:</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap1">Ved lang-trykk på dato:</string>   <!-- spinner label -->
 
     <!-- Widget Setting: location -->
     <string name="locationMode_current">Gjeldende (sist kjente)</string>  <!-- setting -->
@@ -295,6 +323,8 @@
     <string name="configHint_location_lat">desimalgrader</string>      <!-- edittext hint -->
     <string name="configLabel_location_lon">Lengdegrad:</string>                          <!-- edittext label -->
     <string name="configHint_location_lon">desimalgrader</string> <!-- edittext hint -->
+    <string name="configLabel_location_alt">Høyde:</string>                          <!-- edittext label -->
+    <string name="configHint_location_alt">0</string> <!-- edittext hint -->
     <string name="configLabel_location_name">Navn:</string>                      <!-- edittext label -->
     <string name="configHint_location_name">(valgfri)</string>                  <!-- edittext hint -->
 
@@ -408,10 +438,10 @@
     <string name="configLabel_themeColorFall">Høstfarge:</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Vinterfarge:</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMapBackground">Map Background</string> <!-- color label --> <!-- TODO -->
-    <string name="configLabel_themeColorMapForeground">Map Foreground</string> <!-- color label --> <!-- TODO -->
-    <string name="configLabel_themeColorMapSunShadow">Shadow</string> <!-- color label -->          <!-- TODO -->
-    <string name="configLabel_themeColorMapMoonHighlight">Highlight</string> <!-- color label -->   <!-- TODO -->
+    <string name="configLabel_themeColorMapBackground">Kartbakgrunn</string> <!-- color label -->
+    <string name="configLabel_themeColorMapForeground">Kartforgrunn</string> <!-- color label -->
+    <string name="configLabel_themeColorMapSunShadow">Skygge</string> <!-- color label -->
+    <string name="configLabel_themeColorMapMoonHighlight">Belysning</string> <!-- color label -->
 
     <string name="configLabel_themeColorMoonrise">Måneoppgangsfarge:</string> <!-- color label -->
     <string name="configLabel_themeColorMoonset">Månenedgangsfarge:</string> <!-- color label -->
@@ -543,7 +573,7 @@
 
     <!-- App Setting: show blue hour -->
     <string name="configLabel_ui_showbluehour">Vis blå time</string>
-    <string name="configLabel_ui_showbluehour_summary">Vis tider for blå time.</string>
+    <string name="configLabel_ui_showbluehour_summary">Vis tider for den blå timen.</string>
 
     <!-- App Setting: UI Theme -->
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
@@ -617,6 +647,34 @@
         <item>en uke (168 timer)</item>
         <item>en måned (672 timer)</item>
     </string-array>
+
+    <!-- App Setting: calendars -->
+    <string name="configLabel_calendars">Kalendere</string>   <!-- group title -->
+
+    <string name="configLabel_calendars_enabled">Kalenderintegrasjon</string>
+    <string name="configLabel_calendars_enabled_summary">Gi hendelser til Kalender-appen (månefaser, solverv og jevndøgn).</string>
+
+    <string name="configLabel_calendars_window0">Vindu (start)</string>
+    <string name="configLabel_calendars_window0_summary">En periode som starter for <xliff:g id="calendars_window_display" example="one year">%s</xliff:g> siden</string>
+
+    <string name="configLabel_calendars_window1">Vindu (slutt)</string>
+    <string name="configLabel_calendars_window1_summary">En periode som slutter <xliff:g id="calendars_window_display" example="two years">%s</xliff:g> fra nå</string>
+
+    <string name="calendars_notification_adding">Legger til kalendere…</string>
+    <string name="calendars_notification_added">Kalendere er lagt til.</string>
+
+    <string name="calendars_notification_clearing">Fjerner kalendere…</string>
+    <string name="calendars_notification_cleared">Kalendere er fjernet.</string>
+
+    <string-array name="calendars_window_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
+        <item>ett år</item>
+        <item>to år</item>
+        <item>fem år</item>
+        <item>ti år</item>
+    </string-array>
+
+    <string name="calendar_solstice_displayName">Solverv og jevndøgn</string>
+    <string name="calendar_moonPhase_displayName">Månefaser</string>
 
     <!-- App Setting: passive location mode -->
     <string name="configLabel_getFix_passiveMode">Passiv posisjon</string>
@@ -698,6 +756,12 @@
     <!--
       DIALOGS
     -->
+
+    <!-- Dialog: World Map -->
+    <string name="worldmap_dialog_title">@string/configAction_worldMap</string>
+    <string name="worldmap_dialog_option_sunlight">Sollys</string>
+    <string name="worldmap_dialog_option_moonlight">Månelys</string>
+    <string name="worldmap_dialog_option_all">Begge</string>
 
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Planlegg en alarm for</string>
@@ -782,6 +846,7 @@
     <string name="location_dialog_cancel">Avbryt</string>
     <string name="location_dialog_error_lat">Dette er ikke en gyldig breddegrad.</string>
     <string name="location_dialog_error_lon">Dette er ikke en gyldig lengdegrad.</string>
+    <string name="location_dialog_error_alt">Dette er ikke en gyldig høyde.</string>
 
     <string name="location_dialog_toast_copied">Kopiert til utklippstavle<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
 
@@ -828,7 +893,7 @@
     <string name="app_name_solsticewidget0">Solstice Widget</string>
     <string name="app_name_moonwidget0">Moon Widget</string>
     <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
-    <string name="app_shortdesc">Displays sunlight and moonlight times.</string>
+    <string name="app_shortdesc">Viser tider for sollys og månelys.</string>
     <string name="app_support_url"><![CDATA[
         <b>Support:</b> visit the
         <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a> to submit a request.
@@ -874,6 +939,7 @@
                 * <b>%loc</b> for label (e.g. Prescott) <br />
                 * <b>%lat</b> for latitude (e.g. 35.5409) <br />
                 * <b>%lon</b> for longitude (e.g. -112.4691) <br/>
+                * <b>%lel</b> for elevation (e.g. 385 meters) <br/>
                 <br/>
                 * <b>%s</b> for data source (e.g. sunrisesunsetlib) <br/>
                 * <b>%t</b> for time zone (id) (e.g. US/Arizona) <br/>
@@ -941,6 +1007,12 @@
           To <b>add a new widget</b> you must navigate to the home screen.<br/><br/>
           To <b>reconfigure an existing widget</b> you can select from the following list.<br/>
     ]]></string>
+
+    <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>Suntimes does not collect, store, or transmit personal user data. It contains <b>no advertising</b>, <b>no analytics</b>, <b>no trackers</b>, and <b>no unnecessary permissions</b>. <br/><br/>The app is configured from location data. This information (and other configuration data used by the app) is stored locally and does not leave the device.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string> <!-- TODO -->
+    <string name="privacy_permission_location"><![CDATA[Suntimes uses the <b>location</b> permission to determine your current longitude and latitude.<br/><br/>This permission is optional; the location is manually configured by default.]]></string> <!-- TODO -->
+    <string name="privacy_permission_calendar"><![CDATA[Suntimes uses <b>calendar</b> permissions to integrate with the Calendar app. These permissions allow the app to create custom calendars and events.<br/><br/>Permissions are also required when disabling calendar integration (to remove custom calendars).]]></string> <!-- TODO -->
+    <string name="privacy_permission_storage"><![CDATA[Suntimes uses <b>external storage</b> permissions to backup/export data to file (e.g. places, themes).]]></string> <!-- TODO -->
+    <string name="privacy_permissiondialog_title">Permissions</string> <!-- TODO -->
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>

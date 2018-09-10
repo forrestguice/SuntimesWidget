@@ -80,8 +80,9 @@ public class WorldMapDialog extends DialogFragment
         super.onCreate(savedInstanceState);
 
         final Activity myParent = getActivity();
-        LayoutInflater inflater = myParent.getLayoutInflater();
+        WorldMapWidgetSettings.initDisplayStrings(myParent);
 
+        LayoutInflater inflater = myParent.getLayoutInflater();
         final ViewGroup viewGroup = null;
         dialogContent = inflater.inflate(R.layout.layout_dialog_worldmap, viewGroup);
 
@@ -145,7 +146,7 @@ public class WorldMapDialog extends DialogFragment
                     Calendar nowUtc = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
                     nowUtc.setTimeInMillis(now.getTimeInMillis());
                     SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, nowUtc); // utils.calendarTimeShortDisplayString(context, nowUtc);
-                    utcTime.setText(getString(R.string.datetime_format_verylong, timeText.toString(), nowUtc.getTimeZone().getDisplayName()));
+                    utcTime.setText(getString(R.string.datetime_format_verylong, timeText.toString(), nowUtc.getTimeZone().getID()));
                 }
                 // TODO: periodic update bitmap
             }
