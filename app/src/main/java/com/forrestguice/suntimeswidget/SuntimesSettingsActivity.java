@@ -44,6 +44,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.util.TypedValue;
 import android.widget.Toast;
@@ -1175,7 +1177,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
     private static void initPref_altitude(final Activity context, final CheckBoxPreference altitudePref)
     {
-        // TODO
+        TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.icActionAltitude});
+        int drawableID = a.getResourceId(0, R.drawable.baseline_terrain_black_18);
+        a.recycle();
+
+        String title = context.getString(R.string.configLabel_general_altitude_enabled) + "  [i]";
+        ImageSpan altitudeIcon = SuntimesUtils.createImageSpan(context, drawableID, 24, 24, 0);
+        SpannableStringBuilder altitudeSpan = SuntimesUtils.createSpan(context, title, "[i]", altitudeIcon);
+        altitudePref.setTitle(altitudeSpan);
     }
 
     private static void initPref_timeFormat(final Activity context, final Preference timeformatPref)
