@@ -31,7 +31,6 @@
             app:layout_constraintEnd_toEndOf="@+id/header_gutter4"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toStartOf="parent">
 
             <android.support.v7.widget.AppCompatCheckBox
@@ -83,17 +82,19 @@
             android:layout_width="0dp" android:layout_height="1dp"
             app:layout_constraintStart_toEndOf="@+id/layout_altitude"
             app:layout_constraintEnd_toStartOf="@+id/txt_datasource"
-            app:layout_constraintHorizontal_weight="2" />
+            app:layout_constraintHorizontal_weight="1" />
 
         <TextView
             android:id="@+id/txt_datasource"
             app:layout_constraintStart_toEndOf="@+id/header_gutter4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center_vertical"
+            android:layout_marginLeft="4dp" android:layout_marginStart="4dp"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:gravity="center_vertical|end"
             android:textColor="?attr/date_buttonSelector" android:textSize="10sp" android:textStyle="bold"
             tools:text="sunrisesunsetlib" tools:ignore="SmallSp"
-            app:layout_constraintHorizontal_weight="1"/>
+            android:ellipsize="start" android:maxLines="2"
+            app:layout_constraintHorizontal_weight="3"/>
 
     </android.support.constraint.ConstraintLayout>
 
