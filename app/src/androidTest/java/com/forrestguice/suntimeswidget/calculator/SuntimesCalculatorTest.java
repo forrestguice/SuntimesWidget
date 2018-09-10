@@ -43,8 +43,10 @@ public class SuntimesCalculatorTest
     {
             new WidgetSettings.Location("test0", "0", "0", "0"),             // 0, all zero
             new WidgetSettings.Location("test1", "35", "-112"),                      // 1, no altitude
-            new WidgetSettings.Location("test2", "35", "-112", "-14"),       // 2, negative altitude
-            new WidgetSettings.Location("test3", "35", "-112", "14")
+            new WidgetSettings.Location("test2", "35", "-112", "-14"),       // 2, out of bounds (negative altitude)
+            new WidgetSettings.Location("test3", "35", "-112", "14"),        // 3
+            new WidgetSettings.Location("test4", "35", "-112", "10999"),     // 4, at bounds (max altitude)
+            new WidgetSettings.Location("test5", "35", "-112", "11000")      // 5, out of bounds (max altitude + 1)
     };
 
     @Before
