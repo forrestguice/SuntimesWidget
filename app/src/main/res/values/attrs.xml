@@ -53,6 +53,7 @@
     <attr name="icActionWarning" format="reference" />
     <attr name="icActionError" format="reference" />
     <attr name="icActionAppearance" format="reference" />
+    <attr name="icActionAltitude" format="reference" />
 
     <attr name="icActionSettings" format="reference" />
     <attr name="icActionHelp" format="reference" />
