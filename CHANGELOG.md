@@ -1,5 +1,8 @@
 ### ~
 
+### v0.9.2 (2018-09-12)
+* fixes app crash when location has altitude greater equal 11000m (validation off-by-one) (#243).
+
 ### v0.9.1 (2018-08-30)
 * fixes bug "export places; commas in place names break csv output bug" (#240).
 * fixes bug "momentary hang/pause when adding or reconfiguring sunposition widgets (3x1 and 3x2)".
