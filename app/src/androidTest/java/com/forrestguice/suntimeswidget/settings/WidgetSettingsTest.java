@@ -399,7 +399,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
 
         WidgetSettings.deleteShowLabelsPref(context, appWidgetId);
         boolean pref0 = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
-        assertTrue("mode should be default (false) but was " + pref0, !pref0 && pref0 == WidgetSettings.PREF_DEF_APPEARANCE_SHOWLABELS);
+        assertTrue("mode should be default (false) but was " + pref0, pref0 && pref0 == WidgetSettings.PREF_DEF_APPEARANCE_SHOWLABELS);
     }
 
     @Test
