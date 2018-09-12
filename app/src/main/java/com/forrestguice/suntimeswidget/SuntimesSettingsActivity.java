@@ -44,6 +44,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.util.TypedValue;
 import android.widget.Toast;
@@ -536,12 +538,20 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         Context context = fragment.getActivity();
 
         String key_timeFormat = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + WidgetSettings.PREF_KEY_APPEARANCE_TIMEFORMATMODE;
-        Preference timeformatPref = fragment.findPreference(key_timeFormat);
-        initPref_timeFormat(fragment.getActivity(), timeformatPref);
+        ListPreference timeformatPref = (ListPreference)fragment.findPreference(key_timeFormat);
+        if (timeformatPref != null)
+        {
+            initPref_timeFormat(fragment.getActivity(), timeformatPref);
+            loadPref_timeFormat(fragment.getActivity(), timeformatPref);
+        }
 
         String key_altitudePref = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_LOCATION + WidgetSettings.PREF_KEY_LOCATION_ALTITUDE_ENABLED;
         CheckBoxPreference altitudePref = (CheckBoxPreference)fragment.findPreference(key_altitudePref);
-        initPref_altitude(fragment.getActivity(), altitudePref);
+        if (altitudePref != null)
+        {
+            initPref_altitude(fragment.getActivity(), altitudePref);
+            loadPref_altitude(fragment.getActivity(), altitudePref);
+        }
 
         String key_sunCalc = WidgetSettings.keyCalculatorModePref(0);
         SummaryListPreference calculatorPref = (SummaryListPreference) fragment.findPreference(key_sunCalc);
@@ -1175,13 +1185,28 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
     private static void initPref_altitude(final Activity context, final CheckBoxPreference altitudePref)
     {
-        // TODO
+        TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.icActionAltitude});
+        int drawableID = a.getResourceId(0, R.drawable.baseline_terrain_black_18);
+        a.recycle();
+
+        String title = context.getString(R.string.configLabel_general_altitude_enabled) + "  [i]";
+        ImageSpan altitudeIcon = SuntimesUtils.createImageSpan(context, drawableID, 32, 32, 0);
+        SpannableStringBuilder altitudeSpan = SuntimesUtils.createSpan(context, title, "[i]", altitudeIcon);
+        altitudePref.setTitle(altitudeSpan);
     }
+
+    private static void loadPref_altitude(Context context, CheckBoxPreference altitudePref)
+    {
+        boolean useAltitude = WidgetSettings.loadLocationAltitudeEnabledPref(context, 0);
+        altitudePref.setChecked(useAltitude);
+    }
+
+    //////////////////////////////////////////////////
+    //////////////////////////////////////////////////
+
 
     private static void initPref_timeFormat(final Activity context, final Preference timeformatPref)
     {
-        WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
-        timeformatPref.setSummary(timeFormatPrefSummary(mode, context));
         timeformatPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
         {
             @Override
@@ -1191,6 +1216,21 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 return true;
             }
         });
+    }
+
+    private static void loadPref_timeFormat(final Activity context, final ListPreference timeformatPref)
+    {
+        WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
+        int index = timeformatPref.findIndexOfValue(mode.name());
+        if (index < 0)
+        {
+            index = 0;
+            WidgetSettings.TimeFormatMode mode0 = mode;
+            mode = WidgetSettings.TimeFormatMode.values()[index];
+            Log.w("loadPref", "timeFormat not found (" + mode0 + ") :: loading " + mode.name() + " instead..");
+        }
+        timeformatPref.setValueIndex(index);
+        timeformatPref.setSummary(timeFormatPrefSummary(mode, context));
     }
 
     public static String timeFormatPrefSummary(WidgetSettings.TimeFormatMode mode, Context context)
