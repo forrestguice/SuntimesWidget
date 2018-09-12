@@ -28,7 +28,7 @@
             android:background="?attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@+id/header_gutter4"
+            app:layout_constraintEnd_toEndOf="@+id/txt_datasource"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent">
@@ -79,15 +79,9 @@
 
         </LinearLayout>
 
-        <View android:id="@+id/header_gutter4"
-            android:layout_width="0dp" android:layout_height="1dp"
-            app:layout_constraintStart_toEndOf="@+id/layout_altitude"
-            app:layout_constraintEnd_toStartOf="@+id/txt_datasource"
-            app:layout_constraintHorizontal_weight="1" />
-
         <TextView
             android:id="@+id/txt_datasource"
-            app:layout_constraintStart_toEndOf="@+id/header_gutter4"
+            app:layout_constraintStart_toEndOf="@+id/layout_altitude"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginLeft="4dp" android:layout_marginStart="4dp"
