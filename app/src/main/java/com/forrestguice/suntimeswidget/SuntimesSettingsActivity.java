@@ -538,12 +538,20 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         Context context = fragment.getActivity();
 
         String key_timeFormat = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + WidgetSettings.PREF_KEY_APPEARANCE_TIMEFORMATMODE;
-        Preference timeformatPref = fragment.findPreference(key_timeFormat);
-        initPref_timeFormat(fragment.getActivity(), timeformatPref);
+        ListPreference timeformatPref = (ListPreference)fragment.findPreference(key_timeFormat);
+        if (timeformatPref != null)
+        {
+            initPref_timeFormat(fragment.getActivity(), timeformatPref);
+            loadPref_timeFormat(fragment.getActivity(), timeformatPref);
+        }
 
         String key_altitudePref = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_LOCATION + WidgetSettings.PREF_KEY_LOCATION_ALTITUDE_ENABLED;
         CheckBoxPreference altitudePref = (CheckBoxPreference)fragment.findPreference(key_altitudePref);
-        initPref_altitude(fragment.getActivity(), altitudePref);
+        if (altitudePref != null)
+        {
+            initPref_altitude(fragment.getActivity(), altitudePref);
+            loadPref_altitude(fragment.getActivity(), altitudePref);
+        }
 
         String key_sunCalc = WidgetSettings.keyCalculatorModePref(0);
         SummaryListPreference calculatorPref = (SummaryListPreference) fragment.findPreference(key_sunCalc);
@@ -1187,10 +1195,18 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         altitudePref.setTitle(altitudeSpan);
     }
 
+    private static void loadPref_altitude(Context context, CheckBoxPreference altitudePref)
+    {
+        boolean useAltitude = WidgetSettings.loadLocationAltitudeEnabledPref(context, 0);
+        altitudePref.setChecked(useAltitude);
+    }
+
+    //////////////////////////////////////////////////
+    //////////////////////////////////////////////////
+
+
     private static void initPref_timeFormat(final Activity context, final Preference timeformatPref)
     {
-        WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
-        timeformatPref.setSummary(timeFormatPrefSummary(mode, context));
         timeformatPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
         {
             @Override
@@ -1200,6 +1216,21 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 return true;
             }
         });
+    }
+
+    private static void loadPref_timeFormat(final Activity context, final ListPreference timeformatPref)
+    {
+        WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
+        int index = timeformatPref.findIndexOfValue(mode.name());
+        if (index < 0)
+        {
+            index = 0;
+            WidgetSettings.TimeFormatMode mode0 = mode;
+            mode = WidgetSettings.TimeFormatMode.values()[index];
+            Log.w("loadPref", "timeFormat not found (" + mode0 + ") :: loading " + mode.name() + " instead..");
+        }
+        timeformatPref.setValueIndex(index);
+        timeformatPref.setSummary(timeFormatPrefSummary(mode, context));
     }
 
     public static String timeFormatPrefSummary(WidgetSettings.TimeFormatMode mode, Context context)
