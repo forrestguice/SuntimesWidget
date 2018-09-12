@@ -1190,7 +1190,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         a.recycle();
 
         String title = context.getString(R.string.configLabel_general_altitude_enabled) + "  [i]";
-        ImageSpan altitudeIcon = SuntimesUtils.createImageSpan(context, drawableID, 24, 24, 0);
+        ImageSpan altitudeIcon = SuntimesUtils.createImageSpan(context, drawableID, 32, 32, 0);
         SpannableStringBuilder altitudeSpan = SuntimesUtils.createSpan(context, title, "[i]", altitudeIcon);
         altitudePref.setTitle(altitudeSpan);
     }
