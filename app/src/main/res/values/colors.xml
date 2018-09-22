@@ -4,7 +4,7 @@
 
     <color name="primary">#ff9900</color>
     <color name="primary_dark">#ff9900</color>
-    <color name="accent">#ffcc00</color>
+    <color name="accent">#ffd500</color>
     <color name="text_primary">#cccccc</color>
     <color name="btn_tint_pressed">#ff9900</color>
     <color name="text_alertDialogListItem">#000000</color>
@@ -29,7 +29,7 @@
     <!-- tags -->
     <color name="warningTag_dark">#ff9900</color>
     <color name="errorTag_dark">#FF5252</color>
-    <color name="dstTag_dark">#ffcc00</color>
+    <color name="dstTag_dark">#ffd500</color>
 
     <color name="warningTag_light">#ff9900</color>
     <color name="errorTag_light">#FF5252</color>
@@ -64,10 +64,10 @@
     <color name="moonIcon_color_full_border_light">@color/grey_600</color>
 
     <!-- sun icon -->
-    <color name="sunIcon_color_rising_dark">#ffcc00</color>
+    <color name="sunIcon_color_rising_dark">#ffd500</color>
     <color name="sunIcon_color_risingBorder_dark">#ff9900</color>
     <color name="sunIcon_color_setting_dark">#ff9900</color>
-    <color name="sunIcon_color_settingBorder_dark">#ffcc00</color>
+    <color name="sunIcon_color_settingBorder_dark">#ffd500</color>
 
     <color name="sunIcon_color_rising_light">#ffcc00</color>
     <color name="sunIcon_color_risingBorder_light">#ff9900</color>
@@ -86,7 +86,7 @@
 
     <!-- graph colors -->
     <color name="graphColor_bg_dark">@color/material_grey_850</color>
-    <color name="graphColor_day_dark">#ffffcc00</color>
+    <color name="graphColor_day_dark">#ffffd500</color>
     <color name="graphColor_civil_dark">#ff7ba3ff</color>
     <color name="graphColor_nautical_dark">#003366</color>
     <color name="graphColor_astronomical_dark">#000066</color>
@@ -115,7 +115,7 @@
     <color name="map_foreground_light">#c6ff00</color>
 
     <color name="springColor_dark">#8BC34A</color>
-    <color name="summerColor_dark">#ffffcc00</color>
+    <color name="summerColor_dark">#ffffd500</color>
     <color name="fallColor_dark">#FF5722</color>
     <color name="winterColor_dark">#03A9F4</color>
 
