@@ -116,8 +116,8 @@
 
     <color name="springColor_dark">#AAEB5B</color>
     <color name="summerColor_dark">#ffffd500</color>
-    <color name="winterColor_dark">#03A9F4</color>
     <color name="fallColor_dark">#FF9900</color>
+    <color name="winterColor_dark">#37BBF0</color>
 
     <color name="springColor_light">#8BC34A</color>
     <color name="summerColor_light">#FFC107</color>
