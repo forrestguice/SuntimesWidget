@@ -66,6 +66,8 @@
     <!-- sun icon -->
     <color name="sunIcon_color_rising_dark">#ffd500</color>
     <color name="sunIcon_color_risingBorder_dark">#ff9900</color>
+    <color name="sunIcon_color_noon_dark">#ffd500</color>
+    <color name="sunIcon_color_noonBorder_dark">#ff9900</color>
     <color name="sunIcon_color_setting_dark">#ff9900</color>
     <color name="sunIcon_color_settingBorder_dark">#ffd500</color>
 
@@ -73,6 +75,8 @@
     <color name="sunIcon_color_risingBorder_light">#ff9900</color>
     <color name="sunIcon_color_setting_light">#ff9900</color>
     <color name="sunIcon_color_settingBorder_light">#ffcc00</color>
+    <color name="sunIcon_color_noon_light">#ff9900</color>
+    <color name="sunIcon_color_noonBorder_light">#B54E00</color>
 
     <!-- timezone colors -->
     <array name="utcOffsetColors">

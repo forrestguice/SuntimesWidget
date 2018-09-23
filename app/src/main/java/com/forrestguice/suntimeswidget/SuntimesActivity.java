@@ -143,6 +143,7 @@ public class SuntimesActivity extends AppCompatActivity
     protected SuntimesMoonData dataset3;
 
     private int color_textTimeDelta;
+    private int resID_noonIcon;
 
     // clock views
     private TextView txt_time;
@@ -242,10 +243,7 @@ public class SuntimesActivity extends AppCompatActivity
     public void onCreate(Bundle savedState)
     {
         Context context = SuntimesActivity.this;
-        appTheme = AppSettings.loadThemePref(this);
-        setTheme(appThemeResID = AppSettings.themePrefToStyleId(this, appTheme, null));
-        GetFixUI.themeIcons(this);
-
+        initTheme();
         super.onCreate(savedState);
         setResult(RESULT_CANCELED);
 
@@ -266,6 +264,19 @@ public class SuntimesActivity extends AppCompatActivity
             intent.setData(null);
             configLocation(data);
         }
+    }
+
+    private void initTheme()
+    {
+        appTheme = AppSettings.loadThemePref(this);
+        setTheme(appThemeResID = AppSettings.themePrefToStyleId(this, appTheme, null));
+
+        int[] attrs = new int[] { R.attr.sunnoonIcon };
+        TypedArray a = obtainStyledAttributes(attrs);
+        resID_noonIcon = a.getResourceId(0, R.drawable.ic_noon_large);
+        a.recycle();
+
+        GetFixUI.themeIcons(this);
     }
 
     private void initLocale( Context context )
@@ -2567,7 +2578,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         Resources resources = getResources();
         int iconWidth = (int)resources.getDimension(R.dimen.sunIconLarge_width);
-        int iconHeight = ((note.noteIconResource == R.drawable.ic_noon_large) ? iconWidth : (int)resources.getDimension(R.dimen.sunIconLarge_height));
+        int iconHeight = ((note.noteIconResource == resID_noonIcon) ? iconWidth : (int)resources.getDimension(R.dimen.sunIconLarge_height));
 
         ViewGroup.LayoutParams iconParams = icon.getLayoutParams();
         iconParams.width = iconWidth;

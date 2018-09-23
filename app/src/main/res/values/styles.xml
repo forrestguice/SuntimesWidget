@@ -33,7 +33,7 @@
         <item name="sunsetIconSmall">@drawable/ic_sunset_light</item>
         <item name="sunsetIconLarge">@drawable/ic_sunset_large_light</item>
         <item name="sunsetColor">@color/sunIcon_color_setting_light</item>
-        <item name="sunnoonIcon">@drawable/ic_noon_large</item>
+        <item name="sunnoonIcon">@drawable/ic_noon_large_light</item>
 
         <item name="moonriseIcon">@drawable/ic_moon_rise_light</item>
         <item name="moonriseColor">@color/moonIcon_color_rising_light</item>

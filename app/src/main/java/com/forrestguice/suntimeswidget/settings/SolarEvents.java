@@ -132,12 +132,18 @@ public enum SolarEvents
     {
         private final Context context;
         private final ArrayList<SolarEvents> choices;
+        private int resID_noonIcon;
 
         public SolarEventsAdapter(Context context, ArrayList<SolarEvents> choices)
         {
             super(context, R.layout.layout_listitem_solarevent, choices);
             this.context = context;
             this.choices = choices;
+
+            int[] iconAttr = { R.attr.sunnoonIcon };
+            TypedArray typedArray = context.obtainStyledAttributes(iconAttr);
+            resID_noonIcon = typedArray.getResourceId(0, R.drawable.ic_noon_large);
+            typedArray.recycle();
         }
 
         @Override
@@ -182,7 +188,7 @@ public enum SolarEvents
             Resources resources = icon.getContext().getResources();
             int iconWidth = (int)resources.getDimension(R.dimen.sunIconLarge_width);
             int iconHeight = (int)resources.getDimension(R.dimen.sunIconLarge_height);
-            if (iconResource == R.drawable.ic_noon_large)
+            if (iconResource == resID_noonIcon)
             {
                 //noinspection SuspiciousNameCombination
                 iconHeight = iconWidth;
