@@ -122,7 +122,7 @@
     <color name="springColor_light">#8BC34A</color>
     <color name="summerColor_light">#FFC107</color>
     <color name="fallColor_light">#CF461D</color>
-    <color name="winterColor_light">#03A9F4</color>
+    <color name="winterColor_light">#176CFF</color>
 
     <!-- misc -->
     <color name="transparent">#00000000</color>
