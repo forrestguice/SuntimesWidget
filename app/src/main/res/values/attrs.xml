@@ -23,9 +23,9 @@
     <attr name="graphColor_pointFill" format="reference" />
     <attr name="graphColor_pointStroke" format="reference" />
 
-    <attr name="sunriseIcon" format="reference" />
+    <attr name="sunriseIconLarge" format="reference" />
     <attr name="sunriseColor" format="reference" />
-    <attr name="sunsetIcon" format="reference" />
+    <attr name="sunsetIconLarge" format="reference" />
     <attr name="sunsetColor" format="reference" />
     <attr name="sunnoonIcon" format="reference" />
 
