@@ -45,7 +45,7 @@
             app:layout_constraintEnd_toEndOf="@+id/info_sun_azimuth_rising"
             app:layout_constraintBottom_toTopOf="@+id/info_sun_azimuth_rising"
             android:labelFor="@+id/info_sun_azimuth_rising"
-            android:background="@drawable/ic_sunrise" android:contentDescription="@string/sunrise" />
+            android:background="?attr/sunriseIconSmall" android:contentDescription="@string/sunrise" />
 
         <ImageView android:id="@+id/sundialog_seticon" android:layout_marginBottom="2dp"
             android:layout_width="24dp" android:layout_height="8dp"
@@ -53,7 +53,7 @@
             app:layout_constraintEnd_toEndOf="@+id/info_sun_azimuth_setting"
             app:layout_constraintBottom_toTopOf="@+id/info_sun_azimuth_setting"
             android:labelFor="@+id/info_sun_azimuth_setting"
-            android:background="@drawable/ic_sunset" android:contentDescription="@string/sunset" />
+            android:background="?attr/sunsetIconSmall" android:contentDescription="@string/sunset" />
 
         <!-- elevation -->
         <TextView android:id="@+id/info_sun_elevation_current_label" style="@style/SunsetTimeTextView"
