@@ -27,8 +27,10 @@
         <item name="graphColor_pointFill">@color/sunIcon_color_setting_light</item>
         <item name="graphColor_pointStroke">@color/grey_800</item>
 
+        <item name="sunriseIconSmall">@drawable/ic_sunrise_light</item>
         <item name="sunriseIconLarge">@drawable/ic_sunrise_large_light</item>
         <item name="sunriseColor">@color/sunIcon_color_rising_light</item>
+        <item name="sunsetIconSmall">@drawable/ic_sunset_light</item>
         <item name="sunsetIconLarge">@drawable/ic_sunset_large_light</item>
         <item name="sunsetColor">@color/sunIcon_color_setting_light</item>
         <item name="sunnoonIcon">@drawable/ic_noon_large</item>
@@ -100,8 +102,10 @@
         <item name="graphColor_pointFill">@color/sunIcon_color_setting_dark</item>
         <item name="graphColor_pointStroke">@color/grey_800</item>
 
+        <item name="sunriseIconSmall">@drawable/ic_sunrise</item>
         <item name="sunriseIconLarge">@drawable/ic_sunrise_large</item>
         <item name="sunriseColor">@color/sunIcon_color_rising_dark</item>
+        <item name="sunsetIconSmall">@drawable/ic_sunset</item>
         <item name="sunsetIconLarge">@drawable/ic_sunset_large</item>
         <item name="sunsetColor">@color/sunIcon_color_setting_dark</item>
         <item name="sunnoonIcon">@drawable/ic_noon_large</item>
