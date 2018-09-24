@@ -17,6 +17,7 @@
 */
 package com.forrestguice.suntimeswidget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
@@ -212,7 +213,7 @@ public class EquinoxView extends LinearLayout
                 {
                     if (motionEvent.getAction() == MotionEvent.ACTION_DOWN)
                     {
-                        button.setColorFilter(ContextCompat.getColor(getContext(), R.color.btn_tint_pressed_dark));
+                        button.setColorFilter(ContextCompat.getColor(getContext(), resID_buttonPressColor));
                         performClick();
                     } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                         button.setColorFilter(null);
@@ -224,13 +225,15 @@ public class EquinoxView extends LinearLayout
     }
 
     private int noteColor; //, springColor, summerColor, fallColor, winterColor;
+    private int resID_buttonPressColor;
 
+    @SuppressLint("ResourceType")
     private void initColors(Context context)
     {
-        int[] colorAttrs = { android.R.attr.textColorPrimary }; //, R.attr.springColor, R.attr.summerColor, R.attr.fallColor, R.attr.winterColor };
+        int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.buttonPressColor }; //, R.attr.springColor, R.attr.summerColor, R.attr.fallColor, R.attr.winterColor };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
-        int def = R.color.transparent;
-        noteColor = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
+        noteColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.transparent));
+        resID_buttonPressColor = typedArray.getResourceId(1, R.color.btn_tint_pressed_dark);
         //springColor = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
         //summerColor = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
         //fallColor = ContextCompat.getColor(context, typedArray.getResourceId(3, def));
