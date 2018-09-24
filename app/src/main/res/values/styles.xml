@@ -15,6 +15,7 @@
         <item name="text_accentColor">@color/text_accent_light</item>
         <item name="text_disabledColor">@color/text_disabled_light</item>
 
+        <item name="buttonPressColor">@color/btn_tint_pressed_light</item>
         <item name="text_buttonSelector">@drawable/btn_txt_light</item>
         <item name="date_buttonSelector">@drawable/btn_datetxt_light</item>
 
@@ -90,6 +91,7 @@
         <item name="text_accentColor">@color/text_accent_dark</item>
         <item name="text_disabledColor">@color/text_disabled_dark</item>
 
+        <item name="buttonPressColor">@color/btn_tint_pressed_dark</item>
         <item name="text_buttonSelector">@drawable/btn_txt_dark</item>
         <item name="date_buttonSelector">@drawable/btn_datetxt_dark</item>
 

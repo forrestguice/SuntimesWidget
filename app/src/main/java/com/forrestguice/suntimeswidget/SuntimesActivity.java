@@ -144,6 +144,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     private int color_textTimeDelta;
     private int resID_noonIcon;
+    private int resID_buttonPressColor;
 
     // clock views
     private TextView txt_time;
@@ -271,9 +272,10 @@ public class SuntimesActivity extends AppCompatActivity
         appTheme = AppSettings.loadThemePref(this);
         setTheme(appThemeResID = AppSettings.themePrefToStyleId(this, appTheme, null));
 
-        int[] attrs = new int[] { R.attr.sunnoonIcon };
+        int[] attrs = new int[] { R.attr.sunnoonIcon, R.attr.buttonPressColor };
         TypedArray a = obtainStyledAttributes(attrs);
         resID_noonIcon = a.getResourceId(0, R.drawable.ic_noon_large);
+        resID_buttonPressColor = a.getResourceId(1, R.color.btn_tint_pressed_dark);
         a.recycle();
 
         GetFixUI.themeIcons(this);
@@ -1030,7 +1032,7 @@ public class SuntimesActivity extends AppCompatActivity
                 public boolean onTouch(View view, MotionEvent motionEvent)
                 {
                     if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                        btn_flipperNext_today.setColorFilter(ContextCompat.getColor(SuntimesActivity.this, R.color.btn_tint_pressed_dark));
+                        btn_flipperNext_today.setColorFilter(ContextCompat.getColor(SuntimesActivity.this, resID_buttonPressColor));
                     } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                         btn_flipperNext_today.setColorFilter(null);
                     }
@@ -1123,7 +1125,7 @@ public class SuntimesActivity extends AppCompatActivity
                 {
                     if (motionEvent.getAction() == MotionEvent.ACTION_DOWN)
                     {
-                        btn_flipperPrev_tomorrow.setColorFilter(ContextCompat.getColor(SuntimesActivity.this, R.color.btn_tint_pressed_dark));
+                        btn_flipperPrev_tomorrow.setColorFilter(ContextCompat.getColor(SuntimesActivity.this, resID_buttonPressColor));
                     } else if (motionEvent.getAction() == MotionEvent.ACTION_UP)
                     {
                         btn_flipperPrev_tomorrow.setColorFilter(null);
