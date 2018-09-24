@@ -212,7 +212,7 @@ public class EquinoxView extends LinearLayout
                 {
                     if (motionEvent.getAction() == MotionEvent.ACTION_DOWN)
                     {
-                        button.setColorFilter(ContextCompat.getColor(getContext(), R.color.btn_tint_pressed));
+                        button.setColorFilter(ContextCompat.getColor(getContext(), R.color.btn_tint_pressed_dark));
                         performClick();
                     } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                         button.setColorFilter(null);

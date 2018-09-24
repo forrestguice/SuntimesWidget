@@ -4,9 +4,18 @@
 
     <color name="primary">#ff9900</color>
     <color name="primary_dark">#ff9900</color>
+
     <color name="accent">#ffd500</color>
-    <color name="text_primary">#cccccc</color>
-    <color name="btn_tint_pressed">#ff9900</color>
+
+    <color name="datetext_dark">#cccccc</color>
+    <color name="datetext_light">#000000</color>
+
+    <color name="labeltext_dark">#cccccc</color>
+    <color name="labeltext_light">#000000</color>
+
+    <color name="btn_tint_pressed_dark">#ff9900</color>
+    <color name="btn_tint_pressed_light">#81009688</color>
+
     <color name="text_alertDialogListItem">#000000</color>
     <color name="grid_selected">#81009688</color>
 

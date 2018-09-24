@@ -16,7 +16,7 @@
         <item name="text_disabledColor">@color/text_disabled_light</item>
 
         <item name="text_buttonSelector">@drawable/btn_txt_light</item>
-        <item name="date_buttonSelector">@drawable/btn_datetxt</item>
+        <item name="date_buttonSelector">@drawable/btn_datetxt_light</item>
 
         <item name="graphColor_background">@color/graphColor_bg_light</item>
         <item name="graphColor_day">@color/graphColor_day_light</item>
@@ -91,7 +91,7 @@
         <item name="text_disabledColor">@color/text_disabled_dark</item>
 
         <item name="text_buttonSelector">@drawable/btn_txt_dark</item>
-        <item name="date_buttonSelector">@drawable/btn_datetxt</item>
+        <item name="date_buttonSelector">@drawable/btn_datetxt_dark</item>
 
         <item name="graphColor_background">@color/graphColor_bg_dark</item>
         <item name="graphColor_day">@color/graphColor_day_dark</item>

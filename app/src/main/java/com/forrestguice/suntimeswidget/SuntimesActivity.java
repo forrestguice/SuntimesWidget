@@ -1030,7 +1030,7 @@ public class SuntimesActivity extends AppCompatActivity
                 public boolean onTouch(View view, MotionEvent motionEvent)
                 {
                     if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                        btn_flipperNext_today.setColorFilter(ContextCompat.getColor(SuntimesActivity.this, R.color.btn_tint_pressed));
+                        btn_flipperNext_today.setColorFilter(ContextCompat.getColor(SuntimesActivity.this, R.color.btn_tint_pressed_dark));
                     } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                         btn_flipperNext_today.setColorFilter(null);
                     }
@@ -1123,7 +1123,7 @@ public class SuntimesActivity extends AppCompatActivity
                 {
                     if (motionEvent.getAction() == MotionEvent.ACTION_DOWN)
                     {
-                        btn_flipperPrev_tomorrow.setColorFilter(ContextCompat.getColor(SuntimesActivity.this, R.color.btn_tint_pressed));
+                        btn_flipperPrev_tomorrow.setColorFilter(ContextCompat.getColor(SuntimesActivity.this, R.color.btn_tint_pressed_dark));
                     } else if (motionEvent.getAction() == MotionEvent.ACTION_UP)
                     {
                         btn_flipperPrev_tomorrow.setColorFilter(null);

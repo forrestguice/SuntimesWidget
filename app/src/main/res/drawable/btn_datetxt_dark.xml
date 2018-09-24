@@ -7,10 +7,10 @@
           android:color="@color/btn_tint_pressed_dark" />
 
     <item android:state_pressed="true" android:state_enabled="false"
-          android:color="?text_disabledColor" />
+          android:color="@color/datetext_dark" />
 
     <item android:state_enabled="false"
-          android:color="?text_disabledColor" />
+          android:color="@color/datetext_dark" />
 
-    <item android:color="?text_accentColor"/>
+    <item android:color="@color/datetext_dark"/>
 </selector>
