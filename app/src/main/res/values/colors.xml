@@ -8,13 +8,13 @@
     <color name="accent">#ffd500</color>
 
     <color name="datetext_dark">#cccccc</color>
-    <color name="datetext_light">#000000</color>
+    <color name="datetext_light">#575757</color>
 
     <color name="labeltext_dark">#cccccc</color>
-    <color name="labeltext_light">#000000</color>
+    <color name="labeltext_light">#575757</color>
 
     <color name="btn_tint_pressed_dark">#ff9900</color>
-    <color name="btn_tint_pressed_light">#81009688</color>
+    <color name="btn_tint_pressed_light">#3277C7</color> <!-- #CF4800 -->
 
     <color name="text_alertDialogListItem">#000000</color>
     <color name="grid_selected">#81009688</color>
@@ -42,13 +42,13 @@
 
     <color name="warningTag_light">#ff9900</color>
     <color name="errorTag_light">#FF5252</color>
-    <color name="dstTag_light">#ffcc00</color>
+    <color name="dstTag_light">#CF4800</color>
 
     <!-- moon icons (rising, setting) -->
     <color name="moonIcon_color_rising_dark">@color/grey_50</color>
     <color name="moonIcon_color_setting_dark">@color/grey_500l</color>
-    <color name="moonIcon_color_rising_light">@color/grey_400</color>
-    <color name="moonIcon_color_setting_light">@color/grey_600</color>
+    <color name="moonIcon_color_rising_light">#537794</color> <!-- #606CCC (blue-violet), #8060CC (violet-blue), #57797A (green), #566778 -->
+    <color name="moonIcon_color_setting_light">#6B5256</color>
 
     <!-- moon icons (waxing phase, waning phase) -->
     <color name="moonIcon_color_waxing">@color/grey_300</color>
@@ -80,12 +80,13 @@
     <color name="sunIcon_color_setting_dark">#ff9900</color>
     <color name="sunIcon_color_settingBorder_dark">#ffd500</color>
 
-    <color name="sunIcon_color_rising_light">#ffcc00</color>
-    <color name="sunIcon_color_risingBorder_light">#ff9900</color>
-    <color name="sunIcon_color_setting_light">#ff9900</color>
-    <color name="sunIcon_color_settingBorder_light">#ffcc00</color>
-    <color name="sunIcon_color_noon_light">#ff9900</color>
-    <color name="sunIcon_color_noonBorder_light">#B54E00</color>
+
+    <color name="sunIcon_color_rising_light">#3277C7</color>
+    <color name="sunIcon_color_risingBorder_light">#CF4800</color>
+    <color name="sunIcon_color_noon_light">#C94700</color>
+    <color name="sunIcon_color_noonBorder_light">#ff9900</color>
+    <color name="sunIcon_color_setting_light">#CF4800</color>
+    <color name="sunIcon_color_settingBorder_light">#3277C7</color>
 
     <!-- timezone colors -->
     <array name="utcOffsetColors">
@@ -135,7 +136,7 @@
     <color name="springColor_light">#45807A</color>
     <color name="summerColor_light">#FFC107</color>
     <color name="fallColor_light">#CF461D</color>
-    <color name="winterColor_light">#176CFF</color>
+    <color name="winterColor_light">#3277C7</color>
 
     <!-- misc -->
     <color name="transparent">#00000000</color>
