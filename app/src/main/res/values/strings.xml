@@ -786,6 +786,7 @@
         <item>French</item>
         <item>German</item>
         <item>Hungarian</item>
+        <item>Italian</item>
         <item>Polish</item>
         <item>Spanish</item>
         <item>Catalan</item>
@@ -798,6 +799,7 @@
         <item>Français</item>
         <item>Deutsche</item>
         <item>Magyar</item>
+        <item>Italiano</item>
         <item>Polski</item>
         <item>Español</item>
         <item>Català</item>
@@ -810,6 +812,7 @@
         <item>fr</item>
         <item>de</item>
         <item>hu</item>
+        <item>it</item>
         <item>pl</item>
         <item>es_ES</item>
         <item>ca</item>
