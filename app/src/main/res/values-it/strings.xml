@@ -910,7 +910,16 @@
     <string name="app_support_url"><b>Support:</b> visita         <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a> per inviare una richiesta.</string>
     <string name="app_url"><xliff:g id="url" >         &lt;a href="https://forrestguice.github.io/SuntimesWidget/">forrestguice.github.io/SuntimesWidget&lt;/a>     </xliff:g></string>
     <string name="app_legal1">&lt;b>Codice sorgente:&lt;/b>&lt;br />         Copyright &amp;#169 2014-2018 Forrest Guice &lt;br />         Codice sorgente disponibile con licenza GPLv3.</string>
-    <string name="app_legal2">&lt;b>Traduzioni:&lt;/b>&lt;br/>         Traduzione in italiano di Matteo Caoduro. &lt;br />         Traduzione in tedesco di Henrik "HerHde" Hüttemann e Wolkenschieber. &lt;br />         Traduzioni in polacco ed esperanto  di Verdulo>         Traduzione in francese di Jej &amp; Aloha. &lt;br />         Traduzione in ungherese di Erci. &lt;br />         Traduzioni in spagnolo e catalano di &lt;a href=https://github.com/Raulvo>Raulvo&lt;/a>. &lt;br />         Traduzione in Basco di beriain. &lt;br />         Traduzione in norvegese di FTno.</string>
+    <string name="app_legal2"><![CDATA[<b>Traduzioni:</b><br/>
+        Traduzione in italiano di Matteo Caoduro. <br />
+        Traduzione in tedesco di Henrik "HerHde" Hüttemann e Wolkenschieber. <br />
+        Traduzioni in polacco ed esperanto di Verdulo <br/>
+        Traduzione in francese di Jej &amp; Aloha. <br />
+        Traduzione in ungherese di Erci. <br />
+        Traduzioni in spagnolo e catalano di <a href="https://github.com/Raulvo">Raulvo</a>. <br />
+        Traduzione in Basco di beriain. <br />
+        Traduzione in norvegese di FTno.
+    ]]></string>
     <string name="app_legal3"><b>Librerie:</b><br/>       github.com/MenoData/Time4A   <br />       github.com/mikereedell/sunrisesunsetlib-java   <br />       github.com/caarmen/SunriseSunset   <br />       github.com/QuadFlask/colorpicker</string>
 
     <!-- Dialog: Help -->
