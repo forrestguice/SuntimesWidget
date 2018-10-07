@@ -520,8 +520,8 @@
     <!--App Setting: WidgetList -->
     <string name="configLabel_widgetList">Widget</string>               <!-- group title -->
     <string name="configLabel_widgetList_itemTitle"><xliff:g id="widgetTitle" >%s</xliff:g></string>
-    <string name="configLabel_widgetList_itemTitlePattern" formatted="false"><xliff:g id="titlePattern" >%M (%loc) [%t]</xliff:g></string> <!-- the pattern used when generating sun widget titles -->
-    <string name="configLabel_widgetList_itemTitlePattern1" formatted="false"><xliff:g id="titlePattern" >%loc [%t]</xliff:g></string> <!-- the pattern used when generating sun widget titles -->
+    <string name="configLabel_widgetList_itemTitlePattern" formatted="false"><xliff:g id="titlePattern" ><![CDATA[%M (%loc) [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
+    <string name="configLabel_widgetList_itemTitlePattern1" formatted="false"><xliff:g id="titlePattern" ><![CDATA[%loc [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
     <string name="configLabel_widgetList_itemSummaryPattern"><xliff:g id="widgetType" >%1$s</xliff:g> [<xliff:g id="datasource" >%2$s</xliff:g>]</string>
     <string name="configLabel_widgetListHelp_title">Aiuto</string>               <!-- always the first item in the widgetList -->
     <string name="configLabel_widgetListHelp_summary">Mostra aiuto per il widget</string>
@@ -861,7 +861,7 @@
     <string name="location_dialog_error_lon">Questa non è una longitudine valida.</string>
     <string name="location_dialog_error_alt">Questa non è una quota valida.</string>
 
-    <string name="location_dialog_toast_copied">Copiato nella clipboard&lt;br/><xliff:g id="value" >%1$s</xliff:g></string>
+    <string name="location_dialog_toast_copied">Copiato nella clipboard<![CDATA[<br/>]]><xliff:g id="value" >%1$s</xliff:g></string>
 
     <!-- Dialog: Clear Places -->
     <string name="locationclear_dialog_title">Elimina luoghi?</string>
@@ -905,12 +905,22 @@
     <string name="app_name_widget2">Widget posizione del sole</string>
     <string name="app_name_solsticewidget0">Widget solstizio</string>
     <string name="app_name_moonwidget0">Widget luna</string>
-    <string name="app_version">&lt;b>Versione:&lt;/b> <xliff:g id="versionString" >%s</xliff:g></string>
+    <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString" >%s</xliff:g></string>
     <string name="app_shortdesc">Visualizza orari di luce solare e luce lunare.</string>
-    <string name="app_support_url"><b>Support:</b> visita         <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a> per inviare una richiesta.</string>
-    <string name="app_url"><xliff:g id="url" >         &lt;a href="https://forrestguice.github.io/SuntimesWidget/">forrestguice.github.io/SuntimesWidget&lt;/a>     </xliff:g></string>
-    <string name="app_legal1">&lt;b>Codice sorgente:&lt;/b>&lt;br />         Copyright &amp;#169 2014-2018 Forrest Guice &lt;br />         Codice sorgente disponibile con licenza GPLv3.</string>
-    <string name="app_legal2"><![CDATA[<b>Traduzioni:</b><br/>
+    <string name="app_support_url"><![CDATA[
+        <b>Support:</b> visita
+        <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a> per inviare una richiesta.
+    ]]></string>
+    <string name="app_url"><xliff:g id="url" ><![CDATA[
+             <a href="https://forrestguice.github.io/SuntimesWidget/">forrestguice.github.io/SuntimesWidget</a>
+    ]]></xliff:g></string>
+    <string name="app_legal1"><![CDATA[
+        <b>Codice sorgente:</b><br />
+        Copyright &#169 2014-2018 Forrest Guice <br />
+        Codice sorgente disponibile con licenza GPLv3.
+    ]]></string>
+    <string name="app_legal2"><![CDATA[
+        <b>Traduzioni:</b><br/>
         Traduzione in italiano di Matteo Caoduro. <br />
         Traduzione in tedesco di Henrik "HerHde" Hüttemann e Wolkenschieber. <br />
         Traduzioni in polacco ed esperanto di Verdulo <br/>
@@ -920,32 +930,106 @@
         Traduzione in Basco di beriain. <br />
         Traduzione in norvegese di FTno.
     ]]></string>
-    <string name="app_legal3"><b>Librerie:</b><br/>       github.com/MenoData/Time4A   <br />       github.com/mikereedell/sunrisesunsetlib-java   <br />       github.com/caarmen/SunriseSunset   <br />       github.com/QuadFlask/colorpicker</string>
+    <string name="app_legal3"><![CDATA[ <b>Librerie:</b><br/> ]]>
+    <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
+    <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>
+    <![CDATA[ github.com/caarmen/SunriseSunset ]]> <![CDATA[ <br /> ]]>
+    <![CDATA[ github.com/QuadFlask/colorpicker ]]>
+    </string>
 
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Aiuto</string>
-    <string name="help_appearance_title">Sono supportate le seguenti sostituzioni di titolo:<br/>         <br/>         <b>Tutti i widget:</b> <br />                 * <b>%d</b> per data (e.g. 12 febbraio) <br/>                 * <b>%dd</b> per giorno (breve) (e.g. lun) <br/>                 * <b>%dD</b> per giorno (esteso) (e.g. lunedì) <br/>                 * <b>%dY</b> per anno (e.g. 2018) <br/>                 * <b>%dt</b> per orario (dell\'ultimo aggiornamento) <br/>                 * <b>%dT</b> per orario con secondi (dell\'ultimo aggiornamento) <br/>                 <br/>                 * <b>%loc</b> per etichetta (e.g. Prescott) <br />                 * <b>%lat</b> per latitudine (e.g. 35.5409) <br />                 * <b>%lon</b> per longitudine (e.g. -112.4691) <br/>                 * <b>%lel</b> per altitudine (e.g. 385 metri) <br/>                 <br/>                 * <b>%s</b> per sorgente dati (e.g. sunrisesunsetlib) <br/>                 * <b>%t</b> per fuso orario (id) (e.g. US/Arizona) <br/>                 * <b>%id</b> per appWidgetID <br/>          <br/>          <b>Widget solari:</b> <br/>                 * <b>%m</b> per modalità (breve) (e.g. civile) <br/>                 * <b>%M</b> per modalità (esteso) (e.g. crepuscolo civile) <br/>          <br/>          <b>Widget lunari:</b> <br/>                 * <b>%i</b> per illuminazione lunare (e.g. 25%) <br/>                 * <b>%M</b> per fase lunare (e.g. luna crescente) <br/>          <br/>          <b>Widget dei solstizi:</b> <br/>                 * <b>%m</b> per modalità (breve) (e.g. solstizio) <br/>                 * <b>%M</b> per modalità (esteso) (e.g. solstizio d\'inverno) <br/></string>
+    <string name="help_appearance_title"><![CDATA[
+        Sono supportate le seguenti sostituzioni di titolo:<br/>
+        <br/>
+        <b>Tutti i widget:</b> <br />
+        * <b>%d</b> per data (e.g. 12 febbraio) <br/>
+        * <b>%dd</b> per giorno (breve) (e.g. lun) <br/>
+        * <b>%dD</b> per giorno (esteso) (e.g. lunedì) <br/>
+        * <b>%dY</b> per anno (e.g. 2018) <br/>
+        * <b>%dt</b> per orario (dell\'ultimo aggiornamento) <br/>
+        * <b>%dT</b> per orario con secondi (dell\'ultimo aggiornamento) <br/>
+        <br/>
+        * <b>%loc</b> per etichetta (e.g. Prescott) <br />
+        * <b>%lat</b> per latitudine (e.g. 35.5409) <br />
+        * <b>%lon</b> per longitudine (e.g. -112.4691) <br/>
+        * <b>%lel</b> per altitudine (e.g. 385 metri) <br/>
+        <br/>
+        * <b>%s</b> per sorgente dati (e.g. sunrisesunsetlib) <br/>
+        * <b>%t</b> per fuso orario (id) (e.g. US/Arizona) <br/>
+        * <b>%id</b> per appWidgetID <br/>
+        <br/>
+        <b>Widget solari:</b> <br/>
+        * <b>%m</b> per modalità (breve) (e.g. civile) <br/>
+        * <b>%M</b> per modalità (esteso) (e.g. crepuscolo civile) <br/>
+        <br/>
+        <b>Widget lunari:</b> <br/>
+        * <b>%i</b> per illuminazione lunare (e.g. 25%) <br/>
+        * <b>%M</b> per fase lunare (e.g. luna crescente) <br/>
+        <br/>
+        <b>Widget dei solstizi:</b> <br/>
+        * <b>%m</b> per modalità (breve) (e.g. solstizio) <br/>
+        * <b>%M</b> per modalità (esteso) (e.g. solstizio d\'inverno) <br/>
+    ]]></string>
 
-    <string name="help_general2"><xliff:g id="help_topic1" >%1$s</xliff:g>&lt;br />         <xliff:g id="help_topic2" >%2$s</xliff:g></string>
-    <string name="help_general3"><xliff:g id="help_topic1" >%1$s</xliff:g>&lt;br />         <xliff:g id="help_topic2" >%2$s</xliff:g>&lt;br />         <xliff:g id="help_topic3" >%3$s</xliff:g></string>
-    <string name="help_general4"><xliff:g id="help_topic1" >%1$s</xliff:g>&lt;br />         <xliff:g id="help_topic2" >%2$s</xliff:g>&lt;br />         <xliff:g id="help_topic3" >%3$s</xliff:g>&lt;br />         <xliff:g id="help_topic4" >%4$s</xliff:g></string>
+    <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
+        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic2">%2$s</xliff:g>
+    </string>
+    <string name="help_general3">  <!-- general app help; composites a couple help topics together. -->
+        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic2">%2$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic3">%3$s</xliff:g>
+    </string>
+    <string name="help_general4">  <!-- general app help; composites a couple help topics together. -->
+        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic2">%2$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic3">%3$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic4">%4$s</xliff:g>
+    </string>
 
-    <string name="help_general_timeMode"><b>Orario effettivo:</b> Il sole è all\'orizzonte; questo è l\'orario approssimativo di alba e tramonto.<br/><br/>           <b>Crepuscolo civile:</b> Il sole è 6 gradi al di sotto dell\'orizzonte; le stelle più luminose sono visibili. C\'è abbastanza luce per la maggior parte delle attività all\'aperto, senza bisogno di una fonte luminosa.<br/><br/>           <b>Crepuscolo nautico:</b> Il sole è 12 gradi al di sotto dell\'orizzonte; è sempre più difficoltoso discernere i bordi degli oggetti e l\'orizzonte. Non c\'è abbastanza luce per la maggior parte delle attività all\'aperto, senza l\'utilizzo di una fonte luminosa.<br/><br/>           <b>Crepuscolo astronomico:</b> Il sole è 18 gradi al di sotto dell\'orizzonte. Pressoché il buio della notte.<br/></string>
+    <string name="help_general_timeMode"><![CDATA[
+        <b>Orario effettivo:</b> Il sole è all\'orizzonte; questo è l\'orario approssimativo di alba e tramonto.<br/><br/>
+        <b>Crepuscolo civile:</b> Il sole è 6 gradi al di sotto dell\'orizzonte; le stelle più luminose sono visibili. C\'è abbastanza luce per la maggior parte delle attività all\'aperto, senza bisogno di una fonte luminosa.<br/><br/>
+        <b>Crepuscolo nautico:</b> Il sole è 12 gradi al di sotto dell\'orizzonte; è sempre più difficoltoso discernere i bordi degli oggetti e l\'orizzonte. Non c\'è abbastanza luce per la maggior parte delle attività all\'aperto, senza l\'utilizzo di una fonte luminosa.<br/><br/>
+        <b>Crepuscolo astronomico:</b> Il sole è 18 gradi al di sotto dell\'orizzonte. Pressoché il buio della notte.<br/>
+    ]]></string>
+    <string name="help_general_timeMode2"><![CDATA[
+        <b>Equinozio di primavera:</b> TODO.<br/><br/>
+        <b>Solstizio d\'estate:</b> TODO.<br/><br/>
+        <b>Equinozio d\'autunno:</b> TODO.<br/><br/>
+        <b>Solstizio d\'inverno:</b> TODO.<br/>
+    ]]></string>
+    <string name="help_general_daylength"><![CDATA[
+        <b>Lunghezza della giornata:</b> L\'intervallo di tempo che intercorre tra l\'alba e il tramonto.<br/><br/>
+        <b>Luce disponibile:</b> L\'intervallo di tempo che intercorre tra il crepuscolo civile mattutino e il crepuscolo civile serale.<br/>
+    ]]></string>
+    <string name="help_general_moonillum"><![CDATA[
+        <b>Illuminazione lunare:</b> I widget lunari e la pagina principale mostrano l\'illuminazione della luna durante il mezzogiorno lunare (il punto intermedio tra l\'alba e il tramonto lunari), mentre la finestra di dialogo relativa alla luna mostra l\'illuminazione corrente della luna.<br/><br/>
+     ]]></string>
 
-    <string name="help_general_timeMode2"><b>Equinozio di primavera:</b> TODO.<br/><br/>           <b>Solstizio d\'estate:</b> TODO.<br/><br/>           <b>Equinozio d\'autunno:</b> TODO.<br/><br/>           <b>Solstizio d\'inverno:</b> TODO.<br/></string>
-    <string name="help_general_daylength"><b>Lunghezza della giornata:</b> L\'intervallo di tempo che intercorre tra l\'alba e il tramonto.<br/><br/>         <b>Luce disponibile:</b> L\'intervallo di tempo che intercorre tra il crepuscolo civile mattutino e il crepuscolo civile serale.<br/></string>
-    <string name="help_general_moonillum"><b>Illuminazione lunare:</b> I widget lunari e la pagina principale mostrano l\'illuminazione della luna durante il mezzogiorno lunare (il punto intermedio tra l\'alba e il tramonto lunari), mentre la finestra di dialogo relativa alla luna mostra l\'illuminazione corrente della luna.<br/><br/></string>
-    <string name="help_general_goldhour"><b>Ora d\'oro:</b> Il sole è scostato dall\'orizzonte di massimo ±6 gradi. Al mattino l\'ora d\'oro inizia con il crepuscolo civile e finisce poco dopo l\'alba. Di sera l\'ora d\'oro inizia poco prima del tramonto e termina con il crepuscolo civile.<br/></string>
-    <string name="help_general_bluehour"><b>Ora blu:</b> Il sole si trova in una posizione compresa tra 8 gradi e 4 gradi al di sotto dell\'orizzonte. L\'inizio e la fine dell\'ora blu cadono tra il crepuscolo nautico e quello civile.<br/></string>
-    <string name="help_action_launch">Il nome completo dell\'attività da avviare.<br/></string>
-    <string name="help_widgetlist">Per <b>aggiungere un nuovo widget</b> devi recarti sulla schermata principale.<br/><br/>           Per <b>riconfigurare un widget esistente</b> puoi selezionarlo dalla lista seguente.<br/></string>
+    <string name="help_general_goldhour"><![CDATA[
+        <b>Ora d\'oro:</b> Il sole è scostato dall\'orizzonte di massimo ±6 gradi. Al mattino l\'ora d\'oro inizia con il crepuscolo civile e finisce poco dopo l\'alba. Di sera l\'ora d\'oro inizia poco prima del tramonto e termina con il crepuscolo civile.<br/>
+    ]]></string>
+    <string name="help_general_bluehour"><![CDATA[
+        <b>Ora blu:</b> Il sole si trova in una posizione compresa tra 8 gradi e 4 gradi al di sotto dell\'orizzonte. L\'inizio e la fine dell\'ora blu cadono tra il crepuscolo nautico e quello civile.<br/>
+    ]]></string>
+    <string name="help_action_launch"><![CDATA[
+        Il nome completo dell\'attività da avviare.<br/>
+    ]]></string>
+    <string name="help_widgetlist"><![CDATA[
+        Per <b>aggiungere un nuovo widget</b> devi recarti sulla schermata principale.<br/><br/>
+        Per <b>riconfigurare un widget esistente</b> puoi selezionarlo dalla lista seguente.<br/>
+    ]]></string>
 
-    <string name="privacy_policy">&lt;b>Privacy:&lt;/b>&lt;br/>Suntimes non raccoglie, memorizza, né trasmette dati personali dell\'utente. Non contiene &lt;b>nessuna pubblicità&lt;/b>, &lt;b>nessuna analitica&lt;/b>, &lt;b>nessun tracker&lt;/b>, e &lt;b>nessun permesso superfluo&lt;/b>. &lt;br/>&lt;br/>L\'applicazione si configura in base alla località.  Queste informazioni (e altri dati di configurazione utilizzati dall\'applicazione) sono memorizzate localmente e non vengono trasmesse altrove.&lt;br/>&lt;br/><xliff:g id="permissionsExplained">%1$s</xliff:g></string>
-    <string name="privacy_permission_location">Suntimes utilizza il permesso di accesso alla <b>posizione</b> per determinare la tua latitudine e longitudine correnti.<br/><br/> Questo permesso è opzionale; la posizione viene configurata manualmente di default.</string>
-    <string name="privacy_permission_calendar">Suntimes utilizza i permessi di accesso al <b>calendario</b> per integrarsi con l\'applicazione Calendario. Questi permessi consentono all\'applicazione di creare calendari propri ed eventi.<br/><br/>I permessi sono anche utilizzati quando si disattivano le integrazioni con il calendario (per rimuovere i calendari creati).</string>
-    <string name="privacy_permission_storage">Suntimes utilizza il permesso di accesso alla <b>memoria esterna</b> per effettuare backup e esportare dati su file (e.g. località, temi).</string>
+    <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>Suntimes non raccoglie, memorizza, né trasmette dati personali dell\'utente. Non contiene <b>nessuna pubblicità</b>, <b>nessuna analitica</b>, <b>nessun tracker</b>, e <b>nessun permesso superfluo</b>. <br/><br/>L\'applicazione si configura in base alla località.  Queste informazioni (e altri dati di configurazione utilizzati dall\'applicazione) sono memorizzate localmente e non vengono trasmesse altrove.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
+    <string name="privacy_permission_location"><![CDATA[Suntimes utilizza il permesso di accesso alla <b>posizione</b> per determinare la tua latitudine e longitudine correnti.<br/><br/> Questo permesso è opzionale; la posizione viene configurata manualmente di default.]]></string>
+    <string name="privacy_permission_calendar"><![CDATA[Suntimes utilizza i permessi di accesso al <b>calendario</b> per integrarsi con l\'applicazione Calendario. Questi permessi consentono all\'applicazione di creare calendari propri ed eventi.<br/><br/>I permessi sono anche utilizzati quando si disattivano le integrazioni con il calendario (per rimuovere i calendari creati).]]></string>
+    <string name="privacy_permission_storage"><![CDATA[Suntimes utilizza il permesso di accesso alla <b>memoria esterna</b> per effettuare backup e esportare dati su file (e.g. località, temi).]]></string>
     <string name="privacy_permissiondialog_title">Permessi</string>
-    <string name="privacy_url"><xliff:g id="url" >         &lt;a href="https://github.com/forrestguice/SuntimesWidget/wiki/Privacy">github.com/forrestguice/SuntimesWidget/wiki/Privacy&lt;/a>     </xliff:g></string>
+    <string name="privacy_url"><xliff:g id="url" ><![CDATA[
+        <a href="https://github.com/forrestguice/SuntimesWidget/wiki/Privacy">github.com/forrestguice/SuntimesWidget/wiki/Privacy</a>
+    ]]></xliff:g></string>
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
