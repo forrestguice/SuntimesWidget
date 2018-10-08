@@ -82,13 +82,25 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/appwidget_timezone_extras0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textSize="12sp"
-            tools:text="timezone extras" />
+        <LinearLayout
+            android:id="@+id/appwidget_timezone_extrasgroup"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:layout_marginTop="0dp"
+            android:paddingTop="@dimen/settingsGroup_padding">
+
+            <View android:layout_width="match_parent" android:layout_height="2dp"
+                style="@style/SunsetTimeHorizontalRule"
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:id="@+id/appwidget_timezone_extras0"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="12sp"
+                android:paddingTop="@dimen/settingsGroup_padding"
+                tools:text="timezone extras" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
