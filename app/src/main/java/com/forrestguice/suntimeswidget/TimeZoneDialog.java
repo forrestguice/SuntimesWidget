@@ -63,6 +63,7 @@ public class TimeZoneDialog extends DialogFragment
     public static final String KEY_TIMEZONE_MODE = "timezoneMode";
     public static final String KEY_TIMEZONE_ID = "timezoneID";
     public static final String KEY_SOLARTIME_MODE = "solartimeMode";
+    public static final String KEY_NOW = "paramNow";
 
     private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     private String customTimezoneID;
@@ -84,6 +85,12 @@ public class TimeZoneDialog extends DialogFragment
 
     private WidgetTimezones.TimeZoneItemAdapter spinner_timezone_adapter;
     private boolean loading = false;
+
+    private Calendar now = Calendar.getInstance();
+    public void setNow( Calendar now )
+    {
+        this.now = now;
+    }
 
     @SuppressWarnings({"deprecation","RestrictedApi"})
     @NonNull @Override
@@ -265,7 +272,6 @@ public class TimeZoneDialog extends DialogFragment
             {
                 WidgetTimezones.TimeZoneItem item = (WidgetTimezones.TimeZoneItem)parent.getItemAtPosition(position);
                 TimeZone timezone = TimeZone.getTimeZone(item.getID());
-                Calendar now = Calendar.getInstance(); // TODO
 
                 boolean usesDST = (Build.VERSION.SDK_INT < 24 ? timezone.useDaylightTime() : timezone.observesDaylightTime());
                 boolean inDST = usesDST && timezone.inDaylightTime(now.getTime());
@@ -474,6 +480,11 @@ public class TimeZoneDialog extends DialogFragment
             WidgetSettings.SolarTimeMode solartimeMode = WidgetSettings.SolarTimeMode.valueOf(solarModeString);
             spinner_solartime.setSelection(solartimeMode.ordinal());
         }
+
+        // now
+        long nowMillis = bundle.getLong(KEY_NOW, Calendar.getInstance().getTimeInMillis());
+        now = Calendar.getInstance();
+        now.setTimeInMillis(nowMillis);
     }
 
     /**
@@ -520,6 +531,11 @@ public class TimeZoneDialog extends DialogFragment
         if (solarTimeMode != null)
         {
             bundle.putString(KEY_SOLARTIME_MODE, solarTimeMode.name());
+        }
+
+        // now
+        if (now != null) {
+            bundle.putLong(KEY_NOW, now.getTimeInMillis());
         }
     }
 
