@@ -29,6 +29,8 @@ import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
 
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Log;
@@ -76,6 +78,7 @@ public class TimeZoneDialog extends DialogFragment
     private Spinner spinner_solartime;
     private Object actionMode = null;
 
+    private View layout_timezoneExtras;
     private TextView label_tzExtras0;
     private SuntimesUtils utils;
 
@@ -245,6 +248,7 @@ public class TimeZoneDialog extends DialogFragment
         spinner_solartime = (Spinner) dialogContent.findViewById(R.id.appwidget_solartime);
         spinner_solartime.setAdapter(spinner_solartimeAdapter);
 
+        layout_timezoneExtras = dialogContent.findViewById(R.id.appwidget_timezone_extrasgroup);
         label_tzExtras0 = (TextView) dialogContent.findViewById(R.id.appwidget_timezone_extras0);
     }
 
@@ -257,7 +261,7 @@ public class TimeZoneDialog extends DialogFragment
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
         {
             Context context = getContext();
-            if (label_tzExtras0 != null && context != null)
+            if (layout_timezoneExtras != null && label_tzExtras0 != null && context != null)
             {
                 WidgetTimezones.TimeZoneItem item = (WidgetTimezones.TimeZoneItem)parent.getItemAtPosition(position);
                 TimeZone timezone = TimeZone.getTimeZone(item.getID());
@@ -270,10 +274,15 @@ public class TimeZoneDialog extends DialogFragment
                     SuntimesUtils.TimeDisplayText dstSavings = utils.timeDeltaLongDisplayString(0L, (long)timezone.getDSTSavings(), false, true, false);
                     ImageSpan dstIcon = SuntimesUtils.createDstSpan(context, 24, 24);
                     String dstString = (dstSavings.getRawValue() < 0 ? "-" : "+") + dstSavings.getValue();
-                    SpannableStringBuilder dstSpan = SuntimesUtils.createSpan(context, getString(R.string.timezoneExtraDST, dstString), SuntimesUtils.SPANTAG_DST, dstIcon);
-                    label_tzExtras0.setText(dstSpan);
+                    String extrasString = getString(R.string.timezoneExtraDST, dstString);
+
+                    SpannableStringBuilder extrasSpan = SuntimesUtils.createSpan(context, extrasString, SuntimesUtils.SPANTAG_DST, dstIcon);
+                    SpannableString boldedExtrasSpan = SuntimesUtils.createBoldSpan(SpannableString.valueOf(extrasSpan), extrasString, dstString);
+                    label_tzExtras0.setText(boldedExtrasSpan);
+                    layout_timezoneExtras.setVisibility(View.VISIBLE);
 
                 } else {
+                    layout_timezoneExtras.setVisibility(View.GONE);
                     label_tzExtras0.setText("");
                 }
             }
