@@ -86,7 +86,7 @@
             android:id="@+id/appwidget_timezone_extrasgroup"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="vertical" android:layout_marginTop="0dp"
-            android:paddingTop="@dimen/settingsGroup_padding">
+            android:paddingTop="@dimen/settingsGroup_padding" android:visibility="gone">
 
             <View android:layout_width="match_parent" android:layout_height="2dp"
                 style="@style/SunsetTimeHorizontalRule"
