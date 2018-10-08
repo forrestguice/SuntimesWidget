@@ -77,6 +77,7 @@ public class TimeZoneDialog extends DialogFragment
     private Object actionMode = null;
 
     private TextView label_tzExtras0;
+    private SuntimesUtils utils;
 
     private WidgetTimezones.TimeZoneItemAdapter spinner_timezone_adapter;
     private boolean loading = false;
@@ -188,6 +189,8 @@ public class TimeZoneDialog extends DialogFragment
     protected void initViews( Context context, View dialogContent )
     {
         WidgetSettings.initDisplayStrings(context);
+        SuntimesUtils.initDisplayStrings(context);
+        utils = new SuntimesUtils();
 
         layout_timezone = (LinearLayout) dialogContent.findViewById(R.id.appwidget_timezone_custom_layout);
         label_timezone = (TextView) dialogContent.findViewById(R.id.appwidget_timezone_custom_label);
@@ -264,14 +267,11 @@ public class TimeZoneDialog extends DialogFragment
                 boolean inDST = usesDST && timezone.inDaylightTime(now.getTime());
                 if (inDST)
                 {
-                    SuntimesUtils.initDisplayStrings(context);
-                    SuntimesUtils utils = new SuntimesUtils();
                     SuntimesUtils.TimeDisplayText dstSavings = utils.timeDeltaLongDisplayString(0L, (long)timezone.getDSTSavings(), false, true, false);
-
                     ImageSpan dstIcon = SuntimesUtils.createDstSpan(context, 24, 24);
-                    String dstString = SuntimesUtils.SPANTAG_DST + " " + "Daylight Saving (" + (dstSavings.getRawValue() < 0 ? "-" : "+") + dstSavings.getValue() + ")";   // TODO: i18n
-                    SpannableStringBuilder extrasSpan = SuntimesUtils.createSpan(context, dstString, SuntimesUtils.SPANTAG_DST, dstIcon);
-                    label_tzExtras0.setText(extrasSpan);
+                    String dstString = (dstSavings.getRawValue() < 0 ? "-" : "+") + dstSavings.getValue();
+                    SpannableStringBuilder dstSpan = SuntimesUtils.createSpan(context, getString(R.string.timezoneExtraDST, dstString), SuntimesUtils.SPANTAG_DST, dstIcon);
+                    label_tzExtras0.setText(dstSpan);
 
                 } else {
                     label_tzExtras0.setText("");
@@ -280,9 +280,7 @@ public class TimeZoneDialog extends DialogFragment
         }
 
         @Override
-        public void onNothingSelected(AdapterView<?> parent)
-        {
-        }
+        public void onNothingSelected(AdapterView<?> parent) {}
     };
 
     /**
