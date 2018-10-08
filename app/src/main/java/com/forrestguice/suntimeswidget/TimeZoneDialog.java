@@ -29,6 +29,9 @@ import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
 
+import android.text.SpannableStringBuilder;
+import android.text.style.ImageSpan;
+import android.util.Log;
 import android.util.TypedValue;
 
 import android.support.annotation.NonNull;
@@ -49,6 +52,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
+import java.util.Calendar;
 import java.util.TimeZone;
 
 @SuppressWarnings("Convert2Diamond")
@@ -71,6 +75,8 @@ public class TimeZoneDialog extends DialogFragment
     private TextView label_solartime;
     private Spinner spinner_solartime;
     private Object actionMode = null;
+
+    private TextView label_tzExtras0;
 
     private WidgetTimezones.TimeZoneItemAdapter spinner_timezone_adapter;
     private boolean loading = false;
@@ -174,6 +180,11 @@ public class TimeZoneDialog extends DialogFragment
         super.onSaveInstanceState(outState);
     }
 
+    /**
+     * initViews
+     * @param context
+     * @param dialogContent
+     */
     protected void initViews( Context context, View dialogContent )
     {
         WidgetSettings.initDisplayStrings(context);
@@ -193,6 +204,7 @@ public class TimeZoneDialog extends DialogFragment
         View spinner_timezone_empty = dialogContent.findViewById(R.id.appwidget_timezone_custom_empty);
         label_timezone = (TextView) dialogContent.findViewById(R.id.appwidget_timezone_custom_label);
         spinner_timezone = (Spinner) dialogContent.findViewById(R.id.appwidget_timezone_custom);
+        spinner_timezone.setOnItemSelectedListener(onTimeZoneSelected);
 
         spinner_timezone.setEmptyView(spinner_timezone_empty);
         spinner_timezone.setOnLongClickListener(new View.OnLongClickListener()
@@ -229,8 +241,53 @@ public class TimeZoneDialog extends DialogFragment
 
         spinner_solartime = (Spinner) dialogContent.findViewById(R.id.appwidget_solartime);
         spinner_solartime.setAdapter(spinner_solartimeAdapter);
+
+        label_tzExtras0 = (TextView) dialogContent.findViewById(R.id.appwidget_timezone_extras0);
     }
 
+    /**
+     * onTimeZoneSelected
+     */
+    private AdapterView.OnItemSelectedListener onTimeZoneSelected = new AdapterView.OnItemSelectedListener()
+    {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+        {
+            Context context = getContext();
+            if (label_tzExtras0 != null && context != null)
+            {
+                WidgetTimezones.TimeZoneItem item = (WidgetTimezones.TimeZoneItem)parent.getItemAtPosition(position);
+                TimeZone timezone = TimeZone.getTimeZone(item.getID());
+                Calendar now = Calendar.getInstance(); // TODO
+
+                boolean usesDST = (Build.VERSION.SDK_INT < 24 ? timezone.useDaylightTime() : timezone.observesDaylightTime());
+                boolean inDST = usesDST && timezone.inDaylightTime(now.getTime());
+                if (inDST)
+                {
+                    SuntimesUtils.initDisplayStrings(context);
+                    SuntimesUtils utils = new SuntimesUtils();
+                    SuntimesUtils.TimeDisplayText dstSavings = utils.timeDeltaLongDisplayString(0L, (long)timezone.getDSTSavings(), false, true, false);
+
+                    ImageSpan dstIcon = SuntimesUtils.createDstSpan(context, 24, 24);
+                    String dstString = SuntimesUtils.SPANTAG_DST + " " + "Daylight Saving (" + (dstSavings.getRawValue() < 0 ? "-" : "+") + dstSavings.getValue() + ")";   // TODO: i18n
+                    SpannableStringBuilder extrasSpan = SuntimesUtils.createSpan(context, dstString, SuntimesUtils.SPANTAG_DST, dstIcon);
+                    label_tzExtras0.setText(extrasSpan);
+
+                } else {
+                    label_tzExtras0.setText("");
+                }
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent)
+        {
+        }
+    };
+
+    /**
+     * onTimeZoneModeSelected
+     */
     private Spinner.OnItemSelectedListener onTimeZoneModeSelected = new Spinner.OnItemSelectedListener()
     {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
