@@ -139,7 +139,8 @@ French translation by <u>Jej</u> and <u>Aloha</u>.<br/>
 Hungarian translation by <u>Erci</u>.<br/>
 Catalan and Spanish translations by <u><a href="https://github.com/Raulvo">Raulvo</a></u>.<br/>
 Basque translation by <u>beriain</u>.<br/>
-Norwegian translation by <u>FTno</u>.
+Norwegian translation by <u>FTno</u>.<br/>
+Italian translation by <u>Matteo Caoduro</u>.
 
 [Contributions to the project](CONTRIBUTING.md) are welcome.
 
