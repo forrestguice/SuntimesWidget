@@ -2,6 +2,7 @@
 
 ###
 * adds dst label to timezone dialog; displayed when selected timezone is using daylight saving time.
+* adds eot label to timezone dialog; displayed for apparent solar time.
 
 ### v0.9.2 (2018-09-12)
 * adds altitude ui to the datasource card; toggles altitude (hidden when datasource lacks support) (#245).
