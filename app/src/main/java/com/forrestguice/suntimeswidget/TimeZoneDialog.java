@@ -263,10 +263,48 @@ public class TimeZoneDialog extends DialogFragment
 
         spinner_solartime = (Spinner) dialogContent.findViewById(R.id.appwidget_solartime);
         spinner_solartime.setAdapter(spinner_solartimeAdapter);
+        spinner_solartime.setOnItemSelectedListener(onSolarTimeSelected);
 
         layout_timezoneExtras = dialogContent.findViewById(R.id.appwidget_timezone_extrasgroup);
         label_tzExtras0 = (TextView) dialogContent.findViewById(R.id.appwidget_timezone_extras0);
     }
+
+    /**
+     * onSolarTimeSelected
+     */
+    private AdapterView.OnItemSelectedListener onSolarTimeSelected = new AdapterView.OnItemSelectedListener()
+    {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+        {
+            Context context = getContext();
+            if (layout_timezoneExtras != null && label_tzExtras0 != null && context != null)
+            {
+                WidgetSettings.SolarTimeMode item = (WidgetSettings.SolarTimeMode)parent.getItemAtPosition(position);
+                if (item == WidgetSettings.SolarTimeMode.APPARENT_SOLAR_TIME)
+                {
+                    TimeZone apparentSolarTime = new WidgetTimezones.ApparentSolarTime(longitude, WidgetTimezones.ApparentSolarTime.TIMEZONEID);
+
+                    SuntimesUtils.TimeDisplayText offset = utils.timeDeltaLongDisplayString(0L, (long)apparentSolarTime.getDSTSavings(), false, true, false);
+                    ImageSpan icon = SuntimesUtils.createDstSpan(context, 24, 24);
+                    String offsetString = (offset.getRawValue() < 0 ? "-" : "+") + offset.getValue();
+                    String extrasString = getString(R.string.timezoneExtraApparentSolar, offsetString);
+
+                    SpannableStringBuilder extrasSpan = SuntimesUtils.createSpan(context, extrasString, SuntimesUtils.SPANTAG_DST, icon);
+                    SpannableString boldedExtrasSpan = SuntimesUtils.createBoldSpan(SpannableString.valueOf(extrasSpan), extrasString, offsetString);
+                    label_tzExtras0.setText(boldedExtrasSpan);
+                    layout_timezoneExtras.setVisibility(View.VISIBLE);
+
+                } else {
+                    layout_timezoneExtras.setVisibility(View.GONE);
+                    label_tzExtras0.setText("");
+                }
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {}
+    };
 
     /**
      * onTimeZoneSelected
