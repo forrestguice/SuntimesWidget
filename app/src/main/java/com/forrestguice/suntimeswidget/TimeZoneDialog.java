@@ -226,7 +226,6 @@ public class TimeZoneDialog extends DialogFragment
         View spinner_timezone_empty = dialogContent.findViewById(R.id.appwidget_timezone_custom_empty);
         label_timezone = (TextView) dialogContent.findViewById(R.id.appwidget_timezone_custom_label);
         spinner_timezone = (Spinner) dialogContent.findViewById(R.id.appwidget_timezone_custom);
-        spinner_timezone.setOnItemSelectedListener(onTimeZoneSelected);
 
         spinner_timezone.setEmptyView(spinner_timezone_empty);
         spinner_timezone.setOnLongClickListener(new View.OnLongClickListener()
@@ -263,10 +262,62 @@ public class TimeZoneDialog extends DialogFragment
 
         spinner_solartime = (Spinner) dialogContent.findViewById(R.id.appwidget_solartime);
         spinner_solartime.setAdapter(spinner_solartimeAdapter);
-        spinner_solartime.setOnItemSelectedListener(onSolarTimeSelected);
 
         layout_timezoneExtras = dialogContent.findViewById(R.id.appwidget_timezone_extrasgroup);
         label_tzExtras0 = (TextView) dialogContent.findViewById(R.id.appwidget_timezone_extras0);
+    }
+
+    private void updateExtrasLabel(@NonNull Context context, int stringResID, @NonNull TimeZone timezone)
+    {
+        SuntimesUtils.TimeDisplayText dstSavings = utils.timeDeltaLongDisplayString(0L, (long)timezone.getDSTSavings(), false, true, false);
+        ImageSpan dstIcon = SuntimesUtils.createDstSpan(context, 24, 24);
+        String dstString = (dstSavings.getRawValue() < 0 ? "-" : "+") + dstSavings.getValue();
+        String extrasString = getString(stringResID, dstString);
+
+        SpannableStringBuilder extrasSpan = SuntimesUtils.createSpan(context, extrasString, SuntimesUtils.SPANTAG_DST, dstIcon);
+        SpannableString boldedExtrasSpan = SuntimesUtils.createBoldSpan(SpannableString.valueOf(extrasSpan), extrasString, dstString);
+        label_tzExtras0.setText(boldedExtrasSpan);
+        layout_timezoneExtras.setVisibility(View.VISIBLE);
+    }
+
+    private void updateExtrasLabel(String text)
+    {
+        if (text == null)
+        {
+            layout_timezoneExtras.setVisibility(View.GONE);
+            label_tzExtras0.setText("");
+
+        } else {
+            label_tzExtras0.setText(text);
+            layout_timezoneExtras.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void updateExtras(Context context, boolean solarTime, Object item0)
+    {
+        if (solarTime)
+        {
+            WidgetSettings.SolarTimeMode item = (WidgetSettings.SolarTimeMode)item0;
+            if (item != null && item == WidgetSettings.SolarTimeMode.APPARENT_SOLAR_TIME)
+            {
+                TimeZone apparentSolarTime = new WidgetTimezones.ApparentSolarTime(longitude, WidgetTimezones.ApparentSolarTime.TIMEZONEID);
+                updateExtrasLabel(getContext(), R.string.timezoneExtraApparentSolar, apparentSolarTime);
+            } else {
+                updateExtrasLabel(null);
+            }
+
+        } else {
+            WidgetTimezones.TimeZoneItem item = (WidgetTimezones.TimeZoneItem)item0;
+            if (item != null)
+            {
+                TimeZone timezone = TimeZone.getTimeZone(item.getID());
+                boolean usesDST = (Build.VERSION.SDK_INT < 24 ? timezone.useDaylightTime() : timezone.observesDaylightTime());
+                boolean inDST = usesDST && timezone.inDaylightTime(now.getTime());
+                if (inDST)
+                    updateExtrasLabel(context, R.string.timezoneExtraDST, timezone);
+                else updateExtrasLabel(null);
+            } else updateExtrasLabel(null);
+        }
     }
 
     /**
@@ -278,27 +329,8 @@ public class TimeZoneDialog extends DialogFragment
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
         {
             Context context = getContext();
-            if (layout_timezoneExtras != null && label_tzExtras0 != null && context != null)
-            {
-                WidgetSettings.SolarTimeMode item = (WidgetSettings.SolarTimeMode)parent.getItemAtPosition(position);
-                if (item == WidgetSettings.SolarTimeMode.APPARENT_SOLAR_TIME)
-                {
-                    TimeZone apparentSolarTime = new WidgetTimezones.ApparentSolarTime(longitude, WidgetTimezones.ApparentSolarTime.TIMEZONEID);
-
-                    SuntimesUtils.TimeDisplayText offset = utils.timeDeltaLongDisplayString(0L, (long)apparentSolarTime.getDSTSavings(), false, true, false);
-                    ImageSpan icon = SuntimesUtils.createDstSpan(context, 24, 24);
-                    String offsetString = (offset.getRawValue() < 0 ? "-" : "+") + offset.getValue();
-                    String extrasString = getString(R.string.timezoneExtraApparentSolar, offsetString);
-
-                    SpannableStringBuilder extrasSpan = SuntimesUtils.createSpan(context, extrasString, SuntimesUtils.SPANTAG_DST, icon);
-                    SpannableString boldedExtrasSpan = SuntimesUtils.createBoldSpan(SpannableString.valueOf(extrasSpan), extrasString, offsetString);
-                    label_tzExtras0.setText(boldedExtrasSpan);
-                    layout_timezoneExtras.setVisibility(View.VISIBLE);
-
-                } else {
-                    layout_timezoneExtras.setVisibility(View.GONE);
-                    label_tzExtras0.setText("");
-                }
+            if (layout_timezoneExtras != null && label_tzExtras0 != null && context != null) {
+                updateExtras(context, true, parent.getItemAtPosition(position));
             }
         }
 
@@ -315,29 +347,8 @@ public class TimeZoneDialog extends DialogFragment
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
         {
             Context context = getContext();
-            if (layout_timezoneExtras != null && label_tzExtras0 != null && context != null)
-            {
-                WidgetTimezones.TimeZoneItem item = (WidgetTimezones.TimeZoneItem)parent.getItemAtPosition(position);
-                TimeZone timezone = TimeZone.getTimeZone(item.getID());
-
-                boolean usesDST = (Build.VERSION.SDK_INT < 24 ? timezone.useDaylightTime() : timezone.observesDaylightTime());
-                boolean inDST = usesDST && timezone.inDaylightTime(now.getTime());
-                if (inDST)
-                {
-                    SuntimesUtils.TimeDisplayText dstSavings = utils.timeDeltaLongDisplayString(0L, (long)timezone.getDSTSavings(), false, true, false);
-                    ImageSpan dstIcon = SuntimesUtils.createDstSpan(context, 24, 24);
-                    String dstString = (dstSavings.getRawValue() < 0 ? "-" : "+") + dstSavings.getValue();
-                    String extrasString = getString(R.string.timezoneExtraDST, dstString);
-
-                    SpannableStringBuilder extrasSpan = SuntimesUtils.createSpan(context, extrasString, SuntimesUtils.SPANTAG_DST, dstIcon);
-                    SpannableString boldedExtrasSpan = SuntimesUtils.createBoldSpan(SpannableString.valueOf(extrasSpan), extrasString, dstString);
-                    label_tzExtras0.setText(boldedExtrasSpan);
-                    layout_timezoneExtras.setVisibility(View.VISIBLE);
-
-                } else {
-                    layout_timezoneExtras.setVisibility(View.GONE);
-                    label_tzExtras0.setText("");
-                }
+            if (layout_timezoneExtras != null && label_tzExtras0 != null && context != null) {
+                updateExtras(context, false, parent.getItemAtPosition(position));
             }
         }
 
@@ -352,10 +363,23 @@ public class TimeZoneDialog extends DialogFragment
     {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
         {
+            spinner_timezone.setOnItemSelectedListener(null);
+            spinner_solartime.setOnItemSelectedListener(null);
+
             final WidgetSettings.TimezoneMode[] timezoneModes = WidgetSettings.TimezoneMode.values();
             WidgetSettings.TimezoneMode timezoneMode = timezoneModes[parent.getSelectedItemPosition()];
+
+            boolean useSolarTime = (timezoneMode == WidgetSettings.TimezoneMode.SOLAR_TIME);
+            if (useSolarTime)
+                spinner_solartime.setOnItemSelectedListener(onSolarTimeSelected);
+            else spinner_timezone.setOnItemSelectedListener(onTimeZoneSelected);
+
             setUseCustomTimezone((timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE));
             setUseSolarTime((timezoneMode == WidgetSettings.TimezoneMode.SOLAR_TIME));
+
+            Object item = (useSolarTime ? spinner_solartime.getSelectedItem() : spinner_timezone.getSelectedItem());
+            updateExtras(getContext(), useSolarTime, item);
+
             SuntimesUtils.announceForAccessibility(spinner_timezoneMode, timezoneMode.getDisplayString());
         }
 
