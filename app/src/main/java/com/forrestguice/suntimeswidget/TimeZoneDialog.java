@@ -29,11 +29,9 @@ import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
 
-import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
-import android.util.Log;
 import android.util.TypedValue;
 
 import android.support.annotation.NonNull;
@@ -64,6 +62,7 @@ public class TimeZoneDialog extends DialogFragment
     public static final String KEY_TIMEZONE_ID = "timezoneID";
     public static final String KEY_SOLARTIME_MODE = "solartimeMode";
     public static final String KEY_NOW = "paramNow";
+    public static final String KEY_LONGITUDE = "paramLongitude";
 
     private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     private String customTimezoneID;
@@ -90,6 +89,12 @@ public class TimeZoneDialog extends DialogFragment
     public void setNow( Calendar now )
     {
         this.now = now;
+    }
+
+    private double longitude = 0;
+    public void setLongitude( double longitude )
+    {
+        this.longitude = longitude;
     }
 
     @SuppressWarnings({"deprecation","RestrictedApi"})
@@ -183,6 +188,10 @@ public class TimeZoneDialog extends DialogFragment
         return dialog;
     }
 
+    /**
+     * onSaveInstanceState
+     * @param outState
+     */
     @Override
     public void onSaveInstanceState(Bundle outState)
     {
@@ -481,10 +490,11 @@ public class TimeZoneDialog extends DialogFragment
             spinner_solartime.setSelection(solartimeMode.ordinal());
         }
 
-        // now
         long nowMillis = bundle.getLong(KEY_NOW, Calendar.getInstance().getTimeInMillis());
         now = Calendar.getInstance();
         now.setTimeInMillis(nowMillis);
+
+        longitude = bundle.getDouble(KEY_LONGITUDE);
     }
 
     /**
@@ -533,10 +543,13 @@ public class TimeZoneDialog extends DialogFragment
             bundle.putString(KEY_SOLARTIME_MODE, solarTimeMode.name());
         }
 
-        // now
+        // save: now
         if (now != null) {
             bundle.putLong(KEY_NOW, now.getTimeInMillis());
         }
+
+        // save: longitude
+        bundle.putDouble(KEY_LONGITUDE, longitude);
     }
 
     /**
