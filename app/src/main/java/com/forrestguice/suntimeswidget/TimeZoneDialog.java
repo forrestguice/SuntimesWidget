@@ -32,6 +32,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.util.TypedValue;
 
 import android.support.annotation.NonNull;
@@ -267,9 +268,9 @@ public class TimeZoneDialog extends DialogFragment
         label_tzExtras0 = (TextView) dialogContent.findViewById(R.id.appwidget_timezone_extras0);
     }
 
-    private void updateExtrasLabel(@NonNull Context context, int stringResID, @NonNull TimeZone timezone)
+    private void updateExtrasLabel(@NonNull Context context, int stringResID, long offset)
     {
-        SuntimesUtils.TimeDisplayText dstSavings = utils.timeDeltaLongDisplayString(0L, (long)timezone.getDSTSavings(), false, true, false);
+        SuntimesUtils.TimeDisplayText dstSavings = utils.timeDeltaLongDisplayString(0L, offset, false, false, true);
         ImageSpan dstIcon = SuntimesUtils.createDstSpan(context, 24, 24);
         String dstString = (dstSavings.getRawValue() < 0 ? "-" : "+") + dstSavings.getValue();
         String extrasString = getString(stringResID, dstString);
@@ -300,11 +301,9 @@ public class TimeZoneDialog extends DialogFragment
             WidgetSettings.SolarTimeMode item = (WidgetSettings.SolarTimeMode)item0;
             if (item != null && item == WidgetSettings.SolarTimeMode.APPARENT_SOLAR_TIME)
             {
-                TimeZone apparentSolarTime = new WidgetTimezones.ApparentSolarTime(longitude, WidgetTimezones.ApparentSolarTime.TIMEZONEID);
-                updateExtrasLabel(getContext(), R.string.timezoneExtraApparentSolar, apparentSolarTime);
-            } else {
-                updateExtrasLabel(null);
-            }
+                int eot = WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(now.getTimeInMillis());
+                updateExtrasLabel(getContext(), R.string.timezoneExtraApparentSolar, eot);
+            } else updateExtrasLabel(null);
 
         } else {
             WidgetTimezones.TimeZoneItem item = (WidgetTimezones.TimeZoneItem)item0;
@@ -314,7 +313,7 @@ public class TimeZoneDialog extends DialogFragment
                 boolean usesDST = (Build.VERSION.SDK_INT < 24 ? timezone.useDaylightTime() : timezone.observesDaylightTime());
                 boolean inDST = usesDST && timezone.inDaylightTime(now.getTime());
                 if (inDST)
-                    updateExtrasLabel(context, R.string.timezoneExtraDST, timezone);
+                    updateExtrasLabel(context, R.string.timezoneExtraDST, (long)timezone.getDSTSavings());
                 else updateExtrasLabel(null);
             } else updateExtrasLabel(null);
         }
