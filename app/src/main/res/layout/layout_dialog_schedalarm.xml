@@ -32,8 +32,8 @@
             />
 
         <Spinner android:id="@+id/appwidget_schedalarm_mode"
-                 android:layout_width="match_parent" android:layout_height="wrap_content"
-                 android:layout_marginTop="5dp" android:layout_marginBottom="5dp"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="5dp" android:layout_marginBottom="5dp"
             />
 
         <LinearLayout
@@ -47,10 +47,10 @@
                 tools:ignore="contentDescription" />
 
             <TextView android:id="@+id/appwidget_schedalarm_note"
-                      android:layout_width="wrap_content" android:layout_height="wrap_content"
-                      android:layout_gravity="center_vertical"
-                      android:paddingLeft="5dp" android:paddingRight="5dp"
-                      android:text="@string/schedalarm_dialog_note"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="5dp" android:paddingRight="5dp"
+                android:text="@string/schedalarm_dialog_note"
                 />
 
         </LinearLayout>
@@ -58,4 +58,3 @@
     </LinearLayout>
 
 </ScrollView>
-
