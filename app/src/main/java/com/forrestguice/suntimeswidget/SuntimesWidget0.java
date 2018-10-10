@@ -37,6 +37,7 @@ import android.appwidget.AppWidgetProvider;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.layouts.SunLayout;
 import com.forrestguice.suntimeswidget.layouts.SunLayout_2x1_0;
+import com.forrestguice.suntimeswidget.lightmap.LightMapWidgetSettings;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -330,6 +331,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
         {
             WidgetSettings.deletePrefs(context, appWidgetId);
             WorldMapWidgetSettings.deletePrefs(context, appWidgetId);
+            LightMapWidgetSettings.deletePrefs(context, appWidgetId);
         }
     }
 
