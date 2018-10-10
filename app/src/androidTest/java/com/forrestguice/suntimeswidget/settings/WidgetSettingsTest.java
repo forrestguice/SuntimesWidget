@@ -25,6 +25,7 @@ import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.time4a.Time4ASimpleSuntimesCalculator;
+import com.forrestguice.suntimeswidget.lightmap.LightMapWidgetSettings;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.themes.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.LightTheme;
@@ -498,6 +499,22 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         WorldMapWidgetSettings.deleteSunPosMapModePref(context, appWidgetId);
         WorldMapWidgetSettings.WorldMapWidgetMode pref0 = WorldMapWidgetSettings.loadSunPosMapModePref(context, appWidgetId);
         assertTrue("pref should be default (EQUIRECTANGULAR_SIMPLE) but was " + pref0, pref0.equals(WorldMapWidgetSettings.PREF_DEF_APPEARANCE_WIDGETMODE_WORLDMAP) && pref0.equals(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE));
+    }
+
+    @Test
+    public void test_analemmaModePref()
+    {
+        LightMapWidgetSettings.saveAnalemmaModePref(context, appWidgetId, LightMapWidgetSettings.AnalemmaWidgetMode.DEC_EOT);
+        LightMapWidgetSettings.AnalemmaWidgetMode pref2 = LightMapWidgetSettings.loadAnalemmaModePref(context, appWidgetId);
+        assertTrue("pref should be DEC_EOT but was " + pref2, pref2.equals(LightMapWidgetSettings.AnalemmaWidgetMode.DEC_EOT));
+
+        LightMapWidgetSettings.saveAnalemmaModePref(context, appWidgetId, LightMapWidgetSettings.AnalemmaWidgetMode.ALT_AZ);
+        LightMapWidgetSettings.AnalemmaWidgetMode pref1 = LightMapWidgetSettings.loadAnalemmaModePref(context, appWidgetId);
+        assertTrue("pref should be ALT_AZ but was " + pref1, pref1.equals(LightMapWidgetSettings.AnalemmaWidgetMode.ALT_AZ));
+
+        LightMapWidgetSettings.deleteAnalemmaModePref(context, appWidgetId);
+        LightMapWidgetSettings.AnalemmaWidgetMode pref0 = LightMapWidgetSettings.loadAnalemmaModePref(context, appWidgetId);
+        assertTrue("pref should be default (DEC_EOT) but was " + pref0, pref0.equals(LightMapWidgetSettings.PREF_DEF_APPEARANCE_WIDGETMODE_ANALEMMA) && pref0.equals(LightMapWidgetSettings.AnalemmaWidgetMode.DEC_EOT));
     }
 
     @Test
