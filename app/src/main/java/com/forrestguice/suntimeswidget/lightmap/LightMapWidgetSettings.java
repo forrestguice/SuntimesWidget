@@ -35,6 +35,7 @@ public class LightMapWidgetSettings
     public static enum AnalemmaWidgetMode
     {
         DEC_EOT("Declination & EOT"),
+        ALT_EOT("Altitude & EOT"),
         ALT_AZ("Altitude & Azimuth");
 
         private String displayString;
@@ -62,6 +63,7 @@ public class LightMapWidgetSettings
         public static void initDisplayStrings( Context context )
         {
             DEC_EOT.setDisplayString(context.getString(R.string.widgetMode_analemma_dec_eot));
+            ALT_EOT.setDisplayString(context.getString(R.string.widgetMode_analemma_alt_eot));
             ALT_AZ.setDisplayString(context.getString(R.string.widgetMode_analemma_alt_az));
         }
     }

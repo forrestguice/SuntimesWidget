@@ -299,6 +299,7 @@
     <string name="widgetMode_sunPosMap_bluemarble">Blue Marble</string>    <!-- setting -->
 
     <string name="widgetMode_analemma_dec_eot">Dec v EOT</string>  <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode_analemma_alt_eot">Alt v EOT</string>  <!-- setting -->  <!-- TODO -->
     <string name="widgetMode_analemma_alt_az">Alt v Az</string>  <!-- setting -->  <!-- TODO -->
 
     <string name="widgetMode1x1_moonriseset">Moonrise &amp; moonset</string>     <!-- setting -->
