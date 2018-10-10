@@ -116,7 +116,7 @@ public class AnalemmaDialog extends DialogFragment
         super.onStop();
     }
 
-    public static final int UPDATE_RATE = 3000;
+    public static final int UPDATE_RATE = 6 * 60 * 1000;
     private Runnable updateTask = new Runnable()
     {
         @Override
@@ -134,7 +134,10 @@ public class AnalemmaDialog extends DialogFragment
     public void initViews(View dialogView)
     {
         analemma = (AnalemmaView)dialogView.findViewById(R.id.info_time_analemma);
-        //analemma.getOptions().showAxis = false;
+        AnalemmaView.AnalemmaOptions options = analemma.getOptions();
+        //options.showAxis = false;
+        //options.mode = LightMapWidgetSettings.AnalemmaWidgetMode.ALT_EOT;
+
         analemma.setAnalemmaListener(new AnalemmaView.AnalemmaTaskListener()
         {
             @Override
