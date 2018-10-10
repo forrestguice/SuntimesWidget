@@ -345,26 +345,60 @@ public class AnalemmaView extends android.support.v7.widget.AppCompatImageView
                     c.drawLine(p0[0], p0[1], p1[0], p1[1], p);
                 }
 
+                if (options.showMonths)
+                {
+                    // TODO
+                }
+
+                if (options.showSeasons)
+                {
+                    int[] springPoint = projectToCanvas(dataPoints.springPoint, w, h, mid, dataBounds, canvasBounds);
+                    drawPoint(springPoint, options.seasonPointWidth, options.colorSpring, options.colorSpring, 0, c, p);
+
+                    int[] summerPoint = projectToCanvas(dataPoints.summerPoint, w, h, mid, dataBounds, canvasBounds);
+                    drawPoint(summerPoint, options.seasonPointWidth, options.colorSummer, options.colorSummer, 0, c, p);
+
+                    int[] fallPoint = projectToCanvas(dataPoints.fallPoint, w, h, mid, dataBounds, canvasBounds);
+                    drawPoint(fallPoint, options.seasonPointWidth, options.colorFall, options.colorFall, 0, c, p);
+
+                    int[] winterPoint = projectToCanvas(dataPoints.winterPoint, w, h, mid, dataBounds, canvasBounds);
+                    drawPoint(winterPoint, options.seasonPointWidth, options.colorWinter, options.colorWinter, 0, c, p);
+                }
+
                 // draw sun position
                 if (options.showSun)
                 {
                     double[] sunData = dataPoints.getData().get(dataPoints.getDayOfYear());
                     int[] sun = projectToCanvas(sunData, w, h, mid, dataBounds, canvasBounds);
-
-                    p.setStyle(Paint.Style.FILL);
-                    p.setColor(options.sunPointFill);
-                    c.drawCircle(sun[0], sun[1], options.sunPointWidth, p);
-
-                    p.setStyle(Paint.Style.STROKE);
-                    p.setStrokeWidth(options.sunStrokeWidth);
-                    p.setColor(options.sunPointStroke);
-                    c.drawCircle(sun[0], sun[1], options.sunPointWidth, p);
+                    drawPoint(sun, options.sunPointWidth, options.sunPointFill, options.sunPointStroke, options.sunStrokeWidth, c, p);
                 }
             }
 
             long bench_end = System.nanoTime();
             Log.d("Analemma", "makeBitmap :: " + ((bench_end - bench_start) / 1000000.0) + " ms; " + w + ", " + h);
             return b;
+        }
+
+        /**
+         * drawPoint
+         * @param pos canvas position
+         * @param r radius
+         * @param colorFill fill color
+         * @param colorStroke stroke color
+         * @param strokeWidth stroke width
+         * @param c canvas
+         * @param p paint
+         */
+        private void drawPoint(int[] pos, int r, int colorFill, int colorStroke, int strokeWidth, Canvas c, Paint p)
+        {
+            p.setStyle(Paint.Style.FILL);
+            p.setColor(colorFill);
+            c.drawCircle(pos[0], pos[1], r, p);
+
+            p.setStyle(Paint.Style.STROKE);
+            p.setStrokeWidth(strokeWidth);
+            p.setColor(colorStroke);
+            c.drawCircle(pos[0], pos[1], r, p);
         }
 
         /**
@@ -484,15 +518,24 @@ public class AnalemmaView extends android.support.v7.widget.AppCompatImageView
     public static class AnalemmaOptions
     {
         public LightMapWidgetSettings.AnalemmaWidgetMode mode = LightMapWidgetSettings.PREF_DEF_APPEARANCE_WIDGETMODE_ANALEMMA;
+        public int colorBackground, colorLine;
         public int[] padding = new int[] {8, 8};
+
         public boolean showAxis = true;
         public boolean showTicks = true;
-        public boolean showSun = true;
         public int tickScale_x = 5, tickScale_y = 5;
         public int colorAxis_x, colorAxis_y;
-        public int colorBackground, colorLine;
+
+        public boolean showSun = true;
         public int sunPointFill, sunPointStroke;
         public int sunPointWidth = 6, sunStrokeWidth = 2;
+
+        public boolean showMonths = true;
+
+        public boolean showSeasons = true;
+        public int colorSpring, colorSummer, colorFall, colorWinter;
+        public int seasonPointWidth = 3, seasonStrokeWidth = 0;
+
         public int date_hour = 12, date_minute = 0;
 
         public AnalemmaOptions() {}
@@ -506,7 +549,12 @@ public class AnalemmaView extends android.support.v7.widget.AppCompatImageView
                     R.attr.graphColor_astronomical,         // 3
                     R.attr.graphColor_night,                // 4
                     R.attr.graphColor_pointFill,            // 5
-                    R.attr.graphColor_pointStroke };        // 6
+                    R.attr.graphColor_pointStroke,          // 6
+                    R.attr.springColor,                     // 7
+                    R.attr.summerColor,                     // 8
+                    R.attr.fallColor,                       // 9
+                    R.attr.winterColor,                     // 10
+            };
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
             int def = R.color.transparent;
 
@@ -516,6 +564,11 @@ public class AnalemmaView extends android.support.v7.widget.AppCompatImageView
             colorBackground = ContextCompat.getColor(context, typedArray.getResourceId(4, def));
             sunPointFill = ContextCompat.getColor(context, typedArray.getResourceId(5, def));
             sunPointStroke = ContextCompat.getColor(context, typedArray.getResourceId(6, def));
+
+            colorSpring = ContextCompat.getColor(context, typedArray.getResourceId(7, def));
+            colorSummer = ContextCompat.getColor(context, typedArray.getResourceId(8, def));
+            colorFall = ContextCompat.getColor(context, typedArray.getResourceId(9, def));
+            colorWinter = ContextCompat.getColor(context, typedArray.getResourceId(10, def));
 
             typedArray.recycle();
         }
@@ -528,6 +581,11 @@ public class AnalemmaView extends android.support.v7.widget.AppCompatImageView
             colorBackground = ContextCompat.getColor(context, R.color.graphColor_night_dark);
             sunPointFill = ContextCompat.getColor(context, R.color.sunIcon_color_setting_dark);
             sunPointStroke = ContextCompat.getColor(context, R.color.grey_800);
+
+            colorSpring = ContextCompat.getColor(context, R.color.springColor_dark);
+            colorSummer = ContextCompat.getColor(context, R.color.summerColor_dark);
+            colorFall = ContextCompat.getColor(context, R.color.fallColor_dark);
+            colorWinter = ContextCompat.getColor(context, R.color.winterColor_dark);
         }
 
         public void initDefaultLight(Context context)
@@ -538,6 +596,11 @@ public class AnalemmaView extends android.support.v7.widget.AppCompatImageView
             colorBackground = ContextCompat.getColor(context, R.color.graphColor_night_light);
             sunPointFill = ContextCompat.getColor(context, R.color.sunIcon_color_setting_light);
             sunPointStroke = ContextCompat.getColor(context, R.color.grey_800);
+
+            colorSpring = ContextCompat.getColor(context, R.color.springColor_light);
+            colorSummer = ContextCompat.getColor(context, R.color.summerColor_light);
+            colorFall = ContextCompat.getColor(context, R.color.fallColor_light);
+            colorWinter = ContextCompat.getColor(context, R.color.winterColor_light);
         }
     }
 
@@ -577,28 +640,54 @@ public class AnalemmaView extends android.support.v7.widget.AppCompatImageView
             return dayOfYear;
         }
 
-        protected double maxX = 0;
+        protected int i_maxX = 0;
         public double getMaxX()
         {
-            return maxX;
+            return data.get(i_maxX)[0];
         }
 
-        protected double minX = 0;
+        protected int i_minX = 0;
         private double getMinX()
         {
-            return minX;
+            return data.get(i_minX)[0];
         }
 
-        protected double maxY = 0;
+        protected int i_maxY = 0;
         public double getMaxY()
         {
-            return maxY;
+            return data.get(i_maxY)[1];
         }
 
-        protected double minY = 0;
+        protected int i_minY = 0;
         public double getMinY()
         {
-            return minY;
+            return data.get(i_minY)[1];
+        }
+
+        protected double[] springPoint = {0,0}, summerPoint = {0,0}, fallPoint = {0,0}, winterPoint = {0,0};
+
+        public static double[] createPoint(int day, SuntimesCalculator.SunPosition sunPos, @NonNull LightMapWidgetSettings.AnalemmaWidgetMode mode)
+        {
+            double[] point = new double[2];
+            switch (mode)
+            {
+                case ALT_AZ:
+                    point[0] = sunPos.azimuth;                                                  // azimuth degrees
+                    point[1] = sunPos.elevation;                                                // altitude degrees
+                    break;
+
+                case ALT_EOT:
+                    point[0] = WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(day);     // eot minutes
+                    point[1] = sunPos.elevation;                                                // altitude degrees
+                    break;
+
+                case DEC_EOT:
+                default:
+                    point[0] = WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(day);     // eot minutes
+                    point[1] = sunPos.declination;                                              // declination degrees
+                    break;
+            }
+            return point;
         }
 
         public static void generateDataPoints(@NonNull AnalemmaDataPoints dataPoints, @NonNull SuntimesCalculator calculator, @NonNull Calendar date0, @NonNull LightMapWidgetSettings.AnalemmaWidgetMode mode)
@@ -612,41 +701,46 @@ public class AnalemmaView extends android.support.v7.widget.AppCompatImageView
             {
                 date.set(Calendar.DAY_OF_YEAR, day);
                 SuntimesCalculator.SunPosition sunPos = calculator.getSunPosition(date);
-
-                double[] point = new double[2];
-                switch (mode)
-                {
-                    case ALT_AZ:
-                        point[0] = sunPos.azimuth;                                                  // azimuth degrees
-                        point[1] = sunPos.elevation;                                                // altitude degrees
-                        break;
-
-                    case ALT_EOT:
-                        point[0] = WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(day);     // eot minutes
-                        point[1] = sunPos.elevation;                                                // altitude degrees
-                        break;
-
-                    case DEC_EOT:
-                    default:
-                        point[0] = WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(day);     // eot minutes
-                        point[1] = sunPos.declination;                                              // declination degrees
-                        break;
-                }
+                double[] point = createPoint(day, sunPos, mode);
                 dataPoints.data.add(point);
 
-                if (point[0] < dataPoints.minX) {
-                    dataPoints.minX = point[0];
+                if (point[0] < dataPoints.getMinX()) {
+                    dataPoints.i_minX = dataPoints.data.size()-1;
                 }
-                if (point[1] < dataPoints.minY) {
-                    dataPoints.minY = point[1];
+                if (point[1] < dataPoints.getMinY()) {
+                    dataPoints.i_minY = dataPoints.data.size()-1;
                 }
-                if (point[0] > dataPoints.maxX) {
-                    dataPoints.maxX = point[0];
+                if (point[0] > dataPoints.getMaxX()) {
+                    dataPoints.i_maxX = dataPoints.data.size()-1;
                 }
-                if (point[1] > dataPoints.maxY) {
-                    dataPoints.maxY = point[1];
+                if (point[1] > dataPoints.getMaxY()) {
+                    dataPoints.i_maxY = dataPoints.data.size()-1;
                 }
             }
+
+            Calendar springDate = calculator.getVernalEquinoxForYear(date0);
+            springDate.set(Calendar.HOUR_OF_DAY, date0.get(Calendar.HOUR_OF_DAY));
+            springDate.set(Calendar.MINUTE, date0.get(Calendar.MINUTE));
+            SuntimesCalculator.SunPosition vernalPosition = calculator.getSunPosition(springDate);
+            dataPoints.springPoint = createPoint(springDate.get(Calendar.DAY_OF_YEAR), vernalPosition, mode);
+
+            Calendar summerDate = calculator.getSummerSolsticeForYear(date0);
+            summerDate.set(Calendar.HOUR_OF_DAY, date0.get(Calendar.HOUR_OF_DAY));
+            summerDate.set(Calendar.MINUTE, date0.get(Calendar.MINUTE));
+            SuntimesCalculator.SunPosition summerPosition = calculator.getSunPosition(summerDate);
+            dataPoints.summerPoint = createPoint(summerDate.get(Calendar.DAY_OF_YEAR), summerPosition, mode);
+
+            Calendar fallDate = calculator.getAutumnalEquinoxForYear(date0);
+            fallDate.set(Calendar.HOUR_OF_DAY, date0.get(Calendar.HOUR_OF_DAY));
+            fallDate.set(Calendar.MINUTE, date0.get(Calendar.MINUTE));
+            SuntimesCalculator.SunPosition fallPosition = calculator.getSunPosition(fallDate);
+            dataPoints.fallPoint = createPoint(fallDate.get(Calendar.DAY_OF_YEAR), fallPosition, mode);
+
+            Calendar winterDate = calculator.getWinterSolsticeForYear(date0);
+            winterDate.set(Calendar.HOUR_OF_DAY, date0.get(Calendar.HOUR_OF_DAY));
+            winterDate.set(Calendar.MINUTE, date0.get(Calendar.MINUTE));
+            SuntimesCalculator.SunPosition winterPosition = calculator.getSunPosition(winterDate);
+            dataPoints.winterPoint = createPoint(winterDate.get(Calendar.DAY_OF_YEAR), winterPosition, mode);
         }
     }
 
