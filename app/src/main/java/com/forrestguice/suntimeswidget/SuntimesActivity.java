@@ -81,6 +81,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
+import com.forrestguice.suntimeswidget.lightmap.AnalemmaDialog;
 import com.forrestguice.suntimeswidget.map.WorldMapDialog;
 import com.forrestguice.suntimeswidget.notes.NoteChangedListener;
 import com.forrestguice.suntimeswidget.notes.NoteData;
@@ -122,6 +123,7 @@ public class SuntimesActivity extends AppCompatActivity
     private static final String DIALOGTAG_LOCATION = "location";
     private static final String DIALOGTAG_DATE = "dateselect";
     private static final String DIALOGTAG_LIGHTMAP = "lightmap";
+    private static final String DIALOGTAG_ANALEMMA = "analemma";
     private static final String DIALOGTAG_WORLDMAP = "worldmap";
     private static final String DIALOGTAG_EQUINOX = "equinox";
     private static final String DIALOGTAG_MOON = "moon";
@@ -350,6 +352,14 @@ public class SuntimesActivity extends AppCompatActivity
             alarmDialog.setData(this, dataset, dataset3);
             alarmDialog.setOnAcceptedListener(alarmDialog.scheduleAlarmClickListener);
             //Log.d("DEBUG", "AlarmDialog listeners restored.");
+        }
+
+        AnalemmaDialog analemmaDialog = (AnalemmaDialog) fragments.findFragmentByTag(DIALOGTAG_ANALEMMA);
+        if (analemmaDialog != null)
+        {
+            analemmaDialog.setData(dataset);
+            analemmaDialog.updateViews();
+            //Log.d("DEBUG", "AnalemmaDialog updated on restore.");
         }
 
         LightMapDialog lightMapDialog = (LightMapDialog) fragments.findFragmentByTag(DIALOGTAG_LIGHTMAP);
@@ -1294,6 +1304,10 @@ public class SuntimesActivity extends AppCompatActivity
 
             case R.id.action_sunposition:
                 showLightMapDialog();
+                return true;
+
+            case R.id.action_analemma:
+                showAnalemmaDialog();
                 return true;
 
             case R.id.action_worldmap:
@@ -2370,6 +2384,13 @@ public class SuntimesActivity extends AppCompatActivity
         final LightMapDialog lightMapDialog = new LightMapDialog();
         lightMapDialog.setData(dataset);
         lightMapDialog.show(getSupportFragmentManager(), DIALOGTAG_LIGHTMAP);
+    }
+
+    protected void showAnalemmaDialog()
+    {
+        final AnalemmaDialog analemmaDialog = new AnalemmaDialog();
+        analemmaDialog.setData(dataset);
+        analemmaDialog.show(getSupportFragmentManager(), DIALOGTAG_ANALEMMA);
     }
 
     protected void showWorldMapDialog()
