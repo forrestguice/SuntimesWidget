@@ -1,5 +1,8 @@
 ### ~
 
+###
+* adds help to the "theme list" activity.
+
 ### v0.9.2 (2018-09-12)
 * adds altitude ui to the datasource card; toggles altitude (hidden when datasource lacks support) (#245).
 * fixes app crash when location has altitude greater equal 11000m (validation off-by-one) (#243).
