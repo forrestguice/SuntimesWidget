@@ -25,11 +25,13 @@ import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.text.style.ImageSpan;
 import android.util.AttributeSet;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
@@ -228,6 +230,7 @@ public class AnalemmaView extends android.support.v7.widget.AppCompatImageView
         private int tickLength = DEFAULT_TICK_LENGTH;
 
         private AnalemmaDataPoints dataPoints;
+        private SuntimesRiseSetDataset data;
 
         /**
          * @param params 0: SuntimesRiseSetDataset,
@@ -239,7 +242,6 @@ public class AnalemmaView extends android.support.v7.widget.AppCompatImageView
         protected Bitmap doInBackground(Object... params)
         {
             int w, h;
-            SuntimesRiseSetDataset data;
             try {
                 data = (SuntimesRiseSetDataset)params[0];
                 w = (Integer)params[1];

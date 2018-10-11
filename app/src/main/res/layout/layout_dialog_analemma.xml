@@ -35,9 +35,9 @@
     <com.forrestguice.suntimeswidget.lightmap.AnalemmaView
         android:id="@+id/info_time_analemma"
         android:layout_width="128dp" android:layout_height="128dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/analemmadialog_title"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/layout_solarTime"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
@@ -46,10 +46,38 @@
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         tools:text="June 3, 6:00 PM UTC" android:gravity="end|right"
         app:layout_constraintTop_toBottomOf="@+id/info_time_analemma"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/layout_solarTime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
+    <LinearLayout
+        android:id="@+id/layout_solarTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/info_time_analemma"
+        app:layout_constraintTop_toTopOf="@+id/info_time_analemma"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/SunsetTimeTextView"
+            android:id="@+id/info_time_localMean"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            tools:text="6:00 PM Local Mean" android:gravity="end|right" />
+
+        <TextView
+            style="@style/SunsetTimeTextView"
+            android:id="@+id/info_time_apparentSolar"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            tools:text="6:00 PM ApparentSolar" android:gravity="end|right" />
+
+        <TextView
+            style="@style/SunsetTimeTextView"
+            android:id="@+id/info_time_eotOffset"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            tools:text="+12m 30s equation of time" android:gravity="end|right" />
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
 

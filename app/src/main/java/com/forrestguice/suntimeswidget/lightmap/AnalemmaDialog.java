@@ -37,6 +37,9 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
+
+import java.util.Calendar;
 
 /**
  * AnalemmaDialog
@@ -47,9 +50,9 @@ public class AnalemmaDialog extends DialogFragment
 
     private AnalemmaView analemma;
     private TextView labelTime;
-
-    //private int colorNight, colorAstro, colorNautical, colorCivil, colorDay;
-    //private int colorLabel;
+    private TextView labelLocalMean;
+    private TextView labelApparentSolar;
+    private TextView labelEOT;
 
     private int decimalPlaces = 1;
     private View dialogContent = null;
@@ -136,7 +139,8 @@ public class AnalemmaDialog extends DialogFragment
         analemma = (AnalemmaView)dialogView.findViewById(R.id.info_time_analemma);
         AnalemmaView.AnalemmaOptions options = analemma.getOptions();
         //options.showAxis = false;
-        //options.mode = LightMapWidgetSettings.AnalemmaWidgetMode.ALT_EOT;
+        options.mode = LightMapWidgetSettings.AnalemmaWidgetMode.DEC_EOT;
+        options.date_hour = 12;
 
         analemma.setAnalemmaListener(new AnalemmaView.AnalemmaTaskListener()
         {
@@ -152,6 +156,9 @@ public class AnalemmaDialog extends DialogFragment
         });
 
         labelTime = (TextView)dialogView.findViewById(R.id.info_time_analemmaTime);
+        labelLocalMean = (TextView)dialogView.findViewById(R.id.info_time_localMean);
+        labelApparentSolar = (TextView)dialogView.findViewById(R.id.info_time_apparentSolar);
+        labelEOT = (TextView)dialogView.findViewById(R.id.info_time_eotOffset);
     }
 
     @SuppressWarnings("ResourceType")
@@ -197,6 +204,12 @@ public class AnalemmaDialog extends DialogFragment
         if (analemma != null)
         {
             analemma.updateViews(data);
+        }
+
+        if (labelEOT != null)
+        {
+            double eotOffset = WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(data.calendar().get(Calendar.DAY_OF_YEAR));
+            labelEOT.setText( utils.timeDeltaLongDisplayString(0, (long)(eotOffset * 60 * 1000L), false, true, true).getValue() + " equation of time" ); // TODO
         }
     }
 
