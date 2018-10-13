@@ -87,7 +87,7 @@ Widgets are resizable and include...
 Suntimes does not collect, store, or transmit personal user data. It contains <b>no advertising</b>, <b>no analytics</b>, <b>no trackers</b>, and <b>no unnecessary permissions</b>. 
 [https://github.com/forrestguice/SuntimesWidget/wiki/Privacy](https://github.com/forrestguice/SuntimesWidget/wiki/Privacy)
     
-The app needs the following permissions...
+The app benefits from the following permissions...
 
 |Permission||Since Version|
 |---|---|---|
@@ -139,7 +139,8 @@ French translation by <u>Jej</u> and <u>Aloha</u>.<br/>
 Hungarian translation by <u>Erci</u>.<br/>
 Catalan and Spanish translations by <u><a href="https://github.com/Raulvo">Raulvo</a></u>.<br/>
 Basque translation by <u>beriain</u>.<br/>
-Norwegian translation by <u>FTno</u>.
+Norwegian translation by <u>FTno</u>.<br/>
+Italian translation by <u>Matteo Caoduro</u>.
 
 [Contributions to the project](CONTRIBUTING.md) are welcome.
 
