@@ -128,45 +128,51 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
         configureAppForScreenshots(context, languageTag, theme);
         activityRule.launchActivity(activityRule.getActivity().getIntent());
 
+        long waitTime = 3 * 1000;            // wait a moment
+        IdlingResource waitForResource = new ElapsedTimeIdlingResource(waitTime);
+        IdlingPolicies.setMasterPolicyTimeout(waitTime * 2, TimeUnit.MILLISECONDS);
+        IdlingPolicies.setIdlingResourceTimeout(waitTime * 2, TimeUnit.MILLISECONDS);
+        registerIdlingResources(waitForResource);
+
+        // main activity
+        captureScreenshot(version + "/" + languageTag, "activity-main0-" + theme);
+
         // dialogs
-        DialogTest.showAboutDialog(context);
+        DialogTest.showAboutDialog(context, false);
         captureScreenshot(version + "/" + languageTag, "dialog-about-" + theme);
         DialogTest.cancelAboutDialog();
 
-        DialogTest.showHelpDialog(context);
+        DialogTest.showHelpDialog(context, false);
         captureScreenshot(version + "/" + languageTag, "dialog-help-" + theme);
         DialogTest.cancelHelpDialog();
 
-        DialogTest.showEquinoxDialog(context);
+        DialogTest.showEquinoxDialog(context, false);
         captureScreenshot(version + "/" + languageTag, "dialog-equinox-" + theme);
         DialogTest.cancelEquinoxDialog();
 
-        DialogTest.showLightmapDialog(context);
+        DialogTest.showLightmapDialog(context, false);
         captureScreenshot(version + "/" + languageTag, "dialog-lightmap-" + theme);
         DialogTest.cancelLightmapDialog();
 
-        TimeZoneDialogTest.showTimezoneDialog(activityRule.getActivity());
+        TimeZoneDialogTest.showTimezoneDialog(activityRule.getActivity(), false);
         captureScreenshot(version + "/" + languageTag, "dialog-timezone0-" + theme);
         TimeZoneDialogTest.inputTimezoneDialog_mode(context, WidgetSettings.TimezoneMode.SOLAR_TIME);
         captureScreenshot(version + "/" + languageTag, "dialog-timezone1-" + theme);
         TimeZoneDialogTest.cancelTimezoneDialog();
 
-        AlarmDialogTest.showAlarmDialog(context);
+        AlarmDialogTest.showAlarmDialog(context, false);
         captureScreenshot(version + "/" + languageTag, "dialog-alarm-" + theme);
         AlarmDialogTest.cancelAlarmDialog();
 
-        TimeDateDialogTest.showDateDialog(context);
+        TimeDateDialogTest.showDateDialog(context, false);
         captureScreenshot(version + "/" + languageTag, "dialog-date-" + theme);
         TimeDateDialogTest.cancelDateDialog();
 
-        LocationDialogTest.showLocationDialog();
+        LocationDialogTest.showLocationDialog(false);
         captureScreenshot(version + "/" + languageTag, "dialog-location0-" + theme);
-        LocationDialogTest.editLocationDialog();
+        LocationDialogTest.editLocationDialog(false);
         captureScreenshot(version + "/" + languageTag, "dialog-location1-" + theme);
         LocationDialogTest.cancelLocationDialog(context);
-
-        // main activity
-        captureScreenshot(version + "/" + languageTag, "activity-main0-" + theme);
     }
 
     private void configureAppForScreenshots(Activity context)
