@@ -40,17 +40,21 @@ public class HelpDialog extends DialogFragment
     /**
      * The text content displayed by the help dialog.
      */
-    private String rawContent = "";
-    public String getContent()
+    private CharSequence rawContent = "";
+    public CharSequence getContent()
     {
         return rawContent;
     }
     public void setContent( String content )
     {
+        setContent((CharSequence)SuntimesUtils.fromHtml(content));
+    }
+
+    public void setContent( CharSequence content )
+    {
         rawContent = content;
-        if (txtView != null)
-        {
-            txtView.setText(SuntimesUtils.fromHtml(rawContent));
+        if (txtView != null) {
+            txtView.setText(content);
         }
     }
 
@@ -84,7 +88,7 @@ public class HelpDialog extends DialogFragment
         if (savedInstanceState != null)
         {
             //Log.d("DEBUG", "HelpDialog onCreate (restoreState)");
-            rawContent = savedInstanceState.getString(KEY_HELPTEXT);
+            rawContent = savedInstanceState.getCharSequence(KEY_HELPTEXT);
         }
         setContent(rawContent);
         if (onShowListener != null) {
@@ -106,7 +110,7 @@ public class HelpDialog extends DialogFragment
     public void onSaveInstanceState( Bundle outState )
     {
         //Log.d("DEBUG", "HelpDialog onSaveInstanceState");
-        outState.putString(KEY_HELPTEXT, rawContent);
+        outState.putCharSequence(KEY_HELPTEXT, rawContent);
         //outState.putString(KEY_NEUTRALTEXT, neutralButtonMsg);
         super.onSaveInstanceState(outState);
     }

@@ -1,6 +1,7 @@
 ### ~
 
 ### v0.9.3 (2018-10-10)
+* adds help to the "theme list" activity.
 * adds translation to Italian (it) (contributed by Matteo Caoduro) (#249).
 
 ### v0.9.2 (2018-09-12)
