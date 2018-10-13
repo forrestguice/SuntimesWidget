@@ -179,7 +179,7 @@
 
     <string name="configLabel_tagDefault">[default]</string>
     <string name="configLabel_tagPlugin">[plugin]</string>
-    <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText" >%1$s</xliff:g>\\<xliff:g id="tag" example="[default]" >%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->
+    <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText" >%1$s</xliff:g>\t<xliff:g id="tag" example="[default]" >%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->
 
     <!-- WidgetConfig Activity -->
     <string name="configAction_addWidget">Aggiungi widget</string>                   <!-- Button: Add -->
@@ -242,10 +242,10 @@
     <string name="timeMode_day">Giorno</string>                       <!-- a label (not an actual timeMode setting) -->
     <string name="timeMode_golden_short">D\'oro</string>                <!-- setting -->
     <string name="timeMode_golden">Ora d\'oro</string>                 <!-- setting -->
-    <string name="timeMode_blue8_short">Blu (8\\00B0)</string>                    <!-- setting -->
-    <string name="timeMode_blue8">Ora blu (8\\00B0)</string>                     <!-- setting -->
-    <string name="timeMode_blue4_short">Blu (4\\00B0)</string>                    <!-- setting -->
-    <string name="timeMode_blue4">Ora blu (4\\00B0)</string>                     <!-- setting -->
+    <string name="timeMode_blue8_short">Blu (8\u00B0)</string>                    <!-- setting -->
+    <string name="timeMode_blue8">Ora blu (8\u00B0)</string>                     <!-- setting -->
+    <string name="timeMode_blue4_short">Blu (4\u00B0)</string>                    <!-- setting -->
+    <string name="timeMode_blue4">Ora blu (4\u00B0)</string>                     <!-- setting -->
 
     <string name="timeMode_equinox_vernal">Equinozio di primavera</string>      <!-- setting -->
     <string name="timeMode_equinox_vernal_short">Equinozio</string>       <!-- setting -->
