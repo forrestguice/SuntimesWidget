@@ -21,17 +21,16 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.text.style.ImageSpan;
 import android.util.AttributeSet;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
@@ -46,8 +45,6 @@ public class AnalemmaView extends android.support.v7.widget.AppCompatImageView
     //private static final double MINUTES_IN_DAY = 24 * 60;
 
     public static final int DEFAULT_MAX_UPDATE_RATE = 15 * 1000;  // ms value; once every 15s
-    public static final int DEFAULT_POINT_RADIUS = 6;
-    public static final int DEFAULT_STROKE_WIDTH = 2;
     public static final int DEFAULT_LINE_WIDTH = 2;
     public static final int DEFAULT_AXIS_WIDTH = 2;
     public static final int DEFAULT_TICK_WIDTH = 1;
@@ -82,12 +79,12 @@ public class AnalemmaView extends android.support.v7.widget.AppCompatImageView
         options = new AnalemmaOptions(context);
         if (isInEditMode())
         {
-            setBackgroundColor(options.colorBackground);
+            setBackgroundColor(options.backgroundColor);
         }
     }
 
-    private AnalemmaDataPoints dataPoints;
-    public AnalemmaDataPoints getDataPoints()
+    private AnalemmaData dataPoints;
+    public AnalemmaData getDataPoints()
     {
         return dataPoints;
     }
@@ -160,7 +157,7 @@ public class AnalemmaView extends android.support.v7.widget.AppCompatImageView
         drawTask.setListener(new AnalemmaTaskListener()
         {
             @Override
-            public void onFinished(Bitmap result, AnalemmaDataPoints dataPoints)
+            public void onFinished(Bitmap result, AnalemmaData dataPoints)
             {
                 AnalemmaView.this.dataPoints = dataPoints;
                 setImageBitmap(result);
@@ -202,7 +199,7 @@ public class AnalemmaView extends android.support.v7.widget.AppCompatImageView
      */
     /**protected boolean saveSettings(Context context)
     {
-        //Log.d("DEBUG", "LightMap loadSettings (prefs)");
+        //Log.d("DEBUG", "AnalemmaView loadSettings (prefs)");
         return true;
     }*/
 
@@ -222,14 +219,8 @@ public class AnalemmaView extends android.support.v7.widget.AppCompatImageView
     public static class AnalemmaTask extends AsyncTask<Object, Void, Bitmap>
     {
         private AnalemmaOptions options;
-        private int pointRadius = DEFAULT_POINT_RADIUS;
-        private int pointStrokeWidth = DEFAULT_STROKE_WIDTH;
-        private int lineWidth = DEFAULT_LINE_WIDTH;
-        private int axisWidth = DEFAULT_AXIS_WIDTH;
-        private int tickWidth = DEFAULT_TICK_WIDTH;
-        private int tickLength = DEFAULT_TICK_LENGTH;
 
-        private AnalemmaDataPoints dataPoints;
+        private AnalemmaData dataPoints;
         private SuntimesRiseSetDataset data;
 
         /**
@@ -271,16 +262,12 @@ public class AnalemmaView extends android.support.v7.widget.AppCompatImageView
             Canvas c = new Canvas(b);
             Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-            p.setColor(options.colorBackground);         // background
+            p.setColor(options.backgroundColor);         // background
             c.drawRect(0, 0, w, h, p);
 
-            int[] mid = new int[2];                     // canvas center
-            mid[0] = w / 2;
-            mid[1] = h / 2;
-
-            double[] canvasBounds = new double[2];      // bounds from center (0,0)
-            canvasBounds[0] = (mid[0] - options.padding[0]);
-            canvasBounds[1] = (mid[1] - options.padding[1]);
+            double[] canvasBounds = new double[2];
+            canvasBounds[0] = w;
+            canvasBounds[1] = h;
 
             if (data != null)
             {
@@ -289,90 +276,94 @@ public class AnalemmaView extends android.support.v7.widget.AppCompatImageView
                 date.set(Calendar.HOUR_OF_DAY, options.date_hour);
                 date.set(Calendar.MINUTE, options.date_minute);
 
-                dataPoints = new AnalemmaDataPoints(calculator, date, options.mode);
+                dataPoints = new AnalemmaData(calculator, date, options.mode);
                 ArrayList<double[]> d = dataPoints.getData();
-
-                double[] dataBounds = new double[2];           // bounds from center (0,0)
-                dataBounds[0] = Math.max( Math.abs(dataPoints.getMinX()), Math.abs(dataPoints.getMaxX()) );
-                dataBounds[1] = Math.max( Math.abs(dataPoints.getMinY()), Math.abs(dataPoints.getMaxY()) );
+                double[][] dataBounds = dataPoints.getBounds();
+                Matrix projection = initProjection(dataBounds, canvasBounds, options);
 
                 // draw axis (and ticks)
                 if (options.showAxis)
                 {
-                    int[] axis = getAxis(w, h, mid);
+                    int[] axis = projectToCanvas(0, 0, projection);
 
-                    p.setColor(options.colorAxis_y);             // y-axis
-                    p.setStrokeWidth(axisWidth);
-                    c.drawLine(axis[1], 0, axis[1], h, p);
+                    p.setColor(options.axisColor_y);             // y-axis
+                    p.setStrokeWidth(options.axisWidth);
+                    c.drawLine(axis[0], 0, axis[0], h, p);
 
-                    p.setColor(options.colorAxis_x);             // x-axis
-                    p.setStrokeWidth(axisWidth);
-                    c.drawLine(0, axis[0], w, axis[0], p);
+                    p.setColor(options.axisColor_x);             // x-axis
+                    p.setStrokeWidth(options.axisWidth);
+                    c.drawLine(0, axis[1], w, axis[1], p);
 
                     if (options.showTicks)
                     {
-                        p.setStrokeWidth(tickWidth);
-
-                        int numTicks = (int)(dataBounds[1] / options.tickScale_y) + 1;
+                        p.setStrokeWidth(options.tickWidth);
+                        p.setColor(options.axisColor_x);
+                        int numTicks = (int)(90 / options.tickScale_x) + 1;
                         for (int i=1; i<=numTicks; i++)         // x-axis
                         {
-                            int pa[] = projectToCanvas(new double[] {i * options.tickScale_x, 0}, w, h, mid, dataBounds, canvasBounds);
-                            int pb[] = projectToCanvas(new double[] {-i * options.tickScale_x, 0}, w, h, mid, dataBounds, canvasBounds);
-                            p.setColor(options.colorAxis_x);
-                            c.drawLine(pa[0], pa[1] + tickLength, pa[0], pa[1] - tickLength, p);
-                            c.drawLine(pb[0], pb[1] + tickLength, pb[0], pb[1] - tickLength, p);
+                            int pa[] = projectToCanvas(new double[] {i * options.tickScale_x, 0}, projection);
+                            int pb[] = projectToCanvas(new double[] {-i * options.tickScale_x, 0}, projection);
+                            c.drawLine(pa[0], pa[1] + options.tickLength, pa[0], pa[1] - options.tickLength, p);
+                            c.drawLine(pb[0], pb[1] + options.tickLength, pb[0], pb[1] - options.tickLength, p);
                         }
 
-                        numTicks = (int)(dataBounds[1] / options.tickScale_y) + 1;
+                        p.setStrokeWidth(options.tickWidth);
+                        p.setColor(options.axisColor_y);
+                        numTicks = (int)(90 / options.tickScale_y) + 1;
                         for (int i=1; i<=numTicks; i++)   // y axis
                         {
-                            int pa[] = projectToCanvas(new double[] {0, i * options.tickScale_y}, w, h, mid, dataBounds, canvasBounds);
-                            int pb[] = projectToCanvas(new double[] {0, -i * options.tickScale_y}, w, h, mid, dataBounds, canvasBounds);
-                            p.setColor(options.colorAxis_y);
-                            c.drawLine(pa[0] + tickLength, pa[1], pa[0] - tickLength, pa[1], p);
-                            c.drawLine(pb[0] + tickLength, pb[1], pb[0] - tickLength, pb[1], p);
+                            int pa[] = projectToCanvas(new double[] {0, i * options.tickScale_y}, projection);
+                            int pb[] = projectToCanvas(new double[] {0, -i * options.tickScale_y}, projection);
+                            c.drawLine(pa[0] + options.tickLength, pa[1], pa[0] - options.tickLength, pa[1], p);
+                            c.drawLine(pb[0] + options.tickLength, pb[1], pb[0] - options.tickLength, pb[1], p);
                         }
                     }
                 }
 
-                // draw analemma
-                p.setColor(options.colorLine);
-                p.setStrokeWidth(lineWidth);
+                // draw analemma line
+                p.setColor(options.lineColor);
+                p.setStrokeWidth(options.lineWidth);
                 for (int i=0; i<d.size(); i++)
                 {
                     double[] d0 = d.get(i);
                     double[] d1 = (i == d.size()-1 ? d.get(0) : d.get(i+1));
-                    int[] p0 = projectToCanvas(d0, w, h, mid, dataBounds, canvasBounds);
-                    int[] p1 = projectToCanvas(d1, w, h, mid, dataBounds, canvasBounds);
+                    int[] p0 = projectToCanvas(d0, projection);
+                    int[] p1 = projectToCanvas(d1, projection);
                     c.drawLine(p0[0], p0[1], p1[0], p1[1], p);
                 }
 
+                // draw month markers
                 if (options.showMonths)
                 {
-                    // TODO
+                    for (int i=0; i<12; i++)
+                    {
+                        int[] monthPoint = projectToCanvas(dataPoints.monthPoint[i], projection);
+                        drawPoint(monthPoint, options.monthPointWidth, options.monthColor, options.monthColor, 0, c, p);
+                    }
                 }
 
+                // draw season markers
                 if (options.showSeasons)
                 {
-                    int[] springPoint = projectToCanvas(dataPoints.springPoint, w, h, mid, dataBounds, canvasBounds);
-                    drawPoint(springPoint, options.seasonPointWidth, options.colorSpring, options.colorSpring, 0, c, p);
+                    int[] springPoint = projectToCanvas(dataPoints.springPoint, projection);
+                    drawPoint(springPoint, options.seasonPointWidth, options.springColor, options.springColor, 0, c, p);
 
-                    int[] summerPoint = projectToCanvas(dataPoints.summerPoint, w, h, mid, dataBounds, canvasBounds);
-                    drawPoint(summerPoint, options.seasonPointWidth, options.colorSummer, options.colorSummer, 0, c, p);
+                    int[] summerPoint = projectToCanvas(dataPoints.summerPoint, projection);
+                    drawPoint(summerPoint, options.seasonPointWidth, options.summerColor, options.summerColor, 0, c, p);
 
-                    int[] fallPoint = projectToCanvas(dataPoints.fallPoint, w, h, mid, dataBounds, canvasBounds);
-                    drawPoint(fallPoint, options.seasonPointWidth, options.colorFall, options.colorFall, 0, c, p);
+                    int[] fallPoint = projectToCanvas(dataPoints.fallPoint, projection);
+                    drawPoint(fallPoint, options.seasonPointWidth, options.fallColor, options.fallColor, 0, c, p);
 
-                    int[] winterPoint = projectToCanvas(dataPoints.winterPoint, w, h, mid, dataBounds, canvasBounds);
-                    drawPoint(winterPoint, options.seasonPointWidth, options.colorWinter, options.colorWinter, 0, c, p);
+                    int[] winterPoint = projectToCanvas(dataPoints.winterPoint, projection);
+                    drawPoint(winterPoint, options.seasonPointWidth, options.winterColor, options.winterColor, 0, c, p);
                 }
 
                 // draw sun position
                 if (options.showSun)
                 {
                     double[] sunData = dataPoints.getData().get(dataPoints.getDayOfYear());
-                    int[] sun = projectToCanvas(sunData, w, h, mid, dataBounds, canvasBounds);
-                    drawPoint(sun, options.sunPointWidth, options.sunPointFill, options.sunPointStroke, options.sunStrokeWidth, c, p);
+                    int[] sunPoint = projectToCanvas(sunData, projection);
+                    drawPoint(sunPoint, options.sunPointWidth, options.sunPointFill, options.sunPointStroke, options.sunStrokeWidth, c, p);
                 }
             }
 
@@ -383,7 +374,8 @@ public class AnalemmaView extends android.support.v7.widget.AppCompatImageView
 
         /**
          * drawPoint
-         * @param pos canvas position
+         * @param pX x position
+         * @param pY y position
          * @param r radius
          * @param colorFill fill color
          * @param colorStroke stroke color
@@ -391,69 +383,65 @@ public class AnalemmaView extends android.support.v7.widget.AppCompatImageView
          * @param c canvas
          * @param p paint
          */
-        private void drawPoint(int[] pos, int r, int colorFill, int colorStroke, int strokeWidth, Canvas c, Paint p)
+        private void drawPoint(int pX, int pY, int r, int colorFill, int colorStroke, int strokeWidth, Canvas c, Paint p)
         {
             p.setStyle(Paint.Style.FILL);
             p.setColor(colorFill);
-            c.drawCircle(pos[0], pos[1], r, p);
+            c.drawCircle(pX, pY, r, p);
 
             p.setStyle(Paint.Style.STROKE);
             p.setStrokeWidth(strokeWidth);
             p.setColor(colorStroke);
-            c.drawCircle(pos[0], pos[1], r, p);
+            c.drawCircle(pX, pY, r, p);
+        }
+        private void drawPoint(int[] pos, int r, int colorFill, int colorStroke, int strokeWidth, Canvas c, Paint p)
+        {
+            drawPoint(pos[0], pos[1], r, colorFill, colorStroke, strokeWidth, c, p);
         }
 
-        /**
-         * projectToCanvas
-         * @param d [x,y] dataPoint to be projected
-         * @param w canvas width
-         * @param h canvas height
-         * @param mid canvas midpoint
-         * @param dataBounds data [xMax,yMax]
-         * @param canvasBounds canvas [xMax, yMax]
-         * @return projected [canvasX, canvasY]
-         */
-        private int[] projectToCanvas(double[] d, int w, int h, int[] mid, double[] dataBounds, double[] canvasBounds)
+        private Matrix initProjection(double[][] dataBounds, double[] canvasBounds, AnalemmaOptions options)
         {
-            switch (options.mode)
-            {
-                case ALT_AZ: return projectToCanvas_fromBottom(d, w, h, mid, dataBounds, canvasBounds);
-                case ALT_EOT: return projectToCanvas_fromBottom(d, w, h, mid, dataBounds, canvasBounds);
-                case DEC_EOT:
-                default: return projectToCanvas_fromCenter(d, mid, dataBounds, canvasBounds);
-            }
-        }
-        private int[] projectToCanvas_fromBottom(double[] d, int w, int h, int[] mid, double[] dataBounds, double[] canvasBounds)
-        {
-            int[] p = new int[2];
-            p[0] = (int)(mid[0] + ((d[0] / dataBounds[0]) * canvasBounds[0]));
-            p[1] = (int)(h - options.padding[1] - ((d[1] / dataBounds[1]) * canvasBounds[0]*2));
-            return p;
-        }
-        private int[] projectToCanvas_fromCenter(double[] d, int[] mid, double[] dataBounds, double[] canvasBounds)
-        {
-            int[] p = new int[2];
-            p[0] = (int)(mid[0] + ((d[0] / dataBounds[0]) * canvasBounds[0]));
-            p[1] = (int)(mid[1] - ((d[1] / dataBounds[1]) * canvasBounds[1]));
-            return p;
-        }
+            float[] mid = new float[] {(float)(canvasBounds[0] / 2d), (float)(canvasBounds[1] / 2d)};
+            double xAbsMax = (Math.max(Math.abs(dataBounds[0][0]), Math.abs(dataBounds[0][1])));
+            double yAbsMax = (Math.max(Math.abs(dataBounds[1][0]), Math.abs(dataBounds[1][1])));
 
-        private int[] getAxis(int w, int h, int[] mid)
-        {
-            int[] axis;
+            Matrix m = new Matrix();
             switch (options.mode)
             {
                 case ALT_AZ:
                 case ALT_EOT:
-                    axis = new int[] {h - options.padding[1], mid[0]};
+                    m.preTranslate((float)xAbsMax, 90f);
+                    m.preScale(1, -1);
+                    m.postScale( (float)((mid[0] - options.padding[0]) / xAbsMax),
+                                 (float)((canvasBounds[1] - (2 * options.padding[1])) / 90f) );
+                    m.postTranslate(options.padding[0], options.padding[1]);
                     break;
+
                 case DEC_EOT:
                 default:
-                    axis = new int[] {mid[1], mid[0]};
+                    m.preTranslate((float)xAbsMax, (float)yAbsMax);
+                    m.preScale(1, -1);
+                    m.postScale( (float)((mid[0] - options.padding[0]) / xAbsMax),
+                                 (float)((mid[1] - options.padding[1]) / yAbsMax) );
+                    m.postTranslate(options.padding[0], options.padding[1]);
                     break;
             }
-            return axis;
+            return m;
         }
+
+        private int[] projectToCanvas(double[] d, @NonNull Matrix m)
+        {
+            return projectToCanvas(d[0], d[1], m);
+        }
+
+        private int[] projectToCanvas(double x, double y, @NonNull Matrix m)
+        {
+            float[] src = {(float)x, (float)y};
+            float[] dst = new float[2];
+            m.mapPoints(dst, src);
+            return new int[] {(int)dst[0], (int)dst[1]};
+        }
+
 
         @Override
         protected void onPreExecute()
@@ -500,7 +488,7 @@ public class AnalemmaView extends android.support.v7.widget.AppCompatImageView
     @SuppressWarnings("EmptyMethod")
     public static abstract class AnalemmaTaskListener
     {
-        public void onFinished( Bitmap result, AnalemmaDataPoints dataPoints ) {}
+        public void onFinished( Bitmap result, AnalemmaData dataPoints ) {}
     }
 
     private AnalemmaTaskListener listener = null;
@@ -519,26 +507,34 @@ public class AnalemmaView extends android.support.v7.widget.AppCompatImageView
     @SuppressWarnings("WeakerAccess")
     public static class AnalemmaOptions
     {
+        public int date_hour = 12, date_minute = 0;
         public LightMapWidgetSettings.AnalemmaWidgetMode mode = LightMapWidgetSettings.PREF_DEF_APPEARANCE_WIDGETMODE_ANALEMMA;
-        public int colorBackground, colorLine;
+
+        public int backgroundColor;
         public int[] padding = new int[] {8, 8};
 
         public boolean showAxis = true;
+        private int axisWidth = DEFAULT_AXIS_WIDTH;
+        public int axisColor_x, axisColor_y;
+
         public boolean showTicks = true;
         public int tickScale_x = 5, tickScale_y = 5;
-        public int colorAxis_x, colorAxis_y;
+        private int tickWidth = DEFAULT_TICK_WIDTH;
+        private int tickLength = DEFAULT_TICK_LENGTH;
+
+        public int lineColor;
+        private int lineWidth = DEFAULT_LINE_WIDTH;
 
         public boolean showSun = true;
         public int sunPointFill, sunPointStroke;
         public int sunPointWidth = 6, sunStrokeWidth = 2;
 
         public boolean showMonths = true;
+        public int monthPointWidth = 2, monthColor;
 
         public boolean showSeasons = true;
-        public int colorSpring, colorSummer, colorFall, colorWinter;
+        public int springColor, summerColor, fallColor, winterColor;
         public int seasonPointWidth = 3, seasonStrokeWidth = 0;
-
-        public int date_hour = 12, date_minute = 0;
 
         public AnalemmaOptions() {}
 
@@ -560,58 +556,64 @@ public class AnalemmaView extends android.support.v7.widget.AppCompatImageView
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
             int def = R.color.transparent;
 
-            colorLine = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
-            colorAxis_x = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
-            colorAxis_y = ContextCompat.getColor(context, typedArray.getResourceId(3, def));
-            colorBackground = ContextCompat.getColor(context, typedArray.getResourceId(4, def));
+            lineColor = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
+            axisColor_x = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
+            axisColor_y = ContextCompat.getColor(context, typedArray.getResourceId(3, def));
+            backgroundColor = ContextCompat.getColor(context, typedArray.getResourceId(4, def));
             sunPointFill = ContextCompat.getColor(context, typedArray.getResourceId(5, def));
             sunPointStroke = ContextCompat.getColor(context, typedArray.getResourceId(6, def));
 
-            colorSpring = ContextCompat.getColor(context, typedArray.getResourceId(7, def));
-            colorSummer = ContextCompat.getColor(context, typedArray.getResourceId(8, def));
-            colorFall = ContextCompat.getColor(context, typedArray.getResourceId(9, def));
-            colorWinter = ContextCompat.getColor(context, typedArray.getResourceId(10, def));
+            springColor = ContextCompat.getColor(context, typedArray.getResourceId(7, def));
+            summerColor = ContextCompat.getColor(context, typedArray.getResourceId(8, def));
+            fallColor = ContextCompat.getColor(context, typedArray.getResourceId(9, def));
+            winterColor = ContextCompat.getColor(context, typedArray.getResourceId(10, def));
+
+            monthColor = lineColor;
 
             typedArray.recycle();
         }
 
         public void initDefaultDark(Context context)
         {
-            colorLine = ContextCompat.getColor(context, R.color.graphColor_astronomical_dark);
-            colorAxis_x = ContextCompat.getColor(context, R.color.graphColor_astronomical_dark);
-            colorAxis_y = ContextCompat.getColor(context, R.color.graphColor_astronomical_dark);
-            colorBackground = ContextCompat.getColor(context, R.color.graphColor_night_dark);
+            lineColor = ContextCompat.getColor(context, R.color.graphColor_astronomical_dark);
+            axisColor_x = ContextCompat.getColor(context, R.color.graphColor_astronomical_dark);
+            axisColor_y = ContextCompat.getColor(context, R.color.graphColor_astronomical_dark);
+            backgroundColor = ContextCompat.getColor(context, R.color.graphColor_night_dark);
             sunPointFill = ContextCompat.getColor(context, R.color.sunIcon_color_setting_dark);
             sunPointStroke = ContextCompat.getColor(context, R.color.grey_800);
 
-            colorSpring = ContextCompat.getColor(context, R.color.springColor_dark);
-            colorSummer = ContextCompat.getColor(context, R.color.summerColor_dark);
-            colorFall = ContextCompat.getColor(context, R.color.fallColor_dark);
-            colorWinter = ContextCompat.getColor(context, R.color.winterColor_dark);
+            springColor = ContextCompat.getColor(context, R.color.springColor_dark);
+            summerColor = ContextCompat.getColor(context, R.color.summerColor_dark);
+            fallColor = ContextCompat.getColor(context, R.color.fallColor_dark);
+            winterColor = ContextCompat.getColor(context, R.color.winterColor_dark);
+
+            monthColor = lineColor;
         }
 
         public void initDefaultLight(Context context)
         {
-            colorLine = ContextCompat.getColor(context, R.color.graphColor_astronomical_light);
-            colorAxis_x = ContextCompat.getColor(context, R.color.graphColor_astronomical_light);
-            colorAxis_y = ContextCompat.getColor(context, R.color.graphColor_astronomical_light);
-            colorBackground = ContextCompat.getColor(context, R.color.graphColor_night_light);
+            lineColor = ContextCompat.getColor(context, R.color.graphColor_astronomical_light);
+            axisColor_x = ContextCompat.getColor(context, R.color.graphColor_astronomical_light);
+            axisColor_y = ContextCompat.getColor(context, R.color.graphColor_astronomical_light);
+            backgroundColor = ContextCompat.getColor(context, R.color.graphColor_night_light);
             sunPointFill = ContextCompat.getColor(context, R.color.sunIcon_color_setting_light);
             sunPointStroke = ContextCompat.getColor(context, R.color.grey_800);
 
-            colorSpring = ContextCompat.getColor(context, R.color.springColor_light);
-            colorSummer = ContextCompat.getColor(context, R.color.summerColor_light);
-            colorFall = ContextCompat.getColor(context, R.color.fallColor_light);
-            colorWinter = ContextCompat.getColor(context, R.color.winterColor_light);
+            springColor = ContextCompat.getColor(context, R.color.springColor_light);
+            summerColor = ContextCompat.getColor(context, R.color.summerColor_light);
+            fallColor = ContextCompat.getColor(context, R.color.fallColor_light);
+            winterColor = ContextCompat.getColor(context, R.color.winterColor_light);
+
+            monthColor = lineColor;
         }
     }
 
     /**
-     * AnalemmaDataPoints
+     * AnalemmaData
      */
-    public static class AnalemmaDataPoints
+    public static class AnalemmaData
     {
-        public AnalemmaDataPoints(@NonNull SuntimesCalculator calculator, @NonNull Calendar date, @NonNull LightMapWidgetSettings.AnalemmaWidgetMode mode)
+        public AnalemmaData(@NonNull SuntimesCalculator calculator, @NonNull Calendar date, @NonNull LightMapWidgetSettings.AnalemmaWidgetMode mode)
         {
             this.date = date;
             this.mode = mode;
@@ -666,7 +668,26 @@ public class AnalemmaView extends android.support.v7.widget.AppCompatImageView
             return data.get(i_minY)[1];
         }
 
+        public double[][] getBounds()
+        {
+            double[][] dataBounds = new double[2][2];
+            dataBounds[0][0] = getMinX();
+            dataBounds[0][1] = getMaxX();
+            dataBounds[1][0] = getMinY();
+            dataBounds[1][1] = getMaxY();
+            return dataBounds;
+        }
+
+        public double[] getAbsBounds()
+        {
+            double[] dataBounds = new double[2];
+            dataBounds[0] = Math.max( Math.abs(getMinX()), Math.abs(getMaxX()) );
+            dataBounds[1] = Math.max( Math.abs(getMinY()), Math.abs(getMaxY()) );
+            return dataBounds;
+        }
+
         protected double[] springPoint = {0,0}, summerPoint = {0,0}, fallPoint = {0,0}, winterPoint = {0,0};
+        protected double[][] monthPoint = new double[12][2];
 
         public static double[] createPoint(int day, SuntimesCalculator.SunPosition sunPos, @NonNull LightMapWidgetSettings.AnalemmaWidgetMode mode)
         {
@@ -692,7 +713,7 @@ public class AnalemmaView extends android.support.v7.widget.AppCompatImageView
             return point;
         }
 
-        public static void generateDataPoints(@NonNull AnalemmaDataPoints dataPoints, @NonNull SuntimesCalculator calculator, @NonNull Calendar date0, @NonNull LightMapWidgetSettings.AnalemmaWidgetMode mode)
+        public static void generateDataPoints(@NonNull AnalemmaData dataPoints, @NonNull SuntimesCalculator calculator, @NonNull Calendar date0, @NonNull LightMapWidgetSettings.AnalemmaWidgetMode mode)
         {
             Calendar date = Calendar.getInstance();
             date.setTimeZone(date0.getTimeZone());
@@ -720,29 +741,40 @@ public class AnalemmaView extends android.support.v7.widget.AppCompatImageView
                 }
             }
 
-            Calendar springDate = calculator.getVernalEquinoxForYear(date0);
-            springDate.set(Calendar.HOUR_OF_DAY, date0.get(Calendar.HOUR_OF_DAY));
-            springDate.set(Calendar.MINUTE, date0.get(Calendar.MINUTE));
+            for (int month=0; month<12; month++)
+            {
+                date.set(Calendar.MONTH, month);
+                date.set(Calendar.DAY_OF_MONTH, 1);
+                Calendar monthDate = adjustTime(date, date0);
+
+                SuntimesCalculator.SunPosition monthPosition = calculator.getSunPosition(monthDate);
+                double[] point = createPoint(monthDate.get(Calendar.DAY_OF_YEAR), monthPosition, mode);
+                dataPoints.monthPoint[month][0] = point[0];
+                dataPoints.monthPoint[month][1] = point[1];
+            }
+
+            Calendar springDate = adjustTime(calculator.getVernalEquinoxForYear(date0), date0);
             SuntimesCalculator.SunPosition vernalPosition = calculator.getSunPosition(springDate);
             dataPoints.springPoint = createPoint(springDate.get(Calendar.DAY_OF_YEAR), vernalPosition, mode);
 
-            Calendar summerDate = calculator.getSummerSolsticeForYear(date0);
-            summerDate.set(Calendar.HOUR_OF_DAY, date0.get(Calendar.HOUR_OF_DAY));
-            summerDate.set(Calendar.MINUTE, date0.get(Calendar.MINUTE));
+            Calendar summerDate = adjustTime(calculator.getSummerSolsticeForYear(date0), date0);
             SuntimesCalculator.SunPosition summerPosition = calculator.getSunPosition(summerDate);
             dataPoints.summerPoint = createPoint(summerDate.get(Calendar.DAY_OF_YEAR), summerPosition, mode);
 
-            Calendar fallDate = calculator.getAutumnalEquinoxForYear(date0);
-            fallDate.set(Calendar.HOUR_OF_DAY, date0.get(Calendar.HOUR_OF_DAY));
-            fallDate.set(Calendar.MINUTE, date0.get(Calendar.MINUTE));
+            Calendar fallDate = adjustTime(calculator.getAutumnalEquinoxForYear(date0), date0);
             SuntimesCalculator.SunPosition fallPosition = calculator.getSunPosition(fallDate);
             dataPoints.fallPoint = createPoint(fallDate.get(Calendar.DAY_OF_YEAR), fallPosition, mode);
 
-            Calendar winterDate = calculator.getWinterSolsticeForYear(date0);
-            winterDate.set(Calendar.HOUR_OF_DAY, date0.get(Calendar.HOUR_OF_DAY));
-            winterDate.set(Calendar.MINUTE, date0.get(Calendar.MINUTE));
+            Calendar winterDate = adjustTime(calculator.getWinterSolsticeForYear(date0), date0);
             SuntimesCalculator.SunPosition winterPosition = calculator.getSunPosition(winterDate);
             dataPoints.winterPoint = createPoint(winterDate.get(Calendar.DAY_OF_YEAR), winterPosition, mode);
+        }
+
+        private static Calendar adjustTime(Calendar date0, Calendar date1)
+        {
+            date0.set(Calendar.HOUR_OF_DAY, date1.get(Calendar.HOUR_OF_DAY));
+            date0.set(Calendar.MINUTE, date1.get(Calendar.MINUTE));
+            return date0;
         }
     }
 
