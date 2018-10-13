@@ -59,6 +59,7 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
         config.put("es_ES", new ScreenshotConfig(new WidgetSettings.Location("Madrid", "40.4378", "-3.8196"), "Europe/Madrid", true));
         config.put("fr", new ScreenshotConfig(new WidgetSettings.Location("Paris", "48.8566", "2.3518"), "Europe/Paris", true));
         config.put("hu", new ScreenshotConfig(new WidgetSettings.Location("Budapest", "47.4811", "18.9902"), "Europe/Budapest", true));
+        config.put("it", new ScreenshotConfig(new WidgetSettings.Location("Roma", "41.9099", "12.3959"), "CET", false));
         config.put("pl", new ScreenshotConfig(new WidgetSettings.Location("Warszawa", "52.2319", "21.0067"), "Poland", true));
         config.put("nb", new ScreenshotConfig(new WidgetSettings.Location("Oslo", "59.8937", "10.6450"), "Europe/Oslo", true));
 

@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.themes;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -28,6 +29,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -40,6 +42,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
 
+import android.text.SpannableStringBuilder;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -55,6 +59,7 @@ import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.AboutDialog;
 import com.forrestguice.suntimeswidget.ExportTask;
+import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.SuntimesWidget0;
@@ -72,6 +77,7 @@ import static com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity.E
 public class WidgetThemeListActivity extends AppCompatActivity
 {
     public static final String DIALOGTAG_ABOUT = "about";
+    private static final String DIALOGTAG_HELP = "help";
 
     public static final int WALLPAPER_DELAY = 1000;
 
@@ -439,6 +445,10 @@ public class WidgetThemeListActivity extends AppCompatActivity
                 exportThemes(this);
                 return true;
 
+            case R.id.action_help:
+                showHelp();
+                return true;
+
             case R.id.action_about:
                 showAbout();
                 return true;
@@ -716,6 +726,34 @@ public class WidgetThemeListActivity extends AppCompatActivity
         if (useWallpaper)
             initWallpaper(true);
         else hideWallpaper();
+    }
+
+    @SuppressLint("ResourceType")
+    protected void showHelp()
+    {
+        int iconSize = 32;
+        int[] iconAttrs = { R.attr.icActionNew, R.attr.icActionCopy, R.attr.icActionEdit, R.attr.icActionDelete, R.attr.icActionSettings };
+        TypedArray typedArray = obtainStyledAttributes(iconAttrs);
+        ImageSpan addIcon = SuntimesUtils.createImageSpan(this, typedArray.getResourceId(0, R.drawable.ic_action_new), iconSize, iconSize, 0);
+        ImageSpan copyIcon = SuntimesUtils.createImageSpan(this, typedArray.getResourceId(1, R.drawable.ic_action_copy), iconSize, iconSize, 0);
+        ImageSpan editIcon = SuntimesUtils.createImageSpan(this, typedArray.getResourceId(2, R.drawable.ic_action_edit), iconSize, iconSize, 0);
+        ImageSpan deleteIcon = SuntimesUtils.createImageSpan(this, typedArray.getResourceId(3, R.drawable.ic_action_discard), iconSize, iconSize, 0);
+        ImageSpan defaultIcon = SuntimesUtils.createImageSpan(this, typedArray.getResourceId(4, R.drawable.ic_action_settings), iconSize, iconSize, 0);
+        typedArray.recycle();
+
+        SuntimesUtils.ImageSpanTag[] helpTags = {
+                new SuntimesUtils.ImageSpanTag("[Icon Add]", addIcon),
+                new SuntimesUtils.ImageSpanTag("[Icon Copy]", copyIcon),
+                new SuntimesUtils.ImageSpanTag("[Icon Edit]", editIcon),
+                new SuntimesUtils.ImageSpanTag("[Icon Delete]", deleteIcon),
+                new SuntimesUtils.ImageSpanTag("[Icon Default]", defaultIcon)
+        };
+        String helpString = getString(R.string.help_themelist);
+        SpannableStringBuilder helpSpan = SuntimesUtils.createSpan(this, helpString, helpTags);
+
+        HelpDialog helpDialog = new HelpDialog();
+        helpDialog.setContent(helpSpan);
+        helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
     }
 
     protected void showAbout()
