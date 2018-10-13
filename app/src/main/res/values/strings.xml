@@ -792,6 +792,7 @@
         <item>French</item>
         <item>German</item>
         <item>Hungarian</item>
+        <item>Italian</item>
         <item>Polish</item>
         <item>Spanish</item>
         <item>Catalan</item>
@@ -804,6 +805,7 @@
         <item>Français</item>
         <item>Deutsche</item>
         <item>Magyar</item>
+        <item>Italiano</item>
         <item>Polski</item>
         <item>Español</item>
         <item>Català</item>
@@ -816,6 +818,7 @@
         <item>fr</item>
         <item>de</item>
         <item>hu</item>
+        <item>it</item>
         <item>pl</item>
         <item>es_ES</item>
         <item>ca</item>
@@ -1031,7 +1034,8 @@
         Hungarian translation by Erci. <br />
         Spanish and Catalan translation by <a href=https://github.com/Raulvo>Raulvo</a>. <br />
         Basque translation by beriain. <br />
-        Norwegian translation by FTno.
+        Norwegian translation by FTno. <br />
+        Italian translation by Matteo Caoduro. <br />
     ]]></string>
     <string name="app_legal3"><![CDATA[ <b>Libraries:</b><br/> ]]>
     <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
@@ -1124,6 +1128,12 @@
           To <b>add a new widget</b> you must navigate to the home screen.<br/><br/>
           To <b>reconfigure an existing widget</b> you can select from the following list.<br/>
     ]]></string>
+    <string name="help_themelist">
+          [Icon Add] Add a new theme or [Icon Copy] copy from an existing theme.\n
+          \n
+          [Icon Edit] Edit or [Icon Delete] delete themes.\n
+          The [Icon Default] default themes cannot be modified.
+    </string> <!-- TODO -->
 
     <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>Suntimes does not collect, store, or transmit personal user data. It contains <b>no advertising</b>, <b>no analytics</b>, <b>no trackers</b>, and <b>no unnecessary permissions</b>. <br/><br/>The app is configured from location data. This information (and other configuration data used by the app) is stored locally and does not leave the device.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes uses the <b>location</b> permission to determine your current longitude and latitude.<br/><br/>This permission is optional; the location is manually configured by default.]]></string>
