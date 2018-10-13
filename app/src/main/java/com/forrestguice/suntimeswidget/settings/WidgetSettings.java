@@ -1322,7 +1322,7 @@ public class WidgetSettings
     }
     public static String keyCalculatorModePref(int appWidgetId, @NonNull String calculatorName)
     {
-        calculatorName = calculatorName.toLowerCase().trim();
+        calculatorName = calculatorName.toLowerCase(Locale.US).trim();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
         if (calculatorName.isEmpty())
             return prefs_prefix + PREF_KEY_GENERAL_CALCULATOR;
@@ -1343,7 +1343,7 @@ public class WidgetSettings
 
     public static String defaultCalculatorModePref(Context context, int appWidgetId, @NonNull String calculatorName)
     {
-        calculatorName = calculatorName.toLowerCase().trim();
+        calculatorName = calculatorName.toLowerCase(Locale.US).trim();
         if (!calculatorName.isEmpty())
         {
             for (String[] defaultCalculator : PREF_DEF_GENERAL_CALCULATORS)

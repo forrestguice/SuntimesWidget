@@ -179,7 +179,7 @@
 
     <string name="configLabel_tagDefault">[default]</string>
     <string name="configLabel_tagPlugin">[plugin]</string>
-    <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText" >%1$s</xliff:g>\\<xliff:g id="tag" example="[default]" >%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->
+    <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText" >%1$s</xliff:g>\t<xliff:g id="tag" example="[default]" >%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->
 
     <!-- WidgetConfig Activity -->
     <string name="configAction_addWidget">Aggiungi widget</string>                   <!-- Button: Add -->
@@ -242,10 +242,10 @@
     <string name="timeMode_day">Giorno</string>                       <!-- a label (not an actual timeMode setting) -->
     <string name="timeMode_golden_short">D\'oro</string>                <!-- setting -->
     <string name="timeMode_golden">Ora d\'oro</string>                 <!-- setting -->
-    <string name="timeMode_blue8_short">Blu (8\\00B0)</string>                    <!-- setting -->
-    <string name="timeMode_blue8">Ora blu (8\\00B0)</string>                     <!-- setting -->
-    <string name="timeMode_blue4_short">Blu (4\\00B0)</string>                    <!-- setting -->
-    <string name="timeMode_blue4">Ora blu (4\\00B0)</string>                     <!-- setting -->
+    <string name="timeMode_blue8_short">Blu (8\u00B0)</string>                    <!-- setting -->
+    <string name="timeMode_blue8">Ora blu (8\u00B0)</string>                     <!-- setting -->
+    <string name="timeMode_blue4_short">Blu (4\u00B0)</string>                    <!-- setting -->
+    <string name="timeMode_blue4">Ora blu (4\u00B0)</string>                     <!-- setting -->
 
     <string name="timeMode_equinox_vernal">Equinozio di primavera</string>      <!-- setting -->
     <string name="timeMode_equinox_vernal_short">Equinozio</string>       <!-- setting -->
@@ -672,10 +672,10 @@
     <string name="configLabel_calendars_window1">Finestra (fine)</string>
     <string name="configLabel_calendars_window1_summary">Un periodo che finisce a <xliff:g id="calendars_window_display" example="two years" >%s</xliff:g> da adesso</string>
 
-    <string name="calendars_notification_adding">Aggiungendo i calendari...</string>
+    <string name="calendars_notification_adding">Aggiungendo i calendari…</string>
     <string name="calendars_notification_added">I calendari sono stati aggiunti.</string>
 
-    <string name="calendars_notification_clearing">Rimuovendo i calendari...</string>
+    <string name="calendars_notification_clearing">Rimuovendo i calendari…</string>
     <string name="calendars_notification_cleared">I calendari sono stati rimossi.</string>
 
     <string-array name="calendars_window_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
@@ -781,8 +781,8 @@
     <string name="schedalarm_dialog_title">Imposta allarme</string>
     <string name="schedalarm_dialog_ok">Imposta allarme</string>
     <string name="schedalarm_dialog_cancel">Cancella</string>
-    <string name="schedalarm_dialog_error">L\'allarme non è stato impostato...</string>
-    <string name="schedalarm_dialog_error2">L\'allarme non può essere impostato...</string>
+    <string name="schedalarm_dialog_error">L\'allarme non è stato impostato…</string>
+    <string name="schedalarm_dialog_error2">L\'allarme non può essere impostato…</string>
     <string name="schedalarm_dialog_note">circa <xliff:g id="timetext" example="6h 30m" >%s</xliff:g> a partire da ora.</string>
     <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="nautical twilight" >%s</xliff:g> non si verifica.</string>
     <string name="schedalarm_labelformat"><xliff:g id="solarevents_short" example="sunrise" >%1$s</xliff:g> (<xliff:g id="shortDate" example="4/6/2018" >%2$s</xliff:g>)</string>
@@ -871,12 +871,12 @@
 
     <!-- Dialog: Clear Places (progress) -->
     <string name="locationcleared_dialog_title">Eliminando i luoghi</string>
-    <string name="locationcleared_dialog_message">Eliminando il database...</string>
+    <string name="locationcleared_dialog_message">Eliminando il database…</string>
     <string name="locationcleared_toast_success">Il database dei luoghi è stato eliminato.</string>
 
     <!-- Dialog: Build Places List (progress) -->
     <string name="locationbuild_dialog_title">Costruendo database</string>
-    <string name="locationbuild_dialog_message">Costruendo un database delle località...</string>
+    <string name="locationbuild_dialog_message">Costruendo un database delle località…</string>
     <string name="locationbuild_toast_success">Aggiunti <xliff:g id="n" >%1$s</xliff:g> luoghi al database.</string>
 
     <!-- Dialog: Export Places -->
