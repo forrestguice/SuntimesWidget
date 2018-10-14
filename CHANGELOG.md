@@ -1,5 +1,9 @@
 ### ~
 
+###
+* adds dst label to timezone dialog; displayed when selected timezone is using daylight saving time.
+* adds eot label to timezone dialog; displayed for apparent solar time.
+
 ### v0.9.3 (2018-10-10)
 * adds help to the "theme list" activity.
 * adds translation to Italian (it) (contributed by Matteo Caoduro) (#249).

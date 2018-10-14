@@ -202,14 +202,18 @@ public class WidgetTimezones
         @Override
         public int getOffset( long date )
         {
+            return getRawOffset() + equationOfTimeOffset(date);
+        }
+
+        /**
+         * @param date a given date
+         * @return equation of time correction in milliseconds
+         */
+        public static int equationOfTimeOffset(long date)
+        {
             Calendar calendar = new GregorianCalendar();
             calendar.setTimeInMillis(date);
-            double equationOfTimeOffset = equationOfTimeOffset(calendar.get(Calendar.DAY_OF_YEAR));  // equation of time correction (minutes)
-            //Log.d("DEBUG", "eot: " + equationOfTimeOffset);
-
-            int localMeanOffsetMs = getRawOffset();
-            int equationOfTimeOffsetMs = (int)(equationOfTimeOffset * 60 * 1000);
-            return localMeanOffsetMs + equationOfTimeOffsetMs;
+            return (int)(equationOfTimeOffset(calendar.get(Calendar.DAY_OF_YEAR)) * 60 * 1000);
         }
 
         /**

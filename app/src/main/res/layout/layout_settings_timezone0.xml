@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -16,7 +16,8 @@
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
 
@@ -81,6 +82,25 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/appwidget_timezone_extrasgroup"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:layout_marginTop="0dp"
+            android:paddingTop="@dimen/settingsGroup_padding" android:visibility="gone">
+
+            <View android:layout_width="match_parent" android:layout_height="2dp"
+                style="@style/SunsetTimeHorizontalRule"
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:id="@+id/appwidget_timezone_extras0"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="12sp"
+                android:paddingTop="@dimen/settingsGroup_padding"
+                tools:text="timezone extras" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

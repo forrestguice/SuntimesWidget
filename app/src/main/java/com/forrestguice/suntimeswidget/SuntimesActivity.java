@@ -321,6 +321,8 @@ public class SuntimesActivity extends AppCompatActivity
         TimeZoneDialog timezoneDialog = (TimeZoneDialog) fragments.findFragmentByTag(DIALOGTAG_TIMEZONE);
         if (timezoneDialog != null)
         {
+            timezoneDialog.setNow(dataset.nowThen(dataset.calendar()));
+            timezoneDialog.setLongitude(dataset.location().getLongitudeAsDouble());
             timezoneDialog.setOnAcceptedListener(onConfigTimeZone);
             timezoneDialog.setOnCanceledListener(onCancelTimeZone);
             //Log.d("DEBUG", "TimeZoneDialog listeners restored.");
@@ -1403,6 +1405,8 @@ public class SuntimesActivity extends AppCompatActivity
     protected void configTimeZone()
     {
         TimeZoneDialog timezoneDialog = new TimeZoneDialog();
+        timezoneDialog.setNow(dataset.nowThen(dataset.calendar()));
+        timezoneDialog.setLongitude(dataset.location().getLongitudeAsDouble());
         timezoneDialog.setOnAcceptedListener(onConfigTimeZone);
         timezoneDialog.setOnCanceledListener(onCancelTimeZone);
         timezoneDialog.show(getSupportFragmentManager(), DIALOGTAG_TIMEZONE);
