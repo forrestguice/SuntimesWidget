@@ -145,17 +145,23 @@ public class AnalemmaDialog extends DialogFragment
     };
 
     /**
-     * analemmaTaskListener
+     * AnalemmaTaskListener
      */
     private AnalemmaView.AnalemmaTaskListener analemmaTaskListener = new AnalemmaView.AnalemmaTaskListener()
     {
         @Override
-        public void onFinished(Bitmap result, AnalemmaView.AnalemmaData dataPoints)
+        public void onFinished(AnalemmaView.AnalemmaTaskResult result)
         {
-            super.onFinished(result, dataPoints);
-            if (txtAnalemmaTime != null && dataPoints != null)
+            super.onFinished(result);
+            Context context = getContext();
+            if (txtAnalemmaTime != null && result.data != null && context != null)
             {
-                txtAnalemmaTime.setText(utils.calendarDateTimeDisplayString(getContext(), dataPoints.getDate()).getValue());
+                boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
+                txtAnalemmaTime.setText(utils.calendarTimeShortDisplayString(context, result.data.getDate(), showSeconds).toString());
+                txtEarliestSunrise.setText( utils.calendarDateTimeDisplayString(context, result.data.getEarliestSunrise(), true, showSeconds).getValue() );
+                txtLatestSunrise.setText( utils.calendarDateTimeDisplayString(context, result.data.getLatestSunrise(), true, showSeconds).getValue() );
+                txtEarliestSunset.setText( utils.calendarDateTimeDisplayString(context, result.data.getEarliestSunset(), true, showSeconds).getValue() );
+                txtLatestSunset.setText( utils.calendarDateTimeDisplayString(context, result.data.getLatestSunset(), true, showSeconds).getValue() );
             }
         }
     };
@@ -210,7 +216,8 @@ public class AnalemmaDialog extends DialogFragment
         {
             AnalemmaView.AnalemmaOptions options = analemma.getOptions();
             options.mode = mode;
-            options.date_hour = 12;
+            options.date_hour = 7;
+            options.date_minute = 30;
             analemma.setAnalemmaListener(analemmaTaskListener);
         }
 
@@ -305,37 +312,6 @@ public class AnalemmaDialog extends DialogFragment
                 txtApparentSolar.setText(apparentSolarText.toString() + " Apparent Solar");  // TODO
             }
         }
-
-        if (txtEarliestSunrise != null)
-        {
-            txtEarliestSunrise.setText("TODO");
-        }
-
-        if (txtLatestSunrise != null)
-        {
-            txtLatestSunrise.setText("TODO");
-        }
-
-        if (txtEarliestSunset != null)
-        {
-            txtEarliestSunset.setText("TODO");
-        }
-
-        if (txtLatestSunset != null)
-        {
-            txtLatestSunset.setText("TODO");
-        }
-
-        if (txtShortestDay != null)
-        {
-            txtShortestDay.setText("TODO");
-        }
-
-        if (txtLongestDay != null)
-        {
-            txtLongestDay.setText("TODO");
-        }
-
     }
 
 }
