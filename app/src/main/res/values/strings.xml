@@ -792,6 +792,7 @@
         <item>Catalan</item>
         <item>Basque</item>
         <item>Norwegian</item>
+        <item>Traditional Chinese</item>
     </string-array>
     <string-array name="locale_display_native" translatable="false">             <!-- one-to-one with locale_values -->
         <item>English</item>
@@ -805,6 +806,7 @@
         <item>Català</item>
         <item>Euskara</item>
         <item>Norsk</item>
+        <item>正體中文</item>
     </string-array>
     <string-array name="locale_values" translatable="false">  <!-- one-to-one with locale_display -->
         <item>en</item>
@@ -818,6 +820,7 @@
         <item>ca</item>
         <item>eu</item>
         <item>nb</item>
+        <item>zh</item>
     </string-array>
 
     <!-- position formats -->
@@ -1030,6 +1033,7 @@
         Basque translation by beriain. <br />
         Norwegian translation by FTno. <br />
         Italian translation by Matteo Caoduro. <br />
+        Traditinal Chinese translation by <a href=https://github.com/pggdt>ft42</a>. <br />
     ]]></string>
     <string name="app_legal3"><![CDATA[ <b>Libraries:</b><br/> ]]>
     <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
