@@ -105,28 +105,28 @@
     <string name="until_astroTwilight">Crepuscle astrònomic</string>
     <string name="until_civilTwilight">Crepuscle civil</string>
     <string name="until_nauticalTwilight">Crepuscle nàutic</string>
-    <string name="until_sunrise">sortida de Sol</string>
-    <string name="until_noon">migdia</string>
-    <string name="until_sunset">posta de Sol</string>
+    <string name="until_sunrise">Sortida de Sol</string>
+    <string name="until_noon">Migdia</string>
+    <string name="until_sunset">Posta de Sol</string>
     <string name="untilEnd_civilTwilight">Crepuscle civil</string>
     <string name="untilEnd_nauticalTwilight">Crepuscle nàutic</string>
     <string name="untilEnd_astroTwilight">Crepuscle astrònomic</string>
-    <string name="until_goldhour">hora daurada</string>
-    <string name="untilEnd_goldhour">hora daurada</string>
-    <string name="until_bluehour">hora blava</string>
-    <string name="untilEnd_bluehour">hora blava</string>
-    <string name="until_moonrise">sortida de la Lluna</string>
-    <string name="until_moonset">posta de la Lluna</string>
+    <string name="until_goldhour">Hora daurada</string>
+    <string name="untilEnd_goldhour">Hora daurada</string>
+    <string name="until_bluehour">Hora blava</string>
+    <string name="untilEnd_bluehour">Hora blava</string>
+    <string name="until_moonrise">Sortida de la Lluna</string>
+    <string name="until_moonset">Posta de la Lluna</string>
 
     <!-- Table -->
     <string name="sunrise">Alba</string>                             <!-- contentDescription -->
     <string name="sunrise_short">Alba</string>                          <!-- table title -->
-    <string name="sunset">Vespre</string>                               <!-- contentDescription -->
-    <string name="sunset_short">Vespre</string>                            <!-- table title -->
-    <string name="moonrise">sortida de la Lluna</string>                             <!-- contentDescription -->
-    <string name="moonrise_short">sortida de la Lluna</string>                             <!-- table title -->
-    <string name="moonset">posta de la Lluna</string>                             <!-- contentDescription -->
-    <string name="moonset_short">posta de la Lluna</string>                             <!-- table title -->
+    <string name="sunset">Capvespre</string>                               <!-- contentDescription -->
+    <string name="sunset_short">Capvespre</string>                            <!-- table title -->
+    <string name="moonrise">Sortida de la Lluna</string>                             <!-- contentDescription -->
+    <string name="moonrise_short">Sortida de la Lluna</string>                             <!-- table title -->
+    <string name="moonset">Posta de la Lluna</string>                             <!-- contentDescription -->
+    <string name="moonset_short">Posta de la Lluna</string>                             <!-- table title -->
 
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
     <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
@@ -172,7 +172,7 @@
          WIDGET CONFIG
     -->
 
-    <string name="configAction_restoreDefaults">Recupera paràmetres per defect</string>   <!-- button / menu text -->
+    <string name="configAction_restoreDefaults">Recupera paràmetres per defecte</string>   <!-- button / menu text -->
 
     <string name="configLabel_tagDefault">[per defecte]</string>
     <string name="configLabel_tagPlugin">[complement]</string>
@@ -275,9 +275,9 @@
 
     <!-- Widget Setting: layout mode -->
     <string name="widgetMode1x1_sunrise">Només alba</string>             <!-- setting -->
-    <string name="widgetMode1x1_sunset">Només vespre</string>               <!-- setting -->
-    <string name="widgetMode1x1_both_1">Alba i vespre (1)</string>  <!-- setting -->
-    <string name="widgetMode1x1_both_2">Alba i vespre (2)</string>  <!-- setting -->
+    <string name="widgetMode1x1_sunset">Només capvespre</string>               <!-- setting -->
+    <string name="widgetMode1x1_both_1">Alba i capvespre (1)</string>  <!-- setting -->
+    <string name="widgetMode1x1_both_2">Alba i capvespre (2)</string>  <!-- setting -->
 
     <string name="widgetMode1x1_altaz">Altitud i Azimut</string>     <!-- setting -->
     <string name="widgetMode1x1_decright">Inclinació i ascensió dreta</string>     <!-- setting -->
@@ -366,8 +366,8 @@
     <string name="configLabel_general_showComparison">Mostrar comparació</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
-    <string name="trackingMode_closest">Event més proper</string>                 <!-- setting -->
-    <string name="trackingMode_soonest">Event més aviat</string>                <!-- setting -->
+    <string name="trackingMode_closest">Esdeveniment més proper</string>                 <!-- setting -->
+    <string name="trackingMode_soonest">Esdeveniment més d\'hora</string>                <!-- setting -->
     <string name="configLabel_general_trackingMode">Seguiment:</string>            <!-- spinner label -->
 
     <!-- Widget Setting: timeMode override -->
@@ -382,7 +382,7 @@
 
     <!-- App Setting: WidgetThemes -->
     <string name="configLabel_widgetThemeList">Temes de giny</string>
-    <string name="configLabel_widgetThemeListSelect">Sel·lecciona un tema</string>
+    <string name="configLabel_widgetThemeListSelect">Selecciona un tema</string>
     <string name="configAction_addTheme">Afegir</string>           <!-- button (contentDescription) -->
     <string name="configAction_selectTheme">Seleccionar</string>     <!-- button (contentDescription) -->
     <string name="configAction_editTheme">Editar</string>         <!-- button (contentDescription) -->
@@ -409,7 +409,7 @@
     <string name="deletetheme_dialog_title">Esborrar tema</string>        <!-- dialog title -->
     <string name="deletetheme_dialog_message">¿Estàs segur que vols esborrar <xliff:g id="themeName">%1$s</xliff:g>?</string>   <!-- dialog msg -->
     <string name="deletetheme_dialog_ok">Esborrar</string>        <!-- button -->
-    <string name="deletetheme_dialog_cancel">Cancel·lar</string>    <!-- button -->
+    <string name="deletetheme_dialog_cancel">Canceŀlar</string>    <!-- button -->
 
     <string name="configLabel_widgetThemeAdd">Afegir tema</string>     <!-- title text -->
     <string name="configLabel_widgetThemeEdit">Editar tema</string>   <!-- title text -->
@@ -449,7 +449,7 @@
     <string name="configLabel_themeColorSunrise">Color d\'alba:</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
 
-    <string name="configLabel_themeColorSunset">Color del vespre:</string>   <!-- color label -->
+    <string name="configLabel_themeColorSunset">Color del capvespre:</string>   <!-- color label -->
     <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
 
     <string name="configLabel_themeColorNoon">Color del migdia:</string>      <!-- color label -->
@@ -535,7 +535,7 @@
 
     <!-- App Setting: UI Warnings -->
     <string name="configLabel_ui_showWarnings">Mostrar avisos</string>
-    <string name="configLabel_ui_showWarnings_summary">Mostrar Configuració de missatges d\'avís.</string>
+    <string name="configLabel_ui_showWarnings_summary">Mostrar configuració de missatges d\'avís.</string>
 
     <!-- App Setting: Show Lightmap -->
     <string name="configLabel_ui_showLightmap">Mostrar mapa de llum</string>
@@ -570,8 +570,8 @@
     <!-- App Setting: UI Theme -->
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
         <item>Tema clar</item>
-        <item>Tema oscur</item>
-        <item>Tema clar / Tema oscur (mode nit)</item>
+        <item>Tema fosc</item>
+        <item>Tema clar / Tema fosc (mode nit)</item>
     </string-array>
 
     <!-- App Setting: time format -->
@@ -623,11 +623,11 @@
     </string-array>
 
     <string name="timezone_sort_contextAction">Ordenar zones</string>           <!-- action bar title -->
-    <string name="timezone_sort_msg">Zones horàrias ordenades (%1$s).</string>      <!-- toast msg -->
+    <string name="timezone_sort_msg">Zones horàries ordenades (%1$s).</string>      <!-- toast msg -->
 
     <!-- App Setting: GPS fix time limit -->
     <string name="configLabel_getFix_maxElapse">Límit de temps de GPS</string>
-    <string name="configLabel_getFix_maxElapse_summary">Abandonar desprès de <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
+    <string name="configLabel_getFix_maxElapse_summary">Abandonar rere <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
     <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
         <item>15 segons</item>
         <item>30 segons</item>
@@ -637,8 +637,8 @@
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
-    <string name="configLabel_getFix_maxAge">Temps màxim de GPS recent</string>
-    <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> considerat com recent</string>
+    <string name="configLabel_getFix_maxAge">Límit d\'antiguitat de la posició GPS</string>
+    <string name="configLabel_getFix_maxAge_summary">Límit de <xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g></string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>1 minut</item>
         <item>5 minuts</item>
@@ -772,10 +772,10 @@
     <string name="configLabel_schedalarm_mode">Planificar alarma per a</string>
     <string name="schedalarm_dialog_title">Posar alarma</string>
     <string name="schedalarm_dialog_ok">Posar alarma</string>
-    <string name="schedalarm_dialog_cancel">Cancel·la</string>
+    <string name="schedalarm_dialog_cancel">Canceŀla</string>
     <string name="schedalarm_dialog_error">No es va configurar l\'alarma</string>
     <string name="schedalarm_dialog_error2">L\'alarma no és pot configurar…</string>
-    <string name="schedalarm_dialog_note">prop de <xliff:g id="timetext" example="6h 30m">%s</xliff:g> des d\'ara.</string>
+    <string name="schedalarm_dialog_note">Prop de <xliff:g id="timetext" example="6h 30m">%s</xliff:g> des d\'ara.</string>
     <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="nautical twilight">%s</xliff:g> no passa.</string>
     <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
         <item>alba astrònomic</item>
@@ -897,7 +897,7 @@
     <string name="app_name_solsticewidget0">Giny de solstici</string>
     <string name="app_name_moonwidget0">Giny lunar</string>
     <string name="app_version"><![CDATA[<b>Versió:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
-    <string name="app_shortdesc">Mostra les hores de l\'alba, vespre, llum crepuscular i lunar.</string>
+    <string name="app_shortdesc">Mostra les hores de l\'alba, capvespre, llum crepuscular i lunar.</string>
     <string name="app_support_url"><![CDATA[
         <b>Suport:</b> visita el
         <a href="https://github.com/forrestguice/SuntimesWidget/issues">seguiment d\'incidències</a> per enviar una petició.

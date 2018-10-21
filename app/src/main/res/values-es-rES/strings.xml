@@ -11,11 +11,11 @@
     
 
     
-    <string name="configAction_refreshLocation">actualizar</string>
-    <string name="configAction_addLocation">posición</string>
+    <string name="configAction_refreshLocation">Actualizar</string>
+    <string name="configAction_addLocation">Posición</string>
     <string name="configAction_mapLocation">Mostrar Mapa</string>
     <string name="configAction_mapLocation_chooser">Ver posición con</string>
-    <string name="configAction_mapLocation_noapp">No es encontró ninguna aplicación de mapas!</string>
+    <string name="configAction_mapLocation_noapp">¡No se encontró ninguna aplicación de mapas!</string>
     <string name="configAction_setAlarm">Configurar alarma</string>
     <string name="configAction_setTimeZone">Configurar zona horaria</string>
     <string name="configAction_setDate">Configurar data</string>
@@ -46,7 +46,7 @@
 
     
     <string name="past_yesterday">Pasado (-1)</string>
-    <string name="past_today">pasado</string>
+    <string name="past_today">Pasado</string>
     <string name="past_tomorrow">Pasado (1)</string>
 
     
@@ -56,7 +56,7 @@
 
     
     <string name="future_yesterday">Futuro (-1)</string>
-    <string name="future_today">futuro</string>
+    <string name="future_today">Futuro</string>
     <string name="future_tomorrow">Futuro (1)</string>
 
     
@@ -69,7 +69,7 @@
 
     
     <string name="delta_day_tomorrow">mañana será</string>
-    <string name="delta_day_yesterday">Ayer fue</string>
+    <string name="delta_day_yesterday">ayer fue</string>
     <string name="delta_day_shorter">más corto</string>
     <string name="delta_day_longer">más largo</string>
 
@@ -79,31 +79,31 @@
     <string name="until_end">hasta el final</string>
 
     
-    <string name="until_astroTwilight">crepúsculo astronómico</string>
-    <string name="until_civilTwilight">crepúsculo civil</string>
-    <string name="until_nauticalTwilight">crepúsculo náutico</string>
-    <string name="until_sunrise">salida de Sol</string>
-    <string name="until_noon">mediodía</string>
-    <string name="until_sunset">puesta de Sol</string>
-    <string name="untilEnd_civilTwilight">crepúsculo civil</string>
-    <string name="untilEnd_nauticalTwilight">crepúsculo náutico</string>
-    <string name="untilEnd_astroTwilight">crepúsculo Astronómico</string>
-    <string name="until_goldhour">hora dorada</string>
-    <string name="untilEnd_goldhour">hora dorada</string>
-    <string name="until_bluehour">hora azul</string>
-    <string name="untilEnd_bluehour">hora azul</string>
-    <string name="until_moonrise">salida de la Luna</string>
-    <string name="until_moonset">puesta de la Luna</string>
+    <string name="until_astroTwilight">Crepúsculo astronómico</string>
+    <string name="until_civilTwilight">Crepúsculo civil</string>
+    <string name="until_nauticalTwilight">Crepúsculo náutico</string>
+    <string name="until_sunrise">Salida de Sol</string>
+    <string name="until_noon">Mediodía</string>
+    <string name="until_sunset">Puesta de Sol</string>
+    <string name="untilEnd_civilTwilight">Crepúsculo civil</string>
+    <string name="untilEnd_nauticalTwilight">Crepúsculo náutico</string>
+    <string name="untilEnd_astroTwilight">Crepúsculo Astronómico</string>
+    <string name="until_goldhour">Hora dorada</string>
+    <string name="untilEnd_goldhour">Hora dorada</string>
+    <string name="until_bluehour">Hora azul</string>
+    <string name="untilEnd_bluehour">Hora azul</string>
+    <string name="until_moonrise">Salida de la Luna</string>
+    <string name="until_moonset">Puesta de la Luna</string>
 
     
     <string name="sunrise">Alba</string>                             
     <string name="sunrise_short">Alba</string>                          
-    <string name="sunset">tarde</string>                               
-    <string name="sunset_short">tarde</string>                            
-    <string name="moonrise">salida de la Luna</string>                             
-    <string name="moonrise_short">salida de la Luna</string>                             
-    <string name="moonset">puesta de la Luna</string>                             
-    <string name="moonset_short">puesta de la Luna</string>                             
+    <string name="sunset">Atardecer</string>
+    <string name="sunset_short">Atardecer</string>
+    <string name="moonrise">Salida de la Luna</string>
+    <string name="moonrise_short">Salida de la Luna</string>
+    <string name="moonset">Puesta de la Luna</string>
+    <string name="moonset_short">Puesta de la Luna</string>
 
     
     <string name="delta_format"><ns0:g example="3" id="value">%1$s</ns0:g><ns0:g example="m" id="units">%2$s</ns0:g></string>
@@ -213,10 +213,10 @@
     <string name="timeMode_blue4_short">Azul (4 \ u00B0)</string>                    
     <string name="timeMode_blue4">Hora azul (4 \ u00B0)</string>                     
 
-    <string name="timeMode_equinox_vernal">equinocio de primavera</string>
-    <string name="timeMode_equinox_vernal_short">equinocio</string>
-    <string name="timeMode_equinox_autumnal">equinocio de otoño</string>
-    <string name="timeMode_equinox_autumnal_short">equinocio</string>
+    <string name="timeMode_equinox_vernal">equinoccio de primavera</string>
+    <string name="timeMode_equinox_vernal_short">equinoccio</string>
+    <string name="timeMode_equinox_autumnal">equinoccio de otoño</string>
+    <string name="timeMode_equinox_autumnal_short">equinoccio</string>
     <string name="timeMode_solstice_summer">solsticio de verano</string>    
     <string name="timeMode_solstice_summer_short">solsticio</string>     
     <string name="timeMode_solstice_winter">solsticio de invierno</string>    
@@ -244,9 +244,9 @@
 
     
     <string name="widgetMode1x1_sunrise">Sólo amanecer</string>
-    <string name="widgetMode1x1_sunset">Sólo tarde</string>
-    <string name="widgetMode1x1_both_1">Alba y noche (1)</string>  
-    <string name="widgetMode1x1_both_2">Alba y noche (2)</string>  
+    <string name="widgetMode1x1_sunset">Sólo atardecer</string>
+    <string name="widgetMode1x1_both_1">Amanecer y atardecer (1)</string>
+    <string name="widgetMode1x1_both_2">Amanecer y atardecer (2)</string>
 
     <string name="widgetMode1x1_altaz">Altitud i Azimut</string>     
     <string name="widgetMode1x1_decright">Inclinación y ascensión derecha</string>     
@@ -336,7 +336,7 @@
 
     
     <string name="trackingMode_closest">Evento más cercano</string>                 
-    <string name="trackingMode_soonest">Evento más pronto</string>
+    <string name="trackingMode_soonest">Evento más temprano</string>
     <string name="configLabel_general_trackingMode">Seguimiento:</string>
 
     
@@ -346,7 +346,7 @@
     <string name="configLabel_general_showNoon">Mostrar mediodía solar</string>
 
     
-    <string name="configLabel_action_launch">actividad:</string>                 
+    <string name="configLabel_action_launch">Actividad:</string>
     <string name="configHint_action_launch"><ns0:g id="uri">com.forrestguice.suntimeswidget.SuntimesActivity</ns0:g></string> 
 
     
@@ -502,7 +502,7 @@
 
     
     <string name="configLabel_ui_showWarnings">Mostrar avisos</string>
-    <string name="configLabel_ui_showWarnings_summary">Mostrar Configuración de mensajes de aviso.</string>
+    <string name="configLabel_ui_showWarnings_summary">Mostrar configuración de mensajes de aviso.</string>
 
     
     <string name="configLabel_ui_showLightmap">Mostrar mapa de luz</string>
@@ -515,7 +515,7 @@
 
     
     <string name="configLabel_ui_showEquinox">Mostrar solsticio / equinoccio</string>
-    <string name="configLabel_ui_showEquinox_summary">Mostrar tiempo hasta próximo solsticio o equinocio.</string>
+    <string name="configLabel_ui_showEquinox_summary">Mostrar tiempo hasta próximo solsticio o equinoccio.</string>
     <string name="configLabel_ui_showEquinox_notImplemented">solsticio y equinoccio no implementados por esta fuente de datos.</string>
 
     
@@ -598,16 +598,16 @@
     <string-array name="getFix_maxElapse_display">  
         <item>15 segundos</item>
         <item>30 segundos</item>
-        <item>1 minutos</item>
+        <item>1 minuto</item>
         <item>5 minutos</item>
         <item>10 minutos</item>
     </string-array>
 
     
-    <string name="configLabel_getFix_maxAge">Tiempo máximo de GPS reciente</string>
-    <string name="configLabel_getFix_maxAge_summary"><ns0:g example="1 minute" id="maxAgeDisplay">%s</ns0:g> considerado como reciente</string>
+    <string name="configLabel_getFix_maxAge">Límite de antigüedad de la posición GPS</string>
+    <string name="configLabel_getFix_maxAge_summary">Límite de <ns0:g example="1 minute" id="maxAgeDisplay">%s</ns0:g></string>
     <string-array name="getFix_maxAge_display">   
-        <item>1 minutos</item>
+        <item>1 minuto</item>
         <item>5 minutos</item>
         <item>15 minutos</item>
         <item>1 hora</item>
@@ -623,7 +623,7 @@
     <string name="configLabel_calendars">calendarios</string>   
 
     <string name="configLabel_calendars_enabled">Integración con el calendario</string>
-    <string name="configLabel_calendars_enabled_summary">Proporcionar eventos a la aplicación de calendario (fases lunares, solsticios, y equinocios).</string>
+    <string name="configLabel_calendars_enabled_summary">Proporcionar eventos a la aplicación de calendario (fases lunares, solsticios, y equinoccios).</string>
 
     <string name="configLabel_calendars_window0">Ventana (inicio)</string>
     <string name="configLabel_calendars_window0_summary">Un periodo empezó<ns0:g example="one year" id="calendars_window_display">%s</ns0:g> atrás</string>
@@ -644,8 +644,8 @@
         <item>diez años</item>
     </string-array>
 
-    <string name="calendar_solstice_displayName">Solsticios y equinocios</string>
-    <string name="calendar_moonPhase_displayName">Fases llunars</string>
+    <string name="calendar_solstice_displayName">Solsticios y equinoccios</string>
+    <string name="calendar_moonPhase_displayName">Fases lunares</string>
 
     
     <string name="configLabel_getFix_passiveMode">localización pasiva</string>
@@ -740,7 +740,7 @@
     <string name="schedalarm_dialog_cancel">Cancelar</string>
     <string name="schedalarm_dialog_error">No se configuró la alarma</string>
     <string name="schedalarm_dialog_error2">La alarma no se puede configurar…</string>
-    <string name="schedalarm_dialog_note">cerca de<ns0:g example="6h 30m" id="timetext">%s</ns0:g> desde ahora.</string>
+    <string name="schedalarm_dialog_note">Cerca de <ns0:g example="6h 30m" id="timetext">%s</ns0:g> desde ahora.</string>
     <string name="schedalarm_dialog_note2"><ns0:g example="nautical twilight" id="solarevent">%s</ns0:g> no pasa.</string>
     <string-array name="solarevents_short">  
         <item>alba astronómico</item>
@@ -766,7 +766,7 @@
         <item>salida de sol náutica</item>
         <item>hora azul matutina (inicio)</item>
         <item>amanecer civil</item>
-        <item>hora blava matutina (fi)</item>
+        <item>hora azul matutina (final)</item>
         <item>salida de sol</item>
         <item>hora dorada de la mañana (final)</item>
         <item>mediodía</item>
@@ -774,7 +774,7 @@
         <item>posta de sol</item>
         <item>hora azul nocturna (inicio)</item>
         <item>posta de sol civil</item>
-        <item>hora blava nocturna (fi)</item>
+        <item>hora azul nocturna (final)</item>
         <item>puesta de sol náutica</item>
         <item>puesta de sol astronómica</item>
         <item>salida lunar</item>
@@ -800,7 +800,7 @@
     <string name="gps_keeptrying_cancel">Abandonar</string>
 
     
-    <string name="timedate_dialog_title">Configurar data</string>
+    <string name="timedate_dialog_title">Configurar fecha</string>
     <string name="timedate_dialog_ok">Configurar</string>
     <string name="timedate_dialog_cancel">Cancelar</string>
 
