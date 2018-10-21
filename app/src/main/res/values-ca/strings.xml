@@ -137,7 +137,7 @@
     <string name="delta_minutes">m</string>  <!-- e.g. 3m -->
     <string name="delta_seconds">s</string>  <!-- e.g. 4s -->
 
-    <string name="hence"><xliff:g id="timeSpan">%1$s</xliff:g>  des d\'ara</string>  <!-- e.g. 15d 23h from now -->
+    <string name="hence"><xliff:g id="timeSpan">%1$s</xliff:g> comptant des d\'ara</string>  <!-- e.g. 15d 23h from now -->
     <string name="ago"><xliff:g id="timeSpan">%1$s</xliff:g>  enrere</string>         <!-- e.g. 1y 15d 12h ago -->
 
     <!-- misc time values: might be displayed in a timeField in place of an actual time -->
@@ -280,7 +280,7 @@
     <string name="widgetMode1x1_both_2">Alba i capvespre (2)</string>  <!-- setting -->
 
     <string name="widgetMode1x1_altaz">Altitud i Azimut</string>     <!-- setting -->
-    <string name="widgetMode1x1_decright">Inclinació i ascensió dreta</string>     <!-- setting -->
+    <string name="widgetMode1x1_decright">Inclinació i ascensió correcta</string>     <!-- setting -->
 
     <string name="widgetMode_sunPosMap_simplerectangular">Bàsic</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polar</string>     <!-- setting -->
@@ -662,7 +662,7 @@
     <string name="configLabel_calendars_window0_summary">Un període començà <xliff:g id="calendars_window_display" example="one year">%s</xliff:g> enrere</string>
 
     <string name="configLabel_calendars_window1">Finestra (fi)</string>
-    <string name="configLabel_calendars_window1_summary">Un període finalitzarà en <xliff:g id="calendars_window_display" example="two years">%s</xliff:g> des d\'ara</string>
+    <string name="configLabel_calendars_window1_summary">Un període finalitzarà en <xliff:g id="calendars_window_display" example="two years">%s</xliff:g> comptant des d\'ara</string>
 
     <string name="calendars_notification_adding">Afegint calendaris…</string>
     <string name="calendars_notification_added">Els calendaris s\'han afegit.</string>
@@ -775,7 +775,7 @@
     <string name="schedalarm_dialog_cancel">Canceŀla</string>
     <string name="schedalarm_dialog_error">No es va configurar l\'alarma</string>
     <string name="schedalarm_dialog_error2">L\'alarma no és pot configurar…</string>
-    <string name="schedalarm_dialog_note">Prop de <xliff:g id="timetext" example="6h 30m">%s</xliff:g> des d\'ara.</string>
+    <string name="schedalarm_dialog_note">Prop de <xliff:g id="timetext" example="6h 30m">%s</xliff:g> comptant des d\'ara.</string>
     <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="nautical twilight">%s</xliff:g> no passa.</string>
     <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
         <item>alba astrònomic</item>

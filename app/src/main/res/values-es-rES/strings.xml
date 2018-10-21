@@ -438,7 +438,7 @@
     <string name="configLabel_themeColorSuffix">Color del sufijo:</string>
     <string name="configHint_themeColorSuffix">#FFFFFFFF</string>
 
-    <string name="configLabel_themeColorTime">Color de text2:</string>      
+    <string name="configLabel_themeColorTime">Color de texto2:</string>
     <string name="configHint_themeColorTime">#FFFFFFFF</string>
 
     <string name="configLabel_themeSizeTitle">Tamaño del título:</string>  
@@ -484,7 +484,7 @@
     <string name="configLabel_widgetList_itemTitlePattern"><xliff:g id="titlePattern">%M (%loc) [%t]</xliff:g></string> 
     <string name="configLabel_widgetList_itemSummaryPattern"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
     <string name="configLabel_widgetListHelp_title">Ayuda</string>
-    <string name="configLabel_widgetListHelp_summary">Mostrar Ayuda del widget</string>
+    <string name="configLabel_widgetListHelp_summary">Mostrar ayuda del widget</string>
 
     
     <string name="configLabel_places">Lugares</string>
@@ -573,7 +573,7 @@
     
     <string-array name="noteTapActions_display">  
         <item>No hacer nada</item>
-        <item>Poner una alarma en la nota</item>
+        <item>Poner una alarma a la nota</item>
         <item>Mostrar nota siguiente</item>
         <item>Mostrar nota anterior</item>
     </string-array>
@@ -626,7 +626,7 @@
     <string name="configLabel_calendars_enabled_summary">Proporcionar eventos a la aplicación de calendario (fases lunares, solsticios, y equinoccios).</string>
 
     <string name="configLabel_calendars_window0">Ventana (inicio)</string>
-    <string name="configLabel_calendars_window0_summary">Un periodo empezó<xliff:g example="one year" id="calendars_window_display">%s</xliff:g> atrás</string>
+    <string name="configLabel_calendars_window0_summary">Un periodo empezó <xliff:g example="one year" id="calendars_window_display">%s</xliff:g> atrás</string>
 
     <string name="configLabel_calendars_window1">Ventana (fin)</string>
     <string name="configLabel_calendars_window1_summary">Un periodo finalizará dentro de <xliff:g example="two years" id="calendars_window_display">%s</xliff:g> contando desde ahora</string>
@@ -658,7 +658,7 @@
     <string name="configLabel_localeMode_summary"><xliff:g example="System Locale" id="localeMode_display">%s</xliff:g></string>
     <string-array name="localeMode_display">                      
         <item>Sistema</item>
-        <item>Definido por los usuarios \ '</item>
+        <item>Definido por el usuario</item>
     </string-array>
 
     
@@ -670,7 +670,7 @@
         <item>Francés</item>
         <item>Alemán</item>
         <item>Húngaro</item>
-        <item>Italiana</item>
+        <item>Italiano</item>
         <item>Polaco</item>
         <item>Español</item>
         <item>Catalán</item>
@@ -728,7 +728,7 @@
     
 
     
-    <string name="worldmap_dialog_title">@ string / configAction_worldMap</string>
+    <string name="worldmap_dialog_title">@string/configAction_worldMap</string>
     <string name="worldmap_dialog_option_sunlight">Luz solar</string>
     <string name="worldmap_dialog_option_moonlight">Luz lunar</string>
     <string name="worldmap_dialog_option_all">Ambos</string>
@@ -833,7 +833,7 @@
     
     <string name="locationbuild_dialog_title">Construyendo base de datos</string>
     <string name="locationbuild_dialog_message">Construyendo una base de datos de sitios…</string>
-    <string name="locationbuild_toast_success">Añadidos<xliff:g id="n">%1$s</xliff:g> lugares a la base de datos.</string>
+    <string name="locationbuild_toast_success">Añadidos <xliff:g id="n">%1$s</xliff:g> lugares a la base de datos.</string>
 
     
     <string name="locationexport_dialog_title">Exportando lugares</string>
