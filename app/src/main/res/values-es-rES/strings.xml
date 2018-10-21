@@ -150,7 +150,7 @@
     
     <string name="configAction_addWidget">Añadir widget</string>                   
     <string name="configAction_reconfigWidget_short">Reconfigurar</string>       
-    <string name="configAction_reconfigWidget">reconfigurar widget</string>      
+    <string name="configAction_reconfigWidget">Reconfigurar widget</string>
     <string name="configLabel_title0">Widget de tiempo solar</string>                  
     <string name="configLabel_title1">widget reversible</string>                 
     <string name="configLabel_title2">@string/app_name_widget2</string>
