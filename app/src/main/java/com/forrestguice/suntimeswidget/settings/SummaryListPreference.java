@@ -97,8 +97,12 @@ public class SummaryListPreference extends com.forrestguice.suntimeswidget.setti
         @NonNull
         public View getView(int position, View convertView, @NonNull ViewGroup parent)
         {
-            LayoutInflater inflater = LayoutInflater.from(getContext());
-            View row = inflater.inflate(this.layoutID, parent, false);
+            View row = convertView;
+            if (row == null)
+            {
+                LayoutInflater inflater = LayoutInflater.from(getContext());
+                row = inflater.inflate(this.layoutID, parent, false);
+            }
 
             CheckedTextView checkedText = (CheckedTextView)row.findViewById(android.R.id.text1);
             checkedText.setText(getItem(position));

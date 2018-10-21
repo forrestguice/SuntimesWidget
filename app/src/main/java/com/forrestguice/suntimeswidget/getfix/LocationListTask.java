@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -15,7 +15,6 @@
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
-
 
 package com.forrestguice.suntimeswidget.getfix;
 
@@ -44,12 +43,13 @@ public class LocationListTask extends AsyncTask<Object, Object, LocationListTask
         String selectedPlaceName = selected.getLabel();
         String selectedPlaceLat = selected.getLatitude();
         String selectedPlaceLon = selected.getLongitude();
+        String selectedPlaceAlt = selected.getAltitude();
 
         db.open();
         Cursor cursor = db.getAllPlaces(0, true);
         if (GetFixDatabaseAdapter.findPlaceByName(selectedPlaceName, cursor) == -1)
         {
-            Log.d("LocationListTask", "Place not found, adding it; " + selectedPlaceName + ":" + selectedPlaceLat + "," + selectedPlaceLon);
+            Log.i("LocationListTask", "Place not found, adding it.. " + selectedPlaceName + ":" + selectedPlaceLat + "," + selectedPlaceLon + " [" +  selectedPlaceAlt + "]");
             db.addPlace(selected);
             cursor = db.getAllPlaces(0, true);
         }
@@ -57,8 +57,10 @@ public class LocationListTask extends AsyncTask<Object, Object, LocationListTask
         Cursor selectedCursor = db.getPlace(selectedPlaceName, true);
         String selectedLat = selectedCursor.getString(2);
         String selectedLon = selectedCursor.getString(3);
-        if (!selectedLat.equals(selectedPlaceLat) || !selectedLon.equals(selectedPlaceLon))
+        String selectedAlt = selectedCursor.getString(4);
+        if (!selectedLat.equals(selectedPlaceLat) || !selectedLon.equals(selectedPlaceLon) || !selectedAlt.equals(selectedPlaceAlt))
         {
+            Log.i("LocationListTask", "Place modified; saving it.. " + selectedPlaceName + ":" + selectedPlaceLat + "," + selectedPlaceLon + " [" +  selectedPlaceAlt + "]");
             db.updatePlace(selected);
             cursor = db.getAllPlaces(0, true);
         }
@@ -67,6 +69,10 @@ public class LocationListTask extends AsyncTask<Object, Object, LocationListTask
         if (cursor != null)
         {
             int selectedIndex = GetFixDatabaseAdapter.findPlaceByName(selected.getLabel(), cursor);
+            if (selectedIndex < 0)
+                Log.w("LocationListTask", "Place selection not found! " + selectedPlaceName + ":" + selectedPlaceLat + "," + selectedPlaceLon + " [" +  selectedPlaceAlt + "]");
+            else Log.d("LocationListTask", "Place selection: " + selectedPlaceName + ":" + selectedPlaceLat + "," + selectedPlaceLon + " [" +  selectedPlaceAlt + "]");
+
             result = new LocationListTaskResult(cursor, selectedIndex);
         }
         db.close();

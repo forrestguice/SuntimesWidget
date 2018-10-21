@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -30,11 +30,11 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -47,11 +47,12 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+@SuppressWarnings("Convert2Diamond")
 public class EquinoxView extends LinearLayout
 {
-    public static final String KEY_UI_USERSWAPPEDCARD = "userSwappedCard";
-    public static final String KEY_UI_CARDISNEXTYEAR = "cardIsNextYear";
-    public static final String KEY_UI_MINIMIZED = "isMinimized";
+    public static final String KEY_UI_USERSWAPPEDCARD = "userSwappedEquinoxCard";
+    public static final String KEY_UI_CARDISNEXTYEAR = "equinoxCardIsNextYear";
+    public static final String KEY_UI_MINIMIZED = "equinoxIsMinimized";
 
     private SuntimesUtils utils = new SuntimesUtils();
     private boolean userSwappedCard = false;
@@ -63,8 +64,8 @@ public class EquinoxView extends LinearLayout
     private TextView empty;
     private ViewFlipper flipper;           // flip between thisYear, nextYear
     private Animation anim_card_outNext, anim_card_inNext, anim_card_outPrev, anim_card_inPrev;
-    private ImageView btn_flipperNext_thisYear, btn_flipperPrev_thisYear;
-    private ImageView btn_flipperNext_nextYear, btn_flipperPrev_nextYear;
+    private ImageButton btn_flipperNext_thisYear, btn_flipperPrev_thisYear;
+    private ImageButton btn_flipperNext_nextYear, btn_flipperPrev_nextYear;
 
     private TextView titleThisYear, titleNextYear;
 
@@ -119,19 +120,7 @@ public class EquinoxView extends LinearLayout
         {
             btn_flipperNext_thisYear = (ImageButton)thisYear.findViewById(R.id.info_time_nextbtn);
             btn_flipperNext_thisYear.setOnClickListener(onNextCardClick);
-            btn_flipperNext_thisYear.setOnTouchListener(new View.OnTouchListener()
-            {
-                @Override
-                public boolean onTouch(View view, MotionEvent motionEvent)
-                {
-                    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                        btn_flipperNext_thisYear.setColorFilter(ContextCompat.getColor(getContext(), R.color.btn_tint_pressed));
-                    } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                        btn_flipperNext_thisYear.setColorFilter(null);
-                    }
-                    return false;
-                }
-            });
+            btn_flipperNext_thisYear.setOnTouchListener(createButtonListener(btn_flipperNext_thisYear));
 
             btn_flipperPrev_thisYear = (ImageButton)thisYear.findViewById(R.id.info_time_prevbtn);
             btn_flipperPrev_thisYear.setVisibility(View.GONE);
@@ -174,19 +163,7 @@ public class EquinoxView extends LinearLayout
 
             btn_flipperPrev_nextYear = (ImageButton)nextYear.findViewById(R.id.info_time_prevbtn);
             btn_flipperPrev_nextYear.setOnClickListener(onPrevCardClick);
-            btn_flipperPrev_nextYear.setOnTouchListener(new View.OnTouchListener()
-            {
-                @Override
-                public boolean onTouch(View view, MotionEvent motionEvent)
-                {
-                    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                        btn_flipperPrev_nextYear.setColorFilter(ContextCompat.getColor(getContext(), R.color.btn_tint_pressed));
-                    } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                        btn_flipperPrev_nextYear.setColorFilter(null);
-                    }
-                    return false;
-                }
-            });
+            btn_flipperPrev_nextYear.setOnTouchListener(createButtonListener(btn_flipperPrev_nextYear));
 
             titleNextYear = (TextView) nextYear.findViewById(R.id.text_title);
 
@@ -224,6 +201,28 @@ public class EquinoxView extends LinearLayout
         }
     }
 
+    private View.OnTouchListener createButtonListener(final ImageButton button)
+    {
+        return new View.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent)
+            {
+                if (button != null)
+                {
+                    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN)
+                    {
+                        button.setColorFilter(ContextCompat.getColor(getContext(), R.color.btn_tint_pressed));
+                        performClick();
+                    } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                        button.setColorFilter(null);
+                    }
+                }
+                return false;
+            }
+        };
+    }
+
     private int noteColor; //, springColor, summerColor, fallColor, winterColor;
 
     private void initColors(Context context)
@@ -241,6 +240,7 @@ public class EquinoxView extends LinearLayout
 
     public void initLocale(Context context)
     {
+        SuntimesUtils.initDisplayStrings(context);
         isRtl = AppSettings.isLocaleRtl(context);
         initAnimations(context);
     }
@@ -368,7 +368,7 @@ public class EquinoxView extends LinearLayout
             for (EquinoxNote note : notes)
             {
                 note.setEnabled(false);
-                note.updateTime(context, null);
+                note.updateDate(context, null);
                 note.updateNote(context, null);
 
                 if (minimized)
@@ -388,21 +388,24 @@ public class EquinoxView extends LinearLayout
             titleNextYear.setText(nextYear.toString());
 
             boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
+            boolean showTime = WidgetSettings.loadShowTimeDatePref(context, 0);
 
-            note_equinox_vernal.updateTime(context, data.dataEquinoxVernal.eventCalendarThisYear(), showSeconds);
-            note_equinox_autumnal.updateTime(context, data.dataEquinoxAutumnal.eventCalendarThisYear(), showSeconds);
-            note_solstice_summer.updateTime(context, data.dataSolsticeSummer.eventCalendarThisYear(), showSeconds);
-            note_solstice_winter.updateTime(context, data.dataSolsticeWinter.eventCalendarThisYear(), showSeconds);
+            note_equinox_vernal.updateDate(context, data.dataEquinoxVernal.eventCalendarThisYear(), showTime, showSeconds);
+            note_equinox_autumnal.updateDate(context, data.dataEquinoxAutumnal.eventCalendarThisYear(), showTime, showSeconds);
+            note_solstice_summer.updateDate(context, data.dataSolsticeSummer.eventCalendarThisYear(), showTime, showSeconds);
+            note_solstice_winter.updateDate(context, data.dataSolsticeWinter.eventCalendarThisYear(), showTime, showSeconds);
 
-            note_equinox_vernal2.updateTime(context, data.dataEquinoxVernal.eventCalendarOtherYear(), showSeconds);
-            note_equinox_autumnal2.updateTime(context, data.dataEquinoxAutumnal.eventCalendarOtherYear(), showSeconds);
-            note_solstice_summer2.updateTime(context, data.dataSolsticeSummer.eventCalendarOtherYear(), showSeconds);
-            note_solstice_winter2.updateTime(context, data.dataSolsticeWinter.eventCalendarOtherYear(), showSeconds);
+            note_equinox_vernal2.updateDate(context, data.dataEquinoxVernal.eventCalendarOtherYear(), showTime, showSeconds);
+            note_equinox_autumnal2.updateDate(context, data.dataEquinoxAutumnal.eventCalendarOtherYear(), showTime, showSeconds);
+            note_solstice_summer2.updateDate(context, data.dataSolsticeSummer.eventCalendarOtherYear(), showTime, showSeconds);
+            note_solstice_winter2.updateDate(context, data.dataSolsticeWinter.eventCalendarOtherYear(), showTime, showSeconds);
 
+            boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, 0);
+            boolean showHours = WidgetSettings.loadShowHoursPref(context, 0);
             for (EquinoxNote note : notes)
             {
                 note.setEnabled();
-                note.updateNote(context, data.now());
+                note.updateNote(context, data.now(), showWeeks, showHours);
                 note.setVisible(!minimized);
             }
 
@@ -413,32 +416,43 @@ public class EquinoxView extends LinearLayout
                 nextNote = notes.get(0);
             }
 
-            flipper.setDisplayedChild(nextNote.pageIndex);
+            if (!userSwappedCard)
+            {
+                flipper.setDisplayedChild(nextNote.pageIndex);
+            }
             nextNote.setVisible(true);
             nextNote.setHighlighted(true);
 
         } else {
-            showEmptyView(true);
+            if (minimized)
+            {
+                for (EquinoxNote note : notes)
+                {
+                    note.setVisible(false);
+                }
+            } else {
+                showEmptyView(true);
+            }
         }
     }
 
     public boolean saveState(Bundle bundle)
     {
         boolean cardIsNextYear = (flipper.getDisplayedChild() != 0);
-        Log.d("DEBUG", "EquinoxView saveState");
         bundle.putBoolean(EquinoxView.KEY_UI_CARDISNEXTYEAR, cardIsNextYear);
         bundle.putBoolean(EquinoxView.KEY_UI_USERSWAPPEDCARD, userSwappedCard);
         bundle.putBoolean(EquinoxView.KEY_UI_MINIMIZED, minimized);
+        Log.d("DEBUG", "EquinoxView saveState :: nextyear:" + cardIsNextYear + " :: swapped:" + userSwappedCard + " :: minimized:" + minimized);
         return true;
     }
 
     public void loadState(Bundle bundle)
     {
-        Log.d("DEBUG", "EquinoxView loadState");
         boolean cardIsNextYear = bundle.getBoolean(EquinoxView.KEY_UI_CARDISNEXTYEAR, false);
         flipper.setDisplayedChild((cardIsNextYear ? 1 : 0));
-        userSwappedCard = bundle.getBoolean(KEY_UI_USERSWAPPEDCARD, false);
-        minimized = bundle.getBoolean(KEY_UI_MINIMIZED, minimized);
+        userSwappedCard = bundle.getBoolean(EquinoxView.KEY_UI_USERSWAPPEDCARD, false);
+        minimized = bundle.getBoolean(EquinoxView.KEY_UI_MINIMIZED, minimized);
+        Log.d("DEBUG", "EquinoxView loadState :: nextyear: " + cardIsNextYear + " :: swapped:" + userSwappedCard + " :: minimized:" + minimized);
     }
 
     public boolean showNextCard()
@@ -448,9 +462,8 @@ public class EquinoxView extends LinearLayout
             flipper.setOutAnimation(anim_card_outNext);
             flipper.setInAnimation(anim_card_inNext);
             flipper.showNext();
-            return true;
         }
-        return false;
+        return true;
     }
 
     public boolean hasNextCard()
@@ -466,9 +479,8 @@ public class EquinoxView extends LinearLayout
             flipper.setOutAnimation(anim_card_outPrev);
             flipper.setInAnimation(anim_card_inPrev);
             flipper.showPrevious();
-            return true;
         }
-        return false;
+        return true;
     }
 
     public boolean hasPreviousCard()
@@ -526,6 +538,7 @@ public class EquinoxView extends LinearLayout
             {
                 case MotionEvent.ACTION_DOWN:
                     firstTouchX = event.getX();
+                    performClick();
                     break;
 
                 case MotionEvent.ACTION_UP:
@@ -586,10 +599,18 @@ public class EquinoxView extends LinearLayout
         }
     };
 
+    public void adjustColumnWidth(Context context, int columnWidthPx)
+    {
+        for (EquinoxNote note : notes)
+        {
+            note.adjustLabelWidth(columnWidthPx);
+        }
+    }
+
     /**
      * EquinoxNote
      */
-    private class EquinoxNote
+    protected class EquinoxNote
     {
         protected TextView labelView, timeView, noteView;
         protected Calendar time, now;
@@ -602,46 +623,68 @@ public class EquinoxView extends LinearLayout
             this.timeView = timeView;
             this.noteView = noteView;
             this.pageIndex = pageIndex;
+
+            if (this.timeView != null)
+            {
+                this.timeView.setOnClickListener( new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        if (minimized)
+                        {
+                            flipper.performClick();
+                        }
+                    }
+                });
+            }
         }
 
-        public void updateTime( Context context, Calendar time )
+        public void adjustLabelWidth( int labelWidthPx )
         {
-            updateTime(context, time, false);
+            ViewGroup.LayoutParams layoutParams = labelView.getLayoutParams();
+            layoutParams.width = labelWidthPx;
+            labelView.setLayoutParams(layoutParams);
         }
-        public void updateTime( Context context, Calendar time, boolean showSeconds )
+
+        public void updateDate( Context context, Calendar time )
+        {
+            updateDate(context, time, true, false);
+        }
+        public void updateDate( Context context, Calendar time, boolean showTime, boolean showSeconds )
         {
             this.time = time;
             if (timeView != null)
             {
-                SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, time, showSeconds);
+                SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, time, showTime, showSeconds);
                 timeView.setText(timeText.toString());
-
-            } else {
-                String notCalculated = context.getString(R.string.time_loading);
-                timeView.setText(notCalculated);
             }
         }
 
         public void updateNote( Context context, Calendar now )
+        {
+            updateDate(context, now, true, false);
+        }
+        public void updateNote( Context context, Calendar now, boolean showWeeks, boolean showHours )
         {
             this.now = now;
             if (noteView != null)
             {
                 if (now != null && time != null)
                 {
-                    String noteText = utils.timeDeltaDisplayString(now.getTime(), time.getTime()).toString();
+                    String noteText = utils.timeDeltaDisplayString(now.getTime(), time.getTime(), showWeeks, showHours).toString();
 
                     if (time.before(Calendar.getInstance()))
                     {
                         String noteString = context.getString(R.string.ago, noteText);
-                        SpannableString noteSpan = (noteView.isEnabled() ? SuntimesUtils.createBoldColorSpan(noteString, noteText, noteColor)
-                                                                         : SuntimesUtils.createBoldSpan(noteString, noteText));
+                        SpannableString noteSpan = (noteView.isEnabled() ? SuntimesUtils.createBoldColorSpan(null, noteString, noteText, noteColor)
+                                                                         : SuntimesUtils.createBoldSpan(null, noteString, noteText));
                         noteView.setText(noteSpan);
 
                     } else {
                         String noteString = context.getString(R.string.hence, noteText);
-                        SpannableString noteSpan = (noteView.isEnabled() ? SuntimesUtils.createBoldColorSpan(noteString, noteText, noteColor)
-                                                                         : SuntimesUtils.createBoldSpan(noteString, noteText));
+                        SpannableString noteSpan = (noteView.isEnabled() ? SuntimesUtils.createBoldColorSpan(null, noteString, noteText, noteColor)
+                                                                         : SuntimesUtils.createBoldSpan(null, noteString, noteText));
                         noteView.setText(noteSpan);
                     }
                 } else {

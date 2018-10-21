@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2014 Forrest Guice
+   Copyright (C) 2014-2018 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -26,9 +26,9 @@ import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.themes.ThemeBackground;
 
 public abstract class SuntimesLayout
 {
@@ -40,6 +40,9 @@ public abstract class SuntimesLayout
     {
         initLayoutID();
     }
+
+    protected boolean boldTitle = false;
+    protected boolean boldTime = false;
 
     /**
      * All SuntimesLayout subclasses must implement this method and provide a value for
@@ -65,22 +68,6 @@ public abstract class SuntimesLayout
     }
 
     /**
-     * Apply the provided data to the RemoteViews this layout knows about.
-     * @param context the android application context
-     * @param appWidgetId the android widget ID to update
-     * @param views the RemoteViews to apply the data to
-     * @param data the data object to apply to the views
-     */
-    public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesRiseSetData data)
-    {
-        // update title
-        String titlePattern = WidgetSettings.loadTitleTextPref(context, appWidgetId);
-        String titleText = utils.displayStringForTitlePattern(titlePattern, data);
-        views.setTextViewText(R.id.text_title, titleText);
-        //Log.v("DEBUG", "title text: " + titleText);
-    }
-
-    /**
      * Apply a theme (from saved settings for the given appWidgetID) to the RemoteViews this layout
      * knows about.
      * @param context the android application context
@@ -102,12 +89,21 @@ public abstract class SuntimesLayout
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
+        SuntimesUtils.initDisplayStrings(context);
+
         // theme background
-        views.setInt(R.id.widgetframe_inner, "setBackgroundResource", theme.getBackgroundId());
-        // BUG: setting background screws up padding; pre jellybean versions can't correct for it!
-        // either live w/ it, or move this call into if statement below .. however then the background
-        // doesn't update for pre jellybean versions, confusing users into thinking themes don't work
-        // at all (and they really don't considering the background is 90% of the theme).
+        ThemeBackground background = theme.getBackground();
+        if (background.supportsCustomColors())
+        {
+            views.setInt(R.id.widgetframe_inner, "setBackgroundColor", theme.getBackgroundColor());
+
+        } else {
+            views.setInt(R.id.widgetframe_inner, "setBackgroundResource", background.getResID());
+            // BUG: setting background screws up padding; pre jellybean versions can't correct for it!
+            // either live w/ it, or move this call into if statement below .. however then the background
+            // doesn't update for pre jellybean versions, confusing users into thinking themes don't work
+            // at all (and they really don't considering the background is 90% of the theme).
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
@@ -119,9 +115,11 @@ public abstract class SuntimesLayout
             views.setTextViewTextSize(R.id.text_title, TypedValue.COMPLEX_UNIT_SP, theme.getTitleSizeSp());
         }
 
-        // theme title text color
+        // theme title and text
         int titleColor = theme.getTitleColor();
         views.setTextColor(R.id.text_title, titleColor);
+        boldTitle = theme.getTitleBold();
+        boldTime = theme.getTimeBold();
     }
 
 }

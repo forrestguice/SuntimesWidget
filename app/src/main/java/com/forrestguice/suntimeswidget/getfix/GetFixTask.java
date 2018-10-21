@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -37,7 +37,8 @@ import java.util.List;
  * gps updates, and then waits a predetermined amount of time for a
  * good location fix to be acquired; updates progress.
  */
-public class GetFixTask extends AsyncTask<String, Location, Location>
+@SuppressWarnings("Convert2Diamond")
+public class GetFixTask extends AsyncTask<Object, Location, Location>
 {
     public static final int MIN_ELAPSED = 1000 * 5;        // wait at least 5s before settling on a fix
     public static final int MAX_ELAPSED = 1000 * 60;       // wait at most a minute for a fix
@@ -189,12 +190,14 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
      * 1. Checks each LocationProvider (gps, net, passive) and gets lastPosition from each.
      * 2. Starts listening for location updates on providers (based on availability).
      * 3. Busy spin (if necessary) so the task always consumes at least minElapsed time.
-     * @param params unused
      * @return the "best fix" we were able to obtain (potentially null)
      */
     @Override
-    protected Location doInBackground(String... params)
+    protected Location doInBackground(Object... params)
     {
+        final boolean passiveMode = (params.length > 0) ? (Boolean)params[0]
+                                                        : false;
+
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable()
         {
@@ -213,8 +216,13 @@ public class GetFixTask extends AsyncTask<String, Location, Location>
                     Location passiveLastLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
                     locationListener.onLocationChanged(passiveLastLocation);
 
-                    if (!gpsEnabled && netEnabled)
+                    if (passiveMode && passiveEnabled)
                     {
+                        // passive provider only
+                        Log.d("GetFixTask", "starting location listener; now requesting updates from PASSIVE_PROVIDER...");
+                        locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 0, 0, locationListener);
+
+                    } else if (!gpsEnabled && netEnabled) {
                         // network provider only
                         Log.d("GetFixTask", "starting location listener; now requesting updates from NETWORK_PROVIDER...");
                         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);

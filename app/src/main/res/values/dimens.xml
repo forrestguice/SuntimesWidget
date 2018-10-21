@@ -2,6 +2,12 @@
 <resources>
     <dimen name="widget_margin">8dp</dimen>
 
+    <integer name="widget_size_minWidthDp4x1">250</integer>
+    <dimen name="widget_size_minWidth4x1">250dp</dimen>
+
+    <integer name="widget_size_minWidthDp3x1">180</integer>
+    <dimen name="widget_size_minWidth3x1">180dp</dimen>
+
     <integer name="widget_size_minWidthDp2x1">110</integer>
     <integer name="widget_size_minWidthDp">40</integer>
     <integer name="widget_size_minHeightDp">40</integer>
@@ -28,6 +34,10 @@
     <dimen name="sunIcon_width_risingBorder">@dimen/sunIcon_width_border</dimen>
     <dimen name="sunIcon_width_settingBorder">@dimen/sunIcon_width_border</dimen>
 
+    <dimen name="moonIcon_inset">-9dip</dimen>
+    <dimen name="moonIcon_height">9dip</dimen>
+    <dimen name="moonIcon_width">18dip</dimen>
+
     <dimen name="settingsGroup_margin">5dp</dimen>
     <dimen name="settingsGroup_padding">4dp</dimen>
 
@@ -43,8 +53,6 @@
     <integer name="anim_slideout_fade_duration">700</integer>
     <integer name="anim_slideout_move_duration">700</integer>
     <fraction name="anim_slideout_move_fromDelta">0%</fraction>
-    <fraction name="anim_slideout_move_top_toDelta">-110%</fraction>
-    <fraction name="anim_slideout_move_bottom_toDelta">110%</fraction>
     <fraction name="anim_slideout_move_left_toDelta">-110%</fraction>
     <fraction name="anim_slideout_move_right_toDelta">110%</fraction>
 

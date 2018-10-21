@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -28,8 +28,11 @@ import net.time4j.Moment;
 import net.time4j.PlainDate;
 import net.time4j.TemporalType;
 import net.time4j.calendar.astro.AstronomicalSeason;
+
+import net.time4j.calendar.astro.LunarTime;
 import net.time4j.calendar.astro.SolarTime;
 import net.time4j.calendar.astro.StdSolarCalculator;
+
 import net.time4j.calendar.astro.Twilight;
 import net.time4j.engine.CalendarDate;
 import net.time4j.engine.ChronoFunction;
@@ -37,14 +40,13 @@ import net.time4j.tz.TZID;
 import net.time4j.tz.Timezone;
 import net.time4j.tz.ZonalOffset;
 
-import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
 {
-    public static final int[] FEATURES = new int[] { FEATURE_RISESET, FEATURE_SOLSTICE };
+    public static final int[] FEATURES = new int[] { FEATURE_RISESET, FEATURE_SOLSTICE, FEATURE_GOLDBLUE, FEATURE_POSITION };
 
     public abstract StdSolarCalculator getCalculator();
 
@@ -72,8 +74,23 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     @Override
     public void init(WidgetSettings.Location location, TimeZone timezone, Context context)
     {
-        this.solarTime = SolarTime.ofLocation(location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), location.getAltitudeAsInteger(), getCalculator());
+        this.solarTime = SolarTime.ofLocation(location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), clampAltitude(location.getAltitudeAsInteger()), getCalculator());
         this.timezone = timezone;
+    }
+
+    public static final int ALTITUDE_MIN = 0;
+    public static final int ALTITUDE_MAX = 10999;
+    public static int clampAltitude(int value)
+    {
+        if (value > ALTITUDE_MAX) {
+            Log.w("clampAltitude", "altitude of " + value + " is greater than " + ALTITUDE_MAX + "! clamping value..");
+            return ALTITUDE_MAX;
+
+        } else if (value < ALTITUDE_MIN) {
+            Log.w("clampAltitude", "altitude of " + value + " is less than " + ALTITUDE_MIN + "! clamping value..");
+            return ALTITUDE_MIN;
+        }
+        return value;
     }
 
     @Override
@@ -143,26 +160,70 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     @Override
     public Calendar[] getMorningBlueHourForDate(Calendar date)
     {
-        return null;
+        SolarTime.Calculator calculator = solarTime.getCalculator();
+        int altitude = clampAltitude(solarTime.getAltitude());
+        double latitude = solarTime.getLatitude();
+        double longitude = solarTime.getLongitude();
+        double geodeticAngle = calculator.getGeodeticAngle(latitude, altitude);
+        double blueStartAngle = 90 + geodeticAngle + SUN_ALTITUDE_BLUE_HIGH;
+        double blueEndAngle = 90 + geodeticAngle + SUN_ALTITUDE_BLUE_LOW;
+
+        PlainDate localDate = calendarToPlainDate(date);
+        Moment blueMorningStart = calculator.sunrise(localDate, latitude, longitude, blueStartAngle);
+        Moment blueMorningEnd = calculator.sunrise(localDate, latitude, longitude, blueEndAngle);
+        return new Calendar[] { momentToCalendar(blueMorningStart), momentToCalendar(blueMorningEnd) };
     }
 
     @Override
     public Calendar[] getEveningBlueHourForDate(Calendar date)
     {
-        return null;
+        SolarTime.Calculator calculator = solarTime.getCalculator();
+        int altitude = clampAltitude(solarTime.getAltitude());
+        double latitude = solarTime.getLatitude();
+        double longitude = solarTime.getLongitude();
+        double geodeticAngle = calculator.getGeodeticAngle(latitude, altitude);
+        double blueStartAngle = 90 + geodeticAngle + SUN_ALTITUDE_BLUE_LOW;
+        double blueEndAngle = 90 + geodeticAngle + SUN_ALTITUDE_BLUE_HIGH;
+
+        PlainDate localDate = calendarToPlainDate(date);
+        Moment blueEveningStart = calculator.sunset(localDate, latitude, longitude, blueStartAngle);
+        Moment blueEveningEnd = calculator.sunset(localDate, latitude, longitude, blueEndAngle);
+        return new Calendar[] { momentToCalendar(blueEveningStart), momentToCalendar(blueEveningEnd) };
     }
 
     @Override
-    public Calendar[] getMorningGoldenHourForDate(Calendar date)
+    public Calendar getMorningGoldenHourForDate(Calendar date)
     {
-        return null;
+        SolarTime.Calculator calculator = solarTime.getCalculator();
+        int altitude = clampAltitude(solarTime.getAltitude());
+        double latitude = solarTime.getLatitude();
+        double longitude = solarTime.getLongitude();
+        double geodeticAngle = calculator.getGeodeticAngle(latitude, altitude);
+        double goldenAngle = 90 + geodeticAngle - SUN_ALTITUDE_GOLDEN;
+
+        PlainDate localDate = calendarToPlainDate(date);
+        Moment goldMorningEnd = calculator.sunrise(localDate, latitude, longitude, goldenAngle);
+        return momentToCalendar(goldMorningEnd);
     }
 
     @Override
-    public Calendar[] getEveningGoldenHourForDate(Calendar date)
+    public Calendar getEveningGoldenHourForDate(Calendar date)
     {
-        return null;
+        SolarTime.Calculator calculator = solarTime.getCalculator();
+        int altitude = clampAltitude(solarTime.getAltitude());
+        double latitude = solarTime.getLatitude();
+        double longitude = solarTime.getLongitude();
+        double geodeticAngle = calculator.getGeodeticAngle(latitude, altitude);
+        double goldenAngle = 90 + geodeticAngle - SUN_ALTITUDE_GOLDEN;
+
+        PlainDate localDate = calendarToPlainDate(date);
+        Moment goldEveningStart = this.solarTime.getCalculator().sunset(localDate, latitude, longitude, goldenAngle);
+        return momentToCalendar(goldEveningStart);
     }
+
+    public static final double SUN_ALTITUDE_GOLDEN = 6.0;
+    public static final double SUN_ALTITUDE_BLUE_HIGH = 8.0;
+    public static final double SUN_ALTITUDE_BLUE_LOW = 4.0;
 
     @Override
     public Calendar getOfficialSunsetCalendarForDate( Calendar date )
@@ -224,8 +285,9 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     protected PlainDate calendarToPlainDate(Calendar input)
     {
         Moment moment = TemporalType.JAVA_UTIL_DATE.translate(input.getTime());
-        ZonalOffset offset = ZonalOffset.atLongitude(new BigDecimal(this.solarTime.getLongitude()));
-        return moment.toZonalTimestamp(offset).toDate();
+        //ZonalOffset offset = ZonalOffset.atLongitude(new BigDecimal(this.solarTime.getLongitude()));
+        ZonalOffset zonalOffset = ZonalOffset.ofTotalSeconds(timezone.getOffset(input.getTimeInMillis()) / 1000);
+        return moment.toZonalTimestamp(zonalOffset).toDate();
     }
 
     protected Calendar momentToCalendar(Moment moment)
@@ -246,6 +308,85 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         if (northernHemisphere)
             return season.onNorthernHemisphere();
         else return season.onSouthernHemisphere();
+    }
+
+    @Override
+    public MoonTimes getMoonTimesForDate(Calendar date)
+    {
+        Moment moment = TemporalType.JAVA_UTIL_DATE.translate(date.getTime());
+        TZID tzid = toTimezone(date.getTimeZone()).getID();
+        PlainDate localDate = moment.toZonalTimestamp(tzid).toDate();
+
+        LunarTime lunarTime = LunarTime.ofLocation(tzid, this.solarTime.getLatitude(), this.solarTime.getLongitude(), this.solarTime.getAltitude());
+        LunarTime.Moonlight moonlight = lunarTime.on(localDate);
+
+        MoonTimes result = new MoonTimes();
+        result.riseTime = momentToCalendar(moonlight.moonrise()); // might be null meaning there is no moonrise
+        result.setTime = momentToCalendar(moonlight.moonset()); // might be null meaning there is no moonset
+        return result;
+    }
+
+    @Override
+    public double getMoonIlluminationForDate(Calendar date)
+    {
+        Moment moment = TemporalType.JAVA_UTIL_DATE.translate(date.getTime());
+        return net.time4j.calendar.astro.MoonPhase.getIllumination(moment, 1);
+    }
+
+    @Override
+    public Calendar getMoonPhaseNextDate(MoonPhase phase, Calendar date)
+    {
+        net.time4j.calendar.astro.MoonPhase moonPhase = toPhase(phase);
+        Moment phaseMoment = moonPhase.after(TemporalType.JAVA_UTIL_DATE.translate(date.getTime()));
+        return momentToCalendar(phaseMoment);
+    }
+
+    private net.time4j.calendar.astro.MoonPhase toPhase( MoonPhase input )
+    {
+        switch (input) {
+            case NEW: return net.time4j.calendar.astro.MoonPhase.NEW_MOON;
+            case FIRST_QUARTER: return net.time4j.calendar.astro.MoonPhase.FIRST_QUARTER;
+            case THIRD_QUARTER: return net.time4j.calendar.astro.MoonPhase.LAST_QUARTER;
+            case FULL:
+            default: return net.time4j.calendar.astro.MoonPhase.FULL_MOON;
+        }
+    }
+
+    @Override
+    public SunPosition getSunPosition(Calendar dateTime)
+    {
+        Moment moment = TemporalType.JAVA_UTIL_DATE.translate(dateTime.getTime());
+        net.time4j.calendar.astro.SunPosition position = net.time4j.calendar.astro.SunPosition.at(moment, solarTime);
+
+        SunPosition result = new SunPosition();
+        result.azimuth = position.getAzimuth();
+        result.elevation = position.getElevation();
+        result.rightAscension = position.getRightAscension();
+        result.declination = position.getDeclination();
+        return result;
+    }
+
+    @Override
+    public MoonPosition getMoonPosition(Calendar dateTime)
+    {
+        Moment moment = TemporalType.JAVA_UTIL_DATE.translate(dateTime.getTime());
+        net.time4j.calendar.astro.MoonPosition position = net.time4j.calendar.astro.MoonPosition.at(moment, solarTime);
+
+        MoonPosition result = new MoonPosition();
+        result.azimuth = position.getAzimuth();
+        result.elevation = position.getElevation();
+        result.rightAscension = position.getRightAscension();
+        result.declination = position.getDeclination();
+        result.distance = position.getDistance();
+        return result;
+    }
+
+    @Override
+    public double getShadowLength( double objHeight, Calendar dateTime )
+    {
+        Moment moment = TemporalType.JAVA_UTIL_DATE.translate(dateTime.getTime());
+        net.time4j.calendar.astro.SunPosition position = net.time4j.calendar.astro.SunPosition.at(moment, solarTime);
+        return position.getShadowLength(objHeight);
     }
 
 }

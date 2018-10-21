@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="ic_launcher_background">@color/grey_900</color>
 
     <color name="primary">#ff9900</color>
     <color name="primary_dark">#ff9900</color>
@@ -7,18 +8,23 @@
     <color name="text_primary">#cccccc</color>
     <color name="btn_tint_pressed">#ff9900</color>
     <color name="text_alertDialogListItem">#000000</color>
+    <color name="grid_selected">#81009688</color>
 
     <color name="text_disabled_dark">#4Dffffff</color>
     <color name="text_accent_dark">@color/deep_teal_200</color>
     <color name="hr_dark">#33ffffff</color>
     <color name="dialog_bg_dark">@color/grey_850</color>
     <color name="card_bg_dark">@color/grey_800</color>
+    <color name="card_bg_darktrans">#aa212121</color>
+    <color name="widget_bg_dark">#82212121</color>
 
     <color name="text_disabled_light">#39000000</color>
     <color name="text_accent_light">@color/deep_teal_500</color>
     <color name="hr_light">#1f000000</color>
     <color name="dialog_bg_light">@color/grey_50</color>
     <color name="card_bg_light">@android:color/white</color>
+    <color name="card_bg_lighttrans">#aaffffff</color>
+    <color name="widget_bg_light">@color/card_bg_lighttrans</color>
 
     <!-- tags -->
     <color name="warningTag_dark">#ff9900</color>
@@ -29,12 +35,35 @@
     <color name="errorTag_light">#FF5252</color>
     <color name="dstTag_light">#ffcc00</color>
 
-    <!-- sun icon -->
-    <color name="sunIcon_color_rising">@color/sunIcon_color_rising_dark</color>
-    <color name="sunIcon_color_setting">@color/sunIcon_color_setting_dark</color>
-    <color name="sunIcon_color_risingBorder">@color/sunIcon_color_risingBorder_dark</color>
-    <color name="sunIcon_color_settingBorder">@color/sunIcon_color_settingBorder_dark</color>
+    <!-- moon icons (rising, setting) -->
+    <color name="moonIcon_color_rising_dark">@color/grey_50</color>
+    <color name="moonIcon_color_setting_dark">@color/grey_500</color>
+    <color name="moonIcon_color_rising_light">@color/grey_400</color>
+    <color name="moonIcon_color_setting_light">@color/grey_600</color>
 
+    <!-- moon icons (waxing phase, waning phase) -->
+    <color name="moonIcon_color_waxing">@color/grey_300</color>
+    <color name="moonIcon_color_waning">@color/grey_500</color>
+
+    <!-- moon icon (new) -->
+    <color name="moonIcon_color_new">@color/moonIcon_color_new_dark</color>
+    <color name="moonIcon_color_new_border">@color/moonIcon_color_new_border_dark</color>
+
+    <color name="moonIcon_color_new_dark">@color/grey_850</color>
+    <color name="moonIcon_color_new_border_dark">@color/grey_500</color>
+    <color name="moonIcon_color_new_light">@color/grey_850</color>
+    <color name="moonIcon_color_new_border_light">@color/grey_600</color>
+
+    <!-- moon icon (full) -->
+    <color name="moonIcon_color_full">@color/moonIcon_color_full_dark</color>
+    <color name="moonIcon_color_full_border">@color/moonIcon_color_full_border_dark</color>
+
+    <color name="moonIcon_color_full_dark">@color/grey_100</color>
+    <color name="moonIcon_color_full_border_dark">@color/grey_500</color>
+    <color name="moonIcon_color_full_light">@color/grey_100</color>
+    <color name="moonIcon_color_full_border_light">@color/grey_600</color>
+
+    <!-- sun icon -->
     <color name="sunIcon_color_rising_dark">#ffcc00</color>
     <color name="sunIcon_color_risingBorder_dark">#ff9900</color>
     <color name="sunIcon_color_setting_dark">#ff9900</color>
@@ -70,6 +99,21 @@
     <color name="graphColor_astronomical_light">#ff0000ff</color>
     <color name="graphColor_night_light">#ff757575</color>
 
+    <color name="map_sunshadow">@color/map_sunshadow_dark</color>
+    <color name="map_moonlight">@color/map_moonlight_dark</color>
+    <color name="map_background">@color/map_background_dark</color>
+    <color name="map_foreground">@color/map_foreground_dark</color>
+
+    <color name="map_sunshadow_dark">#bf000000</color>
+    <color name="map_moonlight_dark">#38FFFFFF</color>
+    <color name="map_background_dark">#5c6bc0</color>
+    <color name="map_foreground_dark">#c6ff00</color>
+
+    <color name="map_sunshadow_light">#bf000000</color>
+    <color name="map_moonlight_light">#1affffff</color>>
+    <color name="map_background_light">#5c6bc0</color> <!-- TODO: light colors -->
+    <color name="map_foreground_light">#c6ff00</color>
+
     <color name="springColor_dark">#8BC34A</color>
     <color name="summerColor_dark">#ffffcc00</color>
     <color name="fallColor_dark">#FF5722</color>
@@ -84,9 +128,15 @@
     <color name="transparent">#00000000</color>
     <color name="grey_50">#fffafafa</color>
     <color name="grey_100">#fff5f5f5</color>
+    <color name="grey_200">#EEEEEE</color>
+    <color name="grey_300">#ffe0e0e0</color>
+    <color name="grey_400">#BDBDBD</color>
+    <color name="grey_500">#ff9e9e9e</color>
+    <color name="grey_600">#757575</color>
     <color name="grey_800">#ff424242</color>
     <color name="grey_850">#ff303030</color>
     <color name="grey_900">#ff212121</color>
     <color name="deep_teal_200">#ff80cbc4</color>
     <color name="deep_teal_500">#ff009688</color>
+
 </resources>

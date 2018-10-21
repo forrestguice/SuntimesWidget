@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -30,6 +30,18 @@ import java.util.TimeZone;
 
 public class SuntimesData
 {
+    public static final long DAY_MILLIS = 24 * 60 * 60 * 1000;
+
+    /**
+     * Property: appWidgetID
+     * The appWidgetID that was used to initialize from settings (cached), may be null.
+     */
+    protected Integer appWidgetID = null;
+    public Integer appWidgetID()
+    {
+        return appWidgetID;
+    }
+
     /**
      * Property: date ("today" ..but not really, @see todayIs)
      */
@@ -148,6 +160,7 @@ public class SuntimesData
      */
     protected void initFromOther( SuntimesData other )
     {
+        this.appWidgetID = other.appWidgetID;
         this.calculatorMode = other.calculatorMode();
         this.locationMode = other.locationMode();
         this.timezoneMode = other.timezoneMode();
@@ -168,10 +181,15 @@ public class SuntimesData
      */
     protected void initFromSettings(Context context, int appWidgetId)
     {
+        initFromSettings(context, appWidgetId, "");
+    }
+    protected void initFromSettings(Context context, int appWidgetId, String calculatorName)
+    {
+        this.appWidgetID = appWidgetId;
         calculated = false;
 
         // from general settings
-        calculatorMode = WidgetSettings.loadCalculatorModePref(context, appWidgetId);
+        calculatorMode = WidgetSettings.loadCalculatorModePref(context, appWidgetId, calculatorName);
 
         // from location settings
         location = WidgetSettings.loadLocationPref(context, appWidgetId);
@@ -225,7 +243,84 @@ public class SuntimesData
         }
     }
 
+    public void setCalculator(SuntimesCalculator calculator, SuntimesCalculatorDescriptor descriptor)
+    {
+        this.calculator = calculator;
+        this.calculatorMode = descriptor;
+    }
 
+    public void initCalculator(Context context)
+    {
+        if (this.calculator != null)
+            return;
+
+        final SuntimesCalculatorFactory calculatorFactory = initFactory(context);
+        calculatorFactory.setFactoryListener(new SuntimesCalculatorFactory.FactoryListener()
+        {
+            @Override
+            public void onCreateFallback(SuntimesCalculatorDescriptor descriptor)
+            {
+                Log.w("initCalculator",  "failed to initCalculator; using fallback...");
+                calculatorMode = descriptor;
+            }
+        });
+
+        if (calculatorMode == null) {
+            calculatorMode = calculatorFactory.fallbackCalculatorDescriptor();
+        }
+        this.calculator = calculatorFactory.createCalculator(location, timezone);
+    }
+
+    public SuntimesCalculatorFactory initFactory(Context context)
+    {
+        return new SuntimesCalculatorFactory(context, calculatorMode);
+    }
+
+    /**
+     * @return the start of today (@see calendar()), at 0h 0m 0s
+     */
+    public Calendar midnight()
+    {
+        Calendar midnight = null;
+        if (todaysCalendar != null)
+        {
+            midnight = (Calendar) todaysCalendar.clone();
+            midnight.set(Calendar.HOUR_OF_DAY, 0);
+            midnight.set(Calendar.MINUTE, 0);
+            midnight.set(Calendar.SECOND, 0);
+        }
+        return midnight;
+    }
+
+    /**
+     * @return
+     */
+    public Calendar now()
+    {
+        return Calendar.getInstance(timezone());
+    }
+
+    /**
+     * @param date
+     * @return
+     */
+    public Calendar nowThen(Calendar date)
+    {
+        Calendar nowThen = now();
+        nowThen.set(Calendar.YEAR, date.get(Calendar.YEAR));
+        nowThen.set(Calendar.MONTH, date.get(Calendar.MONTH));
+        nowThen.set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH));
+        return nowThen;
+    }
+
+    public static Calendar nowThen(Calendar now, Calendar date)
+    {
+        Calendar nowThen = (Calendar)now.clone();
+        nowThen.set(Calendar.YEAR, date.get(Calendar.YEAR));
+        nowThen.set(Calendar.MONTH, date.get(Calendar.MONTH));
+        nowThen.set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH));
+        return nowThen;
+    }
 
 }
 

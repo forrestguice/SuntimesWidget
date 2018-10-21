@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -29,6 +29,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -40,6 +41,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 
 import java.util.ArrayList;
@@ -48,6 +50,7 @@ import java.util.ArrayList;
  * A helper class that helps to manage a GetFixTask; has methods for starting/stopping the task;
  * allows a single task to run at a time.
  */
+@SuppressWarnings("Convert2Diamond")
 public class GetFixHelper
 {
     public static final String KEY_LOCATION_GETTINGFIX = "gettingfix";
@@ -84,9 +87,9 @@ public class GetFixHelper
     {
         if (!gettingFix)
         {
-            if (hasGPSPermissions(myParent, REQUEST_GETFIX_LOCATION))
+            if (checkGPSPermissions(myParent, REQUEST_GETFIX_LOCATION))
             {
-                if (isLocationEnabled())
+                if (isLocationEnabled(myParent))
                 {
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(myParent);
                     getFixTask = new GetFixTask(myParent, this);
@@ -119,7 +122,7 @@ public class GetFixHelper
                             }
                         }
                     });
-                    getFixTask.execute();
+                    getFixTask.execute(AppSettings.loadPrefGpsPassiveMode(myParent));
 
                 } else {
                     Log.w("GetFixHelper", "getFix called while GPS disabled; showing a prompt");
@@ -156,17 +159,43 @@ public class GetFixHelper
         }
     }
 
-    public boolean hasGPSPermissions(FragmentActivity activity, int requestID)
+    /**
+     * @param activity
+     * @param requestID used to identify the permission request
+     * @return true already has gps permissions, false has no permissions (triggers a request)
+     */
+    public boolean checkGPSPermissions(final FragmentActivity activity, final int requestID)
     {
         int permission = ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION);
         boolean hasPermission = (permission == PackageManager.PERMISSION_GRANTED);
-        //Log.d("hasGPSPermissions", "" + hasPermission);
+        //Log.d("checkGPSPermissions", "" + hasPermission);
 
         if (!hasPermission)
         {
-            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, requestID);
-        }
+            if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.ACCESS_FINE_LOCATION))
+            {
+                String permissionMessage = activity.getString(R.string.privacy_permission_location);
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                builder.setTitle(activity.getString(R.string.privacy_permissiondialog_title))
+                        .setMessage(SuntimesUtils.fromHtml(permissionMessage))
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
+                        {
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, requestID);
+                            }
+                        });
 
+                if (Build.VERSION.SDK_INT >= 11)
+                        builder.setIconAttribute(R.attr.icActionPlace);
+                else builder.setIcon(R.drawable.ic_action_place);
+
+                builder.show();
+
+            } else {
+                ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, requestID);
+            }
+        }
         return hasPermission;
     }
 
@@ -389,9 +418,10 @@ public class GetFixHelper
         }
     }
 
-    public boolean isLocationEnabled()
+    public boolean isLocationEnabled(Context context)
     {
-        return isNetProviderEnabled(myParent) || isGPSProviderEnabled(myParent) || isPassiveProviderEnabled(myParent);
+        boolean allowPassive = AppSettings.loadPrefGpsPassiveMode(context);
+        return isNetProviderEnabled(myParent) || isGPSProviderEnabled(myParent) || (allowPassive && isPassiveProviderEnabled(myParent));
     }
 
     public static boolean isGPSProviderEnabled(Context context)

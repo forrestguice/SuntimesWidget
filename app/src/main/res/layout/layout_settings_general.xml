@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2014-2017 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -61,7 +61,7 @@
             <ImageButton android:id="@+id/appwidget_general_timeMode_helpButton"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:src="@android:drawable/ic_menu_help"
+                android:src="?attr/icActionHelp"
                 android:scaleType="center"
                 android:cropToPadding="false"
                 android:adjustViewBounds="false"
@@ -100,6 +100,39 @@
 
         </LinearLayout>
 
+        <LinearLayout android:id="@+id/appwidget_general_useAltitude_layout"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
+
+            <CheckBox android:id="@+id/appwidget_general_useAltitude"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/configLabel_general_altitude_enabled" />
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/appwidget_general_showWeeks_layout"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
+
+            <CheckBox android:id="@+id/appwidget_general_showWeeks"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/configLabel_general_showWeeks" />
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/appwidget_general_showHours_layout"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
+
+            <CheckBox android:id="@+id/appwidget_general_showHours"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/configLabel_general_showHours" />
+
+        </LinearLayout>
+
         <LinearLayout android:id="@+id/appwidget_general_showSeconds_layout"
                       android:layout_width="match_parent" android:layout_height="wrap_content"
                       android:orientation="horizontal"
@@ -110,7 +143,17 @@
                         android:text="@string/configLabel_general_showSeconds" />
 
         </LinearLayout>
-		      
+
+        <LinearLayout android:id="@+id/appwidget_general_showTimeDate_layout"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
+
+            <CheckBox android:id="@+id/appwidget_general_showTimeDate"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/configLabel_general_showTimeDate" />
+
+        </LinearLayout>
 
         <LinearLayout android:id="@+id/appwidget_general_showNoon_layout"
                       android:layout_width="match_parent" android:layout_height="wrap_content"

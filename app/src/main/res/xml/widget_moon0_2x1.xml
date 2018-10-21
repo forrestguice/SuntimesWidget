@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    tools:ignore="UnusedAttribute"
+
+    android:widgetCategory="home_screen|keyguard"
+    android:previewImage="@drawable/moonwidget0_2x1_preview"
+    android:resizeMode="horizontal|vertical"
+    android:initialLayout="@layout/layout_widget_moon_2x1_0"
+    android:initialKeyguardLayout="@layout/layout_widget_moon_2x1_0"
+
+    android:minWidth="@dimen/widget_size_minWidth2x1" android:minHeight="@dimen/widget_size_minHeight"
+    android:minResizeWidth="@dimen/widget_size_minWidth" android:minResizeHeight="@dimen/widget_size_minHeight"
+
+    android:updatePeriodMillis="@integer/widget_updateInterval"
+    android:configure="com.forrestguice.suntimeswidget.MoonWidget0ConfigActivity_2x1">
+
+</appwidget-provider>

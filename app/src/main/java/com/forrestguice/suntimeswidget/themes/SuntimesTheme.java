@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.themes;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -35,6 +36,8 @@ public class SuntimesTheme
     public static final String THEME_DISPLAYSTRING = "display";
 
     public static final String THEME_BACKGROUND = "backgroundID";
+    public static final String THEME_BACKGROUND_COLOR = "backgroundColor";
+
     public static final String THEME_PADDING = "padding";
     public static final String THEME_PADDING_LEFT = "padding_left";
     public static final String THEME_PADDING_TOP = "padding_top";
@@ -49,6 +52,19 @@ public class SuntimesTheme
     public static final String THEME_SUNRISECOLOR = "sunrisecolor";
     public static final String THEME_NOONCOLOR = "nooncolor";
     public static final String THEME_SUNSETCOLOR = "sunsetcolor";
+
+    public static final String THEME_MOONRISECOLOR = "moonrisecolor";
+    public static final String THEME_MOONSETCOLOR = "moonsetcolor";
+    public static final String THEME_MOONWANINGCOLOR = "moonwaningcolor";
+    public static final String THEME_MOONWAXINGCOLOR = "moonwaxingcolor";
+    public static final String THEME_MOONNEWCOLOR = "moonnewcolor";
+    public static final String THEME_MOONFULLCOLOR = "moonfullcolor";
+
+    public static final String THEME_MOONFULL_STROKE_WIDTH = "moonfull_strokewidth";
+    public static final String THEME_MOONNEW_STROKE_WIDTH = "moonnew_strokewidth";
+    public static final float THEME_MOON_STROKE_MIN = 0.0f;
+    public static final float THEME_MOON_STROKE_DEF = 3.0f;
+    public static final float THEME_MOON_STROKE_MAX = 7.0f;
 
     public static final String THEME_NOONICON_FILL_COLOR = "noonicon_fillcolor";
     public static final String THEME_NOONICON_STROKE_COLOR = "noonicon_strokecolor";
@@ -71,15 +87,27 @@ public class SuntimesTheme
     public static final float THEME_SETICON_STROKE_WIDTH_DEF = 0.0f;
     public static final float THEME_SETICON_STROKE_WIDTH_MAX = 7.0f;
 
+    public static final String THEME_DAYCOLOR = "daycolor";
+    public static final String THEME_CIVILCOLOR = "civilcolor";
+    public static final String THEME_NAUTICALCOLOR = "nauticalcolor";
+    public static final String THEME_ASTROCOLOR = "astrocolor";
+    public static final String THEME_NIGHTCOLOR = "nightcolor";
+
     public static final String THEME_SPRINGCOLOR = "springcolor";
     public static final String THEME_SUMMERCOLOR = "summercolor";
     public static final String THEME_FALLCOLOR = "fallcolor";
     public static final String THEME_WINTERCOLOR = "wintercolor";
 
+    public static final String THEME_MAP_BACKGROUNDCOLOR = "mapbackgroundcolor";
+    public static final String THEME_MAP_FOREGROUNDCOLOR = "mapforegroundcolor";
+    public static final String THEME_MAP_SHADOWCOLOR = "mapshadowcolor";
+    public static final String THEME_MAP_HIGHLIGHTCOLOR = "maphighlightcolor";
+
     public static final String THEME_TITLESIZE = "titlesize";
     public static final float THEME_TITLESIZE_MIN = 6.0f;
     public static final float THEME_TITLESIZE_DEF = 10.0f;
     public static final float THEME_TITLESIZE_MAX = 32.0f;
+    public static final String THEME_TITLEBOLD = "titlebold";
 
     public static final String THEME_TEXTSIZE = "textsize";
     public static final float THEME_TEXTSIZE_MIN = 6.0f;
@@ -90,6 +118,7 @@ public class SuntimesTheme
     public static final float THEME_TIMESIZE_MIN = 6.0f;
     public static final float THEME_TIMESIZE_DEF = 12.0f;
     public static final float THEME_TIMESIZE_MAX = 32.0f;
+    public static final String THEME_TIMEBOLD = "timebold";
 
     public static final String THEME_TIMESUFFIXSIZE = "timesuffixsize";
     public static final float THEME_TIMESUFFIXSIZE_MIN = 4.0f;
@@ -103,7 +132,8 @@ public class SuntimesTheme
     protected boolean themeIsDefault;
     protected String themeDisplayString;
 
-    protected int themeBackground;
+    protected ThemeBackground themeBackground;
+    protected int themeBackgroundColor = Color.DKGRAY;
     protected int[] themePadding = {0, 0, 0, 0};
     private int[] themePaddingPixels = {-1, -1, -1, -1};
 
@@ -130,15 +160,42 @@ public class SuntimesTheme
     protected int themeSunsetIconStrokeWidth;
     protected int themeSunsetIconStrokePixels = -1;
 
+    protected int themeDayColor;
+    protected int themeCivilColor;
+    protected int themeNauticalColor;
+    protected int themeAstroColor;
+    protected int themeNightColor;
+
     protected int themeSpringColor;
     protected int themeSummerColor;
     protected int themeFallColor;
     protected int themeWinterColor;
 
+    protected int themeMapBackgroundColor;
+    protected int themeMapForegroundColor;
+    protected int themeMapShadowColor;
+    protected int themeMapHighlightColor;
+
+    protected int themeMoonriseTextColor;
+    protected int themeMoonsetTextColor;
+    protected int themeMoonWaningColor;
+    protected int themeMoonNewColor;
+    protected int themeMoonWaxingColor;
+    protected int themeMoonFullColor;
+
+    protected int themeMoonFullStroke;
+    protected int themeMoonFullStrokePixels = -1;
+
+    protected int themeMoonNewStroke;
+    protected int themeMoonNewStrokePixels = -1;
+
     protected float themeTitleSize = THEME_TITLESIZE_DEF;
     protected float themeTextSize = THEME_TEXTSIZE_DEF;
     protected float themeTimeSize = THEME_TIMESIZE_DEF;
     protected float themeTimeSuffixSize = THEME_TIMESUFFIXSIZE_DEF;
+
+    protected boolean themeTitleBold = false;
+    protected boolean themeTimeBold = false;
 
     public SuntimesTheme()
     {
@@ -152,6 +209,7 @@ public class SuntimesTheme
         this.themeDisplayString = otherTheme.themeDisplayString;
 
         this.themeBackground = otherTheme.themeBackground;
+        this.themeBackgroundColor = otherTheme.themeBackgroundColor;
         this.themePadding[0] = otherTheme.themePadding[0];
         this.themePadding[1] = otherTheme.themePadding[1];
         this.themePadding[2] = otherTheme.themePadding[2];
@@ -177,19 +235,45 @@ public class SuntimesTheme
         this.themeSunsetIconStrokeColor = otherTheme.themeSunsetIconStrokeColor;
         this.themeSunsetIconStrokeWidth = otherTheme.themeSunsetIconStrokeWidth;
 
+        this.themeMoonriseTextColor = otherTheme.themeMoonriseTextColor;
+        this.themeMoonsetTextColor = otherTheme.themeMoonsetTextColor;
+        this.themeMoonWaningColor = otherTheme.themeMoonWaningColor;
+        this.themeMoonNewColor = otherTheme.themeMoonNewColor;
+        this.themeMoonWaxingColor = otherTheme.themeMoonWaxingColor;
+        this.themeMoonFullColor = otherTheme.themeMoonFullColor;
+
+        this.themeMoonFullStroke = otherTheme.themeMoonFullStroke;
+        this.themeMoonNewStroke = otherTheme.themeMoonNewStroke;
+
+        this.themeDayColor = otherTheme.themeDayColor;
+        this.themeCivilColor = otherTheme.themeCivilColor;
+        this.themeNauticalColor = otherTheme.themeNauticalColor;
+        this.themeAstroColor = otherTheme.themeAstroColor;
+        this.themeNightColor = otherTheme.themeNightColor;
+
         this.themeSpringColor = otherTheme.themeSpringColor;
         this.themeSummerColor = otherTheme.themeSummerColor;
         this.themeFallColor = otherTheme.themeFallColor;
         this.themeWinterColor = otherTheme.themeWinterColor;
 
+        this.themeMapBackgroundColor = otherTheme.themeMapBackgroundColor;
+        this.themeMapForegroundColor = otherTheme.themeMapForegroundColor;
+        this.themeMapShadowColor = otherTheme.themeMapShadowColor;
+        this.themeMapHighlightColor = otherTheme.themeMapHighlightColor;
+
         this.themeTitleSize = otherTheme.themeTitleSize;
         this.themeTextSize = otherTheme.themeTextSize;
         this.themeTimeSize = otherTheme.themeTimeSize;
         this.themeTimeSuffixSize = otherTheme.themeTimeSuffixSize;
+
+        this.themeTitleBold = otherTheme.themeTitleBold;
+        this.themeTimeBold = otherTheme.themeTimeBold;
     }
 
     public boolean initTheme( Context context, String themesPrefix, String themeName, SuntimesTheme defaultTheme )
     {
+        long bench_start = System.nanoTime();
+
         SharedPreferences themes = context.getSharedPreferences(themesPrefix, Context.MODE_PRIVATE);
         String theme = themePrefix(themeName);
 
@@ -205,17 +289,19 @@ public class SuntimesTheme
             if (backgroundName != null)
             {
                 try {
-                    this.themeBackground = ThemeBackground.valueOf(backgroundName).getResID();
+                    this.themeBackground = ThemeBackground.valueOf(backgroundName);
                 } catch (IllegalArgumentException e) {
                     Log.w("initTheme", "unable to find theme background " + backgroundName);
-                    this.themeBackground = ThemeBackground.DARK.getResID();
+                    this.themeBackground = ThemeBackground.DARK;
                 }
             }
         } catch (ClassCastException e) {
             Log.w("initTheme", "legacy theme: " + themeName);
             int backgroundID = themes.getInt(theme + THEME_BACKGROUND, 0);
-            this.themeBackground = ThemeBackground.getThemeBackground(backgroundID).getResID();
+            this.themeBackground = ThemeBackground.getThemeBackground(backgroundID);
         }
+
+        this.themeBackgroundColor = themes.getInt( theme + THEME_BACKGROUND_COLOR, defaultTheme.getBackgroundColor() );
 
         this.themePadding[0] = themes.getInt( theme + THEME_PADDING_LEFT, defaultTheme.themePadding[0] );
         this.themePadding[1] = themes.getInt( theme + THEME_PADDING_TOP, defaultTheme.themePadding[1] );
@@ -242,16 +328,42 @@ public class SuntimesTheme
         this.themeSunsetIconStrokeColor = themes.getInt( theme + THEME_SETICON_STROKE_COLOR, defaultTheme.themeSunsetIconStrokeColor );
         this.themeSunsetIconStrokeWidth = themes.getInt( theme + THEME_SETICON_STROKE_WIDTH, defaultTheme.themeSunsetIconStrokeWidth );
 
+        this.themeMoonriseTextColor = themes.getInt( theme + THEME_MOONRISECOLOR, defaultTheme.themeMoonriseTextColor );
+        this.themeMoonsetTextColor = themes.getInt( theme + THEME_MOONSETCOLOR, defaultTheme.themeMoonsetTextColor );
+        this.themeMoonWaningColor = themes.getInt( theme + THEME_MOONWANINGCOLOR, defaultTheme.themeMoonWaningColor );
+        this.themeMoonNewColor = themes.getInt( theme + THEME_MOONNEWCOLOR, defaultTheme.themeMoonNewColor );
+        this.themeMoonWaxingColor = themes.getInt( theme + THEME_MOONWAXINGCOLOR, defaultTheme.themeMoonWaxingColor );
+        this.themeMoonFullColor = themes.getInt( theme + THEME_MOONFULLCOLOR, defaultTheme.themeMoonFullColor );
+
+        this.themeMoonFullStroke = themes.getInt( theme + THEME_MOONFULL_STROKE_WIDTH, defaultTheme.themeMoonFullStroke );
+        this.themeMoonNewStroke = themes.getInt( theme + THEME_MOONNEW_STROKE_WIDTH, defaultTheme.themeMoonNewStroke );
+
+        this.themeDayColor = themes.getInt( theme + THEME_DAYCOLOR, defaultTheme.themeDayColor );
+        this.themeCivilColor = themes.getInt( theme + THEME_CIVILCOLOR, defaultTheme.themeCivilColor );
+        this.themeNauticalColor = themes.getInt( theme + THEME_NAUTICALCOLOR, defaultTheme.themeNauticalColor );
+        this.themeAstroColor = themes.getInt( theme + THEME_ASTROCOLOR, defaultTheme.themeAstroColor );
+        this.themeNightColor = themes.getInt( theme + THEME_NIGHTCOLOR, defaultTheme.themeNightColor );
+
         this.themeSpringColor = themes.getInt( theme + THEME_SPRINGCOLOR, defaultTheme.themeSpringColor );
         this.themeSummerColor = themes.getInt( theme + THEME_SUMMERCOLOR, defaultTheme.themeSummerColor );
         this.themeFallColor = themes.getInt( theme + THEME_FALLCOLOR, defaultTheme.themeFallColor );
         this.themeWinterColor = themes.getInt( theme + THEME_WINTERCOLOR, defaultTheme.themeWinterColor );
+
+        this.themeMapBackgroundColor = themes.getInt(theme + THEME_MAP_BACKGROUNDCOLOR, defaultTheme.themeMapBackgroundColor);
+        this.themeMapForegroundColor = themes.getInt(theme + THEME_MAP_FOREGROUNDCOLOR, defaultTheme.themeMapForegroundColor);
+        this.themeMapShadowColor = themes.getInt(theme + THEME_MAP_SHADOWCOLOR, defaultTheme.themeMapShadowColor);
+        this.themeMapHighlightColor = themes.getInt(theme + THEME_MAP_HIGHLIGHTCOLOR, defaultTheme.themeMapHighlightColor);
 
         this.themeTitleSize = themes.getFloat( theme + THEME_TITLESIZE, defaultTheme.themeTitleSize );
         this.themeTextSize = themes.getFloat( theme + THEME_TEXTSIZE, defaultTheme.themeTextSize );
         this.themeTimeSize = themes.getFloat( theme + THEME_TIMESIZE, defaultTheme.themeTimeSize );
         this.themeTimeSuffixSize = themes.getFloat( theme + THEME_TIMESUFFIXSIZE, defaultTheme.themeTimeSuffixSize );
 
+        this.themeTitleBold = themes.getBoolean( theme + THEME_TITLEBOLD, defaultTheme.themeTitleBold );
+        this.themeTimeBold = themes.getBoolean( theme + THEME_TIMEBOLD, defaultTheme.themeTimeBold );
+
+        long bench_end = System.nanoTime();
+        Log.d("DEBUG", "init theme: " + this.themeName() + " :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
         return true;
     }
 
@@ -270,7 +382,9 @@ public class SuntimesTheme
         themePrefs.putBoolean(themePrefix + SuntimesTheme.THEME_ISDEFAULT, this.themeIsDefault);
         themePrefs.putString(themePrefix + SuntimesTheme.THEME_DISPLAYSTRING, this.themeDisplayString);
 
-        themePrefs.putString(themePrefix + SuntimesTheme.THEME_BACKGROUND, ThemeBackground.getThemeBackground(this.themeBackground).name());
+        themePrefs.putString(themePrefix + SuntimesTheme.THEME_BACKGROUND, this.themeBackground.name());
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_BACKGROUND_COLOR, this.themeBackgroundColor);
+
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_PADDING_LEFT, this.themePadding[0]);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_PADDING_TOP, this.themePadding[1]);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_PADDING_RIGHT, this.themePadding[2]);
@@ -296,15 +410,39 @@ public class SuntimesTheme
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_SETICON_STROKE_COLOR, this.themeSunsetIconStrokeColor);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_SETICON_STROKE_WIDTH, this.themeSunsetIconStrokeWidth);
 
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_MOONRISECOLOR, this.themeMoonriseTextColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_MOONSETCOLOR, this.themeMoonsetTextColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_MOONWANINGCOLOR, this.themeMoonWaningColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_MOONNEWCOLOR, this.themeMoonNewColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_MOONWAXINGCOLOR, this.themeMoonWaxingColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_MOONFULLCOLOR, this.themeMoonFullColor);
+
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_MOONFULL_STROKE_WIDTH, this.themeMoonFullStroke);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_MOONNEW_STROKE_WIDTH, this.themeMoonNewStroke);
+
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_DAYCOLOR, this.themeDayColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_CIVILCOLOR, this.themeCivilColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_NAUTICALCOLOR, this.themeNauticalColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_ASTROCOLOR, this.themeAstroColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_NIGHTCOLOR, this.themeNightColor);
+
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_SPRINGCOLOR, this.themeSpringColor);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_SUMMERCOLOR, this.themeSummerColor);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_FALLCOLOR, this.themeFallColor);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_WINTERCOLOR, this.themeWinterColor);
 
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_MAP_BACKGROUNDCOLOR, this.themeMapBackgroundColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_MAP_FOREGROUNDCOLOR, this.themeMapForegroundColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_MAP_SHADOWCOLOR, this.themeMapShadowColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_MAP_HIGHLIGHTCOLOR, this.themeMapHighlightColor);
+
         themePrefs.putFloat(themePrefix + SuntimesTheme.THEME_TITLESIZE, this.themeTitleSize);
         themePrefs.putFloat(themePrefix + SuntimesTheme.THEME_TEXTSIZE, this.themeTextSize);
         themePrefs.putFloat(themePrefix + SuntimesTheme.THEME_TIMESIZE, this.themeTimeSize);
         themePrefs.putFloat(themePrefix + SuntimesTheme.THEME_TIMESUFFIXSIZE, this.themeTimeSuffixSize);
+
+        themePrefs.putBoolean(themePrefix + SuntimesTheme.THEME_TITLEBOLD, this.themeTitleBold);
+        themePrefs.putBoolean(themePrefix + SuntimesTheme.THEME_TIMEBOLD, this.themeTimeBold);
 
         themePrefs.apply();
 
@@ -334,6 +472,7 @@ public class SuntimesTheme
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_DISPLAYSTRING);
 
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_BACKGROUND);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_BACKGROUND_COLOR);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_PADDING_LEFT);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_PADDING_TOP);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_PADDING_RIGHT);
@@ -359,15 +498,37 @@ public class SuntimesTheme
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_SETICON_STROKE_COLOR);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_SETICON_STROKE_WIDTH);
 
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_MOONRISECOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_MOONSETCOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_MOONWANINGCOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_MOONNEWCOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_MOONWAXINGCOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_MOONFULLCOLOR);
+
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_MOONFULL_STROKE_WIDTH);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_MOONNEW_STROKE_WIDTH);
+
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_DAYCOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_CIVILCOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_NAUTICALCOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_ASTROCOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_NIGHTCOLOR);
+
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_SPRINGCOLOR);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_SUMMERCOLOR);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_FALLCOLOR);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_WINTERCOLOR);
 
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_MAP_BACKGROUNDCOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_MAP_FOREGROUNDCOLOR);
+
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_TITLESIZE);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_TEXTSIZE);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_TIMESIZE);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_TIMESUFFIXSIZE);
+
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_TITLEBOLD);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_TIMEBOLD);
 
         themePrefs.apply();
     }
@@ -406,6 +567,11 @@ public class SuntimesTheme
         return themeTitleColor;
     }
 
+    public boolean getTitleBold()
+    {
+        return themeTitleBold;
+    }
+
     public int getTextColor()
     {
         return themeTextColor;
@@ -414,6 +580,11 @@ public class SuntimesTheme
     public int getTimeColor()
     {
         return themeTimeColor;
+    }
+
+    public boolean getTimeBold()
+    {
+        return themeTimeBold;
     }
 
     public int getTimeSuffixColor()
@@ -483,6 +654,36 @@ public class SuntimesTheme
         return themeNoonIconStrokePixels;
     }
 
+    public int getMoonWaningColor()
+    {
+        return themeMoonWaningColor;
+    }
+
+    public int getMoonNewColor()
+    {
+        return themeMoonNewColor;
+    }
+
+    public int getMoonWaxingColor()
+    {
+        return themeMoonWaxingColor;
+    }
+
+    public int getMoonFullColor()
+    {
+        return themeMoonFullColor;
+    }
+
+    public int getMoonriseTextColor()
+    {
+        return themeMoonriseTextColor;
+    }
+
+    public int getMoonsetTextColor()
+    {
+        return themeMoonsetTextColor;
+    }
+
     public int getSunsetTextColor()
     {
         return themeSunsetTextColor;
@@ -512,6 +713,53 @@ public class SuntimesTheme
             themeSunsetIconStrokePixels = (int)((metrics.density * getSunsetIconStrokeWidth()) + 0.5f);
         //}
         return themeSunsetIconStrokePixels;
+    }
+
+    public int getMoonFullStroke()
+    {
+        return (themeMoonFullStroke < THEME_MOON_STROKE_MIN) ? (int)THEME_MOON_STROKE_DEF :
+                (themeMoonFullStroke > THEME_MOON_STROKE_MAX) ? (int)THEME_MOON_STROKE_MAX : themeMoonFullStroke;
+    }
+
+    public int getMoonFullStrokePixels(Context context)
+    {
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        themeMoonFullStrokePixels = (int)((metrics.density * getMoonFullStroke()) + 0.5f);
+        return themeMoonFullStrokePixels;
+    }
+
+    public int getMoonNewStroke()
+    {
+        return (themeMoonNewStroke < THEME_MOON_STROKE_MIN) ? (int)THEME_MOON_STROKE_DEF :
+                (themeMoonNewStroke > THEME_MOON_STROKE_MAX) ? (int)THEME_MOON_STROKE_MAX : themeMoonNewStroke;
+    }
+
+    public int getMoonNewStrokePixels(Context context)
+    {
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        themeMoonNewStrokePixels = (int)((metrics.density * getMoonNewStroke()) + 0.5f);
+        return themeMoonNewStrokePixels;
+    }
+
+    public int getDayColor()
+    {
+        return themeDayColor;
+    }
+    public int getCivilColor()
+    {
+        return themeCivilColor;
+    }
+    public int getNauticalColor()
+    {
+        return themeNauticalColor;
+    }
+    public int getAstroColor()
+    {
+        return themeAstroColor;
+    }
+    public int getNightColor()
+    {
+        return themeNightColor;
     }
 
     public int getSpringColor()
@@ -546,6 +794,26 @@ public class SuntimesTheme
         }
     }
 
+    public int getMapBackgroundColor()
+    {
+        return themeMapBackgroundColor;
+    }
+
+    public int getMapForegroundColor()
+    {
+        return themeMapForegroundColor;
+    }
+
+    public int getMapShadowColor()
+    {
+        return themeMapShadowColor;
+    }
+
+    public int getMapHighlightColor()
+    {
+        return themeMapHighlightColor;
+    }
+
     public float getTitleSizeSp()
     {
         return (themeTitleSize < THEME_TITLESIZE_MIN) ? THEME_TITLESIZE_DEF :
@@ -570,9 +838,14 @@ public class SuntimesTheme
                 (themeTimeSuffixSize > THEME_TIMESUFFIXSIZE_MAX) ? THEME_TIMESUFFIXSIZE_MAX : themeTimeSuffixSize;
     }
 
-    public int getBackgroundId()
+    public ThemeBackground getBackground()
     {
         return themeBackground;
+    }
+
+    public int getBackgroundColor()
+    {
+        return themeBackgroundColor;
     }
 
     public int[] getPadding()
@@ -618,6 +891,7 @@ public class SuntimesTheme
         private final String name;
         private String displayString;
         private final int version;
+        private final boolean isDefault;
 
         public ThemeDescriptor(String name, Context context, String themesPrefix)
         {
@@ -629,11 +903,13 @@ public class SuntimesTheme
                 this.name = name;
                 this.displayString = themesPref.getString(themePrefix + THEME_DISPLAYSTRING, "");
                 this.version = themesPref.getInt(themePrefix + THEME_VERSION, -1);
+                this.isDefault = themesPref.getBoolean(themePrefix + THEME_ISDEFAULT, false);
 
             } else {
                 this.name = "";
                 this.displayString = "";
                 this.version = -1;
+                this.isDefault = false;
             }
         }
 
@@ -642,6 +918,7 @@ public class SuntimesTheme
             this.name = name;
             this.displayString = displayString;
             this.version = version;
+            this.isDefault = false;
         }
 
         public boolean isValid()
@@ -671,6 +948,11 @@ public class SuntimesTheme
 
         public int version() {
             return version;
+        }
+
+        public boolean isDefault()
+        {
+            return isDefault;
         }
 
         public int ordinal(ThemeDescriptor[] values)

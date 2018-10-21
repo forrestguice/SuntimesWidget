@@ -2,6 +2,12 @@
 <!-- values\table_res.xml :: typical sized phone (width <= 320dp) -->
 <resources>
 
+    <integer name="clock_amppm_maxems">2</integer>
+    <dimen name="clock_note_maxwidth">125dp</dimen>
+
+    <dimen name="solsticetable_column0_width">130dp</dimen>
+    <dimen name="moonphase_column0_width">75dp</dimen>
+
     <dimen name="table_cell_spacing">10dp</dimen>     <!-- spacing between rows -->
     <integer name="table_weight0">9</integer>
     <integer name="table_weight1">1</integer>
@@ -12,6 +18,8 @@
     <dimen name="table_set_leftMargin">28dp</dimen>  <!-- margins: set column -->
     <dimen name="table_set_rightMargin">0dp</dimen>
 
+    <dimen name="table_moon_startEndMargin">6dp</dimen>
+
     <!-- table heading: date field (col 0) -->
     <dimen name="table_heading_date_fontsize">14sp</dimen>
     <integer name="table_heading_date_maxems">7</integer>
@@ -19,7 +27,7 @@
     <integer name="table_heading_date_maxlines">2</integer>
 
     <style name="TableHeadDateView">                                     <!-- date header text -->
-        <item name="android:textColor">@drawable/btn_datetxt</item>
+        <item name="android:textColor">?attr/date_buttonSelector</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/table_heading_date_fontsize</item>
         <item name="android:ellipsize">end</item>

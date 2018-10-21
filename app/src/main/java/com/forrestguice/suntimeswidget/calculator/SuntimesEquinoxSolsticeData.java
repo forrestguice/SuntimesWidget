@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -33,6 +33,11 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
         this.context = context;
         initFromSettings(context, appWidgetId);
     }
+    public SuntimesEquinoxSolsticeData(Context context, int appWidgetId, String calculatorName)
+    {
+        this.context = context;
+        initFromSettings(context, appWidgetId, calculatorName);
+    }
     public SuntimesEquinoxSolsticeData(SuntimesEquinoxSolsticeData other)
     {
         this.context = other.context;
@@ -64,13 +69,13 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
 
     /**
      * init from shared preferences
-     * @param context
-     * @param appWidgetId
+     * @param context a context used to access shared prefs
+     * @param appWidgetId the widgetID to load settings from (0 for app)
      */
     @Override
-    public void initFromSettings(Context context, int appWidgetId)
+    public void initFromSettings(Context context, int appWidgetId, String calculatorName)
     {
-        super.initFromSettings(context, appWidgetId);
+        super.initFromSettings(context, appWidgetId, calculatorName);
         timeMode = WidgetSettings.loadTimeMode2Pref(context, appWidgetId);
     }
 
@@ -134,6 +139,11 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
         return eventCalendarOtherYear;
     }
 
+    public void initCalculator()
+    {
+        initCalculator(context);
+    }
+    
     public void calculate()
     {
         //Log.v("SuntimesWidgetData", "time mode: " + timeMode);
@@ -143,8 +153,7 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
         //Log.v("SuntimesWidgetData", "timezone_mode: " + timezoneMode.name());
         //Log.v("SuntimesWidgetData", "timezone: " + timezone);
 
-        SuntimesCalculatorFactory calculatorFactory = new SuntimesCalculatorFactory(context, calculatorMode);
-        SuntimesCalculator calculator = calculatorFactory.createCalculator(location, timezone);
+        initCalculator(context);
 
         todaysCalendar = Calendar.getInstance(timezone);
         otherCalendar = Calendar.getInstance(timezone);

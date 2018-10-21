@@ -173,14 +173,35 @@
                                   android:hint="@string/configHint_location_lon" android:enabled="false" />
                     </LinearLayout>
 
+                    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView android:labelFor="@+id/appwidget_location_alt"
+                            android:id="@+id/appwidget_location_alt_label"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:layout_gravity="end|center_vertical"
+                            android:text="@string/configLabel_location_alt" android:enabled="false" />
+
+                        <EditText android:id="@+id/appwidget_location_alt"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_vertical"
+                            android:inputType="numberDecimal|numberSigned" android:minEms="2"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:hint="@string/configHint_location_alt" android:enabled="false" />
+
+                        <TextView android:id="@+id/appwidget_location_alt_units"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/units_meters" android:enabled="false" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <View
                     android:id="@+id/appwidget_location_latlon_overlay"
                     android:layout_width="50dp" android:layout_height="50dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_alignLeft="@id/appwidget_location_latlon"
-                    android:layout_alignRight="@id/appwidget_location_latlon"
+                    android:layout_alignLeft="@id/appwidget_location_latlon" android:layout_alignStart="@id/appwidget_location_latlon"
+                    android:layout_alignRight="@id/appwidget_location_latlon" android:layout_alignEnd="@id/appwidget_location_latlon"
                     android:layout_alignBottom="@id/appwidget_location_latlon"
                     android:layout_alignTop="@id/appwidget_location_latlon"/>
 

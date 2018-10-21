@@ -42,7 +42,7 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 
 /**
- * Automated UI tests for the LocationDialog.
+ * Automated UI tests for the LocationConfigDialog.
  */
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -134,14 +134,26 @@ public class LocationDialogTest extends SuntimesActivityTestBase
 
     public static void showLocationDialog()
     {
+        showLocationDialog(true);
+    }
+    public static void showLocationDialog(boolean verify)
+    {
         onView(withId(R.id.action_location_add)).perform(click());   // show dialog from actionbar
-        verifyLocationDialog();
+        if (verify) {
+            verifyLocationDialog();
+        }
     }
 
     public static void editLocationDialog()
     {
+        editLocationDialog(true);
+    }
+    public static void editLocationDialog(boolean verify)
+    {
         onView(withId(R.id.appwidget_location_edit)).perform(click());   // click edit
-        verifyLocationDialogState_edit();                                // verify edit state
+        if (verify) {
+            verifyLocationDialogState_edit();                                // verify edit state
+        }
     }
 
     public static void saveLocationDialog()

@@ -4,10 +4,10 @@
 
     <shape android:shape="oval">
         <size android:width="@dimen/sunIcon_width" android:height="@dimen/sunIcon_height" />
-        <solid android:color="@color/sunIcon_color_rising" />
+        <solid android:color="@color/sunIcon_color_rising_dark" />
 
         <stroke android:width="@dimen/sunIcon_width_risingBorder"
-                android:color="@color/sunIcon_color_risingBorder" />
+                android:color="@color/sunIcon_color_risingBorder_dark" />
 
     </shape>
 </inset>

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -51,6 +51,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import java.util.TimeZone;
 
+@SuppressWarnings("Convert2Diamond")
 public class TimeZoneDialog extends DialogFragment
 {
     public static final String KEY_TIMEZONE_MODE = "timezoneMode";
@@ -187,21 +188,7 @@ public class TimeZoneDialog extends DialogFragment
 
         spinner_timezoneMode = (Spinner) dialogContent.findViewById(R.id.appwidget_timezone_mode);
         spinner_timezoneMode.setAdapter(spinner_timezoneModeAdapter);
-        spinner_timezoneMode.setOnItemSelectedListener(new Spinner.OnItemSelectedListener()
-                                                       {
-                                                           public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-                                                           {
-                                                               final WidgetSettings.TimezoneMode[] timezoneModes = WidgetSettings.TimezoneMode.values();
-                                                               WidgetSettings.TimezoneMode timezoneMode = timezoneModes[parent.getSelectedItemPosition()];
-                                                               setUseCustomTimezone((timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE));
-                                                               setUseSolarTime((timezoneMode == WidgetSettings.TimezoneMode.SOLAR_TIME));
-                                                           }
-
-                                                           public void onNothingSelected(AdapterView<?> parent)
-                                                           {
-                                                           }
-                                                       }
-        );
+        spinner_timezoneMode.setOnItemSelectedListener(onTimeZoneModeSelected);
 
         View spinner_timezone_empty = dialogContent.findViewById(R.id.appwidget_timezone_custom_empty);
         label_timezone = (TextView) dialogContent.findViewById(R.id.appwidget_timezone_custom_label);
@@ -243,6 +230,20 @@ public class TimeZoneDialog extends DialogFragment
         spinner_solartime = (Spinner) dialogContent.findViewById(R.id.appwidget_solartime);
         spinner_solartime.setAdapter(spinner_solartimeAdapter);
     }
+
+    private Spinner.OnItemSelectedListener onTimeZoneModeSelected = new Spinner.OnItemSelectedListener()
+    {
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+        {
+            final WidgetSettings.TimezoneMode[] timezoneModes = WidgetSettings.TimezoneMode.values();
+            WidgetSettings.TimezoneMode timezoneMode = timezoneModes[parent.getSelectedItemPosition()];
+            setUseCustomTimezone((timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE));
+            setUseSolarTime((timezoneMode == WidgetSettings.TimezoneMode.SOLAR_TIME));
+            SuntimesUtils.announceForAccessibility(spinner_timezoneMode, timezoneMode.getDisplayString());
+        }
+
+        public void onNothingSelected(AdapterView<?> parent) {}
+    };
 
     private void setUseSolarTime( boolean value )
     {

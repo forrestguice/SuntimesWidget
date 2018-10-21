@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -18,22 +18,33 @@
 
 package com.forrestguice.suntimeswidget.themes;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.app.WallpaperManager;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 
+import android.content.SharedPreferences;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
 
+import android.text.SpannableStringBuilder;
+import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -43,11 +54,15 @@ import android.widget.AdapterView;
 
 import android.widget.GridView;
 
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.forrestguice.suntimeswidget.AboutDialog;
 import com.forrestguice.suntimeswidget.ExportTask;
+import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.SuntimesWidget0;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -61,8 +76,16 @@ import static com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity.E
 
 public class WidgetThemeListActivity extends AppCompatActivity
 {
+    public static final String DIALOGTAG_ABOUT = "about";
+    private static final String DIALOGTAG_HELP = "help";
+
+    public static final int WALLPAPER_DELAY = 1000;
+
     public static final int PICK_THEME_REQUEST = 1;
     public static final String ADAPTER_MODIFIED = "isModified";
+
+    public static final String PARAM_SELECTED = "selected";
+    public static final String PARAM_NOSELECT = "noselect";
 
     private boolean adapterModified = false;
     private GridView gridView;
@@ -76,9 +99,21 @@ public class WidgetThemeListActivity extends AppCompatActivity
     private ExportThemesTask exportTask = null;
     private boolean isExporting = false;
 
+    private int previewID = 0;
+    private boolean disallowSelect = false;
+    private String preselectedTheme;
+    private boolean useWallpaper = false;
+
     public WidgetThemeListActivity()
     {
         super();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase)
+    {
+        Context context = AppSettings.initLocale(newBase);
+        super.attachBaseContext(context);
     }
 
     @Override
@@ -88,17 +123,28 @@ public class WidgetThemeListActivity extends AppCompatActivity
         super.onCreate(icicle);
         initLocale();
         setResult(RESULT_CANCELED);
-        setContentView(R.layout.layout_themelist);
+        setContentView(R.layout.layout_activity_themelist);
 
-        /**Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-        if (extras != null)
-        {
-        }*/
+        Intent intent = getIntent();
+        previewID = intent.getIntExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, previewID);
+        disallowSelect = intent.getBooleanExtra(PARAM_NOSELECT, disallowSelect);
+        preselectedTheme = intent.getStringExtra(PARAM_SELECTED);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        useWallpaper = prefs.getBoolean(WidgetThemeConfigActivity.PARAM_WALLPAPER, useWallpaper);
+        useWallpaper = intent.getBooleanExtra(WidgetThemeConfigActivity.PARAM_WALLPAPER, useWallpaper);
 
         WidgetThemes.initThemes(this);
         initData(this);
         initViews(this);
+
+        if (preselectedTheme != null && !preselectedTheme.trim().isEmpty())
+        {
+            int i = adapter.ordinal(preselectedTheme);
+            SuntimesTheme.ThemeDescriptor theme = (SuntimesTheme.ThemeDescriptor) adapter.getItem(i);
+            triggerActionMode(null, theme);
+            gridView.setSelection(i);
+        }
     }
 
     private SuntimesRiseSetData data;
@@ -108,11 +154,15 @@ public class WidgetThemeListActivity extends AppCompatActivity
         data.setCompareMode(WidgetSettings.CompareMode.TOMORROW);
         data.setTimeMode(WidgetSettings.TimeMode.OFFICIAL);
         data.calculate();
+
+        SuntimesRiseSetData noonData = new SuntimesRiseSetData(data);
+        noonData.setTimeMode(WidgetSettings.TimeMode.NOON);
+        noonData.calculate();
+        data.linkData(noonData);
     }
 
     private void initLocale()
     {
-        AppSettings.initLocale(this);
         WidgetSettings.initDefaults(this);
         WidgetSettings.initDisplayStrings(this);
     }
@@ -120,9 +170,23 @@ public class WidgetThemeListActivity extends AppCompatActivity
     protected void initViews( Context context )
     {
         initActionBar(context);
+        themeActions = new WidgetThemeActionCompat(context);
+
         gridView = (GridView)findViewById(R.id.themegrid);
         initThemeAdapter(context);
-        themeActions = new WidgetThemeActionCompat(context);
+
+        View bottomBanner = findViewById(R.id.themegrid_bottom);
+        if (bottomBanner != null)
+        {
+            bottomBanner.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    toggleWallpaper();
+                }
+            });
+        }
     }
 
     protected void initActionBar( Context context )
@@ -141,8 +205,8 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
     protected void initThemeAdapter(Context context)
     {
-        adapter = new WidgetThemes.ThemeGridAdapter(context, WidgetThemes.values());
-        adapter.setRiseSet(data.sunriseCalendarToday(), data.sunsetCalendarToday());
+        adapter = new WidgetThemes.ThemeGridAdapter(context, WidgetThemes.sortedValues(true));
+        adapter.setRiseSet(data.sunriseCalendarToday(), data.sunsetCalendarToday(), data.getLinked().sunriseCalendarToday());
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
@@ -190,6 +254,11 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
         Intent intent = new Intent(this, WidgetThemeConfigActivity.class);
         intent.putExtra(WidgetThemeConfigActivity.PARAM_MODE, WidgetThemeConfigActivity.UIMode.ADD_THEME);
+        intent.putExtra(WidgetThemeConfigActivity.PARAM_WALLPAPER, useWallpaper);
+        if (previewID >= 0)
+        {
+            intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, previewID);
+        }
         startActivityForResult(intent, ADD_THEME_REQUEST);
     }
 
@@ -202,7 +271,11 @@ public class WidgetThemeListActivity extends AppCompatActivity
         } else {
             Intent intent = new Intent(this, WidgetThemeConfigActivity.class);
             intent.putExtra(WidgetThemeConfigActivity.PARAM_MODE, WidgetThemeConfigActivity.UIMode.EDIT_THEME);
+            intent.putExtra(WidgetThemeConfigActivity.PARAM_WALLPAPER, useWallpaper);
             intent.putExtra(SuntimesTheme.THEME_NAME, theme.themeName());
+            if (previewID >= 0) {
+                intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, previewID);
+            }
             startActivityForResult(intent, EDIT_THEME_REQUEST);
         }
     }
@@ -211,7 +284,11 @@ public class WidgetThemeListActivity extends AppCompatActivity
     {
         Intent intent = new Intent(this, WidgetThemeConfigActivity.class);
         intent.putExtra(WidgetThemeConfigActivity.PARAM_MODE, WidgetThemeConfigActivity.UIMode.ADD_THEME);
+        intent.putExtra(WidgetThemeConfigActivity.PARAM_WALLPAPER, useWallpaper);
         intent.putExtra(SuntimesTheme.THEME_NAME, theme.themeName());
+        if (previewID >= 0) {
+            intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, previewID);
+        }
         startActivityForResult(intent, ADD_THEME_REQUEST);
     }
 
@@ -285,21 +362,31 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
             if (results.getResult())
             {
-                String successMessage = getString(R.string.msg_export_success, results.getExportFile().getAbsolutePath());
-                Toast.makeText(getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
-
                 Intent shareIntent = new Intent();
                 shareIntent.setAction(Intent.ACTION_SEND);
-                shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(results.getExportFile()));
                 shareIntent.setType("text/plain");
-                startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.msg_export_to)));
+                shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-            } else {
-                File file = results.getExportFile();
-                String path = ((file != null) ? file.getAbsolutePath() : "<path>");
-                String failureMessage = getString(R.string.msg_export_failure, path);
-                Toast.makeText(getApplicationContext(), failureMessage, Toast.LENGTH_LONG).show();
+                try {
+                    //Uri shareURI = Uri.fromFile(results.getExportFile());  // this URI works until api26 (throws FileUriExposedException)
+                    Uri shareURI = FileProvider.getUriForFile(WidgetThemeListActivity.this, "com.forrestguice.suntimeswidget.fileprovider", results.getExportFile());
+                    shareIntent.putExtra(Intent.EXTRA_STREAM, shareURI);
+
+                    String successMessage = getString(R.string.msg_export_success, results.getExportFile().getAbsolutePath());
+                    Toast.makeText(getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
+
+                    startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.msg_export_to)));
+                    return;     // successful export ends here...
+
+                } catch (Exception e) {
+                    Log.e("ExportThemes", "Failed to share file URI! " + e);
+                }
             }
+
+            File file = results.getExportFile();   // export failed
+            String path = ((file != null) ? file.getAbsolutePath() : "<path>");
+            String failureMessage = getString(R.string.msg_export_failure, path);
+            Toast.makeText(getApplicationContext(), failureMessage, Toast.LENGTH_LONG).show();
         }
     };
 
@@ -319,10 +406,10 @@ public class WidgetThemeListActivity extends AppCompatActivity
     /**
      * @param context a context used to access resources
      */
-    private void importThemes( Context context )
+    /**private void importThemes( Context context )
     {
         // TODO
-    }
+    }*/
 
     @Override
     public void onBackPressed()
@@ -356,6 +443,14 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
             case R.id.exportThemes:
                 exportThemes(this);
+                return true;
+
+            case R.id.action_help:
+                showHelp();
+                return true;
+
+            case R.id.action_about:
+                showAbout();
                 return true;
 
             case android.R.id.home:
@@ -403,6 +498,9 @@ public class WidgetThemeListActivity extends AppCompatActivity
         {
             SuntimesUtils.forceActionBarIcons(menu);
 
+            MenuItem selectItem = menu.findItem(R.id.selectTheme);
+            selectItem.setVisible( !disallowSelect );
+
             MenuItem deleteItem = menu.findItem(R.id.deleteTheme);
             deleteItem.setVisible( !theme.isDefault() );  // not allowed to delete default
 
@@ -415,28 +513,32 @@ public class WidgetThemeListActivity extends AppCompatActivity
         @Override
         public boolean onActionItemClicked(android.support.v7.view.ActionMode mode, MenuItem item)
         {
-            mode.finish();
             if (theme != null)
             {
                 switch (item.getItemId())
                 {
                     case R.id.selectTheme:
+                        mode.finish();
                         selectTheme(theme);
                         return true;
 
                     case R.id.editTheme:
                         editTheme(theme);
+                        //mode.finish();    // TODO: is it OK to startActivity w/out finishing ActionMode? the transition looks better this way.
                         return true;
 
                     case R.id.copyTheme:
                         copyTheme(theme);
+                        //mode.finish();    // TODO: is it OK to startActivity w/out finishing ActionMode? the transition looks better this way.
                         return true;
 
                     case R.id.deleteTheme:
                         deleteTheme(theme);
+                        mode.finish();
                         return true;
                 }
             }
+            mode.finish();
             return false;
         }
     }
@@ -472,8 +574,12 @@ public class WidgetThemeListActivity extends AppCompatActivity
             if (data != null)
             {
                 String themeName = data.getStringExtra(SuntimesTheme.THEME_NAME);
-                SuntimesTheme.ThemeDescriptor theme = (SuntimesTheme.ThemeDescriptor) adapter.getItem(adapter.ordinal(themeName));
+                int i = adapter.ordinal(themeName);
+
+                SuntimesTheme.ThemeDescriptor theme = (SuntimesTheme.ThemeDescriptor) adapter.getItem(i);
                 triggerActionMode(null, theme);
+                gridView.setSelection(i);
+
                 Toast.makeText(this, getString(R.string.addtheme_toast_success, themeName), Toast.LENGTH_LONG).show();
             }
         }
@@ -489,12 +595,25 @@ public class WidgetThemeListActivity extends AppCompatActivity
             if (data != null)
             {
                 String themeName = data.getStringExtra(SuntimesTheme.THEME_NAME);
-                SuntimesTheme.ThemeDescriptor theme = (SuntimesTheme.ThemeDescriptor) adapter.getItem(adapter.ordinal(themeName));
+                int i = adapter.ordinal(themeName);
+
+                SuntimesTheme.ThemeDescriptor theme = (SuntimesTheme.ThemeDescriptor) adapter.getItem(i);
                 theme.updateDescriptor(this, WidgetThemes.PREFS_THEMES);
                 triggerActionMode(null, theme);
+                gridView.setSelection(i);
+
                 Toast.makeText(this, getString(R.string.edittheme_toast_success, themeName), Toast.LENGTH_LONG).show();
+                updateWidgetsMatchingTheme(this, themeName);
             }
         }
+    }
+
+    public static void updateWidgetsMatchingTheme(Context context, String themeName)
+    {
+        Intent updateIntent = new Intent();
+        updateIntent.setAction(SuntimesWidget0.SUNTIMES_THEME_UPDATE);
+        updateIntent.putExtra(SuntimesWidget0.KEY_THEME, themeName);
+        context.sendBroadcast(updateIntent);
     }
 
     @Override
@@ -513,6 +632,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
     public void onSaveInstanceState( Bundle outState )
     {
         super.onSaveInstanceState(outState);
+
         if (selected != null)
         {
             outState.putString(SuntimesTheme.THEME_NAME, selected.name());
@@ -523,11 +643,14 @@ public class WidgetThemeListActivity extends AppCompatActivity
     public void onRestoreInstanceState(@NonNull Bundle savedState)
     {
         super.onRestoreInstanceState(savedState);
+
         String themeName = savedState.getString(SuntimesTheme.THEME_NAME);
         if (themeName != null)
         {
-            SuntimesTheme.ThemeDescriptor theme = (SuntimesTheme.ThemeDescriptor) adapter.getItem(adapter.ordinal(themeName));
+            int i = adapter.ordinal(themeName);
+            SuntimesTheme.ThemeDescriptor theme = (SuntimesTheme.ThemeDescriptor) adapter.getItem(i);
             triggerActionMode(null, theme);
+            gridView.setSelection(i);
         }
     }
 
@@ -535,6 +658,10 @@ public class WidgetThemeListActivity extends AppCompatActivity
     public void onResume()
     {
         super.onResume();
+        if (useWallpaper)
+        {
+            initWallpaper(false);
+        }
         if (isExporting && exportTask != null)
         {
             exportTask.setDescriptors(WidgetThemes.values());
@@ -542,6 +669,97 @@ public class WidgetThemeListActivity extends AppCompatActivity
             showExportProgress();
             exportTask.resumeTask();
         }
+    }
+
+    /**
+     * Set activity background to match home screen wallpaper.
+     */
+    protected void initWallpaper(boolean animate)
+    {
+        WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
+        if (wallpaperManager != null)
+        {
+            ImageView background = (ImageView)findViewById(R.id.themegrid_background);
+            Drawable wallpaper = wallpaperManager.getDrawable();
+            if (background != null && wallpaper != null)
+            {
+                background.setImageDrawable(wallpaper);
+                background.setVisibility(View.VISIBLE);
+
+                if (animate && (Build.VERSION.SDK_INT >= 12))
+                {
+                    background.animate().alpha(1f).setDuration(WALLPAPER_DELAY);
+
+                } else if (Build.VERSION.SDK_INT >= 11) {
+                    background.setAlpha(1f);
+                }
+            }
+        }
+    }
+
+    protected void hideWallpaper()
+    {
+        ImageView background = (ImageView)findViewById(R.id.themegrid_background);
+        if (background != null)
+        {
+            if (Build.VERSION.SDK_INT >= 12)
+            {
+                background.animate().alpha(0f).setDuration(WALLPAPER_DELAY);
+
+            } else if (Build.VERSION.SDK_INT >= 11) {
+                background.setAlpha(0f);
+
+            } else {
+                background.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    protected void toggleWallpaper()
+    {
+        useWallpaper = !useWallpaper;
+
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(this).edit();
+        prefs.putBoolean(WidgetThemeConfigActivity.PARAM_WALLPAPER, useWallpaper);
+        prefs.apply();
+
+        if (useWallpaper)
+            initWallpaper(true);
+        else hideWallpaper();
+    }
+
+    @SuppressLint("ResourceType")
+    protected void showHelp()
+    {
+        int iconSize = 32;
+        int[] iconAttrs = { R.attr.icActionNew, R.attr.icActionCopy, R.attr.icActionEdit, R.attr.icActionDelete, R.attr.icActionSettings };
+        TypedArray typedArray = obtainStyledAttributes(iconAttrs);
+        ImageSpan addIcon = SuntimesUtils.createImageSpan(this, typedArray.getResourceId(0, R.drawable.ic_action_new), iconSize, iconSize, 0);
+        ImageSpan copyIcon = SuntimesUtils.createImageSpan(this, typedArray.getResourceId(1, R.drawable.ic_action_copy), iconSize, iconSize, 0);
+        ImageSpan editIcon = SuntimesUtils.createImageSpan(this, typedArray.getResourceId(2, R.drawable.ic_action_edit), iconSize, iconSize, 0);
+        ImageSpan deleteIcon = SuntimesUtils.createImageSpan(this, typedArray.getResourceId(3, R.drawable.ic_action_discard), iconSize, iconSize, 0);
+        ImageSpan defaultIcon = SuntimesUtils.createImageSpan(this, typedArray.getResourceId(4, R.drawable.ic_action_settings), iconSize, iconSize, 0);
+        typedArray.recycle();
+
+        SuntimesUtils.ImageSpanTag[] helpTags = {
+                new SuntimesUtils.ImageSpanTag("[Icon Add]", addIcon),
+                new SuntimesUtils.ImageSpanTag("[Icon Copy]", copyIcon),
+                new SuntimesUtils.ImageSpanTag("[Icon Edit]", editIcon),
+                new SuntimesUtils.ImageSpanTag("[Icon Delete]", deleteIcon),
+                new SuntimesUtils.ImageSpanTag("[Icon Default]", defaultIcon)
+        };
+        String helpString = getString(R.string.help_themelist);
+        SpannableStringBuilder helpSpan = SuntimesUtils.createSpan(this, helpString, helpTags);
+
+        HelpDialog helpDialog = new HelpDialog();
+        helpDialog.setContent(helpSpan);
+        helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
+    }
+
+    protected void showAbout()
+    {
+        AboutDialog aboutDialog = new AboutDialog();
+        aboutDialog.show(getSupportFragmentManager(), DIALOGTAG_ABOUT);
     }
 
     @SuppressWarnings("RestrictedApi")

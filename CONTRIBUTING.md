@@ -1,22 +1,20 @@
-#Contributing
+# Contributing
 
-1. [Submit a bug report / feature request](#bugReport)
-2. [Add a translation](#addTranslation)
-3. [Add a default location](#addDefaultLocation)
-4. [Add a "data source"](#addDataSource)
+1. [Submit a bug report / feature request](#submit-a-bug-report-or-feature-request)
+2. [Add a translation](#add-a-translation)
+3. [Add a default location](#add-a-default-location)
+4. [Add a "data source"](#add-a-data-source)
 5. [Other](#other)
 
-##Submit a Bug Report or Feature Request
+## Submit a Bug Report or Feature Request
 <a name="bugReport" />
 Use the issue tracker to submit a bug report or a feature request.
 
-Issues will be tagged **bug**, **feature**, or **enhancement** as they are recognized, and later added to specific **milestones** as they are fixed.
+Issues will be tagged **bug**, **feature**, or **enhancement** as they are recognized, and later added to specific **milestones** as they are fixed or completed.
 
-When submitting a bug **please be detailed and specific**. What did you expect the app to do, what did you actually observe? Bugs that can't be reproduced won't get fixed. If reporting inaccurate times include the lat/lon, timezone, and the date. Other useful information includes Android OS version and your specific device model.
+When submitting a bug **please be detailed and specific**. What did you expect the app to do, what did you actually observe? Bugs that can't be reproduced won't get fixed. Useful information includes Android OS version and your specific device model.
 
-Note: in this context "enhancements" are easy additions/modifications that will bump the minor or patch version, while "features" are larger changes that will bump the major version number.
-
-##Add a Translation 
+## Add a Translation 
 <a name="addTranslation" />
 
 **To add a new translation first..**
@@ -45,7 +43,7 @@ Note: in this context "enhancements" are easy additions/modifications that will 
  
  6. Submit a pull request.
 
-##Add a default location
+## Add a default location
 <a name="addDefaultLocation" />
 
 1. Follow the guidelines for adding a new translation, except only shadowing a small subset of values.
@@ -59,10 +57,10 @@ Note: in this context "enhancements" are easy additions/modifications that will 
 note: The lat/lon should use `.` as the decimal separator and include 4 decimal places.
 
 
-##Add a "data source"
+## Add a data source
 <a name="addDataSource" />
 The app uses an interface (`suntimeswidget.calculator.SuntimesCalculator`) to perform the actual calculations (the default implementation uses `sunrisesunsetlib-java`). TODO: describe how to add alternative implementations.
 
-##Other
+## Other
 <a name="other" />
 Use the issue tracker to start a discussion and get started. Your participation in the project in other ways is also welcome.

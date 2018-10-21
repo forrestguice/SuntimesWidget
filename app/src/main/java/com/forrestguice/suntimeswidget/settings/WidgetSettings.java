@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -26,10 +26,20 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_0;
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_1;
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_1x1_2;
+import com.forrestguice.suntimeswidget.layouts.MoonLayout;
+import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_0;
+import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_1;
+import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_2;
+import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_3;
+import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_4;
+import com.forrestguice.suntimeswidget.layouts.SunLayout;
+import com.forrestguice.suntimeswidget.layouts.SunLayout_1x1_0;
+import com.forrestguice.suntimeswidget.layouts.SunLayout_1x1_1;
+import com.forrestguice.suntimeswidget.layouts.SunLayout_1x1_2;
+import com.forrestguice.suntimeswidget.layouts.SunPosLayout;
+import com.forrestguice.suntimeswidget.layouts.SunPosLayout_1X1_0;
+import com.forrestguice.suntimeswidget.layouts.SunPosLayout_1X1_1;
+
 import com.forrestguice.suntimeswidget.themes.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
@@ -55,7 +65,10 @@ public class WidgetSettings
     public static final String PREF_PREFIX_KEY_ACTION = "_action_";
 
     public static final String PREF_KEY_GENERAL_CALCULATOR = "calculator";
-    public static final String PREF_DEF_GENERAL_CALCULATOR = "time4a-noaa";
+    public static final String PREF_DEF_GENERAL_CALCULATOR = "time4a-time4j";
+    public static final String PREF_DEF_GENERAL_CALCULATOR_MOON = "time4a-time4j";
+    public static final String[][] PREF_DEF_GENERAL_CALCULATORS = new String[][] { new String[] {"",     PREF_DEF_GENERAL_CALCULATOR},
+                                                                                   new String[] {"moon", PREF_DEF_GENERAL_CALCULATOR_MOON} };
 
     public static final String PREF_KEY_APPEARANCE_THEME = "theme";
     public static final String PREF_DEF_APPEARANCE_THEME = DarkTheme.THEMEDEF_NAME;
@@ -66,8 +79,17 @@ public class WidgetSettings
     public static final String PREF_KEY_APPEARANCE_TITLETEXT = "titletext";
     public static final String PREF_DEF_APPEARANCE_TITLETEXT = "";
 
-    public static final String PREF_KEY_APPEARANCE_WIDGETMODE_1x1 = "widgetmode_1x1";
-    public static final WidgetMode1x1 PREF_DEF_APPEARANCE_WIDGETMODE_1x1 = WidgetMode1x1.WIDGETMODE1x1_BOTH_1;
+    public static final String PREF_KEY_APPEARANCE_SHOWLABELS = "showlabels";
+    public static final boolean PREF_DEF_APPEARANCE_SHOWLABELS = true;
+
+    public static final String PREF_KEY_APPEARANCE_WIDGETMODE_SUN1x1 = "widgetmode_1x1";
+    public static final WidgetModeSun1x1 PREF_DEF_APPEARANCE_WIDGETMODE_SUN1x1 = WidgetModeSun1x1.WIDGETMODE1x1_BOTH_1;
+
+    public static final String PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS1x1 = "widgetmode_sunpos1x1";
+    public static final WidgetModeSunPos1x1 PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOS1x1 = WidgetModeSunPos1x1.MODE1x1_ALTAZ;
+
+    public static final String PREF_KEY_APPEARANCE_WIDGETMODE_MOON1x1 = "widgetmode_moon1x1";
+    public static final WidgetModeMoon1x1 PREF_DEF_APPEARANCE_WIDGETMODE_MOON1x1 = WidgetModeMoon1x1.MODE1x1_RISESET;
 
     public static final String PREF_KEY_APPEARANCE_ALLOWRESIZE = "allowresize";
     public static final boolean PREF_DEF_APPEARANCE_ALLOWRESIZE = true;
@@ -83,6 +105,9 @@ public class WidgetSettings
 
     public static final String PREF_KEY_GENERAL_TIMEMODE2_OVERRIDE = "timemode2override";
     public static final boolean PREF_DEF_GENERAL_TIMEMODE2_OVERRIDE = true;
+
+    public static final String PREF_KEY_GENERAL_TIMEMODE3 = "timemode3";
+    public static final MoonPhaseMode PREF_DEF_GENERAL_TIMEMODE3 = MoonPhaseMode.FULL_MOON;
 
     public static final String PREF_KEY_GENERAL_TIMENOTE_RISE = "timenoterise";
     public static final SolarEvents PREF_DEF_GENERAL_TIMENOTE_RISE = SolarEvents.SUNRISE;
@@ -102,8 +127,20 @@ public class WidgetSettings
     public static final String PREF_KEY_GENERAL_SHOWNOON = "shownoon";
     public static final boolean PREF_DEF_GENERAL_SHOWNOON = false;
 
+    public static final String PREF_KEY_GENERAL_SHOWWEEKS = "showweeks";
+    public static final boolean PREF_DEF_GENERAL_SHOWWEEKS = false;
+
+    public static final String PREF_KEY_GENERAL_SHOWHOURS = "showhours";
+    public static final boolean PREF_DEF_GENERAL_SHOWHOURS = true;
+
     public static final String PREF_KEY_GENERAL_SHOWSECONDS = "showseconds";
     public static final boolean PREF_DEF_GENERAL_SHOWSECONDS = false;
+
+    public static final String PREF_KEY_GENERAL_SHOWTIMEDATE = "showtimedate";
+    public static final boolean PREF_DEF_GENERAL_SHOWTIMEDATE = true;
+
+    public static final String PREF_KEY_GENERAL_OBSERVERHEIGHT = "observerheight";
+    public static final float PREF_DEF_GENERAL_OBSERVERHEIGHT = 1.8288f; // meters (6ft)
 
     public static final String PREF_KEY_ACTION_MODE = "action";
     public static final ActionMode PREF_DEF_ACTION_MODE = ActionMode.ONTAP_LAUNCH_CONFIG;
@@ -121,7 +158,10 @@ public class WidgetSettings
     public static String PREF_DEF_LOCATION_LATITUDE = "34.5409";         // reassigned later by initDefaults
 
     public static final String PREF_KEY_LOCATION_ALTITUDE = "altitude";
-    public static String PREF_DEF_LOCATION_ALTITUDE = "";
+    public static String PREF_DEF_LOCATION_ALTITUDE = "0";               // reassigned later by initDefaults
+
+    public static final String PREF_KEY_LOCATION_ALTITUDE_ENABLED = "altitude_enabled";
+    public static final boolean PREF_DEF_LOCATION_ALTITUDE_ENABLED = true;
 
     public static final String PREF_KEY_LOCATION_LABEL = "label";
     public static String PREF_DEF_LOCATION_LABEL = "Prescott, AZ";       // reassigned later by initDefaults
@@ -147,12 +187,16 @@ public class WidgetSettings
     public static final String PREF_KEY_DATE_DAY = "dateDay";
     public static final int PREF_DEF_DATE_DAY = -1;
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * WidgetOnTap
      */
     public static enum ActionMode
     {
         ONTAP_DONOTHING("Ignore"),
+        ONTAP_UPDATE("Update Widget"),
         ONTAP_LAUNCH_CONFIG("Reconfigure Widget"),
         ONTAP_LAUNCH_ACTIVITY("Launch Activity"),
         ONTAP_FLIPTO_NEXTITEM("Flip Views");
@@ -182,6 +226,7 @@ public class WidgetSettings
         public static void initDisplayStrings( Context context )
         {
             ONTAP_DONOTHING.setDisplayString(context.getString(R.string.actionMode_doNothing));
+            ONTAP_UPDATE.setDisplayString(context.getString(R.string.actionMode_update));
             ONTAP_LAUNCH_CONFIG.setDisplayString(context.getString(R.string.actionMode_config));
             ONTAP_LAUNCH_ACTIVITY.setDisplayString(context.getString(R.string.actionMode_launchActivity));
             ONTAP_FLIPTO_NEXTITEM.setDisplayString(context.getString(R.string.actionMode_flipToNextItem));
@@ -201,9 +246,9 @@ public class WidgetSettings
     }
 
     /**
-     * WidgetMode1x1
+     * WidgetModeSun1x1
      */
-    public static enum WidgetMode1x1
+    public static enum WidgetModeSun1x1
     {
         WIDGETMODE1x1_SUNRISE("Sunrise only", R.layout.layout_widget_1x1_1),
         WIDGETMODE1x1_SUNSET("Sunset only", R.layout.layout_widget_1x1_2),
@@ -213,7 +258,7 @@ public class WidgetSettings
         private final int layoutID;
         private String displayString;
 
-        private WidgetMode1x1(String displayString, int layoutID)
+        private WidgetModeSun1x1(String displayString, int layoutID)
         {
             this.displayString = displayString;
             this.layoutID = layoutID;
@@ -245,6 +290,102 @@ public class WidgetSettings
             WIDGETMODE1x1_SUNSET.setDisplayString(context.getString(R.string.widgetMode1x1_sunset));
             WIDGETMODE1x1_BOTH_1.setDisplayString(context.getString(R.string.widgetMode1x1_both_1));
             WIDGETMODE1x1_BOTH_2.setDisplayString(context.getString(R.string.widgetMode1x1_both_2));
+        }
+    }
+
+
+    /**
+     * WidgetModeSunPos1x1
+     */
+    public static enum WidgetModeSunPos1x1
+    {
+        MODE1x1_ALTAZ("Altitude & Azimuth", R.layout.layout_widget_sunpos_1x1_5),
+        MODE1x1_DECRIGHT("Declination & Right Ascension", R.layout.layout_widget_sunpos_1x1_6);
+
+        private final int layoutID;
+        private String displayString;
+
+        private WidgetModeSunPos1x1(String displayString, int layoutID)
+        {
+            this.displayString = displayString;
+            this.layoutID = layoutID;
+        }
+
+        public int getLayoutID()
+        {
+            return layoutID;
+        }
+
+        public String toString()
+        {
+            return displayString;
+        }
+
+        public String getDisplayString()
+        {
+            return displayString;
+        }
+
+        public void setDisplayString( String displayString )
+        {
+            this.displayString = displayString;
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            MODE1x1_ALTAZ.setDisplayString(context.getString(R.string.widgetMode1x1_altaz));
+            MODE1x1_DECRIGHT.setDisplayString(context.getString(R.string.widgetMode1x1_decright));
+        }
+    }
+
+
+    /**
+     * WidgetModeMoon1x1
+     */
+    public static enum WidgetModeMoon1x1
+    {
+        MODE1x1_RISESET("Moonrise & moonset", R.layout.layout_widget_moon_1x1_0),
+        MODE1x1_PHASEILLUM("Moon phase & illumination", R.layout.layout_widget_moon_1x1_1),
+        MODE1x1_PHASE("Moon phase only", R.layout.layout_widget_moon_1x1_2),
+        MODE1x1_ILLUM("Moon illumination only", R.layout.layout_widget_moon_1x1_3),
+        MODE1x1_PHASENEXT("Next major phase", R.layout.layout_widget_moon_1x1_4);
+
+        private final int layoutID;
+        private String displayString;
+
+        private WidgetModeMoon1x1(String displayString, int layoutID)
+        {
+            this.displayString = displayString;
+            this.layoutID = layoutID;
+        }
+
+        public int getLayoutID()
+        {
+            return layoutID;
+        }
+
+        public String toString()
+        {
+            return displayString;
+        }
+
+        public String getDisplayString()
+        {
+            return displayString;
+        }
+
+        public void setDisplayString( String displayString )
+        {
+            this.displayString = displayString;
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            MODE1x1_RISESET.setDisplayString(context.getString(R.string.widgetMode1x1_moonriseset));
+            MODE1x1_PHASEILLUM.setDisplayString(context.getString(R.string.widgetMode1x1_moonphaseillum));
+            MODE1x1_PHASE.setDisplayString(context.getString(R.string.widgetMode1x1_moonphase));
+            MODE1x1_ILLUM.setDisplayString(context.getString(R.string.widgetMode1x1_moonillum));
+            MODE1x1_PHASENEXT.setDisplayString(context.getString(R.string.widgetMode1x1_moonphasenext));
         }
     }
 
@@ -492,9 +633,10 @@ public class WidgetSettings
         public static String pattern_latLon = "#.#####";
 
         private String label;
-        private String latitude;
-        private String longitude;
-        private String altitude;   // meters
+        private String latitude;   // decimal degrees (DD)
+        private String longitude;  // decimal degrees (DD)
+        private String altitude;   // meters above the WGS 84 reference ellipsoid
+        private boolean useAltitude = true;
 
         /**
          * @param latitude decimal degrees (DD) string
@@ -565,7 +707,15 @@ public class WidgetSettings
 
         public Double getLatitudeAsDouble()
         {
-            return Double.parseDouble(latitude);
+            double latitudeDouble = Double.parseDouble(latitude);
+            if (latitudeDouble > 90 || latitudeDouble < -90)
+            {
+                double s = Math.signum(latitudeDouble);
+                double adjusted = (s * 90) - (latitudeDouble % (s * 90));
+                Log.w("Location", "latitude is out of range! adjusting.. " + latitudeDouble + " -> " + adjusted);
+                latitudeDouble = adjusted;
+            }
+            return latitudeDouble;
         }
 
         /**
@@ -578,23 +728,43 @@ public class WidgetSettings
 
         public Double getLongitudeAsDouble()
         {
-            return Double.parseDouble(longitude);
+            Double longitudeDouble = Double.parseDouble(longitude);
+            if (longitudeDouble > 180 || longitudeDouble < -180)
+            {
+                double s = Math.signum(longitudeDouble);
+                double adjusted = (longitudeDouble % (s * 180)) - (s * 180);
+                Log.w("Location", "longitude is out of range! adjusting.. " + longitudeDouble + " -> " + adjusted);
+                longitudeDouble = adjusted;
+            }
+            if (longitudeDouble == 180d) {
+                longitudeDouble = -180d;
+            }
+            return longitudeDouble;
         }
 
         /**
          * @return altitude in meters
          */
-        public String getAltitude() { return altitude; }
+        public String getAltitude()
+        {
+            return altitude;
+        }
 
         public Double getAltitudeAsDouble()
         {
-            if (altitude.isEmpty())
+            if (!useAltitude || altitude.isEmpty())
                 return 0.0;
             else return Double.parseDouble(altitude);
         }
         public Integer getAltitudeAsInteger()
         {
-            return getAltitudeAsDouble().intValue();
+            if (!useAltitude || altitude.isEmpty())
+                return 0;
+            else return getAltitudeAsDouble().intValue();
+        }
+        public void setUseAltitude( boolean enabled )
+        {
+            useAltitude = enabled;
         }
 
         /**
@@ -780,6 +950,66 @@ public class WidgetSettings
     }
 
     /**
+     * MoonPhaseMode
+     */
+    public static enum MoonPhaseMode
+    {
+        NEW_MOON("New", "New Moon"),
+        FIRST_QUARTER("First Quarter", "First Quarter Moon"),
+        FULL_MOON("Full", "Full Moon"),
+        THIRD_QUARTER("Third Quarter", "Third Quarter Moon");
+
+        private String shortDisplayString;
+        private String longDisplayString;
+
+        public static boolean shortDisplayStrings = false;
+
+        private MoonPhaseMode( String shortDisplayString, String longDisplayString )
+        {
+            this.shortDisplayString = shortDisplayString;
+            this.longDisplayString = longDisplayString;
+        }
+
+        public String toString()
+        {
+            if (shortDisplayStrings)
+                return shortDisplayString;
+            else return longDisplayString;
+        }
+
+        public String getShortDisplayString()
+        {
+            return shortDisplayString;
+        }
+
+        public String getLongDisplayString()
+        {
+            return longDisplayString;
+        }
+
+        public void setDisplayStrings(String shortDisplayString, String longDisplayString)
+        {
+            this.shortDisplayString = shortDisplayString;
+            this.longDisplayString = longDisplayString;
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            NEW_MOON.setDisplayStrings(context.getString(R.string.timeMode_moon_new_short),
+                    context.getString(R.string.timeMode_moon_new));
+
+            FIRST_QUARTER.setDisplayStrings( context.getString(R.string.timeMode_moon_firstquarter_short),
+                    context.getString(R.string.timeMode_moon_firstquarter));
+
+            FULL_MOON.setDisplayStrings( context.getString(R.string.timeMode_moon_full_short),
+                    context.getString(R.string.timeMode_moon_full) );
+
+            THIRD_QUARTER.setDisplayStrings(context.getString(R.string.timeMode_moon_thirdquarter_short),
+                    context.getString(R.string.timeMode_moon_thirdquarter));
+        }
+    }
+
+    /**
      * TimeMode
      */
     public static enum TimeMode
@@ -788,7 +1018,10 @@ public class WidgetSettings
         CIVIL("Civil", "Civil Twilight"),
         NAUTICAL("Nautical", "Nautical Twilight"),
         ASTRONOMICAL("Astronomical", "Astronomical Twilight"),
-        NOON("Noon", "Solar Noon");
+        NOON("Noon", "Solar Noon"),
+        GOLD("Golden", "Golden Hour"),
+        BLUE8("Blue", "Blue Hour"),      // 8 deg; morning start, evening end
+        BLUE4("Blue", "Blue Hour");      // 4 deg; morning end, evening start
 
         public static boolean shortDisplayStrings = false;
         private String longDisplayString;
@@ -798,7 +1031,6 @@ public class WidgetSettings
         {
             this.shortDisplayString = shortDisplayString;
             this.longDisplayString = longDisplayString;
-
         }
 
         public String toString()
@@ -844,8 +1076,20 @@ public class WidgetSettings
 
             NOON.setDisplayStrings( context.getString(R.string.timeMode_noon_short),
                     context.getString(R.string.timeMode_noon) );
+
+            GOLD.setDisplayStrings( context.getString(R.string.timeMode_golden_short),
+                    context.getString(R.string.timeMode_golden) );
+
+            BLUE8.setDisplayStrings( context.getString(R.string.timeMode_blue8_short),
+                    context.getString(R.string.timeMode_blue8) );
+
+            BLUE4.setDisplayStrings( context.getString(R.string.timeMode_blue4_short),
+                    context.getString(R.string.timeMode_blue4) );
         }
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void saveAllowResizePref(Context context, int appWidgetId, boolean allowResize)
     {
@@ -868,61 +1112,177 @@ public class WidgetSettings
         prefs.apply();
     }
 
-    public static void save1x1ModePref(Context context, int appWidgetId, WidgetSettings.WidgetMode1x1 mode)
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void saveSun1x1ModePref(Context context, int appWidgetId, WidgetModeSun1x1 mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
-        prefs.putString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_1x1, mode.name());
+        prefs.putString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_SUN1x1, mode.name());
         prefs.apply();
     }
-    public static WidgetSettings.WidgetMode1x1 load1x1ModePref(Context context, int appWidgetId)
+    public static WidgetModeSun1x1 loadSun1x1ModePref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
-        String modeString = prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_1x1, PREF_DEF_APPEARANCE_WIDGETMODE_1x1.name());
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_SUN1x1, PREF_DEF_APPEARANCE_WIDGETMODE_SUN1x1.name());
 
-        WidgetMode1x1 widgetMode;
+        WidgetModeSun1x1 widgetMode;
         try
         {
-            widgetMode = WidgetSettings.WidgetMode1x1.valueOf(modeString);
+            widgetMode = WidgetModeSun1x1.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
-            widgetMode = PREF_DEF_APPEARANCE_WIDGETMODE_1x1;
-            Log.w("load1x1ModePref", "Failed to load value '" + modeString + "'; using default '" + PREF_DEF_APPEARANCE_WIDGETMODE_1x1.name() + "'.");
+            widgetMode = PREF_DEF_APPEARANCE_WIDGETMODE_SUN1x1;
+            Log.w("loadSun1x1ModePref", "Failed to load value '" + modeString + "'; using default '" + PREF_DEF_APPEARANCE_WIDGETMODE_SUN1x1.name() + "'.");
         }
         return widgetMode;
     }
-    public static SuntimesLayout load1x1ModePref_asLayout(Context context, int appWidgetId)
+    public static SunLayout loadSun1x1ModePref_asLayout(Context context, int appWidgetId)
     {
-        SuntimesLayout layout;
-        WidgetSettings.WidgetMode1x1 mode = load1x1ModePref(context, appWidgetId);
+        SunLayout layout;
+        WidgetModeSun1x1 mode = loadSun1x1ModePref(context, appWidgetId);
         switch (mode.getLayoutID())
         {
             case R.layout.layout_widget_1x1_1:
-                layout = new SuntimesLayout_1x1_1();
+                layout = new SunLayout_1x1_1();
                 break;
 
             case R.layout.layout_widget_1x1_2:
-                layout = new SuntimesLayout_1x1_2();
+                layout = new SunLayout_1x1_2();
                 break;
 
             case R.layout.layout_widget_1x1_0:
             default:
-                layout = new SuntimesLayout_1x1_0(mode.getLayoutID());
+                layout = new SunLayout_1x1_0(mode.getLayoutID());
                 break;
         }
         return layout;
     }
-    public static void delete1x1ModePref(Context context, int appWidgetId)
+    public static void deleteSun1x1ModePref(Context context, int appWidgetId)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
-        prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_1x1);
+        prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_SUN1x1);
+        prefs.apply();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void saveSunPos1x1ModePref(Context context, int appWidgetId, WidgetModeSunPos1x1 mode)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.putString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS1x1, mode.name());
+        prefs.apply();
+    }
+    public static WidgetModeSunPos1x1 loadSunPos1x1ModePref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS1x1, PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOS1x1.name());
+
+        WidgetModeSunPos1x1 widgetMode;
+        try {
+            widgetMode = WidgetModeSunPos1x1.valueOf(modeString);
+
+        } catch (IllegalArgumentException e) {
+            widgetMode = PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOS1x1;
+            Log.w("loadSunPos1x1ModePref", "Failed to load value '" + modeString + "'; using default '" + PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOS1x1.name() + "'.");
+        }
+        return widgetMode;
+    }
+    public static SunPosLayout loadSunPos1x1ModePref_asLayout(Context context, int appWidgetId)
+    {
+        SunPosLayout layout;
+        WidgetModeSunPos1x1 mode = loadSunPos1x1ModePref(context, appWidgetId);
+        switch (mode)
+        {
+            case MODE1x1_DECRIGHT:
+                layout = new SunPosLayout_1X1_1();
+                break;
+
+            case MODE1x1_ALTAZ:
+            default:
+                layout = new SunPosLayout_1X1_0();
+                break;
+        }
+        return layout;
+    }
+    public static void deleteSunPos1x1ModePref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS1x1);
         prefs.apply();
     }
 
 
+    public static void saveMoon1x1ModePref(Context context, int appWidgetId, WidgetModeMoon1x1 mode)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.putString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_MOON1x1, mode.name());
+        prefs.apply();
+    }
+    public static WidgetModeMoon1x1 loadMoon1x1ModePref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_MOON1x1, PREF_DEF_APPEARANCE_WIDGETMODE_MOON1x1.name());
 
+        WidgetModeMoon1x1 widgetMode;
+        try
+        {
+            widgetMode = WidgetModeMoon1x1.valueOf(modeString);
+
+        } catch (IllegalArgumentException e) {
+            widgetMode = PREF_DEF_APPEARANCE_WIDGETMODE_MOON1x1;
+            Log.w("loadMoon1x1ModePref", "Failed to load value '" + modeString + "'; using default '" + PREF_DEF_APPEARANCE_WIDGETMODE_MOON1x1.name() + "'.");
+        }
+        return widgetMode;
+    }
+    public static MoonLayout loadMoon1x1ModePref_asLayout(Context context, int appWidgetId)
+    {
+        MoonLayout layout;
+        WidgetModeMoon1x1 mode = loadMoon1x1ModePref(context, appWidgetId);
+        switch (mode)
+        {
+            case MODE1x1_PHASENEXT:
+                layout = new MoonLayout_1x1_4();
+                break;
+
+            case MODE1x1_ILLUM:
+                layout = new MoonLayout_1x1_3();
+                break;
+
+            case MODE1x1_PHASE:
+                layout = new MoonLayout_1x1_2();
+                break;
+
+            case MODE1x1_PHASEILLUM:
+                layout = new MoonLayout_1x1_1();
+                break;
+
+            case MODE1x1_RISESET:
+            default:
+                layout = new MoonLayout_1x1_0();
+                break;
+        }
+        return layout;
+    }
+    public static void deleteMoon1x1ModePref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_MOON1x1);
+        prefs.apply();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void saveThemePref(Context context, int appWidgetId, String themeName)
     {
@@ -931,12 +1291,15 @@ public class WidgetSettings
         prefs.putString(prefs_prefix + PREF_KEY_APPEARANCE_THEME, themeName);
         prefs.apply();
     }
-    public static SuntimesTheme loadThemePref(Context context, int appWidgetId)
+    public static String loadThemeName(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
-        String themeName = prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_THEME, PREF_DEF_APPEARANCE_THEME);
-
+        return prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_THEME, PREF_DEF_APPEARANCE_THEME);
+    }
+    public static SuntimesTheme loadThemePref(Context context, int appWidgetId)
+    {
+        String themeName = loadThemeName(context, appWidgetId);
         //noinspection UnnecessaryLocalVariable
         SuntimesTheme theme = WidgetThemes.loadTheme(context, themeName);
         //Log.d("loadThemePref", "theme is " + theme.themeName());
@@ -950,24 +1313,74 @@ public class WidgetSettings
         prefs.apply();
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static String keyCalculatorModePref(int appWidgetId)
+    {
+        return keyCalculatorModePref(appWidgetId, "");
+    }
+    public static String keyCalculatorModePref(int appWidgetId, @NonNull String calculatorName)
+    {
+        calculatorName = calculatorName.toLowerCase(Locale.US).trim();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        if (calculatorName.isEmpty())
+            return prefs_prefix + PREF_KEY_GENERAL_CALCULATOR;
+        else return prefs_prefix + PREF_KEY_GENERAL_CALCULATOR + "_" + calculatorName;
+    }
 
     public static void saveCalculatorModePref(Context context, int appWidgetId, SuntimesCalculatorDescriptor mode)
     {
+        saveCalculatorModePref(context, appWidgetId, "", mode);
+    }
+    public static void saveCalculatorModePref(Context context, int appWidgetId, @NonNull String calculatorName, SuntimesCalculatorDescriptor mode)
+    {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
-        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
-        prefs.putString(prefs_prefix + PREF_KEY_GENERAL_CALCULATOR, mode.name());
+        String key = keyCalculatorModePref(appWidgetId, calculatorName);
+        prefs.putString(key, mode.getName());
         prefs.apply();
     }
+
+    public static String defaultCalculatorModePref(Context context, int appWidgetId, @NonNull String calculatorName)
+    {
+        calculatorName = calculatorName.toLowerCase(Locale.US).trim();
+        if (!calculatorName.isEmpty())
+        {
+            for (String[] defaultCalculator : PREF_DEF_GENERAL_CALCULATORS)
+            {
+                if (defaultCalculator == null)
+                {
+                    Log.e("loadCalculatorModePref", "Bad default mapping! null. skipping...");
+                    continue;
+
+                } else if (defaultCalculator.length != 2) {
+                    Log.e("loadCalculatorModePref", "Bad default mapping! incorrect length " + defaultCalculator.length + ". skipping...");
+                    continue;
+                }
+
+                if (defaultCalculator[0].equals(calculatorName))
+                    return defaultCalculator[1];
+            }
+            Log.w("defaultCalculator", "default for :: " + calculatorName + " :: was not found!");
+        }
+        return PREF_DEF_GENERAL_CALCULATOR;
+    }
+
     public static SuntimesCalculatorDescriptor loadCalculatorModePref(Context context, int appWidgetId)
     {
+        return loadCalculatorModePref(context, appWidgetId, "");
+    }
+    public static SuntimesCalculatorDescriptor loadCalculatorModePref(Context context, int appWidgetId, @NonNull String calculatorName)
+    {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
-        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
-        String modeString = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_CALCULATOR, PREF_DEF_GENERAL_CALCULATOR);
+        String key = keyCalculatorModePref(appWidgetId, calculatorName);
+        String defaultValue = defaultCalculatorModePref(context, appWidgetId, calculatorName);
+        String modeString = prefs.getString(key, defaultValue);
 
         //noinspection UnusedAssignment
         SuntimesCalculatorDescriptor calculatorMode = null;
         try {
-            calculatorMode = SuntimesCalculatorDescriptor.valueOf(modeString);
+            calculatorMode = SuntimesCalculatorDescriptor.valueOf(context, modeString);
 
         } catch (IllegalArgumentException e) {
             Log.e("loadCalculatorModePref", e.toString() + " ... It looks like " + modeString + " isn't in our list of calculators.");
@@ -975,11 +1388,44 @@ public class WidgetSettings
         }
         return calculatorMode;
     }
+
     public static void deleteCalculatorModePref(Context context, int appWidgetId)
     {
+        deleteCalculatorModePref(context, appWidgetId, "");
+    }
+    public static void deleteCalculatorModePref(Context context, int appWidgetId, @NonNull String calculatorName)
+    {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
-        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
-        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_CALCULATOR);
+        String key = keyCalculatorModePref(appWidgetId, calculatorName);
+        prefs.remove(key);
+        prefs.apply();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void saveShowLabelsPref(Context context, int appWidgetId, boolean showLabels)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.putBoolean(prefs_prefix + PREF_KEY_APPEARANCE_SHOWLABELS, showLabels);
+        prefs.apply();
+    }
+    public static boolean loadShowLabelsPref(Context context, int appWidgetId)
+    {
+        return loadShowLabelsPref(context, appWidgetId, PREF_DEF_APPEARANCE_SHOWLABELS);
+    }
+    public static boolean loadShowLabelsPref(Context context, int appWidgetId, boolean defaultValue)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        return prefs.getBoolean(prefs_prefix + PREF_KEY_APPEARANCE_SHOWLABELS, defaultValue);
+    }
+    public static void deleteShowLabelsPref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_SHOWLABELS);
         prefs.apply();
     }
 
@@ -1009,6 +1455,8 @@ public class WidgetSettings
         prefs.apply();
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void saveTitleTextPref(Context context, int appWidgetId, String titleText)
     {
@@ -1035,6 +1483,8 @@ public class WidgetSettings
         prefs.apply();
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void saveTimeModePref(Context context, int appWidgetId, WidgetSettings.TimeMode mode)
     {
@@ -1067,6 +1517,8 @@ public class WidgetSettings
         prefs.apply();
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void saveTimeMode2OverridePref(Context context, int appWidgetId, boolean value)
     {
@@ -1089,6 +1541,8 @@ public class WidgetSettings
         prefs.apply();
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void saveTimeMode2Pref(Context context, int appWidgetId, SolsticeEquinoxMode mode)
     {
@@ -1121,8 +1575,42 @@ public class WidgetSettings
         prefs.apply();
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
+    public static void saveTimeMode3Pref(Context context, int appWidgetId, MoonPhaseMode mode)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putString(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE3, mode.name());
+        prefs.apply();
+    }
+    public static WidgetSettings.MoonPhaseMode loadTimeMode3Pref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE2, PREF_DEF_GENERAL_TIMEMODE3.name());
 
+        MoonPhaseMode timeMode;
+        try
+        {
+            timeMode = WidgetSettings.MoonPhaseMode.valueOf(modeString);
+
+        } catch (IllegalArgumentException e) {
+            timeMode = PREF_DEF_GENERAL_TIMEMODE3;
+        }
+        return timeMode;
+    }
+    public static void deleteTimeMode3Pref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE3);
+        prefs.apply();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void saveSolarTimeModePref(Context context, int appWidgetId, WidgetSettings.SolarTimeMode mode)
     {
@@ -1155,6 +1643,8 @@ public class WidgetSettings
         prefs.apply();
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void saveTimeFormatModePref(Context context, int appWidgetId, WidgetSettings.TimeFormatMode mode)
     {
@@ -1187,6 +1677,8 @@ public class WidgetSettings
         prefs.apply();
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void saveActionModePref(Context context, int appWidgetId, @NonNull WidgetSettings.ActionMode mode)
     {
@@ -1223,6 +1715,8 @@ public class WidgetSettings
         prefs.apply();
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void saveActionLaunchPref(Context context, int appWidgetId, String launchString)
     {
@@ -1248,8 +1742,8 @@ public class WidgetSettings
         prefs.apply();
     }
 
-
-
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void saveLocationModePref(Context context, int appWidgetId, WidgetSettings.LocationMode mode)
     {
@@ -1282,6 +1776,8 @@ public class WidgetSettings
         prefs.apply();
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void saveDateModePref(Context context, int appWidgetId, WidgetSettings.DateMode mode)
     {
@@ -1342,6 +1838,8 @@ public class WidgetSettings
         prefs.apply();
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void saveTimezoneModePref(Context context, int appWidgetId, WidgetSettings.TimezoneMode mode)
     {
@@ -1374,6 +1872,8 @@ public class WidgetSettings
         prefs.apply();
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void saveLocationPref(Context context, int appWidgetId, Location location)
     {
@@ -1393,8 +1893,10 @@ public class WidgetSettings
         String lonString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_LONGITUDE, PREF_DEF_LOCATION_LONGITUDE);
         String latString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_LATITUDE, PREF_DEF_LOCATION_LATITUDE);
         String nameString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_LABEL, PREF_DEF_LOCATION_LABEL);
-        return new Location(nameString, latString, lonString, altString);
 
+        Location location = new Location(nameString, latString, lonString, altString);
+        location.setUseAltitude(prefs.getBoolean(prefs_prefix + PREF_KEY_LOCATION_ALTITUDE_ENABLED, PREF_DEF_LOCATION_ALTITUDE_ENABLED));
+        return location;
     }
     public static void deleteLocationPref(Context context, int appWidgetId)
     {
@@ -1407,6 +1909,33 @@ public class WidgetSettings
         prefs.apply();
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void saveLocationAltitudeEnabledPref(Context context, int appWidgetId, boolean enabled)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_LOCATION;
+        prefs.putBoolean(prefs_prefix + PREF_KEY_LOCATION_ALTITUDE_ENABLED, enabled);
+        prefs.apply();
+    }
+    public static boolean loadLocationAltitudeEnabledPref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_LOCATION;
+        boolean enabled = prefs.getBoolean(prefs_prefix + PREF_KEY_LOCATION_ALTITUDE_ENABLED, PREF_DEF_LOCATION_ALTITUDE_ENABLED);
+        return enabled;
+    }
+    public static void deleteLocationAltitudeEnabledPref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_LOCATION;
+        prefs.remove(prefs_prefix + PREF_KEY_LOCATION_ALTITUDE_ENABLED);
+        prefs.apply();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void saveTimezonePref(Context context, int appWidgetId, String timezone)
     {
@@ -1429,6 +1958,8 @@ public class WidgetSettings
         prefs.apply();
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void saveTrackingModePref(Context context, int appWidgetId, WidgetSettings.TrackingMode mode)
     {
@@ -1461,6 +1992,8 @@ public class WidgetSettings
         prefs.apply();
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void saveCompareModePref(Context context, int appWidgetId, WidgetSettings.CompareMode mode)
     {
@@ -1493,6 +2026,8 @@ public class WidgetSettings
         prefs.apply();
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void saveShowComparePref(Context context, int appWidgetId, boolean showCompare)
     {
@@ -1515,7 +2050,8 @@ public class WidgetSettings
         prefs.apply();
     }
 
-
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void saveShowNoonPref(Context context, int appWidgetId, boolean showNoon)
     {
@@ -1538,6 +2074,53 @@ public class WidgetSettings
         prefs.apply();
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void saveShowWeeksPref(Context context, int appWidgetId, boolean showWeeks)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWWEEKS, showWeeks);
+        prefs.apply();
+    }
+    public static boolean loadShowWeeksPref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        return prefs.getBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWWEEKS, PREF_DEF_GENERAL_SHOWWEEKS);
+    }
+    public static void deleteShowWeeksPref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_SHOWWEEKS);
+        prefs.apply();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void saveShowHoursPref(Context context, int appWidgetId, boolean showHours)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWHOURS, showHours);
+        prefs.apply();
+    }
+    public static boolean loadShowHoursPref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        return prefs.getBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWHOURS, PREF_DEF_GENERAL_SHOWHOURS);
+    }
+    public static void deleteShowHoursPref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_SHOWHOURS);
+        prefs.apply();
+    }
 
 
     public static void saveShowSecondsPref(Context context, int appWidgetId, boolean showSeconds)
@@ -1561,6 +2144,51 @@ public class WidgetSettings
         prefs.apply();
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void saveShowTimeDatePref(Context context, int appWidgetId, boolean showTimeWithDates)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWTIMEDATE, showTimeWithDates);
+        prefs.apply();
+    }
+    public static boolean loadShowTimeDatePref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        return prefs.getBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWTIMEDATE, PREF_DEF_GENERAL_SHOWTIMEDATE);
+    }
+    public static void deleteShowTimeDatePref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_SHOWTIMEDATE);
+        prefs.apply();
+    }
+
+
+    public static void saveObserverHeightPref(Context context, int appWidgetId, float meters)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putFloat(prefs_prefix + PREF_KEY_GENERAL_OBSERVERHEIGHT, meters);
+        prefs.apply();
+    }
+    public static float loadObserverHeightPref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        return prefs.getFloat(prefs_prefix + PREF_KEY_GENERAL_OBSERVERHEIGHT, PREF_DEF_GENERAL_OBSERVERHEIGHT);
+    }
+    public static void deleteObserverHeightPref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_OBSERVERHEIGHT);
+        prefs.apply();
+    }
 
 
     public static void saveTimeNoteRisePref(Context context, int appWidgetId, SolarEvents riseChoice)
@@ -1593,7 +2221,8 @@ public class WidgetSettings
         prefs.apply();
     }
 
-
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void saveTimeNoteSetPref(Context context, int appWidgetId, SolarEvents setChoice)
     {
@@ -1625,28 +2254,44 @@ public class WidgetSettings
         prefs.apply();
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
     public static void deletePrefs(Context context, int appWidgetId)
     {
         deleteActionModePref(context, appWidgetId);
         deleteActionLaunchPref(context, appWidgetId);
 
-        delete1x1ModePref(context, appWidgetId);
+        deleteSun1x1ModePref(context, appWidgetId);
+        deleteSunPos1x1ModePref(context, appWidgetId);
+        deleteMoon1x1ModePref(context, appWidgetId);
         deleteAllowResizePref(context, appWidgetId);
 
         deleteThemePref(context, appWidgetId);
+        deleteShowLabelsPref(context, appWidgetId);
         deleteShowTitlePref(context, appWidgetId);
         deleteTitleTextPref(context, appWidgetId);
         deleteTimeFormatModePref(context, appWidgetId);
 
         deleteCalculatorModePref(context, appWidgetId);
+        deleteCalculatorModePref(context, appWidgetId, "moon");
+
         deleteTimeModePref(context, appWidgetId);
         deleteTimeMode2Pref(context, appWidgetId);
+        deleteTimeMode3Pref(context, appWidgetId);
+
         deleteCompareModePref(context, appWidgetId);
         deleteShowComparePref(context, appWidgetId);
         deleteShowNoonPref(context, appWidgetId);
+        deleteShowWeeksPref(context, appWidgetId);
+        deleteShowHoursPref(context, appWidgetId);
         deleteShowSecondsPref(context, appWidgetId);
+        deleteShowTimeDatePref(context, appWidgetId);
+
+        deleteObserverHeightPref(context, appWidgetId);
 
         deleteLocationModePref(context, appWidgetId);
+	deleteLocationAltitudeEnabledPref(context, appWidgetId);
         deleteLocationPref(context, appWidgetId);
 
         deleteTimezoneModePref(context, appWidgetId);
@@ -1665,15 +2310,19 @@ public class WidgetSettings
         PREF_DEF_LOCATION_LABEL = context.getString(R.string.default_location_label);
         PREF_DEF_LOCATION_LATITUDE = context.getString(R.string.default_location_latitude);
         PREF_DEF_LOCATION_LONGITUDE = context.getString(R.string.default_location_longitude);
+        PREF_DEF_LOCATION_ALTITUDE = context.getString(R.string.default_location_altitude);
     }
 
     public static void initDisplayStrings( Context context )
     {
         ActionMode.initDisplayStrings(context);
-        WidgetMode1x1.initDisplayStrings(context);
+        WidgetModeSun1x1.initDisplayStrings(context);
+        WidgetModeSunPos1x1.initDisplayStrings(context);
+        WidgetModeMoon1x1.initDisplayStrings(context);
         TrackingMode.initDisplayStrings(context);
         CompareMode.initDisplayStrings(context);
         TimeMode.initDisplayStrings(context);
+        MoonPhaseMode.initDisplayStrings(context);
         SolsticeEquinoxMode.initDisplayStrings(context);
         LocationMode.initDisplayStrings(context);
         TimezoneMode.initDisplayStrings(context);

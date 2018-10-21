@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -28,46 +28,23 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
-
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.ScrollView;
-import android.widget.Spinner;
 
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Calendar;
 
-
-public class TimeDateDialog extends DialogFragment implements DatePicker.OnDateChangedListener
+@SuppressWarnings("Convert2Diamond")
+public class TimeDateDialog extends DialogFragment
 {
-    public static final String KEY_TIMEDATE_MODE = "dateMode";
-    public static final String KEY_TIMEDATE_YEAR = "year";
-    public static final String KEY_TIMEDATE_MONTH = "month";
-    public static final String KEY_TIMEDATE_DAY = "day";
     public static final String KEY_TIMEDATE_APPWIDGETID = "appwidgetid";
 
-    private int year = -1, month = -1, day = -1;
-    public int getYear() { return year; }
-    public int getMonth() { return month; }
-    public int getday() { return day; }
-
-    private Spinner spinner_dateMode;
-    private ScrollView scroll;
     private DatePicker picker;
 
-    public boolean isInitialized()
-    {
-        return (year != -1 && month != -1 && day == -1);
-    }
-    public void init()
-    {
-        init(Calendar.getInstance());
-    }
     public void init(Calendar date)
     {
         init(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH));
@@ -78,34 +55,8 @@ public class TimeDateDialog extends DialogFragment implements DatePicker.OnDateC
     }
     public void init(int year, int month, int day)
     {
-        this.year = year;
-        this.month = month;
-        this.day = day;
+        picker.init(year, month, day, null);
     }
-
-    /**
-     *
-     */
-    Spinner.OnItemSelectedListener dateModeSelectedListener = new Spinner.OnItemSelectedListener()
-    {
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-        {
-            final WidgetSettings.DateMode[] dateModes = WidgetSettings.DateMode.values();
-            WidgetSettings.DateMode dateMode = dateModes[parent.getSelectedItemPosition()];
-
-            if (dateMode == WidgetSettings.DateMode.CURRENT_DATE)
-            {
-                picker.setEnabled(false);
-                init();
-                picker.init(year, month, day, TimeDateDialog.this);
-
-            } else {
-                picker.setEnabled(true);
-            }
-        }
-
-        public void onNothingSelected(AdapterView<?> parent) {}
-    };
 
     /**
      * @param context a context used to access resources
@@ -113,18 +64,7 @@ public class TimeDateDialog extends DialogFragment implements DatePicker.OnDateC
      */
     private void initViews(Context context, View dialogContent)
     {
-        ArrayAdapter<WidgetSettings.DateMode> spinner_dateModeAdapter;
-        spinner_dateModeAdapter = new ArrayAdapter<WidgetSettings.DateMode>(context, R.layout.layout_listitem_oneline, WidgetSettings.DateMode.values());
-        spinner_dateModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinner_dateMode = (Spinner) dialogContent.findViewById(R.id.appwidget_date_mode);
-        spinner_dateMode.setAdapter(spinner_dateModeAdapter);
-        spinner_dateMode.setOnItemSelectedListener(dateModeSelectedListener);
-
         picker = (DatePicker) dialogContent.findViewById(R.id.appwidget_date_custom);
-
-        scroll = (ScrollView) dialogContent.findViewById(R.id.appwidget_date_scroll);
-        scroll.scrollTo(0, 0);
     }
 
     /**
@@ -141,7 +81,7 @@ public class TimeDateDialog extends DialogFragment implements DatePicker.OnDateC
 
         LayoutInflater inflater = myParent.getLayoutInflater();
         @SuppressLint("InflateParams")
-        View dialogContent = inflater.inflate(R.layout.layout_dialog_date, null);
+        View dialogContent = inflater.inflate(R.layout.layout_dialog_date1, null);
 
         Resources r = getResources();
         int padding = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, r.getDisplayMetrics());
@@ -149,6 +89,7 @@ public class TimeDateDialog extends DialogFragment implements DatePicker.OnDateC
         AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
         builder.setView(dialogContent, 0, padding, 0, 0);
         builder.setTitle(myParent.getString(R.string.timedate_dialog_title));
+        builder.setNeutralButton(getString(R.string.today), null);
 
         AlertDialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(true);
@@ -185,6 +126,27 @@ public class TimeDateDialog extends DialogFragment implements DatePicker.OnDateC
                 }
         );
 
+        dialog.setOnShowListener(new DialogInterface.OnShowListener()
+        {
+            @Override
+            public void onShow(final DialogInterface dialog)
+            {
+                Button neutralButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_NEUTRAL);
+                neutralButton.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View view)
+                    {
+                        boolean alreadyToday = isToday();
+                        init(Calendar.getInstance());
+                        if (alreadyToday) {
+                            ((AlertDialog) dialog).getButton(DialogInterface.BUTTON_POSITIVE).performClick();
+                        }
+                    }
+                });
+            }
+        });
+
         initViews(myParent, dialogContent);
         if (savedInstanceState != null)
         {
@@ -195,11 +157,6 @@ public class TimeDateDialog extends DialogFragment implements DatePicker.OnDateC
             // no saved dialog state; load from preferences
             //Log.d("DEBUG", "TimeDateDialog onCreate (newState)");
             loadSettings(myParent);
-        }
-
-        if (!isInitialized())
-        {
-            init();
         }
 
         return dialog;
@@ -220,18 +177,6 @@ public class TimeDateDialog extends DialogFragment implements DatePicker.OnDateC
     protected void loadSettings(Bundle bundle)
     {
         appWidgetId = bundle.getInt(KEY_TIMEDATE_APPWIDGETID, appWidgetId);
-
-        String modeString = bundle.getString(KEY_TIMEDATE_MODE);
-        if (modeString != null)
-        {
-            WidgetSettings.DateMode dateMode = WidgetSettings.DateMode.valueOf(modeString);
-            spinner_dateMode.setSelection(dateMode.ordinal());
-        }
-
-        year = bundle.getInt(KEY_TIMEDATE_YEAR, year);
-        month = bundle.getInt(KEY_TIMEDATE_MONTH, month);
-        day = bundle.getInt(KEY_TIMEDATE_DAY, day);
-        picker.init(year, month, day, this);
     }
 
     /**
@@ -240,18 +185,15 @@ public class TimeDateDialog extends DialogFragment implements DatePicker.OnDateC
      */
     protected void loadSettings(Context context)
     {
-        WidgetSettings.DateMode dateMode = WidgetSettings.loadDateModePref(context, appWidgetId);
-        spinner_dateMode.setSelection(dateMode.ordinal());
-
-        if (dateMode == WidgetSettings.DateMode.CURRENT_DATE)
+        WidgetSettings.DateMode mode = WidgetSettings.loadDateModePref(context, appWidgetId);
+        if (mode == WidgetSettings.DateMode.CURRENT_DATE)
         {
-            init();
+            init(Calendar.getInstance());
 
         } else {
             WidgetSettings.DateInfo dateInfo = WidgetSettings.loadDatePref(context, appWidgetId);
             init(dateInfo);
         }
-        picker.init(year, month, day, this);
     }
 
     /**
@@ -259,8 +201,7 @@ public class TimeDateDialog extends DialogFragment implements DatePicker.OnDateC
      */
     protected void saveSettings(Context context)
     {
-        final WidgetSettings.DateMode[] dateModes = WidgetSettings.DateMode.values();
-        WidgetSettings.DateMode dateMode = dateModes[spinner_dateMode.getSelectedItemPosition()];
+        WidgetSettings.DateMode dateMode = (isToday() ? WidgetSettings.DateMode.CURRENT_DATE : WidgetSettings.DateMode.CUSTOM_DATE);
         WidgetSettings.saveDateModePref(context, appWidgetId, dateMode);
 
         WidgetSettings.DateInfo dateInfo = new WidgetSettings.DateInfo(picker.getYear(), picker.getMonth(), picker.getDayOfMonth());
@@ -274,14 +215,6 @@ public class TimeDateDialog extends DialogFragment implements DatePicker.OnDateC
     protected void saveSettings(Bundle bundle)
     {
         bundle.putInt(KEY_TIMEDATE_APPWIDGETID, appWidgetId);
-
-        final WidgetSettings.DateMode[] dateModes = WidgetSettings.DateMode.values();
-        WidgetSettings.DateMode dateMode = dateModes[spinner_dateMode.getSelectedItemPosition()];
-        bundle.putString(KEY_TIMEDATE_MODE, dateMode.name());
-
-        bundle.putInt(KEY_TIMEDATE_YEAR, year);
-        bundle.putInt(KEY_TIMEDATE_MONTH, month);
-        bundle.putInt(KEY_TIMEDATE_DAY, day);
     }
 
     /**
@@ -315,17 +248,14 @@ public class TimeDateDialog extends DialogFragment implements DatePicker.OnDateC
         onCanceled = listener;
     }
 
-    /**
-     * @param datePicker a reference to the DatePicker view
-     * @param year the year (as int)
-     * @param month the month (0-11)
-     * @param day the day of the month
-     */
-    @Override
-    public void onDateChanged(DatePicker datePicker, int year, int month, int day)
+    public boolean isToday()
     {
-        this.year = year;
-        this.month = month;
-        this.day = day;
+        Calendar date = Calendar.getInstance();
+        return isToday(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH));
+    }
+
+    public boolean isToday(int year, int month, int day)
+    {
+        return (year == picker.getYear() && month == picker.getMonth() && day == picker.getDayOfMonth());
     }
 }

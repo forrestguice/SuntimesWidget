@@ -24,7 +24,6 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 
 import net.time4j.calendar.astro.StdSolarCalculator;
 
-
 public class Time4ASimpleSuntimesCalculator extends Time4ASuntimesCalculator implements SuntimesCalculator
 {
     public static final String NAME = "time4a-simple";

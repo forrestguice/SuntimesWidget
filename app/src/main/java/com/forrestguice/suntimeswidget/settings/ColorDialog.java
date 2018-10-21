@@ -49,6 +49,12 @@ public class ColorDialog extends DialogFragment
         this.color = color;
     }
 
+    private boolean showAlpha = false;
+    public void setShowAlpha(boolean value)
+    {
+        this.showAlpha = value;
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedState)
@@ -57,17 +63,17 @@ public class ColorDialog extends DialogFragment
         if (savedState != null)
         {
             setColor(savedState.getInt("color", getColor()));
+            showAlpha = savedState.getBoolean("showAlpha", showAlpha);
         }
 
         Context context = getContext();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH)
         {
-            return ColorPickerDialogBuilder.with(context)
+            ColorPickerDialogBuilder builder = ColorPickerDialogBuilder.with(context)
                 .setTitle(context.getString(R.string.color_dialog_msg))
                 .initialColor(color)
                 .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
                 .density(12)
-                .lightnessSliderOnly()
                 .setOnColorSelectedListener(new OnColorSelectedListener()
                 {
                     @Override
@@ -89,8 +95,12 @@ public class ColorDialog extends DialogFragment
                 {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {}
-                })
-                .build();
+                });
+
+            builder = (showAlpha ? builder.showLightnessSlider(true).showAlphaSlider(true)
+                                 : builder.lightnessSliderOnly());
+
+            return builder.build();
 
         }  else {
             AlertDialog alertDialog = new AlertDialog.Builder(context).create();
@@ -111,6 +121,7 @@ public class ColorDialog extends DialogFragment
     {
         super.onSaveInstanceState(outState);
         outState.putInt("color", getColor());
+        outState.putBoolean("showAlpha", showAlpha);
     }
 
     /**

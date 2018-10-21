@@ -190,23 +190,23 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     @Override
     public Calendar[] getMorningBlueHourForDate(Calendar date)
     {
-        return null;
+        return new Calendar[] { null, null };
     }
 
     @Override
     public Calendar[] getEveningBlueHourForDate(Calendar date)
     {
-        return null;
+        return new Calendar[] { null, null };
     }
 
     @Override
-    public Calendar[] getMorningGoldenHourForDate(Calendar date)
+    public Calendar getMorningGoldenHourForDate(Calendar date)
     {
         return null;
     }
 
     @Override
-    public Calendar[] getEveningGoldenHourForDate(Calendar date)
+    public Calendar getEveningGoldenHourForDate(Calendar date)
     {
         return null;
     }
@@ -228,5 +228,38 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
         return (time.after(sunrise) && time.before(sunset));
     }
 
+    @Override
+    public MoonTimes getMoonTimesForDate(Calendar date)
+    {
+        return null;
+    }
+
+    @Override
+    public double getMoonIlluminationForDate(Calendar date)
+    {
+        return -1;
+    }
+
+    @Override
+    public Calendar getMoonPhaseNextDate(MoonPhase phase, Calendar date)
+    {
+        return null;
+    }
+
+    @Override
+    public SunPosition getSunPosition(Calendar dateTime)
+    {
+        return null;
+    }
+
+    @Override
+    public MoonPosition getMoonPosition(Calendar dateTime) {
+        return null;
+    }
+
+    @Override
+    public double getShadowLength(double objHeight, Calendar dateTime) {
+        return -1;
+    }
 }
 

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -35,12 +35,14 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayout_2x1_0;
+import com.forrestguice.suntimeswidget.layouts.SunLayout;
+import com.forrestguice.suntimeswidget.layouts.SunLayout_2x1_0;
+import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -48,9 +50,13 @@ import java.util.Calendar;
  */
 public class SuntimesWidget0 extends AppWidgetProvider
 {
-    public static final String SUNTIMES_WIDGET_UPDATE = "SUNTIMES_WIDGET_UPDATE";
+    public static final String SUNTIMES_WIDGET_UPDATE = "suntimes.SUNTIMES_WIDGET_UPDATE";
+    public static final String SUNTIMES_THEME_UPDATE = "suntimes.SUNTIMES_THEME_UPDATE";
+    public static final String SUNTIMES_ALARM_UPDATE = "suntimes.SUNTIMES_ALARM_UPDATE";
     public static final int UPDATEALARM_ID = 0;
     public static final String KEY_ALARMID = "alarmID";
+    public static final String KEY_THEME = "themeName";
+    public static final String TAG = "WidgetUpdate";
 
     protected static SuntimesUtils utils = new SuntimesUtils();
 
@@ -99,21 +105,38 @@ public class SuntimesWidget0 extends AppWidgetProvider
         if (action != null && action.equals(filter))
         {
             int alarmID = intent.getIntExtra(KEY_ALARMID, -1);
-            Log.d("onReceive", filter + ": " + alarmID + ": " + getClass().toString());
-            updateWidgets(context);
+            if (alarmID == getUpdateAlarmId())
+            {
+                Log.d(TAG, "onReceive: " + filter + "(" + alarmID + "): " + getClass().toString());
+                updateWidgets(context);
+                if (Build.VERSION.SDK_INT >= 19) {
+                    setUpdateAlarm(context);      // schedule next update
+                }  // api<19 uses a repeating alarm
+            }
 
         } else if (isClickAction(action)) {
-            Log.d("onReceive", "ClickAction :: " + action + ":" + getClass());
+            Log.d(TAG, "onReceive: ClickAction :: " + action + ":" + getClass());
             handleClickAction(context, intent);
 
         } else if (action != null && action.equals(AppWidgetManager.ACTION_APPWIDGET_OPTIONS_CHANGED)) {
-            Log.d("onReceive", "ACTION_APPWIDGET_OPTIONS_CHANGED :: " + getClass());
+            Log.d(TAG, "onReceive: ACTION_APPWIDGET_OPTIONS_CHANGED :: " + getClass());
+
+        } else if (action != null && action.equals(SUNTIMES_THEME_UPDATE)) {
+            String themeName = (intent.hasExtra(KEY_THEME) ? intent.getStringExtra(KEY_THEME) : null);
+            Log.d(TAG, "onReceive: SUNTIMES_THEME_UPDATE :: " + getClass() + " :: " + themeName);
+            updateWidgets(context, themeName);
+
+        } else if (action != null && action.equals(SUNTIMES_ALARM_UPDATE)) {
+            Log.d(TAG, "onReceive: SUNTIMES_ALARM_UPDATE :: " + getClass());
+            if (getWidgetIds(context).length > 0) {
+                setUpdateAlarm(context);
+            }
 
         } else if (action != null && action.equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE)) {
-            Log.d("onReceive", "ACTION_APPWIDGET_UPDATE :: " + getClass());
+            Log.d(TAG, "onReceive: ACTION_APPWIDGET_UPDATE :: " + getClass());
 
         } else {
-            Log.d("onReceive", "unhandled :: " + action + " :: " + getClass());
+            Log.d(TAG, "onReceive: unhandled :: " + action + " :: " + getClass());
         }
     }
 
@@ -132,6 +155,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
     protected String[] getClickActions()
     {
         return new String[] { WidgetSettings.ActionMode.ONTAP_DONOTHING.name(),
+                              WidgetSettings.ActionMode.ONTAP_UPDATE.name(),
                               WidgetSettings.ActionMode.ONTAP_LAUNCH_ACTIVITY.name(),
                               WidgetSettings.ActionMode.ONTAP_LAUNCH_CONFIG.name() };
     }
@@ -158,20 +182,30 @@ public class SuntimesWidget0 extends AppWidgetProvider
             return false;
         }
 
+        // OnTap: Update
+        if (action.equals(WidgetSettings.ActionMode.ONTAP_UPDATE.name()))
+        {
+            updateWidget(context, AppWidgetManager.getInstance(context), appWidgetId);
+            return true;
+        }
+
         // OnTap: Launch an Activity
         if (action.equals(WidgetSettings.ActionMode.ONTAP_LAUNCH_ACTIVITY.name()))
         {
+            Intent launchIntent;
             String launchClassName = WidgetSettings.loadActionLaunchPref(context, appWidgetId);
             Class<?> launchClass;
             try {
                 launchClass = Class.forName(launchClassName);
+                launchIntent = new Intent(context, launchClass);
 
             } catch (ClassNotFoundException e) {
                 launchClass = getConfigClass();
-                Log.e("SuntimesWidget", "LaunchApp :: " + launchClassName + " cannot be found! " + e.toString());
+                launchIntent = new Intent(context, launchClass);
+                launchIntent.putExtra(WidgetSettings.ActionMode.ONTAP_LAUNCH_CONFIG.name(), true);
+                Log.e(TAG, "LaunchApp :: " + launchClassName + " cannot be found! " + e.toString());
             }
 
-            Intent launchIntent = new Intent(context, launchClass);
             launchIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
             launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(launchIntent);
@@ -202,13 +236,54 @@ public class SuntimesWidget0 extends AppWidgetProvider
     }
 
     /**
-     * @param context
+     * @param context the context
      */
     public void updateWidgets(Context context)
     {
         AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
-        int[] widgetIds = widgetManager.getAppWidgetIds(new ComponentName(context, getClass()));
+        int[] widgetIds = getWidgetIds(context, widgetManager);
         onUpdate(context, widgetManager, widgetIds);
+    }
+    public void updateWidgets(Context context, String themeName)
+    {
+        if (themeName == null)
+        {
+            Log.w(TAG, "updateWidgets: requested to update widgets by theme but no theme was supplied (null)... updating all");
+            updateWidgets(context);
+            return;
+        }
+
+        AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
+        int[] widgetIds = getWidgetIds(context, widgetManager);
+        ArrayList<Integer> filteredList = new ArrayList<>();
+        for (int id : widgetIds)
+        {
+            String theme = WidgetSettings.loadThemeName(context, id);
+            if (theme.equals(themeName))
+            {
+                filteredList.add(id);
+            }
+        }
+        if (filteredList.size() > 0)
+        {
+            int[] filteredIds = new int[filteredList.size()];
+            for (int i = 0; i < filteredIds.length; i++)
+            {
+                filteredIds[i] = filteredList.get(i);
+            }
+            onUpdate(context, widgetManager, filteredIds);
+        }
+    }
+
+    public int[] getWidgetIds(Context context)
+    {
+        AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
+        return getWidgetIds(context, widgetManager);
+    }
+
+    public int[] getWidgetIds(Context context, AppWidgetManager widgetManager)
+    {
+        return widgetManager.getAppWidgetIds(new ComponentName(context, getClass()));
     }
 
     /**
@@ -232,7 +307,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
 
     protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
-        SuntimesLayout defLayout = WidgetSettings.load1x1ModePref_asLayout(context, appWidgetId);
+        SunLayout defLayout = WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId);
         SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0.class, getMinSize(context), defLayout);
     }
 
@@ -254,6 +329,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
         for (int appWidgetId : appWidgetIds)
         {
             WidgetSettings.deletePrefs(context, appWidgetId);
+            WorldMapWidgetSettings.deletePrefs(context, appWidgetId);
         }
     }
 
@@ -304,6 +380,32 @@ public class SuntimesWidget0 extends AppWidgetProvider
         return mustFitWithinDp;
     }
 
+    protected static int[] widgetMaxSizeDp(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize)
+    {
+        int[] mustFitWithinDp = {defSize[0], defSize[1]};
+        //Log.d("widgetSizeDp", "0: must fit:  [" + mustFitWithinDp[0] + ", " + mustFitWithinDp[1] + "]");
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        {
+            Bundle widgetOptions = appWidgetManager.getAppWidgetOptions(appWidgetId);
+            int[]  sizePortrait = { widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH),   // dp values
+                    widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT) };
+            int[]  sizeLandscape = { widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH),
+                    widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT) };
+
+            //Log.d("widgetSizeDp", "portrait:  [" + sizePortrait[0] + ", " + sizePortrait[1] + "]");
+            //Log.d("widgetSizeDp", "landscape: [" + sizeLandscape[0] + ", " + sizeLandscape[1] + "]");
+            //Toast toast = Toast.makeText(context, "[" + sizePortrait[0] + ", " + sizePortrait[1] + "]; " + "[" + sizeLandscape[0] + ", " + sizeLandscape[1] + "]", Toast.LENGTH_SHORT);
+            //toast.show();
+
+            mustFitWithinDp[0] = Math.max( sizePortrait[0], sizeLandscape[0] );
+            mustFitWithinDp[1] = Math.max( sizePortrait[1], sizeLandscape[1] );
+            //Log.d("widgetSizeDp", "1: must fit:  [" + mustFitWithinDp[0] + ", " + mustFitWithinDp[1] + "]");
+        }
+        return mustFitWithinDp;
+    }
+
+
     /**
      * @param context the context
      * @param appWidgetManager a reference to the AppWidgetManager
@@ -311,18 +413,18 @@ public class SuntimesWidget0 extends AppWidgetProvider
      * @return a SuntimesLayout that is appropriate for available space.
      */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    protected static SuntimesLayout getWidgetLayout( Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize, SuntimesLayout defLayout )
+    protected static SunLayout getWidgetLayout( Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize, SunLayout defLayout )
     {
         int[] mustFitWithinDp = widgetSizeDp(context, appWidgetManager, appWidgetId, defSize);
 
-        SuntimesLayout layout;
+        SunLayout layout;
         if (WidgetSettings.loadAllowResizePref(context, appWidgetId))
         {
             int minWidth1x3 = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
-            layout = ((mustFitWithinDp[0] >= minWidth1x3) ? new SuntimesLayout_2x1_0()
-                                                          : WidgetSettings.load1x1ModePref_asLayout(context, appWidgetId));
+            layout = ((mustFitWithinDp[0] >= minWidth1x3) ? new SunLayout_2x1_0()
+                                                          : WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId));
         } else {
-            layout = defLayout; // WidgetSettings.load1x1ModePref_asLayout(context, appWidgetId);
+            layout = defLayout; // WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId);
         }
         //Log.d("getWidgetLayout", "layout is: " + layout);
         return layout;
@@ -333,9 +435,9 @@ public class SuntimesWidget0 extends AppWidgetProvider
      * @param appWidgetManager widget manager
      * @param appWidgetId id of widget to be updated
      */
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Class widgetClass, int[] defSize, SuntimesLayout defLayout)
+    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Class widgetClass, int[] defSize, SunLayout defLayout)
     {
-        SuntimesLayout layout = getWidgetLayout(context, appWidgetManager, appWidgetId, defSize, defLayout);
+        SunLayout layout = getWidgetLayout(context, appWidgetManager, appWidgetId, defSize, defLayout);
         SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, layout, widgetClass);
     }
 
@@ -345,7 +447,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
      * @param appWidgetId id of the widget to be updated
      * @param layout a SuntimesLayout managing the views to be updated
      */
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SuntimesLayout layout, Class widgetClass)
+    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SunLayout layout, Class widgetClass)
     {
         RemoteViews views = layout.getViews(context);
 
@@ -399,9 +501,19 @@ public class SuntimesWidget0 extends AppWidgetProvider
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         if (alarmManager != null)
         {
+            long updateInterval = getUpdateInterval();
             long updateTime = getUpdateTimeMillis();
-            alarmManager.setInexactRepeating(AlarmManager.RTC, updateTime, AlarmManager.INTERVAL_DAY, alarmIntent);
-            Log.d("DEBUG", "set update alarm: " + updateTime + " --> " + alarmIntent);
+
+            if (Build.VERSION.SDK_INT < 19)
+            {
+                alarmManager.setRepeating(AlarmManager.RTC, updateTime, updateInterval, alarmIntent);
+
+            } else {
+                alarmManager.setWindow(AlarmManager.RTC, updateTime, 5 * 1000, alarmIntent);
+            }
+
+            SuntimesUtils.TimeDisplayText updateDebug = utils.calendarDateTimeDisplayString(context, updateTime);
+            Log.d(TAG, "setUpdateAlarm: " + updateDebug + " --> " + getUpdateIntentFilter() + "(" + getUpdateAlarmId() + ") :: " + utils.timeDeltaLongDisplayString(updateInterval, true) );
         }
     }
 
@@ -416,7 +528,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
         {
             PendingIntent alarmIntent = getUpdateIntent(context);
             alarmManager.cancel(alarmIntent);
-            Log.d("DEBUG", "unset update alarm --> " + alarmIntent);
+            Log.d(TAG, "unsetUpdateAlarm: unset alarm --> " + getUpdateIntentFilter());
         }
     }
 
@@ -449,7 +561,6 @@ public class SuntimesWidget0 extends AppWidgetProvider
     }
 
     /**
-     * @param context
      * @param context the context
      * @return a SUNTIMES_WIDGET_UPDATE broadcast intent for widget alarmId (@see getUpdateAlarmId)
      */
@@ -459,7 +570,14 @@ public class SuntimesWidget0 extends AppWidgetProvider
         String updateFilter = getUpdateIntentFilter();
         Intent intent = new Intent(updateFilter);
         intent.putExtra(KEY_ALARMID, alarmId);
-        return PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        /**
+         * https://stackoverflow.com/questions/14029400/flag-cancel-current-or-flag-update-current
+         * The discussion here suggests that FLAG_CANCEL_CURRENT doesn't work as expected, and
+         * results in stale alarms (that may eventually consume all of the device's memory).
+         */
+        //return PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        return PendingIntent.getBroadcast(context, alarmId, intent, 0);
     }
 
     /**

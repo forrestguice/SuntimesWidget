@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -20,16 +20,20 @@ package com.forrestguice.suntimeswidget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.layouts.SunPosLayout;
+import com.forrestguice.suntimeswidget.layouts.SunPosLayout_1X1_0;
+import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
- * Solstice / Equinox widget config activity.
+ * ConfigActivity for SunPosition widgets (SuntimesWidget2)
  */
 public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
 {
@@ -43,100 +47,111 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     {
         super.initViews(context);
         setConfigActivityTitle(getString(R.string.configLabel_title2));
-
+        hideOptionShowSeconds();
         hideOptionCompareAgainst();
-        hideOption1x1LayoutMode();
+        showTimeMode(false);
         showOptionShowNoon(false);
-        disableOptionAllowResize();
-        showOptionTrackingMode(true);
-        showOptionTimeModeOverride(true);
-        showDataSource(false);  // temporarily hidden; atm all entries point to same implementation (false choice)
+        showOptionLabels(true);
+        showOption3x2LayoutMode(true);
     }
 
     @Override
-    protected void updateWidget(Context context)
+    protected void initLocale(Context context)
     {
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        SuntimesWidget2.updateAppWidget(context, appWidgetManager, appWidgetId);
+        super.initLocale(context);
+        WorldMapWidgetSettings.initDisplayStrings(context);
     }
 
-    @Override
-    protected void initTimeMode( Context context )
+    /**@Override
+    protected void loadAppearanceSettings(Context context)
     {
-        if (spinner_timeMode != null)
-        {
-            ArrayAdapter<WidgetSettings.SolsticeEquinoxMode> spinner_timeModeAdapter;
-            spinner_timeModeAdapter = new ArrayAdapter<WidgetSettings.SolsticeEquinoxMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.SolsticeEquinoxMode.values() );
-            spinner_timeModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner_timeMode.setAdapter(spinner_timeModeAdapter);
-        }
+        super.loadAppearanceSettings(context);
+    }*/
 
-        if (button_timeModeHelp != null)
-        {
-            button_timeModeHelp.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    HelpDialog helpDialog = new HelpDialog();
-                    helpDialog.setContent(getString(R.string.help_general_timeMode2));
-                    helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
-                }
-            });
-            button_timeModeHelp.setEnabled(false);           // disabled/hidden until txt provided
-            button_timeModeHelp.setVisibility(View.GONE);
-        }
-
-        if (checkbox_timeModeOverride != null)
-        {
-            checkbox_timeModeOverride.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-            {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-                {
-                    if (spinner_timeMode != null)
-                    {
-                        spinner_timeMode.setEnabled(!isChecked);
-                    }
-                }
-            });
-        }
+    @Override
+    protected WidgetSettings.ActionMode defaultActionMode()
+    {
+        return WidgetSettings.ActionMode.ONTAP_UPDATE;
     }
 
     @Override
     protected SuntimesCalculatorDescriptor[] supportingCalculators()
     {
-        return SuntimesCalculatorDescriptor.values(requiredFeatures);
+        return SuntimesCalculatorDescriptor.values(this, requiredFeatures);
     }
-    private static int[] requiredFeatures = new int[] { SuntimesCalculator.FEATURE_SOLSTICE };
+    private static int[] requiredFeatures = new int[] { SuntimesCalculator.FEATURE_POSITION };
 
     @Override
-    protected void loadTimeMode(Context context)
+    protected void updateWidget(Context context)
     {
-        WidgetSettings.SolsticeEquinoxMode timeMode = WidgetSettings.loadTimeMode2Pref(context, appWidgetId);
-        spinner_timeMode.setSelection(timeMode.ordinal());
+        SunPosLayout defLayout = new SunPosLayout_1X1_0();
+        SuntimesWidget2.updateAppWidget(context, AppWidgetManager.getInstance(context), appWidgetId, SuntimesWidget2.class, minWidgetSize(context), defLayout);
     }
 
     @Override
-    protected void saveTimeMode(Context context)
+    protected void loadShowLabels(Context context)
     {
-        final WidgetSettings.SolsticeEquinoxMode[] timeModes = WidgetSettings.SolsticeEquinoxMode.values();
-        WidgetSettings.SolsticeEquinoxMode timeMode = timeModes[ spinner_timeMode.getSelectedItemPosition()];
-        WidgetSettings.saveTimeMode2Pref(context, appWidgetId, timeMode);
+        checkbox_showLabels.setChecked(WidgetSettings.loadShowLabelsPref(context, appWidgetId, true));
     }
 
-    public static final boolean DEF_SHOWTITLE = true;
-    public static final String DEF_TITLETEXT = "%M";
+    @Override
+    protected void initWidgetMode1x1(Context context)
+    {
+        if (spinner_1x1mode != null)
+        {
+            ArrayAdapter<WidgetSettings.WidgetModeSunPos1x1> adapter = new ArrayAdapter<WidgetSettings.WidgetModeSunPos1x1>(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSunPos1x1.values());
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner_1x1mode.setAdapter(adapter);
+        }
+    }
 
     @Override
-    protected void loadTitleSettings(Context context)
+    protected void saveWidgetMode1x1(Context context)
     {
-        boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId, DEF_SHOWTITLE);
-        checkbox_showTitle.setChecked(showTitle);
-        setTitleTextEnabled(showTitle);
+        final WidgetSettings.WidgetModeSunPos1x1[] modes = WidgetSettings.WidgetModeSunPos1x1.values();
+        WidgetSettings.WidgetModeSunPos1x1 mode = modes[spinner_1x1mode.getSelectedItemPosition()];
+        WidgetSettings.saveSunPos1x1ModePref(context, appWidgetId, mode);
+        //Log.d("DEBUG", "Saved mode: " + mode.name());
+    }
 
-        String titleText = WidgetSettings.loadTitleTextPref(context, appWidgetId, DEF_TITLETEXT);
-        text_titleText.setText(titleText);
+    @Override
+    protected void loadWidgetMode1x1(Context context)
+    {
+        WidgetSettings.WidgetModeSunPos1x1 mode1x1 = WidgetSettings.loadSunPos1x1ModePref(context, appWidgetId);
+        spinner_1x1mode.setSelection(mode1x1.ordinal());
+    }
+
+    @Override
+    protected void initWidgetMode3x2(Context context)
+    {
+        if (spinner_3x2mode != null)
+        {
+            ArrayList<WorldMapWidgetSettings.WorldMapWidgetMode> modes = new ArrayList<>(Arrays.asList(WorldMapWidgetSettings.WorldMapWidgetMode.values()));
+            modes.remove(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE);
+            ArrayAdapter<WorldMapWidgetSettings.WorldMapWidgetMode> adapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, modes);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner_3x2mode.setAdapter(adapter);
+        }
+    }
+
+    @Override
+    protected void saveWidgetMode3x2(Context context)
+    {
+        if (spinner_3x2mode != null)
+        {
+            WorldMapWidgetSettings.WorldMapWidgetMode mode = (WorldMapWidgetSettings.WorldMapWidgetMode) spinner_3x2mode.getSelectedItem();
+            WorldMapWidgetSettings.saveSunPosMapModePref(context, appWidgetId, mode);
+        }
+    }
+
+    @Override
+    protected void loadWidgetMode3x2(Context context)
+    {
+        if (spinner_3x2mode != null)
+        {
+            WorldMapWidgetSettings.WorldMapWidgetMode mode = WorldMapWidgetSettings.loadSunPosMapModePref(context, appWidgetId);
+            spinner_3x2mode.setSelection(mode.ordinal());
+        }
     }
 
 }

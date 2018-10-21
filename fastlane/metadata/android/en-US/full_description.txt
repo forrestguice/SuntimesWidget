@@ -1,0 +1,13 @@
+Displays sunlight and moonlight times. Features an app and widget collection.
+
+Displays sunrise and sunset, twilight (civil / nautical / astronomical), blue
+and golden hour, the solstices and equinoxes, moonrise and moonset, moon phases and illumination.
+
+The times reported by this app are approximate. The app doesn't require network connectivity, GPS is optional.
+
+Permissions are required for some features to work properly:
+* ACCESS_FINE_LOCATION (ACCESS_COURSE_LOCATION) is used to obtain the current position (latitude, longitude, altitude).
+* WRITE_SYNC_SETTINGS (READ_SYNC_STATS) is used to create and add custom calendars to the Calendar app.
+* WRITE_CALENDAR (READ_CALENDAR) is used to populate custom calendars with events (moon phases, solstices, equinoxes).
+* SET_ALARM is used to schedule alarms using the AlarmClock app.
+* WRITE_EXTERNAL_STORAGE is used to backup data to file (places, themes, etc) (api<=18 only).

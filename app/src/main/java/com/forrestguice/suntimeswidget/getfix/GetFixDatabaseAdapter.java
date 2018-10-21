@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2018 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -121,8 +121,13 @@ public class GetFixDatabaseAdapter
     public Cursor getAllPlaces(int n, boolean fullEntry)
     {
         String[] QUERY = (fullEntry) ? QUERY_PLACES_FULLENTRY : QUERY_PLACES_MINENTRY;
-        return (n > 0) ? database.query( TABLE_PLACES, QUERY, null, null, null, null, "_id DESC", n+"" )
-                       : database.query( TABLE_PLACES, QUERY, null, null, null, null, "_id DESC" );
+        Cursor cursor =  (n > 0) ? database.query( TABLE_PLACES, QUERY, null, null, null, null, "_id DESC", n+"" )
+                                 : database.query( TABLE_PLACES, QUERY, null, null, null, null, "_id DESC" );
+        if (cursor != null)
+        {
+            cursor.moveToFirst();
+        }
+        return cursor;
     }
 
     /**
@@ -149,7 +154,7 @@ public class GetFixDatabaseAdapter
     {
         String[] QUERY = (fullEntry) ? QUERY_PLACES_FULLENTRY : QUERY_PLACES_MINENTRY;
         Cursor cursor = database.query( true, TABLE_PLACES, QUERY,
-                KEY_PLACE_NAME + "='" + name +"'", null,
+                KEY_PLACE_NAME + " = ?", new String[] { name },
                 null, null, null, null );
         if (cursor != null)
         {
@@ -182,7 +187,7 @@ public class GetFixDatabaseAdapter
         values.put(KEY_PLACE_LONGITUDE, place.getLongitude());
         values.put(KEY_PLACE_ALTITUDE, place.getAltitude());
         values.put(KEY_PLACE_COMMENT, "");
-        database.update(TABLE_PLACES, values,  "name='" + place.getLabel() + "'", null);
+        database.update(TABLE_PLACES, values,  "name = ?", new String[] { place.getLabel() });
     }
 
     public static int findPlaceByName(String name, Cursor cursor)
@@ -217,13 +222,18 @@ public class GetFixDatabaseAdapter
     }
     public String addPlaceCSV_row( ContentValues place )
     {
+        String quote = "\"";
         String separator = ", ";
         //noinspection UnnecessaryLocalVariable
-        String line = place.getAsString(KEY_PLACE_NAME) + separator +
+        String line = quote + place.getAsString(KEY_PLACE_NAME) + quote + separator +
                       place.getAsString(KEY_PLACE_LATITUDE) + separator +
                       place.getAsString(KEY_PLACE_LONGITUDE) + separator +
-                      place.getAsString(KEY_PLACE_ALTITUDE) + separator +
-                      place.getAsString(KEY_PLACE_COMMENT);
+                      place.getAsString(KEY_PLACE_ALTITUDE) + separator;
+
+        String comment = place.getAsString(KEY_PLACE_COMMENT);
+        if (!comment.isEmpty())
+            line += quote + comment + quote;
+
         return line;
     }
 

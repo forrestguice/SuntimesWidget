@@ -4,5 +4,6 @@
     <string name="default_location_label">Sofia</string>
     <string name="default_location_latitude">42.6953</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">23.1838</string>    <!-- decimal degrees (DD) -->
+    <string name="default_location_altitude">695</string>         <!-- meters -->
 
 </resources>

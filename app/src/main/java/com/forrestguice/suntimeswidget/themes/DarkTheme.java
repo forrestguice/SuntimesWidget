@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2014 Forrest Guice
+   Copyright (C) 2014-2018 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -31,7 +31,8 @@ public class DarkTheme extends SuntimesTheme
     public static final int THEMEDEF_VERSION = BuildConfig.VERSION_CODE;
     public static final ThemeDescriptor THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, THEMEDEF_DISPLAYSTRING, THEMEDEF_VERSION);
 
-    public static final int THEMEDEF_BACKGROUND_ID = R.drawable.bg_widget_dark;
+    public static final ThemeBackground THEMEDEF_BACKGROUND = ThemeBackground.DARK;
+    public static final int THEMEDEF_BACKGROUND_COLOR_ID = R.color.widget_bg_dark;
     public static final int[] THEMEDEF_PADDING = {2, 4, 4, 4};
 
     public static final float THEMEDEF_TITLESIZE = 10;
@@ -39,9 +40,14 @@ public class DarkTheme extends SuntimesTheme
     public static final float THEMEDEF_TIMESIZE = 12;
     public static final float THEMEDEF_TIMESUFFIXSIZE = 6;
 
+    public static final boolean THEMEDEF_TITLEBOLD = false;
+    public static final boolean THEMEDEF_TIMEBOLD = false;
+
     public static final int THEMEDEF_RISEICON_STROKEWIDTH = 0;
     public static final int THEMEDEF_SETICON_STROKEWIDTH = 0;
     public static final int THEMEDEF_NOONICON_STROKEWIDTH = 3;
+    public static final int THEMEDEF_MOONFULL_STROKEWIDTH = 2;
+    public static final int THEMEDEF_MOONNEW_STROKEWIDTH = 2;
 
     public static final int THEMEDEF_TITLECOLOR_ID = android.R.color.tertiary_text_dark;
     public static final int THEMEDEF_TEXTCOLOR_ID = android.R.color.tertiary_text_dark;
@@ -50,10 +56,29 @@ public class DarkTheme extends SuntimesTheme
     public static final int THEMEDEF_TIMECOLOR_ID = android.R.color.primary_text_dark;
     public static final int THEMEDEF_TIMESUFFIXCOLOR_ID = android.R.color.tertiary_text_dark;
 
+    public static final int THEMEDEF_MOONWANINGCOLOR_ID = R.color.moonIcon_color_waning;
+    public static final int THEMEDEF_MOONNEWCOLOR_ID = R.color.moonIcon_color_new_dark;
+    public static final int THEMEDEF_MOONWAXINGCOLOR_ID = R.color.moonIcon_color_waxing;
+    public static final int THEMEDEF_MOONFULLCOLOR_ID = R.color.moonIcon_color_full_dark;
+
+    public static final int THEMEDEF_MOONRISECOLOR_ID = R.color.moonIcon_color_rising_dark;
+    public static final int THEMEDEF_MOONSETCOLOR_ID = R.color.moonIcon_color_setting_dark;
+
+    public static final int THEMEDEF_DAYCOLOR_ID = R.color.graphColor_day_dark;
+    public static final int THEMEDEF_CIVILCOLOR_ID = R.color.graphColor_civil_dark;
+    public static final int THEMEDEF_NAUTICALCOLOR_ID = R.color.graphColor_nautical_dark;
+    public static final int THEMEDEF_ASTROCOLOR_ID = R.color.graphColor_astronomical_dark;
+    public static final int THEMEDEF_NIGHTCOLOR_ID = R.color.graphColor_night_dark;
+
     public static final int THEMEDEF_SPRINGCOLOR_ID = R.color.springColor_dark;
     public static final int THEMEDEF_SUMMERCOLOR_ID = R.color.summerColor_dark;
     public static final int THEMEDEF_FALLCOLOR_ID = R.color.fallColor_dark;
     public static final int THEMEDEF_WINTERCOLOR_ID = R.color.winterColor_dark;
+
+    public static final int THEMEDEF_MAP_BACKGROUNDCOLOR_ID = R.color.map_background_dark;
+    public static final int THEMEDEF_MAP_FOREGROUNDCOLOR_ID = R.color.map_foreground_dark;
+    public static final int THEMEDEF_MAP_SHADOWCOLOR_ID = R.color.map_sunshadow_dark;
+    public static final int THEMEDEF_MAP_HIGHLIGHTCOLOR_ID = R.color.map_moonlight_dark;
 
     public DarkTheme(Context context)
     {
@@ -64,7 +89,8 @@ public class DarkTheme extends SuntimesTheme
         this.themeIsDefault = true;
         this.themeDisplayString = THEMEDEF_DISPLAYSTRING;
 
-        this.themeBackground = THEMEDEF_BACKGROUND_ID;
+        this.themeBackground = THEMEDEF_BACKGROUND;
+        this.themeBackgroundColor = ContextCompat.getColor(context, THEMEDEF_BACKGROUND_COLOR_ID);
         this.themePadding = THEMEDEF_PADDING;
 
         this.themeTitleSize = THEMEDEF_TITLESIZE;
@@ -76,6 +102,9 @@ public class DarkTheme extends SuntimesTheme
         this.themeTextColor = ContextCompat.getColor(context, THEMEDEF_TEXTCOLOR_ID);
         this.themeTimeColor = ContextCompat.getColor(context, THEMEDEF_TIMECOLOR_ID);
         this.themeTimeSuffixColor = ContextCompat.getColor(context, THEMEDEF_TIMESUFFIXCOLOR_ID);
+
+        this.themeTitleBold = THEMEDEF_TITLEBOLD;
+        this.themeTimeBold = THEMEDEF_TIMEBOLD;
 
         this.themeSunriseTextColor = ContextCompat.getColor(context, THEMEDEF_SUNRISECOLOR_ID);
         this.themeSunriseIconColor = this.themeSunriseTextColor;
@@ -93,10 +122,31 @@ public class DarkTheme extends SuntimesTheme
         this.themeSunriseIconStrokeColor = this.themeSunsetIconColor;
         this.themeSunsetIconStrokeColor = this.themeSunriseIconColor;
 
+        this.themeMoonriseTextColor = ContextCompat.getColor(context, THEMEDEF_MOONRISECOLOR_ID);
+        this.themeMoonsetTextColor = ContextCompat.getColor(context, THEMEDEF_MOONSETCOLOR_ID);
+        this.themeMoonWaningColor = ContextCompat.getColor(context, THEMEDEF_MOONWANINGCOLOR_ID);
+        this.themeMoonNewColor = ContextCompat.getColor(context, THEMEDEF_MOONNEWCOLOR_ID);
+        this.themeMoonWaxingColor = ContextCompat.getColor(context, THEMEDEF_MOONWAXINGCOLOR_ID);
+        this.themeMoonFullColor = ContextCompat.getColor(context, THEMEDEF_MOONFULLCOLOR_ID);
+
+        this.themeMoonFullStroke = THEMEDEF_MOONFULL_STROKEWIDTH;
+        this.themeMoonNewStroke = THEMEDEF_MOONNEW_STROKEWIDTH;
+
+        this.themeDayColor = ContextCompat.getColor(context, THEMEDEF_DAYCOLOR_ID);
+        this.themeCivilColor = ContextCompat.getColor(context, THEMEDEF_CIVILCOLOR_ID);
+        this.themeNauticalColor = ContextCompat.getColor(context, THEMEDEF_NAUTICALCOLOR_ID);
+        this.themeAstroColor = ContextCompat.getColor(context, THEMEDEF_ASTROCOLOR_ID);
+        this.themeNightColor = ContextCompat.getColor(context, THEMEDEF_NIGHTCOLOR_ID);
+
         this.themeSpringColor = ContextCompat.getColor(context, THEMEDEF_SPRINGCOLOR_ID);
         this.themeSummerColor = ContextCompat.getColor(context, THEMEDEF_SUMMERCOLOR_ID);
         this.themeFallColor = ContextCompat.getColor(context, THEMEDEF_FALLCOLOR_ID);
         this.themeWinterColor = ContextCompat.getColor(context, THEMEDEF_WINTERCOLOR_ID);
+
+        this.themeMapBackgroundColor = ContextCompat.getColor(context, THEMEDEF_MAP_BACKGROUNDCOLOR_ID);
+        this.themeMapForegroundColor = ContextCompat.getColor(context, THEMEDEF_MAP_FOREGROUNDCOLOR_ID);
+        this.themeMapShadowColor = ContextCompat.getColor(context, THEMEDEF_MAP_SHADOWCOLOR_ID);
+        this.themeMapHighlightColor = ContextCompat.getColor(context, THEMEDEF_MAP_HIGHLIGHTCOLOR_ID);
     }
 
     public ThemeDescriptor themeDescriptor()

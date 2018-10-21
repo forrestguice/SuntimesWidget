@@ -77,6 +77,10 @@ public class TimeZoneDialogTest extends SuntimesActivityTestBase
 
     public static void showTimezoneDialog(Activity activity)
     {
+        showTimezoneDialog(activity, true);
+    }
+    public static void showTimezoneDialog(Activity activity, boolean verify)
+    {
         String actionTimezoneText = activity.getString(R.string.configAction_setTimeZone);
         openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
         onView(withText(actionTimezoneText)).perform(click());
@@ -90,6 +94,9 @@ public class TimeZoneDialogTest extends SuntimesActivityTestBase
 
     public static void verifyTimezoneDialog(Context context, WidgetSettings.TimezoneMode mode )
     {
+        if (mode == null)
+            return;
+
         switch (mode)
         {
             case SOLAR_TIME:

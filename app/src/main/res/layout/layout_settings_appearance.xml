@@ -33,6 +33,7 @@
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingLeft="16dp" android:paddingRight="8dp"
+            android:paddingStart="16dp" android:paddingEnd="8dp"
             android:paddingTop="@dimen/settingsGroup_padding">
 
             <TextView android:labelFor="@+id/appwidget_appearance_theme"
@@ -52,6 +53,7 @@
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingLeft="16dp" android:paddingRight="8dp"
+            android:paddingStart="16dp" android:paddingEnd="8dp"
             android:paddingTop="@dimen/settingsGroup_padding">
 
             <TextView android:labelFor="@+id/appwidget_appearance_1x1mode"
@@ -65,10 +67,33 @@
 
         </LinearLayout>
 
+        <LinearLayout android:id="@+id/appwidget_appearance_3x2mode_layout"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:visibility="gone"
+            android:paddingLeft="16dp" android:paddingRight="8dp"
+            android:paddingStart="16dp" android:paddingEnd="8dp"
+            android:paddingTop="@dimen/settingsGroup_padding">
+
+            <TextView android:labelFor="@+id/appwidget_appearance_3x2mode"
+                android:id="@+id/appwidget_appearance_3x2mode_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="@string/configLabel_appearance_3x2mode" />
+
+            <Spinner android:id="@+id/appwidget_appearance_3x2mode" android:layout_width="match_parent"
+                android:dropDownVerticalOffset="16sp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
         <CheckBox android:id="@+id/appwidget_appearance_allowResize" android:layout_width="match_parent"
                   android:paddingTop="@dimen/settingsGroup_padding"
                   android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
                   android:layout_height="wrap_content" android:text="@string/configLabel_appearance_allowResize" />
+
+        <CheckBox android:id="@+id/appwidget_appearance_showLabels" android:layout_width="match_parent"
+            android:paddingTop="@dimen/settingsGroup_padding"
+            android:layout_marginLeft="8dp" android:layout_marginRight="8dp" android:visibility="gone"
+            android:layout_height="wrap_content" android:text="@string/configLabel_appearance_showLabels" />
 
         <CheckBox android:id="@+id/appwidget_appearance_showTitle" android:layout_width="match_parent"
             android:paddingTop="@dimen/settingsGroup_padding"
@@ -77,7 +102,8 @@
 
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingLeft="16dp" android:paddingRight="8dp">
+            android:paddingLeft="16dp" android:paddingRight="8dp"
+            android:paddingStart="16dp" android:paddingEnd="8dp">
 
             <TextView android:labelFor="@+id/appwidget_appearance_titleText"
                 android:id="@+id/appwidget_appearance_titleText_label"
@@ -87,7 +113,8 @@
             <EditText android:id="@+id/appwidget_appearance_titleText" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:layout_weight="1"
                 android:hint="@string/configHint_appearance_titleText" android:text=""
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:inputType="textVisiblePassword" />
 
             <ImageButton android:id="@+id/appwidget_appearance_titleText_helpButton"
                 android:layout_height="wrap_content"
