@@ -227,7 +227,7 @@
     <!-- Widget Setting: time mode -->
     <string name="timeMode_noon_short">Migdia</string>                    <!-- setting -->
     <string name="timeMode_noon">Migdia</string>                    <!-- setting -->
-    <string name="timeMode_official_short">natural</string>              <!-- setting -->
+    <string name="timeMode_official_short">Natural</string>              <!-- setting -->
     <string name="timeMode_official">Temps natural</string>               <!-- setting -->
     <string name="timeMode_civil_short">Civil</string>                  <!-- setting -->
     <string name="timeMode_civil">Crepuscle civil</string>               <!-- setting -->
@@ -248,9 +248,9 @@
     <string name="timeMode_equinox_vernal_short">equinocci</string>       <!-- setting -->
     <string name="timeMode_equinox_autumnal">equinocci de tardor</string>  <!-- setting -->
     <string name="timeMode_equinox_autumnal_short">equinocci</string>     <!-- setting -->
-    <string name="timeMode_solstice_summer">solstici de estiu</string>    <!-- setting -->
+    <string name="timeMode_solstice_summer">solstici d\'estiu</string>    <!-- setting -->
     <string name="timeMode_solstice_summer_short">solstici</string>     <!-- setting -->
-    <string name="timeMode_solstice_winter">solstici de hivern</string>    <!-- setting -->
+    <string name="timeMode_solstice_winter">solstici d\'hivern</string>    <!-- setting -->
     <string name="timeMode_solstice_winter_short">solstici</string>     <!-- setting -->
 
     <string name="timeMode_moon">Lluna</string>                               <!-- label -->
@@ -402,8 +402,8 @@
     <string name="edittheme_error_themeName_empty">L\'ID ha de ser únic (requerit).</string>        <!-- error hint (themeName empty) -->
     <string name="edittheme_error_themeName_unique">L\'ID ha de ser únic (ja existeix).</string>  <!-- error hint (themeName taken) -->
     <string name="edittheme_error_displaytext">El text a mostrar no ha de ser buit.</string>  <!-- error hint (display text is empty) -->
-    <string name="edittheme_error_textsize_min">El tamany deu ser un enter &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->
-    <string name="edittheme_error_textsize_max">El tamany deu ser un enter &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->
+    <string name="edittheme_error_textsize_min">El tamany ha ser un enter >= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->
+    <string name="edittheme_error_textsize_max">El tamany ha ser un enter &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->
     <string name="edittheme_flag_default">per defecte</string>  <!-- content description -->
 
     <string name="deletetheme_dialog_title">Esborrar tema</string>        <!-- dialog title -->
@@ -626,7 +626,7 @@
     <string name="timezone_sort_msg">Zones horàries ordenades (%1$s).</string>      <!-- toast msg -->
 
     <!-- App Setting: GPS fix time limit -->
-    <string name="configLabel_getFix_maxElapse">Límit de temps de GPS</string>
+    <string name="configLabel_getFix_maxElapse">Límit de temps d\'intent de posicionament amb GPS</string>
     <string name="configLabel_getFix_maxElapse_summary">Abandonar rere <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
     <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
         <item>15 segons</item>
@@ -799,17 +799,17 @@
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>sortida de sol astronòmica</item>
         <item>sortida de sol nàutica</item>
-        <item>hora blava matutina (inici)</item>
+        <item>hora blava de l\'alba (inici)</item>
         <item>sortida de sol civil</item>
-        <item>hora blava matutina (fi)</item>
+        <item>hora blava de l\'alba (fi)</item>
         <item>sortida de sol</item>
-        <item>morning golden hour (end)</item>
+        <item>hora daurada del fi de l\'alba</item>
         <item>migdia</item>
-        <item>hora daurada nocturna (inici)</item>
+        <item>hora daurada de l\'inici del capvespre</item>
         <item>posta de sol</item>
         <item>hora blava nocturna (inici)</item>
         <item>posta de sol civil</item>
-        <item>hora blava nocturna (fi)</item>
+        <item>hora blava capvespre (fi)</item>
         <item>posta de sol nàutica</item>
         <item>posta de sol astronòmica</item>
         <item>sortida lunar</item>
@@ -938,7 +938,7 @@
 ]]></string>
 
     <string name="help_general_timeMode"><![CDATA[
-      <b>Temps real:</b> El Sol està en l\'horitzó: això és el temps  aproximat de la sortida i posta de sol.<br/><br/>
+      <b>Temps natural:</b> El Sol està en l\'horitzó: això és el temps  aproximat de la sortida i posta de sol.<br/><br/>
       <b>Crepuscle civil:</b> El Sol està 6 graus per sota de l\'horitzó; les estrelles més brillants són visibles. Hi ha suficient llum per a la majoría de les activitats a l\'aire lliure sense necessitat de llanterna.<br/><br/>
       <b>Crepuscle nàutic:</b> El Sol està 12 graus per sota de l\'horitzó; les siluetes dels objectes i l\'horitzó les difíciles de distinguir. No hi ha suficient llum per a activitatss a l\'aire lliure sense llanterna.<br/><br/>
       <b>Crepuscle astrònomic:</b> El Sol està 18 graus per sota de l\'horitzó. Qüasi l\'obscuritat de la nit.<br/>
