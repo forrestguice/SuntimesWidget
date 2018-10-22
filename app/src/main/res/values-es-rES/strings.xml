@@ -18,7 +18,7 @@
     <string name="configAction_mapLocation_noapp">¡No se encontró ninguna aplicación de mapas!</string>
     <string name="configAction_setAlarm">Configurar alarma</string>
     <string name="configAction_setTimeZone">Configurar zona horaria</string>
-    <string name="configAction_setDate">Configurar data</string>
+    <string name="configAction_setDate">Configurar fecha</string>
     <string name="configAction_sunDialog">Posición del Sol</string>
     <string name="configAction_equinoxDialog">solsticio / equinoccio</string>
     <string name="configAction_worldMap">Mapa del mundo</string>
@@ -28,9 +28,9 @@
     <string name="configAction_aboutWidget">Acerca de</string>
 
     
-    <string name="nextDay">día siguiente</string>
+    <string name="nextDay">Día siguiente</string>
     <string name="prevDay">Día anterior</string>
-    <string name="nextYear">año siguiente</string>
+    <string name="nextYear">Año siguiente</string>
     <string name="prevYear">Año anterior</string>
 
     
@@ -50,9 +50,9 @@
     <string name="past_tomorrow">Pasado (1)</string>
 
     
-    <string name="yesterday">ayer</string>
-    <string name="today">hoy</string>
-    <string name="tomorrow">mañana</string>
+    <string name="yesterday">Ayer</string>
+    <string name="today">Hoy</string>
+    <string name="tomorrow">Mañana</string>
 
     
     <string name="future_yesterday">Futuro (-1)</string>
@@ -351,7 +351,7 @@
 
     
     <string name="configLabel_widgetThemeList">Temas de widget</string>
-    <string name="configLabel_widgetThemeListSelect">Sel·lecciona un tema</string>
+    <string name="configLabel_widgetThemeListSelect">Selecciona un tema</string>
     <string name="configAction_addTheme">Añadir</string>           
     <string name="configAction_selectTheme">Seleccionar</string>     
     <string name="configAction_editTheme">Editar</string>         
@@ -364,8 +364,8 @@
     <string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_copia<xliff:g id="#">%2$s</xliff:g></string>
     <string name="addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g> (copia)</string>
 
-    <string name="addtheme_toast_success">añadido<xliff:g id="themeName">%1$s</xliff:g>.</string>          
-    <string name="edittheme_toast_success">guardado<xliff:g id="themeName">%1$s</xliff:g>.</string>         
+    <string name="addtheme_toast_success">Añadido<xliff:g id="themeName">%1$s</xliff:g>.</string>
+    <string name="edittheme_toast_success">Guardado<xliff:g id="themeName">%1$s</xliff:g>.</string>
     <string name="deletetheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g> va ser esborrat.</string> 
 
     <string name="edittheme_error_themeName_empty">El ID debe ser único (requerido).</string>
@@ -383,7 +383,7 @@
     <string name="configLabel_widgetThemeAdd">Añadir tema</string>     
     <string name="configLabel_widgetThemeEdit">Editar tema</string>   
     <string name="configAction_saveTheme">Guardar</string>           
-    <string name="configAction_chooseColor">Elegir color</string>
+    <string name="configAction_chooseColor">Escoger color</string>
 
     <string name="configLabel_themeBackgroundId">Base:</string>    
     <string name="configLabel_themeBackground_light">Claro</string>
@@ -491,7 +491,7 @@
     <string name="configLabel_places_export">Exportar lugares</string>
     <string name="configLabel_places_clear">Borrar lugares</string>
     <string name="configLabel_places_build">Añadir sitios del mundo</string>
-    <string name="configLabel_places_build_summary">Buscar locales y añade ciudades en la base de datos.</string>
+    <string name="configLabel_places_build_summary">Buscar locales y añadir ciudades en la base de datos.</string>
 
     
     <string name="configLabel_ui">Interfaz de usuario</string>
@@ -620,7 +620,7 @@
     </string-array>
 
     
-    <string name="configLabel_calendars">calendarios</string>   
+    <string name="configLabel_calendars">Calendarios</string>
 
     <string name="configLabel_calendars_enabled">Integración con el calendario</string>
     <string name="configLabel_calendars_enabled_summary">Proporcionar eventos a la aplicación de calendario (fases lunares, solsticios, y equinoccios).</string>
@@ -821,18 +821,18 @@
 
     
     <string name="locationclear_dialog_title">¿Limpiar lugares?</string>
-    <string name="locationclear_dialog_message">¿Estás seguro de querer borrar la base de datos de sitios?</string>
+    <string name="locationclear_dialog_message">¿Estás seguro de querer borrar la base de datos de lugares?</string>
     <string name="locationclear_dialog_ok">Borrar</string>
     <string name="locationclear_dialog_cancel">Cancelar</string>
 
     
-    <string name="locationcleared_dialog_title">Borrando sitios</string>
+    <string name="locationcleared_dialog_title">Borrando lugares</string>
     <string name="locationcleared_dialog_message">Borrando base de datos…</string>
-    <string name="locationcleared_toast_success">La base de datos de sitios se ha borrado.</string>
+    <string name="locationcleared_toast_success">La base de datos de lugares se ha borrado.</string>
 
     
     <string name="locationbuild_dialog_title">Construyendo base de datos</string>
-    <string name="locationbuild_dialog_message">Construyendo una base de datos de sitios…</string>
+    <string name="locationbuild_dialog_message">Construyendo una base de datos de lugares…</string>
     <string name="locationbuild_toast_success">Añadidos <xliff:g id="n">%1$s</xliff:g> lugares a la base de datos.</string>
 
     
