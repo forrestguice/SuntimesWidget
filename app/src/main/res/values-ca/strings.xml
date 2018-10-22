@@ -940,7 +940,7 @@
     <string name="help_general_timeMode"><![CDATA[
       <b>Temps natural:</b> El Sol està en l\'horitzó: això és el temps  aproximat de la sortida i posta de sol.<br/><br/>
       <b>Crepuscle civil:</b> El Sol està 6 graus per sota de l\'horitzó; les estrelles més brillants són visibles. Hi ha suficient llum per a la majoría de les activitats a l\'aire lliure sense necessitat de llanterna.<br/><br/>
-      <b>Crepuscle nàutic:</b> El Sol està 12 graus per sota de l\'horitzó; les siluetes dels objectes i l\'horitzó les difíciles de distinguir. No hi ha suficient llum per a activitatss a l\'aire lliure sense llanterna.<br/><br/>
+      <b>Crepuscle nàutic:</b> El Sol està 12 graus per sota de l\'horitzó; les siluetes dels objectes i l\'horitzó són difícils de distingir. No hi ha suficient llum per a activitatss a l\'aire lliure sense llanterna.<br/><br/>
       <b>Crepuscle astrònomic:</b> El Sol està 18 graus per sota de l\'horitzó. Qüasi l\'obscuritat de la nit.<br/>
 ]]></string>
     <string name="help_general_timeMode2"><![CDATA[
