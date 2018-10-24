@@ -705,7 +705,8 @@
         <item>Katalansk</item>
         <item>Baskisk</item>
         <item>Norsk</item>
-    </string-array>
+        <item>Traditional Chinese</item>
+    </string-array> <!-- TODO -->
 
     <!-- position formats -->
     <string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
