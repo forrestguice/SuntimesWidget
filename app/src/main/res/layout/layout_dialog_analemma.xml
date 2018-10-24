@@ -35,10 +35,18 @@
     <com.forrestguice.suntimeswidget.lightmap.AnalemmaView
         android:id="@+id/info_time_analemma"
         android:layout_width="128dp" android:layout_height="128dp"
+        app:layout_constraintDimensionRatio="1:1"
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/analemmadialog_title"
         app:layout_constraintStart_toEndOf="@+id/layout_solarTime0"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinner_analemmaMode"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/info_time_analemmaTime"
+        app:layout_constraintStart_toStartOf="@+id/info_time_analemma"
+        app:layout_constraintEnd_toEndOf="@+id/info_time_analemma" />
 
     <TextView
         style="@style/SunsetTimeTextView"
@@ -50,21 +58,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
-    <Spinner
-        android:id="@+id/spinner_analemmaMode"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/info_time_analemmaTime"
-        app:layout_constraintStart_toStartOf="@+id/info_time_analemma"
-        app:layout_constraintEnd_toEndOf="@+id/info_time_analemma" />
 
     <LinearLayout
         android:id="@+id/layout_solarTime0"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/info_time_analemma"
         app:layout_constraintTop_toTopOf="@+id/info_time_analemma"
+        app:layout_constraintHorizontal_bias="0" app:layout_constraintHorizontal_chainStyle="spread_inside"
         android:orientation="vertical">
+
+        <TextView
+            style="@style/SunsetTimeTextView"
+            android:id="@+id/info_date_today"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            tools:text="October 15, 2018 [day 288]" android:gravity="end|right" />
 
         <TextView
             style="@style/SunsetTimeTextView"
@@ -88,8 +96,8 @@
 
     <View
         android:id="@+id/hr0"
-        android:layout_width="0dp"
-        android:layout_height="2dp" style="@style/SunsetTimeHorizontalRule"
+        android:layout_width="0dp" android:layout_height="2dp"
+        style="@style/SunsetTimeHorizontalRule" android:layout_margin="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/info_time_analemma"
         app:layout_constraintTop_toBottomOf="@+id/layout_solarTime0" />
@@ -98,46 +106,49 @@
         android:id="@+id/layout_solarTime1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@+id/layout_solarTime0"
         app:layout_constraintEnd_toStartOf="@+id/info_time_analemma"
         app:layout_constraintTop_toBottomOf="@+id/hr0"
         android:orientation="vertical">
 
         <TextView
-            style="@style/SunsetTimeTextView"
+            style="@style/SunsetTimeTextView"  android:layout_marginTop="8dp"
             android:id="@+id/info_time_sunrise_earliest"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            tools:text="5:00 AM" android:gravity="end|right" />
-
-        <TextView
-            style="@style/SunsetTimeTextView"
-            android:id="@+id/info_time_sunrise_latest"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            tools:text="7:00 AM" android:gravity="end|right" />
-
-        <TextView
-            style="@style/SunsetTimeTextView"
-            android:id="@+id/info_time_sunset_earliest"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            tools:text="5:00 PM" android:gravity="end|right" />
+            tools:text="Earliest Sunrise\n5:00 AM" android:gravity="start" />
 
         <TextView
             style="@style/SunsetTimeTextView"
             android:id="@+id/info_time_sunset_latest"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            tools:text="8:00 PM" android:gravity="end|right" />
+            tools:text="Latest Sunset\n8:00 PM" android:gravity="start" />
+
+
+        <TextView
+            style="@style/SunsetTimeTextView" android:layout_marginTop="8dp"
+            android:id="@+id/info_time_sunrise_latest"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            tools:text="Latest Sunrise\n7:00 AM" android:gravity="start" />
 
         <TextView
             style="@style/SunsetTimeTextView"
+            android:id="@+id/info_time_sunset_earliest"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            tools:text="Latest Sunset\n5:00 PM" android:gravity="start" />
+
+
+        <TextView
+            style="@style/SunsetTimeTextView" android:layout_marginTop="8dp"
             android:id="@+id/info_time_shorestday"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            tools:text="Shortest Day" android:gravity="end|right" />
+            tools:text="Shortest Day" android:gravity="start" />
 
         <TextView
             style="@style/SunsetTimeTextView"
             android:id="@+id/info_time_longestday"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            tools:text="Longest Day" android:gravity="end|right" />
+            tools:text="Longest Day" android:gravity="start" />
 
     </LinearLayout>
 

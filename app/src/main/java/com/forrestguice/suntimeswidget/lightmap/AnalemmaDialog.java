@@ -56,7 +56,7 @@ public class AnalemmaDialog extends DialogFragment
     private TextView txtAnalemmaTime;
     private Spinner spinnerMode;
 
-    private TextView txtLocalMean, txtApparentSolar, labelEOT;
+    private TextView txtDate, txtLocalMean, txtApparentSolar, labelEOT;
 
     private TextView txtEarliestSunrise, txtLatestSunrise;
     private TextView txtEarliestSunset, txtLatestSunset;
@@ -221,6 +221,7 @@ public class AnalemmaDialog extends DialogFragment
             analemma.setAnalemmaListener(analemmaTaskListener);
         }
 
+        txtDate = (TextView)dialogView.findViewById(R.id.info_date_today);
         txtAnalemmaTime = (TextView)dialogView.findViewById(R.id.info_time_analemmaTime);
         txtLocalMean = (TextView)dialogView.findViewById(R.id.info_time_localMean);
         txtApparentSolar = (TextView)dialogView.findViewById(R.id.info_time_apparentSolar);
@@ -293,22 +294,34 @@ public class AnalemmaDialog extends DialogFragment
             labelEOT.setText(utils.timeDeltaLongDisplayString(0, (long) (eotOffset * 60 * 1000L), false, true, true).getValue() + " EOT"); // TODO
         }
 
+        if (txtAnalemmaTime != null)
+        {
+            txtAnalemmaTime.setVisibility(mode != LightMapWidgetSettings.AnalemmaWidgetMode.DEC_EOT ? View.VISIBLE : View.GONE);
+        }
+
         Context context = getContext();
         if (context != null)
         {
             boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
+            Calendar localNow = Calendar.getInstance(new WidgetTimezones.LocalMeanTime(longitude, "Local Mean Time"));
+            Calendar apparentNow = Calendar.getInstance(new WidgetTimezones.ApparentSolarTime(longitude, "Apparent Solar Time"));
+
+            if (txtDate != null)
+            {
+                SuntimesUtils.TimeDisplayText dateToday = utils.calendarDateDisplayString(context, localNow, true);
+                txtDate.setText(dateToday.toString() + " [day " + localNow.get(Calendar.DAY_OF_YEAR) + "]");  // TODO
+            }
 
             if (txtLocalMean != null)
             {
-                Calendar now = Calendar.getInstance(new WidgetTimezones.LocalMeanTime(longitude, "Local Mean Time"));
-                SuntimesUtils.TimeDisplayText localMeanText = utils.calendarTimeShortDisplayString(context, now, showSeconds);
+                SuntimesUtils.TimeDisplayText localMeanText = utils.calendarTimeShortDisplayString(context, localNow, showSeconds);
                 txtLocalMean.setText(localMeanText.toString() + " Local Mean");  // TODO
             }
 
             if (txtApparentSolar != null)
             {
-                Calendar now = Calendar.getInstance(new WidgetTimezones.ApparentSolarTime(longitude, "Apparent Solar Time"));
-                SuntimesUtils.TimeDisplayText apparentSolarText = utils.calendarTimeShortDisplayString(context, now, showSeconds);
+
+                SuntimesUtils.TimeDisplayText apparentSolarText = utils.calendarTimeShortDisplayString(context, apparentNow, showSeconds);
                 txtApparentSolar.setText(apparentSolarText.toString() + " Apparent Solar");  // TODO
             }
         }
