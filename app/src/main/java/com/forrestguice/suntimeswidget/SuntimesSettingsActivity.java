@@ -713,19 +713,21 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         final String[] localeValues = activity.getResources().getStringArray(R.array.locale_values);
 
         Integer[] index = getSortedOrder(localeDisplayNative);
-        CharSequence[] entries = new CharSequence[localeDisplay.length];
+        CharSequence[] entries = new CharSequence[localeValues.length];
         CharSequence[] values = new CharSequence[localeValues.length];
         for (int i=0; i<index.length; i++)
         {
             int j = index[i];
             CharSequence formattedDisplayString;
-            if (localeDisplay[j].equals(localeDisplayNative[j]))
-            {
-                formattedDisplayString = localeDisplayNative[j];
+            CharSequence localeDisplay_j = (localeDisplay.length > j ? localeDisplay[j] : localeValues[j]);
+            CharSequence localeDisplayNative_j = (localeDisplayNative.length > j ? localeDisplayNative[j] : localeValues[j]);
+
+            if (localeDisplay_j.equals(localeDisplayNative_j)) {
+                formattedDisplayString = localeDisplayNative_j;
 
             } else {
-                String localizedName = "(" + localeDisplay[j] + ")";
-                String displayString = localeDisplayNative[j] + " " + localizedName;
+                String localizedName = "(" + localeDisplay_j + ")";
+                String displayString = localeDisplayNative_j + " " + localizedName;
                 formattedDisplayString = SuntimesUtils.createRelativeSpan(null, displayString, localizedName, 0.7f);
             }
 
