@@ -588,11 +588,6 @@
         <item>暗色主題</item>
         <item>亮色主題 / 暗色主題 (夜間模式)</item>
     </string-array>
-    <string-array name="appThemes_values" translatable="false">  <!-- config values (one-to-one with appThemes_display) -->
-        <item>亮</item>
-        <item>暗</item>
-        <item>日光</item>
-    </string-array>
 
     <!-- App Setting: time format -->
     <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
@@ -600,20 +595,11 @@
         <item>@string/timeFormatMode_12hr</item>
         <item>@string/timeFormatMode_24hr</item>
     </string-array>
-    <string-array name="timeFormatMode_values" translatable="false">  <!-- one-to-one with timeFormatMode_display -->
-        <item>MODE_SYSTEM</item>
-        <item>MODE_12HR</item>
-        <item>MODE_24HR</item>
-    </string-array>
 
     <!-- App Setting: solstice tracking mode -->
     <string-array name="solsticeTrackingMode_display">                      <!-- one-to-one with solsticeTrackingMode_values -->
         <item>@string/trackingMode_closest</item>
         <item>@string/trackingMode_soonest</item>
-    </string-array>
-    <string-array name="solsticeTrackingMode_values" translatable="false">  <!-- one-to-one with solsticeTrackingMode_display -->
-        <item>CLOSEST</item>
-        <item>SOONEST</item>
     </string-array>
 
     <!-- App Setting: Date "on tap" action -->
@@ -622,12 +608,6 @@
         <item>切換卡片 (今天/明天)</item>
         <item>顯示日曆應用</item>
         <item>設置自定日期</item>
-    </string-array>
-    <string-array name="dateTapActions_values" translatable="false"> <!-- config values (one-to-one with dateTapActions_display) -->
-        <item>NOTHING</item>
-        <item>SWAP_CARD</item>
-        <item>SHOW_CALENDAR</item>
-        <item>CONFIG_DATE</item>
     </string-array>
 
     <!-- App Setting: Clock UI "on tap" action -->
@@ -638,13 +618,6 @@
         <item>顯示下一個便簽</item>
         <item>顯示上一個便簽</item>
     </string-array>
-    <string-array name="clockTapActions_values" translatable="false">  <!-- config values (one-to-one with clockTapActions_display) -->
-        <item>NOTHING</item>
-        <item>ALARM</item>
-        <item>TIMEZONE</item>
-        <item>NEXT_NOTE</item>
-        <item>PREV_NOTE</item>
-    </string-array>
 
     <!-- App Setting: Note UI "on tap" action -->
     <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
@@ -652,12 +625,6 @@
         <item>為便簽設置鬧鐘</item>
         <item>顯示下一個便簽</item>
         <item>顯示上一個便簽</item>
-    </string-array>
-    <string-array name="noteTapActions_values" translatable="false">   <!-- config values (one-to-one with noteTapActions_display) -->
-        <item>NOTHING</item>
-        <item>ALARM</item>
-        <item>NEXT_NOTE</item>
-        <item>PREV_NOTE</item>
     </string-array>
 
     <!-- App Setting: time zone sort modes -->
@@ -669,11 +636,6 @@
         <item>@string/timezone_sort_byOffset</item>
         <item>@string/timezone_sort_byId</item>
         <item>@string/timezone_sort_byName</item>
-    </string-array>
-    <string-array name="timezoneSort_values" translatable="false">   <!-- config values (one-to-one with timezoneSort_display) -->
-        <item>SORT_BY_OFFSET</item>
-        <item>SORT_BY_ID</item>
-        <item>SORT_BY_DISPLAYNAME</item>
     </string-array>
 
     <string name="timezone_sort_contextAction">時區排序</string>           <!-- action bar title -->
@@ -688,13 +650,6 @@
         <item>1分鐘</item>
         <item>5分鐘</item>
         <item>10分鐘</item>
-    </string-array>
-    <string-array name="getFix_maxElapse_values" translatable="false">   <!-- ms config values (one-to-one with getFix_maxElapse_display) -->
-        <item>15000</item>
-        <item>30000></item>
-        <item>60000</item>
-        <item>300000</item>
-        <item>600000</item>
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
@@ -711,18 +666,6 @@
         <item>兩天(48 小時)</item>
         <item>一周(168 小時)</item>
         <item>一個月(672 小時)</item>
-    </string-array>
-    <string-array name="getFix_maxAge_values" translatable="false">     <!-- ms config values (one-to-one with getFix_maxAge_display) -->
-        <item>60000</item>
-        <item>300000</item>
-        <item>900000</item>
-        <item>3600000</item>
-        <item>14400000</item>
-        <item>43200000</item>
-        <item>86400000</item>
-        <item>172800000</item>
-        <item>604800000</item>
-        <item>2419200000</item>
     </string-array>
 
     <!-- App Setting: calendars -->
@@ -749,12 +692,6 @@
         <item>五年</item>
         <item>十年</item>
     </string-array>
-    <string-array name="calendars_window_values" translatable="false">     <!-- ms config values (one-to-one with getFix_maxAge_display) -->
-        <item>31536000000</item>
-        <item>63072000000</item>
-        <item>157680000000</item>
-        <item>315360000000</item>
-    </string-array>
 
     <string name="calendar_solstice_displayName">夏冬至和春秋分</string>
     <string name="calendar_moonPhase_displayName">月相</string>
@@ -771,10 +708,6 @@
     <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
         <item>系統</item>
         <item>用戶自定</item>
-    </string-array>
-    <string-array name="localeMode_values" translatable="false">  <!-- one-to-one with localeMode_display -->
-        <item>SYSTEM_LOCALE</item>
-        <item>CUSTOM_LOCALE</item>
     </string-array>
 
     <!-- App Setting: custom Locale -->
@@ -1150,41 +1083,4 @@
     <string name="calculator_displayString_time4a_cc">Follows algorithms published by Dershowitz/Reingold in their book "Calendrical Calculations" (third edition).</string>
     <string name="calculator_displayString_time4a_4j">Based on astronomical calculations published by Jean Meeus in his book "Astronomical Algorithms" (second edition).</string>
 
-    <!-- pref defaults -->
-    <string name="def_appwidget_0_general_calculator" translatable="false">time4a-time4j</string>
-    <string name="def_appwidget_0_general_calculator_moon" translatable="false">time4a-time4j</string>
-    <string name="def_appwidget_0_general_altitude_enabled" translatable="false">true</string>
-    <string name="def_appwidget_0_appearance_timeformatmode" translatable="false">MODE_SYSTEM</string>
-    <string name="def_appwidget_0_general_showweeks" translatable="false">false</string>
-    <string name="def_appwidget_0_general_showhours" translatable="false">true</string>
-    <string name="def_appwidget_0_general_showseconds" translatable="false">false</string>
-    <string name="def_appwidget_0_general_showtimedate" translatable="false">true</string>
-    <string name="def_appwidget_0_general_trackingmode" translatable="false">SOONEST</string>
-
-    <string name="def_app_calendars_enabled" translatable="false">false</string>
-    <string name="def_app_plugins_enabled" translatable="false">false</string>
-
-    <string name="def_app_locale_mode" translatable="false">SYSTEM_LOCALE</string>
-    <string name="def_app_locale" translatable="false">en</string>
-
-    <string name="def_getFix_maxElapsed" translatable="false">60000</string>
-    <string name="def_getFix_maxAge" translatable="false">300000</string>
-    <string name="def_getFix_passiveMode" translatable="false">false</string>
-
-    <string name="def_calendars_window0" translatable="false">31536000000</string>
-    <string name="def_calendars_window1" translatable="false">63072000000</string>
-
-    <string name="def_app_ui_showwarnings" translatable="false">true</string>
-    <string name="def_app_ui_showmoon" translatable="false">true</string>
-    <string name="def_app_ui_showequinox" translatable="false">true</string>
-    <string name="def_app_ui_showlightmap" translatable="false">true</string>
-    <string name="def_app_ui_showgoldhour" translatable="false">true</string>
-    <string name="def_app_ui_showbluehour" translatable="false">false</string>
-    <string name="def_app_ui_showdatasource" translatable="false">true</string>
-    <string name="def_app_ui_datetapaction" translatable="false">CONFIG_DATE</string>
-    <string name="def_app_ui_datetapaction1" translatable="false">SHOW_CALENDAR</string>
-    <string name="def_app_ui_notetapaction" translatable="false">NEXT_NOTE</string>
-    <string name="def_app_ui_clocktapaction" translatable="false">ALARM</string>
-    <string name="def_app_appearance_theme" translatable="false">dark</string>
-    <string name="def_app_accessibility_verbose" translatable="false">false</string>
 </resources>
