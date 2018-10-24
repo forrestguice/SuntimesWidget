@@ -717,7 +717,8 @@
         <item>Catalan</item>
         <item>Basque</item>
         <item>Norwegian</item>
-    </string-array>  <!-- TODO -->
+        <item>Traditional Chinese</item>
+    </string-array>  <!-- TODO: these should be language/locale names as written/understood in Italian -->
 
     <!-- position formats -->
     <string name="degrees_format"><xliff:g id="value" example="45" >%1$s</xliff:g>°</string>  <!-- e.g. 45° -->

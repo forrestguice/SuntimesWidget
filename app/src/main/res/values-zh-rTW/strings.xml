@@ -4,6 +4,1055 @@
     <string name="default_location_label">Taiwan</string>
     <string name="default_location_latitude">23.5491</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">119.8998</string>  <!-- decimal degrees (DD) -->
-    <string name="default_location_altitude">0</string>         <!-- meters -->
+    <string name="default_location_altitude">0</string> <!-- meters -->
+
+    <!-- MAIN ACTIVITY -->
+
+    <!-- Action Bar
+         The text that appears in the overflow menu / menuItem contentDescription.
+    -->
+    <string name="configAction_refreshLocation">刷新</string>
+    <string name="configAction_addLocation">位置</string>
+    <string name="configAction_mapLocation">展示地圖</string>
+    <string name="configAction_mapLocation_chooser">地圖顯示方式</string>
+    <string name="configAction_mapLocation_noapp">未找到地圖應用</string>
+    <string name="configAction_setAlarm">設置鬧鐘</string>
+    <string name="configAction_setTimeZone">設置時區</string>
+    <string name="configAction_setDate">設置日期</string>
+    <string name="configAction_sunDialog">太陽位置</string>
+    <string name="configAction_equinoxDialog">夏冬至/春秋分</string>
+    <string name="configAction_worldMap">世界地圖</string>
+    <string name="configAction_moon">月亮</string>
+    <string name="configAction_help">幫助</string>
+    <string name="configAction_settings">設置</string>
+    <string name="configAction_aboutWidget">關於</string>
+
+    <!-- Button: Next/Prev Date
+         The next/prev button contentDescription (accessibility).
+    -->
+    <string name="nextDay">下一日</string>
+    <string name="prevDay">上一日</string>
+    <string name="nextYear">下一年</string>
+    <string name="prevYear">上一年</string>
+
+    <!-- Warnings -->
+    <string name="spanTag_warning">警告！</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
+
+    <!-- Field: timezone
+         The time zone field that appears below the clock (main activity).
+    -->
+    <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
+    <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> 這個位置的時區可能是錯的。</string>  <!-- snackbar message -->
+
+    <!-- Field: date
+         The date field that appears above the table (main activity).
+         e.g. [dateDesc] \n [date]
+             where [dateDesc] is a yesterday/today/tomorrow, past_, or future_ string.
+             where [date] is a dateString formatted by app using user's locale
+    -->
+    <string name="dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
+    <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> 日期已設置為今天外的另一天。</string>  <!-- snackbar message -->
+
+    <!-- DateDesc: some day in the past (appears in dateField) -->
+    <string name="past_yesterday">過去 (-1)</string>
+    <string name="past_today">過去</string>
+    <string name="past_tomorrow">過去 (+1)</string>
+
+    <!-- DateDesc: yesterday/today/tomorrow (appears in dateField) -->
+    <string name="yesterday">昨日</string>
+    <string name="today">今日</string>
+    <string name="tomorrow">明日</string>
+
+    <!-- DateDesc: some day in the future (appears in dateField) -->
+    <string name="future_yesterday">將來 (-1)</string>
+    <string name="future_today">將來</string>
+    <string name="future_tomorrow">將來 (+1)</string>
+
+    <!-- Field: length of day
+         The hours in the day field(s) that appears below the table (main activity)
+    -->
+    <string name="length_day"><xliff:g id="timeSpan" example="12h">%1$s</xliff:g> 日光</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
+    <string name="length_light"><xliff:g id="timeSpan" example="12h 50m">%1$s</xliff:g> 天亮時間</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
+    <string name="length_twilight1"><xliff:g id="timeSpan1" example="10h 5m">%1$s</xliff:g></string>
+    <string name="length_twilight1e_pos"><xliff:g id="timeSpan1" example="10h 5m">%1$s</xliff:g> [+<xliff:g id="timeSpan1" example="+30s">%2$s</xliff:g>]</string>
+    <string name="length_twilight1e_neg"><xliff:g id="timeSpan1" example="10h 5m">%1$s</xliff:g> [-<xliff:g id="timeSpan1" example="+30s">%2$s</xliff:g>]</string>
+    <string name="length_twilight2"><xliff:g id="timeSpan1" example="30m">%1$s</xliff:g> | <xliff:g id="timeSpan2" example="30m">%2$s</xliff:g></string>
+    <string name="length_delimiter">|</string>
+
+    <!-- Field: moon illumination (as seen in moon widget) -->
+    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g>飽滿度</string>  <!-- used in 2x1 widget -->
+    <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- used in 1x1 widget -->
+
+    <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
+         e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
+         The relative order is defined by the layout (layout/info_time_daydelta.xml).
+    -->
+    <string name="delta_day_tomorrow">明天將</string>
+    <string name="delta_day_yesterday">昨天</string>
+    <string name="delta_day_shorter">更短</string>
+    <string name="delta_day_longer">更長</string>
+
+    <!-- NotePrefix: since/until/untilEnd
+         The note prefix text. e.g.
+                  4 hr
+                 until
+                  sunset
+         The relative order is defined by the layout (layout/info_time_note.xml).
+    -->
+    <string name="since">從</string>
+    <string name="until">到</string>
+    <string name="until_end">為止</string>
+
+    <!-- NoteBody: sunset/sunrise/twilight string
+         The note body text; appears next to the prefix (layout/info_time_note.xml)
+    -->
+    <string name="until_astroTwilight">天文曙光</string>
+    <string name="until_civilTwilight">民用曙光</string>
+    <string name="until_nauticalTwilight">航海曙光</string>
+    <string name="until_sunrise">日出</string>
+    <string name="until_noon">太陽正午</string>
+    <string name="until_sunset">日落</string>
+    <string name="untilEnd_civilTwilight">民用暮光</string>
+    <string name="untilEnd_nauticalTwilight">航海暮光</string>
+    <string name="untilEnd_astroTwilight">天文暮光</string>
+    <string name="until_goldhour">黃金时刻</string>
+    <string name="untilEnd_goldhour">黃金时刻</string>
+    <string name="until_bluehour">蓝色时刻</string>
+    <string name="untilEnd_bluehour">蓝色时刻</string>
+    <string name="until_moonrise">月出</string>
+    <string name="until_moonset">月落</string>
+
+    <!-- Table -->
+    <string name="sunrise">日出</string>                             <!-- contentDescription -->
+    <string name="sunrise_short">日出</string>                          <!-- table title -->
+    <string name="sunset">日落</string>                               <!-- contentDescription -->
+    <string name="sunset_short">日落</string>                            <!-- table title -->
+    <string name="moonrise">月出</string>                             <!-- contentDescription -->
+    <string name="moonrise_short">月出</string>                             <!-- table title -->
+    <string name="moonset">月落</string>                             <!-- contentDescription -->
+    <string name="moonset_short">月落</string>                             <!-- table title -->
+
+    <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
+    <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
+    <string name="delta_years">年</string>    <!-- e.g. 1y -->
+    <string name="delta_weeks">周</string>    <!-- e.g. 2w -->
+    <string name="delta_days">天</string>     <!-- e.g. 1d -->
+    <string name="delta_hours">小時</string>    <!-- e.g. 2h -->
+    <string name="delta_minutes">分鐘</string>  <!-- e.g. 3m -->
+    <string name="delta_seconds">秒</string>  <!-- e.g. 4s -->
+
+    <string name="hence"><xliff:g id="timeSpan">%1$s</xliff:g>之後</string>  <!-- e.g. 15d 23h from now -->
+    <string name="ago"><xliff:g id="timeSpan">%1$s</xliff:g>之前</string>         <!-- e.g. 1y 15d 12h ago -->
+
+    <!-- misc time values: might be displayed in a timeField in place of an actual time -->
+    <string name="time_none">無</string>  <!-- no time / time does not occur -->
+    <string name="time_loading">…</string>  <!-- calculating / time is loading -->
+    <string name="time_format_12hr_veryshort"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- shortest 12hr time format; should omit am/pm -->
+    <string name="time_format_12hr_veryshort_withseconds"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  <!-- shortest 12hr time format (w/ seconds); should omit am/pm -->
+    <string name="time_format_24hr_veryshort"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- 24hr time format -->
+    <string name="time_format_24hr_veryshort_withseconds"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  <!-- 24hr time format (w/ seconds) -->
+    <string name="time_format_12hr_short"><xliff:g id="hoursMinutes">%1$s</xliff:g> <xliff:g id="suffix">%2$s</xliff:g></string>
+    <string name="date_format_short"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>                                           <!-- MMMM d ... e.g. December 3 -->
+    <string name="date_format_long"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g>, <xliff:g id="patternYear">yyyy</xliff:g></string>  <!-- MMMM d, yyyy ... e.g. December 3, 2017 -->
+    <string name="datetime_format_short"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>           <!-- shortDate, time ... e.g. December 3, 11:00 am -->
+    <string name="datetime_format_long"><xliff:g id="monthYear">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>        <!-- longDate, time ... e.g. December 3, 2017, 11:00 am -->
+    <string name="datetime_format_verylong"><xliff:g id="dateFormat">%1$s</xliff:g> [<xliff:g id="tzID" example="UTC">%2$s</xliff:g>]</string>  <!-- datetime_format and timezone -->
+    <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
+
+    <!-- location display formats -->
+    <string name="location_format_alt"><xliff:g id="altitude">%1$s</xliff:g><xliff:g id="distanceUnit" example="m">%2$s</xliff:g></string>  <!-- altitude, e.g. 1600m -->
+    <string name="location_format_alttag">[<xliff:g id="altitudeString">%1$s</xliff:g>]</string>                                            <!-- altitude as a tag, e.g. [1600m] -->
+    <string name="location_format_latlon"><xliff:g id="latitude">%1$s</xliff:g>, <xliff:g id="longitude">%2$s</xliff:g></string>            <!-- latitude, longitude -->
+    <string name="location_format_latlonalt"><xliff:g id="latlon">%1$s</xliff:g> <xliff:g id="altitudeTag">%2$s</xliff:g></string>        <!-- latitude, longitude [altitude] -->
+
+    <!-- distances (meters, feet, etc) -->
+    <string name="units_feet">英尺</string>
+    <string name="units_feet_short">ft</string>
+    <plurals name="units_feet_long">
+        <item quantity="one">%d 英尺</item>
+        <item quantity="other">%d 英尺</item>
+    </plurals>
+    <string name="units_meters">米</string>
+    <string name="units_meters_short">m</string>
+    <plurals name="units_meters_long">
+        <item quantity="one">%d 米</item>
+        <item quantity="other">%d 米</item>
+    </plurals>
+
+    <!--
+         WIDGET CONFIG
+    -->
+
+    <string name="configAction_restoreDefaults">復原設置</string>   <!-- button / menu text -->
+
+    <string name="configLabel_tagDefault">[初始值]</string>
+    <string name="configLabel_tagPlugin">[插件]</string>
+    <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->
+
+    <!-- WidgetConfig Activity -->
+    <string name="configAction_addWidget">添加小部件</string>                   <!-- Button: Add -->
+    <string name="configAction_reconfigWidget_short">重新配置</string>       <!-- Button: Reconfigure -->
+    <string name="configAction_reconfigWidget">重新配置小部件</string>      <!-- used as title when reconfiguring -->
+    <string name="configLabel_title0">@string/app_name_widget0</string>         <!-- used as title when adding -->
+    <string name="configLabel_title1">可翻轉的小部件</string>                 <!-- used as title when adding -->
+    <string name="configLabel_title2">@string/app_name_widget2</string>                  <!-- used as title when adding -->
+    <string name="configLabel_solsticewidget0">@string/app_name_solsticewidget0</string>                  <!-- used as title when adding -->
+    <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
+
+    <!-- Widget Setting: general -->
+    <string name="configLabel_general">通用設置</string>                <!-- group title -->
+    <string name="configLabel_general_calculator">日期來源:</string>         <!-- spinner label -->
+    <string name="configLabel_general_calculator_sun">日光數據來源</string>         <!-- preference label -->
+    <string name="configLabel_general_calculator_moon">月光數據來源</string>         <!-- preference label -->
+
+    <string name="configLabel_general_altitude_enabled">使用海拔</string>        <!-- checkbox label -->
+    <string name="configLabel_general_altitude_enabled_summary">套用海拔以提高精度。</string>        <!-- checkbox label -->
+
+    <string name="configLabel_general_showSeconds">顯示秒</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showSeconds_summary">顯示時間時包含秒。</string>        <!-- checkbox label -->
+
+    <string name="configLabel_general_showTimeDate">顯示時間 (和日期一起)</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showTimeDate_summary">顯示日期的同時顯示時間。</string>        <!-- checkbox label -->
+
+    <string name="configLabel_general_showWeeks">顯示周</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showWeeks_summary">超過7天的時候用周來記（如：15天為2周1天）。</string>    <!-- checkbox label -->
+
+    <string name="configLabel_general_showHours">顯示小時</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showHours_summary">大於一天的時候包含小時和分鐘。</string>    <!-- checkbox label -->
+
+    <!-- Widget Setting: advanced / experimental -->
+    <string name="configLabel_advanced">高級設置</string>                        <!-- group title -->
+    <string name="configLabel_experimental">實驗性設置</string>                <!-- group title -->
+    <string name="configLabel_general_scanPlugins">數據源插件</string>                                <!-- checkbox label -->
+    <string name="configLabel_general_scanPlugins_summary">掃描並加載第三方插件。</string>   <!-- pref summary -->
+
+    <!-- Widget Setting: appearance -->
+    <string name="configLabel_appearance">顯示設置</string>           <!-- group title -->
+    <string name="configLabel_appearance_theme">主題：</string>                  <!-- spinner label -->
+    <string name="configLabel_appearance_allowResize">適應可用的空間（可調節大小）</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_showLabels">顯示標籤</string>          <!-- checkbox label -->
+    <string name="configLabel_appearance_showTitle">顯示標題</string>          <!-- checkbox label -->
+    <string name="configLabel_appearance_titleText">標題：</string>              <!-- edittext label -->
+    <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
+
+    <!-- Widget Setting: time mode -->
+    <string name="timeMode_noon_short">正午</string>                    <!-- setting -->
+    <string name="timeMode_noon">太陽正午</string>                    <!-- setting -->
+    <string name="timeMode_official_short">實際</string>              <!-- setting -->
+    <string name="timeMode_official">實際時間</string>               <!-- setting -->
+    <string name="timeMode_civil_short">民用</string>                  <!-- setting -->
+    <string name="timeMode_civil">民用曙暮光</string>               <!-- setting -->
+    <string name="timeMode_nautical_short">航海</string>            <!-- setting -->
+    <string name="timeMode_nautical">航海曙暮光</string>         <!-- setting -->
+    <string name="timeMode_astronomical_short">天文</string>    <!-- setting -->
+    <string name="timeMode_astronomical">天文曙暮光</string> <!-- setting -->
+    <string name="timeMode_night">夜間</string>                   <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_day">日間</string>                       <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_golden_short">黃金</string>                <!-- setting -->
+    <string name="timeMode_golden">黃金時刻</string>                 <!-- setting -->
+    <string name="timeMode_blue8_short">藍色 (8\u00B0)</string>                    <!-- setting -->
+    <string name="timeMode_blue8">藍色時刻 (8\u00B0)</string>                     <!-- setting -->
+    <string name="timeMode_blue4_short">藍色 (4\u00B0)</string>                    <!-- setting -->
+    <string name="timeMode_blue4">藍色時刻 (4\u00B0)</string>                     <!-- setting -->
+
+    <string name="timeMode_equinox_vernal">春分</string>      <!-- setting -->
+    <string name="timeMode_equinox_vernal_short">春分</string>       <!-- setting -->
+    <string name="timeMode_equinox_autumnal">秋分</string>  <!-- setting -->
+    <string name="timeMode_equinox_autumnal_short">秋分</string>     <!-- setting -->
+    <string name="timeMode_solstice_summer">夏至</string>    <!-- setting -->
+    <string name="timeMode_solstice_summer_short">夏至</string>     <!-- setting -->
+    <string name="timeMode_solstice_winter">冬至</string>    <!-- setting -->
+    <string name="timeMode_solstice_winter_short">冬至</string>     <!-- setting -->
+
+    <string name="timeMode_moon">月光</string>                               <!-- label -->
+    <string name="timeMode_moon_new">新月</string>                               <!-- setting -->
+    <string name="timeMode_moon_new_short">新月</string>                              <!-- setting -->
+    <string name="timeMode_moon_waxingcrescent_short">眉月</string>               <!-- label -->
+    <string name="timeMode_moon_waxingcrescent">眉月</string>                     <!-- label -->
+    <string name="timeMode_moon_firstquarter">上弦月</string>                 <!-- setting -->
+    <string name="timeMode_moon_firstquarter_short">上弦月</string>           <!-- setting -->
+    <string name="timeMode_moon_waxinggibbous_short">盈凸月</string>               <!-- label -->
+    <string name="timeMode_moon_waxinggibbous">盈凸月</string>                     <!-- label -->
+    <string name="timeMode_moon_full">滿月</string>                             <!-- setting -->
+    <string name="timeMode_moon_full_short">滿月</string>                            <!-- setting -->
+    <string name="timeMode_moon_waninggibbous_short">虧凸月</string>               <!-- label -->
+    <string name="timeMode_moon_waninggibbous">虧凸月</string>                     <!-- label -->
+    <string name="timeMode_moon_thirdquarter">下弦月</string>                 <!-- setting -->
+    <string name="timeMode_moon_thirdquarter_short">下弦月</string>           <!-- setting -->
+    <string name="timeMode_moon_waningcrescent_short">虧眉月</string>               <!-- label -->
+    <string name="timeMode_moon_waningcrescent">虧眉月</string>                     <!-- label -->
+
+    <string name="configLabel_general_timeMode">模式：</string>          <!-- spinner label -->
+
+    <!-- Widget Setting: layout mode -->
+    <string name="widgetMode1x1_sunrise">僅日出</string>             <!-- setting -->
+    <string name="widgetMode1x1_sunset">僅日落</string>               <!-- setting -->
+    <string name="widgetMode1x1_both_1">日出 &amp; 日落 (1)</string>  <!-- setting -->
+    <string name="widgetMode1x1_both_2">日出 &amp; 日落 (2)</string>  <!-- setting -->
+
+    <string name="widgetMode1x1_altaz">海拔 &amp; 方位</string>     <!-- setting -->
+    <string name="widgetMode1x1_decright">赤經 &amp; 赤緯</string>     <!-- setting -->
+
+    <string name="widgetMode_sunPosMap_simplerectangular">基礎</string>  <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal">極性</string>     <!-- setting -->
+    <string name="widgetMode_sunPosMap_bluemarble">藍色彈珠</string>    <!-- setting -->
+
+    <string name="widgetMode1x1_moonriseset">月出 &amp; 月落</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonphaseillum">月相 &amp; 月光</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonphase">僅月相</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonillum">僅月光</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonphasenext">下一個月相</string>     <!-- setting -->
+
+    <string name="configLabel_appearance_1x1mode">1x1 佈局：</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_3x2mode">3x2 佈局：</string>     <!-- spinner label -->
+
+    <!-- Widget Setting: widget tap action -->
+    <string name="actionMode_doNothing">什麼也不做</string>           <!-- setting -->
+    <string name="actionMode_update">更新小部件</string>           <!-- setting -->
+    <string name="actionMode_config">重新配置小部件</string>      <!-- setting -->
+    <string name="actionMode_launchActivity">打開應用</string>      <!-- setting -->
+    <string name="actionMode_flipToNextItem">翻轉顯示</string>      <!-- setting -->
+
+    <string name="configLabel_action">動作設置</string>                  <!-- group title -->
+    <string name="configLabel_action_onTap">輕按時：</string>                    <!-- spinner label -->
+    <string name="configLabel_action_onClockTap">輕按時鐘時：</string>         <!-- spinner label -->
+    <string name="configLabel_action_onNoteTap">輕按便簽時：</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap">輕按日期時：</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap1">長按日期時：</string>   <!-- spinner label -->
+
+    <!-- Widget Setting: location -->
+    <string name="locationMode_current">當前（最近獲取到的位置）</string>  <!-- setting -->
+    <string name="locationMode_custom">用戶自定</string>           <!-- setting -->
+
+    <string name="configLabel_location">位置設置</string>               <!-- group title -->
+    <string name="configLabel_location_mode">模式：</string>                      <!-- spinner label -->
+    <string name="configLabel_location_lat">緯度：</string>                   <!-- edittext label -->
+    <string name="configHint_location_lat">十進制</string>      <!-- edittext hint -->
+    <string name="configLabel_location_lon">經度：</string>                          <!-- edittext label -->
+    <string name="configHint_location_lon">十進制</string> <!-- edittext hint -->
+    <string name="configLabel_location_alt">海拔：</string>                          <!-- edittext label -->
+    <string name="configHint_location_alt">0</string>                                    <!-- edittext hint -->
+    <string name="configLabel_location_name">名稱：</string>                      <!-- edittext label -->
+    <string name="configHint_location_name">（可選）</string>                  <!-- edittext hint -->
+
+    <string name="configAction_getFix">獲取位置</string>    <!-- button (contentDescription) -->
+    <string name="configAction_editPlace">編輯</string>         <!-- button (contentDescription) -->
+    <string name="configAction_savePlace">保存</string>         <!-- button (contentDescription) -->
+
+    <!-- Widget Setting: timezone -->
+    <string name="timezoneMode_solar">太陽時</string>                       <!-- setting -->
+    <string name="timezoneMode_current">系統時區</string>               <!-- setting -->
+    <string name="timezoneMode_custom">用戶自定</string>                    <!-- setting -->
+
+    <string name="solartime_localMean">當地平均時間</string>                 <!-- setting / custom timezone id -->
+    <string name="solartime_apparent">視太陽時間</string>              <!-- setting / custom timezone id -->
+    <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
+    <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
+
+    <string name="configLabel_timezone">時區設置</string>             <!-- group title -->
+    <string name="configLabel_timezone_mode">模式：</string>                     <!-- spinner label -->
+    <string name="configLabel_timezone_custom">時區：</string>              <!-- spinner label -->
+    <string name="configLabel_solartime">太陽時：</string>                   <!-- spinner label -->
+
+    <!-- Widget Setting: timeFormat mode -->
+    <string name="timeFormatMode_system">系統格式</string>          <!-- setting -->
+    <string name="timeFormatMode_12hr">12小時格式</string>                  <!-- setting -->
+    <string name="timeFormatMode_24hr">24小時格式</string>                  <!-- setting -->
+
+    <string name="configLabel_timeFormatMode">時間格式</string>             <!-- preference label -->
+    <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
+
+    <!-- Widget Setting: date mode -->
+    <string name="dateMode_current">今天</string>                  <!-- setting -->
+    <string name="dateMode_custom">用戶自定</string>            <!-- setting -->
+
+    <string name="configLabel_date">日期設置</string>                      <!-- group title -->
+    <string name="configLabel_date_mode">模式：</string>                         <!-- spinner label -->
+    <string name="configLabel_date_custom">日期：</string>                       <!-- dateSelector label -->
+
+    <!-- Widget Setting: compare mode -->
+    <string name="compareMode_yesterday">昨日</string>                     <!-- setting -->
+    <string name="compareMode_tomorrow">明日</string>                       <!-- setting -->
+    <string name="configLabel_general_compareMode">對比：</string>    <!-- spinner label -->
+    <string name="configLabel_general_showComparison">顯示對比</string>  <!-- checkbox label -->
+
+    <!-- Widget Setting: tracking mode -->
+    <string name="trackingMode_closest">最近事件</string>                 <!-- setting -->
+    <string name="trackingMode_soonest">即將發生事件</string>                <!-- setting -->
+    <string name="configLabel_general_trackingMode">追蹤：</string>            <!-- spinner label -->
+
+    <!-- Widget Setting: timeMode override -->
+    <string name="configLabel_general_timeMode_override">追蹤覆蓋模式</string>     <!-- checkbox label -->
+
+    <!-- Widget Settings: noon -->
+    <string name="configLabel_general_showNoon">顯示太陽正午</string>        <!-- checkbox label -->
+
+    <!-- Widget Setting: Launch App -->
+    <string name="configLabel_action_launch">Activity:</string>                 <!-- edittext label -->
+    <string name="configHint_action_launch"><xliff:g id="uri">com.forrestguice.suntimeswidget.SuntimesActivity</xliff:g></string> <!-- editText hint (and default) -->
+
+    <!-- App Setting: WidgetThemes -->
+    <string name="configLabel_widgetThemeList">小部件主題</string>
+    <string name="configLabel_widgetThemeListSelect">選擇一個主題</string>
+    <string name="configAction_addTheme">添加</string>           <!-- button (contentDescription) -->
+    <string name="configAction_selectTheme">選擇</string>     <!-- button (contentDescription) -->
+    <string name="configAction_editTheme">編輯</string>         <!-- button (contentDescription) -->
+    <string name="configAction_deleteTheme">刪除</string>     <!-- button (contentDescription) -->
+    <string name="configAction_copyTheme">複製</string>         <!-- button (contentDescription) -->
+    <string name="configAction_exportThemes">導出</string>    <!-- button (contentDescription) -->
+    <string name="configAction_importThemes">導入</string>    <!-- button (contentDescription) -->
+
+    <string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
+    <string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_copy<xliff:g id="#">%2$s</xliff:g></string>   <!-- copied theme id -->
+    <string name="addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g> (copy)</string>                            <!-- copied theme name (display string) -->
+
+    <string name="addtheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g>添加好了。</string>          <!-- toast msg -->
+    <string name="edittheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g>保存好了。</string>         <!-- toast msg -->
+    <string name="deletetheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g> 已刪除。</string> <!-- toast msg -->
+
+    <string name="edittheme_error_themeName_empty">ID 不能重複 (必填)。</string>        <!-- error hint (themeName empty) -->
+    <string name="edittheme_error_themeName_unique">ID 不能重複 (重複了)。</string>  <!-- error hint (themeName taken) -->
+    <string name="edittheme_error_displaytext">顯示字符不能沒有哦。</string>  <!-- error hint (display text is empty) -->
+    <string name="edittheme_error_textsize_min">大小必須是一個 &gt;= <xliff:g id="minSize">%1$s</xliff:g>的數字。</string>  <!-- error hint (size is smaller than min) -->
+    <string name="edittheme_error_textsize_max">大小必須是一個 &lt;= <xliff:g id="maxSize">%1$s</xliff:g>的數字。</string>  <!-- error hint (size is larger than max) -->
+    <string name="edittheme_flag_default">缺省</string>  <!-- content description -->
+
+    <string name="deletetheme_dialog_title">刪除主題</string>        <!-- dialog title -->
+    <string name="deletetheme_dialog_message">確定要刪除 <xliff:g id="themeName">%1$s</xliff:g>？</string>   <!-- dialog msg -->
+    <string name="deletetheme_dialog_ok">刪除</string>        <!-- button -->
+    <string name="deletetheme_dialog_cancel">取消</string>    <!-- button -->
+
+    <string name="configLabel_widgetThemeAdd">添加主題</string>     <!-- title text -->
+    <string name="configLabel_widgetThemeEdit">編輯主題</string>   <!-- title text -->
+    <string name="configAction_saveTheme">保存</string>           <!-- button (contentDescription) -->
+    <string name="configAction_chooseColor">選擇顏色</string> <!-- button (contentDescription) -->
+
+    <string name="configLabel_themeBackgroundId">底色：</string>    <!-- spinner label -->
+    <string name="configLabel_themeBackground_light">亮色</string>        <!-- light background -->
+    <string name="configLabel_themeBackground_dark">暗色</string>          <!-- dark background -->
+    <string name="configLabel_themeBackground_trans">透明</string>  <!-- transparent background -->
+    <string name="configLabel_themeBackground_color">顏色</string>      <!-- custom background -->
+    <string name="configLabel_themeColorBackground">顏色：</string>      <!-- color label -->
+
+    <string name="configLabel_themeColorTitle">標題顏色：</string>     <!-- color label -->
+    <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->
+
+    <string name="configLabel_themeColorText">文字顏色：</string>       <!-- color label -->
+    <string name="configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->
+
+    <string name="configLabel_themeColorSpring">春季顏色：</string> <!-- color label -->
+    <string name="configLabel_themeColorSummer">夏季顏色：</string> <!-- color label -->
+    <string name="configLabel_themeColorFall">秋季顏色：</string> <!-- color label -->
+    <string name="configLabel_themeColorWinter">冬季顏色：</string> <!-- color label -->
+
+    <string name="configLabel_themeColorMapBackground">地圖背景</string> <!-- color label -->
+    <string name="configLabel_themeColorMapForeground">地圖前景</string> <!-- color label -->
+    <string name="configLabel_themeColorMapSunShadow">陰影</string> <!-- color label -->
+    <string name="configLabel_themeColorMapMoonHighlight">高光</string> <!-- color label -->
+
+    <string name="configLabel_themeColorMoonrise">月出顏色：</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonset">月落顏色：</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaxing">眉月顏色：</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaning">虧凸月顏色：</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonFull">滿月顏色：</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonNew">新月顏色：</string> <!-- color label -->
+
+    <string name="configLabel_themeColorSunrise">日出顏色：</string> <!-- color label -->
+    <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
+
+    <string name="configLabel_themeColorSunset">日落顏色</string>   <!-- color label -->
+    <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
+
+    <string name="configLabel_themeColorNoon">正午顏色：</string>      <!-- color label -->
+    <string name="configHint_themeColorNoon">#FFFFFFFF</string>         <!-- color hint -->
+
+    <string name="configLabel_themeColorFill">填充：</string>         <!-- color label -->
+    <string name="configHint_themeColorFill">#FFFFFFFF</string>        <!-- color hint -->
+
+    <string name="configLabel_themeColorBorder">邊框：</string>         <!-- color label -->
+    <string name="configHint_themeColorBorder">#FFFFFFFF</string>        <!-- color hint -->
+
+    <string name="configLabel_themeBorderWidthRiseSet">邊框寬度（出/落）</string>  <!-- size label -->
+    <string name="configHint_themeBorderWidthRiseSet">2</string>                          <!-- size hint -->
+    <string name="configLabel_themeBorderWidthNoon">邊框寬度（午）：</string>         <!-- size label -->
+    <string name="configHint_themeBorderWidthNoon">3</string>                             <!-- size hint -->
+
+    <string name="configLabel_themeColorSuffix">後綴顏色：</string>   <!-- color label -->
+    <string name="configHint_themeColorSuffix">#FFFFFFFF</string>        <!-- color hint -->
+
+    <string name="configLabel_themeColorTime">文字顏色2：</string>      <!-- color label -->
+    <string name="configHint_themeColorTime">#FFFFFFFF</string>          <!-- color hint -->
+
+    <string name="configLabel_themeSizeTitle">標題大小：</string>  <!-- edit label -->
+    <string name="configHint_themeSizeTitle">14</string>                 <!-- edit hint -->
+
+    <string name="configLabel_themeBoldTitle">粗體</string>          <!-- checkbox label -->
+
+    <string name="configLabel_themeSizeText">文字大小：</string>    <!-- edit label -->
+    <string name="configHint_themeSizeText">10</string>                  <!-- edit hint -->
+
+    <string name="configLabel_themeSizeTime">時間文字大小：</string>    <!-- edit label -->
+    <string name="configHint_themeSizeTime">12</string>                  <!-- edit hint -->
+
+    <string name="configLabel_themeBoldTime">粗體</string>          <!-- checkbox label -->
+
+    <string name="configLabel_themeSizeSuffix">後綴文字大小：</string> <!-- edit label -->
+    <string name="configHint_themeSizeSuffix">8</string>                  <!-- edit hint -->
+
+    <string name="configLabel_themePadding">留白：</string>            <!-- edit label -->
+    <string name="configHint_themePadding">[左, 上, 右, 下]</string> <!-- edit hint -->
+
+    <string name="configLabel_themeID">ID:</string>                      <!-- edit label -->
+    <string name="configHint_themeID">主題ID</string>                  <!-- edit hint -->
+
+    <string name="configLabel_themeName">顯示：</string>               <!-- edit label -->
+    <string name="configHint_themeName">標籤</string>                   <!-- edit hint -->
+
+    <string name="widgetLabel_azimuth">方位</string>                   <!-- label -->
+    <string name="widgetLabel_azimuth_short">方位</string>                   <!-- label -->
+    <string name="widgetLabel_altitude">高度</string>               <!-- label -->
+    <string name="widgetLabel_altitude_short">高度</string>               <!-- label -->
+    <string name="widgetLabel_altitude_symbol">∠</string>               <!-- label/suffix -->
+
+    <string name="widgetLabel_rightAscension">赤經</string>    <!-- label -->
+    <string name="widgetLabel_rightAscension_short">赤經</string>    <!-- label -->
+    <string name="widgetLabel_rightAscension_symbol">α</string>    <!-- label/suffix -->
+    <string name="widgetLabel_declination">赤緯</string>           <!-- label -->
+    <string name="widgetLabel_declination_short">赤緯</string>           <!-- label -->
+    <string name="widgetLabel_declination_symbol">δ</string>           <!-- label/suffix -->
+
+    <!--
+         APP SETTINGS
+    -->
+
+    <!--App Setting: WidgetList -->
+    <string name="configLabel_widgetList">小部件</string>               <!-- group title -->
+    <string name="configLabel_widgetList_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
+    <string name="configLabel_widgetList_itemTitlePattern" formatted="false"><xliff:g id="titlePattern"><![CDATA[%M (%loc) [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
+    <string name="configLabel_widgetList_itemTitlePattern1" formatted="false"><xliff:g id="titlePattern"><![CDATA[%loc [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
+    <string name="configLabel_widgetList_itemSummaryPattern"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
+    <string name="configLabel_widgetListHelp_title">幫助</string>               <!-- always the first item in the widgetList -->
+    <string name="configLabel_widgetListHelp_summary">顯示小部件幫助</string>
+
+    <!-- App Setting: Places -->
+    <string name="configLabel_places">地點</string>                           <!-- group title -->
+    <string name="configLabel_places_export">導出地點</string>
+    <string name="configLabel_places_clear">清空地點</string>
+    <string name="configLabel_places_build">添加世界地點</string>
+    <string name="configLabel_places_build_summary">掃描本地並添加城市到數據庫。</string>
+
+    <!-- App Setting: UI -->
+    <string name="configLabel_ui">用戶界面</string>                       <!-- group title -->
+
+    <!-- App Setting: Verbose Accessibility -->
+    <string name="configLabel_accessibility_verbose">詳細的屏幕閱讀器</string>
+    <string name="configLabel_accessibility_verbose_summary">用戶界面發生變化時自動通知。</string>
+
+    <!-- App Setting: UI Warnings -->
+    <string name="configLabel_ui_showWarnings">顯示警告</string>
+    <string name="configLabel_ui_showWarnings_summary">顯示配置好的警告信息。</string>
+
+    <!-- App Setting: Show Lightmap -->
+    <string name="configLabel_ui_showLightmap">顯示光照圖</string>
+    <string name="configLabel_ui_showLightmap_summary">顯示一個含有白天，夜晚和的曙暮光柱狀圖。</string>
+
+    <!-- App Setting: Show Moon -->
+    <string name="configLabel_ui_showmoon">顯示月亮的信息</string>
+    <string name="configLabel_ui_showmoon_summary">顯示月出月落的時間，月相和月光時段。</string>
+    <string name="configLabel_ui_showmoon_notImplemented">Moon not implemented by this data source.</string>
+
+    <!-- App Setting: Show Equinox / Solstice -->
+    <string name="configLabel_ui_showEquinox">顯示夏冬至/春秋分</string>
+    <string name="configLabel_ui_showEquinox_summary">顯示到下一次夏冬至/春秋分的時間。</string>
+    <string name="configLabel_ui_showEquinox_notImplemented">這個數據源里沒有夏冬至/春秋分數據。</string>
+
+    <!-- App Setting: Solstice Tracking Mode -->
+    <string name="configLabel_ui_solsticeTrackingMode">夏冬至追蹤</string>
+    <string name="configLabel_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Upcoming Event">%s</xliff:g></string>
+
+    <!-- App Setting: show data source -->
+    <string name="configLabel_ui_showdatasource">顯示數據源</string>
+    <string name="configLabel_ui_showdatasource_summary">為當前配置顯示一個標籤。</string>
+
+    <!-- App Setting: show golden hour -->
+    <string name="configLabel_ui_showgoldhour">顯示黃金時刻</string>
+    <string name="configLabel_ui_showgoldhour_summary">顯示黃金時刻的時間。</string>
+
+    <!-- App Setting: show blue hour -->
+    <string name="configLabel_ui_showbluehour">顯示藍色時刻</string>
+    <string name="configLabel_ui_showbluehour_summary">顯示藍色時刻的時間。</string>
+
+    <!-- App Setting: UI Theme -->
+    <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
+        <item>亮色主題</item>
+        <item>暗色主題</item>
+        <item>亮色主題 / 暗色主題 (夜間模式)</item>
+    </string-array>
+
+    <!-- App Setting: time format -->
+    <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
+        <item>@string/timeFormatMode_system</item>
+        <item>@string/timeFormatMode_12hr</item>
+        <item>@string/timeFormatMode_24hr</item>
+    </string-array>
+
+    <!-- App Setting: solstice tracking mode -->
+    <string-array name="solsticeTrackingMode_display">                      <!-- one-to-one with solsticeTrackingMode_values -->
+        <item>@string/trackingMode_closest</item>
+        <item>@string/trackingMode_soonest</item>
+    </string-array>
+
+    <!-- App Setting: Date "on tap" action -->
+    <string-array name="dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
+        <item>什麼也不做</item>
+        <item>切換卡片 (今天/明天)</item>
+        <item>顯示日曆應用</item>
+        <item>設置自定日期</item>
+    </string-array>
+
+    <!-- App Setting: Clock UI "on tap" action -->
+    <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
+        <item>什麼也不做</item>
+        <item>@string/configAction_setAlarm</item>
+        <item>@string/configAction_setTimeZone</item>
+        <item>顯示下一個便簽</item>
+        <item>顯示上一個便簽</item>
+    </string-array>
+
+    <!-- App Setting: Note UI "on tap" action -->
+    <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
+        <item>什麼也不做</item>
+        <item>為便簽設置鬧鐘</item>
+        <item>顯示下一個便簽</item>
+        <item>顯示上一個便簽</item>
+    </string-array>
+
+    <!-- App Setting: time zone sort modes -->
+    <string name="timezone_sort_byOffset">by offset</string>
+    <string name="timezone_sort_byId">by id</string>
+    <string name="timezone_sort_byName">by name</string>
+
+    <string-array name="timezoneSort_display">  <!-- display values (one-to-one with timezoneSort_values) -->
+        <item>@string/timezone_sort_byOffset</item>
+        <item>@string/timezone_sort_byId</item>
+        <item>@string/timezone_sort_byName</item>
+    </string-array>
+
+    <string name="timezone_sort_contextAction">時區排序</string>           <!-- action bar title -->
+    <string name="timezone_sort_msg">(%1$s)時區排序完成。</string>      <!-- toast msg -->
+
+    <!-- App Setting: GPS fix time limit -->
+    <string name="configLabel_getFix_maxElapse">GPS時間限制</string>
+    <string name="configLabel_getFix_maxElapse_summary">最多等待<xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
+    <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
+        <item>15秒</item>
+        <item>30秒</item>
+        <item>1分鐘</item>
+        <item>5分鐘</item>
+        <item>10分鐘</item>
+    </string-array>
+
+    <!-- App Setting: GPS fix max age -->
+    <string name="configLabel_getFix_maxAge">GPS最近位置有效期</string>
+    <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> 內算作最近位置</string>
+    <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
+        <item>1分鐘</item>
+        <item>5分鐘</item>
+        <item>15分鐘</item>
+        <item>1小時</item>
+        <item>4小時</item>
+        <item>12小時</item>
+        <item>一天(24 小時)</item>
+        <item>兩天(48 小時)</item>
+        <item>一周(168 小時)</item>
+        <item>一個月(672 小時)</item>
+    </string-array>
+
+    <!-- App Setting: calendars -->
+    <string name="configLabel_calendars">日曆</string>   <!-- group title -->
+
+    <string name="configLabel_calendars_enabled">日曆集成</string>
+    <string name="configLabel_calendars_enabled_summary">為日曆應用提供事件（月相，夏冬至，春秋分）。</string>
+
+    <string name="configLabel_calendars_window0">視窗（啟動）</string>
+    <string name="configLabel_calendars_window0_summary"><xliff:g id="calendars_window_display" example="one year">%s</xliff:g> 前開始的一段時期。</string>
+
+    <string name="configLabel_calendars_window1">視窗（結束）</string>
+    <string name="configLabel_calendars_window1_summary">到<xliff:g id="calendars_window_display" example="two years">%s</xliff:g>為止的一段時間。</string>
+
+    <string name="calendars_notification_adding">添加日曆中……</string>
+    <string name="calendars_notification_added">日曆添加好了。</string>
+
+    <string name="calendars_notification_clearing">清理日曆中……</string>
+    <string name="calendars_notification_cleared">日曆清理好了。</string>
+
+    <string-array name="calendars_window_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
+        <item>一年</item>
+        <item>兩年</item>
+        <item>五年</item>
+        <item>十年</item>
+    </string-array>
+
+    <string name="calendar_solstice_displayName">夏冬至和春秋分</string>
+    <string name="calendar_moonPhase_displayName">月相</string>
+
+    <!-- App Setting: passive location mode -->
+    <string name="configLabel_getFix_passiveMode">被動位置</string>
+    <string name="configLabel_getFix_passiveMode_summary">使用被動接收到的位置。</string>
+
+    <!-- App Setting: locale mode -->
+    <string name="configLabel_locale">語言設置</string>   <!-- group title -->
+
+    <string name="configLabel_localeMode">模式</string>
+    <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
+    <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
+        <item>系統</item>
+        <item>用戶自定</item>
+    </string-array>
+
+    <!-- App Setting: custom Locale -->
+    <string name="configLabel_localeSelect">語言</string>
+    <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
+    <string-array name="locale_display">                      <!-- one-to-one with locale_values -->
+        <item>English</item>
+        <item>Esperanto</item>
+        <item>French</item>
+        <item>German</item>
+        <item>Hungarian</item>
+        <item>Italian</item>
+        <item>Polish</item>
+        <item>Spanish</item>
+        <item>Catalan</item>
+        <item>Basque</item>
+        <item>Norwegian</item>
+        <item>正體中文</item>
+    </string-array>  <!-- TODO: these should be language/locale names as written/understood in Chinese -->
+
+    <!-- position formats -->
+    <string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
+    <string name="elevation_format"><xliff:g id="degrees" example="45">%1$s</xliff:g><xliff:g id="altSymbol" example="∠">%2$s</xliff:g></string>  <!-- e.g. 45°∠ -->
+    <string name="declination_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="decSymbol" example="δ">%2$s</xliff:g></string>  <!-- e.g. 5° δ -->
+    <string name="rightascension_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="raSymbol" example="δ">%2$s</xliff:g></string>  <!-- e.g. 5° α -->
+    <string name="direction_format"><xliff:g id="degrees" example="180°">%1$s</xliff:g> <xliff:g id="directions_short" example="S">%2$s</xliff:g></string>  <!-- e.g. 180°S -->
+
+    <!-- cardinal directions -->
+    <string-array name="directions_short">  <!-- one-to-one with directions_long -->
+        <item>北</item>
+        <item>北北東</item>
+        <item>東北</item>
+        <item>東北東</item>
+        <item>東</item>
+        <item>東南東</item>
+        <item>東南</item>
+        <item>南南東</item>
+        <item>南</item>
+        <item>南南西</item>
+        <item>西南</item>
+        <item>西南西</item>
+        <item>西</item>
+        <item>西北西</item>
+        <item>西北</item>
+        <item>北北西</item>
+        <item>北</item>
+    </string-array>
+    <string-array name="directions_long">   <!-- one-to-one with directions_short -->
+        <item>北</item>
+        <item>東北偏北</item>
+        <item>東北</item>
+        <item>東北偏東</item>
+        <item>東</item>
+        <item>東南偏東</item>
+        <item>東南</item>
+        <item>東南偏南</item>
+        <item>南</item>
+        <item>西南偏南</item>
+        <item>西南</item>
+        <item>西南偏西 </item>
+        <item>西</item>
+        <item>西北偏西</item>
+        <item>西北</item>
+        <item>西北偏北</item>
+        <item>北</item>
+    </string-array>
+
+    <!--
+      DIALOGS
+    -->
+
+    <!-- Dialog: World Map -->
+    <string name="worldmap_dialog_title">@string/configAction_worldMap</string>
+    <string name="worldmap_dialog_option_sunlight">日照</string>
+    <string name="worldmap_dialog_option_moonlight">月照</string>
+    <string name="worldmap_dialog_option_all">全部</string>
+
+    <!-- Dialog: Set Alarm -->
+    <string name="configLabel_schedalarm_mode">新建一個鬧鐘排程</string>
+    <string name="schedalarm_dialog_title">設置鬧鐘</string>
+    <string name="schedalarm_dialog_ok">設置鬧鐘</string>
+    <string name="schedalarm_dialog_cancel">取消</string>
+    <string name="schedalarm_dialog_error">鬧鐘沒有設置……</string>
+    <string name="schedalarm_dialog_error2">鬧鐘無法設置……</string>
+    <string name="schedalarm_dialog_note">距離現在大約<xliff:g id="timetext" example="6h 30m">%s</xliff:g>。</string>
+    <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="nautical twilight">%s</xliff:g>沒有出現。</string>
+    <string name="schedalarm_labelformat"><xliff:g id="solarevents_short" example="sunrise">%1$s</xliff:g> (<xliff:g id="shortDate" example="4/6/2018">%2$s</xliff:g>)</string>
+    <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
+        <item>天文曙光</item>
+        <item>航海曙光</item>
+        <item>藍色時刻</item>
+        <item>民用曙光</item>
+        <item>藍色時刻</item>
+        <item>日出</item>
+        <item>黃金時刻</item>
+        <item>正午</item>
+        <item>黃金時刻</item>
+        <item>日落</item>
+        <item>藍色時刻</item>
+        <item>民用暮光</item>
+        <item>藍色時刻</item>
+        <item>航海暮光</item>
+        <item>天文暮光</item>
+        <item>月出</item>
+        <item>月落</item>
+    </string-array>
+    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
+        <item>天文曙光</item>
+        <item>航海曙光</item>
+        <item>藍色時刻（開始）</item>
+        <item>民用曙光</item>
+        <item>藍色時刻（結束）</item>
+        <item>日出</item>
+        <item>黃金時刻（結束）</item>
+        <item>正午</item>
+        <item>黃金時刻（開始）</item>
+        <item>日落</item>
+        <item>藍色時刻（開始）</item>
+        <item>民用暮光</item>
+        <item>藍色時刻（結束）</item>
+        <item>航海暮光</item>
+        <item>天文暮光</item>
+        <item>月出</item>
+        <item>月落</item>
+    </string-array>
+
+    <!-- Dialog: Enable GPS? -->
+    <string name="gps_dialog_msg">GPS是禁用的，要啟用嗎？</string>
+    <string name="gps_dialog_ok">啟用</string>
+    <string name="gps_dialog_cancel">不要</string>
+
+    <!-- gps_lastfix (current location mode) -->
+    <string name="gps_lastfix_title_set">設置位置</string>               <!-- may appear as place name when location set by intent -->
+    <string name="gps_lastfix_title_found">上次獲取到的位置</string>            <!-- may appear as place name when location set by gps -->
+    <string name="gps_lastfix_title_searching">獲取位置</string>     <!-- may appear in ActionBar title while gps in progress -->
+    <string name="gps_lastfix_toast_notfound">GPS沒能獲取到位置；嘗試用上次獲取到的位置。</string>  <!-- displayed briefly after gps has failed to get a location -->
+    <string name="gps_lastfix_toast_cancelled">GPS更新已取消。</string> <!-- displayed briefly when gps refresh cancelled -->
+
+    <!-- Dialog: KeepTrying GPS? -->
+    <string name="gps_keeptrying_title">沒有補丁</string>
+    <string name="gps_keeptrying_msg">無法獲取補丁。</string>
+    <string name="gps_keeptrying_ok">繼續嘗試</string>
+    <string name="gps_keeptrying_cancel">放棄</string>
+
+    <!-- Dialog: Use Date -->
+    <string name="timedate_dialog_title">設置日期</string>
+    <string name="timedate_dialog_ok">設置</string>
+    <string name="timedate_dialog_cancel">取消</string>
+
+    <!-- Dialog: Use Timezone -->
+    <string name="timezone_dialog_title">時區</string>
+    <string name="timezone_dialog_ok">設置</string>
+    <string name="timezone_dialog_cancel">取消</string>
+
+    <!-- Dialog: Set Location -->
+    <string name="location_dialog_title">位置</string>
+    <string name="location_dialog_ok">更新</string>
+    <string name="location_dialog_cancel">取消</string>
+    <string name="location_dialog_error_lat">無效緯度</string>
+    <string name="location_dialog_error_lon">無效經度</string>
+    <string name="location_dialog_error_alt">無效海拔</string>
+
+    <string name="location_dialog_toast_copied">已複製到剪切板<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
+
+    <!-- Dialog: Clear Places -->
+    <string name="locationclear_dialog_title">清空地點？</string>
+    <string name="locationclear_dialog_message">確定要清除存放地點的數據庫嗎？</string>
+    <string name="locationclear_dialog_ok">清除</string>
+    <string name="locationclear_dialog_cancel">取消</string>
+
+    <!-- Dialog: Clear Places (progress) -->
+    <string name="locationcleared_dialog_title">正在清除地點</string>
+    <string name="locationcleared_dialog_message">正在清理數據庫……</string>
+    <string name="locationcleared_toast_success">地點數據庫清理好了。</string>
+
+    <!-- Dialog: Build Places List (progress) -->
+    <string name="locationbuild_dialog_title">創建數據庫</string>
+    <string name="locationbuild_dialog_message">正在創建地點數據庫……</string>
+    <string name="locationbuild_toast_success">添加了<xliff:g id="n">%1$s</xliff:g>個地點到數據庫中。</string>
+
+    <!-- Dialog: Export Places -->
+    <string name="locationexport_dialog_title">導出地點</string>
+    <string name="locationexport_dialog_message">導出地點到csv文件。</string>
+
+    <!-- Dialog: Export Themes -->
+    <string name="themesexport_dialog_title">導出主題</string>
+    <string name="themesexport_dialog_message">導出主題到文件中。</string>
+
+    <!-- Dialog: Export -->
+    <string name="msg_export_success">臨時複製到了 <xliff:g id="filepath">%s</xliff:g></string>
+    <string name="msg_export_failure">導出到 <xliff:g id="filepath">%s</xliff:g> 失敗了。</string>
+    <string name="msg_export_to">其他導出工具</string>  <!-- title displayed over "share action" chooser -->
+
+    <!-- Dialog: Color -->
+    <string name="color_dialog_msg">選擇顏色</string>
+    <string name="color_dialog_ok">選擇</string>
+    <string name="color_dialog_cancel">取消</string>
+
+    <!-- Dialog: About -->
+    <string name="about_dialog_title">關於</string>
+    <string name="app_name">Suntimes</string>
+    <string name="app_name_widget0">Suntimes Widget</string>
+    <string name="app_name_widget1">Suntimes Widget (flippable)</string>
+    <string name="app_name_widget2">Sun Position Widget</string>
+    <string name="app_name_solsticewidget0">Solstice Widget</string>
+    <string name="app_name_moonwidget0">Moon Widget</string>
+    <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
+    <string name="app_shortdesc">展示太陽和月亮的時間。</string>
+    <string name="app_support_url"><![CDATA[
+        <b>Support:</b> visit the
+        <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a> to submit a request.
+    ]]></string>
+    <string name="app_url"><xliff:g id="url"><![CDATA[
+        <a href="https://forrestguice.github.io/SuntimesWidget/">forrestguice.github.io/SuntimesWidget</a>
+    ]]></xliff:g></string>
+    <string name="app_legal1"><![CDATA[
+        <b>Source Code:</b><br />
+        Copyright &#169 2014-2018 Forrest Guice <br />
+        Source code available under GPLv3.
+    ]]></string>
+    <string name="app_legal2"><![CDATA[
+        <b>Translations:</b><br/>
+        German translation by Henrik "HerHde" Hüttemann and Wolkenschieber. <br />
+        Polish and Esperanto translation by Verdulo. <br />
+        French translation by Jej & Aloha. <br />
+        Hungarian translation by Erci. <br />
+        Spanish and Catalan translation by <a href=https://github.com/Raulvo>Raulvo</a>. <br />
+        Basque translation by beriain. <br />
+        Norwegian translation by FTno. <br />
+        Italian translation by Matteo Caoduro. <br />
+        Traditional Chinese translation by <a href=https://github.com/pggdt>ft42</a>. <br />
+    ]]></string>
+    <string name="app_legal3"><![CDATA[ <b>Libraries:</b><br/> ]]>
+    <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
+    <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>
+    <![CDATA[ github.com/caarmen/SunriseSunset ]]> <![CDATA[ <br /> ]]>
+    <![CDATA[ github.com/QuadFlask/colorpicker ]]>
+    </string>
+
+    <!-- Dialog: Help -->
+    <string name="help_dialog_title">幫助</string>
+    <string name="help_appearance_title"><![CDATA[
+        The following title substitutions are supported:<br/>
+        <br/>
+        <b>All Widgets:</b> <br />
+                * <b>%d</b> for date (e.g. February 12) <br/>
+                * <b>%dd</b> for day (short) (e.g. Mon) <br/>
+                * <b>%dD</b> for day (long) (e.g. Monday) <br/>
+                * <b>%dY</b> for year (e.g. 2018) <br/>
+                * <b>%dt</b> for time (of last update) <br/>
+                * <b>%dT</b> for time with seconds (of last update) <br/>
+                <br/>
+                * <b>%loc</b> for label (e.g. Prescott) <br />
+                * <b>%lat</b> for latitude (e.g. 35.5409) <br />
+                * <b>%lon</b> for longitude (e.g. -112.4691) <br/>
+                * <b>%lel</b> for elevation (e.g. 385 meters) <br/>
+                <br/>
+                * <b>%s</b> for data source (e.g. sunrisesunsetlib) <br/>
+                * <b>%t</b> for time zone (id) (e.g. US/Arizona) <br/>
+                * <b>%id</b> for appWidgetID <br/>
+         <br/>
+         <b>Sun Widgets:</b> <br/>
+                * <b>%m</b> for mode (short) (e.g. Civil) <br/>
+                * <b>%M</b> for mode (long) (e.g. Civil Twilight) <br/>
+         <br/>
+         <b>Moon Widgets:</b> <br/>
+                * <b>%i</b> for moon illumination (e.g. 25%) <br/>
+                * <b>%M</b> for moon phase (e.g. Waxing Crescent) <br/>
+         <br/>
+         <b>Solstice Widgets:</b> <br/>
+                * <b>%m</b> for mode (short) (e.g. Solstice) <br/>
+                * <b>%M</b> for mode (long) (e.g. Winter Solstice) <br/>
+    ]]></string>
+
+    <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
+        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic2">%2$s</xliff:g>
+    </string>
+    <string name="help_general3">  <!-- general app help; composites a couple help topics together. -->
+        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic2">%2$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic3">%3$s</xliff:g>
+    </string>
+    <string name="help_general4">  <!-- general app help; composites a couple help topics together. -->
+        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic2">%2$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic3">%3$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic4">%4$s</xliff:g>
+    </string>
+
+    <string name="help_general_timeMode"><![CDATA[
+          <b>實際時間：</b> 太陽到達地平線；準確的日出和日落時間。<br/><br/>
+          <b>民用曙暮光：</b> 太陽到達地平線下6度；最亮的星星仍然可見。對於大多數戶外運動來說已不用額外照明。<br/><br/>
+          <b>航海曙暮光：</b> 太陽到達地平線下12度；地平線和物體的輪廓非常模糊。對於大多數戶外運動來說光照不足。<br/><br/>
+          <b>天文曙暮光：</b> 太陽到達地平線下18度；跟夜裡差不多。<br/>
+    ]]></string>
+
+    <string name="help_general_timeMode2"><![CDATA[
+          <b>春分：</b>待完成。可參閱<a href="https://zh.wikipedia.org/wiki/%E6%98%A5%E5%88%86">維基百科：春分</a><br/><br/>
+          <b>夏至：</b>待完成。可參閱<a href="https://zh.wikipedia.org/wiki/%E5%A4%8F%E8%87%B3">維基百科：夏至</a><br/><br/>
+          <b>秋分：</b>待完成。可參閱<a href="https://zh.wikipedia.org/wiki/%E7%A7%8B%E5%88%86">維基百科：秋分</a><br/><br/>
+          <b>冬至：</b>待完成。可參閱<a href="https://zh.wikipedia.org/wiki/%E5%86%AC%E8%87%B3">維基百科：冬至</a><br/>
+    ]]></string>
+    <string name="help_general_daylength"><![CDATA[
+        <b>日光：</b> 日出到日落的時間。<br/><br/>
+        <b>天亮時間：</b> 從民用曙光到民用暮光的時間。<br/>
+    ]]></string>
+    <string name="help_general_moonillum"><![CDATA[
+        <b>（月亮）飽滿度</b> 月亮小部件和主頁會顯示午夜（月出和月落的中間點）時月亮的飽滿度，月亮對話框則會顯示當前時刻月亮的飽滿度。<br/><br/>
+    ]]></string>
+    <string name="help_general_goldhour"><![CDATA[
+        <b>黃金時刻（魔術光）：</b>太陽位於地平線上方或下方6度之間。早上，黃金時刻以民用曙光開始，在日出一小段時間後結束。傍晚，黃金時刻在日落前一小段時間開始，以民用暮光結束。<br/>
+    ]]></string>
+    <string name="help_general_bluehour"><![CDATA[
+        <b>藍色時刻：</b>太陽在地平線以下8度到4度之間。 藍色時刻開始和結束於航海曙暮光和民用曙暮光之間。<br/>
+    ]]></string>
+    <string name="help_action_launch"><![CDATA[
+        啟動Activity所需的完整類名。<br/>
+    ]]></string>
+    <string name="help_widgetlist"><![CDATA[
+          如果要<b>新增一個小部件</b>，你需要去手機的主頁。<br/><br/>
+          如果要<b>配置一個已存在的小部件</b>，你可以從下面的列表中選擇。<br/>
+    ]]></string>
+    <string name="help_themelist">
+          [Icon Add] 添加一個新主題或[Icon Copy]從已有主題中複製一份。\n
+          \n
+          [Icon Edit]編輯或[Icon Delete]刪除主題。\n
+          [Icon Default]缺省主題是不能被刪除的。
+    </string> <!-- TODO -->
+
+    <string name="privacy_policy"><![CDATA[<b>隱私：</b><br/>Suntimes不會蒐集、儲存、傳輸個人用戶數據。它<b>沒有廣告</b>, <b>沒有用戶分析</b>, <b>沒有跟蹤器</b>，並且<b>不使用不必要的權限</b>。<br/><br/>本應用使用位置信息來配置。位置信息（和其他用來配置本應用的數據）保存在本機並且不會離開本機。<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
+    <string name="privacy_permission_location"><![CDATA[Suntimes uses the <b>location</b> permission to determine your current longitude and latitude.<br/><br/>This permission is optional; the location is manually configured by default.]]></string>
+    <string name="privacy_permission_calendar"><![CDATA[Suntimes uses <b>calendar</b> permissions to integrate with the Calendar app. These permissions allow the app to create custom calendars and events.<br/><br/>Permissions are also required when disabling calendar integration (to remove custom calendars).]]></string>
+    <string name="privacy_permission_storage"><![CDATA[Suntimes uses <b>external storage</b> permissions to backup/export data to file (e.g. places, themes).]]></string>
+    <string name="privacy_permissiondialog_title">Permissions</string>
+    <string name="privacy_url"><xliff:g id="url"><![CDATA[
+        <a href="https://github.com/forrestguice/SuntimesWidget/wiki/Privacy">github.com/forrestguice/SuntimesWidget/wiki/Privacy</a>
+    ]]></xliff:g></string>
+
+    <!-- calculator implementations -->
+    <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
+    <string name="calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
+    <string name="calculator_displayString_time4a_simple">A simple, relatively fast, but imprecise calculator.</string>
+    <string name="calculator_displayString_time4a_noaa">Follows algorithms published by the National Oceanic and Atmospheric Administration.</string>
+    <string name="calculator_displayString_time4a_cc">Follows algorithms published by Dershowitz/Reingold in their book "Calendrical Calculations" (third edition).</string>
+    <string name="calculator_displayString_time4a_4j">Based on astronomical calculations published by Jean Meeus in his book "Astronomical Algorithms" (second edition).</string>
 
 </resources>
