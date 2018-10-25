@@ -222,7 +222,7 @@
     <string name="configLabel_appearance_showLabels">Mostrar etiquetas</string>          
     <string name="configLabel_appearance_showTitle">Mostrar título</string>
     <string name="configLabel_appearance_titleText">Título:</string>
-    <string name="configHint_appearance_titleText">(% t% m% M% lat% lon)</string> 
+    <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string>
 
     
     <string name="timeMode_noon_short">Mediodía</string>
@@ -239,10 +239,10 @@
     <string name="timeMode_day">Día</string>
     <string name="timeMode_golden_short">Dorada</string>
     <string name="timeMode_golden">Hora dorada</string>
-    <string name="timeMode_blue8_short">Azul (8 \ u00B0)</string>                    
-    <string name="timeMode_blue8">Hora azul (8 \ u00B0)</string>                     
-    <string name="timeMode_blue4_short">Azul (4 \ u00B0)</string>                    
-    <string name="timeMode_blue4">Hora azul (4 \ u00B0)</string>                     
+    <string name="timeMode_blue8_short">Azul (8\u00B0)</string>
+    <string name="timeMode_blue8">Hora azul (8\u00B0)</string>
+    <string name="timeMode_blue4_short">Azul (4\u00B0)</string>
+    <string name="timeMode_blue4">Hora azul (4\u00B0)</string>
 
     <string name="timeMode_equinox_vernal">equinoccio de primavera</string>
     <string name="timeMode_equinox_vernal_short">equinoccio</string>
@@ -402,8 +402,8 @@
     <string name="edittheme_error_themeName_empty">El ID debe ser único (requerido).</string>
     <string name="edittheme_error_themeName_unique">El ID debe ser único (ya existe).</string>
     <string name="edittheme_error_displaytext">El texto a mostrar no debe ser vacío.</string>  
-    <string name="edittheme_error_textsize_min">El tamaño debe ser un entero >= <xliff:g id="minSize">%1$s</xliff:g>.</string>
-    <string name="edittheme_error_textsize_max">El tamaño debe ser un entero <![CDATA[<=]]> <xliff:g id="maxSize">%1$s</xliff:g>.</string>
+    <string name="edittheme_error_textsize_min">El tamaño debe ser un entero &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>
+    <string name="edittheme_error_textsize_max">El tamaño debe ser un entero &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>
     <string name="edittheme_flag_default">por defecto</string>  
 
     <string name="deletetheme_dialog_title">Borrar tema</string>
@@ -896,27 +896,27 @@
     <string name="app_name_widget2">widget solar</string>
     <string name="app_name_solsticewidget0">Widget de solsticio</string>
     <string name="app_name_moonwidget0">Widget lunar</string>
-    <string name="app_version"><![CDATA[<b> Versión: </ b>]]><xliff:g id="versionString">%s</xliff:g></string>
+    <string name="app_version"><![CDATA[<b>Versión:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Muestra las horas del amanecer, noche, luz crepuscular y lunar.</string>
     <string name="app_support_url"><![CDATA[
-    <b> Soporte: </ b> visita el
-    <a href="https://github.com/forrestguice/SuntimesWidget/issues"> seguimiento de incidencias </a> para enviar una petición.
+    <b>Soporte:</b> visita el
+    <a href="https://github.com/forrestguice/SuntimesWidget/issues">seguimiento de incidencias</a> para enviar una petición.
 ]]></string>
     <string name="app_legal1"><![CDATA[
-    <b> Código fuente: </b> <br />
+    <b>Código fuente:</b> <br />
     Copyright &#169 2014-2018 Forrest Guice <br />
     Código fuente disponible bajo GPLv3.
 ]]></string>
     <string name="app_legal2"><![CDATA[
-    <b> Traducciones:</ b> <br/>
+    <b>Traducciones:</b> <br/>
     Traducción en alemán por Henrik "HerHde" Hüttemann. <br />
     Traducción en polaco y esperanto por verdulería. <br />
     Traducción en francés para Jej. <br />
     Traducción en húngaro para Ercis. <br />
-    Traducción en español y catalán por <a href=https://github.com/Raulvo> Raulvo </a>.
+    Traducción en español y catalán por <a href=https://github.com/Raulvo>Raulvo</a>.
 ]]></string>
     <string name="app_legal3"><![CDATA[
-    <b> Bibliotecas: </b> <br/>
+    <b>Bibliotecas:</b> <br/>
     github.com/MenoData/Time4A <br />
     github.com/mikereedell/sunrisesunsetlib-java <br />
     github.com/caarmen/SunriseSunset <br />
@@ -938,43 +938,43 @@
 ]]></string>
 
     <string name="help_general_timeMode"><![CDATA[
-    <b> Tiempo natural: </ b> El Sol está en el horizonte: esto es el tiempo aproximado de la salida y puesta de sol. <br/>       
-    <b> Crepúsculo civil: </ b> El Sol está 6 grados por debajo del horizonte; las estrellas más brillantes son visibles. Hay suficiente luz para la mayoría de las actividades al aire libre sin necesidad de linterna. <br/>       
-    <b> Crepúsculo náutico: </ b> El Sol está 12 grados por debajo del horizonte; las siluetas de los objetos y el horizonte son difíciles de distinguir. No hay suficiente luz para actividades a al aire libre sin linterna. <br/>       
-    <b> Crepúsculo astronómico: </ b> El Sol está 18 grados por debajo del horizonte. Casi la oscuridad de la noche. <br/>
+    <b>Tiempo natural:</b> El Sol está en el horizonte: esto es el tiempo aproximado de la salida y puesta de sol. <br/><br/>
+    <b>Crepúsculo civil:</b> El Sol está 6 grados por debajo del horizonte; las estrellas más brillantes son visibles. Hay suficiente luz para la mayoría de las actividades al aire libre sin necesidad de linterna. <br/><br/>
+    <b>Crepúsculo náutico:</b> El Sol está 12 grados por debajo del horizonte; las siluetas de los objetos y el horizonte son difíciles de distinguir. No hay suficiente luz para actividades a al aire libre sin linterna. <br/><br/>
+    <b>Crepúsculo astronómico:</b> El Sol está 18 grados por debajo del horizonte. Casi la oscuridad de la noche. <br/>
 ]]></string>
     <string name="help_general_timeMode2"><![CDATA[
-    <b> Equinoccio primaveral: </ b> TODO. <br/>       
-    <b> Solsticio de \ verano: </ b> TODO. <br/>       
-    <b> Equinoccio de otoño: </ b> TODO. <br/>       
-    <b> Solsticio de \ invierno: </ b> TODO. <br/>
+    <b>Equinoccio primaveral:</b> TODO. <br/>       
+    <b>Solsticio de \ verano:</b> TODO. <br/>       
+    <b>Equinoccio de otoño:</b> TODO. <br/>       
+    <b>Solsticio de \ invierno:</b> TODO. <br/>
 ]]></string>
     <string name="help_general_daylength"><![CDATA[
-    <b> Duración del día: </ b> la cantidad de tiempo entre la salida y la puesta del Sol. <br/>     
-    <b> Luz usable: </ b> la cantidad de tiempo entre el crepúsculo civil diurno y el nocturno. </ br>
+    <b>Duración del día:</b> la cantidad de tiempo entre la salida y la puesta del Sol. <br/><br/>
+    <b>Luz usable:</b> la cantidad de tiempo entre el crepúsculo civil diurno y el nocturno. <br/>
 ]]>
 </string>
     <string name="help_general_moonillum"><![CDATA[
-    <b>Iluminación lunar: </ b> Los widgets lunares y la página principal muestran la iluminación de la Luna en la noche lunar (el punto medio entre la salida y puesta de la Luna), mientras que el diálogo lunar muestra la iluminación actual de la Luna. <br/>
+    <b>Iluminación lunar:</b> Los widgets lunares y la página principal muestran la iluminación de la Luna en la noche lunar (el punto medio entre la salida y puesta de la Luna), mientras que el diálogo lunar muestra la iluminación actual de la Luna. <br/>
 ]]></string>
     <string name="help_general_goldhour"><![CDATA[
-    <b> Hora dorada: </ b> El Sol está 6 grados por encima o por debajo del horizonte. En la madrugada de la hora dorada comienza con el amanecer civil y termina poco después de salir el Sol. Por la tarde la hora dorada comienza poco después del atardecer y finaliza con el crepúsculo civil. <br/>
+    <b>Hora dorada:</b> El Sol está 6 grados por encima o por debajo del horizonte. En la madrugada de la hora dorada comienza con el amanecer civil y termina poco después de salir el Sol. Por la tarde la hora dorada comienza poco después del atardecer y finaliza con el crepúsculo civil. <br/>
 ]]></string>
     <string name="help_general_bluehour"><![CDATA[
-    <b> Hora azul: </ b> El Sol está entre 8 y 4 grados por debajo del horizonte. El inicio y final de la hora azul está entre el crepúsculo náutico y civil. <br/>
+    <b>Hora azul:</b> El Sol está entre 8 y 4 grados por debajo del horizonte. El inicio y final de la hora azul está entre el crepúsculo náutico y civil. <br/>
 ]]></string>
     <string name="help_action_launch"><![CDATA[
     El nombre calificado de la clase de la Actividad a ser tirada. <br/>
 ]]></string>
     <string name="help_widgetlist"><![CDATA[
-    Para <b> añadir un widget </ b> tienes que ir al escritorio. <br/>
-    Para <b> reconfigurar un widget existente </ b> puedes seleccionar uno de la siguiente lista. <br/>
+    Para <b>añadir un widget</b> tienes que ir al escritorio. <br/><br/>
+    Para <b>reconfigurar un widget existente</b> puedes seleccionar uno de la siguiente lista. <br/>
 ]]></string>
 
-    <string name="privacy_policy"><![CDATA[<b> Privacidad: </ b> <br /> Suntimes no colectivo, almacena, o transmite datos personales. < b> No contiene anuncios </ b>, < b> cálculos estadísticos </ b>, <b> rastreadores </ b>, y <b> no utiliza permisos innecesarios </ b>. <br/> La aplicación se configura con datos de localización. Esta información (y cualquier otro dato configurada empleada por la aplicación) se almacena localmente y no sale del dispositivo. <br/><br/> <xliff:g id = "permissionsExplained">%1$s </xliff:g>]]></string>
-    <string name="privacy_permission_location"><![CDATA[Suntimes utiliza el permiso de <b> localización </ b> para determinar tu longitud y latitud. <br /> Este permiso es opcional; la localización se configura manualmente por defecto.]]></string>
-    <string name="privacy_permission_calendar"><![CDATA[Suntimes utiliza el permiso de <b> calendario </ b> para integrarse con la aplicación Calendario. Estos permisos permiten crear calendarios y eventos personalizados. <br /> También se necesitan permisos cuando se desactiva la integración con el calendario (para eliminar calendarios personalizados).]]></string>
-    <string name="privacy_permission_storage"><![CDATA[Suntimes utiliza el permiso de <b> almacenamiento externo </ b> para hacer una copia de seguridad o exportar datos a un archivo (p. Ej. Lugares, temas).]]></string>
+    <string name="privacy_policy"><![CDATA[<b>Privacidad:</b> <br /> Suntimes no colectivo, almacena, o transmite datos personales. <b>No contiene anuncios</b>, <b>cálculos estadísticos</b>, <b>rastreadores</b>, y <b>no utiliza permisos innecesarios</b>. <br/><br/> La aplicación se configura con datos de localización. Esta información (y cualquier otro dato configurada empleada por la aplicación) se almacena localmente y no sale del dispositivo. <br/><br/> <xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
+    <string name="privacy_permission_location"><![CDATA[Suntimes utiliza el permiso de <b>localización</b> para determinar tu longitud y latitud. <br /> Este permiso es opcional; la localización se configura manualmente por defecto.]]></string>
+    <string name="privacy_permission_calendar"><![CDATA[Suntimes utiliza el permiso de <b>calendario</b> para integrarse con la aplicación Calendario. Estos permisos permiten crear calendarios y eventos personalizados. <br /><br /> También se necesitan permisos cuando se desactiva la integración con el calendario (para eliminar calendarios personalizados).]]></string>
+    <string name="privacy_permission_storage"><![CDATA[Suntimes utiliza el permiso de <b>almacenamiento externo</b> para hacer una copia de seguridad o exportar datos a un archivo (p. Ej. Lugares, temas).]]></string>
     <string name="privacy_permissiondialog_title">Permisos</string>
 
     <!-- calculator implementations -->
@@ -985,4 +985,4 @@
     <string name="calculator_displayString_time4a_cc">Sigue algoritmos publicados por Dershowitz / Reingold en su libro "Calendrical Calculations" (tercera edición).</string>
     <string name="calculator_displayString_time4a_4j">Basado en cálculos Astronómico publicados por Jean Meeus en su libro "Astronomical Algorithms" (segunda edición).</string>
 
-    </resources>
+</resources>

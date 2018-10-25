@@ -402,7 +402,7 @@
     <string name="edittheme_error_themeName_empty">L\'ID ha de ser únic (requerit).</string>        <!-- error hint (themeName empty) -->
     <string name="edittheme_error_themeName_unique">L\'ID ha de ser únic (ja existeix).</string>  <!-- error hint (themeName taken) -->
     <string name="edittheme_error_displaytext">El text a mostrar no ha de ser buit.</string>  <!-- error hint (display text is empty) -->
-    <string name="edittheme_error_textsize_min">El tamany ha ser un enter >= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->
+    <string name="edittheme_error_textsize_min">El tamany ha ser un enter &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->
     <string name="edittheme_error_textsize_max">El tamany ha ser un enter &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->
     <string name="edittheme_flag_default">per defecte</string>  <!-- content description -->
 
