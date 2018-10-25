@@ -1,5 +1,10 @@
 ### ~
 
+###
+* updates translations to Spanish (es-es) and Catalan (ca) (#255 by Raulvo).
+* updates translation to Norwegian (nb) (#253 by FTno).
+* adds translation to Traditional Chinese (zh-tw) (contributed by ft42) (#252).
+
 ### v0.9.3 (2018-10-10)
 * adds help to the "theme list" activity.
 * adds translation to Italian (it) (contributed by Matteo Caoduro) (#249).
