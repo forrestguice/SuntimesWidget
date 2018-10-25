@@ -927,15 +927,37 @@
     <string name="help_dialog_title">ayudar</string>
     
     <string name="help_appearance_title"><![CDATA[
-    Las siguientes sustituciones están soportadas: <br />             
-    * <b>% loc </ b> para etiqueta <br />             
-    * <b>% lat </ b> para latitud <br />             
-    * <b>% lon </ b> para longitud <br/>             
-    * <b>% m </ b> para el modo de tiempo (corto) (p.ej. «Civil») <br/>             
-    * <b>% M </ b> para el modo de tiempo (largo) (p.ej. «Crepúsculo Civil») <br/>             
-    * <b>%s </b> para fuente de datos (p.ej. sunrisesunsetlib) <br/>             
-    * <b>% t </ b> para zona horaria (id) (p. ej. ES/Barcelona) <br/>
-]]></string>
+        Las siguientes sustituciones están soportadas:<br/>
+        <br/>
+        <b>Todos Widgets:</b> <br />
+                * <b>%d</b> for date (e.g. February 12) <br/>
+                * <b>%dd</b> for day (short) (e.g. Mon) <br/>
+                * <b>%dD</b> for day (long) (e.g. Monday) <br/>
+                * <b>%dY</b> for year (e.g. 2018) <br/>
+                * <b>%dt</b> for time (of last update) <br/>
+                * <b>%dT</b> for time with seconds (of last update) <br/>
+                <br/>
+                * <b>%loc</b> para etiqueta <br />
+                * <b>%lat</b> para latitud <br />
+                * <b>%lon</b> para longitud <br/>
+                * <b>%lel</b> for elevation (e.g. 385 meters) <br/>
+                <br/>
+                * <b>%s</b> para fuente de datos (p.ej. sunrisesunsetlib) <br/>
+                * <b>%t</b> para zona horaria (id) (p. ej. ES/Barcelona) <br/>
+                * <b>%id</b> for appWidgetID <br/>
+         <br/>
+         <b>Widget solar:</b> <br/>
+                * <b>%m</b> para el modo de tiempo (corto) (p.ej. «Civil») <br/>
+                * <b>%M</b> para el modo de tiempo (largo) (p.ej. «Crepúsculo Civil») <br/>
+         <br/>
+         <b>Widget lunar:</b> <br/>
+                * <b>%i</b> for moon illumination (e.g. 25%) <br/>
+                * <b>%M</b> for moon phase (e.g. Waxing Crescent) <br/>
+         <br/>
+         <b>Widget de solsticio:</b> <br/>
+                * <b>%m</b> for mode (short) (e.g. Solstice) <br/>
+                * <b>%M</b> for mode (long) (e.g. Winter Solstice) <br/>
+    ]]></string>  <!-- TODO -->
 
     <string name="help_general_timeMode"><![CDATA[
     <b>Tiempo natural:</b> El Sol está en el horizonte: esto es el tiempo aproximado de la salida y puesta de sol. <br/><br/>
