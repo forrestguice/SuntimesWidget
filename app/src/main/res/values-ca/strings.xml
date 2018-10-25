@@ -20,24 +20,24 @@
     <string name="configAction_setAlarm">Configurar alarma</string>
     <string name="configAction_setTimeZone">Configurar zona horària</string>
     <string name="configAction_setDate">Configurar data</string>
-    <string name="configAction_sunDialog">Sun Position</string>   <!-- TODO -->
+    <string name="configAction_sunDialog">Posició del Sol</string>
     <string name="configAction_equinoxDialog">solstici / equinocci</string>
-    <string name="configAction_worldMap">World Map</string>  <!-- TODO -->
-    <string name="configAction_moon">Moon</string>                            <!-- TODO -->
+    <string name="configAction_worldMap">Mapa del món</string>
+    <string name="configAction_moon">Lluna</string>
     <string name="configAction_help">Ajuda</string>
     <string name="configAction_settings">Configuració</string>
-    <string name="configAction_aboutWidget">Sobre de</string>
+    <string name="configAction_aboutWidget">Quant a</string>
 
     <!-- Button: Next/Prev Date
          The next/prev button contentDescription (accessibility).
     -->
     <string name="nextDay">Dia següent</string>
     <string name="prevDay">Dia anterior</string>
-    <string name="nextYear">Next Year</string>        <!-- TODO -->
-    <string name="prevYear">Previous Year</string>        <!-- TODO -->
+    <string name="nextYear">Any següent</string>
+    <string name="prevYear">Any anterior</string>
 
     <!-- Warnings -->
-    <string name="spanTag_warning">Warning!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->  <!-- TODO -->
+    <string name="spanTag_warning">Atenció!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
 
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
@@ -76,7 +76,7 @@
     <string name="length_light"><xliff:g id="timeSpan" example="12h 50m">%1$s</xliff:g> de llum útil</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
 
     <!-- Field: moon illumination (as seen in moon widget) -->
-    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> illuminated</string>  <!-- "50% illuminated" .. used in 2x1 widget --> <!-- TODO -->
+    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> iŀluminada</string>  <!-- "50% illuminated" .. used in 2x1 widget -->
     <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- "50%" .. used in 1x1 widget -->
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
@@ -105,28 +105,28 @@
     <string name="until_astroTwilight">Crepuscle astrònomic</string>
     <string name="until_civilTwilight">Crepuscle civil</string>
     <string name="until_nauticalTwilight">Crepuscle nàutic</string>
-    <string name="until_sunrise">sortida de Sol</string>
-    <string name="until_noon">mitgdia</string>
-    <string name="until_sunset">posta de Sol</string>
+    <string name="until_sunrise">Sortida de Sol</string>
+    <string name="until_noon">Migdia</string>
+    <string name="until_sunset">Posta de Sol</string>
     <string name="untilEnd_civilTwilight">Crepuscle civil</string>
     <string name="untilEnd_nauticalTwilight">Crepuscle nàutic</string>
     <string name="untilEnd_astroTwilight">Crepuscle astrònomic</string>
-    <string name="until_goldhour">golden hour</string>  <!-- TODO -->
-    <string name="untilEnd_goldhour">golden hour</string>    <!-- TODO -->
-    <string name="until_bluehour">blue hour</string>    <!-- TODO -->
-    <string name="untilEnd_bluehour">blue hour</string>    <!-- TODO -->
-    <string name="until_moonrise">moonrise</string> <!-- TODO -->
-    <string name="until_moonset">moonset</string>  <!-- TODO -->
+    <string name="until_goldhour">Hora daurada</string>
+    <string name="untilEnd_goldhour">Hora daurada</string>
+    <string name="until_bluehour">Hora blava</string>
+    <string name="untilEnd_bluehour">Hora blava</string>
+    <string name="until_moonrise">Sortida de la Lluna</string>
+    <string name="until_moonset">Posta de la Lluna</string>
 
     <!-- Table -->
     <string name="sunrise">Alba</string>                             <!-- contentDescription -->
     <string name="sunrise_short">Alba</string>                          <!-- table title -->
-    <string name="sunset">Vespre</string>                               <!-- contentDescription -->
-    <string name="sunset_short">Vespre</string>                            <!-- table title -->
-    <string name="moonrise">Moonrise</string>                             <!-- contentDescription -->  <!-- TODO -->
-    <string name="moonrise_short">Moonrise</string>                             <!-- table title -->  <!-- TODO -->
-    <string name="moonset">Moonset</string>                             <!-- contentDescription -->  <!-- TODO -->
-    <string name="moonset_short">Moonset</string>                             <!-- table title -->  <!-- TODO -->
+    <string name="sunset">Capvespre</string>                               <!-- contentDescription -->
+    <string name="sunset_short">Capvespre</string>                            <!-- table title -->
+    <string name="moonrise">Sortida de la Lluna</string>                             <!-- contentDescription -->
+    <string name="moonrise_short">Sortida de la Lluna</string>                             <!-- table title -->
+    <string name="moonset">Posta de la Lluna</string>                             <!-- contentDescription -->
+    <string name="moonset_short">Posta de la Lluna</string>                             <!-- table title -->
 
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
     <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
@@ -137,7 +137,7 @@
     <string name="delta_minutes">m</string>  <!-- e.g. 3m -->
     <string name="delta_seconds">s</string>  <!-- e.g. 4s -->
 
-    <string name="hence"><xliff:g id="timeSpan">%1$s</xliff:g>  des d\'ara</string>  <!-- e.g. 15d 23h from now -->
+    <string name="hence"><xliff:g id="timeSpan">%1$s</xliff:g> comptant des d\'ara</string>  <!-- e.g. 15d 23h from now -->
     <string name="ago"><xliff:g id="timeSpan">%1$s</xliff:g>  enrere</string>         <!-- e.g. 1y 15d 12h ago -->
 
     <!-- misc time values: might be displayed in a timeField in place of an actual time -->
@@ -155,14 +155,14 @@
     <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
 
     <!-- distances (meters, feet, etc) -->
-    <string name="units_feet">feet</string>   <!-- TODO -->
-    <string name="units_feet_short">ft</string>   <!-- TODO -->
+    <string name="units_feet">peus</string>
+    <string name="units_feet_short">ft</string>
     <!--<plurals name="units_feet_long">
       <item quantity="one">%d foot</item>
       <item quantity="other">%d feet</item>
     </plurals>-->
-    <string name="units_meters">meters</string>  <!-- TODO -->
-    <string name="units_meters_short">m</string>  <!-- TODO -->
+    <string name="units_meters">metres</string>
+    <string name="units_meters_short">m</string>
     <!--<plurals name="units_meters_long">
       <item quantity="one">%d meter</item>
       <item quantity="other">%d meters</item>
@@ -172,134 +172,134 @@
          WIDGET CONFIG
     -->
 
-    <string name="configAction_restoreDefaults">Restore Defaults</string>   <!-- button / menu text -->  <!-- TODO -->
+    <string name="configAction_restoreDefaults">Recupera paràmetres per defecte</string>   <!-- button / menu text -->
 
-    <string name="configLabel_tagDefault">[default]</string>                <!-- TODO -->
-    <string name="configLabel_tagPlugin">[plugin]</string>                <!-- TODO -->
+    <string name="configLabel_tagDefault">[per defecte]</string>
+    <string name="configLabel_tagPlugin">[complement]</string>
     <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->  <!-- TODO -->
 
     <!-- WidgetConfig Activity -->
-    <string name="configAction_addWidget">Afegir Widget</string>                   <!-- Button: Add -->
+    <string name="configAction_addWidget">Afegir giny</string>                   <!-- Button: Add -->
     <string name="configAction_reconfigWidget_short">Reconfigurar</string>       <!-- Button: Reconfigure -->
-    <string name="configAction_reconfigWidget">Reconfigurar Widget</string>      <!-- used as title when reconfiguring -->
-    <string name="configLabel_title0">Widget de temps solar</string>                  <!-- used as title when adding -->
-    <string name="configLabel_title1">Widget reversible</string>                 <!-- used as title when adding -->
+    <string name="configAction_reconfigWidget">Reconfigurar giny</string>      <!-- used as title when reconfiguring -->
+    <string name="configLabel_title0">Giny de temps solar</string>                  <!-- used as title when adding -->
+    <string name="configLabel_title1">Giny reversible</string>                 <!-- used as title when adding -->
     <string name="configLabel_title2">@string/app_name_widget2</string>                  <!-- used as title when adding -->  <!-- TODO -->
-    <string name="configLabel_solsticewidget0">Widget de solstici</string>                  <!-- used as title when adding -->
+    <string name="configLabel_solsticewidget0">Giny de solstici</string>                  <!-- used as title when adding -->
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding --> <!-- TODO -->
 
     <!-- Widget Setting: general -->
     <string name="configLabel_general">Opcions generals</string>                <!-- group title -->
     <string name="configLabel_general_calculator">Font de dades:</string>         <!-- spinner label -->
-    <string name="configLabel_general_calculator_sun">Sun Data Source</string>         <!-- preference label -->  <!-- TODO -->
-    <string name="configLabel_general_calculator_moon">Moon Data Source</string>         <!-- preference label --> <!-- TODO -->
+    <string name="configLabel_general_calculator_sun">Font de dades del Sol</string>         <!-- preference label -->
+    <string name="configLabel_general_calculator_moon">Font de dades de la Lluna</string>         <!-- preference label -->
 
-    <string name="configLabel_general_altitude_enabled">Use Elevation</string>        <!-- checkbox label --> <!-- TODO -->
-    <string name="configLabel_general_altitude_enabled_summary">Apply altitude based refinements.</string>        <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_general_altitude_enabled">Utilitza elevació</string>        <!-- checkbox label -->
+    <string name="configLabel_general_altitude_enabled_summary">Aplica refinaments basats en l\'altitud.</string>        <!-- checkbox label -->
 
     <string name="configLabel_general_showSeconds">Mostrar segons</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showSeconds_summary">Include seconds when displaying times.</string>        <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_general_showSeconds_summary">Inclou segons quan es mostra el temps.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showTimeDate">Show Time (with dates)</string>        <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_general_showTimeDate_summary">Include the time when displaying dates.</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_showTimeDate">Mostra el temps (amb dates)</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showTimeDate_summary">Inclou el temps quan es mostren les dates.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showWeeks">Show Weeks</string>        <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_general_showWeeks_summary">Divide time spans greater than 7 days into weeks (e.g. 15d becomes 2w 1d).</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_showWeeks">Mostrar setmanes</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showWeeks_summary">Divideix intervals de temps majors a 7 dies en setmanes (p. ex. 15d es transforma en 2se 1d).</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showHours">Show Hours</string>        <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_general_showHours_summary">Include hours and minutes in time spans greater than a day.</string>    <!-- checkbox label -->    <!-- TODO -->
+    <string name="configLabel_general_showHours">Mostrar hores</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showHours_summary">Inclou hores i minuts en intervals de temps majors a un dia.</string>    <!-- checkbox label -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">Advanced Settings</string>                        <!-- group title -->  <!-- TODO -->
-    <string name="configLabel_experimental">Experimental Settings</string>                <!-- group title --> <!-- TODO -->
-    <string name="configLabel_general_scanPlugins">Data Source Plugins</string>                                <!-- checkbox label --> <!-- TODO -->
-    <string name="configLabel_general_scanPlugins_summary">Scan for and load third party plugins.</string>   <!-- pref summary --> <!-- TODO -->
+    <string name="configLabel_advanced">Configuració avançada</string>                        <!-- group title -->
+    <string name="configLabel_experimental">Configuració experimental</string>                <!-- group title -->
+    <string name="configLabel_general_scanPlugins">Complements de fonts de dades</string>                                <!-- checkbox label -->
+    <string name="configLabel_general_scanPlugins_summary">Cerca i carrega complements de tercers.</string>   <!-- pref summary -->
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Opcions d\'apariència</string>           <!-- group title -->
     <string name="configLabel_appearance_theme">Tema:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Creix amb l\'espai disponible (reescalable)</string>  <!-- checkbox label -->
-    <string name="configLabel_appearance_showLabels">Show Labels</string>          <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_appearance_showLabels">Mostra etiquetes</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_showTitle">Mostrar títol</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Títol:</string>              <!-- edittext label -->
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
 
     <!-- Widget Setting: time mode -->
-    <string name="timeMode_noon_short">Mitgdia</string>                    <!-- setting -->
-    <string name="timeMode_noon">Mitgdia</string>                    <!-- setting -->
-    <string name="timeMode_official_short">Real</string>              <!-- setting -->
-    <string name="timeMode_official">Temps real</string>               <!-- setting -->
+    <string name="timeMode_noon_short">Migdia</string>                    <!-- setting -->
+    <string name="timeMode_noon">Migdia</string>                    <!-- setting -->
+    <string name="timeMode_official_short">Natural</string>              <!-- setting -->
+    <string name="timeMode_official">Temps natural</string>               <!-- setting -->
     <string name="timeMode_civil_short">Civil</string>                  <!-- setting -->
     <string name="timeMode_civil">Crepuscle civil</string>               <!-- setting -->
-    <string name="timeMode_nautical_short">Náutic</string>            <!-- setting -->
+    <string name="timeMode_nautical_short">Nàutic</string>            <!-- setting -->
     <string name="timeMode_nautical">Crepuscle nàutic</string>         <!-- setting -->
     <string name="timeMode_astronomical_short">Astronòmic</string>    <!-- setting -->
     <string name="timeMode_astronomical">Crepuscle astrònomic</string> <!-- setting -->
     <string name="timeMode_night">Nit</string>                   <!-- a label (not an actual timeMode setting) -->
     <string name="timeMode_day">Dia</string>                       <!-- a label (not an actual timeMode setting) -->
-    <string name="timeMode_golden_short">Golden</string>                <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_golden">Golden Hour</string>                 <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_blue8_short">Blue (8\u00B0)</string>                    <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_blue8">Blue Hour (8\u00B0)</string>                     <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_blue4_short">Blue (4\u00B0)</string>                    <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_blue4">Blue Hour (4\u00B0)</string>                     <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_golden_short">Daurada</string>                <!-- setting -->
+    <string name="timeMode_golden">Hora daurada</string>                 <!-- setting -->
+    <string name="timeMode_blue8_short">Blava (8\u00B0)</string>                    <!-- setting -->
+    <string name="timeMode_blue8">Hora blava (8\u00B0)</string>                     <!-- setting -->
+    <string name="timeMode_blue4_short">Blava (4\u00B0)</string>                    <!-- setting -->
+    <string name="timeMode_blue4">Hora blava (4\u00B0)</string>                     <!-- setting -->
 
     <string name="timeMode_equinox_vernal">equinocci de primavera</string>      <!-- setting -->
     <string name="timeMode_equinox_vernal_short">equinocci</string>       <!-- setting -->
     <string name="timeMode_equinox_autumnal">equinocci de tardor</string>  <!-- setting -->
     <string name="timeMode_equinox_autumnal_short">equinocci</string>     <!-- setting -->
-    <string name="timeMode_solstice_summer">solstici de estiu</string>    <!-- setting -->
+    <string name="timeMode_solstice_summer">solstici d\'estiu</string>    <!-- setting -->
     <string name="timeMode_solstice_summer_short">solstici</string>     <!-- setting -->
-    <string name="timeMode_solstice_winter">solstici de hivern</string>    <!-- setting -->
+    <string name="timeMode_solstice_winter">solstici d\'hivern</string>    <!-- setting -->
     <string name="timeMode_solstice_winter_short">solstici</string>     <!-- setting -->
 
-    <string name="timeMode_moon">Moon</string>                               <!-- label -->  <!-- TODO -->
-    <string name="timeMode_moon_new">New Moon</string>                               <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_moon_new_short">New</string>                              <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_moon_waxingcrescent_short">Waxing Crescent</string>               <!-- label -->  <!-- TODO -->
-    <string name="timeMode_moon_waxingcrescent">Waxing Crescent</string>                     <!-- label -->  <!-- TODO -->
-    <string name="timeMode_moon_firstquarter">First Quarter</string>                 <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_moon_firstquarter_short">First Quarter</string>           <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_moon_waxinggibbous_short">Waxing Gibbous</string>               <!-- label -->  <!-- TODO -->
-    <string name="timeMode_moon_waxinggibbous">Waxing Gibbous</string>                     <!-- label -->  <!-- TODO -->
-    <string name="timeMode_moon_full">Full Moon</string>                             <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_moon_full_short">Full</string>                            <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_moon_waninggibbous_short">Waning Gibbous</string>               <!-- label -->  <!-- TODO -->
-    <string name="timeMode_moon_waninggibbous">Waning Gibbous</string>                     <!-- label -->  <!-- TODO -->
-    <string name="timeMode_moon_thirdquarter">Third Quarter</string>                 <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_moon_thirdquarter_short">Third Quarter</string>           <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_moon_waningcrescent_short">Waning Crescent</string>               <!-- label -->  <!-- TODO -->
-    <string name="timeMode_moon_waningcrescent">Waning Crescent</string>                     <!-- label -->  <!-- TODO -->
+    <string name="timeMode_moon">Lluna</string>                               <!-- label -->
+    <string name="timeMode_moon_new">Lluna nova</string>                               <!-- setting -->
+    <string name="timeMode_moon_new_short">Nova</string>                              <!-- setting -->
+    <string name="timeMode_moon_waxingcrescent_short">Creixent</string>               <!-- label -->
+    <string name="timeMode_moon_waxingcrescent">Lluna creixent</string>                     <!-- label -->
+    <string name="timeMode_moon_firstquarter">Quart creixent</string>                 <!-- setting -->
+    <string name="timeMode_moon_firstquarter_short">Quart creixent</string>           <!-- setting -->
+    <string name="timeMode_moon_waxinggibbous_short">Gibosa creixent</string>               <!-- label -->
+    <string name="timeMode_moon_waxinggibbous">Lluna gibosa creixent</string>                     <!-- label -->
+    <string name="timeMode_moon_full">Lluna plena</string>                             <!-- setting -->
+    <string name="timeMode_moon_full_short">Plena</string>                            <!-- setting -->
+    <string name="timeMode_moon_waninggibbous_short">Gibosa minvant</string>               <!-- label -->
+    <string name="timeMode_moon_waninggibbous">Lluna gibosa minvant</string>                     <!-- label -->
+    <string name="timeMode_moon_thirdquarter">Quart minvant</string>                 <!-- setting -->
+    <string name="timeMode_moon_thirdquarter_short">Quart minvant</string>           <!-- setting -->
+    <string name="timeMode_moon_waningcrescent_short">Minvant</string>               <!-- label -->
+    <string name="timeMode_moon_waningcrescent">Lluna minvant</string>                     <!-- label -->
 
     <string name="configLabel_general_timeMode">Mode:</string>          <!-- spinner label -->
 
     <!-- Widget Setting: layout mode -->
     <string name="widgetMode1x1_sunrise">Només alba</string>             <!-- setting -->
-    <string name="widgetMode1x1_sunset">Només vespre</string>               <!-- setting -->
-    <string name="widgetMode1x1_both_1">Alba i vespre (1)</string>  <!-- setting -->
-    <string name="widgetMode1x1_both_2">Alba i vespre (2)</string>  <!-- setting -->
+    <string name="widgetMode1x1_sunset">Només capvespre</string>               <!-- setting -->
+    <string name="widgetMode1x1_both_1">Alba i capvespre (1)</string>  <!-- setting -->
+    <string name="widgetMode1x1_both_2">Alba i capvespre (2)</string>  <!-- setting -->
 
-    <string name="widgetMode1x1_altaz">Altitude &amp; Azimuth</string>     <!-- setting -->  <!-- TODO -->
-    <string name="widgetMode1x1_decright">Declination &amp; Right Ascension</string>     <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode1x1_altaz">Altitud i Azimut</string>     <!-- setting -->
+    <string name="widgetMode1x1_decright">Inclinació i ascensió correcta</string>     <!-- setting -->
 
-    <string name="widgetMode_sunPosMap_simplerectangular">Basic</string>  <!-- setting -->  <!-- TODO -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal">Polar</string>     <!-- setting -->  <!-- TODO -->
-    <string name="widgetMode_sunPosMap_bluemarble">Blue Marble</string>    <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode_sunPosMap_simplerectangular">Bàsic</string>  <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal">Polar</string>     <!-- setting -->
+    <string name="widgetMode_sunPosMap_bluemarble">Bola blava</string>    <!-- setting -->
 
-    <string name="widgetMode1x1_moonriseset">Moonrise &amp; moonset</string>     <!-- setting -->   <!-- TODO -->
-    <string name="widgetMode1x1_moonphaseillum">Moon phase &amp; illumination</string>     <!-- setting -->  <!-- TODO -->
-    <string name="widgetMode1x1_moonphase">Moon phase only</string>     <!-- setting -->  <!-- TODO -->
-    <string name="widgetMode1x1_moonillum">Moon illumination only</string>     <!-- setting -->  <!-- TODO -->
-    <string name="widgetMode1x1_moonphasenext">Next major phase</string>     <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode1x1_moonriseset">Sortida i posta de la Lluna</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonphaseillum">Fase llunar i iŀluminació</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonphase">Només fase llunar</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonillum">Només iŀluminació llunar</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonphasenext">Següent fase</string>     <!-- setting -->
 
     <string name="configLabel_appearance_1x1mode">Disseny 1x1:</string>     <!-- spinner label -->
     <string name="configLabel_appearance_3x2mode">Disseny 3x2:</string>     <!-- spinner label -->
 
     <!-- Widget Setting: widget tap action -->
-    <string name="actionMode_doNothing">Res</string>           <!-- setting -->
-    <string name="actionMode_update">Update Widget</string>           <!-- setting -->  <!-- TODO -->
-    <string name="actionMode_config">Reconfigurar widget</string>      <!-- setting -->
-    <string name="actionMode_launchActivity">Llençar app</string>      <!-- setting -->
+    <string name="actionMode_doNothing">No fer res</string>           <!-- setting -->
+    <string name="actionMode_update">Actualitzar giny</string>           <!-- setting -->
+    <string name="actionMode_config">Reconfigurar giny</string>      <!-- setting -->
+    <string name="actionMode_launchActivity">Iniciar app</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Intercanviar vista</string>      <!-- setting -->
 
     <string name="configLabel_action">Opcions de pulsació</string>                  <!-- group title -->
@@ -307,7 +307,7 @@
     <string name="configLabel_action_onClockTap">Al prèmer el rellotge:</string>         <!-- spinner label -->
     <string name="configLabel_action_onNoteTap">Al prèmer una nota:</string>           <!-- spinner label -->
     <string name="configLabel_action_onDateTap">Al prèmer la data:</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap1">On Date Long Press:</string>   <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_action_onDateTap1">Al mantenir polsat en la data:</string>   <!-- spinner label -->
 
     <!-- Widget Setting: location -->
     <string name="locationMode_current">Actual (última coneguda)</string>  <!-- setting -->
@@ -319,8 +319,8 @@
     <string name="configHint_location_lat">graus decimals</string>      <!-- edittext hint -->
     <string name="configLabel_location_lon">Longitud:</string>                          <!-- edittext label -->
     <string name="configHint_location_lon">graus decimals</string> <!-- edittext hint -->
-    <string name="configLabel_location_alt">Elevation:</string>                          <!-- edittext label -->   <!-- TODO -->
-    <string name="configHint_location_alt">0</string> <!-- edittext hint -->                                 <!-- TODO -->
+    <string name="configLabel_location_alt">Elevació:</string>                          <!-- edittext label -->
+    <string name="configHint_location_alt">0</string> <!-- edittext hint -->
     <string name="configLabel_location_name">Nom:</string>                      <!-- edittext label -->
     <string name="configHint_location_name">(opcional)</string>                  <!-- edittext hint -->
 
@@ -344,7 +344,7 @@
     <string name="configLabel_solartime">Temps solar:</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: timeFormat mode -->
-    <string name="timeFormatMode_system">Format de sistema</string>          <!-- setting -->
+    <string name="timeFormatMode_system">Format del sistema</string>          <!-- setting -->
     <string name="timeFormatMode_12hr">12 hores</string>                  <!-- setting -->
     <string name="timeFormatMode_24hr">24 hores</string>                  <!-- setting -->
 
@@ -362,38 +362,38 @@
     <!-- Widget Setting: compare mode -->
     <string name="compareMode_yesterday">Ahir</string>                     <!-- setting -->
     <string name="compareMode_tomorrow">Demà</string>                       <!-- setting -->
-    <string name="configLabel_general_compareMode">Comper ar con:</string>    <!-- spinner label -->
-    <string name="configLabel_general_showComparison">Mostrar comper ación</string>  <!-- checkbox label -->
+    <string name="configLabel_general_compareMode">Comparar amb:</string>    <!-- spinner label -->
+    <string name="configLabel_general_showComparison">Mostrar comparació</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
-    <string name="trackingMode_closest">Event més proper</string>                 <!-- setting -->
-    <string name="trackingMode_soonest">Event pròxim</string>                <!-- setting -->
+    <string name="trackingMode_closest">Esdeveniment més proper</string>                 <!-- setting -->
+    <string name="trackingMode_soonest">Esdeveniment més d\'hora</string>                <!-- setting -->
     <string name="configLabel_general_trackingMode">Seguiment:</string>            <!-- spinner label -->
 
     <!-- Widget Setting: timeMode override -->
     <string name="configLabel_general_timeMode_override">Mode de substitució de seguiment</string>     <!-- checkbox label -->
 
     <!-- Widget Settings: noon -->
-    <string name="configLabel_general_showNoon">Mostrar mitgdia solar</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showNoon">Mostrar migdia solar</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: Launch App -->
     <string name="configLabel_action_launch">Activitat:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch"><xliff:g id="uri">com.forrestguice.suntimeswidget.SuntimesActivity</xliff:g></string> <!-- editText hint (and default) -->
 
     <!-- App Setting: WidgetThemes -->
-    <string name="configLabel_widgetThemeList">Temes de widget</string>
-    <string name="configLabel_widgetThemeListSelect">Sel·lecciona un tema</string>
+    <string name="configLabel_widgetThemeList">Temes de giny</string>
+    <string name="configLabel_widgetThemeListSelect">Selecciona un tema</string>
     <string name="configAction_addTheme">Afegir</string>           <!-- button (contentDescription) -->
     <string name="configAction_selectTheme">Seleccionar</string>     <!-- button (contentDescription) -->
     <string name="configAction_editTheme">Editar</string>         <!-- button (contentDescription) -->
-    <string name="configAction_deleteTheme">Borrar</string>     <!-- button (contentDescription) -->
+    <string name="configAction_deleteTheme">Esborrar</string>     <!-- button (contentDescription) -->
     <string name="configAction_copyTheme">Copiar</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportThemes">Exportar</string>    <!-- button (contentDescription) -->
     <string name="configAction_importThemes">Importar</string>    <!-- button (contentDescription) -->
 
     <string name="addtheme_custname">tema_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
-    <string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_copy<xliff:g id="#">%2$s</xliff:g></string>   <!-- copied theme id -->
-    <string name="addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g> (copy)</string>                            <!-- copied theme name (display string) -->
+    <string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_còpia<xliff:g id="#">%2$s</xliff:g></string>   <!-- copied theme id -->
+    <string name="addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g> (còpia)</string>                            <!-- copied theme name (display string) -->
 
     <string name="addtheme_toast_success">Afegit <xliff:g id="themeName">%1$s</xliff:g>.</string>          <!-- toast msg -->
     <string name="edittheme_toast_success">Guardat <xliff:g id="themeName">%1$s</xliff:g>.</string>         <!-- toast msg -->
@@ -402,14 +402,14 @@
     <string name="edittheme_error_themeName_empty">L\'ID ha de ser únic (requerit).</string>        <!-- error hint (themeName empty) -->
     <string name="edittheme_error_themeName_unique">L\'ID ha de ser únic (ja existeix).</string>  <!-- error hint (themeName taken) -->
     <string name="edittheme_error_displaytext">El text a mostrar no ha de ser buit.</string>  <!-- error hint (display text is empty) -->
-    <string name="edittheme_error_textsize_min">El tamany deu ser un enter &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->
-    <string name="edittheme_error_textsize_max">El tamany deu ser un enter &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->
-    <string name="edittheme_flag_default">default</string>  <!-- content description -->  <!-- TODO -->
+    <string name="edittheme_error_textsize_min">El tamany ha ser un enter &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->
+    <string name="edittheme_error_textsize_max">El tamany ha ser un enter &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->
+    <string name="edittheme_flag_default">per defecte</string>  <!-- content description -->
 
     <string name="deletetheme_dialog_title">Esborrar tema</string>        <!-- dialog title -->
     <string name="deletetheme_dialog_message">¿Estàs segur que vols esborrar <xliff:g id="themeName">%1$s</xliff:g>?</string>   <!-- dialog msg -->
     <string name="deletetheme_dialog_ok">Esborrar</string>        <!-- button -->
-    <string name="deletetheme_dialog_cancel">Cancel·lar</string>    <!-- button -->
+    <string name="deletetheme_dialog_cancel">Canceŀlar</string>    <!-- button -->
 
     <string name="configLabel_widgetThemeAdd">Afegir tema</string>     <!-- title text -->
     <string name="configLabel_widgetThemeEdit">Editar tema</string>   <!-- title text -->
@@ -434,25 +434,25 @@
     <string name="configLabel_themeColorFall">Color de tardor:</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Color de hivern:</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMapBackground">Map Background</string> <!-- color label --> <!-- TODO -->
-    <string name="configLabel_themeColorMapForeground">Map Foreground</string> <!-- color label --> <!-- TODO -->
-    <string name="configLabel_themeColorMapSunShadow">Shadow</string> <!-- color label -->          <!-- TODO -->
-    <string name="configLabel_themeColorMapMoonHighlight">Highlight</string> <!-- color label -->   <!-- TODO -->
+    <string name="configLabel_themeColorMapBackground">Fons del mapa</string> <!-- color label -->
+    <string name="configLabel_themeColorMapForeground">Front del mapa</string> <!-- color label -->
+    <string name="configLabel_themeColorMapSunShadow">Ombra</string> <!-- color label -->
+    <string name="configLabel_themeColorMapMoonHighlight">Accent</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMoonrise">Moonrise Color:</string> <!-- color label -->  <!-- TODO -->
-    <string name="configLabel_themeColorMoonset">Moonset Color:</string> <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorMoonWaxing">Waxing Color:</string> <!-- color label --> <!-- TODO -->
-    <string name="configLabel_themeColorMoonWaning">Waning Color:</string> <!-- color label --> <!-- TODO -->
-    <string name="configLabel_themeColorMoonFull">Full Color:</string> <!-- color label --> <!-- TODO -->
-    <string name="configLabel_themeColorMoonNew">New Color:</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorMoonrise">Color de sortida de la Lluna:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonset">Color de posta de la Lluna:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaxing">Color creixent:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaning">Color minvant:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonFull">Color plena:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonNew">Color nova:</string> <!-- color label -->
 
     <string name="configLabel_themeColorSunrise">Color d\'alba:</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
 
-    <string name="configLabel_themeColorSunset">Color de vespre:</string>   <!-- color label -->
+    <string name="configLabel_themeColorSunset">Color del capvespre:</string>   <!-- color label -->
     <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorNoon">Color de mitgdia:</string>      <!-- color label -->
+    <string name="configLabel_themeColorNoon">Color del migdia:</string>      <!-- color label -->
     <string name="configHint_themeColorNoon">#FFFFFFFF</string>         <!-- color hint -->
 
     <string name="configLabel_themeColorFill">Farcit:</string>         <!-- color label -->
@@ -463,7 +463,7 @@
 
     <string name="configLabel_themeBorderWidthRiseSet">Ample de la vora (sortida/posta):</string>  <!-- size label -->
     <string name="configHint_themeBorderWidthRiseSet">2</string>                          <!-- size hint -->
-    <string name="configLabel_themeBorderWidthNoon">Ample de la vora (mitgdia):</string>         <!-- size label -->
+    <string name="configLabel_themeBorderWidthNoon">Ample de la vora (migdia):</string>         <!-- size label -->
     <string name="configHint_themeBorderWidthNoon">3</string>                             <!-- size hint -->
 
     <string name="configLabel_themeColorSuffix">Color del sufixe:</string>   <!-- color label -->
@@ -475,7 +475,7 @@
     <string name="configLabel_themeSizeTitle">Tamany del títol:</string>  <!-- edit label -->
     <string name="configHint_themeSizeTitle">14</string>                 <!-- edit hint -->
 
-    <string name="configLabel_themeBoldTitle">Bold</string>          <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_themeBoldTitle">Negreta</string>          <!-- checkbox label -->
 
     <string name="configLabel_themeSizeText">Tamany del text:</string>    <!-- edit label -->
     <string name="configHint_themeSizeText">10</string>                  <!-- edit hint -->
@@ -483,9 +483,9 @@
     <string name="configLabel_themeSizeTime">Tamany del temps:</string>    <!-- edit label -->
     <string name="configHint_themeSizeTime">12</string>                  <!-- edit hint -->
 
-    <string name="configLabel_themeBoldTime">Bold</string>          <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_themeBoldTime">Negreta</string>          <!-- checkbox label -->
 
-    <string name="configLabel_themeSizeSuffix">Tamany del sufijo:</string> <!-- edit label -->
+    <string name="configLabel_themeSizeSuffix">Tamany del sufixe:</string> <!-- edit label -->
     <string name="configHint_themeSizeSuffix">8</string>                  <!-- edit hint -->
 
     <string name="configLabel_themePadding">Espaiat:</string>            <!-- edit label -->
@@ -497,54 +497,54 @@
     <string name="configLabel_themeName">Mostrar:</string>               <!-- edit label -->
     <string name="configHint_themeName">Etiqueta</string>                   <!-- edit hint -->
 
-    <string name="widgetLabel_azimuth">Azimuth</string>                   <!-- label -->  <!-- TODO -->
-    <string name="widgetLabel_azimuth_short">Az</string>                   <!-- label -->  <!-- TODO -->
-    <string name="widgetLabel_altitude">Altitude</string>               <!-- label -->  <!-- TODO -->
-    <string name="widgetLabel_altitude_short">Alt</string>               <!-- label -->  <!-- TODO -->
+    <string name="widgetLabel_azimuth">Azimut</string>                   <!-- label -->
+    <string name="widgetLabel_azimuth_short">Az</string>                   <!-- label -->
+    <string name="widgetLabel_altitude">Altitud</string>               <!-- label -->
+    <string name="widgetLabel_altitude_short">Alt</string>               <!-- label -->
 
-    <string name="widgetLabel_rightAscension">Right Ascension</string>    <!-- label -->  <!-- TODO -->
-    <string name="widgetLabel_rightAscension_short">RA</string>    <!-- label -->  <!-- TODO -->
-    <string name="widgetLabel_declination">Declination</string>           <!-- label -->  <!-- TODO -->
-    <string name="widgetLabel_declination_short">Dec</string>           <!-- label -->  <!-- TODO -->
+    <string name="widgetLabel_rightAscension">Ascensió correcta</string>    <!-- label -->
+    <string name="widgetLabel_rightAscension_short">AC</string>    <!-- label -->
+    <string name="widgetLabel_declination">Inclinació</string>           <!-- label -->
+    <string name="widgetLabel_declination_short">Inc</string>           <!-- label -->
 
     <!--
          APP SETTINGS
     -->
 
     <!--App Setting: WidgetList -->
-    <string name="configLabel_widgetList">Widgets</string>               <!-- group title -->
+    <string name="configLabel_widgetList">Ginys</string>               <!-- group title -->
     <string name="configLabel_widgetList_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
     <string name="configLabel_widgetList_itemTitlePattern"><xliff:g id="titlePattern"><![CDATA[%M (%loc) [%t]]]></xliff:g></string> <!-- the pattern used when generating widget titles for display in the list -->
     <string name="configLabel_widgetList_itemSummaryPattern"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
     <string name="configLabel_widgetListHelp_title">Ajuda</string>               <!-- always the first item in the widgetList -->
-    <string name="configLabel_widgetListHelp_summary">Mostrar Ajuda del widget</string>
+    <string name="configLabel_widgetListHelp_summary">Mostrar ajuda del giny</string>
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">Llocs</string>                           <!-- group title -->
     <string name="configLabel_places_export">Exportar llocs</string>
     <string name="configLabel_places_clear">Borrar llocs</string>
-    <string name="configLabel_places_build">Add World Places</string>  <!-- TODO -->
-    <string name="configLabel_places_build_summary">Scan locales and add cities to the database.</string>   <!-- TODO -->
+    <string name="configLabel_places_build">Afegir llocs del món</string>
+    <string name="configLabel_places_build_summary">Cerca locals i afegeix ciutats a la base de dades.</string>
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Interfície d\'usuari</string>                       <!-- group title -->
 
     <!-- App Setting: Verbose Accessibility -->
-    <string name="configLabel_accessibility_verbose">Verbose TalkBack</string>   <!-- TODO -->
-    <string name="configLabel_accessibility_verbose_summary">Announce automated changes to the UI.</string>     <!-- TODO -->
+    <string name="configLabel_accessibility_verbose">Retroalimentació detallada</string>
+    <string name="configLabel_accessibility_verbose_summary">Anúncia canvis automatitzats a la IU.</string>
 
     <!-- App Setting: UI Warnings -->
     <string name="configLabel_ui_showWarnings">Mostrar avisos</string>
-    <string name="configLabel_ui_showWarnings_summary">Mostrar Configuració de missatges d\'avís.</string>
+    <string name="configLabel_ui_showWarnings_summary">Mostrar configuració de missatges d\'avís.</string>
 
     <!-- App Setting: Show Lightmap -->
     <string name="configLabel_ui_showLightmap">Mostrar mapa de llum</string>
     <string name="configLabel_ui_showLightmap_summary">Mostrar barra apilada dels períodes de dia, nit i llum crepuscular.</string>
 
     <!-- App Setting: Show Moon -->
-    <string name="configLabel_ui_showmoon">Show Moon</string>  <!-- TODO -->
-    <string name="configLabel_ui_showmoon_summary">Show rise and set times, phase, and illumination.</string>  <!-- TODO -->
-    <string name="configLabel_ui_showmoon_notImplemented">Moon not implemented by this data source.</string>  <!-- TODO -->
+    <string name="configLabel_ui_showmoon">Mostrar la Lluna</string>
+    <string name="configLabel_ui_showmoon_summary">Mostra els moments de sortida i posta, fase i iŀluminació.</string>
+    <string name="configLabel_ui_showmoon_notImplemented">La Lluna no està implementada per aquesta font de dades.</string>
 
     <!-- App Setting: Show Equinox / Solstice -->
     <string name="configLabel_ui_showEquinox">Mostrar solstici / equinocci</string>
@@ -560,18 +560,18 @@
     <string name="configLabel_ui_showdatasource_summary">Mostrar una etiqueta indicant la Configuració actual.</string>
 
     <!-- App Setting: show golden hour -->
-    <string name="configLabel_ui_showgoldhour">Show Golden Hour</string>   <!-- TODO -->
-    <string name="configLabel_ui_showgoldhour_summary">Show golden hour times.</string>    <!-- TODO -->
+    <string name="configLabel_ui_showgoldhour">Mostrar l\'hora daurada</string>
+    <string name="configLabel_ui_showgoldhour_summary">Mostrar les hores daurades.</string>
 
     <!-- App Setting: show blue hour -->
-    <string name="configLabel_ui_showbluehour">Show Blue Hour</string>   <!-- TODO -->
-    <string name="configLabel_ui_showbluehour_summary">Show blue hour times.</string>   <!-- TODO -->
+    <string name="configLabel_ui_showbluehour">Mostrar l\'hora blava</string>
+    <string name="configLabel_ui_showbluehour_summary">Mostrar les hores blaves.</string>
 
     <!-- App Setting: UI Theme -->
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
         <item>Tema clar</item>
-        <item>Tema oscur</item>
-        <item>Tema clar / Tema oscur (mode nit)</item>
+        <item>Tema fosc</item>
+        <item>Tema clar / Tema fosc (mode nit)</item>
     </string-array>
 
     <!-- App Setting: time format -->
@@ -622,12 +622,12 @@
         <item>@string/timezone_sort_byName</item>
     </string-array>
 
-    <string name="timezone_sort_contextAction">Ordenar zonas</string>           <!-- action bar title -->
-    <string name="timezone_sort_msg">Zonas horàrias ordenadas (%1$s).</string>      <!-- toast msg -->
+    <string name="timezone_sort_contextAction">Ordenar zones</string>           <!-- action bar title -->
+    <string name="timezone_sort_msg">Zones horàries ordenades (%1$s).</string>      <!-- toast msg -->
 
     <!-- App Setting: GPS fix time limit -->
-    <string name="configLabel_getFix_maxElapse">Límite de temps de GPS</string>
-    <string name="configLabel_getFix_maxElapse_summary">Abandonar tras <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
+    <string name="configLabel_getFix_maxElapse">Límit de temps d\'intent de posicionament amb GPS</string>
+    <string name="configLabel_getFix_maxElapse_summary">Abandonar rere <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
     <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
         <item>15 segons</item>
         <item>30 segons</item>
@@ -637,8 +637,8 @@
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
-    <string name="configLabel_getFix_maxAge">Temps máximo de GPS reciente</string>
-    <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> considerado como reciente</string>
+    <string name="configLabel_getFix_maxAge">Límit d\'antiguitat de la posició GPS</string>
+    <string name="configLabel_getFix_maxAge_summary">Límit de <xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g></string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>1 minut</item>
         <item>5 minuts</item>
@@ -653,36 +653,36 @@
     </string-array>
 
     <!-- App Setting: calendars -->
-    <string name="configLabel_calendars">Calendars</string>   <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_calendars">Calendaris</string>   <!-- group title -->
 
-    <string name="configLabel_calendars_enabled">Calendar Integration</string>  <!-- TODO -->
-    <string name="configLabel_calendars_enabled_summary">Supply events to the Calendar app (moon phases, solstices, and equinoxes).</string>  <!-- TODO -->
+    <string name="configLabel_calendars_enabled">Integració amb el calendari</string>
+    <string name="configLabel_calendars_enabled_summary">Proporcionar esdeveniments a l\'aplicació de calendari (fases llunars, solsticis, i equinoccis).</string>
 
-    <string name="configLabel_calendars_window0">Window (start)</string>  <!-- TODO -->
-    <string name="configLabel_calendars_window0_summary">A period starting <xliff:g id="calendars_window_display" example="one year">%s</xliff:g> ago</string>  <!-- TODO -->
+    <string name="configLabel_calendars_window0">Finestra (inici)</string>
+    <string name="configLabel_calendars_window0_summary">Un període començà <xliff:g id="calendars_window_display" example="one year">%s</xliff:g> enrere</string>
 
-    <string name="configLabel_calendars_window1">Window (end)</string>  <!-- TODO -->
-    <string name="configLabel_calendars_window1_summary">A period ending <xliff:g id="calendars_window_display" example="two years">%s</xliff:g> from now</string>  <!-- TODO -->
+    <string name="configLabel_calendars_window1">Finestra (fi)</string>
+    <string name="configLabel_calendars_window1_summary">Un període finalitzarà en <xliff:g id="calendars_window_display" example="two years">%s</xliff:g> comptant des d\'ara</string>
 
-    <string name="calendars_notification_adding">Adding calendars…</string>  <!-- TODO -->
-    <string name="calendars_notification_added">Calendars have been added.</string>  <!-- TODO -->
+    <string name="calendars_notification_adding">Afegint calendaris…</string>
+    <string name="calendars_notification_added">Els calendaris s\'han afegit.</string>
 
-    <string name="calendars_notification_clearing">Clearing calendars…</string>  <!-- TODO -->
-    <string name="calendars_notification_cleared">Calendars have been cleared.</string>  <!-- TODO -->
+    <string name="calendars_notification_clearing">Netejant calendaris…</string>
+    <string name="calendars_notification_cleared">Els calendaris s\'han afegit.</string>
 
     <string-array name="calendars_window_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
-        <item>one year</item>
-        <item>two years</item>
-        <item>five years</item>
-        <item>ten years</item>
-    </string-array>  <!-- TODO -->
+        <item>un any</item>
+        <item>dos anys</item>
+        <item>cinc anys</item>
+        <item>deu anys</item>
+    </string-array>
 
-    <string name="calendar_solstice_displayName">Solstices and Equinoxes</string>  <!-- TODO -->
-    <string name="calendar_moonPhase_displayName">Moon Phases</string>  <!-- TODO -->
+    <string name="calendar_solstice_displayName">Solsticis i equinoccis</string>
+    <string name="calendar_moonPhase_displayName">Fases llunars</string>
 
     <!-- App Setting: passive location mode -->
-    <string name="configLabel_getFix_passiveMode">Passive Location</string>  <!-- TODO -->
-    <string name="configLabel_getFix_passiveMode_summary">Use the passive location provider.</string> <!-- TODO -->
+    <string name="configLabel_getFix_passiveMode">Localització passiva</string>
+    <string name="configLabel_getFix_passiveMode_summary">Utilitza el proveïdor de localització passiva.</string>
 
     <!-- App Setting: locale mode -->
     <string name="configLabel_locale">Opcions d\'idioma</string>   <!-- group title -->
@@ -720,7 +720,7 @@
     <string name="direction_format"><xliff:g id="degrees" example="180°">%1$s</xliff:g> <xliff:g id="directions_short" example="S">%2$s</xliff:g></string>  <!-- e.g. 180°S -->
 
     <!-- cardinal directions -->
-    <string-array name="directions_short">  <!-- one-to-one with directions_long -->   <!-- TODO -->
+    <string-array name="directions_short">  <!-- one-to-one with directions_long -->
         <item>N</item>
         <item>NNE</item>
         <item>NE</item>
@@ -730,33 +730,33 @@
         <item>SE</item>
         <item>SSE</item>
         <item>S</item>
-        <item>SSW</item>
-        <item>SW</item>
-        <item>WSW</item>
-        <item>W</item>
-        <item>WNW</item>
-        <item>NW</item>
-        <item>NNW</item>
+        <item>SSO</item>
+        <item>SO</item>
+        <item>OSO</item>
+        <item>O</item>
+        <item>ONO</item>
+        <item>NO</item>
+        <item>NNO</item>
         <item>N</item>
     </string-array>
-    <string-array name="directions_long">   <!-- one-to-one with directions_short -->   <!-- TODO -->
-        <item>North</item>
-        <item>North North East</item>
-        <item>North East</item>
-        <item>East North East</item>
-        <item>East</item>
-        <item>East South East</item>
-        <item>South East</item>
-        <item>South South East</item>
-        <item>South</item>
-        <item>South South West</item>
-        <item>South West</item>
-        <item>West South West</item>
-        <item>West</item>
-        <item>West North West</item>
-        <item>North West</item>
-        <item>North North West</item>
-        <item>North</item>
+    <string-array name="directions_long">   <!-- one-to-one with directions_short -->
+        <item>Nord</item>
+        <item>Nord-nord-est</item>
+        <item>Nord-est</item>
+        <item>Est-nord-est</item>
+        <item>Est</item>
+        <item>Est-sud-est</item>
+        <item>Sud-est</item>
+        <item>Sud-sud-est</item>
+        <item>Sud</item>
+        <item>Sud-sud-oest</item>
+        <item>Sud-oest</item>
+        <item>Oest-sud-oest</item>
+        <item>Oest</item>
+        <item>Oest-nord-oest</item>
+        <item>Nord-oest</item>
+        <item>Nord-nord-oest</item>
+        <item>Nord</item>
     </string-array>
 
     <!--
@@ -764,57 +764,57 @@
     -->
 
     <!-- Dialog: World Map -->
-    <string name="worldmap_dialog_title">@string/configAction_worldMap</string>   <!-- TODO -->
-    <string name="worldmap_dialog_option_sunlight">Sunlight</string>              <!-- TODO -->
-    <string name="worldmap_dialog_option_moonlight">Moonlight</string>            <!-- TODO -->
-    <string name="worldmap_dialog_option_all">Both</string>                       <!-- TODO -->
+    <string name="worldmap_dialog_title">@string/configAction_worldMap</string>
+    <string name="worldmap_dialog_option_sunlight">Llum solar</string>
+    <string name="worldmap_dialog_option_moonlight">Llum lunar</string>
+    <string name="worldmap_dialog_option_all">Ambdòs</string>
 
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Planificar alarma per a</string>
     <string name="schedalarm_dialog_title">Posar alarma</string>
     <string name="schedalarm_dialog_ok">Posar alarma</string>
-    <string name="schedalarm_dialog_cancel">Cancel·lar</string>
-    <string name="schedalarm_dialog_error">No és va configurar l\'alarma</string>
+    <string name="schedalarm_dialog_cancel">Canceŀla</string>
+    <string name="schedalarm_dialog_error">No es va configurar l\'alarma</string>
     <string name="schedalarm_dialog_error2">L\'alarma no és pot configurar…</string>
-    <string name="schedalarm_dialog_note">prop de <xliff:g id="timetext" example="6h 30m">%s</xliff:g> des d\'ara.</string>
+    <string name="schedalarm_dialog_note">Prop de <xliff:g id="timetext" example="6h 30m">%s</xliff:g> comptant des d\'ara.</string>
     <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="nautical twilight">%s</xliff:g> no passa.</string>
     <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
         <item>alba astrònomic</item>
         <item>alba nàutic</item>
-        <item>blue hour</item>    <!-- TODO -->
+        <item>hora blava</item>
         <item>alba civil</item>
-        <item>blue hour</item>    <!-- TODO -->
+        <item>hora blava</item>
         <item>alba</item>
-        <item>golden hour</item>    <!-- TODO -->
-        <item>mitgdia</item>
-        <item>golden hour</item>    <!-- TODO -->
+        <item>hora daurada</item>
+        <item>migdia</item>
+        <item>hora daurada</item>
         <item>ocàs</item>
-        <item>blue hour</item>    <!-- TODO -->
+        <item>hora blava</item>
         <item>ocàs civil</item>
-        <item>blue hour</item>    <!-- TODO -->
+        <item>hora blava</item>
         <item>ocàs nàutic</item>
         <item>ocàs astrònomic</item>
-        <item>moonrise</item>                         <!-- TODO -->
-        <item>moonset</item>                          <!-- TODO -->
+        <item>sortida lunar</item>
+        <item>posta lunar</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>sortida de sol astronòmica</item>
         <item>sortida de sol nàutica</item>
-        <item>morning blue hour (start)</item>    <!-- TODO -->
+        <item>hora blava de l\'alba (inici)</item>
         <item>sortida de sol civil</item>
-        <item>morning blue hour (end)</item>   <!-- TODO -->
+        <item>hora blava de l\'alba (fi)</item>
         <item>sortida de sol</item>
-        <item>morning golden hour (end)</item>    <!-- TODO -->
-        <item>mitgdia</item>
-        <item>evening golden hour (start)</item>    <!-- TODO -->
+        <item>hora daurada del fi de l\'alba</item>
+        <item>migdia</item>
+        <item>hora daurada de l\'inici del capvespre</item>
         <item>posta de sol</item>
-        <item>evening blue hour (start)</item>    <!-- TODO -->
+        <item>hora blava nocturna (inici)</item>
         <item>posta de sol civil</item>
-        <item>evening blue hour (end)</item>    <!-- TODO -->
+        <item>hora blava capvespre (fi)</item>
         <item>posta de sol nàutica</item>
         <item>posta de sol astronòmica</item>
-        <item>moonrise</item>    <!-- TODO -->
-        <item>moonset</item>     <!-- TODO -->
+        <item>sortida lunar</item>
+        <item>posta lunar</item>
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
@@ -830,30 +830,30 @@
     <string name="gps_lastfix_toast_cancelled">Actualizació de GPS cancel·lada.</string> <!-- displayed briefly when gps refresh cancelled -->
 
     <!-- Dialog: KeepTrying GPS? -->
-    <string name="gps_keeptrying_title">Sense fixació</string>
-    <string name="gps_keeptrying_msg">Incapaç d\'obtenir fixació</string>
+    <string name="gps_keeptrying_title">Sense posició</string>
+    <string name="gps_keeptrying_msg">Incapaç d\'obtenir posició</string>
     <string name="gps_keeptrying_ok">Segueix intentant</string>
     <string name="gps_keeptrying_cancel">Abandonar</string>
 
     <!-- Dialog: Use Date -->
     <string name="timedate_dialog_title">Configurar data</string>
     <string name="timedate_dialog_ok">Configurar</string>
-    <string name="timedate_dialog_cancel">Cancel·lar</string>
+    <string name="timedate_dialog_cancel">Canceŀlar</string>
 
     <!-- Dialog: Use Timezone -->
     <string name="timezone_dialog_title">Zona horària</string>
     <string name="timezone_dialog_ok">Configurar</string>
-    <string name="timezone_dialog_cancel">Cancel·lar</string>
+    <string name="timezone_dialog_cancel">Canceŀlar</string>
 
     <!-- Dialog: Set Location -->
     <string name="location_dialog_title">Localització</string>
     <string name="location_dialog_ok">Actualizar</string>
-    <string name="location_dialog_cancel">Cancel·lar</string>
+    <string name="location_dialog_cancel">Canceŀlar</string>
     <string name="location_dialog_error_lat">No és una latitud vàlida.</string>
     <string name="location_dialog_error_lon">No és una longitud vàlida.</string>
-    <string name="location_dialog_error_alt">This is not a valid elevation.</string>  <!-- TODO -->
+    <string name="location_dialog_error_alt">No és una elevació vàlida.</string>
 
-    <string name="location_dialog_toast_copied">Copiada al pertapapeles<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
+    <string name="location_dialog_toast_copied">Copiada al porta-retalls<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
 
     <!-- Dialog: Clear Places -->
     <string name="locationclear_dialog_title">Netejar llocs?</string>
@@ -867,9 +867,9 @@
     <string name="locationcleared_toast_success">La base de dades de llocs s\'ha esborrat.</string>
 
     <!-- Dialog: Build Places List (progress) -->
-    <string name="locationbuild_dialog_title">Building Database</string>  <!-- TODO -->
-    <string name="locationbuild_dialog_message">Building a database of places…</string>  <!-- TODO -->
-    <string name="locationbuild_toast_success">Added <xliff:g id="n">%1$s</xliff:g> places to the database.</string>  <!-- TODO -->
+    <string name="locationbuild_dialog_title">Construint base de dades</string>
+    <string name="locationbuild_dialog_message">Construint una base de dades de llocs…</string>
+    <string name="locationbuild_toast_success">Afegits <xliff:g id="n">%1$s</xliff:g> llocs a la base de dades.</string>
 
     <!-- Dialog: export Places -->
     <string name="locationexport_dialog_title">Exportant llocs</string>
@@ -886,19 +886,19 @@
 
     <!-- Dialog: Color -->
     <string name="color_dialog_msg">Escollir color</string>
-    <string name="color_dialog_ok">Sel·leccionar</string>
-    <string name="color_dialog_cancel">Cancel·lar</string>
+    <string name="color_dialog_ok">Seleccionar</string>
+    <string name="color_dialog_cancel">Canceŀlar</string>
 
     <!-- Dialog: About -->
-    <string name="about_dialog_title">Sobre de</string>
+    <string name="about_dialog_title">Quant a</string>
     <string name="app_name">Suntimes</string>
-    <string name="app_name_widget0">Suntimes Widget</string>
-    <string name="app_name_widget1">Suntimes Widget (reversible)</string>
-    <string name="app_name_widget2">Sun Position Widget</string>
-    <string name="app_name_solsticewidget0">Solstice Widget</string>
-    <string name="app_name_moonwidget0">Moon Widget</string>
+    <string name="app_name_widget0">Giny de Suntimes</string>
+    <string name="app_name_widget1">Giny de Suntimes (reversible)</string>
+    <string name="app_name_widget2">Giny solar</string>
+    <string name="app_name_solsticewidget0">Giny de solstici</string>
+    <string name="app_name_moonwidget0">Giny lunar</string>
     <string name="app_version"><![CDATA[<b>Versió:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
-    <string name="app_shortdesc">Mostra les hores de l\'alba, vespre i llum crepuscular.</string>  <!-- TODO: needs update to mention the moon. default changed to -> "Displays sunlight and moonlight times" -->
+    <string name="app_shortdesc">Mostra les hores de l\'alba, capvespre, llum crepuscular i lunar.</string>
     <string name="app_support_url"><![CDATA[
         <b>Suport:</b> visita el
         <a href="https://github.com/forrestguice/SuntimesWidget/issues">seguiment d\'incidències</a> per enviar una petició.
@@ -926,22 +926,44 @@
 
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Ajuda</string>
-    <!-- TODO: needs update (see values\strings.xml) -->
+
     <string name="help_appearance_title"><![CDATA[
-    Les següents substitucions estàn soportades: <br />
-            * <b>%loc</b> per a etiqueta <br />
-            * <b>%lat</b> per a latitud <br />
-            * <b>%lon</b> per a longitud <br/>
-            * <b>%m</b> per a mode de temps (curt) (p.ex. "Civil") <br/>
-            * <b>%M</b> per a mode de temps (llarg) (p.ex. "Crepuscle Civil ") <br/>
-            * <b>%s</b> per a font de dades (p.ex. sunrisesunsetlib) <br/>
-            * <b>%t</b> per a zona horària (id) (p.ex. ES/Barcelona) <br/>
-]]></string>
+        Les següents substitucions estàn soportades:<br/>
+        <br/>
+        <b>All Widgets:</b> <br />
+                * <b>%d</b> for date (e.g. February 12) <br/>
+                * <b>%dd</b> for day (short) (e.g. Mon) <br/>
+                * <b>%dD</b> for day (long) (e.g. Monday) <br/>
+                * <b>%dY</b> for year (e.g. 2018) <br/>
+                * <b>%dt</b> for time (of last update) <br/>
+                * <b>%dT</b> for time with seconds (of last update) <br/>
+                <br/>
+                * <b>%loc</b> per a etiqueta <br />
+                * <b>%lat</b> per a latitud <br />
+                * <b>%lon</b> per a longitud <br/>
+                * <b>%lel</b> for elevation (e.g. 385 meters) <br/>
+                <br/>
+                * <b>%s</b> per a font de dades (p.ex. sunrisesunsetlib) <br/>
+                * <b>%t</b> per a zona horària (id) (p.ex. ES/Barcelona) <br/>
+                * <b>%id</b> for appWidgetID <br/>
+         <br/>
+         <b>Sun Widgets:</b> <br/>
+                * <b>%m</b> per a mode de temps (curt) (p.ex. "Civil") <br/>
+                * <b>%M</b> per a mode de temps (llarg) (p.ex. "Crepuscle Civil") <br/>
+         <br/>
+         <b>Moon Widgets:</b> <br/>
+                * <b>%i</b> for moon illumination (e.g. 25%) <br/>
+                * <b>%M</b> for moon phase (e.g. Waxing Crescent) <br/>
+         <br/>
+         <b>Solstice Widgets:</b> <br/>
+                * <b>%m</b> for mode (short) (e.g. Solstice) <br/>
+                * <b>%M</b> for mode (long) (e.g. Winter Solstice) <br/>
+    ]]></string>  <!-- TODO -->
 
     <string name="help_general_timeMode"><![CDATA[
-      <b>Temps real:</b> El Sol està en l\'horitzó: això és el temps  aproximat de la sortida i posta de sol.<br/><br/>
+      <b>Temps natural:</b> El Sol està en l\'horitzó: això és el temps  aproximat de la sortida i posta de sol.<br/><br/>
       <b>Crepuscle civil:</b> El Sol està 6 graus per sota de l\'horitzó; les estrelles més brillants són visibles. Hi ha suficient llum per a la majoría de les activitats a l\'aire lliure sense necessitat de llanterna.<br/><br/>
-      <b>Crepuscle nàutic:</b> El Sol està 12 graus per sota de l\'horitzó; les siluetes dels objectes i l\'horitzó les difíciles de distinguir. No hi ha suficient llum per a activitatss a l\'aire lliure sense llanterna.<br/><br/>
+      <b>Crepuscle nàutic:</b> El Sol està 12 graus per sota de l\'horitzó; les siluetes dels objectes i l\'horitzó són difícils de distingir. No hi ha suficient llum per a activitatss a l\'aire lliure sense llanterna.<br/><br/>
       <b>Crepuscle astrònomic:</b> El Sol està 18 graus per sota de l\'horitzó. Qüasi l\'obscuritat de la nit.<br/>
 ]]></string>
     <string name="help_general_timeMode2"><![CDATA[
@@ -956,33 +978,33 @@
 ]]>
 </string>
     <string name="help_general_moonillum"><![CDATA[
-        <b>Moon Illumination:</b> The moon widgets and main page display the moon\'s illumination at lunar noon (the midpoint between moonrise and moonset), while the moon dialog displays the moon\'s current illumination.<br/><br/>
-    ]]></string> <!-- TODO -->
+        <b>Iŀluminació lunar:</b> Els ginys lunars i la pàgina principal mostren l\'iŀluminació de la Lluna en la nit lunar (el punt mig entre la sortida i posta de la Lluna), mentre que el diàleg lunar mostra l\'iŀluminació actual de la Lluna.<br/><br/>
+    ]]></string>
     <string name="help_general_goldhour"><![CDATA[
-        <b>Golden Hour:</b> The sun is between 6 degrees above or below the horizon. In the morning the golden hour begins with civil twilight and ends a short time after sunrise. In the evening the golden hour begins a short time before sunset and ends with civil twilight.<br/>
-    ]]></string>    <!-- TODO -->
+        <b>Hora daurada:</b> El Sol està 6 graus per sobre o per sota de l\'horitzó. En la matinada l\'hora daurada comença amb l\'alba civil i acaba poc desprès de sortir el Sol. A la tarda l\'hora daurada comença poc desprès del capvespre i finalitza amb el crepuscle civil.<br/>
+    ]]></string>
     <string name="help_general_bluehour"><![CDATA[
-        <b>Blue Hour:</b> The sun is between 8 degrees and 4 degrees below the horizon. The start and end of the blue hour falls between nautical and civil twilight.<br/>
-    ]]></string>    <!-- TODO -->
+        <b>Hora blava:</b> El Sol està entre 8 i 4 graus per sota de l\'horitzó. L\'inici i final de l\'hora blava està entre el crepuscle nàutic i civil.<br/>
+    ]]></string>
     <string name="help_action_launch"><![CDATA[
     El nom qualificat de la classe de la Activitat a ser llençada.<br/>
 ]]></string>
     <string name="help_widgetlist"><![CDATA[
-      Per <b>afegir un widget</b> has d\'anar a l\'escriptori.<br/><br/>
-      Per <b>reconfigurar un widget existent</b> pots sel·leccionar un de la següent llista.<br/>
+      Per <b>afegir un giny</b> has d\'anar a l\'escriptori.<br/><br/>
+      Per <b>reconfigurar un giny existent</b> pots sel·leccionar un de la següent llista.<br/>
 ]]></string>
 
-    <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>Suntimes does not collect, store, or transmit personal user data. It contains <b>no advertising</b>, <b>no analytics</b>, <b>no trackers</b>, and <b>no unnecessary permissions</b>. <br/><br/>The app is configured from location data. This information (and other configuration data used by the app) is stored locally and does not leave the device.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string> <!-- TODO -->
-    <string name="privacy_permission_location"><![CDATA[Suntimes uses the <b>location</b> permission to determine your current longitude and latitude.<br/><br/>This permission is optional; the location is manually configured by default.]]></string> <!-- TODO -->
-    <string name="privacy_permission_calendar"><![CDATA[Suntimes uses <b>calendar</b> permissions to integrate with the Calendar app. These permissions allow the app to create custom calendars and events.<br/><br/>Permissions are also required when disabling calendar integration (to remove custom calendars).]]></string> <!-- TODO -->
-    <string name="privacy_permission_storage"><![CDATA[Suntimes uses <b>external storage</b> permissions to backup/export data to file (e.g. places, themes).]]></string> <!-- TODO -->
-    <string name="privacy_permissiondialog_title">Permissions</string> <!-- TODO -->
+    <string name="privacy_policy"><![CDATA[<b>Privadesa:</b><br/>Suntimes no coŀlecta, emmagatzema, o transmet dades personals. <b>No contè anuncis</b>, <b>càlculs estadístics</b>, <b>rastrejadors</b>, i <b>no utilitza permissos innecessaris</b>. <br/><br/>L\'aplicació es configura amb dades de localització. Aquesta informació (i qualsevol altra dada configurada emprada per l\'aplicació) s\'emmagatzema localment i no surt del dispositiu.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
+    <string name="privacy_permission_location"><![CDATA[Suntimes utilitza el permís de <b>localització</b> per determinar la teva longitud i latitud.<br/><br/>Aquest permís és opcional; la localització es configura manualment per defecte.]]></string>
+    <string name="privacy_permission_calendar"><![CDATA[Suntimes utilitza el permís de <b>calendari</b> per integrar-se amb l\'aplicació Calendari. Aquests permisos permeten crear calendaris i esdeveniments personalitzats.<br/><br/>També es necessiten permisos quan es desactiva la integració amb el calendari (per eliminar calendaris personalitzats).]]></string>
+    <string name="privacy_permission_storage"><![CDATA[Suntimes utilitza el permís d\'<b>emmagatzematge extern</b> per fer una còpia de seguretat o exportar dades a un arxiu (p. ex. llocs, temes).]]></string>
+    <string name="privacy_permissiondialog_title">Permissos</string>
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
     <string name="calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
     <string name="calculator_displayString_time4a_simple">Una simple, relativament ràpida però imprecisa calculadora.</string>
-    <string name="calculator_displayString_time4a_noaa">Segueix algoritmes publicats per la «National Oceanic and Atmospheric Administration».</string>
+    <string name="calculator_displayString_time4a_noaa">Segueix algoritmes publicats per la "National Oceanic and Atmospheric Administration".</string>
     <string name="calculator_displayString_time4a_cc">Segueix algoritmes publicats per Dershowitz/Reingold en el seu llibre "Calendrical Calculations" (tercera edició).</string>
     <string name="calculator_displayString_time4a_4j">Basat en càlculs astrònomics publicats per Jean Meeus en el seu llibre "Astronomical Algorithms" (segona edició).</string>
 
