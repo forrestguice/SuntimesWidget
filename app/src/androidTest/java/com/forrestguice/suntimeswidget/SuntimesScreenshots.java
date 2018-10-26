@@ -56,13 +56,14 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
         config = new HashMap<String, ScreenshotConfig>();
         config.put("ca", new ScreenshotConfig(new WidgetSettings.Location("Barcelona", "41.3825", "2.1769", "31"), "CET", true));
         config.put("de", new ScreenshotConfig(new WidgetSettings.Location("Berlin", "52.5243", "13.4105", "40"), "Europe/Berlin", true));
-        config.put("es_ES", new ScreenshotConfig(new WidgetSettings.Location("Madrid", "40.4378", "-3.8196", "681"), "Europe/Madrid", true));
+        config.put("es_ES", new ScreenshotConfig(new WidgetSettings.Location("Madrid", "40.4378", "-3.8196", "681"), "Europe/Madrid", false));
         config.put("eu", new ScreenshotConfig(new WidgetSettings.Location("Euskal Herriko erdigunea", "42.883008", "-1.935491", "1258"), "CET", true));
         config.put("fr", new ScreenshotConfig(new WidgetSettings.Location("Paris", "48.8566", "2.3518", "41"), "Europe/Paris", true));
         config.put("hu", new ScreenshotConfig(new WidgetSettings.Location("Budapest", "47.4811", "18.9902", "225"), "Europe/Budapest", true));
         config.put("it", new ScreenshotConfig(new WidgetSettings.Location("Roma", "41.9099", "12.3959", "79"), "CET", false));
         config.put("pl", new ScreenshotConfig(new WidgetSettings.Location("Warszawa", "52.2319", "21.0067", "143"), "Poland", true));
         config.put("nb", new ScreenshotConfig(new WidgetSettings.Location("Oslo", "59.8937", "10.6450", "0"), "Europe/Oslo", true));
+        config.put("zh_TW", new ScreenshotConfig(new WidgetSettings.Location("Taiwan", "23.5491", "119.8998", "0"), "Asia/Taipei", false));
 
         if (!version.startsWith("v"))
             version = "v" + version;
@@ -180,12 +181,14 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
         WidgetSettings.saveDateModePref(context, 0, WidgetSettings.DateMode.CURRENT_DATE);
         WidgetSettings.saveTrackingModePref(context, 0, WidgetSettings.TrackingMode.SOONEST);
         WidgetSettings.saveShowSecondsPref(context, 0, false);
+        WidgetSettings.saveLocationAltitudeEnabledPref(context, 0, true);
 
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
         prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWWARNINGS, false);
         prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWLIGHTMAP, true);
-        prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWDATASOURCE, true);
+        prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWDATASOURCE, false);
         prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWEQUINOX, true);
+        prefs.putInt(AppSettings.PREF_KEY_UI_SHOWFIELDS, AppSettings.PREF_DEF_UI_SHOWFIELDS);
         prefs.apply();
     }
 

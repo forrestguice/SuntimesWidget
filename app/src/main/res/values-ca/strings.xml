@@ -176,17 +176,17 @@
 
     <string name="configLabel_tagDefault">[per defecte]</string>
     <string name="configLabel_tagPlugin">[complement]</string>
-    <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->  <!-- TODO -->
+    <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->
 
     <!-- WidgetConfig Activity -->
     <string name="configAction_addWidget">Afegir giny</string>                   <!-- Button: Add -->
     <string name="configAction_reconfigWidget_short">Reconfigurar</string>       <!-- Button: Reconfigure -->
     <string name="configAction_reconfigWidget">Reconfigurar giny</string>      <!-- used as title when reconfiguring -->
-    <string name="configLabel_title0">Giny de temps solar</string>                  <!-- used as title when adding -->
+    <string name="configLabel_title0">Giny d\'horari solar</string>                  <!-- used as title when adding -->
     <string name="configLabel_title1">Giny reversible</string>                 <!-- used as title when adding -->
-    <string name="configLabel_title2">@string/app_name_widget2</string>                  <!-- used as title when adding -->  <!-- TODO -->
+    <string name="configLabel_title2">@string/app_name_widget2</string>                  <!-- used as title when adding -->
     <string name="configLabel_solsticewidget0">Giny de solstici</string>                  <!-- used as title when adding -->
-    <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding --> <!-- TODO -->
+    <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
     <string name="configLabel_general">Opcions generals</string>                <!-- group title -->
@@ -244,14 +244,14 @@
     <string name="timeMode_blue4_short">Blava (4\u00B0)</string>                    <!-- setting -->
     <string name="timeMode_blue4">Hora blava (4\u00B0)</string>                     <!-- setting -->
 
-    <string name="timeMode_equinox_vernal">equinocci de primavera</string>      <!-- setting -->
-    <string name="timeMode_equinox_vernal_short">equinocci</string>       <!-- setting -->
-    <string name="timeMode_equinox_autumnal">equinocci de tardor</string>  <!-- setting -->
-    <string name="timeMode_equinox_autumnal_short">equinocci</string>     <!-- setting -->
-    <string name="timeMode_solstice_summer">solstici d\'estiu</string>    <!-- setting -->
-    <string name="timeMode_solstice_summer_short">solstici</string>     <!-- setting -->
-    <string name="timeMode_solstice_winter">solstici d\'hivern</string>    <!-- setting -->
-    <string name="timeMode_solstice_winter_short">solstici</string>     <!-- setting -->
+    <string name="timeMode_equinox_vernal">Equinocci de primavera</string>      <!-- setting -->
+    <string name="timeMode_equinox_vernal_short">Equinocci</string>       <!-- setting -->
+    <string name="timeMode_equinox_autumnal">Equinocci de tardor</string>  <!-- setting -->
+    <string name="timeMode_equinox_autumnal_short">Equinocci</string>     <!-- setting -->
+    <string name="timeMode_solstice_summer">Solstici d\'estiu</string>    <!-- setting -->
+    <string name="timeMode_solstice_summer_short">Solstici</string>     <!-- setting -->
+    <string name="timeMode_solstice_winter">Solstici d\'hivern</string>    <!-- setting -->
+    <string name="timeMode_solstice_winter_short">Solstici</string>     <!-- setting -->
 
     <string name="timeMode_moon">Lluna</string>                               <!-- label -->
     <string name="timeMode_moon_new">Lluna nova</string>                               <!-- setting -->
@@ -329,12 +329,12 @@
     <string name="configAction_savePlace">Guardar</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_solar">Temps solar</string>                       <!-- setting -->
+    <string name="timezoneMode_solar">Horari solar</string>                       <!-- setting -->
     <string name="timezoneMode_current">Zona horària de sistema</string>               <!-- setting -->
-    <string name="timezoneMode_custom">Definida per usuari</string>                    <!-- setting -->
+    <string name="timezoneMode_custom">Definida per l\'usuari</string>                    <!-- setting -->
 
-    <string name="solartime_localMean">Temps meitg local</string>                 <!-- setting / custom timezone id -->
-    <string name="solartime_apparent">Temps solar aparent</string>              <!-- setting / custom timezone id -->
+    <string name="solartime_localMean">Hora local</string>                 <!-- setting / custom timezone id -->
+    <string name="solartime_apparent">Hora solar aparent</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
@@ -709,8 +709,8 @@
         <item>Català</item>
         <item>Basc</item>
         <item>Noruec</item>
-        <item>Traditional Chinese</item>
-    </string-array>  <!-- TODO -->
+        <item>Xinès tradicional</item>
+    </string-array>
 
     <!-- position formats -->
     <string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
@@ -930,13 +930,13 @@
     <string name="help_appearance_title"><![CDATA[
         Les següents substitucions estàn soportades:<br/>
         <br/>
-        <b>All Widgets:</b> <br />
-                * <b>%d</b> for date (e.g. February 12) <br/>
-                * <b>%dd</b> for day (short) (e.g. Mon) <br/>
-                * <b>%dD</b> for day (long) (e.g. Monday) <br/>
-                * <b>%dY</b> for year (e.g. 2018) <br/>
-                * <b>%dt</b> for time (of last update) <br/>
-                * <b>%dT</b> for time with seconds (of last update) <br/>
+        <b>Tots els ginys:</b> <br />
+                * <b>%d</b> per la data (p. ex. 12 de Febrer) <br/>
+                * <b>%dd</b> per el dia (curt) (p. ex. Dl) <br/>
+                * <b>%dD</b> per el dia (llarg) (e.g. Dilluns) <br/>
+                * <b>%dY</b> per l\'any (p. ex. 2018) <br/>
+                * <b>%dt</b> per l\'hora (de l\'última actualització) <br/>
+                * <b>%dT</b> per l\'hora amb segons (de l\'lúltima actualització) <br/>
                 <br/>
                 * <b>%loc</b> per a etiqueta <br />
                 * <b>%lat</b> per a latitud <br />
@@ -947,18 +947,18 @@
                 * <b>%t</b> per a zona horària (id) (p.ex. ES/Barcelona) <br/>
                 * <b>%id</b> for appWidgetID <br/>
          <br/>
-         <b>Sun Widgets:</b> <br/>
+         <b>Giny solar:</b> <br/>
                 * <b>%m</b> per a mode de temps (curt) (p.ex. "Civil") <br/>
                 * <b>%M</b> per a mode de temps (llarg) (p.ex. "Crepuscle Civil") <br/>
          <br/>
-         <b>Moon Widgets:</b> <br/>
-                * <b>%i</b> for moon illumination (e.g. 25%) <br/>
-                * <b>%M</b> for moon phase (e.g. Waxing Crescent) <br/>
+         <b>Giny lunar:</b> <br/>
+                * <b>%i</b> per a la iŀluminació (p. ex. 25%) <br/>
+                * <b>%M</b> per a la fase lunar (p. ex. Creixent) <br/>
          <br/>
-         <b>Solstice Widgets:</b> <br/>
-                * <b>%m</b> for mode (short) (e.g. Solstice) <br/>
-                * <b>%M</b> for mode (long) (e.g. Winter Solstice) <br/>
-    ]]></string>  <!-- TODO -->
+         <b>Ginys de solsticis:</b> <br/>
+                * <b>%m</b> per al mode (curt) (p. ex. Solstici) <br/>
+                * <b>%M</b> per al mode (llarg) (p. ex. Solstici d\'hivern) <br/>
+    ]]></string>
 
     <string name="help_general_timeMode"><![CDATA[
       <b>Temps natural:</b> El Sol està en l\'horitzó: això és el temps  aproximat de la sortida i posta de sol.<br/><br/>

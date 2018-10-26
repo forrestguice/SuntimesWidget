@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="http://schemas.android.com/tools">
 
     <string name="default_location_label">Madrid</string>
@@ -183,13 +184,13 @@
     <string name="configAction_reconfigWidget_short">Reconfigurar</string>       
     <string name="configAction_reconfigWidget">Reconfigurar widget</string>
     <string name="configLabel_title0">Widget de tiempo solar</string>                  
-    <string name="configLabel_title1">widget reversible</string>                 
+    <string name="configLabel_title1">Widget reversible</string>                 
     <string name="configLabel_title2">@string/app_name_widget2</string>
     <string name="configLabel_solsticewidget0">Widget de solsticio</string>                  
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>
 
     <!-- Widget Setting: general -->
-    <string name="configLabel_general">opciones generales</string>                
+    <string name="configLabel_general">Opciones generales</string>                
     <string name="configLabel_general_calculator">Fuente de datos:</string>         
     <string name="configLabel_general_calculator_sun">Fuente de datos del Sol</string>         
     <string name="configLabel_general_calculator_moon">Fuente de datos de la Luna</string>         
@@ -244,14 +245,14 @@
     <string name="timeMode_blue4_short">Azul (4\u00B0)</string>
     <string name="timeMode_blue4">Hora azul (4\u00B0)</string>
 
-    <string name="timeMode_equinox_vernal">equinoccio de primavera</string>
-    <string name="timeMode_equinox_vernal_short">equinoccio</string>
-    <string name="timeMode_equinox_autumnal">equinoccio de otoño</string>
-    <string name="timeMode_equinox_autumnal_short">equinoccio</string>
-    <string name="timeMode_solstice_summer">solsticio de verano</string>    
-    <string name="timeMode_solstice_summer_short">solsticio</string>     
-    <string name="timeMode_solstice_winter">solsticio de invierno</string>    
-    <string name="timeMode_solstice_winter_short">solsticio</string>     
+    <string name="timeMode_equinox_vernal">Equinoccio de primavera</string>
+    <string name="timeMode_equinox_vernal_short">Equinoccio</string>
+    <string name="timeMode_equinox_autumnal">Equinoccio de otoño</string>
+    <string name="timeMode_equinox_autumnal_short">Equinoccio</string>
+    <string name="timeMode_solstice_summer">Solsticio de verano</string>    
+    <string name="timeMode_solstice_summer_short">Solsticio</string>     
+    <string name="timeMode_solstice_winter">Solsticio de invierno</string>    
+    <string name="timeMode_solstice_winter_short">Solsticio</string>     
 
     <string name="timeMode_moon">Luna</string>                               
     <string name="timeMode_moon_new">Luna nueva</string>                               
@@ -279,7 +280,7 @@
     <string name="widgetMode1x1_both_1">Amanecer y atardecer (1)</string>
     <string name="widgetMode1x1_both_2">Amanecer y atardecer (2)</string>
 
-    <string name="widgetMode1x1_altaz">Altitud i Azimut</string>     
+    <string name="widgetMode1x1_altaz">Altitud y Azimut</string>     
     <string name="widgetMode1x1_decright">Inclinación y ascensión derecha</string>     
 
     <string name="widgetMode_sunPosMap_simplerectangular">Básico</string>
@@ -303,10 +304,10 @@
     <string name="actionMode_flipToNextItem">Intercambiar vista</string>
 
     <string name="configLabel_action">Opciones de pulsación</string>                  
-    <string name="configLabel_action_onTap">Al dar:</string>                    
-    <string name="configLabel_action_onClockTap">Al dar al reloj:</string>         
-    <string name="configLabel_action_onNoteTap">Al dar una nota:</string>           
-    <string name="configLabel_action_onDateTap">Al dar la fecha:</string>           
+    <string name="configLabel_action_onTap">Al pulsar:</string>                    
+    <string name="configLabel_action_onClockTap">Al pulsar el reloj:</string>         
+    <string name="configLabel_action_onNoteTap">Al pulsar una nota:</string>           
+    <string name="configLabel_action_onDateTap">Al pulsar la fecha:</string>           
     <string name="configLabel_action_onDateTap1">Al mantener pulsado en la fecha:</string>
 
     
@@ -329,19 +330,19 @@
     <string name="configAction_savePlace">Guardar</string>         
 
     
-    <string name="timezoneMode_solar">Tiempo solar</string>
+    <string name="timezoneMode_solar">Horario solar</string>
     <string name="timezoneMode_current">Zona horaria de sistema</string>               
     <string name="timezoneMode_custom">Definida por usuario</string>                    
 
     <string name="solartime_localMean">Hora local</string>                 
-    <string name="solartime_apparent">Tiempo solar aparente</string>              
+    <string name="solartime_apparent">Horario solar aparente</string>              
     <string name="timezoneCustom_line1"><xliff:g example="US/Arizona" id="timezoneID">%1$s</xliff:g></string>                                                                     
     <string name="timezoneCustom_line2">El<xliff:g example="-7" id="utmOffset">%1$s</xliff:g>] <xliff:g example="Mountain Standard Time" id="timezoneName">%2$s</xliff:g></string> 
 
     <string name="configLabel_timezone">Opciones de zona horaria</string>             
     <string name="configLabel_timezone_mode">Modo:</string>                     
     <string name="configLabel_timezone_custom">Zona horaria:</string>              
-    <string name="configLabel_solartime">Tiempo solar:</string>                   
+    <string name="configLabel_solartime">Horario solar:</string>                   
 
     
     <string name="timeFormatMode_system">Formato del sistema</string>
@@ -360,8 +361,8 @@
     <string name="configLabel_date_custom">Datos:</string>
 
     
-    <string name="compareMode_yesterday">ayer</string>                     
-    <string name="compareMode_tomorrow">mañana</string>                       
+    <string name="compareMode_yesterday">Ayer</string>                     
+    <string name="compareMode_tomorrow">Mañana</string>                       
     <string name="configLabel_general_compareMode">Comparar con:</string>
     <string name="configLabel_general_showComparison">Mostrar comparación</string>
 
@@ -407,7 +408,7 @@
     <string name="edittheme_flag_default">por defecto</string>  
 
     <string name="deletetheme_dialog_title">Borrar tema</string>
-    <string name="deletetheme_dialog_message">¿Estás seguro que quieres borrar<xliff:g id="themeName">%1$s</xliff:g>?</string>   
+    <string name="deletetheme_dialog_message">¿Estás seguro querer borrar <xliff:g id="themeName">%1$s</xliff:g>?</string>   
     <string name="deletetheme_dialog_ok">Borrar</string>
     <string name="deletetheme_dialog_cancel">Cancelar</string>
 
@@ -449,7 +450,7 @@
     <string name="configLabel_themeColorSunrise">Color del alba:</string>
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>
 
-    <string name="configLabel_themeColorSunset">Color de la tarde:</string>   
+    <string name="configLabel_themeColorSunset">Color del atardecer:</string>   
     <string name="configHint_themeColorSunset">#FFFFFFFF</string>
 
     <string name="configLabel_themeColorNoon">Color del mediodía:</string>      
@@ -681,7 +682,7 @@
     <string name="calendar_moonPhase_displayName">Fases lunares</string>
 
     
-    <string name="configLabel_getFix_passiveMode">localización pasiva</string>
+    <string name="configLabel_getFix_passiveMode">Localización pasiva</string>
     <string name="configLabel_getFix_passiveMode_summary">Utiliza el proveedor de localización pasiva.</string>
 
     
@@ -709,7 +710,7 @@
         <item>Catalán</item>
         <item>Vasco</item>
         <item>Noruego</item>
-        <item>Traditional Chinese</item>
+        <item>Chino tradicional</item>
     </string-array>
 
     
@@ -779,42 +780,42 @@
     <string name="schedalarm_dialog_note">Cerca de <xliff:g example="6h 30m" id="timetext">%s</xliff:g> contando desde ahora.</string>
     <string name="schedalarm_dialog_note2"><xliff:g example="nautical twilight" id="solarevent">%s</xliff:g> no pasa.</string>
     <string-array name="solarevents_short">  
-        <item>amanecer astronómico</item>
-        <item>amanecer náutico</item>
-        <item>hora azul</item>
-        <item>amanecer civil</item>
-        <item>hora azul</item>
-        <item>amanecer</item>
-        <item>hora dorada</item>
-        <item>mediodía</item>
-        <item>hora dorada</item>
-        <item>ocaso</item>
-        <item>hora azul</item>
-        <item>ocaso civil</item>
-        <item>hora azul</item>
-        <item>ocaso náutico</item>
-        <item>ocaso astronómico</item>
-        <item>salida lunar</item>
-        <item>puesta lunar</item>
+        <item>Amanecer astronómico</item>
+        <item>Amanecer náutico</item>
+        <item>Hora azul</item>
+        <item>Amanecer civil</item>
+        <item>Hora azul</item>
+        <item>Amanecer</item>
+        <item>Hora dorada</item>
+        <item>Mediodía</item>
+        <item>Hora dorada</item>
+        <item>Ocaso</item>
+        <item>Hora azul</item>
+        <item>Ocaso civil</item>
+        <item>Hora azul</item>
+        <item>Ocaso náutico</item>
+        <item>Ocaso astronómico</item>
+        <item>Salida lunar</item>
+        <item>Puesta lunar</item>
     </string-array>
     <string-array name="solarevents_long">   
-        <item>amanecer astronómico</item>
-        <item>amanecer náutico</item>
-        <item>hora azul del amanecer (inicio)</item>
-        <item>amanecer civil</item>
-        <item>hora azul del amanecer (final)</item>
-        <item>amanecer</item>
-        <item>hora dorada del final del amanecer</item>
-        <item>mediodía</item>
-        <item>hora dorada del inicio del atardecer</item>
-        <item>atardecer</item>
-        <item>hora azul del atardecer (inicio)</item>
-        <item>atardecer sol civil</item>
-        <item>hora azul del atardecer (final)</item>
-        <item>atardecer náutica</item>
-        <item>atardecer astronómico</item>
-        <item>salida lunar</item>
-        <item>puesta lunar</item>
+        <item>Amanecer astronómico</item>
+        <item>Amanecer náutico</item>
+        <item>Hora azul del amanecer (inicio)</item>
+        <item>Amanecer civil</item>
+        <item>Hora azul del amanecer (final)</item>
+        <item>Amanecer</item>
+        <item>Hora dorada del final del amanecer</item>
+        <item>Mediodía</item>
+        <item>Hora dorada del inicio del atardecer</item>
+        <item>Atardecer</item>
+        <item>Hora azul del atardecer (inicio)</item>
+        <item>Atardecer sol civil</item>
+        <item>Hora azul del atardecer (final)</item>
+        <item>Atardecer náutica</item>
+        <item>Atardecer astronómico</item>
+        <item>Salida lunar</item>
+        <item>Puesta lunar</item>
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
@@ -925,40 +926,40 @@
 ]]></string>
 
     
-    <string name="help_dialog_title">ayudar</string>
+    <string name="help_dialog_title">Ayuda</string>
     
     <string name="help_appearance_title"><![CDATA[
         Las siguientes sustituciones están soportadas:<br/>
         <br/>
-        <b>Todos Widgets:</b> <br />
-                * <b>%d</b> for date (e.g. February 12) <br/>
-                * <b>%dd</b> for day (short) (e.g. Mon) <br/>
-                * <b>%dD</b> for day (long) (e.g. Monday) <br/>
-                * <b>%dY</b> for year (e.g. 2018) <br/>
-                * <b>%dt</b> for time (of last update) <br/>
-                * <b>%dT</b> for time with seconds (of last update) <br/>
+        <b>Todos los widgets:</b> <br />
+                * <b>%d</b> p. ej. (12 de Febrero) <br/>
+                * <b>%dd</b> para el día (corto) (p. ej. Lun) <br/>
+                * <b>%dD</b> para el día (largo) (p. ej. Lunes) <br/>
+                * <b>%dY</b> para el año (p. ej. 2018) <br/>
+                * <b>%dt</b> para la hora (de la última actualización) <br/>
+                * <b>%dT</b> para la hora con segundos (de la última actualización) <br/>
                 <br/>
                 * <b>%loc</b> para etiqueta <br />
                 * <b>%lat</b> para latitud <br />
                 * <b>%lon</b> para longitud <br/>
-                * <b>%lel</b> for elevation (e.g. 385 meters) <br/>
+                * <b>%lel</b> para elevación (p. ej. 385 metros) <br/>
                 <br/>
                 * <b>%s</b> para fuente de datos (p.ej. sunrisesunsetlib) <br/>
                 * <b>%t</b> para zona horaria (id) (p. ej. ES/Barcelona) <br/>
-                * <b>%id</b> for appWidgetID <br/>
+                * <b>%id</b> para appWidgetID <br/>
          <br/>
          <b>Widget solar:</b> <br/>
-                * <b>%m</b> para el modo de tiempo (corto) (p.ej. «Civil») <br/>
-                * <b>%M</b> para el modo de tiempo (largo) (p.ej. «Crepúsculo Civil») <br/>
+                * <b>%m</b> para el modo de tiempo (corto) (p. ej. «Civil») <br/>
+                * <b>%M</b> para el modo de tiempo (largo) (p. ej. «Crepúsculo Civil») <br/>
          <br/>
          <b>Widget lunar:</b> <br/>
-                * <b>%i</b> for moon illumination (e.g. 25%) <br/>
-                * <b>%M</b> for moon phase (e.g. Waxing Crescent) <br/>
+                * <b>%i</b> para la iluminación de la Luna (p. ej. 25%) <br/>
+                * <b>%M</b> para la fase de la Luna (e.g. Creciente) <br/>
          <br/>
-         <b>Widget de solsticio:</b> <br/>
-                * <b>%m</b> for mode (short) (e.g. Solstice) <br/>
-                * <b>%M</b> for mode (long) (e.g. Winter Solstice) <br/>
-    ]]></string>  <!-- TODO -->
+         <b>Widgets de solsticios:</b> <br/>
+                * <b>%m</b> para el modo (corto) (p. ej. Solsticio) <br/>
+                * <b>%M</b> para el modo (largo) (p. ej. Solsticio de invierno) <br/>
+    ]]></string>
 
     <string name="help_general_timeMode"><![CDATA[
     <b>Tiempo natural:</b> El Sol está en el horizonte: esto es el tiempo aproximado de la salida y puesta de sol. <br/><br/>
@@ -967,10 +968,10 @@
     <b>Crepúsculo astronómico:</b> El Sol está 18 grados por debajo del horizonte. Casi la oscuridad de la noche. <br/>
 ]]></string>
     <string name="help_general_timeMode2"><![CDATA[
-    <b>Equinoccio primaveral:</b> TODO. <br/>       
-    <b>Solsticio de \ verano:</b> TODO. <br/>       
-    <b>Equinoccio de otoño:</b> TODO. <br/>       
-    <b>Solsticio de \ invierno:</b> TODO. <br/>
+    <b>Equinoccio primaveral:</b> TODO. <br/> 
+    <b>Solsticio de verano:</b> TODO. <br/> 
+    <b>Equinoccio de otoño:</b> TODO. <br/> 
+    <b>Solsticio de invierno:</b> TODO. <br/>
 ]]></string>
     <string name="help_general_daylength"><![CDATA[
     <b>Duración del día:</b> la cantidad de tiempo entre la salida y la puesta del Sol. <br/><br/>
