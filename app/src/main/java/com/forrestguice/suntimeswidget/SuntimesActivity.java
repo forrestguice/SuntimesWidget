@@ -2747,6 +2747,7 @@ public class SuntimesActivity extends AppCompatActivity
             TextView snackbarText = (TextView)snackbarView.findViewById(android.support.design.R.id.snackbar_text);
             if (snackbarText != null) {
                 snackbarText.setTextColor(textColor);
+                snackbarText.setMaxLines(5);
             }
         }
 
