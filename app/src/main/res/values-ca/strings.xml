@@ -176,7 +176,7 @@
 
     <string name="configLabel_tagDefault">[per defecte]</string>
     <string name="configLabel_tagPlugin">[complement]</string>
-    <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->  <!-- TODO -->
+    <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->
 
     <!-- WidgetConfig Activity -->
     <string name="configAction_addWidget">Afegir giny</string>                   <!-- Button: Add -->
@@ -184,9 +184,9 @@
     <string name="configAction_reconfigWidget">Reconfigurar giny</string>      <!-- used as title when reconfiguring -->
     <string name="configLabel_title0">Giny d\'horari solar</string>                  <!-- used as title when adding -->
     <string name="configLabel_title1">Giny reversible</string>                 <!-- used as title when adding -->
-    <string name="configLabel_title2">@string/app_name_widget2</string>                  <!-- used as title when adding -->  <!-- TODO -->
+    <string name="configLabel_title2">@string/app_name_widget2</string>                  <!-- used as title when adding -->
     <string name="configLabel_solsticewidget0">Giny de solstici</string>                  <!-- used as title when adding -->
-    <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding --> <!-- TODO -->
+    <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
     <string name="configLabel_general">Opcions generals</string>                <!-- group title -->
@@ -710,7 +710,7 @@
         <item>Basc</item>
         <item>Noruec</item>
         <item>Xinès tradicional</item>
-    </string-array>  <!-- TODO -->
+    </string-array>
 
     <!-- position formats -->
     <string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
