@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -2715,7 +2716,7 @@ public class SuntimesActivity extends AppCompatActivity
         protected String contentDescription = null;
         protected View parentView = null;
 
-        public void initWarning(Context context, View view, String msg)
+        public void initWarning(@NonNull Context context, View view, String msg)
         {
             this.parentView = view;
             ImageSpan warningIcon = SuntimesUtils.createWarningSpan(context, txt_date.getTextSize());
@@ -2726,6 +2727,27 @@ public class SuntimesActivity extends AppCompatActivity
             snackbar = Snackbar.make(card_flipper, message, Snackbar.LENGTH_INDEFINITE);
             snackbar.addCallback(snackbarListener);
             setContentDescription(contentDescription);
+            themeWarning(context, snackbar);
+        }
+
+        @SuppressLint("ResourceType")
+        private void themeWarning(@NonNull Context context, @NonNull Snackbar snackbarWarning)
+        {
+            int[] colorAttrs = { R.attr.snackbar_textColor, R.attr.snackbar_accentColor, R.attr.snackbar_backgroundColor };
+            TypedArray a = context.obtainStyledAttributes(colorAttrs);
+            int textColor = ContextCompat.getColor(context, a.getResourceId(0, android.R.color.primary_text_dark));
+            int accentColor = ContextCompat.getColor(context, a.getResourceId(1, R.color.text_accent_dark));
+            int backgroundColor = ContextCompat.getColor(context, a.getResourceId(2, R.color.card_bg_dark));
+            a.recycle();
+
+            View snackbarView = snackbarWarning.getView();
+            snackbarView.setBackgroundColor(backgroundColor);
+            snackbarWarning.setActionTextColor(accentColor);
+
+            TextView snackbarText = (TextView)snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+            if (snackbarText != null) {
+                snackbarText.setTextColor(textColor);
+            }
         }
 
         private Snackbar.Callback snackbarListener = new Snackbar.Callback()

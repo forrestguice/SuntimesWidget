@@ -47,6 +47,10 @@
         <item name="tagColor_error">@color/errorTag_light</item>
         <item name="tagColor_dst">@color/dstTag_light</item>
 
+        <item name="snackbar_textColor">@android:color/primary_text_light</item>
+        <item name="snackbar_accentColor">?colorAccent</item>
+        <item name="snackbar_backgroundColor">?attr/colorPrimary</item>
+
         <item name="icActionGPS">@drawable/ic_action_location_found_light</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off_light</item>
         <item name="icActionGPS_searching">@drawable/ic_action_location_searching_light</item>
@@ -119,6 +123,10 @@
         <item name="tagColor_warning">@color/warningTag_dark</item>
         <item name="tagColor_error">@color/errorTag_dark</item>
         <item name="tagColor_dst">@color/dstTag_dark</item>
+
+        <item name="snackbar_textColor">@android:color/primary_text_dark</item>
+        <item name="snackbar_accentColor">?colorAccent</item>
+        <item name="snackbar_backgroundColor">?attr/colorPrimary</item>
 
         <item name="icActionGPS">@drawable/ic_action_location_found</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off</item>
