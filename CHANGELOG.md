@@ -1,6 +1,11 @@
 ### ~
 
-###
+### v0.9.4 (2018-10-28)
+* fixes bug "widgets missing" (#258); installLocation set to internalOnly.
+* fixes appearance of main table for locales with header text shorter than event times; sunset column now has minWidth.
+* fixes appearance of snackbar warnings; now styled by theme.
+* fixes readability of snackbar warnings for locales with long action button text.
+* fixes Settings Activity iconography; unique icons for each header.
 * updates translations to Spanish (es-es) and Catalan (ca) (#255 by Raulvo).
 * updates translation to Norwegian (nb) (#253 by FTno).
 * adds translation to Traditional Chinese (zh-tw) (contributed by ft42) (#252).
