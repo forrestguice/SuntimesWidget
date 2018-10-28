@@ -262,6 +262,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     }
 
     /**
+     * forces styled icons on headers
      * @param target the target list to place headers into
      */
     @Override
@@ -272,17 +273,32 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         {
             loadHeadersFromResource(R.xml.preference_headers, target);
 
-            TypedValue typedValue = new TypedValue();   // force styled icons on headers
-            int[] icActionAttr = new int[] { R.attr.icActionSettings };
+            TypedValue typedValue = new TypedValue();
+            int[] icActionAttr = new int[] { R.attr.icActionSettings, R.attr.icActionLocale, R.attr.icActionPlace, R.attr.icActionTime, R.attr.icActionAppearance };
             TypedArray a = obtainStyledAttributes(typedValue.data, icActionAttr);
             int settingsIcon = a.getResourceId(0, R.drawable.ic_action_settings);
+            int localeIcon = a.getResourceId(1, R.drawable.ic_action_locale);
+            int placesIcon = a.getResourceId(2, R.drawable.ic_action_place);
+            int timeIcon = a.getResourceId(3, R.drawable.ic_action_time);
+            int paletteIcon = a.getResourceId(4, R.drawable.ic_palette);
             a.recycle();
 
             for (Header header : target)
             {
                 if (header.iconRes == 0)
                 {
-                    header.iconRes = settingsIcon;
+                    if (header.fragment != null)
+                    {
+                        if (header.fragment.endsWith("LocalePrefsFragment")) {
+                            header.iconRes = localeIcon;
+                        } else if (header.fragment.endsWith("PlacesPrefsFragment")) {
+                            header.iconRes = placesIcon;
+                        } else if (header.fragment.endsWith("CalendarPrefsFragment")) {
+                            header.iconRes = timeIcon;
+                        } else if (header.fragment.endsWith("UIPrefsFragment")) {
+                            header.iconRes = paletteIcon;
+                        } else header.iconRes = settingsIcon;
+                    } else header.iconRes = settingsIcon;
                 }
             }
         }
