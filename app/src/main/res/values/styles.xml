@@ -65,6 +65,7 @@
         <item name="icActionError">@drawable/ic_action_error_light</item>
         <item name="icActionAppearance">@drawable/ic_palette_light</item>
         <item name="icActionAltitude">@drawable/baseline_terrain_black_18</item>
+        <item name="icActionLocale">@drawable/ic_action_locale_light</item>
         <item name="icActionSettings">@drawable/ic_action_settings_light</item>
         <item name="icActionHelp">@drawable/ic_action_help_light</item>
         <item name="icActionAccept">@drawable/ic_action_accept_light</item>
@@ -142,6 +143,7 @@
         <item name="icActionError">@drawable/ic_action_error</item>
         <item name="icActionAppearance">@drawable/ic_palette</item>
         <item name="icActionAltitude">@drawable/baseline_terrain_white_18</item>
+        <item name="icActionLocale">@drawable/ic_action_locale</item>
         <item name="icActionSettings">@drawable/ic_action_settings</item>
         <item name="icActionHelp">@drawable/ic_action_help</item>
         <item name="icActionAccept">@drawable/ic_action_accept</item>
