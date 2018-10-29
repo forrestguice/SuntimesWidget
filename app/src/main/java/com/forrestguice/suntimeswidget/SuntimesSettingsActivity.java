@@ -262,6 +262,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     }
 
     /**
+     * forces styled icons on headers
      * @param target the target list to place headers into
      */
     @Override
@@ -272,17 +273,32 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         {
             loadHeadersFromResource(R.xml.preference_headers, target);
 
-            TypedValue typedValue = new TypedValue();   // force styled icons on headers
-            int[] icActionAttr = new int[] { R.attr.icActionSettings };
+            TypedValue typedValue = new TypedValue();
+            int[] icActionAttr = new int[] { R.attr.icActionSettings, R.attr.icActionLocale, R.attr.icActionPlace, R.attr.icActionTime, R.attr.icActionAppearance };
             TypedArray a = obtainStyledAttributes(typedValue.data, icActionAttr);
             int settingsIcon = a.getResourceId(0, R.drawable.ic_action_settings);
+            int localeIcon = a.getResourceId(1, R.drawable.ic_action_locale);
+            int placesIcon = a.getResourceId(2, R.drawable.ic_action_place);
+            int timeIcon = a.getResourceId(3, R.drawable.ic_action_time);
+            int paletteIcon = a.getResourceId(4, R.drawable.ic_palette);
             a.recycle();
 
             for (Header header : target)
             {
                 if (header.iconRes == 0)
                 {
-                    header.iconRes = settingsIcon;
+                    if (header.fragment != null)
+                    {
+                        if (header.fragment.endsWith("LocalePrefsFragment")) {
+                            header.iconRes = localeIcon;
+                        } else if (header.fragment.endsWith("PlacesPrefsFragment")) {
+                            header.iconRes = placesIcon;
+                        } else if (header.fragment.endsWith("CalendarPrefsFragment")) {
+                            header.iconRes = timeIcon;
+                        } else if (header.fragment.endsWith("UIPrefsFragment")) {
+                            header.iconRes = paletteIcon;
+                        } else header.iconRes = settingsIcon;
+                    } else header.iconRes = settingsIcon;
                 }
             }
         }
@@ -713,19 +729,21 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         final String[] localeValues = activity.getResources().getStringArray(R.array.locale_values);
 
         Integer[] index = getSortedOrder(localeDisplayNative);
-        CharSequence[] entries = new CharSequence[localeDisplay.length];
+        CharSequence[] entries = new CharSequence[localeValues.length];
         CharSequence[] values = new CharSequence[localeValues.length];
         for (int i=0; i<index.length; i++)
         {
             int j = index[i];
             CharSequence formattedDisplayString;
-            if (localeDisplay[j].equals(localeDisplayNative[j]))
-            {
-                formattedDisplayString = localeDisplayNative[j];
+            CharSequence localeDisplay_j = (localeDisplay.length > j ? localeDisplay[j] : localeValues[j]);
+            CharSequence localeDisplayNative_j = (localeDisplayNative.length > j ? localeDisplayNative[j] : localeValues[j]);
+
+            if (localeDisplay_j.equals(localeDisplayNative_j)) {
+                formattedDisplayString = localeDisplayNative_j;
 
             } else {
-                String localizedName = "(" + localeDisplay[j] + ")";
-                String displayString = localeDisplayNative[j] + " " + localizedName;
+                String localizedName = "(" + localeDisplay_j + ")";
+                String displayString = localeDisplayNative_j + " " + localizedName;
                 formattedDisplayString = SuntimesUtils.createRelativeSpan(null, displayString, localizedName, 0.7f);
             }
 

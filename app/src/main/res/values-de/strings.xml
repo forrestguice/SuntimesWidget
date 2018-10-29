@@ -697,7 +697,8 @@
       <item>Katalanisch</item>
       <item>Baskisch</item>
       <item>Norwegisch</item>
-  </string-array>
+      <item>Traditional Chinese</item>
+  </string-array>  <!-- TODO -->
 
   <!--
        DIALOGS

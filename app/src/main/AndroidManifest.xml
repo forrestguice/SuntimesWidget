@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
-          package="com.forrestguice.suntimeswidget" >
+          package="com.forrestguice.suntimeswidget"
+          android:installLocation="internalOnly">   <!-- internalOnly; widgets may be unavailable when installed to external -->
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />     <!-- needed to get location using GPS -->
