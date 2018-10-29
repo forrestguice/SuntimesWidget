@@ -47,6 +47,10 @@
         <item name="tagColor_error">@color/errorTag_light</item>
         <item name="tagColor_dst">@color/dstTag_light</item>
 
+        <item name="snackbar_textColor">@android:color/primary_text_light</item>
+        <item name="snackbar_accentColor">?colorAccent</item>
+        <item name="snackbar_backgroundColor">?attr/colorPrimary</item>
+
         <item name="icActionGPS">@drawable/ic_action_location_found_light</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off_light</item>
         <item name="icActionGPS_searching">@drawable/ic_action_location_searching_light</item>
@@ -61,6 +65,7 @@
         <item name="icActionError">@drawable/ic_action_error_light</item>
         <item name="icActionAppearance">@drawable/ic_palette_light</item>
         <item name="icActionAltitude">@drawable/baseline_terrain_black_18</item>
+        <item name="icActionLocale">@drawable/ic_action_locale_light</item>
         <item name="icActionSettings">@drawable/ic_action_settings_light</item>
         <item name="icActionHelp">@drawable/ic_action_help_light</item>
         <item name="icActionAccept">@drawable/ic_action_accept_light</item>
@@ -120,6 +125,10 @@
         <item name="tagColor_error">@color/errorTag_dark</item>
         <item name="tagColor_dst">@color/dstTag_dark</item>
 
+        <item name="snackbar_textColor">@android:color/primary_text_dark</item>
+        <item name="snackbar_accentColor">?colorAccent</item>
+        <item name="snackbar_backgroundColor">?attr/colorPrimary</item>
+
         <item name="icActionGPS">@drawable/ic_action_location_found</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off</item>
         <item name="icActionGPS_searching">@drawable/ic_action_location_searching</item>
@@ -134,6 +143,7 @@
         <item name="icActionError">@drawable/ic_action_error</item>
         <item name="icActionAppearance">@drawable/ic_palette</item>
         <item name="icActionAltitude">@drawable/baseline_terrain_white_18</item>
+        <item name="icActionLocale">@drawable/ic_action_locale</item>
         <item name="icActionSettings">@drawable/ic_action_settings</item>
         <item name="icActionHelp">@drawable/ic_action_help</item>
         <item name="icActionAccept">@drawable/ic_action_accept</item>

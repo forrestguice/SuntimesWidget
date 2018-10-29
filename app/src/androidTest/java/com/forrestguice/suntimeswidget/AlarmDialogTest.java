@@ -63,10 +63,16 @@ public class AlarmDialogTest extends SuntimesActivityTestBase
 
     public static void showAlarmDialog(Context context)
     {
+        showAlarmDialog(context, true);
+    }
+    public static void showAlarmDialog(Context context, boolean verify)
+    {
         String actionAboutText = context.getString(R.string.configAction_setAlarm);
         openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
         onView(withText(actionAboutText)).perform(click());
-        verifyAlarmDialog();
+        if (verify) {
+            verifyAlarmDialog();
+        }
     }
 
     public static void inputAlarmDialog_alarm(SolarEvents mode)

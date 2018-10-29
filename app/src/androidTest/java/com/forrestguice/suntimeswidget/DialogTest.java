@@ -69,8 +69,14 @@ public class DialogTest extends SuntimesActivityTestBase
 
     public static void showLightmapDialog(Context context)
     {
+        showLightmapDialog(context, true);
+    }
+    public static void showLightmapDialog(Context context, boolean verify)
+    {
         onView(withId(R.id.info_time_lightmap)).perform(click());
-        verifyLightmapDialog();
+        if (verify) {
+            verifyLightmapDialog();
+        }
     }
 
     public static void verifyLightmapDialog()
@@ -108,10 +114,16 @@ public class DialogTest extends SuntimesActivityTestBase
 
     public static void showEquinoxDialog(Context context)
     {
+        showEquinoxDialog(context, true);
+    }
+    public static void showEquinoxDialog(Context context, boolean verify)
+    {
         String actionText = context.getString(R.string.configAction_equinoxDialog);
         openActionBarOverflowOrOptionsMenu(context);
         onView(withText(actionText)).perform(click());
-        verifyEquinoxDialog();
+        if (verify) {
+            verifyEquinoxDialog();
+        }
     }
 
     public static void verifyEquinoxDialog()
@@ -143,10 +155,16 @@ public class DialogTest extends SuntimesActivityTestBase
 
     public static void showHelpDialog(Context context)
     {
+        showHelpDialog(context, true);
+    }
+    public static void showHelpDialog(Context context, boolean verify)
+    {
         String actionHelpText = context.getString(R.string.configAction_help);
         openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
         onView(withText(actionHelpText)).perform(click());
-        verifyHelpDialog();
+        if (verify) {
+            verifyHelpDialog();
+        }
     }
 
     public static void verifyHelpDialog()
@@ -178,10 +196,16 @@ public class DialogTest extends SuntimesActivityTestBase
 
     public static void showAboutDialog(Context context)
     {
+        showAboutDialog(context, true);
+    }
+    public static void showAboutDialog(Context context, boolean verify)
+    {
         String actionAboutText = context.getString(R.string.configAction_aboutWidget);
         openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
         onView(withText(actionAboutText)).perform(click());
-        verifyAboutDialog();
+        if (verify) {
+            verifyAboutDialog();
+        }
     }
 
     public static void verifyAboutDialog()
