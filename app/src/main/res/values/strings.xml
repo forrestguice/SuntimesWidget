@@ -432,55 +432,55 @@
     <string name="configLabel_themeBackground_dark">Dark</string>          <!-- dark background -->
     <string name="configLabel_themeBackground_trans">Transparent</string>  <!-- transparent background -->
     <string name="configLabel_themeBackground_color">Colour</string>      <!-- custom background -->
-    <string name="configLabel_themeColorBackground">Colour:</string>      <!-- color label -->
+    <string name="configLabel_themeColorBackground">Colour</string>      <!-- color label -->
 
-    <string name="configLabel_themeColorTitle">Title Colour:</string>     <!-- color label -->
+    <string name="configLabel_themeColorTitle">Title Colour</string>     <!-- color label -->
     <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->
 
-    <string name="configLabel_themeColorText">Text Colour:</string>       <!-- color label -->
+    <string name="configLabel_themeColorText">Text Colour</string>       <!-- color label -->
     <string name="configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->
 
-    <string name="configLabel_themeColorSpring">Spring Colour:</string> <!-- color label -->
-    <string name="configLabel_themeColorSummer">Summer Colour:</string> <!-- color label -->
-    <string name="configLabel_themeColorFall">Autumn Colour:</string> <!-- color label -->
-    <string name="configLabel_themeColorWinter">Winter Colour:</string> <!-- color label -->
+    <string name="configLabel_themeColorSpring">Spring</string> <!-- color label -->
+    <string name="configLabel_themeColorSummer">Summer</string> <!-- color label -->
+    <string name="configLabel_themeColorFall">Autumn</string> <!-- color label -->
+    <string name="configLabel_themeColorWinter">Winter</string> <!-- color label -->
 
     <string name="configLabel_themeColorMapBackground">Map Background</string> <!-- color label -->
     <string name="configLabel_themeColorMapForeground">Map Foreground</string> <!-- color label -->
     <string name="configLabel_themeColorMapSunShadow">Shadow</string> <!-- color label -->
     <string name="configLabel_themeColorMapMoonHighlight">Highlight</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMoonrise">Moonrise Colour:</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonset">Moonset Colour:</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonWaxing">Waxing Colour:</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonWaning">Waning Colour:</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonFull">Full Colour:</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonNew">New Colour:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonrise">Moonrise</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonset">Moonset</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaxing">Waxing</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaning">Waning</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonFull">Full</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonNew">New</string> <!-- color label -->
 
-    <string name="configLabel_themeColorSunrise">Sunrise Colour:</string> <!-- color label -->
+    <string name="configLabel_themeColorSunrise">Sunrise</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
 
-    <string name="configLabel_themeColorSunset">Sunset Colour:</string>   <!-- color label -->
+    <string name="configLabel_themeColorSunset">Sunset</string>   <!-- color label -->
     <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorNoon">Noon Colour:</string>      <!-- color label -->
+    <string name="configLabel_themeColorNoon">Noon</string>      <!-- color label -->
     <string name="configHint_themeColorNoon">#FFFFFFFF</string>         <!-- color hint -->
 
-    <string name="configLabel_themeColorFill">Fill:</string>         <!-- color label -->
+    <string name="configLabel_themeColorFill">Fill</string>         <!-- color label -->
     <string name="configHint_themeColorFill">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorBorder">Border:</string>         <!-- color label -->
+    <string name="configLabel_themeColorBorder">Border</string>         <!-- color label -->
     <string name="configHint_themeColorBorder">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeBorderWidthRiseSet">Border Width (rise/set):</string>  <!-- size label -->
+    <string name="configLabel_themeBorderWidthRiseSet">Border Width (rise/set)</string>  <!-- size label -->
     <string name="configHint_themeBorderWidthRiseSet">2</string>                          <!-- size hint -->
-    <string name="configLabel_themeBorderWidthNoon">Border Width (noon):</string>         <!-- size label -->
+    <string name="configLabel_themeBorderWidthNoon">Border Width (noon)</string>         <!-- size label -->
     <string name="configHint_themeBorderWidthNoon">3</string>                             <!-- size hint -->
 
-    <string name="configLabel_themeColorSuffix">Suffix Colour:</string>   <!-- color label -->
+    <string name="configLabel_themeColorSuffix">Suffix Colour</string>   <!-- color label -->
     <string name="configHint_themeColorSuffix">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorTime">Text Colour2:</string>      <!-- color label -->
+    <string name="configLabel_themeColorTime">Text Colour2</string>      <!-- color label -->
     <string name="configHint_themeColorTime">#FFFFFFFF</string>          <!-- color hint -->
 
     <string name="configLabel_themeSizeTitle">Title Size:</string>  <!-- edit label -->
@@ -792,6 +792,7 @@
         <item>Catalan</item>
         <item>Basque</item>
         <item>Norwegian</item>
+        <item>Traditional Chinese</item>
     </string-array>
     <string-array name="locale_display_native" translatable="false">             <!-- one-to-one with locale_values -->
         <item>English</item>
@@ -805,6 +806,7 @@
         <item>Català</item>
         <item>Euskara</item>
         <item>Norsk</item>
+        <item>正體中文</item>
     </string-array>
     <string-array name="locale_values" translatable="false">  <!-- one-to-one with locale_display -->
         <item>en</item>
@@ -818,6 +820,7 @@
         <item>ca</item>
         <item>eu</item>
         <item>nb</item>
+        <item>zh_TW</item>
     </string-array>
 
     <!-- position formats -->
@@ -1030,6 +1033,7 @@
         Basque translation by beriain. <br />
         Norwegian translation by FTno. <br />
         Italian translation by Matteo Caoduro. <br />
+        Traditional Chinese translation by <a href=https://github.com/pggdt>ft42</a>. <br />
     ]]></string>
     <string name="app_legal3"><![CDATA[ <b>Libraries:</b><br/> ]]>
     <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>

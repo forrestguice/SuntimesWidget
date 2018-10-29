@@ -140,7 +140,8 @@ Hungarian translation by <u>Erci</u>.<br/>
 Catalan and Spanish translations by <u><a href="https://github.com/Raulvo">Raulvo</a></u>.<br/>
 Basque translation by <u>beriain</u>.<br/>
 Norwegian translation by <u>FTno</u>.<br/>
-Italian translation by <u>Matteo Caoduro</u>.
+Italian translation by <u>Matteo Caoduro</u>.<br/>
+Traditional Chinese translation by <u><a href=https://github.com/pggdt>ft42</a></u>.<br />
 
 [Contributions to the project](CONTRIBUTING.md) are welcome.
 

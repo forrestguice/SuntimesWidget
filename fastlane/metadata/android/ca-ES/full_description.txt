@@ -1,0 +1,12 @@
+Mostra els calendaris solars i lunars. Conté una app i un una coŀlecció de ginys.
+
+Mostra quan és l'alba, capvespre, crepuscles (civil / nàutic / astronòmic), hores blava i daurada, els solsticis i equinoccis, sortida i posta de la Lluna, les fases de la Lluna i la intensitat d'iŀluminació.
+
+Els temps donats per l'aplicació són aproximats. L'aplicació no necessita connexió a una xarxa, el GPS és opcional.
+
+L'aplicació requereix una sèrie de permissos per a que algunes característiques funcionin correctament:
+* ACCESS_FINE_LOCATION (ACCESS_COURSE_LOCATION) és utilitzat per obtenir la posició actual (latitud, longitud, altitud).
+* WRITE_SYNC_SETTINGS (READ_SYNC_STATS) és utilitzat per crear i afegir calendaris personalitzats a l'aplicació Calendari.
+* WRITE_CALENDAR (READ_CALENDAR) és utilitzat per a emplenar d'events els calendaris personalitzats (fases llunars, solsticis, equinoccis).
+* SET_ALARM és utilitzat per planificar alarmes emprant l'aplicació Rellotge.
+* WRITE_EXTERNAL_STORAGE és utilitzat per fer còpies de seguretat a un arxiu (llocs, temes, etc.) (només api<=18).
