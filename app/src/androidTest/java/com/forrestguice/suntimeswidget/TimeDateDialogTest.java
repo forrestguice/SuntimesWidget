@@ -86,10 +86,16 @@ public class TimeDateDialogTest extends SuntimesActivityTestBase
 
     public static void showDateDialog(Context context)
     {
+        showDateDialog(context, true);
+    }
+    public static void showDateDialog(Context context, boolean verify)
+    {
         String actionDateText = context.getString(R.string.configAction_setDate);
         openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
         onView(withText(actionDateText)).perform(click());
-        verifyDateDialog();
+        if (verify) {
+            verifyDateDialog();
+        }
     }
 
     public static void verifyDateDialog()
