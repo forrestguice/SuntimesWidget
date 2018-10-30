@@ -471,6 +471,12 @@ public class AppSettings
         return pref.getBoolean(PREF_KEY_ACCESSIBILITY_VERBOSE, PREF_DEF_ACCESSIBILITY_VERBOSE);
     }
 
+    public static void saveCalendarsEnabledPref( Context context, boolean enabled )
+    {
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        pref.putBoolean(PREF_KEY_CALENDARS_ENABLED, enabled);
+        pref.apply();
+    }
     public static boolean loadCalendarsEnabledPref( Context context )
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
