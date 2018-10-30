@@ -1124,8 +1124,8 @@
         The fully qualified class name of the Activity to be launched.<br/>
     ]]></string>
     <string name="help_widgetlist"><![CDATA[
-          To <b>add a new widget</b> you must navigate to the home screen.<br/><br/>
-          To <b>reconfigure an existing widget</b> you can select from the following list.<br/>
+          To <b>add</b> or <b>remove</b> a widget you must navigate to the home screen.<br/><br/>
+          To <b>reconfigure</b> an existing widget you can select from the following list.<br/>
     ]]></string>
     <string name="help_themelist">
           [Icon Add] Add a new theme or [Icon Copy] copy from an existing theme.\n
