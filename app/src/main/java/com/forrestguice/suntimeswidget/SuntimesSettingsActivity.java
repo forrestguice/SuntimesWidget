@@ -274,12 +274,12 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             loadHeadersFromResource(R.xml.preference_headers, target);
 
             TypedValue typedValue = new TypedValue();
-            int[] icActionAttr = new int[] { R.attr.icActionSettings, R.attr.icActionLocale, R.attr.icActionPlace, R.attr.icActionTime, R.attr.icActionAppearance };
+            int[] icActionAttr = new int[] { R.attr.icActionSettings, R.attr.icActionLocale, R.attr.icActionPlace, R.attr.icActionCalendar, R.attr.icActionAppearance };
             TypedArray a = obtainStyledAttributes(typedValue.data, icActionAttr);
             int settingsIcon = a.getResourceId(0, R.drawable.ic_action_settings);
             int localeIcon = a.getResourceId(1, R.drawable.ic_action_locale);
             int placesIcon = a.getResourceId(2, R.drawable.ic_action_place);
-            int timeIcon = a.getResourceId(3, R.drawable.ic_action_time);
+            int timeIcon = a.getResourceId(3, R.drawable.ic_calendar);
             int paletteIcon = a.getResourceId(4, R.drawable.ic_palette);
             a.recycle();
 
