@@ -730,12 +730,14 @@
         <item>Franca</item>
         <item>Germana</item>
         <item>Hungara</item>
+        <item>Itala</item>
         <item>Pola</item>
         <item>Hispana</item>
         <item>Kataluna</item>
         <item>Eŭska</item>
         <item>Norvega</item>
-    </string-array>
+        <item>Traditional Chinese</item>
+    </string-array> <!-- TODO -->
 
     <!-- position formats -->
     <string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->

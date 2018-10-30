@@ -4,6 +4,7 @@
     <bool name="api_post_14">false</bool>
 
     <attr name="dialogBackground" format="reference" />
+    <attr name="dialogBackgroundAlt" format="reference" />
     <attr name="settingsCardBackground" format="reference" />
     <attr name="timeCardBackground" format="reference" />
     <attr name="semiTransparentBackground" format="reference" />
@@ -43,17 +44,23 @@
     <attr name="tagColor_error" format="reference" />
     <attr name="tagColor_dst" format="reference" />
 
+    <attr name="snackbar_textColor" format="reference" />
+    <attr name="snackbar_accentColor" format="reference" />
+    <attr name="snackbar_backgroundColor" format="reference" />
+
     <attr name="toolbarTheme" format="reference" />
     <attr name="icActionPlace" format="reference" />
     <attr name="icActionMap" format="reference" />
     <attr name="icActionTime" format="reference" />
     <attr name="icActionDst" format="reference" />
     <attr name="icActionAlarm" format="reference" />
+    <attr name="icActionCalendar" format="reference" />
     <attr name="icActionAbout" format="reference" />
     <attr name="icActionWarning" format="reference" />
     <attr name="icActionError" format="reference" />
     <attr name="icActionAppearance" format="reference" />
-
+    <attr name="icActionAltitude" format="reference" />
+    <attr name="icActionLocale" format="reference" />
     <attr name="icActionSettings" format="reference" />
     <attr name="icActionHelp" format="reference" />
 

@@ -210,7 +210,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
             SuntimesCalculatorDescriptor dataSource = WidgetSettings.loadCalculatorModePref(context, 0);
             if (dataSource != null)
             {
-                onView(withId(R.id.txt_datasource)).check(matches(withText(dataSource.name())));
+                onView(withId(R.id.txt_datasource)).check(matches(withText(dataSource.getName())));
             }
             // else { // TODO: test conditions when dataSource==null }
 

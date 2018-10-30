@@ -75,6 +75,22 @@ public class SuntimesCalendarAdapter
         } else return false;
     }
 
+    public boolean removeCalendar( String calendarName )
+    {
+        Cursor cursor = queryCalendar(calendarName);
+        if (cursor != null)
+        {
+            while (cursor.moveToNext())
+            {
+                long calendarID = cursor.getLong(PROJECTION_ID_INDEX);
+                Uri deleteUri = ContentUris.withAppendedId(CalendarContract.Calendars.CONTENT_URI, calendarID);
+                contentResolver.delete(deleteUri, null, null);
+                Log.d("removeCalendar", "removed calendar " + calendarID);
+            }
+            return true;
+        } else return false;
+    }
+
     /**
      * @param calendarID the calendar's ID
      * @param title the event title

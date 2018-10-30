@@ -1,5 +1,32 @@
 ### ~
 
+### v0.9.4 (2018-10-28)
+* fixes bug "widgets missing" (#258); installLocation set to internalOnly.
+* fixes appearance of main table for locales with header text shorter than event times; sunset column now has minWidth.
+* fixes appearance of snackbar warnings; now styled by theme.
+* fixes readability of snackbar warnings for locales with long action button text.
+* fixes Settings Activity iconography; unique icons for each header.
+* updates translations to Spanish (es-es) and Catalan (ca) (#255 by Raulvo).
+* updates translation to Norwegian (nb) (#253 by FTno).
+* adds translation to Traditional Chinese (zh-tw) (contributed by ft42) (#252).
+
+### v0.9.3 (2018-10-10)
+* adds help to the "theme list" activity.
+* adds translation to Italian (it) (contributed by Matteo Caoduro) (#249).
+
+### v0.9.2 (2018-09-12)
+* adds altitude ui to the datasource card; toggles altitude (hidden when datasource lacks support) (#245).
+* fixes app crash when location has altitude greater equal 11000m (validation off-by-one) (#243).
+
+### v0.9.1 (2018-08-30)
+* fixes bug "export places; commas in place names break csv output bug" (#240).
+* fixes bug "momentary hang/pause when adding or reconfiguring sunposition widgets (3x1 and 3x2)".
+* adds permission explanations to fastlane app description.
+* adds runtime permission explanations (a dialog displayed prior to each permission request).
+* adds privacy link to about dialog (links to https://github.com/forrestguice/SuntimesWidget/wiki/Privacy); added privacy statement to readme.
+* updates translation to Polish and Esperanto (eo, pl) (#238, #241 by Verdulo).
+* updates translation to Norwegian (nb) (#236 by FTno).
+
 ### v0.9.0 (2018-08-14)
 * changes default sun data source to time4a-time4j (supporting altitude based refinements).
 * changes default 'en' location to New York City, and default 'en-US' location to Phoenix.

@@ -25,6 +25,7 @@ import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.time4a.Time4ASimpleSuntimesCalculator;
+import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.themes.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.LightTheme;
 import com.forrestguice.suntimeswidget.themes.LightThemeTrans;
@@ -84,16 +85,16 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         SuntimesCalculatorDescriptor testmode2 = Time4ASimpleSuntimesCalculator.getDescriptor();
         WidgetSettings.saveCalculatorModePref(context, appWidgetId, testmode2);
         SuntimesCalculatorDescriptor pref2 = WidgetSettings.loadCalculatorModePref(context, appWidgetId);
-        assertTrue("pref should be " + testmode2.name() +  "but was " + pref2.name(), pref2.name().equals(testmode2.name()));
+        assertTrue("pref should be " + testmode2.getName() +  "but was " + pref2.getName(), pref2.getName().equals(testmode2.getName()));
 
         SuntimesCalculatorDescriptor testmode1 = SunriseSunsetSuntimesCalculator.getDescriptor();
         WidgetSettings.saveCalculatorModePref(context, appWidgetId, testmode1);
         SuntimesCalculatorDescriptor pref1 = WidgetSettings.loadCalculatorModePref(context, appWidgetId);
-        assertTrue("pref should be " + testmode1.name() +  "but was " + pref1.name(), pref1.name().equals(testmode1.name()));
+        assertTrue("pref should be " + testmode1.getName() +  "but was " + pref1.getName(), pref1.getName().equals(testmode1.getName()));
 
         WidgetSettings.deleteCalculatorModePref(context, appWidgetId);
         SuntimesCalculatorDescriptor pref0 = WidgetSettings.loadCalculatorModePref(context, appWidgetId);
-        assertTrue("pref should be default but was " + pref0, pref0.name().equals(WidgetSettings.PREF_DEF_GENERAL_CALCULATOR));
+        assertTrue("pref should be default but was " + pref0, pref0.getName().equals(WidgetSettings.PREF_DEF_GENERAL_CALCULATOR));
     }
 
     @Test
@@ -323,7 +324,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
 
 	WidgetSettings.deleteLocationAltitudeEnabledPref(context, appWidgetId);
 	boolean isEnabled2 = WidgetSettings.loadLocationAltitudeEnabledPref(context, appWidgetId);
-	assertTrue("value does not match! " + isEnabled2, isEnabled2 == WidgetSettings.PREF_DEF_LOCATOION_ALTITUDE_ENABLED);
+	assertTrue("value does not match! " + isEnabled2, isEnabled2 == WidgetSettings.PREF_DEF_LOCATION_ALTITUDE_ENABLED);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -398,7 +399,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
 
         WidgetSettings.deleteShowLabelsPref(context, appWidgetId);
         boolean pref0 = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
-        assertTrue("mode should be default (false) but was " + pref0, !pref0 && pref0 == WidgetSettings.PREF_DEF_APPEARANCE_SHOWLABELS);
+        assertTrue("mode should be default (false) but was " + pref0, pref0 && pref0 == WidgetSettings.PREF_DEF_APPEARANCE_SHOWLABELS);
     }
 
     @Test
@@ -486,17 +487,17 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_sunPosMapModePref()
     {
-        WidgetSettings.saveSunPosMapModePref(context, appWidgetId, WidgetSettings.WidgetModeSunPosMap.EQUIAZIMUTHAL_SIMPLE);
-        WidgetSettings.WidgetModeSunPosMap pref2 = WidgetSettings.loadSunPosMapModePref(context, appWidgetId);
-        assertTrue("pref should be EQUIAZIMUTHAL_SIMPLE but was " + pref2, pref2.equals(WidgetSettings.WidgetModeSunPosMap.EQUIAZIMUTHAL_SIMPLE));
+        WorldMapWidgetSettings.saveSunPosMapModePref(context, appWidgetId, WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE);
+        WorldMapWidgetSettings.WorldMapWidgetMode pref2 = WorldMapWidgetSettings.loadSunPosMapModePref(context, appWidgetId);
+        assertTrue("pref should be EQUIAZIMUTHAL_SIMPLE but was " + pref2, pref2.equals(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE));
 
-        WidgetSettings.saveSunPosMapModePref(context, appWidgetId, WidgetSettings.WidgetModeSunPosMap.EQUIRECTANGULAR_BLUEMARBLE);
-        WidgetSettings.WidgetModeSunPosMap pref1 = WidgetSettings.loadSunPosMapModePref(context, appWidgetId);
-        assertTrue("pref should be EQUIRECTANGULAR_BLUEMARBLE but was " + pref1, pref1.equals(WidgetSettings.WidgetModeSunPosMap.EQUIRECTANGULAR_BLUEMARBLE));
+        WorldMapWidgetSettings.saveSunPosMapModePref(context, appWidgetId,WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_BLUEMARBLE);
+        WorldMapWidgetSettings.WorldMapWidgetMode pref1 = WorldMapWidgetSettings.loadSunPosMapModePref(context, appWidgetId);
+        assertTrue("pref should be EQUIRECTANGULAR_BLUEMARBLE but was " + pref1, pref1.equals(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_BLUEMARBLE));
 
-        WidgetSettings.deleteSunPosMapModePref(context, appWidgetId);
-        WidgetSettings.WidgetModeSunPosMap pref0 = WidgetSettings.loadSunPosMapModePref(context, appWidgetId);
-        assertTrue("pref should be default (EQUIRECTANGULAR_SIMPLE) but was " + pref0, pref0.equals(WidgetSettings.PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOSMAP) && pref0.equals(WidgetSettings.WidgetModeSunPosMap.EQUIRECTANGULAR_SIMPLE));
+        WorldMapWidgetSettings.deleteSunPosMapModePref(context, appWidgetId);
+        WorldMapWidgetSettings.WorldMapWidgetMode pref0 = WorldMapWidgetSettings.loadSunPosMapModePref(context, appWidgetId);
+        assertTrue("pref should be default (EQUIRECTANGULAR_SIMPLE) but was " + pref0, pref0.equals(WorldMapWidgetSettings.PREF_DEF_APPEARANCE_WIDGETMODE_WORLDMAP) && pref0.equals(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE));
     }
 
     @Test

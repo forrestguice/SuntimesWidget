@@ -141,7 +141,7 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
         dataSourcePref.check(assertEnabled);
 
         SuntimesCalculatorDescriptor dataSource = WidgetSettings.loadCalculatorModePref(context, 0);
-        DataInteraction dataSourcePref_text = dataSourcePref.onChildView(allOf(withClassName(is(TextView.class.getName())), withText(dataSource.name())));
+        DataInteraction dataSourcePref_text = dataSourcePref.onChildView(allOf(withClassName(is(TextView.class.getName())), withText(dataSource.getName())));
         dataSourcePref_text.check(assertShown);
     }
 

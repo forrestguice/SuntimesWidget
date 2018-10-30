@@ -675,12 +675,14 @@
         <item>Francuski</item>
         <item>Niemiecki</item>
         <item>Węgierski</item>
+        <item>Włoski</item>
         <item>Polski</item>
         <item>Hiszpański</item>
         <item>Kataloński</item>
         <item>Baskijski</item>
         <item>Norweski</item>
-    </string-array>
+        <item>Traditional Chinese</item>
+    </string-array>  <!-- TODO -->
 
     <!-- position formats -->
     <string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
@@ -866,7 +868,7 @@
     <string name="app_version"><![CDATA[<b>Wersja:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Wyświetla czasy świecenia Słońca i Księżyca.</string>
     <string name="app_support_url"><![CDATA[<b>Wsparcie:</b> odwiedź <a href="https://github.com/forrestguice/SuntimesWidget/issues">stronę trackera błędów</a> aby zgłosić błąd/sugestię.]]></string>
-    <string name="app_legal1"><![CDATA[Prawo autorskie &#169 2014-2018 Forrest Guice <br />Kod źródłowy dostępny na licencji GPLv3.]]></string>
+    <string name="app_legal1"><![CDATA[Prawo autorskie &#169 2014–2018 Forrest Guice <br />Kod źródłowy dostępny na licencji GPLv3.]]></string>
     <string name="app_legal2"><![CDATA[
         Niemieckie tłumaczenie: Henrik "HerHde" Hüttemann<br />
         Esperanckie i Polskie tłumaczenia: Verdulo<br />

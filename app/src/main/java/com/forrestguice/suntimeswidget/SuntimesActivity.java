@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -49,6 +50,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -201,6 +203,9 @@ public class SuntimesActivity extends AppCompatActivity
 
     private TextView txt_datasource;
     private View layout_datasource;
+    private AppCompatCheckBox check_altitude;
+    private TextView txt_altitude;
+    private View layout_altitude;
 
     private boolean isRtl = false;
     private boolean userSwappedCard = false;
@@ -705,7 +710,7 @@ public class SuntimesActivity extends AppCompatActivity
         });
     }
 
-    private void initMisc(Context context)
+    private void initMisc(final Context context)
     {
         layout_datasource = findViewById(R.id.layout_datasource);
 
@@ -731,8 +736,28 @@ public class SuntimesActivity extends AppCompatActivity
                 }
             });
         }
-    }
 
+        txt_altitude = (TextView) findViewById(R.id.txt_altitude);
+        check_altitude = (AppCompatCheckBox) findViewById(R.id.check_altitude);
+
+        layout_altitude = findViewById(R.id.layout_altitude);
+        if (layout_altitude != null)
+        {
+            layout_altitude.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    boolean useAltitude = WidgetSettings.loadLocationAltitudeEnabledPref(SuntimesActivity.this, 0);
+                    WidgetSettings.saveLocationAltitudeEnabledPref(SuntimesActivity.this, 0, !useAltitude);
+                    calculateData(SuntimesActivity.this);
+                    setUpdateAlarms(SuntimesActivity.this);
+                    updateViews(SuntimesActivity.this);
+                }
+            });
+        }
+    }
+    
     /**
      * initialize gps helper
      */
@@ -1574,10 +1599,12 @@ public class SuntimesActivity extends AppCompatActivity
         SpannableString locationSubtitle;
         String locationString = getString(R.string.location_format_latlon, location.getLatitude(), location.getLongitude());
         boolean supportsAltitude = dataset.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_ALTITUDE);
-        if (supportsAltitude && location.getAltitudeAsInteger() != 0)
+        boolean enabledAltitude = WidgetSettings.loadLocationAltitudeEnabledPref(SuntimesActivity.this, 0);
+        String altitudeString = "";
+        if (supportsAltitude && enabledAltitude && location.getAltitudeAsInteger() != 0)
         {
             String altitudeUnits = getString(R.string.units_meters_short);    // TODO: support display in feet
-            String altitudeString = getString(R.string.location_format_alt, ("" + location.getAltitudeAsInteger()), altitudeUnits);
+            altitudeString = getString(R.string.location_format_alt, ("" + location.getAltitudeAsInteger()), altitudeUnits);
             String altitudeTag = getString(R.string.location_format_alttag, altitudeString);
             String displayString = getString(R.string.location_format_latlonalt, locationString, altitudeTag);
             locationSubtitle = SuntimesUtils.createRelativeSpan(null, displayString, altitudeTag, 0.5f);
@@ -1832,6 +1859,18 @@ public class SuntimesActivity extends AppCompatActivity
         if (txt_datasource != null)
         {
             txt_datasource.setText(dataset.dataActual.calculator().name());
+        }
+        if (txt_altitude != null)
+        {
+            txt_altitude.setText(altitudeString);
+        }
+        if (check_altitude != null)
+        {
+            check_altitude.setChecked(enabledAltitude);
+        }
+        if (layout_altitude != null)
+        {
+            layout_altitude.setVisibility(supportsAltitude ? View.VISIBLE : View.INVISIBLE);
         }
         showDatasourceUI(AppSettings.loadDatasourceUIPref(this));
 
@@ -2677,7 +2716,7 @@ public class SuntimesActivity extends AppCompatActivity
         protected String contentDescription = null;
         protected View parentView = null;
 
-        public void initWarning(Context context, View view, String msg)
+        public void initWarning(@NonNull Context context, View view, String msg)
         {
             this.parentView = view;
             ImageSpan warningIcon = SuntimesUtils.createWarningSpan(context, txt_date.getTextSize());
@@ -2688,6 +2727,28 @@ public class SuntimesActivity extends AppCompatActivity
             snackbar = Snackbar.make(card_flipper, message, Snackbar.LENGTH_INDEFINITE);
             snackbar.addCallback(snackbarListener);
             setContentDescription(contentDescription);
+            themeWarning(context, snackbar);
+        }
+
+        @SuppressLint("ResourceType")
+        private void themeWarning(@NonNull Context context, @NonNull Snackbar snackbarWarning)
+        {
+            int[] colorAttrs = { R.attr.snackbar_textColor, R.attr.snackbar_accentColor, R.attr.snackbar_backgroundColor };
+            TypedArray a = context.obtainStyledAttributes(colorAttrs);
+            int textColor = ContextCompat.getColor(context, a.getResourceId(0, android.R.color.primary_text_dark));
+            int accentColor = ContextCompat.getColor(context, a.getResourceId(1, R.color.text_accent_dark));
+            int backgroundColor = ContextCompat.getColor(context, a.getResourceId(2, R.color.card_bg_dark));
+            a.recycle();
+
+            View snackbarView = snackbarWarning.getView();
+            snackbarView.setBackgroundColor(backgroundColor);
+            snackbarWarning.setActionTextColor(accentColor);
+
+            TextView snackbarText = (TextView)snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+            if (snackbarText != null) {
+                snackbarText.setTextColor(textColor);
+                snackbarText.setMaxLines(5);
+            }
         }
 
         private Snackbar.Callback snackbarListener = new Snackbar.Callback()

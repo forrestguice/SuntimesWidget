@@ -48,19 +48,22 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
     private static String version = BuildConfig.VERSION_NAME;
 
     private HashMap<String, ScreenshotConfig> config;
-    private ScreenshotConfig defaultConfig = new ScreenshotConfig(new WidgetSettings.Location("Iron Springs", "34.58742", "-112.57367"), "US/Arizona", false);
+    private ScreenshotConfig defaultConfig = new ScreenshotConfig(new WidgetSettings.Location("Phoenix", "33.45579", "-111.94580", "385"), "US/Arizona", false);
 
     @Before
     public void initScreenshots()
     {
         config = new HashMap<String, ScreenshotConfig>();
-        config.put("ca", new ScreenshotConfig(new WidgetSettings.Location("Barcelona", "41.3825", "2.1769"), "CET", true));
-        config.put("de", new ScreenshotConfig(new WidgetSettings.Location("Berlin", "52.5243", "13.4105"), "Europe/Berlin", true));
-        config.put("es_ES", new ScreenshotConfig(new WidgetSettings.Location("Madrid", "40.4378", "-3.8196"), "Europe/Madrid", true));
-        config.put("fr", new ScreenshotConfig(new WidgetSettings.Location("Paris", "48.8566", "2.3518"), "Europe/Paris", true));
-        config.put("hu", new ScreenshotConfig(new WidgetSettings.Location("Budapest", "47.4811", "18.9902"), "Europe/Budapest", true));
-        config.put("pl", new ScreenshotConfig(new WidgetSettings.Location("Warszawa", "52.2319", "21.0067"), "Poland", true));
-        config.put("nb", new ScreenshotConfig(new WidgetSettings.Location("Oslo", "59.8937", "10.6450"), "Europe/Oslo", true));
+        config.put("ca", new ScreenshotConfig(new WidgetSettings.Location("Barcelona", "41.3825", "2.1769", "31"), "CET", true));
+        config.put("de", new ScreenshotConfig(new WidgetSettings.Location("Berlin", "52.5243", "13.4105", "40"), "Europe/Berlin", true));
+        config.put("es_ES", new ScreenshotConfig(new WidgetSettings.Location("Madrid", "40.4378", "-3.8196", "681"), "Europe/Madrid", false));
+        config.put("eu", new ScreenshotConfig(new WidgetSettings.Location("Euskal Herriko erdigunea", "42.883008", "-1.935491", "1258"), "CET", true));
+        config.put("fr", new ScreenshotConfig(new WidgetSettings.Location("Paris", "48.8566", "2.3518", "41"), "Europe/Paris", true));
+        config.put("hu", new ScreenshotConfig(new WidgetSettings.Location("Budapest", "47.4811", "18.9902", "225"), "Europe/Budapest", true));
+        config.put("it", new ScreenshotConfig(new WidgetSettings.Location("Roma", "41.9099", "12.3959", "79"), "CET", false));
+        config.put("pl", new ScreenshotConfig(new WidgetSettings.Location("Warszawa", "52.2319", "21.0067", "143"), "Poland", true));
+        config.put("nb", new ScreenshotConfig(new WidgetSettings.Location("Oslo", "59.8937", "10.6450", "0"), "Europe/Oslo", true));
+        config.put("zh_TW", new ScreenshotConfig(new WidgetSettings.Location("Taiwan", "23.5491", "119.8998", "0"), "Asia/Taipei", false));
 
         if (!version.startsWith("v"))
             version = "v" + version;
@@ -126,45 +129,51 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
         configureAppForScreenshots(context, languageTag, theme);
         activityRule.launchActivity(activityRule.getActivity().getIntent());
 
+        long waitTime = 3 * 1000;            // wait a moment
+        IdlingResource waitForResource = new ElapsedTimeIdlingResource(waitTime);
+        IdlingPolicies.setMasterPolicyTimeout(waitTime * 2, TimeUnit.MILLISECONDS);
+        IdlingPolicies.setIdlingResourceTimeout(waitTime * 2, TimeUnit.MILLISECONDS);
+        registerIdlingResources(waitForResource);
+
+        // main activity
+        captureScreenshot(version + "/" + languageTag, "activity-main0-" + theme);
+
         // dialogs
-        DialogTest.showAboutDialog(context);
+        DialogTest.showAboutDialog(context, false);
         captureScreenshot(version + "/" + languageTag, "dialog-about-" + theme);
         DialogTest.cancelAboutDialog();
 
-        DialogTest.showHelpDialog(context);
+        DialogTest.showHelpDialog(context, false);
         captureScreenshot(version + "/" + languageTag, "dialog-help-" + theme);
         DialogTest.cancelHelpDialog();
 
-        DialogTest.showEquinoxDialog(context);
+        DialogTest.showEquinoxDialog(context, false);
         captureScreenshot(version + "/" + languageTag, "dialog-equinox-" + theme);
         DialogTest.cancelEquinoxDialog();
 
-        DialogTest.showLightmapDialog(context);
+        DialogTest.showLightmapDialog(context, false);
         captureScreenshot(version + "/" + languageTag, "dialog-lightmap-" + theme);
         DialogTest.cancelLightmapDialog();
 
-        TimeZoneDialogTest.showTimezoneDialog(activityRule.getActivity());
+        TimeZoneDialogTest.showTimezoneDialog(activityRule.getActivity(), false);
         captureScreenshot(version + "/" + languageTag, "dialog-timezone0-" + theme);
         TimeZoneDialogTest.inputTimezoneDialog_mode(context, WidgetSettings.TimezoneMode.SOLAR_TIME);
         captureScreenshot(version + "/" + languageTag, "dialog-timezone1-" + theme);
         TimeZoneDialogTest.cancelTimezoneDialog();
 
-        AlarmDialogTest.showAlarmDialog(context);
+        AlarmDialogTest.showAlarmDialog(context, false);
         captureScreenshot(version + "/" + languageTag, "dialog-alarm-" + theme);
         AlarmDialogTest.cancelAlarmDialog();
 
-        TimeDateDialogTest.showDateDialog(context);
+        TimeDateDialogTest.showDateDialog(context, false);
         captureScreenshot(version + "/" + languageTag, "dialog-date-" + theme);
         TimeDateDialogTest.cancelDateDialog();
 
-        LocationDialogTest.showLocationDialog();
+        LocationDialogTest.showLocationDialog(false);
         captureScreenshot(version + "/" + languageTag, "dialog-location0-" + theme);
-        LocationDialogTest.editLocationDialog();
+        LocationDialogTest.editLocationDialog(false);
         captureScreenshot(version + "/" + languageTag, "dialog-location1-" + theme);
         LocationDialogTest.cancelLocationDialog(context);
-
-        // main activity
-        captureScreenshot(version + "/" + languageTag, "activity-main0-" + theme);
     }
 
     private void configureAppForScreenshots(Activity context)
@@ -172,12 +181,14 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
         WidgetSettings.saveDateModePref(context, 0, WidgetSettings.DateMode.CURRENT_DATE);
         WidgetSettings.saveTrackingModePref(context, 0, WidgetSettings.TrackingMode.SOONEST);
         WidgetSettings.saveShowSecondsPref(context, 0, false);
+        WidgetSettings.saveLocationAltitudeEnabledPref(context, 0, true);
 
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
         prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWWARNINGS, false);
         prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWLIGHTMAP, true);
-        prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWDATASOURCE, true);
+        prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWDATASOURCE, false);
         prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWEQUINOX, true);
+        prefs.putInt(AppSettings.PREF_KEY_UI_SHOWFIELDS, AppSettings.PREF_DEF_UI_SHOWFIELDS);
         prefs.apply();
     }
 

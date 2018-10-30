@@ -689,12 +689,14 @@
       <item>Französisch</item>
       <item>Deutsche</item>
       <item>Ungarisch</item>
+      <item>Italienische</item>
       <item>Polieren</item>
       <item>Spanisch</item>
       <item>Katalanisch</item>
       <item>Baskisch</item>
       <item>Norwegisch</item>
-  </string-array>
+      <item>Traditional Chinese</item>
+  </string-array>  <!-- TODO -->
 
   <!--
        DIALOGS

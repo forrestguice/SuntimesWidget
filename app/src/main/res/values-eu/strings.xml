@@ -712,12 +712,14 @@
         <item>Frantsesa</item>
         <item>Alemana</item>
         <item>Hungariera</item>
+        <item>Italiako</item>
         <item>Poloniera</item>
         <item>Gaztelania</item>
         <item>Katalana</item>
         <item>Euskara</item>
         <item>Norvegiako</item>
-    </string-array>
+        <item>Traditional Chinese</item>
+    </string-array>  <!-- TODO -->
 
     <!-- position formats -->
     <string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->

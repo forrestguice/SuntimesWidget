@@ -222,13 +222,18 @@ public class GetFixDatabaseAdapter
     }
     public String addPlaceCSV_row( ContentValues place )
     {
+        String quote = "\"";
         String separator = ", ";
         //noinspection UnnecessaryLocalVariable
-        String line = place.getAsString(KEY_PLACE_NAME) + separator +
+        String line = quote + place.getAsString(KEY_PLACE_NAME) + quote + separator +
                       place.getAsString(KEY_PLACE_LATITUDE) + separator +
                       place.getAsString(KEY_PLACE_LONGITUDE) + separator +
-                      place.getAsString(KEY_PLACE_ALTITUDE) + separator +
-                      place.getAsString(KEY_PLACE_COMMENT);
+                      place.getAsString(KEY_PLACE_ALTITUDE) + separator;
+
+        String comment = place.getAsString(KEY_PLACE_COMMENT);
+        if (!comment.isEmpty())
+            line += quote + comment + quote;
+
         return line;
     }
 

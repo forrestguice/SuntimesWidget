@@ -1,0 +1,12 @@
+Muestra los calendarios solares y lunares. Incluye una aplicación y una colección de widgets.
+
+Muestra el amanecer, atardecer, crepúsculo (civil / náutico / astronómico), horas azul y dorada, solsticios y equinoccios, salida y puesta de la Luna, fases lunares e iluminación de la Luna.
+
+Los tiempos mostrados por la aplicación son aproximados. La aplicación no requiere conexión a una red, el GPS es opcional.
+
+Algunos permisos son necesarios para que algunas opciones de la aplicación funcionen correctamente:
+* ACCESS_FINE_LOCATION (ACCESS_COURSE_LOCATION) se utiliza para obtener la posición actual (latitud, longitud, altitud).
+* WRITE_SYNC_SETTINGS (READ_SYNC_STATS) se utiliza para crear y añadir calendarios personalizados a la aplicación Calendario.
+* WRITE_CALENDAR (READ_CALENDAR) se utiliza para rellenar calendarios personalizados con eventos (fases lunares, solsticios, equinoccios).
+* SET_ALARM se utiliza para configurar alarmas utilizando la aplicación Reloj.
+* WRITE_EXTERNAL_STORAGE se utiliza para hacer copias de seguridad a un archivo (lugares, temas, etc.) (sólo api<=18).

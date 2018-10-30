@@ -7,6 +7,7 @@
     <!-- Theme: Light (left-to-right) -->
     <style name="AppThemeBase.Light" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="dialogBackground">@color/dialog_bg_light</item>
+        <item name="dialogBackgroundAlt">@color/grey_300</item>
         <item name="settingsCardBackground">@drawable/bg_widget</item>
         <item name="timeCardBackground">@color/card_bg_light</item>
         <item name="semiTransparentBackground">@color/card_bg_lighttrans</item>
@@ -47,6 +48,10 @@
         <item name="tagColor_error">@color/errorTag_light</item>
         <item name="tagColor_dst">@color/dstTag_light</item>
 
+        <item name="snackbar_textColor">@android:color/primary_text_light</item>
+        <item name="snackbar_accentColor">?colorAccent</item>
+        <item name="snackbar_backgroundColor">?attr/colorPrimary</item>
+
         <item name="icActionGPS">@drawable/ic_action_location_found_light</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off_light</item>
         <item name="icActionGPS_searching">@drawable/ic_action_location_searching_light</item>
@@ -56,10 +61,13 @@
         <item name="icActionTime">@drawable/ic_action_time_light</item>
         <item name="icActionDst">@drawable/ic_weather_sunny_light</item>
         <item name="icActionAlarm">@drawable/ic_action_alarms_light</item>
+        <item name="icActionCalendar">@drawable/ic_calendar_light</item>
         <item name="icActionAbout">@drawable/ic_action_about_light</item>
         <item name="icActionWarning">@drawable/ic_action_warning_light</item>
         <item name="icActionError">@drawable/ic_action_error_light</item>
         <item name="icActionAppearance">@drawable/ic_palette_light</item>
+        <item name="icActionAltitude">@drawable/baseline_terrain_black_18</item>
+        <item name="icActionLocale">@drawable/ic_action_locale_light</item>
         <item name="icActionSettings">@drawable/ic_action_settings_light</item>
         <item name="icActionHelp">@drawable/ic_action_help_light</item>
         <item name="icActionAccept">@drawable/ic_action_accept_light</item>
@@ -79,6 +87,7 @@
     <!-- Theme: Dark (left-to-right) -->
     <style name="AppThemeBase.Dark" parent="Theme.AppCompat.NoActionBar">
         <item name="dialogBackground">@color/dialog_bg_dark</item>
+        <item name="dialogBackgroundAlt">@color/grey_900</item>
         <item name="settingsCardBackground">@drawable/bg_widget_dark</item>
         <item name="timeCardBackground">@color/card_bg_dark</item>
         <item name="semiTransparentBackground">@color/card_bg_darktrans</item>
@@ -119,6 +128,10 @@
         <item name="tagColor_error">@color/errorTag_dark</item>
         <item name="tagColor_dst">@color/dstTag_dark</item>
 
+        <item name="snackbar_textColor">@android:color/primary_text_dark</item>
+        <item name="snackbar_accentColor">?colorAccent</item>
+        <item name="snackbar_backgroundColor">?attr/colorPrimary</item>
+
         <item name="icActionGPS">@drawable/ic_action_location_found</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off</item>
         <item name="icActionGPS_searching">@drawable/ic_action_location_searching</item>
@@ -128,10 +141,13 @@
         <item name="icActionTime">@drawable/ic_action_time</item>
         <item name="icActionDst">@drawable/ic_weather_sunny</item>
         <item name="icActionAlarm">@drawable/ic_action_alarms</item>
+        <item name="icActionCalendar">@drawable/ic_calendar</item>
         <item name="icActionAbout">@drawable/ic_action_about</item>
         <item name="icActionWarning">@drawable/ic_action_warning</item>
         <item name="icActionError">@drawable/ic_action_error</item>
         <item name="icActionAppearance">@drawable/ic_palette</item>
+        <item name="icActionAltitude">@drawable/baseline_terrain_white_18</item>
+        <item name="icActionLocale">@drawable/ic_action_locale</item>
         <item name="icActionSettings">@drawable/ic_action_settings</item>
         <item name="icActionHelp">@drawable/ic_action_help</item>
         <item name="icActionAccept">@drawable/ic_action_accept</item>
