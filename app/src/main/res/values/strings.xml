@@ -522,6 +522,12 @@
     <string name="widgetLabel_declination_symbol">δ</string>           <!-- label/suffix -->
 
     <!--
+         ALARM CLOCK
+    -->
+    <string name="configLabel_alarmClock">Alarm Clock</string>            <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_alarmClock_emptyMsg">No Alarms</string>     <!-- a label that is displayed in place of an empty listview -->  <!-- TODO -->
+
+    <!--
          APP SETTINGS
     -->
 
@@ -1005,6 +1011,7 @@
     <!-- Dialog: About -->
     <string name="about_dialog_title">About</string>
     <string name="app_name">Suntimes</string>
+    <string name="app_name_alarmclock">Suntimes Alarm Clock</string>  <!-- TODO -->
     <string name="app_name_widget0">Suntimes Widget</string>
     <string name="app_name_widget1">Suntimes Widget (flippable)</string>
     <string name="app_name_widget2">Sun Position Widget</string>
@@ -1127,6 +1134,9 @@
           To <b>add</b> or <b>remove</b> a widget you must navigate to the home screen.<br/><br/>
           To <b>reconfigure</b> an existing widget you can select from the following list.<br/>
     ]]></string>
+    <string name="help_alarmclock"><![CDATA[
+          TODO
+    ]]></string> <!-- TODO -->
     <string name="help_themelist">
           [Icon Add] Add a new theme or [Icon Copy] copy from an existing theme.\n
           \n
