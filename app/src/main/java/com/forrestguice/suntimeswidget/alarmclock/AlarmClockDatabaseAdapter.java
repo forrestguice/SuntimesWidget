@@ -192,9 +192,9 @@ public class AlarmClockDatabaseAdapter
         return database.insert(TABLE_ALARMS, null, values);
     }
 
-    public void updateAlarm( ContentValues values )
+    public boolean updateAlarm( long row, ContentValues values )
     {
-        database.update(TABLE_ALARMS, values,  "_id = ?", new String[] { values.getAsString(KEY_ROWID) });
+        return database.update(TABLE_ALARMS, values,KEY_ROWID + "=" + row, null) > 0;
     }
 
     public String addAlarmCSV_header()
