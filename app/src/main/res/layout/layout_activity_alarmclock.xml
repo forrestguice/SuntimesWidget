@@ -46,7 +46,8 @@
 
             <ListView
                 android:id="@+id/alarmList"
-                android:layout_width="match_parent" android:layout_height="match_parent" />
+                android:layout_width="match_parent" android:layout_height="match_parent"
+				android:divider="@null" />
 
             <include layout="@layout/layout_empty_alarmlist" />
 

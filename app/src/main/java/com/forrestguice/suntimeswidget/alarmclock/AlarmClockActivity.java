@@ -18,12 +18,21 @@
 
 package com.forrestguice.suntimeswidget.alarmclock;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.database.Cursor;
+import android.database.DatabaseUtils;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.menu.MenuBuilder;
+import android.support.v7.view.menu.MenuPopupHelper;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,9 +42,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.AboutDialog;
 import com.forrestguice.suntimeswidget.HelpDialog;
@@ -43,7 +56,9 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class AlarmClockActivity extends AppCompatActivity
 {
@@ -59,7 +74,8 @@ public class AlarmClockActivity extends AppCompatActivity
     private ListView alarmList;
     private FloatingActionButton actionButton;
 
-    //private static final SuntimesUtils utils = new SuntimesUtils();
+    private AlarmClockListTask updateTask = null;
+    private static final SuntimesUtils utils = new SuntimesUtils();
 
     public AlarmClockActivity()
     {
@@ -206,7 +222,7 @@ public class AlarmClockActivity extends AppCompatActivity
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id)
         {
-            AlarmClockListItem alarmItem = (AlarmClockListItem) alarmList.getAdapter().getItem(position);
+            AlarmClockItem alarmItem = (AlarmClockItem) alarmList.getAdapter().getItem(position);
             // TODO
         }
     };
@@ -216,8 +232,16 @@ public class AlarmClockActivity extends AppCompatActivity
      */
     private View.OnClickListener onActionButtonClick = new View.OnClickListener() {
         @Override
-        public void onClick(View v) {
+        public void onClick(View v)
+        {
+            AlarmClockItem alarm = new AlarmClockItem();
+            alarm.label = "progress";
+            AlarmClockDatabaseAdapter db = new AlarmClockDatabaseAdapter(getApplicationContext());
+            db.open();
+            db.addAlarm(alarm.asContentValues(false));
+            db.close();
 
+            updateViews(AlarmClockActivity.this);
         }
     };
 
@@ -237,7 +261,13 @@ public class AlarmClockActivity extends AppCompatActivity
      */
     protected void updateViews(Context context)
     {
-        //alarmList.setAdapter(WidgetListAdapter.createWidgetListAdapter(context)); // TODO
+        if (updateTask != null) {
+            updateTask.cancel(true);
+            updateTask = null;
+        }
+
+        updateTask = new AlarmClockListTask(this);
+        updateTask.execute();
     }
 
     /**
@@ -260,39 +290,47 @@ public class AlarmClockActivity extends AppCompatActivity
     }
 
     /**
-     * AlarmClockListItem
+     * AlarmCLockListTask
      */
-    public static class AlarmClockListItem
+    private class AlarmClockListTask extends AsyncTask<String, Void, AlarmClockListAdapter>
     {
-        private final int icon;
-        private final String title;
-        private final String summary;
+        private AlarmClockDatabaseAdapter db;
+        private WeakReference<Context> contextRef;
 
-        public AlarmClockListItem( int icon, String title, String summary )
+        public AlarmClockListTask(Context context)
         {
-            this.icon = icon;
-            this.title = title;
-            this.summary = summary;
+            contextRef = new WeakReference<>(context);
+            db = new AlarmClockDatabaseAdapter(context.getApplicationContext());
         }
 
-        public int getIcon()
+        @Override
+        protected AlarmClockListAdapter doInBackground(String... strings)
         {
-            return icon;
+            ArrayList<AlarmClockItem> items = new ArrayList<>();
+            db.open();
+            Cursor cursor = db.getAllAlarms(0, true);
+            while (!cursor.isAfterLast())
+            {
+                ContentValues entryValues = new ContentValues();
+                DatabaseUtils.cursorRowToContentValues(cursor, entryValues);
+                items.add(new AlarmClockItem(entryValues));
+                cursor.moveToNext();
+            }
+            db.close();
+
+            Context context = contextRef.get();
+            if (context != null)
+                return new AlarmClockListAdapter(context, items);
+            else return null;
         }
 
-        public String getTitle()
+        @Override
+        protected void onPostExecute(AlarmClockListAdapter result)
         {
-            return title;
-        }
-
-        public String getSummary()
-        {
-            return summary;
-        }
-
-        public String toString()
-        {
-            return getTitle();
+            if (result != null)
+            {
+                alarmList.setAdapter(result);
+            }
         }
     }
 
@@ -300,14 +338,14 @@ public class AlarmClockActivity extends AppCompatActivity
      * AlarmClockListAdapter
      */
     @SuppressWarnings("Convert2Diamond")
-    public static class AlarmClockListAdapter extends ArrayAdapter<AlarmClockListItem>
+    public static class AlarmClockListAdapter extends ArrayAdapter<AlarmClockItem>
     {
         private Context context;
-        private ArrayList<AlarmClockListItem> items;
+        private ArrayList<AlarmClockItem> items;
 
-        public AlarmClockListAdapter(Context context, ArrayList<AlarmClockListItem> items)
+        public AlarmClockListAdapter(Context context, ArrayList<AlarmClockItem> items)
         {
-            super(context, R.layout.layout_listitem_widgets, items);  // TODO: layout
+            super(context, R.layout.layout_listitem_alarmclock, items);
             this.context = context;
             this.items = items;
         }
@@ -331,21 +369,183 @@ public class AlarmClockActivity extends AppCompatActivity
             if (convertView == null)
             {
                 LayoutInflater inflater = LayoutInflater.from(context);
-                view = inflater.inflate(R.layout.layout_listitem_widgets, parent, false);
+                view = inflater.inflate(R.layout.layout_listitem_alarmclock, parent, false);
             }
 
-            AlarmClockListItem item = items.get(position);
+            final AlarmClockItem item = items.get(position);
 
-            ImageView icon = (ImageView) view.findViewById(android.R.id.icon1);
-            icon.setImageResource(item.getIcon());
+            //ImageView icon = (ImageView) view.findViewById(android.R.id.icon1);
+            //icon.setImageResource(item.icon);
 
             TextView text = (TextView) view.findViewById(android.R.id.text1);
-            text.setText(item.getTitle());
+            if (text != null) {
+                text.setText(item.label);
+            }
 
             TextView text2 = (TextView) view.findViewById(android.R.id.text2);
-            text2.setText(item.getSummary());
+            if (text2 != null) {
+                text2.setText(item.event != null ? item.event.getLongDisplayString() : "Clock Time");
+            }
+
+            TextView text_datetime = (TextView) view.findViewById(R.id.text_datetime);
+            if (text_datetime != null) {
+                Calendar alarmTime = Calendar.getInstance();
+                alarmTime.setTimeInMillis(item.timestamp);
+                text_datetime.setText(utils.calendarTimeShortDisplayString(context, alarmTime).getValue());
+            }
+
+            TextView text_location = (TextView) view.findViewById(R.id.text_location_label);
+            if (text_location != null && item.location != null) {
+                text_location.setText(item.location.getLabel());
+            }
+
+            Switch switch_enabled = (Switch) view.findViewById(R.id.switch_enabled);
+            if (switch_enabled != null)
+            {
+                switch_enabled.setChecked(item.enabled);
+                switch_enabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+                {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+                    {
+                        enableAlarm(item, isChecked);
+                    }
+                });
+            }
+
+            TextView text_ringtone = (TextView) view.findViewById(R.id.text_ringtone);
+            if (text_ringtone != null) {
+                text_ringtone.setText(item.ringtone);
+            }
+
+            CheckBox check_vibrate = (CheckBox) view.findViewById(R.id.check_vibrate);
+            if (check_vibrate != null)
+            {
+                check_vibrate.setChecked(item.vibrate);
+                check_vibrate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+                {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+                    {
+                        item.vibrate = isChecked;
+                        item.modified = true;
+                        onAlarmModified(item);
+                    }
+                });
+            }
+
+            CheckBox check_repeat = (CheckBox) view.findViewById(R.id.check_repeat);
+            if (check_repeat != null)
+            {
+                check_repeat.setChecked(item.repeating);
+                check_repeat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+                {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+                    {
+                        item.repeating = isChecked;
+                        item.modified = true;
+                        onAlarmModified(item);
+                    }
+                });
+            }
+
+            ImageButton overflow = (ImageButton) view.findViewById(R.id.overflow_menu);
+            if (overflow != null)
+            {
+                overflow.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v) {
+                        showOverflowMenu(item, v);
+                    }
+                });
+            }
 
             return view;
+        }
+
+        /**
+         * showOverflowMenu
+         * @param item associated AlarmClockItem
+         * @param v View that triggered menu
+         */
+        protected void showOverflowMenu(final AlarmClockItem item, final View v)
+        {
+            PopupMenu menu = new PopupMenu(context, v);
+            MenuInflater inflater = menu.getMenuInflater();
+            inflater.inflate(R.menu.alarmcontext, menu.getMenu());
+
+            menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+            {
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem)
+                {
+                    switch (menuItem.getItemId())
+                    {
+                        case R.id.deleteAlarm:
+                            deleteAlarm(item);
+                            return true;
+
+                        default:
+                            return false;
+                    }
+                }
+            });
+
+            SuntimesUtils.forceActionBarIcons(menu.getMenu());
+            menu.show();
+        }
+
+        /**
+         * onAlarmModified
+         * @param item AlarmClockItem
+         */
+        protected void onAlarmModified(final AlarmClockItem item)
+        {
+            if (item.modified)
+            {
+                // TODO: persist changes
+                Toast msg = Toast.makeText(context, "alarm " + item.rowID + " modified", Toast.LENGTH_SHORT);
+                msg.show();
+            }
+        }
+
+        /**
+         * enableAlarm
+         * @param item AlarmClockItem
+         * @param enabled enabled/disabled
+         */
+        protected void enableAlarm(final AlarmClockItem item, boolean enabled)
+        {
+            item.enabled = enabled;
+            item.modified = true;
+            onAlarmModified(item);
+        }
+
+        /**
+         * deleteAlarm
+         * @param item AlarmClockItem
+         */
+        protected void deleteAlarm(final AlarmClockItem item)
+        {
+            AlertDialog.Builder confirm = new AlertDialog.Builder(context)
+                    .setTitle(context.getString(R.string.deletealarm_dialog_title))
+                    .setMessage(context.getString(R.string.deletealarm_dialog_message, item.rowID + ""))
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(context.getString(R.string.deletealarm_dialog_ok), new DialogInterface.OnClickListener()
+                    {
+                        public void onClick(DialogInterface dialog, int whichButton)
+                        {
+                            // TODO: delete alarm
+                            //if (WidgetThemes.removeValue(context, theme.themeDescriptor()))
+                            //{
+                            Toast.makeText(context, context.getString(R.string.deletealarm_toast_success, item.rowID+""), Toast.LENGTH_LONG).show();
+                            //}
+                        }
+                    })
+                    .setNegativeButton(context.getString(R.string.deletealarm_dialog_cancel), null);
+            confirm.show();
         }
     }
 
