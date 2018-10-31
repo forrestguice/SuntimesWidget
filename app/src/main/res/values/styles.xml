@@ -16,6 +16,9 @@
         <item name="text_accentColor">@color/text_accent_light</item>
         <item name="text_disabledColor">@color/text_disabled_light</item>
 
+        <item name="alarmCardEnabled">@color/alarm_enabled_light</item>
+        <item name="alarmCardDisabled">@color/alarm_disabled_light</item>
+
         <item name="text_buttonSelector">@drawable/btn_txt_light</item>
         <item name="date_buttonSelector">@drawable/btn_datetxt</item>
 
@@ -99,6 +102,9 @@
         <item name="hrColor">@color/hr_dark</item>
         <item name="text_accentColor">@color/text_accent_dark</item>
         <item name="text_disabledColor">@color/text_disabled_dark</item>
+
+        <item name="alarmCardEnabled">@color/alarm_enabled_dark</item>
+        <item name="alarmCardDisabled">@color/alarm_disabled_dark</item>
 
         <item name="text_buttonSelector">@drawable/btn_txt_dark</item>
         <item name="date_buttonSelector">@drawable/btn_datetxt</item>

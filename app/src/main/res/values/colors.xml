@@ -26,6 +26,13 @@
     <color name="card_bg_lighttrans">#aaffffff</color>
     <color name="widget_bg_light">@color/card_bg_lighttrans</color>
 
+    <!-- alarm cards -->
+    <color name="alarm_enabled_light">@color/grey_600</color>
+    <color name="alarm_disabled_light">@color/grey_400</color>
+
+    <color name="alarm_enabled_dark">@color/grey_800</color>
+    <color name="alarm_disabled_dark">@color/grey_900</color>
+
     <!-- tags -->
     <color name="warningTag_dark">#ff9900</color>
     <color name="errorTag_dark">#FF5252</color>
