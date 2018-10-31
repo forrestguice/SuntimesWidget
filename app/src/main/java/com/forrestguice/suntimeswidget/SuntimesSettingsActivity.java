@@ -50,6 +50,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.widget.Toast;
 
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calendar.SuntimesCalendarTask;
@@ -74,6 +75,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     public static final String LOG_TAG = "SuntimesSettings";
 
     final static String ACTION_PREFS_GENERAL = "com.forrestguice.suntimeswidget.PREFS_GENERAL";
+    final static String ACTION_PREFS_ALARMCLOCK = "com.forrestguice.suntimeswidget.PREFS_ALARMCLOCK";
     final static String ACTION_PREFS_CALENDAR = "com.forrestguice.suntimeswidget.PREFS_CALENDAR";
     final static String ACTION_PREFS_LOCALE = "com.forrestguice.suntimeswidget.PREFS_LOCALE";
     final static String ACTION_PREFS_UI = "com.forrestguice.suntimeswidget.PREFS_UI";
@@ -152,6 +154,11 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
             } else if (action.equals(ACTION_PREFS_WIDGETLIST)) {
                 Intent intent = new Intent(this, SuntimesWidgetListActivity.class);
+                startActivity(intent);
+                finish();
+
+            } else if (action.equals(ACTION_PREFS_ALARMCLOCK)) {
+                Intent intent = new Intent(this, AlarmClockActivity.class);
                 startActivity(intent);
                 finish();
 
@@ -274,7 +281,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             loadHeadersFromResource(R.xml.preference_headers, target);
 
             TypedValue typedValue = new TypedValue();
-            int[] icActionAttr = new int[] { R.attr.icActionSettings, R.attr.icActionLocale, R.attr.icActionPlace, R.attr.icActionCalendar, R.attr.icActionAppearance, R.attr.icActionWidgets };
+            int[] icActionAttr = new int[] { R.attr.icActionSettings, R.attr.icActionLocale, R.attr.icActionPlace, R.attr.icActionCalendar, R.attr.icActionAppearance, R.attr.icActionWidgets, R.attr.icActionAlarm };
             TypedArray a = obtainStyledAttributes(typedValue.data, icActionAttr);
             int settingsIcon = a.getResourceId(0, R.drawable.ic_action_settings);
             int localeIcon = a.getResourceId(1, R.drawable.ic_action_locale);
@@ -282,6 +289,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             int timeIcon = a.getResourceId(3, R.drawable.ic_calendar);
             int paletteIcon = a.getResourceId(4, R.drawable.ic_palette);
             int widgetIcon = a.getResourceId(5, R.drawable.ic_action_widget);
+            int alarmIcon = a.getResourceId(6, R.drawable.ic_action_alarms);
             a.recycle();
 
             for (Header header : target)
@@ -302,6 +310,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                     } else {
                         if (header.id == R.id.prefHeaderWidgets)
                             header.iconRes = widgetIcon;
+                        else if (header.id == R.id.prefHeaderAlarmClock)
+                            header.iconRes = alarmIcon;
                         else header.iconRes = settingsIcon;
                     }
                 }
