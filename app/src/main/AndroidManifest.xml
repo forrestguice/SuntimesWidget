@@ -106,6 +106,19 @@
             android:icon="@mipmap/ic_suntimes">
         </activity>
 
+        <!-- Alarm Clock Activity -->
+        <activity
+            android:name=".alarmclock.AlarmClockActivity"
+            android:label="@string/app_name_alarmclock"
+            android:icon="@mipmap/ic_suntimes">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
         <!-- FileProvider (export to file; places, themes) -->
         <provider
             android:name="android.support.v4.content.FileProvider"
