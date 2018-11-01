@@ -17,6 +17,10 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="18" />  <!-- needed by "export" features (e.g. "export places" to file) -->
 
+
+    <uses-permission android:name="android.permission.VIBRATE" />  <!-- needed by AlarmClock -->
+
+
     <uses-sdk tools:overrideLibrary="com.flask.colorpicker" />
 
     <application
@@ -113,7 +117,7 @@
             android:label="@string/app_name_alarmclock"
             android:icon="@mipmap/ic_suntimes"
             android:taskAffinity=".alarmclock.AlarmClockActivity"
-            android:launchMode="singleInstance">
+            android:launchMode="singleTop">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

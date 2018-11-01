@@ -22,14 +22,19 @@ import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
@@ -39,6 +44,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -71,6 +77,7 @@ import java.util.Calendar;
 public class AlarmClockActivity extends AppCompatActivity
 {
     public static final String EXTRA_SHOWHOME = "showHome";
+    public static final int REQUEST_RINGTONE = 10;
 
     private static final String DIALOGTAG_HELP = "help";
     private static final String DIALOGTAG_ABOUT = "about";
@@ -80,6 +87,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
     private ActionBar actionBar;
     private ListView alarmList;
+    private AlarmClockAdapter adapter = null;
     private FloatingActionButton actionButton;
 
     private AlarmClockListTask updateTask = null;
@@ -108,7 +116,6 @@ public class AlarmClockActivity extends AppCompatActivity
         super.onCreate(icicle);
         SuntimesUtils.initDisplayStrings(this);
 
-        setResult(RESULT_CANCELED);
         setContentView(R.layout.layout_activity_alarmclock);
         initViews(this);
     }
@@ -270,7 +277,76 @@ public class AlarmClockActivity extends AppCompatActivity
         }
 
         updateTask = new AlarmClockListTask(this, alarmList);
+        updateTask.setTaskListener(new AlarmClockListTask.AlarmClockListTaskListener()
+        {
+            @Override
+            public void onFinished(AlarmClockAdapter result)
+            {
+                adapter = result;
+                adapter.setAdapterListener(new AlarmClockAdapter.AlarmClockAdapterListener()
+                {
+                    @Override
+                    public void onRequestRingtone(AlarmClockItem forItem)
+                    {
+                        pickRingtone(forItem);
+                    }
+                });
+            }
+        });
         updateTask.execute();
+    }
+
+    /**
+     * pickRingtone
+     * @param item apply selected ringtone to supplied AlarmClockItem
+     */
+    protected void pickRingtone(@NonNull AlarmClockItem item)
+    {
+        Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, RingtoneManager.getActualDefaultRingtoneUri(AlarmClockActivity.this, RingtoneManager.TYPE_ALARM));
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (item.ringtoneURI != null ? Uri.parse(item.ringtoneURI) : null));
+
+        t_item = item;
+        startActivityForResult(intent, REQUEST_RINGTONE);
+    }
+
+    private AlarmClockItem t_item = null;  // ick
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        switch (requestCode)
+        {
+            case REQUEST_RINGTONE:
+                if (resultCode == RESULT_OK && t_item != null && data != null)
+                {
+                    Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+                    Ringtone ringtone = RingtoneManager.getRingtone(this, uri);
+                    String ringtoneName = ringtone.getTitle(this);
+                    ringtone.stop();
+
+                    t_item.ringtoneName = (uri != null ? ringtoneName : null);
+                    t_item.ringtoneURI = (uri != null ? uri.toString() : null);
+                    Log.d("DEBUG", "uri: " + t_item.ringtoneURI + ", title: " + ringtoneName);
+
+                    AlarmClockUpdateTask task = new AlarmClockUpdateTask(this);
+                    task.setTaskListener(new AlarmClockUpdateTask.AlarmClockUpdateTaskListener()
+                    {
+                        @Override
+                        public void onFinished(Boolean result)
+                        {
+                            if (result) {
+                                adapter.notifyDataSetChanged();
+                            }
+                        }
+                    });
+                    task.execute(t_item);
+                }
+                t_item = null;
+                break;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     /**
@@ -395,8 +471,13 @@ public class AlarmClockActivity extends AppCompatActivity
         {
             db.open();
             boolean removed = true;
-            for (long rowID : rowIDs) {
-                removed = removed && db.removeAlarm(rowID);
+            if (rowIDs.length > 0)
+            {
+                for (long rowID : rowIDs) {
+                    removed = removed && db.removeAlarm(rowID);
+                }
+            } else {
+                removed = db.clearAlarms();
             }
             db.close();
             return removed;
@@ -467,7 +548,22 @@ public class AlarmClockActivity extends AppCompatActivity
                 if (alarmList != null) {
                     alarmList.setAdapter(result);
                 }
+
+                if (taskListener != null) {
+                    taskListener.onFinished(result);
+                }
             }
+        }
+
+        protected AlarmClockListTaskListener taskListener;
+        public void setTaskListener( AlarmClockListTaskListener l )
+        {
+            taskListener = l;
+        }
+
+        public static abstract class AlarmClockListTaskListener
+        {
+            public void onFinished(AlarmClockAdapter result) {}
         }
     }
 
@@ -514,6 +610,8 @@ public class AlarmClockActivity extends AppCompatActivity
             LayoutInflater inflater = LayoutInflater.from(context);
             final View view = inflater.inflate(R.layout.layout_listitem_alarmclock, parent, false);  // always re-inflate (ignore convertView)
             final AlarmClockItem item = items.get(position);
+            if (item == null)
+                Log.d("DEBUG", "position " + position + " is null!");
 
             //ImageView icon = (ImageView) view.findViewById(android.R.id.icon1);
             //icon.setImageResource(item.icon);
@@ -524,40 +622,80 @@ public class AlarmClockActivity extends AppCompatActivity
                 card.setBackgroundColor(item.enabled ? alarmEnabledColor : alarmDisabledColor);
             }
 
-            TextView text = (TextView) view.findViewById(android.R.id.text1);
-            if (text != null) {
+            final TextView text = (TextView) view.findViewById(android.R.id.text1);
+            if (text != null)
+            {
                 text.setText(item.label);
+                text.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        item.label = "todo";  // TODO: select label
+                        onAlarmModified(item);
+                        text.setText(item.label);
+                    }
+                });
             }
 
-            TextView text2 = (TextView) view.findViewById(android.R.id.text2);
-            if (text2 != null) {
-                text2.setText(item.event != null ? item.event.getLongDisplayString() : "Clock Time");
+            final TextView text2 = (TextView) view.findViewById(android.R.id.text2);
+            if (text2 != null)
+            {
+                final String clockTime = "Clock Time";  // TODO: i18n
+                text2.setText(item.event != null ? item.event.getLongDisplayString() : clockTime);
+                text2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        item.event = null;    // TODO: select event
+                        onAlarmModified(item);
+                        text2.setText(item.event != null ? item.event.getLongDisplayString() : clockTime);
+                    }
+                });
             }
 
             TextView text_datetime = (TextView) view.findViewById(R.id.text_datetime);
-            if (text_datetime != null) {
+            if (text_datetime != null)
+            {
                 Calendar alarmTime = Calendar.getInstance();
                 alarmTime.setTimeInMillis(item.timestamp);
                 text_datetime.setText(utils.calendarTimeShortDisplayString(context, alarmTime).getValue());
+
+                //int colorEvent = Color.YELLOW;   // TODO: colors
+                //int colorClock = Color.BLUE;
+                //text_datetime.setTextColor(item.event == null ? colorClock : colorEvent);        // TODO: colorSelector
+
+                text_datetime.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        if (item.event == null)
+                        {
+                            Calendar c = Calendar.getInstance();
+                            c.add(Calendar.HOUR_OF_DAY, 1);
+                            item.timestamp = c.getTimeInMillis();        // TODO: select clock time
+                            onAlarmModified(item);
+                        }
+                    }
+                });
             }
 
-            TextView text_location = (TextView) view.findViewById(R.id.text_location_label);
+            final TextView text_location = (TextView) view.findViewById(R.id.text_location_label);
             if (text_location != null)
             {
-                if (item.location != null)
+                updateLocationLabel(text_location, item);
+                text_location.setOnClickListener(new View.OnClickListener()
                 {
-                    String coordString = context.getString(R.string.location_format_latlon, item.location.getLatitude(), item.location.getLongitude());
-                    String labelString = item.location.getLabel();
-                    String displayString = labelString + "\n" + coordString;
-                    SpannableString displayText = SuntimesUtils.createBoldSpan(null, displayString, labelString);
-                    displayText = SuntimesUtils.createRelativeSpan(displayText, displayString, coordString, 0.75f);
-
-                    text_location.setText(displayText);
-                    text_location.setVisibility(View.VISIBLE);
-
-                } else {
-                    text_location.setVisibility(View.INVISIBLE);
-                }
+                    @Override
+                    public void onClick(View v)
+                    {
+                        item.location = new WidgetSettings.Location("Phoenix", "33.4500", "-111.9400", "385");  // TODO: select location
+                        item.modified = true;
+                        onAlarmModified(item);
+                        updateLocationLabel(text_location, item);
+                    }
+                });
             }
 
             Switch switch_enabled = (Switch) view.findViewById(R.id.switch_enabled);
@@ -574,10 +712,21 @@ public class AlarmClockActivity extends AppCompatActivity
                 });
             }
 
-            TextView text_ringtone = (TextView) view.findViewById(R.id.text_ringtone);
+            final TextView text_ringtone = (TextView) view.findViewById(R.id.text_ringtone);
             if (text_ringtone != null)
             {
-                text_ringtone.setText(item.ringtone != null ? item.ringtone : "none");  // TODO
+                final String none = "none";  // TODO: i18n none string
+                text_ringtone.setText(item.ringtoneName != null ? item.ringtoneName : none);
+                text_ringtone.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        if (adapterListener != null) {
+                            adapterListener.onRequestRingtone(item);
+                        }
+                    }
+                });
             }
 
             CheckBox check_vibrate = (CheckBox) view.findViewById(R.id.check_vibrate);
@@ -618,8 +767,8 @@ public class AlarmClockActivity extends AppCompatActivity
                 overflow.setOnClickListener(new View.OnClickListener()
                 {
                     @Override
-                    public void onClick(View v) {
-
+                    public void onClick(View v)
+                    {
                         showOverflowMenu(item, v, view);
                     }
                 });
@@ -628,6 +777,25 @@ public class AlarmClockActivity extends AppCompatActivity
             return view;
         }
 
+        private void updateLocationLabel(TextView text_location, AlarmClockItem item)
+        {
+            if (text_location != null)
+            {
+                if (item.location != null)
+                {
+                    String coordString = context.getString(R.string.location_format_latlon, item.location.getLatitude(), item.location.getLongitude());
+                    String labelString = item.location.getLabel();
+                    String displayString = labelString + "\n" + coordString;
+                    SpannableString displayText = SuntimesUtils.createBoldSpan(null, displayString, labelString);
+                    displayText = SuntimesUtils.createRelativeSpan(displayText, displayString, coordString, 0.75f);
+                    text_location.setText(displayText);
+                    text_location.setVisibility(View.VISIBLE);
+
+                } else {
+                    text_location.setVisibility(View.INVISIBLE);
+                }
+            }
+        }
 
         /**
          * @param item associated AlarmClockItem
@@ -740,6 +908,17 @@ public class AlarmClockActivity extends AppCompatActivity
                     })
                     .setNegativeButton(context.getString(R.string.deletealarm_dialog_cancel), null);
             confirm.show();
+        }
+
+        protected AlarmClockAdapterListener adapterListener;
+        public void setAdapterListener(AlarmClockAdapterListener l)
+        {
+            adapterListener = l;
+        }
+
+        public static abstract class AlarmClockAdapterListener
+        {
+            public void onRequestRingtone(AlarmClockItem forItem) {}
         }
     }
 
