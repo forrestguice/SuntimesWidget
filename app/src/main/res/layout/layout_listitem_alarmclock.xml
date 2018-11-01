@@ -72,11 +72,9 @@
 
         <TextView
             android:id="@+id/text_datetime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="22:22"
-            android:textSize="48sp"
-            android:textStyle="bold"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            tools:text="22:22"
+            android:textSize="48sp" android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/layout_options"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="parent"
@@ -111,7 +109,7 @@
 
         <TextView
             android:id="@+id/text_location_label"
-            android:layout_width="125dp"
+            android:layout_width="135dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
@@ -119,6 +117,7 @@
             android:drawableStart="?attr/icActionPlace"
             android:gravity="center_vertical"
             tools:text="Location"
+            android:maxLines="2" android:ellipsize="end"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1"
             app:layout_constraintStart_toEndOf="@+id/guideline2"
@@ -138,15 +137,13 @@
 
             <TextView
                 android:id="@+id/text_ringtone"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+                android:layout_weight="1" android:gravity="center_vertical"
+                android:drawableLeft="?attr/icActionAlarm" android:drawableStart="?attr/icActionAlarm"
+                tools:text="ringtone very very very long name"
                 android:maxLines="2" android:ellipsize="end"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_weight="1"
-                android:drawableLeft="?attr/icActionAlarm"
-                android:gravity="center_vertical"
-                android:text="ringtone very very very long name"
-                android:textStyle="bold" />
+                android:textStyle="bold" android:textColor="?attr/text_buttonSelector"/>
 
             <CheckBox
                 android:id="@+id/check_vibrate"
@@ -155,14 +152,14 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:scaleX="0.85" android:scaleY="0.85"
-                android:text="Vibrate" />
+                android:text="@string/alarmOption_vibrate" />
 
             <CheckBox
                 android:id="@+id/check_repeat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
-                android:text="Repeat"
+                android:text="@string/alarmOption_repeat"
                 android:scaleX="0.85" android:scaleY="0.85"
                 app:layout_constraintStart_toEndOf="@android:id/text2" />
 
