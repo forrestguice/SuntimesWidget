@@ -21,6 +21,8 @@ package com.forrestguice.suntimeswidget.settings;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -628,7 +630,7 @@ public class WidgetSettings
     /**
      * Location
      */
-    public static class Location
+    public static class Location implements Parcelable
     {
         public static String pattern_latLon = "#.#####";
 
@@ -813,6 +815,47 @@ public class WidgetSettings
             formatter.applyLocalizedPattern(pattern_latLon);
             return formatter;
         }
+
+        /**
+         * @param in Parcel
+         */
+        public Location( Parcel in )
+        {
+            this.label = in.readString();
+            this.latitude = in.readString();
+            this.longitude = in.readString();
+            this.altitude = in.readString();
+            this.useAltitude = (in.readInt() == 1);
+        }
+
+        @Override
+        public int describeContents()
+        {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags)
+        {
+            dest.writeString(label);
+            dest.writeString(latitude);
+            dest.writeString(longitude);
+            dest.writeString(altitude);
+            dest.writeInt(useAltitude ? 1 : 0);
+        }
+
+        public static final Parcelable.Creator CREATOR = new Parcelable.Creator()
+        {
+            public Location createFromParcel(Parcel in)
+            {
+                return new Location(in);
+            }
+
+            public Location[] newArray(int size)
+            {
+                return new Location[size];
+            }
+        };
     }
 
     /**
