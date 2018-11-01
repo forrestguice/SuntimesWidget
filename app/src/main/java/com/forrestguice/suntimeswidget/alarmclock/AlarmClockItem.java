@@ -34,7 +34,8 @@ public class AlarmClockItem
     protected String label = null;
     protected SolarEvents event = null;
     protected WidgetSettings.Location location = null;
-    protected String ringtone = null;
+    protected String ringtoneName = null;
+    protected String ringtoneURI = null;
     protected boolean vibrate = false;
 
     protected int icon = 0;
@@ -71,7 +72,8 @@ public class AlarmClockItem
         }
 
         vibrate = (alarm.getAsInteger(AlarmClockDatabaseAdapter.KEY_ALARM_VIBRATE) == 1);
-        ringtone = alarm.getAsString(AlarmClockDatabaseAdapter.KEY_ALARM_RINGTONE);
+        ringtoneName = alarm.getAsString(AlarmClockDatabaseAdapter.KEY_ALARM_RINGTONE_NAME);
+        ringtoneURI = alarm.getAsString(AlarmClockDatabaseAdapter.KEY_ALARM_RINGTONE_URI);
     }
 
     public ContentValues asContentValues(boolean withRowID)
@@ -100,7 +102,8 @@ public class AlarmClockItem
         }
 
         values.put(AlarmClockDatabaseAdapter.KEY_ALARM_VIBRATE, (vibrate ? 1 : 0));
-        values.put(AlarmClockDatabaseAdapter.KEY_ALARM_RINGTONE, ringtone);
+        values.put(AlarmClockDatabaseAdapter.KEY_ALARM_RINGTONE_NAME, ringtoneName);
+        values.put(AlarmClockDatabaseAdapter.KEY_ALARM_RINGTONE_URI, ringtoneURI);
         return values;
     }
 }

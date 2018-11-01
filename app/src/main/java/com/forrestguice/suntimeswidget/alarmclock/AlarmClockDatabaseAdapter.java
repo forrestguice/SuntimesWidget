@@ -66,8 +66,11 @@ public class AlarmClockDatabaseAdapter
     public static final String KEY_ALARM_VIBRATE = "vibrate";                                       // vibrate flag (0: false, 1: true)
     public static final String DEF_ALARM_VIBRATE = KEY_ALARM_VIBRATE + " integer default 0";
 
-    public static final String KEY_ALARM_RINGTONE = "ringtone";                                     // ringtone name (optional)
-    public static final String DEF_ALARM_RINGTONE = KEY_ALARM_RINGTONE + " text";
+    public static final String KEY_ALARM_RINGTONE_NAME = "ringtoneName";                            // ringtone uri (optional)
+    public static final String DEF_ALARM_RINGTONE_NAME = KEY_ALARM_RINGTONE_NAME + " text";
+
+    public static final String KEY_ALARM_RINGTONE_URI = "ringtoneURI";                              // ringtone uri (optional)
+    public static final String DEF_ALARM_RINGTONE_URI = KEY_ALARM_RINGTONE_URI + " text";
 
     private static final String TABLE_ALARMS = "alarms";
     private static final String TABLE_ALARMS_CREATE_COLS = DEF_ROWID + ", "
@@ -85,14 +88,15 @@ public class AlarmClockDatabaseAdapter
                                                          + DEF_ALARM_ALTITUDE + ", "
 
                                                          + DEF_ALARM_VIBRATE + ", "
-                                                         + DEF_ALARM_RINGTONE;
+                                                         + DEF_ALARM_RINGTONE_NAME + ", "
+                                                         + DEF_ALARM_RINGTONE_URI;
 
     private static final String TABLE_ALARMS_CREATE = "create table " + TABLE_ALARMS + " (" + TABLE_ALARMS_CREATE_COLS + ");";
 
     private static final String[] QUERY_ALARMS_MINENTRY = new String[] { KEY_ROWID, KEY_ALARM_ENABLED, KEY_ALARM_REPEATING, KEY_ALARM_DATETIME, KEY_ALARM_LABEL };
     private static final String[] QUERY_ALARMS_FULLENTRY = new String[] { KEY_ROWID, KEY_ALARM_ENABLED, KEY_ALARM_REPEATING, KEY_ALARM_DATETIME, KEY_ALARM_DATETIME_OFFSET, KEY_ALARM_LABEL,
                                                                           KEY_ALARM_SOLAREVENT, KEY_ALARM_PLACELABEL, KEY_ALARM_LATITUDE, KEY_ALARM_LONGITUDE, KEY_ALARM_ALTITUDE,
-                                                                          KEY_ALARM_VIBRATE, KEY_ALARM_RINGTONE };
+                                                                          KEY_ALARM_VIBRATE, KEY_ALARM_RINGTONE_NAME, KEY_ALARM_RINGTONE_URI };
 
     /**
      *
@@ -212,7 +216,8 @@ public class AlarmClockDatabaseAdapter
                 KEY_ALARM_LONGITUDE + separator +
                 KEY_ALARM_ALTITUDE + separator +
                 KEY_ALARM_VIBRATE + separator +
-                KEY_ALARM_RINGTONE;
+                KEY_ALARM_RINGTONE_NAME + separator +
+                KEY_ALARM_RINGTONE_URI;
         return line;
     }
     public String addAlarmCSV_row( ContentValues alarm )
@@ -230,7 +235,8 @@ public class AlarmClockDatabaseAdapter
                       alarm.getAsString(KEY_ALARM_LONGITUDE) + separator +
                       alarm.getAsString(KEY_ALARM_ALTITUDE) + separator +
                       alarm.getAsInteger(KEY_ALARM_VIBRATE) + separator +
-                      alarm.getAsString(KEY_ALARM_RINGTONE);
+                      alarm.getAsString(KEY_ALARM_RINGTONE_NAME) + separator +
+                      alarm.getAsString(KEY_ALARM_RINGTONE_URI);
         return line;
     }
 
