@@ -681,8 +681,8 @@
         <item>Kataloński</item>
         <item>Baskijski</item>
         <item>Norweski</item>
-        <item>Traditional Chinese</item>
-    </string-array>  <!-- TODO -->
+        <item>Chiński tradycyjny</item>
+    </string-array>
 
     <!-- position formats -->
     <string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
