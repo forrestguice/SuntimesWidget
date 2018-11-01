@@ -233,8 +233,8 @@ public class AlarmClockActivity extends AppCompatActivity
         public void onClick(View v)
         {
             AlarmClockItem alarm = new AlarmClockItem();
-            alarm.label = "alarm label";
-            alarm.location = new WidgetSettings.Location("Location", "33.4500", "-111.9400", "385");
+            alarm.label = "";
+            alarm.location = WidgetSettings.loadLocationPref(AlarmClockActivity.this, 0);
             alarm.event = SolarEvents.SUNRISE;
             alarm.enabled = true;
             alarm.vibrate = true;
