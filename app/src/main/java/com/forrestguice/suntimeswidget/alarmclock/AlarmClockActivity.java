@@ -274,6 +274,40 @@ public class AlarmClockActivity extends AppCompatActivity
     }
 
     /**
+     * clearAlarms
+     */
+    protected void clearAlarms()
+    {
+        final Context context = this;
+        AlertDialog.Builder confirm = new AlertDialog.Builder(context)
+                .setTitle(context.getString(R.string.clearalarms_dialog_title))
+                .setMessage(context.getString(R.string.clearalarms_dialog_message))
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(context.getString(R.string.clearalarms_dialog_ok), new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int whichButton)
+                    {
+                        AlarmClockDeleteTask clearTask = new AlarmClockDeleteTask(context);
+                        clearTask.setTaskListener(new AlarmClockDeleteTask.AlarmClockDeleteTaskListener()
+                        {
+                            @Override
+                            public void onFinished(Boolean result)
+                            {
+                                if (result)
+                                {
+                                    Toast.makeText(context, context.getString(R.string.clearalarms_toast_success), Toast.LENGTH_LONG).show();
+                                    updateViews(context);
+                                }
+                            }
+                        });
+                        clearTask.execute();
+                    }
+                })
+                .setNegativeButton(context.getString(R.string.clearalarms_dialog_cancel), null);
+        confirm.show();
+    }
+
+    /**
      * showHelp
      */
     protected void showHelp()
@@ -722,6 +756,10 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         switch (item.getItemId())
         {
+            case R.id.action_clear:
+                clearAlarms();
+                return true;
+
             case R.id.action_help:
                 showHelp();
                 return true;

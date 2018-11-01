@@ -527,13 +527,19 @@
     <string name="configLabel_alarmClock">Alarms</string>            <!-- group title -->  <!-- TODO -->
     <string name="configLabel_alarmClock_emptyMsg">No Alarms</string>     <!-- a label that is displayed in place of an empty listview -->  <!-- TODO -->
     <string name="configAction_deleteAlarm">Delete</string>               <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_clearAlarms">Clear</string>                <!-- action button / menu item -->
 
     <string name="deletealarm_dialog_title">Delete Alarm</string>        <!-- dialog title -->  <!-- TODO -->
     <string name="deletealarm_dialog_message">Are you sure you want to delete <xliff:g id="alarm">%1$s</xliff:g>?</string>   <!-- dialog msg --> <!-- TODO -->
     <string name="deletealarm_dialog_ok">Delete</string>        <!-- button --> <!-- TODO -->
     <string name="deletealarm_dialog_cancel">Cancel</string>    <!-- button --> <!-- TODO -->
-
     <string name="deletealarm_toast_success"><xliff:g id="alarm">%1$s</xliff:g> was deleted.</string> <!-- toast msg --> <!-- TODO -->
+
+    <string name="clearalarms_dialog_title">Clear Alarms</string>        <!-- dialog title -->  <!-- TODO -->
+    <string name="clearalarms_dialog_message">Are you sure you want to delete all alarms?</string>   <!-- dialog msg --> <!-- TODO -->
+    <string name="clearalarms_dialog_ok">Clear</string>        <!-- button --> <!-- TODO -->
+    <string name="clearalarms_dialog_cancel">Cancel</string>    <!-- button --> <!-- TODO -->
+    <string name="clearalarms_toast_success">Alarms cleared.</string> <!-- toast msg --> <!-- TODO -->
 
     <!--
          APP SETTINGS
