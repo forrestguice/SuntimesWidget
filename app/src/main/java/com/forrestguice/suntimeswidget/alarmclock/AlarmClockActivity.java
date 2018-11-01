@@ -37,6 +37,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -63,9 +64,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.AboutDialog;
+import com.forrestguice.suntimeswidget.AlarmDialog;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -79,9 +83,12 @@ public class AlarmClockActivity extends AppCompatActivity
     public static final String EXTRA_SHOWHOME = "showHome";
     public static final int REQUEST_RINGTONE = 10;
 
+    private static final String DIALOGTAG_EVENT_FAB = "eventfab";
+    private static final String DIALOGTAG_EVENT = "event";
     private static final String DIALOGTAG_HELP = "help";
     private static final String DIALOGTAG_ABOUT = "about";
 
+    private static final String KEY_SELECTED_ROWID = "selectedID";
     private static final String KEY_LISTVIEW_TOP = "alarmlisttop";
     private static final String KEY_LISTVIEW_INDEX = "alarmlistindex";
 
@@ -134,6 +141,21 @@ public class AlarmClockActivity extends AppCompatActivity
     public void onResume()
     {
         super.onResume();
+
+        FragmentManager fragments = getSupportFragmentManager();
+        AlarmDialog eventDialog0 = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
+        if (eventDialog0 != null)
+        {
+            initEventDialog(eventDialog0);
+            eventDialog0.setOnAcceptedListener(onActionButtonAccepted);
+        }
+
+        AlarmDialog eventDialog1 = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT);
+        if (eventDialog1 != null)
+        {
+            initEventDialog(eventDialog1);
+            eventDialog1.setOnAcceptedListener(onSolarEventChanged);
+        }
     }
 
     @Override
@@ -160,6 +182,9 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         super.onSaveInstanceState(outState);
         saveListViewPosition(outState);
+        if (t_selectedItem != null) {
+            outState.putString(KEY_SELECTED_ROWID, t_selectedItem.toString());
+        }
     }
 
     @Override
@@ -167,6 +192,18 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         super.onRestoreInstanceState(savedState);
         restoreListViewPosition(savedState);
+
+        String idString = savedState.getString(KEY_SELECTED_ROWID);
+        if (idString == null) {
+            t_selectedItem = null;
+        } else {
+            try {
+                t_selectedItem = Long.parseLong(idString);
+            } catch (NumberFormatException e) {
+                Log.w("onRestoreInstanceState", "KEY_SELECTED_ROWID is invalid! not a Long.. ignoring: " + idString);
+                t_selectedItem = null;
+            }
+        }
     }
 
     /**
@@ -232,14 +269,18 @@ public class AlarmClockActivity extends AppCompatActivity
         @Override
         public void onClick(View v)
         {
-            AlarmClockItem alarm = new AlarmClockItem();
-            alarm.label = "";
-            alarm.location = WidgetSettings.loadLocationPref(AlarmClockActivity.this, 0);
-            alarm.event = SolarEvents.SUNRISE;
-            alarm.enabled = true;
-            alarm.vibrate = true;
-            alarm.repeating = true;
+            final AlarmDialog dialog = new AlarmDialog();
+            initEventDialog(dialog);
+            dialog.setChoice(SolarEvents.SUNRISE);
+            dialog.setOnAcceptedListener(onActionButtonAccepted);
+            dialog.show(getSupportFragmentManager(), DIALOGTAG_EVENT_FAB);
+        }
+    };
 
+    private DialogInterface.OnClickListener onActionButtonAccepted = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface d, int which)
+        {
             AlarmClockUpdateTask task = new AlarmClockUpdateTask(AlarmClockActivity.this, true);
             task.setTaskListener(new AlarmClockUpdateTask.AlarmClockUpdateTaskListener()
             {
@@ -251,7 +292,47 @@ public class AlarmClockActivity extends AppCompatActivity
                     }
                 }
             });
+
+            final AlarmClockItem alarm = new AlarmClockItem();
+            alarm.label = "";
+            alarm.location = WidgetSettings.loadLocationPref(AlarmClockActivity.this, 0);
+            alarm.enabled = true;
+            alarm.vibrate = true;
+            alarm.repeating = true;
+
+            FragmentManager fragments = getSupportFragmentManager();
+            AlarmDialog dialog = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
+            alarm.event = dialog.getChoice();
+
             task.execute(alarm);
+        }
+    };
+
+    private DialogInterface.OnClickListener onSolarEventChanged = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface d, int which)
+        {
+            AlarmClockUpdateTask task = new AlarmClockUpdateTask(AlarmClockActivity.this);
+            task.setTaskListener(new AlarmClockUpdateTask.AlarmClockUpdateTaskListener()
+            {
+                @Override
+                public void onFinished(Boolean result)
+                {
+                    if (result) {
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+            });
+
+            AlarmClockItem item = adapter.findItem(t_selectedItem);
+            if (item != null)
+            {
+                FragmentManager fragments = getSupportFragmentManager();
+                AlarmDialog dialog = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT);
+                item.event = dialog.getChoice();
+                task.execute(item);
+                t_selectedItem = null;
+            }
         }
     };
 
@@ -290,10 +371,41 @@ public class AlarmClockActivity extends AppCompatActivity
                     {
                         pickRingtone(forItem);
                     }
+
+                    @Override
+                    public void onRequestSolarEvent(AlarmClockItem forItem)
+                    {
+                        pickSolarEvent(forItem);
+                    }
                 });
             }
         });
         updateTask.execute();
+    }
+
+    /**
+     * pickSolarEvent
+     * @param item apply selected solar event to supplied AlarmClockItem
+     */
+    protected void pickSolarEvent(@NonNull AlarmClockItem item)
+    {
+        final AlarmDialog dialog = new AlarmDialog();
+        initEventDialog(dialog);
+        dialog.setChoice(item.event);
+        dialog.setOnAcceptedListener(onSolarEventChanged);
+        t_selectedItem = item.rowID;
+        dialog.show(getSupportFragmentManager(), DIALOGTAG_EVENT);
+    }
+
+    private void initEventDialog(AlarmDialog dialog)
+    {
+        SuntimesRiseSetDataset sunData = new SuntimesRiseSetDataset(this, 0);
+        sunData.calculateData();
+
+        SuntimesMoonData moonData = new SuntimesMoonData(this, 0);
+        moonData.calculate();
+
+        dialog.setData(this, sunData, moonData);
     }
 
     /**
@@ -306,29 +418,29 @@ public class AlarmClockActivity extends AppCompatActivity
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, RingtoneManager.getActualDefaultRingtoneUri(AlarmClockActivity.this, RingtoneManager.TYPE_ALARM));
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (item.ringtoneURI != null ? Uri.parse(item.ringtoneURI) : null));
-
-        t_item = item;
+        t_selectedItem = item.rowID;
         startActivityForResult(intent, REQUEST_RINGTONE);
     }
 
-    private AlarmClockItem t_item = null;  // ick
+    private Long t_selectedItem = null;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
+        AlarmClockItem item = adapter.findItem(t_selectedItem);
         switch (requestCode)
         {
             case REQUEST_RINGTONE:
-                if (resultCode == RESULT_OK && t_item != null && data != null)
+                if (resultCode == RESULT_OK && item != null && data != null)
                 {
                     Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
                     Ringtone ringtone = RingtoneManager.getRingtone(this, uri);
                     String ringtoneName = ringtone.getTitle(this);
                     ringtone.stop();
 
-                    t_item.ringtoneName = (uri != null ? ringtoneName : null);
-                    t_item.ringtoneURI = (uri != null ? uri.toString() : null);
-                    Log.d("DEBUG", "uri: " + t_item.ringtoneURI + ", title: " + ringtoneName);
+                    item.ringtoneName = (uri != null ? ringtoneName : null);
+                    item.ringtoneURI = (uri != null ? uri.toString() : null);
+                    Log.d("DEBUG", "uri: " + item.ringtoneURI + ", title: " + ringtoneName);
 
                     AlarmClockUpdateTask task = new AlarmClockUpdateTask(this);
                     task.setTaskListener(new AlarmClockUpdateTask.AlarmClockUpdateTaskListener()
@@ -341,9 +453,9 @@ public class AlarmClockActivity extends AppCompatActivity
                             }
                         }
                     });
-                    task.execute(t_item);
+                    task.execute(item);
                 }
-                t_item = null;
+                t_selectedItem = null;
                 break;
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -592,6 +704,23 @@ public class AlarmClockActivity extends AppCompatActivity
             a.recycle();
         }
 
+        /**
+         * Retrieve an AlarmClockItem from the adapter using its rowID.
+         * @param rowID the item's rowID
+         * @return an AlarmClockItem or null if not found
+         */
+        public AlarmClockItem findItem( Long rowID )
+        {
+            if (rowID != null) {
+                for (AlarmClockItem item : items) {
+                    if (item != null && item.rowID == rowID) {
+                        return item;
+                    }
+                }
+            }
+            return null;
+        }
+
         @Override
         @NonNull
         public View getView(int position, View convertView, @NonNull ViewGroup parent)
@@ -641,15 +770,16 @@ public class AlarmClockActivity extends AppCompatActivity
             final TextView text2 = (TextView) view.findViewById(android.R.id.text2);
             if (text2 != null)
             {
-                final String clockTime = "Clock Time";  // TODO: i18n
+                final String clockTime = context.getString(R.string.alarmOption_solarevent_none);
                 text2.setText(item.event != null ? item.event.getLongDisplayString() : clockTime);
                 text2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v)
                     {
-                        item.event = null;    // TODO: select event
-                        onAlarmModified(item);
-                        text2.setText(item.event != null ? item.event.getLongDisplayString() : clockTime);
+                        if (adapterListener != null)
+                        {
+                            adapterListener.onRequestSolarEvent(item);
+                        }
                     }
                 });
             }
@@ -919,6 +1049,7 @@ public class AlarmClockActivity extends AppCompatActivity
         public static abstract class AlarmClockAdapterListener
         {
             public void onRequestRingtone(AlarmClockItem forItem) {}
+            public void onRequestSolarEvent(AlarmClockItem forItem) {}
         }
     }
 
