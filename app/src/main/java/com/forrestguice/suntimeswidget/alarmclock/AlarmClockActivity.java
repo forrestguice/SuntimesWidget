@@ -89,13 +89,17 @@ public class AlarmClockActivity extends AppCompatActivity
     private static final String DIALOGTAG_ABOUT = "about";
 
     private static final String KEY_SELECTED_ROWID = "selectedID";
+    private static final String KEY_SELECTED_LOCATION = "selectedLocation";
     private static final String KEY_LISTVIEW_TOP = "alarmlisttop";
     private static final String KEY_LISTVIEW_INDEX = "alarmlistindex";
 
     private ActionBar actionBar;
     private ListView alarmList;
-    private AlarmClockAdapter adapter = null;
     private FloatingActionButton actionButton;
+
+    private AlarmClockAdapter adapter = null;
+    private Long t_selectedItem = null;
+    private WidgetSettings.Location t_selectedLocation = null;
 
     private AlarmClockListTask updateTask = null;
     private static final SuntimesUtils utils = new SuntimesUtils();
@@ -146,14 +150,14 @@ public class AlarmClockActivity extends AppCompatActivity
         AlarmDialog eventDialog0 = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
         if (eventDialog0 != null)
         {
-            initEventDialog(eventDialog0);
+            initEventDialog(eventDialog0, null);
             eventDialog0.setOnAcceptedListener(onActionButtonAccepted);
         }
 
         AlarmDialog eventDialog1 = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT);
         if (eventDialog1 != null)
         {
-            initEventDialog(eventDialog1);
+            initEventDialog(eventDialog1, t_selectedLocation);
             eventDialog1.setOnAcceptedListener(onSolarEventChanged);
         }
     }
@@ -182,8 +186,13 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         super.onSaveInstanceState(outState);
         saveListViewPosition(outState);
+
         if (t_selectedItem != null) {
             outState.putString(KEY_SELECTED_ROWID, t_selectedItem.toString());
+        }
+
+        if (t_selectedLocation != null) {
+            outState.putParcelable(KEY_SELECTED_LOCATION, t_selectedLocation);
         }
     }
 
@@ -204,6 +213,8 @@ public class AlarmClockActivity extends AppCompatActivity
                 t_selectedItem = null;
             }
         }
+
+        t_selectedLocation = savedState.getParcelable(KEY_SELECTED_LOCATION);
     }
 
     /**
@@ -270,7 +281,7 @@ public class AlarmClockActivity extends AppCompatActivity
         public void onClick(View v)
         {
             final AlarmDialog dialog = new AlarmDialog();
-            initEventDialog(dialog);
+            initEventDialog(dialog, null);
             dialog.setChoice(SolarEvents.SUNRISE);
             dialog.setOnAcceptedListener(onActionButtonAccepted);
             dialog.show(getSupportFragmentManager(), DIALOGTAG_EVENT_FAB);
@@ -347,6 +358,45 @@ public class AlarmClockActivity extends AppCompatActivity
     };
 
     /**
+     * onUpdateFinished
+     * The update task completed creating the adapter; set a listener on the completed adapter.
+     */
+    private AlarmClockListTask.AlarmClockListTaskListener onUpdateFinished = new AlarmClockListTask.AlarmClockListTaskListener()
+    {
+        @Override
+        public void onFinished(AlarmClockAdapter result)
+        {
+            adapter = result;
+            adapter.setAdapterListener(onAdapterAction);
+        }
+    };
+
+    /**
+     * onAdapterAction
+     * An action was performed on an AlarmItem managed by the adapter; respond to it.
+     */
+    private AlarmClockAdapter.AlarmClockAdapterListener onAdapterAction = new AlarmClockAdapter.AlarmClockAdapterListener()
+    {
+        @Override
+        public void onRequestRingtone(AlarmClockItem forItem)
+        {
+            pickRingtone(forItem);
+        }
+
+        @Override
+        public void onRequestSolarEvent(AlarmClockItem forItem)
+        {
+            pickSolarEvent(forItem);
+        }
+
+        @Override
+        public void onRequestLocation(AlarmClockItem forItem)
+        {
+            pickLocation(forItem);
+        }
+    };
+
+    /**
      * updateViews
      * @param context context
      */
@@ -358,28 +408,7 @@ public class AlarmClockActivity extends AppCompatActivity
         }
 
         updateTask = new AlarmClockListTask(this, alarmList);
-        updateTask.setTaskListener(new AlarmClockListTask.AlarmClockListTaskListener()
-        {
-            @Override
-            public void onFinished(AlarmClockAdapter result)
-            {
-                adapter = result;
-                adapter.setAdapterListener(new AlarmClockAdapter.AlarmClockAdapterListener()
-                {
-                    @Override
-                    public void onRequestRingtone(AlarmClockItem forItem)
-                    {
-                        pickRingtone(forItem);
-                    }
-
-                    @Override
-                    public void onRequestSolarEvent(AlarmClockItem forItem)
-                    {
-                        pickSolarEvent(forItem);
-                    }
-                });
-            }
-        });
+        updateTask.setTaskListener(onUpdateFinished);
         updateTask.execute();
     }
 
@@ -390,22 +419,35 @@ public class AlarmClockActivity extends AppCompatActivity
     protected void pickSolarEvent(@NonNull AlarmClockItem item)
     {
         final AlarmDialog dialog = new AlarmDialog();
-        initEventDialog(dialog);
+        initEventDialog(dialog, item.location);
         dialog.setChoice(item.event);
         dialog.setOnAcceptedListener(onSolarEventChanged);
+
         t_selectedItem = item.rowID;
+        t_selectedLocation = item.location;
         dialog.show(getSupportFragmentManager(), DIALOGTAG_EVENT);
     }
 
-    private void initEventDialog(AlarmDialog dialog)
+    private void initEventDialog(AlarmDialog dialog, WidgetSettings.Location forLocation)
     {
         SuntimesRiseSetDataset sunData = new SuntimesRiseSetDataset(this, 0);
-        sunData.calculateData();
-
         SuntimesMoonData moonData = new SuntimesMoonData(this, 0);
-        moonData.calculate();
 
+        if (forLocation != null) {
+            sunData.setLocation(forLocation);
+            moonData.setLocation(forLocation);
+        }
+
+        sunData.calculateData();
+        moonData.calculate();
         dialog.setData(this, sunData, moonData);
+    }
+
+    protected void pickLocation(@NonNull AlarmClockItem item)
+    {
+        t_selectedItem = item.rowID;
+        // TODO
+        //t_selectedItem = null;
     }
 
     /**
@@ -421,8 +463,6 @@ public class AlarmClockActivity extends AppCompatActivity
         t_selectedItem = item.rowID;
         startActivityForResult(intent, REQUEST_RINGTONE);
     }
-
-    private Long t_selectedItem = null;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
@@ -820,10 +860,9 @@ public class AlarmClockActivity extends AppCompatActivity
                     @Override
                     public void onClick(View v)
                     {
-                        item.location = new WidgetSettings.Location("Phoenix", "33.4500", "-111.9400", "385");  // TODO: select location
-                        item.modified = true;
-                        onAlarmModified(item);
-                        updateLocationLabel(text_location, item);
+                        if (adapterListener != null) {
+                            adapterListener.onRequestLocation(item);
+                        }
                     }
                 });
             }
@@ -1050,6 +1089,7 @@ public class AlarmClockActivity extends AppCompatActivity
         {
             public void onRequestRingtone(AlarmClockItem forItem) {}
             public void onRequestSolarEvent(AlarmClockItem forItem) {}
+            public void onRequestLocation(AlarmClockItem forItem) {}
         }
     }
 
