@@ -715,7 +715,7 @@ public class AlarmClockActivity extends AppCompatActivity
             final TextView text_ringtone = (TextView) view.findViewById(R.id.text_ringtone);
             if (text_ringtone != null)
             {
-                final String none = "none";  // TODO: i18n none string
+                final String none = context.getString(R.string.alarmOption_ringtone_none);
                 text_ringtone.setText(item.ringtoneName != null ? item.ringtoneName : none);
                 text_ringtone.setOnClickListener(new View.OnClickListener()
                 {
