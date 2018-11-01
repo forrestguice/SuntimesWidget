@@ -532,6 +532,7 @@
     <string name="alarmOption_vibrate">Vibrate</string>                <!-- checkbox text -->
     <string name="alarmOption_repeat">Repeat</string>                <!-- checkbox text -->
     <string name="alarmOption_ringtone_none">No Alarm</string>          <!-- ringtone label (none) -->
+    <string name="alarmOption_solarevent_none">Clock Time</string>          <!-- ringtone label (none) -->
 
 
     <string name="deletealarm_dialog_title">Delete Alarm</string>        <!-- dialog title -->  <!-- TODO -->
