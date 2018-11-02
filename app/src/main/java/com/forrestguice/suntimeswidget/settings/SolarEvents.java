@@ -40,33 +40,40 @@ import java.util.Arrays;
 @SuppressWarnings("Convert2Diamond")
 public enum SolarEvents
 {
-    MORNING_ASTRONOMICAL("astronomical twilight", "morning astronomical twilight", R.attr.sunriseIcon), // 0
-    MORNING_NAUTICAL("nautical twilight", "morning nautical twilight", R.attr.sunriseIcon),             // 1
-    MORNING_BLUE8("blue hour", "morning blue hour", R.attr.sunriseIcon),                                // 2
-    MORNING_CIVIL("civil twilight", "morning civil twilight", R.attr.sunriseIcon),                      // 3
-    MORNING_BLUE4("blue hour", "morning blue hour", R.attr.sunriseIcon),                                // 4
-    SUNRISE("sunrise", "sunrise", R.attr.sunriseIcon),                                                  // 5
-    MORNING_GOLDEN("golden hour", "morning golden hour", R.attr.sunriseIcon),                           // 6
-    NOON("solar noon", "solar noon", R.attr.sunnoonIcon),                                               // 7
-    EVENING_GOLDEN("golden hour", "evening golden hour", R.attr.sunsetIcon),                            // 8
-    SUNSET("sunset", "sunset", R.attr.sunsetIcon),                                                      // 9
-    EVENING_BLUE4("blue hour", "evening blue hour", R.attr.sunsetIcon),                                 // 10
-    EVENING_CIVIL("civil twilight", "evening civil twilight", R.attr.sunsetIcon),                       // 11
-    EVENING_BLUE8("blue hour", "evening blue hour", R.attr.sunsetIcon),                                 // 12
-    EVENING_NAUTICAL("nautical twilight", "evening nautical twilight", R.attr.sunsetIcon),              // 13
-    EVENING_ASTRONOMICAL("astronomical twilight", "evening astronomical twilight", R.attr.sunsetIcon),  // 14
-    MOONRISE("moonrise", "moonrise", R.attr.moonriseIcon),                                              // 15
-    MOONSET("moonset", "mooonset", R.attr.moonsetIcon);                                                 // 16
+    MORNING_ASTRONOMICAL("astronomical twilight", "morning astronomical twilight", R.attr.sunriseIcon, 0, true), // 0
+    MORNING_NAUTICAL("nautical twilight", "morning nautical twilight", R.attr.sunriseIcon, 0, true),             // 1
+    MORNING_BLUE8("blue hour", "morning blue hour", R.attr.sunriseIcon, 0, true),                                // 2
+    MORNING_CIVIL("civil twilight", "morning civil twilight", R.attr.sunriseIcon, 0, true),                      // 3
+    MORNING_BLUE4("blue hour", "morning blue hour", R.attr.sunriseIcon, 0, true),                                // 4
+    SUNRISE("sunrise", "sunrise", R.attr.sunriseIcon, 0, true),                                                  // 5
+    MORNING_GOLDEN("golden hour", "morning golden hour", R.attr.sunriseIcon, 0, true),                           // 6
+    NOON("solar noon", "solar noon", R.attr.sunnoonIcon, 0, false),                                               // 7
+    EVENING_GOLDEN("golden hour", "evening golden hour", R.attr.sunsetIcon, 0, false),                            // 8
+    SUNSET("sunset", "sunset", R.attr.sunsetIcon, 0, false),                                                      // 9
+    EVENING_BLUE4("blue hour", "evening blue hour", R.attr.sunsetIcon, 0, false),                                 // 10
+    EVENING_CIVIL("civil twilight", "evening civil twilight", R.attr.sunsetIcon, 0, false),                       // 11
+    EVENING_BLUE8("blue hour", "evening blue hour", R.attr.sunsetIcon, 0, false),                                 // 12
+    EVENING_NAUTICAL("nautical twilight", "evening nautical twilight", R.attr.sunsetIcon, 0, false),              // 13
+    EVENING_ASTRONOMICAL("astronomical twilight", "evening astronomical twilight", R.attr.sunsetIcon, 0, false),  // 14
+    MOONRISE("moonrise", "moonrise", R.attr.moonriseIcon, 1, true),                                               // 15
+    MOONSET("moonset", "mooonset", R.attr.moonsetIcon, 1, false);                                                 // 16
                                                                                                         // .. R.array.solarevents_short/_long req same length/order
 
     private int iconResource;
     private String shortDisplayString, longDisplayString;
+    public int type;
+    public boolean rising;
 
-    private SolarEvents(String shortDisplayString, String longDisplayString, int iconResource)
+    public static final int TYPE_SUN = 0;
+    public static final int TYPE_MOON = 1;
+
+    private SolarEvents(String shortDisplayString, String longDisplayString, int iconResource, int type, boolean rising)
     {
         this.shortDisplayString = shortDisplayString;
         this.longDisplayString = longDisplayString;
         this.iconResource = iconResource;
+        this.type = type;
+        this.rising = rising;
     }
 
     public String toString()
@@ -77,6 +84,16 @@ public enum SolarEvents
     public int getIcon()
     {
         return iconResource;
+    }
+
+    public int getType()
+    {
+        return type;
+    }
+
+    public boolean isRising()
+    {
+        return rising;
     }
 
     public String getShortDisplayString()
@@ -234,5 +251,45 @@ public enum SolarEvents
         {
             return event + " " + (tomorrow ? "tomorrow" : "today");
         }
+    }
+
+    public WidgetSettings.TimeMode toTimeMode()
+    {
+        return toTimeMode(this);
+    }
+
+    /**
+     * toTimeMode
+     * @param event SolarEvents enum
+     * @return a TimeMode (or null if not applicable)
+     */
+    public static WidgetSettings.TimeMode toTimeMode( SolarEvents event )
+    {
+        switch (event)
+        {
+            case MORNING_ASTRONOMICAL:
+            case EVENING_ASTRONOMICAL: return WidgetSettings.TimeMode.ASTRONOMICAL;
+
+            case MORNING_NAUTICAL:
+            case EVENING_NAUTICAL: return WidgetSettings.TimeMode.NAUTICAL;
+
+            case MORNING_BLUE8:
+            case EVENING_BLUE8: return WidgetSettings.TimeMode.BLUE8;
+
+            case MORNING_BLUE4:
+            case EVENING_BLUE4: return WidgetSettings.TimeMode.BLUE4;
+
+            case MORNING_CIVIL:
+            case EVENING_CIVIL: return WidgetSettings.TimeMode.CIVIL;
+
+            case MORNING_GOLDEN:
+            case EVENING_GOLDEN: return WidgetSettings.TimeMode.GOLD;
+
+            case NOON: return WidgetSettings.TimeMode.NOON;
+
+            case SUNSET:
+            case SUNRISE: return WidgetSettings.TimeMode.OFFICIAL;
+        }
+        return null;
     }
 }
