@@ -26,16 +26,11 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.location.Location;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.AlarmClock;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
@@ -45,7 +40,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Log;
@@ -82,6 +76,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 
 public class AlarmClockActivity extends AppCompatActivity
@@ -101,6 +96,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
     private ActionBar actionBar;
     private ListView alarmList;
+    private View emptyView;
     private FloatingActionButton actionButton;
 
     private AlarmClockAdapter adapter = null;
@@ -274,9 +270,8 @@ public class AlarmClockActivity extends AppCompatActivity
         actionButton.setOnClickListener(onActionButtonClick);
 
         alarmList = (ListView)findViewById(R.id.alarmList);
-        View emptyView = findViewById(android.R.id.empty);
+        emptyView = findViewById(android.R.id.empty);
         emptyView.setOnClickListener(onEmptyViewClick);
-        alarmList.setEmptyView(emptyView);
     }
 
     /**
@@ -442,7 +437,7 @@ public class AlarmClockActivity extends AppCompatActivity
             updateTask = null;
         }
 
-        updateTask = new AlarmClockListTask(this, alarmList);
+        updateTask = new AlarmClockListTask(this, alarmList, emptyView);
         updateTask.setTaskListener(onUpdateFinished);
         updateTask.execute();
     }
@@ -728,30 +723,40 @@ public class AlarmClockActivity extends AppCompatActivity
     /**
      * AlarmClockListTask
      */
-    public static class AlarmClockListTask extends AsyncTask<String, Void, AlarmClockAdapter>
+    public static class AlarmClockListTask extends AsyncTask<String, AlarmClockItem, AlarmClockAdapter>
     {
         private AlarmClockDatabaseAdapter db;
         private WeakReference<Context> contextRef;
         private WeakReference<ListView> alarmListRef;
+        private WeakReference<View> emptyViewRef;
 
-        public AlarmClockListTask(Context context, ListView list)
+        public AlarmClockListTask(Context context, ListView list, View emptyView)
         {
             contextRef = new WeakReference<>(context);
-            db = new AlarmClockDatabaseAdapter(context.getApplicationContext());
             alarmListRef = new WeakReference<>(list);
+            emptyViewRef = new WeakReference<>(emptyView);
+            db = new AlarmClockDatabaseAdapter(context.getApplicationContext());
         }
+
+        @Override
+        protected void onPreExecute() {}
 
         @Override
         protected AlarmClockAdapter doInBackground(String... strings)
         {
             ArrayList<AlarmClockItem> items = new ArrayList<>();
+
             db.open();
             Cursor cursor = db.getAllAlarms(0, true);
             while (!cursor.isAfterLast())
             {
                 ContentValues entryValues = new ContentValues();
                 DatabaseUtils.cursorRowToContentValues(cursor, entryValues);
-                items.add(new AlarmClockItem(entryValues));
+
+                AlarmClockItem item = new AlarmClockItem(entryValues);
+                items.add(item);
+                publishProgress(item);
+
                 cursor.moveToNext();
             }
             db.close();
@@ -763,13 +768,21 @@ public class AlarmClockActivity extends AppCompatActivity
         }
 
         @Override
+        protected void onProgressUpdate(AlarmClockItem... item) {}
+
+        @Override
         protected void onPostExecute(AlarmClockAdapter result)
         {
             if (result != null)
             {
                 ListView alarmList = alarmListRef.get();
-                if (alarmList != null) {
+                if (alarmList != null)
+                {
                     alarmList.setAdapter(result);
+                    View emptyView = emptyViewRef.get();
+                    if (emptyView != null) {
+                        alarmList.setEmptyView(emptyView);
+                    }
                 }
 
                 if (taskListener != null) {
@@ -801,12 +814,24 @@ public class AlarmClockActivity extends AppCompatActivity
         private int iconAlarm, iconNotification, iconSoundEnabled, iconSoundDisabled;
         private int alarmEnabledColor, alarmDisabledColor;
 
-        @SuppressLint("ResourceType")
+        public AlarmClockAdapter(Context context)
+        {
+            super(context, R.layout.layout_listitem_alarmclock);
+            initAdapter(context);
+            this.items = new ArrayList<>();
+        }
+
         public AlarmClockAdapter(Context context, ArrayList<AlarmClockItem> items)
         {
             super(context, R.layout.layout_listitem_alarmclock, items);
-            this.context = context;
+            initAdapter(context);
             this.items = items;
+        }
+
+        @SuppressLint("ResourceType")
+        private void initAdapter(Context context)
+        {
+            this.context = context;
 
             int[] attrs = { R.attr.alarmCardEnabled, R.attr.alarmCardDisabled, R.attr.icActionAlarm, R.attr.icActionNotification, R.attr.icActionSoundEnabled, R.attr.icActionSoundDisabled};
             TypedArray a = context.obtainStyledAttributes(attrs);
@@ -817,6 +842,20 @@ public class AlarmClockActivity extends AppCompatActivity
             iconSoundEnabled = a.getResourceId(4, R.drawable.ic_action_soundenabled);
             iconSoundDisabled = a.getResourceId(5, R.drawable.ic_action_sounddisabled);
             a.recycle();
+        }
+
+        @Override
+        public void add(AlarmClockItem item)
+        {
+            this.items.add(item);
+            super.add(item);
+        }
+
+        @Override
+        public void addAll (AlarmClockItem... items)
+        {
+            this.items.addAll(0, Arrays.asList(items));
+            super.addAll(items);
         }
 
         /**
@@ -853,7 +892,7 @@ public class AlarmClockActivity extends AppCompatActivity
         {
             LayoutInflater inflater = LayoutInflater.from(context);
             final View view = inflater.inflate(R.layout.layout_listitem_alarmclock, parent, false);  // always re-inflate (ignore convertView)
-            final AlarmClockItem item = items.get(position);
+            final AlarmClockItem item = ((position >= 0 && position < items.size()) ? items.get(position) : null);
             if (item == null)
             {
                 Log.d("DEBUG", "position " + position + " is null!");
