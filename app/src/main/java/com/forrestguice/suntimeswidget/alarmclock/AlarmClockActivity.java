@@ -40,6 +40,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Log;
@@ -68,7 +69,10 @@ import com.forrestguice.suntimeswidget.AlarmDialog;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
@@ -351,6 +355,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 FragmentManager fragments = getSupportFragmentManager();
                 AlarmDialog dialog = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT);
                 item.event = dialog.getChoice();
+                updateAlarmTime(AlarmClockActivity.this, item);
                 task.execute(item);
                 t_selectedItem = null;
             }
@@ -754,6 +759,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 DatabaseUtils.cursorRowToContentValues(cursor, entryValues);
 
                 AlarmClockItem item = new AlarmClockItem(entryValues);
+                updateAlarmTime(contextRef.get(), item);
                 items.add(item);
                 publishProgress(item);
 
@@ -801,6 +807,56 @@ public class AlarmClockActivity extends AppCompatActivity
         {
             public void onFinished(AlarmClockAdapter result) {}
         }
+    }
+
+    /**
+     * updateAlarmTime
+     * @param item AlarmClockItem
+     */
+    protected static void updateAlarmTime(Context context, final AlarmClockItem item)
+    {
+        Calendar now = Calendar.getInstance();
+        Calendar eventTime;
+        if (item.location != null && item.event != null)
+        {
+            // Event Mode; set timestamp based on SolarEvent
+            switch (item.event.getType())
+            {
+                case SolarEvents.TYPE_MOON:
+                    SuntimesMoonData moonData = new SuntimesMoonData(context, 0);
+                    moonData.setLocation(item.location);
+                    moonData.calculate();
+                    eventTime = (item.event.isRising() ? moonData.moonriseCalendarToday() : moonData.moonsetCalendarToday());
+                    if (now.after(eventTime)) {
+                        eventTime = (item.event.isRising() ? moonData.moonriseCalendarTomorrow() : moonData.moonsetCalendarTomorrow());
+                    }
+                    break;
+
+                case SolarEvents.TYPE_SUN:
+                default:
+                    SuntimesRiseSetData sunData = new SuntimesRiseSetData(context, 0);
+                    sunData.setLocation(item.location);
+                    WidgetSettings.TimeMode timeMode = item.event.toTimeMode();
+                    sunData.setTimeMode(timeMode != null ? timeMode : WidgetSettings.TimeMode.OFFICIAL);
+                    sunData.calculate();
+                    eventTime = (item.event.isRising() ? sunData.sunriseCalendarToday() : sunData.sunsetCalendarToday());
+                    if (now.after(eventTime)) {
+                        eventTime = (item.event.isRising() ? sunData.sunriseCalendarOther() : sunData.sunsetCalendarOther());
+                    }
+                    break;
+            }
+
+        } else {
+            // Clock Mode; set timestamp from previous timestamp
+            eventTime = Calendar.getInstance();
+            eventTime.setTimeInMillis(item.timestamp);
+            while (now.after(eventTime)) {
+                eventTime.add(Calendar.DAY_OF_YEAR, 1);
+            }
+        }
+
+        item.timestamp = eventTime.getTimeInMillis();
+        item.modified = true;
     }
 
     /**
@@ -959,11 +1015,17 @@ public class AlarmClockActivity extends AppCompatActivity
             {
                 Calendar alarmTime = Calendar.getInstance();
                 alarmTime.setTimeInMillis(item.timestamp);
-                text_datetime.setText(utils.calendarTimeShortDisplayString(context, alarmTime).getValue());
 
-                //int colorEvent = Color.YELLOW;   // TODO: colors
-                //int colorClock = Color.BLUE;
-                //text_datetime.setTextColor(item.event == null ? colorClock : colorEvent);        // TODO: colorSelector
+                SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(context, alarmTime, false);
+                if (SuntimesUtils.is24())
+                {
+                    text_datetime.setText(timeText.getValue());
+
+                } else {
+                    String timeString = timeText.getValue() + " " + timeText.getSuffix();
+                    SpannableString timeDisplay = SuntimesUtils.createRelativeSpan(null, timeString, " " + timeText.getSuffix(), 0.40f);
+                    text_datetime.setText(timeDisplay);
+                }
 
                 text_datetime.setOnClickListener(new View.OnClickListener()
                 {
