@@ -34,6 +34,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.AlarmClock;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -45,6 +46,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -52,11 +55,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Switch;
@@ -280,11 +286,16 @@ public class AlarmClockActivity extends AppCompatActivity
         @Override
         public void onClick(View v)
         {
-            final AlarmDialog dialog = new AlarmDialog();
-            initEventDialog(dialog, null);
-            dialog.setChoice(SolarEvents.SUNRISE);
-            dialog.setOnAcceptedListener(onActionButtonAccepted);
-            dialog.show(getSupportFragmentManager(), DIALOGTAG_EVENT_FAB);
+            FragmentManager fragments = getSupportFragmentManager();
+            AlarmDialog eventDialog0 = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
+            if (eventDialog0 == null)
+            {
+                final AlarmDialog dialog = new AlarmDialog();
+                initEventDialog(dialog, null);
+                dialog.setChoice(SolarEvents.SUNRISE);
+                dialog.setOnAcceptedListener(onActionButtonAccepted);
+                dialog.show(getSupportFragmentManager(), DIALOGTAG_EVENT_FAB);
+            }
         }
     };
 
@@ -308,8 +319,13 @@ public class AlarmClockActivity extends AppCompatActivity
             alarm.label = "";
             alarm.location = WidgetSettings.loadLocationPref(AlarmClockActivity.this, 0);
             alarm.enabled = true;
-            alarm.vibrate = true;
-            alarm.repeating = true;
+            alarm.vibrate = false;
+            alarm.repeating = false;
+
+            Uri ringtoneUri = getDefaultRingtoneUri();
+            Ringtone ringtone = RingtoneManager.getRingtone(AlarmClockActivity.this, ringtoneUri);
+            alarm.ringtoneName = ringtone.getTitle(AlarmClockActivity.this);
+            alarm.ringtoneURI = ringtoneUri.toString();
 
             FragmentManager fragments = getSupportFragmentManager();
             AlarmDialog dialog = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
@@ -319,21 +335,20 @@ public class AlarmClockActivity extends AppCompatActivity
         }
     };
 
+    public Uri getDefaultRingtoneUri()
+    {
+        return RingtoneManager.getActualDefaultRingtoneUri(AlarmClockActivity.this, RingtoneManager.TYPE_ALARM);
+    }
+
+    /**
+     * onSolarEventChanged
+     */
     private DialogInterface.OnClickListener onSolarEventChanged = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface d, int which)
         {
             AlarmClockUpdateTask task = new AlarmClockUpdateTask(AlarmClockActivity.this);
-            task.setTaskListener(new AlarmClockUpdateTask.AlarmClockUpdateTaskListener()
-            {
-                @Override
-                public void onFinished(Boolean result)
-                {
-                    if (result) {
-                        adapter.notifyDataSetChanged();
-                    }
-                }
-            });
+            task.setTaskListener(onUpdateItem);
 
             AlarmClockItem item = adapter.findItem(t_selectedItem);
             if (item != null)
@@ -378,6 +393,12 @@ public class AlarmClockActivity extends AppCompatActivity
     private AlarmClockAdapter.AlarmClockAdapterListener onAdapterAction = new AlarmClockAdapter.AlarmClockAdapterListener()
     {
         @Override
+        public void onRequestLabel(AlarmClockItem forItem)
+        {
+            pickLabel(forItem);
+        }
+
+        @Override
         public void onRequestRingtone(AlarmClockItem forItem)
         {
             pickRingtone(forItem);
@@ -393,6 +414,20 @@ public class AlarmClockActivity extends AppCompatActivity
         public void onRequestLocation(AlarmClockItem forItem)
         {
             pickLocation(forItem);
+        }
+    };
+
+    /**
+     * onUpdateItem
+     */
+    private AlarmClockUpdateTask.AlarmClockUpdateTaskListener onUpdateItem = new AlarmClockUpdateTask.AlarmClockUpdateTaskListener()
+    {
+        @Override
+        public void onFinished(Boolean result)
+        {
+            if (result && adapter != null) {
+                adapter.notifyDataSetChanged();
+            }
         }
     };
 
@@ -451,6 +486,51 @@ public class AlarmClockActivity extends AppCompatActivity
     }
 
     /**
+     * pickLabel
+     * @param item apply selected label to supplied AlarmClockItem
+     */
+    protected void pickLabel(@NonNull AlarmClockItem item)
+    {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle(getString(R.string.alarmlabel_dialog_title));
+
+        final EditText labelEdit = new EditText(this);
+        labelEdit.setText(item.label);
+        labelEdit.selectAll();
+        labelEdit.requestFocus();
+        dialog.setView(labelEdit);
+
+        dialog.setPositiveButton(getString(R.string.alarmlabel_dialog_ok), new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int whichButton)
+            {
+                AlarmClockItem item = adapter.findItem(t_selectedItem);
+                t_selectedItem = null;
+
+                if (item != null)
+                {
+                    item.label = labelEdit.getText().toString();
+                    AlarmClockUpdateTask task = new AlarmClockUpdateTask(AlarmClockActivity.this);
+                    task.setTaskListener(onUpdateItem);
+                    task.execute(item);
+                }
+            }
+        });
+        dialog.setNegativeButton(getString(R.string.alarmlabel_dialog_cancel), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {}
+        });
+
+        final AlertDialog alertDialog = dialog.create();
+        Window w = alertDialog.getWindow();
+        if (w != null) {
+            w.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
+
+        t_selectedItem = item.rowID;
+        alertDialog.show();
+    }
+
+    /**
      * pickRingtone
      * @param item apply selected ringtone to supplied AlarmClockItem
      */
@@ -458,7 +538,7 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, RingtoneManager.getActualDefaultRingtoneUri(AlarmClockActivity.this, RingtoneManager.TYPE_ALARM));
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, getDefaultRingtoneUri());
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (item.ringtoneURI != null ? Uri.parse(item.ringtoneURI) : null));
         t_selectedItem = item.rowID;
         startActivityForResult(intent, REQUEST_RINGTONE);
@@ -483,16 +563,7 @@ public class AlarmClockActivity extends AppCompatActivity
                     Log.d("DEBUG", "uri: " + item.ringtoneURI + ", title: " + ringtoneName);
 
                     AlarmClockUpdateTask task = new AlarmClockUpdateTask(this);
-                    task.setTaskListener(new AlarmClockUpdateTask.AlarmClockUpdateTaskListener()
-                    {
-                        @Override
-                        public void onFinished(Boolean result)
-                        {
-                            if (result) {
-                                adapter.notifyDataSetChanged();
-                            }
-                        }
-                    });
+                    task.setTaskListener(onUpdateItem);
                     task.execute(item);
                 }
                 t_selectedItem = null;
@@ -727,7 +798,7 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         private Context context;
         private ArrayList<AlarmClockItem> items;
-
+        private int iconAlarm, iconNotification, iconSoundEnabled, iconSoundDisabled;
         private int alarmEnabledColor, alarmDisabledColor;
 
         @SuppressLint("ResourceType")
@@ -737,10 +808,14 @@ public class AlarmClockActivity extends AppCompatActivity
             this.context = context;
             this.items = items;
 
-            int[] attrs = { R.attr.alarmCardEnabled, R.attr.alarmCardDisabled};
+            int[] attrs = { R.attr.alarmCardEnabled, R.attr.alarmCardDisabled, R.attr.icActionAlarm, R.attr.icActionNotification, R.attr.icActionSoundEnabled, R.attr.icActionSoundDisabled};
             TypedArray a = context.obtainStyledAttributes(attrs);
             alarmEnabledColor = ContextCompat.getColor(context, a.getResourceId(0, R.color.alarm_enabled_dark));
             alarmDisabledColor = ContextCompat.getColor(context, a.getResourceId(1, R.color.alarm_disabled_dark));
+            iconAlarm = a.getResourceId(2, R.drawable.ic_action_alarms);
+            iconNotification = a.getResourceId(3, R.drawable.ic_action_notification);
+            iconSoundEnabled = a.getResourceId(4, R.drawable.ic_action_soundenabled);
+            iconSoundDisabled = a.getResourceId(5, R.drawable.ic_action_sounddisabled);
             a.recycle();
         }
 
@@ -780,7 +855,11 @@ public class AlarmClockActivity extends AppCompatActivity
             final View view = inflater.inflate(R.layout.layout_listitem_alarmclock, parent, false);  // always re-inflate (ignore convertView)
             final AlarmClockItem item = items.get(position);
             if (item == null)
+            {
                 Log.d("DEBUG", "position " + position + " is null!");
+                view.setVisibility(View.GONE);
+                return view;
+            }
 
             //ImageView icon = (ImageView) view.findViewById(android.R.id.icon1);
             //icon.setImageResource(item.icon);
@@ -791,18 +870,30 @@ public class AlarmClockActivity extends AppCompatActivity
                 card.setBackgroundColor(item.enabled ? alarmEnabledColor : alarmDisabledColor);
             }
 
+            final ImageButton typeButton = (ImageButton) view.findViewById(R.id.type_menu);
+            typeButton.setImageDrawable(ContextCompat.getDrawable(context, (item.type == AlarmClockItem.AlarmType.ALARM ? iconAlarm : iconNotification)));
+            typeButton.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    showAlarmTypeMenu(item, typeButton, view);
+                }
+            });
+
             final TextView text = (TextView) view.findViewById(android.R.id.text1);
             if (text != null)
             {
-                text.setText(item.label);
+                String emptyLabel = ((item.type == AlarmClockItem.AlarmType.ALARM) ? context.getString(R.string.alarmMode_alarm) : context.getString(R.string.alarmMode_notification));
+                text.setText((item.label == null || item.label.isEmpty()) ? emptyLabel : item.label);
                 text.setOnClickListener(new View.OnClickListener()
                 {
                     @Override
                     public void onClick(View v)
                     {
-                        item.label = "todo";  // TODO: select label
-                        onAlarmModified(item);
-                        text.setText(item.label);
+                        if (adapterListener != null) {
+                            adapterListener.onRequestLabel(item);
+                        }
                     }
                 });
             }
@@ -854,7 +945,7 @@ public class AlarmClockActivity extends AppCompatActivity
             final TextView text_location = (TextView) view.findViewById(R.id.text_location_label);
             if (text_location != null)
             {
-                updateLocationLabel(text_location, item);
+                AlarmDialog.updateLocationLabel(context, text_location, item.location);
                 text_location.setOnClickListener(new View.OnClickListener()
                 {
                     @Override
@@ -884,8 +975,16 @@ public class AlarmClockActivity extends AppCompatActivity
             final TextView text_ringtone = (TextView) view.findViewById(R.id.text_ringtone);
             if (text_ringtone != null)
             {
+                int iconID = item.ringtoneName != null ? iconSoundEnabled : iconSoundDisabled;
+                ImageSpan icon = SuntimesUtils.createImageSpan(context, iconID, 28, 28, 0);
+
                 final String none = context.getString(R.string.alarmOption_ringtone_none);
-                text_ringtone.setText(item.ringtoneName != null ? item.ringtoneName : none);
+                String ringtoneName = (item.ringtoneName != null ? item.ringtoneName : none);
+
+                String ringtoneLabel = context.getString(R.string.alarmOption_ringtone_label, ringtoneName);
+                SpannableStringBuilder ringtoneDisplay = SuntimesUtils.createSpan(context, ringtoneLabel, "[icon]", icon);
+
+                text_ringtone.setText(ringtoneDisplay);
                 text_ringtone.setOnClickListener(new View.OnClickListener()
                 {
                     @Override
@@ -946,26 +1045,6 @@ public class AlarmClockActivity extends AppCompatActivity
             return view;
         }
 
-        private void updateLocationLabel(TextView text_location, AlarmClockItem item)
-        {
-            if (text_location != null)
-            {
-                if (item.location != null)
-                {
-                    String coordString = context.getString(R.string.location_format_latlon, item.location.getLatitude(), item.location.getLongitude());
-                    String labelString = item.location.getLabel();
-                    String displayString = labelString + "\n" + coordString;
-                    SpannableString displayText = SuntimesUtils.createBoldSpan(null, displayString, labelString);
-                    displayText = SuntimesUtils.createRelativeSpan(displayText, displayString, coordString, 0.75f);
-                    text_location.setText(displayText);
-                    text_location.setVisibility(View.VISIBLE);
-
-                } else {
-                    text_location.setVisibility(View.INVISIBLE);
-                }
-            }
-        }
-
         /**
          * @param item associated AlarmClockItem
          * @param buttonView button that triggered menu
@@ -991,6 +1070,44 @@ public class AlarmClockActivity extends AppCompatActivity
                         default:
                             return false;
                     }
+                }
+            });
+
+            SuntimesUtils.forceActionBarIcons(menu.getMenu());
+            menu.show();
+        }
+
+        /**
+         * showAlarmTypeMenu
+         * @param item AlarmClockItem
+         * @param buttonView button that triggered menu
+         * @param itemView view associated with item
+         */
+        protected void showAlarmTypeMenu(final AlarmClockItem item, final View buttonView, final View itemView)
+        {
+            PopupMenu menu = new PopupMenu(context, buttonView);
+            MenuInflater inflater = menu.getMenuInflater();
+            inflater.inflate(R.menu.alarmtype, menu.getMenu());
+
+            menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+            {
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem)
+                {
+                    switch (menuItem.getItemId())
+                    {
+                        case R.id.alarmTypeNotification:
+                            item.type = AlarmClockItem.AlarmType.NOTIFICATION;
+                            break;
+
+                        case R.id.alarmTypeAlarm:
+                        default:
+                            item.type = AlarmClockItem.AlarmType.ALARM;
+                            break;
+                    }
+                    onAlarmModified(item);
+                    notifyDataSetChanged();
+                    return true;
                 }
             });
 
@@ -1087,6 +1204,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
         public static abstract class AlarmClockAdapterListener
         {
+            public void onRequestLabel(AlarmClockItem forItem) {}
             public void onRequestRingtone(AlarmClockItem forItem) {}
             public void onRequestSolarEvent(AlarmClockItem forItem) {}
             public void onRequestLocation(AlarmClockItem forItem) {}
