@@ -31,6 +31,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.AlarmClock;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
@@ -86,6 +87,7 @@ import java.util.Calendar;
 public class AlarmClockActivity extends AppCompatActivity
 {
     public static final String EXTRA_SHOWHOME = "showHome";
+    public static final String EXTRA_SOLAREVENT = "solarevent";
     public static final int REQUEST_RINGTONE = 10;
 
     private static final String DIALOGTAG_EVENT_FAB = "eventfab";
@@ -135,6 +137,34 @@ public class AlarmClockActivity extends AppCompatActivity
 
         setContentView(R.layout.layout_activity_alarmclock);
         initViews(this);
+        handleIntent(getIntent());
+    }
+
+    @Override
+    public void onNewIntent( Intent intent )
+    {
+        super.onNewIntent(intent);
+        handleIntent(intent);
+    }
+
+    protected void handleIntent(Intent intent)
+    {
+        String param_action = intent.getAction();
+        intent.setAction(null);
+
+        if (param_action != null)
+        {
+            if (param_action.equals(AlarmClock.ACTION_SET_ALARM))
+            {
+                String param_label = intent.getStringExtra(AlarmClock.EXTRA_MESSAGE);
+                int param_hour = intent.getIntExtra(AlarmClock.EXTRA_HOUR, -1);
+                int param_minute = intent.getIntExtra(AlarmClock.EXTRA_MINUTES, -1);
+                SolarEvents param_event = SolarEvents.valueOf(intent.getStringExtra(AlarmClockActivity.EXTRA_SOLAREVENT), null);
+
+                Log.i("AlarmClockActivity", "ACTION_SET_ALARM :: " + param_label + ", " + param_hour + ", " + param_minute + ", " + param_event);
+                addAlarm(param_label, param_event, param_hour, param_minute);
+            }
+        }
     }
 
     /**
@@ -302,37 +332,45 @@ public class AlarmClockActivity extends AppCompatActivity
         @Override
         public void onClick(DialogInterface d, int which)
         {
-            AlarmClockUpdateTask task = new AlarmClockUpdateTask(AlarmClockActivity.this, true);
-            task.setTaskListener(new AlarmClockUpdateTask.AlarmClockUpdateTaskListener()
-            {
-                @Override
-                public void onFinished(Boolean result)
-                {
-                    if (result) {
-                        updateViews(AlarmClockActivity.this);
-                    }
-                }
-            });
-
-            final AlarmClockItem alarm = new AlarmClockItem();
-            alarm.label = "";
-            alarm.location = WidgetSettings.loadLocationPref(AlarmClockActivity.this, 0);
-            alarm.enabled = true;
-            alarm.vibrate = false;
-            alarm.repeating = false;
-
-            Uri ringtoneUri = getDefaultRingtoneUri();
-            Ringtone ringtone = RingtoneManager.getRingtone(AlarmClockActivity.this, ringtoneUri);
-            alarm.ringtoneName = ringtone.getTitle(AlarmClockActivity.this);
-            alarm.ringtoneURI = ringtoneUri.toString();
-
-            FragmentManager fragments = getSupportFragmentManager();
-            AlarmDialog dialog = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
-            alarm.event = dialog.getChoice();
-
-            task.execute(alarm);
+            addAlarm();
         }
     };
+
+    protected void addAlarm()
+    {
+        FragmentManager fragments = getSupportFragmentManager();
+        AlarmDialog dialog = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
+        addAlarm("", dialog.getChoice(), -1, -1);
+    }
+    protected void addAlarm(String label, SolarEvents event, int hour, int minute)
+    {
+        AlarmClockUpdateTask task = new AlarmClockUpdateTask(AlarmClockActivity.this, true);
+        task.setTaskListener(new AlarmClockUpdateTask.AlarmClockUpdateTaskListener()
+        {
+            @Override
+            public void onFinished(Boolean result)
+            {
+                if (result) {
+                    updateViews(AlarmClockActivity.this);
+                }
+            }
+        });
+
+        final AlarmClockItem alarm = new AlarmClockItem();
+        alarm.label = label;
+        alarm.location = WidgetSettings.loadLocationPref(AlarmClockActivity.this, 0);
+        alarm.enabled = true;
+        alarm.vibrate = false;
+        alarm.repeating = false;
+        alarm.event = event;
+
+        Uri ringtoneUri = getDefaultRingtoneUri();
+        Ringtone ringtone = RingtoneManager.getRingtone(AlarmClockActivity.this, ringtoneUri);
+        alarm.ringtoneName = ringtone.getTitle(AlarmClockActivity.this);
+        alarm.ringtoneURI = ringtoneUri.toString();
+
+        task.execute(alarm);
+    }
 
     public Uri getDefaultRingtoneUri()
     {
