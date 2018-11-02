@@ -68,6 +68,9 @@
         <item name="icActionDst">@drawable/ic_weather_sunny_light</item>
         <item name="icActionAlarm">@drawable/ic_action_alarms_light</item>
         <item name="icActionCalendar">@drawable/ic_calendar_light</item>
+        <item name="icActionNotification">@drawable/ic_action_notification_light</item>
+        <item name="icActionSoundEnabled">@drawable/ic_action_soundenabled_light</item>
+        <item name="icActionSoundDisabled">@drawable/ic_action_sounddisabled_light</item>
         <item name="icActionAbout">@drawable/ic_action_about_light</item>
         <item name="icActionWarning">@drawable/ic_action_warning_light</item>
         <item name="icActionError">@drawable/ic_action_error_light</item>
@@ -155,6 +158,9 @@
         <item name="icActionDst">@drawable/ic_weather_sunny</item>
         <item name="icActionAlarm">@drawable/ic_action_alarms</item>
         <item name="icActionCalendar">@drawable/ic_calendar</item>
+        <item name="icActionNotification">@drawable/ic_action_notification</item>
+        <item name="icActionSoundEnabled">@drawable/ic_action_soundenabled</item>
+        <item name="icActionSoundDisabled">@drawable/ic_action_sounddisabled</item>
         <item name="icActionAbout">@drawable/ic_action_about</item>
         <item name="icActionWarning">@drawable/ic_action_warning</item>
         <item name="icActionError">@drawable/ic_action_error</item>
