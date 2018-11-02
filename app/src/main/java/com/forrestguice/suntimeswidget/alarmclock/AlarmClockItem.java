@@ -68,15 +68,7 @@ public class AlarmClockItem
         } else location = null;
 
         String eventString = alarm.getAsString(AlarmClockDatabaseAdapter.KEY_ALARM_SOLAREVENT);
-        if (eventString != null)
-        {
-            try {
-                event = SolarEvents.valueOf(eventString);
-            } catch (IllegalArgumentException e) {
-                Log.w("AlarmClockItem", "Failed to load SolarEvent '" + eventString);
-                event = null;
-            }
-        }
+        event = SolarEvents.valueOf(eventString, null);
 
         vibrate = (alarm.getAsInteger(AlarmClockDatabaseAdapter.KEY_ALARM_VIBRATE) == 1);
         ringtoneName = alarm.getAsString(AlarmClockDatabaseAdapter.KEY_ALARM_RINGTONE_NAME);

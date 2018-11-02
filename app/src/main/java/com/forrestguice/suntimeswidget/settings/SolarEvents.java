@@ -135,6 +135,22 @@ public enum SolarEvents
         }
     }
 
+    public static SolarEvents valueOf(String value, SolarEvents defaultType)
+    {
+        SolarEvents retValue = defaultType;
+        if (value != null)
+        {
+            try {
+                retValue = SolarEvents.valueOf(value);
+
+            } catch (IllegalArgumentException e) {
+                Log.w("SolarEvents", "valueOf :: failed to load '" + value);
+                retValue = defaultType;
+            }
+        }
+        return retValue;
+    }
+
     public static SolarEventsAdapter createAdapter(Context context)
     {
         ArrayList<SolarEvents> choices = new ArrayList<SolarEvents>();
