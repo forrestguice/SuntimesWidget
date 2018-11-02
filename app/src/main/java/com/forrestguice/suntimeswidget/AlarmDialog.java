@@ -37,6 +37,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 
+import android.text.SpannableString;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -242,6 +243,7 @@ public class AlarmDialog extends DialogFragment
     private Spinner spinner_scheduleMode;
     private TextView txt_note;
     private ImageView icon_note;
+    private TextView txt_location;
 
     protected void initViews( final Context context, View dialogContent )
     {
@@ -256,6 +258,11 @@ public class AlarmDialog extends DialogFragment
         txt_note = (TextView) dialogContent.findViewById(R.id.appwidget_schedalarm_note);
         txt_note.setText("");
 
+        txt_location = (TextView) dialogContent.findViewById(R.id.appwidget_schedalarm_location);
+        if (txt_location != null) {
+            txt_location.setText("");
+        }
+
         spinner_scheduleMode = (Spinner) dialogContent.findViewById(R.id.appwidget_schedalarm_mode);
         if (adapter != null)
         {
@@ -267,8 +274,9 @@ public class AlarmDialog extends DialogFragment
                 {
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
                     {
-                        choice = (SolarEvents)spinner_scheduleMode.getSelectedItem();
+                        updateLocationLabel(context, txt_location, dataset.location());
 
+                        choice = (SolarEvents)spinner_scheduleMode.getSelectedItem();
                         Calendar now0 = dataset.nowThen(dataset.calendar());
                         Calendar alarmCalendar = getCalendarForAlarmChoice(choice, now0);
                         if (alarmCalendar != null)
@@ -599,6 +607,27 @@ public class AlarmDialog extends DialogFragment
                 context.startActivity(alarmsIntent);
             }
         }
+    }
+
+    public static boolean updateLocationLabel(Context context, TextView text_location, WidgetSettings.Location location)
+    {
+        if (text_location != null)
+        {
+            if (location != null)
+            {
+                String coordString = context.getString(R.string.location_format_latlon, location.getLatitude(), location.getLongitude());
+                String labelString = location.getLabel();
+                String displayString = labelString + "\n" + coordString;
+                SpannableString displayText = SuntimesUtils.createBoldSpan(null, displayString, labelString);
+                displayText = SuntimesUtils.createRelativeSpan(displayText, displayString, coordString, 0.75f);
+                text_location.setText(displayText);
+                return true;
+
+            } else {
+                text_location.setText("");
+                return false;
+            }
+        } else return false;
     }
 
 }
