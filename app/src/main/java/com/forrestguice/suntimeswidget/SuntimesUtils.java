@@ -195,6 +195,11 @@ public class SuntimesUtils
         return initialized;
     }
 
+    public static boolean is24()
+    {
+        return is24;
+    }
+
     /**
      * CardinalDirection
      */
