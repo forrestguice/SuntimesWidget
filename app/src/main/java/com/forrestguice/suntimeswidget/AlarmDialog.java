@@ -49,6 +49,7 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
@@ -558,7 +559,7 @@ public class AlarmDialog extends DialogFragment
                 {
                     DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
                     String alarmLabel = context.getString(R.string.schedalarm_labelformat, choice.getShortDisplayString(), dateFormat.format(calendar.getTime()));
-                    AlarmDialog.scheduleAlarm(getActivity(), alarmLabel, calendar);
+                    AlarmDialog.scheduleAlarm(getActivity(), alarmLabel, calendar, choice);
 
                 } else {
                     String alarmErrorTxt = getString(R.string.schedalarm_dialog_error) + "\n" + getString(R.string.schedalarm_dialog_note2, choice.getLongDisplayString());
@@ -569,7 +570,7 @@ public class AlarmDialog extends DialogFragment
         }
     };
 
-    public static void scheduleAlarm(Activity context, String label, Calendar calendar)
+    public static void scheduleAlarm(Activity context, String label, Calendar calendar, SolarEvents event)
     {
         if (calendar == null)
             return;
@@ -584,6 +585,7 @@ public class AlarmDialog extends DialogFragment
         alarmIntent.putExtra(AlarmClock.EXTRA_MESSAGE, label);
         alarmIntent.putExtra(AlarmClock.EXTRA_HOUR, hour);
         alarmIntent.putExtra(AlarmClock.EXTRA_MINUTES, minutes);
+        alarmIntent.putExtra(AlarmClockActivity.EXTRA_SOLAREVENT, event.name());
 
         if (alarmIntent.resolveActivity(context.getPackageManager()) != null)
         {
