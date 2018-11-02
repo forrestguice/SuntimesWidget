@@ -527,13 +527,16 @@
     <string name="configLabel_alarmClock">Alarms</string>            <!-- group title -->  <!-- TODO -->
     <string name="configLabel_alarmClock_emptyMsg">No Alarms</string>     <!-- a label that is displayed in place of an empty listview -->  <!-- TODO -->
     <string name="configAction_deleteAlarm">Delete</string>               <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_clearAlarms">Clear</string>                <!-- action button / menu item -->
+    <string name="configAction_clearAlarms">Clear</string>                <!-- action button / menu item -->  <!-- TODO -->
 
-    <string name="alarmOption_vibrate">Vibrate</string>                <!-- checkbox text -->
-    <string name="alarmOption_repeat">Repeat</string>                <!-- checkbox text -->
-    <string name="alarmOption_ringtone_none">No Alarm</string>          <!-- ringtone label (none) -->
-    <string name="alarmOption_solarevent_none">Clock Time</string>          <!-- ringtone label (none) -->
+    <string name="alarmMode_alarm">Alarm</string>                <!-- alarm type (setting) -->  <!-- TODO -->
+    <string name="alarmMode_notification">Notification</string>                <!-- alarm type (setting) -->  <!-- TODO -->
 
+    <string name="alarmOption_vibrate">Vibrate</string>                <!-- checkbox text -->  <!-- TODO -->
+    <string name="alarmOption_repeat">Repeat</string>                <!-- checkbox text -->  <!-- TODO -->
+    <string name="alarmOption_ringtone_none">No Sound</string>          <!-- ringtone label (none) -->  <!-- TODO -->
+    <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->  <!-- TODO -->
+    <string name="alarmOption_solarevent_none">Clock Time</string>          <!-- ringtone label (none) -->  <!-- TODO -->
 
     <string name="deletealarm_dialog_title">Delete Alarm</string>        <!-- dialog title -->  <!-- TODO -->
     <string name="deletealarm_dialog_message">Are you sure you want to delete <xliff:g id="alarm">%1$s</xliff:g>?</string>   <!-- dialog msg --> <!-- TODO -->
@@ -546,6 +549,10 @@
     <string name="clearalarms_dialog_ok">Clear</string>        <!-- button --> <!-- TODO -->
     <string name="clearalarms_dialog_cancel">Cancel</string>    <!-- button --> <!-- TODO -->
     <string name="clearalarms_toast_success">Alarms cleared.</string> <!-- toast msg --> <!-- TODO -->
+
+    <string name="alarmlabel_dialog_title">Label</string>        <!-- dialog title -->  <!-- TODO -->
+    <string name="alarmlabel_dialog_ok">Apply</string>        <!-- button --> <!-- TODO -->
+    <string name="alarmlabel_dialog_cancel">Cancel</string>    <!-- button --> <!-- TODO -->
 
     <!--
          APP SETTINGS
