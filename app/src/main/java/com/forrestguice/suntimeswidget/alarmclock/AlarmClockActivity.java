@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.annotation.SuppressLint;
+import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -64,6 +65,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.AboutDialog;
@@ -171,6 +173,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 }
 
                 SolarEvents param_event = SolarEvents.valueOf(intent.getStringExtra(AlarmClockActivity.EXTRA_SOLAREVENT), null);
+                param_event = null;  // test clock mode :TODO remove line
 
                 Log.i("AlarmClockActivity", "ACTION_SET_ALARM :: " + param_label + ", " + param_hour + ", " + param_minute + ", " + param_event);
                 addAlarm(param_label, param_event, param_hour, param_minute, param_vibrate, param_ringtoneUri);
@@ -379,13 +382,17 @@ public class AlarmClockActivity extends AppCompatActivity
         });
 
         final AlarmClockItem alarm = new AlarmClockItem();
+        alarm.enabled = getDefaultNewAlarmsEnabled();
         alarm.label = label;
+
+        alarm.hour = hour;
+        alarm.minute = minute;
         alarm.event = event;
         alarm.location = WidgetSettings.loadLocationPref(AlarmClockActivity.this, 0);
-        alarm.enabled = true;
-        alarm.repeating = false;
-        alarm.vibrate = vibrate;
 
+        alarm.repeating = false;
+
+        alarm.vibrate = vibrate;
         alarm.ringtoneURI = (ringtoneUri != null ? ringtoneUri.toString() : null);
         if (alarm.ringtoneURI != null)
         {
@@ -394,7 +401,13 @@ public class AlarmClockActivity extends AppCompatActivity
             ringtone.stop();
         }
 
+        alarm.modified = true;
         task.execute(alarm);
+    }
+
+    public boolean getDefaultNewAlarmsEnabled()
+    {
+        return true;
     }
 
     public Uri getDefaultRingtoneUri()
@@ -418,14 +431,16 @@ public class AlarmClockActivity extends AppCompatActivity
             task.setTaskListener(onUpdateItem);
 
             AlarmClockItem item = adapter.findItem(t_selectedItem);
+            t_selectedItem = null;
+
             if (item != null)
             {
                 FragmentManager fragments = getSupportFragmentManager();
                 AlarmDialog dialog = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT);
                 item.event = dialog.getChoice();
+                item.modified = true;
                 updateAlarmTime(AlarmClockActivity.this, item);
                 task.execute(item);
-                t_selectedItem = null;
             }
         }
     };
@@ -482,6 +497,12 @@ public class AlarmClockActivity extends AppCompatActivity
         public void onRequestLocation(AlarmClockItem forItem)
         {
             pickLocation(forItem);
+        }
+
+        @Override
+        public void onRequestTime(AlarmClockItem forItem)
+        {
+            pickTime(forItem);
         }
     };
 
@@ -554,6 +575,56 @@ public class AlarmClockActivity extends AppCompatActivity
     }
 
     /**
+     * onPickTime
+     */
+    private TimePickerDialog.OnTimeSetListener onPickTime = new TimePickerDialog.OnTimeSetListener()
+    {
+        @Override
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute)
+        {
+            AlarmClockItem item = adapter.findItem(t_selectedItem);
+            t_selectedItem = null;
+
+            if (item != null)
+            {
+                item.event = null;
+                item.hour = hourOfDay;
+                item.minute = minute;
+                item.modified = true;
+                updateAlarmTime(AlarmClockActivity.this, item);
+
+                AlarmClockUpdateTask task = new AlarmClockUpdateTask(AlarmClockActivity.this);
+                task.setTaskListener(onUpdateItem);
+                task.execute(item);
+            }
+        }
+    };
+
+    /**
+     * pickTime
+     * @param item apply selected time to supplied AlarmClockItem
+     */
+    protected void pickTime(@NonNull AlarmClockItem item)
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(item.timestamp);
+
+        int hour = item.hour;
+        if (hour < 0 || hour >= 24) {
+            hour = calendar.get(Calendar.HOUR_OF_DAY);
+        }
+
+        int minute = item.minute;
+        if (minute < 0 || minute >= 60) {
+            minute = calendar.get(Calendar.MINUTE);
+        }
+
+        TimePickerDialog dialog = new TimePickerDialog(AlarmClockActivity.this, onPickTime, hour, minute, SuntimesUtils.is24());
+        t_selectedItem = item.rowID;
+        dialog.show();
+    }
+
+    /**
      * pickLabel
      * @param item apply selected label to supplied AlarmClockItem
      */
@@ -578,6 +649,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 if (item != null)
                 {
                     item.label = labelEdit.getText().toString();
+                    item.modified = true;
                     AlarmClockUpdateTask task = new AlarmClockUpdateTask(AlarmClockActivity.this);
                     task.setTaskListener(onUpdateItem);
                     task.execute(item);
@@ -628,6 +700,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
                     item.ringtoneName = (uri != null ? ringtoneName : null);
                     item.ringtoneURI = (uri != null ? uri.toString() : null);
+                    item.modified = true;
                     Log.d("DEBUG", "uri: " + item.ringtoneURI + ", title: " + ringtoneName);
 
                     AlarmClockUpdateTask task = new AlarmClockUpdateTask(this);
@@ -913,11 +986,18 @@ public class AlarmClockActivity extends AppCompatActivity
                     }
                     break;
             }
+            item.hour = eventTime.get(Calendar.HOUR_OF_DAY);
+            item.minute = eventTime.get(Calendar.MINUTE);
 
         } else {
-            // Clock Mode; set timestamp from previous timestamp
+            // Clock Mode; set timestamp from hour and minute
             eventTime = Calendar.getInstance();
-            eventTime.setTimeInMillis(item.timestamp);
+            if (item.hour >= 0 && item.hour < 24) {
+                eventTime.set(Calendar.HOUR_OF_DAY, item.hour);
+            }
+            if (item.minute >= 0 && item.minute < 60) {
+                eventTime.set(Calendar.MINUTE, item.minute);
+            }
             while (now.after(eventTime)) {
                 eventTime.add(Calendar.DAY_OF_YEAR, 1);
             }
@@ -1100,12 +1180,8 @@ public class AlarmClockActivity extends AppCompatActivity
                     @Override
                     public void onClick(View v)
                     {
-                        if (item.event == null)
-                        {
-                            Calendar c = Calendar.getInstance();
-                            c.add(Calendar.HOUR_OF_DAY, 1);
-                            item.timestamp = c.getTimeInMillis();        // TODO: select clock time
-                            onAlarmModified(item);
+                        if (adapterListener != null) {
+                            adapterListener.onRequestTime(item);
                         }
                     }
                 });
@@ -1377,6 +1453,7 @@ public class AlarmClockActivity extends AppCompatActivity
             public void onRequestRingtone(AlarmClockItem forItem) {}
             public void onRequestSolarEvent(AlarmClockItem forItem) {}
             public void onRequestLocation(AlarmClockItem forItem) {}
+            public void onRequestTime(AlarmClockItem forItem) {}
         }
     }
 
