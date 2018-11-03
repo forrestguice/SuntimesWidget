@@ -93,7 +93,7 @@ public class AlarmClockItem
 
         values.put(AlarmClockDatabaseAdapter.KEY_ALARM_DATETIME, timestamp);
         values.put(AlarmClockDatabaseAdapter.KEY_ALARM_DATETIME_HOUR, hour);
-        values.put(AlarmClockDatabaseAdapter.KEY_ALARM_DATETIME_HOUR, minute);
+        values.put(AlarmClockDatabaseAdapter.KEY_ALARM_DATETIME_MINUTE, minute);
         values.put(AlarmClockDatabaseAdapter.KEY_ALARM_DATETIME_OFFSET, offset);
 
         if (location != null)
