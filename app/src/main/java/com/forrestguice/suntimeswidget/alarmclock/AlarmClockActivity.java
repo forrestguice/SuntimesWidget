@@ -168,7 +168,7 @@ public class AlarmClockActivity extends AppCompatActivity
                     param_vibrate = intent.getBooleanExtra(AlarmClock.EXTRA_VIBRATE, param_vibrate);
                     String param_ringtoneUriString = intent.getStringExtra(AlarmClock.EXTRA_RINGTONE);
                     if (param_ringtoneUriString != null) {
-                        param_ringtoneUri = Uri.parse(param_ringtoneUriString);
+                        param_ringtoneUri = (param_ringtoneUriString.equals(AlarmClock.VALUE_RINGTONE_SILENT) ? null : Uri.parse(param_ringtoneUriString));
                     }
                 }
 
