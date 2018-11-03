@@ -104,10 +104,9 @@ public class AlarmClockItem
             values.put(AlarmClockDatabaseAdapter.KEY_ALARM_ALTITUDE, location.getAltitude());
         }
 
-        if (event != null)
-        {
+        if (event != null) {
             values.put(AlarmClockDatabaseAdapter.KEY_ALARM_SOLAREVENT, event.name());
-        }
+        } else values.putNull(AlarmClockDatabaseAdapter.KEY_ALARM_SOLAREVENT);
 
         values.put(AlarmClockDatabaseAdapter.KEY_ALARM_VIBRATE, (vibrate ? 1 : 0));
         values.put(AlarmClockDatabaseAdapter.KEY_ALARM_RINGTONE_NAME, ringtoneName);
