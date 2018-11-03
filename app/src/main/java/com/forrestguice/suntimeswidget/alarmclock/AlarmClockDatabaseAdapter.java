@@ -45,7 +45,13 @@ public class AlarmClockDatabaseAdapter
     public static final String KEY_ALARM_DATETIME = "datetime";                                     // timestamp, the datetime this alarm should sound; one-time alarm if SOLAREVENT is null; repeating-alarm if SOLAREVENT is provided (DATETIME recalculated on repeat).
     public static final String DEF_ALARM_DATETIME = KEY_ALARM_DATETIME + " integer default -1";
 
-    public static final String KEY_ALARM_DATETIME_OFFSET = "timeoffset";                                // timestamp offset; alarm is triggered at some offset (+)before or (-)after timestamp.
+    public static final String KEY_ALARM_DATETIME_HOUR = "hour";                                    // hour [0,23] (optional); the hour may be used to calculate the alarm datetime
+    public static final String DEF_ALARM_DATETIME_HOUR = KEY_ALARM_DATETIME_HOUR + " integer default -1";
+
+    public static final String KEY_ALARM_DATETIME_MINUTE = "minute";                                // minute [0,59] (optional); the minute may be used to calculate the alarm datetime
+    public static final String DEF_ALARM_DATETIME_MINUTE = KEY_ALARM_DATETIME_MINUTE + " integer default -1";
+
+    public static final String KEY_ALARM_DATETIME_OFFSET = "timeoffset";                            // timestamp offset; alarm is triggered at some offset (+)before or (-)after timestamp.
     public static final String DEF_ALARM_DATETIME_OFFSET = KEY_ALARM_DATETIME_OFFSET + " integer default 0";
 
     public static final String KEY_ALARM_LABEL = "alarmlabel";                                      // alarm label (optional)
@@ -80,12 +86,17 @@ public class AlarmClockDatabaseAdapter
 
                                                          + DEF_ALARM_TYPE + ", "
                                                          + DEF_ALARM_ENABLED + ", "
-                                                         + DEF_ALARM_REPEATING + ", "
-                                                         + DEF_ALARM_DATETIME + ", "
-                                                         + DEF_ALARM_DATETIME_OFFSET + ", "
                                                          + DEF_ALARM_LABEL + ", "
 
+                                                         + DEF_ALARM_REPEATING + ", "
+
+                                                         + DEF_ALARM_DATETIME + ", "
+                                                         + DEF_ALARM_DATETIME_HOUR + ", "
+                                                         + DEF_ALARM_DATETIME_MINUTE + ", "
+                                                         + DEF_ALARM_DATETIME_OFFSET + ", "
+
                                                          + DEF_ALARM_SOLAREVENT + ", "
+
                                                          + DEF_ALARM_PLACELABEL + ", "
                                                          + DEF_ALARM_LATITUDE + ", "
                                                          + DEF_ALARM_LONGITUDE + ", "
@@ -98,7 +109,8 @@ public class AlarmClockDatabaseAdapter
     private static final String TABLE_ALARMS_CREATE = "create table " + TABLE_ALARMS + " (" + TABLE_ALARMS_CREATE_COLS + ");";
 
     private static final String[] QUERY_ALARMS_MINENTRY = new String[] { KEY_ROWID, KEY_ALARM_TYPE, KEY_ALARM_ENABLED, KEY_ALARM_REPEATING, KEY_ALARM_DATETIME, KEY_ALARM_LABEL };
-    private static final String[] QUERY_ALARMS_FULLENTRY = new String[] { KEY_ROWID, KEY_ALARM_TYPE, KEY_ALARM_ENABLED, KEY_ALARM_REPEATING, KEY_ALARM_DATETIME, KEY_ALARM_DATETIME_OFFSET, KEY_ALARM_LABEL,
+    private static final String[] QUERY_ALARMS_FULLENTRY = new String[] { KEY_ROWID, KEY_ALARM_TYPE, KEY_ALARM_ENABLED, KEY_ALARM_LABEL, KEY_ALARM_REPEATING,
+                                                                          KEY_ALARM_DATETIME, KEY_ALARM_DATETIME_HOUR, KEY_ALARM_DATETIME_MINUTE, KEY_ALARM_DATETIME_OFFSET,
                                                                           KEY_ALARM_SOLAREVENT, KEY_ALARM_PLACELABEL, KEY_ALARM_LATITUDE, KEY_ALARM_LONGITUDE, KEY_ALARM_ALTITUDE,
                                                                           KEY_ALARM_VIBRATE, KEY_ALARM_RINGTONE_NAME, KEY_ALARM_RINGTONE_URI };
 
@@ -213,6 +225,8 @@ public class AlarmClockDatabaseAdapter
                 KEY_ALARM_ENABLED + separator +
                 KEY_ALARM_REPEATING + separator +
                 KEY_ALARM_DATETIME + separator +
+                KEY_ALARM_DATETIME_HOUR + separator +
+                KEY_ALARM_DATETIME_MINUTE + separator +
                 KEY_ALARM_DATETIME_OFFSET + separator +
                 KEY_ALARM_LABEL + separator +
                 KEY_ALARM_SOLAREVENT + separator +
@@ -234,6 +248,8 @@ public class AlarmClockDatabaseAdapter
                       alarm.getAsInteger(KEY_ALARM_ENABLED) + separator +
                       alarm.getAsInteger(KEY_ALARM_REPEATING) + separator +
                       alarm.getAsLong(KEY_ALARM_DATETIME) + separator +
+                      alarm.getAsInteger(KEY_ALARM_DATETIME_HOUR) + separator +
+                      alarm.getAsInteger(KEY_ALARM_DATETIME_MINUTE) + separator +
                       quote + alarm.getAsString(KEY_ALARM_LABEL) + quote + separator +
                       alarm.getAsString(KEY_ALARM_SOLAREVENT) + separator +
                       quote + alarm.getAsString(KEY_ALARM_PLACELABEL) + quote + separator +
