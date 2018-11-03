@@ -133,8 +133,7 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         setTheme(AppSettings.loadTheme(this));
         super.onCreate(icicle);
-        SuntimesUtils.initDisplayStrings(this);
-
+        initLocale(this);
         setContentView(R.layout.layout_activity_alarmclock);
         initViews(this);
         handleIntent(getIntent());
@@ -177,6 +176,14 @@ public class AlarmClockActivity extends AppCompatActivity
                 addAlarm(param_label, param_event, param_hour, param_minute, param_vibrate, param_ringtoneUri);
             }
         }
+    }
+
+    private void initLocale(Context context)
+    {
+        WidgetSettings.initDefaults(context);
+        WidgetSettings.initDisplayStrings(context);
+        SuntimesUtils.initDisplayStrings(context);
+        SolarEvents.initDisplayStrings(context);
     }
 
     /**
