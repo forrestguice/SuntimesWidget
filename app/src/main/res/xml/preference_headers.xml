@@ -18,7 +18,7 @@
         android:summary="">
         <intent android:targetPackage="com.forrestguice.suntimeswidget"
             android:targetClass="com.forrestguice.suntimeswidget.alarmclock.AlarmClockActivity">
-            <extra android:name="showHome" android:value="true" />
+            <extra android:name="showBack" android:value="true" />
         </intent>
     </header>
 

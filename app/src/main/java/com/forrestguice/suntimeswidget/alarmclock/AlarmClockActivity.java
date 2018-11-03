@@ -30,6 +30,7 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.AlarmClock;
 import android.support.annotation.NonNull;
@@ -69,9 +70,8 @@ import com.forrestguice.suntimeswidget.AboutDialog;
 import com.forrestguice.suntimeswidget.AlarmDialog;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
@@ -86,7 +86,7 @@ import java.util.Calendar;
 
 public class AlarmClockActivity extends AppCompatActivity
 {
-    public static final String EXTRA_SHOWHOME = "showHome";
+    public static final String EXTRA_SHOWBACK = "showBack";
     public static final String EXTRA_SOLAREVENT = "solarevent";
     public static final int REQUEST_RINGTONE = 10;
 
@@ -159,10 +159,22 @@ public class AlarmClockActivity extends AppCompatActivity
                 String param_label = intent.getStringExtra(AlarmClock.EXTRA_MESSAGE);
                 int param_hour = intent.getIntExtra(AlarmClock.EXTRA_HOUR, -1);
                 int param_minute = intent.getIntExtra(AlarmClock.EXTRA_MINUTES, -1);
+
+                boolean param_vibrate = getDefaultVibrate();
+                Uri param_ringtoneUri = getDefaultRingtoneUri();
+                if (Build.VERSION.SDK_INT >= 19)
+                {
+                    param_vibrate = intent.getBooleanExtra(AlarmClock.EXTRA_VIBRATE, param_vibrate);
+                    String param_ringtoneUriString = intent.getStringExtra(AlarmClock.EXTRA_RINGTONE);
+                    if (param_ringtoneUriString != null) {
+                        param_ringtoneUri = Uri.parse(param_ringtoneUriString);
+                    }
+                }
+
                 SolarEvents param_event = SolarEvents.valueOf(intent.getStringExtra(AlarmClockActivity.EXTRA_SOLAREVENT), null);
 
                 Log.i("AlarmClockActivity", "ACTION_SET_ALARM :: " + param_label + ", " + param_hour + ", " + param_minute + ", " + param_event);
-                addAlarm(param_label, param_event, param_hour, param_minute);
+                addAlarm(param_label, param_event, param_hour, param_minute, param_vibrate, param_ringtoneUri);
             }
         }
     }
@@ -293,11 +305,14 @@ public class AlarmClockActivity extends AppCompatActivity
         setSupportActionBar(menuBar);
         actionBar = getSupportActionBar();
 
-        boolean showHome = getIntent().getBooleanExtra(EXTRA_SHOWHOME, false);
-        if (actionBar != null && showHome)
+        if (actionBar != null)
         {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
+            boolean showBack = getIntent().getBooleanExtra(EXTRA_SHOWBACK, false);
+            if (!showBack) {
+                actionBar.setHomeAsUpIndicator(R.drawable.ic_action_suntimes);
+            }
         }
 
         actionButton = (FloatingActionButton) findViewById(R.id.btn_addAlarm);
@@ -340,9 +355,9 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         FragmentManager fragments = getSupportFragmentManager();
         AlarmDialog dialog = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
-        addAlarm("", dialog.getChoice(), -1, -1);
+        addAlarm("", dialog.getChoice(), -1, -1, getDefaultVibrate(), getDefaultRingtoneUri());
     }
-    protected void addAlarm(String label, SolarEvents event, int hour, int minute)
+    protected void addAlarm(String label, SolarEvents event, int hour, int minute, boolean vibrate, Uri ringtoneUri)
     {
         AlarmClockUpdateTask task = new AlarmClockUpdateTask(AlarmClockActivity.this, true);
         task.setTaskListener(new AlarmClockUpdateTask.AlarmClockUpdateTaskListener()
@@ -358,16 +373,19 @@ public class AlarmClockActivity extends AppCompatActivity
 
         final AlarmClockItem alarm = new AlarmClockItem();
         alarm.label = label;
+        alarm.event = event;
         alarm.location = WidgetSettings.loadLocationPref(AlarmClockActivity.this, 0);
         alarm.enabled = true;
-        alarm.vibrate = false;
         alarm.repeating = false;
-        alarm.event = event;
+        alarm.vibrate = vibrate;
 
-        Uri ringtoneUri = getDefaultRingtoneUri();
-        Ringtone ringtone = RingtoneManager.getRingtone(AlarmClockActivity.this, ringtoneUri);
-        alarm.ringtoneName = ringtone.getTitle(AlarmClockActivity.this);
-        alarm.ringtoneURI = ringtoneUri.toString();
+        alarm.ringtoneURI = (ringtoneUri != null ? ringtoneUri.toString() : null);
+        if (alarm.ringtoneURI != null)
+        {
+            Ringtone ringtone = RingtoneManager.getRingtone(AlarmClockActivity.this, ringtoneUri);
+            alarm.ringtoneName = ringtone.getTitle(AlarmClockActivity.this);
+            ringtone.stop();
+        }
 
         task.execute(alarm);
     }
@@ -375,6 +393,11 @@ public class AlarmClockActivity extends AppCompatActivity
     public Uri getDefaultRingtoneUri()
     {
         return RingtoneManager.getActualDefaultRingtoneUri(AlarmClockActivity.this, RingtoneManager.TYPE_ALARM);
+    }
+
+    public boolean getDefaultVibrate()
+    {
+        return false;
     }
 
     /**
@@ -1376,12 +1399,27 @@ public class AlarmClockActivity extends AppCompatActivity
                 return true;
 
             case android.R.id.home:
-                onBackPressed();
+                boolean showBack = getIntent().getBooleanExtra(EXTRA_SHOWBACK, false);
+                if (showBack) {
+                    onBackPressed();
+                } else {
+                    onHomePressed();
+                }
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    /**
+     * onHomePressed
+     */
+    protected void onHomePressed()
+    {
+        Intent intent = new Intent(this, SuntimesActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     @SuppressWarnings("RestrictedApi")
