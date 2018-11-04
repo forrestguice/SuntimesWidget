@@ -26,6 +26,10 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+
 /**
  * AlarmClockItem
  */
@@ -35,6 +39,7 @@ public class AlarmClockItem
     protected AlarmType type = AlarmType.ALARM;
     protected boolean enabled = false;
     protected boolean repeating = false;
+    protected ArrayList<Integer> repeatingDays = null;
     protected long timestamp = -1L;
     protected int hour = -1, minute = -1;
     protected long offset = 0;
@@ -56,7 +61,9 @@ public class AlarmClockItem
         type = AlarmType.valueOf(alarm.getAsString(AlarmClockDatabaseAdapter.KEY_ALARM_TYPE), AlarmType.ALARM);
         enabled = (alarm.getAsInteger(AlarmClockDatabaseAdapter.KEY_ALARM_ENABLED) == 1);
         label = alarm.getAsString(AlarmClockDatabaseAdapter.KEY_ALARM_LABEL);
+
         repeating = (alarm.getAsInteger(AlarmClockDatabaseAdapter.KEY_ALARM_REPEATING) == 1);
+        setRepeatingDays(alarm.getAsString(AlarmClockDatabaseAdapter.KEY_ALARM_REPEATING_DAYS));
 
         timestamp = alarm.getAsLong(AlarmClockDatabaseAdapter.KEY_ALARM_DATETIME);
         hour = alarm.getAsInteger(AlarmClockDatabaseAdapter.KEY_ALARM_DATETIME_HOUR);
@@ -108,10 +115,86 @@ public class AlarmClockItem
             values.put(AlarmClockDatabaseAdapter.KEY_ALARM_SOLAREVENT, event.name());
         } else values.putNull(AlarmClockDatabaseAdapter.KEY_ALARM_SOLAREVENT);
 
+        if (repeatingDays != null) {
+            values.put(AlarmClockDatabaseAdapter.KEY_ALARM_REPEATING_DAYS, getRepeatingDays());
+        } else values.putNull(AlarmClockDatabaseAdapter.KEY_ALARM_REPEATING_DAYS);
+
         values.put(AlarmClockDatabaseAdapter.KEY_ALARM_VIBRATE, (vibrate ? 1 : 0));
         values.put(AlarmClockDatabaseAdapter.KEY_ALARM_RINGTONE_NAME, ringtoneName);
         values.put(AlarmClockDatabaseAdapter.KEY_ALARM_RINGTONE_URI, ringtoneURI);
         return values;
+    }
+
+    /**
+     * repeatsEveryDay
+     * @return
+     */
+    public static boolean repeatsEveryDay(ArrayList<Integer> repeatingDays)
+    {
+        if (repeatingDays != null)
+        {
+            if (repeatingDays.size() > 0)
+            {
+                return (repeatingDays.contains(Calendar.SUNDAY) &&
+                        repeatingDays.contains(Calendar.MONDAY) &&
+                        repeatingDays.contains(Calendar.TUESDAY) &&
+                        repeatingDays.contains(Calendar.WEDNESDAY) &&
+                        repeatingDays.contains(Calendar.THURSDAY) &&
+                        repeatingDays.contains(Calendar.FRIDAY) &&
+                        repeatingDays.contains(Calendar.SATURDAY));
+            } else return false;
+        } else return false;
+    }
+
+    /**
+     * getRepeatingDays
+     * @return a stringlist representation of repeatingDays Array (e.g. "0,1,2,3");
+     */
+    protected String getRepeatingDays()
+    {
+        if (repeatingDays != null)
+        {
+            int n = repeatingDays.size();
+            StringBuilder repeatingDaysString = new StringBuilder();
+            for (int i=0; i<n; i++)
+            {
+                Integer day = repeatingDays.get(i);
+                repeatingDaysString.append(day.toString());
+
+                boolean isLast = (i == (n - 1));
+                if (!isLast) {
+                    repeatingDaysString.append(",");
+                }
+            }
+            return repeatingDaysString.toString();
+        } else return null;
+    }
+
+    /**
+     * setRepeatingDays
+     * @param repeatingDaysString a stringlist representation of repeatingDays Array (e.g. "0,1,2,3");
+     */
+    protected void setRepeatingDays(String repeatingDaysString)
+    {
+        if (repeatingDaysString != null)
+        {
+            String[] repeatingDaysStringArray = repeatingDaysString.split(",");
+            Integer[] repeatingDaysArray = new Integer[repeatingDaysStringArray.length];
+            for (int i=0; i<repeatingDaysArray.length; i++) {
+                try {
+                    repeatingDaysArray[i] = Integer.parseInt(repeatingDaysStringArray[i]);
+                } catch (NumberFormatException e) {
+                    repeatingDaysArray = null;
+                    break;
+                }
+            }
+
+            if (repeatingDaysArray != null)
+            {
+                repeatingDays = new ArrayList<>();
+                repeatingDays.addAll(Arrays.asList(repeatingDaysArray));
+            } else repeatingDays = null;
+        } else repeatingDays = null;
     }
 
     /**
