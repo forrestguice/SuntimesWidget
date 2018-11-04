@@ -62,6 +62,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -94,6 +95,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
     private static final String DIALOGTAG_EVENT_FAB = "eventfab";
     private static final String DIALOGTAG_EVENT = "event";
+    private static final String DIALOGTAG_REPEAT = "repetition";
     private static final String DIALOGTAG_HELP = "help";
     private static final String DIALOGTAG_ABOUT = "about";
 
@@ -161,22 +163,28 @@ public class AlarmClockActivity extends AppCompatActivity
                 int param_hour = intent.getIntExtra(AlarmClock.EXTRA_HOUR, -1);
                 int param_minute = intent.getIntExtra(AlarmClock.EXTRA_MINUTES, -1);
 
+                ArrayList<Integer> param_days = getDefaultRepetition();
                 boolean param_vibrate = getDefaultVibrate();
                 Uri param_ringtoneUri = getDefaultRingtoneUri();
                 if (Build.VERSION.SDK_INT >= 19)
                 {
                     param_vibrate = intent.getBooleanExtra(AlarmClock.EXTRA_VIBRATE, param_vibrate);
+
                     String param_ringtoneUriString = intent.getStringExtra(AlarmClock.EXTRA_RINGTONE);
                     if (param_ringtoneUriString != null) {
                         param_ringtoneUri = (param_ringtoneUriString.equals(AlarmClock.VALUE_RINGTONE_SILENT) ? null : Uri.parse(param_ringtoneUriString));
                     }
+
+                    ArrayList<Integer> repeatOnDays = intent.getIntegerArrayListExtra(AlarmClock.EXTRA_DAYS);
+                    if (repeatOnDays != null) {
+                        param_days = repeatOnDays;
+                    }
                 }
 
                 SolarEvents param_event = SolarEvents.valueOf(intent.getStringExtra(AlarmClockActivity.EXTRA_SOLAREVENT), null);
-                param_event = null;  // test clock mode :TODO remove line
 
                 Log.i("AlarmClockActivity", "ACTION_SET_ALARM :: " + param_label + ", " + param_hour + ", " + param_minute + ", " + param_event);
-                addAlarm(param_label, param_event, param_hour, param_minute, param_vibrate, param_ringtoneUri);
+                addAlarm(param_label, param_event, param_hour, param_minute, param_vibrate, param_ringtoneUri, param_days);
             }
         }
     }
@@ -217,6 +225,12 @@ public class AlarmClockActivity extends AppCompatActivity
         {
             initEventDialog(eventDialog1, t_selectedLocation);
             eventDialog1.setOnAcceptedListener(onSolarEventChanged);
+        }
+
+        AlarmRepeatDialog repeatDialog = (AlarmRepeatDialog) fragments.findFragmentByTag(DIALOGTAG_REPEAT);
+        if (repeatDialog != null)
+        {
+            repeatDialog.setOnAcceptedListener(onRepetitionChanged);
         }
     }
 
@@ -365,9 +379,9 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         FragmentManager fragments = getSupportFragmentManager();
         AlarmDialog dialog = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
-        addAlarm("", dialog.getChoice(), -1, -1, getDefaultVibrate(), getDefaultRingtoneUri());
+        addAlarm("", dialog.getChoice(), -1, -1, getDefaultVibrate(), getDefaultRingtoneUri(), getDefaultRepetition());
     }
-    protected void addAlarm(String label, SolarEvents event, int hour, int minute, boolean vibrate, Uri ringtoneUri)
+    protected void addAlarm(String label, SolarEvents event, int hour, int minute, boolean vibrate, Uri ringtoneUri, ArrayList<Integer> repetitionDays)
     {
         AlarmClockUpdateTask task = new AlarmClockUpdateTask(AlarmClockActivity.this, true);
         task.setTaskListener(new AlarmClockUpdateTask.AlarmClockUpdateTaskListener()
@@ -420,6 +434,11 @@ public class AlarmClockActivity extends AppCompatActivity
         return false;
     }
 
+    public ArrayList<Integer> getDefaultRepetition()
+    {
+        return AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS;
+    }
+
     /**
      * onSolarEventChanged
      */
@@ -427,19 +446,20 @@ public class AlarmClockActivity extends AppCompatActivity
         @Override
         public void onClick(DialogInterface d, int which)
         {
-            AlarmClockUpdateTask task = new AlarmClockUpdateTask(AlarmClockActivity.this);
-            task.setTaskListener(onUpdateItem);
+            FragmentManager fragments = getSupportFragmentManager();
+            AlarmDialog dialog = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT);
 
             AlarmClockItem item = adapter.findItem(t_selectedItem);
             t_selectedItem = null;
 
-            if (item != null)
+            if (item != null && dialog != null)
             {
-                FragmentManager fragments = getSupportFragmentManager();
-                AlarmDialog dialog = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT);
                 item.event = dialog.getChoice();
                 item.modified = true;
                 updateAlarmTime(AlarmClockActivity.this, item);
+
+                AlarmClockUpdateTask task = new AlarmClockUpdateTask(AlarmClockActivity.this);
+                task.setTaskListener(onUpdateItem);
                 task.execute(item);
             }
         }
@@ -503,6 +523,12 @@ public class AlarmClockActivity extends AppCompatActivity
         public void onRequestTime(AlarmClockItem forItem)
         {
             pickTime(forItem);
+        }
+
+        @Override
+        public void onRequestRepetition(AlarmClockItem forItem)
+        {
+            pickRepetition(forItem);
         }
     };
 
@@ -602,7 +628,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
     /**
      * pickTime
-     * @param item apply selected time to supplied AlarmClockItem
+     * @param item apply time to AlarmClockItem
      */
     protected void pickTime(@NonNull AlarmClockItem item)
     {
@@ -625,8 +651,48 @@ public class AlarmClockActivity extends AppCompatActivity
     }
 
     /**
+     * pickRepetition
+     * @param item apply repetition to AlarmClockItem
+     */
+    protected void pickRepetition(@NonNull AlarmClockItem item)
+    {
+        final AlarmRepeatDialog repeatDialog = new AlarmRepeatDialog();
+        repeatDialog.setRepetition(item.repeating, item.repeatingDays);
+        repeatDialog.setOnAcceptedListener(onRepetitionChanged);
+
+        t_selectedItem = item.rowID;
+        repeatDialog.show(getSupportFragmentManager(), DIALOGTAG_REPEAT);
+    }
+
+    /**
+     * onRepetitionChanged
+     */
+    private DialogInterface.OnClickListener onRepetitionChanged = new DialogInterface.OnClickListener()
+    {
+        public void onClick(DialogInterface dialog, int whichButton)
+        {
+            FragmentManager fragments = getSupportFragmentManager();
+            AlarmRepeatDialog repeatDialog = (AlarmRepeatDialog) fragments.findFragmentByTag(DIALOGTAG_REPEAT);
+
+            AlarmClockItem item = adapter.findItem(t_selectedItem);
+            t_selectedItem = null;
+
+            if (item != null && repeatDialog != null)
+            {
+                item.repeating = repeatDialog.getRepetition();
+                item.repeatingDays = repeatDialog.getRepetitionDays();
+                item.modified = true;
+
+                AlarmClockUpdateTask task = new AlarmClockUpdateTask(AlarmClockActivity.this);
+                task.setTaskListener(onUpdateItem);
+                task.execute(item);
+            }
+        }
+    };
+
+    /**
      * pickLabel
-     * @param item apply selected label to supplied AlarmClockItem
+     * @param item apply label to AlarmClockItem
      */
     protected void pickLabel(@NonNull AlarmClockItem item)
     {
@@ -672,7 +738,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
     /**
      * pickRingtone
-     * @param item apply selected ringtone to supplied AlarmClockItem
+     * @param item apply ringtone to AlarmClockItem
      */
     protected void pickRingtone(@NonNull AlarmClockItem item)
     {
@@ -1190,6 +1256,7 @@ public class AlarmClockActivity extends AppCompatActivity
             final TextView text_location = (TextView) view.findViewById(R.id.text_location_label);
             if (text_location != null)
             {
+                text_location.setVisibility(item.event == null ? View.INVISIBLE : View.VISIBLE);
                 AlarmDialog.updateLocationLabel(context, text_location, item.location);
                 text_location.setOnClickListener(new View.OnClickListener()
                 {
@@ -1258,18 +1325,23 @@ public class AlarmClockActivity extends AppCompatActivity
                 });
             }
 
-            CheckBox check_repeat = (CheckBox) view.findViewById(R.id.check_repeat);
-            if (check_repeat != null)
+            TextView option_repeat = (TextView) view.findViewById(R.id.option_repeat);
+            if (option_repeat != null)
             {
-                check_repeat.setChecked(item.repeating);
-                check_repeat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-                {
+                String repeatText = AlarmClockItem.repeatsEveryDay(item.repeatingDays)
+                        ? context.getString(R.string.alarmOption_repeat_all)
+                        : (item.repeatingDays == null || item.repeatingDays.isEmpty())
+                                ? context.getString(R.string.alarmOption_repeat_none)
+                                : context.getString(R.string.alarmOption_repeat);
+                option_repeat.setText(repeatText);
+
+                option_repeat.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+                    public void onClick(View v)
                     {
-                        item.repeating = isChecked;
-                        item.modified = true;
-                        onAlarmModified(item);
+                        if (adapterListener != null) {
+                            adapterListener.onRequestRepetition(item);
+                        }
                     }
                 });
             }
@@ -1454,6 +1526,7 @@ public class AlarmClockActivity extends AppCompatActivity
             public void onRequestSolarEvent(AlarmClockItem forItem) {}
             public void onRequestLocation(AlarmClockItem forItem) {}
             public void onRequestTime(AlarmClockItem forItem) {}
+            public void onRequestRepetition(AlarmClockItem forItem) {}
         }
     }
 
