@@ -168,8 +168,6 @@ public class LocationConfigView extends LinearLayout
     public void setHideTitle(boolean value)
     {
         hideTitle = value;
-        TextView groupTitle = (TextView)findViewById(R.id.appwidget_location_grouptitle);
-        groupTitle.setVisibility( (hideTitle ? View.GONE : View.VISIBLE) );
     }
 
     /**
@@ -475,6 +473,11 @@ public class LocationConfigView extends LinearLayout
         getFixHelper = new GetFixHelper(myParent, getFixUI_editMode);    // 0; getFixUI_editMode
         getFixHelper.addUI(getFixUI_autoMode);                           // 1; getFixUI_autoMode
         updateGPSButtonIcons();
+
+        TextView groupTitle = (TextView)findViewById(R.id.appwidget_location_grouptitle);
+        if (groupTitle != null) {
+            groupTitle.setVisibility( (hideTitle ? View.GONE : View.VISIBLE) );
+        }
     }
 
 

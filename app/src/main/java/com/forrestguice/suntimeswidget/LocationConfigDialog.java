@@ -176,8 +176,8 @@ public class LocationConfigDialog extends DialogFragment
 
         final FragmentActivity myParent = getActivity();
         dialogContent = new com.forrestguice.suntimeswidget.LocationConfigView(myParent);
-        dialogContent.init(myParent, true);
         dialogContent.setHideTitle(hideTitle);
+        dialogContent.init(myParent, true);
 
         Resources r = getResources();
         int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, r.getDisplayMetrics());
