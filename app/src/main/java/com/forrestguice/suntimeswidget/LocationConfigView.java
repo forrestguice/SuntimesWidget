@@ -653,6 +653,10 @@ public class LocationConfigView extends LinearLayout
 
     public static Bundle bundleData( Uri data, String label )
     {
+        return bundleData(data, label, LocationViewMode.MODE_CUSTOM_ADD);
+    }
+    public static Bundle bundleData( Uri data, String label, LocationViewMode viewMode )
+    {
         String lat = "";
         String lon = "";
         String alt = "";
@@ -679,7 +683,7 @@ public class LocationConfigView extends LinearLayout
         }
 
         Bundle bundle = new Bundle();
-        bundle.putString(KEY_DIALOGMODE, LocationViewMode.MODE_CUSTOM_ADD.name());
+        bundle.putString(KEY_DIALOGMODE, viewMode.name());
         bundle.putString(KEY_LOCATION_MODE, WidgetSettings.LocationMode.CUSTOM_LOCATION.name());
         bundle.putString(KEY_LOCATION_LATITUDE, lat);
         bundle.putString(KEY_LOCATION_LONGITUDE, lon);
