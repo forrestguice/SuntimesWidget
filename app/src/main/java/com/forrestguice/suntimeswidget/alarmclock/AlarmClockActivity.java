@@ -526,6 +526,12 @@ public class AlarmClockActivity extends AppCompatActivity
         }
 
         @Override
+        public void onRequestOffset(AlarmClockItem forItem)
+        {
+            pickOffset(forItem);
+        }
+
+        @Override
         public void onRequestRepetition(AlarmClockItem forItem)
         {
             pickRepetition(forItem);
@@ -648,6 +654,15 @@ public class AlarmClockActivity extends AppCompatActivity
         TimePickerDialog dialog = new TimePickerDialog(AlarmClockActivity.this, onPickTime, hour, minute, SuntimesUtils.is24());
         t_selectedItem = item.rowID;
         dialog.show();
+    }
+
+    /**
+     * pickOffset
+     * @param item apply offset to AlarmClockItem
+     */
+    protected void pickOffset(@NonNull AlarmClockItem item)
+    {
+        // TODO
     }
 
     /**
@@ -1346,6 +1361,24 @@ public class AlarmClockActivity extends AppCompatActivity
                 });
             }
 
+            TextView option_offset = (TextView) view.findViewById(R.id.option_offset);
+            if (option_offset != null)
+            {
+                // TODO: format/display offset
+                option_offset.setText("TODO");
+
+                option_offset.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        if (adapterListener != null) {
+                            adapterListener.onRequestOffset(item);
+                        }
+                    }
+                });
+            }
+
             ImageButton overflow = (ImageButton) view.findViewById(R.id.overflow_menu);
             if (overflow != null)
             {
@@ -1526,6 +1559,7 @@ public class AlarmClockActivity extends AppCompatActivity
             public void onRequestSolarEvent(AlarmClockItem forItem) {}
             public void onRequestLocation(AlarmClockItem forItem) {}
             public void onRequestTime(AlarmClockItem forItem) {}
+            public void onRequestOffset(AlarmClockItem forItem) {}
             public void onRequestRepetition(AlarmClockItem forItem) {}
         }
     }

@@ -131,6 +131,19 @@
             app:layout_constraintStart_toEndOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@android:id/text2" />
 
+        <TextView
+            android:id="@+id/option_offset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/text_buttonSelector"
+            android:maxLines="1" android:ellipsize="end"
+            tools:text="offset"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintStart_toEndOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/text_location_label" />  <!-- TODO: better layout -->
+
         <LinearLayout
             android:id="@+id/layout_options"
             android:layout_width="0dp"
