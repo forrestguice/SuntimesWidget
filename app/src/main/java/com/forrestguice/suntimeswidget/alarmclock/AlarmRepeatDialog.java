@@ -27,22 +27,25 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.ToggleButton;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 
+import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Locale;
 
 public class AlarmRepeatDialog extends DialogFragment
 {
@@ -57,7 +60,7 @@ public class AlarmRepeatDialog extends DialogFragment
     private Switch switchRepeat;
     private boolean repeat = PREF_DEF_ALARM_REPEAT;
     private ArrayList<Integer> repeatDays = PREF_DEF_ALARM_REPEATDAYS;
-    private SparseArray<CompoundButton> btnDays;
+    private SparseArray<ToggleButton> btnDays;
 
     /**
      * @param savedInstanceState a Bundle containing dialog state
@@ -145,23 +148,55 @@ public class AlarmRepeatDialog extends DialogFragment
         }
 
         btnDays = new SparseArray<>();
-        btnDays.put(Calendar.SUNDAY, (CompoundButton)dialogContent.findViewById(R.id.alarmOption_repeat_sun));
-        btnDays.put(Calendar.MONDAY, (CompoundButton)dialogContent.findViewById(R.id.alarmOption_repeat_mon));
-        btnDays.put(Calendar.TUESDAY, (CompoundButton)dialogContent.findViewById(R.id.alarmOption_repeat_tue));
-        btnDays.put(Calendar.WEDNESDAY, (CompoundButton)dialogContent.findViewById(R.id.alarmOption_repeat_wed));
-        btnDays.put(Calendar.THURSDAY, (CompoundButton)dialogContent.findViewById(R.id.alarmOption_repeat_thu));
-        btnDays.put(Calendar.FRIDAY, (CompoundButton)dialogContent.findViewById(R.id.alarmOption_repeat_fri));
-        btnDays.put(Calendar.SATURDAY, (CompoundButton)dialogContent.findViewById(R.id.alarmOption_repeat_sat));
+        btnDays.put(Calendar.SUNDAY, (ToggleButton)dialogContent.findViewById(R.id.alarmOption_repeat_sun));
+        btnDays.put(Calendar.MONDAY, (ToggleButton)dialogContent.findViewById(R.id.alarmOption_repeat_mon));
+        btnDays.put(Calendar.TUESDAY, (ToggleButton)dialogContent.findViewById(R.id.alarmOption_repeat_tue));
+        btnDays.put(Calendar.WEDNESDAY, (ToggleButton)dialogContent.findViewById(R.id.alarmOption_repeat_wed));
+        btnDays.put(Calendar.THURSDAY, (ToggleButton)dialogContent.findViewById(R.id.alarmOption_repeat_thu));
+        btnDays.put(Calendar.FRIDAY, (ToggleButton)dialogContent.findViewById(R.id.alarmOption_repeat_fri));
+        btnDays.put(Calendar.SATURDAY, (ToggleButton)dialogContent.findViewById(R.id.alarmOption_repeat_sat));
 
         int n = btnDays.size();
         for (int i=0; i<n; i++)
         {
-            CompoundButton button = btnDays.get(btnDays.keyAt(i));
+            int day = btnDays.keyAt(i);
+            ToggleButton button = btnDays.get(day);
             if (button != null)
             {
                 button.setOnCheckedChangeListener(onRepeatDayChanged);
+                String dayName = utils.getShortDayString(context, day);
+                button.setTextOn(dayName);
+                button.setTextOff(dayName);
             }
         }
+    }
+
+    public static String getDisplayString(Context context, ArrayList<Integer> days)
+    {
+        StringBuilder retString = new StringBuilder();
+        if (days != null && days.size() > 0)
+        {
+            if (days.size() == 1)
+            {
+                retString.append(utils.getDayString(context, days.get(0)));
+
+            } else {
+                String[] dayStrings = utils.getShortDayStrings(context);
+                Collections.sort(days);
+                int n = days.size();
+                for (int i=0; i<n; i++)
+                {
+                    int day = days.get(i);
+                    retString.append(dayStrings[day]);
+
+                    boolean isLast = (i == (n-1));
+                    if (!isLast) {
+                        retString.append(", ");
+                    }
+                }
+            }
+        }
+        return retString.toString();
     }
 
     /**
@@ -255,7 +290,7 @@ public class AlarmRepeatDialog extends DialogFragment
             int n = btnDays.size();
             for (int i=0; i<n; i++)
             {
-                CompoundButton button = btnDays.valueAt(i);
+                ToggleButton button = btnDays.valueAt(i);
                 if (button != null)
                 {
                     Integer day = tagToDay(button.getTag());

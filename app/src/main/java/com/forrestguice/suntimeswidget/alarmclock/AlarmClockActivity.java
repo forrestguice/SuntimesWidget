@@ -1332,7 +1332,7 @@ public class AlarmClockActivity extends AppCompatActivity
                         ? context.getString(R.string.alarmOption_repeat_all)
                         : (item.repeatingDays == null || item.repeatingDays.isEmpty())
                                 ? context.getString(R.string.alarmOption_repeat_none)
-                                : context.getString(R.string.alarmOption_repeat);
+                                : AlarmRepeatDialog.getDisplayString(context, item.repeatingDays);
                 option_repeat.setText(repeatText);
 
                 option_repeat.setOnClickListener(new View.OnClickListener() {

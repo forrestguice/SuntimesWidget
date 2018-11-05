@@ -42,6 +42,7 @@ import android.graphics.drawable.Drawable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.format.DateUtils;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
@@ -70,6 +71,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings.TimeFormatMode;
 
+import java.text.DateFormatSymbols;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 
@@ -467,6 +469,33 @@ public class SuntimesUtils
         }
     }
 
+    /**
+     * getDayString
+     * @param context Context
+     * @param day e.g. Calendar.SUNDAY
+     * @return "Sunday"
+     */
+    public String getDayString(Context context, int day)
+    {
+        return DateUtils.getDayOfWeekString(day, DateUtils.LENGTH_LONG);
+    }
+
+    /**
+     * getShortDayString
+     * @param context Context
+     * @param day e.g. Calendar.SUNDAY
+     * @return "Sun"
+     */
+    public String getShortDayString(Context context, int day)
+    {
+        String[] shortWeekDays = getShortDayStrings(context);
+        return (day >= 0 && day < shortWeekDays.length ? shortWeekDays[day] : "");
+    }
+    public String[] getShortDayStrings(Context context)
+    {
+        return DateFormatSymbols.getInstance(getLocale()).getShortWeekdays();
+    }
+    
     /**
      * formats a time display string (lets the system determine the exact format).
      *

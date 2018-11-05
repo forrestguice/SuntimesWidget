@@ -540,13 +540,6 @@
     <string name="alarmOption_repeat">Repeat</string>                <!-- checkbox text; an alarm that repeats -->  <!-- TODO -->
     <string name="alarmOption_repeat_none">No Repeat</string>         <!-- label text; an alarm that does not repeat (occurs once) -->  <!-- TODO -->
     <string name="alarmOption_repeat_all">Every Day</string>         <!-- label text; an alarm that repeats every day -->  <!-- TODO -->
-    <string name="alarmOption_repeatSymbol_sun">Sun</string>   <!-- day symbol --> <!-- TODO -->
-    <string name="alarmOption_repeatSymbol_mon">Mon</string>   <!-- day symbol --> <!-- TODO -->
-    <string name="alarmOption_repeatSymbol_tue">Tue</string>   <!-- day symbol --> <!-- TODO -->
-    <string name="alarmOption_repeatSymbol_wed">Wed</string>   <!-- day symbol --> <!-- TODO -->
-    <string name="alarmOption_repeatSymbol_thu">Thu</string>   <!-- day symbol --> <!-- TODO -->
-    <string name="alarmOption_repeatSymbol_fri">Fri</string>   <!-- day symbol --> <!-- TODO -->
-    <string name="alarmOption_repeatSymbol_sat">Sat</string>   <!-- day symbol --> <!-- TODO -->
 
     <string name="deletealarm_dialog_title">Delete Alarm</string>        <!-- dialog title -->  <!-- TODO -->
     <string name="deletealarm_dialog_message">Are you sure you want to delete <xliff:g id="alarm">%1$s</xliff:g>?</string>   <!-- dialog msg --> <!-- TODO -->
