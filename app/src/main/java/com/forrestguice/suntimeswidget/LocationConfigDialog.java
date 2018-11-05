@@ -18,6 +18,7 @@
 package com.forrestguice.suntimeswidget;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.net.Uri;
@@ -29,6 +30,8 @@ import android.support.v7.app.AlertDialog;
 
 import android.util.TypedValue;
 import android.view.View;
+
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 public class LocationConfigDialog extends DialogFragment
 {
@@ -56,6 +59,34 @@ public class LocationConfigDialog extends DialogFragment
     public void setOnCanceledListener( DialogInterface.OnClickListener listener )
     {
         onCanceled = listener;
+    }
+
+    /***
+     * LocationConfigDialogListener
+     */
+    protected LocationConfigDialogListener defaultDialogListener = new LocationConfigDialogListener()
+    {
+        @Override
+        public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, WidgetSettings.Location location)
+        {
+            return dialogContent.saveSettings(context);
+        }
+    };
+    protected LocationConfigDialogListener dialogListener = defaultDialogListener;
+
+    public void setDialogListener( LocationConfigDialogListener listener )
+    {
+        if (listener == null)
+            this.dialogListener = defaultDialogListener;
+        else this.dialogListener = listener;
+    }
+
+    public static abstract class LocationConfigDialogListener
+    {
+        public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, WidgetSettings.Location location)
+        {
+            return true;
+        }
     }
 
     /**
@@ -180,7 +211,8 @@ public class LocationConfigDialog extends DialogFragment
                     public void onClick(View view)
                     {
                         dialogContent.cancelGetFix();
-                        if (dialogContent.saveSettings(myParent))
+                        if (dialogListener != null &&
+                                dialogListener.saveSettings(myParent, dialogContent.getLocationMode(), dialogContent.getLocation()))
                         {
                             LocationConfigView.LocationViewMode mode = dialogContent.getMode();
                             switch (mode)
