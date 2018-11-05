@@ -72,6 +72,7 @@ import android.widget.Toast;
 import com.forrestguice.suntimeswidget.AboutDialog;
 import com.forrestguice.suntimeswidget.AlarmDialog;
 import com.forrestguice.suntimeswidget.HelpDialog;
+import com.forrestguice.suntimeswidget.LocationConfigDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -96,6 +97,7 @@ public class AlarmClockActivity extends AppCompatActivity
     private static final String DIALOGTAG_EVENT_FAB = "eventfab";
     private static final String DIALOGTAG_EVENT = "event";
     private static final String DIALOGTAG_REPEAT = "repetition";
+    private static final String DIALOGTAG_LOCATION = "location";
     private static final String DIALOGTAG_HELP = "help";
     private static final String DIALOGTAG_ABOUT = "about";
 
@@ -231,6 +233,12 @@ public class AlarmClockActivity extends AppCompatActivity
         if (repeatDialog != null)
         {
             repeatDialog.setOnAcceptedListener(onRepetitionChanged);
+        }
+
+        LocationConfigDialog locationDialog = (LocationConfigDialog) fragments.findFragmentByTag(DIALOGTAG_LOCATION);
+        if (locationDialog != null)
+        {
+            locationDialog.setDialogListener(onLocationChanged);
         }
     }
 
@@ -599,12 +607,42 @@ public class AlarmClockActivity extends AppCompatActivity
         dialog.setData(this, sunData, moonData);
     }
 
+    /**
+     * pickLocation
+     * @param item apply location to AlarmClockItem
+     */
     protected void pickLocation(@NonNull AlarmClockItem item)
     {
+        final LocationConfigDialog dialog = new LocationConfigDialog();
+        dialog.setHideTitle(true);
+        dialog.setLocation(this, item.location);
+        dialog.setDialogListener(onLocationChanged);
         t_selectedItem = item.rowID;
-        // TODO
-        //t_selectedItem = null;
+        dialog.show(getSupportFragmentManager(), DIALOGTAG_LOCATION);
     }
+
+    private LocationConfigDialog.LocationConfigDialogListener onLocationChanged = new LocationConfigDialog.LocationConfigDialogListener()
+    {
+        @Override
+        public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, WidgetSettings.Location location)
+        {
+            AlarmClockItem item = adapter.findItem(t_selectedItem);
+            t_selectedItem = null;
+
+            if (item != null)
+            {
+                item.location = location;
+                item.modified = true;
+                updateAlarmTime(AlarmClockActivity.this, item);
+
+                AlarmClockUpdateTask task = new AlarmClockUpdateTask(AlarmClockActivity.this);
+                task.setTaskListener(onUpdateItem);
+                task.execute(item);
+                return true;
+            }
+            return false;
+        }
+    };
 
     /**
      * onPickTime
