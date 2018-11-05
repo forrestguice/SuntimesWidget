@@ -615,6 +615,7 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         final LocationConfigDialog dialog = new LocationConfigDialog();
         dialog.setHideTitle(true);
+        dialog.setHideMode(true);
         dialog.setLocation(this, item.location);
         dialog.setDialogListener(onLocationChanged);
         t_selectedItem = item.rowID;
