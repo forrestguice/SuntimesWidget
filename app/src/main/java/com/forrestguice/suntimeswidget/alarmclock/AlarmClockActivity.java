@@ -94,10 +94,11 @@ public class AlarmClockActivity extends AppCompatActivity
     public static final String EXTRA_SOLAREVENT = "solarevent";
     public static final int REQUEST_RINGTONE = 10;
 
-    private static final String DIALOGTAG_EVENT_FAB = "eventfab";
-    private static final String DIALOGTAG_EVENT = "event";
-    private static final String DIALOGTAG_REPEAT = "repetition";
-    private static final String DIALOGTAG_LOCATION = "location";
+    private static final String DIALOGTAG_EVENT_FAB = "alarmeventfab";
+    private static final String DIALOGTAG_EVENT = "alarmevent";
+    private static final String DIALOGTAG_REPEAT = "alarmrepetition";
+    private static final String DIALOGTAG_LABEL = "alarmlabel";
+    private static final String DIALOGTAG_LOCATION = "alarmlocation";
     private static final String DIALOGTAG_HELP = "help";
     private static final String DIALOGTAG_ABOUT = "about";
 
@@ -233,6 +234,12 @@ public class AlarmClockActivity extends AppCompatActivity
         if (repeatDialog != null)
         {
             repeatDialog.setOnAcceptedListener(onRepetitionChanged);
+        }
+
+        AlarmLabelDialog labelDialog = (AlarmLabelDialog) fragments.findFragmentByTag(DIALOGTAG_LABEL);
+        if (labelDialog != null)
+        {
+            labelDialog.setOnAcceptedListener(onLabelChanged);
         }
 
         LocationConfigDialog locationDialog = (LocationConfigDialog) fragments.findFragmentByTag(DIALOGTAG_LOCATION);
@@ -750,45 +757,39 @@ public class AlarmClockActivity extends AppCompatActivity
      */
     protected void pickLabel(@NonNull AlarmClockItem item)
     {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle(getString(R.string.alarmlabel_dialog_title));
-
-        final EditText labelEdit = new EditText(this);
-        labelEdit.setText(item.label);
-        labelEdit.selectAll();
-        labelEdit.requestFocus();
-        dialog.setView(labelEdit);
-
-        dialog.setPositiveButton(getString(R.string.alarmlabel_dialog_ok), new DialogInterface.OnClickListener()
-        {
-            public void onClick(DialogInterface dialog, int whichButton)
-            {
-                AlarmClockItem item = adapter.findItem(t_selectedItem);
-                t_selectedItem = null;
-
-                if (item != null)
-                {
-                    item.label = labelEdit.getText().toString();
-                    item.modified = true;
-                    AlarmClockUpdateTask task = new AlarmClockUpdateTask(AlarmClockActivity.this);
-                    task.setTaskListener(onUpdateItem);
-                    task.execute(item);
-                }
-            }
-        });
-        dialog.setNegativeButton(getString(R.string.alarmlabel_dialog_cancel), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {}
-        });
-
-        final AlertDialog alertDialog = dialog.create();
-        Window w = alertDialog.getWindow();
-        if (w != null) {
-            w.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-        }
+        AlarmLabelDialog dialog = new AlarmLabelDialog();
+        dialog.setOnAcceptedListener(onLabelChanged);
+        dialog.setLabel(item.label);
 
         t_selectedItem = item.rowID;
-        alertDialog.show();
+        dialog.show(getSupportFragmentManager(), DIALOGTAG_LABEL);
     }
+
+    /**
+     * onLabelChanged
+     */
+    private DialogInterface.OnClickListener onLabelChanged = new DialogInterface.OnClickListener()
+    {
+        @Override
+        public void onClick(DialogInterface d, int which)
+        {
+            FragmentManager fragments = getSupportFragmentManager();
+            AlarmLabelDialog dialog = (AlarmLabelDialog) fragments.findFragmentByTag(DIALOGTAG_LABEL);
+
+            AlarmClockItem item = adapter.findItem(t_selectedItem);
+            t_selectedItem = null;
+
+            if (item != null && dialog != null)
+            {
+                item.label = dialog.getLabel();
+                item.modified = true;
+
+                AlarmClockUpdateTask task = new AlarmClockUpdateTask(AlarmClockActivity.this);
+                task.setTaskListener(onUpdateItem);
+                task.execute(item);
+            }
+        }
+    };
 
     /**
      * pickRingtone
