@@ -168,6 +168,36 @@ public class LocationConfigView extends LinearLayout
     public void setHideTitle(boolean value)
     {
         hideTitle = value;
+
+        TextView groupTitle = (TextView)findViewById(R.id.appwidget_location_grouptitle);
+        if (groupTitle != null) {
+            groupTitle.setVisibility( (hideTitle ? View.GONE : View.VISIBLE) );
+        }
+    }
+
+    /**
+     * Property: hide mode
+     */
+    private boolean hideMode = false;
+    public boolean getHideMode()
+    {
+        return hideMode;
+    }
+    public void setHideMode(boolean value)
+    {
+        hideMode = value;
+        if (hideMode)
+        {
+            View locationModeLayout = findViewById(R.id.appwidget_location_mode_layout);
+            if (locationModeLayout != null) {
+                locationModeLayout.setVisibility( hideMode ? View.GONE : View.VISIBLE );
+            }
+
+            View locationModeDivider = findViewById(R.id.appwidget_location_mode_divider);
+            if (locationModeDivider != null) {
+                locationModeDivider.setVisibility( hideMode ? View.GONE : View.VISIBLE );
+            }
+        }
     }
 
     /**
@@ -474,9 +504,12 @@ public class LocationConfigView extends LinearLayout
         getFixHelper.addUI(getFixUI_autoMode);                           // 1; getFixUI_autoMode
         updateGPSButtonIcons();
 
-        TextView groupTitle = (TextView)findViewById(R.id.appwidget_location_grouptitle);
-        if (groupTitle != null) {
-            groupTitle.setVisibility( (hideTitle ? View.GONE : View.VISIBLE) );
+        if (hideTitle) {
+            setHideTitle(hideTitle);
+        }
+
+        if (hideMode) {
+            setHideMode(hideMode);
         }
     }
 

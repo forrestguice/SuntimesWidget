@@ -36,6 +36,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 public class LocationConfigDialog extends DialogFragment
 {
     public static final String KEY_LOCATION_HIDETITLE = "hidetitle";
+    public static final String KEY_LOCATION_HIDEMODE = "hidemode";
 
     /**
      * The dialog content; in this case just a wrapper around a LocationConfigView.
@@ -116,6 +117,23 @@ public class LocationConfigDialog extends DialogFragment
     }
     public boolean getHideTitle() { return hideTitle; }
 
+    /***
+     * Show / hide the location mode; when hidden the mode is locked to user-defined.
+     */
+    private boolean hideMode = false;
+    public void setHideMode(boolean value)
+    {
+        hideMode = value;
+        if (dialogContent != null)
+        {
+            dialogContent.setHideMode(hideMode);
+        }
+    }
+    public boolean getHideMode()
+    {
+        return hideMode;
+    }
+
     /**
      * Preset data (in the form of a geo URI)
      */
@@ -177,6 +195,7 @@ public class LocationConfigDialog extends DialogFragment
         final FragmentActivity myParent = getActivity();
         dialogContent = new com.forrestguice.suntimeswidget.LocationConfigView(myParent);
         dialogContent.setHideTitle(hideTitle);
+        dialogContent.setHideMode(hideMode);
         dialogContent.init(myParent, true);
 
         Resources r = getResources();
@@ -279,6 +298,7 @@ public class LocationConfigDialog extends DialogFragment
     {
         //Log.d("DEBUG", "LocationConfigDialog saveSettings (bundle)");
         bundle.putBoolean(KEY_LOCATION_HIDETITLE, hideTitle);
+        bundle.putBoolean(KEY_LOCATION_HIDEMODE, hideMode);
         if (dialogContent != null)
         {
             dialogContent.saveSettings(bundle);
@@ -294,8 +314,10 @@ public class LocationConfigDialog extends DialogFragment
         hideTitle = bundle.getBoolean(KEY_LOCATION_HIDETITLE);
         setHideTitle(hideTitle);
 
-        if (dialogContent != null)
-        {
+        hideMode = bundle.getBoolean(KEY_LOCATION_HIDEMODE);
+        setHideMode(hideMode);
+
+        if (dialogContent != null) {
             dialogContent.loadSettings(getActivity(), bundle);
         }
     }
