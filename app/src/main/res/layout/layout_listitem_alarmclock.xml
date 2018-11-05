@@ -164,10 +164,13 @@
 
             <TextView
                 android:id="@+id/option_repeat"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
                 android:text="@string/alarmOption_repeat" android:textColor="?attr/text_buttonSelector"
+                tools:text="Sun, Mon, Tue, Wed, Thu, Fri"
+                android:maxLines="2" android:layout_weight="1"
+                android:gravity="end|right"
                 android:scaleX="0.85" android:scaleY="0.85"
                 app:layout_constraintStart_toEndOf="@android:id/text2" />
 
