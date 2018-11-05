@@ -90,6 +90,19 @@ public class LocationConfigDialog extends DialogFragment
     }
 
     /**
+     * setLocation
+     * @param location
+     */
+    private WidgetSettings.Location presetLocation = null;
+    public void setLocation(Context context, WidgetSettings.Location location)
+    {
+        presetLocation = location;
+        if (dialogContent != null) {
+            dialogContent.loadSettings(context, LocationConfigView.bundleData(presetLocation.getUri(), presetLocation.getLabel(), LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT));
+        }
+    }
+
+    /**
      * Show / hide the title widget.
      */
     private boolean hideTitle;
@@ -238,8 +251,12 @@ public class LocationConfigDialog extends DialogFragment
         if (savedInstanceState != null)
         {
             loadSettings(savedInstanceState);
+
         } else if (presetData != null) {
             dialogContent.loadSettings(myParent, presetData);
+
+        } else if (presetLocation != null) {
+            setLocation(getContext(), presetLocation);
         }
         return dialog;
     }

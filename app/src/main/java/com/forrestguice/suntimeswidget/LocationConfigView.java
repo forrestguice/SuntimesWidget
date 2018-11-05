@@ -588,6 +588,10 @@ public class LocationConfigView extends LinearLayout
                 viewMode = LocationViewMode.MODE_CUSTOM_SELECT;
             }
             setMode(viewMode);
+
+            if (viewMode == LocationViewMode.MODE_CUSTOM_SELECT) {
+                populateLocationList();
+            }
         }
 
         getFixHelper.loadSettings(bundle);
