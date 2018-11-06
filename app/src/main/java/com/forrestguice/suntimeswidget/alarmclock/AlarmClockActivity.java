@@ -98,6 +98,7 @@ public class AlarmClockActivity extends AppCompatActivity
     private static final String DIALOGTAG_EVENT = "alarmevent";
     private static final String DIALOGTAG_REPEAT = "alarmrepetition";
     private static final String DIALOGTAG_LABEL = "alarmlabel";
+    private static final String DIALOGTAG_TIME = "alarmtime";
     private static final String DIALOGTAG_LOCATION = "alarmlocation";
     private static final String DIALOGTAG_HELP = "help";
     private static final String DIALOGTAG_ABOUT = "about";
@@ -246,6 +247,12 @@ public class AlarmClockActivity extends AppCompatActivity
         if (locationDialog != null)
         {
             locationDialog.setDialogListener(onLocationChanged);
+        }
+
+        AlarmTimeDialog timeDialog = (AlarmTimeDialog) fragments.findFragmentByTag(DIALOGTAG_TIME);
+        if (timeDialog != null)
+        {
+            timeDialog.setOnAcceptedListener(onTimeChanged);
         }
     }
 
@@ -653,32 +660,6 @@ public class AlarmClockActivity extends AppCompatActivity
     };
 
     /**
-     * onPickTime
-     */
-    private TimePickerDialog.OnTimeSetListener onPickTime = new TimePickerDialog.OnTimeSetListener()
-    {
-        @Override
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute)
-        {
-            AlarmClockItem item = adapter.findItem(t_selectedItem);
-            t_selectedItem = null;
-
-            if (item != null)
-            {
-                item.event = null;
-                item.hour = hourOfDay;
-                item.minute = minute;
-                item.modified = true;
-                updateAlarmTime(AlarmClockActivity.this, item);
-
-                AlarmClockUpdateTask task = new AlarmClockUpdateTask(AlarmClockActivity.this);
-                task.setTaskListener(onUpdateItem);
-                task.execute(item);
-            }
-        }
-    };
-
-    /**
      * pickTime
      * @param item apply time to AlarmClockItem
      */
@@ -697,10 +678,40 @@ public class AlarmClockActivity extends AppCompatActivity
             minute = calendar.get(Calendar.MINUTE);
         }
 
-        TimePickerDialog dialog = new TimePickerDialog(AlarmClockActivity.this, onPickTime, hour, minute, SuntimesUtils.is24());
+        AlarmTimeDialog timeDialog = new AlarmTimeDialog();
+        timeDialog.setTime(hour, minute);
+        timeDialog.set24Hour(SuntimesUtils.is24());
+        timeDialog.setOnAcceptedListener(onTimeChanged);
         t_selectedItem = item.rowID;
-        dialog.show();
+        timeDialog.show(getSupportFragmentManager(), DIALOGTAG_TIME);
     }
+
+    private DialogInterface.OnClickListener onTimeChanged = new DialogInterface.OnClickListener()
+    {
+        @Override
+        public void onClick(DialogInterface dialog, int which)
+        {
+            FragmentManager fragments = getSupportFragmentManager();
+            AlarmTimeDialog timeDialog = (AlarmTimeDialog) fragments.findFragmentByTag(DIALOGTAG_TIME);
+
+            AlarmClockItem item = adapter.findItem(t_selectedItem);
+            t_selectedItem = null;
+
+            if (item != null && timeDialog != null)
+            {
+                item.event = null;
+                item.hour = timeDialog.getHour();
+                item.minute = timeDialog.getMinute();
+                item.modified = true;
+                updateAlarmTime(AlarmClockActivity.this, item);
+
+                AlarmClockUpdateTask task = new AlarmClockUpdateTask(AlarmClockActivity.this);
+                task.setTaskListener(onUpdateItem);
+                task.execute(item);
+            }
+
+        }
+    };
 
     /**
      * pickOffset

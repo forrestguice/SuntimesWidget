@@ -561,6 +561,10 @@
     <string name="alarmrepeat_dialog_ok">Apply</string>        <!-- button --> <!-- TODO -->
     <string name="alarmrepeat_dialog_cancel">Cancel</string>    <!-- button --> <!-- TODO -->
 
+    <string name="alarmtime_dialog_title">Alarm Time</string>        <!-- dialog title -->  <!-- TODO -->
+    <string name="alarmtime_dialog_ok">Override</string>        <!-- button --> <!-- TODO -->
+    <string name="alarmtime_dialog_cancel">Cancel</string>    <!-- button --> <!-- TODO -->
+
     <!--
          APP SETTINGS
     -->
