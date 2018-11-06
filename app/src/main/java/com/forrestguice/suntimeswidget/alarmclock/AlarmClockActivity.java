@@ -99,6 +99,7 @@ public class AlarmClockActivity extends AppCompatActivity
     private static final String DIALOGTAG_REPEAT = "alarmrepetition";
     private static final String DIALOGTAG_LABEL = "alarmlabel";
     private static final String DIALOGTAG_TIME = "alarmtime";
+    private static final String DIALOGTAG_OFFSET = "alarmoffset";
     private static final String DIALOGTAG_LOCATION = "alarmlocation";
     private static final String DIALOGTAG_HELP = "help";
     private static final String DIALOGTAG_ABOUT = "about";
@@ -253,6 +254,12 @@ public class AlarmClockActivity extends AppCompatActivity
         if (timeDialog != null)
         {
             timeDialog.setOnAcceptedListener(onTimeChanged);
+        }
+
+        AlarmOffsetDialog offsetDialog = (AlarmOffsetDialog) fragments.findFragmentByTag(DIALOGTAG_OFFSET);
+        if (offsetDialog != null)
+        {
+            offsetDialog.setOnAcceptedListener(onOffsetChanged);
         }
     }
 
@@ -719,8 +726,36 @@ public class AlarmClockActivity extends AppCompatActivity
      */
     protected void pickOffset(@NonNull AlarmClockItem item)
     {
-        // TODO
+        AlarmOffsetDialog offsetDialog = new AlarmOffsetDialog();
+        offsetDialog.setOffset(item.offset);
+        offsetDialog.setOnAcceptedListener(onOffsetChanged);
+        t_selectedItem = item.rowID;
+        offsetDialog.show(getSupportFragmentManager(), DIALOGTAG_OFFSET);
     }
+
+    /**
+     * onOffsetChanged
+     */
+    private DialogInterface.OnClickListener onOffsetChanged = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which)
+        {
+            FragmentManager fragments = getSupportFragmentManager();
+            AlarmOffsetDialog offsetDialog = (AlarmOffsetDialog) fragments.findFragmentByTag(DIALOGTAG_OFFSET);
+
+            AlarmClockItem item = adapter.findItem(t_selectedItem);
+            t_selectedItem = null;
+
+            if (item != null && offsetDialog != null)
+            {
+                item.offset = offsetDialog.getOffset();
+                item.modified = true;
+                AlarmClockUpdateTask task = new AlarmClockUpdateTask(AlarmClockActivity.this);
+                task.setTaskListener(onUpdateItem);
+                task.execute(item);
+            }
+        }
+    };
 
     /**
      * pickRepetition
@@ -728,7 +763,7 @@ public class AlarmClockActivity extends AppCompatActivity
      */
     protected void pickRepetition(@NonNull AlarmClockItem item)
     {
-        final AlarmRepeatDialog repeatDialog = new AlarmRepeatDialog();
+        AlarmRepeatDialog repeatDialog = new AlarmRepeatDialog();
         repeatDialog.setRepetition(item.repeating, item.repeatingDays);
         repeatDialog.setOnAcceptedListener(onRepetitionChanged);
 
