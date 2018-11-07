@@ -529,6 +529,9 @@
     <string name="configAction_deleteAlarm">Delete</string>               <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_clearAlarms">Clear</string>                <!-- action button / menu item -->  <!-- TODO -->
 
+    <string name="alarmAction_dismiss">Dismiss</string>                <!-- notification action button -->  <!-- TODO -->
+    <string name="alarmAction_snooze">Snooze</string>                <!-- notification action button -->  <!-- TODO -->
+
     <string name="alarmMode_alarm">Alarm</string>                <!-- alarm type (setting) -->  <!-- TODO -->
     <string name="alarmMode_notification">Notification</string>                <!-- alarm type (setting) -->  <!-- TODO -->
 
@@ -569,6 +572,7 @@
     <string name="alarmoffset_dialog_ok">Apply</string>        <!-- button --> <!-- TODO -->
     <string name="alarmoffset_dialog_cancel">Cancel</string>    <!-- button --> <!-- TODO -->
 
+    <string name="alarmenabled_toast">Alarm set for <xliff:g id="alarmTime" example="8h">%1$s</xliff:g> from now.</string> <!-- toast msg --> <!-- TODO -->
 
     <!--
          APP SETTINGS
