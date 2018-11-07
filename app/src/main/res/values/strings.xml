@@ -574,6 +574,11 @@
 
     <string name="alarmenabled_toast">Alarm set for <xliff:g id="alarmTime" example="8h">%1$s</xliff:g> from now.</string> <!-- toast msg --> <!-- TODO -->
 
+    <plurals name="units_minutes">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
+
     <!--
          APP SETTINGS
     -->
