@@ -50,7 +50,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.widget.Toast;
 
-import com.forrestguice.suntimeswidget.alarmclock.AlarmClockActivity;
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calendar.SuntimesCalendarTask;

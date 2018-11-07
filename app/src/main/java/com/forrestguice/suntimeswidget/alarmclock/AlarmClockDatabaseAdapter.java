@@ -27,8 +27,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class AlarmClockDatabaseAdapter
 {
-    private static final String DATABASE_NAME = "suntimesAlarms";
-    private static final int DATABASE_VERSION = 1;
+    public static final String DATABASE_NAME = "suntimesAlarms";
+    public static final int DATABASE_VERSION = 1;
 
     public static final String KEY_ROWID = "_id";                                                   // row ID
     public static final String DEF_ROWID = KEY_ROWID + " integer primary key autoincrement";

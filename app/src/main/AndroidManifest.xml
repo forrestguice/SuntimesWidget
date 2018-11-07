@@ -113,10 +113,10 @@
 
         <!-- Alarm Clock Activity -->
         <activity
-            android:name=".alarmclock.AlarmClockActivity"
+            android:name=".alarmclock.ui.AlarmClockActivity"
             android:label="@string/app_name_alarmclock"
             android:icon="@mipmap/ic_suntimes"
-            android:taskAffinity=".alarmclock.AlarmClockActivity"
+            android:taskAffinity=".alarmclock.ui.AlarmClockActivity"
             android:launchMode="singleTop">
 
             <intent-filter>

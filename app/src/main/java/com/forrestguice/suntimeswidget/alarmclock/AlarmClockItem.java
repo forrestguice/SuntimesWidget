@@ -35,23 +35,26 @@ import java.util.Calendar;
  */
 public class AlarmClockItem
 {
-    protected long rowID = -1L;
-    protected AlarmType type = AlarmType.ALARM;
-    protected boolean enabled = false;
-    protected boolean repeating = false;
-    protected ArrayList<Integer> repeatingDays = null;
-    protected long timestamp = -1L;
-    protected int hour = -1, minute = -1;
-    protected long offset = 0;
-    protected String label = null;
-    protected SolarEvents event = null;
-    protected WidgetSettings.Location location = null;
-    protected String ringtoneName = null;
-    protected String ringtoneURI = null;
-    protected boolean vibrate = false;
+    public static final String AUTHORITY = "com.forrestguice.suntimeswidget.alarmclock";
+    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/alarms");
 
-    protected int icon = 0;
-    protected boolean modified = false;
+    public long rowID = -1L;
+    public AlarmType type = AlarmType.ALARM;
+    public boolean enabled = false;
+    public boolean repeating = false;
+    public ArrayList<Integer> repeatingDays = null;
+    public long timestamp = -1L;
+    public int hour = -1, minute = -1;
+    public long offset = 0;
+    public String label = null;
+    public SolarEvents event = null;
+    public WidgetSettings.Location location = null;
+    public String ringtoneName = null;
+    public String ringtoneURI = null;
+    public boolean vibrate = false;
+
+    public int icon = 0;
+    public boolean modified = false;
 
     public AlarmClockItem() {}
 
@@ -150,7 +153,7 @@ public class AlarmClockItem
      * getRepeatingDays
      * @return a stringlist representation of repeatingDays Array (e.g. "0,1,2,3");
      */
-    protected String getRepeatingDays()
+    public String getRepeatingDays()
     {
         if (repeatingDays != null)
         {
@@ -174,7 +177,7 @@ public class AlarmClockItem
      * setRepeatingDays
      * @param repeatingDaysString a stringlist representation of repeatingDays Array (e.g. "0,1,2,3");
      */
-    protected void setRepeatingDays(String repeatingDaysString)
+    public void setRepeatingDays(String repeatingDaysString)
     {
         if (repeatingDaysString != null)
         {
@@ -249,4 +252,5 @@ public class AlarmClockItem
             return retValue;
         }
     }
+
 }

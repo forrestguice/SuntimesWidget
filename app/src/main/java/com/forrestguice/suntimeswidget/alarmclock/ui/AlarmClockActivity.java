@@ -16,10 +16,9 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */ 
 
-package com.forrestguice.suntimeswidget.alarmclock;
+package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.annotation.SuppressLint;
-import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -53,20 +52,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.AboutDialog;
@@ -76,6 +70,9 @@ import com.forrestguice.suntimeswidget.LocationConfigDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockDatabaseAdapter;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
@@ -168,9 +165,9 @@ public class AlarmClockActivity extends AppCompatActivity
                 int param_hour = intent.getIntExtra(AlarmClock.EXTRA_HOUR, -1);
                 int param_minute = intent.getIntExtra(AlarmClock.EXTRA_MINUTES, -1);
 
-                ArrayList<Integer> param_days = getDefaultRepetition();
-                boolean param_vibrate = getDefaultVibrate();
-                Uri param_ringtoneUri = getDefaultRingtoneUri();
+                ArrayList<Integer> param_days = getDefaultRepetition(this);
+                boolean param_vibrate = getDefaultVibrate(this);
+                Uri param_ringtoneUri = getDefaultRingtoneUri(this);
                 if (Build.VERSION.SDK_INT >= 19)
                 {
                     param_vibrate = intent.getBooleanExtra(AlarmClock.EXTRA_VIBRATE, param_vibrate);
@@ -408,7 +405,7 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         FragmentManager fragments = getSupportFragmentManager();
         AlarmDialog dialog = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
-        addAlarm("", dialog.getChoice(), -1, -1, getDefaultVibrate(), getDefaultRingtoneUri(), getDefaultRepetition());
+        addAlarm("", dialog.getChoice(), -1, -1, getDefaultVibrate(this), getDefaultRingtoneUri(this), getDefaultRepetition(this));
     }
     protected void addAlarm(String label, SolarEvents event, int hour, int minute, boolean vibrate, Uri ringtoneUri, ArrayList<Integer> repetitionDays)
     {
@@ -425,7 +422,7 @@ public class AlarmClockActivity extends AppCompatActivity
         });
 
         final AlarmClockItem alarm = new AlarmClockItem();
-        alarm.enabled = getDefaultNewAlarmsEnabled();
+        alarm.enabled = getDefaultNewAlarmsEnabled(this);
         alarm.label = label;
 
         alarm.hour = hour;
@@ -448,22 +445,22 @@ public class AlarmClockActivity extends AppCompatActivity
         task.execute(alarm);
     }
 
-    public boolean getDefaultNewAlarmsEnabled()
+    public static boolean getDefaultNewAlarmsEnabled(Context context)
     {
         return true;
     }
 
-    public Uri getDefaultRingtoneUri()
+    public static Uri getDefaultRingtoneUri(Context context)
     {
-        return RingtoneManager.getActualDefaultRingtoneUri(AlarmClockActivity.this, RingtoneManager.TYPE_ALARM);
+        return RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_ALARM);
     }
 
-    public boolean getDefaultVibrate()
+    public static boolean getDefaultVibrate(Context context)
     {
         return false;
     }
 
-    public ArrayList<Integer> getDefaultRepetition()
+    public static ArrayList<Integer> getDefaultRepetition(Context context)
     {
         return AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS;
     }
@@ -845,7 +842,7 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, getDefaultRingtoneUri());
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, getDefaultRingtoneUri(this));
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (item.ringtoneURI != null ? Uri.parse(item.ringtoneURI) : null));
         t_selectedItem = item.rowID;
         startActivityForResult(intent, REQUEST_RINGTONE);
@@ -1577,11 +1574,38 @@ public class AlarmClockActivity extends AppCompatActivity
             onAlarmModified(item);
 
             itemView.setBackgroundColor(enabled ? alarmEnabledColor : alarmDisabledColor);
-            if (enabled)
-            {
-                Toast msg = Toast.makeText(context, "alarm " + item.rowID + " enabled", Toast.LENGTH_SHORT);  // TODO
-                msg.show();
+            if (enabled) {
+                showAlarmEnabledMessage(context, item);  // TODO: this line belongs somewhere else .. like when actually scheduled via AlarmManager
+                triggerNotification(context, item);  // TODO: remove this line .. testing, trigger notification immediately
             }
+        }
+
+        /**
+         * showAlarmEnabledMessage
+         * @param context
+         * @param item
+         */
+        protected static void showAlarmEnabledMessage(@NonNull Context context, @NonNull AlarmClockItem item)
+        {
+            Calendar now = Calendar.getInstance();
+            SuntimesUtils.TimeDisplayText alarmText = utils.timeDeltaLongDisplayString(now.getTimeInMillis(), item.timestamp);
+            String alarmString = context.getString(R.string.alarmenabled_toast, alarmText.getValue());
+            SpannableString alarmDisplay = SuntimesUtils.createBoldSpan(null, alarmString, alarmText.getValue());
+            Toast msg = Toast.makeText(context, alarmDisplay, Toast.LENGTH_SHORT);
+            msg.show();
+        }
+
+        /**
+         * triggerNotification
+         * @param context
+         * @param item
+         */
+        protected static void triggerNotification(@NonNull Context context, @NonNull AlarmClockItem item)
+        {
+            Intent intent = new Intent(context, AlarmNotifications.class);
+            intent.setAction(AlarmNotifications.ACTION_SHOW);
+            intent.setData(item.getUri());
+            context.sendBroadcast(intent);  // TODO: testing
         }
 
         /**
