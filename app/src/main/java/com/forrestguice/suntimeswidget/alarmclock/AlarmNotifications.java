@@ -47,6 +47,7 @@ import java.io.IOException;
 public class AlarmNotifications extends BroadcastReceiver
 {
     public static final String ACTION_SHOW = "show";
+    public static final String ACTION_SILENT = "silent";
     public static final String ACTION_DISMISS = "dismiss";
     public static final String ACTION_SNOOZE = "snooze";
 
@@ -78,6 +79,9 @@ public class AlarmNotifications extends BroadcastReceiver
             {
                 stopAlert(context);
                 dismissNotification(context, notificationID);
+
+            } else if (action.equals(ACTION_SILENT)) {
+                stopAlert(context);
             }
 
             AlarmDatabaseAdapter.AlarmItemTask itemTask = new AlarmDatabaseAdapter.AlarmItemTask(context);
@@ -100,8 +104,11 @@ public class AlarmNotifications extends BroadcastReceiver
                             }
                         });
 
-                        if (action.equals(ACTION_DISMISS))
+                        if (action.equals(ACTION_SILENT))
                         {
+                            // TODO
+
+                        } else if (action.equals(ACTION_DISMISS)) {
                             if (!item.repeating)
                             {
                                 item.enabled = false;
@@ -110,6 +117,8 @@ public class AlarmNotifications extends BroadcastReceiver
                             }
 
                         } else if (action.equals(ACTION_SNOOZE)) {
+                            long snooze = loadSnoozePref(context);
+                            // TODO
 
                         } else if (action.equals(ACTION_SHOW)) {
                             showNotification(context, item);
@@ -140,7 +149,7 @@ public class AlarmNotifications extends BroadcastReceiver
         if (alarm.vibrate && vibrator != null)
         {
             int repeatFrom = (alarm.type == AlarmClockItem.AlarmType.ALARM ? 0 : -1);
-            vibrator.vibrate(getDefaultVibratePattern(context, alarm.type), repeatFrom);
+            vibrator.vibrate(loadDefaultVibratePattern(context, alarm.type), repeatFrom);
         }
 
         Uri soundUri = ((alarm.ringtoneURI != null && !alarm.ringtoneURI.isEmpty()) ? Uri.parse(alarm.ringtoneURI) : null);
@@ -214,7 +223,7 @@ public class AlarmNotifications extends BroadcastReceiver
             player.setOnErrorListener(new MediaPlayer.OnErrorListener()
             {
                 @Override
-                public boolean onError(MediaPlayer mp, int what, int extra)
+                public boolean onError(MediaPlayer mediaPlayer, int what, int extra)
                 {
                     Log.d("DEBUG", "MediaPlayer error " + what);
                     return false;
@@ -226,8 +235,8 @@ public class AlarmNotifications extends BroadcastReceiver
                 @Override
                 public void onSeekComplete(MediaPlayer mediaPlayer)
                 {
-                    if (!mediaPlayer.isLooping()) {
-                        stopAlert(context);
+                    if (!mediaPlayer.isLooping()) {                // some sounds (mostly ringtones) have a built-in loop - they repeat despite !isLooping!
+                        stopAlert(context);                            // so manually stop them after playing once
                     }
                 }
             });
