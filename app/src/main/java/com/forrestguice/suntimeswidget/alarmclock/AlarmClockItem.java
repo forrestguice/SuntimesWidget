@@ -18,8 +18,10 @@
 
 package com.forrestguice.suntimeswidget.alarmclock;
 
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
@@ -171,6 +173,15 @@ public class AlarmClockItem
             }
             return repeatingDaysString.toString();
         } else return null;
+    }
+
+    /**
+     * getUri
+     * @return e.g. content://com.forrestguice.suntimeswidget.alarmclock/alarms/[rowID]
+     */
+    public Uri getUri()
+    {
+        return ContentUris.withAppendedId(CONTENT_URI, rowID);
     }
 
     /**
