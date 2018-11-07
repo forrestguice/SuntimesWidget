@@ -70,7 +70,7 @@ import com.forrestguice.suntimeswidget.LocationConfigDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmClockDatabaseAdapter;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
@@ -409,8 +409,8 @@ public class AlarmClockActivity extends AppCompatActivity
     }
     protected void addAlarm(String label, SolarEvents event, int hour, int minute, boolean vibrate, Uri ringtoneUri, ArrayList<Integer> repetitionDays)
     {
-        AlarmClockDatabaseAdapter.AlarmUpdateTask task = new AlarmClockDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, true);
-        task.setTaskListener(new AlarmClockDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
+        AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, true);
+        task.setTaskListener(new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
         {
             @Override
             public void onFinished(Boolean result)
@@ -484,7 +484,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 item.modified = true;
                 updateAlarmTime(AlarmClockActivity.this, item);
 
-                AlarmClockDatabaseAdapter.AlarmUpdateTask task = new AlarmClockDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this);
+                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this);
                 task.setTaskListener(onUpdateItem);
                 task.execute(item);
             }
@@ -567,7 +567,7 @@ public class AlarmClockActivity extends AppCompatActivity
     /**
      * onUpdateItem
      */
-    private AlarmClockDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener onUpdateItem = new AlarmClockDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
+    private AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener onUpdateItem = new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
     {
         @Override
         public void onFinished(Boolean result)
@@ -654,7 +654,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 item.modified = true;
                 updateAlarmTime(AlarmClockActivity.this, item);
 
-                AlarmClockDatabaseAdapter.AlarmUpdateTask task = new AlarmClockDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this);
+                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this);
                 task.setTaskListener(onUpdateItem);
                 task.execute(item);
                 return true;
@@ -709,7 +709,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 item.modified = true;
                 updateAlarmTime(AlarmClockActivity.this, item);
 
-                AlarmClockDatabaseAdapter.AlarmUpdateTask task = new AlarmClockDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this);
+                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this);
                 task.setTaskListener(onUpdateItem);
                 task.execute(item);
             }
@@ -747,7 +747,7 @@ public class AlarmClockActivity extends AppCompatActivity
             {
                 item.offset = offsetDialog.getOffset();
                 item.modified = true;
-                AlarmClockDatabaseAdapter.AlarmUpdateTask task = new AlarmClockDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this);
+                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this);
                 task.setTaskListener(onUpdateItem);
                 task.execute(item);
             }
@@ -787,7 +787,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 item.repeatingDays = repeatDialog.getRepetitionDays();
                 item.modified = true;
 
-                AlarmClockDatabaseAdapter.AlarmUpdateTask task = new AlarmClockDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this);
+                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this);
                 task.setTaskListener(onUpdateItem);
                 task.execute(item);
             }
@@ -827,7 +827,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 item.label = dialog.getLabel();
                 item.modified = true;
 
-                AlarmClockDatabaseAdapter.AlarmUpdateTask task = new AlarmClockDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this);
+                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this);
                 task.setTaskListener(onUpdateItem);
                 task.execute(item);
             }
@@ -867,7 +867,7 @@ public class AlarmClockActivity extends AppCompatActivity
                     item.modified = true;
                     Log.d("DEBUG", "uri: " + item.ringtoneURI + ", title: " + ringtoneName);
 
-                    AlarmClockDatabaseAdapter.AlarmUpdateTask task = new AlarmClockDatabaseAdapter.AlarmUpdateTask(this);
+                    AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(this);
                     task.setTaskListener(onUpdateItem);
                     task.execute(item);
                 }
@@ -891,8 +891,8 @@ public class AlarmClockActivity extends AppCompatActivity
                 {
                     public void onClick(DialogInterface dialog, int whichButton)
                     {
-                        AlarmClockDatabaseAdapter.AlarmDeleteTask clearTask = new AlarmClockDatabaseAdapter.AlarmDeleteTask(context);
-                        clearTask.setTaskListener(new AlarmClockDatabaseAdapter.AlarmDeleteTask.AlarmClockDeleteTaskListener()
+                        AlarmDatabaseAdapter.AlarmDeleteTask clearTask = new AlarmDatabaseAdapter.AlarmDeleteTask(context);
+                        clearTask.setTaskListener(new AlarmDatabaseAdapter.AlarmDeleteTask.AlarmClockDeleteTaskListener()
                         {
                             @Override
                             public void onFinished(Boolean result)
@@ -935,7 +935,7 @@ public class AlarmClockActivity extends AppCompatActivity
      */
     public static class AlarmClockListTask extends AsyncTask<String, AlarmClockItem, AlarmClockAdapter>
     {
-        private AlarmClockDatabaseAdapter db;
+        private AlarmDatabaseAdapter db;
         private WeakReference<Context> contextRef;
         private WeakReference<ListView> alarmListRef;
         private WeakReference<View> emptyViewRef;
@@ -945,7 +945,7 @@ public class AlarmClockActivity extends AppCompatActivity
             contextRef = new WeakReference<>(context);
             alarmListRef = new WeakReference<>(list);
             emptyViewRef = new WeakReference<>(emptyView);
-            db = new AlarmClockDatabaseAdapter(context.getApplicationContext());
+            db = new AlarmDatabaseAdapter(context.getApplicationContext());
         }
 
         @Override
@@ -1457,7 +1457,7 @@ public class AlarmClockActivity extends AppCompatActivity
         {
             if (item.modified)
             {
-                AlarmClockDatabaseAdapter.AlarmUpdateTask task = new AlarmClockDatabaseAdapter.AlarmUpdateTask(context);
+                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context);
                 task.execute(item);
             }
         }
@@ -1522,8 +1522,8 @@ public class AlarmClockActivity extends AppCompatActivity
                     {
                         public void onClick(DialogInterface dialog, int whichButton)
                         {
-                            AlarmClockDatabaseAdapter.AlarmDeleteTask deleteTask = new AlarmClockDatabaseAdapter.AlarmDeleteTask(context);
-                            deleteTask.setTaskListener(new AlarmClockDatabaseAdapter.AlarmDeleteTask.AlarmClockDeleteTaskListener()
+                            AlarmDatabaseAdapter.AlarmDeleteTask deleteTask = new AlarmDatabaseAdapter.AlarmDeleteTask(context);
+                            deleteTask.setTaskListener(new AlarmDatabaseAdapter.AlarmDeleteTask.AlarmClockDeleteTaskListener()
                             {
                                 @Override
                                 public void onFinished(Boolean result)

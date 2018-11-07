@@ -62,71 +62,71 @@ public class AlarmClockItem
 
     public AlarmClockItem(ContentValues alarm)
     {
-        rowID = alarm.getAsLong(AlarmClockDatabaseAdapter.KEY_ROWID);
-        type = AlarmType.valueOf(alarm.getAsString(AlarmClockDatabaseAdapter.KEY_ALARM_TYPE), AlarmType.ALARM);
-        enabled = (alarm.getAsInteger(AlarmClockDatabaseAdapter.KEY_ALARM_ENABLED) == 1);
-        label = alarm.getAsString(AlarmClockDatabaseAdapter.KEY_ALARM_LABEL);
+        rowID = alarm.getAsLong(AlarmDatabaseAdapter.KEY_ROWID);
+        type = AlarmType.valueOf(alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_TYPE), AlarmType.ALARM);
+        enabled = (alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_ENABLED) == 1);
+        label = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_LABEL);
 
-        repeating = (alarm.getAsInteger(AlarmClockDatabaseAdapter.KEY_ALARM_REPEATING) == 1);
-        setRepeatingDays(alarm.getAsString(AlarmClockDatabaseAdapter.KEY_ALARM_REPEATING_DAYS));
+        repeating = (alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_REPEATING) == 1);
+        setRepeatingDays(alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_REPEATING_DAYS));
 
-        timestamp = alarm.getAsLong(AlarmClockDatabaseAdapter.KEY_ALARM_DATETIME);
-        hour = alarm.getAsInteger(AlarmClockDatabaseAdapter.KEY_ALARM_DATETIME_HOUR);
-        minute = alarm.getAsInteger(AlarmClockDatabaseAdapter.KEY_ALARM_DATETIME_MINUTE);
-        offset = alarm.getAsLong(AlarmClockDatabaseAdapter.KEY_ALARM_DATETIME_OFFSET);
+        timestamp = alarm.getAsLong(AlarmDatabaseAdapter.KEY_ALARM_DATETIME);
+        hour = alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_HOUR);
+        minute = alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_MINUTE);
+        offset = alarm.getAsLong(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_OFFSET);
 
-        String locLat = alarm.getAsString(AlarmClockDatabaseAdapter.KEY_ALARM_LATITUDE);
-        String locLon = alarm.getAsString(AlarmClockDatabaseAdapter.KEY_ALARM_LONGITUDE);
+        String locLat = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_LATITUDE);
+        String locLon = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_LONGITUDE);
         if (locLat !=  null && locLon != null)
         {
-            String locLabel = alarm.getAsString(AlarmClockDatabaseAdapter.KEY_ALARM_PLACELABEL);
-            String locAlt = alarm.getAsString(AlarmClockDatabaseAdapter.KEY_ALARM_ALTITUDE);
+            String locLabel = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_PLACELABEL);
+            String locAlt = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_ALTITUDE);
             location = new WidgetSettings.Location(locLabel, locLat, locLon, locAlt);
         } else location = null;
 
-        String eventString = alarm.getAsString(AlarmClockDatabaseAdapter.KEY_ALARM_SOLAREVENT);
+        String eventString = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_SOLAREVENT);
         event = SolarEvents.valueOf(eventString, null);
 
-        vibrate = (alarm.getAsInteger(AlarmClockDatabaseAdapter.KEY_ALARM_VIBRATE) == 1);
-        ringtoneName = alarm.getAsString(AlarmClockDatabaseAdapter.KEY_ALARM_RINGTONE_NAME);
-        ringtoneURI = alarm.getAsString(AlarmClockDatabaseAdapter.KEY_ALARM_RINGTONE_URI);
+        vibrate = (alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_VIBRATE) == 1);
+        ringtoneName = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_RINGTONE_NAME);
+        ringtoneURI = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_RINGTONE_URI);
     }
 
     public ContentValues asContentValues(boolean withRowID)
     {
         ContentValues values = new ContentValues();
         if (withRowID) {
-            values.put(AlarmClockDatabaseAdapter.KEY_ROWID, rowID);
+            values.put(AlarmDatabaseAdapter.KEY_ROWID, rowID);
         }
-        values.put(AlarmClockDatabaseAdapter.KEY_ALARM_TYPE, type.name());
-        values.put(AlarmClockDatabaseAdapter.KEY_ALARM_ENABLED, (enabled ? 1 : 0));
-        values.put(AlarmClockDatabaseAdapter.KEY_ALARM_LABEL, label);
-        values.put(AlarmClockDatabaseAdapter.KEY_ALARM_REPEATING, (repeating ? 1 : 0));
+        values.put(AlarmDatabaseAdapter.KEY_ALARM_TYPE, type.name());
+        values.put(AlarmDatabaseAdapter.KEY_ALARM_ENABLED, (enabled ? 1 : 0));
+        values.put(AlarmDatabaseAdapter.KEY_ALARM_LABEL, label);
+        values.put(AlarmDatabaseAdapter.KEY_ALARM_REPEATING, (repeating ? 1 : 0));
 
-        values.put(AlarmClockDatabaseAdapter.KEY_ALARM_DATETIME, timestamp);
-        values.put(AlarmClockDatabaseAdapter.KEY_ALARM_DATETIME_HOUR, hour);
-        values.put(AlarmClockDatabaseAdapter.KEY_ALARM_DATETIME_MINUTE, minute);
-        values.put(AlarmClockDatabaseAdapter.KEY_ALARM_DATETIME_OFFSET, offset);
+        values.put(AlarmDatabaseAdapter.KEY_ALARM_DATETIME, timestamp);
+        values.put(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_HOUR, hour);
+        values.put(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_MINUTE, minute);
+        values.put(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_OFFSET, offset);
 
         if (location != null)
         {
-            values.put(AlarmClockDatabaseAdapter.KEY_ALARM_PLACELABEL, location.getLabel());
-            values.put(AlarmClockDatabaseAdapter.KEY_ALARM_LATITUDE, location.getLatitude());
-            values.put(AlarmClockDatabaseAdapter.KEY_ALARM_LONGITUDE, location.getLongitude());
-            values.put(AlarmClockDatabaseAdapter.KEY_ALARM_ALTITUDE, location.getAltitude());
+            values.put(AlarmDatabaseAdapter.KEY_ALARM_PLACELABEL, location.getLabel());
+            values.put(AlarmDatabaseAdapter.KEY_ALARM_LATITUDE, location.getLatitude());
+            values.put(AlarmDatabaseAdapter.KEY_ALARM_LONGITUDE, location.getLongitude());
+            values.put(AlarmDatabaseAdapter.KEY_ALARM_ALTITUDE, location.getAltitude());
         }
 
         if (event != null) {
-            values.put(AlarmClockDatabaseAdapter.KEY_ALARM_SOLAREVENT, event.name());
-        } else values.putNull(AlarmClockDatabaseAdapter.KEY_ALARM_SOLAREVENT);
+            values.put(AlarmDatabaseAdapter.KEY_ALARM_SOLAREVENT, event.name());
+        } else values.putNull(AlarmDatabaseAdapter.KEY_ALARM_SOLAREVENT);
 
         if (repeatingDays != null) {
-            values.put(AlarmClockDatabaseAdapter.KEY_ALARM_REPEATING_DAYS, getRepeatingDays());
-        } else values.putNull(AlarmClockDatabaseAdapter.KEY_ALARM_REPEATING_DAYS);
+            values.put(AlarmDatabaseAdapter.KEY_ALARM_REPEATING_DAYS, getRepeatingDays());
+        } else values.putNull(AlarmDatabaseAdapter.KEY_ALARM_REPEATING_DAYS);
 
-        values.put(AlarmClockDatabaseAdapter.KEY_ALARM_VIBRATE, (vibrate ? 1 : 0));
-        values.put(AlarmClockDatabaseAdapter.KEY_ALARM_RINGTONE_NAME, ringtoneName);
-        values.put(AlarmClockDatabaseAdapter.KEY_ALARM_RINGTONE_URI, ringtoneURI);
+        values.put(AlarmDatabaseAdapter.KEY_ALARM_VIBRATE, (vibrate ? 1 : 0));
+        values.put(AlarmDatabaseAdapter.KEY_ALARM_RINGTONE_NAME, ringtoneName);
+        values.put(AlarmDatabaseAdapter.KEY_ALARM_RINGTONE_URI, ringtoneURI);
         return values;
     }
 

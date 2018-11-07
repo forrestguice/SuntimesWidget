@@ -495,7 +495,7 @@ public class SuntimesUtils
     {
         return DateFormatSymbols.getInstance(getLocale()).getShortWeekdays();
     }
-    
+
     /**
      * formats a time display string (lets the system determine the exact format).
      *

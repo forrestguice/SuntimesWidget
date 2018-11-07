@@ -71,16 +71,16 @@ public class AlarmNotifications extends BroadcastReceiver
                 dismissNotification(context, notificationID);
             }
 
-            AlarmClockDatabaseAdapter.AlarmItemTask itemTask = new AlarmClockDatabaseAdapter.AlarmItemTask(context);
-            itemTask.setAlarmItemTaskListener(new AlarmClockDatabaseAdapter.AlarmItemTask.AlarmItemTaskListener()
+            AlarmDatabaseAdapter.AlarmItemTask itemTask = new AlarmDatabaseAdapter.AlarmItemTask(context);
+            itemTask.setAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmItemTask.AlarmItemTaskListener()
             {
                 @Override
                 public void onItemLoaded(AlarmClockItem item)
                 {
                     if (item != null)
                     {
-                        AlarmClockDatabaseAdapter.AlarmUpdateTask updateTask = new AlarmClockDatabaseAdapter.AlarmUpdateTask(context);
-                        updateTask.setTaskListener(new AlarmClockDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
+                        AlarmDatabaseAdapter.AlarmUpdateTask updateTask = new AlarmDatabaseAdapter.AlarmUpdateTask(context);
+                        updateTask.setTaskListener(new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
                         {
                             @Override
                             public void onFinished(Boolean result)

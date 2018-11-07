@@ -27,7 +27,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.AsyncTask;
 
-public class AlarmClockDatabaseAdapter
+public class AlarmDatabaseAdapter
 {
     public static final String DATABASE_NAME = "suntimesAlarms";
     public static final int DATABASE_VERSION = 1;
@@ -128,7 +128,7 @@ public class AlarmClockDatabaseAdapter
     private SQLiteDatabase database;
     private DatabaseHelper databaseHelper;
 
-    public AlarmClockDatabaseAdapter(Context context)
+    public AlarmDatabaseAdapter(Context context)
     {
         this.context = context;
     }
@@ -138,7 +138,7 @@ public class AlarmClockDatabaseAdapter
      * @return a reference the (now open) database adapter
      * @throws SQLException if failed to open
      */
-    public AlarmClockDatabaseAdapter open() throws SQLException
+    public AlarmDatabaseAdapter open() throws SQLException
     {
         if (databaseHelper != null)
         {
@@ -335,11 +335,11 @@ public class AlarmClockDatabaseAdapter
      */
     public static class AlarmItemTask extends AsyncTask<Long, Void, AlarmClockItem>
     {
-        protected AlarmClockDatabaseAdapter db;
+        protected AlarmDatabaseAdapter db;
 
         public AlarmItemTask(Context context)
         {
-            db = new AlarmClockDatabaseAdapter(context.getApplicationContext());
+            db = new AlarmDatabaseAdapter(context.getApplicationContext());
         }
 
         @Override
@@ -386,17 +386,17 @@ public class AlarmClockDatabaseAdapter
      */
     public static class AlarmUpdateTask extends AsyncTask<AlarmClockItem, Void, Boolean>
     {
-        protected AlarmClockDatabaseAdapter db;
+        protected AlarmDatabaseAdapter db;
         private boolean flag_add = false;
 
         public AlarmUpdateTask(Context context)
         {
-            db = new AlarmClockDatabaseAdapter(context.getApplicationContext());
+            db = new AlarmDatabaseAdapter(context.getApplicationContext());
         }
 
         public AlarmUpdateTask(Context context, boolean flag_add)
         {
-            db = new AlarmClockDatabaseAdapter(context.getApplicationContext());
+            db = new AlarmDatabaseAdapter(context.getApplicationContext());
             this.flag_add = flag_add;
         }
 
@@ -438,11 +438,11 @@ public class AlarmClockDatabaseAdapter
      */
     public static class AlarmDeleteTask extends AsyncTask<Long, Void, Boolean>
     {
-        protected AlarmClockDatabaseAdapter db;
+        protected AlarmDatabaseAdapter db;
 
         public AlarmDeleteTask(Context context)
         {
-            db = new AlarmClockDatabaseAdapter(context.getApplicationContext());
+            db = new AlarmDatabaseAdapter(context.getApplicationContext());
         }
 
         @Override
