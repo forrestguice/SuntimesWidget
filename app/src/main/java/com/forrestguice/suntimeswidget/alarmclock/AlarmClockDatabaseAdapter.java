@@ -21,9 +21,11 @@ package com.forrestguice.suntimeswidget.alarmclock;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.AsyncTask;
 
 public class AlarmClockDatabaseAdapter
 {
@@ -324,4 +326,159 @@ public class AlarmClockDatabaseAdapter
             }*/
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * AlarmItemTask
+     */
+    public static class AlarmItemTask extends AsyncTask<Long, Void, AlarmClockItem>
+    {
+        protected AlarmClockDatabaseAdapter db;
+
+        public AlarmItemTask(Context context)
+        {
+            db = new AlarmClockDatabaseAdapter(context.getApplicationContext());
+        }
+
+        @Override
+        protected AlarmClockItem doInBackground(Long... rowIDs)
+        {
+            AlarmClockItem item = null;
+            if (rowIDs.length > 0)
+            {
+                db.open();
+                Cursor cursor = db.getAlarm(rowIDs[0]);
+                cursor.moveToFirst();
+                if (!cursor.isAfterLast())
+                {
+                    ContentValues entryValues = new ContentValues();
+                    DatabaseUtils.cursorRowToContentValues(cursor, entryValues);
+                    item = new AlarmClockItem(entryValues);
+                }
+                db.close();
+            }
+            return item;
+        }
+
+        protected void onPostExecute( AlarmClockItem item )
+        {
+            if (taskListener != null) {
+                taskListener.onItemLoaded(item);
+            }
+        }
+
+        private AlarmItemTaskListener taskListener = null;
+        public void setAlarmItemTaskListener( AlarmItemTaskListener listener )
+        {
+            this.taskListener = listener;
+        }
+
+        public static abstract class AlarmItemTaskListener
+        {
+            public void onItemLoaded( AlarmClockItem item ) {}
+        }
+    }
+
+    /**
+     * AlarmUpdateTask
+     */
+    public static class AlarmUpdateTask extends AsyncTask<AlarmClockItem, Void, Boolean>
+    {
+        protected AlarmClockDatabaseAdapter db;
+        private boolean flag_add = false;
+
+        public AlarmUpdateTask(Context context)
+        {
+            db = new AlarmClockDatabaseAdapter(context.getApplicationContext());
+        }
+
+        public AlarmUpdateTask(Context context, boolean flag_add)
+        {
+            db = new AlarmClockDatabaseAdapter(context.getApplicationContext());
+            this.flag_add = flag_add;
+        }
+
+        @Override
+        protected Boolean doInBackground(AlarmClockItem... items)
+        {
+            db.open();
+            boolean updated = true;
+            for (AlarmClockItem item : items) {
+                updated = updated && ((flag_add
+                        ? (db.addAlarm(item.asContentValues(false)) > 0)
+                        : (db.updateAlarm(item.rowID, item.asContentValues(false)))));
+            }
+            db.close();
+            return updated;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result)
+        {
+            if (listener != null)
+                listener.onFinished(result);
+        }
+
+        protected AlarmClockUpdateTaskListener listener = null;
+        public void setTaskListener( AlarmClockUpdateTaskListener l )
+        {
+            listener = l;
+        }
+
+        public static abstract class AlarmClockUpdateTaskListener
+        {
+            public void onFinished(Boolean result) {}
+        }
+    }
+
+    /**
+     * AlarmDeleteTask
+     */
+    public static class AlarmDeleteTask extends AsyncTask<Long, Void, Boolean>
+    {
+        protected AlarmClockDatabaseAdapter db;
+
+        public AlarmDeleteTask(Context context)
+        {
+            db = new AlarmClockDatabaseAdapter(context.getApplicationContext());
+        }
+
+        @Override
+        protected Boolean doInBackground(Long... rowIDs)
+        {
+            db.open();
+            boolean removed = true;
+            if (rowIDs.length > 0)
+            {
+                for (long rowID : rowIDs) {
+                    removed = removed && db.removeAlarm(rowID);
+                }
+            } else {
+                removed = db.clearAlarms();
+            }
+            db.close();
+            return removed;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result)
+        {
+            if (listener != null)
+                listener.onFinished(result);
+        }
+
+        protected AlarmClockDeleteTaskListener listener = null;
+        public void setTaskListener( AlarmClockDeleteTaskListener l )
+        {
+            listener = l;
+        }
+
+        public static abstract class AlarmClockDeleteTaskListener
+        {
+            public void onFinished(Boolean result) {}
+        }
+    }
+
 }

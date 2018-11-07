@@ -409,8 +409,8 @@ public class AlarmClockActivity extends AppCompatActivity
     }
     protected void addAlarm(String label, SolarEvents event, int hour, int minute, boolean vibrate, Uri ringtoneUri, ArrayList<Integer> repetitionDays)
     {
-        AlarmClockUpdateTask task = new AlarmClockUpdateTask(AlarmClockActivity.this, true);
-        task.setTaskListener(new AlarmClockUpdateTask.AlarmClockUpdateTaskListener()
+        AlarmClockDatabaseAdapter.AlarmUpdateTask task = new AlarmClockDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, true);
+        task.setTaskListener(new AlarmClockDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
         {
             @Override
             public void onFinished(Boolean result)
@@ -484,7 +484,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 item.modified = true;
                 updateAlarmTime(AlarmClockActivity.this, item);
 
-                AlarmClockUpdateTask task = new AlarmClockUpdateTask(AlarmClockActivity.this);
+                AlarmClockDatabaseAdapter.AlarmUpdateTask task = new AlarmClockDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this);
                 task.setTaskListener(onUpdateItem);
                 task.execute(item);
             }
@@ -567,7 +567,7 @@ public class AlarmClockActivity extends AppCompatActivity
     /**
      * onUpdateItem
      */
-    private AlarmClockUpdateTask.AlarmClockUpdateTaskListener onUpdateItem = new AlarmClockUpdateTask.AlarmClockUpdateTaskListener()
+    private AlarmClockDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener onUpdateItem = new AlarmClockDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
     {
         @Override
         public void onFinished(Boolean result)
@@ -654,7 +654,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 item.modified = true;
                 updateAlarmTime(AlarmClockActivity.this, item);
 
-                AlarmClockUpdateTask task = new AlarmClockUpdateTask(AlarmClockActivity.this);
+                AlarmClockDatabaseAdapter.AlarmUpdateTask task = new AlarmClockDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this);
                 task.setTaskListener(onUpdateItem);
                 task.execute(item);
                 return true;
@@ -709,7 +709,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 item.modified = true;
                 updateAlarmTime(AlarmClockActivity.this, item);
 
-                AlarmClockUpdateTask task = new AlarmClockUpdateTask(AlarmClockActivity.this);
+                AlarmClockDatabaseAdapter.AlarmUpdateTask task = new AlarmClockDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this);
                 task.setTaskListener(onUpdateItem);
                 task.execute(item);
             }
@@ -747,7 +747,7 @@ public class AlarmClockActivity extends AppCompatActivity
             {
                 item.offset = offsetDialog.getOffset();
                 item.modified = true;
-                AlarmClockUpdateTask task = new AlarmClockUpdateTask(AlarmClockActivity.this);
+                AlarmClockDatabaseAdapter.AlarmUpdateTask task = new AlarmClockDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this);
                 task.setTaskListener(onUpdateItem);
                 task.execute(item);
             }
@@ -787,7 +787,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 item.repeatingDays = repeatDialog.getRepetitionDays();
                 item.modified = true;
 
-                AlarmClockUpdateTask task = new AlarmClockUpdateTask(AlarmClockActivity.this);
+                AlarmClockDatabaseAdapter.AlarmUpdateTask task = new AlarmClockDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this);
                 task.setTaskListener(onUpdateItem);
                 task.execute(item);
             }
@@ -827,7 +827,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 item.label = dialog.getLabel();
                 item.modified = true;
 
-                AlarmClockUpdateTask task = new AlarmClockUpdateTask(AlarmClockActivity.this);
+                AlarmClockDatabaseAdapter.AlarmUpdateTask task = new AlarmClockDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this);
                 task.setTaskListener(onUpdateItem);
                 task.execute(item);
             }
@@ -867,7 +867,7 @@ public class AlarmClockActivity extends AppCompatActivity
                     item.modified = true;
                     Log.d("DEBUG", "uri: " + item.ringtoneURI + ", title: " + ringtoneName);
 
-                    AlarmClockUpdateTask task = new AlarmClockUpdateTask(this);
+                    AlarmClockDatabaseAdapter.AlarmUpdateTask task = new AlarmClockDatabaseAdapter.AlarmUpdateTask(this);
                     task.setTaskListener(onUpdateItem);
                     task.execute(item);
                 }
@@ -891,8 +891,8 @@ public class AlarmClockActivity extends AppCompatActivity
                 {
                     public void onClick(DialogInterface dialog, int whichButton)
                     {
-                        AlarmClockDeleteTask clearTask = new AlarmClockDeleteTask(context);
-                        clearTask.setTaskListener(new AlarmClockDeleteTask.AlarmClockDeleteTaskListener()
+                        AlarmClockDatabaseAdapter.AlarmDeleteTask clearTask = new AlarmClockDatabaseAdapter.AlarmDeleteTask(context);
+                        clearTask.setTaskListener(new AlarmClockDatabaseAdapter.AlarmDeleteTask.AlarmClockDeleteTaskListener()
                         {
                             @Override
                             public void onFinished(Boolean result)
@@ -928,106 +928,6 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         AboutDialog aboutDialog = new AboutDialog();
         aboutDialog.show(getSupportFragmentManager(), DIALOGTAG_ABOUT);
-    }
-
-    /**
-     * AlarmClockUpdateTask
-     */
-    public static class AlarmClockUpdateTask extends AsyncTask<AlarmClockItem, Void, Boolean>
-    {
-        protected AlarmClockDatabaseAdapter db;
-        private boolean flag_add = false;
-
-        public AlarmClockUpdateTask(Context context)
-        {
-            db = new AlarmClockDatabaseAdapter(context.getApplicationContext());
-        }
-
-        public AlarmClockUpdateTask(Context context, boolean flag_add)
-        {
-            db = new AlarmClockDatabaseAdapter(context.getApplicationContext());
-            this.flag_add = flag_add;
-        }
-
-        @Override
-        protected Boolean doInBackground(AlarmClockItem... items)
-        {
-            db.open();
-            boolean updated = true;
-            for (AlarmClockItem item : items) {
-                updated = updated && ((flag_add
-                        ? (db.addAlarm(item.asContentValues(false)) > 0)
-                        : (db.updateAlarm(item.rowID, item.asContentValues(false)))));
-            }
-            db.close();
-            return updated;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result)
-        {
-            if (listener != null)
-                listener.onFinished(result);
-        }
-
-        protected AlarmClockUpdateTaskListener listener = null;
-        public void setTaskListener( AlarmClockUpdateTaskListener l )
-        {
-            listener = l;
-        }
-
-        public static abstract class AlarmClockUpdateTaskListener
-        {
-            public void onFinished(Boolean result) {}
-        }
-    }
-
-    /**
-     * AlarmClockDeleteTask
-     */
-    public static class AlarmClockDeleteTask extends AsyncTask<Long, Void, Boolean>
-    {
-        protected AlarmClockDatabaseAdapter db;
-
-        public AlarmClockDeleteTask(Context context)
-        {
-            db = new AlarmClockDatabaseAdapter(context.getApplicationContext());
-        }
-
-        @Override
-        protected Boolean doInBackground(Long... rowIDs)
-        {
-            db.open();
-            boolean removed = true;
-            if (rowIDs.length > 0)
-            {
-                for (long rowID : rowIDs) {
-                    removed = removed && db.removeAlarm(rowID);
-                }
-            } else {
-                removed = db.clearAlarms();
-            }
-            db.close();
-            return removed;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result)
-        {
-            if (listener != null)
-                listener.onFinished(result);
-        }
-
-        protected AlarmClockDeleteTaskListener listener = null;
-        public void setTaskListener( AlarmClockDeleteTaskListener l )
-        {
-            listener = l;
-        }
-
-        public static abstract class AlarmClockDeleteTaskListener
-        {
-            public void onFinished(Boolean result) {}
-        }
     }
 
     /**
@@ -1557,7 +1457,7 @@ public class AlarmClockActivity extends AppCompatActivity
         {
             if (item.modified)
             {
-                AlarmClockUpdateTask task = new AlarmClockUpdateTask(context);
+                AlarmClockDatabaseAdapter.AlarmUpdateTask task = new AlarmClockDatabaseAdapter.AlarmUpdateTask(context);
                 task.execute(item);
             }
         }
@@ -1622,8 +1522,8 @@ public class AlarmClockActivity extends AppCompatActivity
                     {
                         public void onClick(DialogInterface dialog, int whichButton)
                         {
-                            AlarmClockDeleteTask deleteTask = new AlarmClockDeleteTask(context);
-                            deleteTask.setTaskListener(new AlarmClockDeleteTask.AlarmClockDeleteTaskListener()
+                            AlarmClockDatabaseAdapter.AlarmDeleteTask deleteTask = new AlarmClockDatabaseAdapter.AlarmDeleteTask(context);
+                            deleteTask.setTaskListener(new AlarmClockDatabaseAdapter.AlarmDeleteTask.AlarmClockDeleteTaskListener()
                             {
                                 @Override
                                 public void onFinished(Boolean result)

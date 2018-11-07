@@ -22,15 +22,14 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ContentUris;
-import android.content.ContentValues;
+
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.DatabaseUtils;
+
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.AsyncTask;
+
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationManagerCompat;
@@ -39,6 +38,7 @@ import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 
 import java.io.IOException;
 
@@ -71,16 +71,34 @@ public class AlarmNotifications extends BroadcastReceiver
                 dismissNotification(context, notificationID);
             }
 
-            AlarmItemTask itemTask = new AlarmItemTask(context);
-            itemTask.setAlarmItemTaskListener(new AlarmItemTask.AlarmItemTaskListener()
+            AlarmClockDatabaseAdapter.AlarmItemTask itemTask = new AlarmClockDatabaseAdapter.AlarmItemTask(context);
+            itemTask.setAlarmItemTaskListener(new AlarmClockDatabaseAdapter.AlarmItemTask.AlarmItemTaskListener()
             {
                 @Override
                 public void onItemLoaded(AlarmClockItem item)
                 {
                     if (item != null)
                     {
+                        AlarmClockDatabaseAdapter.AlarmUpdateTask updateTask = new AlarmClockDatabaseAdapter.AlarmUpdateTask(context);
+                        updateTask.setTaskListener(new AlarmClockDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
+                        {
+                            @Override
+                            public void onFinished(Boolean result)
+                            {
+                                Intent intent = new Intent(context, AlarmClockActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                context.startActivity(intent);
+                            }
+                        });
+
                         if (action.equals(ACTION_DISMISS))
                         {
+                            if (!item.repeating)
+                            {
+                                item.enabled = false;
+                                item.modified = true;
+                                updateTask.execute(item);
+                            }
 
                         } else if (action.equals(ACTION_SNOOZE)) {
 
@@ -322,57 +340,4 @@ public class AlarmNotifications extends BroadcastReceiver
         notificationManager.cancel(ALARM_NOTIFICATION_TAG, notificationID);
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * AlarmItemTask
-     */
-    public static class AlarmItemTask extends AsyncTask<Long, Void, AlarmClockItem>
-    {
-        protected AlarmClockDatabaseAdapter db;
-
-        public AlarmItemTask(Context context)
-        {
-            db = new AlarmClockDatabaseAdapter(context.getApplicationContext());
-        }
-
-        @Override
-        protected AlarmClockItem doInBackground(Long... rowIDs)
-        {
-            AlarmClockItem item = null;
-            if (rowIDs.length > 0)
-            {
-                db.open();
-                Cursor cursor = db.getAlarm(rowIDs[0]);
-                cursor.moveToFirst();
-                if (!cursor.isAfterLast())
-                {
-                    ContentValues entryValues = new ContentValues();
-                    DatabaseUtils.cursorRowToContentValues(cursor, entryValues);
-                    item = new AlarmClockItem(entryValues);
-                }
-                db.close();
-            }
-            return item;
-        }
-
-        protected void onPostExecute( AlarmClockItem item )
-        {
-            if (taskListener != null) {
-                taskListener.onItemLoaded(item);
-            }
-        }
-
-        private AlarmItemTaskListener taskListener = null;
-        public void setAlarmItemTaskListener( AlarmItemTaskListener listener )
-        {
-            this.taskListener = listener;
-        }
-
-        public static abstract class AlarmItemTaskListener
-        {
-            public void onItemLoaded( AlarmClockItem item ) {}
-        }
-    }
 }
