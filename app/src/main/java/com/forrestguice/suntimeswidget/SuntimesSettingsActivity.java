@@ -133,6 +133,10 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 addPreferencesFromResource(R.xml.preference_general);
                 initPref_general();
 
+            } else if (action.equals(ACTION_PREFS_ALARMCLOCK)) {
+                addPreferencesFromResource(R.xml.preference_alarms);
+                initPref_alarms();
+
             } else if (action.equals(ACTION_PREFS_CALENDAR)) {
                 addPreferencesFromResource(R.xml.preference_calendars);
                 initPref_calendars();
@@ -304,14 +308,16 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                             header.iconRes = placesIcon;
                         } else if (header.fragment.endsWith("CalendarPrefsFragment")) {
                             header.iconRes = timeIcon;
+                        } else if (header.fragment.endsWith("AlarmPrefsFragment")) {
+                            header.iconRes = alarmIcon;
                         } else if (header.fragment.endsWith("UIPrefsFragment")) {
                             header.iconRes = paletteIcon;
                         } else header.iconRes = settingsIcon;
                     } else {
                         if (header.id == R.id.prefHeaderWidgets)
                             header.iconRes = widgetIcon;
-                        else if (header.id == R.id.prefHeaderAlarmClock)
-                            header.iconRes = alarmIcon;
+                        //else if (header.id == R.id.prefHeaderAlarmClock)
+                            //header.iconRes = alarmIcon;
                         else header.iconRes = settingsIcon;
                     }
                 }
@@ -327,6 +333,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     protected boolean isValidFragment(String fragmentName)
     {
         return GeneralPrefsFragment.class.getName().equals(fragmentName) ||
+               AlarmPrefsFragment.class.getName().equals(fragmentName) ||
                CalendarPrefsFragment.class.getName().equals(fragmentName) ||
                LocalePrefsFragment.class.getName().equals(fragmentName) ||
                UIPrefsFragment.class.getName().equals(fragmentName) ||
@@ -1212,6 +1219,34 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             }
         });
     }
+
+    //////////////////////////////////////////////////
+    //////////////////////////////////////////////////
+
+    /**
+     * Alarm Prefs
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class AlarmPrefsFragment extends PreferenceFragment
+    {
+        @Override
+        public void onCreate(Bundle savedInstanceState)
+        {
+            super.onCreate(savedInstanceState);
+            AppSettings.initLocale(getActivity());
+            Log.i(LOG_TAG, "AlarmPrefsFragment: Arguments: " + getArguments());
+
+            PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_alarms, false);
+            addPreferencesFromResource(R.xml.preference_alarms);
+
+            initPref_alarms(AlarmPrefsFragment.this);
+        }
+    }
+
+    private void initPref_alarms() {}
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    private static void initPref_alarms(final PreferenceFragment fragment) {}
 
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////

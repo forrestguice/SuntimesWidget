@@ -574,6 +574,12 @@
 
     <string name="alarmenabled_toast">Alarm set for <xliff:g id="alarmTime" example="8h">%1$s</xliff:g> from now.</string> <!-- toast msg --> <!-- TODO -->
 
+    <string name="configLabel_alarms_silenceAfter">Silence after</string>
+    <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
+
+    <string name="configLabel_alarms_snooze">Snooze time</string>
+    <string name="configLabel_alarms_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
+
     <plurals name="units_minutes">
         <item quantity="one">%d minute</item>
         <item quantity="other">%d minutes</item>
@@ -1250,4 +1256,8 @@
     <string name="def_app_ui_clocktapaction" translatable="false">ALARM</string>
     <string name="def_app_appearance_theme" translatable="false">dark</string>
     <string name="def_app_accessibility_verbose" translatable="false">false</string>
+
+    <string name="def_app_alarms_silence" translatable="false">600000</string>
+    <string name="def_app_alarms_snooze" translatable="false">600000</string>
+
 </resources>

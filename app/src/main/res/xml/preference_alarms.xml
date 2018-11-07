@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/configLabel_alarmClock">
+
+        <com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
+            android:key="app_alarms_silenceafter"
+            android:title="@string/configLabel_alarms_silenceAfter"
+            android:summary="@string/configLabel_alarms_silenceAfter_summary"
+            android:defaultValue="@string/def_app_alarms_silence" />
+
+        <com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
+            android:key="app_alarms_snooze"
+            android:title="@string/configLabel_alarms_snooze"
+            android:summary="@string/configLabel_alarms_snooze_summary"
+            android:defaultValue="@string/def_app_alarms_snooze" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

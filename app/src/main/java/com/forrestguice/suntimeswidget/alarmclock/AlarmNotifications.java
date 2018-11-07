@@ -26,11 +26,13 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
@@ -47,8 +49,15 @@ public class AlarmNotifications extends BroadcastReceiver
     public static final String ACTION_SHOW = "show";
     public static final String ACTION_DISMISS = "dismiss";
     public static final String ACTION_SNOOZE = "snooze";
+
     public static final String EXTRA_NOTIFICATION_ID = "notificationID";
     public static final String ALARM_NOTIFICATION_TAG = "suntimesalarm";
+
+    public static final String PREF_KEY_ALARM_SILENCEAFTER = "app_alarms_silenceafter";
+    public static final long PREF_DEF_ALARM_SILENCEAFTER = 10 * 60 * 1000;   // 10 min
+
+    public static final String PREF_KEY_ALARM_SNOOZE = "app_alarms_snooze";
+    public static final long PREF_DEF_ALARM_SNOOZE = 10 * 60 * 1000;   // 10 min
 
     /**
      * onReceive
@@ -225,15 +234,28 @@ public class AlarmNotifications extends BroadcastReceiver
         }
     }
 
-    public static long[] getDefaultVibratePattern(Context context, AlarmClockItem.AlarmType type)
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static long loadSilenceAfterPref(Context context)
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getLong(PREF_KEY_ALARM_SILENCEAFTER, PREF_DEF_ALARM_SILENCEAFTER);
+    }
+
+    public static long loadSnoozePref(Context context)
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getLong(PREF_KEY_ALARM_SNOOZE, PREF_DEF_ALARM_SNOOZE);
+    }
+
+    public static long[] loadDefaultVibratePattern(Context context, AlarmClockItem.AlarmType type)
     {
         switch (type)
         {
             case NOTIFICATION:
-                return new long[] {0, 400, 200, 400};
-
             case ALARM:
-            default:
+            default:                    // TODO
                 return new long[] {0, 400, 200, 400, 800};   // 0 immediate start, 400ms buzz, 200ms break, 400ms buzz, 800ms break [repeat]
         }
     }
