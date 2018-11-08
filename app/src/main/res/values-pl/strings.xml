@@ -944,6 +944,12 @@
           Przejdź do ekranu głównego, aby <b>dodać nowy widżet</b>.<br/><br/>
           Aby <b>edytować istniejący widżet</b>, wybierz go z poniższej listy.<br/>
     ]]></string>
+    <string name="help_themelist">
+          [Icon Add] Add a new theme or [Icon Copy] copy from an existing theme.\n
+          \n
+          [Icon Edit] Edit or [Icon Delete] delete themes.\n
+          The [Icon Default] default themes cannot be modified.
+    </string> <!-- text explains themelist actions/icons; [Icon tags] are substituted at runtime (should remain unaltered)  --> <!-- TODO -->
 
     <string name="privacy_policy"><![CDATA[<b>Prywatność:</b><br/>Aplikacja Zmierzchy i Świty nie zbiera, przechowuje i przesyła osobistych danych użytkownika. Ta aplikacja nie zawiera reklam, narzędzi analitycznych i zbędnych uprawnień.<br/><br/>Aplikacja konfiguruje się używając danych lokalizacji; te dane (i inne używane przez program) są zapisywane lokalnie i nie opuszczają urządzenia.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Uprawnienie <b>określenia lokalizacji</b> jest używane do ustalenia bieżącej szerokości i długości geograficznej. To uprawnienie jest opcjonalne; położenie domyślnie jest wpisywane ręcznie.]]></string>
