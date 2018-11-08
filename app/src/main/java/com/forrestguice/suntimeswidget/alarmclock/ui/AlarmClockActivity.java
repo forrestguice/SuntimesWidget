@@ -167,7 +167,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
                 ArrayList<Integer> param_days = getDefaultRepetition(this);
                 boolean param_vibrate = getDefaultVibrate(this);
-                Uri param_ringtoneUri = getDefaultRingtoneUri(this);
+                Uri param_ringtoneUri = getDefaultRingtoneUri(this, AlarmClockItem.AlarmType.ALARM);
                 if (Build.VERSION.SDK_INT >= 19)
                 {
                     param_vibrate = intent.getBooleanExtra(AlarmClock.EXTRA_VIBRATE, param_vibrate);
@@ -186,7 +186,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 SolarEvents param_event = SolarEvents.valueOf(intent.getStringExtra(AlarmClockActivity.EXTRA_SOLAREVENT), null);
 
                 Log.i("AlarmClockActivity", "ACTION_SET_ALARM :: " + param_label + ", " + param_hour + ", " + param_minute + ", " + param_event);
-                addAlarm(param_label, param_event, param_hour, param_minute, param_vibrate, param_ringtoneUri, param_days);
+                addAlarm(AlarmClockItem.AlarmType.ALARM, param_label, param_event, param_hour, param_minute, param_vibrate, param_ringtoneUri, param_days);
             }
         }
     }
@@ -397,17 +397,17 @@ public class AlarmClockActivity extends AppCompatActivity
         @Override
         public void onClick(DialogInterface d, int which)
         {
-            addAlarm();
+            addAlarm(AlarmClockItem.AlarmType.ALARM);
         }
     };
 
-    protected void addAlarm()
+    protected void addAlarm(AlarmClockItem.AlarmType type)
     {
         FragmentManager fragments = getSupportFragmentManager();
         AlarmDialog dialog = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
-        addAlarm("", dialog.getChoice(), -1, -1, getDefaultVibrate(this), getDefaultRingtoneUri(this), getDefaultRepetition(this));
+        addAlarm(type, "", dialog.getChoice(), -1, -1, getDefaultVibrate(this), getDefaultRingtoneUri(this, type), getDefaultRepetition(this));
     }
-    protected void addAlarm(String label, SolarEvents event, int hour, int minute, boolean vibrate, Uri ringtoneUri, ArrayList<Integer> repetitionDays)
+    protected void addAlarm(AlarmClockItem.AlarmType type, String label, SolarEvents event, int hour, int minute, boolean vibrate, Uri ringtoneUri, ArrayList<Integer> repetitionDays)
     {
         AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, true);
         task.setTaskListener(new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
@@ -423,6 +423,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
         final AlarmClockItem alarm = new AlarmClockItem();
         alarm.enabled = getDefaultNewAlarmsEnabled(this);
+        alarm.type = type;
         alarm.label = label;
 
         alarm.hour = hour;
@@ -450,9 +451,16 @@ public class AlarmClockActivity extends AppCompatActivity
         return true;
     }
 
-    public static Uri getDefaultRingtoneUri(Context context)
+    public static Uri getDefaultRingtoneUri(Context context, AlarmClockItem.AlarmType type)
     {
-        return RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_ALARM);
+        switch (type)
+        {
+            case ALARM:
+                return RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_ALARM);
+            case NOTIFICATION:
+            default:
+                return RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_NOTIFICATION);
+        }
     }
 
     public static boolean getDefaultVibrate(Context context)
@@ -842,7 +850,7 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, getDefaultRingtoneUri(this));
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, getDefaultRingtoneUri(this, item.type));
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (item.ringtoneURI != null ? Uri.parse(item.ringtoneURI) : null));
         t_selectedItem = item.rowID;
         startActivityForResult(intent, REQUEST_RINGTONE);
