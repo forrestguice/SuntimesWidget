@@ -17,7 +17,8 @@ Displays sunrise and sunset, twilights (civil / nautical / astronomical), blue a
 <img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="80"/></a>
 
 The app:
-* displays the current time (system timezone, custom timezone, or solar time), and notes the time until the next rising/setting event.
+* displays the current time (system time zone, custom time zone, or solar time) 
+* displays the time until the next rising/setting event.
 * displays the sunrise and sunset, blue and golden hour, and twilight times (civil / nautical / astronomical).
 * displays the current moon phase, illumination, moonrise and moonset times, and major phase dates.
 * displays the current sunlight and moonlight projected over a world map (basic equirectangular, blue marble).
@@ -26,7 +27,7 @@ The app:
 * displays the moon's current position, and its position at moonrise and moonset.
 * can set an alarm for the next sunrise or sunset (or other rising/setting event).
 * can provide the Calendar app with custom calendars (moon phase, solstice, and equinox events).
-* can display the configured location on a map (requires a map application), and configure the location from a map (using geo intent).
+* can display the configured location on a map (requires a map application) and configure the location from a map (using geo intent).
 
 The app:
 * *does not* require GPS. The location is manually specified by default (and optionally obtained from GPS).
@@ -34,9 +35,9 @@ The app:
 
 Widgets are (re)configurable:
 * location (latitude, longitude, elevation).
-* timezone (system / custom), or solar time (local mean time, apparent solar time).
+* time zone (system / custom), or solar time (local mean time, apparent solar time).
 * user-defined titles (supporting limited substitutions).
-* misc options: "use elevation", "show seconds", "show noon", and "show comparison", etc.
+* misc. options: "use elevation", "show seconds", "show noon", and "show comparison", etc.
 
 Widgets are themeable and provide:
 * a theme editor and support for basic custom themes.
@@ -94,7 +95,7 @@ The app benefits from the following permissions...
 |ACCESS_COARSE_LOCATION|To get current location.|v0.1.0|
 |ACCESS_FINE_LOCATION|To get current location (GPS).|v0.1.0|
 |SET_ALARM|To interact with the AlarmClock app.|v0.1.0|
-|WRITE_EXTERNAL_STORAGE|To export data (places, themes, etc) to file.|v0.2.2 (api<=18)|
+|WRITE_EXTERNAL_STORAGE|To export data (places, themes, etc.) to file.|v0.2.2 (api<=18)|
 |READ_CALENDAR|To interact with the Calendar app (access events).|v0.9.0|
 |WRITE_CALENDAR|To interact with the Calendar app (add/remove events).|v0.9.0|
 |READ_SYNC_STATS|To interact with the Calendar app (access custom calendars).|v0.9.0|
