@@ -47,6 +47,13 @@
 
         </activity>
 
+        <!-- Calculator Provider -->
+        <provider
+            android:name="com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorProvider"
+            android:authorities="com.forrestguice.suntimeswidget.calculator.provider"
+            android:exported="false"
+            android:syncable="false" />
+
         <!-- Calendar Provider -->
         <provider
             android:name="com.forrestguice.suntimeswidget.calendar.SuntimesCalendarProvider"
