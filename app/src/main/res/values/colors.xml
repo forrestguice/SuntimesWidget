@@ -113,6 +113,35 @@
     <color name="graphColor_astronomical_light">#ff0000ff</color>
     <color name="graphColor_night_light">#ff757575</color>
 
+    <!-- Dingy Yellows
+    <color name="graphColor_bg_light">@color/material_grey_50</color>
+    <color name="graphColor_day_light">#ffffcc00</color>
+    <color name="graphColor_civil_light">#D1A700</color>
+    <color name="graphColor_nautical_light">#A18100</color>
+    <color name="graphColor_astronomical_light">#594700</color>
+    <color name="graphColor_night_light">#ff757575</color>-->
+
+    <!-- Fire Orange <color name="graphColor_bg_light">@color/material_grey_50</color>
+    <color name="graphColor_day_light">#ffffcc00</color>
+    <color name="graphColor_civil_light">#ff9900</color>
+    <color name="graphColor_nautical_light">#CF4800</color>
+    <color name="graphColor_astronomical_light">#943100</color>
+    <color name="graphColor_night_light">#ff757575</color>-->
+
+    <!--<color name="graphColor_bg_light">@color/material_grey_50</color>
+    <color name="graphColor_day_light">#ffffcc00</color>
+    <color name="graphColor_civil_light">#ff9900</color>
+    <color name="graphColor_nautical_light">#CF4850</color>
+    <color name="graphColor_astronomical_light">#943170</color>
+    <color name="graphColor_night_light">#ff757575</color>-->
+
+    <!-- Blue Sky <color name="graphColor_bg_light">@color/material_grey_50</color>
+    <color name="graphColor_day_light">#ff7ba3ff</color>
+    <color name="graphColor_civil_light">#ff9900</color>
+    <color name="graphColor_nautical_light">#CF4800</color>
+    <color name="graphColor_astronomical_light">#943100</color>
+    <color name="graphColor_night_light">#ff757575</color>-->
+
     <color name="map_sunshadow">@color/map_sunshadow_dark</color>
     <color name="map_moonlight">@color/map_moonlight_dark</color>
     <color name="map_background">@color/map_background_dark</color>
