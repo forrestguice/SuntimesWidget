@@ -28,7 +28,7 @@ import android.support.annotation.Nullable;
 /**
  * stubbed ContentProvider
  */
-public class SuntimesContentProvider extends ContentProvider
+public class SuntimesCalendarProvider extends ContentProvider
 {
     @Override
     public boolean onCreate()

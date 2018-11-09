@@ -49,7 +49,7 @@
 
         <!-- Calendar Provider -->
         <provider
-            android:name="com.forrestguice.suntimeswidget.calendar.SuntimesContentProvider"
+            android:name="com.forrestguice.suntimeswidget.calendar.SuntimesCalendarProvider"
             android:authorities="com.forrestguice.suntimeswidget.datasync.provider"
             android:exported="false"
             android:syncable="true"/>
