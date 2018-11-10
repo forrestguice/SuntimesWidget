@@ -22,6 +22,15 @@ package com.forrestguice.suntimeswidget.calculator;
  * CalculatorProviderContract
  * @version 0.1.0
  *
+ * ------------------------------------------------------------------------------------------------
+ * Configuration
+ *   The following URIs are supported:
+ *       content://suntimeswidget.calculator.provider/config                         .. get the calculator config
+ *
+ *   The result will be one row containing:
+ *       [COLUMN_LATITUDE, COLUMN_LONGITUDE, COLUMN_ALTITUDE, COLUMN_TIMEZONE]
+ *
+ * ------------------------------------------------------------------------------------------------*
  * Moon Phases
  *   The following URIs are supported:
  *       content://suntimeswiget.calculator.provider/moon/phases                     .. get upcoming moon phases
@@ -31,7 +40,7 @@ package com.forrestguice.suntimeswidget.calculator;
  *   The result will be one or more rows containing:
  *       [COLUMN_MOON_NEW(long), COLUMN_MOON_FIRST(long), COLUMN_MOON_FULL(long), COLUMN_MOON_THIRD(long)]
  *
- *
+ * ------------------------------------------------------------------------------------------------
  * Solstice and Equinox
  *   The following URIs are supported:
  *       content://suntimeswidget.calculator.provider/seasons                         .. get vernal, summer, autumn, and winter dates for this year
@@ -50,6 +59,12 @@ package com.forrestguice.suntimeswidget.calculator;
 public final class CalculatorProviderContract
 {
     public static final String AUTHORITY = "suntimeswidget.calculator.provider";
+
+    public static final String QUERY_CONFIG = "config";
+    public static final String COLUMN_CONFIG_LATITUDE = "latitude";
+    public static final String COLUMN_CONFIG_LONGITUDE = "longitude";
+    public static final String COLUMN_CONFIG_ALTITUDE = "altitude";
+    public static final String COLUMN_CONFIG_TIMEZONE = "timezone";
 
     public static final String QUERY_MOONPHASE = "moon/phases";
     public static final String COLUMN_MOON_NEW = "new";
