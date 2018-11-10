@@ -52,6 +52,7 @@ import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.calendar.SuntimesCalendarSettings;
 import com.forrestguice.suntimeswidget.calendar.SuntimesCalendarTask;
 import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
@@ -240,7 +241,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                         runCalendarTask(SuntimesSettingsActivity.this, enabled);
 
                         SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
-                        pref.putBoolean(AppSettings.PREF_KEY_CALENDARS_ENABLED, enabled);
+                        pref.putBoolean(SuntimesCalendarSettings.PREF_KEY_CALENDARS_ENABLED, enabled);
                         pref.apply();
 
                         if (tmp_calendarPref != null)
@@ -614,13 +615,13 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
     private void initPref_calendars()
     {
-        CheckBoxPreference calendarsEnabledPref = (CheckBoxPreference) findPreference(AppSettings.PREF_KEY_CALENDARS_ENABLED);
+        CheckBoxPreference calendarsEnabledPref = (CheckBoxPreference) findPreference(SuntimesCalendarSettings.PREF_KEY_CALENDARS_ENABLED);
         initPref_calendars(this, calendarsEnabledPref);
     }
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private static void initPref_calendars(PreferenceFragment fragment)
     {
-        CheckBoxPreference calendarsEnabledPref = (CheckBoxPreference) fragment.findPreference(AppSettings.PREF_KEY_CALENDARS_ENABLED);
+        CheckBoxPreference calendarsEnabledPref = (CheckBoxPreference) fragment.findPreference(SuntimesCalendarSettings.PREF_KEY_CALENDARS_ENABLED);
         initPref_calendars(fragment.getActivity(), calendarsEnabledPref);
     }
     private static void initPref_calendars(final Activity activity, final CheckBoxPreference enabledPref )

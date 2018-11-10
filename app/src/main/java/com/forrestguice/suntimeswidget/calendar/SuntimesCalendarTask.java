@@ -79,8 +79,8 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
     {
         contextRef = new WeakReference<Context>(context);
         adapter = new SuntimesCalendarAdapter(context.getContentResolver());
-        calendarWindow0 = AppSettings.loadPrefCalendarWindow0(context);
-        calendarWindow1 = AppSettings.loadPrefCalendarWindow1(context);
+        calendarWindow0 = SuntimesCalendarSettings.loadPrefCalendarWindow0(context);
+        calendarWindow1 = SuntimesCalendarSettings.loadPrefCalendarWindow1(context);
 
         // solstice calendar resources
         solsticeData = new SuntimesEquinoxSolsticeData(context, 0);
