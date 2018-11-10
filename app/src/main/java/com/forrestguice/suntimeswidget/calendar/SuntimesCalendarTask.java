@@ -36,16 +36,10 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorProvider;
-import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
-import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
-import com.forrestguice.suntimeswidget.settings.AppSettings;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.HashMap;
 
 public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
@@ -58,8 +52,6 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
 
     private String[] solsticeStrings = new String[4];
     //private int[] solsticeColors = new int[4];
-    private SuntimesEquinoxSolsticeData solsticeData;
-    private SuntimesMoonData moonData;
 
     private long lastSync = -1;
     private long calendarWindow0 = -1, calendarWindow1 = -1;
@@ -83,7 +75,6 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
         calendarWindow1 = SuntimesCalendarSettings.loadPrefCalendarWindow1(context);
 
         // solstice calendar resources
-        solsticeData = new SuntimesEquinoxSolsticeData(context, 0);
         calendarDisplay.put(SuntimesCalendarAdapter.CALENDAR_SOLSTICE, context.getString(R.string.calendar_solstice_displayName));
         calendarColors.put(SuntimesCalendarAdapter.CALENDAR_SOLSTICE, ContextCompat.getColor(context, R.color.winterColor_light));
 
@@ -98,7 +89,6 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
         //solsticeColors[3] = ContextCompat.getColor(context, R.color.winterColor_light);
 
         // moon phase calendar resources
-        moonData = new SuntimesMoonData(context, 0, "moon");
         calendarDisplay.put(SuntimesCalendarAdapter.CALENDAR_MOONPHASE, context.getString(R.string.calendar_moonPhase_displayName));
         calendarColors.put(SuntimesCalendarAdapter.CALENDAR_MOONPHASE, ContextCompat.getColor(context, R.color.moonIcon_color_rising_light));
         MoonPhaseDisplay.initDisplayStrings(context);
@@ -250,6 +240,7 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
                     }
                     cursor.close();
                 } else Log.w("initSolsticeCalendar", "Failed to resolve URI! " + uri);
+
                 return true;
 
             } else {
@@ -266,37 +257,49 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
             adapter.createCalendar(calendarName, calendarDisplay.get(calendarName), calendarColors.get(calendarName));
         } else return false;
 
+        String[] phaseStrings = new String[4];
+        phaseStrings[0] = MoonPhaseDisplay.NEW.getLongDisplayString();
+        phaseStrings[1] = MoonPhaseDisplay.FIRST_QUARTER.getLongDisplayString();
+        phaseStrings[2] = MoonPhaseDisplay.FULL.getLongDisplayString();
+        phaseStrings[3] = MoonPhaseDisplay.THIRD_QUARTER.getLongDisplayString();
+
+        String[] projection = new String[] {
+                SuntimesCalculatorProvider.COLUMN_MOON_NEW,
+                SuntimesCalculatorProvider.COLUMN_MOON_FIRST,
+                SuntimesCalculatorProvider.COLUMN_MOON_FULL,
+                SuntimesCalculatorProvider.COLUMN_MOON_THIRD };
+
         long calendarID = adapter.queryCalendarID(calendarName);
         if (calendarID != -1)
         {
-            String fullMoonString = MoonPhaseDisplay.FULL.getLongDisplayString();
-            String newMoonString = MoonPhaseDisplay.NEW.getLongDisplayString();
-            String firstQuarterString = MoonPhaseDisplay.FIRST_QUARTER.getLongDisplayString();
-            String thirdQuarterString = MoonPhaseDisplay.THIRD_QUARTER.getLongDisplayString();
-
-            moonData.initCalculator();
-            SuntimesCalculator calculator = moonData.calculator();
-
-            ArrayList<Calendar> events = new ArrayList<>();
-            Calendar d = (Calendar)startDate.clone();
-            while (d.before(endDate))
+            Context context = contextRef.get();
+            ContentResolver resolver = (context == null ? null : context.getContentResolver());
+            if (resolver != null)
             {
-                Calendar fullMoon, newMoon, firstQuarter, thirdQuarter;
+                Uri uri = Uri.parse("content://" + SuntimesCalculatorProvider.AUTHORITY + "/" + SuntimesCalculatorProvider.QUERY_MOONPHASE + "/" + startDate.getTimeInMillis() + "-" + endDate.getTimeInMillis());
+                Cursor cursor = resolver.query(uri, projection, null, null, null);
+                if (cursor != null)
+                {
+                    cursor.moveToFirst();
+                    while (!cursor.isAfterLast())
+                    {
+                        for (int i=0; i<projection.length; i++)
+                        {
+                            Calendar eventTime = Calendar.getInstance();
+                            eventTime.setTimeInMillis(cursor.getLong(i));
+                            adapter.createCalendarEvent(calendarID, phaseStrings[i], phaseStrings[i], eventTime);
+                        }
+                        cursor.moveToNext();
+                    }
+                    cursor.close();
+                } else Log.w("initMoonPhaseCalendar", "Failed to resolve URI! " + uri);
 
-                events.clear();
-                events.add(fullMoon = calculator.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.FULL, d));
-                events.add(newMoon = calculator.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.NEW, d));
-                events.add(firstQuarter = calculator.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.FIRST_QUARTER, d));
-                events.add(thirdQuarter = calculator.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.THIRD_QUARTER, d));
-                Collections.sort(events);
-                d.setTimeInMillis( events.get(events.size()-1).getTimeInMillis() + 1000 );
+                return true;
 
-                adapter.createCalendarEvent(calendarID, fullMoonString, fullMoonString, fullMoon);
-                adapter.createCalendarEvent(calendarID, newMoonString, newMoonString, newMoon);
-                adapter.createCalendarEvent(calendarID, firstQuarterString, firstQuarterString, firstQuarter);
-                adapter.createCalendarEvent(calendarID, thirdQuarterString, thirdQuarterString, thirdQuarter);
+            } else {
+                Log.e("initMoonPhaseCalendar", "unable to getContentResolver!");
+                return false;
             }
-            return true;
         } else return false;
     }
 }
