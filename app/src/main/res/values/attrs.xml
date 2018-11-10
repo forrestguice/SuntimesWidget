@@ -4,6 +4,7 @@
     <bool name="api_post_14">false</bool>
 
     <attr name="dialogBackground" format="reference" />
+    <attr name="dialogBackgroundAlt" format="reference" />
     <attr name="settingsCardBackground" format="reference" />
     <attr name="timeCardBackground" format="reference" />
     <attr name="semiTransparentBackground" format="reference" />
@@ -56,9 +57,11 @@
     <attr name="icActionTime" format="reference" />
     <attr name="icActionDst" format="reference" />
     <attr name="icActionAlarm" format="reference" />
+    <attr name="icActionCalendar" format="reference" />
     <attr name="icActionAbout" format="reference" />
     <attr name="icActionWarning" format="reference" />
     <attr name="icActionError" format="reference" />
+    <attr name="icActionWidgets" format="reference" />
     <attr name="icActionAppearance" format="reference" />
     <attr name="icActionAltitude" format="reference" />
     <attr name="icActionLocale" format="reference" />

@@ -262,7 +262,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
 
             ////////////////
             // draw sun
-            if (options.showSunPosition)
+            if (options.showSunPosition && options.showSunShadow)
             {
                 double[] point = toCartesian(toPolar(sunLat, sunLon));
                 int sunX = (int)(mid[0] + ((point[0] / 180d) * mid[0]) );
@@ -272,7 +272,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
 
             ////////////////
             // draw moon
-            if (options.showMoonPosition)
+            if (options.showMoonPosition && options.showMoonLight)
             {
                 double[] point = toCartesian(toPolar(moonLat, moonLon));
                 int moonX = (int)(mid[0] + ((point[0] / 180d) * mid[0]) );
