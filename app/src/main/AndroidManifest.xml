@@ -51,6 +51,7 @@
         <provider
             android:name="com.forrestguice.suntimeswidget.calculator.CalculatorProvider"
             android:authorities="suntimeswidget.calculator.provider"
+            android:permission="suntimeswidget.calculator.provider.permission.READ_PROVIDER"
             android:exported="true"
             android:syncable="false" />
 
