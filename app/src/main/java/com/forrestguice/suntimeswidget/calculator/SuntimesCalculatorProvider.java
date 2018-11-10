@@ -32,12 +32,24 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import net.time4j.calendar.astro.MoonPhase;
+
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.TimeZone;
 
 /**
- * Solstice and Equinox
+ * Moon Phases
+ *   The following URIs are supported:
+ *       content://com.forrestguice.suntimeswiget.calculator.provider/moon/phases                     .. get upcoming moon phases
+ *       content://com.forrestguice.suntimeswiget.calculator.provider/moon/phases/[millis]            .. get upcoming moon phases after date (timestamp)
+ *       content://com.forrestguice.suntimeswiget.calculator.provider/moon/phases/[millis]-[millis]   .. get upcoming moon phases for range (timestamp)
  *
+ *   The result will be one or more rows containing:
+ *       [COLUMN_MOON_NEW(long), COLUMN_MOON_FIRST(long), COLUMN_MOON_FULL(long), COLUMN_MOON_THIRD(long)]
+ *
+ * Solstice and Equinox
  *   The following URIs are supported:
  *       content://com.forrestguice.suntimeswidget.calculator.provider/seasons                         .. get vernal, summer, autumn, and winter dates for this year
  *       content://com.forrestguice.suntimeswidget.calculator.provider/seasons/[year]                  .. get vernal, summer, autumn, and winter dates for some year
@@ -50,6 +62,12 @@ public class SuntimesCalculatorProvider extends ContentProvider
 {
     public static final String AUTHORITY = "com.forrestguice.suntimeswidget.calculator.provider";
 
+    public static final String QUERY_MOONPHASE = "moon/phases";
+    public static final String COLUMN_MOON_NEW = "new";
+    public static final String COLUMN_MOON_FIRST = "first";
+    public static final String COLUMN_MOON_FULL = "full";
+    public static final String COLUMN_MOON_THIRD = "third";
+
     public static final String QUERY_SEASONS = "seasons";
     public static final String COLUMN_YEAR = "year";
     public static final String COLUMN_SEASON_VERNAL = "vernal";
@@ -60,13 +78,19 @@ public class SuntimesCalculatorProvider extends ContentProvider
     private static final int URIMATCH_SEASONS = 10;
     private static final int URIMATCH_SEASONS_FOR_YEAR = 20;
     private static final int URIMATCH_SEASONS_FOR_RANGE = 30;
+    private static final int URIMATCH_MOONPHASE = 40;
+    private static final int URIMATCH_MOONPHASE_FOR_DATE = 50;
+    private static final int URIMATCH_MOONPHASE_FOR_RANGE = 60;
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     static
     {
         uriMatcher.addURI(AUTHORITY, QUERY_SEASONS, URIMATCH_SEASONS);
         uriMatcher.addURI(AUTHORITY, QUERY_SEASONS + "/#", URIMATCH_SEASONS_FOR_YEAR);
         uriMatcher.addURI(AUTHORITY, QUERY_SEASONS + "/*", URIMATCH_SEASONS_FOR_RANGE);
-            }
+        uriMatcher.addURI(AUTHORITY, QUERY_MOONPHASE, URIMATCH_MOONPHASE);
+        uriMatcher.addURI(AUTHORITY, QUERY_MOONPHASE + "/#", URIMATCH_MOONPHASE_FOR_DATE);
+        uriMatcher.addURI(AUTHORITY, QUERY_MOONPHASE + "/*", URIMATCH_MOONPHASE_FOR_RANGE);
+    }
 
     @Override
     public boolean onCreate()
@@ -100,33 +124,78 @@ public class SuntimesCalculatorProvider extends ContentProvider
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder)
     {
         initCalculator(getContext());
+        Calendar now = Calendar.getInstance();
+        Calendar date = Calendar.getInstance();
+        Calendar[] range;
+
+        Log.d("CalculatorProvider", "URI: " + uri);
         Cursor retValue = null;
         int uriMatch = uriMatcher.match(uri);
         switch (uriMatch)
         {
             case URIMATCH_SEASONS:
                 Log.d("CalculatorProvider", "URIMATCH_SEASONS");
-                Calendar now = Calendar.getInstance();
                 retValue = querySeasons(new Calendar[] {now, now}, uri, projection, selection, selectionArgs, sortOrder);
                 break;
 
             case URIMATCH_SEASONS_FOR_YEAR:
                 Log.d("CalculatorProvider", "URIMATCH_SEASONS_FOR_YEAR");
-                Calendar date = Calendar.getInstance();
                 date.set(Calendar.YEAR, (int)ContentUris.parseId(uri));
                 retValue = querySeasons(new Calendar[] { date, date }, uri, projection, selection, selectionArgs, sortOrder);
                 break;
 
             case URIMATCH_SEASONS_FOR_RANGE:
                 Log.d("CalculatorProvider", "URIMATCH_SEASONS_FOR_RANGE");
-                Calendar[] range = parseYearRange(uri.getLastPathSegment());
+                range = parseYearRange(uri.getLastPathSegment());
                 retValue = querySeasons(range, uri, projection, selection, selectionArgs, sortOrder);
+                break;
+
+            case URIMATCH_MOONPHASE:
+                Log.d("CalculatorProvider", "URIMATCH_MOONPHASE");
+                retValue = queryMoonPhase(new Calendar[] {now, now}, uri, projection, selection, selectionArgs, sortOrder);
+                break;
+
+            case URIMATCH_MOONPHASE_FOR_DATE:
+                Log.d("CalculatorProvider", "URIMATCH_MOONPHASE_FOR_DATE");
+                date.setTimeInMillis(ContentUris.parseId(uri));
+                retValue = queryMoonPhase(new Calendar[] {date, date}, uri, projection, selection, selectionArgs, sortOrder);
+                break;
+
+            case URIMATCH_MOONPHASE_FOR_RANGE:
+                Log.d("CalculatorProvider", "URIMATCH_MOONPHASE_FOR_RANGE");
+                range = parseDateRange(uri.getLastPathSegment());
+                retValue = queryMoonPhase(range, uri, projection, selection, selectionArgs, sortOrder);
                 break;
 
             default:
                 Log.e("CalculatorProvider", "Unrecognized URI! " + uri);
                 break;
         }
+        return retValue;
+    }
+
+    protected Calendar[] parseDateRange(String rangeSegment)
+    {
+        Calendar[] retValue = new Calendar[2];
+        String[] rangeString = rangeSegment.split("-");
+        if (rangeString.length == 2)
+        {
+            try {
+                retValue[0] = Calendar.getInstance();
+                retValue[0].setTimeInMillis(Long.parseLong(rangeString[0]));
+
+                retValue[1] = Calendar.getInstance();
+                retValue[1].setTimeInMillis(Long.parseLong(rangeString[1]) + 1000);
+
+            } catch (NumberFormatException e) {
+                Log.w("CalculatorProvider", "Invalid range! " + rangeSegment);
+                retValue[0] = retValue[1] = Calendar.getInstance();
+            }
+        } else {
+            Log.w("CalculatorProvider", "Invalid range! " + rangeSegment);
+            retValue[0] = retValue[1] = Calendar.getInstance();
+        }
+        Log.d("DEBUG", "startDate: " + retValue[0].getTimeInMillis() + ", endDate: " + retValue[1].getTimeInMillis());
         return retValue;
     }
 
@@ -155,6 +224,67 @@ public class SuntimesCalculatorProvider extends ContentProvider
         return retValue;
     }
 
+    /**
+     * queryMoonPhase
+     */
+    private Cursor queryMoonPhase(Calendar[] range, @NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder)
+    {
+        String[] columns = (projection != null ? projection : new String[] { COLUMN_MOON_NEW, COLUMN_MOON_FIRST, COLUMN_MOON_FULL, COLUMN_MOON_THIRD });
+        MatrixCursor retValue = new MatrixCursor(columns);
+        if (moonSource != null)
+        {
+            ArrayList<Calendar> events = new ArrayList<>();
+            Calendar date = Calendar.getInstance();
+            date.setTimeInMillis(range[0].getTimeInMillis());
+            do {
+                events.clear();
+                Object[] row = new Object[columns.length];
+                for (int i=0; i<columns.length; i++)
+                {
+                    Calendar event;
+                    switch (columns[i])
+                    {
+                        case COLUMN_MOON_NEW:
+                            events.add(event = moonSource.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.NEW , date));
+                            row[i] = event.getTimeInMillis();
+                            break;
+
+                        case COLUMN_MOON_FIRST:
+                            events.add(event = moonSource.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.FIRST_QUARTER, date));
+                            row[i] = event.getTimeInMillis();
+                            break;
+
+                        case COLUMN_MOON_FULL:
+                            events.add(event = moonSource.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.FULL, date));
+                            row[i] = event.getTimeInMillis();
+                            break;
+
+                        case COLUMN_MOON_THIRD:
+                            events.add(event = moonSource.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.THIRD_QUARTER, date));
+                            row[i] = event.getTimeInMillis();
+                            break;
+
+                        default:
+                            row[i] = null; break;
+                    }
+                }
+                retValue.addRow(row);
+
+                Collections.sort(events);
+                Calendar latest = (events.size() > 1) ? events.get(events.size()-1)
+                                : (events.size() > 0) ? events.get(0) : null;
+
+                date.setTimeInMillis(latest != null ? latest.getTimeInMillis() + 1000
+                                                    : range[1].getTimeInMillis() + 1000);
+            } while (date.before(range[1]));
+
+        }  Log.d("DEBUG", "moonSource is null!");
+        return retValue;
+    }
+
+    /**
+     * querySeasons
+     */
     private Cursor querySeasons(Calendar[] range, @NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder)
     {
         String[] columns = (projection != null ? projection : new String[] { COLUMN_YEAR, COLUMN_SEASON_VERNAL, COLUMN_SEASON_SUMMER, COLUMN_SEASON_AUTUMN, COLUMN_SEASON_WINTER });
@@ -188,7 +318,6 @@ public class SuntimesCalculatorProvider extends ContentProvider
             } while (year.before(range[1]));
 
         } else Log.d("DEBUG", "sunSource is null!");
-
         return retValue;
     }
 
