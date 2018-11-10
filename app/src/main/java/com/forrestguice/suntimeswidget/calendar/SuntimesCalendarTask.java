@@ -35,7 +35,6 @@ import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorProvider;
 
 import java.lang.ref.WeakReference;
@@ -50,6 +49,7 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
     private HashMap<String, String> calendarDisplay = new HashMap<>();
     private HashMap<String, Integer> calendarColors = new HashMap<>();
 
+    private String[] phaseStrings = new String[4];
     private String[] solsticeStrings = new String[4];
     //private int[] solsticeColors = new int[4];
 
@@ -83,6 +83,11 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
         solsticeStrings[2] = context.getString(R.string.timeMode_equinox_autumnal);
         solsticeStrings[3] = context.getString(R.string.timeMode_solstice_winter);
 
+        phaseStrings[0] = context.getString(R.string.timeMode_moon_new);
+        phaseStrings[1] = context.getString(R.string.timeMode_moon_firstquarter);
+        phaseStrings[2] = context.getString(R.string.timeMode_moon_full);
+        phaseStrings[3] = context.getString(R.string.timeMode_moon_thirdquarter);
+
         //solsticeColors[0] = ContextCompat.getColor(context, R.color.springColor_light);
         //solsticeColors[1] = ContextCompat.getColor(context, R.color.summerColor_light);
         //solsticeColors[2] = ContextCompat.getColor(context, R.color.fallColor_light);
@@ -91,7 +96,6 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
         // moon phase calendar resources
         calendarDisplay.put(SuntimesCalendarAdapter.CALENDAR_MOONPHASE, context.getString(R.string.calendar_moonPhase_displayName));
         calendarColors.put(SuntimesCalendarAdapter.CALENDAR_MOONPHASE, ContextCompat.getColor(context, R.color.moonIcon_color_rising_light));
-        MoonPhaseDisplay.initDisplayStrings(context);
 
         notificationManager = NotificationManagerCompat.from(context);
         notificationBuilder = new NotificationCompat.Builder(context);
@@ -256,12 +260,6 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
         if (!adapter.hasCalendar(calendarName)) {
             adapter.createCalendar(calendarName, calendarDisplay.get(calendarName), calendarColors.get(calendarName));
         } else return false;
-
-        String[] phaseStrings = new String[4];
-        phaseStrings[0] = MoonPhaseDisplay.NEW.getLongDisplayString();
-        phaseStrings[1] = MoonPhaseDisplay.FIRST_QUARTER.getLongDisplayString();
-        phaseStrings[2] = MoonPhaseDisplay.FULL.getLongDisplayString();
-        phaseStrings[3] = MoonPhaseDisplay.THIRD_QUARTER.getLongDisplayString();
 
         String[] projection = new String[] {
                 SuntimesCalculatorProvider.COLUMN_MOON_NEW,
