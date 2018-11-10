@@ -232,30 +232,24 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
             ContentResolver resolver = (context == null ? null : context.getContentResolver());
             if (resolver != null)
             {
-                Calendar d = (Calendar)startDate.clone();
-                while (d.before(endDate))
+                Uri uri = Uri.parse("content://" + SuntimesCalculatorProvider.AUTHORITY + "/" + SuntimesCalculatorProvider.QUERY_SEASONS + "/" + startDate.get(Calendar.YEAR) + "-" + endDate.get(Calendar.YEAR));
+                String[] projection = new String[] { SuntimesCalculatorProvider.COLUMN_SEASON_VERNAL, SuntimesCalculatorProvider.COLUMN_SEASON_SUMMER, SuntimesCalculatorProvider.COLUMN_SEASON_AUTUMN, SuntimesCalculatorProvider.COLUMN_SEASON_WINTER };
+                Cursor cursor = resolver.query(uri, projection, null, null, null);
+                if (cursor != null)
                 {
-                    Uri uri = Uri.parse("content://" + SuntimesCalculatorProvider.AUTHORITY + "/" + SuntimesCalculatorProvider.QUERY_SEASONS + "/" + d.get(Calendar.YEAR));
-                    String[] projection = new String[] { SuntimesCalculatorProvider.COLUMN_SEASON_VERNAL, SuntimesCalculatorProvider.COLUMN_SEASON_SUMMER, SuntimesCalculatorProvider.COLUMN_SEASON_AUTUMN, SuntimesCalculatorProvider.COLUMN_SEASON_WINTER };
-                    Cursor cursor = resolver.query(uri, projection, null, null, null);
-                    if (cursor != null)
+                    cursor.moveToFirst();
+                    while (!cursor.isAfterLast())
                     {
-                        cursor.moveToFirst();
-                        while (!cursor.isAfterLast())
+                        for (int i=0; i<projection.length; i++)
                         {
-                            for (int i=0; i<projection.length; i++)
-                            {
-                                Calendar eventTime = Calendar.getInstance();
-                                eventTime.setTimeInMillis(cursor.getLong(i));
-                                adapter.createCalendarEvent(calendarID, solsticeStrings[i], solsticeStrings[i], eventTime);
-                            }
-                            cursor.moveToNext();
+                            Calendar eventTime = Calendar.getInstance();
+                            eventTime.setTimeInMillis(cursor.getLong(i));
+                            adapter.createCalendarEvent(calendarID, solsticeStrings[i], solsticeStrings[i], eventTime);
                         }
-                        cursor.close();
-
-                    } else Log.w("initSolsticeCalendar", "Failed to resolve URI! " + uri);
-                    d.add(Calendar.YEAR, 1);
-                }
+                        cursor.moveToNext();
+                    }
+                    cursor.close();
+                } else Log.w("initSolsticeCalendar", "Failed to resolve URI! " + uri);
                 return true;
 
             } else {
