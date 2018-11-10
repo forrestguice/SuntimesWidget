@@ -20,9 +20,11 @@ package com.forrestguice.suntimeswidget.calendar;
 
 import android.app.Activity;
 import android.app.PendingIntent;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -35,6 +37,7 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -225,19 +228,40 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
         long calendarID = adapter.queryCalendarID(calendarName);
         if (calendarID != -1)
         {
-            solsticeData.initCalculator();
-            SuntimesCalculator calculator = solsticeData.calculator();
-
-            Calendar d = (Calendar)startDate.clone();
-            while (d.before(endDate))
+            Context context = contextRef.get();
+            ContentResolver resolver = (context == null ? null : context.getContentResolver());
+            if (resolver != null)
             {
-                adapter.createCalendarEvent(calendarID, solsticeStrings[0], solsticeStrings[0], calculator.getVernalEquinoxForYear(d));
-                adapter.createCalendarEvent(calendarID, solsticeStrings[1], solsticeStrings[1], calculator.getSummerSolsticeForYear(d));
-                adapter.createCalendarEvent(calendarID, solsticeStrings[2], solsticeStrings[2], calculator.getAutumnalEquinoxForYear(d));
-                adapter.createCalendarEvent(calendarID, solsticeStrings[3], solsticeStrings[3], calculator.getWinterSolsticeForYear(d));
-                d.add(Calendar.YEAR, 1);
+                Calendar d = (Calendar)startDate.clone();
+                while (d.before(endDate))
+                {
+                    Uri uri = Uri.parse("content://" + SuntimesCalculatorProvider.AUTHORITY + "/" + SuntimesCalculatorProvider.QUERY_SEASONS + "/" + d.get(Calendar.YEAR));
+                    String[] projection = new String[] { SuntimesCalculatorProvider.COLUMN_SEASON_VERNAL, SuntimesCalculatorProvider.COLUMN_SEASON_SUMMER, SuntimesCalculatorProvider.COLUMN_SEASON_AUTUMN, SuntimesCalculatorProvider.COLUMN_SEASON_WINTER };
+                    Cursor cursor = resolver.query(uri, projection, null, null, null);
+                    if (cursor != null)
+                    {
+                        cursor.moveToFirst();
+                        while (!cursor.isAfterLast())
+                        {
+                            for (int i=0; i<projection.length; i++)
+                            {
+                                Calendar eventTime = Calendar.getInstance();
+                                eventTime.setTimeInMillis(cursor.getLong(i));
+                                adapter.createCalendarEvent(calendarID, solsticeStrings[i], solsticeStrings[i], eventTime);
+                            }
+                            cursor.moveToNext();
+                        }
+                        cursor.close();
+
+                    } else Log.w("initSolsticeCalendar", "Failed to resolve URI! " + uri);
+                    d.add(Calendar.YEAR, 1);
+                }
+                return true;
+
+            } else {
+                Log.e("initSolsticeCalendar", "unable to getContentResolver!");
+                return false;
             }
-            return true;
         } else return false;
     }
 
