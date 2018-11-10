@@ -143,8 +143,7 @@ public class AboutDialog extends DialogFragment
         legalView3.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_legal3)));
 
         TextView legalView4 = (TextView) dialogContent.findViewById(R.id.txt_about_legal4);
-        String permissionsExplained = context.getString(R.string.privacy_permission_location) + "<br/><br/>" +
-                                      context.getString(R.string.privacy_permission_calendar);
+        String permissionsExplained = context.getString(R.string.privacy_permission_location);
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             permissionsExplained += "<br/><br/>" + context.getString(R.string.privacy_permission_storage);
         }
