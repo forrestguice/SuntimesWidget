@@ -30,51 +30,33 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-
-import net.time4j.calendar.astro.MoonPhase;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.TimeZone;
 
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.AUTHORITY;
+
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_MOONPHASE;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOON_FIRST;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOON_FULL;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOON_NEW;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOON_THIRD;
+
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_SEASONS;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SEASON_AUTUMN;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SEASON_SUMMER;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SEASON_VERNAL;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SEASON_WINTER;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SEASON_YEAR;
+
 /**
- * Moon Phases
- *   The following URIs are supported:
- *       content://com.forrestguice.suntimeswiget.calculator.provider/moon/phases                     .. get upcoming moon phases
- *       content://com.forrestguice.suntimeswiget.calculator.provider/moon/phases/[millis]            .. get upcoming moon phases after date (timestamp)
- *       content://com.forrestguice.suntimeswiget.calculator.provider/moon/phases/[millis]-[millis]   .. get upcoming moon phases for range (timestamp)
- *
- *   The result will be one or more rows containing:
- *       [COLUMN_MOON_NEW(long), COLUMN_MOON_FIRST(long), COLUMN_MOON_FULL(long), COLUMN_MOON_THIRD(long)]
- *
- * Solstice and Equinox
- *   The following URIs are supported:
- *       content://com.forrestguice.suntimeswidget.calculator.provider/seasons                         .. get vernal, summer, autumn, and winter dates for this year
- *       content://com.forrestguice.suntimeswidget.calculator.provider/seasons/[year]                  .. get vernal, summer, autumn, and winter dates for some year
- *       content://com.forrestguice.suntimeswidget.calculator.provider/seasons/[startYear]-[endYear]   .. get vernal, summer, autumn, and winter dates for range
- *
- *   The result will be one or more rows containing:
- *       [COLUMN_YEAR(int), COLUMM_SEASON_VERNAL(long), COLUMN_SEASON_SUMMER(long), COLUMN_SEASON_AUTUMN(long), COLUMN_SEASON_WINTER(long)]
+ * CalculatorProvider
+ * @see CalculatorProviderContract
  */
-public class SuntimesCalculatorProvider extends ContentProvider
+public class CalculatorProvider extends ContentProvider
 {
-    public static final String AUTHORITY = "com.forrestguice.suntimeswidget.calculator.provider";
-
-    public static final String QUERY_MOONPHASE = "moon/phases";
-    public static final String COLUMN_MOON_NEW = "new";
-    public static final String COLUMN_MOON_FIRST = "first";
-    public static final String COLUMN_MOON_FULL = "full";
-    public static final String COLUMN_MOON_THIRD = "third";
-
-    public static final String QUERY_SEASONS = "seasons";
-    public static final String COLUMN_YEAR = "year";
-    public static final String COLUMN_SEASON_VERNAL = "vernal";
-    public static final String COLUMN_SEASON_SUMMER = "summer";
-    public static final String COLUMN_SEASON_AUTUMN = "autumn";
-    public static final String COLUMN_SEASON_WINTER = "winter";
-
     private static final int URIMATCH_SEASONS = 10;
     private static final int URIMATCH_SEASONS_FOR_YEAR = 20;
     private static final int URIMATCH_SEASONS_FOR_RANGE = 30;
@@ -287,7 +269,7 @@ public class SuntimesCalculatorProvider extends ContentProvider
      */
     private Cursor querySeasons(Calendar[] range, @NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder)
     {
-        String[] columns = (projection != null ? projection : new String[] { COLUMN_YEAR, COLUMN_SEASON_VERNAL, COLUMN_SEASON_SUMMER, COLUMN_SEASON_AUTUMN, COLUMN_SEASON_WINTER });
+        String[] columns = (projection != null ? projection : new String[] { COLUMN_SEASON_YEAR, COLUMN_SEASON_VERNAL, COLUMN_SEASON_SUMMER, COLUMN_SEASON_AUTUMN, COLUMN_SEASON_WINTER });
         MatrixCursor retValue = new MatrixCursor(columns);
         if (sunSource != null)
         {
@@ -299,7 +281,7 @@ public class SuntimesCalculatorProvider extends ContentProvider
                 {
                     switch (columns[i])
                     {
-                        case COLUMN_YEAR:
+                        case COLUMN_SEASON_YEAR:
                             row[i] = year.get(Calendar.YEAR); break;
                         case COLUMN_SEASON_VERNAL:
                             row[i] = sunSource.getVernalEquinoxForYear(year).getTimeInMillis(); break;

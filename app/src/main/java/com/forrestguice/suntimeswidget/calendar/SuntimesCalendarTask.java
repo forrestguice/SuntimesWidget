@@ -35,7 +35,7 @@ import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorProvider;
+import com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
@@ -226,8 +226,8 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
             ContentResolver resolver = (context == null ? null : context.getContentResolver());
             if (resolver != null)
             {
-                Uri uri = Uri.parse("content://" + SuntimesCalculatorProvider.AUTHORITY + "/" + SuntimesCalculatorProvider.QUERY_SEASONS + "/" + startDate.get(Calendar.YEAR) + "-" + endDate.get(Calendar.YEAR));
-                String[] projection = new String[] { SuntimesCalculatorProvider.COLUMN_SEASON_VERNAL, SuntimesCalculatorProvider.COLUMN_SEASON_SUMMER, SuntimesCalculatorProvider.COLUMN_SEASON_AUTUMN, SuntimesCalculatorProvider.COLUMN_SEASON_WINTER };
+                Uri uri = Uri.parse("content://" + CalculatorProviderContract.AUTHORITY + "/" + CalculatorProviderContract.QUERY_SEASONS + "/" + startDate.get(Calendar.YEAR) + "-" + endDate.get(Calendar.YEAR));
+                String[] projection = new String[] { CalculatorProviderContract.COLUMN_SEASON_VERNAL, CalculatorProviderContract.COLUMN_SEASON_SUMMER, CalculatorProviderContract.COLUMN_SEASON_AUTUMN, CalculatorProviderContract.COLUMN_SEASON_WINTER };
                 Cursor cursor = resolver.query(uri, projection, null, null, null);
                 if (cursor != null)
                 {
@@ -262,10 +262,10 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
         } else return false;
 
         String[] projection = new String[] {
-                SuntimesCalculatorProvider.COLUMN_MOON_NEW,
-                SuntimesCalculatorProvider.COLUMN_MOON_FIRST,
-                SuntimesCalculatorProvider.COLUMN_MOON_FULL,
-                SuntimesCalculatorProvider.COLUMN_MOON_THIRD };
+                CalculatorProviderContract.COLUMN_MOON_NEW,
+                CalculatorProviderContract.COLUMN_MOON_FIRST,
+                CalculatorProviderContract.COLUMN_MOON_FULL,
+                CalculatorProviderContract.COLUMN_MOON_THIRD };
 
         long calendarID = adapter.queryCalendarID(calendarName);
         if (calendarID != -1)
@@ -274,7 +274,7 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
             ContentResolver resolver = (context == null ? null : context.getContentResolver());
             if (resolver != null)
             {
-                Uri uri = Uri.parse("content://" + SuntimesCalculatorProvider.AUTHORITY + "/" + SuntimesCalculatorProvider.QUERY_MOONPHASE + "/" + startDate.getTimeInMillis() + "-" + endDate.getTimeInMillis());
+                Uri uri = Uri.parse("content://" + CalculatorProviderContract.AUTHORITY + "/" + CalculatorProviderContract.QUERY_MOONPHASE + "/" + startDate.getTimeInMillis() + "-" + endDate.getTimeInMillis());
                 Cursor cursor = resolver.query(uri, projection, null, null, null);
                 if (cursor != null)
                 {
