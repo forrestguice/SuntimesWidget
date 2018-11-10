@@ -12,13 +12,6 @@
 
     </header>
 
-    <header android:fragment="com.forrestguice.suntimeswidget.SuntimesSettingsActivity$CalendarPrefsFragment"
-        android:icon="?attr/icActionCalendar"
-        android:title="@string/configLabel_calendars"
-        android:summary=""
-        tools:ignore="UnusedAttribute">
-    </header>
-
     <header android:fragment="com.forrestguice.suntimeswidget.SuntimesSettingsActivity$LocalePrefsFragment"
             android:icon="?attr/icActionLocale"
             android:title="@string/configLabel_locale"

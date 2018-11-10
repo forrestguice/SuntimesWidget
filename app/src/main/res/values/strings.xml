@@ -1162,7 +1162,6 @@
     <string name="def_appwidget_0_general_showtimedate" translatable="false">true</string>
     <string name="def_appwidget_0_general_trackingmode" translatable="false">SOONEST</string>
 
-    <string name="def_app_calendars_enabled" translatable="false">false</string>
     <string name="def_app_plugins_enabled" translatable="false">false</string>
 
     <string name="def_app_locale_mode" translatable="false">SYSTEM_LOCALE</string>
@@ -1171,9 +1170,6 @@
     <string name="def_getFix_maxElapsed" translatable="false">60000</string>
     <string name="def_getFix_maxAge" translatable="false">300000</string>
     <string name="def_getFix_passiveMode" translatable="false">false</string>
-
-    <string name="def_calendars_window0" translatable="false">31536000000</string>
-    <string name="def_calendars_window1" translatable="false">63072000000</string>
 
     <string name="def_app_ui_showwarnings" translatable="false">true</string>
     <string name="def_app_ui_showmoon" translatable="false">true</string>
