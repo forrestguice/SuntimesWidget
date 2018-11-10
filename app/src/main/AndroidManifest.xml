@@ -50,8 +50,8 @@
         <!-- Calculator Provider -->
         <provider
             android:name="com.forrestguice.suntimeswidget.calculator.CalculatorProvider"
-            android:authorities="com.forrestguice.suntimeswidget.calculator.provider"
-            android:exported="false"
+            android:authorities="suntimeswidget.calculator.provider"
+            android:exported="true"
             android:syncable="false" />
 
         <!-- Calendar Provider -->

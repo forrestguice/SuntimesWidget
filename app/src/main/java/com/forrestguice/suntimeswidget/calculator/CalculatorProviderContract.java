@@ -19,11 +19,14 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 /**
+ * CalculatorProviderContract
+ * @version 0.1.0
+ *
  * Moon Phases
  *   The following URIs are supported:
- *       content://com.forrestguice.suntimeswiget.calculator.provider/moon/phases                     .. get upcoming moon phases
- *       content://com.forrestguice.suntimeswiget.calculator.provider/moon/phases/[millis]            .. get upcoming moon phases after date (timestamp)
- *       content://com.forrestguice.suntimeswiget.calculator.provider/moon/phases/[millis]-[millis]   .. get upcoming moon phases for range (timestamp)
+ *       content://suntimeswiget.calculator.provider/moon/phases                     .. get upcoming moon phases
+ *       content://suntimeswiget.calculator.provider/moon/phases/[millis]            .. get upcoming moon phases after date (timestamp)
+ *       content://suntimeswiget.calculator.provider/moon/phases/[millis]-[millis]   .. get upcoming moon phases for range (timestamp)
  *
  *   The result will be one or more rows containing:
  *       [COLUMN_MOON_NEW(long), COLUMN_MOON_FIRST(long), COLUMN_MOON_FULL(long), COLUMN_MOON_THIRD(long)]
@@ -31,9 +34,9 @@ package com.forrestguice.suntimeswidget.calculator;
  *
  * Solstice and Equinox
  *   The following URIs are supported:
- *       content://com.forrestguice.suntimeswidget.calculator.provider/seasons                         .. get vernal, summer, autumn, and winter dates for this year
- *       content://com.forrestguice.suntimeswidget.calculator.provider/seasons/[year]                  .. get vernal, summer, autumn, and winter dates for some year
- *       content://com.forrestguice.suntimeswidget.calculator.provider/seasons/[year]-[year]           .. get vernal, summer, autumn, and winter dates for range
+ *       content://suntimeswidget.calculator.provider/seasons                         .. get vernal, summer, autumn, and winter dates for this year
+ *       content://suntimeswidget.calculator.provider/seasons/[year]                  .. get vernal, summer, autumn, and winter dates for some year
+ *       content://suntimeswidget.calculator.provider/seasons/[year]-[year]           .. get vernal, summer, autumn, and winter dates for range
  *
  *   The result will be one or more rows containing:
  *       [COLUMN_YEAR(int), COLUMM_SEASON_VERNAL(long), COLUMN_SEASON_SUMMER(long), COLUMN_SEASON_AUTUMN(long), COLUMN_SEASON_WINTER(long)]
@@ -46,7 +49,7 @@ package com.forrestguice.suntimeswidget.calculator;
  */
 public final class CalculatorProviderContract
 {
-    public static final String AUTHORITY = "com.forrestguice.suntimeswidget.calculator.provider";
+    public static final String AUTHORITY = "suntimeswidget.calculator.provider";
 
     public static final String QUERY_MOONPHASE = "moon/phases";
     public static final String COLUMN_MOON_NEW = "new";
