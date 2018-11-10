@@ -38,6 +38,7 @@ import android.widget.TextView;
 public class AboutDialog extends DialogFragment
 {
     public static final String WEBSITE_URL = "https://forrestguice.github.io/SuntimesWidget/";
+    public static final String ADDONS_URL = "https://forrestguice.github.io/SuntimesWidget/";
     public static final String PRIVACY_URL = "https://github.com/forrestguice/SuntimesWidget/wiki/Privacy";
     public static final String CHANGELOG_URL = "https://github.com/forrestguice/SuntimesWidget/blob/master/CHANGELOG.md";
     public static final String COMMIT_URL = "https://github.com/forrestguice/SuntimesWidget/commit/";

@@ -245,7 +245,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             int settingsIcon = a.getResourceId(0, R.drawable.ic_action_settings);
             int localeIcon = a.getResourceId(1, R.drawable.ic_action_locale);
             int placesIcon = a.getResourceId(2, R.drawable.ic_action_place);
-            int timeIcon = a.getResourceId(3, R.drawable.ic_calendar);
+            int calendarIcon = a.getResourceId(3, R.drawable.ic_calendar);
             int paletteIcon = a.getResourceId(4, R.drawable.ic_palette);
             int widgetIcon = a.getResourceId(5, R.drawable.ic_action_widget);
             a.recycle();
@@ -261,13 +261,15 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                         } else if (header.fragment.endsWith("PlacesPrefsFragment")) {
                             header.iconRes = placesIcon;
                         } else if (header.fragment.endsWith("CalendarPrefsFragment")) {
-                            header.iconRes = timeIcon;
+                            header.iconRes = calendarIcon;
                         } else if (header.fragment.endsWith("UIPrefsFragment")) {
                             header.iconRes = paletteIcon;
                         } else header.iconRes = settingsIcon;
                     } else {
                         if (header.id == R.id.prefHeaderWidgets)
                             header.iconRes = widgetIcon;
+                        //else if (header.id == R.id.prefHeaderCalendar)
+                            //header.iconRes = calendarIcon;
                         else header.iconRes = settingsIcon;
                     }
                 }
@@ -283,6 +285,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     protected boolean isValidFragment(String fragmentName)
     {
         return GeneralPrefsFragment.class.getName().equals(fragmentName) ||
+               CalendarPrefsFragment.class.getName().equals(fragmentName) ||
                LocalePrefsFragment.class.getName().equals(fragmentName) ||
                UIPrefsFragment.class.getName().equals(fragmentName) ||
                PlacesPrefsFragment.class.getName().equals(fragmentName);
@@ -556,6 +559,45 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         }
     }
 
+    //////////////////////////////////////////////////
+    //////////////////////////////////////////////////
+
+    /**
+     * Calendar Prefs
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class CalendarPrefsFragment extends PreferenceFragment
+    {
+        @Override
+        public void onCreate(Bundle savedInstanceState)
+        {
+            super.onCreate(savedInstanceState);
+            AppSettings.initLocale(getActivity());
+            addPreferencesFromResource(R.xml.preference_calendar);
+
+            Preference calendarReadme = findPreference("appwidget_0_calendars_readme");
+            if (calendarReadme != null)
+            {
+                calendarReadme.setSummary(SuntimesUtils.fromHtml(getString(R.string.help_calendar)));
+                calendarReadme.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
+                {
+                    @Override
+                    public boolean onPreferenceClick(Preference preference)
+                    {
+                        Activity activity = getActivity();
+                        if (activity != null) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(AboutDialog.ADDONS_URL));
+                            if (intent.resolveActivity(activity.getPackageManager()) != null) {
+                                activity.startActivity(intent);
+                            }
+                        }
+                        return false;
+                    }
+                });
+            }
+            Log.i(LOG_TAG, "CalendarPrefsFragment: Arguments: " + getArguments());
+        }
+    }
 
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////
