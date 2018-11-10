@@ -274,13 +274,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             loadHeadersFromResource(R.xml.preference_headers, target);
 
             TypedValue typedValue = new TypedValue();
-            int[] icActionAttr = new int[] { R.attr.icActionSettings, R.attr.icActionLocale, R.attr.icActionPlace, R.attr.icActionCalendar, R.attr.icActionAppearance };
+            int[] icActionAttr = new int[] { R.attr.icActionSettings, R.attr.icActionLocale, R.attr.icActionPlace, R.attr.icActionCalendar, R.attr.icActionAppearance, R.attr.icActionWidgets };
             TypedArray a = obtainStyledAttributes(typedValue.data, icActionAttr);
             int settingsIcon = a.getResourceId(0, R.drawable.ic_action_settings);
             int localeIcon = a.getResourceId(1, R.drawable.ic_action_locale);
             int placesIcon = a.getResourceId(2, R.drawable.ic_action_place);
             int timeIcon = a.getResourceId(3, R.drawable.ic_calendar);
             int paletteIcon = a.getResourceId(4, R.drawable.ic_palette);
+            int widgetIcon = a.getResourceId(5, R.drawable.ic_action_widget);
             a.recycle();
 
             for (Header header : target)
@@ -298,7 +299,11 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                         } else if (header.fragment.endsWith("UIPrefsFragment")) {
                             header.iconRes = paletteIcon;
                         } else header.iconRes = settingsIcon;
-                    } else header.iconRes = settingsIcon;
+                    } else {
+                        if (header.id == R.id.prefHeaderWidgets)
+                            header.iconRes = widgetIcon;
+                        else header.iconRes = settingsIcon;
+                    }
                 }
             }
         }

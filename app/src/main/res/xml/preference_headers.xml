@@ -40,7 +40,8 @@
             tools:ignore="UnusedAttribute">
     </header>
 
-    <header android:icon="?attr/icActionSettings"
+    <header android:id="@+id/prefHeaderWidgets"
+            android:icon="?attr/icActionWidgets"
             android:title="@string/configLabel_widgetList"
             android:summary="">
 

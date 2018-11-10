@@ -266,7 +266,7 @@ public class AppSettings
         Locale locale;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
         {
-            locale = Locale.forLanguageTag(languageTag);
+            locale = Locale.forLanguageTag(languageTag.replaceAll("_", "-"));
 
         } else {
             String[] parts = languageTag.split("[_]");
