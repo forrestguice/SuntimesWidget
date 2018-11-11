@@ -19,11 +19,11 @@
 package com.forrestguice.suntimeswidget;
 
 import android.annotation.SuppressLint;
-import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -40,8 +40,6 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -73,14 +71,13 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     public static final String LOG_TAG = "SuntimesSettings";
 
     final static String ACTION_PREFS_GENERAL = "com.forrestguice.suntimeswidget.PREFS_GENERAL";
-    final static String ACTION_PREFS_CALENDAR = "com.forrestguice.suntimeswidget.PREFS_CALENDAR";
     final static String ACTION_PREFS_LOCALE = "com.forrestguice.suntimeswidget.PREFS_LOCALE";
     final static String ACTION_PREFS_UI = "com.forrestguice.suntimeswidget.PREFS_UI";
     final static String ACTION_PREFS_WIDGETLIST = "com.forrestguice.suntimeswidget.PREFS_WIDGETLIST";
     final static String ACTION_PREFS_PLACES = "com.forrestguice.suntimeswidget.PREFS_PLACES";
 
-    public static final int REQUEST_CALENDARPREFSFRAGMENT_ENABLED = 2;
-    public static final int REQUEST_CALENDARPREFSFRAGMENT_DISABLED = 4;
+    public static String calendarPackage = "com.forrestguice.suntimescalendars";
+    public static String calendarActivity = "com.forrestguice.suntimeswidget.calendar.SuntimesCalendarActivity";
 
     private Context context;
     private PlacesPrefsBase placesPrefBase = null;
@@ -572,9 +569,26 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         public void onCreate(Bundle savedInstanceState)
         {
             super.onCreate(savedInstanceState);
+
+            Intent calendarIntent = new Intent();
+            calendarIntent.setComponent(new ComponentName(calendarPackage, calendarActivity));
+            calendarIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            PackageManager packageManager = getActivity().getPackageManager();
+            if (calendarIntent.resolveActivity(packageManager) != null)
+            {
+                try {
+                    startActivity(calendarIntent);
+                    getActivity().finish();
+                    return;
+
+                } catch (Exception e) {
+                    Log.e("CalendarPrefs", "Unable to launch SuntimesCalendarActivity! " + e);
+                }
+            }
+
             AppSettings.initLocale(getActivity());
             addPreferencesFromResource(R.xml.preference_calendar);
-
             Preference calendarReadme = findPreference("appwidget_0_calendars_readme");
             if (calendarReadme != null)
             {
