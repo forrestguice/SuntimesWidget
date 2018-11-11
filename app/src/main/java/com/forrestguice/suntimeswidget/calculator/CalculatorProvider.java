@@ -35,11 +35,14 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.TimeZone;
 
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.AUTHORITY;
 
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_ALTITUDE;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_APPTHEME;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LATITUDE;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LOCALE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LONGITUDE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_TIMEZONE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_CONFIG;
@@ -226,6 +229,7 @@ public class CalculatorProvider extends ContentProvider
      */
     private Cursor queryConfig(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder)
     {
+        Context context = getContext();
         String[] columns = (projection != null ? projection : new String[] { COLUMN_CONFIG_LATITUDE, COLUMN_CONFIG_LONGITUDE, COLUMN_CONFIG_ALTITUDE, COLUMN_CONFIG_TIMEZONE });
         MatrixCursor retValue = new MatrixCursor(columns);
         if (sunSource != null)
@@ -235,6 +239,15 @@ public class CalculatorProvider extends ContentProvider
             {
                 switch (columns[i])
                 {
+                    case COLUMN_CONFIG_LOCALE:
+                        AppSettings.LocaleMode localeMode = AppSettings.loadLocaleModePref(context);
+                        row[i] = ((localeMode == AppSettings.LocaleMode.SYSTEM_LOCALE) ? null : AppSettings.loadLocalePref(context));
+                        break;
+
+                    case COLUMN_CONFIG_APPTHEME:
+                        row[i] = AppSettings.loadThemePref(context);
+                        break;
+
                     case COLUMN_CONFIG_LATITUDE:
                         row[i] = config_location.getLatitude();
                         break;

@@ -28,7 +28,7 @@ package com.forrestguice.suntimeswidget.calculator;
  *       content://suntimeswidget.calculator.provider/config                         .. get the calculator config
  *
  *   The result will be one row containing:
- *       [COLUMN_LATITUDE, COLUMN_LONGITUDE, COLUMN_ALTITUDE, COLUMN_TIMEZONE]
+ *       [COLUMN_LATITUDE(double), COLUMN_LONGITUDE(double), COLUMN_ALTITUDE(double), COLUMN_TIMEZONE(String), COLUMN_LOCALE(String), COLUMN_APPTHEME(String) ]
  *
  * ------------------------------------------------------------------------------------------------*
  * Moon Phases
@@ -61,6 +61,8 @@ public final class CalculatorProviderContract
     public static final String AUTHORITY = "suntimeswidget.calculator.provider";
 
     public static final String QUERY_CONFIG = "config";
+    public static final String COLUMN_CONFIG_APPTHEME = "apptheme";
+    public static final String COLUMN_CONFIG_LOCALE = "locale";
     public static final String COLUMN_CONFIG_LATITUDE = "latitude";
     public static final String COLUMN_CONFIG_LONGITUDE = "longitude";
     public static final String COLUMN_CONFIG_ALTITUDE = "altitude";
