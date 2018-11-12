@@ -23,15 +23,38 @@ package com.forrestguice.suntimeswidget.calculator;
  * @version 0.1.0
  *
  * ------------------------------------------------------------------------------------------------
- * Configuration
+ * CONFIG
  *   The following URIs are supported:
  *       content://suntimeswidget.calculator.provider/config                         .. get the calculator config
  *
  *   The result will be one row containing:
- *       [COLUMN_LATITUDE(double), COLUMN_LONGITUDE(double), COLUMN_ALTITUDE(double), COLUMN_TIMEZONE(String), COLUMN_LOCALE(String), COLUMN_APPTHEME(String) ]
+ *       [COLUMN_LATITUDE(double), COLUMN_LONGITUDE(double), COLUMN_ALTITUDE(double), COLUMN_TIMEZONE(String), COLUMN_LOCALE(String), COLUMN_APPTHEME(String) ]
  *
  * ------------------------------------------------------------------------------------------------*
- * Moon Phases
+ * SUN
+ *   The following URIs are supported:
+ *       content://suntimeswiget.calculator.provider/sun                     .. get todays sun (rise, set, twilights)
+ *       content://suntimeswiget.calculator.provider/sun/[millis]            .. get upcoming sun (timestamp)
+ *       content://suntimeswiget.calculator.provider/sun/[millis]-[millis]   .. get upcoming sun for range (timestamp)
+ *
+ *   The result will be one or more rows containing:
+ *       [COLUMN_SUN_RISE(long), COLUMN_SUN_SET(long),
+ *        COLUMN_SUN_CIVIL_RISE(long), COLUMN_SUN_CIVIL_SET(long),
+ *        COLUMN_SUN_NAUTICAL_RISE(long), COLUMN_SUN_NAUTICAL_SET(long),
+ *        COLUMN_SUN_ASTRO_RISE(long), COLUMN_SUN_ASTRO_SET(long)]
+ *
+ * ------------------------------------------------------------------------------------------------*
+ * MOON
+ *   The following URIs are supported:
+ *       content://suntimeswiget.calculator.provider/moon                     .. get todays moon (rise, set)
+ *       content://suntimeswiget.calculator.provider/moon/[millis]            .. get upcoming moon (timestamp)
+ *       content://suntimeswiget.calculator.provider/moon/[millis]-[millis]   .. get upcoming moon for range (timestamp)
+ *
+ *   The result will be one or more rows containing:
+ *       [COLUMN_MOON_RISE(long), COLUMN_MOON_SET(long)]
+ *
+ * ------------------------------------------------------------------------------------------------*
+ * MOON PHASES
  *   The following URIs are supported:
  *       content://suntimeswiget.calculator.provider/moon/phases                     .. get upcoming moon phases
  *       content://suntimeswiget.calculator.provider/moon/phases/[millis]            .. get upcoming moon phases after date (timestamp)
@@ -41,7 +64,7 @@ package com.forrestguice.suntimeswidget.calculator;
  *       [COLUMN_MOON_NEW(long), COLUMN_MOON_FIRST(long), COLUMN_MOON_FULL(long), COLUMN_MOON_THIRD(long)]
  *
  * ------------------------------------------------------------------------------------------------
- * Solstice and Equinox
+ * SOLSTICE / EQUINOX
  *   The following URIs are supported:
  *       content://suntimeswidget.calculator.provider/seasons                         .. get vernal, summer, autumn, and winter dates for this year
  *       content://suntimeswidget.calculator.provider/seasons/[year]                  .. get vernal, summer, autumn, and winter dates for some year
@@ -52,32 +75,97 @@ package com.forrestguice.suntimeswidget.calculator;
  *
  * ------------------------------------------------------------------------------------------------
  * Example:
- *     String[] projection = new String[] { SuntimesCalculatorProviderContract.COLUMN_MOON_NEW, SuntimesCalculatorProviderContract.COLUMN_MOON_FIRST, SuntimesCalculatorProviderContract.COLUMN_MOON_FULL, SuntimesCalculatorProviderContract.COLUMN_MOON_THIRD };*
- *     Uri uri = Uri.parse("content://" + SuntimesCalculatorProviderContract.AUTHORITY + "/" + SuntimesCalculatorProviderContract.QUERY_MOONPHASE + "/" + startDate.getTimeInMillis() + "-" + endDate.getTimeInMillis());*
+ *     String[] projection = new String[] {COLUMN_MOON_NEW, COLUMN_MOON_FIRST, COLUMN_MOON_FULL, COLUMN_MOON_THIRD };*
+ *     Uri uri = Uri.parse("content://" + AUTHORITY + "/" + QUERY_MOONPHASE + "/" + startDate.getTimeInMillis() + "-" + endDate.getTimeInMillis());*
  *     Cursor cursor = resolver.query(uri, projection, null, null, null);
+ *     if (cursor != null {
+ *         cursor.moveToFirst();
+ *         while (!cursor.isAfterLast()) {
+ *             Long fullMoonTimeMillis = cursor.getLong(cursor.getColumnIndex(COLUMN_MOON_FULL));   // possibly null..
+ *             if (fullMoonTimeMillis != null) {                                                    // if column is not part of or is missing from the projection
+ *                 Calendar fullMoonCalendar = Calendar.getInstance();
+     *             fullMoonCalendar.setTimeInMillis(fullMoonTimeMillis); *
+ *             }
+ *             cursor.moveToNext();
+ *         }
+ *         cursor.close();
+ *     }
  */
-public final class CalculatorProviderContract
+public interface CalculatorProviderContract
 {
-    public static final String AUTHORITY = "suntimeswidget.calculator.provider";
+    String AUTHORITY = "suntimeswidget.calculator.provider";
 
-    public static final String QUERY_CONFIG = "config";
-    public static final String COLUMN_CONFIG_APPTHEME = "apptheme";
-    public static final String COLUMN_CONFIG_LOCALE = "locale";
-    public static final String COLUMN_CONFIG_LATITUDE = "latitude";
-    public static final String COLUMN_CONFIG_LONGITUDE = "longitude";
-    public static final String COLUMN_CONFIG_ALTITUDE = "altitude";
-    public static final String COLUMN_CONFIG_TIMEZONE = "timezone";
+    /**
+     * CONFIG
+     */
+    String COLUMN_CONFIG_APPTHEME = "config_apptheme";
+    String COLUMN_CONFIG_LOCALE = "config_locale";
+    String COLUMN_CONFIG_LATITUDE = "latitude";
+    String COLUMN_CONFIG_LONGITUDE = "longitude";
+    String COLUMN_CONFIG_ALTITUDE = "altitude";
+    String COLUMN_CONFIG_TIMEZONE = "timezone";
 
-    public static final String QUERY_MOONPHASE = "moon/phases";
-    public static final String COLUMN_MOON_NEW = "new";
-    public static final String COLUMN_MOON_FIRST = "first";
-    public static final String COLUMN_MOON_FULL = "full";
-    public static final String COLUMN_MOON_THIRD = "third";
+    String QUERY_CONFIG = "config";
+    String[] QUERY_CONFIG_PROJECTION = new String[] {
+            COLUMN_CONFIG_LOCALE, COLUMN_CONFIG_APPTHEME,
+            COLUMN_CONFIG_LATITUDE, COLUMN_CONFIG_LONGITUDE, COLUMN_CONFIG_ALTITUDE,
+            COLUMN_CONFIG_TIMEZONE
+    };
 
-    public static final String QUERY_SEASONS = "seasons";
-    public static final String COLUMN_SEASON_YEAR = "year";
-    public static final String COLUMN_SEASON_VERNAL = "vernal";
-    public static final String COLUMN_SEASON_SUMMER = "summer";
-    public static final String COLUMN_SEASON_AUTUMN = "autumn";
-    public static final String COLUMN_SEASON_WINTER = "winter";
+    /**
+     * SUN
+     */
+    String COLUMN_SUN_ACTUAL_RISE = "sunrise";
+    String COLUMN_SUN_ACTUAL_SET = "sunset";
+    String COLUMN_SUN_CIVIL_RISE = "civilrise";
+    String COLUMN_SUN_CIVIL_SET = "civilset";
+    String COLUMN_SUN_NAUTICAL_RISE = "nauticalrise";
+    String COLUMN_SUN_NAUTICAL_SET = "nauticalset";
+    String COLUMN_SUN_ASTRO_RISE = "astrorise";
+    String COLUMN_SUN_ASTRO_SET = "astroset";
+
+    String QUERY_SUN = "sun";
+    String[] QUERY_SUN_PROJECTION = new String[] {
+            COLUMN_SUN_ACTUAL_RISE, COLUMN_SUN_ACTUAL_SET,
+            COLUMN_SUN_CIVIL_RISE, COLUMN_SUN_CIVIL_SET,
+            COLUMN_SUN_NAUTICAL_RISE, COLUMN_SUN_NAUTICAL_SET,
+            COLUMN_SUN_ASTRO_RISE, COLUMN_SUN_ASTRO_SET
+    };
+
+    /**
+     * MOON
+     */
+    String COLUMN_MOON_RISE = "moonrise";
+    String COLUMN_MOON_SET = "moonset";
+
+    String QUERY_MOON = "moon";
+    String[] QUERY_MOON_PROJECTION = new String[] { COLUMN_MOON_RISE, COLUMN_MOON_SET };
+
+    /**
+     * MOONPHASE
+     */
+    String COLUMN_MOON_NEW = "moonphase_new";
+    String COLUMN_MOON_FIRST = "moonphase_first";
+    String COLUMN_MOON_FULL = "moonphase_full";
+    String COLUMN_MOON_THIRD = "moonphase_third";
+
+    String QUERY_MOONPHASE = "moon/phases";
+    String[] QUERY_MOONPHASE_PROJECTION = new String[] {
+            COLUMN_MOON_NEW, COLUMN_MOON_FIRST, COLUMN_MOON_FULL, COLUMN_MOON_THIRD
+    };
+
+    /**
+     * SEASONS
+     */
+    String COLUMN_SEASON_YEAR = "season_year";
+    String COLUMN_SEASON_VERNAL = "season_vernal";
+    String COLUMN_SEASON_SUMMER = "season_summer";
+    String COLUMN_SEASON_AUTUMN = "season_autumn";
+    String COLUMN_SEASON_WINTER = "season_winter";
+
+    String QUERY_SEASONS = "seasons";
+    String[] QUERY_SEASONS_PROJECTION = new String[] {
+            COLUMN_SEASON_VERNAL, COLUMN_SEASON_SUMMER, COLUMN_SEASON_AUTUMN, COLUMN_SEASON_WINTER, COLUMN_SEASON_YEAR
+    };
+
 }
