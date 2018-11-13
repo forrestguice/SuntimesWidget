@@ -55,6 +55,7 @@ import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContr
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_ISDAY_DATETIME;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_ALT;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_AZ;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_DATE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_DEC;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_RA;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOON_FIRST;
@@ -70,6 +71,7 @@ import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContr
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SEASON_YEAR;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUNPOS_ALT;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUNPOS_AZ;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUNPOS_DATE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUNPOS_DEC;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUNPOS_RA;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_ACTUAL_RISE;
@@ -356,6 +358,7 @@ public class CalculatorProviderTest
         assertTrue("default projection contains COLUMN_SUNPOS_AZ", projection.contains(COLUMN_SUNPOS_AZ));
         assertTrue("default projection contains COLUMN_SUNPOS_RA", projection.contains(COLUMN_SUNPOS_RA));
         assertTrue("default projection contains COLUMN_SUNPOS_DEC", projection.contains(COLUMN_SUNPOS_DEC));
+        assertTrue("default projection contains COLUMN_SUNPOS_DATE", projection.contains(COLUMN_SUNPOS_DATE));
         test_projectionHasUniqueColumns(QUERY_SUNPOS_PROJECTION);
     }
 
@@ -436,6 +439,7 @@ public class CalculatorProviderTest
         assertTrue("default projection contains COLUMN_MOONPOS_AZ", projection.contains(COLUMN_MOONPOS_AZ));
         assertTrue("default projection contains COLUMN_MOONPOS_RA", projection.contains(COLUMN_MOONPOS_RA));
         assertTrue("default projection contains COLUMN_MOONPOS_DEC", projection.contains(COLUMN_MOONPOS_DEC));
+        assertTrue("default projection contains COLUMN_MOONPOS_DATE", projection.contains(COLUMN_MOONPOS_DATE));
         test_projectionHasUniqueColumns(QUERY_MOONPOS_PROJECTION);
     }
 

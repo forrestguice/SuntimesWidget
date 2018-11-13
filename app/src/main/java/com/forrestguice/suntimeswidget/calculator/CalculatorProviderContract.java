@@ -197,11 +197,13 @@ public interface CalculatorProviderContract
     String COLUMN_SUNPOS_ALT = "sunpos_altitude";
     String COLUMN_SUNPOS_RA = "sunpos_ra";
     String COLUMN_SUNPOS_DEC = "sunpos_dec";
+    String COLUMN_SUNPOS_DATE = "sunpos_date";
 
     String QUERY_SUNPOS = "sunpos";
     String[] QUERY_SUNPOS_PROJECTION = new String[] {
             COLUMN_SUNPOS_AZ, COLUMN_SUNPOS_ALT,
-            COLUMN_SUNPOS_RA, COLUMN_SUNPOS_DEC
+            COLUMN_SUNPOS_RA, COLUMN_SUNPOS_DEC,
+            COLUMN_SUNPOS_DATE
     };
 
     /**
@@ -220,11 +222,13 @@ public interface CalculatorProviderContract
     String COLUMN_MOONPOS_ALT = "moonpos_altitude";
     String COLUMN_MOONPOS_RA = "moonpos_ra";
     String COLUMN_MOONPOS_DEC = "moonpos_dec";
+    String COLUMN_MOONPOS_DATE = "moonpos_date";
 
     String QUERY_MOONPOS = "moonpos";
     String[] QUERY_MOONPOS_PROJECTION = new String[] {
             COLUMN_MOONPOS_AZ, COLUMN_MOONPOS_ALT,
-            COLUMN_MOONPOS_RA, COLUMN_MOONPOS_DEC
+            COLUMN_MOONPOS_RA, COLUMN_MOONPOS_DEC,
+            COLUMN_MOONPOS_DATE
     };
 
     /**
