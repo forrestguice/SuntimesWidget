@@ -149,11 +149,11 @@ public interface CalculatorProviderContract
      * ISDAY
      */
     String COLUMN_ISDAY = "isday";
-    String COLUMN_ISDAY_DATETIME = "isday_datetime";
+    String COLUMN_ISDAY_DATE = "isday_date";
 
     String QUERY_ISDAY = "isday";
     String[] QUERY_ISDAY_PROJECTION = new String[] {
-            COLUMN_ISDAY, COLUMN_ISDAY_DATETIME
+            COLUMN_ISDAY, COLUMN_ISDAY_DATE
     };
 
     /**

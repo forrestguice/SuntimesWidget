@@ -52,7 +52,7 @@ import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContr
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LONGITUDE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_TIMEZONE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_ISDAY;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_ISDAY_DATETIME;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_ISDAY_DATE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_ALT;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_AZ;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_DATE;
@@ -260,7 +260,7 @@ public class CalculatorProviderTest
     {
         List<String> projection = Arrays.asList(QUERY_ISDAY_PROJECTION);
         assertTrue("default projection contains COLUMN_ISDAY", projection.contains(COLUMN_ISDAY));
-        assertTrue("default projection contains COLUMN_ISDAY_DATETIME", projection.contains(COLUMN_ISDAY_DATETIME));
+        assertTrue("default projection contains COLUMN_ISDAY_DATETIME", projection.contains(COLUMN_ISDAY_DATE));
         test_projectionHasUniqueColumns(QUERY_ISDAY_PROJECTION);
     }
 

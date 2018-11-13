@@ -49,7 +49,7 @@ import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContr
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LONGITUDE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_TIMEZONE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_ISDAY;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_ISDAY_DATETIME;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_ISDAY_DATE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_ALT;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_AZ;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_DEC;
@@ -555,7 +555,7 @@ public class CalculatorProvider extends ContentProvider
                         row[i] = calculator.isDay(datetime);
                         break;
 
-                    case COLUMN_ISDAY_DATETIME:
+                    case COLUMN_ISDAY_DATE:
                         row[i] = datetime.getTimeInMillis();
                         break;
 
@@ -699,6 +699,10 @@ public class CalculatorProvider extends ContentProvider
 
                         case COLUMN_SUNPOS_DEC:
                             row[i] = position.declination;
+                            break;
+
+                        case COLUMN_ISDAY:
+                            row[i] = calculator.isDay(datetime);
                             break;
 
                         default:
