@@ -107,6 +107,7 @@ public interface CalculatorProviderContract
     String COLUMN_CONFIG_LONGITUDE = "longitude";
     String COLUMN_CONFIG_ALTITUDE = "altitude";
     String COLUMN_CONFIG_TIMEZONE = "timezone";
+    String COLUMN_CONFIG_APPWIDGETID = "appwidgetid";
 
     String QUERY_CONFIG = "config";
     String[] QUERY_CONFIG_PROJECTION = new String[] {
@@ -118,20 +119,23 @@ public interface CalculatorProviderContract
     /**
      * SUN
      */
+    String COLUMN_SUN_NOON = "solarnoon";
     String COLUMN_SUN_ACTUAL_RISE = "sunrise";
     String COLUMN_SUN_ACTUAL_SET = "sunset";
+
     String COLUMN_SUN_CIVIL_RISE = "civilrise";
     String COLUMN_SUN_CIVIL_SET = "civilset";
     String COLUMN_SUN_NAUTICAL_RISE = "nauticalrise";
     String COLUMN_SUN_NAUTICAL_SET = "nauticalset";
     String COLUMN_SUN_ASTRO_RISE = "astrorise";
     String COLUMN_SUN_ASTRO_SET = "astroset";
-    String COLUMN_SUN_NOON = "solarnoon";
-    String COLUMN_SUN_GOLDEN_RISE = "goldenrise";
-    String COLUMN_SUN_GOLDEN_SET = "goldenset";
-    String COLUMN_SUN_BLUE8_RISE = "blue8rise";
-    String COLUMN_SUN_BLUE8_SET = "blue8set";
+
+    String COLUMN_SUN_GOLDEN_MORNING = "goldenmorning";
+    String COLUMN_SUN_GOLDEN_EVENING = "goldenevening";
+
+    String COLUMN_SUN_BLUE8_RISE = "blue8rise";      // morning blue hour
     String COLUMN_SUN_BLUE4_RISE = "blue4rise";
+    String COLUMN_SUN_BLUE8_SET = "blue8set";        // evening blue hour
     String COLUMN_SUN_BLUE4_SET = "blue4set";
 
     String QUERY_SUN = "sun";
@@ -141,7 +145,7 @@ public interface CalculatorProviderContract
             COLUMN_SUN_NAUTICAL_RISE, COLUMN_SUN_NAUTICAL_SET,
             COLUMN_SUN_ASTRO_RISE, COLUMN_SUN_ASTRO_SET,
             COLUMN_SUN_NOON,
-            COLUMN_SUN_GOLDEN_RISE, COLUMN_SUN_GOLDEN_SET,
+            COLUMN_SUN_GOLDEN_MORNING, COLUMN_SUN_GOLDEN_EVENING,
             COLUMN_SUN_BLUE8_RISE, COLUMN_SUN_BLUE8_SET,
             COLUMN_SUN_BLUE4_RISE, COLUMN_SUN_BLUE4_SET
     };

@@ -38,10 +38,11 @@ import java.util.TimeZone;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.AUTHORITY;
 
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.AUTHORITY;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_ALTITUDE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_APPTHEME;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_APPWIDGETID;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LATITUDE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LOCALE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LONGITUDE;
@@ -58,8 +59,8 @@ import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContr
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_BLUE8_SET;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_CIVIL_RISE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_CIVIL_SET;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_GOLDEN_RISE;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_GOLDEN_SET;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_GOLDEN_EVENING;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_GOLDEN_MORNING;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_NAUTICAL_RISE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_NAUTICAL_SET;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_NOON;
@@ -71,7 +72,6 @@ import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContr
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOON_FULL;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOON_NEW;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOON_THIRD;
-
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_MOONPHASE_PROJECTION;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_MOON_PROJECTION;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_SEASONS;
@@ -137,17 +137,13 @@ public class CalculatorProvider extends ContentProvider
     }
 
     private static SparseArray<SuntimesCalculator> sunSource = new SparseArray<>();    // sun source for appWidgetID (app is 0)
-    private static SparseArray<SuntimesCalculator> moonSource = new SparseArray<>();   // moon source for appWidgetID (app is 0)
-    private static WidgetSettings.Location config_location;
-    private static String config_timezone;
-
     private static SuntimesCalculator initSunCalculator(Context context, int appWidgetID)
     {
         SuntimesCalculator retValue = sunSource.get(appWidgetID);
         if (retValue == null)         // lazy init
         {
-            config_location = WidgetSettings.loadLocationPref(context, appWidgetID);
-            TimeZone timezone = TimeZone.getTimeZone(config_timezone = WidgetSettings.loadTimezonePref(context, appWidgetID));
+            WidgetSettings.Location config_location = WidgetSettings.loadLocationPref(context, appWidgetID);
+            TimeZone timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, appWidgetID));
             SuntimesCalculatorDescriptor sunSourceDesc = WidgetSettings.loadCalculatorModePref(context, appWidgetID);
             SuntimesCalculatorFactory sunSourceFactory = new SuntimesCalculatorFactory(context, sunSourceDesc);
             sunSource.put(appWidgetID, (retValue = sunSourceFactory.createCalculator(config_location, timezone)));
@@ -155,13 +151,14 @@ public class CalculatorProvider extends ContentProvider
         return retValue;
     }
 
+    private static SparseArray<SuntimesCalculator> moonSource = new SparseArray<>();   // moon source for appWidgetID (app is 0)
     private static SuntimesCalculator initMoonCalculator(Context context, int appWidgetID)
     {
         SuntimesCalculator retValue = moonSource.get(appWidgetID);
         if (retValue == null)    // lazy init
         {
-            config_location = WidgetSettings.loadLocationPref(context, appWidgetID);
-            TimeZone timezone = TimeZone.getTimeZone(config_timezone = WidgetSettings.loadTimezonePref(context, appWidgetID));
+            WidgetSettings.Location config_location = WidgetSettings.loadLocationPref(context, appWidgetID);
+            TimeZone timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, appWidgetID));
             SuntimesCalculatorDescriptor moonSourceDesc = WidgetSettings.loadCalculatorModePref(context, 0, "moon");      // always use app calculator (0)
             SuntimesCalculatorFactory moonSourceFactory = new SuntimesCalculatorFactory(context, moonSourceDesc);
             moonSource.put(appWidgetID, (retValue = moonSourceFactory.createCalculator(config_location, timezone)));
@@ -176,18 +173,18 @@ public class CalculatorProvider extends ContentProvider
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder)
     {
+        int appWidgetID = 0;
         Calendar now = Calendar.getInstance();
         Calendar date = Calendar.getInstance();
         Calendar[] range;
         Cursor retValue = null;
-        int appWidgetID = 0;
 
         int uriMatch = uriMatcher.match(uri);
         switch (uriMatch)
         {
             case URIMATCH_CONFIG:
                 Log.d("CalculatorProvider", "URIMATCH_CONFIG");
-                retValue = queryConfig(uri, projection, selection, selectionArgs, sortOrder);
+                retValue = queryConfig(appWidgetID, uri, projection, selection, selectionArgs, sortOrder);
                 break;
 
             case URIMATCH_SEASONS:
@@ -308,52 +305,71 @@ public class CalculatorProvider extends ContentProvider
     /**
      * queryConfig
      */
-    private Cursor queryConfig(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder)
+    private Cursor queryConfig(int appWidgetID, @NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder)
     {
         Context context = getContext();
         String[] columns = (projection != null ? projection : QUERY_CONFIG_PROJECTION);
         MatrixCursor retValue = new MatrixCursor(columns);
 
-        initSunCalculator(getContext(), 0);
-        if (sunSource.get(0) != null)
+        if (context != null)
         {
-            Object[] row = new Object[columns.length];
-            for (int i=0; i<columns.length; i++)
+            initSunCalculator(getContext(), appWidgetID);
+            SuntimesCalculator calculator = sunSource.get(appWidgetID);
+            if (calculator != null)
             {
-                switch (columns[i])
+                WidgetSettings.Location location = null;
+                Object[] row = new Object[columns.length];
+                for (int i=0; i<columns.length; i++)
                 {
-                    case COLUMN_CONFIG_LOCALE:
-                        AppSettings.LocaleMode localeMode = AppSettings.loadLocaleModePref(context);
-                        row[i] = ((localeMode == AppSettings.LocaleMode.SYSTEM_LOCALE) ? null : AppSettings.loadLocalePref(context));
-                        break;
+                    switch (columns[i])
+                    {
+                        case COLUMN_CONFIG_LOCALE:
+                            AppSettings.LocaleMode localeMode = AppSettings.loadLocaleModePref(context);
+                            row[i] = ((localeMode == AppSettings.LocaleMode.SYSTEM_LOCALE) ? null : AppSettings.loadLocalePref(context));
+                            break;
 
-                    case COLUMN_CONFIG_APPTHEME:
-                        row[i] = AppSettings.loadThemePref(context);
-                        break;
+                        case COLUMN_CONFIG_APPTHEME:
+                            row[i] = AppSettings.loadThemePref(context);
+                            break;
 
-                    case COLUMN_CONFIG_LATITUDE:
-                        row[i] = config_location.getLatitude();
-                        break;
+                        case COLUMN_CONFIG_LATITUDE:
+                            if (location == null) {
+                                location = WidgetSettings.loadLocationPref(context, appWidgetID);
+                            }
+                            row[i] = location.getLatitude();
+                            break;
 
-                    case COLUMN_CONFIG_LONGITUDE:
-                        row[i] = config_location.getLongitude();
-                        break;
+                        case COLUMN_CONFIG_LONGITUDE:
+                            if (location == null) {
+                                location = WidgetSettings.loadLocationPref(context, appWidgetID);
+                            }
+                            row[i] = location.getLongitude();
+                            break;
 
-                    case COLUMN_CONFIG_ALTITUDE:
-                        row[i] = config_location.getAltitude();
-                        break;
+                        case COLUMN_CONFIG_ALTITUDE:
+                            if (location == null) {
+                                location = WidgetSettings.loadLocationPref(context, appWidgetID);
+                            }
+                            row[i] = location.getAltitude();
+                            break;
 
-                    case COLUMN_CONFIG_TIMEZONE:
-                        row[i] = config_timezone;
-                        break;
+                        case COLUMN_CONFIG_TIMEZONE:
+                            row[i] = WidgetSettings.loadTimezonePref(context, appWidgetID);
+                            break;
 
-                    default:
-                        row[i] = null; break;
+                        case COLUMN_CONFIG_APPWIDGETID:
+                            row[i] = appWidgetID;
+                            break;
+
+                        default:
+                            row[i] = null;
+                            break;
+                    }
                 }
-            }
-            retValue.addRow(row);
+                retValue.addRow(row);
 
-        } else Log.d("DEBUG", "sunSource is null!");
+            } else Log.e("queryConfig", "sunSource " + appWidgetID + " is null!");
+        } else Log.e("queryConfig", "context is null!");
         return retValue;
     }
 
@@ -409,10 +425,10 @@ public class CalculatorProvider extends ContentProvider
                             row[i] = calculator.getSolarNoonCalendarForDate(day);
                             break;
 
-                        case COLUMN_SUN_GOLDEN_RISE:
+                        case COLUMN_SUN_GOLDEN_EVENING:
                             row[i] = calculator.getEveningGoldenHourForDate(day);
                             break;
-                        case COLUMN_SUN_GOLDEN_SET:
+                        case COLUMN_SUN_GOLDEN_MORNING:
                             row[i] = calculator.getMorningGoldenHourForDate(day);
                             break;
 
