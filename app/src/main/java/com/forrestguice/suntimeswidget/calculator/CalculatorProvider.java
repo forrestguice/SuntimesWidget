@@ -137,19 +137,54 @@ public class CalculatorProvider extends ContentProvider
         return true;
     }
 
+    private SuntimesCalculator initCalculator(Context context, HashMap<String,String> selection, String calculatorName)
+    {
+        int appWidgetID = 0;
+        if (selection.containsKey(COLUMN_CONFIG_APPWIDGETID)) {
+            appWidgetID = Integer.parseInt(selection.getOrDefault(COLUMN_CONFIG_APPWIDGETID, "0"));
+        }
+
+        String timezoneID = selection.getOrDefault(COLUMN_CONFIG_TIMEZONE, null);
+        TimeZone timezone = (timezoneID != null ? TimeZone.getTimeZone(timezoneID) : null);
+        WidgetSettings.Location location = processSelection_location(selection);
+
+        if (location == null && timezone == null) {
+            return initSunCalculator(context, appWidgetID);
+
+        } else {
+            SuntimesCalculatorDescriptor descriptor = (calculatorName == null ? WidgetSettings.loadCalculatorModePref(context, appWidgetID)
+                                                                              : WidgetSettings.loadCalculatorModePref(context, appWidgetID, calculatorName));
+            SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, descriptor);
+
+            if (location != null && timezone != null) {
+                return factory.createCalculator(location, timezone);
+
+            } else if (timezone != null) {
+                location = WidgetSettings.loadLocationPref(context, appWidgetID);
+                return factory.createCalculator(location, timezone);
+
+            } else {
+                timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, appWidgetID));
+                return factory.createCalculator(location, timezone);
+            }
+        }
+    }
+
     private static SparseArray<SuntimesCalculator> sunSource = new SparseArray<>();    // sun source for appWidgetID (app is 0)
     private static SuntimesCalculator initSunCalculator(Context context, int appWidgetID)
     {
-        SuntimesCalculator retValue = sunSource.get(appWidgetID);
-        if (retValue == null)         // lazy init
-        {
-            WidgetSettings.Location config_location = WidgetSettings.loadLocationPref(context, appWidgetID);
+        SuntimesCalculator retValue = sunSource.get(appWidgetID);   // lazy init
+        if (retValue == null) {
+            WidgetSettings.Location location = WidgetSettings.loadLocationPref(context, appWidgetID);
             TimeZone timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, appWidgetID));
-            SuntimesCalculatorDescriptor sunSourceDesc = WidgetSettings.loadCalculatorModePref(context, appWidgetID);
-            SuntimesCalculatorFactory sunSourceFactory = new SuntimesCalculatorFactory(context, sunSourceDesc);
-            sunSource.put(appWidgetID, (retValue = sunSourceFactory.createCalculator(config_location, timezone)));
+            SuntimesCalculatorDescriptor descriptor = WidgetSettings.loadCalculatorModePref(context, appWidgetID);
+            SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, descriptor);
+            sunSource.put(appWidgetID, (retValue = factory.createCalculator(location, timezone)));
         }
         return retValue;
+    }
+    private SuntimesCalculator initSunCalculator(Context context, HashMap<String,String> selection) {
+        return initCalculator(context, selection, null);
     }
 
     private static SparseArray<SuntimesCalculator> moonSource = new SparseArray<>();   // moon source for appWidgetID (app is 0)
@@ -158,13 +193,16 @@ public class CalculatorProvider extends ContentProvider
         SuntimesCalculator retValue = moonSource.get(appWidgetID);
         if (retValue == null)    // lazy init
         {
-            WidgetSettings.Location config_location = WidgetSettings.loadLocationPref(context, appWidgetID);
+            WidgetSettings.Location location = WidgetSettings.loadLocationPref(context, appWidgetID);
             TimeZone timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, appWidgetID));
-            SuntimesCalculatorDescriptor moonSourceDesc = WidgetSettings.loadCalculatorModePref(context, 0, "moon");      // always use app calculator (0)
-            SuntimesCalculatorFactory moonSourceFactory = new SuntimesCalculatorFactory(context, moonSourceDesc);
-            moonSource.put(appWidgetID, (retValue = moonSourceFactory.createCalculator(config_location, timezone)));
+            SuntimesCalculatorDescriptor descriptor = WidgetSettings.loadCalculatorModePref(context, 0, "moon");      // always use app calculator (0)
+            SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, descriptor);
+            moonSource.put(appWidgetID, (retValue = factory.createCalculator(location, timezone)));
         }
         return retValue;
+    }
+    private SuntimesCalculator initMoonCalculator(Context context, HashMap<String,String> selection) {
+        return initCalculator(context, selection, "moon");
     }
 
     @Nullable
@@ -205,6 +243,21 @@ public class CalculatorProvider extends ContentProvider
             }
         }
         return retValue;
+    }
+
+    private WidgetSettings.Location processSelection_location(HashMap<String,String> selection)
+    {
+        WidgetSettings.Location location = null;
+        if (selection.containsKey(COLUMN_CONFIG_LATITUDE) || selection.containsKey(COLUMN_CONFIG_LONGITUDE))
+        {
+            boolean hasAltitude = selection.containsKey(COLUMN_CONFIG_ALTITUDE);
+            location = (hasAltitude) ? new WidgetSettings.Location("", selection.get(COLUMN_CONFIG_LATITUDE), selection.get(COLUMN_CONFIG_LONGITUDE), selection.get(COLUMN_CONFIG_ALTITUDE))
+                                     : new WidgetSettings.Location("", selection.get(COLUMN_CONFIG_LATITUDE), selection.get(COLUMN_CONFIG_LONGITUDE));
+            if (hasAltitude) {
+                location.setUseAltitude(true);
+            }
+        }
+        return location;
     }
 
     /**
@@ -359,8 +412,7 @@ public class CalculatorProvider extends ContentProvider
                 appWidgetID = Integer.parseInt(selection.getOrDefault(COLUMN_CONFIG_APPWIDGETID, "0"));
             }
 
-            initSunCalculator(getContext(), appWidgetID);
-            SuntimesCalculator calculator = sunSource.get(appWidgetID);
+            SuntimesCalculator calculator = initSunCalculator(getContext(), selection);
             if (calculator != null)
             {
                 WidgetSettings.Location location = null;
@@ -426,13 +478,7 @@ public class CalculatorProvider extends ContentProvider
     {
         String[] columns = (projection != null ? projection : QUERY_SUN_PROJECTION);
         MatrixCursor retValue = new MatrixCursor(columns);
-
-        int appWidgetID = 0;
-        if (selection.containsKey(COLUMN_CONFIG_APPWIDGETID)) {
-            appWidgetID = Integer.parseInt(selection.getOrDefault(COLUMN_CONFIG_APPWIDGETID, "0"));
-        }
-
-        SuntimesCalculator calculator = initSunCalculator(getContext(), appWidgetID);
+        SuntimesCalculator calculator = initSunCalculator(getContext(), selection);
         if (calculator != null)
         {
             Calendar day = Calendar.getInstance();
@@ -529,13 +575,7 @@ public class CalculatorProvider extends ContentProvider
     {
         String[] columns = (projection != null ? projection : QUERY_MOON_PROJECTION);
         MatrixCursor retValue = new MatrixCursor(columns);
-
-        int appWidgetID = 0;
-        if (selection.containsKey(COLUMN_CONFIG_APPWIDGETID)) {
-            appWidgetID = Integer.parseInt(selection.getOrDefault(COLUMN_CONFIG_APPWIDGETID, "0"));
-        }
-
-        SuntimesCalculator calculator = initMoonCalculator(getContext(), appWidgetID);
+        SuntimesCalculator calculator = initMoonCalculator(getContext(), selection);
         if (calculator != null)
         {
             Calendar day = Calendar.getInstance();
@@ -576,13 +616,7 @@ public class CalculatorProvider extends ContentProvider
     {
         String[] columns = (projection != null ? projection : QUERY_MOONPHASE_PROJECTION);
         MatrixCursor retValue = new MatrixCursor(columns);
-
-        int appWidgetID = 0;
-        if (selection.containsKey(COLUMN_CONFIG_APPWIDGETID)) {
-            appWidgetID = Integer.parseInt(selection.getOrDefault(COLUMN_CONFIG_APPWIDGETID, "0"));
-        }
-
-        SuntimesCalculator calculator = initMoonCalculator(getContext(), appWidgetID);
+        SuntimesCalculator calculator = initMoonCalculator(getContext(), selection);
         if (calculator != null)
         {
             ArrayList<Calendar> events = new ArrayList<>();
@@ -641,13 +675,7 @@ public class CalculatorProvider extends ContentProvider
     {
         String[] columns = (projection != null ? projection : QUERY_SEASONS_PROJECTION);
         MatrixCursor retValue = new MatrixCursor(columns);
-
-        int appWidgetID = 0;
-        if (selection.containsKey(COLUMN_CONFIG_APPWIDGETID)) {
-            appWidgetID = Integer.parseInt(selection.getOrDefault(COLUMN_CONFIG_APPWIDGETID, "0"));
-        }
-
-        SuntimesCalculator calculator = initSunCalculator(getContext(), appWidgetID);
+        SuntimesCalculator calculator = initSunCalculator(getContext(), selection);
         if (calculator != null)
         {
             Calendar year = Calendar.getInstance();
