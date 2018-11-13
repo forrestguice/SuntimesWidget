@@ -149,7 +149,9 @@ public class CalculatorProvider extends ContentProvider
         WidgetSettings.Location location = processSelection_location(selection);
 
         if (location == null && timezone == null) {
-            return initSunCalculator(context, appWidgetID);
+            if (calculatorName != null && calculatorName.equals("moon"))
+                return initMoonCalculator(context, appWidgetID);
+            else return initSunCalculator(context, appWidgetID);
 
         } else {
             SuntimesCalculatorDescriptor descriptor = (calculatorName == null ? WidgetSettings.loadCalculatorModePref(context, appWidgetID)
