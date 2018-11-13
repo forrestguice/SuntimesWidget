@@ -52,10 +52,17 @@ import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContr
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_ACTUAL_SET;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_ASTRO_RISE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_ASTRO_SET;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_BLUE4_RISE;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_BLUE4_SET;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_BLUE8_RISE;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_BLUE8_SET;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_CIVIL_RISE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_CIVIL_SET;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_GOLDEN_RISE;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_GOLDEN_SET;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_NAUTICAL_RISE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_NAUTICAL_SET;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_NOON;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_CONFIG;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_CONFIG_PROJECTION;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_MOON;
@@ -364,6 +371,7 @@ public class CalculatorProvider extends ContentProvider
             Calendar day = Calendar.getInstance();
             day.setTimeInMillis(range[0].getTimeInMillis());
             do {
+                Calendar[] morningBlueHour = null, eveningBlueHour = null;
                 Object[] row = new Object[columns.length];
                 for (int i=0; i<columns.length; i++)
                 {
@@ -395,6 +403,43 @@ public class CalculatorProvider extends ContentProvider
                             break;
                         case COLUMN_SUN_ASTRO_SET:
                             row[i] = calculator.getAstronomicalSunsetCalendarForDate(day);
+                            break;
+
+                        case COLUMN_SUN_NOON:
+                            row[i] = calculator.getSolarNoonCalendarForDate(day);
+                            break;
+
+                        case COLUMN_SUN_GOLDEN_RISE:
+                            row[i] = calculator.getEveningGoldenHourForDate(day);
+                            break;
+                        case COLUMN_SUN_GOLDEN_SET:
+                            row[i] = calculator.getMorningGoldenHourForDate(day);
+                            break;
+
+                        case COLUMN_SUN_BLUE8_RISE:
+                            if (morningBlueHour == null) {
+                                morningBlueHour = calculator.getMorningBlueHourForDate(day);
+                            }
+                            row[i] = morningBlueHour[0];
+                            break;
+                        case COLUMN_SUN_BLUE4_RISE:
+                            if (morningBlueHour == null) {
+                                morningBlueHour = calculator.getMorningBlueHourForDate(day);
+                            }
+                            row[i] = morningBlueHour[1];
+                            break;
+
+                        case COLUMN_SUN_BLUE4_SET:
+                            if (eveningBlueHour == null) {
+                                eveningBlueHour = calculator.getEveningBlueHourForDate(day);
+                            }
+                            row[i] = eveningBlueHour[0];
+                            break;
+                        case COLUMN_SUN_BLUE8_SET:
+                            if (eveningBlueHour == null) {
+                                eveningBlueHour = calculator.getEveningBlueHourForDate(day);
+                            }
+                            row[i] = eveningBlueHour[1];
                             break;
 
                         default:

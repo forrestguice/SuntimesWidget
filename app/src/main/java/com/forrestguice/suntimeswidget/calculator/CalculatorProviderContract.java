@@ -38,10 +38,13 @@ package com.forrestguice.suntimeswidget.calculator;
  *       content://suntimeswiget.calculator.provider/sun/[millis]-[millis]   .. get upcoming sun for range (timestamp)
  *
  *   The result will be one or more rows containing:
- *       [COLUMN_SUN_RISE(long), COLUMN_SUN_SET(long),
- *        COLUMN_SUN_CIVIL_RISE(long), COLUMN_SUN_CIVIL_SET(long),
- *        COLUMN_SUN_NAUTICAL_RISE(long), COLUMN_SUN_NAUTICAL_SET(long),
- *        COLUMN_SUN_ASTRO_RISE(long), COLUMN_SUN_ASTRO_SET(long)]
+ *      COLUMN_SUN_ACTUAL_RISE, COLUMN_SUN_ACTUAL_SET,
+ *      COLUMN_SUN_CIVIL_RISE, COLUMN_SUN_CIVIL_SET,
+ *      COLUMN_SUN_NAUTICAL_RISE, COLUMN_SUN_NAUTICAL_SET,
+ *      COLUMN_SUN_ASTRO_RISE, COLUMN_SUN_ASTRO_SET,COLUMN_SUN_NOON,
+ *      COLUMN_SUN_GOLDEN_RISE, COLUMN_SUN_GOLDEN_SET,
+ *      COLUMN_SUN_BLUE8_RISE, COLUMN_SUN_BLUE8_SET,
+ *      COLUMN_SUN_BLUE4_RISE, COLUMN_SUN_BLUE4_SET
  *
  * ------------------------------------------------------------------------------------------------*
  * MOON
@@ -123,13 +126,24 @@ public interface CalculatorProviderContract
     String COLUMN_SUN_NAUTICAL_SET = "nauticalset";
     String COLUMN_SUN_ASTRO_RISE = "astrorise";
     String COLUMN_SUN_ASTRO_SET = "astroset";
+    String COLUMN_SUN_NOON = "solarnoon";
+    String COLUMN_SUN_GOLDEN_RISE = "goldenrise";
+    String COLUMN_SUN_GOLDEN_SET = "goldenset";
+    String COLUMN_SUN_BLUE8_RISE = "blue8rise";
+    String COLUMN_SUN_BLUE8_SET = "blue8set";
+    String COLUMN_SUN_BLUE4_RISE = "blue4rise";
+    String COLUMN_SUN_BLUE4_SET = "blue4set";
 
     String QUERY_SUN = "sun";
     String[] QUERY_SUN_PROJECTION = new String[] {
             COLUMN_SUN_ACTUAL_RISE, COLUMN_SUN_ACTUAL_SET,
             COLUMN_SUN_CIVIL_RISE, COLUMN_SUN_CIVIL_SET,
             COLUMN_SUN_NAUTICAL_RISE, COLUMN_SUN_NAUTICAL_SET,
-            COLUMN_SUN_ASTRO_RISE, COLUMN_SUN_ASTRO_SET
+            COLUMN_SUN_ASTRO_RISE, COLUMN_SUN_ASTRO_SET,
+            COLUMN_SUN_NOON,
+            COLUMN_SUN_GOLDEN_RISE, COLUMN_SUN_GOLDEN_SET,
+            COLUMN_SUN_BLUE8_RISE, COLUMN_SUN_BLUE8_SET,
+            COLUMN_SUN_BLUE4_RISE, COLUMN_SUN_BLUE4_SET
     };
 
     /**
