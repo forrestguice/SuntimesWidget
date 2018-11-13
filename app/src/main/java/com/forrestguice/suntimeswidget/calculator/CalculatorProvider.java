@@ -48,8 +48,16 @@ import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContr
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LOCALE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LONGITUDE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_TIMEZONE;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_ALT;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_AZ;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_DEC;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_RA;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOON_RISE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOON_SET;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUNPOS_ALT;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUNPOS_AZ;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUNPOS_DEC;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUNPOS_RA;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_ACTUAL_RISE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_ACTUAL_SET;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_ASTRO_RISE;
@@ -74,6 +82,8 @@ import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContr
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOON_NEW;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOON_THIRD;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_MOONPHASE_PROJECTION;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_MOONPOS;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_MOONPOS_PROJECTION;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_MOON_PROJECTION;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_SEASONS;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SEASON_AUTUMN;
@@ -83,6 +93,8 @@ import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContr
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SEASON_YEAR;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_SEASONS_PROJECTION;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_SUN;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_SUNPOS;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_SUNPOS_PROJECTION;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_SUN_PROJECTION;
 
 /**
@@ -97,17 +109,23 @@ public class CalculatorProvider extends ContentProvider
     private static final int URIMATCH_SUN_FOR_DATE = 20;
     private static final int URIMATCH_SUN_FOR_RANGE = 30;
 
-    private static final int URIMATCH_MOON = 40;
-    private static final int URIMATCH_MOON_FOR_DATE = 50;
-    private static final int URIMATCH_MOON_FOR_RANGE = 60;
+    private static final int URIMATCH_SUNPOS = 40;
+    private static final int URIMATCH_SUNPOS_FOR_DATE = 50;
 
-    private static final int URIMATCH_MOONPHASE = 70;
-    private static final int URIMATCH_MOONPHASE_FOR_DATE = 80;
-    private static final int URIMATCH_MOONPHASE_FOR_RANGE = 90;
+    private static final int URIMATCH_MOON = 60;
+    private static final int URIMATCH_MOON_FOR_DATE = 70;
+    private static final int URIMATCH_MOON_FOR_RANGE = 80;
 
-    private static final int URIMATCH_SEASONS = 100;
-    private static final int URIMATCH_SEASONS_FOR_YEAR = 110;
-    private static final int URIMATCH_SEASONS_FOR_RANGE = 120;
+    private static final int URIMATCH_MOONPOS = 90;
+    private static final int URIMATCH_MOONPOS_FOR_DATE = 100;
+
+    private static final int URIMATCH_MOONPHASE = 110;
+    private static final int URIMATCH_MOONPHASE_FOR_DATE = 120;
+    private static final int URIMATCH_MOONPHASE_FOR_RANGE = 130;
+
+    private static final int URIMATCH_SEASONS = 140;
+    private static final int URIMATCH_SEASONS_FOR_YEAR = 150;
+    private static final int URIMATCH_SEASONS_FOR_RANGE = 160;
 
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     static
@@ -118,9 +136,15 @@ public class CalculatorProvider extends ContentProvider
         uriMatcher.addURI(AUTHORITY, QUERY_SUN + "/#", URIMATCH_SUN_FOR_DATE);
         uriMatcher.addURI(AUTHORITY, QUERY_SUN + "/*", URIMATCH_SUN_FOR_RANGE);
 
+        uriMatcher.addURI(AUTHORITY, QUERY_SUNPOS, URIMATCH_SUNPOS);
+        uriMatcher.addURI(AUTHORITY, QUERY_SUNPOS + "/#", URIMATCH_SUNPOS_FOR_DATE);
+
         uriMatcher.addURI(AUTHORITY, QUERY_MOON, URIMATCH_MOON);
         uriMatcher.addURI(AUTHORITY, QUERY_MOON + "/#", URIMATCH_MOON_FOR_DATE);
         uriMatcher.addURI(AUTHORITY, QUERY_MOON + "/*", URIMATCH_MOON_FOR_RANGE);
+
+        uriMatcher.addURI(AUTHORITY, QUERY_MOONPOS, URIMATCH_MOONPOS);
+        uriMatcher.addURI(AUTHORITY, QUERY_MOONPOS + "/#", URIMATCH_MOONPOS_FOR_DATE);
 
         uriMatcher.addURI(AUTHORITY, QUERY_MOONPHASE, URIMATCH_MOONPHASE);
         uriMatcher.addURI(AUTHORITY, QUERY_MOONPHASE + "/#", URIMATCH_MOONPHASE_FOR_DATE);
@@ -313,6 +337,15 @@ public class CalculatorProvider extends ContentProvider
                 retValue = querySun(range, uri, projection, selectionMap, sortOrder);
                 break;
 
+            case URIMATCH_SUNPOS:
+                Log.d("CalculatorProvider", "URIMATCH_SUNPOS");
+                retValue = querySunPos(now, uri, projection, selectionMap, sortOrder);
+                break;
+            case URIMATCH_SUNPOS_FOR_DATE:
+                Log.d("CalculatorProvider", "URIMATCH_SUNPOS_FOR_DATE");
+                retValue = querySunPos(date, uri, projection, selectionMap, sortOrder);
+                break;
+
             case URIMATCH_MOON:
                 Log.d("CalculatorProvider", "URIMATCH_MOON");
                 retValue = queryMoon(new Calendar[] {now, now}, uri, projection, selectionMap, sortOrder);
@@ -325,6 +358,15 @@ public class CalculatorProvider extends ContentProvider
                 Log.d("CalculatorProvider", "URIMATCH_MOON_FOR_RANGE");
                 range = parseDateRange(uri.getLastPathSegment());
                 retValue = queryMoon(range, uri, projection, selectionMap, sortOrder);
+                break;
+
+            case URIMATCH_MOONPOS:
+                Log.d("CalculatorProvider", "URIMATCH_MOONPOS");
+                retValue = queryMoonPos(now, uri, projection, selectionMap, sortOrder);
+                break;
+            case URIMATCH_MOONPOS_FOR_DATE:
+                Log.d("CalculatorProvider", "URIMATCH_MOONPOS_FOR_DATE");
+                retValue = queryMoonPos(date, uri, projection, selectionMap, sortOrder);
                 break;
 
             case URIMATCH_MOONPHASE:
@@ -573,6 +615,52 @@ public class CalculatorProvider extends ContentProvider
     }
 
     /**
+     * querySunPos
+     */
+    private Cursor querySunPos(Calendar datetime, @NonNull Uri uri, @Nullable String[] projection, HashMap<String, String> selection, @Nullable String sortOrder)
+    {
+        String[] columns = (projection != null ? projection : QUERY_SUNPOS_PROJECTION);
+        MatrixCursor retValue = new MatrixCursor(columns);
+        SuntimesCalculator calculator = initSunCalculator(getContext(), selection);
+        if (calculator != null)
+        {
+            SuntimesCalculator.SunPosition position = calculator.getSunPosition(datetime);
+            if (position != null)
+            {
+                Object[] row = new Object[columns.length];
+                for (int i=0; i<columns.length; i++)
+                {
+                    switch (columns[i])
+                    {
+                        case COLUMN_SUNPOS_ALT:
+                            row[i] = position.elevation;
+                            break;
+
+                        case COLUMN_SUNPOS_AZ:
+                            row[i] = position.azimuth;
+                            break;
+
+                        case COLUMN_SUNPOS_RA:
+                            row[i] = position.rightAscension;
+                            break;
+
+                        case COLUMN_SUNPOS_DEC:
+                            row[i] = position.declination;
+                            break;
+
+                        default:
+                            row[i] = null;
+                            break;
+                    }
+                }
+                retValue.addRow(row);
+
+            } else Log.d("DEBUG", "sunSource returned null position! " + calculator.name());
+        } else Log.d("DEBUG", "sunSource is null!");
+        return retValue;
+    }
+
+    /**
      * queryMoon
      */
     private Cursor queryMoon(Calendar[] range, @NonNull Uri uri, @Nullable String[] projection, HashMap<String, String> selection, @Nullable String sortOrder)
@@ -609,6 +697,52 @@ public class CalculatorProvider extends ContentProvider
                 day.add(Calendar.DAY_OF_YEAR, 1);
             } while (day.before(range[1]));
 
+        } else Log.d("DEBUG", "moonSource is null!");
+        return retValue;
+    }
+
+    /**
+     * queryMoonPos
+     */
+    private Cursor queryMoonPos(Calendar datetime, @NonNull Uri uri, @Nullable String[] projection, HashMap<String, String> selection, @Nullable String sortOrder)
+    {
+        String[] columns = (projection != null ? projection : QUERY_MOONPOS_PROJECTION);
+        MatrixCursor retValue = new MatrixCursor(columns);
+        SuntimesCalculator calculator = initMoonCalculator(getContext(), selection);
+        if (calculator != null)
+        {
+            SuntimesCalculator.MoonPosition position = calculator.getMoonPosition(datetime);
+            if (position != null)
+            {
+                Object[] row = new Object[columns.length];
+                for (int i=0; i<columns.length; i++)
+                {
+                    switch (columns[i])
+                    {
+                        case COLUMN_MOONPOS_ALT:
+                            row[i] = position.elevation;
+                            break;
+
+                        case COLUMN_MOONPOS_AZ:
+                            row[i] = position.azimuth;
+                            break;
+
+                        case COLUMN_MOONPOS_RA:
+                            row[i] = position.rightAscension;
+                            break;
+
+                        case COLUMN_MOONPOS_DEC:
+                            row[i] = position.declination;
+                            break;
+
+                        default:
+                            row[i] = null;
+                            break;
+                    }
+                }
+                retValue.addRow(row);
+
+            } else Log.d("DEBUG", "moonSource returned null position! " + calculator.name());
         } else Log.d("DEBUG", "moonSource is null!");
         return retValue;
     }
