@@ -96,8 +96,8 @@ package com.forrestguice.suntimeswidget.calculator;
  *
  * ------------------------------------------------------------------------------------------------
  * WIDGETS
- *   To use a specific widget configuration you must provide a `selection` arg that specifies the
- *   appWidgetID. If omitted this defaults to 0 (the app configuration).
+ *   To specify a widget configuration you can provide a `selection` arg that specifies the
+ *   appWidgetID. If omitted all URIs default to 0 (the app configuration).
  *
  *     String[] projection = ...   // see example
  *     Uri uri = ...
@@ -110,6 +110,18 @@ package com.forrestguice.suntimeswidget.calculator;
  *     if (cursor != null) {
  *         // see example 1
  *     }
+ *
+ * ------------------------------------------------------------------------------------------------
+ * LOCATION & TIMEZONE
+ *   It is also possible to override the location and timezone using `selection` args.
+ *
+ *     String[] projection = ...   // see example
+ *     Uri uri = ...
+ *     String selection = COLUMN_CONFIG_LATITUDE + "=? AND "
+ *                      + COLUMN_CONFIG_LONGITUDE + "=? AND "
+ *                      + COLUMN_CONFIG_TIMEZONE + "=?";
+ *     String[] selectionArgs = new String[] {"33.45", "-111.94", "US/Arizona"};
+ *     Cursor cursor = resolver.query(uri, projection, selection, selectionArgs, null);
  */
 public interface CalculatorProviderContract
 {
