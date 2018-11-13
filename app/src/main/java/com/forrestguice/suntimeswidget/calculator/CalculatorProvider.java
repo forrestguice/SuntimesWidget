@@ -141,10 +141,11 @@ public class CalculatorProvider extends ContentProvider
     {
         int appWidgetID = 0;
         if (selection.containsKey(COLUMN_CONFIG_APPWIDGETID)) {
-            appWidgetID = Integer.parseInt(selection.getOrDefault(COLUMN_CONFIG_APPWIDGETID, "0"));
+            String id = selection.get(COLUMN_CONFIG_APPWIDGETID);
+            appWidgetID = Integer.parseInt(id != null ? id : "0");
         }
 
-        String timezoneID = selection.getOrDefault(COLUMN_CONFIG_TIMEZONE, null);
+        String timezoneID = selection.get(COLUMN_CONFIG_TIMEZONE);
         TimeZone timezone = (timezoneID != null ? TimeZone.getTimeZone(timezoneID) : null);
         WidgetSettings.Location location = processSelection_location(selection);
 
@@ -411,7 +412,8 @@ public class CalculatorProvider extends ContentProvider
         {
             int appWidgetID = 0;
             if (selection.containsKey(COLUMN_CONFIG_APPWIDGETID)) {
-                appWidgetID = Integer.parseInt(selection.getOrDefault(COLUMN_CONFIG_APPWIDGETID, "0"));
+                String id = selection.get(COLUMN_CONFIG_APPWIDGETID);
+                appWidgetID = Integer.parseInt(id != null ? id : "0");
             }
 
             SuntimesCalculator calculator = initSunCalculator(getContext(), selection);
