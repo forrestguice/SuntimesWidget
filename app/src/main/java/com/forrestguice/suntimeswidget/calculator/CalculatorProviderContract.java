@@ -77,7 +77,7 @@ package com.forrestguice.suntimeswidget.calculator;
  *       [COLUMN_YEAR(int), COLUMM_SEASON_VERNAL(long), COLUMN_SEASON_SUMMER(long), COLUMN_SEASON_AUTUMN(long), COLUMN_SEASON_WINTER(long)]
  *
  * ------------------------------------------------------------------------------------------------
- * Example:
+ * Example 1:
  *     String[] projection = new String[] {COLUMN_MOON_NEW, COLUMN_MOON_FIRST, COLUMN_MOON_FULL, COLUMN_MOON_THIRD };*
  *     Uri uri = Uri.parse("content://" + AUTHORITY + "/" + QUERY_MOONPHASE + "/" + startDate.getTimeInMillis() + "-" + endDate.getTimeInMillis());*
  *     Cursor cursor = resolver.query(uri, projection, null, null, null);
@@ -92,6 +92,23 @@ package com.forrestguice.suntimeswidget.calculator;
  *             cursor.moveToNext();
  *         }
  *         cursor.close();
+ *     }
+ *
+ * ------------------------------------------------------------------------------------------------
+ * WIDGETS
+ *   To use a specific widget configuration you must provide a `selection` arg that specifies the
+ *   appWidgetID. If omitted this defaults to 0 (the app configuration).
+ *
+ *     String[] projection = ...   // see example
+ *     Uri uri = ...
+ *
+ *     int appWidgetID = 1000;
+ *     String selection = COLUMN_CONFIG_APPWIDGETID + "=?";
+ *     String[] selectionArgs = new String[] { appWidgetID };
+ *
+ *     Cursor cursor = resolver.query(uri, projection, selection, selectionArgs, null);
+ *     if (cursor != null) {
+ *         // see example 1
  *     }
  */
 public interface CalculatorProviderContract
