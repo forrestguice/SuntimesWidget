@@ -36,7 +36,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -99,6 +101,26 @@ public class CalculatorProviderTest
     public void setup()
     {
         mockContext = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(), "test_");
+    }
+
+    @Test
+    public void test_columns()
+    {
+        List<String> columns = new ArrayList<>();
+        Collections.addAll(columns, QUERY_CONFIG_PROJECTION);
+        Collections.addAll(columns, QUERY_SEASONS_PROJECTION);
+        Collections.addAll(columns, QUERY_SUN_PROJECTION);
+        Collections.addAll(columns, QUERY_SUNPOS_PROJECTION);
+        Collections.addAll(columns, QUERY_MOON_PROJECTION);
+        Collections.addAll(columns, QUERY_MOONPOS_PROJECTION);
+        Collections.addAll(columns, QUERY_MOONPHASE_PROJECTION);
+        test_projectionHasUniqueColumns(columns.toArray(new String[columns.size()]));
+
+        test_query_config_projection();
+        test_query_seasons_projection();
+        test_query_sun_projection();
+        test_query_moon_projection();
+        test_query_moonphase_projection();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
