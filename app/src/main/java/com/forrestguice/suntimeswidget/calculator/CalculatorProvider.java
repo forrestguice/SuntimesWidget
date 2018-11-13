@@ -44,6 +44,8 @@ import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContr
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_ALTITUDE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_APPTHEME;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_APPWIDGETID;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_CALCULATOR;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_CALCULATOR_FEATURES;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LATITUDE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LOCALE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LONGITUDE;
@@ -53,6 +55,7 @@ import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContr
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_ALT;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_AZ;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_DEC;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_ILLUMINATION;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_RA;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOON_RISE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOON_SET;
@@ -524,6 +527,14 @@ public class CalculatorProvider extends ContentProvider
                             row[i] = appWidgetID;
                             break;
 
+                        case COLUMN_CONFIG_CALCULATOR:
+                            row[i] = calculator.name();
+                            break;
+
+                        case COLUMN_CONFIG_CALCULATOR_FEATURES:
+                            row[i] = calculator.getSupportedFeatures();
+                            break;
+
                         default:
                             row[i] = null;
                             break;
@@ -790,6 +801,10 @@ public class CalculatorProvider extends ContentProvider
 
                         case COLUMN_MOONPOS_DEC:
                             row[i] = position.declination;
+                            break;
+
+                        case COLUMN_MOONPOS_ILLUMINATION:
+                            row[i] = calculator.getMoonIlluminationForDate(datetime);
                             break;
 
                         default:

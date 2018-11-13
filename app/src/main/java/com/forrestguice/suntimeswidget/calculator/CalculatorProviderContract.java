@@ -137,10 +137,13 @@ public interface CalculatorProviderContract
     String COLUMN_CONFIG_ALTITUDE = "altitude";
     String COLUMN_CONFIG_TIMEZONE = "timezone";
     String COLUMN_CONFIG_APPWIDGETID = "appwidgetid";
+    String COLUMN_CONFIG_CALCULATOR = "calculator";
+    String COLUMN_CONFIG_CALCULATOR_FEATURES = "calculator_features";
 
     String QUERY_CONFIG = "config";
     String[] QUERY_CONFIG_PROJECTION = new String[] {
             COLUMN_CONFIG_LOCALE, COLUMN_CONFIG_APPTHEME,
+            COLUMN_CONFIG_CALCULATOR, COLUMN_CONFIG_CALCULATOR_FEATURES,
             COLUMN_CONFIG_LATITUDE, COLUMN_CONFIG_LONGITUDE, COLUMN_CONFIG_ALTITUDE,
             COLUMN_CONFIG_TIMEZONE, COLUMN_CONFIG_APPWIDGETID
     };
@@ -222,13 +225,14 @@ public interface CalculatorProviderContract
     String COLUMN_MOONPOS_ALT = "moonpos_altitude";
     String COLUMN_MOONPOS_RA = "moonpos_ra";
     String COLUMN_MOONPOS_DEC = "moonpos_dec";
+    String COLUMN_MOONPOS_ILLUMINATION = "moonpos_illum";
     String COLUMN_MOONPOS_DATE = "moonpos_date";
 
     String QUERY_MOONPOS = "moonpos";
     String[] QUERY_MOONPOS_PROJECTION = new String[] {
             COLUMN_MOONPOS_AZ, COLUMN_MOONPOS_ALT,
             COLUMN_MOONPOS_RA, COLUMN_MOONPOS_DEC,
-            COLUMN_MOONPOS_DATE
+            COLUMN_MOONPOS_ILLUMINATION, COLUMN_MOONPOS_DATE
     };
 
     /**

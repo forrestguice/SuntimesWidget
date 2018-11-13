@@ -47,6 +47,8 @@ import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContr
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_ALTITUDE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_APPTHEME;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_APPWIDGETID;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_CALCULATOR;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_CALCULATOR_FEATURES;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LATITUDE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LOCALE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LONGITUDE;
@@ -57,6 +59,7 @@ import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContr
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_AZ;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_DATE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_DEC;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_ILLUMINATION;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_RA;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOON_FIRST;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOON_FULL;
@@ -156,6 +159,8 @@ public class CalculatorProviderTest
     public void test_query_config_projection()
     {
         List<String> projection = Arrays.asList(QUERY_CONFIG_PROJECTION);
+        assertTrue("default projection contains COLUMN_CONFIG_CALCULATOR", projection.contains(COLUMN_CONFIG_CALCULATOR));
+        assertTrue("default projection contains COLUMN_CONFIG_CALCULATOR_FEATURES", projection.contains(COLUMN_CONFIG_CALCULATOR_FEATURES));
         assertTrue("default projection contains COLUMN_CONFIG_APPWIDGETID", projection.contains(COLUMN_CONFIG_APPWIDGETID));
         assertTrue("default projection contains COLUMN_CONFIG_APPTHEME", projection.contains(COLUMN_CONFIG_APPTHEME));
         assertTrue("default projection contains COLUMN_CONFIG_LOCALE", projection.contains(COLUMN_CONFIG_LOCALE));
@@ -184,6 +189,9 @@ public class CalculatorProviderTest
         assertTrue("QUERY_CONFIG should return one row.", cursor.getCount() == 1);
 
         int appWidgetID = 0;
+        SuntimesCalculatorDescriptor descriptor = WidgetSettings.loadCalculatorModePref(mockContext, appWidgetID);
+        assertTrue("COLUMN_CONFIG_CALCULATOR should be " + descriptor.getName(), descriptor.getName().equals(cursor.getString(cursor.getColumnIndex(COLUMN_CONFIG_CALCULATOR))));
+
         WidgetSettings.Location location = WidgetSettings.loadLocationPref(mockContext, appWidgetID);
         assertTrue("COLUMN_CONFIG_APPWIDGETID should be " + appWidgetID, cursor.getInt(cursor.getColumnIndex(COLUMN_CONFIG_APPWIDGETID)) == appWidgetID);
         assertTrue("COLUMN_CONFIG_LATITUDE should be " + location.getLatitude(), cursor.getString(cursor.getColumnIndex(COLUMN_CONFIG_LATITUDE)).equals(location.getLatitude()));
@@ -439,6 +447,7 @@ public class CalculatorProviderTest
         assertTrue("default projection contains COLUMN_MOONPOS_AZ", projection.contains(COLUMN_MOONPOS_AZ));
         assertTrue("default projection contains COLUMN_MOONPOS_RA", projection.contains(COLUMN_MOONPOS_RA));
         assertTrue("default projection contains COLUMN_MOONPOS_DEC", projection.contains(COLUMN_MOONPOS_DEC));
+        assertTrue("default projection contains COLUMN_MOONPOS_ILLUMINATION", projection.contains(COLUMN_MOONPOS_ILLUMINATION));
         assertTrue("default projection contains COLUMN_MOONPOS_DATE", projection.contains(COLUMN_MOONPOS_DATE));
         test_projectionHasUniqueColumns(QUERY_MOONPOS_PROJECTION);
     }
