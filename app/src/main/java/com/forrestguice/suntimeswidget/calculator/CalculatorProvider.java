@@ -29,6 +29,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.util.SparseArray;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -128,28 +129,37 @@ public class CalculatorProvider extends ContentProvider
         return true;
     }
 
-    private static SuntimesCalculator sunSource, moonSource;
+    private static SparseArray<SuntimesCalculator> sunSource = new SparseArray<>();    // sun source for appWidgetID (app is 0)
+    private static SparseArray<SuntimesCalculator> moonSource = new SparseArray<>();   // moon source for appWidgetID (app is 0)
     private static WidgetSettings.Location config_location;
     private static String config_timezone;
 
-    private static void initCalculator(Context context)
+    private static SuntimesCalculator initSunCalculator(Context context, int appWidgetID)
     {
-        config_location = WidgetSettings.loadLocationPref(context, 0);
-        TimeZone timezone = TimeZone.getTimeZone(config_timezone = WidgetSettings.loadTimezonePref(context, 0));
-
-        if (sunSource == null)
+        SuntimesCalculator retValue = sunSource.get(appWidgetID);
+        if (retValue == null)         // lazy init
         {
-            SuntimesCalculatorDescriptor sunSourceDesc = WidgetSettings.loadCalculatorModePref(context, 0);
+            config_location = WidgetSettings.loadLocationPref(context, appWidgetID);
+            TimeZone timezone = TimeZone.getTimeZone(config_timezone = WidgetSettings.loadTimezonePref(context, appWidgetID));
+            SuntimesCalculatorDescriptor sunSourceDesc = WidgetSettings.loadCalculatorModePref(context, appWidgetID);
             SuntimesCalculatorFactory sunSourceFactory = new SuntimesCalculatorFactory(context, sunSourceDesc);
-            sunSource = sunSourceFactory.createCalculator(config_location, timezone);
+            sunSource.put(appWidgetID, (retValue = sunSourceFactory.createCalculator(config_location, timezone)));
         }
+        return retValue;
+    }
 
-        if (moonSource == null)
+    private static SuntimesCalculator initMoonCalculator(Context context, int appWidgetID)
+    {
+        SuntimesCalculator retValue = moonSource.get(appWidgetID);
+        if (retValue == null)    // lazy init
         {
-            SuntimesCalculatorDescriptor moonSourceDesc = WidgetSettings.loadCalculatorModePref(context, 0, "moon");
+            config_location = WidgetSettings.loadLocationPref(context, appWidgetID);
+            TimeZone timezone = TimeZone.getTimeZone(config_timezone = WidgetSettings.loadTimezonePref(context, appWidgetID));
+            SuntimesCalculatorDescriptor moonSourceDesc = WidgetSettings.loadCalculatorModePref(context, 0, "moon");      // always use app calculator (0)
             SuntimesCalculatorFactory moonSourceFactory = new SuntimesCalculatorFactory(context, moonSourceDesc);
-            moonSource = moonSourceFactory.createCalculator(config_location, timezone);
+            moonSource.put(appWidgetID, (retValue = moonSourceFactory.createCalculator(config_location, timezone)));
         }
+        return retValue;
     }
 
     /**
@@ -159,12 +169,11 @@ public class CalculatorProvider extends ContentProvider
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder)
     {
-        initCalculator(getContext());
-
         Calendar now = Calendar.getInstance();
         Calendar date = Calendar.getInstance();
         Calendar[] range;
         Cursor retValue = null;
+        int appWidgetID = 0;
 
         int uriMatch = uriMatcher.match(uri);
         switch (uriMatch)
@@ -176,60 +185,60 @@ public class CalculatorProvider extends ContentProvider
 
             case URIMATCH_SEASONS:
                 Log.d("CalculatorProvider", "URIMATCH_SEASONS");
-                retValue = querySeasons(new Calendar[] {now, now}, uri, projection, selection, selectionArgs, sortOrder);
+                retValue = querySeasons(appWidgetID, new Calendar[] {now, now}, uri, projection, selection, selectionArgs, sortOrder);
                 break;
             case URIMATCH_SEASONS_FOR_YEAR:
                 Log.d("CalculatorProvider", "URIMATCH_SEASONS_FOR_YEAR");
                 date.set(Calendar.YEAR, (int)ContentUris.parseId(uri));
-                retValue = querySeasons(new Calendar[] { date, date }, uri, projection, selection, selectionArgs, sortOrder);
+                retValue = querySeasons(appWidgetID, new Calendar[] { date, date }, uri, projection, selection, selectionArgs, sortOrder);
                 break;
             case URIMATCH_SEASONS_FOR_RANGE:
                 Log.d("CalculatorProvider", "URIMATCH_SEASONS_FOR_RANGE");
                 range = parseYearRange(uri.getLastPathSegment());
-                retValue = querySeasons(range, uri, projection, selection, selectionArgs, sortOrder);
+                retValue = querySeasons(appWidgetID, range, uri, projection, selection, selectionArgs, sortOrder);
                 break;
 
             case URIMATCH_SUN:
                 Log.d("CalculatorProvider", "URIMATCH_SUN");
-                retValue = querySun(new Calendar[] {now, now}, uri, projection, selection, selectionArgs, sortOrder);
+                retValue = querySun(appWidgetID, new Calendar[] {now, now}, uri, projection, selection, selectionArgs, sortOrder);
                 break;
             case URIMATCH_SUN_FOR_DATE:
                 Log.d("CalculatorProvider", "URIMATCH_SUN_FOR_DATE");
-                retValue = querySun(new Calendar[] {date, date}, uri, projection, selection, selectionArgs, sortOrder);
+                retValue = querySun(appWidgetID, new Calendar[] {date, date}, uri, projection, selection, selectionArgs, sortOrder);
                 break;
             case URIMATCH_SUN_FOR_RANGE:
                 Log.d("CalculatorProvider", "URIMATCH_SUN_FOR_RANGE");
                 range = parseDateRange(uri.getLastPathSegment());
-                retValue = querySun(range, uri, projection, selection, selectionArgs, sortOrder);
+                retValue = querySun(appWidgetID, range, uri, projection, selection, selectionArgs, sortOrder);
                 break;
 
             case URIMATCH_MOON:
                 Log.d("CalculatorProvider", "URIMATCH_MOON");
-                retValue = queryMoon(new Calendar[] {now, now}, uri, projection, selection, selectionArgs, sortOrder);
+                retValue = queryMoon(appWidgetID, new Calendar[] {now, now}, uri, projection, selection, selectionArgs, sortOrder);
                 break;
             case URIMATCH_MOON_FOR_DATE:
                 Log.d("CalculatorProvider", "URIMATCH_MOON_FOR_DATE");
-                retValue = queryMoon(new Calendar[] {date, date}, uri, projection, selection, selectionArgs, sortOrder);
+                retValue = queryMoon(appWidgetID, new Calendar[] {date, date}, uri, projection, selection, selectionArgs, sortOrder);
                 break;
             case URIMATCH_MOON_FOR_RANGE:
                 Log.d("CalculatorProvider", "URIMATCH_MOON_FOR_RANGE");
                 range = parseDateRange(uri.getLastPathSegment());
-                retValue = queryMoon(range, uri, projection, selection, selectionArgs, sortOrder);
+                retValue = queryMoon(appWidgetID, range, uri, projection, selection, selectionArgs, sortOrder);
                 break;
 
             case URIMATCH_MOONPHASE:
                 Log.d("CalculatorProvider", "URIMATCH_MOONPHASE");
-                retValue = queryMoonPhase(new Calendar[] {now, now}, uri, projection, selection, selectionArgs, sortOrder);
+                retValue = queryMoonPhase(appWidgetID, new Calendar[] {now, now}, uri, projection, selection, selectionArgs, sortOrder);
                 break;
             case URIMATCH_MOONPHASE_FOR_DATE:
                 Log.d("CalculatorProvider", "URIMATCH_MOONPHASE_FOR_DATE");
                 date.setTimeInMillis(ContentUris.parseId(uri));
-                retValue = queryMoonPhase(new Calendar[] {date, date}, uri, projection, selection, selectionArgs, sortOrder);
+                retValue = queryMoonPhase(appWidgetID, new Calendar[] {date, date}, uri, projection, selection, selectionArgs, sortOrder);
                 break;
             case URIMATCH_MOONPHASE_FOR_RANGE:
                 Log.d("CalculatorProvider", "URIMATCH_MOONPHASE_FOR_RANGE");
                 range = parseDateRange(uri.getLastPathSegment());
-                retValue = queryMoonPhase(range, uri, projection, selection, selectionArgs, sortOrder);
+                retValue = queryMoonPhase(appWidgetID, range, uri, projection, selection, selectionArgs, sortOrder);
                 break;
 
             default:
@@ -297,7 +306,9 @@ public class CalculatorProvider extends ContentProvider
         Context context = getContext();
         String[] columns = (projection != null ? projection : QUERY_CONFIG_PROJECTION);
         MatrixCursor retValue = new MatrixCursor(columns);
-        if (sunSource != null)
+
+        initSunCalculator(getContext(), 0);
+        if (sunSource.get(0) != null)
         {
             Object[] row = new Object[columns.length];
             for (int i=0; i<columns.length; i++)
@@ -342,11 +353,13 @@ public class CalculatorProvider extends ContentProvider
     /**
      * querySun
      */
-    private Cursor querySun(Calendar[] range, @NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder)
+    private Cursor querySun(int appWidgetID, Calendar[] range, @NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder)
     {
         String[] columns = (projection != null ? projection : QUERY_SUN_PROJECTION);
         MatrixCursor retValue = new MatrixCursor(columns);
-        if (sunSource != null)
+
+        SuntimesCalculator calculator = initSunCalculator(getContext(), appWidgetID);
+        if (calculator != null)
         {
             Calendar day = Calendar.getInstance();
             day.setTimeInMillis(range[0].getTimeInMillis());
@@ -357,31 +370,31 @@ public class CalculatorProvider extends ContentProvider
                     switch (columns[i])
                     {
                         case COLUMN_SUN_ACTUAL_RISE:
-                            row[i] = sunSource.getOfficialSunriseCalendarForDate(day);
+                            row[i] = calculator.getOfficialSunriseCalendarForDate(day);
                             break;
                         case COLUMN_SUN_ACTUAL_SET:
-                            row[i] = sunSource.getOfficialSunsetCalendarForDate(day);
+                            row[i] = calculator.getOfficialSunsetCalendarForDate(day);
                             break;
 
                         case COLUMN_SUN_CIVIL_RISE:
-                            row[i] = sunSource.getCivilSunriseCalendarForDate(day);
+                            row[i] = calculator.getCivilSunriseCalendarForDate(day);
                             break;
                         case COLUMN_SUN_CIVIL_SET:
-                            row[i] = sunSource.getCivilSunsetCalendarForDate(day);
+                            row[i] = calculator.getCivilSunsetCalendarForDate(day);
                             break;
 
                         case COLUMN_SUN_NAUTICAL_RISE:
-                            row[i] = sunSource.getNauticalSunriseCalendarForDate(day);
+                            row[i] = calculator.getNauticalSunriseCalendarForDate(day);
                             break;
                         case COLUMN_SUN_NAUTICAL_SET:
-                            row[i] = sunSource.getNauticalSunsetCalendarForDate(day);
+                            row[i] = calculator.getNauticalSunsetCalendarForDate(day);
                             break;
 
                         case COLUMN_SUN_ASTRO_RISE:
-                            row[i] = sunSource.getAstronomicalSunriseCalendarForDate(day);
+                            row[i] = calculator.getAstronomicalSunriseCalendarForDate(day);
                             break;
                         case COLUMN_SUN_ASTRO_SET:
-                            row[i] = sunSource.getAstronomicalSunsetCalendarForDate(day);
+                            row[i] = calculator.getAstronomicalSunsetCalendarForDate(day);
                             break;
 
                         default:
@@ -400,11 +413,13 @@ public class CalculatorProvider extends ContentProvider
     /**
      * queryMoon
      */
-    private Cursor queryMoon(Calendar[] range, @NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder)
+    private Cursor queryMoon(int appWidgetID, Calendar[] range, @NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder)
     {
         String[] columns = (projection != null ? projection : QUERY_MOON_PROJECTION);
         MatrixCursor retValue = new MatrixCursor(columns);
-        if (moonSource != null)
+
+        SuntimesCalculator calculator = initMoonCalculator(getContext(), appWidgetID);
+        if (calculator != null)
         {
             Calendar day = Calendar.getInstance();
             day.setTimeInMillis(range[0].getTimeInMillis());
@@ -416,11 +431,11 @@ public class CalculatorProvider extends ContentProvider
                     switch (columns[i])
                     {
                         case COLUMN_MOON_RISE:
-                            moontimes = (moontimes == null ? moonSource.getMoonTimesForDate(day) : moontimes);
+                            moontimes = (moontimes == null ? calculator.getMoonTimesForDate(day) : moontimes);
                             row[i] = moontimes.riseTime;
                             break;
                         case COLUMN_MOON_SET:
-                            moontimes = (moontimes == null ? moonSource.getMoonTimesForDate(day) : moontimes);
+                            moontimes = (moontimes == null ? calculator.getMoonTimesForDate(day) : moontimes);
                             row[i] = moontimes.setTime;
                             break;
 
@@ -440,11 +455,13 @@ public class CalculatorProvider extends ContentProvider
     /**
      * queryMoonPhase
      */
-    private Cursor queryMoonPhase(Calendar[] range, @NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder)
+    private Cursor queryMoonPhase(int appWidgetID, Calendar[] range, @NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder)
     {
         String[] columns = (projection != null ? projection : QUERY_MOONPHASE_PROJECTION);
         MatrixCursor retValue = new MatrixCursor(columns);
-        if (moonSource != null)
+
+        SuntimesCalculator calculator = initMoonCalculator(getContext(), appWidgetID);
+        if (calculator != null)
         {
             ArrayList<Calendar> events = new ArrayList<>();
             Calendar date = Calendar.getInstance();
@@ -458,22 +475,22 @@ public class CalculatorProvider extends ContentProvider
                     switch (columns[i])
                     {
                         case COLUMN_MOON_NEW:
-                            events.add(event = moonSource.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.NEW , date));
+                            events.add(event = calculator.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.NEW , date));
                             row[i] = event.getTimeInMillis();
                             break;
 
                         case COLUMN_MOON_FIRST:
-                            events.add(event = moonSource.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.FIRST_QUARTER, date));
+                            events.add(event = calculator.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.FIRST_QUARTER, date));
                             row[i] = event.getTimeInMillis();
                             break;
 
                         case COLUMN_MOON_FULL:
-                            events.add(event = moonSource.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.FULL, date));
+                            events.add(event = calculator.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.FULL, date));
                             row[i] = event.getTimeInMillis();
                             break;
 
                         case COLUMN_MOON_THIRD:
-                            events.add(event = moonSource.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.THIRD_QUARTER, date));
+                            events.add(event = calculator.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.THIRD_QUARTER, date));
                             row[i] = event.getTimeInMillis();
                             break;
 
@@ -498,11 +515,13 @@ public class CalculatorProvider extends ContentProvider
     /**
      * querySeasons
      */
-    private Cursor querySeasons(Calendar[] range, @NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder)
+    private Cursor querySeasons(int appWidgetID, Calendar[] range, @NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder)
     {
         String[] columns = (projection != null ? projection : QUERY_SEASONS_PROJECTION);
         MatrixCursor retValue = new MatrixCursor(columns);
-        if (sunSource != null)
+
+        SuntimesCalculator calculator = initSunCalculator(getContext(), appWidgetID);
+        if (calculator != null)
         {
             Calendar year = Calendar.getInstance();
             year.setTimeInMillis(range[0].getTimeInMillis());
@@ -517,19 +536,19 @@ public class CalculatorProvider extends ContentProvider
                             break;
 
                         case COLUMN_SEASON_VERNAL:
-                            row[i] = sunSource.getVernalEquinoxForYear(year).getTimeInMillis();
+                            row[i] = calculator.getVernalEquinoxForYear(year).getTimeInMillis();
                             break;
 
                         case COLUMN_SEASON_SUMMER:
-                            row[i] = sunSource.getSummerSolsticeForYear(year).getTimeInMillis();
+                            row[i] = calculator.getSummerSolsticeForYear(year).getTimeInMillis();
                             break;
 
                         case COLUMN_SEASON_AUTUMN:
-                            row[i] = sunSource.getAutumnalEquinoxForYear(year).getTimeInMillis();
+                            row[i] = calculator.getAutumnalEquinoxForYear(year).getTimeInMillis();
                             break;
 
                         case COLUMN_SEASON_WINTER:
-                            row[i] = sunSource.getWinterSolsticeForYear(year).getTimeInMillis();
+                            row[i] = calculator.getWinterSolsticeForYear(year).getTimeInMillis();
                             break;
 
                         default:
