@@ -146,6 +146,17 @@ public interface CalculatorProviderContract
     };
 
     /**
+     * ISDAY
+     */
+    String COLUMN_ISDAY = "isday";
+    String COLUMN_ISDAY_DATETIME = "isday_datetime";
+
+    String QUERY_ISDAY = "isday";
+    String[] QUERY_ISDAY_PROJECTION = new String[] {
+            COLUMN_ISDAY, COLUMN_ISDAY_DATETIME
+    };
+
+    /**
      * SUN
      */
     String COLUMN_SUN_NOON = "solarnoon";

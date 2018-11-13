@@ -51,6 +51,8 @@ import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContr
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LOCALE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LONGITUDE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_TIMEZONE;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_ISDAY;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_ISDAY_DATETIME;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_ALT;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_AZ;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_DEC;
@@ -88,6 +90,8 @@ import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContr
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_CONFIG;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_CONFIG_PROJECTION;
 
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_ISDAY;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_ISDAY_PROJECTION;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_MOON;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_MOONPHASE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_MOONPHASE_PROJECTION;
@@ -120,6 +124,7 @@ public class CalculatorProviderTest
     {
         List<String> columns = new ArrayList<>();
         Collections.addAll(columns, QUERY_CONFIG_PROJECTION);
+        Collections.addAll(columns, QUERY_ISDAY_PROJECTION);
         Collections.addAll(columns, QUERY_SEASONS_PROJECTION);
         Collections.addAll(columns, QUERY_SUN_PROJECTION);
         Collections.addAll(columns, QUERY_SUNPOS_PROJECTION);
@@ -129,6 +134,7 @@ public class CalculatorProviderTest
         test_projectionHasUniqueColumns(columns.toArray(new String[columns.size()]));
 
         test_query_config_projection();
+        test_query_isday_projection();
         test_query_seasons_projection();
         test_query_sun_projection();
         test_query_sunpos_projection();
@@ -232,6 +238,45 @@ public class CalculatorProviderTest
         String[] projection = QUERY_SEASONS_PROJECTION;
         Cursor cursor = resolver.query(uri, projection, null, null, null);
         test_cursorHasColumns("QUERY_SEASONS", cursor, projection);
+
+        // TODO
+
+        if (cursor != null) {
+            cursor.close();
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // ISDAY
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * test_query_isday_projection
+     */
+    @Test
+    public void test_query_isday_projection()
+    {
+        List<String> projection = Arrays.asList(QUERY_ISDAY_PROJECTION);
+        assertTrue("default projection contains COLUMN_ISDAY", projection.contains(COLUMN_ISDAY));
+        assertTrue("default projection contains COLUMN_ISDAY_DATETIME", projection.contains(COLUMN_ISDAY_DATETIME));
+        test_projectionHasUniqueColumns(QUERY_ISDAY_PROJECTION);
+    }
+
+    /**
+     * test_query_isday
+     */
+    @Test
+    public void test_query_isday()
+    {
+        test_query_isday_projection();
+
+        ContentResolver resolver = mockContext.getContentResolver();
+        assertTrue("Unable to getContentResolver!", resolver != null);
+
+        Uri uri = Uri.parse("content://" + AUTHORITY + "/" + QUERY_ISDAY);
+        String[] projection = QUERY_ISDAY_PROJECTION;
+        Cursor cursor = resolver.query(uri, projection, null, null, null);
+        test_cursorHasColumns("QUERY_ISDAY", cursor, projection);
 
         // TODO
 

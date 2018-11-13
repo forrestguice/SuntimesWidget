@@ -48,6 +48,8 @@ import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContr
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LOCALE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LONGITUDE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_TIMEZONE;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_ISDAY;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_ISDAY_DATETIME;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_ALT;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_AZ;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_DEC;
@@ -75,6 +77,8 @@ import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContr
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_NOON;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_CONFIG;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_CONFIG_PROJECTION;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_ISDAY;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_ISDAY_PROJECTION;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_MOON;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_MOONPHASE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOON_FIRST;
@@ -105,6 +109,9 @@ public class CalculatorProvider extends ContentProvider
 {
     private static final int URIMATCH_CONFIG = 0;
 
+    private static final int URIMATCH_ISDAY = 5;
+    private static final int URIMATCH_ISDAY_FOR_DATE = 6;
+
     private static final int URIMATCH_SUN = 10;
     private static final int URIMATCH_SUN_FOR_DATE = 20;
     private static final int URIMATCH_SUN_FOR_RANGE = 30;
@@ -131,6 +138,9 @@ public class CalculatorProvider extends ContentProvider
     static
     {
         uriMatcher.addURI(AUTHORITY, QUERY_CONFIG, URIMATCH_CONFIG);
+
+        uriMatcher.addURI(AUTHORITY, QUERY_ISDAY, URIMATCH_ISDAY);
+        uriMatcher.addURI(AUTHORITY, QUERY_ISDAY + "/#", URIMATCH_ISDAY_FOR_DATE);
 
         uriMatcher.addURI(AUTHORITY, QUERY_SUN, URIMATCH_SUN);
         uriMatcher.addURI(AUTHORITY, QUERY_SUN + "/#", URIMATCH_SUN_FOR_DATE);
@@ -321,6 +331,15 @@ public class CalculatorProvider extends ContentProvider
                 Log.d("CalculatorProvider", "URIMATCH_SEASONS_FOR_RANGE");
                 range = parseYearRange(uri.getLastPathSegment());
                 retValue = querySeasons(range, uri, projection, selectionMap, sortOrder);
+                break;
+
+            case URIMATCH_ISDAY:
+                Log.d("CalculatorProvider", "URIMATCH_ISDAY");
+                retValue = queryIsDay(now, uri, projection, selectionMap, sortOrder);
+                break;
+            case URIMATCH_ISDAY_FOR_DATE:
+                Log.d("CalculatorProvider", "URIMATCH_ISDAY_FOR_DATE");
+                retValue = queryIsDay(date, uri, projection, selectionMap, sortOrder);
                 break;
 
             case URIMATCH_SUN:
@@ -514,6 +533,40 @@ public class CalculatorProvider extends ContentProvider
 
             } else Log.e("queryConfig", "sunSource " + appWidgetID + " is null!");
         } else Log.e("queryConfig", "context is null!");
+        return retValue;
+    }
+
+    /**
+     * queryIsDay
+     */
+    private Cursor queryIsDay(Calendar datetime, @NonNull Uri uri, @Nullable String[] projection, HashMap<String, String> selection, @Nullable String sortOrder)
+    {
+        String[] columns = (projection != null ? projection : QUERY_ISDAY_PROJECTION);
+        MatrixCursor retValue = new MatrixCursor(columns);
+        SuntimesCalculator calculator = initSunCalculator(getContext(), selection);
+        if (calculator != null)
+        {
+            Object[] row = new Object[columns.length];
+            for (int i=0; i<columns.length; i++)
+            {
+                switch (columns[i])
+                {
+                    case COLUMN_ISDAY:
+                        row[i] = calculator.isDay(datetime);
+                        break;
+
+                    case COLUMN_ISDAY_DATETIME:
+                        row[i] = datetime.getTimeInMillis();
+                        break;
+
+                    default:
+                        row[i] = null;
+                        break;
+                }
+            }
+            retValue.addRow(row);
+
+        } else Log.d("DEBUG", "sunSource is null!");
         return retValue;
     }
 
