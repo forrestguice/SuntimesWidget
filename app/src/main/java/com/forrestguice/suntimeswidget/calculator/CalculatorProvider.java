@@ -235,12 +235,12 @@ public class CalculatorProvider extends ContentProvider
         HashMap<String, String> retValue = new HashMap<>();
         if (selection != null)
         {
-            String[] expressions = selection.split(" or | OR | and | AND ");  // just separators in this context (means the same)
+            String[] expressions = selection.split(" or | OR | and | AND ");  // just separators in this context (all interpreted the same)
             for (String expression : expressions)
             {
                 String[] parts = expression.split("=");
                 if (parts.length == 2) {
-                    retValue.put(parts[0], parts[1]);
+                    retValue.put(parts[0].trim(), parts[1].trim());
                 } else Log.w("CalendarProvider", "processSelection: Too many parts! " + expression);
             }
         }
