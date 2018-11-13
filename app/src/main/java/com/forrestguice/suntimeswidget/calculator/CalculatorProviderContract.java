@@ -180,6 +180,20 @@ public interface CalculatorProviderContract
     };
 
     /**
+     * SUNPOS
+     */
+    String COLUMN_SUNPOS_AZ = "sunpos_azimuth";
+    String COLUMN_SUNPOS_ALT = "sunpos_altitude";
+    String COLUMN_SUNPOS_RA = "sunpos_ra";
+    String COLUMN_SUNPOS_DEC = "sunpos_dec";
+
+    String QUERY_SUNPOS = "sunpos";
+    String[] QUERY_SUNPOS_PROJECTION = new String[] {
+            COLUMN_SUNPOS_AZ, COLUMN_SUNPOS_ALT,
+            COLUMN_SUNPOS_RA, COLUMN_SUNPOS_DEC
+    };
+
+    /**
      * MOON
      */
     String COLUMN_MOON_RISE = "moonrise";
@@ -187,6 +201,20 @@ public interface CalculatorProviderContract
 
     String QUERY_MOON = "moon";
     String[] QUERY_MOON_PROJECTION = new String[] { COLUMN_MOON_RISE, COLUMN_MOON_SET };
+
+    /**
+     * MOONPOS
+     */
+    String COLUMN_MOONPOS_AZ = "moonpos_azimuth";
+    String COLUMN_MOONPOS_ALT = "moonpos_altitude";
+    String COLUMN_MOONPOS_RA = "moonpos_ra";
+    String COLUMN_MOONPOS_DEC = "moonpos_dec";
+
+    String QUERY_MOONPOS = "moonpos";
+    String[] QUERY_MOONPOS_PROJECTION = new String[] {
+            COLUMN_MOONPOS_AZ, COLUMN_MOONPOS_ALT,
+            COLUMN_MOONPOS_RA, COLUMN_MOONPOS_DEC
+    };
 
     /**
      * MOONPHASE

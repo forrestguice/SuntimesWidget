@@ -51,6 +51,10 @@ import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContr
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LOCALE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LONGITUDE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_TIMEZONE;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_ALT;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_AZ;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_DEC;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_RA;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOON_FIRST;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOON_FULL;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOON_NEW;
@@ -62,6 +66,10 @@ import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContr
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SEASON_VERNAL;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SEASON_WINTER;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SEASON_YEAR;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUNPOS_ALT;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUNPOS_AZ;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUNPOS_DEC;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUNPOS_RA;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_ACTUAL_RISE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_ACTUAL_SET;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_ASTRO_RISE;
@@ -83,11 +91,15 @@ import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContr
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_MOON;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_MOONPHASE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_MOONPHASE_PROJECTION;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_MOONPOS;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_MOONPOS_PROJECTION;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_MOON_PROJECTION;
 
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_SEASONS;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_SEASONS_PROJECTION;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_SUN;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_SUNPOS;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_SUNPOS_PROJECTION;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_SUN_PROJECTION;
 
 import static org.junit.Assert.assertTrue;
@@ -119,7 +131,9 @@ public class CalculatorProviderTest
         test_query_config_projection();
         test_query_seasons_projection();
         test_query_sun_projection();
+        test_query_sunpos_projection();
         test_query_moon_projection();
+        test_query_moonpos_projection();
         test_query_moonphase_projection();
     }
 
@@ -283,6 +297,47 @@ public class CalculatorProviderTest
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
+    // SUNPOS
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * test_query_sunpos_projection
+     */
+    @Test
+    public void test_query_sunpos_projection()
+    {
+        List<String> projection = Arrays.asList(QUERY_SUNPOS_PROJECTION);
+        assertTrue("default projection contains COLUMN_SUNPOS_ALT", projection.contains(COLUMN_SUNPOS_ALT));
+        assertTrue("default projection contains COLUMN_SUNPOS_AZ", projection.contains(COLUMN_SUNPOS_AZ));
+        assertTrue("default projection contains COLUMN_SUNPOS_RA", projection.contains(COLUMN_SUNPOS_RA));
+        assertTrue("default projection contains COLUMN_SUNPOS_DEC", projection.contains(COLUMN_SUNPOS_DEC));
+        test_projectionHasUniqueColumns(QUERY_SUNPOS_PROJECTION);
+    }
+
+    /**
+     * test_query_sunpos
+     */
+    @Test
+    public void test_query_sunpos()
+    {
+        test_query_sunpos_projection();
+
+        ContentResolver resolver = mockContext.getContentResolver();
+        assertTrue("Unable to getContentResolver!", resolver != null);
+
+        Uri uri = Uri.parse("content://" + AUTHORITY + "/" + QUERY_SUNPOS);
+        String[] projection = QUERY_SUNPOS_PROJECTION;
+        Cursor cursor = resolver.query(uri, projection, null, null, null);
+        test_cursorHasColumns("QUERY_SUNPOS", cursor, projection);
+
+        // TODO
+
+        if (cursor != null) {
+            cursor.close();
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     // MOON
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -320,6 +375,48 @@ public class CalculatorProviderTest
             cursor.close();
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // MOONPOS
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * test_query_moonpos_projection
+     */
+    @Test
+    public void test_query_moonpos_projection()
+    {
+        List<String> projection = Arrays.asList(QUERY_MOONPOS_PROJECTION);
+        assertTrue("default projection contains COLUMN_MOONPOS_ALT", projection.contains(COLUMN_MOONPOS_ALT));
+        assertTrue("default projection contains COLUMN_MOONPOS_AZ", projection.contains(COLUMN_MOONPOS_AZ));
+        assertTrue("default projection contains COLUMN_MOONPOS_RA", projection.contains(COLUMN_MOONPOS_RA));
+        assertTrue("default projection contains COLUMN_MOONPOS_DEC", projection.contains(COLUMN_MOONPOS_DEC));
+        test_projectionHasUniqueColumns(QUERY_MOONPOS_PROJECTION);
+    }
+
+    /**
+     * test_query_moonpos
+     */
+    @Test
+    public void test_query_moonpos()
+    {
+        test_query_moonpos_projection();
+
+        ContentResolver resolver = mockContext.getContentResolver();
+        assertTrue("Unable to getContentResolver!", resolver != null);
+
+        Uri uri = Uri.parse("content://" + AUTHORITY + "/" + QUERY_MOONPOS);
+        String[] projection = QUERY_MOONPOS_PROJECTION;
+        Cursor cursor = resolver.query(uri, projection, null, null, null);
+        test_cursorHasColumns("QUERY_MOONPOS", cursor, projection);
+
+        // TODO
+
+        if (cursor != null) {
+            cursor.close();
+        }
+    }
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // MOONPHASE
