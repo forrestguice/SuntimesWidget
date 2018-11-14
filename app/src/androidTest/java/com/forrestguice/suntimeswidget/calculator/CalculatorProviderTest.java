@@ -53,8 +53,6 @@ import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContr
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LOCALE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LONGITUDE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_TIMEZONE;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_ISDAY;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_ISDAY_DATE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_ALT;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_AZ;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_DATE;
@@ -76,6 +74,7 @@ import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContr
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUNPOS_AZ;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUNPOS_DATE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUNPOS_DEC;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUNPOS_ISDAY;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUNPOS_RA;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_ACTUAL_RISE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_ACTUAL_SET;
@@ -95,8 +94,6 @@ import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContr
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_CONFIG;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_CONFIG_PROJECTION;
 
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_ISDAY;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_ISDAY_PROJECTION;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_MOON;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_MOONPHASE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_MOONPHASE_PROJECTION;
@@ -129,7 +126,6 @@ public class CalculatorProviderTest
     {
         List<String> columns = new ArrayList<>();
         Collections.addAll(columns, QUERY_CONFIG_PROJECTION);
-        Collections.addAll(columns, QUERY_ISDAY_PROJECTION);
         Collections.addAll(columns, QUERY_SEASONS_PROJECTION);
         Collections.addAll(columns, QUERY_SUN_PROJECTION);
         Collections.addAll(columns, QUERY_SUNPOS_PROJECTION);
@@ -139,7 +135,6 @@ public class CalculatorProviderTest
         test_projectionHasUniqueColumns(columns.toArray(new String[columns.size()]));
 
         test_query_config_projection();
-        test_query_isday_projection();
         test_query_seasons_projection();
         test_query_sun_projection();
         test_query_sunpos_projection();
@@ -257,45 +252,6 @@ public class CalculatorProviderTest
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    // ISDAY
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * test_query_isday_projection
-     */
-    @Test
-    public void test_query_isday_projection()
-    {
-        List<String> projection = Arrays.asList(QUERY_ISDAY_PROJECTION);
-        assertTrue("default projection contains COLUMN_ISDAY", projection.contains(COLUMN_ISDAY));
-        assertTrue("default projection contains COLUMN_ISDAY_DATETIME", projection.contains(COLUMN_ISDAY_DATE));
-        test_projectionHasUniqueColumns(QUERY_ISDAY_PROJECTION);
-    }
-
-    /**
-     * test_query_isday
-     */
-    @Test
-    public void test_query_isday()
-    {
-        test_query_isday_projection();
-
-        ContentResolver resolver = mockContext.getContentResolver();
-        assertTrue("Unable to getContentResolver!", resolver != null);
-
-        Uri uri = Uri.parse("content://" + AUTHORITY + "/" + QUERY_ISDAY);
-        String[] projection = QUERY_ISDAY_PROJECTION;
-        Cursor cursor = resolver.query(uri, projection, null, null, null);
-        test_cursorHasColumns("QUERY_ISDAY", cursor, projection);
-
-        // TODO
-
-        if (cursor != null) {
-            cursor.close();
-        }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////
     // SUN
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -366,6 +322,7 @@ public class CalculatorProviderTest
         assertTrue("default projection contains COLUMN_SUNPOS_AZ", projection.contains(COLUMN_SUNPOS_AZ));
         assertTrue("default projection contains COLUMN_SUNPOS_RA", projection.contains(COLUMN_SUNPOS_RA));
         assertTrue("default projection contains COLUMN_SUNPOS_DEC", projection.contains(COLUMN_SUNPOS_DEC));
+        assertTrue("default projection contains COLUMN_SUNPOS_ISDAY", projection.contains(COLUMN_SUNPOS_ISDAY));
         assertTrue("default projection contains COLUMN_SUNPOS_DATE", projection.contains(COLUMN_SUNPOS_DATE));
         test_projectionHasUniqueColumns(QUERY_SUNPOS_PROJECTION);
     }

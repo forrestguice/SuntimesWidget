@@ -34,15 +34,6 @@ package com.forrestguice.suntimeswidget.calculator;
  *       COLUMN_CONFIG_TIMEZONE, COLUMN_CONFIG_APPWIDGETID
  *
  * ------------------------------------------------------------------------------------------------*
- * ISDAY
- *   The following URIs are supported:
- *       content://suntimeswiget.calculator.provider/isday                   .. sun above the horizon right now?
- *       content://suntimeswiget.calculator.provider/sun/[millis]            .. sun above the horizon at datetime?
- *
- *   The result will be one row containing:
- *       COLUMN_ISDAY, COLUMN_ISDAY_DATE
- *
- * ------------------------------------------------------------------------------------------------*
  * SUN
  *   The following URIs are supported:
  *       content://suntimeswiget.calculator.provider/sun                     .. get todays sun (rise, set, twilights)
@@ -68,8 +59,7 @@ package com.forrestguice.suntimeswidget.calculator;
  *   The result will be one row containing:
  *       COLUMN_SUNPOS_AZ, COLUMN_SUNPOS_ALT,
  *       COLUMN_SUNPOS_RA, COLUMN_SUNPOS_DEC,
- *       COLUMN_SUNPOS_DATE,
- *       COLUMN_ISDAY (note: isday is supported here but not included in default projection)
+ *       COLUMN_SUNPOS_ISDAY, COLUMN_SUNPOS_DATE
  *
  * ------------------------------------------------------------------------------------------------*
  * MOON
@@ -210,17 +200,6 @@ public interface CalculatorProviderContract
     };
 
     /**
-     * ISDAY
-     */
-    String COLUMN_ISDAY = "isday";
-    String COLUMN_ISDAY_DATE = "isday_date";
-
-    String QUERY_ISDAY = "isday";
-    String[] QUERY_ISDAY_PROJECTION = new String[] {
-            COLUMN_ISDAY, COLUMN_ISDAY_DATE
-    };
-
-    /**
      * SUN
      */
     String COLUMN_SUN_NOON = "solarnoon";
@@ -261,13 +240,14 @@ public interface CalculatorProviderContract
     String COLUMN_SUNPOS_ALT = "sunpos_altitude";
     String COLUMN_SUNPOS_RA = "sunpos_ra";
     String COLUMN_SUNPOS_DEC = "sunpos_dec";
+    String COLUMN_SUNPOS_ISDAY = "sunpos_isday";
     String COLUMN_SUNPOS_DATE = "sunpos_date";
 
     String QUERY_SUNPOS = "sunpos";
     String[] QUERY_SUNPOS_PROJECTION = new String[] {
             COLUMN_SUNPOS_AZ, COLUMN_SUNPOS_ALT,
             COLUMN_SUNPOS_RA, COLUMN_SUNPOS_DEC,
-            COLUMN_SUNPOS_DATE
+            COLUMN_SUNPOS_ISDAY, COLUMN_SUNPOS_DATE
     };
 
     /**
