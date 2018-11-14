@@ -213,7 +213,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
 
             ////////////////
             // draw sun
-            if (options.showSunPosition)
+            if (options.showSunPosition && options.showSunShadow)
             {
                 int sunX = (int) (mid[0] - ((ghaSun180 / 180d) * mid[0]));
                 int sunY = (int) (mid[1] - ((sunPos.declination / 90d) * mid[1]));
@@ -222,7 +222,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
 
             ////////////////
             // draw moon
-            if (options.showMoonPosition)
+            if (options.showMoonPosition && options.showMoonLight)
             {
                 int moonX = (int) (mid[0] - ((moonPos2[0] / 180d) * mid[0]));
                 int moonY = (int) (mid[1] - ((moonPos2[1] / 90d) * mid[1]));
