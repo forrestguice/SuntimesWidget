@@ -165,133 +165,30 @@ public class CalculatorProvider extends ContentProvider
         return true;
     }
 
-    private SuntimesCalculator initCalculator(Context context, HashMap<String,String> selection, String calculatorName)
+    @Nullable
+    @Override
+    public String getType(@NonNull Uri uri)
     {
-        int appWidgetID = 0;
-        if (selection.containsKey(COLUMN_CONFIG_APPWIDGETID)) {
-            String id = selection.get(COLUMN_CONFIG_APPWIDGETID);
-            appWidgetID = Integer.parseInt(id != null ? id : "0");
-        }
-
-        String timezoneID = selection.get(COLUMN_CONFIG_TIMEZONE);
-        TimeZone timezone = (timezoneID != null ? TimeZone.getTimeZone(timezoneID) : null);
-        WidgetSettings.Location location = processSelection_location(selection);
-
-        SuntimesCalculatorDescriptor descriptor = null;
-        String calculator = selection.get(COLUMN_CONFIG_CALCULATOR);
-        if (calculator != null) {
-            descriptor = SuntimesCalculatorDescriptor.valueOf(context, calculator);
-        }
-
-        if (location == null && timezone == null && descriptor == null) {
-            if (calculatorName != null && calculatorName.equals("moon"))
-                return initMoonCalculator(context, appWidgetID);
-            else return initSunCalculator(context, appWidgetID);
-
-        } else {
-            if (location == null) {
-                location = WidgetSettings.loadLocationPref(context, appWidgetID);
-            }
-            if (timezone == null) {
-                timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, appWidgetID));
-            }
-            if (descriptor != null) {
-                descriptor = (calculatorName == null ? WidgetSettings.loadCalculatorModePref(context, appWidgetID)
-                                                     : WidgetSettings.loadCalculatorModePref(context, appWidgetID, calculatorName));
-            }
-            SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, descriptor);
-            return factory.createCalculator(location, timezone);
-        }
-    }
-
-    private static SparseArray<SuntimesCalculator> sunSource = new SparseArray<>();    // sun source for appWidgetID (app is 0)
-    private static SuntimesCalculator initSunCalculator(Context context, int appWidgetID)
-    {
-        SuntimesCalculator retValue = sunSource.get(appWidgetID);   // lazy init
-        if (retValue == null) {
-            WidgetSettings.Location location = WidgetSettings.loadLocationPref(context, appWidgetID);
-            TimeZone timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, appWidgetID));
-            SuntimesCalculatorDescriptor descriptor = WidgetSettings.loadCalculatorModePref(context, appWidgetID);
-            SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, descriptor);
-            sunSource.put(appWidgetID, (retValue = factory.createCalculator(location, timezone)));
-        }
-        return retValue;
-    }
-    private SuntimesCalculator initSunCalculator(Context context, HashMap<String,String> selection) {
-        return initCalculator(context, selection, null);
-    }
-
-    private static SparseArray<SuntimesCalculator> moonSource = new SparseArray<>();   // moon source for appWidgetID (app is 0)
-    private static SuntimesCalculator initMoonCalculator(Context context, int appWidgetID)
-    {
-        SuntimesCalculator retValue = moonSource.get(appWidgetID);
-        if (retValue == null)    // lazy init
-        {
-            WidgetSettings.Location location = WidgetSettings.loadLocationPref(context, appWidgetID);
-            TimeZone timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, appWidgetID));
-            SuntimesCalculatorDescriptor descriptor = WidgetSettings.loadCalculatorModePref(context, 0, "moon");      // always use app calculator (0)
-            SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, descriptor);
-            moonSource.put(appWidgetID, (retValue = factory.createCalculator(location, timezone)));
-        }
-        return retValue;
-    }
-    private SuntimesCalculator initMoonCalculator(Context context, HashMap<String,String> selection) {
-        return initCalculator(context, selection, "moon");
+        return null;
     }
 
     @Nullable
-    private String processSelectionArgs(@Nullable String selection, @Nullable String[] selectionArgs)
+    @Override
+    public Uri insert(@NonNull Uri uri, @Nullable ContentValues values)
     {
-        String retValue = selection;
-        if (selectionArgs != null && selection != null)
-        {
-            for (int i=0; i<selectionArgs.length; i++)
-            {
-                if (selectionArgs[i] != null)
-                {
-                    if (retValue.contains("?")) {
-                        retValue = retValue.replaceFirst("\\?", selectionArgs[i]);
-
-                    } else {
-                        Log.w("CalendarProvider", "processSelectionArgs: Too many arguments! Given " + selectionArgs.length + " arguments, but selection contains only " + (i+1));
-                        break;
-                    }
-                }
-            }
-        }
-        return retValue;
+        return null;
     }
 
-    private HashMap<String, String> processSelection(@Nullable String selection)
+    @Override
+    public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs)
     {
-        HashMap<String, String> retValue = new HashMap<>();
-        if (selection != null)
-        {
-            String[] expressions = selection.split(" or | OR | and | AND ");  // just separators in this context (all interpreted the same)
-            for (String expression : expressions)
-            {
-                String[] parts = expression.split("=");
-                if (parts.length == 2) {
-                    retValue.put(parts[0].trim(), parts[1].trim());
-                } else Log.w("CalendarProvider", "processSelection: Too many parts! " + expression);
-            }
-        }
-        return retValue;
+        return 0;
     }
 
-    private WidgetSettings.Location processSelection_location(HashMap<String,String> selection)
+    @Override
+    public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs)
     {
-        WidgetSettings.Location location = null;
-        if (selection.containsKey(COLUMN_CONFIG_LATITUDE) || selection.containsKey(COLUMN_CONFIG_LONGITUDE))
-        {
-            boolean hasAltitude = selection.containsKey(COLUMN_CONFIG_ALTITUDE);
-            location = (hasAltitude) ? new WidgetSettings.Location("", selection.get(COLUMN_CONFIG_LATITUDE), selection.get(COLUMN_CONFIG_LONGITUDE), selection.get(COLUMN_CONFIG_ALTITUDE))
-                                     : new WidgetSettings.Location("", selection.get(COLUMN_CONFIG_LATITUDE), selection.get(COLUMN_CONFIG_LONGITUDE));
-            if (hasAltitude) {
-                location.setUseAltitude(true);
-            }
-        }
-        return location;
+        return 0;
     }
 
     /**
@@ -395,56 +292,6 @@ public class CalculatorProvider extends ContentProvider
                 Log.e("CalculatorProvider", "Unrecognized URI! " + uri);
                 break;
         }
-        return retValue;
-    }
-
-    protected Calendar[] parseDateRange(String rangeSegment)
-    {
-        Calendar[] retValue = new Calendar[2];
-        String[] rangeString = rangeSegment.split("-");
-        if (rangeString.length == 2)
-        {
-            try {
-                retValue[0] = Calendar.getInstance();
-                retValue[0].setTimeInMillis(Long.parseLong(rangeString[0]));
-
-                retValue[1] = Calendar.getInstance();
-                retValue[1].setTimeInMillis(Long.parseLong(rangeString[1]) + 1000);
-
-            } catch (NumberFormatException e) {
-                Log.w("CalculatorProvider", "Invalid range! " + rangeSegment);
-                retValue[0] = retValue[1] = Calendar.getInstance();
-            }
-        } else {
-            Log.w("CalculatorProvider", "Invalid range! " + rangeSegment);
-            retValue[0] = retValue[1] = Calendar.getInstance();
-        }
-        Log.d("DEBUG", "startDate: " + retValue[0].getTimeInMillis() + ", endDate: " + retValue[1].getTimeInMillis());
-        return retValue;
-    }
-
-    protected Calendar[] parseYearRange(String rangeSegment)
-    {
-        Calendar[] retValue = new Calendar[2];
-        String[] rangeString = rangeSegment.split("-");
-        if (rangeString.length == 2)
-        {
-            try {
-                retValue[0] = Calendar.getInstance();
-                retValue[0].set(Calendar.YEAR, Integer.parseInt(rangeString[0]));
-
-                retValue[1] = Calendar.getInstance();
-                retValue[1].set(Calendar.YEAR, Integer.parseInt(rangeString[1]) + 1);
-
-            } catch (NumberFormatException e) {
-                Log.w("CalculatorProvider", "Invalid range! " + rangeSegment);
-                retValue[0] = retValue[1] = Calendar.getInstance();
-            }
-        } else {
-            Log.w("CalculatorProvider", "Invalid range! " + rangeSegment);
-            retValue[0] = retValue[1] = Calendar.getInstance();
-        }
-        Log.d("DEBUG", "startDate: " + retValue[0].get(Calendar.YEAR) + ", endDate: " + retValue[1].get(Calendar.YEAR));
         return retValue;
     }
 
@@ -879,29 +726,222 @@ public class CalculatorProvider extends ContentProvider
         return retValue;
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    // Calculator Init
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    private SuntimesCalculator initCalculator(Context context, HashMap<String,String> selection, String calculatorName)
+    {
+        int appWidgetID = 0;
+        if (selection.containsKey(COLUMN_CONFIG_APPWIDGETID)) {
+            String id = selection.get(COLUMN_CONFIG_APPWIDGETID);
+            appWidgetID = Integer.parseInt(id != null ? id : "0");
+        }
+
+        String timezoneID = selection.get(COLUMN_CONFIG_TIMEZONE);
+        TimeZone timezone = (timezoneID != null ? TimeZone.getTimeZone(timezoneID) : null);
+        WidgetSettings.Location location = processSelection_location(selection);
+
+        SuntimesCalculatorDescriptor descriptor = null;
+        String calculator = selection.get(COLUMN_CONFIG_CALCULATOR);
+        if (calculator != null) {
+            descriptor = SuntimesCalculatorDescriptor.valueOf(context, calculator);
+        }
+
+        if (location == null && timezone == null && descriptor == null) {
+            if (calculatorName != null && calculatorName.equals("moon"))
+                return initMoonCalculator(context, appWidgetID);
+            else return initSunCalculator(context, appWidgetID);
+
+        } else {
+            if (location == null) {
+                location = WidgetSettings.loadLocationPref(context, appWidgetID);
+            }
+            if (timezone == null) {
+                timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, appWidgetID));
+            }
+            if (descriptor != null) {
+                descriptor = (calculatorName == null ? WidgetSettings.loadCalculatorModePref(context, appWidgetID)
+                        : WidgetSettings.loadCalculatorModePref(context, appWidgetID, calculatorName));
+            }
+            SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, descriptor);
+            return factory.createCalculator(location, timezone);
+        }
+    }
+
+    private static SparseArray<SuntimesCalculator> sunSource = new SparseArray<>();    // sun source for appWidgetID (app is 0)
+    private static SuntimesCalculator initSunCalculator(Context context, int appWidgetID)
+    {
+        SuntimesCalculator retValue = sunSource.get(appWidgetID);   // lazy init
+        if (retValue == null) {
+            WidgetSettings.Location location = WidgetSettings.loadLocationPref(context, appWidgetID);
+            TimeZone timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, appWidgetID));
+            SuntimesCalculatorDescriptor descriptor = WidgetSettings.loadCalculatorModePref(context, appWidgetID);
+            SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, descriptor);
+            sunSource.put(appWidgetID, (retValue = factory.createCalculator(location, timezone)));
+        }
+        return retValue;
+    }
+    private SuntimesCalculator initSunCalculator(Context context, HashMap<String,String> selection) {
+        return initCalculator(context, selection, null);
+    }
+
+    private static SparseArray<SuntimesCalculator> moonSource = new SparseArray<>();   // moon source for appWidgetID (app is 0)
+    private static SuntimesCalculator initMoonCalculator(Context context, int appWidgetID)
+    {
+        SuntimesCalculator retValue = moonSource.get(appWidgetID);
+        if (retValue == null)    // lazy init
+        {
+            WidgetSettings.Location location = WidgetSettings.loadLocationPref(context, appWidgetID);
+            TimeZone timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, appWidgetID));
+            SuntimesCalculatorDescriptor descriptor = WidgetSettings.loadCalculatorModePref(context, 0, "moon");      // always use app calculator (0)
+            SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, descriptor);
+            moonSource.put(appWidgetID, (retValue = factory.createCalculator(location, timezone)));
+        }
+        return retValue;
+    }
+    private SuntimesCalculator initMoonCalculator(Context context, HashMap<String,String> selection) {
+        return initCalculator(context, selection, "moon");
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    // Query Helpers
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * processSelectionArgs
+     * A query helper method; inserts arguments into selection string.
+     * @param selection a selection string (as passed to query)
+     * @param selectionArgs a list of selection arguments
+     * @return a completed selection string containing substituted arguments
+     */
     @Nullable
-    @Override
-    public String getType(@NonNull Uri uri)
+    public static String processSelectionArgs(@Nullable String selection, @Nullable String[] selectionArgs)
     {
-        return null;
+        String retValue = selection;
+        if (selectionArgs != null && selection != null)
+        {
+            for (int i=0; i<selectionArgs.length; i++)
+            {
+                if (selectionArgs[i] != null)
+                {
+                    if (retValue.contains("?")) {
+                        retValue = retValue.replaceFirst("\\?", selectionArgs[i]);
+
+                    } else {
+                        Log.w("CalendarProvider", "processSelectionArgs: Too many arguments! Given " + selectionArgs.length + " arguments, but selection contains only " + (i+1));
+                        break;
+                    }
+                }
+            }
+        }
+        return retValue;
     }
 
-    @Nullable
-    @Override
-    public Uri insert(@NonNull Uri uri, @Nullable ContentValues values)
+    /**
+     * processSelection
+     * A query helper method; extracts selection columns/values to HashMap.
+     * @param selection a completed selection string (@see processSelectionArgs)
+     * @return a HashMap containing <COLUMN_NAME, VALUE> pairs
+     */
+    public static HashMap<String, String> processSelection(@Nullable String selection)
     {
-        return null;
+        HashMap<String, String> retValue = new HashMap<>();
+        if (selection != null)
+        {
+            String[] expressions = selection.split(" or | OR | and | AND ");  // just separators in this context (all interpreted the same)
+            for (String expression : expressions)
+            {
+                String[] parts = expression.split("=");
+                if (parts.length == 2) {
+                    retValue.put(parts[0].trim(), parts[1].trim());
+                } else Log.w("CalendarProvider", "processSelection: Too many parts! " + expression);
+            }
+        }
+        return retValue;
     }
 
-    @Override
-    public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs)
+    /**
+     * processSelection_location
+     * A query helper method; creates a Location object from selection values (@see processSelection).
+     * @param selection a completed selection string (@see processSelectionArgs)
+     * @return a WidgetSettings.Location created from the selection (or null if selection is missing COLUMN_CONFIG_LATITUDE or COLUMN_CONFIG_LONGITUDE)
+     */
+    public static WidgetSettings.Location processSelection_location(HashMap<String,String> selection)
     {
-        return 0;
+        WidgetSettings.Location location = null;
+        if (selection.containsKey(COLUMN_CONFIG_LATITUDE) || selection.containsKey(COLUMN_CONFIG_LONGITUDE))
+        {
+            boolean hasAltitude = selection.containsKey(COLUMN_CONFIG_ALTITUDE);
+            location = (hasAltitude) ? new WidgetSettings.Location("", selection.get(COLUMN_CONFIG_LATITUDE), selection.get(COLUMN_CONFIG_LONGITUDE), selection.get(COLUMN_CONFIG_ALTITUDE))
+                    : new WidgetSettings.Location("", selection.get(COLUMN_CONFIG_LATITUDE), selection.get(COLUMN_CONFIG_LONGITUDE));
+            if (hasAltitude) {
+                location.setUseAltitude(true);
+            }
+        }
+        return location;
     }
 
-    @Override
-    public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs)
+    /**
+     * parseDateRange
+     * A query helper method; get startDate and endDate from a "timestamp-timestamp" range value.
+     * @param rangeSegment startMillis-endMillis
+     * @return a Calendar[2] containing [0]startDate, [1]endDate.
+     */
+    public static Calendar[] parseDateRange(String rangeSegment)
     {
-        return 0;
+        Calendar[] retValue = new Calendar[2];
+        String[] rangeString = rangeSegment.split("-");
+        if (rangeString.length == 2)
+        {
+            try {
+                retValue[0] = Calendar.getInstance();
+                retValue[0].setTimeInMillis(Long.parseLong(rangeString[0]));
+
+                retValue[1] = Calendar.getInstance();
+                retValue[1].setTimeInMillis(Long.parseLong(rangeString[1]) + 1000);
+
+            } catch (NumberFormatException e) {
+                Log.w("CalculatorProvider", "Invalid range! " + rangeSegment);
+                retValue[0] = retValue[1] = Calendar.getInstance();
+            }
+        } else {
+            Log.w("CalculatorProvider", "Invalid range! " + rangeSegment);
+            retValue[0] = retValue[1] = Calendar.getInstance();
+        }
+        Log.d("DEBUG", "startDate: " + retValue[0].getTimeInMillis() + ", endDate: " + retValue[1].getTimeInMillis());
+        return retValue;
     }
+
+    /**
+     * parseYearRange
+     * A query helper method; get startDate and endDate from a "startYear-endYear" range value.
+     * @param rangeSegment startYear-endYear (e.g. 2018-2020)
+     * @return a Calendar[2] containing [0]startDate, [1]endDate.
+     */
+    public static Calendar[] parseYearRange(String rangeSegment)
+    {
+        Calendar[] retValue = new Calendar[2];
+        String[] rangeString = rangeSegment.split("-");
+        if (rangeString.length == 2)
+        {
+            try {
+                retValue[0] = Calendar.getInstance();
+                retValue[0].set(Calendar.YEAR, Integer.parseInt(rangeString[0]));
+
+                retValue[1] = Calendar.getInstance();
+                retValue[1].set(Calendar.YEAR, Integer.parseInt(rangeString[1]) + 1);
+
+            } catch (NumberFormatException e) {
+                Log.w("CalculatorProvider", "Invalid range! " + rangeSegment);
+                retValue[0] = retValue[1] = Calendar.getInstance();
+            }
+        } else {
+            Log.w("CalculatorProvider", "Invalid range! " + rangeSegment);
+            retValue[0] = retValue[1] = Calendar.getInstance();
+        }
+        Log.d("DEBUG", "startDate: " + retValue[0].get(Calendar.YEAR) + ", endDate: " + retValue[1].get(Calendar.YEAR));
+        return retValue;
+    }
+
 }
