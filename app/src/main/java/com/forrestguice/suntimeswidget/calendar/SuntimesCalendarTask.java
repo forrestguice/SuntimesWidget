@@ -63,7 +63,7 @@ public class SuntimesCalendarTask extends AsyncTask<Void, String, Boolean>
     private String notificationTitle;
     private String notificationMsgAdding, notificationMsgAdded;
     private String notificationMsgClearing, notificationMsgCleared;
-    private int notificationIcon = R.drawable.ic_action_time;
+    private int notificationIcon = R.drawable.ic_calendar;
     private int notificationPriority = NotificationCompat.PRIORITY_LOW;
     private PendingIntent notificationIntent;
 

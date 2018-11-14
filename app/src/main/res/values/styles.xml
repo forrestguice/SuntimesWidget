@@ -16,8 +16,9 @@
         <item name="text_accentColor">@color/text_accent_light</item>
         <item name="text_disabledColor">@color/text_disabled_light</item>
 
+        <item name="buttonPressColor">@color/btn_tint_pressed_light</item>
         <item name="text_buttonSelector">@drawable/btn_txt_light</item>
-        <item name="date_buttonSelector">@drawable/btn_datetxt</item>
+        <item name="date_buttonSelector">@drawable/btn_datetxt_light</item>
 
         <item name="graphColor_background">@color/graphColor_bg_light</item>
         <item name="graphColor_day">@color/graphColor_day_light</item>
@@ -25,14 +26,16 @@
         <item name="graphColor_civil">@color/graphColor_civil_light</item>
         <item name="graphColor_nautical">@color/graphColor_nautical_light</item>
         <item name="graphColor_astronomical">@color/graphColor_astronomical_light</item>
-        <item name="graphColor_pointFill">@color/sunIcon_color_setting_light</item>
-        <item name="graphColor_pointStroke">@color/grey_800</item>
+        <item name="graphColor_pointFill">@color/sunIcon_color_noon_light</item>
+        <item name="graphColor_pointStroke">@color/sunIcon_color_noonBorder_light</item>
 
-        <item name="sunriseIcon">@drawable/ic_sunrise_large</item>
+        <item name="sunriseIconSmall">@drawable/ic_sunrise_light</item>
+        <item name="sunriseIconLarge">@drawable/ic_sunrise_large_light</item>
         <item name="sunriseColor">@color/sunIcon_color_rising_light</item>
-        <item name="sunsetIcon">@drawable/ic_sunset_large</item>
+        <item name="sunsetIconSmall">@drawable/ic_sunset_light</item>
+        <item name="sunsetIconLarge">@drawable/ic_sunset_large_light</item>
         <item name="sunsetColor">@color/sunIcon_color_setting_light</item>
-        <item name="sunnoonIcon">@drawable/ic_noon_large</item>
+        <item name="sunnoonIcon">@drawable/ic_noon_large_light</item>
 
         <item name="moonriseIcon">@drawable/ic_moon_rise_light</item>
         <item name="moonriseColor">@color/moonIcon_color_rising_light</item>
@@ -97,8 +100,9 @@
         <item name="text_accentColor">@color/text_accent_dark</item>
         <item name="text_disabledColor">@color/text_disabled_dark</item>
 
+        <item name="buttonPressColor">@color/btn_tint_pressed_dark</item>
         <item name="text_buttonSelector">@drawable/btn_txt_dark</item>
-        <item name="date_buttonSelector">@drawable/btn_datetxt</item>
+        <item name="date_buttonSelector">@drawable/btn_datetxt_dark</item>
 
         <item name="graphColor_background">@color/graphColor_bg_dark</item>
         <item name="graphColor_day">@color/graphColor_day_dark</item>
@@ -109,9 +113,11 @@
         <item name="graphColor_pointFill">@color/sunIcon_color_setting_dark</item>
         <item name="graphColor_pointStroke">@color/grey_800</item>
 
-        <item name="sunriseIcon">@drawable/ic_sunrise_large</item>
+        <item name="sunriseIconSmall">@drawable/ic_sunrise</item>
+        <item name="sunriseIconLarge">@drawable/ic_sunrise_large</item>
         <item name="sunriseColor">@color/sunIcon_color_rising_dark</item>
-        <item name="sunsetIcon">@drawable/ic_sunset_large</item>
+        <item name="sunsetIconSmall">@drawable/ic_sunset</item>
+        <item name="sunsetIconLarge">@drawable/ic_sunset_large</item>
         <item name="sunsetColor">@color/sunIcon_color_setting_dark</item>
         <item name="sunnoonIcon">@drawable/ic_noon_large</item>
 
