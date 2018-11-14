@@ -186,27 +186,30 @@ public class CalculatorProvider extends ContentProvider
         TimeZone timezone = (timezoneID != null ? TimeZone.getTimeZone(timezoneID) : null);
         WidgetSettings.Location location = processSelection_location(selection);
 
-        if (location == null && timezone == null) {
+        SuntimesCalculatorDescriptor descriptor = null;
+        String calculator = selection.get(COLUMN_CONFIG_CALCULATOR);
+        if (calculator != null) {
+            descriptor = SuntimesCalculatorDescriptor.valueOf(context, calculator);
+        }
+
+        if (location == null && timezone == null && descriptor == null) {
             if (calculatorName != null && calculatorName.equals("moon"))
                 return initMoonCalculator(context, appWidgetID);
             else return initSunCalculator(context, appWidgetID);
 
         } else {
-            SuntimesCalculatorDescriptor descriptor = (calculatorName == null ? WidgetSettings.loadCalculatorModePref(context, appWidgetID)
-                                                                              : WidgetSettings.loadCalculatorModePref(context, appWidgetID, calculatorName));
-            SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, descriptor);
-
-            if (location != null && timezone != null) {
-                return factory.createCalculator(location, timezone);
-
-            } else if (timezone != null) {
+            if (location == null) {
                 location = WidgetSettings.loadLocationPref(context, appWidgetID);
-                return factory.createCalculator(location, timezone);
-
-            } else {
-                timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, appWidgetID));
-                return factory.createCalculator(location, timezone);
             }
+            if (timezone == null) {
+                timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, appWidgetID));
+            }
+            if (descriptor != null) {
+                descriptor = (calculatorName == null ? WidgetSettings.loadCalculatorModePref(context, appWidgetID)
+                                                     : WidgetSettings.loadCalculatorModePref(context, appWidgetID, calculatorName));
+            }
+            SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, descriptor);
+            return factory.createCalculator(location, timezone);
         }
     }
 
