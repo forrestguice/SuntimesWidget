@@ -572,7 +572,7 @@ public class CalculatorProviderTest
         assertTrue("startDate should be non-null", range0[0] != null);
         assertTrue("endDate should be non-null", range0[1] != null);
         assertTrue("startDate should match", range0[0].getTimeInMillis() == start0.getTimeInMillis());
-        assertTrue("endDate should match (+1000)", range0[1].getTimeInMillis() == (end0.getTimeInMillis() + 1000));
+        assertTrue("endDate should match (+1000)", range0[1].getTimeInMillis() == (end0.getTimeInMillis()));
 
         // TODO: test against invalid ranges
     }
@@ -599,7 +599,7 @@ public class CalculatorProviderTest
             if (parts.length == 2) {
                 try {
                     startYear = Integer.parseInt(parts[0]);
-                    endYear = Integer.parseInt(parts[1]) + 1;
+                    endYear = Integer.parseInt(parts[1]);
 
                 } catch (NumberFormatException e) {
                     startYear = now.get(Calendar.YEAR);

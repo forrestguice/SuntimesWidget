@@ -391,6 +391,10 @@ public class CalculatorProvider extends ContentProvider
         {
             Calendar day = Calendar.getInstance();
             day.setTimeInMillis(range[0].getTimeInMillis());
+
+            Calendar endDay = Calendar.getInstance();
+            endDay.setTimeInMillis(range[1].getTimeInMillis() + 1000);      // +1000ms (make range[1] inclusive)
+
             do {
                 Calendar[] morningBlueHour = null, eveningBlueHour = null;
                 Object[] row = new Object[columns.length];
@@ -470,7 +474,7 @@ public class CalculatorProvider extends ContentProvider
                 }
                 retValue.addRow(row);
                 day.add(Calendar.DAY_OF_YEAR, 1);
-            } while (day.before(range[1]));
+            } while (day.before(endDay));
 
         } else Log.d("DEBUG", "sunSource is null!");
         return retValue;
@@ -538,6 +542,10 @@ public class CalculatorProvider extends ContentProvider
         {
             Calendar day = Calendar.getInstance();
             day.setTimeInMillis(range[0].getTimeInMillis());
+
+            Calendar endDay = Calendar.getInstance();
+            endDay.setTimeInMillis(range[1].getTimeInMillis() + 1000);    // +1000ms (make range[1] inclusive)
+
             do {
                 SuntimesCalculator.MoonTimes moontimes = null;
                 Object[] row = new Object[columns.length];
@@ -561,7 +569,7 @@ public class CalculatorProvider extends ContentProvider
                 }
                 retValue.addRow(row);
                 day.add(Calendar.DAY_OF_YEAR, 1);
-            } while (day.before(range[1]));
+            } while (day.before(endDay));
 
         } else Log.d("DEBUG", "moonSource is null!");
         return retValue;
@@ -630,6 +638,10 @@ public class CalculatorProvider extends ContentProvider
             ArrayList<Calendar> events = new ArrayList<>();
             Calendar date = Calendar.getInstance();
             date.setTimeInMillis(range[0].getTimeInMillis());
+
+            Calendar endDate = Calendar.getInstance();
+            endDate.setTimeInMillis(range[1].getTimeInMillis() + 1000);   // +1000ms (make range[1] inclusive)
+
             do {
                 events.clear();
                 Object[] row = new Object[columns.length];
@@ -670,7 +682,7 @@ public class CalculatorProvider extends ContentProvider
 
                 date.setTimeInMillis(latest != null ? latest.getTimeInMillis() + 1000
                                                     : range[1].getTimeInMillis() + 1000);
-            } while (date.before(range[1]));
+            } while (date.before(endDate));
 
         } else Log.d("DEBUG", "moonSource is null!");
         return retValue;
@@ -688,6 +700,11 @@ public class CalculatorProvider extends ContentProvider
         {
             Calendar year = Calendar.getInstance();
             year.setTimeInMillis(range[0].getTimeInMillis());
+
+            Calendar endYear = Calendar.getInstance();
+            endYear.setTimeInMillis(range[1].getTimeInMillis());
+            endYear.add(Calendar.YEAR, 1);                   // +1 year (make range[1] inclusive)
+
             do {
                 Object[] row = new Object[columns.length];
                 for (int i=0; i<columns.length; i++)
@@ -719,8 +736,8 @@ public class CalculatorProvider extends ContentProvider
                     }
                 }
                 retValue.addRow(row);
-                year.set(Calendar.YEAR, year.get(Calendar.YEAR) + 1);
-            } while (year.before(range[1]));
+                year.add(Calendar.YEAR, 1);
+            } while (year.before(endYear));
 
         } else Log.d("DEBUG", "sunSource is null!");
         return retValue;
@@ -905,7 +922,7 @@ public class CalculatorProvider extends ContentProvider
                 retValue[0].setTimeInMillis(Long.parseLong(rangeString[0]));
 
                 retValue[1] = Calendar.getInstance();
-                retValue[1].setTimeInMillis(Long.parseLong(rangeString[1]) + 1000);
+                retValue[1].setTimeInMillis(Long.parseLong(rangeString[1]));
 
             } catch (NumberFormatException e) {
                 Log.w("CalculatorProvider", "Invalid range! " + rangeSegment);
@@ -922,9 +939,8 @@ public class CalculatorProvider extends ContentProvider
     /**
      * parseYearRange
      * A query helper method; get startDate and endDate from a "startYear-endYear" range value.
-     * Note: adds 1 year to the endDate to make the range inclusive.
-     * @param rangeSegment startYear-endYear (e.g. 2018-2020)
-     * @return a Calendar[2] containing [0](startDate), [1](endDate + 1yr).
+     * @param rangeSegment startYear-endYear
+     * @return a Calendar[2] containing [0](startDate), [1](endDate).
      */
     public static Calendar[] parseYearRange(String rangeSegment)
     {
@@ -937,7 +953,7 @@ public class CalculatorProvider extends ContentProvider
                 retValue[0].set(Calendar.YEAR, Integer.parseInt(rangeString[0]));
 
                 retValue[1] = Calendar.getInstance();
-                retValue[1].set(Calendar.YEAR, Integer.parseInt(rangeString[1]) + 1);
+                retValue[1].set(Calendar.YEAR, Integer.parseInt(rangeString[1]));
 
             } catch (NumberFormatException e) {
                 Log.w("CalculatorProvider", "Invalid range! " + rangeSegment);
