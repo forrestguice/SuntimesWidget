@@ -38,10 +38,12 @@ import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TimeZone;
 
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.AUTHORITY;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_ALTITUDE;
@@ -239,15 +241,29 @@ public class CalculatorProviderTest
         ContentResolver resolver = mockContext.getContentResolver();
         assertTrue("Unable to getContentResolver!", resolver != null);
 
-        Uri uri = Uri.parse("content://" + AUTHORITY + "/" + QUERY_SEASONS);
+        Uri uri = Uri.parse("content://" + AUTHORITY + "/" + QUERY_SEASONS + "/2018");
         String[] projection = QUERY_SEASONS_PROJECTION;
         Cursor cursor = resolver.query(uri, projection, null, null, null);
         test_cursorHasColumns("QUERY_SEASONS", cursor, projection);
 
-        // TODO
-
-        if (cursor != null) {
+        if (cursor != null)
+        {
+            cursor.moveToFirst();
+            long vernalEquinoxTime = cursor.getLong(cursor.getColumnIndex(COLUMN_SEASON_VERNAL));
+            long summerSolsticeTime = cursor.getLong(cursor.getColumnIndex(COLUMN_SEASON_SUMMER));
+            long autumnalEquinoxTime = cursor.getLong(cursor.getColumnIndex(COLUMN_SEASON_AUTUMN));
+            long winterSolsticeTime = cursor.getLong(cursor.getColumnIndex(COLUMN_SEASON_WINTER));
             cursor.close();
+
+            assertTrue("COLUMN_SEASON_VERNAL result missing", vernalEquinoxTime != 0);
+            assertTrue("COLUMN_SEASON_SUMMER result missing", summerSolsticeTime != 0);
+            assertTrue("COLUMN_SEASON_AUTUMN result missing", autumnalEquinoxTime != 0);
+            assertTrue("COLUMN_SEASON_WINTER result missing", winterSolsticeTime != 0);
+
+            test_dateUTC("COLUMN_SEASON_VERNAL", vernalEquinoxTime,2018, 2, 20, 16, 15);
+            test_dateUTC("COLUMN_SEASON_SUMMER", summerSolsticeTime,2018, 5, 21, 10, 7);
+            test_dateUTC("COLUMN_SEASON_AUTUMN", autumnalEquinoxTime,2018, 8, 23, 1, 54);
+            test_dateUTC("COLUMN_SEASON_WINTER", winterSolsticeTime,2018, 11, 21, 22, 22);
         }
     }
 
@@ -494,6 +510,15 @@ public class CalculatorProviderTest
             assertTrue("Column names are not unique! \"" + column + "\" is used more than once.", !uniqueColumns.contains(column));
             uniqueColumns.add(column);
         }
+    }
+
+    private void test_dateUTC(String tag, long timestamp, int year, int month, int day, int hour, int minute)
+    {
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        calendar.setTimeInMillis(timestamp);
+        assertTrue(tag + " should match " + year + " " + month + " " + day + " " + hour + " " + minute + " :: " + calendar.toString(),
+                calendar.get(Calendar.YEAR) == year && calendar.get(Calendar.MONTH) == month && calendar.get(Calendar.DAY_OF_MONTH) == day
+                        && calendar.get(Calendar.HOUR_OF_DAY) == hour && calendar.get(Calendar.MINUTE) == minute);
     }
 
 }
