@@ -40,21 +40,21 @@ import java.util.Arrays;
 @SuppressWarnings("Convert2Diamond")
 public enum SolarEvents
 {
-    MORNING_ASTRONOMICAL("astronomical twilight", "morning astronomical twilight", R.attr.sunriseIcon), // 0
-    MORNING_NAUTICAL("nautical twilight", "morning nautical twilight", R.attr.sunriseIcon),             // 1
-    MORNING_BLUE8("blue hour", "morning blue hour", R.attr.sunriseIcon),                                // 2
-    MORNING_CIVIL("civil twilight", "morning civil twilight", R.attr.sunriseIcon),                      // 3
-    MORNING_BLUE4("blue hour", "morning blue hour", R.attr.sunriseIcon),                                // 4
-    SUNRISE("sunrise", "sunrise", R.attr.sunriseIcon),                                                  // 5
-    MORNING_GOLDEN("golden hour", "morning golden hour", R.attr.sunriseIcon),                           // 6
+    MORNING_ASTRONOMICAL("astronomical twilight", "morning astronomical twilight", R.attr.sunriseIconLarge), // 0
+    MORNING_NAUTICAL("nautical twilight", "morning nautical twilight", R.attr.sunriseIconLarge),             // 1
+    MORNING_BLUE8("blue hour", "morning blue hour", R.attr.sunriseIconLarge),                                // 2
+    MORNING_CIVIL("civil twilight", "morning civil twilight", R.attr.sunriseIconLarge),                      // 3
+    MORNING_BLUE4("blue hour", "morning blue hour", R.attr.sunriseIconLarge),                                // 4
+    SUNRISE("sunrise", "sunrise", R.attr.sunriseIconLarge),                                                  // 5
+    MORNING_GOLDEN("golden hour", "morning golden hour", R.attr.sunriseIconLarge),                           // 6
     NOON("solar noon", "solar noon", R.attr.sunnoonIcon),                                               // 7
-    EVENING_GOLDEN("golden hour", "evening golden hour", R.attr.sunsetIcon),                            // 8
-    SUNSET("sunset", "sunset", R.attr.sunsetIcon),                                                      // 9
-    EVENING_BLUE4("blue hour", "evening blue hour", R.attr.sunsetIcon),                                 // 10
-    EVENING_CIVIL("civil twilight", "evening civil twilight", R.attr.sunsetIcon),                       // 11
-    EVENING_BLUE8("blue hour", "evening blue hour", R.attr.sunsetIcon),                                 // 12
-    EVENING_NAUTICAL("nautical twilight", "evening nautical twilight", R.attr.sunsetIcon),              // 13
-    EVENING_ASTRONOMICAL("astronomical twilight", "evening astronomical twilight", R.attr.sunsetIcon),  // 14
+    EVENING_GOLDEN("golden hour", "evening golden hour", R.attr.sunsetIconLarge),                            // 8
+    SUNSET("sunset", "sunset", R.attr.sunsetIconLarge),                                                      // 9
+    EVENING_BLUE4("blue hour", "evening blue hour", R.attr.sunsetIconLarge),                                 // 10
+    EVENING_CIVIL("civil twilight", "evening civil twilight", R.attr.sunsetIconLarge),                       // 11
+    EVENING_BLUE8("blue hour", "evening blue hour", R.attr.sunsetIconLarge),                                 // 12
+    EVENING_NAUTICAL("nautical twilight", "evening nautical twilight", R.attr.sunsetIconLarge),              // 13
+    EVENING_ASTRONOMICAL("astronomical twilight", "evening astronomical twilight", R.attr.sunsetIconLarge),  // 14
     MOONRISE("moonrise", "moonrise", R.attr.moonriseIcon),                                              // 15
     MOONSET("moonset", "mooonset", R.attr.moonsetIcon);                                                 // 16
                                                                                                         // .. R.array.solarevents_short/_long req same length/order
@@ -132,12 +132,18 @@ public enum SolarEvents
     {
         private final Context context;
         private final ArrayList<SolarEvents> choices;
+        private int resID_noonIcon;
 
         public SolarEventsAdapter(Context context, ArrayList<SolarEvents> choices)
         {
             super(context, R.layout.layout_listitem_solarevent, choices);
             this.context = context;
             this.choices = choices;
+
+            int[] iconAttr = { R.attr.sunnoonIcon };
+            TypedArray typedArray = context.obtainStyledAttributes(iconAttr);
+            resID_noonIcon = typedArray.getResourceId(0, R.drawable.ic_noon_large);
+            typedArray.recycle();
         }
 
         @Override
@@ -182,7 +188,7 @@ public enum SolarEvents
             Resources resources = icon.getContext().getResources();
             int iconWidth = (int)resources.getDimension(R.dimen.sunIconLarge_width);
             int iconHeight = (int)resources.getDimension(R.dimen.sunIconLarge_height);
-            if (iconResource == R.drawable.ic_noon_large)
+            if (iconResource == resID_noonIcon)
             {
                 //noinspection SuspiciousNameCombination
                 iconHeight = iconWidth;

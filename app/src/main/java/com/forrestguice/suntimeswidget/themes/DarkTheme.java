@@ -114,9 +114,9 @@ public class DarkTheme extends SuntimesTheme
         this.themeSunsetIconColor = this.themeSunsetTextColor;
         this.themeSunsetIconStrokeWidth = THEMEDEF_SETICON_STROKEWIDTH;
 
-        this.themeNoonTextColor = this.themeSunsetTextColor;
-        this.themeNoonIconColor = this.themeSunriseTextColor;
-        this.themeNoonIconStrokeColor = this.themeSunsetTextColor;
+        this.themeNoonTextColor = ContextCompat.getColor(context, R.color.sunIcon_color_noon_dark);
+        this.themeNoonIconColor = ContextCompat.getColor(context, R.color.sunIcon_color_noon_dark);
+        this.themeNoonIconStrokeColor = ContextCompat.getColor(context, R.color.sunIcon_color_noonBorder_dark);
         this.themeNoonIconStrokeWidth = THEMEDEF_NOONICON_STROKEWIDTH;
 
         this.themeSunriseIconStrokeColor = this.themeSunsetIconColor;

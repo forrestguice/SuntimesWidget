@@ -520,6 +520,7 @@
     <string name="configLabel_widgetList_itemSummaryPattern"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
     <string name="configLabel_widgetListHelp_title">Ajuda</string>               <!-- always the first item in the widgetList -->
     <string name="configLabel_widgetListHelp_summary">Mostrar ajuda del giny</string>
+    <string name="configLabel_widgetList_emptyMsg">No Widgets</string>          <!-- a label that is displayed in place of an empty listview -->  <!-- TODO -->
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">Llocs</string>                           <!-- group title -->
@@ -995,6 +996,12 @@
       Per <b>afegir un giny</b> has d\'anar a l\'escriptori.<br/><br/>
       Per <b>reconfigurar un giny existent</b> pots sel·leccionar un de la següent llista.<br/>
 ]]></string>
+    <string name="help_themelist">
+          [Icon Add] Add a new theme or [Icon Copy] copy from an existing theme.\n
+          \n
+          [Icon Edit] Edit or [Icon Delete] delete themes.\n
+          The [Icon Default] default themes cannot be modified.
+    </string> <!-- text explains themelist actions/icons; [Icon tags] are substituted at runtime (should remain unaltered)  --> <!-- TODO -->
 
     <string name="privacy_policy"><![CDATA[<b>Privadesa:</b><br/>Suntimes no coŀlecta, emmagatzema, o transmet dades personals. <b>No contè anuncis</b>, <b>càlculs estadístics</b>, <b>rastrejadors</b>, i <b>no utilitza permissos innecessaris</b>. <br/><br/>L\'aplicació es configura amb dades de localització. Aquesta informació (i qualsevol altra dada configurada emprada per l\'aplicació) s\'emmagatzema localment i no surt del dispositiu.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes utilitza el permís de <b>localització</b> per determinar la teva longitud i latitud.<br/><br/>Aquest permís és opcional; la localització es configura manualment per defecte.]]></string>
