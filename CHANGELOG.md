@@ -1,5 +1,15 @@
 ### ~
 
+### v0.9.5 (2018-11-12)
+* modifies the default colors to improve contrast and readability (#247, #264, #268).
+* fixes bug "language selectors fails for some languages" (#262).
+* fixes empty widgetlist; an oversized label and icon are now displayed when the list is empty.
+* fixes worldmap bug where the sun/moon positions are drawn despite sunlight/moonlight options toggled off.
+* fixes settings activity iconography (unique icons for each header); the previous patch only fixed this for older Android versions where the icon attribute is completely ignored.
+* updates translation to Basque (eu) (#271 by beriain).
+* updates translation to Norwegian (nb) (#270 by FTno).
+* updates translation to Polish and Esperanto (eo, pl) (#263, #267 by Verdulo).
+
 ### v0.9.4 (2018-10-28)
 * fixes bug "widgets missing" (#258); installLocation set to internalOnly.
 * fixes appearance of main table for locales with header text shorter than event times; sunset column now has minWidth.
