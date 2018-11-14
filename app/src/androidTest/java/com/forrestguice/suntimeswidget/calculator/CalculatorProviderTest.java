@@ -497,15 +497,28 @@ public class CalculatorProviderTest
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Test
-    public void test_processSelectionArgs()
-    {
-        // TODO
-    }
-
-    @Test
     public void test_processSelection()
     {
-        // TODO
+        String[] selectionArgs0 = new String[] {"33", "-112", "330", "time4a-time4j"};
+        String selectionString0 = COLUMN_CONFIG_LATITUDE + "=? AND " + COLUMN_CONFIG_LONGITUDE + "=? AND " + COLUMN_CONFIG_ALTITUDE + "=? AND " + COLUMN_CONFIG_CALCULATOR + "=?";
+        String selectionString0_truth = COLUMN_CONFIG_LATITUDE + "=33"
+                                        + " AND " + COLUMN_CONFIG_LONGITUDE + "=-112"
+                                        + " AND " + COLUMN_CONFIG_ALTITUDE + "=330"
+                                        + " AND " + COLUMN_CONFIG_CALCULATOR + "=time4a-time4j";
+        String selectionString0_complete = CalculatorProvider.processSelectionArgs(selectionString0, selectionArgs0);
+        assertTrue("selectionString should be non-null", selectionString0_complete != null);
+        assertTrue("selectionString should match", selectionString0_complete.equals(selectionString0_truth));
+
+        String selectionString1_complete = CalculatorProvider.processSelectionArgs(null, selectionArgs0);
+        assertTrue("selectionString should be null", selectionString1_complete == null);
+
+        HashMap<String,String> selection = CalculatorProvider.processSelection(selectionString0_complete);
+        assertTrue("processSelection returns non-null", selection != null);
+        assertTrue("processSelection returns same number of columns: " + selection.size() + " != " + selectionArgs0.length, selection.size() == selectionArgs0.length);
+        assertTrue("CONFIG_LATITUDE matches", selection.get(COLUMN_CONFIG_LATITUDE).equals(selectionArgs0[0]));
+        assertTrue("CONFIG_LONGITUDE matches", selection.get(COLUMN_CONFIG_LONGITUDE).equals(selectionArgs0[1]));
+        assertTrue("CONFIG_ALTITUDE matches", selection.get(COLUMN_CONFIG_ALTITUDE).equals(selectionArgs0[2]));
+        assertTrue("CONFIG_CALCULATOR matches", selection.get(COLUMN_CONFIG_CALCULATOR).equals(selectionArgs0[3]));
     }
 
     @Test
