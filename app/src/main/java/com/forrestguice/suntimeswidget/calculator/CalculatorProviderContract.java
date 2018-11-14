@@ -22,8 +22,15 @@ package com.forrestguice.suntimeswidget.calculator;
  * CalculatorProviderContract
  * @version 0.1.0
  *
+ * Supported URIs have the form: "content://AUTHORITY/query"
+ * ..where [AUTHORITY] is "suntimeswidget.calculator.provider"
+ * ..where [query] is one of: QUERY_CONFIG (config),
+ *                            QUERY_SUN (sun), QUERY_SUNPOS (sunpos),
+ *                            QUERY_MOON (moon), QUERY_MOONPOS (moonpos), QUERY_MOONPHASE (moon/phases),
+ *                            QUERY_SEASONS (seasons)
+ *
  * ------------------------------------------------------------------------------------------------
- * CONFIG
+ * QUERY_CONFIG (config)
  *   The following URIs are supported:
  *       content://suntimeswidget.calculator.provider/config                         .. get the calculator config
  *
@@ -34,7 +41,7 @@ package com.forrestguice.suntimeswidget.calculator;
  *       COLUMN_CONFIG_TIMEZONE, COLUMN_CONFIG_APPWIDGETID
  *
  * ------------------------------------------------------------------------------------------------*
- * SUN
+ * QUERY_SUN (sun)
  *   The following URIs are supported:
  *       content://suntimeswiget.calculator.provider/sun                     .. get todays sun (rise, set, twilights)
  *       content://suntimeswiget.calculator.provider/sun/[millis]            .. get upcoming sun (timestamp)
@@ -51,7 +58,7 @@ package com.forrestguice.suntimeswidget.calculator;
  *       COLUMN_SUN_BLUE4_RISE,       COLUMN_SUN_BLUE4_SET
  *
  * ------------------------------------------------------------------------------------------------*
- * SUNPOS
+ * QUERY_SUNPOS (sunpos)
  *   The following URIs are supported:
  *       content://suntimeswiget.calculator.provider/sunpos                   .. get sun position right now
  *       content://suntimeswiget.calculator.provider/sunpos/[millis]          .. get sun position at timestamp
@@ -62,7 +69,7 @@ package com.forrestguice.suntimeswidget.calculator;
  *       COLUMN_SUNPOS_ISDAY, COLUMN_SUNPOS_DATE
  *
  * ------------------------------------------------------------------------------------------------*
- * MOON
+ * QUERY_MOON (moon)
  *   The following URIs are supported:
  *       content://suntimeswiget.calculator.provider/moon                     .. get todays moon (rise, set)
  *       content://suntimeswiget.calculator.provider/moon/[millis]            .. get upcoming moon (timestamp)
@@ -72,7 +79,7 @@ package com.forrestguice.suntimeswidget.calculator;
  *       COLUMN_MOON_RISE, COLUMN_MOON_SET
  *
  * ------------------------------------------------------------------------------------------------*
- * MOONPOS
+ * QUERY_MOONPOS (moonpos)
  *   The following URIs are supported:
  *       content://suntimeswiget.calculator.provider/moonpos                   .. get moon position right now
  *       content://suntimeswiget.calculator.provider/moonpos/[millis]          .. get moon position at timestamp
@@ -83,7 +90,7 @@ package com.forrestguice.suntimeswidget.calculator;
  *       COLUMN_MOONPOS_ILLUMINATION,
  *       COLUMN_MOONPOS_DATE
  * ------------------------------------------------------------------------------------------------*
- * MOON PHASES
+ * QUERY_MOONPHASE (moon/phases)
  *   The following URIs are supported:
  *       content://suntimeswiget.calculator.provider/moon/phases                     .. get upcoming moon phases
  *       content://suntimeswiget.calculator.provider/moon/phases/[millis]            .. get upcoming moon phases after date (timestamp)
@@ -94,7 +101,7 @@ package com.forrestguice.suntimeswidget.calculator;
  *       COLUMN_MOON_FULL, COLUMN_MOON_THIRD
  *
  * ------------------------------------------------------------------------------------------------
- * SOLSTICE / EQUINOX
+ * QUERY_SEASONS (seasons)
  *   The following URIs are supported:
  *       content://suntimeswidget.calculator.provider/seasons                         .. get vernal, summer, autumn, and winter dates for this year
  *       content://suntimeswidget.calculator.provider/seasons/[year]                  .. get vernal, summer, autumn, and winter dates for some year
@@ -134,7 +141,7 @@ package com.forrestguice.suntimeswidget.calculator;
  *             }
  *             cursor.moveToNext();
  *         }
- *         cursor.close();
+ *         cursor.close();  // don't forget to close the cursor when finished
  *     }
  *
  * ------------------------------------------------------------------------------------------------
@@ -181,15 +188,15 @@ public interface CalculatorProviderContract
     /**
      * CONFIG
      */
-    String COLUMN_CONFIG_APPTHEME = "config_apptheme";
-    String COLUMN_CONFIG_LOCALE = "config_locale";
-    String COLUMN_CONFIG_LATITUDE = "latitude";
-    String COLUMN_CONFIG_LONGITUDE = "longitude";
-    String COLUMN_CONFIG_ALTITUDE = "altitude";
-    String COLUMN_CONFIG_TIMEZONE = "timezone";
-    String COLUMN_CONFIG_APPWIDGETID = "appwidgetid";
-    String COLUMN_CONFIG_CALCULATOR = "calculator";
-    String COLUMN_CONFIG_CALCULATOR_FEATURES = "calculator_features";
+    String COLUMN_CONFIG_APPTHEME = "config_apptheme";                  // String (themeName)
+    String COLUMN_CONFIG_LOCALE = "config_locale";                      // String (localeCode)
+    String COLUMN_CONFIG_LATITUDE = "latitude";                         // String (dd)
+    String COLUMN_CONFIG_LONGITUDE = "longitude";                       // String (dd)
+    String COLUMN_CONFIG_ALTITUDE = "altitude";                         // String (meters)
+    String COLUMN_CONFIG_TIMEZONE = "timezone";                         // String (timezoneID)
+    String COLUMN_CONFIG_APPWIDGETID = "appwidgetid";                   // int
+    String COLUMN_CONFIG_CALCULATOR = "calculator";                     // String (calculatorName)
+    String COLUMN_CONFIG_CALCULATOR_FEATURES = "calculator_features";   // int[] (SuntimesCalculator.FEATURE flags)
 
     String QUERY_CONFIG = "config";
     String[] QUERY_CONFIG_PROJECTION = new String[] {
@@ -202,24 +209,24 @@ public interface CalculatorProviderContract
     /**
      * SUN
      */
-    String COLUMN_SUN_NOON = "solarnoon";
-    String COLUMN_SUN_ACTUAL_RISE = "sunrise";
-    String COLUMN_SUN_ACTUAL_SET = "sunset";
+    String COLUMN_SUN_NOON = "solarnoon";                   // long (timestamp)
+    String COLUMN_SUN_ACTUAL_RISE = "sunrise";              // long (timestamp)
+    String COLUMN_SUN_ACTUAL_SET = "sunset";                // long (timestamp)
 
-    String COLUMN_SUN_CIVIL_RISE = "civilrise";
-    String COLUMN_SUN_CIVIL_SET = "civilset";
-    String COLUMN_SUN_NAUTICAL_RISE = "nauticalrise";
-    String COLUMN_SUN_NAUTICAL_SET = "nauticalset";
-    String COLUMN_SUN_ASTRO_RISE = "astrorise";
-    String COLUMN_SUN_ASTRO_SET = "astroset";
+    String COLUMN_SUN_CIVIL_RISE = "civilrise";             // long (timestamp)
+    String COLUMN_SUN_CIVIL_SET = "civilset";               // long (timestamp)
+    String COLUMN_SUN_NAUTICAL_RISE = "nauticalrise";       // long (timestamp)
+    String COLUMN_SUN_NAUTICAL_SET = "nauticalset";         // long (timestamp)
+    String COLUMN_SUN_ASTRO_RISE = "astrorise";             // long (timestamp)
+    String COLUMN_SUN_ASTRO_SET = "astroset";               // long (timestamp)
 
-    String COLUMN_SUN_GOLDEN_MORNING = "goldenmorning";
-    String COLUMN_SUN_GOLDEN_EVENING = "goldenevening";
+    String COLUMN_SUN_GOLDEN_MORNING = "goldenmorning";     // long (timestamp)
+    String COLUMN_SUN_GOLDEN_EVENING = "goldenevening";     // long (timestamp)
 
-    String COLUMN_SUN_BLUE8_RISE = "blue8rise";      // morning blue hour
-    String COLUMN_SUN_BLUE4_RISE = "blue4rise";
-    String COLUMN_SUN_BLUE8_SET = "blue8set";        // evening blue hour
-    String COLUMN_SUN_BLUE4_SET = "blue4set";
+    String COLUMN_SUN_BLUE8_RISE = "blue8rise";             // long (timestamp)
+    String COLUMN_SUN_BLUE4_RISE = "blue4rise";             // long (timestamp)
+    String COLUMN_SUN_BLUE8_SET = "blue8set";               // long (timestamp)
+    String COLUMN_SUN_BLUE4_SET = "blue4set";               // long (timestamp)
 
     String QUERY_SUN = "sun";
     String[] QUERY_SUN_PROJECTION = new String[] {
@@ -236,12 +243,12 @@ public interface CalculatorProviderContract
     /**
      * SUNPOS
      */
-    String COLUMN_SUNPOS_AZ = "sunpos_azimuth";
-    String COLUMN_SUNPOS_ALT = "sunpos_altitude";
-    String COLUMN_SUNPOS_RA = "sunpos_ra";
-    String COLUMN_SUNPOS_DEC = "sunpos_dec";
-    String COLUMN_SUNPOS_ISDAY = "sunpos_isday";
-    String COLUMN_SUNPOS_DATE = "sunpos_date";
+    String COLUMN_SUNPOS_AZ = "sunpos_azimuth";            // double
+    String COLUMN_SUNPOS_ALT = "sunpos_altitude";          // double
+    String COLUMN_SUNPOS_RA = "sunpos_ra";                 // double
+    String COLUMN_SUNPOS_DEC = "sunpos_dec";               // double
+    String COLUMN_SUNPOS_ISDAY = "sunpos_isday";           // boolean
+    String COLUMN_SUNPOS_DATE = "sunpos_date";             // long (timestamp)
 
     String QUERY_SUNPOS = "sunpos";
     String[] QUERY_SUNPOS_PROJECTION = new String[] {
@@ -253,8 +260,8 @@ public interface CalculatorProviderContract
     /**
      * MOON
      */
-    String COLUMN_MOON_RISE = "moonrise";
-    String COLUMN_MOON_SET = "moonset";
+    String COLUMN_MOON_RISE = "moonrise";                  // long (timestamp)
+    String COLUMN_MOON_SET = "moonset";                    // long (timestamp)
 
     String QUERY_MOON = "moon";
     String[] QUERY_MOON_PROJECTION = new String[] { COLUMN_MOON_RISE, COLUMN_MOON_SET };
@@ -262,12 +269,12 @@ public interface CalculatorProviderContract
     /**
      * MOONPOS
      */
-    String COLUMN_MOONPOS_AZ = "moonpos_azimuth";
-    String COLUMN_MOONPOS_ALT = "moonpos_altitude";
-    String COLUMN_MOONPOS_RA = "moonpos_ra";
-    String COLUMN_MOONPOS_DEC = "moonpos_dec";
-    String COLUMN_MOONPOS_ILLUMINATION = "moonpos_illum";
-    String COLUMN_MOONPOS_DATE = "moonpos_date";
+    String COLUMN_MOONPOS_AZ = "moonpos_azimuth";          // double
+    String COLUMN_MOONPOS_ALT = "moonpos_altitude";        // double
+    String COLUMN_MOONPOS_RA = "moonpos_ra";               // double
+    String COLUMN_MOONPOS_DEC = "moonpos_dec";             // double
+    String COLUMN_MOONPOS_ILLUMINATION = "moonpos_illum";  // double [0,1]
+    String COLUMN_MOONPOS_DATE = "moonpos_date";           // long (timestamp)
 
     String QUERY_MOONPOS = "moonpos";
     String[] QUERY_MOONPOS_PROJECTION = new String[] {
@@ -279,10 +286,10 @@ public interface CalculatorProviderContract
     /**
      * MOONPHASE
      */
-    String COLUMN_MOON_NEW = "moonphase_new";
-    String COLUMN_MOON_FIRST = "moonphase_first";
-    String COLUMN_MOON_FULL = "moonphase_full";
-    String COLUMN_MOON_THIRD = "moonphase_third";
+    String COLUMN_MOON_NEW = "moonphase_new";               // long (timestamp)
+    String COLUMN_MOON_FIRST = "moonphase_first";           // long (timestamp)
+    String COLUMN_MOON_FULL = "moonphase_full";             // long (timestamp)
+    String COLUMN_MOON_THIRD = "moonphase_third";           // long (timestamp)
 
     String QUERY_MOONPHASE = "moon/phases";
     String[] QUERY_MOONPHASE_PROJECTION = new String[] {
@@ -292,11 +299,11 @@ public interface CalculatorProviderContract
     /**
      * SEASONS
      */
-    String COLUMN_SEASON_YEAR = "season_year";
-    String COLUMN_SEASON_VERNAL = "season_vernal";
-    String COLUMN_SEASON_SUMMER = "season_summer";
-    String COLUMN_SEASON_AUTUMN = "season_autumn";
-    String COLUMN_SEASON_WINTER = "season_winter";
+    String COLUMN_SEASON_YEAR = "season_year";               // int
+    String COLUMN_SEASON_VERNAL = "season_vernal";           // long (timestamp)
+    String COLUMN_SEASON_SUMMER = "season_summer";           // long (timestamp)
+    String COLUMN_SEASON_AUTUMN = "season_autumn";           // long (timestamp)
+    String COLUMN_SEASON_WINTER = "season_winter";           // long (timestamp)
 
     String QUERY_SEASONS = "seasons";
     String[] QUERY_SEASONS_PROJECTION = new String[] {
