@@ -40,3 +40,6 @@ proguard/
 # Android Studio Files
 .idea/workspace.xml
 .idea/vcs.xml
+.idea/assetWizardSettings.xml
+.idea/codeStyles/Project.xml
+.idea/caches/build_file_checksums.ser
