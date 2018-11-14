@@ -28,7 +28,19 @@ package com.forrestguice.suntimeswidget.calculator;
  *       content://suntimeswidget.calculator.provider/config                         .. get the calculator config
  *
  *   The result will be one row containing:
- *       [COLUMN_LATITUDE(double), COLUMN_LONGITUDE(double), COLUMN_ALTITUDE(double), COLUMN_TIMEZONE(String), COLUMN_LOCALE(String), COLUMN_APPTHEME(String) ]
+ *       COLUMN_CONFIG_LOCALE, COLUMN_CONFIG_APPTHEME,
+ *       COLUMN_CONFIG_CALCULATOR, COLUMN_CONFIG_CALCULATOR_FEATURES,
+ *       COLUMN_CONFIG_LATITUDE, COLUMN_CONFIG_LONGITUDE, COLUMN_CONFIG_ALTITUDE,
+ *       COLUMN_CONFIG_TIMEZONE, COLUMN_CONFIG_APPWIDGETID
+ *
+ * ------------------------------------------------------------------------------------------------*
+ * ISDAY
+ *   The following URIs are supported:
+ *       content://suntimeswiget.calculator.provider/isday                   .. sun above the horizon right now?
+ *       content://suntimeswiget.calculator.provider/sun/[millis]            .. sun above the horizon at datetime?
+ *
+ *   The result will be one row containing:
+ *       COLUMN_ISDAY, COLUMN_ISDAY_DATE
  *
  * ------------------------------------------------------------------------------------------------*
  * SUN
@@ -38,13 +50,26 @@ package com.forrestguice.suntimeswidget.calculator;
  *       content://suntimeswiget.calculator.provider/sun/[millis]-[millis]   .. get upcoming sun for range (timestamp)
  *
  *   The result will be one or more rows containing:
- *      COLUMN_SUN_ACTUAL_RISE, COLUMN_SUN_ACTUAL_SET,
- *      COLUMN_SUN_CIVIL_RISE, COLUMN_SUN_CIVIL_SET,
- *      COLUMN_SUN_NAUTICAL_RISE, COLUMN_SUN_NAUTICAL_SET,
- *      COLUMN_SUN_ASTRO_RISE, COLUMN_SUN_ASTRO_SET,COLUMN_SUN_NOON,
- *      COLUMN_SUN_GOLDEN_RISE, COLUMN_SUN_GOLDEN_SET,
- *      COLUMN_SUN_BLUE8_RISE, COLUMN_SUN_BLUE8_SET,
- *      COLUMN_SUN_BLUE4_RISE, COLUMN_SUN_BLUE4_SET
+ *       COLUMN_SUN_NOON,
+ *       COLUMN_SUN_ACTUAL_RISE,      COLUMN_SUN_ACTUAL_SET,
+ *       COLUMN_SUN_CIVIL_RISE,       COLUMN_SUN_CIVIL_SET,
+ *       COLUMN_SUN_NAUTICAL_RISE,    COLUMN_SUN_NAUTICAL_SET,
+ *       COLUMN_SUN_ASTRO_RISE,       COLUMN_SUN_ASTRO_SET,COLUMN_SUN_NOON,
+ *       COLUMN_SUN_GOLDEN_MORNING,   COLUMN_SUN_GOLDEN_EVENING,
+ *       COLUMN_SUN_BLUE8_RISE,       COLUMN_SUN_BLUE8_SET,
+ *       COLUMN_SUN_BLUE4_RISE,       COLUMN_SUN_BLUE4_SET
+ *
+ * ------------------------------------------------------------------------------------------------*
+ * SUNPOS
+ *   The following URIs are supported:
+ *       content://suntimeswiget.calculator.provider/sunpos                   .. get sun position right now
+ *       content://suntimeswiget.calculator.provider/sunpos/[millis]          .. get sun position at timestamp
+ *
+ *   The result will be one row containing:
+ *       COLUMN_SUNPOS_AZ, COLUMN_SUNPOS_ALT,
+ *       COLUMN_SUNPOS_RA, COLUMN_SUNPOS_DEC,
+ *       COLUMN_SUNPOS_DATE,
+ *       COLUMN_ISDAY (note: isday is supported here but not included in default projection)
  *
  * ------------------------------------------------------------------------------------------------*
  * MOON
@@ -54,8 +79,19 @@ package com.forrestguice.suntimeswidget.calculator;
  *       content://suntimeswiget.calculator.provider/moon/[millis]-[millis]   .. get upcoming moon for range (timestamp)
  *
  *   The result will be one or more rows containing:
- *       [COLUMN_MOON_RISE(long), COLUMN_MOON_SET(long)]
+ *       COLUMN_MOON_RISE, COLUMN_MOON_SET
  *
+ * ------------------------------------------------------------------------------------------------*
+ * MOONPOS
+ *   The following URIs are supported:
+ *       content://suntimeswiget.calculator.provider/moonpos                   .. get moon position right now
+ *       content://suntimeswiget.calculator.provider/moonpos/[millis]          .. get moon position at timestamp
+ *
+ *   The result will be one row containing:
+ *       COLUMN_MOONPOS_AZ, COLUMN_MOONPOS_ALT,
+ *       COLUMN_MOONPOS_RA, COLUMN_MOONPOS_DEC,
+ *       COLUMN_MOONPOS_ILLUMINATION,
+ *       COLUMN_MOONPOS_DATE
  * ------------------------------------------------------------------------------------------------*
  * MOON PHASES
  *   The following URIs are supported:
@@ -64,7 +100,8 @@ package com.forrestguice.suntimeswidget.calculator;
  *       content://suntimeswiget.calculator.provider/moon/phases/[millis]-[millis]   .. get upcoming moon phases for range (timestamp)
  *
  *   The result will be one or more rows containing:
- *       [COLUMN_MOON_NEW(long), COLUMN_MOON_FIRST(long), COLUMN_MOON_FULL(long), COLUMN_MOON_THIRD(long)]
+ *       COLUMN_MOON_NEW, COLUMN_MOON_FIRST,
+ *       COLUMN_MOON_FULL, COLUMN_MOON_THIRD
  *
  * ------------------------------------------------------------------------------------------------
  * SOLSTICE / EQUINOX
@@ -74,20 +111,36 @@ package com.forrestguice.suntimeswidget.calculator;
  *       content://suntimeswidget.calculator.provider/seasons/[year]-[year]           .. get vernal, summer, autumn, and winter dates for range
  *
  *   The result will be one or more rows containing:
- *       [COLUMN_YEAR(int), COLUMM_SEASON_VERNAL(long), COLUMN_SEASON_SUMMER(long), COLUMN_SEASON_AUTUMN(long), COLUMN_SEASON_WINTER(long)]
+ *       COLUMM_SEASON_VERNAL, COLUMN_SEASON_SUMMER,
+ *       COLUMN_SEASON_AUTUMN, COLUMN_SEASON_WINTER, COLUMN_YEAR
  *
  * ------------------------------------------------------------------------------------------------
- * Example 1:
- *     String[] projection = new String[] {COLUMN_MOON_NEW, COLUMN_MOON_FIRST, COLUMN_MOON_FULL, COLUMN_MOON_THIRD };*
- *     Uri uri = Uri.parse("content://" + AUTHORITY + "/" + QUERY_MOONPHASE + "/" + startDate.getTimeInMillis() + "-" + endDate.getTimeInMillis());*
+ * Example: Date of the Full Moon
+ *
+ *     // The projection specifies the data (columns) to be requested.
+ *     // Pass a null projection to use the default (full projection), or construct a projection containing specific columns...
+ *     String[] projection = new String[] { COLUMN_MOON_FULL };   // full moon only
+ *
+ *     // Create a URI pointing to the provider (e.g. "content://suntimeswiget.calculator.provider/moon/phases"
+ *     // Some URI's (like "moon/phases") support timestamps (milliseconds), or timestamp-timestamp ranges.
+ *     Uri uri = Uri.parse("content://" + AUTHORITY + "/" + QUERY_MOONPHASE + "/" + startDate.getTimeInMillis() + "-" + endDate.getTimeInMillis());    // get all full moons between startDate and endDate
+ *
+ *     // Use ContentResolver.query to get a cursor to the data..
+ *     ContentResolver resolver = context.getContentResolver();
  *     Cursor cursor = resolver.query(uri, projection, null, null, null);
- *     if (cursor != null {
- *         cursor.moveToFirst();
- *         while (!cursor.isAfterLast()) {
- *             Long fullMoonTimeMillis = cursor.getLong(cursor.getColumnIndex(COLUMN_MOON_FULL));   // possibly null..
- *             if (fullMoonTimeMillis != null) {                                                    // if column is not part of or is missing from the projection
+ *     if (cursor != null
+ *     {
+ *         cursor.moveToFirst();                     // Expect at least one row, but a cursor will contain multiple rows if a timestamp-range is used.
+ *         while (!cursor.isAfterLast())
+ *         {
+ *             // each column has its own type; time-based columns are Long (timestamp)
+ *             Long fullMoonTimeMillis = cursor.getLong(cursor.getColumnIndex(COLUMN_MOON_FULL));
+ *
+ *             // always test result for null before trying to use it..
+ *             if (fullMoonTimeMillis != null) {             // might be null if column is not part of or is missing from the projection
  *                 Calendar fullMoonCalendar = Calendar.getInstance();
-     *             fullMoonCalendar.setTimeInMillis(fullMoonTimeMillis); *
+ *                 fullMoonCalendar.setTimeInMillis(fullMoonTimeMillis);
+ *                 // ... do something with fullMoonCalendar
  *             }
  *             cursor.moveToNext();
  *         }
@@ -95,33 +148,41 @@ package com.forrestguice.suntimeswidget.calculator;
  *     }
  *
  * ------------------------------------------------------------------------------------------------
- * WIDGETS
- *   To specify a widget configuration you can provide a `selection` arg that specifies the
- *   appWidgetID. If omitted all URIs default to 0 (the app configuration).
+ * APP & WIDGETS
+ *   To specify a widget configuration you can provide a `selection` arg with the appWidgetID.
+ *   All URIs default to 0 (the app configuration) if the selection is omitted.
  *
- *     String[] projection = ...   // see example
- *     Uri uri = ...
- *
- *     int appWidgetID = 1000;
+ *     int appWidgetID = 1000;   // use config for widget 1000
  *     String selection = COLUMN_CONFIG_APPWIDGETID + "=?";
  *     String[] selectionArgs = new String[] { appWidgetID };
  *
+ *     String[] projection = ...
+ *     Uri uri = ...
  *     Cursor cursor = resolver.query(uri, projection, selection, selectionArgs, null);
  *     if (cursor != null) {
- *         // see example 1
+ *         ...
  *     }
  *
- * ------------------------------------------------------------------------------------------------
- * LOCATION & TIMEZONE
- *   It is also possible to override the location and timezone using `selection` args.
+ *  Note: Calculators are cached by appWidgetID to improve performance when making repeated calls.
  *
- *     String[] projection = ...   // see example
- *     Uri uri = ...
- *     String selection = COLUMN_CONFIG_LATITUDE + "=? AND "
+ * ------------------------------------------------------------------------------------------------
+ * LOCATION, TIMEZONE, CALCULATOR (OVERRIDES)
+ *   It is also possible to override the location, timezone, or calculator using `selection` args.
+ *
+ *     String selection = COLUMN_CONFIG_CALCULATOR +=? AND "      // any combination of these CONFIG_COLUMNS
+ *                      + COLUMN_CONFIG_LATITUDE + "=? AND "
  *                      + COLUMN_CONFIG_LONGITUDE + "=? AND "
  *                      + COLUMN_CONFIG_TIMEZONE + "=?";
- *     String[] selectionArgs = new String[] {"33.45", "-111.94", "US/Arizona"};
+ *     String[] selectionArgs = new String[] {"time4a-cc", "33.45", "-111.94", "US/Arizona"};
+ *
+ *     String[] projection = ...
+ *     Uri uri = ...
  *     Cursor cursor = resolver.query(uri, projection, selection, selectionArgs, null);
+ *     if (cursor != null) {
+ *         ...
+ *     }
+ *
+ *   Note: Caching doesn't occur when overriding the configuration; a new instance will be created for each query.
  */
 public interface CalculatorProviderContract
 {
