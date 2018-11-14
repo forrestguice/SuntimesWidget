@@ -867,16 +867,22 @@ public class CalculatorProvider extends ContentProvider
      * @param selection a completed selection string (@see processSelectionArgs)
      * @return a WidgetSettings.Location created from the selection (or null if selection is missing COLUMN_CONFIG_LATITUDE or COLUMN_CONFIG_LONGITUDE)
      */
-    public static WidgetSettings.Location processSelection_location(HashMap<String,String> selection)
+    @Nullable
+    public static WidgetSettings.Location processSelection_location(@NonNull HashMap<String,String> selection)
     {
         WidgetSettings.Location location = null;
         if (selection.containsKey(COLUMN_CONFIG_LATITUDE) || selection.containsKey(COLUMN_CONFIG_LONGITUDE))
         {
-            boolean hasAltitude = selection.containsKey(COLUMN_CONFIG_ALTITUDE);
-            location = (hasAltitude) ? new WidgetSettings.Location("", selection.get(COLUMN_CONFIG_LATITUDE), selection.get(COLUMN_CONFIG_LONGITUDE), selection.get(COLUMN_CONFIG_ALTITUDE))
-                    : new WidgetSettings.Location("", selection.get(COLUMN_CONFIG_LATITUDE), selection.get(COLUMN_CONFIG_LONGITUDE));
-            if (hasAltitude) {
-                location.setUseAltitude(true);
+            String value_latitude = selection.get(COLUMN_CONFIG_LATITUDE);
+            String value_longitude = selection.get(COLUMN_CONFIG_LONGITUDE);
+            if (value_latitude != null && value_longitude != null)
+            {
+                boolean hasAltitude = selection.containsKey(COLUMN_CONFIG_ALTITUDE);
+                location = (hasAltitude) ? new WidgetSettings.Location("", value_latitude, value_longitude, selection.get(COLUMN_CONFIG_ALTITUDE))
+                        : new WidgetSettings.Location("", value_latitude, value_longitude);
+                if (hasAltitude) {
+                    location.setUseAltitude(true);
+                }
             }
         }
         return location;
@@ -888,7 +894,7 @@ public class CalculatorProvider extends ContentProvider
      * @param rangeSegment startMillis-endMillis
      * @return a Calendar[2] containing [0]startDate, [1]endDate.
      */
-    public static Calendar[] parseDateRange(String rangeSegment)
+    public static Calendar[] parseDateRange(@NonNull String rangeSegment)
     {
         Calendar[] retValue = new Calendar[2];
         String[] rangeString = rangeSegment.split("-");
@@ -916,8 +922,9 @@ public class CalculatorProvider extends ContentProvider
     /**
      * parseYearRange
      * A query helper method; get startDate and endDate from a "startYear-endYear" range value.
+     * Note: adds 1 year to the endDate to make the range inclusive.
      * @param rangeSegment startYear-endYear (e.g. 2018-2020)
-     * @return a Calendar[2] containing [0]startDate, [1]endDate.
+     * @return a Calendar[2] containing [0](startDate), [1](endDate + 1yr).
      */
     public static Calendar[] parseYearRange(String rangeSegment)
     {

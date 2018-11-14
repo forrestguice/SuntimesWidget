@@ -29,6 +29,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
 
+import com.forrestguice.suntimeswidget.calendar.SuntimesCalendarProvider;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -40,6 +41,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -490,6 +492,119 @@ public class CalculatorProviderTest
         }
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // Query Helpers
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @Test
+    public void test_processSelectionArgs()
+    {
+        // TODO
+    }
+
+    @Test
+    public void test_processSelection()
+    {
+        // TODO
+    }
+
+    @Test
+    public void test_processSelection_location()
+    {
+        String[][] TEST_LOCATION = new String[][] { {"33", "-112", "330"},
+                                                    {null, "180", null},
+                                                    {"40", null, null}
+        };
+        for (String[] location_parts : TEST_LOCATION)
+        {
+            assertTrue("TEST_LOCATION should contain 3 parts!", location_parts.length == 3);
+            HashMap<String,String> selection = createSelection(location_parts);
+            WidgetSettings.Location location = CalculatorProvider.processSelection_location(selection);
+            if (location_parts[0] == null || location_parts[1] == null) {
+                assertTrue("Location should be null (missing latitude or longitude)", location == null);
+
+            } else {
+                assertTrue("Location should be non-null", location != null);
+                assertTrue("Location latitude should match!", location.getLatitude().equals(location_parts[0]));
+                assertTrue("Location longitude should match!", location.getLongitude().equals(location_parts[1]));
+            }
+        }
+    }
+    private HashMap<String,String> createSelection(String[] location)
+    {
+        HashMap<String,String> selection = new HashMap<>();
+        if (location[0] != null) {
+            selection.put(COLUMN_CONFIG_LATITUDE, location[0]);
+        }
+        if (location[1] != null) {
+            selection.put(COLUMN_CONFIG_LONGITUDE, location[1]);
+        }
+        if (location[2] != null) {
+            selection.put(COLUMN_CONFIG_ALTITUDE, location[2]);
+        }
+        return selection;
+    }
+
+    @Test
+    public void test_parseDateRange()
+    {
+        Calendar start0 = Calendar.getInstance();
+        Calendar end0 = Calendar.getInstance();
+        end0.add(Calendar.DAY_OF_MONTH, 1);
+        String segment0 = start0.getTimeInMillis() + "-" + end0.getTimeInMillis();
+
+        Calendar[] range0 = CalculatorProvider.parseDateRange(segment0);
+        assertTrue("range should be non-null", range0 != null);
+        assertTrue("range should have length of 2", range0.length == 2);
+        assertTrue("startDate should be non-null", range0[0] != null);
+        assertTrue("endDate should be non-null", range0[1] != null);
+        assertTrue("startDate should match", range0[0].getTimeInMillis() == start0.getTimeInMillis());
+        assertTrue("endDate should match (+1000)", range0[1].getTimeInMillis() == (end0.getTimeInMillis() + 1000));
+
+        // TODO: test against invalid ranges
+    }
+
+    @Test
+    public void test_parseYearRange()
+    {
+        Calendar now = Calendar.getInstance();
+        String[] TEST_SEGMENTS = new String[] {
+                "2018-2020",            // valid
+                "2018-2010",            // order
+                "2018-",                // missing parts
+                "-2020",                // missing parts
+                "-",                    // missing parts
+                "",                     // missing parts
+                "number-number"         // not-a-number
+        };
+
+        for (String segment : TEST_SEGMENTS)
+        {
+            int startYear = now.get(Calendar.YEAR);
+            int endYear = startYear;
+            String[] parts = segment.split("-");
+            if (parts.length == 2) {
+                try {
+                    startYear = Integer.parseInt(parts[0]);
+                    endYear = Integer.parseInt(parts[1]) + 1;
+
+                } catch (NumberFormatException e) {
+                    startYear = now.get(Calendar.YEAR);
+                    endYear = now.get(Calendar.YEAR);
+                }
+            }
+
+            Calendar[] range = CalculatorProvider.parseYearRange(segment);
+            assertTrue("range should be non-null", range != null);
+            assertTrue("range should have length of 2", range.length == 2);
+            assertTrue("startYear should be non-null", range[0] != null);
+            assertTrue("endYear should be non-null", range[1] != null);
+            assertTrue(segment + " :: startYear should match: " + range[0].get(Calendar.YEAR) + " != " + startYear, range[0].get(Calendar.YEAR) == startYear);
+            assertTrue(segment + " :: endYear should match: " + range[1].get(Calendar.YEAR) + " != " + endYear, range[1].get(Calendar.YEAR) == endYear);
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void test_cursorHasColumns(@NonNull String tag, @Nullable Cursor cursor, @NonNull String[] projection)
