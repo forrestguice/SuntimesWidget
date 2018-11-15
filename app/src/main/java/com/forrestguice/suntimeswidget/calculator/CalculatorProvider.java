@@ -37,18 +37,23 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.TimeZone;
 
+import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.AUTHORITY;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_ALTITUDE;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_APPTHEME;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_APPWIDGETID;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_APP_THEME;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_APP_VERSION;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_APP_VERSION_CODE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_CALCULATOR;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_CALCULATOR_FEATURES;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LATITUDE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LOCALE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LONGITUDE;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_PROVIDER_VERSION;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_PROVIDER_VERSION_CODE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_TIMEZONE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_ALT;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_AZ;
@@ -323,12 +328,28 @@ public class CalculatorProvider extends ContentProvider
                 {
                     switch (columns[i])
                     {
+                        case COLUMN_CONFIG_APP_VERSION:
+                            row[i] = BuildConfig.VERSION_NAME + (BuildConfig.DEBUG ? " [" + BuildConfig.BUILD_TYPE + "]" : "");
+                            break;
+
+                        case COLUMN_CONFIG_APP_VERSION_CODE:
+                            row[i] = BuildConfig.VERSION_CODE;
+                            break;
+
+                        case COLUMN_CONFIG_PROVIDER_VERSION:
+                            row[i] = CalculatorProviderContract.VERSION_NAME;
+                            break;
+
+                        case COLUMN_CONFIG_PROVIDER_VERSION_CODE:
+                            row[i] = CalculatorProviderContract.VERSION_CODE;
+                            break;
+
                         case COLUMN_CONFIG_LOCALE:
                             AppSettings.LocaleMode localeMode = AppSettings.loadLocaleModePref(context);
                             row[i] = ((localeMode == AppSettings.LocaleMode.SYSTEM_LOCALE) ? null : AppSettings.loadLocalePref(context));
                             break;
 
-                        case COLUMN_CONFIG_APPTHEME:
+                        case COLUMN_CONFIG_APP_THEME:
                             row[i] = AppSettings.loadThemePref(context);
                             break;
 

@@ -29,6 +29,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
 
+import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.calendar.SuntimesCalendarProvider;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -49,13 +50,17 @@ import java.util.TimeZone;
 
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.AUTHORITY;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_ALTITUDE;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_APPTHEME;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_APPWIDGETID;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_APP_THEME;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_APP_VERSION;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_APP_VERSION_CODE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_CALCULATOR;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_CALCULATOR_FEATURES;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LATITUDE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LOCALE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LONGITUDE;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_PROVIDER_VERSION;
+import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_PROVIDER_VERSION_CODE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_TIMEZONE;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_ALT;
 import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_AZ;
@@ -161,7 +166,7 @@ public class CalculatorProviderTest
         assertTrue("default projection contains COLUMN_CONFIG_CALCULATOR", projection.contains(COLUMN_CONFIG_CALCULATOR));
         assertTrue("default projection contains COLUMN_CONFIG_CALCULATOR_FEATURES", projection.contains(COLUMN_CONFIG_CALCULATOR_FEATURES));
         assertTrue("default projection contains COLUMN_CONFIG_APPWIDGETID", projection.contains(COLUMN_CONFIG_APPWIDGETID));
-        assertTrue("default projection contains COLUMN_CONFIG_APPTHEME", projection.contains(COLUMN_CONFIG_APPTHEME));
+        assertTrue("default projection contains COLUMN_CONFIG_APPTHEME", projection.contains(COLUMN_CONFIG_APP_THEME));
         assertTrue("default projection contains COLUMN_CONFIG_LOCALE", projection.contains(COLUMN_CONFIG_LOCALE));
         assertTrue("default projection contains COLUMN_CONFIG_LATITUDE", projection.contains(COLUMN_CONFIG_LATITUDE));
         assertTrue("default projection contains COLUMN_CONFIG_LONGITUDE", projection.contains(COLUMN_CONFIG_LONGITUDE));
@@ -187,6 +192,11 @@ public class CalculatorProviderTest
         test_cursorHasColumns("QUERY_CONFIG", cursor, projection);
         assertTrue("QUERY_CONFIG should return one row.", cursor.getCount() == 1);
 
+        assertTrue("COLUMN_CONFIG_APP_VERSION should be " + BuildConfig.VERSION_NAME, cursor.getString(cursor.getColumnIndex(COLUMN_CONFIG_APP_VERSION)).startsWith(BuildConfig.VERSION_NAME));
+        assertTrue("COLUMN_CONFIG_APP_VERSION_CODE should be " + BuildConfig.VERSION_CODE,cursor.getInt(cursor.getColumnIndex(COLUMN_CONFIG_APP_VERSION_CODE)) == BuildConfig.VERSION_CODE);
+        assertTrue("COLUMN_CONFIG_PROVIDER_VERSION should be " + CalculatorProviderContract.VERSION_NAME, cursor.getString(cursor.getColumnIndex(COLUMN_CONFIG_PROVIDER_VERSION)).equals(CalculatorProviderContract.VERSION_NAME));
+        assertTrue("COLUMN_CONFIG_PROVIDER_VERSION_CODE should be " +  CalculatorProviderContract.VERSION_CODE,cursor.getInt(cursor.getColumnIndex(COLUMN_CONFIG_PROVIDER_VERSION_CODE)) == CalculatorProviderContract.VERSION_CODE);
+
         int appWidgetID = 0;
         SuntimesCalculatorDescriptor descriptor = WidgetSettings.loadCalculatorModePref(mockContext, appWidgetID);
         assertTrue("COLUMN_CONFIG_CALCULATOR should be " + descriptor.getName(), descriptor.getName().equals(cursor.getString(cursor.getColumnIndex(COLUMN_CONFIG_CALCULATOR))));
@@ -201,7 +211,7 @@ public class CalculatorProviderTest
         assertTrue("COLUMN_CONFIG_TIMEZONE should be " + timezone, cursor.getString(cursor.getColumnIndex(COLUMN_CONFIG_TIMEZONE)).equals(timezone));
 
         String appTheme = AppSettings.loadThemePref(mockContext);
-        assertTrue("COLUMN_CONFIG_APPTHEME should be " + appTheme, cursor.getString(cursor.getColumnIndex(COLUMN_CONFIG_APPTHEME)).equals(appTheme));
+        assertTrue("COLUMN_CONFIG_APPTHEME should be " + appTheme, cursor.getString(cursor.getColumnIndex(COLUMN_CONFIG_APP_THEME)).equals(appTheme));
 
         AppSettings.LocaleMode localeMode = AppSettings.loadLocaleModePref(mockContext);
         String locale = ((localeMode == AppSettings.LocaleMode.SYSTEM_LOCALE) ? null : AppSettings.loadLocalePref(mockContext));

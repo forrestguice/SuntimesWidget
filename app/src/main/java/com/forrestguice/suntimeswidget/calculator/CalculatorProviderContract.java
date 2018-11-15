@@ -35,6 +35,8 @@ package com.forrestguice.suntimeswidget.calculator;
  *       content://suntimeswidget.calculator.provider/config                         .. get the calculator config
  *
  *   The result will be one row containing:
+ *       COLUMN_CONFIG_APP_VERSION, COLUMN_CONFIG_APP_VERSION_CODE,
+ *       COLUMN_CONFIG_PROVIDER_VERSION, COLUMN_CONFIG_PROVIDER_VERSION_CODE,
  *       COLUMN_CONFIG_LOCALE, COLUMN_CONFIG_APPTHEME,
  *       COLUMN_CONFIG_CALCULATOR, COLUMN_CONFIG_CALCULATOR_FEATURES,
  *       COLUMN_CONFIG_LATITUDE, COLUMN_CONFIG_LONGITUDE, COLUMN_CONFIG_ALTITUDE,
@@ -184,23 +186,31 @@ package com.forrestguice.suntimeswidget.calculator;
 public interface CalculatorProviderContract
 {
     String AUTHORITY = "suntimeswidget.calculator.provider";
+    String VERSION_NAME = "v0.1.0";
+    int VERSION_CODE = 0;
 
     /**
      * CONFIG
      */
-    String COLUMN_CONFIG_APPTHEME = "config_apptheme";                  // String (themeName)
-    String COLUMN_CONFIG_LOCALE = "config_locale";                      // String (localeCode)
-    String COLUMN_CONFIG_LATITUDE = "latitude";                         // String (dd)
-    String COLUMN_CONFIG_LONGITUDE = "longitude";                       // String (dd)
-    String COLUMN_CONFIG_ALTITUDE = "altitude";                         // String (meters)
-    String COLUMN_CONFIG_TIMEZONE = "timezone";                         // String (timezoneID)
-    String COLUMN_CONFIG_APPWIDGETID = "appwidgetid";                   // int
-    String COLUMN_CONFIG_CALCULATOR = "calculator";                     // String (calculatorName)
-    String COLUMN_CONFIG_CALCULATOR_FEATURES = "calculator_features";   // int[] (SuntimesCalculator.FEATURE flags)
+    String COLUMN_CONFIG_PROVIDER_VERSION = "config_provider_version";             // String (provider version string)
+    String COLUMN_CONFIG_PROVIDER_VERSION_CODE = "config_pvodier_version_code";    // int (provider version code)
+    String COLUMN_CONFIG_APP_VERSION = "config_app_version";                       // String (app version string)
+    String COLUMN_CONFIG_APP_VERSION_CODE = "config_app_version_code";             // int (app version code)
+    String COLUMN_CONFIG_APP_THEME = "config_app_theme";                           // String (themeName)
+    String COLUMN_CONFIG_LOCALE = "config_locale";                                 // String (localeCode)
+    String COLUMN_CONFIG_LATITUDE = "latitude";                                    // String (dd)
+    String COLUMN_CONFIG_LONGITUDE = "longitude";                                  // String (dd)
+    String COLUMN_CONFIG_ALTITUDE = "altitude";                                    // String (meters)
+    String COLUMN_CONFIG_TIMEZONE = "timezone";                                    // String (timezoneID)
+    String COLUMN_CONFIG_APPWIDGETID = "appwidgetid";                              // int
+    String COLUMN_CONFIG_CALCULATOR = "calculator";                                // String (calculatorName)
+    String COLUMN_CONFIG_CALCULATOR_FEATURES = "calculator_features";              // int[] (SuntimesCalculator.FEATURE flags)
 
     String QUERY_CONFIG = "config";
     String[] QUERY_CONFIG_PROJECTION = new String[] {
-            COLUMN_CONFIG_LOCALE, COLUMN_CONFIG_APPTHEME,
+            COLUMN_CONFIG_APP_VERSION, COLUMN_CONFIG_APP_VERSION_CODE,
+            COLUMN_CONFIG_PROVIDER_VERSION, COLUMN_CONFIG_PROVIDER_VERSION_CODE,
+            COLUMN_CONFIG_LOCALE, COLUMN_CONFIG_APP_THEME,
             COLUMN_CONFIG_CALCULATOR, COLUMN_CONFIG_CALCULATOR_FEATURES,
             COLUMN_CONFIG_LATITUDE, COLUMN_CONFIG_LONGITUDE, COLUMN_CONFIG_ALTITUDE,
             COLUMN_CONFIG_TIMEZONE, COLUMN_CONFIG_APPWIDGETID
