@@ -220,6 +220,9 @@
     <string name="configLabel_general_showHours">Show Hours</string>        <!-- checkbox label -->
     <string name="configLabel_general_showHours_summary">Include hours and minutes in time spans greater than a day.</string>    <!-- checkbox label -->
 
+    <string name="configLabel_general_observerheight">Object Height</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_observerheight_summary">The height used to calculate shadow length (meters).</string>        <!-- checkbox label -->  <!-- TODO -->
+
     <!-- Widget Setting: advanced / experimental -->
     <string name="configLabel_advanced">Advanced Settings</string>                        <!-- group title -->
     <string name="configLabel_experimental">Experimental Settings</string>                <!-- group title -->
@@ -1161,6 +1164,7 @@
     <string name="def_appwidget_0_general_showseconds" translatable="false">false</string>
     <string name="def_appwidget_0_general_showtimedate" translatable="false">true</string>
     <string name="def_appwidget_0_general_trackingmode" translatable="false">SOONEST</string>
+    <string name="def_appwidget_0_general_observerheight" translatable="false">1.8288</string>
 
     <string name="def_app_calendars_enabled" translatable="false">false</string>
     <string name="def_app_plugins_enabled" translatable="false">false</string>

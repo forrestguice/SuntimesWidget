@@ -439,6 +439,19 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             WidgetSettings.saveShowHoursPref(this, 0, sharedPreferences.getBoolean(key, WidgetSettings.PREF_DEF_GENERAL_SHOWHOURS));
             return;
         }
+
+        if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_OBSERVERHEIGHT))
+        {
+            // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
+            // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
+            try {
+                WidgetSettings.saveObserverHeightPref(this, 0,
+                        Float.parseFloat(sharedPreferences.getString(key, WidgetSettings.PREF_DEF_GENERAL_OBSERVERHEIGHT + "")));
+            } catch (NumberFormatException e) {
+                Log.e(LOG_TAG, "onPreferenceChangeD: Failed to persist observerHeight: bad value!" + e);
+            }
+            return;
+        }
     }
 
     protected void updateLocale()
