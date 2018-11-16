@@ -269,7 +269,7 @@ public class LightMapDialog extends DialogFragment
     private CharSequence styleLengthText(@NonNull Context context, double length)
     {
         NumberFormat formatter = NumberFormat.getInstance();
-        formatter.setMinimumFractionDigits(2);
+        formatter.setMinimumFractionDigits(0);
         formatter.setMaximumFractionDigits(2);
         return formatter.format(length) + SuntimesUtils.strSpace + context.getString(R.string.units_meters_short);
     }
@@ -363,9 +363,12 @@ public class LightMapDialog extends DialogFragment
             if (sunShadowLength != null && sunShadowObj != null && calculator != null && context != null)
             {
                 double objectHeight = WidgetSettings.loadObserverHeightPref(context, 0);
-                double shadowLength = calculator.getShadowLength(objectHeight, data.now());
-                sunShadowObj.setText(styleLengthText(context, objectHeight));
-                sunShadowLength.setText((shadowLength >= 0) ? styleLengthText(context, shadowLength) : "");
+                if (objectHeight > 0)
+                {
+                    double shadowLength = calculator.getShadowLength(objectHeight, data.now());
+                    sunShadowObj.setText(styleLengthText(context, objectHeight));
+                    sunShadowLength.setText((shadowLength >= 0) ? styleLengthText(context, shadowLength) : "");
+                }
             }
 
             showSunPosition(currentPosition != null);
