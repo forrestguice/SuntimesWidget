@@ -29,11 +29,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -61,6 +63,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.io.File;
 import java.security.InvalidParameterException;
+import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -602,6 +605,46 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             initPref_calculator(context, moonCalculatorPref, new int[] {SuntimesCalculator.FEATURE_MOON}, WidgetSettings.PREF_DEF_GENERAL_CALCULATOR_MOON);
             loadPref_calculator(context, moonCalculatorPref, "moon");
         }
+
+        String key_observerHeight = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_GENERAL + WidgetSettings.PREF_KEY_GENERAL_OBSERVERHEIGHT;
+        EditTextPreference observerHeightPref = (EditTextPreference) fragment.findPreference(key_observerHeight);
+        if (observerHeightPref != null)
+        {
+            double observerHeight = WidgetSettings.loadObserverHeightPref(context, 0);
+            observerHeightPref.setSummary(formatObserverHeightSummary(context, observerHeight));
+            observerHeightPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
+            {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue)
+                {
+                    try {
+                        double doubleValue = Double.parseDouble((String)newValue);
+                        if (doubleValue > 0)
+                        {
+                            preference.setSummary(formatObserverHeightSummary(preference.getContext(), doubleValue));
+                            return true;
+
+                        } else return false;
+                    } catch (NumberFormatException e) {
+                        return false;
+                    }
+                }
+            });
+        }
+    }
+
+    private static CharSequence formatObserverHeightSummary(@NonNull Context context, double observerHeight)
+    {
+        NumberFormat formatter = NumberFormat.getInstance();
+        formatter.setMinimumFractionDigits(0);
+        formatter.setMaximumFractionDigits(2);
+
+        int h = ((observerHeight > 1) ? (int)Math.ceil(observerHeight)
+                : (observerHeight < 1) ? 2 : 1);
+
+        Resources resources = context.getResources();
+        String observerHeightDisplay = resources.getQuantityString(R.plurals.units_meters_long, h, formatter.format(observerHeight));
+        return context.getString(R.string.configLabel_general_observerheight_summary, observerHeightDisplay);
     }
 
 
