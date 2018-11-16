@@ -92,11 +92,11 @@ package com.forrestguice.suntimeswidget.calculator;
  *       COLUMN_MOONPOS_ILLUMINATION,
  *       COLUMN_MOONPOS_DATE
  * ------------------------------------------------------------------------------------------------*
- * QUERY_MOONPHASE (moon/phases)
+ * QUERY_MOONPHASE (moonphases)
  *   The following URIs are supported:
- *       content://suntimeswiget.calculator.provider/moon/phases                     .. get upcoming moon phases
- *       content://suntimeswiget.calculator.provider/moon/phases/[millis]            .. get upcoming moon phases after date (timestamp)
- *       content://suntimeswiget.calculator.provider/moon/phases/[millis]-[millis]   .. get upcoming moon phases for range (timestamp)
+ *       content://suntimeswiget.calculator.provider/moonphases                     .. get upcoming moon phases
+ *       content://suntimeswiget.calculator.provider/moonphases/[millis]            .. get upcoming moon phases after date (timestamp)
+ *       content://suntimeswiget.calculator.provider/moonphases/[millis]-[millis]   .. get upcoming moon phases for range (timestamp)
  *
  *   The result will be one or more rows containing:
  *       COLUMN_MOON_NEW, COLUMN_MOON_FIRST,
@@ -301,7 +301,7 @@ public interface CalculatorProviderContract
     String COLUMN_MOON_FULL = "moonphase_full";             // long (timestamp)
     String COLUMN_MOON_THIRD = "moonphase_third";           // long (timestamp)
 
-    String QUERY_MOONPHASE = "moon/phases";
+    String QUERY_MOONPHASE = "moonphases";
     String[] QUERY_MOONPHASE_PROJECTION = new String[] {
             COLUMN_MOON_NEW, COLUMN_MOON_FIRST, COLUMN_MOON_FULL, COLUMN_MOON_THIRD
     };
