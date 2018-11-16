@@ -141,12 +141,38 @@
             app:layout_constraintTop_toTopOf="@+id/info_sun_azimuth_atnoon"
             app:layout_constraintEnd_toEndOf="parent" android:background="@color/transparent" android:visibility="invisible" />
 
+        <LinearLayout
+            android:id="@+id/info_shadow_layout"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center"
+            android:layout_marginLeft="2dp" android:layout_marginStart="2dp"
+            android:layout_marginTop="6dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/info_sun_azimuth_current_label">
+
+            <TextView style="@style/SunsetTimeTextView"
+                android:id="@+id/info_shadow_height"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:gravity="center" tools:text="6 m" />
+
+            <ImageView
+                android:id="@+id/info_shadow_icon"
+                android:src="?attr/icActionShadow"
+                android:layout_width="24dp" android:layout_height="24dp" />
+
+            <TextView style="@style/SunsetTimeTextView"
+                android:id="@+id/info_shadow_length"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:gravity="center" tools:text="3 m" />
+
+        </LinearLayout>
+
     </android.support.constraint.ConstraintLayout>
 
     <com.forrestguice.suntimeswidget.LightMapView
         android:id="@+id/info_time_lightmap"
         android:layout_width="0dp" android:layout_height="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintTop_toBottomOf="@+id/info_sun_layout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
