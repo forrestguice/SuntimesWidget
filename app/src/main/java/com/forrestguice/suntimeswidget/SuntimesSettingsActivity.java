@@ -610,43 +610,10 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         EditTextPreference observerHeightPref = (EditTextPreference) fragment.findPreference(key_observerHeight);
         if (observerHeightPref != null)
         {
-            double observerHeight = WidgetSettings.loadObserverHeightPref(context, 0);
-            observerHeightPref.setSummary(formatObserverHeightSummary(context, observerHeight));
-            observerHeightPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
-            {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue)
-                {
-                    try {
-                        double doubleValue = Double.parseDouble((String)newValue);
-                        if (doubleValue > 0)
-                        {
-                            preference.setSummary(formatObserverHeightSummary(preference.getContext(), doubleValue));
-                            return true;
-
-                        } else return false;
-                    } catch (NumberFormatException e) {
-                        return false;
-                    }
-                }
-            });
+            initPref_observerHeight(fragment.getActivity(), observerHeightPref);
+            loadPref_observerHeight(fragment.getActivity(), observerHeightPref);
         }
     }
-
-    private static CharSequence formatObserverHeightSummary(@NonNull Context context, double observerHeight)
-    {
-        NumberFormat formatter = NumberFormat.getInstance();
-        formatter.setMinimumFractionDigits(0);
-        formatter.setMaximumFractionDigits(2);
-
-        int h = ((observerHeight > 1) ? (int)Math.ceil(observerHeight)
-                : (observerHeight < 1) ? 2 : 1);
-
-        Resources resources = context.getResources();
-        String observerHeightDisplay = resources.getQuantityString(R.plurals.units_meters_long, h, formatter.format(observerHeight));
-        return context.getString(R.string.configLabel_general_observerheight_summary, observerHeightDisplay);
-    }
-
 
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////
@@ -1261,6 +1228,56 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////
+
+    private static void initPref_observerHeight(final Activity context, final EditTextPreference pref)
+    {
+        TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.icActionShadow});
+        int drawableID = a.getResourceId(0, R.drawable.ic_action_shadow);
+        a.recycle();
+
+        String title = context.getString(R.string.configLabel_general_observerheight) + "  [i]";
+        ImageSpan shadowIcon = SuntimesUtils.createImageSpan(context, drawableID, 32, 32, 0);
+        SpannableStringBuilder titleSpan = SuntimesUtils.createSpan(context, title, "[i]", shadowIcon);
+        pref.setTitle(titleSpan);
+
+        pref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
+        {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue)
+            {
+                try {
+                    double doubleValue = Double.parseDouble((String)newValue);
+                    if (doubleValue > 0)
+                    {
+                        preference.setSummary(formatObserverHeightSummary(preference.getContext(), doubleValue));
+                        return true;
+
+                    } else return false;
+                } catch (NumberFormatException e) {
+                    return false;
+                }
+            }
+        });
+    }
+    private static void loadPref_observerHeight(Context context, EditTextPreference pref)
+    {
+        double observerHeight = WidgetSettings.loadObserverHeightPref(context, 0);
+        pref.setSummary(formatObserverHeightSummary(context, observerHeight));
+    }
+    private static CharSequence formatObserverHeightSummary(@NonNull Context context, double observerHeight)
+    {
+        NumberFormat formatter = NumberFormat.getInstance();
+        formatter.setMinimumFractionDigits(0);
+        formatter.setMaximumFractionDigits(2);
+
+        int h = ((observerHeight > 1) ? (int)Math.ceil(observerHeight)
+                : (observerHeight < 1) ? 2 : 1);
+
+        Resources resources = context.getResources();
+        String observerHeightDisplay = resources.getQuantityString(R.plurals.units_meters_long, h, formatter.format(observerHeight));
+        return context.getString(R.string.configLabel_general_observerheight_summary, observerHeightDisplay);
+    }
+
 
     private static void initPref_altitude(final Activity context, final CheckBoxPreference altitudePref)
     {
