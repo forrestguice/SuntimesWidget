@@ -56,7 +56,7 @@ public class LightMapDialog extends DialogFragment
     private View sunLayout;
     private TextView sunAzimuth, sunAzimuthRising, sunAzimuthSetting, sunAzimuthAtNoon;
     private TextView sunElevation, sunElevationAtNoon;
-    private TextView sunShadowObj, sunShadowLength;
+    private TextView sunShadowObj, sunShadowLength, sunShadowLengthAtNoon;
 
     private LightMapView lightmap;
     private LightMapKey field_night, field_astro, field_nautical, field_civil, field_day;
@@ -159,6 +159,7 @@ public class LightMapDialog extends DialogFragment
 
         sunShadowObj = (TextView)dialogView.findViewById(R.id.info_shadow_height);
         sunShadowLength = (TextView)dialogView.findViewById(R.id.info_shadow_length);
+        sunShadowLengthAtNoon = null; //(TextView)dialogView.findViewById(R.id.info_shadow_length_atnoon);  // TODO
 
         field_night = new LightMapKey(dialogView, R.id.info_time_lightmap_key_night_icon, R.id.info_time_lightmap_key_night_label, R.id.info_time_lightmap_key_night_duration);
         field_astro = new LightMapKey(dialogView, R.id.info_time_lightmap_key_astro_icon, R.id.info_time_lightmap_key_astro_label, R.id.info_time_lightmap_key_astro_duration);
@@ -360,14 +361,22 @@ public class LightMapDialog extends DialogFragment
             }
 
             Context context = getContext();
-            if (sunShadowLength != null && sunShadowObj != null && calculator != null && context != null)
+            if (context != null && calculator != null)
             {
                 double objectHeight = WidgetSettings.loadObserverHeightPref(context, 0);
                 if (objectHeight > 0)
                 {
-                    double shadowLength = calculator.getShadowLength(objectHeight, data.now());
-                    sunShadowObj.setText(styleLengthText(context, objectHeight));
-                    sunShadowLength.setText((shadowLength >= 0) ? styleLengthText(context, shadowLength) : "");
+                    if (sunShadowObj != null) {
+                        sunShadowObj.setText(styleLengthText(context, objectHeight));
+                    }
+                    if (sunShadowLength != null) {
+                        double shadowLength = calculator.getShadowLength(objectHeight, data.now());
+                        sunShadowLength.setText((shadowLength >= 0) ? styleLengthText(context, shadowLength) : "");
+                    }
+                    if (sunShadowLengthAtNoon != null && noonTime != null) {
+                        double shadowLengthAtNoon = calculator.getShadowLength(objectHeight, noonTime );
+                        sunShadowLengthAtNoon.setText((shadowLengthAtNoon >= 0) ? styleLengthText(context, shadowLengthAtNoon) : "");
+                    }
                 }
             }
 
