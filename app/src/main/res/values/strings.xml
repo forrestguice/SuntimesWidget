@@ -169,14 +169,14 @@
     <string name="units_feet">feet</string>
     <string name="units_feet_short">ft</string>
     <plurals name="units_feet_long">
-        <item quantity="one">%d foot</item>
-        <item quantity="other">%d feet</item>
+        <item quantity="one">%s foot</item>
+        <item quantity="other">%s feet</item>
     </plurals>
     <string name="units_meters">meters</string>
     <string name="units_meters_short">m</string>
     <plurals name="units_meters_long">
-        <item quantity="one">%d meter</item>
-        <item quantity="other">%d meters</item>
+        <item quantity="one">%s meter</item>
+        <item quantity="other">%s meters</item>
     </plurals>
 
     <!--
@@ -221,7 +221,7 @@
     <string name="configLabel_general_showHours_summary">Include hours and minutes in time spans greater than a day.</string>    <!-- checkbox label -->
 
     <string name="configLabel_general_observerheight">Object Height</string>        <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_general_observerheight_summary">The height used to calculate shadow length (meters).</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_observerheight_summary">The height used to calculate shadow length.\n<xliff:g id="value" example="1 meter">%1$s</xliff:g></string>        <!-- checkbox label -->  <!-- TODO -->
 
     <!-- Widget Setting: advanced / experimental -->
     <string name="configLabel_advanced">Advanced Settings</string>                        <!-- group title -->
