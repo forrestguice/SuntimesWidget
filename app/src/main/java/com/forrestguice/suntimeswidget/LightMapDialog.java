@@ -42,7 +42,10 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -53,6 +56,7 @@ public class LightMapDialog extends DialogFragment
     private View sunLayout;
     private TextView sunAzimuth, sunAzimuthRising, sunAzimuthSetting, sunAzimuthAtNoon;
     private TextView sunElevation, sunElevationAtNoon;
+    private TextView sunShadowObj, sunShadowLength;
 
     private LightMapView lightmap;
     private LightMapKey field_night, field_astro, field_nautical, field_civil, field_day;
@@ -152,6 +156,9 @@ public class LightMapDialog extends DialogFragment
         sunAzimuthRising = (TextView)dialogView.findViewById(R.id.info_sun_azimuth_rising);
         sunAzimuthAtNoon = (TextView)dialogView.findViewById(R.id.info_sun_azimuth_atnoon);
         sunAzimuthSetting = (TextView)dialogView.findViewById(R.id.info_sun_azimuth_setting);
+
+        sunShadowObj = (TextView)dialogView.findViewById(R.id.info_shadow_height);
+        sunShadowLength = (TextView)dialogView.findViewById(R.id.info_shadow_length);
 
         field_night = new LightMapKey(dialogView, R.id.info_time_lightmap_key_night_icon, R.id.info_time_lightmap_key_night_label, R.id.info_time_lightmap_key_night_duration);
         field_astro = new LightMapKey(dialogView, R.id.info_time_lightmap_key_astro_icon, R.id.info_time_lightmap_key_astro_label, R.id.info_time_lightmap_key_astro_duration);
@@ -259,6 +266,14 @@ public class LightMapDialog extends DialogFragment
         return (span != null ? span : elevationString);
     }
 
+    private CharSequence styleLengthText(@NonNull Context context, double length)
+    {
+        NumberFormat formatter = NumberFormat.getInstance();
+        formatter.setMinimumFractionDigits(2);
+        formatter.setMaximumFractionDigits(2);
+        return formatter.format(length) + SuntimesUtils.strSpace + context.getString(R.string.units_meters_short);
+    }
+
     private int getColorForPosition(SuntimesCalculator.SunPosition position, SuntimesCalculator.SunPosition noonPosition)
     {
         if (position.elevation >= 0)
@@ -342,6 +357,15 @@ public class LightMapDialog extends DialogFragment
                 sunElevationAtNoon.setText("");
                 sunAzimuthAtNoon.setText("");
                 sunAzimuthAtNoon.setContentDescription("");
+            }
+
+            Context context = getContext();
+            if (sunShadowLength != null && sunShadowObj != null && calculator != null && context != null)
+            {
+                double objectHeight = WidgetSettings.loadObserverHeightPref(context, 0);
+                double shadowLength = calculator.getShadowLength(objectHeight, data.now());
+                sunShadowObj.setText(styleLengthText(context, objectHeight));
+                sunShadowLength.setText((shadowLength >= 0) ? styleLengthText(context, shadowLength) : "");
             }
 
             showSunPosition(currentPosition != null);
