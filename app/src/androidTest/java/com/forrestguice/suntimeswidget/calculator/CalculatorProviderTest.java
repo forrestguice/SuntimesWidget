@@ -477,6 +477,8 @@ public class CalculatorProviderTest
         assertTrue("default projection contains COLUMN_MOON_FULL", projection.contains(COLUMN_MOON_FULL));
         assertTrue("default projection contains COLUMN_MOON_THIRD", projection.contains(COLUMN_MOON_THIRD));
         test_projectionHasUniqueColumns(QUERY_MOONPHASE_PROJECTION);
+
+
     }
 
     /**
@@ -490,16 +492,32 @@ public class CalculatorProviderTest
         ContentResolver resolver = mockContext.getContentResolver();
         assertTrue("Unable to getContentResolver!", resolver != null);
 
-        Uri uri = Uri.parse("content://" + AUTHORITY + "/" + QUERY_MOONPHASE);
-        String[] projection = QUERY_MOONPHASE_PROJECTION;
-        Cursor cursor = resolver.query(uri, projection, null, null, null);
-        test_cursorHasColumns("QUERY_MOONPHASE", cursor, projection);
+        Calendar startDate = Calendar.getInstance();
+        startDate.set(2018, 0, 0, 0, 0, 0);
+        Calendar endDate = Calendar.getInstance();
+        startDate.set(2019, 0, 0, 0, 0, 0);
 
-        // TODO
+        // case 0:
+        Uri uri0 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_MOONPHASE);
+        String[] projection0 = QUERY_MOONPHASE_PROJECTION;
+        Cursor cursor0 = resolver.query(uri0, projection0, null, null, null);
+        test_cursorHasColumns("QUERY_MOONPHASE", cursor0, projection0);
 
-        if (cursor != null) {
-            cursor.close();
+        if (cursor0 != null) {
+            cursor0.close();
         }
+
+        // case 1: date
+        Uri uri1 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_MOONPHASE + "/" + startDate.getTimeInMillis());
+        String[] projection1 = QUERY_MOONPHASE_PROJECTION;
+        Cursor cursor1 = resolver.query(uri1, projection1, null, null, null);
+        test_cursorHasColumns("QUERY_MOONPHASE", cursor1, projection1);
+
+        // case 2: range
+        Uri uri2 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_MOONPHASE + "/" + startDate.getTimeInMillis() + "-" + endDate.getTimeInMillis());
+        String[] projection2 = QUERY_MOONPHASE_PROJECTION;
+        Cursor cursor2 = resolver.query(uri2, projection2, null, null, null);
+        test_cursorHasColumns("QUERY_MOONPHASE", cursor2, projection2);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
