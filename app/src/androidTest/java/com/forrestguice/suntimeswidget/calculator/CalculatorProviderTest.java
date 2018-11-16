@@ -123,11 +123,18 @@ import static org.junit.Assert.assertTrue;
 public class CalculatorProviderTest
 {
     private Context mockContext;
+    private Calendar TEST_DATE0, TEST_DATE1;
 
     @Before
     public void setup()
     {
         mockContext = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(), "test_");
+
+        TEST_DATE0 = Calendar.getInstance();
+        TEST_DATE0.set(2018, 0, 0, 0, 0, 0);
+
+        TEST_DATE1 = Calendar.getInstance();
+        TEST_DATE1.set(2019, 0, 0, 0, 0, 0);
     }
 
     @Test
@@ -253,19 +260,32 @@ public class CalculatorProviderTest
         ContentResolver resolver = mockContext.getContentResolver();
         assertTrue("Unable to getContentResolver!", resolver != null);
 
-        Uri uri = Uri.parse("content://" + AUTHORITY + "/" + QUERY_SEASONS + "/2018");
-        String[] projection = QUERY_SEASONS_PROJECTION;
-        Cursor cursor = resolver.query(uri, projection, null, null, null);
-        test_cursorHasColumns("QUERY_SEASONS", cursor, projection);
+        // case 0:
+        Uri uri0 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_SEASONS);
+        String[] projection0 = QUERY_SEASONS_PROJECTION;
+        Cursor cursor0 = resolver.query(uri0, projection0, null, null, null);
+        test_cursorHasColumns("QUERY_SEASONS", cursor0, projection0);
 
-        if (cursor != null)
+        // case 1: year
+        Uri uri1 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_SEASONS + "/" + TEST_DATE0.get(Calendar.YEAR));
+        String[] projection1 = QUERY_SEASONS_PROJECTION;
+        Cursor cursor1 = resolver.query(uri1, projection1, null, null, null);
+        test_cursorHasColumns("QUERY_SEASONS", cursor1, projection1);
+
+        // case 2: range
+        Uri uri2 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_SEASONS + "/" + TEST_DATE0.get(Calendar.YEAR) + "-" + TEST_DATE1.get(Calendar.YEAR));
+        String[] projection2 = QUERY_SEASONS_PROJECTION;
+        Cursor cursor2 = resolver.query(uri2, projection2, null, null, null);
+        test_cursorHasColumns("QUERY_SEASONS", cursor2, projection2);
+
+        /**if (cursor1 != null)
         {
-            cursor.moveToFirst();
-            long vernalEquinoxTime = cursor.getLong(cursor.getColumnIndex(COLUMN_SEASON_VERNAL));
-            long summerSolsticeTime = cursor.getLong(cursor.getColumnIndex(COLUMN_SEASON_SUMMER));
-            long autumnalEquinoxTime = cursor.getLong(cursor.getColumnIndex(COLUMN_SEASON_AUTUMN));
-            long winterSolsticeTime = cursor.getLong(cursor.getColumnIndex(COLUMN_SEASON_WINTER));
-            cursor.close();
+            cursor1.moveToFirst();
+            long vernalEquinoxTime = cursor1.getLong(cursor1.getColumnIndex(COLUMN_SEASON_VERNAL));
+            long summerSolsticeTime = cursor1.getLong(cursor1.getColumnIndex(COLUMN_SEASON_SUMMER));
+            long autumnalEquinoxTime = cursor1.getLong(cursor1.getColumnIndex(COLUMN_SEASON_AUTUMN));
+            long winterSolsticeTime = cursor1.getLong(cursor1.getColumnIndex(COLUMN_SEASON_WINTER));
+            cursor1.close();
 
             assertTrue("COLUMN_SEASON_VERNAL result missing", vernalEquinoxTime != 0);
             assertTrue("COLUMN_SEASON_SUMMER result missing", summerSolsticeTime != 0);
@@ -276,7 +296,7 @@ public class CalculatorProviderTest
             test_dateUTC("COLUMN_SEASON_SUMMER", summerSolsticeTime,2018, 5, 21, 10, 7);
             test_dateUTC("COLUMN_SEASON_AUTUMN", autumnalEquinoxTime,2018, 8, 23, 1, 54);
             test_dateUTC("COLUMN_SEASON_WINTER", winterSolsticeTime,2018, 11, 21, 22, 22);
-        }
+        }*/
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -323,16 +343,23 @@ public class CalculatorProviderTest
         ContentResolver resolver = mockContext.getContentResolver();
         assertTrue("Unable to getContentResolver!", resolver != null);
 
+        // case 0:
         Uri uri = Uri.parse("content://" + AUTHORITY + "/" + QUERY_SUN);
         String[] projection = QUERY_SUN_PROJECTION;
         Cursor cursor = resolver.query(uri, projection, null, null, null);
         test_cursorHasColumns("QUERY_SUN", cursor, projection);
 
-        // TODO
+        // case 1: date
+        Uri uri1 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_SUN + "/" + TEST_DATE0.getTimeInMillis());
+        String[] projection1 = QUERY_SUN_PROJECTION;
+        Cursor cursor1 = resolver.query(uri1, projection1, null, null, null);
+        test_cursorHasColumns("QUERY_SUN", cursor1, projection1);
 
-        if (cursor != null) {
-            cursor.close();
-        }
+        // case 2: range
+        Uri uri2 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_SUN + "/" + TEST_DATE0.getTimeInMillis() + "-" + TEST_DATE1.getTimeInMillis());
+        String[] projection2 = QUERY_SUN_PROJECTION;
+        Cursor cursor2 = resolver.query(uri2, projection2, null, null, null);
+        test_cursorHasColumns("QUERY_SUN", cursor2, projection2);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -366,16 +393,17 @@ public class CalculatorProviderTest
         ContentResolver resolver = mockContext.getContentResolver();
         assertTrue("Unable to getContentResolver!", resolver != null);
 
+        // case 0:
         Uri uri = Uri.parse("content://" + AUTHORITY + "/" + QUERY_SUNPOS);
         String[] projection = QUERY_SUNPOS_PROJECTION;
         Cursor cursor = resolver.query(uri, projection, null, null, null);
         test_cursorHasColumns("QUERY_SUNPOS", cursor, projection);
 
-        // TODO
-
-        if (cursor != null) {
-            cursor.close();
-        }
+        // case 1: date
+        Uri uri1 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_SUNPOS + "/" + TEST_DATE0.getTimeInMillis());
+        String[] projection1 = QUERY_SUNPOS_PROJECTION;
+        Cursor cursor1 = resolver.query(uri1, projection1, null, null, null);
+        test_cursorHasColumns("QUERY_SUNPOS", cursor1, projection1);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -405,16 +433,23 @@ public class CalculatorProviderTest
         ContentResolver resolver = mockContext.getContentResolver();
         assertTrue("Unable to getContentResolver!", resolver != null);
 
+        // case 0:
         Uri uri = Uri.parse("content://" + AUTHORITY + "/" + QUERY_MOON);
         String[] projection = QUERY_MOON_PROJECTION;
         Cursor cursor = resolver.query(uri, projection, null, null, null);
         test_cursorHasColumns("QUERY_MOON", cursor, projection);
 
-        // TODO
+        // case 1: date
+        Uri uri1 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_MOON + "/" + TEST_DATE0.getTimeInMillis());
+        String[] projection1 = QUERY_MOON_PROJECTION;
+        Cursor cursor1 = resolver.query(uri1, projection1, null, null, null);
+        test_cursorHasColumns("QUERY_MOON", cursor1, projection1);
 
-        if (cursor != null) {
-            cursor.close();
-        }
+        // case 2: range
+        Uri uri2 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_MOON + "/" + TEST_DATE0.getTimeInMillis() + "-" + TEST_DATE1.getTimeInMillis());
+        String[] projection2 = QUERY_MOON_PROJECTION;
+        Cursor cursor2 = resolver.query(uri2, projection2, null, null, null);
+        test_cursorHasColumns("QUERY_MOON", cursor2, projection2);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -448,16 +483,17 @@ public class CalculatorProviderTest
         ContentResolver resolver = mockContext.getContentResolver();
         assertTrue("Unable to getContentResolver!", resolver != null);
 
-        Uri uri = Uri.parse("content://" + AUTHORITY + "/" + QUERY_MOONPOS);
-        String[] projection = QUERY_MOONPOS_PROJECTION;
-        Cursor cursor = resolver.query(uri, projection, null, null, null);
-        test_cursorHasColumns("QUERY_MOONPOS", cursor, projection);
+        // case 0:
+        Uri uri0 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_MOONPOS);
+        String[] projection0 = QUERY_MOONPOS_PROJECTION;
+        Cursor cursor0 = resolver.query(uri0, projection0, null, null, null);
+        test_cursorHasColumns("QUERY_MOONPOS", cursor0, projection0);
 
-        // TODO
-
-        if (cursor != null) {
-            cursor.close();
-        }
+        // case 1: date
+        Uri uri1 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_MOONPOS + "/" + TEST_DATE0.getTimeInMillis());
+        String[] projection1 = QUERY_MOONPOS_PROJECTION;
+        Cursor cursor1 = resolver.query(uri1, projection1, null, null, null);
+        test_cursorHasColumns("QUERY_MOONPOS", cursor1, projection1);
     }
 
 
@@ -477,8 +513,6 @@ public class CalculatorProviderTest
         assertTrue("default projection contains COLUMN_MOON_FULL", projection.contains(COLUMN_MOON_FULL));
         assertTrue("default projection contains COLUMN_MOON_THIRD", projection.contains(COLUMN_MOON_THIRD));
         test_projectionHasUniqueColumns(QUERY_MOONPHASE_PROJECTION);
-
-
     }
 
     /**
@@ -492,20 +526,14 @@ public class CalculatorProviderTest
         ContentResolver resolver = mockContext.getContentResolver();
         assertTrue("Unable to getContentResolver!", resolver != null);
 
-        Calendar startDate = Calendar.getInstance();
-        startDate.set(2018, 0, 0, 0, 0, 0);
-        Calendar endDate = Calendar.getInstance();
-        startDate.set(2019, 0, 0, 0, 0, 0);
+        Calendar startDate = TEST_DATE0;
+        Calendar endDate = TEST_DATE1;
 
         // case 0:
         Uri uri0 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_MOONPHASE);
         String[] projection0 = QUERY_MOONPHASE_PROJECTION;
         Cursor cursor0 = resolver.query(uri0, projection0, null, null, null);
         test_cursorHasColumns("QUERY_MOONPHASE", cursor0, projection0);
-
-        if (cursor0 != null) {
-            cursor0.close();
-        }
 
         // case 1: date
         Uri uri1 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_MOONPHASE + "/" + startDate.getTimeInMillis());
@@ -589,8 +617,9 @@ public class CalculatorProviderTest
     @Test
     public void test_parseDateRange()
     {
-        Calendar start0 = Calendar.getInstance();
+        Calendar start0 = TEST_DATE0;
         Calendar end0 = Calendar.getInstance();
+        end0.setTimeInMillis(TEST_DATE0.getTimeInMillis());
         end0.add(Calendar.DAY_OF_MONTH, 1);
         String segment0 = start0.getTimeInMillis() + "-" + end0.getTimeInMillis();
 
@@ -608,7 +637,7 @@ public class CalculatorProviderTest
     @Test
     public void test_parseYearRange()
     {
-        Calendar now = Calendar.getInstance();
+        Calendar now = TEST_DATE0;
         String[] TEST_SEGMENTS = new String[] {
                 "2018-2020",            // valid
                 "2018-2010",            // order
