@@ -20,7 +20,7 @@
     <uses-sdk tools:overrideLibrary="com.flask.colorpicker" />
 
     <permission
-        android:name="suntimeswidget.calculator.provider.permission.READ_PROVIDER"
+        android:name="suntimeswidget.calculator.permission.READ_PROVIDER"
         android:protectionLevel="normal" />
 
     <application
@@ -55,7 +55,7 @@
         <provider
             android:name="com.forrestguice.suntimeswidget.calculator.CalculatorProvider"
             android:authorities="suntimeswidget.calculator.provider"
-            android:permission="suntimeswidget.calculator.provider.permission.READ_PROVIDER"
+            android:permission="suntimeswidget.calculator.permission.READ_PROVIDER"
             android:exported="true"
             android:syncable="false" />
 

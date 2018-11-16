@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget.calculator;
 
 /**
  * CalculatorProviderContract
- * @version 0.1.0
+ * @version 0 (0.1.0)
  *
  * Supported URIs have the form: "content://AUTHORITY/query"
  * ..where [AUTHORITY] is "suntimeswidget.calculator.provider"
@@ -182,10 +182,31 @@ package com.forrestguice.suntimeswidget.calculator;
  *     }
  *
  *   Note: Caching doesn't occur when overriding the configuration; a new instance will be created for each query.
+ *
+ * ------------------------------------------------------------------------------------------------
+ * PERMISSIONS
+ *   Access to this provider is restricted to apps that declare the READ_PERMISSION in their manifest.
+ *   The permission is granted by the user when an app is installed (and revoked if the provider is
+ *   uninstalled/reinstalled).
+ *
+ *       <uses-permission android:name="suntimeswidget.calculator.permission.READ_PROVIDER" />
+ *
+ *   Note that calling query without the necessary permission will result in a SecurityException.
+ *       try {
+ *           Cursor cursor = resolver.query(uri, projection, selection, selectionArgs, null)
+ *           if (cursor != null) {
+ *               ...
+ *           }
+ *       } catch (SecurityException e) {
+ *           // Permissions! We don't have them for some reason. They are either missing from the
+ *           // manifest, were revoked, or were never granted (re-installing the app should grant
+ *           // permissions).
+ *       }*
  */
 public interface CalculatorProviderContract
 {
     String AUTHORITY = "suntimeswidget.calculator.provider";
+    String READ_PERMISSION = "suntimeswidget.calculator.permission.READ_PROVIDER";
     String VERSION_NAME = "v0.1.0";
     int VERSION_CODE = 0;
 
