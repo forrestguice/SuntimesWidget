@@ -220,8 +220,8 @@
     <string name="configLabel_general_showHours">Show Hours</string>        <!-- checkbox label -->
     <string name="configLabel_general_showHours_summary">Include hours and minutes in time spans greater than a day.</string>    <!-- checkbox label -->
 
-    <string name="configLabel_general_observerheight">Object Height</string>        <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_general_observerheight_summary">The height used to calculate shadow length.\n<xliff:g id="value" example="1 meter">%1$s</xliff:g></string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_observerheight">Object Shadow</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_observerheight_summary">Display the length of shadows cast by an object with a height of <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->  <!-- TODO -->
 
     <!-- Widget Setting: advanced / experimental -->
     <string name="configLabel_advanced">Advanced Settings</string>                        <!-- group title -->
