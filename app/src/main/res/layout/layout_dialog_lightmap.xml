@@ -33,7 +33,7 @@
         android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
     <android.support.constraint.ConstraintLayout android:id="@+id/info_sun_layout"
-        android:layout_width="0dp" android:layout_height="wrap_content" android:visibility="gone"
+        android:layout_width="0dp" android:layout_height="wrap_content" android:visibility="visible"
         app:layout_constraintTop_toBottomOf="@+id/sundialog_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -152,6 +152,8 @@
 
             <TextView style="@style/SunsetTimeTextView"
                 android:id="@+id/info_shadow_height"
+                android:layout_marginLeft="0dp" android:layout_marginStart="0dp"
+                android:layout_marginRight="0dp" android:layout_marginEnd="0dp"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:gravity="center" tools:text="6 m" />
 
@@ -162,10 +164,24 @@
 
             <TextView style="@style/SunsetTimeTextView"
                 android:id="@+id/info_shadow_length"
+                android:layout_marginLeft="0dp" android:layout_marginStart="0dp"
+                android:layout_marginRight="0dp" android:layout_marginEnd="0dp"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:gravity="center" tools:text="3 m" />
 
         </LinearLayout>
+
+        <TextView style="@style/SunsetTimeTextView"
+            android:id="@+id/info_shadow_length_atnoon"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:gravity="center" tools:text="1 m"
+            android:layout_marginLeft="0dp" android:layout_marginStart="0dp"
+            android:layout_marginRight="0dp" android:layout_marginEnd="0dp"
+            app:layout_constraintStart_toEndOf="@+id/info_sun_azimuth_rising"
+            app:layout_constraintEnd_toStartOf="@+id/info_sun_azimuth_setting"
+            app:layout_constraintTop_toTopOf="@+id/info_shadow_layout"
+            app:layout_constraintBottom_toBottomOf="@+id/info_shadow_layout" />
+
 
     </android.support.constraint.ConstraintLayout>
 

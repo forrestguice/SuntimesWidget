@@ -159,7 +159,7 @@ public class LightMapDialog extends DialogFragment
 
         sunShadowObj = (TextView)dialogView.findViewById(R.id.info_shadow_height);
         sunShadowLength = (TextView)dialogView.findViewById(R.id.info_shadow_length);
-        sunShadowLengthAtNoon = null; //(TextView)dialogView.findViewById(R.id.info_shadow_length_atnoon);  // TODO
+        sunShadowLengthAtNoon = (TextView)dialogView.findViewById(R.id.info_shadow_length_atnoon);
 
         field_night = new LightMapKey(dialogView, R.id.info_time_lightmap_key_night_icon, R.id.info_time_lightmap_key_night_label, R.id.info_time_lightmap_key_night_duration);
         field_astro = new LightMapKey(dialogView, R.id.info_time_lightmap_key_astro_icon, R.id.info_time_lightmap_key_astro_label, R.id.info_time_lightmap_key_astro_duration);
