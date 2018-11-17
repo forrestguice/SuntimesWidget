@@ -38,6 +38,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
@@ -157,6 +158,11 @@ public class LightMapDialog extends DialogFragment
         sunAzimuthAtNoon = (TextView)dialogView.findViewById(R.id.info_sun_azimuth_atnoon);
         sunAzimuthSetting = (TextView)dialogView.findViewById(R.id.info_sun_azimuth_setting);
 
+        View shadowLayout = dialogView.findViewById(R.id.info_shadow_layout);
+        if (shadowLayout != null) {
+            shadowLayout.setOnClickListener(onShadowLayoutClick);
+        }
+
         sunShadowObj = (TextView)dialogView.findViewById(R.id.info_shadow_height);
         sunShadowLength = (TextView)dialogView.findViewById(R.id.info_shadow_length);
         sunShadowLengthAtNoon = (TextView)dialogView.findViewById(R.id.info_shadow_length_atnoon);
@@ -167,6 +173,19 @@ public class LightMapDialog extends DialogFragment
         field_civil = new LightMapKey(dialogView, R.id.info_time_lightmap_key_civil_icon, R.id.info_time_lightmap_key_civil_label, R.id.info_time_lightmap_key_civil_duration);
         field_day = new LightMapKey(dialogView, R.id.info_time_lightmap_key_day_icon, R.id.info_time_lightmap_key_day_label, R.id.info_time_lightmap_key_day_duration);
     }
+
+    private View.OnClickListener onShadowLayoutClick =  new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+            Context context = getContext();
+            if (context != null)
+            {
+                Toast.makeText(context, "TODO: set height", Toast.LENGTH_SHORT).show();     // TODO: set object height
+            }
+        }
+    };
 
     @SuppressWarnings("ResourceType")
     public void themeViews(Context context)
