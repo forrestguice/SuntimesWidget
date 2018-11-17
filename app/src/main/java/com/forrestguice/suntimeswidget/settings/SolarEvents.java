@@ -40,43 +40,23 @@ import java.util.Arrays;
 @SuppressWarnings("Convert2Diamond")
 public enum SolarEvents
 {
-<<<<<<< HEAD
-    MORNING_ASTRONOMICAL("astronomical twilight", "morning astronomical twilight", R.attr.sunriseIcon, 0, true), // 0
-    MORNING_NAUTICAL("nautical twilight", "morning nautical twilight", R.attr.sunriseIcon, 0, true),             // 1
-    MORNING_BLUE8("blue hour", "morning blue hour", R.attr.sunriseIcon, 0, true),                                // 2
-    MORNING_CIVIL("civil twilight", "morning civil twilight", R.attr.sunriseIcon, 0, true),                      // 3
-    MORNING_BLUE4("blue hour", "morning blue hour", R.attr.sunriseIcon, 0, true),                                // 4
-    SUNRISE("sunrise", "sunrise", R.attr.sunriseIcon, 0, true),                                                  // 5
-    MORNING_GOLDEN("golden hour", "morning golden hour", R.attr.sunriseIcon, 0, true),                           // 6
-    NOON("solar noon", "solar noon", R.attr.sunnoonIcon, 0, false),                                               // 7
-    EVENING_GOLDEN("golden hour", "evening golden hour", R.attr.sunsetIcon, 0, false),                            // 8
-    SUNSET("sunset", "sunset", R.attr.sunsetIcon, 0, false),                                                      // 9
-    EVENING_BLUE4("blue hour", "evening blue hour", R.attr.sunsetIcon, 0, false),                                 // 10
-    EVENING_CIVIL("civil twilight", "evening civil twilight", R.attr.sunsetIcon, 0, false),                       // 11
-    EVENING_BLUE8("blue hour", "evening blue hour", R.attr.sunsetIcon, 0, false),                                 // 12
-    EVENING_NAUTICAL("nautical twilight", "evening nautical twilight", R.attr.sunsetIcon, 0, false),              // 13
-    EVENING_ASTRONOMICAL("astronomical twilight", "evening astronomical twilight", R.attr.sunsetIcon, 0, false),  // 14
+    MORNING_ASTRONOMICAL("astronomical twilight", "morning astronomical twilight", R.attr.sunriseIconLarge, 0, true), // 0
+    MORNING_NAUTICAL("nautical twilight", "morning nautical twilight", R.attr.sunriseIconLarge, 0, true),             // 1
+    MORNING_BLUE8("blue hour", "morning blue hour", R.attr.sunriseIconLarge, 0, true),                                // 2
+    MORNING_CIVIL("civil twilight", "morning civil twilight", R.attr.sunriseIconLarge, 0, true),                      // 3
+    MORNING_BLUE4("blue hour", "morning blue hour", R.attr.sunriseIconLarge, 0, true),                                // 4
+    SUNRISE("sunrise", "sunrise", R.attr.sunriseIconLarge, 0, true),                                                  // 5
+    MORNING_GOLDEN("golden hour", "morning golden hour", R.attr.sunriseIconLarge, 0, true),                           // 6
+    NOON("solar noon", "solar noon", R.attr.sunnoonIcon, 0, false),                                                    // 7
+    EVENING_GOLDEN("golden hour", "evening golden hour", R.attr.sunsetIconLarge, 0, false),                            // 8
+    SUNSET("sunset", "sunset", R.attr.sunsetIconLarge, 0, false),                                                      // 9
+    EVENING_BLUE4("blue hour", "evening blue hour", R.attr.sunsetIconLarge, 0, false),                                 // 10
+    EVENING_CIVIL("civil twilight", "evening civil twilight", R.attr.sunsetIconLarge, 0, false),                       // 11
+    EVENING_BLUE8("blue hour", "evening blue hour", R.attr.sunsetIconLarge, 0, false),                                 // 12
+    EVENING_NAUTICAL("nautical twilight", "evening nautical twilight", R.attr.sunsetIconLarge, 0, false),              // 13
+    EVENING_ASTRONOMICAL("astronomical twilight", "evening astronomical twilight", R.attr.sunsetIconLarge, 0, false),  // 14
     MOONRISE("moonrise", "moonrise", R.attr.moonriseIcon, 1, true),                                               // 15
     MOONSET("moonset", "mooonset", R.attr.moonsetIcon, 1, false);                                                 // 16
-=======
-    MORNING_ASTRONOMICAL("astronomical twilight", "morning astronomical twilight", R.attr.sunriseIconLarge), // 0
-    MORNING_NAUTICAL("nautical twilight", "morning nautical twilight", R.attr.sunriseIconLarge),             // 1
-    MORNING_BLUE8("blue hour", "morning blue hour", R.attr.sunriseIconLarge),                                // 2
-    MORNING_CIVIL("civil twilight", "morning civil twilight", R.attr.sunriseIconLarge),                      // 3
-    MORNING_BLUE4("blue hour", "morning blue hour", R.attr.sunriseIconLarge),                                // 4
-    SUNRISE("sunrise", "sunrise", R.attr.sunriseIconLarge),                                                  // 5
-    MORNING_GOLDEN("golden hour", "morning golden hour", R.attr.sunriseIconLarge),                           // 6
-    NOON("solar noon", "solar noon", R.attr.sunnoonIcon),                                               // 7
-    EVENING_GOLDEN("golden hour", "evening golden hour", R.attr.sunsetIconLarge),                            // 8
-    SUNSET("sunset", "sunset", R.attr.sunsetIconLarge),                                                      // 9
-    EVENING_BLUE4("blue hour", "evening blue hour", R.attr.sunsetIconLarge),                                 // 10
-    EVENING_CIVIL("civil twilight", "evening civil twilight", R.attr.sunsetIconLarge),                       // 11
-    EVENING_BLUE8("blue hour", "evening blue hour", R.attr.sunsetIconLarge),                                 // 12
-    EVENING_NAUTICAL("nautical twilight", "evening nautical twilight", R.attr.sunsetIconLarge),              // 13
-    EVENING_ASTRONOMICAL("astronomical twilight", "evening astronomical twilight", R.attr.sunsetIconLarge),  // 14
-    MOONRISE("moonrise", "moonrise", R.attr.moonriseIcon),                                              // 15
-    MOONSET("moonset", "mooonset", R.attr.moonsetIcon);                                                 // 16
->>>>>>> master
                                                                                                         // .. R.array.solarevents_short/_long req same length/order
 
     private int iconResource;
