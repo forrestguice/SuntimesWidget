@@ -291,7 +291,9 @@ public class LightMapDialog extends DialogFragment
         NumberFormat formatter = NumberFormat.getInstance();
         formatter.setMinimumFractionDigits(0);
         formatter.setMaximumFractionDigits(2);
-        return formatter.format(length) + SuntimesUtils.strSpace + context.getString(R.string.units_meters_short);
+        if (length < Double.POSITIVE_INFINITY)
+            return formatter.format(length) + SuntimesUtils.strSpace + context.getString(R.string.units_meters_short);
+        else return formatter.format(length);
     }
 
     private int getColorForPosition(SuntimesCalculator.SunPosition position, SuntimesCalculator.SunPosition noonPosition)
