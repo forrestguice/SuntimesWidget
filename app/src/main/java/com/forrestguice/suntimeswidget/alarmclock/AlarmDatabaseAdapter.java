@@ -32,6 +32,9 @@ public class AlarmDatabaseAdapter
     public static final String DATABASE_NAME = "suntimesAlarms";
     public static final int DATABASE_VERSION = 1;
 
+    //
+    // Table: Alarms
+    //
     public static final String KEY_ROWID = "_id";                                                   // row ID
     public static final String DEF_ROWID = KEY_ROWID + " integer primary key autoincrement";
 
@@ -121,6 +124,21 @@ public class AlarmDatabaseAdapter
                                                                           KEY_ALARM_SOLAREVENT, KEY_ALARM_PLACELABEL, KEY_ALARM_LATITUDE, KEY_ALARM_LONGITUDE, KEY_ALARM_ALTITUDE,
                                                                           KEY_ALARM_VIBRATE, KEY_ALARM_RINGTONE_NAME, KEY_ALARM_RINGTONE_URI };
 
+    //
+    // Table: AlarmState
+    //
+
+    public static final String KEY_STATE_ALARMID = KEY_ROWID;
+    public static final String DEF_STATE_ALARMID = KEY_STATE_ALARMID + " integer primary key";
+
+    public static final String KEY_STATE = "state";
+    public static final String DEF_STATE = KEY_STATE + " integer not null";
+
+    private static final String TABLE_ALARMSTATE = "alarmstate";
+    private static final String TABLE_ALARMSTATE_CREATE_COLS = DEF_STATE_ALARMID + ", " + DEF_STATE;
+    private static final String TABLE_ALARMSTATE_CREATE = "create table " + TABLE_ALARMSTATE + " (" + TABLE_ALARMSTATE_CREATE_COLS + ");";
+    private static final String[] QUERY_ALARMSTATE_FULLENTRY = new String[] { KEY_STATE_ALARMID, KEY_STATE };
+
     /**
      *
      */
@@ -202,8 +220,26 @@ public class AlarmDatabaseAdapter
         Cursor cursor = database.query( true, TABLE_ALARMS, QUERY,
                                         KEY_ROWID + "=" + row, null,
                                         null, null, null, null );
-        if (cursor != null)
-        {
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        return cursor;
+    }
+
+    /**
+     * Get an alarm state from the database.
+     * @param row the rowID to get
+     * @return a Cursor into the database
+     * @throws SQLException if query failed
+     */
+    public Cursor getAlarmState(long row) throws SQLException
+    {
+        @SuppressWarnings("UnnecessaryLocalVariable")
+        String[] QUERY = QUERY_ALARMSTATE_FULLENTRY;
+        Cursor cursor = database.query( true, TABLE_ALARMSTATE, QUERY,
+                KEY_STATE_ALARMID + "=" + row, null,
+                null, null, null, null );
+        if (cursor != null) {
             cursor.moveToFirst();
         }
         return cursor;
@@ -216,12 +252,25 @@ public class AlarmDatabaseAdapter
      */
     public long addAlarm( ContentValues values )
     {
-        return database.insert(TABLE_ALARMS, null, values);
+        long rowID = database.insert(TABLE_ALARMS, null, values);
+        if (rowID != -1)
+        {
+            ContentValues alarmState = new ContentValues();
+            alarmState.put(KEY_STATE_ALARMID, rowID);
+            alarmState.put(KEY_STATE, AlarmState.STATE_NONE);
+            database.insert(TABLE_ALARMSTATE, null, alarmState);
+        }
+        return rowID;
     }
 
     public boolean updateAlarm( long row, ContentValues values )
     {
         return database.update(TABLE_ALARMS, values,KEY_ROWID + "=" + row, null) > 0;
+    }
+
+    public boolean updateAlarmState( long row, ContentValues values )
+    {
+        return database.update(TABLE_ALARMSTATE, values, KEY_STATE_ALARMID + "=" + row, null) > 0;
     }
 
     public String addAlarmCSV_header()
@@ -278,7 +327,9 @@ public class AlarmDatabaseAdapter
      */
     public boolean removeAlarm(long row)
     {
-        return database.delete(TABLE_ALARMS, KEY_ROWID + "=" + row, null) > 0;
+        boolean removeAlarm = (database.delete(TABLE_ALARMS, KEY_ROWID + "=" + row, null) > 0);
+        boolean removeAlarmState = (database.delete(TABLE_ALARMSTATE, KEY_ROWID + "=" + row, null) > 0);
+        return removeAlarm && removeAlarmState;
     }
 
     /**
@@ -287,7 +338,8 @@ public class AlarmDatabaseAdapter
      */
     public boolean clearAlarms()
     {
-        return database.delete(TABLE_ALARMS, null, null) > 0;
+        return (database.delete(TABLE_ALARMS, null, null) > 0) &&
+               (database.delete(TABLE_ALARMSTATE, null, null) > 0);
     }
 
     /**
@@ -309,6 +361,7 @@ public class AlarmDatabaseAdapter
                 case 0:
                 default:
                     db.execSQL(TABLE_ALARMS_CREATE);
+                    db.execSQL(TABLE_ALARMSTATE_CREATE);
                     break;
             }
         }
