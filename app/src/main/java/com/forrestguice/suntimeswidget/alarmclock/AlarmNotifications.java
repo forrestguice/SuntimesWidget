@@ -348,7 +348,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
             Intent dismissIntent = getDismissAlarmIntent(context, alarm, notificationID);
             PendingIntent pendingDismiss = PendingIntent.getBroadcast(context, alarm.hashCode(), dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            builder.addAction(android.R.drawable.ic_menu_close_clear_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);
+            builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);
 
             //PendingIntent contentIntent = PendingIntent.getActivity(context.getApplicationContext(), 0, new Intent(), 0);
             //builder.setContentIntent(contentIntent);
