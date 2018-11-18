@@ -45,8 +45,6 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
  */
 public class AlarmDismissActivity extends AppCompatActivity
 {
-    public static final String ACTION_HANDLED = "handled";
-
     private AlarmClockItem alarm = null;
     private TextView alarmTitle, alarmSubtitle, alarmText;
     private SuntimesUtils utils = new SuntimesUtils();
@@ -83,7 +81,7 @@ public class AlarmDismissActivity extends AppCompatActivity
 
         Uri data = getIntent().getData();
         if (data != null) {
-            if (ACTION_HANDLED.equals(getIntent().getAction()))
+            if (AlarmNotifications.ACTION_DISMISS.equals(getIntent().getAction()))
             {
                 Log.d("AlarmDismissActivity", "onCreate: ACTION_HANDLED: " + data);
                 setResult(RESULT_CANCELED);
@@ -109,12 +107,13 @@ public class AlarmDismissActivity extends AppCompatActivity
                 Uri newData = intent.getData();
                 if (newData != null)
                 {
-                    long alarmID = ContentUris.parseId(newData);
-                    if (action.equals(ACTION_HANDLED))
-                    {
+                    if (action.equals(AlarmNotifications.ACTION_DISMISS)) {
                         Log.d("AlarmDismissActivity", "onNewIntent: ACTION_HANDLED: " + newData);
                         setResult(Activity.RESULT_CANCELED);
                         finish();
+
+                    } else if (action.equals(AlarmNotifications.ACTION_SNOOZE)) {
+                        // TODO
 
                     } else if (action.equals(Intent.ACTION_VIEW)) {
                         Log.d("AlarmDismissActivity", "onNewIntent: ACTION_VIEW: " + newData);

@@ -81,6 +81,10 @@ public class AlarmNotifications extends BroadcastReceiver
                 stopAlert(context);
                 dismissNotification(context, notificationID);
 
+                if (action.equals(ACTION_DISMISS)) {
+                    dismissFullscreenActivity(context, notificationID);
+                }
+
             } else if (action.equals(ACTION_SILENT)) {
                 stopAlert(context);
             }
@@ -276,29 +280,29 @@ public class AlarmNotifications extends BroadcastReceiver
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static Intent getFullScreenIntent(Context context, AlarmClockItem alarm, int notificationID)
+    public static Intent getFullScreenIntent(Context context, Uri data, int notificationID)
     {
         Intent intent = new Intent(context, AlarmDismissActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setData(alarm.getUri());
+        intent.setData(data);
         intent.putExtra(EXTRA_NOTIFICATION_ID, notificationID);
         return intent;
     }
 
-    public static Intent getDismissAlarmIntent(Context context, AlarmClockItem alarm, int notificationID)
+    public static Intent getDismissAlarmIntent(Context context, Uri data, int notificationID)
     {
         Intent intent = new Intent(context, AlarmNotifications.class);
         intent.setAction(ACTION_DISMISS);
-        intent.setData(alarm.getUri());
+        intent.setData(data);
         intent.putExtra(EXTRA_NOTIFICATION_ID, notificationID);
         return intent;
     }
 
-    public static Intent getSnoozeAlarmIntent(Context context, AlarmClockItem alarm, int notificationID)
+    public static Intent getSnoozeAlarmIntent(Context context, Uri data, int notificationID)
     {
         Intent intent = new Intent(context, AlarmNotifications.class);
         intent.setAction(ACTION_SNOOZE);
-        intent.setData(alarm.getUri());
+        intent.setData(data);
         intent.putExtra(EXTRA_NOTIFICATION_ID, notificationID);
         return intent;
     }
@@ -337,15 +341,15 @@ public class AlarmNotifications extends BroadcastReceiver
             builder.setOngoing(true);
             builder.setAutoCancel(false);
 
-            Intent fullScreenIntent = getFullScreenIntent(context, alarm, notificationID);
+            Intent fullScreenIntent = getFullScreenIntent(context, alarm.getUri(), notificationID);
             PendingIntent alarmFullScreen = PendingIntent.getActivity(context, alarm.hashCode(), fullScreenIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             builder.setFullScreenIntent(alarmFullScreen, true);       // at discretion of system to use this intent (or to show a heads up notification instead)
 
-            Intent snoozeIntent = getSnoozeAlarmIntent(context, alarm, notificationID);
+            Intent snoozeIntent = getSnoozeAlarmIntent(context, alarm.getUri(), notificationID);
             PendingIntent pendingSnooze = PendingIntent.getBroadcast(context, alarm.hashCode(), snoozeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             builder.addAction(R.drawable.ic_action_alarms, context.getString(R.string.alarmAction_snooze), pendingSnooze);
 
-            Intent dismissIntent = getDismissAlarmIntent(context, alarm, notificationID);
+            Intent dismissIntent = getDismissAlarmIntent(context, alarm.getUri(), notificationID);
             PendingIntent pendingDismiss = PendingIntent.getBroadcast(context, alarm.hashCode(), dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);
 
@@ -386,6 +390,25 @@ public class AlarmNotifications extends BroadcastReceiver
     {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         notificationManager.cancel(ALARM_NOTIFICATION_TAG, notificationID);
+    }
+
+    /**
+     * @param context
+     * @param notificationID
+     */
+    public static void dismissFullscreenActivity(Context context, int notificationID)
+    {
+        try {
+            Uri data = ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, notificationID);
+            Intent intent = getFullScreenIntent(context, data, notificationID);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.setAction(ACTION_DISMISS);
+            PendingIntent handledIntent = PendingIntent.getActivity(context, notificationID, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            handledIntent.send();
+
+        } catch (PendingIntent.CanceledException e) {
+            Log.e("AlarmNotifications", "dismissFullscreenActivity: " + e);
+        }
     }
 
 }
