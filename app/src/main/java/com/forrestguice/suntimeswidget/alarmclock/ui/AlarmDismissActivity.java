@@ -39,14 +39,11 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
-import java.util.Calendar;
-
 /**
  * AlarmDismissActivity
  */
 public class AlarmDismissActivity extends AppCompatActivity
 {
-    private Long alarmID = null;
     private AlarmClockItem alarm = null;
     private TextView alarmLabel, alarmText;
     private SuntimesUtils utils = new SuntimesUtils();
@@ -69,38 +66,8 @@ public class AlarmDismissActivity extends AppCompatActivity
         setTheme(AppSettings.loadTheme(this));
         super.onCreate(icicle);
         initLocale(this);
+
         setContentView(R.layout.layout_activity_dismissalarm);
-        initViews(this);
-
-        Uri data = getIntent().getData();
-        if (data != null) {
-            alarmID = ContentUris.parseId(data);
-
-        } else {
-            Log.e("AlarmDismissActivity", "Missing data uri! canceling..");
-            finish();
-        }
-
-        updateViews(this);
-    }
-
-    @Override
-    public void onNewIntent( Intent intent )
-    {
-        super.onNewIntent(intent);
-        // TODO
-    }
-
-    private void initLocale(Context context)
-    {
-        WidgetSettings.initDefaults(context);
-        WidgetSettings.initDisplayStrings(context);
-        SuntimesUtils.initDisplayStrings(context);
-        SolarEvents.initDisplayStrings(context);
-    }
-
-    protected void initViews(Context context)
-    {
         alarmLabel = (TextView)findViewById(R.id.txt_alarm_label);
         alarmText = (TextView)findViewById(R.id.txt_alarm_time);
 
@@ -109,6 +76,29 @@ public class AlarmDismissActivity extends AppCompatActivity
 
         Button snoozeButton = (Button) findViewById(R.id.btn_snooze);
         snoozeButton.setOnClickListener(onSnoozeClicked);
+
+        Uri data = getIntent().getData();
+        if (data != null) {
+            setAlarmID(this, ContentUris.parseId(data));
+        } else {
+            Log.e("AlarmDismissActivity", "Missing data uri! canceling..");
+            finish();
+        }
+    }
+
+    @Override
+    public void onNewIntent( Intent intent )
+    {
+        super.onNewIntent(intent);
+        // TODO: what happens if two alarms overlap? this activity is already showing (onNewIntent)
+    }
+
+    private void initLocale(Context context)
+    {
+        WidgetSettings.initDefaults(context);
+        WidgetSettings.initDisplayStrings(context);
+        SuntimesUtils.initDisplayStrings(context);
+        SolarEvents.initDisplayStrings(context);
     }
 
     private View.OnClickListener onSnoozeClicked = new View.OnClickListener()
@@ -135,31 +125,26 @@ public class AlarmDismissActivity extends AppCompatActivity
         }
     };
 
-    protected void updateViews(final Context context)
+    public void setAlarmID(final Context context, long alarmID)
     {
-        if (alarmID != null)
-        {
-            AlarmDatabaseAdapter.AlarmItemTask task = new AlarmDatabaseAdapter.AlarmItemTask(context);
-            task.setAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmItemTask.AlarmItemTaskListener() {
-                @Override
-                public void onItemLoaded(AlarmClockItem item) {
-                    updateViews(context, item);
-                }
-            });
-            task.execute(alarmID);
-        }
+        AlarmDatabaseAdapter.AlarmItemTask task = new AlarmDatabaseAdapter.AlarmItemTask(context);
+        task.setAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmItemTask.AlarmItemTaskListener() {
+            @Override
+            public void onItemLoaded(AlarmClockItem item) {
+                setAlarmItem(context, item);
+            }
+        });
+        task.execute(alarmID);
     }
 
-    protected void updateViews(Context context, AlarmClockItem item)
+    public void setAlarmItem(Context context, AlarmClockItem item)
     {
         alarm = item;
+
         String emptyLabel = context.getString(R.string.alarmMode_alarm);
         alarmLabel.setText((item.label == null || item.label.isEmpty()) ? emptyLabel : item.label);
 
-        Calendar alarmTime = Calendar.getInstance();
-        alarmTime.setTimeInMillis(item.timestamp);
-
-        SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(context, alarmTime, false);
+        SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(context, item.getCalendar(), false);
         if (SuntimesUtils.is24()) {
             alarmText.setText(timeText.getValue());
         } else {
