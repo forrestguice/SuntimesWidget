@@ -285,7 +285,6 @@ public class AlarmNotifications extends BroadcastReceiver
         return intent;
     }
 
-
     public static Intent getDismissAlarmIntent(Context context, AlarmClockItem alarm, int notificationID)
     {
         Intent intent = new Intent(context, AlarmNotifications.class);
@@ -387,17 +386,6 @@ public class AlarmNotifications extends BroadcastReceiver
     {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         notificationManager.cancel(ALARM_NOTIFICATION_TAG, notificationID);
-    }
-
-    /**
-     * showAlarmFullScreen
-     */
-    public static void showAlarmFullScreen(Context context, @NonNull AlarmClockItem item)
-    {
-        Intent intent = new Intent(context, AlarmDismissActivity.class);
-        intent.putExtra(AlarmDismissActivity.EXTRA_ALARMID, item.rowID);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
     }
 
 }
