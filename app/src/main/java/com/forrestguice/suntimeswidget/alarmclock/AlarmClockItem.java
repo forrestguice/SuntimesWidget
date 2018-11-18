@@ -57,6 +57,7 @@ public class AlarmClockItem
 
     public int icon = 0;
     public boolean modified = false;
+    public AlarmState state = null;
 
     public AlarmClockItem() {}
 

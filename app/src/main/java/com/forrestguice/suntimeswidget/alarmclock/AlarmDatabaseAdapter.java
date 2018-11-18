@@ -402,13 +402,30 @@ public class AlarmDatabaseAdapter
             if (rowIDs.length > 0)
             {
                 db.open();
-                Cursor cursor = db.getAlarm(rowIDs[0]);
-                cursor.moveToFirst();
-                if (!cursor.isAfterLast())
+                Cursor cursor0 = db.getAlarm(rowIDs[0]);
+                if (cursor0 != null)
                 {
-                    ContentValues entryValues = new ContentValues();
-                    DatabaseUtils.cursorRowToContentValues(cursor, entryValues);
-                    item = new AlarmClockItem(entryValues);
+                    cursor0.moveToFirst();
+                    if (!cursor0.isAfterLast())
+                    {
+                        ContentValues itemValues = new ContentValues();
+                        DatabaseUtils.cursorRowToContentValues(cursor0, itemValues);
+                        item = new AlarmClockItem(itemValues);
+
+                        Cursor cursor1 = db.getAlarmState(rowIDs[0]);
+                        if (cursor1 != null)
+                        {
+                            cursor1.moveToFirst();
+                            if (!cursor1.isAfterLast())
+                            {
+                                ContentValues stateValues = new ContentValues();
+                                DatabaseUtils.cursorRowToContentValues(cursor1, stateValues);
+                                item.state = new AlarmState(stateValues);
+                            }
+                            cursor1.close();
+                        }
+                    }
+                    cursor0.close();
                 }
                 db.close();
             }
