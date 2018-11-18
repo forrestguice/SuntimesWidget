@@ -534,4 +534,101 @@ public class AlarmDatabaseAdapter
         }
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * AlarmStateTask
+     */
+    public static class AlarmStateTask extends AsyncTask<Long, Void, AlarmState>
+    {
+        protected AlarmDatabaseAdapter db;
+
+        public AlarmStateTask(Context context)
+        {
+            db = new AlarmDatabaseAdapter(context.getApplicationContext());
+        }
+
+        @Override
+        protected AlarmState doInBackground(Long... rowIDs)
+        {
+            AlarmState state = null;
+            if (rowIDs.length > 0)
+            {
+                db.open();
+                Cursor cursor = db.getAlarmState(rowIDs[0]);
+                cursor.moveToFirst();
+                if (!cursor.isAfterLast())
+                {
+                    ContentValues entryValues = new ContentValues();
+                    DatabaseUtils.cursorRowToContentValues(cursor, entryValues);
+                    state = new AlarmState(entryValues);
+                }
+                db.close();
+            }
+            return state;
+        }
+
+        protected void onPostExecute( AlarmState state )
+        {
+            if (taskListener != null) {
+                taskListener.onStateLoaded(state);
+            }
+        }
+
+        private AlarmStateTaskListener taskListener = null;
+        public void setAlarmItemTaskListener( AlarmStateTaskListener listener )
+        {
+            this.taskListener = listener;
+        }
+
+        public static abstract class AlarmStateTaskListener
+        {
+            public void onStateLoaded( AlarmState state ) {}
+        }
+    }
+
+    /**
+     * AlarmStateUpdateTask
+     */
+    public static class AlarmStateUpdateTask extends AsyncTask<AlarmState, Void, Boolean>
+    {
+        protected AlarmDatabaseAdapter db;
+
+        public AlarmStateUpdateTask(Context context)
+        {
+            db = new AlarmDatabaseAdapter(context.getApplicationContext());
+        }
+
+        @Override
+        protected Boolean doInBackground(AlarmState... states)
+        {
+            db.open();
+            boolean updated = true;
+            for (AlarmState state : states) {
+                updated = updated && (db.updateAlarm(state.getAlarmID(), state.asContentValues()));
+            }
+            db.close();
+            return updated;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result)
+        {
+            if (listener != null)
+                listener.onFinished(result);
+        }
+
+        protected AlarmStateUpdateTaskListener listener = null;
+        public void setTaskListener( AlarmStateUpdateTaskListener l )
+        {
+            listener = l;
+        }
+
+        public static abstract class AlarmStateUpdateTaskListener
+        {
+            public void onFinished(Boolean result) {}
+        }
+    }
+
 }
