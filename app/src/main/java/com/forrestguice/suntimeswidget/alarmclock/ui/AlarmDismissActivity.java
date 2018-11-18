@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.alarmclock.ui;
 
+import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
@@ -44,8 +45,10 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
  */
 public class AlarmDismissActivity extends AppCompatActivity
 {
+    public static final String ACTION_HANDLED = "handled";
+
     private AlarmClockItem alarm = null;
-    private TextView alarmLabel, alarmText;
+    private TextView alarmTitle, alarmSubtitle, alarmText;
     private SuntimesUtils utils = new SuntimesUtils();
 
     public AlarmDismissActivity()
@@ -68,7 +71,8 @@ public class AlarmDismissActivity extends AppCompatActivity
         initLocale(this);
 
         setContentView(R.layout.layout_activity_dismissalarm);
-        alarmLabel = (TextView)findViewById(R.id.txt_alarm_label);
+        alarmTitle = (TextView)findViewById(R.id.txt_alarm_label);
+        alarmSubtitle = (TextView)findViewById(R.id.txt_alarm_label2);
         alarmText = (TextView)findViewById(R.id.txt_alarm_time);
 
         Button dismissButton = (Button) findViewById(R.id.btn_dismiss);
@@ -79,7 +83,14 @@ public class AlarmDismissActivity extends AppCompatActivity
 
         Uri data = getIntent().getData();
         if (data != null) {
-            setAlarmID(this, ContentUris.parseId(data));
+            if (ACTION_HANDLED.equals(getIntent().getAction()))
+            {
+                Log.d("AlarmDismissActivity", "onCreate: ACTION_HANDLED: " + data);
+                setResult(RESULT_CANCELED);
+                finish();
+            } else {
+                setAlarmID(this, ContentUris.parseId(data));
+            }
         } else {
             Log.e("AlarmDismissActivity", "Missing data uri! canceling..");
             finish();
@@ -90,7 +101,30 @@ public class AlarmDismissActivity extends AppCompatActivity
     public void onNewIntent( Intent intent )
     {
         super.onNewIntent(intent);
-        // TODO: what happens if two alarms overlap? this activity is already showing (onNewIntent)
+        if (intent != null)
+        {
+            String action = intent.getAction();
+            if (action != null)
+            {
+                Uri newData = intent.getData();
+                if (newData != null)
+                {
+                    long alarmID = ContentUris.parseId(newData);
+                    if (action.equals(ACTION_HANDLED))
+                    {
+                        Log.d("AlarmDismissActivity", "onNewIntent: ACTION_HANDLED: " + newData);
+                        setResult(Activity.RESULT_CANCELED);
+                        finish();
+
+                    } else if (action.equals(Intent.ACTION_VIEW)) {
+                        Log.d("AlarmDismissActivity", "onNewIntent: ACTION_VIEW: " + newData);
+                        // TODO: what happens if two alarms overlap? this activity is already showing (onNewIntent called on second alarm)
+                        setAlarmID(this, ContentUris.parseId(newData));
+
+                    } else Log.e("AlarmDismissActivity", "onNewIntent: Unrecognized action! " + action);
+                } else Log.w("AlarmDismissActivity", "onNewIntent: null data!");
+            } else Log.w("AlarmDismissActivity", "onNewIntent: null action!");
+        } else Log.w("AlarmDismissActivity", "onNewIntent: null Intent!");
     }
 
     private void initLocale(Context context)
@@ -107,8 +141,10 @@ public class AlarmDismissActivity extends AppCompatActivity
         public void onClick(View v)
         {
             if (alarm != null) {
-                Intent intent = AlarmNotifications.getSnoozeAlarmIntent(AlarmDismissActivity.this, alarm, (int)alarm.rowID);
+                Intent intent = AlarmNotifications.getSnoozeAlarmIntent(AlarmDismissActivity.this, alarm.getUri(), (int)alarm.rowID);
                 sendBroadcast(intent);
+                setResult(Activity.RESULT_OK);
+                finish();
             }
         }
     };
@@ -119,8 +155,10 @@ public class AlarmDismissActivity extends AppCompatActivity
         public void onClick(View v)
         {
             if (alarm != null) {
-                Intent intent = AlarmNotifications.getDismissAlarmIntent(AlarmDismissActivity.this, alarm, (int)alarm.rowID);
+                Intent intent = AlarmNotifications.getDismissAlarmIntent(AlarmDismissActivity.this, alarm.getUri(), (int)alarm.rowID);
                 sendBroadcast(intent);
+                setResult(Activity.RESULT_OK);
+                finish();
             }
         }
     };
@@ -142,7 +180,13 @@ public class AlarmDismissActivity extends AppCompatActivity
         alarm = item;
 
         String emptyLabel = context.getString(R.string.alarmMode_alarm);
-        alarmLabel.setText((item.label == null || item.label.isEmpty()) ? emptyLabel : item.label);
+        alarmTitle.setText((item.label == null || item.label.isEmpty()) ? emptyLabel : item.label);
+
+        if (alarm.event != null) {
+            alarmSubtitle.setText(item.event.getLongDisplayString());
+            alarmSubtitle.setVisibility(View.VISIBLE);
+
+        } else alarmSubtitle.setVisibility(View.GONE);
 
         SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(context, item.getCalendar(), false);
         if (SuntimesUtils.is24()) {
