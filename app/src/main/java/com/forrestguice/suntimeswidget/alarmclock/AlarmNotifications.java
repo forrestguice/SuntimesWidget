@@ -41,6 +41,7 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmDismissActivity;
 
 import java.io.IOException;
 
@@ -119,6 +120,9 @@ public class AlarmNotifications extends BroadcastReceiver
                         } else if (action.equals(ACTION_SNOOZE)) {
                             long snooze = loadSnoozePref(context);
                             // TODO
+
+                        //} else if (action.equals(ACTION_SHOW_FULLSCREEN)) {
+                            //showAlarmFullScreen(context, item);
 
                         } else if (action.equals(ACTION_SHOW)) {
                             showNotification(context, item);
@@ -272,6 +276,16 @@ public class AlarmNotifications extends BroadcastReceiver
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public static Intent getFullScreenIntent(Context context, AlarmClockItem alarm, int notificationID)
+    {
+        Intent intent = new Intent(context, AlarmDismissActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setData(alarm.getUri());
+        intent.putExtra(EXTRA_NOTIFICATION_ID, notificationID);
+        return intent;
+    }
+
+
     public static Intent getDismissAlarmIntent(Context context, AlarmClockItem alarm, int notificationID)
     {
         Intent intent = new Intent(context, AlarmNotifications.class);
@@ -324,6 +338,10 @@ public class AlarmNotifications extends BroadcastReceiver
             builder.setOngoing(true);
             builder.setAutoCancel(false);
 
+            Intent fullScreenIntent = getFullScreenIntent(context, alarm, notificationID);
+            PendingIntent alarmFullScreen = PendingIntent.getActivity(context, alarm.hashCode(), fullScreenIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.setFullScreenIntent(alarmFullScreen, true);       // at discretion of system to use this intent (or to show a heads up notification instead)
+
             Intent snoozeIntent = getSnoozeAlarmIntent(context, alarm, notificationID);
             PendingIntent pendingSnooze = PendingIntent.getBroadcast(context, alarm.hashCode(), snoozeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             builder.addAction(R.drawable.ic_action_alarms, context.getString(R.string.alarmAction_snooze), pendingSnooze);
@@ -369,6 +387,17 @@ public class AlarmNotifications extends BroadcastReceiver
     {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         notificationManager.cancel(ALARM_NOTIFICATION_TAG, notificationID);
+    }
+
+    /**
+     * showAlarmFullScreen
+     */
+    public static void showAlarmFullScreen(Context context, @NonNull AlarmClockItem item)
+    {
+        Intent intent = new Intent(context, AlarmDismissActivity.class);
+        intent.putExtra(AlarmDismissActivity.EXTRA_ALARMID, item.rowID);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
 }

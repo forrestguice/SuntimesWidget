@@ -144,6 +144,13 @@
 
         </activity>
 
+        <activity
+            android:name=".alarmclock.ui.AlarmDismissActivity"
+            android:label="@string/app_name_alarmclock"
+            android:icon="@mipmap/ic_suntimes"
+            android:taskAffinity=".alarmclock.ui.AlarmClockActivity">
+        </activity>
+
         <receiver android:name=".alarmclock.AlarmNotifications"
             android:exported="false">
         </receiver>
