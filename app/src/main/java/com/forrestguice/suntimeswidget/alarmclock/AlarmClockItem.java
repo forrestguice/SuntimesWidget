@@ -130,6 +130,15 @@ public class AlarmClockItem
         return values;
     }
 
+    public Calendar getCalendar()
+    {
+        if (timestamp >= 0) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(timestamp);
+            return calendar;
+        } else return null;
+    }
+
     /**
      * repeatsEveryDay
      * @return
