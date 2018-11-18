@@ -89,6 +89,8 @@
         <item name="icActionEdit">@drawable/ic_action_edit_light</item>
         <item name="icActionDelete">@drawable/ic_action_discard_light</item>
         <item name="icActionCopy">@drawable/ic_action_copy_light</item>
+        <item name="icActionDismiss">@drawable/ic_action_cancel_light</item>
+        <item name="icActionCancel">@drawable/ic_action_cancel_light</item>
 
         <item name="windowActionModeOverlay">true</item>
     </style>
@@ -182,6 +184,8 @@
         <item name="icActionEdit">@drawable/ic_action_edit</item>
         <item name="icActionDelete">@drawable/ic_action_discard</item>
         <item name="icActionCopy">@drawable/ic_action_copy</item>
+        <item name="icActionDismiss">@drawable/ic_action_cancel</item>
+        <item name="icActionCancel">@drawable/ic_action_cancel</item>
 
         <item name="windowActionModeOverlay">true</item>
     </style>

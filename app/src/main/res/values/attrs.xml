@@ -83,6 +83,8 @@
     <attr name="icActionEdit" format="reference" />
     <attr name="icActionDelete" format="reference" />
     <attr name="icActionCopy" format="reference" />
+    <attr name="icActionDismiss" format="reference" />
+    <attr name="icActionCancel" format="reference" />
 
     <attr name="icActionNext" format="reference" />
     <attr name="icActionPrevious" format="reference" />
