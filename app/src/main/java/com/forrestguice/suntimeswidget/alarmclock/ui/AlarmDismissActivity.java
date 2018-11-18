@@ -18,20 +18,38 @@
 
 package com.forrestguice.suntimeswidget.alarmclock.ui;
 
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import java.util.Calendar;
+
+/**
+ * AlarmDismissActivity
+ */
 public class AlarmDismissActivity extends AppCompatActivity
 {
-    public static final String EXTRA_ALARMID = "alarmID";
+    private Long alarmID = null;
+    private AlarmClockItem alarm = null;
+    private TextView alarmLabel, alarmText;
+    private SuntimesUtils utils = new SuntimesUtils();
 
     public AlarmDismissActivity()
     {
@@ -53,22 +71,24 @@ public class AlarmDismissActivity extends AppCompatActivity
         initLocale(this);
         setContentView(R.layout.layout_activity_dismissalarm);
         initViews(this);
-        handleIntent(getIntent());
+
+        Uri data = getIntent().getData();
+        if (data != null) {
+            alarmID = ContentUris.parseId(data);
+
+        } else {
+            Log.e("AlarmDismissActivity", "Missing data uri! canceling..");
+            finish();
+        }
+
+        updateViews(this);
     }
 
     @Override
     public void onNewIntent( Intent intent )
     {
         super.onNewIntent(intent);
-        handleIntent(intent);
-    }
-
-    protected void handleIntent(Intent intent)
-    {
-        /**String param_action = intent.getAction();
-        intent.setAction(null);
-        if (param_action != null) {
-        }*/
+        // TODO
     }
 
     private void initLocale(Context context)
@@ -79,113 +99,74 @@ public class AlarmDismissActivity extends AppCompatActivity
         SolarEvents.initDisplayStrings(context);
     }
 
-    @Override
-    public void onStart()
-    {
-        super.onStart();
-    }
-
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause()
-    {
-        super.onPause();
-    }
-
-    @Override
-    public void onStop()
-    {
-        super.onStop();
-    }
-
-    @Override
-    public void onDestroy()
-    {
-        super.onDestroy();
-    }
-
-
-    @Override
-    public void onSaveInstanceState( Bundle outState )
-    {
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onRestoreInstanceState(@NonNull Bundle savedState)
-    {
-        super.onRestoreInstanceState(savedState);
-    }
-
-    /**
-     * initViews
-     */
     protected void initViews(Context context)
     {
+        alarmLabel = (TextView)findViewById(R.id.txt_alarm_label);
+        alarmText = (TextView)findViewById(R.id.txt_alarm_time);
+
+        Button dismissButton = (Button) findViewById(R.id.btn_dismiss);
+        dismissButton.setOnClickListener(onDismissClicked);
+
+        Button snoozeButton = (Button) findViewById(R.id.btn_snooze);
+        snoozeButton.setOnClickListener(onSnoozeClicked);
     }
 
-    /**@Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    private View.OnClickListener onSnoozeClicked = new View.OnClickListener()
     {
-        super.onActivityResult(requestCode, resultCode, data);
-    }*/
-
-    /**@Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.alarmclock, menu);
-        return true;
-    }*/
-
-    /**@Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
+        @Override
+        public void onClick(View v)
         {
-            case R.id.action_clear:
-                clearAlarms();
-                return true;
-
-            case R.id.action_help:
-                showHelp();
-                return true;
-
-            case R.id.action_about:
-                showAbout();
-                return true;
-
-            case android.R.id.home:
-                //onBackPressed();
-                //onHomePressed();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+            if (alarm != null) {
+                Intent intent = AlarmNotifications.getSnoozeAlarmIntent(AlarmDismissActivity.this, alarm, (int)alarm.rowID);
+                sendBroadcast(intent);
+            }
         }
-    }*/
+    };
 
-    /**
-     * onHomePressed
-     */
-    /**protected void onHomePressed()
+    private View.OnClickListener onDismissClicked = new View.OnClickListener()
     {
-        Intent intent = new Intent(this, SuntimesActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-    }*/
+        @Override
+        public void onClick(View v)
+        {
+            if (alarm != null) {
+                Intent intent = AlarmNotifications.getDismissAlarmIntent(AlarmDismissActivity.this, alarm, (int)alarm.rowID);
+                sendBroadcast(intent);
+            }
+        }
+    };
 
-    /**@SuppressWarnings("RestrictedApi")
-    @Override
-    protected boolean onPrepareOptionsPanel(View view, Menu menu)
+    protected void updateViews(final Context context)
     {
-        SuntimesUtils.forceActionBarIcons(menu);
-        return super.onPrepareOptionsPanel(view, menu);
-    }*/
+        if (alarmID != null)
+        {
+            AlarmDatabaseAdapter.AlarmItemTask task = new AlarmDatabaseAdapter.AlarmItemTask(context);
+            task.setAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmItemTask.AlarmItemTaskListener() {
+                @Override
+                public void onItemLoaded(AlarmClockItem item) {
+                    updateViews(context, item);
+                }
+            });
+            task.execute(alarmID);
+        }
+    }
+
+    protected void updateViews(Context context, AlarmClockItem item)
+    {
+        alarm = item;
+        String emptyLabel = context.getString(R.string.alarmMode_alarm);
+        alarmLabel.setText((item.label == null || item.label.isEmpty()) ? emptyLabel : item.label);
+
+        Calendar alarmTime = Calendar.getInstance();
+        alarmTime.setTimeInMillis(item.timestamp);
+
+        SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(context, alarmTime, false);
+        if (SuntimesUtils.is24()) {
+            alarmText.setText(timeText.getValue());
+        } else {
+            String timeString = timeText.getValue() + " " + timeText.getSuffix();
+            SpannableString timeDisplay = SuntimesUtils.createRelativeSpan(null, timeString, " " + timeText.getSuffix(), 0.40f);
+            alarmText.setText(timeDisplay);
+        }
+    }
 
 }
