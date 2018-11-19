@@ -140,6 +140,13 @@ public class AlarmClockItem
         } else return null;
     }
 
+    public Calendar getAdjustedCalendar()
+    {
+        Calendar calendar = getCalendar();
+        calendar.setTimeInMillis(calendar.getTimeInMillis() + offset);
+        return calendar;
+    }
+
     /**
      * repeatsEveryDay
      * @return
