@@ -18,11 +18,9 @@
 
 package com.forrestguice.suntimeswidget.alarmclock.ui;
 
-import android.animation.ObjectAnimator;
-import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.app.Activity;
-import android.app.PendingIntent;
+
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
@@ -53,8 +51,11 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 public class AlarmDismissActivity extends AppCompatActivity
 {
     public static final String TAG = "AlarmReceiverDismiss";
+    public static final String EXTRA_SNOOZING = "isSnoozing";
 
     private AlarmClockItem alarm = null;
+    private boolean isSnoozing = false;
+
     private TextView alarmTitle, alarmSubtitle, alarmText, snoozeText;
     private Button snoozeButton, dismissButton;
     private ViewFlipper icon;
@@ -104,7 +105,27 @@ public class AlarmDismissActivity extends AppCompatActivity
             setResult(RESULT_CANCELED);
             finish();
         }
-        setMode(null);
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+    }
+
+    @Override
+    public void onRestoreInstanceState( Bundle bundle )
+    {
+        super.onRestoreInstanceState(bundle);
+        isSnoozing = bundle.getBoolean(EXTRA_SNOOZING, false);
+        setMode(isSnoozing ? AlarmNotifications.ACTION_SNOOZE : null);
+    }
+
+    @Override
+    public void onSaveInstanceState( Bundle bundle )
+    {
+        super.onSaveInstanceState(bundle);
+        bundle.putBoolean(EXTRA_SNOOZING, isSnoozing);
     }
 
     @Override
@@ -164,13 +185,19 @@ public class AlarmDismissActivity extends AppCompatActivity
 
     private void setMode( @Nullable String action )
     {
-        if (AlarmNotifications.ACTION_SNOOZE.equals(action))
+        boolean shouldSnooze = AlarmNotifications.ACTION_SNOOZE.equals(action);
+        boolean needsTransition = (shouldSnooze != isSnoozing);
+        isSnoozing = shouldSnooze;
+
+        if (shouldSnooze)
         {
             snoozeText.setText("Snoozing");            // TODO
             snoozeText.setVisibility(View.VISIBLE);
             snoozeButton.setVisibility(View.GONE);
             icon.setDisplayedChild(1);
-            animateBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_OFF, 1000);
+            if (needsTransition)
+                animateBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_OFF, 1000);
+            else setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_OFF);
 
         } else {
             snoozeText.setVisibility(View.GONE);
