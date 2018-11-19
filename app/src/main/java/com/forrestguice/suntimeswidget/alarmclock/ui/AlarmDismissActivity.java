@@ -19,11 +19,12 @@
 package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.animation.ValueAnimator;
-import android.app.Activity;
 
+import android.content.BroadcastReceiver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -41,6 +42,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -52,6 +54,7 @@ public class AlarmDismissActivity extends AppCompatActivity
 {
     public static final String TAG = "AlarmReceiverDismiss";
     public static final String EXTRA_SNOOZING = "isSnoozing";
+    public static final String BROADCAST_UPDATE = "com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockDismissActivity.UPDATE";
 
     private AlarmClockItem alarm = null;
     private boolean isSnoozing = false;
@@ -108,9 +111,64 @@ public class AlarmDismissActivity extends AppCompatActivity
     }
 
     @Override
-    public void onResume()
+    public void onNewIntent( Intent intent )
     {
-        super.onResume();
+        super.onNewIntent(intent);
+        if (intent != null)
+        {
+            Uri newData = intent.getData();
+            if (newData != null)
+            {
+                Log.d(TAG, "onNewIntent: " + newData);
+                setAlarmID(this, ContentUris.parseId(newData));
+
+            } else Log.w(TAG, "onNewIntent: null data!");
+        } else Log.w(TAG, "onNewIntent: null Intent!");
+    }
+
+    private BroadcastReceiver updateReceiver = new BroadcastReceiver()
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            String action = intent.getAction();
+            Uri data = intent.getData();
+            Log.d(TAG, "updateReceiver.onReceive: " + action + ", " + data);
+
+            if (action != null && data != null)
+            {
+                long alarmID = ContentUris.parseId(data);
+                if (action.equals(BROADCAST_UPDATE))
+                {
+                    if (alarm == null || alarm.rowID != alarmID)
+                    {
+                        Log.d(TAG, "updateReceiver.onReceive: setting alarmID: " + alarmID);
+                        setAlarmID(AlarmDismissActivity.this, alarmID);
+
+                    } else {
+                        Log.d(TAG, "updateReceiver.onReceive: setting mode: " + AlarmNotifications.ACTION_SNOOZE);
+                        setMode(AlarmNotifications.ACTION_SNOOZE);
+                    }
+                }
+            }
+        }
+    };
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        IntentFilter updateFilter = new IntentFilter();
+        updateFilter.addAction(BROADCAST_UPDATE);
+        updateFilter.addDataScheme("content");
+        registerReceiver(updateReceiver, updateFilter);
+    }
+
+    @Override
+    protected void onStop()
+    {
+        unregisterReceiver(updateReceiver);
+        super.onStop();
     }
 
     @Override
@@ -128,22 +186,6 @@ public class AlarmDismissActivity extends AppCompatActivity
         bundle.putBoolean(EXTRA_SNOOZING, isSnoozing);
     }
 
-    @Override
-    public void onNewIntent( Intent intent )
-    {
-        super.onNewIntent(intent);
-        if (intent != null)
-        {
-            Uri newData = intent.getData();
-            if (newData != null)
-            {
-                Log.d(TAG, "onNewIntent: " + newData);
-                setAlarmID(this, ContentUris.parseId(newData));
-
-            } else Log.w(TAG, "onNewIntent: null data!");
-        } else Log.w(TAG, "onNewIntent: null Intent!");
-    }
-
     private void initLocale(Context context)
     {
         WidgetSettings.initDefaults(context);
@@ -159,10 +201,11 @@ public class AlarmDismissActivity extends AppCompatActivity
         {
             if (alarm != null) {
                 Log.d(TAG, "onSnoozeClicked");
+                snoozeButton.setEnabled(false);
+                dismissButton.setEnabled(false);
                 Intent intent = AlarmNotifications.getAlarmIntent(AlarmDismissActivity.this, alarm.getUri(), (int)alarm.rowID);
                 intent.setAction(AlarmNotifications.ACTION_SNOOZE);
                 sendBroadcast(intent);
-                setMode(AlarmNotifications.ACTION_SNOOZE);
             }
         }
     };
@@ -174,11 +217,11 @@ public class AlarmDismissActivity extends AppCompatActivity
         {
             if (alarm != null) {
                 Log.d(TAG, "onDismissedClicked");
+                snoozeButton.setEnabled(false);
+                dismissButton.setEnabled(false);
                 Intent intent = AlarmNotifications.getAlarmIntent(AlarmDismissActivity.this, alarm.getUri(), (int)alarm.rowID);
                 intent.setAction(AlarmNotifications.ACTION_DISMISS);
                 sendBroadcast(intent);
-                setResult(Activity.RESULT_OK);
-                finish();
             }
         }
     };
@@ -194,6 +237,8 @@ public class AlarmDismissActivity extends AppCompatActivity
             snoozeText.setText("Snoozing");            // TODO
             snoozeText.setVisibility(View.VISIBLE);
             snoozeButton.setVisibility(View.GONE);
+            snoozeButton.setEnabled(false);
+            dismissButton.setEnabled(true);
             icon.setDisplayedChild(1);
             if (needsTransition)
                 animateBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_OFF, 1000);
@@ -202,6 +247,8 @@ public class AlarmDismissActivity extends AppCompatActivity
         } else {
             snoozeText.setVisibility(View.GONE);
             snoozeButton.setVisibility(View.VISIBLE);
+            snoozeButton.setEnabled(true);
+            dismissButton.setEnabled(true);
             icon.setDisplayedChild(0);
             setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE);
         }
@@ -265,6 +312,10 @@ public class AlarmDismissActivity extends AppCompatActivity
             String timeString = timeText.getValue() + " " + timeText.getSuffix();
             SpannableString timeDisplay = SuntimesUtils.createRelativeSpan(null, timeString, " " + timeText.getSuffix(), 0.40f);
             alarmText.setText(timeDisplay);
+        }
+
+        if (alarm.state != null) {
+            setMode(alarm.state.getState() == AlarmState.STATE_SNOOZING ? AlarmNotifications.ACTION_SNOOZE : null);
         }
     }
 

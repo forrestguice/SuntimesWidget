@@ -128,6 +128,24 @@ public class AlarmNotifications extends BroadcastReceiver
         };
     }
 
+    private AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener signalFullscreenActivityOnAlarmChanged(final Context context, final Uri data)
+    {
+        return new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
+        {
+            @Override
+            public void onFinished(Boolean result)
+            {
+                if (result)
+                {
+                    Log.d(TAG, "trigger fullscreenActivity update: " + data);
+                    Intent intent = new Intent(AlarmDismissActivity.BROADCAST_UPDATE);
+                    intent.setData(data);
+                    context.sendBroadcast(intent);
+                }
+            }
+        };
+    }
+
     /**
      */
     private AlarmDatabaseAdapter.AlarmStateUpdateTask.AlarmStateUpdateTaskListener performActionOnStateChanged(final Context context, final String action, final AlarmClockItem item)
@@ -151,7 +169,7 @@ public class AlarmNotifications extends BroadcastReceiver
         return new AlarmDatabaseAdapter.AlarmItemTask.AlarmItemTaskListener()
         {
             @Override
-            public void onItemLoaded(AlarmClockItem item)
+            public void onItemLoaded(final AlarmClockItem item)
             {
                 if (item != null)
                 {
@@ -246,11 +264,12 @@ public class AlarmNotifications extends BroadcastReceiver
                         {
                             long snooze = loadSnoozePref(context);
                             long snoozeAlarmTime = item.timestamp + snooze;  // TODO
-                            Log.i(TAG, "Snoozed: " + item.rowID + ", " + snoozeAlarmTime);
+                            Log.i(TAG, "Snoozing: " + item.rowID + ", " + snoozeAlarmTime);
 
                             // TODO: schedule snoozed alarm
                             //AlarmState.transitionState(item.state, AlarmState.STATE_DISMISSED);  // TODO: remove this line, replace w/ AlarmManager
                             item.modified = true;
+                            updateItem.setTaskListener(signalFullscreenActivityOnAlarmChanged(context, item.getUri()));
                             updateItem.execute(item);
                         }
 
