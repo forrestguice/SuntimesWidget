@@ -45,6 +45,8 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
  */
 public class AlarmDismissActivity extends AppCompatActivity
 {
+    public static final String TAG = "AlarmReceiverDismiss";
+
     private AlarmClockItem alarm = null;
     private TextView alarmTitle, alarmSubtitle, alarmText;
     private SuntimesUtils utils = new SuntimesUtils();
@@ -80,25 +82,15 @@ public class AlarmDismissActivity extends AppCompatActivity
         snoozeButton.setOnClickListener(onSnoozeClicked);
 
         Intent intent = getIntent();
-        String action = intent.getAction();
         Uri data = intent.getData();
-        if (data != null) {
-            if (AlarmNotifications.ACTION_DISMISS.equals(action))
-            {
-                Log.d("AlarmDismissActivity", "onCreate: ACTION_HANDLED: " + data);
-                setResult(RESULT_CANCELED);
-                finish();
+        if (data != null)
+        {
+            Log.d(TAG, "onCreate: " + data);
+            setAlarmID(this, ContentUris.parseId(data));
 
-            } else if (AlarmNotifications.ACTION_SNOOZE.equals(action) || AlarmNotifications.ACTION_TIMEOUT.equals(action)) {
-                Log.d("AlarmDismissActivity", "onCreate: ACTION_SNOOZE,TIMEOUT: " + data + " .. not supported by onCreate, finishing...");
-                setResult(RESULT_CANCELED);
-                finish();
-
-            } else {
-                setAlarmID(this, ContentUris.parseId(data));
-            }
         } else {
-            Log.e("AlarmDismissActivity", "Missing data uri! canceling..");
+            Log.e(TAG, "onCreate: missing data uri! canceling...");
+            setResult(RESULT_CANCELED);
             finish();
         }
     }
@@ -109,26 +101,14 @@ public class AlarmDismissActivity extends AppCompatActivity
         super.onNewIntent(intent);
         if (intent != null)
         {
-            String action = intent.getAction();
-            if (action != null)
+            Uri newData = intent.getData();
+            if (newData != null)
             {
-                Uri newData = intent.getData();
-                if (newData != null)
-                {
-                    if (action.equals(AlarmNotifications.ACTION_DISMISS)) {
-                        Log.d("AlarmDismissActivity", "onNewIntent: ACTION_HANDLED: " + newData);
-                        setResult(Activity.RESULT_CANCELED);
-                        finish();
+                Log.d(TAG, "onNewIntent: " + newData);
+                setAlarmID(this, ContentUris.parseId(newData));
 
-                    } else if (action.equals(Intent.ACTION_VIEW)) {
-                        Log.d("AlarmDismissActivity", "onNewIntent: ACTION_VIEW: " + newData);
-                        // TODO: what happens if two alarms overlap? this activity is already showing (onNewIntent called on second alarm)
-                        setAlarmID(this, ContentUris.parseId(newData));
-
-                    } else Log.e("AlarmDismissActivity", "onNewIntent: Unrecognized action! " + action);
-                } else Log.w("AlarmDismissActivity", "onNewIntent: null data!");
-            } else Log.w("AlarmDismissActivity", "onNewIntent: null action!");
-        } else Log.w("AlarmDismissActivity", "onNewIntent: null Intent!");
+            } else Log.w(TAG, "onNewIntent: null data!");
+        } else Log.w(TAG, "onNewIntent: null Intent!");
     }
 
     private void initLocale(Context context)
@@ -145,10 +125,10 @@ public class AlarmDismissActivity extends AppCompatActivity
         public void onClick(View v)
         {
             if (alarm != null) {
+                Log.d(TAG, "onSnoozeClicked");
                 Intent intent = AlarmNotifications.getAlarmIntent(AlarmDismissActivity.this, alarm.getUri(), (int)alarm.rowID);
                 intent.setAction(AlarmNotifications.ACTION_SNOOZE);
                 sendBroadcast(intent);
-                setResult(Activity.RESULT_OK);
             }
         }
     };
@@ -159,6 +139,7 @@ public class AlarmDismissActivity extends AppCompatActivity
         public void onClick(View v)
         {
             if (alarm != null) {
+                Log.d(TAG, "onDismissedClicked");
                 Intent intent = AlarmNotifications.getAlarmIntent(AlarmDismissActivity.this, alarm.getUri(), (int)alarm.rowID);
                 intent.setAction(AlarmNotifications.ACTION_DISMISS);
                 sendBroadcast(intent);
