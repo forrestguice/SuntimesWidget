@@ -95,7 +95,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 Intent dismissNotification = NotificationService.getDismissIntent(context, data);
                 context.startService(dismissNotification);
 
-                if (action.equals(ACTION_SNOOZE) || action.equals(ACTION_DISMISS))
+                if (action.equals(ACTION_DISMISS))
                 {
                     Intent dismissNotificationDrawer =  new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
                     context.sendBroadcast(dismissNotificationDrawer);
@@ -141,6 +141,10 @@ public class AlarmNotifications extends BroadcastReceiver
                     Intent intent = new Intent(AlarmDismissActivity.BROADCAST_UPDATE);
                     intent.setData(data);
                     context.sendBroadcast(intent);
+
+                    Log.d(TAG, "trigger notification update: " + data);
+                    Intent snoozeNotification = NotificationService.getSnoozeIntent(context, data);
+                    context.startService(snoozeNotification);
                 }
             }
         };
@@ -219,6 +223,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         {
                             Log.i(TAG, "Timeout: " + item.rowID);
                             item.modified = true;
+                            updateItem.setTaskListener(signalFullscreenActivityOnAlarmChanged(context, item.getUri()));
                             updateItem.execute(item);
                         }
 
@@ -282,7 +287,7 @@ public class AlarmNotifications extends BroadcastReceiver
                             if (item.type == AlarmClockItem.AlarmType.ALARM)
                             {
                                 Log.i(TAG, "Show: " + item.rowID + "(Alarm)");
-                                Intent showNotification = NotificationService.getShowIntent(context, item);
+                                Intent showNotification = NotificationService.getShowIntent(context, item.getUri());
                                 context.startService(showNotification);
 
                             } else {
@@ -494,13 +499,6 @@ public class AlarmNotifications extends BroadcastReceiver
         builder.setDefaults( Notification.DEFAULT_LIGHTS );
         //builder.setStyle(new NotificationCompat.MediaStyle());
 
-        builder.setContentTitle(notificationTitle)
-                .setContentText(notificationMsg)
-                .setSmallIcon(notificationIcon)
-                .setColor(notificationColor)
-                .setOnlyAlertOnce(false);
-        builder.setVisibility( NotificationCompat.VISIBILITY_PUBLIC );
-
         if (alarm.type == AlarmClockItem.AlarmType.ALARM)
         {
             // ALARM
@@ -511,17 +509,41 @@ public class AlarmNotifications extends BroadcastReceiver
 
             Intent fullScreenIntent = getFullScreenIntent(context, alarm.getUri(), notificationID);
             PendingIntent alarmFullScreen = PendingIntent.getActivity(context, alarm.hashCode(), fullScreenIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            builder.setFullScreenIntent(alarmFullScreen, true);       // at discretion of system to use this intent (or to show a heads up notification instead)
 
             Intent snoozeIntent = getAlarmIntent(context, alarm.getUri(), notificationID);
             snoozeIntent.setAction(ACTION_SNOOZE);
             PendingIntent pendingSnooze = PendingIntent.getBroadcast(context, alarm.hashCode(), snoozeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            builder.addAction(R.drawable.ic_action_alarms, context.getString(R.string.alarmAction_snooze), pendingSnooze);
 
             Intent dismissIntent = getAlarmIntent(context, alarm.getUri(), notificationID);
             dismissIntent.setAction(ACTION_DISMISS);
             PendingIntent pendingDismiss = PendingIntent.getBroadcast(context, alarm.hashCode(), dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);
+
+            builder.setFullScreenIntent(alarmFullScreen, true);       // at discretion of system to use this intent (or to show a heads up notification instead)
+
+            if (alarm.state != null)
+            {
+                int alarmState = alarm.state.getState();
+                switch (alarmState)
+                {
+                    case AlarmState.STATE_SNOOZING:
+                        notificationMsg = "Snoozing";  // TODO
+                        notificationIcon = R.drawable.ic_action_snooze;
+                        builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);
+                        break;
+
+                    case AlarmState.STATE_TIMEOUT:
+                        notificationMsg = "Timed out";  // TODO
+                        break;
+
+                    default:
+                        builder.addAction(R.drawable.ic_action_snooze, context.getString(R.string.alarmAction_snooze), pendingSnooze);
+                        builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);
+                        break;
+                }
+            } else {
+                builder.addAction(R.drawable.ic_action_snooze, context.getString(R.string.alarmAction_snooze), pendingSnooze);
+                builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);
+            }
 
         } else {
             // NOTIFICATION
@@ -536,6 +558,13 @@ public class AlarmNotifications extends BroadcastReceiver
             builder.setDeleteIntent(pendingDismiss);
             builder.setContentIntent(pendingDismiss);
         }
+
+        builder.setContentTitle(notificationTitle)
+                .setContentText(notificationMsg)
+                .setSmallIcon(notificationIcon)
+                .setColor(notificationColor)
+                .setVisibility( NotificationCompat.VISIBILITY_PUBLIC );
+        builder.setOnlyAlertOnce(false);
 
         return builder.build();
     }
@@ -555,6 +584,14 @@ public class AlarmNotifications extends BroadcastReceiver
         notificationManager.notify(ALARM_NOTIFICATION_TAG, notificationID, notification);
         startAlert(context, item);
     }
+
+    /**public static void updateNotification(Context context, @NonNull AlarmClockItem item)
+    {
+        int notificationID = (int)item.rowID;
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+        Notification notification = createNotification(context, item, notificationID);
+        notificationManager.notify(ALARM_NOTIFICATION_TAG, notificationID, notification);
+    }*/
 
     /**
      * dismissNotification
@@ -612,10 +649,37 @@ public class AlarmNotifications extends BroadcastReceiver
                 Log.d(TAG, "ACTION_SILENT");
                 AlarmNotifications.stopAlert(getApplicationContext());
 
+            } else if (AlarmNotifications.ACTION_SNOOZE.equals(action) && data != null) {
+                Log.d(TAG, "ACTION_SNOOZE");
+                final long notificationID = ContentUris.parseId(data);
+                AlarmDatabaseAdapter.AlarmItemTask alarmTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext());
+                alarmTask.setAlarmItemTaskListener(updateNotificationTask((int)notificationID));
+                alarmTask.execute(notificationID);
+
+            } else if (AlarmNotifications.ACTION_TIMEOUT.equals(action) && data != null) {
+                Log.d(TAG, "ACTION_TIMEOUT");
+                final long notificationID = ContentUris.parseId(data);
+                AlarmDatabaseAdapter.AlarmItemTask alarmTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext());
+                alarmTask.setAlarmItemTaskListener(updateNotificationTask((int)notificationID));
+                alarmTask.execute(notificationID);
+
             } else {
                 Log.w(TAG, "Unrecognized action: " + action);
             }
             return START_STICKY;
+        }
+
+        private AlarmDatabaseAdapter.AlarmItemTask.AlarmItemTaskListener updateNotificationTask(final int notificationID)
+        {
+            return new AlarmDatabaseAdapter.AlarmItemTask.AlarmItemTaskListener()
+            {
+                @Override
+                public void onItemLoaded(AlarmClockItem alarm) {
+                    Context context = getApplicationContext();
+                    Notification notification = AlarmNotifications.createNotification(context, alarm, (int)notificationID);
+                    startForeground((int)notificationID, notification);
+                }
+            };
         }
 
         @Nullable
@@ -625,26 +689,44 @@ public class AlarmNotifications extends BroadcastReceiver
             return null;
         }
 
-        public static Intent getShowIntent(Context context, AlarmClockItem alarm)
+        public static Intent getShowIntent(Context context, Uri data)
         {
-            Intent intent = new Intent(context,NotificationService.class);
+            Intent intent = getNotificationIntent(context, data);
             intent.setAction(ACTION_SHOW);
-            intent.setData(alarm.getUri());
             return intent;
         }
 
         public static Intent getDismissIntent(Context context, Uri data)
         {
-            Intent intent = new Intent(context, NotificationService.class);
+            Intent intent = getNotificationIntent(context, data);
             intent.setAction(ACTION_DISMISS);
-            intent.setData(data);
             return intent;
         }
 
         public static Intent getSilenceIntent(Context context, Uri data)
         {
-            Intent intent = new Intent(context, NotificationService.class);
+            Intent intent = getNotificationIntent(context, data);
             intent.setAction(ACTION_SILENT);
+            return intent;
+        }
+
+        public static Intent getSnoozeIntent(Context context, Uri data)
+        {
+            Intent intent = getNotificationIntent(context, data);
+            intent.setAction(ACTION_SNOOZE);
+            return intent;
+        }
+
+        public static Intent getTimeoutIntent(Context context, Uri data)
+        {
+            Intent intent = getNotificationIntent(context, data);
+            intent.setAction(ACTION_TIMEOUT);
+            return intent;
+        }
+
+        private static Intent getNotificationIntent(Context context, Uri data)
+        {
+            Intent intent = new Intent(context, NotificationService.class);
             intent.setData(data);
             return intent;
         }
