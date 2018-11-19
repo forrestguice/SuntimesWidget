@@ -93,6 +93,12 @@ public class AlarmNotifications extends BroadcastReceiver
                 Intent dismissNotification = NotificationService.getDismissIntent(context, data);
                 context.startService(dismissNotification);
 
+                if (action.equals(ACTION_SNOOZE) || action.equals(ACTION_DISMISS))
+                {
+                    Intent dismissNotificationDrawer =  new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
+                    context.sendBroadcast(dismissNotificationDrawer);
+                }
+
             } else if (action.equals(ACTION_SILENT)) {
                 Intent silenceNotification = NotificationService.getSilenceIntent(context, data);
                 context.startService(silenceNotification);
@@ -537,7 +543,7 @@ public class AlarmNotifications extends BroadcastReceiver
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         notificationManager.cancel(ALARM_NOTIFICATION_TAG, notificationID);
     }
-    
+
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
