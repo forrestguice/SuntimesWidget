@@ -409,7 +409,7 @@ public class AlarmClockActivity extends AppCompatActivity
     }
     protected void addAlarm(AlarmClockItem.AlarmType type, String label, SolarEvents event, int hour, int minute, boolean vibrate, Uri ringtoneUri, ArrayList<Integer> repetitionDays)
     {
-        AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, true);
+        AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, true, false);
         task.setTaskListener(new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
         {
             @Override
@@ -1475,45 +1475,37 @@ public class AlarmClockActivity extends AppCompatActivity
          * @param item AlarmClockItem
          * @param enabled enabled/disabled
          */
-        protected void enableAlarm(final AlarmClockItem item, View itemView, boolean enabled)
+        protected void enableAlarm(final AlarmClockItem item, View itemView, final boolean enabled)
         {
+            itemView.setBackgroundColor(enabled ? alarmEnabledColor : alarmDisabledColor);
+
             item.enabled = enabled;
             item.modified = true;
-            onAlarmModified(item);
 
-            itemView.setBackgroundColor(enabled ? alarmEnabledColor : alarmDisabledColor);
-            if (enabled) {
-                showAlarmEnabledMessage(context, item);  // TODO: this line belongs somewhere else .. like when actually scheduled via AlarmManager
-                triggerNotification(context, item);  // TODO: remove this line .. testing, trigger notification immediately
-            }
-        }
+            AlarmDatabaseAdapter.AlarmUpdateTask enableTask = new AlarmDatabaseAdapter.AlarmUpdateTask(context);
+            enableTask.setTaskListener(new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
+            {
+                @Override
+                public void onFinished(Boolean result)
+                {
+                    if (result)
+                    {
+                        if (enabled)
+                        {
+                            Intent scheduleIntent = AlarmNotifications.getAlarmIntent(context, item.getUri(), (int)item.rowID);
+                            scheduleIntent.setAction(AlarmNotifications.ACTION_SCHEDULE);
+                            context.sendBroadcast(scheduleIntent);
 
-        /**
-         * showAlarmEnabledMessage
-         * @param context
-         * @param item
-         */
-        protected static void showAlarmEnabledMessage(@NonNull Context context, @NonNull AlarmClockItem item)
-        {
-            Calendar now = Calendar.getInstance();
-            SuntimesUtils.TimeDisplayText alarmText = utils.timeDeltaLongDisplayString(now.getTimeInMillis(), item.timestamp);
-            String alarmString = context.getString(R.string.alarmenabled_toast, alarmText.getValue());
-            SpannableString alarmDisplay = SuntimesUtils.createBoldSpan(null, alarmString, alarmText.getValue());
-            Toast msg = Toast.makeText(context, alarmDisplay, Toast.LENGTH_SHORT);
-            msg.show();
-        }
+                        } else {
+                            Intent disableIntent = AlarmNotifications.getAlarmIntent(context, item.getUri(), (int)item.rowID);
+                            disableIntent.setAction(AlarmNotifications.ACTION_DISABLE);
+                            context.sendBroadcast(disableIntent);
+                        }
 
-        /**
-         * triggerNotification
-         * @param context
-         * @param item
-         */
-        protected static void triggerNotification(@NonNull Context context, @NonNull AlarmClockItem item)
-        {
-            Intent intent = new Intent(context, AlarmNotifications.class);
-            intent.setAction(AlarmNotifications.ACTION_SHOW);
-            intent.setData(item.getUri());
-            context.sendBroadcast(intent);  // TODO: testing
+                    } else Log.e("AlarmClockActivity", "enableAlarm: failed to save state!");
+                }
+            });
+            enableTask.execute(item);
         }
 
         /**

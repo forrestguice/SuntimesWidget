@@ -140,7 +140,8 @@ public class AlarmDismissActivity extends AppCompatActivity
         public void onClick(View v)
         {
             if (alarm != null) {
-                Intent intent = AlarmNotifications.getSnoozeAlarmIntent(AlarmDismissActivity.this, alarm.getUri(), (int)alarm.rowID);
+                Intent intent = AlarmNotifications.getAlarmIntent(AlarmDismissActivity.this, alarm.getUri(), (int)alarm.rowID);
+                intent.setAction(AlarmNotifications.ACTION_SNOOZE);
                 sendBroadcast(intent);
                 setResult(Activity.RESULT_OK);
                 finish();
@@ -154,7 +155,8 @@ public class AlarmDismissActivity extends AppCompatActivity
         public void onClick(View v)
         {
             if (alarm != null) {
-                Intent intent = AlarmNotifications.getDismissAlarmIntent(AlarmDismissActivity.this, alarm.getUri(), (int)alarm.rowID);
+                Intent intent = AlarmNotifications.getAlarmIntent(AlarmDismissActivity.this, alarm.getUri(), (int)alarm.rowID);
+                intent.setAction(AlarmNotifications.ACTION_DISMISS);
                 sendBroadcast(intent);
                 setResult(Activity.RESULT_OK);
                 finish();
