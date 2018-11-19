@@ -18,18 +18,25 @@
 
 package com.forrestguice.suntimeswidget.alarmclock.ui;
 
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
+import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -48,7 +55,9 @@ public class AlarmDismissActivity extends AppCompatActivity
     public static final String TAG = "AlarmReceiverDismiss";
 
     private AlarmClockItem alarm = null;
-    private TextView alarmTitle, alarmSubtitle, alarmText;
+    private TextView alarmTitle, alarmSubtitle, alarmText, snoozeText;
+    private Button snoozeButton, dismissButton;
+    private ViewFlipper icon;
     private SuntimesUtils utils = new SuntimesUtils();
 
     public AlarmDismissActivity()
@@ -74,11 +83,13 @@ public class AlarmDismissActivity extends AppCompatActivity
         alarmTitle = (TextView)findViewById(R.id.txt_alarm_label);
         alarmSubtitle = (TextView)findViewById(R.id.txt_alarm_label2);
         alarmText = (TextView)findViewById(R.id.txt_alarm_time);
+        snoozeText = (TextView)findViewById(R.id.txt_snooze);
+        icon = (ViewFlipper)findViewById(R.id.icon_alarm);
 
-        Button dismissButton = (Button) findViewById(R.id.btn_dismiss);
+        dismissButton = (Button) findViewById(R.id.btn_dismiss);
         dismissButton.setOnClickListener(onDismissClicked);
 
-        Button snoozeButton = (Button) findViewById(R.id.btn_snooze);
+        snoozeButton = (Button) findViewById(R.id.btn_snooze);
         snoozeButton.setOnClickListener(onSnoozeClicked);
 
         Intent intent = getIntent();
@@ -93,6 +104,7 @@ public class AlarmDismissActivity extends AppCompatActivity
             setResult(RESULT_CANCELED);
             finish();
         }
+        setMode(null);
     }
 
     @Override
@@ -129,6 +141,7 @@ public class AlarmDismissActivity extends AppCompatActivity
                 Intent intent = AlarmNotifications.getAlarmIntent(AlarmDismissActivity.this, alarm.getUri(), (int)alarm.rowID);
                 intent.setAction(AlarmNotifications.ACTION_SNOOZE);
                 sendBroadcast(intent);
+                setMode(AlarmNotifications.ACTION_SNOOZE);
             }
         }
     };
@@ -148,6 +161,50 @@ public class AlarmDismissActivity extends AppCompatActivity
             }
         }
     };
+
+    private void setMode( @Nullable String action )
+    {
+        if (AlarmNotifications.ACTION_SNOOZE.equals(action))
+        {
+            snoozeText.setText("Snoozing");            // TODO
+            snoozeText.setVisibility(View.VISIBLE);
+            snoozeButton.setVisibility(View.GONE);
+            icon.setDisplayedChild(1);
+            animateBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_OFF, 1000);
+
+        } else {
+            snoozeText.setVisibility(View.GONE);
+            snoozeButton.setVisibility(View.VISIBLE);
+            icon.setDisplayedChild(0);
+            setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE);
+        }
+    }
+
+    private void setBrightness(float toValue)
+    {
+        WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
+        layoutParams.screenBrightness = toValue;
+        getWindow().setAttributes(layoutParams);
+    }
+
+    private void animateBrightness(float downToValue, int durationMillis)
+    {
+        WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
+        float startValue = layoutParams.screenBrightness;
+        ValueAnimator animator = ValueAnimator.ofFloat(startValue, downToValue);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener()
+        {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator)
+            {
+                WindowManager.LayoutParams params = getWindow().getAttributes();
+                params.screenBrightness = valueAnimator.getAnimatedFraction();
+                getWindow().setAttributes(params);
+            }
+        });
+        animator.setDuration(durationMillis);
+        animator.reverse();
+    }
 
     public void setAlarmID(final Context context, long alarmID)
     {
