@@ -252,8 +252,14 @@ public class AlarmNotifications extends BroadcastReceiver
                         ////////////////////////////////////////////////////////////////////////////
                         if (AlarmState.transitionState(item.state, AlarmState.STATE_SOUNDING))
                         {
-                            Intent showNotification = NotificationService.getShowIntent(context, item);
-                            context.startService(showNotification);
+                            if (item.type == AlarmClockItem.AlarmType.ALARM)
+                            {
+                                Intent showNotification = NotificationService.getShowIntent(context, item);
+                                context.startService(showNotification);
+
+                            } else {
+                                showNotification(context, item);
+                            }
 
                             if (item.state != null) {
                                 updateState.execute(item.state);
