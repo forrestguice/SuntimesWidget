@@ -40,6 +40,9 @@ public class AlarmClockItem
     public static final String AUTHORITY = "com.forrestguice.suntimeswidget.alarmclock";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/alarms");
 
+    public static final int ICON_ALARM = R.drawable.ic_action_alarms;
+    public static final int ICON_NOTIFICATION = R.drawable.ic_action_notification;
+
     public long rowID = -1L;
     public AlarmType type = AlarmType.ALARM;
     public boolean enabled = false;
@@ -55,7 +58,6 @@ public class AlarmClockItem
     public String ringtoneURI = null;
     public boolean vibrate = false;
 
-    public int icon = 0;
     public boolean modified = false;
     public AlarmState state = null;
 
@@ -129,6 +131,26 @@ public class AlarmClockItem
         values.put(AlarmDatabaseAdapter.KEY_ALARM_RINGTONE_NAME, ringtoneName);
         values.put(AlarmDatabaseAdapter.KEY_ALARM_RINGTONE_URI, ringtoneURI);
         return values;
+    }
+
+    public int getIcon()
+    {
+        return ((type == AlarmClockItem.AlarmType.NOTIFICATION) ? ICON_NOTIFICATION : ICON_ALARM);
+    }
+
+    public String getLabel(Context context)
+    {
+        return getLabel((type == AlarmClockItem.AlarmType.ALARM) ? context.getString(R.string.alarmMode_alarm) : context.getString(R.string.alarmMode_notification));
+    }
+
+    public String getLabelAlt(Context context)
+    {
+        return getLabel((event != null) ? event.getShortDisplayString() : context.getString(R.string.alarmOption_solarevent_none));
+    }
+
+    public String getLabel(String emptyLabel)
+    {
+        return (label == null || label.isEmpty() ? emptyLabel : label);
     }
 
     public Calendar getCalendar()
