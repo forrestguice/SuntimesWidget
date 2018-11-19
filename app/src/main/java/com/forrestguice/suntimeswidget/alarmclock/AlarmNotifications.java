@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.app.Notification;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.ContentUris;
 
@@ -31,9 +32,11 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 
+import android.os.IBinder;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.NotificationCompat;
@@ -88,15 +91,16 @@ public class AlarmNotifications extends BroadcastReceiver
             if (action.equals(ACTION_DISMISS) || action.equals(ACTION_SNOOZE) ||
                     action.equals(ACTION_DISABLE) || action.equals(ACTION_TIMEOUT))
             {
-                stopAlert(context);
-                dismissNotification(context, notificationID);
+                Intent dismissNotification = NotificationService.getDismissIntent(context, data);
+                context.startService(dismissNotification);
 
                 if (action.equals(ACTION_DISMISS) || action.equals(ACTION_DISABLE) || action.equals(ACTION_TIMEOUT)) {
                     dismissFullscreenActivity(context, notificationID);
                 }
 
             } else if (action.equals(ACTION_SILENT)) {
-                stopAlert(context);
+                Intent silenceNotification = NotificationService.getSilenceIntent(context, data);
+                context.startService(silenceNotification);
             }
 
             AlarmDatabaseAdapter.AlarmItemTask itemTask = new AlarmDatabaseAdapter.AlarmItemTask(context);
@@ -258,7 +262,9 @@ public class AlarmNotifications extends BroadcastReceiver
                         ////////////////////////////////////////////////////////////////////////////
                         if (AlarmState.transitionState(item.state, AlarmState.STATE_SOUNDING))
                         {
-                            showNotification(context, item);
+                            Intent showNotification = NotificationService.getShowIntent(context, item);
+                            context.startService(showNotification);
+
                             if (item.type == AlarmClockItem.AlarmType.ALARM && item.state != null) {
                                 updateState.execute(item.state);
                             }
@@ -510,6 +516,8 @@ public class AlarmNotifications extends BroadcastReceiver
 
     /**
      * showNotification
+     * Use this method to display the notification without a foreground service.
+     * @see NotificationService to display a notification that lives longer than the receiver.
      * @param context
      * @param item
      */
@@ -523,6 +531,8 @@ public class AlarmNotifications extends BroadcastReceiver
     }
 
     /**
+     * dismissNotification
+     * Use this method to dismiss notifications not started as a foreground service.
      * @param context
      * @param notificationID
      */
@@ -548,6 +558,86 @@ public class AlarmNotifications extends BroadcastReceiver
 
         } catch (PendingIntent.CanceledException e) {
             Log.e("AlarmNotifications", "dismissFullscreenActivity: " + e);
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * NotificationService
+     */
+    public static class NotificationService extends Service
+    {
+        @Override
+        public int onStartCommand(Intent intent, int flags, int startId)
+        {
+            super.onStartCommand(intent, flags, startId);
+
+            String action = intent.getAction();
+            Uri data = intent.getData();
+            if (AlarmNotifications.ACTION_SHOW.equals(action) && data != null)
+            {
+                Log.d("AlarmNotificationsServ", "ACTION_SHOW");
+                final long notificationID = ContentUris.parseId(data);
+                AlarmDatabaseAdapter.AlarmItemTask alarmTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext());
+                alarmTask.setAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmItemTask.AlarmItemTaskListener()
+                {
+                    @Override
+                    public void onItemLoaded(AlarmClockItem alarm) {
+                        Context context = getApplicationContext();
+                        Notification notification = AlarmNotifications.createNotification(context, alarm, (int)notificationID);
+                        startForeground((int)notificationID, notification);
+                        AlarmNotifications.startAlert(context, alarm);
+                    }
+                });
+                alarmTask.execute(notificationID);
+
+            } else if (AlarmNotifications.ACTION_DISMISS.equals(action) && data != null) {
+                long notificationID = ContentUris.parseId(data);
+                Log.d("AlarmNotificationsServ", "ACTION_DISMISS: " + notificationID);
+                AlarmNotifications.stopAlert(getApplicationContext());
+                stopForeground(true);
+
+            } else if (AlarmNotifications.ACTION_SILENT.equals(action)) {
+                Log.d("AlarmNotificationsServ", "ACTION_SILENT");
+                AlarmNotifications.stopAlert(getApplicationContext());
+
+            } else {
+                Log.w("AlarmNotificationsServ", "Unrecognized action: " + action);
+            }
+            return START_STICKY;
+        }
+
+        @Nullable
+        @Override
+        public IBinder onBind(Intent intent)
+        {
+            return null;
+        }
+
+        public static Intent getShowIntent(Context context, AlarmClockItem alarm)
+        {
+            Intent intent = new Intent(context,NotificationService.class);
+            intent.setAction(ACTION_SHOW);
+            intent.setData(alarm.getUri());
+            return intent;
+        }
+
+        public static Intent getDismissIntent(Context context, Uri data)
+        {
+            Intent intent = new Intent(context, NotificationService.class);
+            intent.setAction(ACTION_DISMISS);
+            intent.setData(data);
+            return intent;
+        }
+
+        public static Intent getSilenceIntent(Context context, Uri data)
+        {
+            Intent intent = new Intent(context, NotificationService.class);
+            intent.setAction(ACTION_SILENT);
+            intent.setData(data);
+            return intent;
         }
     }
 
