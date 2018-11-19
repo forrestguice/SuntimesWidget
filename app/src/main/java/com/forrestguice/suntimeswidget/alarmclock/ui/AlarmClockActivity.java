@@ -72,7 +72,7 @@ import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmReceiver;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
@@ -1199,8 +1199,7 @@ public class AlarmClockActivity extends AppCompatActivity
             final TextView text = (TextView) view.findViewById(android.R.id.text1);
             if (text != null)
             {
-                String emptyLabel = ((item.type == AlarmClockItem.AlarmType.ALARM) ? context.getString(R.string.alarmMode_alarm) : context.getString(R.string.alarmMode_notification));
-                text.setText((item.label == null || item.label.isEmpty()) ? emptyLabel : item.label);
+                text.setText(item.getLabel(context));
                 text.setOnClickListener(new View.OnClickListener()
                 {
                     @Override
@@ -1492,13 +1491,13 @@ public class AlarmClockActivity extends AppCompatActivity
                     {
                         if (enabled)
                         {
-                            Intent scheduleIntent = AlarmNotifications.getAlarmIntent(context, item.getUri(), (int)item.rowID);
-                            scheduleIntent.setAction(AlarmNotifications.ACTION_SCHEDULE);
+                            Intent scheduleIntent = AlarmReceiver.getAlarmIntent(context, item.getUri(), (int)item.rowID);
+                            scheduleIntent.setAction(AlarmReceiver.ACTION_SCHEDULE);
                             context.sendBroadcast(scheduleIntent);
 
                         } else {
-                            Intent disableIntent = AlarmNotifications.getAlarmIntent(context, item.getUri(), (int)item.rowID);
-                            disableIntent.setAction(AlarmNotifications.ACTION_DISABLE);
+                            Intent disableIntent = AlarmReceiver.getAlarmIntent(context, item.getUri(), (int)item.rowID);
+                            disableIntent.setAction(AlarmReceiver.ACTION_DISABLE);
                             context.sendBroadcast(disableIntent);
                         }
 

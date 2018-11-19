@@ -49,7 +49,7 @@ import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmDismissActivity;
 import java.io.IOException;
 import java.util.Calendar;
 
-public class AlarmNotifications extends BroadcastReceiver
+public class AlarmReceiver extends BroadcastReceiver
 {
     public static final String ACTION_SHOW = "show";                // sound an alarm
     public static final String ACTION_SILENT = "silent";            // silence an alarm (but don't dismiss it)
@@ -80,7 +80,7 @@ public class AlarmNotifications extends BroadcastReceiver
     {
         final String action = intent.getAction();
         Uri data = intent.getData();
-        Log.d("AlarmNotifications", "onReceive: " + action + ", " + data);
+        Log.d("AlarmReceiver", "onReceive: " + action + ", " + data);
 
         if (action != null)
         {
@@ -91,7 +91,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 stopAlert(context);
                 dismissNotification(context, notificationID);
 
-                if (action.equals(ACTION_DISMISS) || action.equals(ACTION_DISABLE) || action.equals(ACTION_TIMEOUT)) {
+                if (action.equals(ACTION_DISMISS) || action.equals(ACTION_DISABLE)) {
                     dismissFullscreenActivity(context, notificationID);
                 }
 
@@ -162,7 +162,7 @@ public class AlarmNotifications extends BroadcastReceiver
                             if (nextState == AlarmState.STATE_TIMEOUT)
                             {
                                 Intent intent = getFullScreenIntent(context, item.getUri(), (int)item.rowID);
-                                intent.setAction(AlarmNotifications.ACTION_TIMEOUT);
+                                intent.setAction(AlarmReceiver.ACTION_TIMEOUT);
                                 context.startActivity(intent);
                             }
 
@@ -171,11 +171,11 @@ public class AlarmNotifications extends BroadcastReceiver
                             final String action;
                             if (!item.repeating)
                             {
-                                Log.i("AlarmNotifications", "Dismiss: Non-repeating; disabling.. " + item.rowID);
+                                Log.i("AlarmReceiver", "Dismiss: Non-repeating; disabling.. " + item.rowID);
                                 action = ACTION_DISABLE;
 
                             } else {
-                                Log.i("AlarmNotifications", "Dismiss: Repeating; re-scheduling.." + item.rowID);
+                                Log.i("AlarmReceiver", "Dismiss: Repeating; re-scheduling.." + item.rowID);
                                 action = ACTION_SCHEDULE;
                             }
 
@@ -192,7 +192,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         ////////////////////////////////////////////////////////////////////////////
                         if (AlarmState.transitionState(item.state, AlarmState.STATE_TIMEOUT))
                         {
-                            Log.i("AlarmNotifications", "Timeout: " + item.rowID);
+                            Log.i("AlarmReceiver", "Timeout: " + item.rowID);
                             item.modified = true;
                             updateItem.execute(item);
                         }
@@ -203,7 +203,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         ////////////////////////////////////////////////////////////////////////////
                         if (AlarmState.transitionState(item.state, AlarmState.STATE_DISABLED))
                         {
-                            Log.i("AlarmNotifications", "Disabled: " + item.rowID);
+                            Log.i("AlarmReceiver", "Disabled: " + item.rowID);
                             item.enabled = false;
                             item.modified = true;
                             updateItem.setTaskListener(showAlarmListOnAlarmChanged(context));
@@ -225,14 +225,14 @@ public class AlarmNotifications extends BroadcastReceiver
 
                                 if (item.type == AlarmClockItem.AlarmType.ALARM && item.state != null)
                                 {
-                                    updateState.setTaskListener(performActionOnStateChanged(context, AlarmNotifications.ACTION_SHOW, item));   // test by triggering immediately // TODO: remove
+                                    updateState.setTaskListener(performActionOnStateChanged(context, AlarmReceiver.ACTION_SHOW, item));   // test by triggering immediately // TODO: remove
                                     updateState.execute(item.state);
 
                                 } else {
                                     final Uri data = item.getUri();
                                     final int id = (int)item.rowID;
                                     Intent intent = getAlarmIntent(context, data, id);
-                                    intent.setAction(AlarmNotifications.ACTION_SHOW);
+                                    intent.setAction(AlarmReceiver.ACTION_SHOW);
                                     context.sendBroadcast(intent);  // TODO: testing by triggering immediately
                                 }
                             }
@@ -439,7 +439,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
     public static Intent getAlarmIntent(Context context, Uri data, int notificationID)
     {
-        Intent intent = new Intent(context, AlarmNotifications.class);
+        Intent intent = new Intent(context, AlarmReceiver.class);
         intent.setData(data);
         intent.putExtra(EXTRA_NOTIFICATION_ID, notificationID);
         return intent;
@@ -454,10 +454,9 @@ public class AlarmNotifications extends BroadcastReceiver
     {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 
-        String emptyLabel = ((alarm.event != null) ? alarm.event.getShortDisplayString() : context.getString(R.string.alarmOption_solarevent_none));
-        String notificationTitle = (alarm.label == null || alarm.label.isEmpty() ? emptyLabel : alarm.label);
+        String notificationTitle = alarm.getLabelAlt(context);
         String notificationMsg = notificationTitle;
-        int notificationIcon = ((alarm.type == AlarmClockItem.AlarmType.NOTIFICATION) ? R.drawable.ic_action_notification : R.drawable.ic_action_alarms);
+        int notificationIcon = alarm.getIcon();
         int notificationColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting_dark);
 
         builder.setDefaults( Notification.DEFAULT_LIGHTS );
@@ -547,7 +546,25 @@ public class AlarmNotifications extends BroadcastReceiver
             handledIntent.send();
 
         } catch (PendingIntent.CanceledException e) {
-            Log.e("AlarmNotifications", "dismissFullscreenActivity: " + e);
+            Log.e("AlarmReceiver", "dismissFullscreenActivity: " + e);
+        }
+    }
+
+    /**
+     * @param context
+     * @param action
+     */
+    public static void notifyFullscreenActivity(Context context, String action, AlarmClockItem item)
+    {
+        try {
+            Uri data = ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, item.rowID);
+            Intent intent = getFullScreenIntent(context, data, (int)item.rowID);
+            intent.setAction(action);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, (int)item.rowID, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            pendingIntent.send();
+
+        } catch (PendingIntent.CanceledException e) {
+            Log.e("AlarmReceiver", "notifyFullscreenActivity: " + e);
         }
     }
 

@@ -152,7 +152,8 @@
             android:taskAffinity=".alarmclock.ui.AlarmDismissActivity">
         </activity>
 
-        <receiver android:name=".alarmclock.AlarmNotifications"
+
+        <receiver android:name=".alarmclock.AlarmReceiver"
             android:exported="false">
         </receiver>
 
