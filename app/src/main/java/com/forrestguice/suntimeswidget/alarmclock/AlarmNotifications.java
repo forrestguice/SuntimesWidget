@@ -54,6 +54,8 @@ import java.util.Calendar;
 
 public class AlarmNotifications extends BroadcastReceiver
 {
+    public static final String TAG = "AlarmReceiver";
+
     public static final String ACTION_SHOW = "show";                // sound an alarm
     public static final String ACTION_SILENT = "silent";            // silence an alarm (but don't dismiss it)
     public static final String ACTION_DISMISS = "dismiss";          // dismiss an alarm
@@ -83,7 +85,7 @@ public class AlarmNotifications extends BroadcastReceiver
     {
         final String action = intent.getAction();
         Uri data = intent.getData();
-        Log.d("AlarmNotifications", "onReceive: " + action + ", " + data);
+        Log.d(TAG, "onReceive: " + action + ", " + data);
 
         if (action != null)
         {
@@ -170,17 +172,16 @@ public class AlarmNotifications extends BroadcastReceiver
                                 intent.setAction(AlarmNotifications.ACTION_TIMEOUT);
                                 context.startActivity(intent);
                             }
-
                             AlarmState.transitionState(item.state, AlarmState.STATE_NONE);
 
                             final String action;
                             if (!item.repeating)
                             {
-                                Log.i("AlarmNotifications", "Dismiss: Non-repeating; disabling.. " + item.rowID);
+                                Log.i(TAG, "Dismissed: Non-repeating; disabling.. " + item.rowID);
                                 action = ACTION_DISABLE;
 
                             } else {
-                                Log.i("AlarmNotifications", "Dismiss: Repeating; re-scheduling.." + item.rowID);
+                                Log.i(TAG, "Dismissed: Repeating; re-scheduling.." + item.rowID);
                                 action = ACTION_SCHEDULE;
                             }
 
@@ -198,7 +199,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         ////////////////////////////////////////////////////////////////////////////
                         if (AlarmState.transitionState(item.state, AlarmState.STATE_TIMEOUT))
                         {
-                            Log.i("AlarmNotifications", "Timeout: " + item.rowID);
+                            Log.i(TAG, "Timeout: " + item.rowID);
                             item.modified = true;
                             updateItem.execute(item);
                         }
@@ -209,7 +210,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         ////////////////////////////////////////////////////////////////////////////
                         if (AlarmState.transitionState(item.state, AlarmState.STATE_DISABLED))
                         {
-                            Log.i("AlarmNotifications", "Disabled: " + item.rowID);
+                            Log.i(TAG, "Disabled: " + item.rowID);
                             item.enabled = false;
                             item.modified = true;
                             updateItem.setTaskListener(showAlarmListOnAlarmChanged(context));
@@ -226,13 +227,12 @@ public class AlarmNotifications extends BroadcastReceiver
                             if (AlarmState.transitionState(item.state, AlarmState.STATE_SCHEDULED_DISTANT))
                             {
                                 // TODO: schedule alarm, set timestamp values on item
-
+                                Log.i(TAG, "Scheduled: " + item.rowID + ", " + item.timestamp);
                                 showAlarmEnabledMessage(context, item);
 
                                 AlarmDatabaseAdapter.AlarmStateUpdateTask.AlarmStateUpdateTaskListener testShow = performActionOnStateChanged(context, AlarmNotifications.ACTION_SHOW, item);
-                                if (item.state != null)
-                                {
-                                    updateState.setTaskListener(testShow);   // test by triggering immediately // TODO: remove
+                                if (item.state != null) {
+                                    updateState.setTaskListener(testShow);   // test by triggering immediately // TODO: remove this block, replace w/ AlarmManager
                                     updateState.execute(item.state);
                                 }
                             }
@@ -245,9 +245,11 @@ public class AlarmNotifications extends BroadcastReceiver
                         if (AlarmState.transitionState(item.state, AlarmState.STATE_SNOOZING))
                         {
                             long snooze = loadSnoozePref(context);
+                            long snoozeAlarmTime = item.timestamp + snooze;  // TODO
+                            Log.i(TAG, "Snoozed: " + item.rowID + ", " + snoozeAlarmTime);
 
                             // TODO: schedule snoozed alarm
-                            AlarmState.transitionState(item.state, AlarmState.STATE_DISMISSED);  // TODO: remove this line
+                            //AlarmState.transitionState(item.state, AlarmState.STATE_DISMISSED);  // TODO: remove this line, replace w/ AlarmManager
                             item.modified = true;
                             updateItem.execute(item);
                         }
@@ -260,10 +262,12 @@ public class AlarmNotifications extends BroadcastReceiver
                         {
                             if (item.type == AlarmClockItem.AlarmType.ALARM)
                             {
+                                Log.i(TAG, "Show: " + item.rowID + "(Alarm)");
                                 Intent showNotification = NotificationService.getShowIntent(context, item);
                                 context.startService(showNotification);
 
                             } else {
+                                Log.i(TAG, "Show: " + item.rowID + "(Notification)");
                                 showNotification(context, item);
                             }
 
@@ -341,7 +345,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 player.prepareAsync();
 
             } catch (IOException e) {
-                Log.e("startAlert", "Failed to setDataSource! " + soundUri.toString());
+                Log.e(TAG, "startAlert: Failed to setDataSource! " + soundUri.toString());
             }
         }
     }
@@ -389,7 +393,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 @Override
                 public boolean onError(MediaPlayer mediaPlayer, int what, int extra)
                 {
-                    Log.d("DEBUG", "MediaPlayer error " + what);
+                    Log.e(TAG, "onError: MediaPlayer error " + what);
                     return false;
                 }
             });
@@ -553,6 +557,8 @@ public class AlarmNotifications extends BroadcastReceiver
      */
     public static class NotificationService extends Service
     {
+        public static final String TAG = "AlarmReceiverService";
+
         @Override
         public int onStartCommand(Intent intent, int flags, int startId)
         {
@@ -562,7 +568,7 @@ public class AlarmNotifications extends BroadcastReceiver
             Uri data = intent.getData();
             if (AlarmNotifications.ACTION_SHOW.equals(action) && data != null)
             {
-                Log.d("AlarmNotificationsServ", "ACTION_SHOW");
+                Log.d(TAG, "ACTION_SHOW");
                 final long notificationID = ContentUris.parseId(data);
                 AlarmDatabaseAdapter.AlarmItemTask alarmTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext());
                 alarmTask.setAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmItemTask.AlarmItemTaskListener()
@@ -579,16 +585,16 @@ public class AlarmNotifications extends BroadcastReceiver
 
             } else if (AlarmNotifications.ACTION_DISMISS.equals(action) && data != null) {
                 long notificationID = ContentUris.parseId(data);
-                Log.d("AlarmNotificationsServ", "ACTION_DISMISS: " + notificationID);
+                Log.d(TAG, "ACTION_DISMISS: " + notificationID);
                 AlarmNotifications.stopAlert(getApplicationContext());
                 stopForeground(true);
 
             } else if (AlarmNotifications.ACTION_SILENT.equals(action)) {
-                Log.d("AlarmNotificationsServ", "ACTION_SILENT");
+                Log.d(TAG, "ACTION_SILENT");
                 AlarmNotifications.stopAlert(getApplicationContext());
 
             } else {
-                Log.w("AlarmNotificationsServ", "Unrecognized action: " + action);
+                Log.w(TAG, "Unrecognized action: " + action);
             }
             return START_STICKY;
         }

@@ -47,6 +47,8 @@ import android.util.Log;
  */
 public class AlarmState
 {
+    public static final String TAG = "AlarmReceiverState";
+
     public static final int STATE_DISABLED = -1;          // alarm is disabled
     public static final int STATE_NONE = 0;               // no state; the state of this alarm tbd
     public static final int STATE_SCHEDULED_DISTANT = 1;  // alarm is scheduled (but not for anytime soon)
@@ -129,7 +131,7 @@ public class AlarmState
                 return (nextState == STATE_SCHEDULED_DISTANT || nextState == STATE_SCHEDULED_SOON || nextState == STATE_DISABLED);
 
             default:
-                Log.w("AlarmState", "validTransition: invalid state! " + currentState);
+                Log.w(TAG, "validTransition: invalid state! " + currentState);
                 return false;
         }
     }
@@ -142,21 +144,21 @@ public class AlarmState
     public static boolean transitionState(@Nullable AlarmState currentState, int nextState)
     {
         if (currentState == null) {
-            Log.i("AlarmState", "Transitioned from null to " + nextState);
+            Log.i(TAG, "Transitioned from null to " + nextState);
             return true;
 
         } else if (isValidTransition(currentState.state, nextState)) {
-            Log.i("AlarmState", "Transitioned from " + currentState + " to " + nextState);
+            Log.i(TAG, "Transitioned from " + currentState + " to " + nextState);
             currentState.state = nextState;
             currentState.modified = true;
             return true;
         }
-        Log.e("AlarmState", "Unable to transition state! " + currentState + ", " + nextState);
+        Log.e(TAG, "Unable to transition state! " + currentState + ", " + nextState);
         return false;
     }
 
     public String toString()
     {
-        return rowID + ":" + state;
+        return "" + state;
     }
 }
