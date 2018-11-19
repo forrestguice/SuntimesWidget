@@ -87,16 +87,11 @@ public class AlarmNotifications extends BroadcastReceiver
 
         if (action != null)
         {
-            int notificationID = intent.getIntExtra(EXTRA_NOTIFICATION_ID, 0);
             if (action.equals(ACTION_DISMISS) || action.equals(ACTION_SNOOZE) ||
                     action.equals(ACTION_DISABLE) || action.equals(ACTION_TIMEOUT))
             {
                 Intent dismissNotification = NotificationService.getDismissIntent(context, data);
                 context.startService(dismissNotification);
-
-                if (action.equals(ACTION_DISMISS) || action.equals(ACTION_DISABLE) || action.equals(ACTION_TIMEOUT)) {
-                    dismissFullscreenActivity(context, notificationID);
-                }
 
             } else if (action.equals(ACTION_SILENT)) {
                 Intent silenceNotification = NotificationService.getSilenceIntent(context, data);
@@ -536,26 +531,7 @@ public class AlarmNotifications extends BroadcastReceiver
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         notificationManager.cancel(ALARM_NOTIFICATION_TAG, notificationID);
     }
-
-    /**
-     * @param context
-     * @param notificationID
-     */
-    public static void dismissFullscreenActivity(Context context, int notificationID)
-    {
-        try {
-            Uri data = ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, notificationID);
-            Intent intent = getFullScreenIntent(context, data, notificationID);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.setAction(ACTION_DISMISS);
-            PendingIntent handledIntent = PendingIntent.getActivity(context, notificationID, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-            handledIntent.send();
-
-        } catch (PendingIntent.CanceledException e) {
-            Log.e("AlarmNotifications", "dismissFullscreenActivity: " + e);
-        }
-    }
-
+    
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
