@@ -153,7 +153,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 if (item != null)
                 {
                     AlarmDatabaseAdapter.AlarmStateUpdateTask updateState = new AlarmDatabaseAdapter.AlarmStateUpdateTask(context);
-                    AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, item.type == AlarmClockItem.AlarmType.ALARM);
+                    AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, true);
 
                     if (action.equals(ACTION_DISMISS) || action.equals(ACTION_TIMEOUT))
                     {
@@ -183,9 +183,10 @@ public class AlarmNotifications extends BroadcastReceiver
                                 action = ACTION_SCHEDULE;
                             }
 
-                            if (item.type == AlarmClockItem.AlarmType.ALARM && item.state != null)
+                            AlarmDatabaseAdapter.AlarmStateUpdateTask.AlarmStateUpdateTaskListener performAction = performActionOnStateChanged(context, action, item);
+                            if (item.state != null)
                             {
-                                updateState.setTaskListener(performActionOnStateChanged(context, action, item));
+                                updateState.setTaskListener(performAction);
                                 updateState.execute(item.state);
                             }
                         }
@@ -227,17 +228,11 @@ public class AlarmNotifications extends BroadcastReceiver
 
                                 showAlarmEnabledMessage(context, item);
 
-                                if (item.type == AlarmClockItem.AlarmType.ALARM && item.state != null)
+                                AlarmDatabaseAdapter.AlarmStateUpdateTask.AlarmStateUpdateTaskListener testShow = performActionOnStateChanged(context, AlarmNotifications.ACTION_SHOW, item);
+                                if (item.state != null)
                                 {
-                                    updateState.setTaskListener(performActionOnStateChanged(context, AlarmNotifications.ACTION_SHOW, item));   // test by triggering immediately // TODO: remove
+                                    updateState.setTaskListener(testShow);   // test by triggering immediately // TODO: remove
                                     updateState.execute(item.state);
-
-                                } else {
-                                    final Uri data = item.getUri();
-                                    final int id = (int)item.rowID;
-                                    Intent intent = getAlarmIntent(context, data, id);
-                                    intent.setAction(AlarmNotifications.ACTION_SHOW);
-                                    context.sendBroadcast(intent);  // TODO: testing by triggering immediately
                                 }
                             }
                         }
@@ -265,7 +260,7 @@ public class AlarmNotifications extends BroadcastReceiver
                             Intent showNotification = NotificationService.getShowIntent(context, item);
                             context.startService(showNotification);
 
-                            if (item.type == AlarmClockItem.AlarmType.ALARM && item.state != null) {
+                            if (item.state != null) {
                                 updateState.execute(item.state);
                             }
                         }
@@ -498,17 +493,17 @@ public class AlarmNotifications extends BroadcastReceiver
             PendingIntent pendingDismiss = PendingIntent.getBroadcast(context, alarm.hashCode(), dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);
 
-            //PendingIntent contentIntent = PendingIntent.getActivity(context.getApplicationContext(), 0, new Intent(), 0);
-            //builder.setContentIntent(contentIntent);
-
         } else {
             // NOTIFICATION
             builder.setCategory( NotificationCompat.CATEGORY_REMINDER );
             builder.setPriority( NotificationCompat.PRIORITY_HIGH );
             builder.setOngoing(false);
             builder.setAutoCancel(true);
-            PendingIntent contentIntent = PendingIntent.getActivity(context.getApplicationContext(), 0, new Intent(), 0);
-            builder.setContentIntent(contentIntent);
+
+            Intent dismissIntent = getAlarmIntent(context, alarm.getUri(), notificationID);
+            dismissIntent.setAction(ACTION_DISMISS);
+            PendingIntent pendingDismiss = PendingIntent.getBroadcast(context, notificationID, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.setContentIntent(pendingDismiss);
         }
 
         return builder.build();
