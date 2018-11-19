@@ -510,6 +510,7 @@ public class AlarmNotifications extends BroadcastReceiver
             Intent dismissIntent = getAlarmIntent(context, alarm.getUri(), notificationID);
             dismissIntent.setAction(ACTION_DISMISS);
             PendingIntent pendingDismiss = PendingIntent.getBroadcast(context, notificationID, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.setDeleteIntent(pendingDismiss);
             builder.setContentIntent(pendingDismiss);
         }
 
