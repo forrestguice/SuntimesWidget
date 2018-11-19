@@ -459,6 +459,7 @@ public class AlarmDatabaseAdapter
         protected AlarmDatabaseAdapter db;
         private boolean flag_add = false;
         private boolean flag_withState = false;
+        private AlarmClockItem lastItem;
 
         public AlarmUpdateTask(Context context)
         {
@@ -479,6 +480,7 @@ public class AlarmDatabaseAdapter
             boolean updated = true;
             for (AlarmClockItem item : items)
             {
+                lastItem = item;
                 boolean itemUpdated = ((flag_add
                         ? (db.addAlarm(item.asContentValues(false)) > 0)
                         : (db.updateAlarm(item.rowID, item.asContentValues(false)))));
@@ -497,7 +499,7 @@ public class AlarmDatabaseAdapter
         protected void onPostExecute(Boolean result)
         {
             if (listener != null)
-                listener.onFinished(result);
+                listener.onFinished(result, lastItem);
         }
 
         protected AlarmClockUpdateTaskListener listener = null;
@@ -508,7 +510,7 @@ public class AlarmDatabaseAdapter
 
         public static abstract class AlarmClockUpdateTaskListener
         {
-            public void onFinished(Boolean result) {}
+            public void onFinished(Boolean result, AlarmClockItem item) {}
         }
     }
 

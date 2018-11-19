@@ -120,7 +120,7 @@ public class AlarmNotifications extends BroadcastReceiver
     {
         return new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener() {
             @Override
-            public void onFinished(Boolean result) {
+            public void onFinished(Boolean result, AlarmClockItem item) {
                 Intent intent = new Intent(context, AlarmClockActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
@@ -133,7 +133,7 @@ public class AlarmNotifications extends BroadcastReceiver
         return new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
         {
             @Override
-            public void onFinished(Boolean result)
+            public void onFinished(Boolean result, AlarmClockItem item)
             {
                 if (result)
                 {

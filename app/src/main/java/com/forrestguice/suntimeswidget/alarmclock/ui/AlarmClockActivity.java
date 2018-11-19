@@ -413,7 +413,7 @@ public class AlarmClockActivity extends AppCompatActivity
         task.setTaskListener(new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
         {
             @Override
-            public void onFinished(Boolean result)
+            public void onFinished(Boolean result, AlarmClockItem item)
             {
                 if (result) {
                     updateViews(AlarmClockActivity.this);
@@ -578,7 +578,7 @@ public class AlarmClockActivity extends AppCompatActivity
     private AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener onUpdateItem = new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
     {
         @Override
-        public void onFinished(Boolean result)
+        public void onFinished(Boolean result, AlarmClockItem item)
         {
             if (result && adapter != null) {
                 adapter.notifyDataSetChanged();
@@ -1486,7 +1486,7 @@ public class AlarmClockActivity extends AppCompatActivity
             enableTask.setTaskListener(new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
             {
                 @Override
-                public void onFinished(Boolean result)
+                public void onFinished(Boolean result, AlarmClockItem item)
                 {
                     if (result)
                     {
