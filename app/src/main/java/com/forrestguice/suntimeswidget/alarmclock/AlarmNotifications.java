@@ -57,6 +57,7 @@ public class AlarmNotifications extends BroadcastReceiver
     public static final String ACTION_SNOOZE = "snooze";            // snooze an alarm
     public static final String ACTION_SCHEDULE = "schedule";        // enable (schedule) an alarm
     public static final String ACTION_DISABLE = "disable";          // disable an alarm
+    public static final String ACTION_TIMEOUT = "timeoute";         // timeout an alarm
 
     public static final String EXTRA_NOTIFICATION_ID = "notificationID";
     public static final String ALARM_NOTIFICATION_TAG = "suntimesalarm";
@@ -84,12 +85,13 @@ public class AlarmNotifications extends BroadcastReceiver
         if (action != null)
         {
             int notificationID = intent.getIntExtra(EXTRA_NOTIFICATION_ID, 0);
-            if (action.equals(ACTION_DISMISS) || action.equals(ACTION_SNOOZE) || action.equals(ACTION_DISABLE))
+            if (action.equals(ACTION_DISMISS) || action.equals(ACTION_SNOOZE) ||
+                    action.equals(ACTION_DISABLE) || action.equals(ACTION_TIMEOUT))
             {
                 stopAlert(context);
                 dismissNotification(context, notificationID);
 
-                if (action.equals(ACTION_DISMISS) || action.equals(ACTION_DISABLE)) {
+                if (action.equals(ACTION_DISMISS) || action.equals(ACTION_DISABLE) || action.equals(ACTION_TIMEOUT)) {
                     dismissFullscreenActivity(context, notificationID);
                 }
 
@@ -104,7 +106,38 @@ public class AlarmNotifications extends BroadcastReceiver
     }
 
     /**
-     *
+     * @param context
+     * @return
+     */
+    private AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener showAlarmListOnAlarmChanged(final Context context)
+    {
+        return new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener() {
+            @Override
+            public void onFinished(Boolean result) {
+                Intent intent = new Intent(context, AlarmClockActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }
+        };
+    }
+
+    /**
+     */
+    private AlarmDatabaseAdapter.AlarmStateUpdateTask.AlarmStateUpdateTaskListener performActionOnStateChanged(final Context context, final String action, final AlarmClockItem item)
+    {
+        return new AlarmDatabaseAdapter.AlarmStateUpdateTask.AlarmStateUpdateTaskListener()
+        {
+            @Override
+            public void onFinished(Boolean result)
+            {
+                Intent intent = getAlarmIntent(context, item.getUri(), (int)item.rowID);
+                intent.setAction(action);
+                context.sendBroadcast(intent);
+            }
+        };
+    }
+
+    /**
      */
     private AlarmDatabaseAdapter.AlarmItemTask.AlarmItemTaskListener createAlarmOnReceiveListener(final Context context, final String action)
     {
@@ -117,24 +150,22 @@ public class AlarmNotifications extends BroadcastReceiver
                 {
                     AlarmDatabaseAdapter.AlarmStateUpdateTask updateState = new AlarmDatabaseAdapter.AlarmStateUpdateTask(context);
                     AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, item.type == AlarmClockItem.AlarmType.ALARM);
-                    updateItem.setTaskListener(new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
-                    {
-                        @Override
-                        public void onFinished(Boolean result)
-                        {
-                            Intent intent = new Intent(context, AlarmClockActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            context.startActivity(intent);
-                        }
-                    });
 
-                    if (action.equals(ACTION_DISMISS))
+                    if (action.equals(ACTION_DISMISS) || action.equals(ACTION_TIMEOUT))
                     {
                         ////////////////////////////////////////////////////////////////////////////
                         // Dismiss Alarm
                         ////////////////////////////////////////////////////////////////////////////
-                        if (AlarmState.transitionState(item.state, AlarmState.STATE_DISMISSED))
+                        int nextState = (action.equals(ACTION_TIMEOUT) ? AlarmState.STATE_TIMEOUT : AlarmState.STATE_DISMISSED);
+                        if (AlarmState.transitionState(item.state, nextState))
                         {
+                            if (nextState == AlarmState.STATE_TIMEOUT)
+                            {
+                                Intent intent = getFullScreenIntent(context, item.getUri(), (int)item.rowID);
+                                intent.setAction(AlarmNotifications.ACTION_TIMEOUT);
+                                context.startActivity(intent);
+                            }
+
                             AlarmState.transitionState(item.state, AlarmState.STATE_NONE);
 
                             final String action;
@@ -150,20 +181,20 @@ public class AlarmNotifications extends BroadcastReceiver
 
                             if (item.type == AlarmClockItem.AlarmType.ALARM && item.state != null)
                             {
-                                final Uri data = item.getUri();
-                                final int id = (int)item.rowID;
-                                updateState.setTaskListener(new AlarmDatabaseAdapter.AlarmStateUpdateTask.AlarmStateUpdateTaskListener()
-                                {
-                                    @Override
-                                    public void onFinished(Boolean result)
-                                    {
-                                        Intent intent = getAlarmIntent(context, data, id);
-                                        intent.setAction(action);
-                                        context.sendBroadcast(intent);
-                                    }
-                                });
+                                updateState.setTaskListener(performActionOnStateChanged(context, action, item));
                                 updateState.execute(item.state);
                             }
+                        }
+
+                    } else if (action.equals(ACTION_TIMEOUT)) {
+                        ////////////////////////////////////////////////////////////////////////////
+                        // Timeout Alarm
+                        ////////////////////////////////////////////////////////////////////////////
+                        if (AlarmState.transitionState(item.state, AlarmState.STATE_TIMEOUT))
+                        {
+                            Log.i("AlarmNotifications", "Timeout: " + item.rowID);
+                            item.modified = true;
+                            updateItem.execute(item);
                         }
 
                     } else if (action.equals(ACTION_DISABLE)) {
@@ -175,6 +206,7 @@ public class AlarmNotifications extends BroadcastReceiver
                             Log.i("AlarmNotifications", "Disabled: " + item.rowID);
                             item.enabled = false;
                             item.modified = true;
+                            updateItem.setTaskListener(showAlarmListOnAlarmChanged(context));
                             updateItem.execute(item);
                         }
 
@@ -193,18 +225,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
                                 if (item.type == AlarmClockItem.AlarmType.ALARM && item.state != null)
                                 {
-                                    final Uri data = item.getUri();
-                                    final int id = (int)item.rowID;
-                                    updateState.setTaskListener(new AlarmDatabaseAdapter.AlarmStateUpdateTask.AlarmStateUpdateTaskListener()
-                                    {
-                                        @Override
-                                        public void onFinished(Boolean result)
-                                        {
-                                            Intent intent = getAlarmIntent(context, data, id);
-                                            intent.setAction(AlarmNotifications.ACTION_SHOW);
-                                            context.sendBroadcast(intent);  // TODO: testing by triggering immediately
-                                        }
-                                    });
+                                    updateState.setTaskListener(performActionOnStateChanged(context, AlarmNotifications.ACTION_SHOW, item));   // test by triggering immediately // TODO: remove
                                     updateState.execute(item.state);
 
                                 } else {
@@ -224,7 +245,9 @@ public class AlarmNotifications extends BroadcastReceiver
                         if (AlarmState.transitionState(item.state, AlarmState.STATE_SNOOZING))
                         {
                             long snooze = loadSnoozePref(context);
+
                             // TODO: schedule snoozed alarm
+                            AlarmState.transitionState(item.state, AlarmState.STATE_DISMISSED);  // TODO: remove this line
                             item.modified = true;
                             updateItem.execute(item);
                         }

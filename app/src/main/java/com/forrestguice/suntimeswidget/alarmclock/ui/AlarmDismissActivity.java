@@ -30,6 +30,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -79,13 +80,21 @@ public class AlarmDismissActivity extends AppCompatActivity
         Button snoozeButton = (Button) findViewById(R.id.btn_snooze);
         snoozeButton.setOnClickListener(onSnoozeClicked);
 
-        Uri data = getIntent().getData();
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        Uri data = intent.getData();
         if (data != null) {
-            if (AlarmNotifications.ACTION_DISMISS.equals(getIntent().getAction()))
+            if (AlarmNotifications.ACTION_DISMISS.equals(action))
             {
                 Log.d("AlarmDismissActivity", "onCreate: ACTION_HANDLED: " + data);
                 setResult(RESULT_CANCELED);
                 finish();
+
+            } else if (AlarmNotifications.ACTION_SNOOZE.equals(action) || AlarmNotifications.ACTION_TIMEOUT.equals(action)) {
+                Log.d("AlarmDismissActivity", "onCreate: ACTION_SNOOZE,TIMEOUT: " + data + " .. not supported by onCreate, finishing...");
+                setResult(RESULT_CANCELED);
+                finish();
+
             } else {
                 setAlarmID(this, ContentUris.parseId(data));
             }
@@ -111,9 +120,6 @@ public class AlarmDismissActivity extends AppCompatActivity
                         Log.d("AlarmDismissActivity", "onNewIntent: ACTION_HANDLED: " + newData);
                         setResult(Activity.RESULT_CANCELED);
                         finish();
-
-                    } else if (action.equals(AlarmNotifications.ACTION_SNOOZE)) {
-                        // TODO
 
                     } else if (action.equals(Intent.ACTION_VIEW)) {
                         Log.d("AlarmDismissActivity", "onNewIntent: ACTION_VIEW: " + newData);
@@ -144,7 +150,6 @@ public class AlarmDismissActivity extends AppCompatActivity
                 intent.setAction(AlarmNotifications.ACTION_SNOOZE);
                 sendBroadcast(intent);
                 setResult(Activity.RESULT_OK);
-                finish();
             }
         }
     };
