@@ -30,12 +30,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmReceiver;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -83,13 +84,13 @@ public class AlarmDismissActivity extends AppCompatActivity
         String action = intent.getAction();
         Uri data = intent.getData();
         if (data != null) {
-            if (AlarmReceiver.ACTION_DISMISS.equals(action))
+            if (AlarmNotifications.ACTION_DISMISS.equals(action))
             {
                 Log.d("AlarmDismissActivity", "onCreate: ACTION_HANDLED: " + data);
                 setResult(RESULT_CANCELED);
                 finish();
 
-            } else if (AlarmReceiver.ACTION_SNOOZE.equals(action) || AlarmReceiver.ACTION_TIMEOUT.equals(action)) {
+            } else if (AlarmNotifications.ACTION_SNOOZE.equals(action) || AlarmNotifications.ACTION_TIMEOUT.equals(action)) {
                 Log.d("AlarmDismissActivity", "onCreate: ACTION_SNOOZE,TIMEOUT: " + data + " .. not supported by onCreate, finishing...");
                 setResult(RESULT_CANCELED);
                 finish();
@@ -115,7 +116,7 @@ public class AlarmDismissActivity extends AppCompatActivity
                 Uri newData = intent.getData();
                 if (newData != null)
                 {
-                    if (action.equals(AlarmReceiver.ACTION_DISMISS)) {
+                    if (action.equals(AlarmNotifications.ACTION_DISMISS)) {
                         Log.d("AlarmDismissActivity", "onNewIntent: ACTION_HANDLED: " + newData);
                         setResult(Activity.RESULT_CANCELED);
                         finish();
@@ -145,8 +146,8 @@ public class AlarmDismissActivity extends AppCompatActivity
         public void onClick(View v)
         {
             if (alarm != null) {
-                Intent intent = AlarmReceiver.getAlarmIntent(AlarmDismissActivity.this, alarm.getUri(), (int)alarm.rowID);
-                intent.setAction(AlarmReceiver.ACTION_SNOOZE);
+                Intent intent = AlarmNotifications.getAlarmIntent(AlarmDismissActivity.this, alarm.getUri(), (int)alarm.rowID);
+                intent.setAction(AlarmNotifications.ACTION_SNOOZE);
                 sendBroadcast(intent);
                 setResult(Activity.RESULT_OK);
             }
@@ -159,8 +160,8 @@ public class AlarmDismissActivity extends AppCompatActivity
         public void onClick(View v)
         {
             if (alarm != null) {
-                Intent intent = AlarmReceiver.getAlarmIntent(AlarmDismissActivity.this, alarm.getUri(), (int)alarm.rowID);
-                intent.setAction(AlarmReceiver.ACTION_DISMISS);
+                Intent intent = AlarmNotifications.getAlarmIntent(AlarmDismissActivity.this, alarm.getUri(), (int)alarm.rowID);
+                intent.setAction(AlarmNotifications.ACTION_DISMISS);
                 sendBroadcast(intent);
                 setResult(Activity.RESULT_OK);
                 finish();
@@ -184,7 +185,8 @@ public class AlarmDismissActivity extends AppCompatActivity
     {
         alarm = item;
 
-        alarmTitle.setText(item.getLabel(context));
+        String emptyLabel = context.getString(R.string.alarmMode_alarm);
+        alarmTitle.setText((item.label == null || item.label.isEmpty()) ? emptyLabel : item.label);
 
         if (alarm.event != null) {
             alarmSubtitle.setText(item.event.getLongDisplayString());
