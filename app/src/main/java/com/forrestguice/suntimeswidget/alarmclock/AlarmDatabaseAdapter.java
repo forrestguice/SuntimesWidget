@@ -128,7 +128,7 @@ public class AlarmDatabaseAdapter
     // Table: AlarmState
     //
 
-    public static final String KEY_STATE_ALARMID = KEY_ROWID;
+    public static final String KEY_STATE_ALARMID = "alarmID";
     public static final String DEF_STATE_ALARMID = KEY_STATE_ALARMID + " integer primary key";
 
     public static final String KEY_STATE = "state";
@@ -328,7 +328,7 @@ public class AlarmDatabaseAdapter
     public boolean removeAlarm(long row)
     {
         boolean removeAlarm = (database.delete(TABLE_ALARMS, KEY_ROWID + "=" + row, null) > 0);
-        boolean removeAlarmState = (database.delete(TABLE_ALARMSTATE, KEY_ROWID + "=" + row, null) > 0);
+        boolean removeAlarmState = (database.delete(TABLE_ALARMSTATE, KEY_STATE_ALARMID + "=" + row, null) > 0);
         return removeAlarm && removeAlarmState;
     }
 
@@ -458,16 +458,18 @@ public class AlarmDatabaseAdapter
     {
         protected AlarmDatabaseAdapter db;
         private boolean flag_add = false;
+        private boolean flag_withState = false;
 
         public AlarmUpdateTask(Context context)
         {
             db = new AlarmDatabaseAdapter(context.getApplicationContext());
         }
 
-        public AlarmUpdateTask(Context context, boolean flag_add)
+        public AlarmUpdateTask(Context context, boolean flag_add, boolean flag_withState)
         {
             db = new AlarmDatabaseAdapter(context.getApplicationContext());
             this.flag_add = flag_add;
+            this.flag_withState = flag_withState;
         }
 
         @Override
@@ -475,10 +477,17 @@ public class AlarmDatabaseAdapter
         {
             db.open();
             boolean updated = true;
-            for (AlarmClockItem item : items) {
-                updated = updated && ((flag_add
+            for (AlarmClockItem item : items)
+            {
+                boolean itemUpdated = ((flag_add
                         ? (db.addAlarm(item.asContentValues(false)) > 0)
                         : (db.updateAlarm(item.rowID, item.asContentValues(false)))));
+
+                if (itemUpdated && flag_withState && item.state != null) {
+                    db.updateAlarmState(item.rowID, item.state.asContentValues());
+                }
+
+                updated = updated && itemUpdated;
             }
             db.close();
             return updated;
@@ -623,7 +632,7 @@ public class AlarmDatabaseAdapter
             db.open();
             boolean updated = true;
             for (AlarmState state : states) {
-                updated = updated && (db.updateAlarm(state.getAlarmID(), state.asContentValues()));
+                updated = updated && (db.updateAlarmState(state.getAlarmID(), state.asContentValues()));
             }
             db.close();
             return updated;

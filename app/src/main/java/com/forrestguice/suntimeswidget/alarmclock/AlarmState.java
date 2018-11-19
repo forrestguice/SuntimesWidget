@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.content.ContentValues;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 /**
@@ -122,7 +123,7 @@ public class AlarmState
                 return (nextState == STATE_NONE);
 
             case STATE_DISABLED:
-                return (nextState == STATE_NONE);
+                return (nextState == STATE_NONE || nextState == STATE_DISABLED);
 
             case STATE_NONE:
                 return (nextState == STATE_SCHEDULED_DISTANT || nextState == STATE_SCHEDULED_SOON || nextState == STATE_DISABLED);
@@ -138,14 +139,24 @@ public class AlarmState
      * @param nextState
      * @return
      */
-    public boolean transitionState(int nextState)
+    public static boolean transitionState(@Nullable AlarmState currentState, int nextState)
     {
-        if (isValidTransition(state, nextState))
-        {
-            state = nextState;
-            modified = true;
+        if (currentState == null) {
+            Log.i("AlarmState", "Transitioned from null to " + nextState);
+            return true;
+
+        } else if (isValidTransition(currentState.state, nextState)) {
+            Log.i("AlarmState", "Transitioned from " + currentState + " to " + nextState);
+            currentState.state = nextState;
+            currentState.modified = true;
             return true;
         }
+        Log.e("AlarmState", "Unable to transition state! " + currentState + ", " + nextState);
         return false;
+    }
+
+    public String toString()
+    {
+        return rowID + ":" + state;
     }
 }
