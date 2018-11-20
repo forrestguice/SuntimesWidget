@@ -338,6 +338,7 @@ public class AlarmDismissActivity extends AppCompatActivity
                 case AlarmState.STATE_TIMEOUT:
                     setMode(AlarmNotifications.ACTION_TIMEOUT);
                     break;
+
                 default:
                     setMode(null);
                     break;
