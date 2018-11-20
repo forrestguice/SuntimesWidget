@@ -237,13 +237,17 @@ public class AlarmDismissActivity extends AppCompatActivity
 
         if (AlarmNotifications.ACTION_SNOOZE.equals(action))
         {
-            String snoozeTime = "TODO";
-            infoText.setText(getString(R.string.alarmAction_snoozeMsg, snoozeTime));
+            SuntimesUtils.initDisplayStrings(this);
+            SuntimesUtils.TimeDisplayText snoozeText = utils.timeDeltaLongDisplayString(0, AlarmSettings.loadPrefAlarmSnooze(this));
+            String snoozeString = getString(R.string.alarmAction_snoozeMsg, snoozeText.getValue());
+            SpannableString snoozeDisplay = SuntimesUtils.createBoldSpan(null, snoozeString, snoozeText.getValue());
+            infoText.setText(snoozeDisplay);
             infoText.setVisibility(View.VISIBLE);
+
+            icon.setDisplayedChild(1);
             snoozeButton.setVisibility(View.GONE);
             snoozeButton.setEnabled(false);
             dismissButton.setEnabled(true);
-            icon.setDisplayedChild(1);
 
             boolean needsTransition = (!AlarmNotifications.ACTION_SNOOZE.equals(prevMode));
             if (needsTransition)

@@ -533,7 +533,7 @@
     <string name="alarmAction_silencedMsg">Alarm silenced</string>          <!-- toast message -->  <!-- TODO -->
 
     <string name="alarmAction_snooze">Snooze</string>                  <!-- notification action button -->  <!-- TODO -->
-    <string name="alarmAction_snoozeMsg">Snoozing for %s</string>     <!-- notification msg -->  <!-- TODO -->
+    <string name="alarmAction_snoozeMsg">Snoozing for <xliff:g id="alarm">%1$s</xliff:g></string>     <!-- notification msg -->  <!-- TODO -->
 
     <string name="alarmAction_timeout">Timeout</string>                  <!-- notification action button -->  <!-- TODO -->
     <string name="alarmAction_timeoutMsg">The alarm timed out.</string>     <!-- notification msg -->  <!-- TODO -->
@@ -598,10 +598,10 @@
         <item>Do Nothing</item>
     </string-array>
     <string-array name="alarm_hardwarebutton_actions_values" translatable="false">
-        <item>dismiss</item>
-        <item>silent</item>
-        <item>snooze</item>
-        <item>none</item>
+        <item>suntimeswidget.alarm.dismiss</item>
+        <item>suntimeswidget.alarm.silent</item>
+        <item>suntimeswidget.alarm.snooze</item>
+        <item>suntimeswidget.alarm.none</item>
     </string-array>
 
     <plurals name="units_minutes">
@@ -1284,6 +1284,6 @@
     <string name="def_app_alarms_silence" translatable="false">600000</string>
     <string name="def_app_alarms_timeout" translatable="false">600000</string>
     <string name="def_app_alarms_snooze" translatable="false">600000</string>
-    <string name="def_app_alarms_hardwarebuttons_action" translatable="false">silent</string>
+    <string name="def_app_alarms_hardwarebuttons_action" translatable="false">suntimeswidget.alarm.silent</string>
 
 </resources>
