@@ -32,7 +32,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.Vibrator;
@@ -88,8 +87,6 @@ public class AlarmNotifications extends BroadcastReceiver
     }
 
     /**
-     * @param context
-     * @param item
      */
     protected static void showAlarmEnabledToast(Context context, @NonNull AlarmClockItem item)
     {
@@ -108,7 +105,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
     /**
      */
-    protected static void showAlarmSilencedToast(Context context, Uri data)
+    protected static void showAlarmSilencedToast(Context context)
     {
         if (context != null) {
             Toast msg = Toast.makeText(context, context.getString(R.string.alarmAction_silencedMsg), Toast.LENGTH_SHORT);
@@ -146,7 +143,7 @@ public class AlarmNotifications extends BroadcastReceiver
         } else Log.e(TAG, "addAlarmSnooze: AlarmManager is null!");
     }
 
-    protected static void addAlarmTimeouts(Context context, Uri data, int notificationID)
+    protected static void addAlarmTimeouts(Context context, Uri data)
     {
         Log.d(TAG, "addAlarmTimeouts: " + data);
         if (context != null)
@@ -265,14 +262,12 @@ public class AlarmNotifications extends BroadcastReceiver
 
     /**
      * Start playing sound / vibration for given alarm.
-     * @param context
-     * @param alarm AlarmClockItem
      */
     public static void startAlert(@NonNull final Context context, @NonNull AlarmClockItem alarm)
     {
         initPlayer(context,false);
         if (isPlaying) {
-            stopAlert(context);
+            stopAlert();
         }
         isPlaying = true;
 
@@ -315,7 +310,7 @@ public class AlarmNotifications extends BroadcastReceiver
     /**
      * Stop playing sound / vibration.
      */
-    public static void stopAlert(Context context)
+    public static void stopAlert()
     {
         stopAlert(true);
     }
@@ -341,7 +336,7 @@ public class AlarmNotifications extends BroadcastReceiver
     private static MediaPlayer player = null;
     private static Vibrator vibrator = null;
     private static AudioManager audioManager;
-    private static void initPlayer(final Context context, boolean reinit)
+    private static void initPlayer(final Context context, @SuppressWarnings("SameParameterValue") boolean reinit)
     {
         if (vibrator == null || reinit) {
             vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
@@ -370,7 +365,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 public void onSeekComplete(MediaPlayer mediaPlayer)
                 {
                     if (!mediaPlayer.isLooping()) {                // some sounds (mostly ringtones) have a built-in loop - they repeat despite !isLooping!
-                        stopAlert(context);                            // so manually stop them after playing once
+                        stopAlert();                            // so manually stop them after playing once
                     }
                 }
             });
@@ -385,7 +380,7 @@ public class AlarmNotifications extends BroadcastReceiver
      * @param context Context
      * @param alarm AlarmClockItem
      */
-    public static Notification createNotification(Context context, @NonNull AlarmClockItem alarm, int notificationID)
+    public static Notification createNotification(Context context, @NonNull AlarmClockItem alarm)
     {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 
@@ -471,14 +466,12 @@ public class AlarmNotifications extends BroadcastReceiver
      * showNotification
      * Use this method to display the notification without a foreground service.
      * @see NotificationService to display a notification that lives longer than the receiver.
-     * @param context
-     * @param item
      */
     public static void showNotification(Context context, @NonNull AlarmClockItem item)
     {
         int notificationID = (int)item.rowID;
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-        Notification notification = createNotification(context, item, notificationID);
+        Notification notification = createNotification(context, item);
         notificationManager.notify(ALARM_NOTIFICATION_TAG, notificationID, notification);
         startAlert(context, item);
     }
@@ -506,24 +499,24 @@ public class AlarmNotifications extends BroadcastReceiver
 
             } else if (AlarmNotifications.ACTION_DISMISS.equals(action) && data != null) {
                 Log.d(TAG, "ACTION_DISMISS: " + data);
-                AlarmNotifications.stopAlert(getApplicationContext());
+                AlarmNotifications.stopAlert();
 
             } else if (AlarmNotifications.ACTION_DISABLE.equals(action) && data != null) {
                 Log.d(TAG, "ACTION_DISABLE: " + data);
-                AlarmNotifications.stopAlert(getApplicationContext());
+                AlarmNotifications.stopAlert();
 
             } else if (AlarmNotifications.ACTION_SILENT.equals(action)) {
                 Log.d(TAG, "ACTION_SILENT: " + data);
                 AlarmNotifications.stopAlert(false);
-                showAlarmSilencedToast(getApplicationContext(), data);
+                showAlarmSilencedToast(getApplicationContext());
 
             } else if (AlarmNotifications.ACTION_SNOOZE.equals(action) && data != null) {
                 Log.d(TAG, "ACTION_SNOOZE: " + data);
-                AlarmNotifications.stopAlert(getApplicationContext());
+                AlarmNotifications.stopAlert();
 
             } else if (AlarmNotifications.ACTION_TIMEOUT.equals(action) && data != null) {
                 Log.d(TAG, "ACTION_TIMEOUT: " + data);
-                AlarmNotifications.stopAlert(getApplicationContext());
+                AlarmNotifications.stopAlert();
 
             } else {
                 Log.w(TAG, "Unrecognized action: " + action);
@@ -559,12 +552,12 @@ public class AlarmNotifications extends BroadcastReceiver
                 @Override
                 public void onItemLoaded(final AlarmClockItem item)
                 {
+                    if (context == null) {
+                        return;
+                    }
+
                     if (item != null)
                     {
-                        if (context == null) {
-                            Log.e(TAG, "Null context!");
-                        }
-
                         if (action.equals(ACTION_DISMISS))
                         {
                             ////////////////////////////////////////////////////////////////////////////
@@ -689,7 +682,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 {
                                     Log.i(TAG, "Show: " + item.rowID + "(Alarm)");
                                     cancelAlarmTimeouts(context, item.getUri());
-                                    addAlarmTimeouts(context, item.getUri(), (int)item.rowID);
+                                    addAlarmTimeouts(context, item.getUri());
 
                                 } else {
                                     Log.i(TAG, "Show: " + item.rowID + "(Notification)");
@@ -739,7 +732,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     if (result)
                     {
                         Log.d(TAG, "State Saved (onSnooze)");
-                        Notification notification = AlarmNotifications.createNotification(context, item, (int)item.rowID);
+                        Notification notification = AlarmNotifications.createNotification(context, item);
                         startForeground((int)item.rowID, notification);  // update notification
                         context.sendBroadcast(getFullscreenBroadcast(item.getUri()));  // update fullscreen activity
                     }
@@ -755,7 +748,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 public void onFinished(Boolean result, AlarmClockItem item)
                 {
                     Log.d(TAG, "State Saved (onTimeout)");
-                    Notification notification = AlarmNotifications.createNotification(context, item, (int)item.rowID);
+                    Notification notification = AlarmNotifications.createNotification(context, item);
                     startForeground((int)item.rowID, notification);  // update notification
                     context.sendBroadcast(getFullscreenBroadcast(item.getUri()));  // update fullscreen activity
                 }
@@ -770,8 +763,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 public void onFinished(Boolean result, AlarmClockItem item)
                 {
                     Log.d(TAG, "State Saved (onShow)");
-                    Context context = getApplicationContext();
-                    Notification notification = AlarmNotifications.createNotification(context, item, (int)item.rowID);
+                    Notification notification = AlarmNotifications.createNotification(context, item);
                     startForeground((int)item.rowID, notification);        // trigger the notification
                     AlarmNotifications.startAlert(context, item);          // play sound/vibration
                     showAlarmPlayingToast(getApplicationContext(), item);           // show toast

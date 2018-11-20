@@ -171,7 +171,6 @@ public class AlarmClockItem
 
     /**
      * repeatsEveryDay
-     * @return
      */
     public static boolean repeatsEveryDay(ArrayList<Integer> repeatingDays)
     {

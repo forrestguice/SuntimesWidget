@@ -138,8 +138,6 @@ public class AlarmState
 
     /**
      * transitionState
-     * @param nextState
-     * @return
      */
     public static boolean transitionState(@Nullable AlarmState currentState, int nextState)
     {

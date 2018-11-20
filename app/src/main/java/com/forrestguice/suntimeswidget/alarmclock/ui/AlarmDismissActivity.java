@@ -20,7 +20,6 @@ package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.animation.ValueAnimator;
 
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -37,7 +36,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.forrestguice.suntimeswidget.R;
@@ -273,7 +271,7 @@ public class AlarmDismissActivity extends AppCompatActivity
         getWindow().setAttributes(layoutParams);
     }
 
-    private void animateBrightness(float downToValue, int durationMillis)
+    private void animateBrightness(float downToValue, @SuppressWarnings("SameParameterValue") int durationMillis)
     {
         WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
         float startValue = layoutParams.screenBrightness;

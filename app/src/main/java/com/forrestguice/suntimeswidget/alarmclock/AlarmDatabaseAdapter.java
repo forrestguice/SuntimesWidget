@@ -26,6 +26,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 public class AlarmDatabaseAdapter
@@ -464,12 +465,12 @@ public class AlarmDatabaseAdapter
         private boolean flag_withState = false;
         private AlarmClockItem lastItem;
 
-        public AlarmUpdateTask(Context context)
+        public AlarmUpdateTask(@NonNull Context context)
         {
             db = new AlarmDatabaseAdapter(context.getApplicationContext());
         }
 
-        public AlarmUpdateTask(Context context, boolean flag_add, boolean flag_withState)
+        public AlarmUpdateTask(@NonNull Context context, boolean flag_add, boolean flag_withState)
         {
             db = new AlarmDatabaseAdapter(context.getApplicationContext());
             this.flag_add = flag_add;
