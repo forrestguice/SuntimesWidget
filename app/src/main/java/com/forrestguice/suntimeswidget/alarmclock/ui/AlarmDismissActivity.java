@@ -260,6 +260,7 @@ public class AlarmDismissActivity extends AppCompatActivity
             setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE);
 
         } else {
+            hardwareButtonPressed = false;
             infoText.setText("");
             infoText.setVisibility(View.GONE);
             snoozeButton.setVisibility(View.VISIBLE);
@@ -352,28 +353,31 @@ public class AlarmDismissActivity extends AppCompatActivity
     @Override
     public boolean dispatchKeyEvent (KeyEvent event)
     {
-        int action = event.getAction();
-        int keyCode = event.getKeyCode();
-
-        if (action == KeyEvent.ACTION_DOWN)
+        if (mode == null && !hardwareButtonPressed)
         {
-            switch (keyCode)
-            {
-                case KeyEvent.KEYCODE_CAMERA:
-                case KeyEvent.KEYCODE_VOLUME_UP:
-                case KeyEvent.KEYCODE_VOLUME_DOWN:
-                    String alarmAction = AlarmSettings.loadPrefOnHardwareButtons(AlarmDismissActivity.this);
-                    Intent intent = AlarmNotifications.getAlarmIntent(AlarmDismissActivity.this, alarm.getUri(), (int)alarm.rowID);
-                    intent.setAction(alarmAction);
-                    sendBroadcast(intent);
-                    return true;
+            int action = event.getAction();
+            int keyCode = event.getKeyCode();
 
-                default:
-                    return super.dispatchKeyEvent(event);
-            }
-        } else {
-            return super.dispatchKeyEvent(event);
-        }
+            if (action == KeyEvent.ACTION_DOWN)
+            {
+                switch (keyCode)
+                {
+                    case KeyEvent.KEYCODE_CAMERA:
+                    case KeyEvent.KEYCODE_VOLUME_UP:
+                    case KeyEvent.KEYCODE_VOLUME_DOWN:
+                        hardwareButtonPressed = true;
+                        String alarmAction = AlarmSettings.loadPrefOnHardwareButtons(AlarmDismissActivity.this);
+                        Intent intent = AlarmNotifications.getAlarmIntent(AlarmDismissActivity.this, alarm.getUri(), (int)alarm.rowID);
+                        intent.setAction(alarmAction);
+                        sendBroadcast(intent);
+                        return true;
+
+                    default:
+                        return super.dispatchKeyEvent(event);
+                }
+            } else return super.dispatchKeyEvent(event);
+        } else return super.dispatchKeyEvent(event);
     }
+    private boolean hardwareButtonPressed = false;
 
 }
