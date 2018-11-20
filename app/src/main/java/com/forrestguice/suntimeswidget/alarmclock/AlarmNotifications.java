@@ -85,20 +85,16 @@ public class AlarmNotifications extends BroadcastReceiver
         if (action != null)
         {
             if (action.equals(ACTION_DISMISS) || action.equals(ACTION_SNOOZE) ||
-                    action.equals(ACTION_DISABLE) || action.equals(ACTION_TIMEOUT))
+                    action.equals(ACTION_DISABLE) || action.equals(ACTION_TIMEOUT) || action.equals(ACTION_SILENT))
             {
-                Intent dismissNotification = NotificationService.getNotificationIntent(context, AlarmNotifications.ACTION_DISMISS, data);
-                context.startService(dismissNotification);
+                Intent notificationIntent = NotificationService.getNotificationIntent(context, action, data);
+                context.startService(notificationIntent);
 
                 if (action.equals(ACTION_DISMISS))
                 {
                     Intent dismissNotificationDrawer =  new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
                     context.sendBroadcast(dismissNotificationDrawer);
                 }
-
-            } else if (action.equals(ACTION_SILENT)) {
-                Intent silenceNotification = NotificationService.getNotificationIntent(context, AlarmNotifications.ACTION_SILENT, data);
-                context.startService(silenceNotification);
             }
 
             AlarmDatabaseAdapter.AlarmItemTask itemTask = new AlarmDatabaseAdapter.AlarmItemTask(context);
@@ -185,6 +181,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         // Silenced Alarm
                         ////////////////////////////////////////////////////////////////////////////
                         Log.i(TAG, "Silenced: " + item.rowID);
+                        cancelAlarmSilence(context, item.getUri());    // cancel upcoming silence timeout; if user silenced alarm there may be another silence scheduled
                         showAlarmSilencedToast(context, item);
 
                     } else if (action.equals(ACTION_TIMEOUT ) && item.type == AlarmClockItem.AlarmType.ALARM) {
@@ -254,9 +251,9 @@ public class AlarmNotifications extends BroadcastReceiver
                         ////////////////////////////////////////////////////////////////////////////
                         if (AlarmState.transitionState(item.state, AlarmState.STATE_SNOOZING))
                         {
-                            long snooze = AlarmSettings.loadPrefAlarmSnooze(context);
-                            long snoozeAlarmTime = item.timestamp + snooze;  // TODO
-                            Log.i(TAG, "Snoozing: " + item.rowID + ", " + snoozeAlarmTime);
+                            Log.i(TAG, "Snoozing: " + item.rowID);
+                            cancelAlarmTimeouts(context, item.getUri());
+                            addAlarmSnooze(context, item.getUri());
 
                             item.modified = true;
                             updateItem.setTaskListener(new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
@@ -276,8 +273,6 @@ public class AlarmNotifications extends BroadcastReceiver
                                 }
                             });
                             updateItem.execute(item);
-                            cancelAlarmTimeouts(context, item.getUri());
-                            addAlarmSnooze(context, item.getUri());
                         }
 
                     } else if (action.equals(ACTION_SHOW)) {
@@ -289,11 +284,11 @@ public class AlarmNotifications extends BroadcastReceiver
                             if (item.type == AlarmClockItem.AlarmType.ALARM)
                             {
                                 Log.i(TAG, "Show: " + item.rowID + "(Alarm)");
-                                Intent showNotification = NotificationService.getNotificationIntent(context, AlarmNotifications.ACTION_SHOW, item.getUri());
-                                context.startService(showNotification);
-
                                 cancelAlarmTimeouts(context, item.getUri());
                                 addAlarmTimeouts(context, item.getUri(), (int)item.rowID);
+
+                                Intent showNotification = NotificationService.getNotificationIntent(context, AlarmNotifications.ACTION_SHOW, item.getUri());
+                                context.startService(showNotification);
 
                             } else {
                                 Log.i(TAG, "Show: " + item.rowID + "(Notification)");
@@ -397,19 +392,35 @@ public class AlarmNotifications extends BroadcastReceiver
         } else Log.e(TAG, "addAlarmTimeout: AlarmManager is null!");
     }
 
+    protected static void cancelAlarmShow(Context context, Uri data)
+    {
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        if (alarmManager != null) {
+            Log.d(TAG, "cancelAlarmShow: " + data);
+            alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_SHOW, data));
+        } else Log.e(TAG, "cancelAlarmShow: AlarmManager is null!");
+    }
+
+    protected static void cancelAlarmSilence(Context context, Uri data)
+    {
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        if (alarmManager != null) {
+            Log.d(TAG, "cancelAlarmSilence: " + data);
+            alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_SILENT, data));
+        } else Log.e(TAG, "cancelAlarmSilence: AlarmManager is null!");
+    }
+
     protected static void cancelAlarmTimeouts(Context context, Uri data)
     {
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        if (alarmManager != null)
-        {
+        if (alarmManager != null) {
             Log.d(TAG, "cancelAlarmTimeouts: " + data);
             alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_SILENT, data));
             alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_TIMEOUT, data));
             alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_SHOW, data));
-
         } else Log.e(TAG, "cancelAlarmTimeouts: AlarmManager is null!");
     }
-    
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -706,6 +717,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
             } else if (AlarmNotifications.ACTION_SNOOZE.equals(action) && data != null) {
                 Log.d(TAG, "ACTION_SNOOZE: " + data);
+                AlarmNotifications.stopAlert(getApplicationContext());
                 final long notificationID = ContentUris.parseId(data);
                 AlarmDatabaseAdapter.AlarmItemTask alarmTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext());
                 alarmTask.setAlarmItemTaskListener(updateNotificationTask((int)notificationID));
@@ -713,6 +725,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
             } else if (AlarmNotifications.ACTION_TIMEOUT.equals(action) && data != null) {
                 Log.d(TAG, "ACTION_TIMEOUT: " + data);
+                AlarmNotifications.stopAlert(getApplicationContext());
                 final long notificationID = ContentUris.parseId(data);
                 AlarmDatabaseAdapter.AlarmItemTask alarmTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext());
                 alarmTask.setAlarmItemTaskListener(updateNotificationTask((int)notificationID));
