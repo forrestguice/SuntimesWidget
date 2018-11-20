@@ -26,6 +26,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.AsyncTask;
+import android.util.Log;
 
 public class AlarmDatabaseAdapter
 {
@@ -456,6 +457,8 @@ public class AlarmDatabaseAdapter
      */
     public static class AlarmUpdateTask extends AsyncTask<AlarmClockItem, Void, Boolean>
     {
+        public static final String TAG = "AlarmReceiverItemTask";
+
         protected AlarmDatabaseAdapter db;
         private boolean flag_add = false;
         private boolean flag_withState = false;
@@ -498,6 +501,7 @@ public class AlarmDatabaseAdapter
         @Override
         protected void onPostExecute(Boolean result)
         {
+            Log.d(TAG, "Item Saved: " + lastItem.rowID + ":" + (lastItem.state != null ? lastItem.state.getState() : null));
             if (listener != null)
                 listener.onFinished(result, lastItem);
         }
@@ -621,7 +625,10 @@ public class AlarmDatabaseAdapter
      */
     public static class AlarmStateUpdateTask extends AsyncTask<AlarmState, Void, Boolean>
     {
+        public static final String TAG = "AlarmReceiverStateTask";
+
         protected AlarmDatabaseAdapter db;
+        protected AlarmState lastState = null;
 
         public AlarmStateUpdateTask(Context context)
         {
@@ -633,7 +640,9 @@ public class AlarmDatabaseAdapter
         {
             db.open();
             boolean updated = true;
-            for (AlarmState state : states) {
+            for (AlarmState state : states)
+            {
+                lastState = state;
                 updated = updated && (db.updateAlarmState(state.getAlarmID(), state.asContentValues()));
             }
             db.close();
@@ -643,6 +652,7 @@ public class AlarmDatabaseAdapter
         @Override
         protected void onPostExecute(Boolean result)
         {
+            Log.d(TAG, "State Saved: " + lastState.getAlarmID() + ":" + lastState.getState());
             if (listener != null)
                 listener.onFinished(result);
         }

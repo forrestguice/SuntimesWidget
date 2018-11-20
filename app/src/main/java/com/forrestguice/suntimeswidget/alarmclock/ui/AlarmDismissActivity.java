@@ -137,20 +137,15 @@ public class AlarmDismissActivity extends AppCompatActivity
         {
             String action = intent.getAction();
             Uri data = intent.getData();
-            Log.d(TAG, "updateReceiver.onReceive: " + action + ", " + data);
+            Log.d(TAG, "updateReceiver.onReceive: " + data);
 
-            if (action != null && data != null)
-            {
-                long alarmID = ContentUris.parseId(data);
-                if (action.equals(BROADCAST_UPDATE))
-                {
-                    if (alarm == null || alarm.rowID != alarmID)
-                    {
-                        Log.d(TAG, "updateReceiver.onReceive: setting alarmID: " + alarmID);
-                        setAlarmID(AlarmDismissActivity.this, alarmID);
-                    }
-                }
-            }
+            if (action != null) {
+                if (action.equals(BROADCAST_UPDATE)) {
+                    if (data != null) {
+                        setAlarmID(AlarmDismissActivity.this, ContentUris.parseId(data));
+                    } else Log.e(TAG, "updateReceiver.onReceive: null data!");
+                } else Log.e(TAG, "updateReceiver.onReceive: unrecognized action: " + action);
+            } else Log.e(TAG, "updateReceiver.onReceive: null action!");
         }
     };
 

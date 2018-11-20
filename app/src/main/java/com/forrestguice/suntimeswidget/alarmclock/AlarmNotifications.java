@@ -32,6 +32,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.Vibrator;
@@ -81,215 +82,9 @@ public class AlarmNotifications extends BroadcastReceiver
         Uri data = intent.getData();
         String dataTag = intent.getStringExtra("tag");
         Log.d(TAG, "onReceive: " + action + ", " + data + " (" + dataTag + ")");
-
         if (action != null) {
-            AlarmDatabaseAdapter.AlarmItemTask itemTask = new AlarmDatabaseAdapter.AlarmItemTask(context);
-            itemTask.setAlarmItemTaskListener(createAlarmOnReceiveListener(context, action));
-            itemTask.execute(ContentUris.parseId(data));
-
+            context.startService(NotificationService.getNotificationIntent(context, action, data));
         } else Log.w(TAG, "onReceive: null action!");
-    }
-
-    /**
-     * @param context
-     * @return
-     */
-    private AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener showAlarmListOnAlarmChanged(final Context context)
-    {
-        return new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener() {
-            @Override
-            public void onFinished(Boolean result, AlarmClockItem item) {
-                context.startActivity(getAlarmListIntent(context));
-            }
-        };
-    }
-
-    /**
-     */
-    private AlarmDatabaseAdapter.AlarmStateUpdateTask.AlarmStateUpdateTaskListener performActionOnStateChanged(final Context context, final String action, final AlarmClockItem item)
-    {
-        return new AlarmDatabaseAdapter.AlarmStateUpdateTask.AlarmStateUpdateTaskListener()
-        {
-            @Override
-            public void onFinished(Boolean result)
-            {
-                Intent intent = getAlarmIntent(context, action, item.getUri());
-                intent.putExtra("tag", "performActionOnStateChanged");
-                context.sendBroadcast(intent);
-            }
-        };
-    }
-
-    /**
-     */
-    private AlarmDatabaseAdapter.AlarmItemTask.AlarmItemTaskListener createAlarmOnReceiveListener(final Context context, final String action)
-    {
-        return new AlarmDatabaseAdapter.AlarmItemTask.AlarmItemTaskListener()
-        {
-            @Override
-            public void onItemLoaded(final AlarmClockItem item)
-            {
-                if (item != null)
-                {
-                    AlarmDatabaseAdapter.AlarmStateUpdateTask updateState = new AlarmDatabaseAdapter.AlarmStateUpdateTask(context);
-                    AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, true);
-
-                    if (action.equals(ACTION_DISMISS))
-                    {
-                        ////////////////////////////////////////////////////////////////////////////
-                        // Dismiss Alarm
-                        ////////////////////////////////////////////////////////////////////////////
-                        if (AlarmState.transitionState(item.state, AlarmState.STATE_DISMISSED))
-                        {
-                            cancelAlarmTimeouts(context, item.getUri());
-                            context.startService(NotificationService.getNotificationIntent(context, action, item.getUri()));
-
-                            AlarmState.transitionState(item.state, AlarmState.STATE_NONE);
-                            final String action;
-                            if (!item.repeating)
-                            {
-                                Log.i(TAG, "Dismissed: Non-repeating; disabling.. " + item.rowID);
-                                action = ACTION_DISABLE;
-
-                            } else {
-                                Log.i(TAG, "Dismissed: Repeating; re-scheduling.." + item.rowID);
-                                action = ACTION_SCHEDULE;
-                            }
-
-                            AlarmDatabaseAdapter.AlarmStateUpdateTask.AlarmStateUpdateTaskListener performAction = performActionOnStateChanged(context, action, item);
-                            if (item.state != null)
-                            {
-                                updateState.setTaskListener(performAction);
-                                updateState.execute(item.state);
-                            }
-                        }
-
-                    } else if (action.equals(ACTION_SILENT) && item.type == AlarmClockItem.AlarmType.ALARM) {
-                        ////////////////////////////////////////////////////////////////////////////
-                        // Silenced Alarm
-                        ////////////////////////////////////////////////////////////////////////////
-                        Log.i(TAG, "Silenced: " + item.rowID);
-                        cancelAlarmSilence(context, item.getUri());    // cancel upcoming silence timeout; if user silenced alarm there may be another silence scheduled
-                        context.startService(NotificationService.getNotificationIntent(context, action, item.getUri()));
-
-                    } else if (action.equals(ACTION_TIMEOUT ) && item.type == AlarmClockItem.AlarmType.ALARM) {
-                        ////////////////////////////////////////////////////////////////////////////
-                        // Timeout Alarm
-                        ////////////////////////////////////////////////////////////////////////////
-                        if (AlarmState.transitionState(item.state, AlarmState.STATE_TIMEOUT))
-                        {
-                            Log.i(TAG, "Timeout: " + item.rowID);
-                            cancelAlarmTimeouts(context, item.getUri());
-                            context.startService(NotificationService.getNotificationIntent(context, action, item.getUri()));
-
-                            updateItem.setTaskListener(new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
-                            {
-                                @Override
-                                public void onFinished(Boolean result, AlarmClockItem item)
-                                {
-                                    context.sendBroadcast(getFullscreenBroadcast(item.getUri()));
-                                }
-                            });
-                            updateItem.execute(item);
-                        }
-
-                    } else if (action.equals(ACTION_DISABLE)) {
-                        ////////////////////////////////////////////////////////////////////////////
-                        // Disable Alarm
-                        ////////////////////////////////////////////////////////////////////////////
-                        if (AlarmState.transitionState(item.state, AlarmState.STATE_DISABLED))
-                        {
-                            Log.i(TAG, "Disabled: " + item.rowID);
-                            cancelAlarmTimeouts(context, item.getUri());
-                            context.startService(NotificationService.getNotificationIntent(context, action, item.getUri()));
-
-                            item.enabled = false;
-                            item.modified = true;
-                            updateItem.setTaskListener(showAlarmListOnAlarmChanged(context));
-                            updateItem.execute(item);
-                        }
-
-                    } else if (action.equals(ACTION_SCHEDULE)) {
-                        ////////////////////////////////////////////////////////////////////////////
-                        // Schedule Alarm
-                        ////////////////////////////////////////////////////////////////////////////
-                        if (AlarmState.transitionState(item.state, AlarmState.STATE_NONE))
-                        {
-                            cancelAlarmTimeouts(context, item.getUri());
-
-                            // TODO: SCHEDULED_DISTANT vs SCHEDULED..
-                            if (AlarmState.transitionState(item.state, AlarmState.STATE_SCHEDULED_DISTANT))
-                            {
-                                // TODO: schedule alarm, set timestamp values on item
-                                Log.i(TAG, "Scheduled: " + item.rowID + ", " + item.timestamp);
-                                showAlarmEnabledToast(context, item);
-
-                                AlarmDatabaseAdapter.AlarmStateUpdateTask.AlarmStateUpdateTaskListener testShow = performActionOnStateChanged(context, AlarmNotifications.ACTION_SHOW, item);
-                                if (item.state != null) {
-                                    updateState.setTaskListener(testShow);   // test by triggering immediately // TODO: remove this block, replace w/ AlarmManager
-                                    updateState.execute(item.state);
-                                }
-                            }
-                        }
-
-                    } else if (action.equals(ACTION_SNOOZE) && item.type == AlarmClockItem.AlarmType.ALARM) {
-                        ////////////////////////////////////////////////////////////////////////////
-                        // Snooze Alarm
-                        ////////////////////////////////////////////////////////////////////////////
-                        if (AlarmState.transitionState(item.state, AlarmState.STATE_SNOOZING))
-                        {
-                            Log.i(TAG, "Snoozing: " + item.rowID);
-                            cancelAlarmTimeouts(context, item.getUri());
-                            addAlarmSnooze(context, item.getUri());
-                            context.startService(NotificationService.getNotificationIntent(context, action, item.getUri()));
-
-                            item.modified = true;
-                            updateItem.setTaskListener(new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
-                            {
-                                @Override
-                                public void onFinished(Boolean result, AlarmClockItem item) {
-                                    if (result) {
-                                        context.sendBroadcast(getFullscreenBroadcast(item.getUri()));
-                                    }
-                                }
-                            });
-                            updateItem.execute(item);
-                        }
-
-                    } else if (action.equals(ACTION_SHOW)) {
-                        ////////////////////////////////////////////////////////////////////////////
-                        // Show Alarm
-                        ////////////////////////////////////////////////////////////////////////////
-                        if (AlarmState.transitionState(item.state, AlarmState.STATE_SOUNDING))
-                        {
-                            if (item.type == AlarmClockItem.AlarmType.ALARM)
-                            {
-                                Log.i(TAG, "Show: " + item.rowID + "(Alarm)");
-                                cancelAlarmTimeouts(context, item.getUri());
-                                addAlarmTimeouts(context, item.getUri(), (int)item.rowID);
-                                context.startService(NotificationService.getNotificationIntent(context, AlarmNotifications.ACTION_SHOW, item.getUri()));
-
-                            } else {
-                                Log.i(TAG, "Show: " + item.rowID + "(Notification)");
-                                showNotification(context, item);
-                            }
-
-                            if (item.state != null)
-                            {
-                                updateState.setTaskListener(new AlarmDatabaseAdapter.AlarmStateUpdateTask.AlarmStateUpdateTaskListener()
-                                {
-                                    @Override
-                                    public void onFinished(Boolean result) {
-                                        context.sendBroadcast(getFullscreenBroadcast(item.getUri()));
-                                    }
-                                });
-                                updateState.execute(item.state);
-                            }
-                        }
-                    }
-                }
-            }
-        };
     }
 
     /**
@@ -318,7 +113,7 @@ public class AlarmNotifications extends BroadcastReceiver
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    static protected void addAlarmSnooze(Context context, Uri data)
+    protected static void addAlarmSnooze(Context context, Uri data)
     {
         Log.d(TAG, "addAlarmSnooze: " + data);
 
@@ -335,7 +130,7 @@ public class AlarmNotifications extends BroadcastReceiver
         } else Log.e(TAG, "addAlarmSnooze: AlarmManager is null!");
     }
 
-    protected void addAlarmTimeouts(Context context, Uri data, int notificationID)
+    protected static void addAlarmTimeouts(Context context, Uri data, int notificationID)
     {
         Log.d(TAG, "addAlarmTimeouts: " + data);
 
@@ -681,33 +476,19 @@ public class AlarmNotifications extends BroadcastReceiver
 
             String action = intent.getAction();
             Uri data = intent.getData();
+
             if (AlarmNotifications.ACTION_SHOW.equals(action) && data != null)
             {
                 Log.d(TAG, "ACTION_SHOW");
-                final long notificationID = ContentUris.parseId(data);
-                AlarmDatabaseAdapter.AlarmItemTask alarmTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext());
-                alarmTask.setAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmItemTask.AlarmItemTaskListener()
-                {
-                    @Override
-                    public void onItemLoaded(AlarmClockItem alarm) {
-                        Context context = getApplicationContext();
-                        Notification notification = AlarmNotifications.createNotification(context, alarm, (int)notificationID);
-                        startForeground((int)notificationID, notification);
-                        AlarmNotifications.startAlert(context, alarm);
-                    }
-                });
-                alarmTask.execute(notificationID);
+                // TODO: show toast?
 
             } else if (AlarmNotifications.ACTION_DISMISS.equals(action) && data != null) {
                 Log.d(TAG, "ACTION_DISMISS: " + data);
                 AlarmNotifications.stopAlert(getApplicationContext());
-                stopForeground(true);
-                sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
 
             } else if (AlarmNotifications.ACTION_DISABLE.equals(action) && data != null) {
                 Log.d(TAG, "ACTION_DISABLE: " + data);
                 AlarmNotifications.stopAlert(getApplicationContext());
-                stopForeground(true);
 
             } else if (AlarmNotifications.ACTION_SILENT.equals(action)) {
                 Log.d(TAG, "ACTION_SILENT: " + data);
@@ -717,37 +498,19 @@ public class AlarmNotifications extends BroadcastReceiver
             } else if (AlarmNotifications.ACTION_SNOOZE.equals(action) && data != null) {
                 Log.d(TAG, "ACTION_SNOOZE: " + data);
                 AlarmNotifications.stopAlert(getApplicationContext());
-                stopForeground(true);
-                final long notificationID = ContentUris.parseId(data);
-                AlarmDatabaseAdapter.AlarmItemTask alarmTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext());
-                alarmTask.setAlarmItemTaskListener(updateNotificationTask((int)notificationID));
-                alarmTask.execute(notificationID);
 
             } else if (AlarmNotifications.ACTION_TIMEOUT.equals(action) && data != null) {
                 Log.d(TAG, "ACTION_TIMEOUT: " + data);
                 AlarmNotifications.stopAlert(getApplicationContext());
-                final long notificationID = ContentUris.parseId(data);
-                AlarmDatabaseAdapter.AlarmItemTask alarmTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext());
-                alarmTask.setAlarmItemTaskListener(updateNotificationTask((int)notificationID));
-                alarmTask.execute(notificationID);
 
             } else {
                 Log.w(TAG, "Unrecognized action: " + action);
             }
-            return START_STICKY;
-        }
 
-        private AlarmDatabaseAdapter.AlarmItemTask.AlarmItemTaskListener updateNotificationTask(final int notificationID)
-        {
-            return new AlarmDatabaseAdapter.AlarmItemTask.AlarmItemTaskListener()
-            {
-                @Override
-                public void onItemLoaded(AlarmClockItem alarm) {
-                    Context context = getApplicationContext();
-                    Notification notification = AlarmNotifications.createNotification(context, alarm, notificationID);
-                    startForeground(notificationID, notification);
-                }
-            };
+            AlarmDatabaseAdapter.AlarmItemTask itemTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext());
+            itemTask.setAlarmItemTaskListener(createAlarmOnReceiveListener(getApplicationContext(), action));
+            itemTask.execute(ContentUris.parseId(data));
+            return START_STICKY;
         }
 
         @Nullable
@@ -764,6 +527,250 @@ public class AlarmNotifications extends BroadcastReceiver
             intent.setData(data);
             return intent;
         }
+
+        /**
+         */
+        private AlarmDatabaseAdapter.AlarmItemTask.AlarmItemTaskListener createAlarmOnReceiveListener(final Context context, final String action)
+        {
+            return new AlarmDatabaseAdapter.AlarmItemTask.AlarmItemTaskListener()
+            {
+                @Override
+                public void onItemLoaded(final AlarmClockItem item)
+                {
+                    if (item != null)
+                    {
+                        if (context == null) {
+                            Log.e(TAG, "Null context!");
+                        }
+
+                        if (action.equals(ACTION_DISMISS))
+                        {
+                            ////////////////////////////////////////////////////////////////////////////
+                            // Dismiss Alarm
+                            ////////////////////////////////////////////////////////////////////////////
+                            if (AlarmState.transitionState(item.state, AlarmState.STATE_DISMISSED))
+                            {
+                                cancelAlarmTimeouts(context, item.getUri());
+
+                                AlarmState.transitionState(item.state, AlarmState.STATE_NONE);
+                                final String nextAction;
+                                if (!item.repeating)
+                                {
+                                    Log.i(TAG, "Dismissed: Non-repeating; disabling.. " + item.rowID);
+                                    nextAction = ACTION_DISABLE;
+
+                                } else {
+                                    Log.i(TAG, "Dismissed: Repeating; re-scheduling.." + item.rowID);
+                                    nextAction = ACTION_SCHEDULE;
+                                }
+
+                                item.modified = true;
+                                AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, true);
+                                updateItem.setTaskListener(onDismissedState(context, nextAction, item.getUri()));
+                                updateItem.execute(item);    // write state
+                            }
+
+                        } else if (action.equals(ACTION_SILENT) && item.type == AlarmClockItem.AlarmType.ALARM) {
+                            ////////////////////////////////////////////////////////////////////////////
+                            // Silenced Alarm
+                            ////////////////////////////////////////////////////////////////////////////
+                            Log.i(TAG, "Silenced: " + item.rowID);
+                            cancelAlarmSilence(context, item.getUri());    // cancel upcoming silence timeout; if user silenced alarm there may be another silence scheduled
+
+                        } else if (action.equals(ACTION_TIMEOUT ) && item.type == AlarmClockItem.AlarmType.ALARM) {
+                            ////////////////////////////////////////////////////////////////////////////
+                            // Timeout Alarm
+                            ////////////////////////////////////////////////////////////////////////////
+                            if (AlarmState.transitionState(item.state, AlarmState.STATE_TIMEOUT))
+                            {
+                                Log.i(TAG, "Timeout: " + item.rowID);
+                                cancelAlarmTimeouts(context, item.getUri());
+
+                                item.modified = true;
+                                AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, true);
+                                updateItem.setTaskListener(onTimeoutState(context, item.getUri()));
+                                updateItem.execute(item);  // write state
+                            }
+
+                        } else if (action.equals(ACTION_DISABLE)) {
+                            ////////////////////////////////////////////////////////////////////////////
+                            // Disable Alarm
+                            ////////////////////////////////////////////////////////////////////////////
+                            if (AlarmState.transitionState(item.state, AlarmState.STATE_DISABLED))
+                            {
+                                Log.i(TAG, "Disabled: " + item.rowID);
+                                cancelAlarmTimeouts(context, item.getUri());
+
+                                item.enabled = false;
+                                item.modified = true;
+                                AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, true);
+                                updateItem.setTaskListener(onDisabledState(context));
+                                updateItem.execute(item);    // write state
+                            }
+
+                        } else if (action.equals(ACTION_SCHEDULE)) {
+                            ////////////////////////////////////////////////////////////////////////////
+                            // Schedule Alarm
+                            ////////////////////////////////////////////////////////////////////////////
+                            if (AlarmState.transitionState(item.state, AlarmState.STATE_NONE))
+                            {
+                                cancelAlarmTimeouts(context, item.getUri());
+
+                                // TODO: SCHEDULED_DISTANT vs SCHEDULED..
+                                if (AlarmState.transitionState(item.state, AlarmState.STATE_SCHEDULED_DISTANT))
+                                {
+                                    // TODO: schedule alarm, set timestamp values on item
+                                    Log.i(TAG, "Scheduled: " + item.rowID + ", " + item.timestamp);
+                                    showAlarmEnabledToast(context, item);
+
+                                    if (item.state != null)
+                                    {
+                                        AlarmDatabaseAdapter.AlarmStateUpdateTask updateState = new AlarmDatabaseAdapter.AlarmStateUpdateTask(context);
+                                        updateState.setTaskListener(new AlarmDatabaseAdapter.AlarmStateUpdateTask.AlarmStateUpdateTaskListener()
+                                        {
+                                            @Override
+                                            public void onFinished(Boolean result)
+                                            {
+                                                Intent intent = getAlarmIntent(context, ACTION_SHOW, item.getUri());
+                                                intent.putExtra("tag", "performActionOnStateChanged");
+                                                context.sendBroadcast(intent);
+                                            }
+                                        });   // test by triggering immediately // TODO: remove this block, replace w/ AlarmManager
+                                        updateState.execute(item.state);  // write state
+                                    }
+                                }
+                            }
+
+                        } else if (action.equals(ACTION_SNOOZE) && item.type == AlarmClockItem.AlarmType.ALARM) {
+                            ////////////////////////////////////////////////////////////////////////////
+                            // Snooze Alarm
+                            ////////////////////////////////////////////////////////////////////////////
+                            if (AlarmState.transitionState(item.state, AlarmState.STATE_SNOOZING))
+                            {
+                                Log.i(TAG, "Snoozing: " + item.rowID);
+                                cancelAlarmTimeouts(context, item.getUri());
+                                addAlarmSnooze(context, item.getUri());
+
+                                item.modified = true;
+                                AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, true);
+                                updateItem.setTaskListener(onSnoozeState(context));
+                                updateItem.execute(item);    // write state
+                            }
+
+                        } else if (action.equals(ACTION_SHOW)) {
+                            ////////////////////////////////////////////////////////////////////////////
+                            // Show Alarm
+                            ////////////////////////////////////////////////////////////////////////////
+                            if (AlarmState.transitionState(item.state, AlarmState.STATE_SOUNDING))
+                            {
+                                if (item.type == AlarmClockItem.AlarmType.ALARM)
+                                {
+                                    Log.i(TAG, "Show: " + item.rowID + "(Alarm)");
+                                    cancelAlarmTimeouts(context, item.getUri());
+                                    addAlarmTimeouts(context, item.getUri(), (int)item.rowID);
+
+                                } else {
+                                    Log.i(TAG, "Show: " + item.rowID + "(Notification)");
+                                    showNotification(context, item);
+                                }
+
+                                item.modified = true;
+                                AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, true);
+                                updateItem.setTaskListener(onShowState(context, item.getUri()));
+                                updateItem.execute(item);     // write state
+                            }
+                        }
+                    }
+                }
+            };
+        }
+
+        private AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener onDismissedState(final Context context, final String nextAction, final Uri data)
+        {
+            return new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
+            {
+                @Override
+                public void onFinished(Boolean result, AlarmClockItem item)
+                {
+                    Log.d(TAG, "State Saved (onDismissed)");
+                    sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));   // dismiss notification tray
+
+                    if (nextAction != null) {
+                        Intent intent = getAlarmIntent(context, nextAction, data);
+                        intent.putExtra("tag", "performActionOnStateChanged");
+                        context.sendBroadcast(intent);  // trigger followup action
+
+                    } else {
+                        stopForeground(true);   // remove notification (will kill running tasks)
+                    }
+                }
+            };
+        }
+
+        private AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener onSnoozeState(final Context context)
+        {
+            return new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
+            {
+                @Override
+                public void onFinished(Boolean result, AlarmClockItem item)
+                {
+                    if (result)
+                    {
+                        Log.d(TAG, "State Saved (onSnooze)");
+                        Notification notification = AlarmNotifications.createNotification(context, item, (int)item.rowID);
+                        startForeground((int)item.rowID, notification);  // update notification
+                        context.sendBroadcast(getFullscreenBroadcast(item.getUri()));  // update fullscreen activity
+                    }
+                }
+            };
+        }
+
+        private AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener onTimeoutState(final Context context, final Uri data)
+        {
+            return new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
+            {
+                @Override
+                public void onFinished(Boolean result, AlarmClockItem item)
+                {
+                    Log.d(TAG, "State Saved (onTimeout)");
+                    Notification notification = AlarmNotifications.createNotification(context, item, (int)item.rowID);
+                    startForeground((int)item.rowID, notification);  // update notification
+                    context.sendBroadcast(getFullscreenBroadcast(data));  // update fullscreen activity
+                }
+            };
+        }
+
+        private AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener onShowState(final Context context, final Uri data)
+        {
+            return new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
+            {
+                @Override
+                public void onFinished(Boolean result, AlarmClockItem item)
+                {
+                    Log.d(TAG, "State Saved (onShow)");
+                    Context context = getApplicationContext();
+                    Notification notification = AlarmNotifications.createNotification(context, item, (int)item.rowID);
+                    startForeground((int)item.rowID, notification);        // trigger the notification
+                    AlarmNotifications.startAlert(context, item);          // play sound/vibration
+                    context.sendBroadcast(getFullscreenBroadcast(data));   // update fullscreen activity
+                }
+            };
+        }
+
+        private AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener onDisabledState(final Context context)
+        {
+            return new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
+            {
+                @Override
+                public void onFinished(Boolean result, AlarmClockItem item)
+                {
+                    Log.d(TAG, "State Saved (onDisabled)");
+                    context.startActivity(getAlarmListIntent(context));   // open the alarm list
+                    stopForeground(true);     // remove notification (will kill running tasks)
+                }
+            };
+        }
+
     }
 
 }
