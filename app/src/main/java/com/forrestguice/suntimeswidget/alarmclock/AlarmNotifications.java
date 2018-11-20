@@ -544,7 +544,9 @@ public class AlarmNotifications extends BroadcastReceiver
         Intent intent = new Intent(context, AlarmNotifications.class);
         intent.setAction(action);
         intent.setData(data);
-        intent.setFlags(Intent.FLAG_RECEIVER_FOREGROUND);
+        if (Build.VERSION.SDK_INT >= 16) {
+            intent.setFlags(Intent.FLAG_RECEIVER_FOREGROUND);  // on my device (api19) the receiver fails to respond when app is closed unless this flag is set
+        }
         intent.putExtra(EXTRA_NOTIFICATION_ID, (int)ContentUris.parseId(data));
         return intent;
     }
