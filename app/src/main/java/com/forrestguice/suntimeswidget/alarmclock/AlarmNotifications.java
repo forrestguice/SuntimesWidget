@@ -113,18 +113,16 @@ public class AlarmNotifications extends BroadcastReceiver
         if (context != null) {
             Toast msg = Toast.makeText(context, context.getString(R.string.alarmAction_silencedMsg), Toast.LENGTH_SHORT);
             msg.show();
-
         } else Log.e(TAG, "showAlarmSilencedToast: context is null!");
     }
 
     /**
      */
-    protected static void showAlarmPlayingToast(Context context, Uri data)
+    protected static void showAlarmPlayingToast(Context context, AlarmClockItem item)
     {
         if (context != null) {
-            Toast msg = Toast.makeText(context, context.getString(R.string.alarmAction_playingMsg), Toast.LENGTH_SHORT);
+            Toast msg = Toast.makeText(context, context.getString(R.string.alarmAction_playingMsg, item.getLabel(context)), Toast.LENGTH_SHORT);
             msg.show();
-
         } else Log.e(TAG, "showAlarmPlayingToast: context is null!");
     }
 
@@ -505,7 +503,6 @@ public class AlarmNotifications extends BroadcastReceiver
             if (AlarmNotifications.ACTION_SHOW.equals(action) && data != null)
             {
                 Log.d(TAG, "ACTION_SHOW");
-                showAlarmPlayingToast(getApplicationContext(), data);
 
             } else if (AlarmNotifications.ACTION_DISMISS.equals(action) && data != null) {
                 Log.d(TAG, "ACTION_DISMISS: " + data);
@@ -777,6 +774,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     Notification notification = AlarmNotifications.createNotification(context, item, (int)item.rowID);
                     startForeground((int)item.rowID, notification);        // trigger the notification
                     AlarmNotifications.startAlert(context, item);          // play sound/vibration
+                    showAlarmPlayingToast(getApplicationContext(), item);           // show toast
                     context.sendBroadcast(getFullscreenBroadcast(item.getUri()));   // update fullscreen activity
                 }
             };
