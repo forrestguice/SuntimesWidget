@@ -86,7 +86,7 @@ public class AlarmNotifications extends BroadcastReceiver
             if (action.equals(ACTION_DISMISS) || action.equals(ACTION_SNOOZE) ||
                     action.equals(ACTION_DISABLE) || action.equals(ACTION_TIMEOUT))
             {
-                Intent dismissNotification = NotificationService.getDismissIntent(context, data);
+                Intent dismissNotification = NotificationService.getNotificationIntent(context, AlarmNotifications.ACTION_DISMISS, data);
                 context.startService(dismissNotification);
 
                 if (action.equals(ACTION_DISMISS))
@@ -96,7 +96,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 }
 
             } else if (action.equals(ACTION_SILENT)) {
-                Intent silenceNotification = NotificationService.getSilenceIntent(context, data);
+                Intent silenceNotification = NotificationService.getNotificationIntent(context, AlarmNotifications.ACTION_SILENT, data);
                 context.startService(silenceNotification);
             }
 
@@ -203,7 +203,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                     intent.setData(item.getUri());
                                     context.sendBroadcast(intent);
 
-                                    Intent timeoutNotification = NotificationService.getTimeoutIntent(context, item.getUri());
+                                    Intent timeoutNotification = NotificationService.getNotificationIntent(context, AlarmNotifications.ACTION_TIMEOUT, item.getUri());
                                     context.startService(timeoutNotification);
                                 }
                             });
@@ -269,7 +269,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                         intent.setData(item.getUri());
                                         context.sendBroadcast(intent);
 
-                                        Intent snoozeNotification = NotificationService.getSnoozeIntent(context, item.getUri());
+                                        Intent snoozeNotification = NotificationService.getNotificationIntent(context, AlarmNotifications.ACTION_SNOOZE, item.getUri());
                                         context.startService(snoozeNotification);
                                     }
                                 }
@@ -286,7 +286,7 @@ public class AlarmNotifications extends BroadcastReceiver
                             if (item.type == AlarmClockItem.AlarmType.ALARM)
                             {
                                 Log.i(TAG, "Show: " + item.rowID + "(Alarm)");
-                                Intent showNotification = NotificationService.getShowIntent(context, item.getUri());
+                                Intent showNotification = NotificationService.getNotificationIntent(context, AlarmNotifications.ACTION_SHOW, item.getUri());
                                 context.startService(showNotification);
 
                                 cancelAlarmTimeouts(context, item.getUri());
@@ -744,44 +744,10 @@ public class AlarmNotifications extends BroadcastReceiver
             return null;
         }
 
-        public static Intent getShowIntent(Context context, Uri data)
-        {
-            Intent intent = getNotificationIntent(context, data);
-            intent.setAction(ACTION_SHOW);
-            return intent;
-        }
-
-        public static Intent getDismissIntent(Context context, Uri data)
-        {
-            Intent intent = getNotificationIntent(context, data);
-            intent.setAction(ACTION_DISMISS);
-            return intent;
-        }
-
-        public static Intent getSilenceIntent(Context context, Uri data)
-        {
-            Intent intent = getNotificationIntent(context, data);
-            intent.setAction(ACTION_SILENT);
-            return intent;
-        }
-
-        public static Intent getSnoozeIntent(Context context, Uri data)
-        {
-            Intent intent = getNotificationIntent(context, data);
-            intent.setAction(ACTION_SNOOZE);
-            return intent;
-        }
-
-        public static Intent getTimeoutIntent(Context context, Uri data)
-        {
-            Intent intent = getNotificationIntent(context, data);
-            intent.setAction(ACTION_TIMEOUT);
-            return intent;
-        }
-
-        private static Intent getNotificationIntent(Context context, Uri data)
+        private static Intent getNotificationIntent(Context context, String action, Uri data)
         {
             Intent intent = new Intent(context, NotificationService.class);
+            intent.setAction(action);
             intent.setData(data);
             return intent;
         }
