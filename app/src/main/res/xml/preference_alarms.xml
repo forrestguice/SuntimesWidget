@@ -11,10 +11,23 @@
             android:defaultValue="@string/def_app_alarms_silence" />
 
         <com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
-            android:key="app_alarms_snooze"
+            android:key="app_alarms_timeoutMillis"
+            android:title="@string/configLabel_alarms_timeoutAfter"
+            android:summary="@string/configLabel_alarms_timeoutAfter_summary"
+            android:defaultValue="@string/def_app_alarms_silence" />
+
+        <com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
+            android:key="app_alarms_snoozeMillis"
             android:title="@string/configLabel_alarms_snooze"
             android:summary="@string/configLabel_alarms_snooze_summary"
             android:defaultValue="@string/def_app_alarms_snooze" />
+
+        <ListPreference android:key="app_alarms_hardwarebutton_action"
+            android:title="@string/configLabel_alarms_hardwarebuttons"
+            android:summary="@string/configLabel_alarms_hardwarebuttons_summary"
+            android:defaultValue="@string/def_app_alarms_hardwarebuttons_action"
+            android:entryValues="@array/alarm_hardwarebutton_actions_values"
+            android:entries="@array/alarm_hardwarebutton_actions_display" />
 
     </PreferenceCategory>
 

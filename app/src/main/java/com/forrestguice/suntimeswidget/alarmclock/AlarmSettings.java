@@ -26,31 +26,40 @@ import android.preference.PreferenceManager;
  */
 public class AlarmSettings
 {
+    public static final String PREF_KEY_ALARM_HARDAREBUTTON_ACTION = "app_alarms_hardwarebutton_action";
+    public static final String PREF_DEF_ALARM_HARDAREBUTTON_ACTION = AlarmNotifications.ACTION_SILENT;
+
     public static final String PREF_KEY_ALARM_SILENCEAFTER = "app_alarms_silenceafter";
-    public static final long PREF_DEF_ALARM_SILENCEAFTER = 10 * 60 * 1000;   // 10 min
+    public static final int PREF_DEF_ALARM_SILENCEAFTER = 1000 * 10; //10 * 60 * 1000;   // 10 min
 
     public static final String PREF_KEY_ALARM_TIMEOUT = "app_alarms_timeoutMillis";
-    public static final long PREF_DEF_ALARM_TIMEOUT = 1000 * 60 * 10;  // 15 min
+    public static final int PREF_DEF_ALARM_TIMEOUT = 1000 * 60; //1000 * 60 * 10;  // 15 min
 
     public static final String PREF_KEY_ALARM_SNOOZE = "app_alarms_snoozeMillis";
-    public static final long PREF_DEF_ALARM_SNOOZE = 1000 * 60 * 10;  // 10 min
+    public static final int PREF_DEF_ALARM_SNOOZE = 1000 * 60 * 10;  // 10 min
+
+    public static String loadPrefOnHardwareButtons(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getString(PREF_KEY_ALARM_HARDAREBUTTON_ACTION, PREF_DEF_ALARM_HARDAREBUTTON_ACTION);
+    }
 
     public static long loadPrefAlarmSilenceAfter(Context context)
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getLong(PREF_KEY_ALARM_SILENCEAFTER, PREF_DEF_ALARM_SILENCEAFTER);
+        return prefs.getInt(PREF_KEY_ALARM_SILENCEAFTER, PREF_DEF_ALARM_SILENCEAFTER);
     }
 
     public static long loadPrefAlarmTimeout(Context context)
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getLong(PREF_KEY_ALARM_TIMEOUT, PREF_DEF_ALARM_TIMEOUT);
+        return prefs.getInt(PREF_KEY_ALARM_TIMEOUT, PREF_DEF_ALARM_TIMEOUT);
     }
 
     public static long loadPrefAlarmSnooze(Context context)
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getLong(PREF_KEY_ALARM_SNOOZE, PREF_DEF_ALARM_SNOOZE);
+        return prefs.getInt(PREF_KEY_ALARM_SNOOZE, PREF_DEF_ALARM_SNOOZE);
     }
 
     public static long[] loadDefaultVibratePattern(Context context, AlarmClockItem.AlarmType type)
