@@ -119,7 +119,7 @@ public class AlarmState
                 return (nextState == STATE_DISMISSED || nextState == STATE_DISABLED || nextState == STATE_SOUNDING);
 
             case STATE_TIMEOUT:
-                return (nextState == STATE_NONE);
+                return (nextState == STATE_NONE || nextState == STATE_DISMISSED || nextState == STATE_DISABLED);
 
             case STATE_DISMISSED:
                 return (nextState == STATE_NONE);
