@@ -354,12 +354,11 @@ public class AlarmNotifications extends BroadcastReceiver
         if (alarmManager != null)
         {
             long snoozeMillis = AlarmSettings.loadPrefAlarmSnooze(context);
-            PendingIntent pendingAlarm = getPendingIntent(context, AlarmNotifications.ACTION_SHOW, data);
             long alarmAt = Calendar.getInstance().getTimeInMillis() + snoozeMillis;
 
-            if (Build.VERSION.SDK_INT >= 19)
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmAt, pendingAlarm);
-            else alarmManager.set(AlarmManager.RTC_WAKEUP, alarmAt, pendingAlarm);
+            if (Build.VERSION.SDK_INT >= 19) {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmAt, getPendingIntent(context, AlarmNotifications.ACTION_SHOW, data));
+            } else alarmManager.set(AlarmManager.RTC_WAKEUP, alarmAt, getPendingIntent(context, AlarmNotifications.ACTION_SHOW, data));
 
         } else Log.e(TAG, "addAlarmSnooze: AlarmManager is null!");
     }
@@ -375,24 +374,22 @@ public class AlarmNotifications extends BroadcastReceiver
             if (silenceMillis > 0)
             {
                 Log.d(TAG, "addAlarmTimeouts: silence after " + silenceMillis);
-                PendingIntent pendingSilence = getPendingIntent(context, AlarmNotifications.ACTION_SILENT, data);
                 long silenceAt = Calendar.getInstance().getTimeInMillis() + silenceMillis;
 
                 if (Build.VERSION.SDK_INT >= 19)
-                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, silenceAt, pendingSilence);
-                else alarmManager.set(AlarmManager.RTC_WAKEUP, silenceAt, pendingSilence);
+                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, silenceAt, getPendingIntent(context, AlarmNotifications.ACTION_SILENT, data));
+                else alarmManager.set(AlarmManager.RTC_WAKEUP, silenceAt, getPendingIntent(context, AlarmNotifications.ACTION_SILENT, data));
             }
 
             long timeoutMillis = AlarmSettings.loadPrefAlarmTimeout(context);
             if (timeoutMillis > 0)
             {
                 Log.d(TAG, "addAlarmTimeouts: timeout after " + timeoutMillis);
-                PendingIntent pendingTimeout = getPendingIntent(context, AlarmNotifications.ACTION_TIMEOUT, data);
                 long timeoutAt = Calendar.getInstance().getTimeInMillis() + timeoutMillis;
 
                 if (Build.VERSION.SDK_INT >= 19)
-                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeoutAt, pendingTimeout);
-                else alarmManager.set(AlarmManager.RTC_WAKEUP, timeoutAt, pendingTimeout);
+                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeoutAt, getPendingIntent(context, AlarmNotifications.ACTION_TIMEOUT, data));
+                else alarmManager.set(AlarmManager.RTC_WAKEUP, timeoutAt, getPendingIntent(context, AlarmNotifications.ACTION_TIMEOUT, data));
             }
 
         } else Log.e(TAG, "addAlarmTimeout: AlarmManager is null!");
