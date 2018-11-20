@@ -53,13 +53,14 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 public class AlarmDismissActivity extends AppCompatActivity
 {
     public static final String TAG = "AlarmReceiverDismiss";
-    public static final String EXTRA_SNOOZING = "isSnoozing";
+    public static final String EXTRA_MODE = "activityMode";
+    public static final String EXTRA_ACTION = "alarmAction";
     public static final String BROADCAST_UPDATE = "com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockDismissActivity.UPDATE";
 
     private AlarmClockItem alarm = null;
-    private boolean isSnoozing = false;
+    private String mode = null;
 
-    private TextView alarmTitle, alarmSubtitle, alarmText, snoozeText;
+    private TextView alarmTitle, alarmSubtitle, alarmText, infoText;
     private Button snoozeButton, dismissButton;
     private ViewFlipper icon;
     private SuntimesUtils utils = new SuntimesUtils();
@@ -87,7 +88,7 @@ public class AlarmDismissActivity extends AppCompatActivity
         alarmTitle = (TextView)findViewById(R.id.txt_alarm_label);
         alarmSubtitle = (TextView)findViewById(R.id.txt_alarm_label2);
         alarmText = (TextView)findViewById(R.id.txt_alarm_time);
-        snoozeText = (TextView)findViewById(R.id.txt_snooze);
+        infoText = (TextView)findViewById(R.id.txt_snooze);
         icon = (ViewFlipper)findViewById(R.id.icon_alarm);
 
         dismissButton = (Button) findViewById(R.id.btn_dismiss);
@@ -146,8 +147,9 @@ public class AlarmDismissActivity extends AppCompatActivity
                         setAlarmID(AlarmDismissActivity.this, alarmID);
 
                     } else {
-                        Log.d(TAG, "updateReceiver.onReceive: setting mode: " + AlarmNotifications.ACTION_SNOOZE);
-                        setMode(AlarmNotifications.ACTION_SNOOZE);
+                        String alarmAction = intent.getStringExtra(AlarmDismissActivity.EXTRA_ACTION);
+                        Log.d(TAG, "updateReceiver.onReceive: setting mode: " + alarmAction);
+                        setMode(alarmAction);
                     }
                 }
             }
@@ -175,15 +177,14 @@ public class AlarmDismissActivity extends AppCompatActivity
     public void onRestoreInstanceState( Bundle bundle )
     {
         super.onRestoreInstanceState(bundle);
-        isSnoozing = bundle.getBoolean(EXTRA_SNOOZING, false);
-        setMode(isSnoozing ? AlarmNotifications.ACTION_SNOOZE : null);
+        setMode(bundle.getString(EXTRA_MODE));
     }
 
     @Override
     public void onSaveInstanceState( Bundle bundle )
     {
         super.onSaveInstanceState(bundle);
-        bundle.putBoolean(EXTRA_SNOOZING, isSnoozing);
+        bundle.putString(EXTRA_MODE, mode);
     }
 
     private void initLocale(Context context)
@@ -228,24 +229,36 @@ public class AlarmDismissActivity extends AppCompatActivity
 
     private void setMode( @Nullable String action )
     {
-        boolean shouldSnooze = AlarmNotifications.ACTION_SNOOZE.equals(action);
-        boolean needsTransition = (shouldSnooze != isSnoozing);
-        isSnoozing = shouldSnooze;
+        String prevMode = this.mode;
+        this.mode = action;
 
-        if (shouldSnooze)
+        if (AlarmNotifications.ACTION_SNOOZE.equals(action))
         {
-            snoozeText.setText("Snoozing");            // TODO
-            snoozeText.setVisibility(View.VISIBLE);
+            String snoozeTime = "TODO";
+            infoText.setText(getString(R.string.alarmAction_snoozeMsg, snoozeTime));
+            infoText.setVisibility(View.VISIBLE);
             snoozeButton.setVisibility(View.GONE);
             snoozeButton.setEnabled(false);
             dismissButton.setEnabled(true);
             icon.setDisplayedChild(1);
+
+            boolean needsTransition = (!AlarmNotifications.ACTION_SNOOZE.equals(prevMode));
             if (needsTransition)
                 animateBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_OFF, 1000);
             else setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_OFF);
 
+        } else if (AlarmNotifications.ACTION_TIMEOUT.equals(action)) {
+            infoText.setText(getString(R.string.alarmAction_timeoutMsg));
+            infoText.setVisibility(View.VISIBLE);
+            snoozeButton.setVisibility(View.GONE);
+            snoozeButton.setEnabled(false);
+            dismissButton.setEnabled(true);
+            icon.setDisplayedChild(0);
+            setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE);
+
         } else {
-            snoozeText.setVisibility(View.GONE);
+            infoText.setText("");
+            infoText.setVisibility(View.GONE);
             snoozeButton.setVisibility(View.VISIBLE);
             snoozeButton.setEnabled(true);
             dismissButton.setEnabled(true);
@@ -314,8 +327,21 @@ public class AlarmDismissActivity extends AppCompatActivity
             alarmText.setText(timeDisplay);
         }
 
-        if (alarm.state != null) {
-            setMode(alarm.state.getState() == AlarmState.STATE_SNOOZING ? AlarmNotifications.ACTION_SNOOZE : null);
+        if (alarm.state != null)
+        {
+            switch (alarm.state.getState())
+            {
+                case AlarmState.STATE_SNOOZING:
+                    setMode(AlarmNotifications.ACTION_SNOOZE);
+                    break;
+
+                case AlarmState.STATE_TIMEOUT:
+                    setMode(AlarmNotifications.ACTION_TIMEOUT);
+                    break;
+                default:
+                    setMode(null);
+                    break;
+            }
         }
     }
 
