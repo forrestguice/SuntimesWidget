@@ -469,9 +469,9 @@ public class AlarmNotifications extends BroadcastReceiver
      */
     public static void stopAlert(Context context)
     {
-        stopAlert(context, true);
+        stopAlert(true);
     }
-    public static void stopAlert(Context context, boolean stopVibrate)
+    public static void stopAlert(boolean stopVibrate)
     {
         if (vibrator != null && stopVibrate) {
             vibrator.cancel();
@@ -699,7 +699,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
             } else if (AlarmNotifications.ACTION_SILENT.equals(action)) {
                 Log.d(TAG, "ACTION_SILENT: " + data);
-                AlarmNotifications.stopAlert(getApplicationContext(), false);
+                AlarmNotifications.stopAlert(false);
 
             } else if (AlarmNotifications.ACTION_SNOOZE.equals(action) && data != null) {
                 Log.d(TAG, "ACTION_SNOOZE: " + data);
