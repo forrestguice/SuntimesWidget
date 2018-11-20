@@ -89,12 +89,6 @@ public class AlarmNotifications extends BroadcastReceiver
             {
                 Intent notificationIntent = NotificationService.getNotificationIntent(context, action, data);
                 context.startService(notificationIntent);
-
-                if (action.equals(ACTION_DISMISS))
-                {
-                    Intent dismissNotificationDrawer =  new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
-                    context.sendBroadcast(dismissNotificationDrawer);
-                }
             }
 
             AlarmDatabaseAdapter.AlarmItemTask itemTask = new AlarmDatabaseAdapter.AlarmItemTask(context);
@@ -715,6 +709,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 Log.d(TAG, "ACTION_DISMISS: " + data);
                 AlarmNotifications.stopAlert(getApplicationContext());
                 stopForeground(true);
+                sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
 
             } else if (AlarmNotifications.ACTION_DISABLE.equals(action) && data != null) {
                 Log.d(TAG, "ACTION_DISABLE: " + data);
@@ -728,7 +723,7 @@ public class AlarmNotifications extends BroadcastReceiver
             } else if (AlarmNotifications.ACTION_SNOOZE.equals(action) && data != null) {
                 Log.d(TAG, "ACTION_SNOOZE: " + data);
                 AlarmNotifications.stopAlert(getApplicationContext());
-                stopForeground(true);
+                stopForeground(false);
                 final long notificationID = ContentUris.parseId(data);
                 AlarmDatabaseAdapter.AlarmItemTask alarmTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext());
                 alarmTask.setAlarmItemTaskListener(updateNotificationTask((int)notificationID));
