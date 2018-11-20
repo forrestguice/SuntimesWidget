@@ -91,23 +91,41 @@ public class AlarmNotifications extends BroadcastReceiver
      * @param context
      * @param item
      */
-    protected static void showAlarmEnabledToast(@NonNull Context context, @NonNull AlarmClockItem item)
+    protected static void showAlarmEnabledToast(Context context, @NonNull AlarmClockItem item)
     {
-        Calendar now = Calendar.getInstance();
-        SuntimesUtils.initDisplayStrings(context);
-        SuntimesUtils.TimeDisplayText alarmText = utils.timeDeltaLongDisplayString(now.getTimeInMillis(), item.timestamp);
-        String alarmString = context.getString(R.string.alarmenabled_toast, alarmText.getValue());
-        SpannableString alarmDisplay = SuntimesUtils.createBoldSpan(null, alarmString, alarmText.getValue());
-        Toast msg = Toast.makeText(context, alarmDisplay, Toast.LENGTH_SHORT);
-        msg.show();
+        if (context != null)
+        {
+            Calendar now = Calendar.getInstance();
+            SuntimesUtils.initDisplayStrings(context);
+            SuntimesUtils.TimeDisplayText alarmText = utils.timeDeltaLongDisplayString(now.getTimeInMillis(), item.timestamp);
+            String alarmString = context.getString(R.string.alarmenabled_toast, alarmText.getValue());
+            SpannableString alarmDisplay = SuntimesUtils.createBoldSpan(null, alarmString, alarmText.getValue());
+            Toast msg = Toast.makeText(context, alarmDisplay, Toast.LENGTH_SHORT);
+            msg.show();
+
+        } else Log.e(TAG, "showAlarmEnabledToast: context is null!");
     }
 
     /**
      */
-    protected static void showAlarmSilencedToast(@NonNull Context context, Uri data)
+    protected static void showAlarmSilencedToast(Context context, Uri data)
     {
-        Toast msg = Toast.makeText(context, context.getString(R.string.alarmAction_silencedMsg), Toast.LENGTH_SHORT);
-        msg.show();
+        if (context != null) {
+            Toast msg = Toast.makeText(context, context.getString(R.string.alarmAction_silencedMsg), Toast.LENGTH_SHORT);
+            msg.show();
+
+        } else Log.e(TAG, "showAlarmSilencedToast: context is null!");
+    }
+
+    /**
+     */
+    protected static void showAlarmPlayingToast(Context context, Uri data)
+    {
+        if (context != null) {
+            Toast msg = Toast.makeText(context, context.getString(R.string.alarmAction_playingMsg), Toast.LENGTH_SHORT);
+            msg.show();
+
+        } else Log.e(TAG, "showAlarmPlayingToast: context is null!");
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -133,62 +151,70 @@ public class AlarmNotifications extends BroadcastReceiver
     protected static void addAlarmTimeouts(Context context, Uri data, int notificationID)
     {
         Log.d(TAG, "addAlarmTimeouts: " + data);
-
-        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        if (alarmManager != null)
+        if (context != null)
         {
-            long silenceMillis = AlarmSettings.loadPrefAlarmSilenceAfter(context);
-            if (silenceMillis > 0)
+            AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+            if (alarmManager != null)
             {
-                Log.d(TAG, "addAlarmTimeouts: silence after " + silenceMillis);
-                long silenceAt = Calendar.getInstance().getTimeInMillis() + silenceMillis;
+                long silenceMillis = AlarmSettings.loadPrefAlarmSilenceAfter(context);
+                if (silenceMillis > 0)
+                {
+                    Log.d(TAG, "addAlarmTimeouts: silence after " + silenceMillis);
+                    long silenceAt = Calendar.getInstance().getTimeInMillis() + silenceMillis;
 
-                if (Build.VERSION.SDK_INT >= 19)
-                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, silenceAt, getPendingIntent(context, AlarmNotifications.ACTION_SILENT, data, "addAlarmTimeouts"));
-                else alarmManager.set(AlarmManager.RTC_WAKEUP, silenceAt, getPendingIntent(context, AlarmNotifications.ACTION_SILENT, data, "addAlarmTimeouts"));
-            }
+                    if (Build.VERSION.SDK_INT >= 19)
+                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, silenceAt, getPendingIntent(context, AlarmNotifications.ACTION_SILENT, data, "addAlarmTimeouts"));
+                    else alarmManager.set(AlarmManager.RTC_WAKEUP, silenceAt, getPendingIntent(context, AlarmNotifications.ACTION_SILENT, data, "addAlarmTimeouts"));
+                }
 
-            long timeoutMillis = AlarmSettings.loadPrefAlarmTimeout(context);
-            if (timeoutMillis > 0)
-            {
-                Log.d(TAG, "addAlarmTimeouts: timeout after " + timeoutMillis);
-                long timeoutAt = Calendar.getInstance().getTimeInMillis() + timeoutMillis;
+                long timeoutMillis = AlarmSettings.loadPrefAlarmTimeout(context);
+                if (timeoutMillis > 0)
+                {
+                    Log.d(TAG, "addAlarmTimeouts: timeout after " + timeoutMillis);
+                    long timeoutAt = Calendar.getInstance().getTimeInMillis() + timeoutMillis;
 
-                if (Build.VERSION.SDK_INT >= 19)
-                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeoutAt, getPendingIntent(context, AlarmNotifications.ACTION_TIMEOUT, data, "addAlarmTimeouts"));
-                else alarmManager.set(AlarmManager.RTC_WAKEUP, timeoutAt, getPendingIntent(context, AlarmNotifications.ACTION_TIMEOUT, data, "addAlarmTimeouts"));
-            }
+                    if (Build.VERSION.SDK_INT >= 19)
+                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeoutAt, getPendingIntent(context, AlarmNotifications.ACTION_TIMEOUT, data, "addAlarmTimeouts"));
+                    else alarmManager.set(AlarmManager.RTC_WAKEUP, timeoutAt, getPendingIntent(context, AlarmNotifications.ACTION_TIMEOUT, data, "addAlarmTimeouts"));
+                }
 
-        } else Log.e(TAG, "addAlarmTimeout: AlarmManager is null!");
+            } else Log.e(TAG, "addAlarmTimeout: AlarmManager is null!");
+        } else Log.e(TAG, "addAlarmTimeout: context is null!");
     }
 
     protected static void cancelAlarmShow(Context context, Uri data)
     {
-        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        if (alarmManager != null) {
-            Log.d(TAG, "cancelAlarmShow: " + data);
-            alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_SHOW, data, "addAlarmPlay"));
-        } else Log.e(TAG, "cancelAlarmShow: AlarmManager is null!");
+        if (context != null) {
+            AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+            if (alarmManager != null) {
+                Log.d(TAG, "cancelAlarmShow: " + data);
+                alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_SHOW, data, "addAlarmPlay"));
+            } else Log.e(TAG, "cancelAlarmShow: AlarmManager is null!");
+        } else Log.e(TAG, "cancelAlarmShow: context is null!");
     }
 
     protected static void cancelAlarmSilence(Context context, Uri data)
     {
-        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        if (alarmManager != null) {
-            Log.d(TAG, "cancelAlarmSilence: " + data);
-            alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_SILENT, data, "addAlarmTimeouts"));
-        } else Log.e(TAG, "cancelAlarmSilence: AlarmManager is null!");
+        if (context != null) {
+            AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+            if (alarmManager != null) {
+                Log.d(TAG, "cancelAlarmSilence: " + data);
+                alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_SILENT, data, "addAlarmTimeouts"));
+            } else Log.e(TAG, "cancelAlarmSilence: AlarmManager is null!");
+        } else Log.e(TAG, "cancelAlarmSilence: context is null!");
     }
 
     protected static void cancelAlarmTimeouts(Context context, Uri data)
     {
-        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        if (alarmManager != null) {
-            Log.d(TAG, "cancelAlarmTimeouts: " + data);
-            alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_SILENT, data, "addAlarmTimeouts"));
-            alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_TIMEOUT, data, "addAlarmTimeouts"));
-            alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_SHOW, data, "addAlarmTimeouts"));
-        } else Log.e(TAG, "cancelAlarmTimeouts: AlarmManager is null!");
+        if (context != null) {
+            AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+            if (alarmManager != null) {
+                Log.d(TAG, "cancelAlarmTimeouts: " + data);
+                alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_SILENT, data, "addAlarmTimeouts"));
+                alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_TIMEOUT, data, "addAlarmTimeouts"));
+                alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_SHOW, data, "addAlarmTimeouts"));
+            } else Log.e(TAG, "cancelAlarmTimeouts: AlarmManager is null!");
+        } else Log.e(TAG, "cancelAlarmTimeouts: context is null!");
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -473,14 +499,13 @@ public class AlarmNotifications extends BroadcastReceiver
         public int onStartCommand(Intent intent, int flags, int startId)
         {
             super.onStartCommand(intent, flags, startId);
-
             String action = intent.getAction();
             Uri data = intent.getData();
-
+            
             if (AlarmNotifications.ACTION_SHOW.equals(action) && data != null)
             {
                 Log.d(TAG, "ACTION_SHOW");
-                // TODO: show toast?
+                showAlarmPlayingToast(getApplicationContext(), data);
 
             } else if (AlarmNotifications.ACTION_DISMISS.equals(action) && data != null) {
                 Log.d(TAG, "ACTION_DISMISS: " + data);
