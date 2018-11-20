@@ -36,7 +36,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.Vibrator;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationManagerCompat;
@@ -68,12 +67,6 @@ public class AlarmNotifications extends BroadcastReceiver
 
     public static final String EXTRA_NOTIFICATION_ID = "notificationID";
     public static final String ALARM_NOTIFICATION_TAG = "suntimesalarm";
-
-    public static final String PREF_KEY_ALARM_SILENCEAFTER = "app_alarms_silenceafter";
-    public static final long PREF_DEF_ALARM_SILENCEAFTER = 10 * 60 * 1000;   // 10 min
-
-    public static final String PREF_KEY_ALARM_SNOOZE = "app_alarms_snooze";
-    public static final long PREF_DEF_ALARM_SNOOZE = 10 * 60 * 1000;   // 10 min
 
     private static SuntimesUtils utils = new SuntimesUtils();
 
@@ -257,7 +250,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         {
                             cancelAlarmTimeout(context, item.getUri(), (int)item.rowID);
 
-                            long snooze = loadSnoozePref(context);
+                            long snooze = AlarmSettings.loadPrefAlarmSnooze(context);
                             long snoozeAlarmTime = item.timestamp + snooze;  // TODO
                             Log.i(TAG, "Snoozing: " + item.rowID + ", " + snoozeAlarmTime);
 
@@ -383,7 +376,7 @@ public class AlarmNotifications extends BroadcastReceiver
         if (alarm.vibrate && vibrator != null)
         {
             int repeatFrom = (alarm.type == AlarmClockItem.AlarmType.ALARM ? 0 : -1);
-            vibrator.vibrate(loadDefaultVibratePattern(context, alarm.type), repeatFrom);
+            vibrator.vibrate(AlarmSettings.loadDefaultVibratePattern(context, alarm.type), repeatFrom);
         }
 
         Uri soundUri = ((alarm.ringtoneURI != null && !alarm.ringtoneURI.isEmpty()) ? Uri.parse(alarm.ringtoneURI) : null);
@@ -474,32 +467,6 @@ public class AlarmNotifications extends BroadcastReceiver
                     }
                 }
             });
-        }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public static long loadSilenceAfterPref(Context context)
-    {
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        return pref.getLong(PREF_KEY_ALARM_SILENCEAFTER, PREF_DEF_ALARM_SILENCEAFTER);
-    }
-
-    public static long loadSnoozePref(Context context)
-    {
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        return pref.getLong(PREF_KEY_ALARM_SNOOZE, PREF_DEF_ALARM_SNOOZE);
-    }
-
-    public static long[] loadDefaultVibratePattern(Context context, AlarmClockItem.AlarmType type)
-    {
-        switch (type)
-        {
-            case NOTIFICATION:
-            case ALARM:
-            default:                    // TODO
-                return new long[] {0, 400, 200, 400, 800};   // 0 immediate start, 400ms buzz, 200ms break, 400ms buzz, 800ms break [repeat]
         }
     }
 
@@ -623,26 +590,6 @@ public class AlarmNotifications extends BroadcastReceiver
         Notification notification = createNotification(context, item, notificationID);
         notificationManager.notify(ALARM_NOTIFICATION_TAG, notificationID, notification);
         startAlert(context, item);
-    }
-
-    /**public static void updateNotification(Context context, @NonNull AlarmClockItem item)
-    {
-        int notificationID = (int)item.rowID;
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-        Notification notification = createNotification(context, item, notificationID);
-        notificationManager.notify(ALARM_NOTIFICATION_TAG, notificationID, notification);
-    }*/
-
-    /**
-     * dismissNotification
-     * Use this method to dismiss notifications not started as a foreground service.
-     * @param context
-     * @param notificationID
-     */
-    public static void dismissNotification(Context context, int notificationID)
-    {
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-        notificationManager.cancel(ALARM_NOTIFICATION_TAG, notificationID);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
