@@ -185,7 +185,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         // Silenced Alarm
                         ////////////////////////////////////////////////////////////////////////////
                         Log.i(TAG, "Silenced: " + item.rowID);
-                        showAlarmSilencedMessage(context, item);
+                        showAlarmSilencedToast(context, item);
 
                     } else if (action.equals(ACTION_TIMEOUT ) && item.type == AlarmClockItem.AlarmType.ALARM) {
                         ////////////////////////////////////////////////////////////////////////////
@@ -238,7 +238,7 @@ public class AlarmNotifications extends BroadcastReceiver
                             {
                                 // TODO: schedule alarm, set timestamp values on item
                                 Log.i(TAG, "Scheduled: " + item.rowID + ", " + item.timestamp);
-                                showAlarmEnabledMessage(context, item);
+                                showAlarmEnabledToast(context, item);
 
                                 AlarmDatabaseAdapter.AlarmStateUpdateTask.AlarmStateUpdateTaskListener testShow = performActionOnStateChanged(context, AlarmNotifications.ACTION_SHOW, item);
                                 if (item.state != null) {
@@ -325,11 +325,10 @@ public class AlarmNotifications extends BroadcastReceiver
     }
 
     /**
-     * showAlarmEnabledMessage
      * @param context
      * @param item
      */
-    protected static void showAlarmEnabledMessage(@NonNull Context context, @NonNull AlarmClockItem item)
+    protected static void showAlarmEnabledToast(@NonNull Context context, @NonNull AlarmClockItem item)
     {
         Calendar now = Calendar.getInstance();
         SuntimesUtils.initDisplayStrings(context);
@@ -341,11 +340,20 @@ public class AlarmNotifications extends BroadcastReceiver
     }
 
     /**
-     * showAlarmSilencedMessage
      * @param context
      * @param item
      */
-    protected static void showAlarmSilencedMessage(@NonNull Context context, @NonNull AlarmClockItem item)
+    protected static void showAlarmSilencedToast(@NonNull Context context, @NonNull AlarmClockItem item)
+    {
+        Toast msg = Toast.makeText(context, context.getString(R.string.alarmAction_silencedMsg), Toast.LENGTH_SHORT);
+        msg.show();
+    }
+
+    /**
+     * @param context
+     * @param item
+     */
+    protected static void showAlarmSnoozeddMessage(@NonNull Context context, @NonNull AlarmClockItem item)
     {
         Toast msg = Toast.makeText(context, context.getString(R.string.alarmAction_silencedMsg), Toast.LENGTH_SHORT);
         msg.show();
