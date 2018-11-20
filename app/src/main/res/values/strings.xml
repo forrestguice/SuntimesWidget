@@ -583,10 +583,10 @@
     <string name="configLabel_alarms_silenceAfter">Silence after</string>
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_timeoutAfter">Time-out after</string>
+    <string name="configLabel_alarms_timeoutAfter">Dismiss after</string>
     <string name="configLabel_alarms_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_snooze">Snooze time</string>
+    <string name="configLabel_alarms_snooze">Snooze for</string>
     <string name="configLabel_alarms_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
     <string name="configLabel_alarms_hardwarebuttons">Camera and Volume Buttons</string>
