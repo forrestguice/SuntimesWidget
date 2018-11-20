@@ -601,8 +601,9 @@ public class AlarmNotifications extends BroadcastReceiver
                 switch (alarmState)
                 {
                     case AlarmState.STATE_SNOOZING:
-                        String snoozeTime = "TODO";
-                        notificationMsg = context.getString(R.string.alarmAction_snoozeMsg, snoozeTime);
+                        SuntimesUtils.initDisplayStrings(context);
+                        SuntimesUtils.TimeDisplayText snoozeText = utils.timeDeltaLongDisplayString(0, AlarmSettings.loadPrefAlarmSnooze(context));
+                        notificationMsg = context.getString(R.string.alarmAction_snoozeMsg, snoozeText.getValue());
                         notificationIcon = R.drawable.ic_action_snooze;
                         break;
 
