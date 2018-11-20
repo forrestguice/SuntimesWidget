@@ -270,6 +270,8 @@ public class AlarmNotifications extends BroadcastReceiver
                                 {
                                     if (result)
                                     {
+                                        addAlarmSnooze(context, item.getUri());
+
                                         Intent intent = new Intent(AlarmDismissActivity.BROADCAST_UPDATE);
                                         intent.setData(item.getUri());
                                         context.sendBroadcast(intent);
@@ -302,7 +304,17 @@ public class AlarmNotifications extends BroadcastReceiver
                                 showNotification(context, item);
                             }
 
-                            if (item.state != null) {
+                            if (item.state != null)
+                            {
+                                updateState.setTaskListener(new AlarmDatabaseAdapter.AlarmStateUpdateTask.AlarmStateUpdateTaskListener()
+                                {
+                                    @Override
+                                    public void onFinished(Boolean result) {
+                                        Intent intent = new Intent(AlarmDismissActivity.BROADCAST_UPDATE);
+                                        intent.setData(item.getUri());
+                                        context.sendBroadcast(intent);
+                                    }
+                                });
                                 updateState.execute(item.state);
                             }
                         }
@@ -341,6 +353,24 @@ public class AlarmNotifications extends BroadcastReceiver
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    protected void addAlarmSnooze(Context context, Uri data)
+    {
+        Log.d(TAG, "addAlarmSnooze: " + data);
+
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        if (alarmManager != null)
+        {
+            long snoozeMillis = AlarmSettings.loadPrefAlarmSnooze(context);
+            PendingIntent pendingAlarm = alarmShowIntent(context, data, (int)ContentUris.parseId(data));
+            long alarmAt = Calendar.getInstance().getTimeInMillis() + snoozeMillis;
+
+            if (Build.VERSION.SDK_INT >= 19)
+                alarmManager.setExact(AlarmManager.RTC, alarmAt, pendingAlarm);
+            else alarmManager.set(AlarmManager.RTC, alarmAt, pendingAlarm);
+
+        } else Log.e(TAG, "addAlarmSnooze: AlarmManager is null!");
+    }
 
     protected void addAlarmTimeouts(Context context, Uri data, int notificationID)
     {
@@ -384,8 +414,17 @@ public class AlarmNotifications extends BroadcastReceiver
             Log.d(TAG, "cancelAlarmTimeouts: " + data);
             alarmManager.cancel(alarmSilenceIntent(context, data, notificationID));
             alarmManager.cancel(alarmTimeoutIntent(context, data, notificationID));
+            alarmManager.cancel(alarmShowIntent(context, data, notificationID));
+
 
         } else Log.e(TAG, "cancelAlarmTimeouts: AlarmManager is null!");
+    }
+
+    private PendingIntent alarmShowIntent(Context context, Uri data, int notificationID)
+    {
+        Intent timeoutIntent = getAlarmIntent(context, data, notificationID);
+        timeoutIntent.setAction(ACTION_SHOW);
+        return PendingIntent.getBroadcast(context, notificationID, timeoutIntent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     private PendingIntent alarmTimeoutIntent(Context context, Uri data, int notificationID)
