@@ -575,6 +575,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
                     case AlarmState.STATE_TIMEOUT:
                         notificationMsg = context.getString(R.string.alarmAction_timeoutMsg);
+                        notificationIcon = R.drawable.ic_action_timeout;
                         break;
 
                     default:
@@ -582,7 +583,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         break;
                 }
                 builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);
-                
+
             } else {
                 builder.addAction(R.drawable.ic_action_snooze, context.getString(R.string.alarmAction_snooze), pendingSnooze);
                 builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);

@@ -56,6 +56,12 @@
                 android:src="@drawable/ic_alarm_snooze_huge"
                 tools:ignore="ContentDescription" />
 
+			<ImageView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:src="@drawable/ic_alarm_timeout_huge"
+				tools:ignore="ContentDescription" />
+
         </ViewFlipper>
 
         <TextView

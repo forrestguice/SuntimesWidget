@@ -253,7 +253,7 @@ public class AlarmDismissActivity extends AppCompatActivity
             snoozeButton.setVisibility(View.GONE);
             snoozeButton.setEnabled(false);
             dismissButton.setEnabled(true);
-            icon.setDisplayedChild(0);
+            icon.setDisplayedChild(2);
             setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE);
 
         } else {
