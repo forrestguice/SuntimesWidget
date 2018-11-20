@@ -131,7 +131,7 @@ public class AlarmNotifications extends BroadcastReceiver
             @Override
             public void onFinished(Boolean result)
             {
-                Intent intent = getAlarmIntent(context, item.getUri(), (int)item.rowID);
+                Intent intent = getAlarmIntent(context, item.getUri());
                 intent.setAction(action);
                 context.sendBroadcast(intent);
             }
@@ -159,7 +159,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         ////////////////////////////////////////////////////////////////////////////
                         if (AlarmState.transitionState(item.state, AlarmState.STATE_DISMISSED))
                         {
-                            cancelAlarmTimeouts(context, item.getUri(), (int)item.rowID);
+                            cancelAlarmTimeouts(context, item.getUri());
                             AlarmState.transitionState(item.state, AlarmState.STATE_NONE);
                             final String action;
                             if (!item.repeating)
@@ -194,7 +194,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         if (AlarmState.transitionState(item.state, AlarmState.STATE_TIMEOUT))
                         {
                             Log.i(TAG, "Timeout: " + item.rowID);
-                            cancelAlarmTimeouts(context, item.getUri(), (int)item.rowID);
+                            cancelAlarmTimeouts(context, item.getUri());
                             updateItem.setTaskListener(new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
                             {
                                 @Override
@@ -218,7 +218,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         if (AlarmState.transitionState(item.state, AlarmState.STATE_DISABLED))
                         {
                             Log.i(TAG, "Disabled: " + item.rowID);
-                            cancelAlarmTimeouts(context, item.getUri(), (int)item.rowID);
+                            cancelAlarmTimeouts(context, item.getUri());
                             item.enabled = false;
                             item.modified = true;
                             updateItem.setTaskListener(showAlarmListOnAlarmChanged(context));
@@ -231,7 +231,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         ////////////////////////////////////////////////////////////////////////////
                         if (AlarmState.transitionState(item.state, AlarmState.STATE_NONE))
                         {
-                            cancelAlarmTimeouts(context, item.getUri(), (int)item.rowID);
+                            cancelAlarmTimeouts(context, item.getUri());
 
                             // TODO: SCHEDULED_DISTANT vs SCHEDULED..
                             if (AlarmState.transitionState(item.state, AlarmState.STATE_SCHEDULED_DISTANT))
@@ -254,14 +254,10 @@ public class AlarmNotifications extends BroadcastReceiver
                         ////////////////////////////////////////////////////////////////////////////
                         if (AlarmState.transitionState(item.state, AlarmState.STATE_SNOOZING))
                         {
-                            cancelAlarmTimeouts(context, item.getUri(), (int)item.rowID);
-
                             long snooze = AlarmSettings.loadPrefAlarmSnooze(context);
                             long snoozeAlarmTime = item.timestamp + snooze;  // TODO
                             Log.i(TAG, "Snoozing: " + item.rowID + ", " + snoozeAlarmTime);
 
-                            // TODO: schedule snoozed alarm
-                            //AlarmState.transitionState(item.state, AlarmState.STATE_DISMISSED);  // TODO: remove this line, replace w/ AlarmManager
                             item.modified = true;
                             updateItem.setTaskListener(new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
                             {
@@ -270,8 +266,6 @@ public class AlarmNotifications extends BroadcastReceiver
                                 {
                                     if (result)
                                     {
-                                        addAlarmSnooze(context, item.getUri());
-
                                         Intent intent = new Intent(AlarmDismissActivity.BROADCAST_UPDATE);
                                         intent.setData(item.getUri());
                                         context.sendBroadcast(intent);
@@ -296,7 +290,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 Intent showNotification = NotificationService.getShowIntent(context, item.getUri());
                                 context.startService(showNotification);
 
-                                cancelAlarmTimeouts(context, item.getUri(), (int)item.rowID);
+                                cancelAlarmTimeouts(context, item.getUri());
                                 addAlarmTimeouts(context, item.getUri(), (int)item.rowID);
 
                             } else {
@@ -349,20 +343,10 @@ public class AlarmNotifications extends BroadcastReceiver
         msg.show();
     }
 
-    /**
-     * @param context
-     * @param item
-     */
-    protected static void showAlarmSnoozeddMessage(@NonNull Context context, @NonNull AlarmClockItem item)
-    {
-        Toast msg = Toast.makeText(context, context.getString(R.string.alarmAction_silencedMsg), Toast.LENGTH_SHORT);
-        msg.show();
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected void addAlarmSnooze(Context context, Uri data)
+    static protected void addAlarmSnooze(Context context, Uri data)
     {
         Log.d(TAG, "addAlarmSnooze: " + data);
 
@@ -370,7 +354,7 @@ public class AlarmNotifications extends BroadcastReceiver
         if (alarmManager != null)
         {
             long snoozeMillis = AlarmSettings.loadPrefAlarmSnooze(context);
-            PendingIntent pendingAlarm = alarmShowIntent(context, data, (int)ContentUris.parseId(data));
+            PendingIntent pendingAlarm = getPendingIntent(context, AlarmNotifications.ACTION_SHOW, data);
             long alarmAt = Calendar.getInstance().getTimeInMillis() + snoozeMillis;
 
             if (Build.VERSION.SDK_INT >= 19)
@@ -391,7 +375,7 @@ public class AlarmNotifications extends BroadcastReceiver
             if (silenceMillis > 0)
             {
                 Log.d(TAG, "addAlarmTimeouts: silence after " + silenceMillis);
-                PendingIntent pendingSilence = alarmSilenceIntent(context, data, notificationID);
+                PendingIntent pendingSilence = getPendingIntent(context, AlarmNotifications.ACTION_SILENT, data);
                 long silenceAt = Calendar.getInstance().getTimeInMillis() + silenceMillis;
 
                 if (Build.VERSION.SDK_INT >= 19)
@@ -403,7 +387,7 @@ public class AlarmNotifications extends BroadcastReceiver
             if (timeoutMillis > 0)
             {
                 Log.d(TAG, "addAlarmTimeouts: timeout after " + timeoutMillis);
-                PendingIntent pendingTimeout = alarmTimeoutIntent(context, data, notificationID);
+                PendingIntent pendingTimeout = getPendingIntent(context, AlarmNotifications.ACTION_TIMEOUT, data);
                 long timeoutAt = Calendar.getInstance().getTimeInMillis() + timeoutMillis;
 
                 if (Build.VERSION.SDK_INT >= 19)
@@ -414,40 +398,20 @@ public class AlarmNotifications extends BroadcastReceiver
         } else Log.e(TAG, "addAlarmTimeout: AlarmManager is null!");
     }
 
-    protected void cancelAlarmTimeouts(Context context, Uri data, int notificationID)
+    protected static void cancelAlarmTimeouts(Context context, Uri data)
     {
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         if (alarmManager != null)
         {
             Log.d(TAG, "cancelAlarmTimeouts: " + data);
-            alarmManager.cancel(alarmSilenceIntent(context, data, notificationID));
-            alarmManager.cancel(alarmTimeoutIntent(context, data, notificationID));
-            alarmManager.cancel(alarmShowIntent(context, data, notificationID));
-
+            alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_SILENT, data));
+            alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_TIMEOUT, data));
+            alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_SHOW, data));
 
         } else Log.e(TAG, "cancelAlarmTimeouts: AlarmManager is null!");
     }
 
-    private PendingIntent alarmShowIntent(Context context, Uri data, int notificationID)
-    {
-        Intent timeoutIntent = getAlarmIntent(context, data, notificationID);
-        timeoutIntent.setAction(ACTION_SHOW);
-        return PendingIntent.getBroadcast(context, notificationID, timeoutIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-    }
 
-    private PendingIntent alarmTimeoutIntent(Context context, Uri data, int notificationID)
-    {
-        Intent timeoutIntent = getAlarmIntent(context, data, notificationID);
-        timeoutIntent.setAction(ACTION_TIMEOUT);
-        return PendingIntent.getBroadcast(context, notificationID, timeoutIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-    }
-
-    private PendingIntent alarmSilenceIntent(Context context, Uri data, int notificationID)
-    {
-        Intent timeoutIntent = getAlarmIntent(context, data, notificationID);
-        timeoutIntent.setAction(ACTION_SILENT);
-        return PendingIntent.getBroadcast(context, notificationID, timeoutIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -578,12 +542,20 @@ public class AlarmNotifications extends BroadcastReceiver
         return intent;
     }
 
-    public static Intent getAlarmIntent(Context context, Uri data, int notificationID)
+    public static Intent getAlarmIntent(Context context, Uri data)
     {
         Intent intent = new Intent(context, AlarmNotifications.class);
         intent.setData(data);
-        intent.putExtra(EXTRA_NOTIFICATION_ID, notificationID);
+        intent.putExtra(EXTRA_NOTIFICATION_ID, (int)ContentUris.parseId(data));
         return intent;
+    }
+
+    public static PendingIntent getPendingIntent(Context context, String action, Uri data)
+    {
+        int notificationID = (int)ContentUris.parseId(data);
+        Intent intent = getAlarmIntent(context, data);
+        intent.setAction(action);
+        return PendingIntent.getBroadcast(context, notificationID, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     /**
@@ -604,7 +576,7 @@ public class AlarmNotifications extends BroadcastReceiver
         builder.setDefaults( Notification.DEFAULT_LIGHTS );
         //builder.setStyle(new NotificationCompat.MediaStyle());
 
-        Intent dismissIntent = getAlarmIntent(context, alarm.getUri(), notificationID);
+        Intent dismissIntent = getAlarmIntent(context, alarm.getUri());
         dismissIntent.setAction(ACTION_DISMISS);
         PendingIntent pendingDismiss = PendingIntent.getBroadcast(context, alarm.hashCode(), dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -619,7 +591,7 @@ public class AlarmNotifications extends BroadcastReceiver
             Intent fullScreenIntent = getFullScreenIntent(context, alarm.getUri(), notificationID);
             PendingIntent alarmFullScreen = PendingIntent.getActivity(context, alarm.hashCode(), fullScreenIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            Intent snoozeIntent = getAlarmIntent(context, alarm.getUri(), notificationID);
+            Intent snoozeIntent = getAlarmIntent(context, alarm.getUri());
             snoozeIntent.setAction(ACTION_SNOOZE);
             PendingIntent pendingSnooze = PendingIntent.getBroadcast(context, alarm.hashCode(), snoozeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -737,6 +709,9 @@ public class AlarmNotifications extends BroadcastReceiver
                 AlarmDatabaseAdapter.AlarmItemTask alarmTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext());
                 alarmTask.setAlarmItemTaskListener(updateNotificationTask((int)notificationID));
                 alarmTask.execute(notificationID);
+
+                cancelAlarmTimeouts(getApplicationContext(), data);
+                addAlarmSnooze(getApplicationContext(), data);
 
             } else if (AlarmNotifications.ACTION_TIMEOUT.equals(action) && data != null) {
                 Log.d(TAG, "ACTION_TIMEOUT: " + data);

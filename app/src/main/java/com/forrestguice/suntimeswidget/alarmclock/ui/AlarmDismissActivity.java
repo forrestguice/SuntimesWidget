@@ -207,7 +207,7 @@ public class AlarmDismissActivity extends AppCompatActivity
                 Log.d(TAG, "onSnoozeClicked");
                 snoozeButton.setEnabled(false);
                 dismissButton.setEnabled(false);
-                Intent intent = AlarmNotifications.getAlarmIntent(AlarmDismissActivity.this, alarm.getUri(), (int)alarm.rowID);
+                Intent intent = AlarmNotifications.getAlarmIntent(AlarmDismissActivity.this, alarm.getUri());
                 intent.setAction(AlarmNotifications.ACTION_SNOOZE);
                 sendBroadcast(intent);
             }
@@ -223,7 +223,7 @@ public class AlarmDismissActivity extends AppCompatActivity
                 Log.d(TAG, "onDismissedClicked");
                 snoozeButton.setEnabled(false);
                 dismissButton.setEnabled(false);
-                Intent intent = AlarmNotifications.getAlarmIntent(AlarmDismissActivity.this, alarm.getUri(), (int)alarm.rowID);
+                Intent intent = AlarmNotifications.getAlarmIntent(AlarmDismissActivity.this, alarm.getUri());
                 intent.setAction(AlarmNotifications.ACTION_DISMISS);
                 sendBroadcast(intent);
             }
@@ -371,7 +371,7 @@ public class AlarmDismissActivity extends AppCompatActivity
                     case KeyEvent.KEYCODE_VOLUME_DOWN:
                         hardwareButtonPressed = true;
                         String alarmAction = AlarmSettings.loadPrefOnHardwareButtons(AlarmDismissActivity.this);
-                        Intent intent = AlarmNotifications.getAlarmIntent(AlarmDismissActivity.this, alarm.getUri(), (int)alarm.rowID);
+                        Intent intent = AlarmNotifications.getAlarmIntent(AlarmDismissActivity.this, alarm.getUri());
                         intent.setAction(alarmAction);
                         sendBroadcast(intent);
                         return true;
