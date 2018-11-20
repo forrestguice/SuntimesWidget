@@ -501,7 +501,7 @@ public class AlarmNotifications extends BroadcastReceiver
             super.onStartCommand(intent, flags, startId);
             String action = intent.getAction();
             Uri data = intent.getData();
-            
+
             if (AlarmNotifications.ACTION_SHOW.equals(action) && data != null)
             {
                 Log.d(TAG, "ACTION_SHOW");
@@ -613,7 +613,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
                                 item.modified = true;
                                 AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, true);
-                                updateItem.setTaskListener(onTimeoutState(context, item.getUri()));
+                                updateItem.setTaskListener(onTimeoutState(context));
                                 updateItem.execute(item);  // write state
                             }
 
@@ -701,7 +701,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
                                 item.modified = true;
                                 AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, true);
-                                updateItem.setTaskListener(onShowState(context, item.getUri()));
+                                updateItem.setTaskListener(onShowState(context));
                                 updateItem.execute(item);     // write state
                             }
                         }
@@ -750,7 +750,7 @@ public class AlarmNotifications extends BroadcastReceiver
             };
         }
 
-        private AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener onTimeoutState(final Context context, final Uri data)
+        private AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener onTimeoutState(final Context context)
         {
             return new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
             {
@@ -760,12 +760,12 @@ public class AlarmNotifications extends BroadcastReceiver
                     Log.d(TAG, "State Saved (onTimeout)");
                     Notification notification = AlarmNotifications.createNotification(context, item, (int)item.rowID);
                     startForeground((int)item.rowID, notification);  // update notification
-                    context.sendBroadcast(getFullscreenBroadcast(data));  // update fullscreen activity
+                    context.sendBroadcast(getFullscreenBroadcast(item.getUri()));  // update fullscreen activity
                 }
             };
         }
 
-        private AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener onShowState(final Context context, final Uri data)
+        private AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener onShowState(final Context context)
         {
             return new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
             {
@@ -777,7 +777,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     Notification notification = AlarmNotifications.createNotification(context, item, (int)item.rowID);
                     startForeground((int)item.rowID, notification);        // trigger the notification
                     AlarmNotifications.startAlert(context, item);          // play sound/vibration
-                    context.sendBroadcast(getFullscreenBroadcast(data));   // update fullscreen activity
+                    context.sendBroadcast(getFullscreenBroadcast(item.getUri()));   // update fullscreen activity
                 }
             };
         }
