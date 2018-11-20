@@ -187,7 +187,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 @Override
                                 public void onFinished(Boolean result, AlarmClockItem item)
                                 {
-                                    context.sendBroadcast(getFullscreenBroadcast(context, action, item.getUri()));
+                                    context.sendBroadcast(getFullscreenBroadcast(item.getUri()));
                                 }
                             });
                             updateItem.execute(item);
@@ -249,7 +249,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 @Override
                                 public void onFinished(Boolean result, AlarmClockItem item) {
                                     if (result) {
-                                        context.sendBroadcast(getFullscreenBroadcast(context, action, item.getUri()));
+                                        context.sendBroadcast(getFullscreenBroadcast(item.getUri()));
                                     }
                                 }
                             });
@@ -280,7 +280,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 {
                                     @Override
                                     public void onFinished(Boolean result) {
-                                        context.sendBroadcast(getFullscreenBroadcast(context, null, item.getUri()));
+                                        context.sendBroadcast(getFullscreenBroadcast(item.getUri()));
                                     }
                                 });
                                 updateState.execute(item.state);
@@ -408,13 +408,10 @@ public class AlarmNotifications extends BroadcastReceiver
         return intent;
     }
 
-    public static Intent getFullscreenBroadcast(Context context, String action, Uri data)
+    public static Intent getFullscreenBroadcast(Uri data)
     {
         Intent intent = new Intent(AlarmDismissActivity.BROADCAST_UPDATE);
         intent.setData(data);
-        if (action != null) {
-            intent.setAction(action);
-        }
         return intent;
     }
 
@@ -720,7 +717,7 @@ public class AlarmNotifications extends BroadcastReceiver
             } else if (AlarmNotifications.ACTION_SNOOZE.equals(action) && data != null) {
                 Log.d(TAG, "ACTION_SNOOZE: " + data);
                 AlarmNotifications.stopAlert(getApplicationContext());
-                stopForeground(false);
+                stopForeground(true);
                 final long notificationID = ContentUris.parseId(data);
                 AlarmDatabaseAdapter.AlarmItemTask alarmTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext());
                 alarmTask.setAlarmItemTaskListener(updateNotificationTask((int)notificationID));
