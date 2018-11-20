@@ -153,8 +153,17 @@
         </activity>
 
         <service android:name=".alarmclock.AlarmNotifications$NotificationService" />
-        <receiver android:name=".alarmclock.AlarmNotifications"
-            android:exported="false">
+        <receiver android:name=".alarmclock.AlarmNotifications" android:exported="false">
+            <intent-filter>
+                <action android:name="suntimeswidget.alarm.show" />
+                <action android:name="suntimeswidget.alarm.silent" />
+                <action android:name="suntimeswidget.alarm.dismiss" />
+                <action android:name="suntimeswidget.alarm.snooze" />
+                <action android:name="suntimeswidget.alarm.schedule" />
+                <action android:name="suntimeswidget.alarm.disable" />
+                <action android:name="suntimeswidget.alarm.timeout" />
+                <data android:scheme="content" />
+            </intent-filter>
         </receiver>
 
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->

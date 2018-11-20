@@ -56,13 +56,13 @@ public class AlarmNotifications extends BroadcastReceiver
 {
     public static final String TAG = "AlarmReceiver";
 
-    public static final String ACTION_SHOW = "show";                // sound an alarm
-    public static final String ACTION_SILENT = "silent";            // silence an alarm (but don't dismiss it)
-    public static final String ACTION_DISMISS = "dismiss";          // dismiss an alarm
-    public static final String ACTION_SNOOZE = "snooze";            // snooze an alarm
-    public static final String ACTION_SCHEDULE = "schedule";        // enable (schedule) an alarm
-    public static final String ACTION_DISABLE = "disable";          // disable an alarm
-    public static final String ACTION_TIMEOUT = "timeoute";         // timeout an alarm
+    public static final String ACTION_SHOW = "suntimeswidget.alarm.show";                // sound an alarm
+    public static final String ACTION_SILENT = "suntimeswidget.alarm.silent";            // silence an alarm (but don't dismiss it)
+    public static final String ACTION_DISMISS = "suntimeswidget.alarm.dismiss";          // dismiss an alarm
+    public static final String ACTION_SNOOZE = "suntimeswidget.alarm.snooze";            // snooze an alarm
+    public static final String ACTION_SCHEDULE = "suntimeswidget.alarm.schedule";        // enable (schedule) an alarm
+    public static final String ACTION_DISABLE = "suntimeswidget.alarm.disable";          // disable an alarm
+    public static final String ACTION_TIMEOUT = "suntimeswidget.alarm.timeout";         // timeout an alarm
 
     public static final String EXTRA_NOTIFICATION_ID = "notificationID";
     public static final String ALARM_NOTIFICATION_TAG = "suntimesalarm";
@@ -543,7 +543,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
     public static Intent getAlarmIntent(Context context, String action, Uri data)
     {
-        Intent intent = new Intent(context, AlarmNotifications.class);
+        Intent intent = new Intent();
         intent.setAction(action);
         intent.setData(data);
         intent.putExtra(EXTRA_NOTIFICATION_ID, (int)ContentUris.parseId(data));
