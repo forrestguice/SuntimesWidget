@@ -28,7 +28,6 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 
-import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -160,7 +159,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         ////////////////////////////////////////////////////////////////////////////
                         if (AlarmState.transitionState(item.state, AlarmState.STATE_DISMISSED))
                         {
-                            cancelAlarmTimeout(context, item.getUri(), (int)item.rowID);
+                            cancelAlarmTimeouts(context, item.getUri(), (int)item.rowID);
                             AlarmState.transitionState(item.state, AlarmState.STATE_NONE);
                             final String action;
                             if (!item.repeating)
@@ -181,14 +180,21 @@ public class AlarmNotifications extends BroadcastReceiver
                             }
                         }
 
-                    } else if (action.equals(ACTION_TIMEOUT)) {
+                    } else if (action.equals(ACTION_SILENT) && item.type == AlarmClockItem.AlarmType.ALARM) {
+                        ////////////////////////////////////////////////////////////////////////////
+                        // Silenced Alarm
+                        ////////////////////////////////////////////////////////////////////////////
+                        Log.i(TAG, "Silenced: " + item.rowID);
+                        showAlarmSilencedMessage(context, item);
+
+                    } else if (action.equals(ACTION_TIMEOUT ) && item.type == AlarmClockItem.AlarmType.ALARM) {
                         ////////////////////////////////////////////////////////////////////////////
                         // Timeout Alarm
                         ////////////////////////////////////////////////////////////////////////////
                         if (AlarmState.transitionState(item.state, AlarmState.STATE_TIMEOUT))
                         {
                             Log.i(TAG, "Timeout: " + item.rowID);
-                            cancelAlarmTimeout(context, item.getUri(), (int)item.rowID);
+                            cancelAlarmTimeouts(context, item.getUri(), (int)item.rowID);
                             updateItem.setTaskListener(new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
                             {
                                 @Override
@@ -212,7 +218,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         if (AlarmState.transitionState(item.state, AlarmState.STATE_DISABLED))
                         {
                             Log.i(TAG, "Disabled: " + item.rowID);
-                            cancelAlarmTimeout(context, item.getUri(), (int)item.rowID);
+                            cancelAlarmTimeouts(context, item.getUri(), (int)item.rowID);
                             item.enabled = false;
                             item.modified = true;
                             updateItem.setTaskListener(showAlarmListOnAlarmChanged(context));
@@ -225,7 +231,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         ////////////////////////////////////////////////////////////////////////////
                         if (AlarmState.transitionState(item.state, AlarmState.STATE_NONE))
                         {
-                            cancelAlarmTimeout(context, item.getUri(), (int)item.rowID);
+                            cancelAlarmTimeouts(context, item.getUri(), (int)item.rowID);
 
                             // TODO: SCHEDULED_DISTANT vs SCHEDULED..
                             if (AlarmState.transitionState(item.state, AlarmState.STATE_SCHEDULED_DISTANT))
@@ -248,7 +254,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         ////////////////////////////////////////////////////////////////////////////
                         if (AlarmState.transitionState(item.state, AlarmState.STATE_SNOOZING))
                         {
-                            cancelAlarmTimeout(context, item.getUri(), (int)item.rowID);
+                            cancelAlarmTimeouts(context, item.getUri(), (int)item.rowID);
 
                             long snooze = AlarmSettings.loadPrefAlarmSnooze(context);
                             long snoozeAlarmTime = item.timestamp + snooze;  // TODO
@@ -288,8 +294,8 @@ public class AlarmNotifications extends BroadcastReceiver
                                 Intent showNotification = NotificationService.getShowIntent(context, item.getUri());
                                 context.startService(showNotification);
 
-                                cancelAlarmTimeout(context, item.getUri(), (int)item.rowID);
-                                addAlarmTimeout(context, item.getUri(), (int)item.rowID);
+                                cancelAlarmTimeouts(context, item.getUri(), (int)item.rowID);
+                                addAlarmTimeouts(context, item.getUri(), (int)item.rowID);
 
                             } else {
                                 Log.i(TAG, "Show: " + item.rowID + "(Notification)");
@@ -322,38 +328,77 @@ public class AlarmNotifications extends BroadcastReceiver
         msg.show();
     }
 
+    /**
+     * showAlarmSilencedMessage
+     * @param context
+     * @param item
+     */
+    protected static void showAlarmSilencedMessage(@NonNull Context context, @NonNull AlarmClockItem item)
+    {
+        Toast msg = Toast.makeText(context, context.getString(R.string.alarmAction_silencedMsg), Toast.LENGTH_SHORT);
+        msg.show();
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected void addAlarmTimeout(Context context, Uri data, int notificationID)
+    protected void addAlarmTimeouts(Context context, Uri data, int notificationID)
+    {
+        Log.d(TAG, "addAlarmTimeouts: " + data);
+
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        if (alarmManager != null)
+        {
+            long silenceMillis = AlarmSettings.loadPrefAlarmSilenceAfter(context);
+            if (silenceMillis > 0)
+            {
+                Log.d(TAG, "addAlarmTimeouts: silence after " + silenceMillis);
+                PendingIntent pendingSilence = alarmSilenceIntent(context, data, notificationID);
+                long silenceAt = Calendar.getInstance().getTimeInMillis() + silenceMillis;
+
+                if (Build.VERSION.SDK_INT >= 19)
+                    alarmManager.setExact(AlarmManager.RTC, silenceAt, pendingSilence);
+                else alarmManager.set(AlarmManager.RTC, silenceAt, pendingSilence);
+            }
+
+            long timeoutMillis = AlarmSettings.loadPrefAlarmTimeout(context);
+            if (timeoutMillis > 0)
+            {
+                Log.d(TAG, "addAlarmTimeouts: timeout after " + timeoutMillis);
+                PendingIntent pendingTimeout = alarmTimeoutIntent(context, data, notificationID);
+                long timeoutAt = Calendar.getInstance().getTimeInMillis() + timeoutMillis;
+
+                if (Build.VERSION.SDK_INT >= 19)
+                    alarmManager.setExact(AlarmManager.RTC, timeoutAt, pendingTimeout);
+                else alarmManager.set(AlarmManager.RTC, timeoutAt, pendingTimeout);
+            }
+
+        } else Log.e(TAG, "addAlarmTimeout: AlarmManager is null!");
+    }
+
+    protected void cancelAlarmTimeouts(Context context, Uri data, int notificationID)
     {
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         if (alarmManager != null)
         {
-            PendingIntent pendingTimeout = alarmTimeoutIntent(context, data, notificationID);
-            Calendar timeoutAt = Calendar.getInstance();
-            timeoutAt.add(Calendar.SECOND, 5);       // TODO
-            Log.d(TAG, "addAlarmTimeout: " + data);
-
-            if (Build.VERSION.SDK_INT >= 19)
-                alarmManager.setExact(AlarmManager.RTC, timeoutAt.getTimeInMillis(), pendingTimeout);
-            else alarmManager.set(AlarmManager.RTC, timeoutAt.getTimeInMillis(), pendingTimeout);
-        } else Log.e(TAG, "addAlarmTimeout: AlarmManager is null!");
-    }
-
-    protected void cancelAlarmTimeout(Context context, Uri data, int notificationID)
-    {
-        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        if (alarmManager != null) {
-            Log.d(TAG, "cancelAlarmTimeout: " + data);
+            Log.d(TAG, "cancelAlarmTimeouts: " + data);
+            alarmManager.cancel(alarmSilenceIntent(context, data, notificationID));
             alarmManager.cancel(alarmTimeoutIntent(context, data, notificationID));
-        } else Log.e(TAG, "cancelAlarmTimeout: AlarmManager is null!");
+
+        } else Log.e(TAG, "cancelAlarmTimeouts: AlarmManager is null!");
     }
 
     private PendingIntent alarmTimeoutIntent(Context context, Uri data, int notificationID)
     {
         Intent timeoutIntent = getAlarmIntent(context, data, notificationID);
         timeoutIntent.setAction(ACTION_TIMEOUT);
+        return PendingIntent.getBroadcast(context, notificationID, timeoutIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
+    private PendingIntent alarmSilenceIntent(Context context, Uri data, int notificationID)
+    {
+        Intent timeoutIntent = getAlarmIntent(context, data, notificationID);
+        timeoutIntent.setAction(ACTION_SILENT);
         return PendingIntent.getBroadcast(context, notificationID, timeoutIntent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
