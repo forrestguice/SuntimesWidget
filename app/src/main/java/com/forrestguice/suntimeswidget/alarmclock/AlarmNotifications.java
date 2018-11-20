@@ -131,8 +131,7 @@ public class AlarmNotifications extends BroadcastReceiver
             @Override
             public void onFinished(Boolean result)
             {
-                Intent intent = getAlarmIntent(context, item.getUri());
-                intent.setAction(action);
+                Intent intent = getAlarmIntent(context, action, item.getUri());
                 context.sendBroadcast(intent);
             }
         };
@@ -542,9 +541,10 @@ public class AlarmNotifications extends BroadcastReceiver
         return intent;
     }
 
-    public static Intent getAlarmIntent(Context context, Uri data)
+    public static Intent getAlarmIntent(Context context, String action, Uri data)
     {
         Intent intent = new Intent(context, AlarmNotifications.class);
+        intent.setAction(action);
         intent.setData(data);
         intent.putExtra(EXTRA_NOTIFICATION_ID, (int)ContentUris.parseId(data));
         return intent;
@@ -553,7 +553,7 @@ public class AlarmNotifications extends BroadcastReceiver
     public static PendingIntent getPendingIntent(Context context, String action, Uri data)
     {
         int notificationID = (int)ContentUris.parseId(data);
-        Intent intent = getAlarmIntent(context, data);
+        Intent intent = getAlarmIntent(context, action, data);
         intent.setAction(action);
         return PendingIntent.getBroadcast(context, notificationID, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
@@ -576,8 +576,7 @@ public class AlarmNotifications extends BroadcastReceiver
         builder.setDefaults( Notification.DEFAULT_LIGHTS );
         //builder.setStyle(new NotificationCompat.MediaStyle());
 
-        Intent dismissIntent = getAlarmIntent(context, alarm.getUri());
-        dismissIntent.setAction(ACTION_DISMISS);
+        Intent dismissIntent = getAlarmIntent(context, ACTION_DISMISS, alarm.getUri());
         PendingIntent pendingDismiss = PendingIntent.getBroadcast(context, alarm.hashCode(), dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         if (alarm.type == AlarmClockItem.AlarmType.ALARM)
@@ -591,8 +590,7 @@ public class AlarmNotifications extends BroadcastReceiver
             Intent fullScreenIntent = getFullScreenIntent(context, alarm.getUri(), notificationID);
             PendingIntent alarmFullScreen = PendingIntent.getActivity(context, alarm.hashCode(), fullScreenIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            Intent snoozeIntent = getAlarmIntent(context, alarm.getUri());
-            snoozeIntent.setAction(ACTION_SNOOZE);
+            Intent snoozeIntent = getAlarmIntent(context, ACTION_SNOOZE, alarm.getUri());
             PendingIntent pendingSnooze = PendingIntent.getBroadcast(context, alarm.hashCode(), snoozeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             builder.setFullScreenIntent(alarmFullScreen, true);       // at discretion of system to use this intent (or to show a heads up notification instead)
