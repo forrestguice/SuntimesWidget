@@ -276,6 +276,8 @@ public class AlarmNotifications extends BroadcastReceiver
                                 }
                             });
                             updateItem.execute(item);
+                            cancelAlarmTimeouts(context, item.getUri());
+                            addAlarmSnooze(context, item.getUri());
                         }
 
                     } else if (action.equals(ACTION_SHOW)) {
@@ -407,8 +409,36 @@ public class AlarmNotifications extends BroadcastReceiver
 
         } else Log.e(TAG, "cancelAlarmTimeouts: AlarmManager is null!");
     }
+    
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public static Intent getFullScreenIntent(Context context, Uri data, int notificationID)
+    {
+        Intent intent = new Intent(context, AlarmDismissActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setData(data);
+        intent.putExtra(EXTRA_NOTIFICATION_ID, notificationID);
+        return intent;
+    }
 
+    public static Intent getAlarmIntent(Context context, String action, Uri data)
+    {
+        Intent intent = new Intent(context, AlarmNotifications.class);
+        intent.setAction(action);
+        intent.setData(data);
+        if (Build.VERSION.SDK_INT >= 16) {
+            intent.setFlags(Intent.FLAG_RECEIVER_FOREGROUND);  // on my device (api19) the receiver fails to respond when app is closed unless this flag is set
+        }
+        intent.putExtra(EXTRA_NOTIFICATION_ID, (int)ContentUris.parseId(data));
+        return intent;
+    }
+
+    public static PendingIntent getPendingIntent(Context context, String action, Uri data)
+    {
+        Intent intent = getAlarmIntent(context, action, data);
+        return PendingIntent.getBroadcast(context, (int)ContentUris.parseId(data), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -529,33 +559,6 @@ public class AlarmNotifications extends BroadcastReceiver
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public static Intent getFullScreenIntent(Context context, Uri data, int notificationID)
-    {
-        Intent intent = new Intent(context, AlarmDismissActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setData(data);
-        intent.putExtra(EXTRA_NOTIFICATION_ID, notificationID);
-        return intent;
-    }
-
-    public static Intent getAlarmIntent(Context context, String action, Uri data)
-    {
-        Intent intent = new Intent(context, AlarmNotifications.class);
-        intent.setAction(action);
-        intent.setData(data);
-        if (Build.VERSION.SDK_INT >= 16) {
-            intent.setFlags(Intent.FLAG_RECEIVER_FOREGROUND);  // on my device (api19) the receiver fails to respond when app is closed unless this flag is set
-        }
-        intent.putExtra(EXTRA_NOTIFICATION_ID, (int)ContentUris.parseId(data));
-        return intent;
-    }
-
-    public static PendingIntent getPendingIntent(Context context, String action, Uri data)
-    {
-        Intent intent = getAlarmIntent(context, action, data);
-        return PendingIntent.getBroadcast(context, data.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
-    }
 
     /**
      * createNotification
@@ -707,9 +710,6 @@ public class AlarmNotifications extends BroadcastReceiver
                 AlarmDatabaseAdapter.AlarmItemTask alarmTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext());
                 alarmTask.setAlarmItemTaskListener(updateNotificationTask((int)notificationID));
                 alarmTask.execute(notificationID);
-
-                cancelAlarmTimeouts(getApplicationContext(), data);
-                addAlarmSnooze(getApplicationContext(), data);
 
             } else if (AlarmNotifications.ACTION_TIMEOUT.equals(action) && data != null) {
                 Log.d(TAG, "ACTION_TIMEOUT: " + data);
