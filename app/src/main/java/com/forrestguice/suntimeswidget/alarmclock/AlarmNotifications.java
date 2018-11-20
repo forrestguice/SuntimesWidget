@@ -544,6 +544,7 @@ public class AlarmNotifications extends BroadcastReceiver
         Intent intent = new Intent(context, AlarmNotifications.class);
         intent.setAction(action);
         intent.setData(data);
+        intent.setFlags(Intent.FLAG_RECEIVER_FOREGROUND);
         intent.putExtra(EXTRA_NOTIFICATION_ID, (int)ContentUris.parseId(data));
         return intent;
     }
