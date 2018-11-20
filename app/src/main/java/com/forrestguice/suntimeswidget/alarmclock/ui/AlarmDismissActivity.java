@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.animation.ValueAnimator;
 
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -57,7 +58,6 @@ public class AlarmDismissActivity extends AppCompatActivity
 {
     public static final String TAG = "AlarmReceiverDismiss";
     public static final String EXTRA_MODE = "activityMode";
-    public static final String EXTRA_ACTION = "alarmAction";
     public static final String BROADCAST_UPDATE = "com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockDismissActivity.UPDATE";
 
     private AlarmClockItem alarm = null;
@@ -148,11 +148,6 @@ public class AlarmDismissActivity extends AppCompatActivity
                     {
                         Log.d(TAG, "updateReceiver.onReceive: setting alarmID: " + alarmID);
                         setAlarmID(AlarmDismissActivity.this, alarmID);
-
-                    } else {
-                        String alarmAction = intent.getStringExtra(AlarmDismissActivity.EXTRA_ACTION);
-                        Log.d(TAG, "updateReceiver.onReceive: setting mode: " + alarmAction);
-                        setMode(alarmAction);
                     }
                 }
             }
@@ -207,7 +202,9 @@ public class AlarmDismissActivity extends AppCompatActivity
                 Log.d(TAG, "onSnoozeClicked");
                 snoozeButton.setEnabled(false);
                 dismissButton.setEnabled(false);
+
                 Intent intent = AlarmNotifications.getAlarmIntent(AlarmDismissActivity.this, AlarmNotifications.ACTION_SNOOZE, alarm.getUri());
+                intent.putExtra("tag", "activity");
                 sendBroadcast(intent);
             }
         }
@@ -223,6 +220,7 @@ public class AlarmDismissActivity extends AppCompatActivity
                 snoozeButton.setEnabled(false);
                 dismissButton.setEnabled(false);
                 Intent intent = AlarmNotifications.getAlarmIntent(AlarmDismissActivity.this, AlarmNotifications.ACTION_DISMISS, alarm.getUri());
+                intent.putExtra("tag", "activity");
                 sendBroadcast(intent);
             }
         }
@@ -370,6 +368,7 @@ public class AlarmDismissActivity extends AppCompatActivity
                         hardwareButtonPressed = true;
                         String alarmAction = AlarmSettings.loadPrefOnHardwareButtons(AlarmDismissActivity.this);
                         Intent intent = AlarmNotifications.getAlarmIntent(AlarmDismissActivity.this, alarmAction, alarm.getUri());
+                        intent.putExtra("tag", "activity");
                         sendBroadcast(intent);
                         return true;
 

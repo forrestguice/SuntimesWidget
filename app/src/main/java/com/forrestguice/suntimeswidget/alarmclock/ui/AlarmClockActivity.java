@@ -1493,10 +1493,12 @@ public class AlarmClockActivity extends AppCompatActivity
                         if (enabled)
                         {
                             Intent scheduleIntent = AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_SCHEDULE, item.getUri());
+                            scheduleIntent.putExtra("tag", "alarmList");
                             context.sendBroadcast(scheduleIntent);
 
                         } else {
                             Intent disableIntent = AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DISABLE, item.getUri());
+                            disableIntent.putExtra("tag", "alarmList");
                             context.sendBroadcast(disableIntent);
                         }
 
