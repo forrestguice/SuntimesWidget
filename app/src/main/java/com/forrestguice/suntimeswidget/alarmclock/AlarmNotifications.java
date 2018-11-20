@@ -50,6 +50,7 @@ import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmDismissActivity;
 
 import java.io.IOException;
+import java.security.KeyStore;
 import java.util.Calendar;
 
 public class AlarmNotifications extends BroadcastReceiver
@@ -357,8 +358,8 @@ public class AlarmNotifications extends BroadcastReceiver
             long alarmAt = Calendar.getInstance().getTimeInMillis() + snoozeMillis;
 
             if (Build.VERSION.SDK_INT >= 19)
-                alarmManager.setExact(AlarmManager.RTC, alarmAt, pendingAlarm);
-            else alarmManager.set(AlarmManager.RTC, alarmAt, pendingAlarm);
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmAt, pendingAlarm);
+            else alarmManager.set(AlarmManager.RTC_WAKEUP, alarmAt, pendingAlarm);
 
         } else Log.e(TAG, "addAlarmSnooze: AlarmManager is null!");
     }
@@ -378,8 +379,8 @@ public class AlarmNotifications extends BroadcastReceiver
                 long silenceAt = Calendar.getInstance().getTimeInMillis() + silenceMillis;
 
                 if (Build.VERSION.SDK_INT >= 19)
-                    alarmManager.setExact(AlarmManager.RTC, silenceAt, pendingSilence);
-                else alarmManager.set(AlarmManager.RTC, silenceAt, pendingSilence);
+                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, silenceAt, pendingSilence);
+                else alarmManager.set(AlarmManager.RTC_WAKEUP, silenceAt, pendingSilence);
             }
 
             long timeoutMillis = AlarmSettings.loadPrefAlarmTimeout(context);
@@ -390,8 +391,8 @@ public class AlarmNotifications extends BroadcastReceiver
                 long timeoutAt = Calendar.getInstance().getTimeInMillis() + timeoutMillis;
 
                 if (Build.VERSION.SDK_INT >= 19)
-                    alarmManager.setExact(AlarmManager.RTC, timeoutAt, pendingTimeout);
-                else alarmManager.set(AlarmManager.RTC, timeoutAt, pendingTimeout);
+                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeoutAt, pendingTimeout);
+                else alarmManager.set(AlarmManager.RTC_WAKEUP, timeoutAt, pendingTimeout);
             }
 
         } else Log.e(TAG, "addAlarmTimeout: AlarmManager is null!");
@@ -543,7 +544,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
     public static Intent getAlarmIntent(Context context, String action, Uri data)
     {
-        Intent intent = new Intent();
+        Intent intent = new Intent(context, AlarmNotifications.class);
         intent.setAction(action);
         intent.setData(data);
         intent.putExtra(EXTRA_NOTIFICATION_ID, (int)ContentUris.parseId(data));
@@ -552,10 +553,8 @@ public class AlarmNotifications extends BroadcastReceiver
 
     public static PendingIntent getPendingIntent(Context context, String action, Uri data)
     {
-        int notificationID = (int)ContentUris.parseId(data);
         Intent intent = getAlarmIntent(context, action, data);
-        intent.setAction(action);
-        return PendingIntent.getBroadcast(context, notificationID, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getBroadcast(context, data.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     /**
