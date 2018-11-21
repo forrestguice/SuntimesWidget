@@ -364,66 +364,64 @@ public class AlarmNotifications extends BroadcastReceiver
     {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 
-        String emptyLabel = ((alarm.event != null) ? alarm.event.getShortDisplayString() : context.getString(R.string.alarmOption_solarevent_none));
+        String emptyLabel = ((alarm.event != null) ? alarm.event.getShortDisplayString() : context.getString(R.string.alarmOption_solarevent_none));  // TODO: refactor to convenience method
         String notificationTitle = (alarm.label == null || alarm.label.isEmpty() ? emptyLabel : alarm.label);
         String notificationMsg = notificationTitle;
         int notificationIcon = ((alarm.type == AlarmClockItem.AlarmType.NOTIFICATION) ? R.drawable.ic_action_notification : R.drawable.ic_action_alarms);
         int notificationColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting_dark);
 
         builder.setDefaults( Notification.DEFAULT_LIGHTS );
-        //builder.setStyle(new NotificationCompat.MediaStyle());
 
-        Intent dismissIntent = getAlarmIntent(context, ACTION_DISMISS, alarm.getUri());
-        PendingIntent pendingDismiss = PendingIntent.getBroadcast(context, alarm.hashCode(), dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingDismiss = PendingIntent.getBroadcast(context, alarm.hashCode(), getAlarmIntent(context, ACTION_DISMISS, alarm.getUri()), PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingSnooze = PendingIntent.getBroadcast(context, (int)alarm.rowID, getAlarmIntent(context, ACTION_SNOOZE, alarm.getUri()), PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent alarmFullscreen = PendingIntent.getActivity(context, (int)alarm.rowID, getFullscreenIntent(context, alarm.getUri()), PendingIntent.FLAG_UPDATE_CURRENT);
 
         if (alarm.type == AlarmClockItem.AlarmType.ALARM)
         {
             // ALARM
-            builder.setCategory( NotificationCompat.CATEGORY_ALARM );
-            builder.setPriority( NotificationCompat.PRIORITY_MAX );
+            int alarmState = (alarm.state == null ? AlarmState.STATE_NONE : alarm.state.getState());
+            switch (alarmState)
+            {
+                case AlarmState.STATE_TIMEOUT:
+                    builder.setCategory( NotificationCompat.CATEGORY_REMINDER );
+                    builder.setPriority( NotificationCompat.PRIORITY_HIGH );
+                    notificationMsg = context.getString(R.string.alarmAction_timeoutMsg);
+                    notificationIcon = R.drawable.ic_action_timeout;
+                    break;
+
+                case AlarmState.STATE_SCHEDULED_SOON:
+                    builder.setCategory( NotificationCompat.CATEGORY_REMINDER );
+                    builder.setPriority( NotificationCompat.PRIORITY_HIGH );
+                    notificationMsg = context.getString(R.string.alarmAction_upcomingMsg);
+                    break;
+
+                case AlarmState.STATE_SNOOZING:
+                    builder.setCategory( NotificationCompat.CATEGORY_ALARM );
+                    builder.setPriority( NotificationCompat.PRIORITY_MAX );
+                    SuntimesUtils.initDisplayStrings(context);
+                    SuntimesUtils.TimeDisplayText snoozeText = utils.timeDeltaLongDisplayString(0, AlarmSettings.loadPrefAlarmSnooze(context));
+                    notificationMsg = context.getString(R.string.alarmAction_snoozeMsg, snoozeText.getValue());
+                    notificationIcon = R.drawable.ic_action_snooze;
+                    builder.setFullScreenIntent(alarmFullscreen, true);       // at discretion of system to use this intent (or to show a heads up notification instead)
+                    break;
+
+                case AlarmState.STATE_SOUNDING:
+                    builder.setCategory( NotificationCompat.CATEGORY_ALARM );
+                    builder.setPriority( NotificationCompat.PRIORITY_MAX );
+                    builder.addAction(R.drawable.ic_action_snooze, context.getString(R.string.alarmAction_snooze), pendingSnooze);
+                    builder.setProgress(0,0,true);
+                    builder.setFullScreenIntent(alarmFullscreen, true);       // at discretion of system to use this intent (or to show a heads up notification instead)
+                    break;
+
+                default:
+                    Log.w(TAG, "createNotification: unhandled state: " + alarmState);
+                    builder.setCategory( NotificationCompat.CATEGORY_RECOMMENDATION );
+                    builder.setPriority( NotificationCompat.PRIORITY_MIN );
+                    break;
+            }
+            builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);
             builder.setOngoing(true);
             builder.setAutoCancel(false);
-
-            Intent fullScreenIntent = getFullscreenIntent(context, alarm.getUri());
-            PendingIntent alarmFullscreen = PendingIntent.getActivity(context, (int)alarm.rowID, fullScreenIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-            Intent snoozeIntent = getAlarmIntent(context, ACTION_SNOOZE, alarm.getUri());
-            PendingIntent pendingSnooze = PendingIntent.getBroadcast(context, (int)alarm.rowID, snoozeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-            builder.setFullScreenIntent(alarmFullscreen, true);       // at discretion of system to use this intent (or to show a heads up notification instead)
-
-            if (alarm.state != null)
-            {
-                int alarmState = alarm.state.getState();
-                switch (alarmState)
-                {
-                    case AlarmState.STATE_SNOOZING:
-                        SuntimesUtils.initDisplayStrings(context);
-                        SuntimesUtils.TimeDisplayText snoozeText = utils.timeDeltaLongDisplayString(0, AlarmSettings.loadPrefAlarmSnooze(context));
-                        notificationMsg = context.getString(R.string.alarmAction_snoozeMsg, snoozeText.getValue());
-                        notificationIcon = R.drawable.ic_action_snooze;
-                        break;
-
-                    case AlarmState.STATE_TIMEOUT:
-                        notificationMsg = context.getString(R.string.alarmAction_timeoutMsg);
-                        notificationIcon = R.drawable.ic_action_timeout;
-                        break;
-
-                    case AlarmState.STATE_SCHEDULED_SOON:
-                        notificationMsg = context.getString(R.string.alarmAction_upcomingMsg);
-                        break;
-
-                    case AlarmState.STATE_SOUNDING:
-                        builder.addAction(R.drawable.ic_action_snooze, context.getString(R.string.alarmAction_snooze), pendingSnooze);
-                        builder.setProgress(0,0,true);
-                        break;
-                }
-                builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);
-
-            } else {
-                builder.addAction(R.drawable.ic_action_snooze, context.getString(R.string.alarmAction_snooze), pendingSnooze);
-                builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);
-            }
 
         } else {
             // NOTIFICATION
