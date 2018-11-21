@@ -127,15 +127,17 @@ public class AlarmNotifications extends BroadcastReceiver
 
     protected static void addAlarmTimeout(Context context, String action, Uri data, long timeoutAt)
     {
-        Log.d(TAG, "addAlarmTimeout: " + action + ": " + data);
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        if (alarmManager != null)
-        {
-            if (Build.VERSION.SDK_INT >= 19) {
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeoutAt, getPendingIntent(context, action, data));
-            } else alarmManager.set(AlarmManager.RTC_WAKEUP, timeoutAt, getPendingIntent(context, action, data));
-
+        if (alarmManager != null) {
+            addAlarmTimeout(context, alarmManager, action, data, timeoutAt);
         } else Log.e(TAG, "addAlarmTimeout: AlarmManager is null!");
+    }
+    protected static void addAlarmTimeout(Context context, @NonNull AlarmManager alarmManager, String action, Uri data, long timeoutAt)
+    {
+        Log.d(TAG, "addAlarmTimeout: " + action + ": " + data);
+        if (Build.VERSION.SDK_INT >= 19) {
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeoutAt, getPendingIntent(context, action, data));
+        } else alarmManager.set(AlarmManager.RTC_WAKEUP, timeoutAt, getPendingIntent(context, action, data));
     }
 
     protected static void addAlarmTimeouts(Context context, Uri data)
@@ -151,10 +153,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 {
                     Log.d(TAG, "addAlarmTimeouts: silence after " + silenceMillis);
                     long silenceAt = Calendar.getInstance().getTimeInMillis() + silenceMillis;
-
-                    if (Build.VERSION.SDK_INT >= 19)
-                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, silenceAt, getPendingIntent(context, AlarmNotifications.ACTION_SILENT, data));
-                    else alarmManager.set(AlarmManager.RTC_WAKEUP, silenceAt, getPendingIntent(context, AlarmNotifications.ACTION_SILENT, data));
+                    addAlarmTimeout(context, alarmManager, ACTION_SILENT, data, silenceAt);
                 }
 
                 long timeoutMillis = AlarmSettings.loadPrefAlarmTimeout(context);
@@ -162,10 +161,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 {
                     Log.d(TAG, "addAlarmTimeouts: timeout after " + timeoutMillis);
                     long timeoutAt = Calendar.getInstance().getTimeInMillis() + timeoutMillis;
-
-                    if (Build.VERSION.SDK_INT >= 19)
-                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeoutAt, getPendingIntent(context, AlarmNotifications.ACTION_TIMEOUT, data));
-                    else alarmManager.set(AlarmManager.RTC_WAKEUP, timeoutAt, getPendingIntent(context, AlarmNotifications.ACTION_TIMEOUT, data));
+                    addAlarmTimeout(context, alarmManager, ACTION_TIMEOUT, data, timeoutAt);
                 }
 
             } else Log.e(TAG, "addAlarmTimeout: AlarmManager is null!");
