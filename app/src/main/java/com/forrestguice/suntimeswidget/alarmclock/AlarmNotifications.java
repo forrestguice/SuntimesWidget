@@ -450,11 +450,22 @@ public class AlarmNotifications extends BroadcastReceiver
      */
     public static void showNotification(Context context, @NonNull AlarmClockItem item)
     {
+        showNotification(context, item, false);
+    }
+    public static void showNotification(Context context, @NonNull AlarmClockItem item, boolean quiet)
+    {
         int notificationID = (int)item.rowID;
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         Notification notification = createNotification(context, item);
         notificationManager.notify(ALARM_NOTIFICATION_TAG, notificationID, notification);
-        startAlert(context, item);
+        if (!quiet) {
+            startAlert(context, item);
+        }
+    }
+    public static void dismissNotification(Context context, int notificationID)
+    {
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+        notificationManager.cancel(ALARM_NOTIFICATION_TAG, notificationID);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -632,7 +643,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener onScheduledState;
 
                                 // upcoming alarm
-                                if ((now - alarmTime) < AlarmSettings.loadPrefAlarmUpcoming(context))   // upcoming very soon
+                                if ((alarmTime - now) < AlarmSettings.loadPrefAlarmUpcoming(context))   // upcoming very soon
                                 {
                                     nextState = AlarmState.STATE_SCHEDULED_SOON;
                                     onScheduledState = onScheduledSoonState(context);
@@ -712,6 +723,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         context.sendBroadcast(intent);  // trigger followup action
 
                     } else {
+                        dismissNotification(context, (int)item.rowID);
                         stopForeground(true);   // remove notification (will kill running tasks)
                     }
                 }
@@ -759,6 +771,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 public void onFinished(Boolean result, AlarmClockItem item)
                 {
                     Log.d(TAG, "State Saved (onShow)");
+                    dismissNotification(context, (int)item.rowID);
                     Notification notification = AlarmNotifications.createNotification(context, item);
                     startForeground((int)item.rowID, notification);        // trigger the notification
                     AlarmNotifications.startAlert(context, item);          // play sound/vibration
@@ -777,6 +790,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 {
                     Log.d(TAG, "State Saved (onDisabled)");
                     context.startActivity(getAlarmListIntent(context));   // open the alarm list
+                    dismissNotification(context, (int)item.rowID);
                     stopForeground(true);     // remove notification (will kill running tasks)
                 }
             };
@@ -807,7 +821,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     Log.d(TAG, "State Saved (onScheduledSoon)");
                     long alarmAt = Calendar.getInstance().getTimeInMillis() + (1000 * 10);  // TODO: testing .. 10s from now sound alarm
                     addAlarmTimeout(context, ACTION_SHOW, item.getUri(), alarmAt);
-                    // TODO
+                    showNotification(context, item, true);
                 }
             };
         }
