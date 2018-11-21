@@ -627,8 +627,8 @@ public class AlarmNotifications extends BroadcastReceiver
                                 long alarmTime = item.alarmtime;
                                 if (alarmTime >= now)
                                 {
-                                    // expired alarm
-                                    if (item.enabled)    // enabled; reschedule alarm
+                                    // expired alarm/notification
+                                    if (item.enabled)    // enabled; reschedule alarm/notification
                                     {
                                         // TODO: set item.alarmtime to be > now
                                         showAlarmEnabledToast(context, item);
@@ -642,20 +642,30 @@ public class AlarmNotifications extends BroadcastReceiver
                                 int nextState;
                                 AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener onScheduledState;
 
-                                // upcoming alarm
-                                if ((alarmTime - now) < AlarmSettings.loadPrefAlarmUpcoming(context))   // upcoming very soon
-                                {
-                                    nextState = AlarmState.STATE_SCHEDULED_SOON;
-                                    onScheduledState = onScheduledSoonState(context);
+                                boolean verySoon = ((alarmTime - now) < AlarmSettings.loadPrefAlarmUpcoming(context));
+                                nextState = (verySoon ? AlarmState.STATE_SCHEDULED_SOON : AlarmState.STATE_SCHEDULED_DISTANT);
 
-                                } else {                                                                // upcoming sometime distant
-                                    nextState = AlarmState.STATE_SCHEDULED_DISTANT;
-                                    onScheduledState = onScheduledDistantState(context);
+                                if (item.type == AlarmClockItem.AlarmType.ALARM)
+                                {
+                                    if (verySoon)                                                          // upcoming very soon
+                                    {
+                                        Log.i(TAG, "Scheduling Alarm: " + item.rowID + " :: very soon");
+                                        onScheduledState = onScheduledSoonState(context);
+
+                                    } else {                                                                // upcoming sometime distant
+                                        Log.i(TAG, "Scheduling Alarm: " + item.rowID + " :: distant");
+                                        onScheduledState = onScheduledDistantState(context);
+                                    }
+
+                                } else {
+                                    Log.i(TAG, "Scheduling Notification: " + item.rowID);
+                                    long alarmAt = Calendar.getInstance().getTimeInMillis() + (1000 * 5);  // TODO: testing .. 5s from now sound alarm
+                                    addAlarmTimeout(context, ACTION_SHOW, item.getUri(), alarmAt);
+                                    onScheduledState = null;
                                 }
 
                                 if (AlarmState.transitionState(item.state, nextState))
                                 {
-                                    Log.i(TAG, "Scheduled: " + item.rowID + ", " + item.timestamp + " (state: " + nextState + ")");
                                     AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, true);
                                     updateItem.setTaskListener(onScheduledState);
                                     updateItem.execute(item);  // write state
@@ -691,6 +701,10 @@ public class AlarmNotifications extends BroadcastReceiver
                                     Log.i(TAG, "Show: " + item.rowID + "(Alarm)");
                                     cancelAlarmTimeouts(context, item.getUri());
                                     addAlarmTimeouts(context, item.getUri());
+
+                                    dismissNotification(context, (int)item.rowID);
+                                    startForeground((int)item.rowID, AlarmNotifications.createNotification(context, item));
+                                    AlarmNotifications.startAlert(context, item);
 
                                 } else {
                                     Log.i(TAG, "Show: " + item.rowID + "(Notification)");
@@ -737,7 +751,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 @Override
                 public void onFinished(Boolean result, AlarmClockItem item)
                 {
-                    if (result)
+                    if (item.type == AlarmClockItem.AlarmType.ALARM)
                     {
                         Log.d(TAG, "State Saved (onSnooze)");
                         Notification notification = AlarmNotifications.createNotification(context, item);
@@ -755,10 +769,13 @@ public class AlarmNotifications extends BroadcastReceiver
                 @Override
                 public void onFinished(Boolean result, AlarmClockItem item)
                 {
-                    Log.d(TAG, "State Saved (onTimeout)");
-                    Notification notification = AlarmNotifications.createNotification(context, item);
-                    startForeground((int)item.rowID, notification);  // update notification
-                    context.sendBroadcast(getFullscreenBroadcast(item.getUri()));  // update fullscreen activity
+                    if (item.type == AlarmClockItem.AlarmType.ALARM)
+                    {
+                        Log.d(TAG, "State Saved (onTimeout)");
+                        Notification notification = AlarmNotifications.createNotification(context, item);
+                        startForeground((int)item.rowID, notification);  // update notification
+                        context.sendBroadcast(getFullscreenBroadcast(item.getUri()));  // update fullscreen activity
+                    }
                 }
             };
         }
@@ -771,12 +788,11 @@ public class AlarmNotifications extends BroadcastReceiver
                 public void onFinished(Boolean result, AlarmClockItem item)
                 {
                     Log.d(TAG, "State Saved (onShow)");
-                    dismissNotification(context, (int)item.rowID);
-                    Notification notification = AlarmNotifications.createNotification(context, item);
-                    startForeground((int)item.rowID, notification);        // trigger the notification
-                    AlarmNotifications.startAlert(context, item);          // play sound/vibration
-                    showAlarmPlayingToast(getApplicationContext(), item);           // show toast
-                    context.sendBroadcast(getFullscreenBroadcast(item.getUri()));   // update fullscreen activity
+                    if (item.type == AlarmClockItem.AlarmType.ALARM)
+                    {
+                        showAlarmPlayingToast(getApplicationContext(), item);
+                        context.sendBroadcast(getFullscreenBroadcast(item.getUri()));   // update fullscreen activity
+                    }
                 }
             };
         }
@@ -803,10 +819,13 @@ public class AlarmNotifications extends BroadcastReceiver
                 @Override
                 public void onFinished(Boolean result, AlarmClockItem item)
                 {
-                    Log.d(TAG, "State Saved (onScheduledDistant)");
-                    long alarmAt = Calendar.getInstance().getTimeInMillis() + (1000 * 10);  // TODO: testing .. 10s from now sound alarm
-                    addAlarmTimeout(context, ACTION_SHOW, item.getUri(), alarmAt);
-                    // TODO
+                    if (item.type == AlarmClockItem.AlarmType.ALARM)
+                    {
+                        Log.d(TAG, "State Saved (onScheduledDistant)");
+                        long alarmAt = Calendar.getInstance().getTimeInMillis() + (1000 * 10);  // TODO: testing .. 10s from now sound alarm
+                        addAlarmTimeout(context, ACTION_SHOW, item.getUri(), alarmAt);
+                        // TODO
+                    }
                 }
             };
         }
@@ -818,10 +837,13 @@ public class AlarmNotifications extends BroadcastReceiver
                 @Override
                 public void onFinished(Boolean result, AlarmClockItem item)
                 {
-                    Log.d(TAG, "State Saved (onScheduledSoon)");
-                    long alarmAt = Calendar.getInstance().getTimeInMillis() + (1000 * 10);  // TODO: testing .. 10s from now sound alarm
-                    addAlarmTimeout(context, ACTION_SHOW, item.getUri(), alarmAt);
-                    showNotification(context, item, true);
+                    if (item.type == AlarmClockItem.AlarmType.ALARM)
+                    {
+                        Log.d(TAG, "State Saved (onScheduledSoon)");
+                        long alarmAt = Calendar.getInstance().getTimeInMillis() + (1000 * 10);  // TODO: testing .. 10s from now sound alarm
+                        addAlarmTimeout(context, ACTION_SHOW, item.getUri(), alarmAt);
+                        showNotification(context, item, true);
+                    }
                 }
             };
         }
