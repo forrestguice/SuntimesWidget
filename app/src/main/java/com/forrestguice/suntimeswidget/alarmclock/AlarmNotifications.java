@@ -79,8 +79,7 @@ public class AlarmNotifications extends BroadcastReceiver
     {
         final String action = intent.getAction();
         Uri data = intent.getData();
-        String dataTag = intent.getStringExtra("tag");
-        Log.d(TAG, "onReceive: " + action + ", " + data + " (" + dataTag + ")");
+        Log.d(TAG, "onReceive: " + action + ", " + data);
         if (action != null) {
             context.startService(NotificationService.getNotificationIntent(context, action, data));
         } else Log.w(TAG, "onReceive: null action!");
@@ -137,8 +136,8 @@ public class AlarmNotifications extends BroadcastReceiver
             long alarmAt = Calendar.getInstance().getTimeInMillis() + snoozeMillis;
 
             if (Build.VERSION.SDK_INT >= 19) {
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmAt, getPendingIntent(context, AlarmNotifications.ACTION_SHOW, data, "addAlarmPlay"));
-            } else alarmManager.set(AlarmManager.RTC_WAKEUP, alarmAt, getPendingIntent(context, AlarmNotifications.ACTION_SHOW, data, "addAlarmPlay"));
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmAt, getPendingIntent(context, AlarmNotifications.ACTION_SHOW, data));
+            } else alarmManager.set(AlarmManager.RTC_WAKEUP, alarmAt, getPendingIntent(context, AlarmNotifications.ACTION_SHOW, data));
 
         } else Log.e(TAG, "addAlarmSnooze: AlarmManager is null!");
     }
@@ -158,8 +157,8 @@ public class AlarmNotifications extends BroadcastReceiver
                     long silenceAt = Calendar.getInstance().getTimeInMillis() + silenceMillis;
 
                     if (Build.VERSION.SDK_INT >= 19)
-                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, silenceAt, getPendingIntent(context, AlarmNotifications.ACTION_SILENT, data, "addAlarmTimeouts"));
-                    else alarmManager.set(AlarmManager.RTC_WAKEUP, silenceAt, getPendingIntent(context, AlarmNotifications.ACTION_SILENT, data, "addAlarmTimeouts"));
+                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, silenceAt, getPendingIntent(context, AlarmNotifications.ACTION_SILENT, data));
+                    else alarmManager.set(AlarmManager.RTC_WAKEUP, silenceAt, getPendingIntent(context, AlarmNotifications.ACTION_SILENT, data));
                 }
 
                 long timeoutMillis = AlarmSettings.loadPrefAlarmTimeout(context);
@@ -169,8 +168,8 @@ public class AlarmNotifications extends BroadcastReceiver
                     long timeoutAt = Calendar.getInstance().getTimeInMillis() + timeoutMillis;
 
                     if (Build.VERSION.SDK_INT >= 19)
-                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeoutAt, getPendingIntent(context, AlarmNotifications.ACTION_TIMEOUT, data, "addAlarmTimeouts"));
-                    else alarmManager.set(AlarmManager.RTC_WAKEUP, timeoutAt, getPendingIntent(context, AlarmNotifications.ACTION_TIMEOUT, data, "addAlarmTimeouts"));
+                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeoutAt, getPendingIntent(context, AlarmNotifications.ACTION_TIMEOUT, data));
+                    else alarmManager.set(AlarmManager.RTC_WAKEUP, timeoutAt, getPendingIntent(context, AlarmNotifications.ACTION_TIMEOUT, data));
                 }
 
             } else Log.e(TAG, "addAlarmTimeout: AlarmManager is null!");
@@ -183,7 +182,7 @@ public class AlarmNotifications extends BroadcastReceiver
             AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
             if (alarmManager != null) {
                 Log.d(TAG, "cancelAlarmShow: " + data);
-                alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_SHOW, data, "addAlarmPlay"));
+                alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_SHOW, data));
             } else Log.e(TAG, "cancelAlarmShow: AlarmManager is null!");
         } else Log.e(TAG, "cancelAlarmShow: context is null!");
     }
@@ -194,7 +193,7 @@ public class AlarmNotifications extends BroadcastReceiver
             AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
             if (alarmManager != null) {
                 Log.d(TAG, "cancelAlarmSilence: " + data);
-                alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_SILENT, data, "addAlarmTimeouts"));
+                alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_SILENT, data));
             } else Log.e(TAG, "cancelAlarmSilence: AlarmManager is null!");
         } else Log.e(TAG, "cancelAlarmSilence: context is null!");
     }
@@ -205,9 +204,9 @@ public class AlarmNotifications extends BroadcastReceiver
             AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
             if (alarmManager != null) {
                 Log.d(TAG, "cancelAlarmTimeouts: " + data);
-                alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_SILENT, data, "addAlarmTimeouts"));
-                alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_TIMEOUT, data, "addAlarmTimeouts"));
-                alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_SHOW, data, "addAlarmTimeouts"));
+                alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_SILENT, data));
+                alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_TIMEOUT, data));
+                alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_SHOW, data));
             } else Log.e(TAG, "cancelAlarmTimeouts: AlarmManager is null!");
         } else Log.e(TAG, "cancelAlarmTimeouts: context is null!");
     }
@@ -250,10 +249,9 @@ public class AlarmNotifications extends BroadcastReceiver
         return intent;
     }
 
-    public static PendingIntent getPendingIntent(Context context, String action, Uri data, String tag)
+    public static PendingIntent getPendingIntent(Context context, String action, Uri data)
     {
         Intent intent = getAlarmIntent(context, action, data);
-        intent.putExtra("tag", tag);
         return PendingIntent.getBroadcast(context, (int)ContentUris.parseId(data), intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
@@ -394,7 +392,6 @@ public class AlarmNotifications extends BroadcastReceiver
         //builder.setStyle(new NotificationCompat.MediaStyle());
 
         Intent dismissIntent = getAlarmIntent(context, ACTION_DISMISS, alarm.getUri());
-        dismissIntent.putExtra("tag", "notification");
         PendingIntent pendingDismiss = PendingIntent.getBroadcast(context, alarm.hashCode(), dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         if (alarm.type == AlarmClockItem.AlarmType.ALARM)
@@ -409,7 +406,6 @@ public class AlarmNotifications extends BroadcastReceiver
             PendingIntent alarmFullscreen = PendingIntent.getActivity(context, (int)alarm.rowID, fullScreenIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             Intent snoozeIntent = getAlarmIntent(context, ACTION_SNOOZE, alarm.getUri());
-            snoozeIntent.putExtra("tag", "notification");
             PendingIntent pendingSnooze = PendingIntent.getBroadcast(context, (int)alarm.rowID, snoozeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             builder.setFullScreenIntent(alarmFullscreen, true);       // at discretion of system to use this intent (or to show a heads up notification instead)
@@ -647,7 +643,6 @@ public class AlarmNotifications extends BroadcastReceiver
                                             public void onFinished(Boolean result)
                                             {
                                                 Intent intent = getAlarmIntent(context, ACTION_SHOW, item.getUri());
-                                                intent.putExtra("tag", "performActionOnStateChanged");
                                                 context.sendBroadcast(intent);
                                             }
                                         });   // test by triggering immediately // TODO: remove this block, replace w/ AlarmManager
@@ -712,7 +707,6 @@ public class AlarmNotifications extends BroadcastReceiver
 
                     if (nextAction != null) {
                         Intent intent = getAlarmIntent(context, nextAction, data);
-                        intent.putExtra("tag", "performActionOnStateChanged");
                         context.sendBroadcast(intent);  // trigger followup action
 
                     } else {
