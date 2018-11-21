@@ -36,7 +36,10 @@ public class AlarmSettings
     public static final int PREF_DEF_ALARM_TIMEOUT = 1000 * 60; //1000 * 60 * 10;  // 15 min
 
     public static final String PREF_KEY_ALARM_SNOOZE = "app_alarms_snoozeMillis";
-    public static final int PREF_DEF_ALARM_SNOOZE = 1000 * 60 * 10;  // 10 min
+    public static final int PREF_DEF_ALARM_SNOOZE = 1000 * 60; //1000 * 60 * 10;  // 10 min
+
+    public static final String PREF_KEY_ALARM_UPCOMING = "app_alarms_upcomingMillis";
+    public static final int PREF_DEF_ALARM_UPCOMING = 1000 * 60;  //1000 * 60 * 60 * 12;  // 12 hours   // TODO: expose through PrefActivity
 
     public static String loadPrefOnHardwareButtons(Context context)
     {
@@ -54,6 +57,12 @@ public class AlarmSettings
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getInt(PREF_KEY_ALARM_TIMEOUT, PREF_DEF_ALARM_TIMEOUT);
+    }
+
+    public static long loadPrefAlarmUpcoming(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getInt(PREF_KEY_ALARM_UPCOMING, PREF_DEF_ALARM_UPCOMING);
     }
 
     public static long loadPrefAlarmSnooze(Context context)
