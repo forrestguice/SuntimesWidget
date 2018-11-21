@@ -572,7 +572,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 }
 
                                 item.modified = true;
-                                AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, true);
+                                AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context);
                                 updateItem.setTaskListener(onDismissedState(context, nextAction, item.getUri()));
                                 updateItem.execute(item);    // write state
                             }
@@ -594,7 +594,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 cancelAlarmTimeouts(context, item.getUri());
 
                                 item.modified = true;
-                                AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, true);
+                                AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context);
                                 updateItem.setTaskListener(onTimeoutState(context));
                                 updateItem.execute(item);  // write state
                             }
@@ -610,7 +610,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
                                 item.enabled = false;
                                 item.modified = true;
-                                AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, true);
+                                AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context);
                                 updateItem.setTaskListener(onDisabledState(context));
                                 updateItem.execute(item);    // write state
                             }
@@ -666,7 +666,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
                                 if (AlarmState.transitionState(item.state, nextState))
                                 {
-                                    AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, true);
+                                    AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context);
                                     updateItem.setTaskListener(onScheduledState);
                                     updateItem.execute(item);  // write state
                                 }
@@ -685,7 +685,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 addAlarmTimeout(context, ACTION_SHOW, item.getUri(), snoozeUntil);
 
                                 item.modified = true;
-                                AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, true);
+                                AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context);
                                 updateItem.setTaskListener(onSnoozeState(context));
                                 updateItem.execute(item);    // write state
                             }
@@ -712,7 +712,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 }
 
                                 item.modified = true;
-                                AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, true);
+                                AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context);
                                 updateItem.setTaskListener(onShowState(context));
                                 updateItem.execute(item);     // write state
                             }

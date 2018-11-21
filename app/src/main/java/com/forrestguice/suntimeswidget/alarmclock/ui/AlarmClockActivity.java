@@ -73,6 +73,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
@@ -409,18 +410,6 @@ public class AlarmClockActivity extends AppCompatActivity
     }
     protected void addAlarm(AlarmClockItem.AlarmType type, String label, SolarEvents event, int hour, int minute, boolean vibrate, Uri ringtoneUri, ArrayList<Integer> repetitionDays)
     {
-        AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, true, false);
-        task.setTaskListener(new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
-        {
-            @Override
-            public void onFinished(Boolean result, AlarmClockItem item)
-            {
-                if (result) {
-                    updateViews(AlarmClockActivity.this);
-                }
-            }
-        });
-
         final AlarmClockItem alarm = new AlarmClockItem();
         alarm.enabled = getDefaultNewAlarmsEnabled(this);
         alarm.type = type;
@@ -442,7 +431,21 @@ public class AlarmClockActivity extends AppCompatActivity
             ringtone.stop();
         }
 
+        alarm.state = new AlarmState();
+        alarm.state.setState(AlarmState.STATE_NONE);
         alarm.modified = true;
+
+        AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, true, true);
+        task.setTaskListener(new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
+        {
+            @Override
+            public void onFinished(Boolean result, AlarmClockItem item)
+            {
+                if (result) {
+                    updateViews(AlarmClockActivity.this);
+                }
+            }
+        });
         task.execute(alarm);
     }
 
@@ -492,7 +495,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 item.modified = true;
                 updateAlarmTime(AlarmClockActivity.this, item);
 
-                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this);
+                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, false, false);
                 task.setTaskListener(onUpdateItem);
                 task.execute(item);
             }
@@ -662,7 +665,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 item.modified = true;
                 updateAlarmTime(AlarmClockActivity.this, item);
 
-                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this);
+                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, false, false);
                 task.setTaskListener(onUpdateItem);
                 task.execute(item);
                 return true;
@@ -717,7 +720,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 item.modified = true;
                 updateAlarmTime(AlarmClockActivity.this, item);
 
-                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this);
+                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, false, false);
                 task.setTaskListener(onUpdateItem);
                 task.execute(item);
             }
@@ -755,7 +758,7 @@ public class AlarmClockActivity extends AppCompatActivity
             {
                 item.offset = offsetDialog.getOffset();
                 item.modified = true;
-                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this);
+                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, false, false);
                 task.setTaskListener(onUpdateItem);
                 task.execute(item);
             }
@@ -795,7 +798,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 item.repeatingDays = repeatDialog.getRepetitionDays();
                 item.modified = true;
 
-                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this);
+                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, false, false);
                 task.setTaskListener(onUpdateItem);
                 task.execute(item);
             }
@@ -835,7 +838,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 item.label = dialog.getLabel();
                 item.modified = true;
 
-                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this);
+                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, false, false);
                 task.setTaskListener(onUpdateItem);
                 task.execute(item);
             }
@@ -875,7 +878,7 @@ public class AlarmClockActivity extends AppCompatActivity
                     item.modified = true;
                     Log.d("DEBUG", "uri: " + item.ringtoneURI + ", title: " + ringtoneName);
 
-                    AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(this);
+                    AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(this, false, false);
                     task.setTaskListener(onUpdateItem);
                     task.execute(item);
                 }
@@ -1459,13 +1462,12 @@ public class AlarmClockActivity extends AppCompatActivity
         /**
          * onAlarmModified
          * @param item AlarmClockItem
-         * @return true modifications were saved
          */
         protected void onAlarmModified(final AlarmClockItem item)
         {
             if (item.modified)
             {
-                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context);
+                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, false);
                 task.execute(item);
             }
         }
@@ -1482,7 +1484,7 @@ public class AlarmClockActivity extends AppCompatActivity
             item.enabled = enabled;
             item.modified = true;
 
-            AlarmDatabaseAdapter.AlarmUpdateTask enableTask = new AlarmDatabaseAdapter.AlarmUpdateTask(context);
+            AlarmDatabaseAdapter.AlarmUpdateTask enableTask = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, false);
             enableTask.setTaskListener(new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
             {
                 @Override

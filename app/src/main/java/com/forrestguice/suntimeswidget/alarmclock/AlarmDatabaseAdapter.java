@@ -468,7 +468,7 @@ public class AlarmDatabaseAdapter
 
         protected AlarmDatabaseAdapter db;
         private boolean flag_add = false;
-        private boolean flag_withState = false;
+        private boolean flag_withState = true;
         private AlarmClockItem lastItem;
 
         public AlarmUpdateTask(@NonNull Context context)
