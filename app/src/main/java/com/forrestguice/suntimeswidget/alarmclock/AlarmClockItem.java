@@ -136,6 +136,19 @@ public class AlarmClockItem
         return values;
     }
 
+    public void setState(int value)
+    {
+        if (state == null) {
+            state = new AlarmState();
+        }
+        state.setState(value);
+    }
+
+    public int getState()
+    {
+        return (state != null ? state.getState() : AlarmState.STATE_NONE);
+    }
+
     public int getIcon()
     {
         return ((type == AlarmClockItem.AlarmType.NOTIFICATION) ? ICON_NOTIFICATION : ICON_ALARM);
