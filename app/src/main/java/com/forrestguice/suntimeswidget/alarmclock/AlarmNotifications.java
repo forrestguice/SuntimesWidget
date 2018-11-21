@@ -609,16 +609,39 @@ public class AlarmNotifications extends BroadcastReceiver
                             {
                                 cancelAlarmTimeouts(context, item.getUri());
 
-                                // TODO: SCHEDULED_DISTANT vs SCHEDULED..
-                                if (AlarmState.transitionState(item.state, AlarmState.STATE_SCHEDULED_DISTANT))
+                                long now = Calendar.getInstance().getTimeInMillis();
+                                long alarmTime = item.alarmtime;
+                                if (alarmTime >= now)
                                 {
-                                    // TODO: schedule alarm, set timestamp values on item
-                                    Log.i(TAG, "Scheduled: " + item.rowID + ", " + item.timestamp);
-                                    showAlarmEnabledToast(context, item);
+                                    // expired alarm
+                                    if (item.enabled)    // enabled; reschedule alarm
+                                    {
+                                        // TODO: set item.alarmtime to be > now
+                                        showAlarmEnabledToast(context, item);
 
-                                    // TODO: distant vs soon
-                                    AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener onScheduledState = onScheduledDistantState(context);
+                                    } else {    // disabled; this alarm should have been dismissed
+                                        sendBroadcast(getAlarmIntent(context, ACTION_DISMISS, item.getUri()));
+                                        return;
+                                    }
+                                }
 
+                                int nextState;
+                                AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener onScheduledState;
+
+                                // upcoming alarm
+                                if ((now - alarmTime) < AlarmSettings.loadPrefAlarmUpcoming(context))   // upcoming very soon
+                                {
+                                    nextState = AlarmState.STATE_SCHEDULED_SOON;
+                                    onScheduledState = onScheduledSoonState(context);
+
+                                } else {                                                                // upcoming sometime distant
+                                    nextState = AlarmState.STATE_SCHEDULED_DISTANT;
+                                    onScheduledState = onScheduledDistantState(context);
+                                }
+
+                                if (AlarmState.transitionState(item.state, nextState))
+                                {
+                                    Log.i(TAG, "Scheduled: " + item.rowID + ", " + item.timestamp + " (state: " + nextState + ")");
                                     AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, true);
                                     updateItem.setTaskListener(onScheduledState);
                                     updateItem.execute(item);  // write state
