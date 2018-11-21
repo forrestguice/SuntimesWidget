@@ -409,8 +409,13 @@ public class AlarmNotifications extends BroadcastReceiver
                         notificationIcon = R.drawable.ic_action_timeout;
                         break;
 
-                    default:
+                    case AlarmState.STATE_SCHEDULED_SOON:
+                        notificationMsg = context.getString(R.string.alarmAction_upcomingMsg);
+                        break;
+
+                    case AlarmState.STATE_SOUNDING:
                         builder.addAction(R.drawable.ic_action_snooze, context.getString(R.string.alarmAction_snooze), pendingSnooze);
+                        builder.setProgress(0,0,true);
                         break;
                 }
                 builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);
