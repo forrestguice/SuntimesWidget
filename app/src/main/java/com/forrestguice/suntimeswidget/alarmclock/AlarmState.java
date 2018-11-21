@@ -107,10 +107,10 @@ public class AlarmState
         switch (currentState)
         {
             case STATE_SCHEDULED_DISTANT:
-                return (nextState == STATE_SOUNDING || nextState == STATE_SCHEDULED_SOON || nextState == STATE_DISMISSED);
+                return (nextState == STATE_SOUNDING || nextState == STATE_SCHEDULED_SOON || nextState == STATE_DISMISSED || nextState == STATE_SCHEDULED_DISTANT);
 
             case STATE_SCHEDULED_SOON:
-                return (nextState == STATE_SOUNDING || nextState == STATE_DISMISSED);
+                return (nextState == STATE_SOUNDING || nextState == STATE_DISMISSED || nextState == STATE_SCHEDULED_SOON);
 
             case STATE_SOUNDING:
                 return (nextState == STATE_DISMISSED || nextState == STATE_SNOOZING || nextState == STATE_TIMEOUT || nextState == STATE_DISABLED);
