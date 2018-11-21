@@ -52,8 +52,11 @@ public class AlarmDatabaseAdapter
     public static final String KEY_ALARM_REPEATING_DAYS = "repeatdays";                             // repeating days (a list as String; e.g. [Calendar.SUNDAY, Calendar.Monday, ...])
     public static final String DEF_ALARM_REPEATING_DAYS = KEY_ALARM_REPEATING_DAYS + " text";
 
-    public static final String KEY_ALARM_DATETIME = "datetime";                                     // timestamp, the datetime this alarm should sound; one-time alarm if SOLAREVENT is null; repeating-alarm if SOLAREVENT is provided (DATETIME recalculated on repeat).
+    public static final String KEY_ALARM_DATETIME = "datetime";                                     // timestamp, the (original) datetime this alarm should sound; one-time alarm if SOLAREVENT is null; repeating-alarm if SOLAREVENT is provided (DATETIME recalculated on repeat).
     public static final String DEF_ALARM_DATETIME = KEY_ALARM_DATETIME + " integer default -1";
+
+    public static final String KEY_ALARM_DATETIME_ADJUSTED = "alarmtime";                           // timestamp, the (adjusted) datetime this alarm should sound; one-time alarm if SOLAREVENT is null; repeating-alarm if SOLAREVENT is provided (DATETIME recalculated on repeat).
+    public static final String DEF_ALARM_DATETIME_ADJUSTED = KEY_ALARM_DATETIME_ADJUSTED + " integer default -1";
 
     public static final String KEY_ALARM_DATETIME_HOUR = "hour";                                    // hour [0,23] (optional); the hour may be used to calculate the alarm datetime
     public static final String DEF_ALARM_DATETIME_HOUR = KEY_ALARM_DATETIME_HOUR + " integer default -1";
@@ -101,6 +104,7 @@ public class AlarmDatabaseAdapter
                                                          + DEF_ALARM_REPEATING + ", "
                                                          + DEF_ALARM_REPEATING_DAYS + ", "
 
+                                                         + DEF_ALARM_DATETIME_ADJUSTED + ", "
                                                          + DEF_ALARM_DATETIME + ", "
                                                          + DEF_ALARM_DATETIME_HOUR + ", "
                                                          + DEF_ALARM_DATETIME_MINUTE + ", "
@@ -122,7 +126,7 @@ public class AlarmDatabaseAdapter
     private static final String[] QUERY_ALARMS_MINENTRY = new String[] { KEY_ROWID, KEY_ALARM_TYPE, KEY_ALARM_ENABLED, KEY_ALARM_DATETIME, KEY_ALARM_LABEL };
     private static final String[] QUERY_ALARMS_FULLENTRY = new String[] { KEY_ROWID, KEY_ALARM_TYPE, KEY_ALARM_ENABLED, KEY_ALARM_LABEL,
                                                                           KEY_ALARM_REPEATING, KEY_ALARM_REPEATING_DAYS,
-                                                                          KEY_ALARM_DATETIME, KEY_ALARM_DATETIME_HOUR, KEY_ALARM_DATETIME_MINUTE, KEY_ALARM_DATETIME_OFFSET,
+                                                                          KEY_ALARM_DATETIME_ADJUSTED, KEY_ALARM_DATETIME, KEY_ALARM_DATETIME_HOUR, KEY_ALARM_DATETIME_MINUTE, KEY_ALARM_DATETIME_OFFSET,
                                                                           KEY_ALARM_SOLAREVENT, KEY_ALARM_PLACELABEL, KEY_ALARM_LATITUDE, KEY_ALARM_LONGITUDE, KEY_ALARM_ALTITUDE,
                                                                           KEY_ALARM_VIBRATE, KEY_ALARM_RINGTONE_NAME, KEY_ALARM_RINGTONE_URI };
 
@@ -281,6 +285,7 @@ public class AlarmDatabaseAdapter
         //noinspection UnnecessaryLocalVariable
         String line = KEY_ALARM_TYPE + separator +
                 KEY_ALARM_ENABLED + separator +
+                KEY_ALARM_DATETIME_ADJUSTED + separator +
                 KEY_ALARM_DATETIME + separator +
                 KEY_ALARM_DATETIME_HOUR + separator +
                 KEY_ALARM_DATETIME_MINUTE + separator +
@@ -305,6 +310,7 @@ public class AlarmDatabaseAdapter
         //noinspection UnnecessaryLocalVariable
         String line = alarm.getAsString(KEY_ALARM_TYPE) + separator +
                       alarm.getAsInteger(KEY_ALARM_ENABLED) + separator +
+                      alarm.getAsLong(KEY_ALARM_DATETIME_ADJUSTED) + separator +
                       alarm.getAsLong(KEY_ALARM_DATETIME) + separator +
                       alarm.getAsInteger(KEY_ALARM_DATETIME_HOUR) + separator +
                       alarm.getAsInteger(KEY_ALARM_DATETIME_MINUTE) + separator +

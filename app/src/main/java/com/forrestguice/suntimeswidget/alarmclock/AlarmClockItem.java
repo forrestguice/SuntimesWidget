@@ -48,6 +48,7 @@ public class AlarmClockItem
     public boolean enabled = false;
     public boolean repeating = false;
     public ArrayList<Integer> repeatingDays = null;
+    public long alarmtime = -1L;
     public long timestamp = -1L;
     public int hour = -1, minute = -1;
     public long offset = 0;
@@ -73,6 +74,7 @@ public class AlarmClockItem
         repeating = (alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_REPEATING) == 1);
         setRepeatingDays(alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_REPEATING_DAYS));
 
+        alarmtime = alarm.getAsLong(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_ADJUSTED);
         timestamp = alarm.getAsLong(AlarmDatabaseAdapter.KEY_ALARM_DATETIME);
         hour = alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_HOUR);
         minute = alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_MINUTE);
@@ -165,7 +167,7 @@ public class AlarmClockItem
     public Calendar getAdjustedCalendar()
     {
         Calendar calendar = getCalendar();
-        calendar.setTimeInMillis(calendar.getTimeInMillis() + offset);
+        calendar.setTimeInMillis(alarmtime);
         return calendar;
     }
 
