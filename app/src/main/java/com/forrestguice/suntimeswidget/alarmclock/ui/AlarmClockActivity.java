@@ -88,6 +88,8 @@ import java.util.Calendar;
 
 public class AlarmClockActivity extends AppCompatActivity
 {
+    public static final String TAG = "AlarmReceiverList";
+
     public static final String EXTRA_SHOWBACK = "showBack";
     public static final String EXTRA_SOLAREVENT = "solarevent";
     public static final int REQUEST_RINGTONE = 10;
@@ -186,7 +188,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
                 SolarEvents param_event = SolarEvents.valueOf(intent.getStringExtra(AlarmClockActivity.EXTRA_SOLAREVENT), null);
 
-                Log.i("AlarmClockActivity", "ACTION_SET_ALARM :: " + param_label + ", " + param_hour + ", " + param_minute + ", " + param_event);
+                Log.i(TAG, "ACTION_SET_ALARM :: " + param_label + ", " + param_hour + ", " + param_minute + ", " + param_event);
                 addAlarm(AlarmClockItem.AlarmType.ALARM, param_label, param_event, param_hour, param_minute, param_vibrate, param_ringtoneUri, param_days);
             }
         }
@@ -308,7 +310,7 @@ public class AlarmClockActivity extends AppCompatActivity
             try {
                 t_selectedItem = Long.parseLong(idString);
             } catch (NumberFormatException e) {
-                Log.w("onRestoreInstanceState", "KEY_SELECTED_ROWID is invalid! not a Long.. ignoring: " + idString);
+                Log.w(TAG, "onRestoreInstanceState: KEY_SELECTED_ROWID is invalid! not a Long.. ignoring: " + idString);
                 t_selectedItem = null;
             }
         }
@@ -431,8 +433,7 @@ public class AlarmClockActivity extends AppCompatActivity
             ringtone.stop();
         }
 
-        alarm.state = new AlarmState();
-        alarm.state.setState(AlarmState.STATE_NONE);
+        alarm.setState(alarm.enabled ? AlarmState.STATE_NONE : AlarmState.STATE_DISABLED);
         alarm.modified = true;
 
         AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, true, true);
@@ -495,8 +496,8 @@ public class AlarmClockActivity extends AppCompatActivity
                 item.modified = true;
                 updateAlarmTime(AlarmClockActivity.this, item);
 
-                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, false, false);
-                task.setTaskListener(onUpdateItem);
+                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, false, true);
+                task.setTaskListener(onUpdateItem);   // TODO: reset state and reschedule on SolarEventChanged
                 task.execute(item);
             }
         }
@@ -665,8 +666,8 @@ public class AlarmClockActivity extends AppCompatActivity
                 item.modified = true;
                 updateAlarmTime(AlarmClockActivity.this, item);
 
-                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, false, false);
-                task.setTaskListener(onUpdateItem);
+                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, false, true);
+                task.setTaskListener(onUpdateItem);    // TODO: reset state and reschedule on locationChanged
                 task.execute(item);
                 return true;
             }
@@ -720,8 +721,8 @@ public class AlarmClockActivity extends AppCompatActivity
                 item.modified = true;
                 updateAlarmTime(AlarmClockActivity.this, item);
 
-                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, false, false);
-                task.setTaskListener(onUpdateItem);
+                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, false, true);
+                task.setTaskListener(onUpdateItem);          // TODO: reset state and reschedule on time changed
                 task.execute(item);
             }
 
@@ -758,8 +759,8 @@ public class AlarmClockActivity extends AppCompatActivity
             {
                 item.offset = offsetDialog.getOffset();
                 item.modified = true;
-                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, false, false);
-                task.setTaskListener(onUpdateItem);
+                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, false, true);
+                task.setTaskListener(onUpdateItem);  // TODO: reset state and reschedule on offset changed
                 task.execute(item);
             }
         }
@@ -876,7 +877,7 @@ public class AlarmClockActivity extends AppCompatActivity
                     item.ringtoneName = (uri != null ? ringtoneName : null);
                     item.ringtoneURI = (uri != null ? uri.toString() : null);
                     item.modified = true;
-                    Log.d("DEBUG", "uri: " + item.ringtoneURI + ", title: " + ringtoneName);
+                    Log.d(TAG, "onActivityResult: uri: " + item.ringtoneURI + ", title: " + ringtoneName);
 
                     AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(this, false, false);
                     task.setTaskListener(onUpdateItem);
@@ -1174,7 +1175,7 @@ public class AlarmClockActivity extends AppCompatActivity
             final AlarmClockItem item = ((position >= 0 && position < items.size()) ? items.get(position) : null);
             if (item == null)
             {
-                Log.d("DEBUG", "position " + position + " is null!");
+                Log.d(TAG, "itemView: position " + position + " is null!");
                 view.setVisibility(View.GONE);
                 return view;
             }
@@ -1329,7 +1330,8 @@ public class AlarmClockActivity extends AppCompatActivity
                     {
                         item.vibrate = isChecked;
                         item.modified = true;
-                        onAlarmModified(item);
+                        AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, false);
+                        task.execute(item);
                     }
                 });
             }
@@ -1441,17 +1443,12 @@ public class AlarmClockActivity extends AppCompatActivity
                     switch (menuItem.getItemId())
                     {
                         case R.id.alarmTypeNotification:
-                            item.type = AlarmClockItem.AlarmType.NOTIFICATION;
-                            break;
+                            return changeAlarmType(item, AlarmClockItem.AlarmType.NOTIFICATION);
 
                         case R.id.alarmTypeAlarm:
                         default:
-                            item.type = AlarmClockItem.AlarmType.ALARM;
-                            break;
+                            return changeAlarmType(item, AlarmClockItem.AlarmType.ALARM);
                     }
-                    onAlarmModified(item);
-                    notifyDataSetChanged();
-                    return true;
                 }
             });
 
@@ -1459,17 +1456,30 @@ public class AlarmClockActivity extends AppCompatActivity
             menu.show();
         }
 
-        /**
-         * onAlarmModified
-         * @param item AlarmClockItem
-         */
-        protected void onAlarmModified(final AlarmClockItem item)
+        protected boolean changeAlarmType(AlarmClockItem item, AlarmClockItem.AlarmType type)
         {
-            if (item.modified)
+            if (item.type != type)
             {
-                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, false);
-                task.execute(item);
+                Log.d(TAG, "alarmTypeMenu: alarm type is changed: " + type);
+                if (item.enabled)
+                {
+                    Log.d(TAG, "alarmTypeMenu: alarm is enabled (reschedule required?)");
+                    // item is enabled; disable it or reschedule/reenable
+                    return false;
+
+                } else {
+                    Log.d(TAG, "alarmTypeMenu: alarm is disabled, changing its type..");
+                    item.type = type;
+                    item.setState(AlarmState.STATE_NONE);
+
+                    AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, true);
+                    task.execute(item);
+                    notifyDataSetChanged();
+                    return true;
+                }
             }
+            Log.w(TAG, "alarmTypeMenu: alarm type is unchanged");
+            return false;
         }
 
         /**
@@ -1495,19 +1505,17 @@ public class AlarmClockActivity extends AppCompatActivity
                         if (enabled)
                         {
                             Intent scheduleIntent = AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_SCHEDULE, item.getUri());
-                            scheduleIntent.putExtra("tag", "alarmList");
                             context.sendBroadcast(scheduleIntent);
 
                         } else {
                             Intent disableIntent = AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DISABLE, item.getUri());
-                            disableIntent.putExtra("tag", "alarmList");
                             context.sendBroadcast(disableIntent);
                         }
 
                     } else Log.e("AlarmClockActivity", "enableAlarm: failed to save state!");
                 }
             });
-            enableTask.execute(item);
+            enableTask.execute(item);   // TD
         }
 
         /**

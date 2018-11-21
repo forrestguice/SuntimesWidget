@@ -379,7 +379,7 @@ public class AlarmNotifications extends BroadcastReceiver
         if (alarm.type == AlarmClockItem.AlarmType.ALARM)
         {
             // ALARM
-            int alarmState = (alarm.state == null ? AlarmState.STATE_NONE : alarm.state.getState());
+            int alarmState = alarm.getState();
             switch (alarmState)
             {
                 case AlarmState.STATE_TIMEOUT:

@@ -138,10 +138,9 @@ public class AlarmClockItem
 
     public void setState(int value)
     {
-        if (state == null) {
-            state = new AlarmState();
-        }
-        state.setState(value);
+        if (state == null)
+            state = new AlarmState(rowID, value);
+        else state.setState(value);
     }
 
     public int getState()

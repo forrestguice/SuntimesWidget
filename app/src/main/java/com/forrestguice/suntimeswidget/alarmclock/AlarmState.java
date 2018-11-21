@@ -62,7 +62,11 @@ public class AlarmState
     private int state = STATE_NONE;
     private boolean modified = false;
 
-    public AlarmState() {}
+    public AlarmState(long id, int value)
+    {
+        this.rowID = id;
+        this.state = value;
+    }
 
     public AlarmState(ContentValues values)
     {
