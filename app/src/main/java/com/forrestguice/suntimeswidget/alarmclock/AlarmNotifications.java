@@ -616,20 +616,12 @@ public class AlarmNotifications extends BroadcastReceiver
                                     Log.i(TAG, "Scheduled: " + item.rowID + ", " + item.timestamp);
                                     showAlarmEnabledToast(context, item);
 
-                                    if (item.state != null)
-                                    {
-                                        AlarmDatabaseAdapter.AlarmStateUpdateTask updateState = new AlarmDatabaseAdapter.AlarmStateUpdateTask(context);
-                                        updateState.setTaskListener(new AlarmDatabaseAdapter.AlarmStateUpdateTask.AlarmStateUpdateTaskListener()
-                                        {
-                                            @Override
-                                            public void onFinished(Boolean result)
-                                            {
-                                                Intent intent = getAlarmIntent(context, ACTION_SHOW, item.getUri());
-                                                context.sendBroadcast(intent);
-                                            }
-                                        });   // test by triggering immediately // TODO: remove this block, replace w/ AlarmManager
-                                        updateState.execute(item.state);  // write state
-                                    }
+                                    // TODO: distant vs soon
+                                    AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener onScheduledState = onScheduledDistantState(context);
+
+                                    AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, true);
+                                    updateItem.setTaskListener(onScheduledState);
+                                    updateItem.execute(item);  // write state
                                 }
                             }
 
@@ -760,6 +752,36 @@ public class AlarmNotifications extends BroadcastReceiver
                     Log.d(TAG, "State Saved (onDisabled)");
                     context.startActivity(getAlarmListIntent(context));   // open the alarm list
                     stopForeground(true);     // remove notification (will kill running tasks)
+                }
+            };
+        }
+
+        private AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener onScheduledDistantState(final Context context)
+        {
+            return new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
+            {
+                @Override
+                public void onFinished(Boolean result, AlarmClockItem item)
+                {
+                    Log.d(TAG, "State Saved (onScheduledDistant)");
+                    long alarmAt = Calendar.getInstance().getTimeInMillis() + (1000 * 10);  // TODO: testing .. 10s from now sound alarm
+                    addAlarmTimeout(context, ACTION_SHOW, item.getUri(), alarmAt);
+                    // TODO
+                }
+            };
+        }
+
+        private AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener onScheduledSoonState(final Context context)
+        {
+            return new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
+            {
+                @Override
+                public void onFinished(Boolean result, AlarmClockItem item)
+                {
+                    Log.d(TAG, "State Saved (onScheduledSoon)");
+                    long alarmAt = Calendar.getInstance().getTimeInMillis() + (1000 * 10);  // TODO: testing .. 10s from now sound alarm
+                    addAlarmTimeout(context, ACTION_SHOW, item.getUri(), alarmAt);
+                    // TODO
                 }
             };
         }
