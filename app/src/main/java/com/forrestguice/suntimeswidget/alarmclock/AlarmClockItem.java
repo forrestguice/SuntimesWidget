@@ -108,6 +108,7 @@ public class AlarmClockItem
         values.put(AlarmDatabaseAdapter.KEY_ALARM_LABEL, label);
         values.put(AlarmDatabaseAdapter.KEY_ALARM_REPEATING, (repeating ? 1 : 0));
 
+        values.put(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_ADJUSTED, alarmtime);
         values.put(AlarmDatabaseAdapter.KEY_ALARM_DATETIME, timestamp);
         values.put(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_HOUR, hour);
         values.put(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_MINUTE, minute);
