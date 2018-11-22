@@ -28,12 +28,7 @@
         <Preference
             android:key="app_appearance_theme_manage"
             android:icon="?attr/icActionAppearance"
-            android:title="@string/configAction_configThemes">
-            <intent android:targetPackage="com.forrestguice.suntimeswidget"
-                android:targetClass="com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity">
-                <extra android:name="noselect" android:value="true" />
-            </intent>
-        </Preference>
+            android:title="@string/configAction_configThemes" />
 
     </PreferenceCategory>
 

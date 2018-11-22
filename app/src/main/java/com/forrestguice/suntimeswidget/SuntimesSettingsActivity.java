@@ -60,6 +60,7 @@ import com.forrestguice.suntimeswidget.settings.SummaryListPreference;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 
 import java.io.File;
 import java.security.InvalidParameterException;
@@ -84,6 +85,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
     public static final int REQUEST_CALENDARPREFSFRAGMENT_ENABLED = 2;
     public static final int REQUEST_CALENDARPREFSFRAGMENT_DISABLED = 4;
+
+    public static final int REQUEST_THEMELIST = 12;
 
     private Context context;
     private PlacesPrefsBase placesPrefBase = null;
@@ -114,6 +117,18 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         initLegacyPrefs();
 
         PreferenceManager.getDefaultSharedPreferences(context).registerOnSharedPreferenceChangeListener(onChangedNeedingRebuild);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == REQUEST_THEMELIST)
+        {
+            Log.d(LOG_TAG, "onActivityResult: " + requestCode + " (" + resultCode + ")");
+            if (resultCode == RESULT_OK) {
+                rebuildActivity();
+            }
+        }
     }
 
     /**
@@ -1182,6 +1197,11 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         ListPreference overrideTheme_dark = (ListPreference)findPreference(AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
         initPref_ui_themeOverride(overrideTheme_dark, this, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
         loadPref_ui_themeOverride(overrideTheme_dark, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK, this);
+
+        Preference manageThemes = findPreference("app_appearance_theme_manage");
+        if (manageThemes != null) {
+            manageThemes.setOnPreferenceClickListener(onManageThemesClick(this));
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -1203,7 +1223,28 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         ListPreference overrideTheme_dark = (ListPreference)fragment.findPreference(AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
         initPref_ui_themeOverride(overrideTheme_dark, fragment.getActivity(), AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
         loadPref_ui_themeOverride(overrideTheme_dark, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK, fragment.getActivity());
+
+        Preference manageThemes = fragment.findPreference("app_appearance_theme_manage");
+        if (manageThemes != null) {
+            manageThemes.setOnPreferenceClickListener(onManageThemesClick(fragment.getActivity()));
+        }
     }
+
+    private static Preference.OnPreferenceClickListener onManageThemesClick(final Activity activity)
+    {
+        return new Preference.OnPreferenceClickListener()
+        {
+            @Override
+            public boolean onPreferenceClick(Preference preference)
+            {
+                Intent configThemesIntent = new Intent(activity, WidgetThemeListActivity.class);
+                configThemesIntent.putExtra(WidgetThemeListActivity.PARAM_NOSELECT, true);
+                activity.startActivityForResult(configThemesIntent, REQUEST_THEMELIST);
+                return false;
+            }
+        };
+    }
+
 
     private static void initPref_ui_field(CheckBoxPreference field, final Context context, final int k, boolean value)
     {
