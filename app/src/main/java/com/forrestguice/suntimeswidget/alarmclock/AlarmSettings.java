@@ -59,6 +59,12 @@ public class AlarmSettings
         return prefs.getInt(PREF_KEY_ALARM_TIMEOUT, PREF_DEF_ALARM_TIMEOUT);
     }
 
+    /**
+     * Show a reminder when the alarm is within upcoming milliseconds.
+     * Note: The reminder won't be shown if the value is less equal zero (disabled).
+     * @param context Context
+     * @return millisecond value
+     */
     public static long loadPrefAlarmUpcoming(Context context)
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);

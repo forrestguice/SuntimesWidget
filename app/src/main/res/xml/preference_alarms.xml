@@ -22,6 +22,12 @@
             android:summary="@string/configLabel_alarms_snooze_summary"
             android:defaultValue="@string/def_app_alarms_snooze" />
 
+        <com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
+            android:key="app_alarms_upcomingMillis"
+            android:title="@string/configLabel_alarms_upcoming"
+            android:summary="@string/configLabel_alarms_upcoming_summary"
+            android:defaultValue="@string/def_app_alarms_upcoming" />
+
         <ListPreference android:key="app_alarms_hardwarebutton_action"
             android:title="@string/configLabel_alarms_hardwarebuttons"
             android:summary="@string/configLabel_alarms_hardwarebuttons_summary"

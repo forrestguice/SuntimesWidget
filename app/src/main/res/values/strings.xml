@@ -590,6 +590,9 @@
     <string name="configLabel_alarms_snooze">Snooze for</string>
     <string name="configLabel_alarms_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
+    <string name="configLabel_alarms_upcoming">Reminder within</string>
+    <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
+
     <string name="configLabel_alarms_hardwarebuttons">Camera and Volume Buttons</string>
     <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>
     <string-array name="alarm_hardwarebutton_actions_display">
@@ -1285,6 +1288,7 @@
     <string name="def_app_alarms_silence" translatable="false">600000</string>
     <string name="def_app_alarms_timeout" translatable="false">600000</string>
     <string name="def_app_alarms_snooze" translatable="false">600000</string>
+    <string name="def_app_alarms_upcoming" translatable="false">600000</string>
     <string name="def_app_alarms_hardwarebuttons_action" translatable="false">suntimeswidget.alarm.silent</string>
 
 </resources>
