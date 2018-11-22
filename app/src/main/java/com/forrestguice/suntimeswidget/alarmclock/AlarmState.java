@@ -23,20 +23,21 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 /**
- * >-- [trigger enabled / disabled] ----------\
- *                                            |             AlarmState
- *                     DISABLED <---\         |
- *                                  |         v
- *        /-- SCHEDULED_DISTANT <---|------- NONE ----------\
- *        |                         |                       |
- *        |--> SCHEDULED_SOON <-----|                       |
- *        |            |                                    |
- *        \----->------|-----------------------> DISMISSED -|
- *           ^         |                   |                |
- *           |         \----> SOUNDING ----+---> TIMEOUT ---/
- *           |                             |
- *           |                             |
- *           \-------------- SNOOZING <----/
+ * AlarmState
+ *                |----------------------------------------------|
+ *                |                                              |
+ *                |--> DISABLED <-->|                            |
+ *                                  |                            |
+ *        |-- SCHEDULED_DISTANT <-->|<-----> NONE <---------|    |
+ *        |                         |                       |    |
+ *        |--- SCHEDULED_SOON <---->|                       |    |
+ *        |                                                 |    |
+ *        |------->----|---->------------------> DISMISSED -|--->|
+ *                     |                   |        ^       |    |
+ *                     |----> SOUNDING ----+---> TIMEOUT ---|    |
+ *                     |                   |                     |
+ *                     |                   |                     |
+ *                     |-<-- SNOOZING <----|-------------------->|
  *
  * Alarms start in the NONE state and immediately transition to DISABLED or SCHEDULED_DISTANT (enabled).
  * Alarms are SCHEDULED_SOON within X hrs of the scheduled time.
@@ -111,10 +112,10 @@ public class AlarmState
         switch (currentState)
         {
             case STATE_SCHEDULED_DISTANT:
-                return (nextState == STATE_SOUNDING || nextState == STATE_SCHEDULED_SOON || nextState == STATE_DISMISSED || nextState == STATE_SCHEDULED_DISTANT);
+                return (nextState == STATE_NONE || nextState == STATE_SOUNDING || nextState == STATE_SCHEDULED_SOON || nextState == STATE_DISMISSED || nextState == STATE_DISABLED || nextState == STATE_SCHEDULED_DISTANT);
 
             case STATE_SCHEDULED_SOON:
-                return (nextState == STATE_SOUNDING || nextState == STATE_DISMISSED || nextState == STATE_SCHEDULED_SOON);
+                return (nextState == STATE_NONE || nextState == STATE_SOUNDING || nextState == STATE_DISMISSED || nextState == STATE_DISABLED || nextState == STATE_SCHEDULED_SOON);
 
             case STATE_SOUNDING:
                 return (nextState == STATE_DISMISSED || nextState == STATE_SNOOZING || nextState == STATE_TIMEOUT || nextState == STATE_DISABLED);
@@ -123,10 +124,10 @@ public class AlarmState
                 return (nextState == STATE_DISMISSED || nextState == STATE_DISABLED || nextState == STATE_SOUNDING);
 
             case STATE_TIMEOUT:
-                return (nextState == STATE_NONE || nextState == STATE_DISMISSED || nextState == STATE_DISABLED);
+                return (nextState == STATE_NONE || nextState == STATE_DISABLED || nextState == STATE_DISMISSED);
 
             case STATE_DISMISSED:
-                return (nextState == STATE_NONE);
+                return (nextState == STATE_NONE || nextState == STATE_DISABLED);
 
             case STATE_DISABLED:
                 return (nextState == STATE_NONE || nextState == STATE_DISABLED);
