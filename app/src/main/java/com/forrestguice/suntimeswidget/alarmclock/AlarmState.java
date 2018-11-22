@@ -26,21 +26,21 @@ import android.util.Log;
  * AlarmState
  *                |----------------------------------------------|
  *                |                                              |
- *                |--> DISABLED <-->|                            |
- *                                  |                            |
+ *                |--> DISABLED <-->|          |<-----[S]        |
+ *                                  |          |                 |
  *        |-- SCHEDULED_DISTANT <-->|<-----> NONE <---------|    |
  *        |                         |                       |    |
- *        |--- SCHEDULED_SOON <---->|                       |    |
- *        |                                                 |    |
- *        |------->----|---->------------------> DISMISSED -|--->|
- *                     |                   |        ^       |    |
+ *        |--- SCHEDULED_SOON <---->|      |---> DISMISSED -|--->|
+ *        |                                |           |    |    |
+ *        |------->----|---->--------------|       |-->|    |    |
+ *                     |                   |       |        |    |
  *                     |----> SOUNDING ----+---> TIMEOUT ---|    |
  *                     |                   |                     |
  *                     |                   |                     |
  *                     |-<-- SNOOZING <----|-------------------->|
  *
- * Alarms start in the NONE state and immediately transition to DISABLED or SCHEDULED_DISTANT (enabled).
- * Alarms are SCHEDULED_SOON within X hrs of the scheduled time.
+ * Alarms start in the NONE state and immediately transition to DISABLED or SCHEDULED.
+ * Alarms are SCHEDULED_SOON within X hrs of the scheduled time. A reminder notification is shown.
  * Alarms are SOUNDING when the notification is served (actively sounding).
  * Alarms are SNOOZING when the notification is snoozed. After the snooze period the alarm is once again SOUNDING.
  * Alarms are DISMISSED when the notification is dismissed. After an alarm is dismissed its state becomes NONE.
@@ -133,7 +133,7 @@ public class AlarmState
                 return (nextState == STATE_NONE || nextState == STATE_DISABLED);
 
             case STATE_NONE:
-                return (nextState == STATE_SCHEDULED_DISTANT || nextState == STATE_SCHEDULED_SOON || nextState == STATE_DISABLED);
+                return (nextState == STATE_NONE || nextState == STATE_SCHEDULED_DISTANT || nextState == STATE_SCHEDULED_SOON || nextState == STATE_DISABLED);
 
             default:
                 Log.w(TAG, "validTransition: invalid state! " + currentState);
