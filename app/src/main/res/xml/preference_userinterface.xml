@@ -14,6 +14,7 @@
 
         <com.forrestguice.suntimeswidget.settings.ListPreference
             android:key="app_appearance_theme_light"
+
             android:title="@string/appThemes_lightTheme"
             android:dialogTitle="@string/configLabel_appearance_theme"
             android:summary="%s" />
@@ -23,6 +24,16 @@
             android:title="@string/appThemes_darkTheme"
             android:dialogTitle="@string/configLabel_appearance_theme"
             android:summary="%s" />
+
+        <Preference
+            android:key="app_appearance_theme_manage"
+            android:icon="?attr/icActionAppearance"
+            android:title="@string/configAction_configThemes">
+            <intent android:targetPackage="com.forrestguice.suntimeswidget"
+                android:targetClass="com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity">
+                <extra android:name="noselect" android:value="true" />
+            </intent>
+        </Preference>
 
     </PreferenceCategory>
 

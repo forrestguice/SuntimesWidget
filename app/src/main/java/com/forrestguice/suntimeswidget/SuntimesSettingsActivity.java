@@ -1176,11 +1176,11 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         }
 
         ListPreference overrideTheme_light = (ListPreference)findPreference(AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT);
-        initPref_ui_themeOverride(overrideTheme_light, this);
+        initPref_ui_themeOverride(overrideTheme_light, this, AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT);
         loadPref_ui_themeOverride(overrideTheme_light, AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT, this);
 
         ListPreference overrideTheme_dark = (ListPreference)findPreference(AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
-        initPref_ui_themeOverride(overrideTheme_dark, this);
+        initPref_ui_themeOverride(overrideTheme_dark, this, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
         loadPref_ui_themeOverride(overrideTheme_dark, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK, this);
     }
 
@@ -1197,11 +1197,11 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         }
 
         ListPreference overrideTheme_light = (ListPreference)fragment.findPreference(AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT);
-        initPref_ui_themeOverride(overrideTheme_light, fragment.getActivity());
+        initPref_ui_themeOverride(overrideTheme_light, fragment.getActivity(), AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT);
         loadPref_ui_themeOverride(overrideTheme_light, AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT, fragment.getActivity());
 
         ListPreference overrideTheme_dark = (ListPreference)fragment.findPreference(AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
-        initPref_ui_themeOverride(overrideTheme_dark, fragment.getActivity());
+        initPref_ui_themeOverride(overrideTheme_dark, fragment.getActivity(), AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
         loadPref_ui_themeOverride(overrideTheme_dark, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK, fragment.getActivity());
     }
 
@@ -1221,7 +1221,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         });
     }
 
-    private static void initPref_ui_themeOverride(ListPreference listPref, Context context)
+    private static void initPref_ui_themeOverride(ListPreference listPref, Context context, String key)
     {
         if (listPref != null)
         {
@@ -1240,6 +1240,16 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
             listPref.setEntries(themeEntries);
             listPref.setEntryValues(themeValues);
+
+            /**TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.icActionAppearance});
+            int drawableID = a.getResourceId(0, R.drawable.ic_palette);
+            a.recycle();
+
+            String title = (key.equals(AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT) ? context.getString(R.string.appThemes_lightTheme) + "  [i]"
+                                                                                    : context.getString(R.string.appThemes_darkTheme) + "  [i]");
+            ImageSpan themeIcon = SuntimesUtils.createImageSpan(context, drawableID, 32, 32, 0);
+            SpannableStringBuilder titleSpan = SuntimesUtils.createSpan(context, title, "[i]", themeIcon);
+            listPref.setTitle(titleSpan);*/
         }
     }
 
