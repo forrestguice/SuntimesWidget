@@ -569,6 +569,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 } else {
                                     Log.i(TAG, "Dismissed: Repeating; re-scheduling.." + item.rowID);
                                     nextAction = ACTION_SCHEDULE;
+                                    item.alarmtime = 0;
                                 }
 
                                 item.modified = true;
@@ -624,14 +625,14 @@ public class AlarmNotifications extends BroadcastReceiver
                                 cancelAlarmTimeouts(context, item.getUri());
 
                                 long now = Calendar.getInstance().getTimeInMillis();
-                                if (item.alarmtime >= now || item.alarmtime == 0)
+                                if (item.alarmtime <= now || item.alarmtime == 0)
                                 {
                                     // expired alarm/notification
                                     if (item.enabled)    // enabled; reschedule alarm/notification
                                     {
                                         Log.d(TAG, "(Re)Scheduling Alarm: " + item.rowID);
                                         item.alarmtime = Calendar.getInstance().getTimeInMillis() + AlarmSettings.loadPrefAlarmUpcoming(context) + (1000 * 60);  // TODO:
-                                        showAlarmEnabledToast(context, item);
+                                        //showAlarmEnabledToast(context, item);
 
                                     } else {    // disabled; this alarm should have been dismissed
                                         Log.d(TAG, "Dismissing Alarm: " + item.rowID);
@@ -735,11 +736,8 @@ public class AlarmNotifications extends BroadcastReceiver
                     if (nextAction != null) {
                         Intent intent = getAlarmIntent(context, nextAction, data);
                         context.sendBroadcast(intent);  // trigger followup action
-
-                    } else {
-                        dismissNotification(context, (int)item.rowID);
-                        stopForeground(true);   // remove notification (will kill running tasks)
                     }
+                    stopForeground(true);   // remove notification (will kill running tasks)
                 }
             };
         }
@@ -806,8 +804,8 @@ public class AlarmNotifications extends BroadcastReceiver
                 {
                     Log.d(TAG, "State Saved (onDisabled)");
                     context.startActivity(getAlarmListIntent(context));   // open the alarm list
-                    dismissNotification(context, (int)item.rowID);
                     stopForeground(true);     // remove notification (will kill running tasks)
+                    //dismissNotification(context, (int)item.rowID);  // dismiss upcoming reminders
                 }
             };
         }
@@ -824,6 +822,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         Log.d(TAG, "State Saved (onScheduledDistant)");
                         long transitionAt = item.alarmtime - AlarmSettings.loadPrefAlarmUpcoming(context) + 1000;
                         addAlarmTimeout(context, ACTION_SCHEDULE, item.getUri(), transitionAt);
+                        //dismissNotification(context, (int)item.rowID);
                     }
                 }
             };
