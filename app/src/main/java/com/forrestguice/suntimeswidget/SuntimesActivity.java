@@ -89,7 +89,9 @@ import com.forrestguice.suntimeswidget.notes.SuntimesNotes;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.lang.reflect.Method;
 import java.text.DateFormat;
@@ -133,6 +135,7 @@ public class SuntimesActivity extends AppCompatActivity
     private Menu actionBarMenu;
     private String appTheme;
     private int appThemeResID;
+    private SuntimesTheme appThemeOverride = null;
     private AppSettings.LocaleInfo localeInfo;
 
     private GetFixHelper getFixHelper;
@@ -272,6 +275,13 @@ public class SuntimesActivity extends AppCompatActivity
     {
         appTheme = AppSettings.loadThemePref(this);
         setTheme(appThemeResID = AppSettings.themePrefToStyleId(this, appTheme, null));
+
+        String themeOverride = (appTheme.equals(AppSettings.THEME_LIGHT) ? AppSettings.loadThemeLightPref(this) : AppSettings.loadThemeDarkPref(this));
+        if (themeOverride != null && !themeOverride.equals("default"))
+        {
+            Log.i("initTheme", "Overriding \"" + appTheme + "\" using: " + themeOverride);
+            appThemeOverride = WidgetThemes.loadTheme(this, themeOverride);
+        }
 
         int[] attrs = new int[] { R.attr.sunnoonIcon, R.attr.buttonPressColor };
         TypedArray a = obtainStyledAttributes(attrs);
