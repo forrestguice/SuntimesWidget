@@ -584,9 +584,11 @@
     <string name="configLabel_ui_showbluehour_summary">Show blue hour times.</string>
 
     <!-- App Setting: UI Theme -->
+    <string name="appThemes_lightTheme">Light Theme</string>  <!-- TODO -->
+    <string name="appThemes_darkTheme">Dark Theme</string>  <!-- TODO -->
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-        <item>Light Theme</item>
-        <item>Dark Theme</item>
+        <item>@string/appThemes_lightTheme</item>  <!-- TODO -->
+        <item>@string/appThemes_darkTheme</item>  <!-- TODO -->
         <item>Light Theme / Dark Theme (Night Mode)</item>
     </string-array>
     <string-array name="appThemes_values" translatable="false">  <!-- config values (one-to-one with appThemes_display) -->

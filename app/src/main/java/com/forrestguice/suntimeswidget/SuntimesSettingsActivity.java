@@ -58,6 +58,8 @@ import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SummaryListPreference;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetThemes;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.io.File;
 import java.security.InvalidParameterException;
@@ -1172,6 +1174,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 initPref_ui_field(field, this, i, showFields[i]);
             }
         }
+
+        ListPreference overrideTheme_light = (ListPreference)findPreference(AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT);
+        initPref_ui_themeOverride(overrideTheme_light, this);
+        loadPref_ui_themeOverride(overrideTheme_light, AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT, this);
+
+        ListPreference overrideTheme_dark = (ListPreference)findPreference(AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
+        initPref_ui_themeOverride(overrideTheme_dark, this);
+        loadPref_ui_themeOverride(overrideTheme_dark, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK, this);
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -1185,6 +1195,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 initPref_ui_field(field, fragment.getActivity(), i, showFields[i]);
             }
         }
+
+        ListPreference overrideTheme_light = (ListPreference)fragment.findPreference(AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT);
+        initPref_ui_themeOverride(overrideTheme_light, fragment.getActivity());
+        loadPref_ui_themeOverride(overrideTheme_light, AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT, fragment.getActivity());
+
+        ListPreference overrideTheme_dark = (ListPreference)fragment.findPreference(AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
+        initPref_ui_themeOverride(overrideTheme_dark, fragment.getActivity());
+        loadPref_ui_themeOverride(overrideTheme_dark, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK, fragment.getActivity());
     }
 
     private static void initPref_ui_field(CheckBoxPreference field, final Context context, final int k, boolean value)
@@ -1201,6 +1219,44 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 } else return false;
             }
         });
+    }
+
+    private static void initPref_ui_themeOverride(ListPreference listPref, Context context)
+    {
+        if (listPref != null)
+        {
+            WidgetThemes.initThemes(context);
+            SuntimesTheme.ThemeDescriptor[] themes = WidgetThemes.sortedValues(true);
+            String[] themeEntries = new String[themes.length + 1];
+            String[] themeValues = new String[themes.length + 1];
+
+            themeValues[0] = "default";
+            themeEntries[0] = context.getString(R.string.configLabel_tagDefault);
+            for (int i=0; i<themes.length; i++)                // i:0 is reserved for "default"
+            {
+                themeValues[i + 1] = themes[i].name();
+                themeEntries[i + 1] = themes[i].displayString();
+            }
+
+            listPref.setEntries(themeEntries);
+            listPref.setEntryValues(themeValues);
+        }
+    }
+
+    private static void loadPref_ui_themeOverride(ListPreference listPref, String key, Context context)
+    {
+        if (listPref != null)
+        {
+            String themeName = ((key.equals(AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT) ? AppSettings.loadThemeLightPref(context) : AppSettings.loadThemeDarkPref(context)));
+            int currentIndex = ((themeName != null) ? listPref.findIndexOfValue(themeName) : -1);
+            if (currentIndex >= 0) {
+                listPref.setValueIndex(currentIndex);
+
+            } else {
+                Log.w(LOG_TAG, "loadPref: Unable to load " + key + "... The list is missing an entry for the descriptor: " + themeName);
+                listPref.setValueIndex(0);
+            }
+        }
     }
 
     //////////////////////////////////////////////////
