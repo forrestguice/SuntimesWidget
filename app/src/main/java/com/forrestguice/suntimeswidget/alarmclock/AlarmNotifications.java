@@ -129,15 +129,15 @@ public class AlarmNotifications extends BroadcastReceiver
     {
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         if (alarmManager != null) {
-            addAlarmTimeout(context, alarmManager, action, data, timeoutAt);
+            addAlarmTimeout(context, alarmManager, action, data, timeoutAt, AlarmManager.RTC_WAKEUP);
         } else Log.e(TAG, "addAlarmTimeout: AlarmManager is null!");
     }
-    protected static void addAlarmTimeout(Context context, @NonNull AlarmManager alarmManager, String action, Uri data, long timeoutAt)
+    protected static void addAlarmTimeout(Context context, @NonNull AlarmManager alarmManager, String action, Uri data, long timeoutAt, int type)
     {
-        Log.d(TAG, "addAlarmTimeout: " + action + ": " + data);
+        Log.d(TAG, "addAlarmTimeout: " + action + ": " + data + " (wakeup:" + type + ")");
         if (Build.VERSION.SDK_INT >= 19) {
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeoutAt, getPendingIntent(context, action, data));
-        } else alarmManager.set(AlarmManager.RTC_WAKEUP, timeoutAt, getPendingIntent(context, action, data));
+            alarmManager.setExact(type, timeoutAt, getPendingIntent(context, action, data));
+        } else alarmManager.set(type, timeoutAt, getPendingIntent(context, action, data));
     }
 
     protected static void addAlarmTimeouts(Context context, Uri data)
@@ -153,7 +153,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 {
                     Log.d(TAG, "addAlarmTimeouts: silence after " + silenceMillis);
                     long silenceAt = Calendar.getInstance().getTimeInMillis() + silenceMillis;
-                    addAlarmTimeout(context, alarmManager, ACTION_SILENT, data, silenceAt);
+                    addAlarmTimeout(context, alarmManager, ACTION_SILENT, data, silenceAt, AlarmManager.RTC_WAKEUP);
                 }
 
                 long timeoutMillis = AlarmSettings.loadPrefAlarmTimeout(context);
@@ -161,7 +161,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 {
                     Log.d(TAG, "addAlarmTimeouts: timeout after " + timeoutMillis);
                     long timeoutAt = Calendar.getInstance().getTimeInMillis() + timeoutMillis;
-                    addAlarmTimeout(context, alarmManager, ACTION_TIMEOUT, data, timeoutAt);
+                    addAlarmTimeout(context, alarmManager, ACTION_TIMEOUT, data, timeoutAt, AlarmManager.RTC_WAKEUP);
                 }
 
             } else Log.e(TAG, "addAlarmTimeout: AlarmManager is null!");
@@ -624,16 +624,17 @@ public class AlarmNotifications extends BroadcastReceiver
                                 cancelAlarmTimeouts(context, item.getUri());
 
                                 long now = Calendar.getInstance().getTimeInMillis();
-                                long alarmTime = item.alarmtime;
-                                if (alarmTime >= now)
+                                if (item.alarmtime >= now || item.alarmtime == 0)
                                 {
                                     // expired alarm/notification
                                     if (item.enabled)    // enabled; reschedule alarm/notification
                                     {
-                                        // TODO: set item.alarmtime to be > now
+                                        Log.d(TAG, "(Re)Scheduling Alarm: " + item.rowID);
+                                        item.alarmtime = Calendar.getInstance().getTimeInMillis() + AlarmSettings.loadPrefAlarmUpcoming(context) + (1000 * 60);  // TODO:
                                         showAlarmEnabledToast(context, item);
 
                                     } else {    // disabled; this alarm should have been dismissed
+                                        Log.d(TAG, "Dismissing Alarm: " + item.rowID);
                                         sendBroadcast(getAlarmIntent(context, ACTION_DISMISS, item.getUri()));
                                         return;
                                     }
@@ -642,7 +643,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 int nextState;
                                 AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener onScheduledState;
 
-                                boolean verySoon = ((alarmTime - now) < AlarmSettings.loadPrefAlarmUpcoming(context));
+                                boolean verySoon = ((item.alarmtime - now) < AlarmSettings.loadPrefAlarmUpcoming(context));
                                 nextState = (verySoon ? AlarmState.STATE_SCHEDULED_SOON : AlarmState.STATE_SCHEDULED_DISTANT);
 
                                 if (item.type == AlarmClockItem.AlarmType.ALARM)
@@ -659,8 +660,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
                                 } else {
                                     Log.i(TAG, "Scheduling Notification: " + item.rowID);
-                                    long alarmAt = Calendar.getInstance().getTimeInMillis() + (1000 * 5);  // TODO: testing .. 5s from now sound alarm
-                                    addAlarmTimeout(context, ACTION_SHOW, item.getUri(), alarmAt);
+                                    addAlarmTimeout(context, ACTION_SHOW, item.getUri(), item.alarmtime);
                                     onScheduledState = null;
                                 }
 
@@ -822,9 +822,8 @@ public class AlarmNotifications extends BroadcastReceiver
                     if (item.type == AlarmClockItem.AlarmType.ALARM)
                     {
                         Log.d(TAG, "State Saved (onScheduledDistant)");
-                        long alarmAt = Calendar.getInstance().getTimeInMillis() + (1000 * 10);  // TODO: testing .. 10s from now sound alarm
-                        addAlarmTimeout(context, ACTION_SHOW, item.getUri(), alarmAt);
-                        // TODO
+                        long transitionAt = item.alarmtime - AlarmSettings.loadPrefAlarmUpcoming(context) + 1000;
+                        addAlarmTimeout(context, ACTION_SCHEDULE, item.getUri(), transitionAt);
                     }
                 }
             };
@@ -842,7 +841,10 @@ public class AlarmNotifications extends BroadcastReceiver
                         Log.d(TAG, "State Saved (onScheduledSoon)");
                         long alarmAt = Calendar.getInstance().getTimeInMillis() + (1000 * 10);  // TODO: testing .. 10s from now sound alarm
                         addAlarmTimeout(context, ACTION_SHOW, item.getUri(), alarmAt);
-                        showNotification(context, item, true);
+
+                        if (AlarmSettings.loadPrefAlarmUpcoming(context) > 0) {
+                            showNotification(context, item, true);             // show upcoming reminder
+                        }
                     }
                 }
             };

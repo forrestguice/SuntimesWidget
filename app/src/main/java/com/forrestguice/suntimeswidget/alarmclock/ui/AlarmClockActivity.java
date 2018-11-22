@@ -1491,6 +1491,7 @@ public class AlarmClockActivity extends AppCompatActivity
         {
             itemView.setBackgroundColor(enabled ? alarmEnabledColor : alarmDisabledColor);
 
+            item.alarmtime = 0;
             item.enabled = enabled;
             item.modified = true;
 
