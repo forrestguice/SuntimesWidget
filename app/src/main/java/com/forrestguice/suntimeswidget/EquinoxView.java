@@ -23,6 +23,7 @@ import android.content.res.TypedArray;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.util.AttributeSet;
@@ -101,7 +102,7 @@ public class EquinoxView extends LinearLayout
     private void init(Context context, AttributeSet attrs)
     {
         initLocale(context);
-        initColors(context);
+        themeViews(context);
         LayoutInflater.from(context).inflate(R.layout.layout_view_equinox, this, true);
 
         if (attrs != null)
@@ -132,22 +133,22 @@ public class EquinoxView extends LinearLayout
             TextView txt_equinox_vernal_label = (TextView) thisYear.findViewById(R.id.text_date_equinox_vernal_label);
             TextView txt_equinox_vernal = (TextView) thisYear.findViewById(R.id.text_date_equinox_vernal);
             TextView txt_equinox_vernal_note = (TextView) thisYear.findViewById(R.id.text_date_equinox_vernal_note);
-            note_equinox_vernal = addNote(txt_equinox_vernal_label, txt_equinox_vernal, txt_equinox_vernal_note, 0 );
+            note_equinox_vernal = addNote(txt_equinox_vernal_label, txt_equinox_vernal, txt_equinox_vernal_note, 0, seasonColors[0]);
 
             TextView txt_solstice_summer_label = (TextView) thisYear.findViewById(R.id.text_date_solstice_summer_label);
             TextView txt_solstice_summer = (TextView) thisYear.findViewById(R.id.text_date_solstice_summer);
             TextView txt_solstice_summer_note = (TextView) thisYear.findViewById(R.id.text_date_solstice_summer_note);
-            note_solstice_summer = addNote(txt_solstice_summer_label, txt_solstice_summer, txt_solstice_summer_note, 0);
+            note_solstice_summer = addNote(txt_solstice_summer_label, txt_solstice_summer, txt_solstice_summer_note, 0, seasonColors[1]);
 
             TextView txt_equinox_autumnal_label = (TextView) thisYear.findViewById(R.id.text_date_equinox_autumnal_label);
             TextView txt_equinox_autumnal = (TextView) thisYear.findViewById(R.id.text_date_equinox_autumnal);
             TextView txt_equinox_autumnal_note = (TextView) thisYear.findViewById(R.id.text_date_equinox_autumnal_note);
-            note_equinox_autumnal = addNote(txt_equinox_autumnal_label, txt_equinox_autumnal, txt_equinox_autumnal_note, 0);
+            note_equinox_autumnal = addNote(txt_equinox_autumnal_label, txt_equinox_autumnal, txt_equinox_autumnal_note, 0, seasonColors[2]);
 
             TextView txt_solstice_winter_label = (TextView) thisYear.findViewById(R.id.text_date_solstice_winter_label);
             TextView txt_solstice_winter = (TextView) thisYear.findViewById(R.id.text_date_solstice_winter);
             TextView txt_solstice_winter_note = (TextView) thisYear.findViewById(R.id.text_date_solstice_winter_note);
-            note_solstice_winter = addNote(txt_solstice_winter_label, txt_solstice_winter, txt_solstice_winter_note, 0);
+            note_solstice_winter = addNote(txt_solstice_winter_label, txt_solstice_winter, txt_solstice_winter_note, 0, seasonColors[3]);
 
             if (centered)
             {
@@ -172,22 +173,22 @@ public class EquinoxView extends LinearLayout
             TextView txt_equinox_vernal2_label = (TextView) nextYear.findViewById(R.id.text_date_equinox_vernal_label);
             TextView txt_equinox_vernal2 = (TextView) nextYear.findViewById(R.id.text_date_equinox_vernal);
             TextView txt_equinox_vernal2_note = (TextView) nextYear.findViewById(R.id.text_date_equinox_vernal_note);
-            note_equinox_vernal2 = addNote(txt_equinox_vernal2_label, txt_equinox_vernal2, txt_equinox_vernal2_note, 1);
+            note_equinox_vernal2 = addNote(txt_equinox_vernal2_label, txt_equinox_vernal2, txt_equinox_vernal2_note, 1, seasonColors[0]);
 
             TextView txt_solstice_summer2_label = (TextView) nextYear.findViewById(R.id.text_date_solstice_summer_label);
             TextView txt_solstice_summer2 = (TextView) nextYear.findViewById(R.id.text_date_solstice_summer);
             TextView txt_solstice_summer2_note = (TextView) nextYear.findViewById(R.id.text_date_solstice_summer_note);
-            note_solstice_summer2 = addNote(txt_solstice_summer2_label, txt_solstice_summer2, txt_solstice_summer2_note, 1);
+            note_solstice_summer2 = addNote(txt_solstice_summer2_label, txt_solstice_summer2, txt_solstice_summer2_note, 1, seasonColors[1]);
 
             TextView txt_equinox_autumnal2_label = (TextView) nextYear.findViewById(R.id.text_date_equinox_autumnal_label);
             TextView txt_equinox_autumnal2 = (TextView) nextYear.findViewById(R.id.text_date_equinox_autumnal);
             TextView txt_equinox_autumnal2_note = (TextView) nextYear.findViewById(R.id.text_date_equinox_autumnal_note);
-            note_equinox_autumnal2 = addNote(txt_equinox_autumnal2_label, txt_equinox_autumnal2, txt_equinox_autumnal2_note, 1);
+            note_equinox_autumnal2 = addNote(txt_equinox_autumnal2_label, txt_equinox_autumnal2, txt_equinox_autumnal2_note, 1, seasonColors[2]);
 
             TextView txt_solstice_winter2_label = (TextView) nextYear.findViewById(R.id.text_date_solstice_winter_label);
             TextView txt_solstice_winter2 = (TextView) nextYear.findViewById(R.id.text_date_solstice_winter);
             TextView txt_solstice_winter2_note = (TextView) nextYear.findViewById(R.id.text_date_solstice_winter_note);
-            note_solstice_winter2 = addNote(txt_solstice_winter2_label, txt_solstice_winter2, txt_solstice_winter2_note, 1);
+            note_solstice_winter2 = addNote(txt_solstice_winter2_label, txt_solstice_winter2, txt_solstice_winter2_note, 1, seasonColors[3]);
 
             if (centered)
             {
@@ -225,21 +226,46 @@ public class EquinoxView extends LinearLayout
         };
     }
 
-    private int noteColor; //, springColor, summerColor, fallColor, winterColor;
+    private int noteColor;
+    private Integer[] seasonColors = new Integer[4];
     private int resID_buttonPressColor;
 
     @SuppressLint("ResourceType")
-    private void initColors(Context context)
+    private void themeViews(Context context)
     {
         int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.buttonPressColor }; //, R.attr.springColor, R.attr.summerColor, R.attr.fallColor, R.attr.winterColor };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         noteColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.transparent));
         resID_buttonPressColor = typedArray.getResourceId(1, R.color.btn_tint_pressed_dark);
-        //springColor = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
-        //summerColor = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
-        //fallColor = ContextCompat.getColor(context, typedArray.getResourceId(3, def));
-        //winterColor = ContextCompat.getColor(context, typedArray.getResourceId(4, def));
+        seasonColors[0] = seasonColors[1] = seasonColors[2] = seasonColors[3] = null;
         typedArray.recycle();
+    }
+
+    public void themeViews(Context context, SuntimesTheme theme)
+    {
+        if (theme != null)
+        {
+            noteColor = theme.getTimeColor();
+            seasonColors[0] = theme.getSpringColor();
+            seasonColors[1] = theme.getSummerColor();
+            seasonColors[2] = theme.getFallColor();
+            seasonColors[3] = theme.getWinterColor();
+
+            if (note_equinox_vernal != null)
+            {
+                note_equinox_vernal.themeViews(seasonColors[0]);
+                note_equinox_vernal2.themeViews(seasonColors[0]);
+
+                note_solstice_summer.themeViews(seasonColors[1]);
+                note_solstice_summer2.themeViews(seasonColors[1]);
+
+                note_equinox_autumnal.themeViews(seasonColors[2]);
+                note_equinox_autumnal2.themeViews(seasonColors[2]);
+
+                note_solstice_winter.themeViews(seasonColors[3]);
+                note_solstice_winter2.themeViews(seasonColors[3]);
+            }
+        }
     }
 
     public void initLocale(Context context)
@@ -258,9 +284,10 @@ public class EquinoxView extends LinearLayout
         anim_card_outPrev = AnimationUtils.loadAnimation(context, R.anim.fade_out);
     }
 
-    private EquinoxNote addNote(TextView labelView, TextView timeView, TextView noteView, int pageIndex)
+    private EquinoxNote addNote(TextView labelView, TextView timeView, TextView noteView, int pageIndex, Integer overrideColor)
     {
         EquinoxNote note = new EquinoxNote(labelView, timeView, noteView, pageIndex);
+        note.themeViews(overrideColor);
         notes.add(note);
         return note;
     }
@@ -346,13 +373,6 @@ public class EquinoxView extends LinearLayout
     {
         empty.setVisibility(show ? View.VISIBLE : View.GONE);
         flipper.setVisibility(show ? View.GONE : View.VISIBLE);
-    }
-
-    public void themeViews(Context context, SuntimesTheme theme)
-    {
-        if (theme != null) {
-            noteColor = theme.getTimeColor();
-        }
     }
 
     protected void updateViews( Context context, SuntimesEquinoxSolsticeDataset data )
@@ -656,6 +676,13 @@ public class EquinoxView extends LinearLayout
             ViewGroup.LayoutParams layoutParams = labelView.getLayoutParams();
             layoutParams.width = labelWidthPx;
             labelView.setLayoutParams(layoutParams);
+        }
+
+        public void themeViews(Integer seasonColor)
+        {
+            if (seasonColor != null) {
+                timeView.setTextColor(seasonColor);
+            } Log.e("EquinoxView", "themeViews: null color, ignoring...");
         }
 
         public void updateDate( Context context, Calendar time )
