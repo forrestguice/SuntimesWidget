@@ -386,6 +386,7 @@ public class SuntimesActivity extends AppCompatActivity
         LightMapDialog lightMapDialog = (LightMapDialog) fragments.findFragmentByTag(DIALOGTAG_LIGHTMAP);
         if (lightMapDialog != null)
         {
+            lightMapDialog.themeViews(this, appThemeOverride);
             lightMapDialog.setData(dataset);
             lightMapDialog.updateViews();
             //Log.d("DEBUG", "LightMapDialog updated on restore.");
@@ -2481,6 +2482,7 @@ public class SuntimesActivity extends AppCompatActivity
     protected void showLightMapDialog()
     {
         final LightMapDialog lightMapDialog = new LightMapDialog();
+        lightMapDialog.themeViews(this, appThemeOverride);
         lightMapDialog.setData(dataset);
         lightMapDialog.show(getSupportFragmentManager(), DIALOGTAG_LIGHTMAP);
     }

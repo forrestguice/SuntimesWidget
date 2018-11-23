@@ -28,6 +28,7 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -42,6 +43,7 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -163,24 +165,37 @@ public class LightMapDialog extends DialogFragment
     @SuppressWarnings("ResourceType")
     public void themeViews(Context context)
     {
-        int[] colorAttrs = { R.attr.graphColor_night,   // 0
-                R.attr.graphColor_astronomical,         // 1
-                R.attr.graphColor_nautical,             // 2
-                R.attr.graphColor_civil,                // 3
-                R.attr.graphColor_day,                  // 4
-                R.attr.sunriseColor,                    // 5
-                R.attr.sunsetColor                      // 6
-        };
-        TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
-        int def = R.color.transparent;
-        colorNight = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
-        colorAstro = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
-        colorNautical = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
-        colorCivil = ContextCompat.getColor(context, typedArray.getResourceId(3, def));
-        colorDay = ContextCompat.getColor(context, typedArray.getResourceId(4, def));
-        colorRising = ContextCompat.getColor(context, typedArray.getResourceId(5, def));
-        colorSetting = ContextCompat.getColor(context, typedArray.getResourceId(6, def));
-        typedArray.recycle();
+        if (themeOverride == null)
+        {
+            int[] colorAttrs = { R.attr.graphColor_night,   // 0
+                    R.attr.graphColor_astronomical,         // 1
+                    R.attr.graphColor_nautical,             // 2
+                    R.attr.graphColor_civil,                // 3
+                    R.attr.graphColor_day,                  // 4
+                    R.attr.sunriseColor,                    // 5
+                    R.attr.sunsetColor                      // 6
+            };
+            TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+            int def = R.color.transparent;
+            colorNight = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
+            colorAstro = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
+            colorNautical = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
+            colorCivil = ContextCompat.getColor(context, typedArray.getResourceId(3, def));
+            colorDay = ContextCompat.getColor(context, typedArray.getResourceId(4, def));
+            colorRising = ContextCompat.getColor(context, typedArray.getResourceId(5, def));
+            colorSetting = ContextCompat.getColor(context, typedArray.getResourceId(6, def));
+            typedArray.recycle();
+
+        } else {
+            lightmap.themeViews(context, themeOverride);
+            colorNight = themeOverride.getNightColor();
+            colorDay = themeOverride.getDayColor();
+            colorAstro = themeOverride.getAstroColor();
+            colorNautical = themeOverride.getNauticalColor();
+            colorCivil = themeOverride.getCivilColor();
+            colorRising = themeOverride.getSunriseTextColor();
+            colorSetting = themeOverride.getSunsetTextColor();
+        }
 
         SuntimesUtils.colorizeImageView(field_night.icon, colorNight);
         SuntimesUtils.colorizeImageView(field_astro.icon, colorAstro);
@@ -189,6 +204,17 @@ public class LightMapDialog extends DialogFragment
         SuntimesUtils.colorizeImageView(field_day.icon, colorDay);
 
         colorLabel = field_night.label.getTextColors().getColorForState(new int[] { -android.R.attr.state_enabled }, Color.BLUE); // field_night.label.getCurrentTextColor()
+    }
+
+    private SuntimesTheme themeOverride = null;
+    public void themeViews(Context context, @Nullable SuntimesTheme theme)
+    {
+        if (theme != null) {
+            themeOverride = theme;
+            if (lightmap != null) {
+                themeViews(context);
+            }
+        }
     }
 
     public void updateViews()
