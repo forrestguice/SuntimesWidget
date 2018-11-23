@@ -35,6 +35,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.graphics.drawable.InsetDrawable;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
@@ -177,7 +178,12 @@ public class SuntimesActivity extends AppCompatActivity
     private ImageButton btn_flipperPrev_tomorrow;
 
     private View sunriseHeader, sunriseHeader2;
+    private TextView header_sunrise,        header_sunrise2;
+    private ImageView icon_sunrise,         icon_sunrise2;
+
     private View sunsetHeader, sunsetHeader2;
+    private TextView header_sunset,         header_sunset2;
+    private ImageView icon_sunset,          icon_sunset2;
 
     private TextView txt_date,              txt_date2;
 
@@ -696,6 +702,8 @@ public class SuntimesActivity extends AppCompatActivity
     }
     protected void themeCardViews(Context context, SuntimesTheme theme)
     {
+        int sunriseTextColor = theme.getSunriseTextColor();
+        int sunsetTextColor = theme.getSunsetTextColor();
         for (SolarEvents.SolarEventField field : timeFields.keySet())
         {
             TextView textView = timeFields.get(field);
@@ -706,28 +714,34 @@ public class SuntimesActivity extends AppCompatActivity
                     case MORNING_ASTRONOMICAL: case MORNING_NAUTICAL: case MORNING_CIVIL:
                     case MORNING_BLUE8: case MORNING_BLUE4:
                     case EVENING_GOLDEN:
-                    case SUNRISE:
-                        textView.setTextColor( theme.getSunriseTextColor() );
+                    case SUNRISE: textView.setTextColor(sunriseTextColor);
                         break;
-
                     case EVENING_ASTRONOMICAL: case EVENING_NAUTICAL: case EVENING_CIVIL:
                     case EVENING_BLUE8: case EVENING_BLUE4:
                     case MORNING_GOLDEN: case NOON:
-                    case SUNSET:
-                        textView.setTextColor( theme.getSunsetTextColor() );
-                        break;
-
-                    case MOONRISE:
-                        textView.setTextColor( theme.getMoonriseTextColor() );
-                        break;
-                    case MOONSET:
-                        textView.setTextColor( theme.getMoonsetTextColor() );
+                    case SUNSET: textView.setTextColor(sunsetTextColor);
                         break;
                 }
             }
         }
 
-        // TODO
+        int sunriseIconColor = theme.getSunriseIconColor();
+        int sunriseIconColor2 = theme.getSunriseIconStrokeColor();
+        int sunriseIconStrokeWidth = theme.getSunriseIconStrokePixels(this);
+        SuntimesUtils.tintDrawable((InsetDrawable)icon_sunrise.getBackground(), sunriseIconColor, sunriseIconColor2, sunriseIconStrokeWidth);
+        SuntimesUtils.tintDrawable((InsetDrawable)icon_sunrise2.getBackground(), sunriseIconColor, sunriseIconColor2, sunriseIconStrokeWidth);
+        header_sunrise.setTextColor(sunriseTextColor);
+        header_sunrise2.setTextColor(sunriseTextColor);
+
+        int sunsetIconColor = theme.getSunsetIconColor();
+        int sunsetIconColor2 = theme.getSunsetIconStrokeColor();
+        int sunsetIconStrokeWidth = theme.getSunsetIconStrokePixels(this);
+        SuntimesUtils.tintDrawable((InsetDrawable)icon_sunset.getBackground(), sunsetIconColor, sunsetIconColor2, sunsetIconStrokeWidth);
+        SuntimesUtils.tintDrawable((InsetDrawable)icon_sunset2.getBackground(), sunsetIconColor, sunsetIconColor2, sunsetIconStrokeWidth);
+        header_sunset.setTextColor(sunsetTextColor);
+        header_sunset2.setTextColor(sunsetTextColor);
+
+        // TODO: theme moon views
     }
     protected void themeEquinoxViews(Context context, SuntimesTheme theme)
     {
@@ -1058,9 +1072,13 @@ public class SuntimesActivity extends AppCompatActivity
 
             sunriseHeader = viewToday.findViewById(R.id.header_time_sunrise);
             sunriseHeader.setOnClickListener(onSunriseClick);
+            header_sunrise = (TextView) viewToday.findViewById(R.id.label_time_sunrise);
+            icon_sunrise = (ImageView) viewToday.findViewById(R.id.icon_time_sunrise);
 
             sunsetHeader = viewToday.findViewById(R.id.header_time_sunset);
             sunsetHeader.setOnClickListener(onSunsetClick);
+            header_sunset = (TextView) viewToday.findViewById(R.id.label_time_sunset);
+            icon_sunset = (ImageView) viewToday.findViewById(R.id.icon_time_sunset);
 
             row_actual = new TimeFieldRow(viewToday, R.id.text_time_label_official, R.id.text_time_sunrise_actual, R.id.text_time_sunset_actual);
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.SUNRISE, false), row_actual.getField(0));
@@ -1143,9 +1161,13 @@ public class SuntimesActivity extends AppCompatActivity
 
             sunriseHeader2 = viewTomorrow.findViewById(R.id.header_time_sunrise);
             sunriseHeader2.setOnClickListener(onSunriseClick);
+            header_sunrise2 = (TextView) viewTomorrow.findViewById(R.id.label_time_sunrise);
+            icon_sunrise2 = (ImageView) viewTomorrow.findViewById(R.id.icon_time_sunrise);
 
             sunsetHeader2 = viewTomorrow.findViewById(R.id.header_time_sunset);
             sunsetHeader2.setOnClickListener(onSunsetClick);
+            header_sunset2 = (TextView) viewTomorrow.findViewById(R.id.label_time_sunset);
+            icon_sunset2 = (ImageView) viewTomorrow.findViewById(R.id.icon_time_sunset);
 
             row_actual2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_official, R.id.text_time_sunrise_actual, R.id.text_time_sunset_actual);
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.SUNRISE, true), row_actual2.getField(0));
