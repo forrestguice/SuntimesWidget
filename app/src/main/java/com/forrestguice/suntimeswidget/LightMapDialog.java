@@ -26,6 +26,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.graphics.drawable.InsetDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -55,6 +56,7 @@ public class LightMapDialog extends DialogFragment
     private View sunLayout;
     private TextView sunAzimuth, sunAzimuthRising, sunAzimuthSetting, sunAzimuthAtNoon;
     private TextView sunElevation, sunElevationAtNoon;
+    private ImageView riseIcon, setIcon;
 
     private LightMapView lightmap;
     private LightMapKey field_night, field_astro, field_nautical, field_civil, field_day;
@@ -160,6 +162,9 @@ public class LightMapDialog extends DialogFragment
         field_nautical = new LightMapKey(dialogView, R.id.info_time_lightmap_key_nautical_icon, R.id.info_time_lightmap_key_nautical_label, R.id.info_time_lightmap_key_nautical_duration);
         field_civil = new LightMapKey(dialogView, R.id.info_time_lightmap_key_civil_icon, R.id.info_time_lightmap_key_civil_label, R.id.info_time_lightmap_key_civil_duration);
         field_day = new LightMapKey(dialogView, R.id.info_time_lightmap_key_day_icon, R.id.info_time_lightmap_key_day_label, R.id.info_time_lightmap_key_day_duration);
+
+        riseIcon = (ImageView)dialogView.findViewById(R.id.sundialog_riseicon);
+        setIcon = (ImageView)dialogView.findViewById(R.id.sundialog_seticon);
     }
 
     @SuppressWarnings("ResourceType")
@@ -195,6 +200,9 @@ public class LightMapDialog extends DialogFragment
             colorCivil = themeOverride.getCivilColor();
             colorRising = themeOverride.getSunriseTextColor();
             colorSetting = themeOverride.getSunsetTextColor();
+
+            SuntimesUtils.tintDrawable((InsetDrawable)riseIcon.getBackground(), themeOverride.getSunriseIconColor(), themeOverride.getSunriseIconStrokeColor(), themeOverride.getSunriseIconStrokePixels(context));
+            SuntimesUtils.tintDrawable((InsetDrawable)setIcon.getBackground(), themeOverride.getSunsetIconColor(), themeOverride.getSunsetIconStrokeColor(), themeOverride.getSunsetIconStrokePixels(context));
         }
 
         SuntimesUtils.colorizeImageView(field_night.icon, colorNight);

@@ -128,6 +128,8 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         colors.colorAstro = theme.getAstroColor();
         colors.colorNautical = theme.getNauticalColor();
         colors.colorCivil = theme.getCivilColor();
+        colors.colorPointFill = theme.getNoonIconColor();
+        colors.colorPointStroke = theme.getNoonIconStrokeColor();
     }
 
     /**
