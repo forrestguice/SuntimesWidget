@@ -201,6 +201,16 @@ public class LightMapDialog extends DialogFragment
             colorRising = themeOverride.getSunriseTextColor();
             colorSetting = themeOverride.getSunsetTextColor();
 
+            field_astro.themeViews(themeOverride);
+            field_nautical.themeViews(themeOverride);
+            field_civil.themeViews(themeOverride);
+            field_day.themeViews(themeOverride);
+            field_night.themeViews(themeOverride);
+
+            sunAzimuth.setTextColor(themeOverride.getTimeColor());
+            sunElevation.setTextColor(themeOverride.getTimeColor());
+            sunAzimuthAtNoon.setTextColor(themeOverride.getTimeColor());
+
             SuntimesUtils.tintDrawable((InsetDrawable)riseIcon.getBackground(), themeOverride.getSunriseIconColor(), themeOverride.getSunriseIconStrokeColor(), themeOverride.getSunriseIconStrokePixels(context));
             SuntimesUtils.tintDrawable((InsetDrawable)setIcon.getBackground(), themeOverride.getSunsetIconColor(), themeOverride.getSunsetIconStrokeColor(), themeOverride.getSunsetIconStrokePixels(context));
         }
@@ -420,6 +430,13 @@ public class LightMapDialog extends DialogFragment
             text = (TextView)parent.findViewById(durationRes);
         }
 
+        public void themeViews(SuntimesTheme theme)
+        {
+            if (theme != null) {
+                text.setTextColor(theme.getTimeColor());
+            }
+        }
+
         public void setVisible(boolean visible)
         {
             int visibility = (visible ? View.VISIBLE : View.GONE);
@@ -534,8 +551,7 @@ public class LightMapDialog extends DialogFragment
         ArrayList<LightMapKeyInfo> info = new ArrayList<>();
         for (int i=0; i<durations.length; i++)
         {
-            if (durations[i] != 0)
-            {
+            if (durations[i] != 0) {
                 info.add(new LightMapKeyInfo(durations[i], 0));
             }
         }
