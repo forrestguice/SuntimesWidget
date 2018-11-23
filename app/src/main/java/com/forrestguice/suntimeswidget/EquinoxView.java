@@ -44,6 +44,7 @@ import android.widget.ViewFlipper;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -345,6 +346,11 @@ public class EquinoxView extends LinearLayout
     {
         empty.setVisibility(show ? View.VISIBLE : View.GONE);
         flipper.setVisibility(show ? View.GONE : View.VISIBLE);
+    }
+
+    public void themeViews(Context context, SuntimesTheme theme)
+    {
+        // TODO
     }
 
     protected void updateViews( Context context, SuntimesEquinoxSolsticeDataset data )

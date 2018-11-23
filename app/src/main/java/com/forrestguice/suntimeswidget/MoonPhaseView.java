@@ -33,6 +33,7 @@ import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.text.NumberFormat;
 
@@ -124,6 +125,11 @@ public class MoonPhaseView extends LinearLayout
         isRtl = AppSettings.isLocaleRtl(context);
         SuntimesUtils.initDisplayStrings(context);
         MoonPhaseDisplay.initDisplayStrings(context);
+    }
+
+    public void themeViews(Context context, SuntimesTheme theme)
+    {
+        // TODO
     }
 
     protected void updateViews( Context context, SuntimesMoonData data )

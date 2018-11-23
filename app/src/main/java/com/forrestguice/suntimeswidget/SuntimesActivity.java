@@ -687,7 +687,7 @@ public class SuntimesActivity extends AppCompatActivity
             themeClockViews(context, appThemeOverride);
             themeNoteViews(context, appThemeOverride);
             themeCardViews(context, appThemeOverride);
-            themeEquinoxViews(context, appThemeOverride);
+            card_equinoxSolstice.themeViews(context, appThemeOverride);
             lightmap.themeViews(context, appThemeOverride);
             themeMisc(context, appThemeOverride);
         }
@@ -741,12 +741,13 @@ public class SuntimesActivity extends AppCompatActivity
         header_sunset.setTextColor(sunsetTextColor);
         header_sunset2.setTextColor(sunsetTextColor);
 
-        // TODO: theme moon views
+        moonrise.themeViews(context, theme);
+        moonphase.themeViews(context, theme);
+
+        moonrise2.themeViews(context, theme);
+        moonphase2.themeViews(context, theme);
     }
-    protected void themeEquinoxViews(Context context, SuntimesTheme theme)
-    {
-        // TODO
-    }
+
     protected void themeMisc(Context context, SuntimesTheme theme)
     {
         // TODO

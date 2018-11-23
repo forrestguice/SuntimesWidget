@@ -33,6 +33,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -150,6 +151,11 @@ public class MoonRiseSetView extends LinearLayout
     {
         SuntimesUtils.initDisplayStrings(context);
         //isRtl = AppSettings.isLocaleRtl(context);
+    }
+
+    public void themeViews(Context context, SuntimesTheme theme)
+    {
+        // TODO
     }
 
     protected void updateViews( Context context, SuntimesMoonData data )
