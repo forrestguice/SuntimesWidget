@@ -350,7 +350,9 @@ public class EquinoxView extends LinearLayout
 
     public void themeViews(Context context, SuntimesTheme theme)
     {
-        // TODO
+        if (theme != null) {
+            noteColor = theme.getTimeColor();
+        }
     }
 
     protected void updateViews( Context context, SuntimesEquinoxSolsticeDataset data )
