@@ -222,6 +222,7 @@ public class SuntimesActivity extends AppCompatActivity
     private boolean isRtl = false;
     private boolean userSwappedCard = false;
     private HashMap<SolarEvents.SolarEventField, TextView> timeFields;
+    private ArrayList<TimeFieldRow> rows = new ArrayList<>();
 
     private boolean showWarnings = false;
     private SuntimesWarning timezoneWarning;
@@ -745,6 +746,11 @@ public class SuntimesActivity extends AppCompatActivity
             }
         }
 
+        int labelColor = theme.getTimeColor();
+        for (TimeFieldRow row : rows) {
+            row.label.setTextColor(labelColor);
+        }
+
         int sunriseIconColor = theme.getSunriseIconColor();
         int sunriseIconColor2 = theme.getSunriseIconStrokeColor();
         int sunriseIconStrokeWidth = theme.getSunriseIconStrokePixels(this);
@@ -1092,34 +1098,34 @@ public class SuntimesActivity extends AppCompatActivity
             header_sunset = (TextView) viewToday.findViewById(R.id.label_time_sunset);
             icon_sunset = (ImageView) viewToday.findViewById(R.id.icon_time_sunset);
 
-            row_actual = new TimeFieldRow(viewToday, R.id.text_time_label_official, R.id.text_time_sunrise_actual, R.id.text_time_sunset_actual);
+            rows.add(row_actual = new TimeFieldRow(viewToday, R.id.text_time_label_official, R.id.text_time_sunrise_actual, R.id.text_time_sunset_actual));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.SUNRISE, false), row_actual.getField(0));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.SUNSET, false), row_actual.getField(1));
 
-            row_civil = new TimeFieldRow(viewToday, R.id.text_time_label_civil, R.id.text_time_sunrise_civil, R.id.text_time_sunset_civil);
+            rows.add(row_civil = new TimeFieldRow(viewToday, R.id.text_time_label_civil, R.id.text_time_sunrise_civil, R.id.text_time_sunset_civil));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_CIVIL, false), row_civil.getField(0));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_CIVIL, false), row_civil.getField(1));
 
-            row_nautical = new TimeFieldRow(viewToday, R.id.text_time_label_nautical, R.id.text_time_sunrise_nautical, R.id.text_time_sunset_nautical);
+            rows.add(row_nautical = new TimeFieldRow(viewToday, R.id.text_time_label_nautical, R.id.text_time_sunrise_nautical, R.id.text_time_sunset_nautical));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_NAUTICAL, false), row_nautical.getField(0));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_NAUTICAL, false), row_nautical.getField(1));
 
-            row_astro = new TimeFieldRow(viewToday, R.id.text_time_label_astro, R.id.text_time_sunrise_astro, R.id.text_time_sunset_astro);
+            rows.add(row_astro = new TimeFieldRow(viewToday, R.id.text_time_label_astro, R.id.text_time_sunrise_astro, R.id.text_time_sunset_astro));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_ASTRONOMICAL, false), row_astro.getField(0));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_ASTRONOMICAL, false), row_astro.getField(1));
 
-            row_solarnoon = new TimeFieldRow(viewToday, R.id.text_time_label_noon, R.id.text_time_noon);
+            rows.add(row_solarnoon = new TimeFieldRow(viewToday, R.id.text_time_label_noon, R.id.text_time_noon));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.NOON, false), row_solarnoon.getField(0));
 
-            row_gold = new TimeFieldRow(viewToday, R.id.text_time_label_golden, R.id.text_time_golden_morning, R.id.text_time_golden_evening);
+            rows.add(row_gold = new TimeFieldRow(viewToday, R.id.text_time_label_golden, R.id.text_time_golden_morning, R.id.text_time_golden_evening));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_GOLDEN, false), row_gold.getField(0));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_GOLDEN, false), row_gold.getField(1));
 
-            row_blue8 = new TimeFieldRow(viewToday, R.id.text_time_label_blue8, R.id.text_time_blue8_morning, R.id.text_time_blue8_evening);
+            rows.add(row_blue8 = new TimeFieldRow(viewToday, R.id.text_time_label_blue8, R.id.text_time_blue8_morning, R.id.text_time_blue8_evening));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_BLUE8, false), row_blue8.getField(0));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_BLUE8, false), row_blue8.getField(1));
 
-            row_blue4 = new TimeFieldRow(viewToday, R.id.text_time_label_blue4, R.id.text_time_blue4_morning, R.id.text_time_blue4_evening);
+            rows.add(row_blue4 = new TimeFieldRow(viewToday, R.id.text_time_label_blue4, R.id.text_time_blue4_morning, R.id.text_time_blue4_evening));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_BLUE4, false), row_blue4.getField(0));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_BLUE4, false), row_blue4.getField(1));
 
@@ -1181,34 +1187,34 @@ public class SuntimesActivity extends AppCompatActivity
             header_sunset2 = (TextView) viewTomorrow.findViewById(R.id.label_time_sunset);
             icon_sunset2 = (ImageView) viewTomorrow.findViewById(R.id.icon_time_sunset);
 
-            row_actual2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_official, R.id.text_time_sunrise_actual, R.id.text_time_sunset_actual);
+            rows.add(row_actual2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_official, R.id.text_time_sunrise_actual, R.id.text_time_sunset_actual));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.SUNRISE, true), row_actual2.getField(0));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.SUNSET, true), row_actual2.getField(1));
 
-            row_civil2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_civil, R.id.text_time_sunrise_civil, R.id.text_time_sunset_civil);
+            rows.add(row_civil2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_civil, R.id.text_time_sunrise_civil, R.id.text_time_sunset_civil));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_CIVIL, true), row_civil2.getField(0));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_CIVIL, true), row_civil2.getField(1));
 
-            row_nautical2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_nautical, R.id.text_time_sunrise_nautical, R.id.text_time_sunset_nautical);
+            rows.add(row_nautical2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_nautical, R.id.text_time_sunrise_nautical, R.id.text_time_sunset_nautical));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_NAUTICAL, true), row_nautical2.getField(0));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_NAUTICAL, true), row_nautical2.getField(1));
 
-            row_astro2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_astro, R.id.text_time_sunrise_astro, R.id.text_time_sunset_astro);
+            rows.add(row_astro2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_astro, R.id.text_time_sunrise_astro, R.id.text_time_sunset_astro));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_ASTRONOMICAL, true), row_astro2.getField(0));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_ASTRONOMICAL, true), row_astro2.getField(1));
 
-            row_solarnoon2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_noon, R.id.text_time_noon);
+            rows.add(row_solarnoon2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_noon, R.id.text_time_noon));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.NOON, true), row_solarnoon2.getField(0));
 
-            row_gold2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_golden, R.id.text_time_golden_morning, R.id.text_time_golden_evening);
+            rows.add(row_gold2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_golden, R.id.text_time_golden_morning, R.id.text_time_golden_evening));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_GOLDEN, true), row_gold2.getField(0));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_GOLDEN, true), row_gold2.getField(1));
 
-            row_blue8_2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_blue8, R.id.text_time_blue8_morning, R.id.text_time_blue8_evening);
+            rows.add(row_blue8_2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_blue8, R.id.text_time_blue8_morning, R.id.text_time_blue8_evening));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_BLUE8, true), row_blue8_2.getField(0));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_BLUE8, true), row_blue8_2.getField(1));
 
-            row_blue4_2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_blue4, R.id.text_time_blue4_morning, R.id.text_time_blue4_evening);
+            rows.add(row_blue4_2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_blue4, R.id.text_time_blue4_morning, R.id.text_time_blue4_evening));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_BLUE4, true), row_blue4_2.getField(0));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_BLUE4, true), row_blue4_2.getField(1));
 
