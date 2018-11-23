@@ -131,10 +131,10 @@ public class MoonPhaseView extends LinearLayout
     {
         noteColor = theme.getTimeColor();
         int textColor = theme.getTextColor();
-        phaseText.setTextColor(textColor);
         illumText.setTextColor(textColor);
         azimuthText.setTextColor(textColor);
         elevationText.setTextColor(textColor);
+        phaseText.setTextColor(theme.getTimeColor());
 
         // TODO: phase icons
     }
