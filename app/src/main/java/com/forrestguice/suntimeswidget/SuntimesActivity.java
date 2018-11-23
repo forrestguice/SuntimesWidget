@@ -255,6 +255,7 @@ public class SuntimesActivity extends AppCompatActivity
         initLocale(this);  // must follow super.onCreate or locale is reverted
         setContentView(R.layout.layout_main);
         initViews(context);
+        themeViews(context);
 
         initWarnings(context, savedState);
 
@@ -667,6 +668,79 @@ public class SuntimesActivity extends AppCompatActivity
             }
         }
     };
+
+    /**
+     * Override the appearance of views if appThemeOverride is defined.
+     * @param context Context
+     */
+    protected void themeViews(Context context)
+    {
+        if (appThemeOverride != null)
+        {
+            Log.i("themeViews", "Applying theme: " + appThemeOverride.themeName());
+            themeClockViews(context, appThemeOverride);
+            themeNoteViews(context, appThemeOverride);
+            themeCardViews(context, appThemeOverride);
+            themeEquinoxViews(context, appThemeOverride);
+            themeLightMap(context, appThemeOverride);
+            themeMisc(context, appThemeOverride);
+        }
+    }
+    protected void themeClockViews(Context context, SuntimesTheme theme)
+    {
+        // TODO
+    }
+    protected void themeNoteViews(Context context, SuntimesTheme theme)
+    {
+        // TODO
+    }
+    protected void themeCardViews(Context context, SuntimesTheme theme)
+    {
+        for (SolarEvents.SolarEventField field : timeFields.keySet())
+        {
+            TextView textView = timeFields.get(field);
+            if (textView != null)
+            {
+                switch (field.event)
+                {
+                    case MORNING_ASTRONOMICAL: case MORNING_NAUTICAL: case MORNING_CIVIL:
+                    case MORNING_BLUE8: case MORNING_BLUE4:
+                    case EVENING_GOLDEN:
+                    case SUNRISE:
+                        textView.setTextColor( theme.getSunriseTextColor() );
+                        break;
+
+                    case EVENING_ASTRONOMICAL: case EVENING_NAUTICAL: case EVENING_CIVIL:
+                    case EVENING_BLUE8: case EVENING_BLUE4:
+                    case MORNING_GOLDEN: case NOON:
+                    case SUNSET:
+                        textView.setTextColor( theme.getSunsetTextColor() );
+                        break;
+
+                    case MOONRISE:
+                        textView.setTextColor( theme.getMoonriseTextColor() );
+                        break;
+                    case MOONSET:
+                        textView.setTextColor( theme.getMoonsetTextColor() );
+                        break;
+                }
+            }
+        }
+
+        // TODO
+    }
+    protected void themeEquinoxViews(Context context, SuntimesTheme theme)
+    {
+        // TODO
+    }
+    protected void themeLightMap(Context context, SuntimesTheme theme)
+    {
+        // TODO
+    }
+    protected void themeMisc(Context context, SuntimesTheme theme)
+    {
+        // TODO
+    }
 
     /**
      * initialize ui/views
