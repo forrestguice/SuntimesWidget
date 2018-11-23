@@ -19,6 +19,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.text.SpannableString;
@@ -26,6 +27,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -104,10 +106,10 @@ public class MoonRiseSetView extends LinearLayout
         content = (LinearLayout)findViewById(R.id.moonriseset_layout);
 
         f.clear();
-        f.add(risingTextField = new MoonRiseSetField(R.id.moonrise_layout , R.id.text_time_moonrise, R.id.text_info_moonrise));
-        f.add(settingTextField = new MoonRiseSetField(R.id.moonset_layout, R.id.text_time_moonset, R.id.text_info_moonset));
-        f.add(risingTextField1 = new MoonRiseSetField(R.id.moonrise_layout1 , R.id.text_time_moonrise1, R.id.text_info_moonrise1));
-        f.add(settingTextField1 = new MoonRiseSetField(R.id.moonset_layout1, R.id.text_time_moonset1, R.id.text_info_moonset1));
+        f.add(risingTextField = new MoonRiseSetField(R.id.moonrise_layout, R.id.icon_time_moonrise, R.id.text_time_moonrise, R.id.text_info_moonrise, true));
+        f.add(settingTextField = new MoonRiseSetField(R.id.moonset_layout, R.id.icon_time_moonset, R.id.text_time_moonset, R.id.text_info_moonset, false));
+        f.add(risingTextField1 = new MoonRiseSetField(R.id.moonrise_layout1, R.id.icon_time_moonrise1, R.id.text_time_moonrise1, R.id.text_info_moonrise1, true));
+        f.add(settingTextField1 = new MoonRiseSetField(R.id.moonset_layout1, R.id.icon_time_moonset1, R.id.text_time_moonset1, R.id.text_info_moonset1, false));
 
         divider = findViewById(R.id.divider_moon1);
 
@@ -155,7 +157,9 @@ public class MoonRiseSetView extends LinearLayout
 
     public void themeViews(Context context, SuntimesTheme theme)
     {
-        // TODO
+        for (MoonRiseSetField field : f) {
+            field.themeView(theme);
+        }
     }
 
     protected void updateViews( Context context, SuntimesMoonData data )
@@ -409,14 +413,26 @@ public class MoonRiseSetView extends LinearLayout
     private class MoonRiseSetField
     {
         protected View layout;
+        protected ImageView iconView;
         protected TextView timeView;
         protected TextView positionView;
+        protected boolean rising;
 
-        public MoonRiseSetField(int layoutID, int timeViewID, int positionViewID)
+        public MoonRiseSetField(int layoutID, int iconViewID, int timeViewID, int positionViewID, boolean risingState)
         {
             layout = findViewById(layoutID);
+            iconView = (ImageView)findViewById(iconViewID);
             timeView = (TextView)findViewById(timeViewID);
             positionView = (TextView)findViewById(positionViewID);
+            rising = risingState;
+        }
+
+        public void themeView(SuntimesTheme theme)
+        {
+            int color = (rising ? theme.getMoonriseTextColor() : theme.getMoonsetTextColor());
+            timeView.setTextColor(color);
+            positionView.setTextColor(color);
+            SuntimesUtils.tintDrawable((LayerDrawable)iconView.getBackground(), color, color, 0);
         }
 
         public void updateField(String timeText)
