@@ -43,6 +43,7 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -219,6 +220,21 @@ public class WorldMapDialog extends DialogFragment
     @SuppressWarnings("ResourceType")
     public void themeViews(Context context)
     {
+        if (themeOverride != null) {
+            worldmap.themeViews(context, themeOverride);
+        }
+    }
+
+    private SuntimesTheme themeOverride = null;
+    public void themeViews(Context context, SuntimesTheme theme)
+    {
+        if (theme != null)
+        {
+            themeOverride = theme;
+            if (worldmap != null) {
+                themeViews(context);
+            }
+        }
     }
 
     public void updateOptions(Context context)

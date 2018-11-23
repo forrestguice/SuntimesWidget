@@ -395,6 +395,7 @@ public class SuntimesActivity extends AppCompatActivity
         WorldMapDialog worldMapDialog = (WorldMapDialog) fragments.findFragmentByTag(DIALOGTAG_WORLDMAP);
         if (worldMapDialog != null)
         {
+            worldMapDialog.themeViews(this, appThemeOverride);
             worldMapDialog.setData(dataset);
             worldMapDialog.updateViews();
             //Log.d("DEBUG", "WorldMapDialog updated on restore.");
@@ -2490,6 +2491,7 @@ public class SuntimesActivity extends AppCompatActivity
     protected void showWorldMapDialog()
     {
         WorldMapDialog worldMapDialog = new WorldMapDialog();
+        worldMapDialog.themeViews(this, appThemeOverride);
         worldMapDialog.setData(dataset);
         worldMapDialog.show(getSupportFragmentManager(), DIALOGTAG_WORLDMAP);
     }
