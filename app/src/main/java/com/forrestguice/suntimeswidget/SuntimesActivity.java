@@ -688,7 +688,7 @@ public class SuntimesActivity extends AppCompatActivity
             themeNoteViews(context, appThemeOverride);
             themeCardViews(context, appThemeOverride);
             themeEquinoxViews(context, appThemeOverride);
-            themeLightMap(context, appThemeOverride);
+            lightmap.themeViews(context, appThemeOverride);
             themeMisc(context, appThemeOverride);
         }
     }
@@ -744,10 +744,6 @@ public class SuntimesActivity extends AppCompatActivity
         // TODO: theme moon views
     }
     protected void themeEquinoxViews(Context context, SuntimesTheme theme)
-    {
-        // TODO
-    }
-    protected void themeLightMap(Context context, SuntimesTheme theme)
     {
         // TODO
     }
