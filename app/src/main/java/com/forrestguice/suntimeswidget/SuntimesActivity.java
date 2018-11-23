@@ -284,7 +284,7 @@ public class SuntimesActivity extends AppCompatActivity
         appTheme = AppSettings.loadThemePref(this);
         setTheme(appThemeResID = AppSettings.themePrefToStyleId(this, appTheme, null));
 
-        String themeOverride = (appTheme.equals(AppSettings.THEME_LIGHT) ? AppSettings.loadThemeLightPref(this) : AppSettings.loadThemeDarkPref(this));
+        String themeOverride = ((appThemeResID == R.style.AppTheme_Light) ? AppSettings.loadThemeLightPref(this) : AppSettings.loadThemeDarkPref(this));
         if (themeOverride != null && !themeOverride.equals("default"))
         {
             Log.i("initTheme", "Overriding \"" + appTheme + "\" using: " + themeOverride);
