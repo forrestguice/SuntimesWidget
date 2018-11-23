@@ -697,7 +697,9 @@ public class SuntimesActivity extends AppCompatActivity
     }
     protected void themeClockViews(Context context, SuntimesTheme theme)
     {
-        // TODO
+        int timeColor = theme.getTimeColor();
+        txt_time.setTextColor(timeColor);
+        txt_time_suffix.setTextColor(timeColor);
     }
     protected void themeNoteViews(Context context, SuntimesTheme theme)
     {
