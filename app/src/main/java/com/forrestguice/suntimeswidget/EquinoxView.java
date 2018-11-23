@@ -19,11 +19,11 @@ package com.forrestguice.suntimeswidget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.util.AttributeSet;
@@ -226,18 +226,20 @@ public class EquinoxView extends LinearLayout
         };
     }
 
-    private int noteColor;
+    private int noteColor, disabledColor;
     private Integer[] seasonColors = new Integer[4];
+    private Integer labelColor, textColor;
     private int resID_buttonPressColor;
 
     @SuppressLint("ResourceType")
     private void themeViews(Context context)
     {
-        int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.buttonPressColor }; //, R.attr.springColor, R.attr.summerColor, R.attr.fallColor, R.attr.winterColor };
+        int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.text_disabledColor, R.attr.buttonPressColor };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         noteColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.transparent));
-        resID_buttonPressColor = typedArray.getResourceId(1, R.color.btn_tint_pressed_dark);
-        seasonColors[0] = seasonColors[1] = seasonColors[2] = seasonColors[3] = null;
+        disabledColor = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.text_disabled_dark));
+        resID_buttonPressColor = typedArray.getResourceId(2, R.color.btn_tint_pressed_dark);
+        labelColor = textColor = seasonColors[0] = seasonColors[1] = seasonColors[2] = seasonColors[3] = null;
         typedArray.recycle();
     }
 
@@ -246,6 +248,8 @@ public class EquinoxView extends LinearLayout
         if (theme != null)
         {
             noteColor = theme.getTimeColor();
+            textColor = theme.getTextColor();
+            //labelColor = noteColor;
             seasonColors[0] = theme.getSpringColor();
             seasonColors[1] = theme.getSummerColor();
             seasonColors[2] = theme.getFallColor();
@@ -253,17 +257,17 @@ public class EquinoxView extends LinearLayout
 
             if (note_equinox_vernal != null)
             {
-                note_equinox_vernal.themeViews(seasonColors[0]);
-                note_equinox_vernal2.themeViews(seasonColors[0]);
+                note_equinox_vernal.themeViews(labelColor, seasonColors[0], textColor);
+                note_equinox_vernal2.themeViews(labelColor, seasonColors[0], textColor);
 
-                note_solstice_summer.themeViews(seasonColors[1]);
-                note_solstice_summer2.themeViews(seasonColors[1]);
+                note_solstice_summer.themeViews(labelColor, seasonColors[1], textColor);
+                note_solstice_summer2.themeViews(labelColor, seasonColors[1], textColor);
 
-                note_equinox_autumnal.themeViews(seasonColors[2]);
-                note_equinox_autumnal2.themeViews(seasonColors[2]);
+                note_equinox_autumnal.themeViews(labelColor, seasonColors[2], textColor);
+                note_equinox_autumnal2.themeViews(labelColor, seasonColors[2], textColor);
 
-                note_solstice_winter.themeViews(seasonColors[3]);
-                note_solstice_winter2.themeViews(seasonColors[3]);
+                note_solstice_winter.themeViews(labelColor, seasonColors[3], textColor);
+                note_solstice_winter2.themeViews(labelColor, seasonColors[3], textColor);
             }
         }
     }
@@ -284,10 +288,10 @@ public class EquinoxView extends LinearLayout
         anim_card_outPrev = AnimationUtils.loadAnimation(context, R.anim.fade_out);
     }
 
-    private EquinoxNote addNote(TextView labelView, TextView timeView, TextView noteView, int pageIndex, Integer overrideColor)
+    private EquinoxNote addNote(TextView labelView, TextView timeView, TextView noteView, int pageIndex, Integer timeColor)
     {
         EquinoxNote note = new EquinoxNote(labelView, timeView, noteView, pageIndex);
-        note.themeViews(overrideColor);
+        note.themeViews(labelColor, timeColor, textColor);
         notes.add(note);
         return note;
     }
@@ -678,11 +682,27 @@ public class EquinoxView extends LinearLayout
             labelView.setLayoutParams(layoutParams);
         }
 
-        public void themeViews(Integer seasonColor)
+        public void themeViews(Integer labelColor, Integer timeColor, Integer textColor)
         {
-            if (seasonColor != null) {
-                timeView.setTextColor(seasonColor);
+            if (labelColor != null) {
+                labelView.setTextColor(colorStateList(labelColor, disabledColor));
             } Log.e("EquinoxView", "themeViews: null color, ignoring...");
+
+            if (timeColor != null) {
+                timeView.setTextColor(colorStateList(timeColor, disabledColor));
+            } Log.e("EquinoxView", "themeViews: null color, ignoring...");
+
+            if (textColor != null) {
+                noteView.setTextColor(colorStateList(textColor, disabledColor));
+            } Log.e("EquinoxView", "themeViews: null color, ignoring...");
+        }
+
+        private ColorStateList colorStateList(int enabledColor, int disabledColor)
+        {
+            return new ColorStateList(
+                    new int[][] { new int[] { android.R.attr.state_enabled}, new int[] {-android.R.attr.state_enabled}},
+                    new int[] {enabledColor, disabledColor}
+            );
         }
 
         public void updateDate( Context context, Calendar time )
