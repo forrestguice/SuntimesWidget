@@ -248,8 +248,8 @@ public class EquinoxView extends LinearLayout
         if (theme != null)
         {
             noteColor = theme.getTimeColor();
+            labelColor = theme.getTitleColor();
             textColor = theme.getTextColor();
-            //labelColor = noteColor;
             seasonColors[0] = theme.getSpringColor();
             seasonColors[1] = theme.getSummerColor();
             seasonColors[2] = theme.getFallColor();
@@ -291,7 +291,9 @@ public class EquinoxView extends LinearLayout
     private EquinoxNote addNote(TextView labelView, TextView timeView, TextView noteView, int pageIndex, Integer timeColor)
     {
         EquinoxNote note = new EquinoxNote(labelView, timeView, noteView, pageIndex);
-        note.themeViews(labelColor, timeColor, textColor);
+        if (timeColor != null) {
+            note.themeViews(labelColor, timeColor, textColor);
+        }
         notes.add(note);
         return note;
     }
@@ -686,15 +688,15 @@ public class EquinoxView extends LinearLayout
         {
             if (labelColor != null) {
                 labelView.setTextColor(colorStateList(labelColor, disabledColor));
-            } Log.e("EquinoxView", "themeViews: null color, ignoring...");
+            } else Log.e("EquinoxView", "themeViews: null color, ignoring...");
 
             if (timeColor != null) {
                 timeView.setTextColor(colorStateList(timeColor, disabledColor));
-            } Log.e("EquinoxView", "themeViews: null color, ignoring...");
+            } else Log.e("EquinoxView", "themeViews: null color, ignoring...");
 
             if (textColor != null) {
                 noteView.setTextColor(colorStateList(textColor, disabledColor));
-            } Log.e("EquinoxView", "themeViews: null color, ignoring...");
+            } else Log.e("EquinoxView", "themeViews: null color, ignoring...");
         }
 
         private ColorStateList colorStateList(int enabledColor, int disabledColor)

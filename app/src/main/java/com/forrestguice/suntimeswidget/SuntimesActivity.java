@@ -746,7 +746,7 @@ public class SuntimesActivity extends AppCompatActivity
             }
         }
 
-        int labelColor = theme.getTimeColor();
+        int labelColor = theme.getTitleColor();
         for (TimeFieldRow row : rows) {
             row.label.setTextColor(labelColor);
         }
@@ -772,6 +772,9 @@ public class SuntimesActivity extends AppCompatActivity
 
         moonphase.themeViews(context, theme);
         moonphase2.themeViews(context, theme);
+
+        moonlabel.setTextColor(labelColor);
+        moonlabel2.setTextColor(labelColor);
     }
 
     /**
