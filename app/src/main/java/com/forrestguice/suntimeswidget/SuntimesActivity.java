@@ -689,7 +689,6 @@ public class SuntimesActivity extends AppCompatActivity
             themeCardViews(context, appThemeOverride);
             card_equinoxSolstice.themeViews(context, appThemeOverride);
             lightmap.themeViews(context, appThemeOverride);
-            themeMisc(context, appThemeOverride);
         }
     }
     protected void themeClockViews(Context context, SuntimesTheme theme)
@@ -702,6 +701,8 @@ public class SuntimesActivity extends AppCompatActivity
     }
     protected void themeCardViews(Context context, SuntimesTheme theme)
     {
+        color_textTimeDelta = theme.getTimeColor();
+
         int sunriseTextColor = theme.getSunriseTextColor();
         int sunsetTextColor = theme.getSunsetTextColor();
         for (SolarEvents.SolarEventField field : timeFields.keySet())
@@ -742,15 +743,10 @@ public class SuntimesActivity extends AppCompatActivity
         header_sunset2.setTextColor(sunsetTextColor);
 
         moonrise.themeViews(context, theme);
-        moonphase.themeViews(context, theme);
-
         moonrise2.themeViews(context, theme);
-        moonphase2.themeViews(context, theme);
-    }
 
-    protected void themeMisc(Context context, SuntimesTheme theme)
-    {
-        // TODO
+        moonphase.themeViews(context, theme);
+        moonphase2.themeViews(context, theme);
     }
 
     /**

@@ -129,7 +129,14 @@ public class MoonPhaseView extends LinearLayout
 
     public void themeViews(Context context, SuntimesTheme theme)
     {
-        // TODO
+        noteColor = theme.getTimeColor();
+        int textColor = theme.getTextColor();
+        phaseText.setTextColor(textColor);
+        illumText.setTextColor(textColor);
+        azimuthText.setTextColor(textColor);
+        elevationText.setTextColor(textColor);
+
+        // TODO: phase icons
     }
 
     protected void updateViews( Context context, SuntimesMoonData data )
