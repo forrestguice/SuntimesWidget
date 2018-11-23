@@ -32,6 +32,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 public class MoonDialog extends DialogFragment
 {
@@ -74,6 +75,7 @@ public class MoonDialog extends DialogFragment
         }
 
         dialog.setOnShowListener(onShowListener);
+        themeViews(getContext());
         return dialog;
     }
 
@@ -98,6 +100,26 @@ public class MoonDialog extends DialogFragment
         Context context = dialogView.getContext();
         if (context != null) {
             currentphase.adjustColumnWidth(context.getResources().getDimensionPixelSize(R.dimen.moonphase_column0_width));
+        }
+    }
+
+    public void themeViews(Context context)
+    {
+        if (themeOverride != null) {
+            moonriseset.themeViews(context, themeOverride);
+            currentphase.themeViews(context, themeOverride);
+            moonphases.themeViews(context, themeOverride);
+        }
+    }
+
+    private SuntimesTheme themeOverride = null;
+    public void themeViews(Context context, SuntimesTheme theme)
+    {
+        if (theme != null) {
+            themeOverride = theme;
+            if (moonriseset != null) {
+                themeViews(context);
+            }
         }
     }
 

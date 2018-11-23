@@ -36,6 +36,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.Calendar;
 
@@ -72,6 +73,11 @@ public class MoonPhasesView extends LinearLayout
             a.recycle();
         }
     }*/
+
+    public void themeViews(Context context, SuntimesTheme theme)
+    {
+        // TODO
+    }
 
     private void init(Context context, AttributeSet attrs)
     {

@@ -412,6 +412,7 @@ public class SuntimesActivity extends AppCompatActivity
         MoonDialog moonDialog = (MoonDialog) fragments.findFragmentByTag(DIALOGTAG_MOON);
         if (moonDialog != null)
         {
+            moonDialog.themeViews(this, appThemeOverride);
             moonDialog.setData((dataset3 != null) ? dataset3 : new SuntimesMoonData(SuntimesActivity.this, 0, "moon"));
             moonDialog.updateViews();
             //Log.d("DEBUG", "MoonDialog updated on restore.");
@@ -2511,6 +2512,7 @@ public class SuntimesActivity extends AppCompatActivity
     protected void showMoonDialog()
     {
         MoonDialog moonDialog = new MoonDialog();
+        moonDialog.themeViews(this, appThemeOverride);
         moonDialog.setData((dataset3 != null) ? dataset3 : new SuntimesMoonData(SuntimesActivity.this, 0, "moon"));
         moonDialog.show(getSupportFragmentManager(), DIALOGTAG_MOON);
     }
