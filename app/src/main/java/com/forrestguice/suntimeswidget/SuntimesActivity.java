@@ -36,6 +36,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.InsetDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
@@ -695,19 +696,31 @@ public class SuntimesActivity extends AppCompatActivity
             lightmap.themeViews(context, appThemeOverride);
         }
     }
-    protected void themeClockViews(Context context, SuntimesTheme theme)
+    protected void themeClockViews(Context context, @NonNull SuntimesTheme theme)
     {
         int timeColor = theme.getTimeColor();
         txt_time.setTextColor(timeColor);
         txt_time_suffix.setTextColor(timeColor);
     }
-    protected void themeNoteViews(Context context, SuntimesTheme theme)
+    protected void themeNoteViews(Context context, @NonNull SuntimesTheme theme)
     {
-        // TODO
+        int timeColor = theme.getTimeColor();
+        txt_time1_note1.setTextColor(timeColor);
+        txt_time2_note1.setTextColor(timeColor);
+
+        int textColor = theme.getTextColor();
+        txt_time1_note2.setTextColor(textColor);
+        txt_time2_note2.setTextColor(textColor);
     }
-    protected void themeCardViews(Context context, SuntimesTheme theme)
+    protected void themeCardViews(Context context, @NonNull SuntimesTheme theme)
     {
         color_textTimeDelta = theme.getTimeColor();
+
+        int textColor = theme.getTextColor();
+        txt_daylength.setTextColor(textColor);
+        txt_daylength2.setTextColor(textColor);
+        txt_lightlength.setTextColor(textColor);
+        txt_lightlength2.setTextColor(textColor);
 
         int sunriseTextColor = theme.getSunriseTextColor();
         int sunsetTextColor = theme.getSunsetTextColor();
@@ -1317,6 +1330,7 @@ public class SuntimesActivity extends AppCompatActivity
     private void initNotes()
     {
         notes = new SuntimesNotes();
+        notes.themeViews(this, appThemeOverride);
         notes.init(this, dataset, dataset3);
         notes.setOnChangedListener(new NoteChangedListener()
         {
@@ -2703,6 +2717,9 @@ public class SuntimesActivity extends AppCompatActivity
         {
             // currently using view1, ready view2
             ic_time2_note.setBackgroundResource(note.noteIconResource);
+            if (appThemeOverride != null) {
+                SuntimesUtils.tintDrawable(ic_time2_note.getBackground(), note.noteColor, note.noteColor2, note.noteIconStroke);
+            }
             adjustNoteIconSize(note, ic_time2_note);
             ic_time2_note.setVisibility(View.VISIBLE);
             txt_time2_note1.setText(note.timeText.toString());
@@ -2714,6 +2731,9 @@ public class SuntimesActivity extends AppCompatActivity
         } else {
             // currently using view2, ready view1
             ic_time1_note.setBackgroundResource(note.noteIconResource);
+            if (appThemeOverride != null) {
+                SuntimesUtils.tintDrawable(ic_time1_note.getBackground(), note.noteColor, note.noteColor2, note.noteIconStroke);
+            }
             adjustNoteIconSize(note, ic_time1_note);
             ic_time1_note.setVisibility(View.VISIBLE);
             txt_time1_note1.setText(note.timeText.toString());
