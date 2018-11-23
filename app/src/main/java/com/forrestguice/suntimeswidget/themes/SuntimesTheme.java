@@ -615,11 +615,9 @@ public class SuntimesTheme
 
     public int getSunriseIconStrokePixels(Context context)
     {
-        //if (themeSunriseIconStrokePixels == -1)
-        //{
-            DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-            themeSunriseIconStrokePixels = (int)((metrics.density * getSunriseIconStrokeWidth()) + 0.5f);
-        //}
+        int strokeWidth = getSunriseIconStrokeWidth();
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        themeSunriseIconStrokePixels = (strokeWidth > 0 ? (int)((metrics.density * getSunriseIconStrokeWidth()) + 0.5f) : 0);
         return themeSunriseIconStrokePixels;
     }
 
@@ -646,11 +644,9 @@ public class SuntimesTheme
 
     public int getNoonIconStrokePixels(Context context)
     {
-        //if (themeNoonIconStrokePixels == -1)
-        //{
-            DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-            themeNoonIconStrokePixels = (int)((metrics.density * getNoonIconStrokeWidth()) + 0.5f);
-        //}
+        int strokeWidth = getNoonIconStrokeWidth();
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        themeNoonIconStrokePixels = (strokeWidth > 0 ? (int)((metrics.density * strokeWidth) + 0.5f) : 0);
         return themeNoonIconStrokePixels;
     }
 
@@ -707,11 +703,9 @@ public class SuntimesTheme
 
     public int getSunsetIconStrokePixels(Context context)
     {
-        //if (themeSunsetIconStrokePixels == -1)
-        //{
-            DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-            themeSunsetIconStrokePixels = (int)((metrics.density * getSunsetIconStrokeWidth()) + 0.5f);
-        //}
+        int strokeWidth = getSunsetIconStrokeWidth();
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        themeSunsetIconStrokePixels = (strokeWidth > 0 ? (int)((metrics.density * strokeWidth) + 0.5f) : 0);
         return themeSunsetIconStrokePixels;
     }
 
@@ -723,8 +717,9 @@ public class SuntimesTheme
 
     public int getMoonFullStrokePixels(Context context)
     {
+        int strokeWidth = getMoonFullStroke();
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-        themeMoonFullStrokePixels = (int)((metrics.density * getMoonFullStroke()) + 0.5f);
+        themeMoonFullStrokePixels = (strokeWidth > 0 ? (int)((metrics.density * strokeWidth) + 0.5f) : 0);
         return themeMoonFullStrokePixels;
     }
 
@@ -736,8 +731,9 @@ public class SuntimesTheme
 
     public int getMoonNewStrokePixels(Context context)
     {
+        int strokeWidth = getMoonNewStroke();
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-        themeMoonNewStrokePixels = (int)((metrics.density * getMoonNewStroke()) + 0.5f);
+        themeMoonNewStrokePixels = (strokeWidth > 0 ? (int)((metrics.density * strokeWidth) + 0.5f) : 0);
         return themeMoonNewStrokePixels;
     }
 
