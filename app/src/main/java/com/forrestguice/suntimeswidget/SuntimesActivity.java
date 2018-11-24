@@ -690,29 +690,28 @@ public class SuntimesActivity extends AppCompatActivity
         if (appThemeOverride != null)
         {
             Log.i("themeViews", "Applying theme: " + appThemeOverride.themeName());
-            themeClockViews(context, appThemeOverride);
-            themeNoteViews(context, appThemeOverride);
+            int titleColor = appThemeOverride.getTitleColor();
+            int timeColor = appThemeOverride.getTimeColor();
+            int textColor = appThemeOverride.getTextColor();
+
+            Toolbar actionBar = (Toolbar) findViewById(R.id.app_menubar);
+            actionBar.setTitleTextColor(titleColor);
+            actionBar.setSubtitleTextColor(textColor);
+
+            txt_time.setTextColor(timeColor);
+            txt_time_suffix.setTextColor(timeColor);
+
+            txt_time1_note1.setTextColor(timeColor);
+            txt_time1_note2.setTextColor(textColor);
+            txt_time2_note1.setTextColor(timeColor);
+            txt_time2_note2.setTextColor(textColor);
+
             themeCardViews(context, appThemeOverride);
             card_equinoxSolstice.themeViews(context, appThemeOverride);
             lightmap.themeViews(context, appThemeOverride);
         }
     }
-    protected void themeClockViews(Context context, @NonNull SuntimesTheme theme)
-    {
-        int timeColor = theme.getTimeColor();
-        txt_time.setTextColor(timeColor);
-        txt_time_suffix.setTextColor(timeColor);
-    }
-    protected void themeNoteViews(Context context, @NonNull SuntimesTheme theme)
-    {
-        int timeColor = theme.getTimeColor();
-        txt_time1_note1.setTextColor(timeColor);
-        txt_time2_note1.setTextColor(timeColor);
 
-        int textColor = theme.getTextColor();
-        txt_time1_note2.setTextColor(textColor);
-        txt_time2_note2.setTextColor(textColor);
-    }
     protected void themeCardViews(Context context, @NonNull SuntimesTheme theme)
     {
         color_textTimeDelta = theme.getTimeColor();
