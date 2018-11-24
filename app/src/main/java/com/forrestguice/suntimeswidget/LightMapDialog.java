@@ -55,8 +55,8 @@ public class LightMapDialog extends DialogFragment
 
     private TextView dialogTitle;
     private View sunLayout;
-    private TextView sunAzimuth, sunAzimuthRising, sunAzimuthSetting, sunAzimuthAtNoon;
-    private TextView sunElevation, sunElevationAtNoon;
+    private TextView sunAzimuth, sunAzimuthRising, sunAzimuthSetting, sunAzimuthAtNoon, sunAzimuthLabel;
+    private TextView sunElevation, sunElevationAtNoon, sunElevationLabel;
     private ImageView riseIcon, setIcon;
 
     private LightMapView lightmap;
@@ -153,11 +153,13 @@ public class LightMapDialog extends DialogFragment
         sunLayout = dialogView.findViewById(R.id.info_sun_layout);
         sunElevation = (TextView)dialogView.findViewById(R.id.info_sun_elevation_current);
         sunElevationAtNoon = (TextView)dialogView.findViewById(R.id.info_sun_elevation_atnoon);
+        sunElevationLabel = (TextView)dialogView.findViewById(R.id.info_sun_elevation_current_label);
 
         sunAzimuth = (TextView)dialogView.findViewById(R.id.info_sun_azimuth_current);
         sunAzimuthRising = (TextView)dialogView.findViewById(R.id.info_sun_azimuth_rising);
         sunAzimuthAtNoon = (TextView)dialogView.findViewById(R.id.info_sun_azimuth_atnoon);
         sunAzimuthSetting = (TextView)dialogView.findViewById(R.id.info_sun_azimuth_setting);
+        sunAzimuthLabel = (TextView)dialogView.findViewById(R.id.info_sun_azimuth_current_label);
 
         field_night = new LightMapKey(dialogView, R.id.info_time_lightmap_key_night_icon, R.id.info_time_lightmap_key_night_label, R.id.info_time_lightmap_key_night_duration);
         field_astro = new LightMapKey(dialogView, R.id.info_time_lightmap_key_astro_icon, R.id.info_time_lightmap_key_astro_label, R.id.info_time_lightmap_key_astro_duration);
@@ -194,7 +196,11 @@ public class LightMapDialog extends DialogFragment
             typedArray.recycle();
 
         } else {
-            dialogTitle.setTextColor(themeOverride.getTitleColor());
+            int titleColor = themeOverride.getTitleColor();
+            dialogTitle.setTextColor(titleColor);
+            sunElevationLabel.setTextColor(titleColor);
+            sunAzimuthLabel.setTextColor(titleColor);
+
             lightmap.themeViews(context, themeOverride);
             colorNight = themeOverride.getNightColor();
             colorDay = themeOverride.getDayColor();
