@@ -150,7 +150,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     private int color_textTimeDelta;
     private int resID_noonIcon;
-    private int resID_buttonPressColor;
+    private int resID_buttonPressColor, resID_buttonDisabledColor;
 
     // clock views
     private TextView txt_time;
@@ -292,10 +292,11 @@ public class SuntimesActivity extends AppCompatActivity
             appThemeOverride = WidgetThemes.loadTheme(this, themeOverride);
         }
 
-        int[] attrs = new int[] { R.attr.sunnoonIcon, R.attr.buttonPressColor };
+        int[] attrs = new int[] { R.attr.sunnoonIcon, R.attr.buttonPressColor, R.attr.text_disabledColor };
         TypedArray a = obtainStyledAttributes(attrs);
         resID_noonIcon = a.getResourceId(0, R.drawable.ic_noon_large);
         resID_buttonPressColor = a.getResourceId(1, R.color.btn_tint_pressed_dark);
+        resID_buttonDisabledColor = a.getResourceId(2, R.color.text_disabled_dark);
         a.recycle();
 
         GetFixUI.themeIcons(this);
@@ -693,6 +694,8 @@ public class SuntimesActivity extends AppCompatActivity
             int titleColor = appThemeOverride.getTitleColor();
             int timeColor = appThemeOverride.getTimeColor();
             int textColor = appThemeOverride.getTextColor();
+            int disabledColor = ContextCompat.getColor(context, resID_buttonDisabledColor);
+            int pressedColor = ContextCompat.getColor(context, resID_buttonPressColor);
 
             Toolbar actionBar = (Toolbar) findViewById(R.id.app_menubar);
             actionBar.setTitleTextColor(titleColor);
@@ -700,11 +703,14 @@ public class SuntimesActivity extends AppCompatActivity
 
             txt_time.setTextColor(timeColor);
             txt_time_suffix.setTextColor(timeColor);
+            txt_timezone.setTextColor(SuntimesUtils.colorStateList(textColor, disabledColor, pressedColor));
 
             txt_time1_note1.setTextColor(timeColor);
             txt_time1_note2.setTextColor(textColor);
             txt_time2_note1.setTextColor(timeColor);
             txt_time2_note2.setTextColor(textColor);
+
+            txt_datasource.setTextColor(SuntimesUtils.colorStateList(textColor, disabledColor, pressedColor));
 
             themeCardViews(context, appThemeOverride);
             card_equinoxSolstice.themeViews(context, appThemeOverride);
