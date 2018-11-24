@@ -49,7 +49,7 @@ public class DarkTheme extends SuntimesTheme
     public static final int THEMEDEF_MOONFULL_STROKEWIDTH = 2;
     public static final int THEMEDEF_MOONNEW_STROKEWIDTH = 2;
 
-    public static final int THEMEDEF_TITLECOLOR_ID = android.R.color.tertiary_text_dark;
+    public static final int THEMEDEF_TITLECOLOR_ID = android.R.color.white;
     public static final int THEMEDEF_TEXTCOLOR_ID = android.R.color.tertiary_text_dark;
     public static final int THEMEDEF_SUNRISECOLOR_ID = R.color.sunIcon_color_rising_dark;
     public static final int THEMEDEF_SUNSETCOLOR_ID = R.color.sunIcon_color_setting_dark;
