@@ -441,7 +441,9 @@ public class LightMapDialog extends DialogFragment
 
         public void themeViews(SuntimesTheme theme)
         {
-            if (theme != null) {
+            if (theme != null)
+            {
+                label.setTextColor(theme.getTextColor());
                 text.setTextColor(theme.getTimeColor());
             }
         }
