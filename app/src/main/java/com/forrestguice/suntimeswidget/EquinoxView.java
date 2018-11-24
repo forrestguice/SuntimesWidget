@@ -123,7 +123,6 @@ public class EquinoxView extends LinearLayout
         {
             btn_flipperNext_thisYear = (ImageButton)thisYear.findViewById(R.id.info_time_nextbtn);
             btn_flipperNext_thisYear.setOnClickListener(onNextCardClick);
-            btn_flipperNext_thisYear.setOnTouchListener(createButtonListener(btn_flipperNext_thisYear));
 
             btn_flipperPrev_thisYear = (ImageButton)thisYear.findViewById(R.id.info_time_prevbtn);
             btn_flipperPrev_thisYear.setVisibility(View.GONE);
@@ -166,7 +165,6 @@ public class EquinoxView extends LinearLayout
 
             btn_flipperPrev_nextYear = (ImageButton)nextYear.findViewById(R.id.info_time_prevbtn);
             btn_flipperPrev_nextYear.setOnClickListener(onPrevCardClick);
-            btn_flipperPrev_nextYear.setOnTouchListener(createButtonListener(btn_flipperPrev_nextYear));
 
             titleNextYear = (TextView) nextYear.findViewById(R.id.text_title);
 
@@ -204,29 +202,7 @@ public class EquinoxView extends LinearLayout
         }
     }
 
-    private View.OnTouchListener createButtonListener(final ImageButton button)
-    {
-        return new View.OnTouchListener()
-        {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent)
-            {
-                if (button != null)
-                {
-                    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN)
-                    {
-                        button.setColorFilter(ContextCompat.getColor(getContext(), resID_buttonPressColor));
-                        performClick();
-                    } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                        button.setColorFilter(null);
-                    }
-                }
-                return false;
-            }
-        };
-    }
-
-    private int noteColor, disabledColor;
+    private int noteColor, disabledColor, pressedColor;
     private Integer[] seasonColors = new Integer[4];
     private Integer labelColor, textColor;
     private int resID_buttonPressColor;
@@ -239,6 +215,7 @@ public class EquinoxView extends LinearLayout
         noteColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.transparent));
         disabledColor = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.text_disabled_dark));
         resID_buttonPressColor = typedArray.getResourceId(2, R.color.btn_tint_pressed_dark);
+        pressedColor = ContextCompat.getColor(context, resID_buttonPressColor);
         labelColor = textColor = seasonColors[0] = seasonColors[1] = seasonColors[2] = seasonColors[3] = null;
         typedArray.recycle();
     }
@@ -257,6 +234,10 @@ public class EquinoxView extends LinearLayout
 
             if (note_equinox_vernal != null)
             {
+                int titleColor = theme.getTitleColor();
+                titleThisYear.setTextColor(colorStateList(titleColor, disabledColor, pressedColor));
+                titleNextYear.setTextColor(colorStateList(titleColor, disabledColor, pressedColor));
+
                 note_equinox_vernal.themeViews(labelColor, seasonColors[0], textColor);
                 note_equinox_vernal2.themeViews(labelColor, seasonColors[0], textColor);
 
@@ -644,6 +625,25 @@ public class EquinoxView extends LinearLayout
         }
     }
 
+    public static ColorStateList colorStateList(int enabledColor, int disabledColor)
+    {
+        return new ColorStateList(
+                new int[][] { new int[] { android.R.attr.state_enabled}, new int[] {-android.R.attr.state_enabled}},
+                new int[] {enabledColor, disabledColor}
+        );
+    }
+
+    public ColorStateList colorStateList(int enabledColor, int disabledColor, int pressedColor)
+    {
+        return new ColorStateList(
+                new int[][] { new int[] { android.R.attr.state_pressed},
+                        new int[] { android.R.attr.state_focused},
+                        new int[] {-android.R.attr.state_enabled},
+                        new int[] {} },
+                new int[] {pressedColor, enabledColor, disabledColor, enabledColor}
+        );
+    }
+
     /**
      * EquinoxNote
      */
@@ -697,14 +697,6 @@ public class EquinoxView extends LinearLayout
             if (textColor != null) {
                 noteView.setTextColor(colorStateList(textColor, disabledColor));
             } else Log.e("EquinoxView", "themeViews: null color, ignoring...");
-        }
-
-        private ColorStateList colorStateList(int enabledColor, int disabledColor)
-        {
-            return new ColorStateList(
-                    new int[][] { new int[] { android.R.attr.state_enabled}, new int[] {-android.R.attr.state_enabled}},
-                    new int[] {enabledColor, disabledColor}
-            );
         }
 
         public void updateDate( Context context, Calendar time )
