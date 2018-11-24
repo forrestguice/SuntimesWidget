@@ -53,6 +53,7 @@ public class LightMapDialog extends DialogFragment
 {
     private static SuntimesUtils utils = new SuntimesUtils();
 
+    private TextView dialogTitle;
     private View sunLayout;
     private TextView sunAzimuth, sunAzimuthRising, sunAzimuthSetting, sunAzimuthAtNoon;
     private TextView sunElevation, sunElevationAtNoon;
@@ -146,6 +147,7 @@ public class LightMapDialog extends DialogFragment
 
     public void initViews(View dialogView)
     {
+        dialogTitle = (TextView)dialogView.findViewById(R.id.sundialog_title);
         lightmap = (LightMapView)dialogView.findViewById(R.id.info_time_lightmap);
 
         sunLayout = dialogView.findViewById(R.id.info_sun_layout);
@@ -192,6 +194,7 @@ public class LightMapDialog extends DialogFragment
             typedArray.recycle();
 
         } else {
+            dialogTitle.setTextColor(themeOverride.getTitleColor());
             lightmap.themeViews(context, themeOverride);
             colorNight = themeOverride.getNightColor();
             colorDay = themeOverride.getDayColor();

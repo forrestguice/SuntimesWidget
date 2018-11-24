@@ -60,6 +60,7 @@ public class WorldMapDialog extends DialogFragment
 
     public static final String LOGTAG = "WorldMapDialog";
 
+    private TextView dialogTitle;
     private WorldMapView worldmap;
     private View dialogContent = null;
     private TextView utcTime;
@@ -160,6 +161,7 @@ public class WorldMapDialog extends DialogFragment
 
     public void initViews(Context context, View dialogView)
     {
+        dialogTitle = (TextView)dialogView.findViewById(R.id.worldmapdialog_title);
         utcTime = (TextView)dialogView.findViewById(R.id.info_time_utc);
         worldmap = (WorldMapView)dialogView.findViewById(R.id.info_time_worldmap);
         worldmap.setOnLongClickListener(new View.OnLongClickListener()
@@ -220,7 +222,9 @@ public class WorldMapDialog extends DialogFragment
     @SuppressWarnings("ResourceType")
     public void themeViews(Context context)
     {
-        if (themeOverride != null) {
+        if (themeOverride != null)
+        {
+            dialogTitle.setTextColor(themeOverride.getTitleColor());
             worldmap.themeViews(context, themeOverride);
         }
     }
