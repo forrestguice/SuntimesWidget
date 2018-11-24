@@ -235,8 +235,8 @@ public class EquinoxView extends LinearLayout
             if (note_equinox_vernal != null)
             {
                 int titleColor = theme.getTitleColor();
-                titleThisYear.setTextColor(colorStateList(titleColor, disabledColor, pressedColor));
-                titleNextYear.setTextColor(colorStateList(titleColor, disabledColor, pressedColor));
+                titleThisYear.setTextColor(SuntimesUtils.colorStateList(titleColor, disabledColor, pressedColor));
+                titleNextYear.setTextColor(SuntimesUtils.colorStateList(titleColor, disabledColor, pressedColor));
 
                 note_equinox_vernal.themeViews(labelColor, seasonColors[0], textColor);
                 note_equinox_vernal2.themeViews(labelColor, seasonColors[0], textColor);
@@ -625,25 +625,6 @@ public class EquinoxView extends LinearLayout
         }
     }
 
-    public static ColorStateList colorStateList(int enabledColor, int disabledColor)
-    {
-        return new ColorStateList(
-                new int[][] { new int[] { android.R.attr.state_enabled}, new int[] {-android.R.attr.state_enabled}},
-                new int[] {enabledColor, disabledColor}
-        );
-    }
-
-    public ColorStateList colorStateList(int enabledColor, int disabledColor, int pressedColor)
-    {
-        return new ColorStateList(
-                new int[][] { new int[] { android.R.attr.state_pressed},
-                        new int[] { android.R.attr.state_focused},
-                        new int[] {-android.R.attr.state_enabled},
-                        new int[] {} },
-                new int[] {pressedColor, enabledColor, disabledColor, enabledColor}
-        );
-    }
-
     /**
      * EquinoxNote
      */
@@ -687,15 +668,15 @@ public class EquinoxView extends LinearLayout
         public void themeViews(Integer labelColor, Integer timeColor, Integer textColor)
         {
             if (labelColor != null) {
-                labelView.setTextColor(colorStateList(labelColor, disabledColor));
+                labelView.setTextColor(SuntimesUtils.colorStateList(labelColor, disabledColor));
             } else Log.e("EquinoxView", "themeViews: null color, ignoring...");
 
             if (timeColor != null) {
-                timeView.setTextColor(colorStateList(timeColor, disabledColor));
+                timeView.setTextColor(SuntimesUtils.colorStateList(timeColor, disabledColor));
             } else Log.e("EquinoxView", "themeViews: null color, ignoring...");
 
             if (textColor != null) {
-                noteView.setTextColor(colorStateList(textColor, disabledColor));
+                noteView.setTextColor(SuntimesUtils.colorStateList(textColor, disabledColor));
             } else Log.e("EquinoxView", "themeViews: null color, ignoring...");
         }
 
