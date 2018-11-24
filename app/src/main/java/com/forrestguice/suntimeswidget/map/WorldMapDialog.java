@@ -225,6 +225,7 @@ public class WorldMapDialog extends DialogFragment
         if (themeOverride != null)
         {
             dialogTitle.setTextColor(themeOverride.getTitleColor());
+            utcTime.setTextColor(themeOverride.getTimeColor());
             worldmap.themeViews(context, themeOverride);
         }
     }
