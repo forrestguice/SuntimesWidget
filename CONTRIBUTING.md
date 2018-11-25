@@ -57,9 +57,12 @@ When submitting a bug **please be detailed and specific**. What did you expect t
 note: The lat/lon should use `.` as the decimal separator and include 4 decimal places.
 
 
-## Add a data source
+## Add a plugin (or addon)
 <a name="addDataSource" />
-The app uses an interface (`suntimeswidget.calculator.SuntimesCalculator`) to perform the actual calculations (the default implementation uses `sunrisesunsetlib-java`). TODO: describe how to add alternative implementations.
+Data sources can be added to the app by implementing the `SuntimesCalculator` interface.
+It is also possible to access Suntimes data from a separate "addon" app through a ContentProvider.
+
+[https://github.com/forrestguice/SuntimesWidget/wiki/Interfaces](https://github.com/forrestguice/SuntimesWidget/wiki/Interfaces)
 
 ## Other
 <a name="other" />
