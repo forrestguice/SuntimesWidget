@@ -711,6 +711,7 @@ public class SuntimesActivity extends AppCompatActivity
             txt_time2_note2.setTextColor(textColor);
 
             txt_datasource.setTextColor(SuntimesUtils.colorStateList(textColor, disabledColor, pressedColor));
+            txt_altitude.setTextColor(timeColor);
 
             themeCardViews(context, appThemeOverride);
             card_equinoxSolstice.themeViews(context, appThemeOverride);
