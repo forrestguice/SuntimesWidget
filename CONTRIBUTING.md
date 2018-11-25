@@ -60,7 +60,8 @@ note: The lat/lon should use `.` as the decimal separator and include 4 decimal 
 ## Add a plugin (or addon)
 <a name="addDataSource" />
 Data sources can be added to the app by implementing the `SuntimesCalculator` interface.
-It is also possible to access Suntimes data from a separate "addon" app through a ContentProvider.
+
+It is also possible to access Suntimes data from a separate "addon" app by using a ContentProvider.
 
 [https://github.com/forrestguice/SuntimesWidget/wiki/Interfaces](https://github.com/forrestguice/SuntimesWidget/wiki/Interfaces)
 
