@@ -1198,6 +1198,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         initPref_ui_themeOverride(overrideTheme_dark, this, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
         loadPref_ui_themeOverride(overrideTheme_dark, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK, this);
 
+        updatePref_ui_themeOverride(AppSettings.loadThemePref(this), overrideTheme_dark, overrideTheme_light);
+
         Preference manageThemes = findPreference("app_appearance_theme_manage");
         if (manageThemes != null) {
             manageThemes.setOnPreferenceClickListener(onManageThemesClick(this));
@@ -1223,6 +1225,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         ListPreference overrideTheme_dark = (ListPreference)fragment.findPreference(AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
         initPref_ui_themeOverride(overrideTheme_dark, fragment.getActivity(), AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
         loadPref_ui_themeOverride(overrideTheme_dark, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK, fragment.getActivity());
+
+        updatePref_ui_themeOverride(AppSettings.loadThemePref(fragment.getActivity()), overrideTheme_dark, overrideTheme_light);
 
         Preference manageThemes = fragment.findPreference("app_appearance_theme_manage");
         if (manageThemes != null) {
@@ -1308,6 +1312,12 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 listPref.setValueIndex(0);
             }
         }
+    }
+
+    private static void updatePref_ui_themeOverride(String mode, ListPreference darkPref, ListPreference lightPref)
+    {
+        darkPref.setEnabled(AppSettings.THEME_DARK.equals(mode) || AppSettings.THEME_DAYNIGHT.equals(mode));
+        lightPref.setEnabled(AppSettings.THEME_LIGHT.equals(mode) || AppSettings.THEME_DAYNIGHT.equals(mode));
     }
 
     //////////////////////////////////////////////////

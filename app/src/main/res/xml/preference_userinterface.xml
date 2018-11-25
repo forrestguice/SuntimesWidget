@@ -6,7 +6,7 @@
 
         <com.forrestguice.suntimeswidget.settings.ListPreference
             android:key="app_appearance_theme"
-            android:title="@string/configLabel_appearance_theme"
+            android:title="@string/configLabel_appearance_mode"
             android:dialogTitle="@string/configLabel_appearance_theme"
             android:summary="%s"
             android:entries="@array/appThemes_display" android:entryValues="@array/appThemes_values"
