@@ -15,14 +15,14 @@
         <com.forrestguice.suntimeswidget.settings.ThemePreference
             android:key="app_appearance_theme_light"
             android:title="@string/appThemes_lightTheme"
-            android:dialogTitle="@string/configLabel_appearance_theme"
+            android:dialogTitle="@string/appThemes_lightTheme"
             android:widgetLayout="@layout/layout_pref_themewidget"
             android:summary="%s" />
 
         <com.forrestguice.suntimeswidget.settings.ThemePreference
             android:key="app_appearance_theme_dark"
             android:title="@string/appThemes_darkTheme"
-            android:dialogTitle="@string/configLabel_appearance_theme"
+            android:dialogTitle="@string/appThemes_darkTheme"
             android:widgetLayout="@layout/layout_pref_themewidget"
             android:summary="%s" />
 
