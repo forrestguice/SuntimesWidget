@@ -285,11 +285,11 @@ public class SuntimesActivity extends AppCompatActivity
         appTheme = AppSettings.loadThemePref(this);
         setTheme(appThemeResID = AppSettings.themePrefToStyleId(this, appTheme, null));
 
-        String themeOverride = ((appThemeResID == R.style.AppTheme_Light) ? AppSettings.loadThemeLightPref(this) : AppSettings.loadThemeDarkPref(this));
-        if (themeOverride != null && !themeOverride.equals("default"))
+        String themeName = getThemeOverride();
+        if (themeName != null)
         {
-            Log.i("initTheme", "Overriding \"" + appTheme + "\" using: " + themeOverride);
-            appThemeOverride = WidgetThemes.loadTheme(this, themeOverride);
+            Log.i("initTheme", "Overriding \"" + appTheme + "\" using: " + themeName);
+            appThemeOverride = WidgetThemes.loadTheme(this, themeName);
         }
 
         int[] attrs = new int[] { R.attr.sunnoonIcon, R.attr.buttonPressColor, R.attr.text_disabledColor };
@@ -300,6 +300,11 @@ public class SuntimesActivity extends AppCompatActivity
         a.recycle();
 
         GetFixUI.themeIcons(this);
+    }
+    private String getThemeOverride()
+    {
+        String themeOverride = ((appThemeResID == R.style.AppTheme_Light) ? AppSettings.loadThemeLightPref(this) : AppSettings.loadThemeDarkPref(this));
+        return ((themeOverride != null && !themeOverride.equals("default")) ? themeOverride : null);
     }
 
     private void initLocale( Context context )
@@ -652,9 +657,10 @@ public class SuntimesActivity extends AppCompatActivity
     {
         if (requestCode == SUNTIMES_SETTINGS_REQUEST && resultCode == RESULT_OK)
         {
-            boolean needsRecreate = ((!AppSettings.loadThemePref(SuntimesActivity.this).equals(appTheme))       // theme changed
-                    || (localeInfo.localeMode != AppSettings.loadLocaleModePref(SuntimesActivity.this))         // or localeMode changed
-                    || ((localeInfo.localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE                             // or customLocale changed
+            boolean needsRecreate = ((!AppSettings.loadThemePref(SuntimesActivity.this).equals(appTheme))                           // theme mode changed
+                    || (appThemeOverride != null && !appThemeOverride.themeName().equals(getThemeOverride()))                       // or theme override changed
+                    || (localeInfo.localeMode != AppSettings.loadLocaleModePref(SuntimesActivity.this))                             // or localeMode changed
+                    || ((localeInfo.localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE                                              // or customLocale changed
                     && !AppSettings.loadLocalePref(SuntimesActivity.this).equals(localeInfo.customLocale))));
 
             if (needsRecreate)
