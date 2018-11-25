@@ -12,23 +12,19 @@
             android:entries="@array/appThemes_display" android:entryValues="@array/appThemes_values"
             android:defaultValue="@string/def_app_appearance_theme"/>
 
-        <com.forrestguice.suntimeswidget.settings.ListPreference
+        <com.forrestguice.suntimeswidget.settings.ThemePreference
             android:key="app_appearance_theme_light"
-
             android:title="@string/appThemes_lightTheme"
             android:dialogTitle="@string/configLabel_appearance_theme"
+            android:widgetLayout="@layout/layout_pref_themewidget"
             android:summary="%s" />
 
-        <com.forrestguice.suntimeswidget.settings.ListPreference
+        <com.forrestguice.suntimeswidget.settings.ThemePreference
             android:key="app_appearance_theme_dark"
             android:title="@string/appThemes_darkTheme"
             android:dialogTitle="@string/configLabel_appearance_theme"
+            android:widgetLayout="@layout/layout_pref_themewidget"
             android:summary="%s" />
-
-        <Preference
-            android:key="app_appearance_theme_manage"
-            android:icon="?attr/icActionAppearance"
-            android:title="@string/configAction_configThemes" />
 
     </PreferenceCategory>
 
