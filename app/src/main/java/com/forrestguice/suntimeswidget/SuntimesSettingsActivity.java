@@ -69,6 +69,9 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_APPEARANCE_THEME_DARK;
+import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT;
+
 /**
  * A preferences activity for the main app;
  * @see SuntimesConfigActivity0 for widget configuration.
@@ -87,7 +90,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     public static final int REQUEST_CALENDARPREFSFRAGMENT_ENABLED = 2;
     public static final int REQUEST_CALENDARPREFSFRAGMENT_DISABLED = 4;
 
-    public static final int REQUEST_THEMELIST = 12;
+    public static final int REQUEST_PICKTHEME_LIGHT = 20;
+    public static final int REQUEST_PICKTHEME_DARK = 30;
 
     private Context context;
     private PlacesPrefsBase placesPrefBase = null;
@@ -123,10 +127,28 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if (requestCode == REQUEST_THEMELIST)
+        Log.d(LOG_TAG, "onActivityResult: " + requestCode + " (" + resultCode + ")");
+        if (requestCode == REQUEST_PICKTHEME_LIGHT || requestCode == REQUEST_PICKTHEME_DARK) {
+            onPickTheme(requestCode, resultCode, data);
+        }
+    }
+
+    private void onPickTheme(int requestCode, int resultCode, Intent data)
+    {
+        if (resultCode == RESULT_OK)
         {
-            Log.d(LOG_TAG, "onActivityResult: " + requestCode + " (" + resultCode + ")");
-            if (resultCode == RESULT_OK) {
+            String selection = data.getStringExtra(SuntimesTheme.THEME_NAME);
+            boolean adapterModified = data.getBooleanExtra(WidgetThemeListActivity.ADAPTER_MODIFIED, false);
+            Log.d("onPickTheme", "Picked " + selection + " (adapterModified:" + adapterModified + ")");
+
+            if (selection != null)
+            {
+                SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+                pref.putString((requestCode == REQUEST_PICKTHEME_LIGHT ? PREF_KEY_APPEARANCE_THEME_LIGHT : PREF_KEY_APPEARANCE_THEME_DARK), selection);
+                pref.apply();
+                rebuildActivity();
+
+            } else if (adapterModified) {
                 rebuildActivity();
             }
         }
@@ -1191,9 +1213,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             }
         }
 
-        ThemePreference overrideTheme_light = (ThemePreference)findPreference(AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT);
-        initPref_ui_themeOverride(this, overrideTheme_light, this, AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT);
-        loadPref_ui_themeOverride(this, overrideTheme_light, AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT, this);
+        ThemePreference overrideTheme_light = (ThemePreference)findPreference(PREF_KEY_APPEARANCE_THEME_LIGHT);
+        initPref_ui_themeOverride(this, overrideTheme_light, this, PREF_KEY_APPEARANCE_THEME_LIGHT);
+        loadPref_ui_themeOverride(this, overrideTheme_light, PREF_KEY_APPEARANCE_THEME_LIGHT, this);
 
         ThemePreference overrideTheme_dark = (ThemePreference)findPreference(AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
         initPref_ui_themeOverride(this, overrideTheme_dark, this, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
@@ -1214,9 +1236,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             }
         }
 
-        final ThemePreference overrideTheme_light = (ThemePreference)fragment.findPreference(AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT);
-        initPref_ui_themeOverride(fragment.getActivity(), overrideTheme_light, fragment.getActivity(), AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT);
-        loadPref_ui_themeOverride(fragment.getActivity(), overrideTheme_light, AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT, fragment.getActivity());
+        final ThemePreference overrideTheme_light = (ThemePreference)fragment.findPreference(PREF_KEY_APPEARANCE_THEME_LIGHT);
+        initPref_ui_themeOverride(fragment.getActivity(), overrideTheme_light, fragment.getActivity(), PREF_KEY_APPEARANCE_THEME_LIGHT);
+        loadPref_ui_themeOverride(fragment.getActivity(), overrideTheme_light, PREF_KEY_APPEARANCE_THEME_LIGHT, fragment.getActivity());
 
         final ThemePreference overrideTheme_dark = (ThemePreference)fragment.findPreference(AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
         initPref_ui_themeOverride(fragment.getActivity(), overrideTheme_dark, fragment.getActivity(), AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
@@ -1241,19 +1263,19 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         });
     }
 
-    private static Preference.OnPreferenceChangeListener onOverrideThemeChanged(final Activity activity, final ThemePreference overridePref)
+    private static Preference.OnPreferenceChangeListener onOverrideThemeChanged(final Activity activity, final ThemePreference overridePref, final int requestCode)
     {
         return new Preference.OnPreferenceChangeListener()
         {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                overridePref.setThemePreferenceListener(createThemeListPreferenceListener(activity, (String)newValue));
+                overridePref.setThemePreferenceListener(createThemeListPreferenceListener(activity, (String)newValue, requestCode));
                 return true;
             }
         };
     }
 
-    private static ThemePreference.ThemePreferenceListener createThemeListPreferenceListener(final Activity activity, final String selectedTheme)
+    private static ThemePreference.ThemePreferenceListener createThemeListPreferenceListener(final Activity activity, final String selectedTheme, final int requestCode)
     {
         return new ThemePreference.ThemePreferenceListener()
         {
@@ -1263,7 +1285,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 Intent configThemesIntent = new Intent(activity, WidgetThemeListActivity.class);
                 configThemesIntent.putExtra(WidgetThemeListActivity.PARAM_NOSELECT, false);
                 configThemesIntent.putExtra(WidgetThemeListActivity.PARAM_SELECTED, selectedTheme);
-                activity.startActivityForResult(configThemesIntent, REQUEST_THEMELIST);
+                activity.startActivityForResult(configThemesIntent, requestCode);
             }
         };
     }
@@ -1287,16 +1309,6 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
             listPref.setEntries(themeEntries);
             listPref.setEntryValues(themeValues);
-
-            /**TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.icActionAppearance});
-            int drawableID = a.getResourceId(0, R.drawable.ic_palette);
-            a.recycle();
-
-            String title = (key.equals(AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT) ? context.getString(R.string.appThemes_lightTheme) + "  [i]"
-                                                                                    : context.getString(R.string.appThemes_darkTheme) + "  [i]");
-            ImageSpan themeIcon = SuntimesUtils.createImageSpan(context, drawableID, 32, 32, 0);
-            SpannableStringBuilder titleSpan = SuntimesUtils.createSpan(context, title, "[i]", themeIcon);
-            listPref.setTitle(titleSpan);*/
         }
     }
 
@@ -1304,12 +1316,16 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     {
         if (listPref != null)
         {
-            String themeName = ((key.equals(AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT) ? AppSettings.loadThemeLightPref(context) : AppSettings.loadThemeDarkPref(context)));
+            boolean isLightTheme = key.equals(PREF_KEY_APPEARANCE_THEME_LIGHT);
+            String themeName = ((isLightTheme ? AppSettings.loadThemeLightPref(context) : AppSettings.loadThemeDarkPref(context)));
+            int requestCode = (isLightTheme ? REQUEST_PICKTHEME_LIGHT : REQUEST_PICKTHEME_DARK);
+
             int currentIndex = ((themeName != null) ? listPref.findIndexOfValue(themeName) : -1);
-            if (currentIndex >= 0) {
+            if (currentIndex >= 0)
+            {
                 listPref.setValueIndex(currentIndex);
-                listPref.setThemePreferenceListener(createThemeListPreferenceListener(activity, themeName));
-                listPref.setOnPreferenceChangeListener(onOverrideThemeChanged(activity, listPref));
+                listPref.setThemePreferenceListener(createThemeListPreferenceListener(activity, themeName, requestCode));
+                listPref.setOnPreferenceChangeListener(onOverrideThemeChanged(activity, listPref, requestCode));
 
             } else {
                 Log.w(LOG_TAG, "loadPref: Unable to load " + key + "... The list is missing an entry for the descriptor: " + themeName);
