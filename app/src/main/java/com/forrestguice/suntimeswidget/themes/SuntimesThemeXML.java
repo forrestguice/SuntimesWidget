@@ -494,14 +494,17 @@ public class SuntimesThemeXML implements SuntimesThemeIO
         {
             String tag = parser.getName();
             if (tag == null) {
-                parseEvent = parser.next();
+                parseEvent = parser.nextTag();
                 continue;
             }
 
             switch (parseEvent)
             {
-                case XmlPullParser.TEXT:
+                case XmlPullParser.START_TAG:
+                    parser.next();
                     String value = parser.getText();
+                    Log.d("readTheme", "TEXT: " + tag + " : " + value);
+
                     if (tag.equalsIgnoreCase(SuntimesTheme.THEME_BACKGROUND))
                     {
                         theme.themeBackground = ThemeBackground.getThemeBackground(backgroundStringToId(value));
@@ -609,16 +612,21 @@ public class SuntimesThemeXML implements SuntimesThemeIO
                     } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_TITLESIZE)) {
                         theme.themeTitleSize = Float.parseFloat(value);
                     }
+                    parseEvent = parser.nextTag();
                     break;
 
                 case XmlPullParser.END_TAG:
-                    if (tag.equalsIgnoreCase(KEY_THEME))
-                    {
+                    if (tag.equalsIgnoreCase(KEY_THEME)) {
                         break loop;
                     }
+                    parseEvent = parser.nextTag();
+                    break;
+
+                default:
+                    Log.d("readTheme", "unhandled: " + parseEvent);
+                    parseEvent = parser.next();
                     break;
             }
-            parseEvent = parser.next();
         }
         return theme;
     }
