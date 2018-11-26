@@ -398,12 +398,14 @@ public class SuntimesThemeXML implements SuntimesThemeIO
                     case XmlPullParser.START_TAG:
                         if (tag.equalsIgnoreCase(KEY_THEMES))
                         {
+                            Log.d("SuntimesThemeXML.read", "START_TAG: " + tag);
                             themes = readThemes(parser);
-                        }
+                        } else Log.w("SuntimesThemeXML.read", "unrecognized: " + tag);
                         break;
                 }
                 parseEvent = parser.next();
             }
+            Log.d("SuntimesThemeXML.read", "done");
 
         } catch (XmlPullParserException e1) {
             Log.e("SuntimesThemeXML.read", "Failed to parse themes :: " + e1);
@@ -430,20 +432,28 @@ public class SuntimesThemeXML implements SuntimesThemeIO
                 case XmlPullParser.START_TAG:
                     if (tag.equalsIgnoreCase(KEY_THEME))
                     {
+                        Log.d("SuntimesThemeXML.read", "START_TAG: " + tag);
                         SuntimesTheme theme = readTheme(parser);
                         themes.add(theme);
                         signalImportProgress(theme, i, n);
                         n = i = i + 1;
+                        Log.d("SuntimesThemeXML.read", "read " + theme.themeName);
                     }
                     break;
 
                 case XmlPullParser.END_TAG:
                     if (tag.equalsIgnoreCase(KEY_THEMES))
                     {
+                        Log.d("SuntimesThemeXML.read", "END_TAG: " + tag);
                         break loop;
                     }
                     break;
+
+                default:
+                    Log.d("SuntimesThemeXML.read", "unrecognized: " + tag);
+                    break;
             }
+            parseEvent = parser.next();
         }
         SuntimesTheme themesArray[] = new SuntimesTheme[themes.size()];
         return themes.toArray(themesArray);
@@ -483,6 +493,11 @@ public class SuntimesThemeXML implements SuntimesThemeIO
         loop: while (parseEvent != XmlPullParser.END_DOCUMENT)
         {
             String tag = parser.getName();
+            if (tag == null) {
+                parseEvent = parser.next();
+                continue;
+            }
+
             switch (parseEvent)
             {
                 case XmlPullParser.TEXT:
@@ -603,6 +618,7 @@ public class SuntimesThemeXML implements SuntimesThemeIO
                     }
                     break;
             }
+            parseEvent = parser.next();
         }
         return theme;
     }
