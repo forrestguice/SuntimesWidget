@@ -192,7 +192,7 @@ public class SuntimesThemeXML implements SuntimesThemeIO
                 xml.endTag(namespace, SuntimesTheme.THEME_BACKGROUND);
 
                 xml.startTag(namespace, SuntimesTheme.THEME_BACKGROUND_COLOR);
-                xml.text(Integer.toString(theme.getBackgroundColor()));
+                xml.text(colorToString(theme.getBackgroundColor()));
                 xml.endTag(namespace, SuntimesTheme.THEME_BACKGROUND_COLOR);
 
                 xml.startTag(namespace, SuntimesTheme.THEME_TEXTCOLOR);
@@ -260,63 +260,63 @@ public class SuntimesThemeXML implements SuntimesThemeIO
                 xml.endTag(namespace, SuntimesTheme.THEME_SETICON_STROKE_WIDTH);
 
                 xml.startTag(namespace, SuntimesTheme.THEME_DAYCOLOR);
-                xml.text(Integer.toString(theme.getDayColor()));
+                xml.text(colorToString(theme.getDayColor()));
                 xml.endTag(namespace, SuntimesTheme.THEME_DAYCOLOR);
 
                 xml.startTag(namespace, SuntimesTheme.THEME_CIVILCOLOR);
-                xml.text(Integer.toString(theme.getCivilColor()));
+                xml.text(colorToString(theme.getCivilColor()));
                 xml.endTag(namespace, SuntimesTheme.THEME_CIVILCOLOR);
 
                 xml.startTag(namespace, SuntimesTheme.THEME_NAUTICALCOLOR);
-                xml.text(Integer.toString(theme.getNauticalColor()));
+                xml.text(colorToString(theme.getNauticalColor()));
                 xml.endTag(namespace, SuntimesTheme.THEME_NAUTICALCOLOR);
 
                 xml.startTag(namespace, SuntimesTheme.THEME_ASTROCOLOR);
-                xml.text(Integer.toString(theme.getAstroColor()));
+                xml.text(colorToString(theme.getAstroColor()));
                 xml.endTag(namespace, SuntimesTheme.THEME_ASTROCOLOR);
 
                 xml.startTag(namespace, SuntimesTheme.THEME_NIGHTCOLOR);
-                xml.text(Integer.toString(theme.getNightColor()));
+                xml.text(colorToString(theme.getNightColor()));
                 xml.endTag(namespace, SuntimesTheme.THEME_NIGHTCOLOR);
 
                 xml.startTag(namespace, SuntimesTheme.THEME_SPRINGCOLOR);
-                xml.text(Integer.toString(theme.getSpringColor()));
+                xml.text(colorToString(theme.getSpringColor()));
                 xml.endTag(namespace, SuntimesTheme.THEME_SPRINGCOLOR);
 
                 xml.startTag(namespace, SuntimesTheme.THEME_SUMMERCOLOR);
-                xml.text(Integer.toString(theme.getSummerColor()));
+                xml.text(colorToString(theme.getSummerColor()));
                 xml.endTag(namespace, SuntimesTheme.THEME_SUMMERCOLOR);
 
                 xml.startTag(namespace, SuntimesTheme.THEME_FALLCOLOR);
-                xml.text(Integer.toString(theme.getFallColor()));
+                xml.text(colorToString(theme.getFallColor()));
                 xml.endTag(namespace, SuntimesTheme.THEME_FALLCOLOR);
 
                 xml.startTag(namespace, SuntimesTheme.THEME_WINTERCOLOR);
-                xml.text(Integer.toString(theme.getWinterColor()));
+                xml.text(colorToString(theme.getWinterColor()));
                 xml.endTag(namespace, SuntimesTheme.THEME_WINTERCOLOR);
 
                 xml.startTag(namespace, SuntimesTheme.THEME_MOONRISECOLOR);
-                xml.text(Integer.toString(theme.getMoonriseTextColor()));
+                xml.text(colorToString(theme.getMoonriseTextColor()));
                 xml.endTag(namespace, SuntimesTheme.THEME_MOONRISECOLOR);
 
                 xml.startTag(namespace, SuntimesTheme.THEME_MOONSETCOLOR);
-                xml.text(Integer.toString(theme.getMoonsetTextColor()));
+                xml.text(colorToString(theme.getMoonsetTextColor()));
                 xml.endTag(namespace, SuntimesTheme.THEME_MOONSETCOLOR);
 
                 xml.startTag(namespace, SuntimesTheme.THEME_MOONWANINGCOLOR);
-                xml.text(Integer.toString(theme.getMoonWaningColor()));
+                xml.text(colorToString(theme.getMoonWaningColor()));
                 xml.endTag(namespace, SuntimesTheme.THEME_MOONWANINGCOLOR);
 
                 xml.startTag(namespace, SuntimesTheme.THEME_MOONWAXINGCOLOR);
-                xml.text(Integer.toString(theme.getMoonWaxingColor()));
+                xml.text(colorToString(theme.getMoonWaxingColor()));
                 xml.endTag(namespace, SuntimesTheme.THEME_MOONWAXINGCOLOR);
 
                 xml.startTag(namespace, SuntimesTheme.THEME_MOONFULLCOLOR);
-                xml.text(Integer.toString(theme.getMoonFullColor()));
+                xml.text(colorToString(theme.getMoonFullColor()));
                 xml.endTag(namespace, SuntimesTheme.THEME_MOONFULLCOLOR);
 
                 xml.startTag(namespace, SuntimesTheme.THEME_MOONNEWCOLOR);
-                xml.text(Integer.toString(theme.getMoonNewColor()));
+                xml.text(colorToString(theme.getMoonNewColor()));
                 xml.endTag(namespace, SuntimesTheme.THEME_MOONNEWCOLOR);
 
                 xml.startTag(namespace, SuntimesTheme.THEME_MOONFULL_STROKE_WIDTH);
@@ -340,19 +340,19 @@ public class SuntimesThemeXML implements SuntimesThemeIO
                 xml.endTag(namespace, SuntimesTheme.THEME_TITLESIZE);
 
                 xml.startTag(namespace, SuntimesTheme.THEME_MAP_BACKGROUNDCOLOR);
-                xml.text(Integer.toString(theme.getMapBackgroundColor()));
+                xml.text(colorToString(theme.getMapBackgroundColor()));
                 xml.endTag(namespace, SuntimesTheme.THEME_MAP_BACKGROUNDCOLOR);
 
                 xml.startTag(namespace, SuntimesTheme.THEME_MAP_FOREGROUNDCOLOR);
-                xml.text(Integer.toString(theme.getMapForegroundColor()));
+                xml.text(colorToString(theme.getMapForegroundColor()));
                 xml.endTag(namespace, SuntimesTheme.THEME_MAP_FOREGROUNDCOLOR);
 
                 xml.startTag(namespace, SuntimesTheme.THEME_MAP_SHADOWCOLOR);
-                xml.text(Integer.toString(theme.getMapShadowColor()));
+                xml.text(colorToString(theme.getMapShadowColor()));
                 xml.endTag(namespace, SuntimesTheme.THEME_MAP_SHADOWCOLOR);
 
                 xml.startTag(namespace, SuntimesTheme.THEME_MAP_HIGHLIGHTCOLOR);
-                xml.text(Integer.toString(theme.getMapHighlightColor()));
+                xml.text(colorToString(theme.getMapHighlightColor()));
                 xml.endTag(namespace, SuntimesTheme.THEME_MAP_HIGHLIGHTCOLOR);
 
                 xml.endTag(null, KEY_THEME);
@@ -625,7 +625,11 @@ public class SuntimesThemeXML implements SuntimesThemeIO
 
     private int colorStringToInt(String value)
     {
-        return Color.parseColor(value);
+        try {
+            return Color.parseColor(value);
+        } catch (IllegalArgumentException e) {
+            return Integer.parseInt(value);
+        }
     }
     private String colorToString(int color)
     {
