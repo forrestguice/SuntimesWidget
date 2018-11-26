@@ -398,14 +398,14 @@ public class SuntimesThemeXML implements SuntimesThemeIO
                     case XmlPullParser.START_TAG:
                         if (tag.equalsIgnoreCase(KEY_THEMES))
                         {
-                            Log.d("SuntimesThemeXML.read", "START_TAG: " + tag);
+                            //Log.d("SuntimesThemeXML.read", "START_TAG: " + tag);
                             themes = readThemes(parser);
                         } else Log.w("SuntimesThemeXML.read", "unrecognized: " + tag);
                         break;
                 }
                 parseEvent = parser.next();
             }
-            Log.d("SuntimesThemeXML.read", "done");
+            //Log.d("SuntimesThemeXML.read", "done");
 
         } catch (XmlPullParserException e1) {
             Log.e("SuntimesThemeXML.read", "Failed to parse themes :: " + e1);
@@ -432,25 +432,25 @@ public class SuntimesThemeXML implements SuntimesThemeIO
                 case XmlPullParser.START_TAG:
                     if (tag.equalsIgnoreCase(KEY_THEME))
                     {
-                        Log.d("SuntimesThemeXML.read", "START_TAG: " + tag);
+                        //Log.d("SuntimesThemeXML.read", "START_TAG: " + tag);
                         SuntimesTheme theme = readTheme(parser);
                         themes.add(theme);
                         signalImportProgress(theme, i, n);
                         n = i = i + 1;
-                        Log.d("SuntimesThemeXML.read", "read " + theme.themeName);
+                        //Log.d("SuntimesThemeXML.read", "read " + theme.themeName);
                     }
                     break;
 
                 case XmlPullParser.END_TAG:
                     if (tag.equalsIgnoreCase(KEY_THEMES))
                     {
-                        Log.d("SuntimesThemeXML.read", "END_TAG: " + tag);
+                        //Log.d("SuntimesThemeXML.read", "END_TAG: " + tag);
                         break loop;
                     }
                     break;
 
                 default:
-                    Log.d("SuntimesThemeXML.read", "unrecognized: " + tag);
+                    //Log.d("SuntimesThemeXML.read", "unrecognized: " + tag);
                     break;
             }
             parseEvent = parser.next();
@@ -503,7 +503,7 @@ public class SuntimesThemeXML implements SuntimesThemeIO
                 case XmlPullParser.START_TAG:
                     parser.next();
                     String value = parser.getText();
-                    Log.d("readTheme", "TEXT: " + tag + " : " + value);
+                    //Log.d("readTheme", "TEXT: " + tag + " : " + value);
 
                     if (tag.equalsIgnoreCase(SuntimesTheme.THEME_BACKGROUND))
                     {
@@ -623,7 +623,7 @@ public class SuntimesThemeXML implements SuntimesThemeIO
                     break;
 
                 default:
-                    Log.d("readTheme", "unhandled: " + parseEvent);
+                    //Log.d("readTheme", "unhandled: " + parseEvent);
                     parseEvent = parser.next();
                     break;
             }
