@@ -334,7 +334,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
     /**
      * @param context a context used to access resources
      */
-    private boolean exportThemes( Context context )
+    private boolean exportThemes(Context context, SuntimesTheme.ThemeDescriptor[] themes)
     {
         if (context != null)
         {
@@ -344,7 +344,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
             } else {
                 exportTask = new ExportThemesTask(context, "SuntimesThemes", true, true);    // export to external cache
-                exportTask.setDescriptors(WidgetThemes.values());
+                exportTask.setDescriptors(themes);
                 exportTask.setTaskListener(exportThemesListener);
                 exportTask.execute();
                 return true;
@@ -555,7 +555,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
                 return true;
 
             case R.id.exportThemes:
-                exportThemes(this);
+                exportThemes(this, WidgetThemes.values());
                 return true;
 
             case R.id.action_help:
@@ -648,6 +648,10 @@ public class WidgetThemeListActivity extends AppCompatActivity
                     case R.id.deleteTheme:
                         deleteTheme(theme);
                         mode.finish();
+                        return true;
+
+                    case R.id.exportTheme:
+                        exportThemes(WidgetThemeListActivity.this, new SuntimesTheme.ThemeDescriptor[] { theme.themeDescriptor()} );
                         return true;
                 }
             }

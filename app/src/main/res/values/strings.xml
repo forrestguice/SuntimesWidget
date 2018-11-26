@@ -400,7 +400,8 @@
     <string name="configAction_editTheme">Edit</string>         <!-- button (contentDescription) -->
     <string name="configAction_deleteTheme">Delete</string>     <!-- button (contentDescription) -->
     <string name="configAction_copyTheme">Copy</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportThemes">Export</string>    <!-- button (contentDescription) -->
+    <string name="configAction_exportThemes">Export</string>    <!-- button (contentDescription) -->  <!-- export many themes -->
+    <string name="configAction_shareTheme">Share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
     <string name="configAction_importThemes">Import</string>    <!-- button (contentDescription) -->
     <string name="configAction_configThemes">Manage Themes</string>  <!-- button / action text --> <!-- TODO -->
 
