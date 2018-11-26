@@ -82,8 +82,9 @@ public class WidgetThemeListActivity extends AppCompatActivity
     public static final int WALLPAPER_DELAY = 1000;
 
     public static final int PICK_THEME_REQUEST = 1;
-    public static final String ADAPTER_MODIFIED = "isModified";
+    public static final int IMPORT_REQUEST = 100;
 
+    public static final String ADAPTER_MODIFIED = "isModified";
     public static final String PARAM_SELECTED = "selected";
     public static final String PARAM_NOSELECT = "noselect";
 
@@ -96,8 +97,9 @@ public class WidgetThemeListActivity extends AppCompatActivity
     private SuntimesTheme.ThemeDescriptor selected = null;
 
     private ProgressDialog progress;
-    private ExportThemesTask exportTask = null;
-    private boolean isExporting = false;
+    private static ExportThemesTask exportTask = null;
+    private static ImportThemesTask importTask = null;
+    private static boolean isExporting = false, isImporting = false;
 
     private int previewID = 0;
     private boolean disallowSelect = false;
@@ -336,14 +338,125 @@ public class WidgetThemeListActivity extends AppCompatActivity
     {
         if (context != null)
         {
-            exportTask = new ExportThemesTask(context, "SuntimesThemes", true, true);    // export to external cache
-            exportTask.setDescriptors(WidgetThemes.values());
-            exportTask.setTaskListener(exportThemesListener);
-            exportTask.execute();
-            return true;
+            if (isImporting || isExporting) {
+                Log.e("exportThemes", "Already busy importing/exporting! ignoring request");
+                return false;
+
+            } else {
+                exportTask = new ExportThemesTask(context, "SuntimesThemes", true, true);    // export to external cache
+                exportTask.setDescriptors(WidgetThemes.values());
+                exportTask.setTaskListener(exportThemesListener);
+                exportTask.execute();
+                return true;
+            }
         }
         return false;
     }
+
+    /**
+     */
+    private boolean importThemes( Context context )
+    {
+        if (context != null)
+        {
+            if (isImporting || isExporting) {
+                Log.e("importThemes","Busy! Already importing/exporting.. ignoring request");
+                return false;
+
+            } else {
+                Intent intent = new Intent((Build.VERSION.SDK_INT >= 19 ? Intent.ACTION_OPEN_DOCUMENT : Intent.ACTION_GET_CONTENT));
+                intent.setType("text/*");
+                startActivityForResult(intent, IMPORT_REQUEST);
+                return true;
+            }
+        }
+        return false;
+    }
+    private boolean importThemes(Context context, @NonNull Uri uri)
+    {
+        if (isImporting || isExporting) {
+            Log.e("importThemes","Busy! Already importing/exporting.. ignoring request");
+            return false;
+
+        } else {
+            Log.i("importThemes", "Starting import task from uri: " + uri);
+            importTask = new ImportThemesTask(context);
+            importTask.setTaskListener(importThemesListener);
+            importTask.execute(uri);
+            return true;
+        }
+    }
+
+    private ImportThemesTask.TaskListener importThemesListener = new ImportThemesTask.TaskListener()
+    {
+        public void onStarted()
+        {
+            isImporting = true;
+            showImportProgress();
+        }
+
+        @Override
+        public void onFinished(ImportThemesTask.ImportThemesResult results)
+        {
+            importTask = null;
+            isImporting = false;
+            dismissProgress();
+
+            if (results.getResult())
+            {
+                int importCount = 0;
+                SuntimesTheme[] themes = results.getThemes();
+                for (SuntimesTheme theme : themes)
+                {
+                    if (theme != null)
+                    {
+                        if (!WidgetThemes.hasValue(theme.themeDescriptor()))
+                        {
+                            if (theme.themeBackground == null)
+                            {
+                                Log.e("importThemes", "background is null! " + theme.themeName());
+                                theme.themeBackground = ThemeBackground.DARK;
+                            }
+
+                            theme.saveTheme(WidgetThemes.getSharedPreferences(WidgetThemeListActivity.this));
+                            WidgetThemes.addValue(WidgetThemeListActivity.this, theme.themeDescriptor());
+                            adapterModified = true;
+                            importCount++;
+                            Log.w("importThemes", "Added " + theme.themeName);
+
+                        } else {
+                            Log.w("importThemes", "Skipping " + theme.themeName + " :: already installed");
+                            // TODO: allow overwrite?
+                        }
+                    }
+                }
+
+                if (importCount > 0)
+                {
+                    String countString = getResources().getQuantityString(R.plurals.themePlural, importCount, importCount);
+                    String successMessage = getString(R.string.msg_import_success, countString);
+                    Toast.makeText(getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
+
+                    if (adapterModified) {
+                        initThemeAdapter(WidgetThemeListActivity.this);
+                    }
+
+                } else {
+                    Toast.makeText(getApplicationContext(), getString(R.string.msg_import_noresults), Toast.LENGTH_LONG).show();
+                }
+
+            } else {
+                String failureMessage = getString(R.string.msg_import_failure, results.getUri());
+                Exception error = results.getException();
+                if (error != null) {
+                    failureMessage += "\n\n" + error.getLocalizedMessage();
+                }
+                Toast.makeText(getApplicationContext(), failureMessage, Toast.LENGTH_LONG).show();
+                //Snackbar errorMsg = Snackbar.make(findViewById(android.R.id.content), failureMessage, Snackbar.LENGTH_LONG);
+                //errorMsg.show();
+            }
+        }
+    };
 
     private ExportPlacesTask.TaskListener exportThemesListener = new ExportTask.TaskListener()
     {
@@ -392,24 +505,24 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
     private void showExportProgress()
     {
-        progress = ProgressDialog.show(this, getString(R.string.themesexport_dialog_title), getString(R.string.themesexport_dialog_message), true);
+        if (progress == null || !progress.isShowing()) {
+            progress = ProgressDialog.show(this, getString(R.string.themesexport_dialog_title), getString(R.string.themesexport_dialog_message), true);
+        } else Log.w("showExportProgress", "progress is already showing! ignoring..");
+    }
+
+    private void showImportProgress()
+    {
+        if (progress == null || !progress.isShowing()) {
+            progress = ProgressDialog.show(this, getString(R.string.themesimport_dialog_title), getString(R.string.themesimport_dialog_message), true);
+        } else Log.w("showImportProgress", "progress is already showing! ignoring..");
     }
 
     private void dismissProgress()
     {
-        if (progress != null && progress.isShowing())
-        {
+        if (progress != null && progress.isShowing()) {
             progress.dismiss();
-        }
+        } else Log.w("dismissProgress", "progress isn't showing! ignoring..");
     }
-
-    /**
-     * @param context a context used to access resources
-     */
-    /**private void importThemes( Context context )
-    {
-        // TODO
-    }*/
 
     @Override
     public void onBackPressed()
@@ -433,9 +546,9 @@ public class WidgetThemeListActivity extends AppCompatActivity
     {
         switch (item.getItemId())
         {
-            //case R.id.importThemes:
-            //    importThemes(this);
-            //    return true;
+            case R.id.importThemes:
+                importThemes(this);
+                return true;
 
             case R.id.addTheme:
                 addTheme();
@@ -561,6 +674,16 @@ public class WidgetThemeListActivity extends AppCompatActivity
             case EDIT_THEME_REQUEST:
                 onEditThemeResult(resultCode, data);
                 break;
+
+            case IMPORT_REQUEST:
+                if (resultCode == Activity.RESULT_OK)
+                {
+                    Uri uri = (data != null ? data.getData() : null);
+                    if (uri != null) {
+                        importThemes(this, uri);
+                    }
+                }
+                break;
         }
     }
 
@@ -625,6 +748,12 @@ public class WidgetThemeListActivity extends AppCompatActivity
             exportTask.pauseTask();
             exportTask.clearTaskListener();
         }
+
+        if (isImporting && importTask != null)
+        {
+            importTask.pauseTask();
+            importTask.clearTaskListener();
+        }
         dismissProgress();
     }
 
@@ -632,6 +761,8 @@ public class WidgetThemeListActivity extends AppCompatActivity
     public void onSaveInstanceState( Bundle outState )
     {
         super.onSaveInstanceState(outState);
+        outState.putBoolean("isExporting", isExporting);
+        outState.putBoolean("isImporting", isImporting);
 
         if (selected != null)
         {
@@ -643,6 +774,8 @@ public class WidgetThemeListActivity extends AppCompatActivity
     public void onRestoreInstanceState(@NonNull Bundle savedState)
     {
         super.onRestoreInstanceState(savedState);
+        savedState.getBoolean("isExporting", isExporting);
+        savedState.getBoolean("isImporting", isImporting);
 
         String themeName = savedState.getString(SuntimesTheme.THEME_NAME);
         if (themeName != null)
@@ -668,6 +801,12 @@ public class WidgetThemeListActivity extends AppCompatActivity
             exportTask.setTaskListener(exportThemesListener);
             showExportProgress();
             exportTask.resumeTask();
+        }
+        if (isImporting && importTask != null)
+        {
+            importTask.setTaskListener(importThemesListener);
+            showImportProgress();
+            importTask.resumeTask();
         }
     }
 
