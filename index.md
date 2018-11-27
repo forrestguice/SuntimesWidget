@@ -2,7 +2,7 @@
 
 ## Add-ons / Plugins
 
-  <a href="https://github.com/forrestguice/SuntimesCalendars/releases"><img align="left" src="images/ic_launcher.png" /></a>  <br/>[Suntimes Calendars](https://github.com/forrestguice/SuntimesCalendars/releases) <br />A calendar provider add-on.
+  <a href="https://github.com/forrestguice/SuntimesCalendars/releases"><img align="left" src="images/ic_launcher.png" hspace="8" /></a>  <br/>[Suntimes Calendars](https://github.com/forrestguice/SuntimesCalendars/releases) <br />A calendar provider add-on.
  <br /> <br />
 
 ## Donations
