@@ -286,14 +286,14 @@ public class LightMapDialog extends DialogFragment
         return (span != null ? span : elevationString);
     }
 
-    private CharSequence styleLengthText(@NonNull Context context, double length)
+    private CharSequence styleLengthText(@NonNull Context context, double meters, WidgetSettings.LengthUnit units)
     {
         NumberFormat formatter = NumberFormat.getInstance();
         formatter.setMinimumFractionDigits(0);
         formatter.setMaximumFractionDigits(2);
-        if (length < Double.POSITIVE_INFINITY)
-            return formatter.format(length) + SuntimesUtils.strSpace + context.getString(R.string.units_meters_short);
-        else return formatter.format(length);
+        if (meters < Double.POSITIVE_INFINITY)
+            return utils.formatAsHeight(context, (int)meters, units).toString();
+        else return formatter.format(meters);
     }
 
     private int getColorForPosition(SuntimesCalculator.SunPosition position, SuntimesCalculator.SunPosition noonPosition)
@@ -387,16 +387,18 @@ public class LightMapDialog extends DialogFragment
                 double objectHeight = WidgetSettings.loadObserverHeightPref(context, 0);
                 if (objectHeight > 0)
                 {
+                    WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+
                     if (sunShadowObj != null) {
-                        sunShadowObj.setText(styleLengthText(context, objectHeight));
+                        sunShadowObj.setText(styleLengthText(context, objectHeight, units));
                     }
                     if (sunShadowLength != null) {
                         double shadowLength = calculator.getShadowLength(objectHeight, data.now());
-                        sunShadowLength.setText((shadowLength >= 0) ? styleLengthText(context, shadowLength) : "");
+                        sunShadowLength.setText((shadowLength >= 0) ? styleLengthText(context, shadowLength, units) : "");
                     }
                     if (sunShadowLengthAtNoon != null && noonTime != null) {
                         double shadowLengthAtNoon = calculator.getShadowLength(objectHeight, noonTime );
-                        sunShadowLengthAtNoon.setText((shadowLengthAtNoon >= 0) ? styleLengthText(context, shadowLengthAtNoon) : "");
+                        sunShadowLengthAtNoon.setText((shadowLengthAtNoon >= 0) ? styleLengthText(context, shadowLengthAtNoon, units) : "");
                     }
                 }
             }
