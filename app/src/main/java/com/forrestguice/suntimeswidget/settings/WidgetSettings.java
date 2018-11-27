@@ -191,6 +191,41 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
+     * LengthUnit
+     */
+    public static enum LengthUnit
+    {
+        METRIC("Metric"),
+        IMPERIAL("Imperial"),
+        USC("U.S. Customary");
+
+        private LengthUnit(String displayString)
+        {
+            this.displayString = displayString;
+        }
+
+        private String displayString;
+        public String getDisplayString()
+        {
+            return displayString;
+        }
+        public void setDisplayString(String value)
+        {
+            displayString = value;
+        }
+        public static void initDisplayStrings(Context context)
+        {
+            METRIC.setDisplayString(context.getString(R.string.lengthUnits_metric));
+            IMPERIAL.setDisplayString(context.getString(R.string.lengthUnits_imperial));
+            IMPERIAL.setDisplayString(context.getString(R.string.lengthUnits_usc));
+        }
+        public String toString()
+        {
+            return displayString;
+        }
+    }
+
+    /**
      * WidgetOnTap
      */
     public static enum ActionMode
@@ -2315,6 +2350,7 @@ public class WidgetSettings
 
     public static void initDisplayStrings( Context context )
     {
+        LengthUnit.initDisplayStrings(context);
         ActionMode.initDisplayStrings(context);
         WidgetModeSun1x1.initDisplayStrings(context);
         WidgetModeSunPos1x1.initDisplayStrings(context);
