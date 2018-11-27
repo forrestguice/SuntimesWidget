@@ -45,6 +45,30 @@ import static junit.framework.Assert.assertTrue;
 public class WidgetSettingsTest extends SuntimesActivityTestBase
 {
     @Test
+    public void test_lengthUnitsPref()
+    {
+        Context context = activityRule.getActivity();
+        int appWidgetId = Integer.MAX_VALUE;
+
+        WidgetSettings.saveLengthUnitsPref(context, appWidgetId, WidgetSettings.LengthUnit.METRIC);
+        WidgetSettings.LengthUnit units3 = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
+        assertTrue("units should be metric, was " + units3, units3 == WidgetSettings.LengthUnit.METRIC);
+
+        WidgetSettings.saveLengthUnitsPref(context, appWidgetId, WidgetSettings.LengthUnit.IMPERIAL);
+        WidgetSettings.LengthUnit units2 = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
+        assertTrue("units should be imperial, was " + units2, units2 == WidgetSettings.LengthUnit.IMPERIAL);
+
+        WidgetSettings.saveLengthUnitsPref(context, appWidgetId, WidgetSettings.LengthUnit.USC);
+        WidgetSettings.LengthUnit units1 = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
+        assertTrue("units should be usc, was " + units1, units1 == WidgetSettings.LengthUnit.USC);
+
+        WidgetSettings.deleteLengthUnitsPref(context, appWidgetId);
+        WidgetSettings.LengthUnit units0 = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
+        assertTrue("units should be default (metric) but was " + units0, units0 == WidgetSettings.PREF_DEF_GENERAL_UNITS_LENGTH &&
+                units0 == WidgetSettings.LengthUnit.METRIC);
+    }
+
+    @Test
     public void test_timeFormatModePref()
     {
         Context context = activityRule.getActivity();
