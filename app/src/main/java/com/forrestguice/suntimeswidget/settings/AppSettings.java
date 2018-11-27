@@ -32,8 +32,6 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
-import com.forrestguice.suntimeswidget.themes.DarkTheme;
-import com.forrestguice.suntimeswidget.themes.LightTheme;
 
 import java.util.Locale;
 

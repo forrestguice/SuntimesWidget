@@ -46,14 +46,14 @@ import java.util.Set;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
-import com.forrestguice.suntimeswidget.themes.DarkThemeTranslucent;
+import com.forrestguice.suntimeswidget.themes.defaults.DarkThemeTranslucent;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
 
-import com.forrestguice.suntimeswidget.themes.DarkTheme;
-import com.forrestguice.suntimeswidget.themes.DarkThemeTrans;
-import com.forrestguice.suntimeswidget.themes.LightTheme;
-import com.forrestguice.suntimeswidget.themes.LightThemeTrans;
+import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
+import com.forrestguice.suntimeswidget.themes.defaults.DarkThemeTrans;
+import com.forrestguice.suntimeswidget.themes.defaults.LightTheme;
+import com.forrestguice.suntimeswidget.themes.defaults.LightThemeTrans;
 import com.forrestguice.suntimeswidget.themes.ThemeBackground;
 
 import org.json.JSONArray;

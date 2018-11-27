@@ -16,23 +16,25 @@
    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.forrestguice.suntimeswidget.themes;
+package com.forrestguice.suntimeswidget.themes.defaults;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.themes.ThemeBackground;
 
-public class LightTheme extends SuntimesTheme
+public class DarkTheme extends SuntimesTheme
 {
-    public static final String THEMEDEF_NAME = "light";
-    public static final String THEMEDEF_DISPLAYSTRING = "Light";
+    public static final String THEMEDEF_NAME = "dark";
+    public static final String THEMEDEF_DISPLAYSTRING = "Dark";
     public static final int THEMEDEF_VERSION = BuildConfig.VERSION_CODE;
     public static final ThemeDescriptor THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, THEMEDEF_DISPLAYSTRING, THEMEDEF_VERSION);
 
-    public static final ThemeBackground THEMEDEF_BACKGROUND = ThemeBackground.LIGHT;
-    public static final int THEMEDEF_BACKGROUND_COLOR_ID = R.color.widget_bg_light;
+    public static final ThemeBackground THEMEDEF_BACKGROUND = ThemeBackground.DARK;
+    public static final int THEMEDEF_BACKGROUND_COLOR_ID = R.color.widget_bg_dark;
     public static final int[] THEMEDEF_PADDING = {2, 4, 4, 4};
 
     public static final float THEMEDEF_TITLESIZE = 10;
@@ -49,38 +51,38 @@ public class LightTheme extends SuntimesTheme
     public static final int THEMEDEF_MOONFULL_STROKEWIDTH = 2;
     public static final int THEMEDEF_MOONNEW_STROKEWIDTH = 2;
 
-    public static final int THEMEDEF_TITLECOLOR_ID = android.R.color.secondary_text_light;
-    public static final int THEMEDEF_TEXTCOLOR_ID = android.R.color.tertiary_text_light;
-    public static final int THEMEDEF_SUNRISECOLOR_ID = R.color.sunIcon_color_rising_light;
-    public static final int THEMEDEF_TIMECOLOR_ID = android.R.color.primary_text_light;
-    public static final int THEMEDEF_SUNSETCOLOR_ID = R.color.sunIcon_color_setting_light;
-    public static final int THEMEDEF_TIMESUFFIXCOLOR_ID = android.R.color.tertiary_text_light;
-
-    public static final int THEMEDEF_MOONRISECOLOR_ID = R.color.moonIcon_color_rising_light;
-    public static final int THEMEDEF_MOONSETCOLOR_ID = R.color.moonIcon_color_setting_light;
+    public static final int THEMEDEF_TITLECOLOR_ID = android.R.color.white;
+    public static final int THEMEDEF_TEXTCOLOR_ID = android.R.color.tertiary_text_dark;
+    public static final int THEMEDEF_SUNRISECOLOR_ID = R.color.sunIcon_color_rising_dark;
+    public static final int THEMEDEF_SUNSETCOLOR_ID = R.color.sunIcon_color_setting_dark;
+    public static final int THEMEDEF_TIMECOLOR_ID = android.R.color.primary_text_dark;
+    public static final int THEMEDEF_TIMESUFFIXCOLOR_ID = android.R.color.tertiary_text_dark;
 
     public static final int THEMEDEF_MOONWANINGCOLOR_ID = R.color.moonIcon_color_waning;
-    public static final int THEMEDEF_MOONNEWCOLOR_ID = R.color.moonIcon_color_new_light;
+    public static final int THEMEDEF_MOONNEWCOLOR_ID = R.color.moonIcon_color_new_dark;
     public static final int THEMEDEF_MOONWAXINGCOLOR_ID = R.color.moonIcon_color_waxing;
-    public static final int THEMEDEF_MOONFULLCOLOR_ID = R.color.moonIcon_color_full_light;
+    public static final int THEMEDEF_MOONFULLCOLOR_ID = R.color.moonIcon_color_full_dark;
 
-    public static final int THEMEDEF_DAYCOLOR_ID = R.color.graphColor_day_light;
-    public static final int THEMEDEF_CIVILCOLOR_ID = R.color.graphColor_civil_light;
-    public static final int THEMEDEF_NAUTICALCOLOR_ID = R.color.graphColor_nautical_light;
-    public static final int THEMEDEF_ASTROCOLOR_ID = R.color.graphColor_astronomical_light;
-    public static final int THEMEDEF_NIGHTCOLOR_ID = R.color.graphColor_night_light;
+    public static final int THEMEDEF_MOONRISECOLOR_ID = R.color.moonIcon_color_rising_dark;
+    public static final int THEMEDEF_MOONSETCOLOR_ID = R.color.moonIcon_color_setting_dark;
 
-    public static final int THEMEDEF_SPRINGCOLOR_ID = R.color.springColor_light;
-    public static final int THEMEDEF_SUMMERCOLOR_ID = R.color.summerColor_light;
-    public static final int THEMEDEF_FALLCOLOR_ID = R.color.fallColor_light;
-    public static final int THEMEDEF_WINTERCOLOR_ID = R.color.winterColor_light;
+    public static final int THEMEDEF_DAYCOLOR_ID = R.color.graphColor_day_dark;
+    public static final int THEMEDEF_CIVILCOLOR_ID = R.color.graphColor_civil_dark;
+    public static final int THEMEDEF_NAUTICALCOLOR_ID = R.color.graphColor_nautical_dark;
+    public static final int THEMEDEF_ASTROCOLOR_ID = R.color.graphColor_astronomical_dark;
+    public static final int THEMEDEF_NIGHTCOLOR_ID = R.color.graphColor_night_dark;
 
-    public static final int THEMEDEF_MAP_BACKGROUNDCOLOR_ID = R.color.map_background_light;
-    public static final int THEMEDEF_MAP_FOREGROUNDCOLOR_ID = R.color.map_foreground_light;
-    public static final int THEMEDEF_MAP_SHADOWCOLOR_ID = R.color.map_sunshadow_light;
-    public static final int THEMEDEF_MAP_HIGHLIGHTCOLOR_ID = R.color.map_moonlight_light;
+    public static final int THEMEDEF_SPRINGCOLOR_ID = R.color.springColor_dark;
+    public static final int THEMEDEF_SUMMERCOLOR_ID = R.color.summerColor_dark;
+    public static final int THEMEDEF_FALLCOLOR_ID = R.color.fallColor_dark;
+    public static final int THEMEDEF_WINTERCOLOR_ID = R.color.winterColor_dark;
 
-    public LightTheme(Context context)
+    public static final int THEMEDEF_MAP_BACKGROUNDCOLOR_ID = R.color.map_background_dark;
+    public static final int THEMEDEF_MAP_FOREGROUNDCOLOR_ID = R.color.map_foreground_dark;
+    public static final int THEMEDEF_MAP_SHADOWCOLOR_ID = R.color.map_sunshadow_dark;
+    public static final int THEMEDEF_MAP_HIGHLIGHTCOLOR_ID = R.color.map_moonlight_dark;
+
+    public DarkTheme(Context context)
     {
         super();
 
@@ -114,9 +116,9 @@ public class LightTheme extends SuntimesTheme
         this.themeSunsetIconColor = this.themeSunsetTextColor;
         this.themeSunsetIconStrokeWidth = THEMEDEF_SETICON_STROKEWIDTH;
 
-        this.themeNoonTextColor = ContextCompat.getColor(context, R.color.sunIcon_color_noon_light);
-        this.themeNoonIconColor = ContextCompat.getColor(context, R.color.sunIcon_color_noon_light);
-        this.themeNoonIconStrokeColor = ContextCompat.getColor(context, R.color.sunIcon_color_noonBorder_light);
+        this.themeNoonTextColor = ContextCompat.getColor(context, R.color.sunIcon_color_noon_dark);
+        this.themeNoonIconColor = ContextCompat.getColor(context, R.color.sunIcon_color_noon_dark);
+        this.themeNoonIconStrokeColor = ContextCompat.getColor(context, R.color.sunIcon_color_noonBorder_dark);
         this.themeNoonIconStrokeWidth = THEMEDEF_NOONICON_STROKEWIDTH;
 
         this.themeSunriseIconStrokeColor = this.themeSunsetIconColor;
@@ -151,6 +153,7 @@ public class LightTheme extends SuntimesTheme
 
     public ThemeDescriptor themeDescriptor()
     {
-        return LightTheme.THEMEDEF_DESCRIPTOR;
+        return DarkTheme.THEMEDEF_DESCRIPTOR;
     }
+
 }

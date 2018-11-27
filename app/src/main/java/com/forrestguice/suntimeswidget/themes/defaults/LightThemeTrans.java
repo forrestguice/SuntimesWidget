@@ -16,12 +16,13 @@
    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.forrestguice.suntimeswidget.themes;
+package com.forrestguice.suntimeswidget.themes.defaults;
 
 import android.content.Context;
 import android.graphics.Color;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
+import com.forrestguice.suntimeswidget.themes.ThemeBackground;
 
 public class LightThemeTrans extends LightTheme
 {
