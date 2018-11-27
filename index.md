@@ -1,5 +1,11 @@
 <a href="https://github.com/forrestguice/SuntimesWidget/releases"><img src="https://img.shields.io/github/release/forrestguice/SuntimesWidget.svg" alt="GitHub release" /></a>&nbsp; Displays sunrise and sunset, twilights, blue and golden hour, solstices and equinoxes, moonrise and moonset, moon phases and illumination.
 
+## Add-ons / Plugins
+
+
+  <a href="https://github.com/forrestguice/SuntimesCalendars/releases"><img align="left" src="https://github.com/forrestguice/SuntimesCalendars/blob/master/app/src/main/res/mipmap-xhdpi/ic_launcher.png" /></a>  <br/>[Suntimes Calendars](https://github.com/forrestguice/SuntimesCalendars/releases) <br />A calendar provider add-on.
+ <br /> <br />
+
 ## Donations
 Do you find value in this app? `Please pay as you feel.` [![paypal](https://www.paypalobjects.com/webstatic/en_US/i/btn/png/silver-rect-paypal-26px.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2) 
 &nbsp;[![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=forrestguice&url=https://github.com/forrestguice/SuntimesWidget&title=Suntimes&tags=github&category=software)
