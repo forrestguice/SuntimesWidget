@@ -227,6 +227,7 @@ public class EquinoxView extends LinearLayout
             noteColor = theme.getTimeColor();
             labelColor = theme.getTitleColor();
             textColor = theme.getTextColor();
+            pressedColor = theme.getActionColor();
             seasonColors[0] = theme.getSpringColor();
             seasonColors[1] = theme.getSummerColor();
             seasonColors[2] = theme.getFallColor();

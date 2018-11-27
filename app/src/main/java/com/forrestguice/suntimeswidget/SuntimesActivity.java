@@ -701,7 +701,7 @@ public class SuntimesActivity extends AppCompatActivity
             int timeColor = appThemeOverride.getTimeColor();
             int textColor = appThemeOverride.getTextColor();
             int disabledColor = ContextCompat.getColor(context, resID_buttonDisabledColor);
-            int pressedColor = ContextCompat.getColor(context, resID_buttonPressColor);
+            int pressedColor = appThemeOverride.getActionColor();
 
             Toolbar actionBar = (Toolbar) findViewById(R.id.app_menubar);
             actionBar.setTitleTextColor(titleColor);
@@ -1168,7 +1168,9 @@ public class SuntimesActivity extends AppCompatActivity
                 public boolean onTouch(View view, MotionEvent motionEvent)
                 {
                     if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                        btn_flipperNext_today.setColorFilter(ContextCompat.getColor(SuntimesActivity.this, resID_buttonPressColor));
+                        btn_flipperNext_today.setColorFilter((appThemeOverride != null
+                                ? appThemeOverride.getActionColor()
+                                : ContextCompat.getColor(SuntimesActivity.this, resID_buttonPressColor)));
                     } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                         btn_flipperNext_today.setColorFilter(null);
                     }
@@ -1265,7 +1267,9 @@ public class SuntimesActivity extends AppCompatActivity
                 {
                     if (motionEvent.getAction() == MotionEvent.ACTION_DOWN)
                     {
-                        btn_flipperPrev_tomorrow.setColorFilter(ContextCompat.getColor(SuntimesActivity.this, resID_buttonPressColor));
+                        btn_flipperPrev_tomorrow.setColorFilter((appThemeOverride != null
+                                ? appThemeOverride.getActionColor()
+                                : ContextCompat.getColor(SuntimesActivity.this, resID_buttonPressColor)));
                     } else if (motionEvent.getAction() == MotionEvent.ACTION_UP)
                     {
                         btn_flipperPrev_tomorrow.setColorFilter(null);
