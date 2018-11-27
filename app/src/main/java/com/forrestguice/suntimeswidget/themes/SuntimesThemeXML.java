@@ -507,7 +507,7 @@ public class SuntimesThemeXML implements SuntimesThemeIO
 
                     if (tag.equalsIgnoreCase(SuntimesTheme.THEME_BACKGROUND))
                     {
-                        theme.themeBackground = ThemeBackground.getThemeBackground(backgroundStringToId(value));
+                        theme.themeBackground = SuntimesTheme.ThemeBackground.getThemeBackground(backgroundStringToId(value));
                     } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_BACKGROUND_COLOR)) {
                         theme.themeBackgroundColor = colorStringToInt(value);
 
@@ -647,13 +647,13 @@ public class SuntimesThemeXML implements SuntimesThemeIO
     private int backgroundStringToId(String value)
     {
         try {
-            ThemeBackground background = ThemeBackground.valueOf(value);
+            SuntimesTheme.ThemeBackground background = SuntimesTheme.ThemeBackground.valueOf(value);
             return background.getResID();
 
         } catch (IllegalArgumentException e) {
             Log.e("backgroundStringToId", "Background " + value + " not found. " + e);
         }
-        return ThemeBackground.DARK.getResID();
+        return SuntimesTheme.ThemeBackground.DARK.getResID();
     }
 
 }

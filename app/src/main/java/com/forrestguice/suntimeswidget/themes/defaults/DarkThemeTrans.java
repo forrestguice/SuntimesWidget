@@ -22,7 +22,6 @@ import android.content.Context;
 import android.graphics.Color;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
-import com.forrestguice.suntimeswidget.themes.ThemeBackground;
 
 public class DarkThemeTrans extends DarkTheme
 {

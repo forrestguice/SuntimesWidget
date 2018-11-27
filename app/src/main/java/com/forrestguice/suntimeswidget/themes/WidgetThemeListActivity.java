@@ -415,7 +415,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
                             if (theme.themeBackground == null)
                             {
                                 Log.e("importThemes", "background is null! " + theme.themeName());
-                                theme.themeBackground = ThemeBackground.DARK;
+                                theme.themeBackground = SuntimesTheme.ThemeBackground.DARK;
                             }
 
                             theme.saveTheme(WidgetThemes.getSharedPreferences(WidgetThemeListActivity.this));

@@ -132,7 +132,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private CheckBox checkTitleBold, checkTimeBold;
 
     private Spinner spinBackground;
-    private ArrayAdapter<ThemeBackground> spinBackground_adapter;
+    private ArrayAdapter<SuntimesTheme.ThemeBackground> spinBackground_adapter;
     private ColorChooser chooseColorBackground;
 
     private ViewFlipper preview;
@@ -198,7 +198,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     {
         WidgetSettings.initDefaults(this);
         WidgetSettings.initDisplayStrings(this);
-        ThemeBackground.initDisplayStrings(this);
+        SuntimesTheme.ThemeBackground.initDisplayStrings(this);
         SuntimesUtils.initDisplayStrings(this);
     }
 
@@ -218,7 +218,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        spinBackground_adapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, ThemeBackground.values());
+        spinBackground_adapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, SuntimesTheme.ThemeBackground.values());
         spinBackground_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinBackground = (Spinner)findViewById(R.id.editSpin_background);
         spinBackground.setAdapter(spinBackground_adapter);
@@ -228,7 +228,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
             {
                 updatePreview();
-                ThemeBackground background = spinBackground_adapter.getItem(i);
+                SuntimesTheme.ThemeBackground background = spinBackground_adapter.getItem(i);
                 boolean enabled = (background != null && background.supportsCustomColors());
                 //chooseColorBackground.setEnabled(enabled);
                 chooseColorBackground.setVisibility(enabled ? View.VISIBLE : View.INVISIBLE);
@@ -621,7 +621,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         View previewBackground = previewLayout.findViewById(R.id.widgetframe_inner);
         if (previewBackground != null)
         {
-            ThemeBackground background = (ThemeBackground)spinBackground.getSelectedItem();
+            SuntimesTheme.ThemeBackground background = (SuntimesTheme.ThemeBackground)spinBackground.getSelectedItem();
             if (background != null)
             {
                 if (background.supportsCustomColors())
@@ -1132,7 +1132,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         outState.putString(SuntimesTheme.THEME_DISPLAYSTRING, editDisplay.getText().toString());
         outState.putInt(PARAM_PREVIEWID, preview.getDisplayedChild());
 
-        ThemeBackground background = (ThemeBackground)spinBackground.getSelectedItem();
+        SuntimesTheme.ThemeBackground background = (SuntimesTheme.ThemeBackground)spinBackground.getSelectedItem();
         if (background != null)
         {
             outState.putString(SuntimesTheme.THEME_BACKGROUND, background.name());
@@ -1164,7 +1164,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         flipToPreview(savedState.getInt(PARAM_PREVIEWID, -1));
 
-        ThemeBackground background = (ThemeBackground)spinBackground.getSelectedItem();
+        SuntimesTheme.ThemeBackground background = (SuntimesTheme.ThemeBackground)spinBackground.getSelectedItem();
         String backgroundName = savedState.getString(SuntimesTheme.THEME_BACKGROUND);
         if (backgroundName == null)
         {
@@ -1172,7 +1172,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         }
 
         try {
-            setSelectedBackground(ThemeBackground.valueOf(backgroundName));
+            setSelectedBackground(SuntimesTheme.ThemeBackground.valueOf(backgroundName));
         } catch (IllegalArgumentException e) {
             Log.e("setBackground", "Unable to resolve ThemeBackground " + backgroundName);
             spinBackground.setSelection(0);
@@ -1343,7 +1343,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         toggleNoonIconColor(usingNoonIconColor(), true);
     }
 
-    private void setSelectedBackground(ThemeBackground themeBackground)
+    private void setSelectedBackground(SuntimesTheme.ThemeBackground themeBackground)
     {
         int backgroundPos = spinBackground_adapter.getPosition(themeBackground);
         spinBackground.setSelection( backgroundPos < 0 ? 0 : backgroundPos );

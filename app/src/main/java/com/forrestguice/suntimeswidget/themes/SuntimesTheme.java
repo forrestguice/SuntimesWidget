@@ -25,6 +25,7 @@ import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 public class SuntimesTheme
@@ -984,6 +985,77 @@ public class SuntimesTheme
         {
             ThemeDescriptor other = (ThemeDescriptor)another;
             return name.compareTo(other.name());
+        }
+    }
+
+
+    /**
+     * ThemeBackground
+     */
+    public enum ThemeBackground
+    {
+        COLOR(-1, "Colour", true),
+        DARK(R.drawable.bg_widget_dark, "Dark", false),
+        LIGHT(R.drawable.bg_widget, "Light", false),
+        TRANSPARENT(android.R.color.transparent, "Transparent", false);
+
+        private int resID;
+        private String displayString;
+        private boolean customColors = false;
+
+        private ThemeBackground(int resId, String displayString, boolean customColors )
+        {
+            this.resID = resId;
+            this.displayString = displayString;
+            this.customColors = customColors;
+        }
+
+        public int getResID()
+        {
+            return resID;
+        }
+
+        public boolean supportsCustomColors()
+        {
+            return customColors;
+        }
+
+        public String getDisplayString()
+        {
+            return displayString;
+        }
+        public void setDisplayString( String displayString )
+        {
+            this.displayString = displayString;
+        }
+
+        @Override
+        public String toString()
+        {
+            return displayString;
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            DARK.setDisplayString(context.getString(R.string.configLabel_themeBackground_dark));
+            LIGHT.setDisplayString(context.getString(R.string.configLabel_themeBackground_light));
+            TRANSPARENT.setDisplayString(context.getString(R.string.configLabel_themeBackground_trans));
+            COLOR.setDisplayString(context.getString(R.string.configLabel_themeBackground_color));
+        }
+
+        @NonNull
+        public static ThemeBackground getThemeBackground( int resID )
+        {
+            ThemeBackground[] backgrounds = ThemeBackground.values();
+            //noinspection ForLoopReplaceableByForEach
+            for (int i=0; i<backgrounds.length; i++)
+            {
+                if (backgrounds[i] != null && backgrounds[i].getResID() == resID)
+                {
+                    return backgrounds[i];
+                }
+            }
+            return ThemeBackground.DARK;
         }
     }
 

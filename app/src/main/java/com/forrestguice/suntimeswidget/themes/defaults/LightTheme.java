@@ -24,7 +24,6 @@ import android.support.v4.content.ContextCompat;
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
-import com.forrestguice.suntimeswidget.themes.ThemeBackground;
 
 public class LightTheme extends SuntimesTheme
 {

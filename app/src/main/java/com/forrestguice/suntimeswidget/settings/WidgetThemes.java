@@ -54,7 +54,6 @@ import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkThemeTrans;
 import com.forrestguice.suntimeswidget.themes.defaults.LightTheme;
 import com.forrestguice.suntimeswidget.themes.defaults.LightThemeTrans;
-import com.forrestguice.suntimeswidget.themes.ThemeBackground;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -521,7 +520,7 @@ public class WidgetThemes
 
                 View layout = view.findViewById(R.id.widgetframe_inner);
                 try {
-                    ThemeBackground background = theme.getBackground();
+                    SuntimesTheme.ThemeBackground background = theme.getBackground();
                     if (background.supportsCustomColors())
                         layout.setBackgroundColor(theme.getBackgroundColor());
                     else layout.setBackgroundResource(background.getResID());
