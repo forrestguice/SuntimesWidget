@@ -49,6 +49,7 @@ public class SuntimesTheme
     public static final String THEME_TITLECOLOR = "titlecolor";
     public static final String THEME_TIMECOLOR = "timecolor";
     public static final String THEME_TIMESUFFIXCOLOR = "timesuffixcolor";
+    public static final String THEME_ACTIONCOLOR = "actioncolor";
 
     public static final String THEME_SUNRISECOLOR = "sunrisecolor";
     public static final String THEME_NOONCOLOR = "nooncolor";
@@ -142,6 +143,7 @@ public class SuntimesTheme
     protected int themeTextColor;
     protected int themeTimeColor;
     protected int themeTimeSuffixColor;
+    protected int themeActionColor;
 
     protected int themeSunriseTextColor;
     protected int themeSunriseIconColor;
@@ -313,6 +315,7 @@ public class SuntimesTheme
         this.themeTitleColor = themes.getInt( theme + THEME_TITLECOLOR, defaultTheme.themeTitleColor );
         this.themeTimeColor = themes.getInt( theme + THEME_TIMECOLOR, defaultTheme.themeTimeColor );
         this.themeTimeSuffixColor = themes.getInt( theme + THEME_TIMESUFFIXCOLOR, defaultTheme.themeTimeSuffixColor );
+        this.themeActionColor = themes.getInt( theme + THEME_ACTIONCOLOR, defaultTheme.themeActionColor );
 
         this.themeSunriseTextColor = themes.getInt( theme + THEME_SUNRISECOLOR, defaultTheme.themeSunriseTextColor );
         this.themeSunriseIconColor = themes.getInt( theme + THEME_RISEICON_FILL_COLOR, defaultTheme.themeSunriseIconColor );
@@ -395,6 +398,7 @@ public class SuntimesTheme
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_TITLECOLOR, this.themeTitleColor);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_TIMECOLOR, this.themeTimeColor);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_TIMESUFFIXCOLOR, this.themeTimeSuffixColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_ACTIONCOLOR, this.themeActionColor);
 
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_SUNRISECOLOR, this.themeSunriseTextColor);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_RISEICON_FILL_COLOR, this.themeSunriseIconColor);
@@ -483,6 +487,7 @@ public class SuntimesTheme
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_TITLECOLOR);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_TIMECOLOR);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_TIMESUFFIXCOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_ACTIONCOLOR);
 
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_SUNRISECOLOR);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_RISEICON_FILL_COLOR);
@@ -843,6 +848,11 @@ public class SuntimesTheme
     public int getBackgroundColor()
     {
         return themeBackgroundColor;
+    }
+
+    public int getActionColor()
+    {
+        return themeActionColor;
     }
 
     public int[] getPadding()

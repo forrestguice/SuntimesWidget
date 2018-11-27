@@ -131,6 +131,21 @@
                     <include layout="@layout/layout_themeconfig_map" />
                 </LinearLayout>
 
+                <!-- Misc Section -->
+                <View android:id="@+id/divider_misc"
+                    android:layout_width="0dp" android:layout_height="1dp" android:background="?attr/hrColor"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_map"
+                    app:layout_constraintStart_toStartOf="@+id/layout_misc" app:layout_constraintEnd_toEndOf="@+id/layout_misc" />
+
+                <LinearLayout android:id="@+id/layout_misc"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider_misc">
+                    <include layout="@layout/layout_themeconfig_misc" />
+                </LinearLayout>
+
 
             </android.support.constraint.ConstraintLayout>
 

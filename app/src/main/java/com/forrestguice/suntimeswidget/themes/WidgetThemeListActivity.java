@@ -412,12 +412,6 @@ public class WidgetThemeListActivity extends AppCompatActivity
                     {
                         if (!WidgetThemes.hasValue(theme.themeDescriptor()))
                         {
-                            if (theme.themeBackground == null)
-                            {
-                                Log.e("importThemes", "background is null! " + theme.themeName());
-                                theme.themeBackground = SuntimesTheme.ThemeBackground.DARK;
-                            }
-
                             theme.saveTheme(WidgetThemes.getSharedPreferences(WidgetThemeListActivity.this));
                             WidgetThemes.addValue(WidgetThemeListActivity.this, theme.themeDescriptor());
                             adapterModified = true;
@@ -652,7 +646,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
                     case R.id.exportTheme:
                         exportThemes(WidgetThemeListActivity.this, new SuntimesTheme.ThemeDescriptor[] { theme.themeDescriptor()} );
-                        return true;
+                        return true;  // TODO: messages
                 }
             }
             mode.finish();

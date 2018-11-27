@@ -211,6 +211,10 @@ public class SuntimesThemeXML implements SuntimesThemeIO
                 xml.text(colorToString(theme.getTimeSuffixColor()));
                 xml.endTag(namespace, SuntimesTheme.THEME_TIMESUFFIXCOLOR);
 
+                xml.startTag(namespace, SuntimesTheme.THEME_ACTIONCOLOR);
+                xml.text(colorToString(theme.getActionColor()));
+                xml.endTag(namespace, SuntimesTheme.THEME_ACTIONCOLOR);
+
                 xml.startTag(namespace, SuntimesTheme.THEME_SUNRISECOLOR);
                 xml.text(colorToString(theme.getSunriseTextColor()));
                 xml.endTag(namespace, SuntimesTheme.THEME_SUNRISECOLOR);
@@ -528,6 +532,8 @@ public class SuntimesThemeXML implements SuntimesThemeIO
                         theme.themeTimeColor = colorStringToInt(value);
                     } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_TIMESUFFIXCOLOR)) {
                         theme.themeTimeSuffixColor = colorStringToInt(value);
+                    } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_ACTIONCOLOR)) {
+                        theme.themeActionColor = colorStringToInt(value);
 
                     } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_SUNRISECOLOR)) {
                         theme.themeSunriseTextColor = colorStringToInt(value);
@@ -627,6 +633,13 @@ public class SuntimesThemeXML implements SuntimesThemeIO
                     parseEvent = parser.next();
                     break;
             }
+        }
+
+        if (theme.themeBackground == null) {
+            theme.themeBackground = SuntimesTheme.ThemeBackground.DARK;
+        }
+        if (theme.themeActionColor == 0) {
+            theme.themeActionColor = theme.themeSunsetIconColor;
         }
         return theme;
     }

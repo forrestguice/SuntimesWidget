@@ -148,6 +148,8 @@ public class LightTheme extends SuntimesTheme
         this.themeMapForegroundColor = ContextCompat.getColor(context, THEMEDEF_MAP_FOREGROUNDCOLOR_ID);
         this.themeMapShadowColor = ContextCompat.getColor(context, THEMEDEF_MAP_SHADOWCOLOR_ID);
         this.themeMapHighlightColor = ContextCompat.getColor(context, THEMEDEF_MAP_HIGHLIGHTCOLOR_ID);
+
+        this.themeActionColor = this.themeSunriseIconColor;
     }
 
     public ThemeDescriptor themeDescriptor()
