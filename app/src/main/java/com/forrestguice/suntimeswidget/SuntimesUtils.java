@@ -869,6 +869,48 @@ public class SuntimesUtils
         return new TimeDisplayText(formatAsDegrees(degreeValue, places), "", strDecSymbol);
     }
 
+    public String formatAsHeight(Context context, int meters, WidgetSettings.LengthUnit units, int places)
+    {
+        NumberFormat formatter = NumberFormat.getInstance();
+        formatter.setMinimumFractionDigits(places);
+        formatter.setMaximumFractionDigits(places);
+
+        double value;
+        switch (units)
+        {
+            case USC:
+            case IMPERIAL:
+                value = 3.28084 * meters;
+                return context.getResources().getQuantityString(R.plurals.units_feet_long, (int)value, formatter.format(value));
+
+            case METRIC:
+            default:
+                value = meters;
+                return context.getResources().getQuantityString(R.plurals.units_meters_long, (int)value, formatter.format(value));
+        }
+    }
+
+    public TimeDisplayText formatAsHeight(Context context, int meters, WidgetSettings.LengthUnit units)
+    {
+        int value;
+        String unitsString;
+        switch (units)
+        {
+            case USC:
+            case IMPERIAL:
+                value = (int)Math.floor(3.28084 * meters);
+                unitsString = context.getString(R.string.units_feet_short);
+                break;
+
+            case METRIC:
+            default:
+                value = meters;
+                unitsString = context.getString(R.string.units_meters_short);
+                break;
+        }
+        return new TimeDisplayText(Integer.toString(value), unitsString, "");
+    }
+
     /**
      * Creates a title string from a given "title pattern".
      *

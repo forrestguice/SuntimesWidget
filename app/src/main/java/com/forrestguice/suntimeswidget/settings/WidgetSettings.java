@@ -142,6 +142,9 @@ public class WidgetSettings
     public static final String PREF_KEY_GENERAL_OBSERVERHEIGHT = "observerheight";
     public static final float PREF_DEF_GENERAL_OBSERVERHEIGHT = 1.8288f; // meters (6ft)
 
+    public static final String PREF_KEY_GENERAL_UNITS_LENGTH = "lengthunits";
+    public static LengthUnit PREF_DEF_GENERAL_UNITS_LENGTH = LengthUnit.METRIC;  // reassigned later by initDefaults
+
     public static final String PREF_KEY_ACTION_MODE = "action";
     public static final ActionMode PREF_DEF_ACTION_MODE = ActionMode.ONTAP_LAUNCH_CONFIG;
 
@@ -189,6 +192,41 @@ public class WidgetSettings
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * LengthUnit
+     */
+    public static enum LengthUnit
+    {
+        METRIC("Metric"),
+        IMPERIAL("Imperial"),
+        USC("U.S. Customary");
+
+        private LengthUnit(String displayString)
+        {
+            this.displayString = displayString;
+        }
+
+        private String displayString;
+        public String getDisplayString()
+        {
+            return displayString;
+        }
+        public void setDisplayString(String value)
+        {
+            displayString = value;
+        }
+        public static void initDisplayStrings(Context context)
+        {
+            METRIC.setDisplayString(context.getString(R.string.lengthUnits_metric));
+            IMPERIAL.setDisplayString(context.getString(R.string.lengthUnits_imperial));
+            IMPERIAL.setDisplayString(context.getString(R.string.lengthUnits_usc));
+        }
+        public String toString()
+        {
+            return displayString;
+        }
+    }
 
     /**
      * WidgetOnTap
@@ -2168,6 +2206,8 @@ public class WidgetSettings
         prefs.apply();
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void saveObserverHeightPref(Context context, int appWidgetId, float meters)
     {
@@ -2190,6 +2230,45 @@ public class WidgetSettings
         prefs.apply();
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void saveLengthUnitsPref(Context context, int appWidgetId, LengthUnit value)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putString(prefs_prefix + PREF_KEY_GENERAL_UNITS_LENGTH, value.name());
+        prefs.apply();
+    }
+
+    public static LengthUnit loadLengthUnitsPref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        return getLengthUnit(prefs.getString(prefs_prefix + PREF_KEY_GENERAL_UNITS_LENGTH, PREF_DEF_GENERAL_UNITS_LENGTH.name()));
+    }
+
+    public static LengthUnit getLengthUnit(String unitName)
+    {
+        LengthUnit retValue;
+        try {
+            retValue = LengthUnit.valueOf(unitName);
+        } catch (IllegalArgumentException e) {
+            retValue = PREF_DEF_GENERAL_UNITS_LENGTH;
+        }
+        return retValue;
+    }
+
+    public static void deleteLengthUnitsPref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_UNITS_LENGTH);
+        prefs.apply();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void saveTimeNoteRisePref(Context context, int appWidgetId, SolarEvents riseChoice)
     {
@@ -2289,9 +2368,10 @@ public class WidgetSettings
         deleteShowTimeDatePref(context, appWidgetId);
 
         deleteObserverHeightPref(context, appWidgetId);
+        deleteLengthUnitsPref(context, appWidgetId);
 
         deleteLocationModePref(context, appWidgetId);
-	deleteLocationAltitudeEnabledPref(context, appWidgetId);
+        deleteLocationAltitudeEnabledPref(context, appWidgetId);
         deleteLocationPref(context, appWidgetId);
 
         deleteTimezoneModePref(context, appWidgetId);
@@ -2311,10 +2391,12 @@ public class WidgetSettings
         PREF_DEF_LOCATION_LATITUDE = context.getString(R.string.default_location_latitude);
         PREF_DEF_LOCATION_LONGITUDE = context.getString(R.string.default_location_longitude);
         PREF_DEF_LOCATION_ALTITUDE = context.getString(R.string.default_location_altitude);
+        PREF_DEF_GENERAL_UNITS_LENGTH = getLengthUnit(context.getString(R.string.default_units_length));
     }
 
     public static void initDisplayStrings( Context context )
     {
+        LengthUnit.initDisplayStrings(context);
         ActionMode.initDisplayStrings(context);
         WidgetModeSun1x1.initDisplayStrings(context);
         WidgetModeSunPos1x1.initDisplayStrings(context);

@@ -453,6 +453,13 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             } catch (NumberFormatException e) {
                 Log.e(LOG_TAG, "onPreferenceChangeD: Failed to persist observerHeight: bad value!" + e);
             }
+        }
+
+        if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_UNITS_LENGTH))
+        {
+            // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
+            // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
+            WidgetSettings.saveLengthUnitsPref(this, 0, WidgetSettings.getLengthUnit(sharedPreferences.getString(key, WidgetSettings.PREF_DEF_GENERAL_UNITS_LENGTH.name())));
             return;
         }
     }
