@@ -871,23 +871,29 @@ public class SuntimesUtils
 
     public static String formatAsHeight(Context context, double meters, WidgetSettings.LengthUnit units, int places)
     {
-        NumberFormat formatter = NumberFormat.getInstance();
-        formatter.setMinimumFractionDigits(places);
-        formatter.setMaximumFractionDigits(places);
-
+        int stringID;
         double value;
         switch (units)
         {
             case USC:
             case IMPERIAL:
-                value = (int)WidgetSettings.LengthUnit.metersToFeet(meters);
-                return context.getResources().getQuantityString(R.plurals.units_feet_long, (int)value, formatter.format(value));
+                value = WidgetSettings.LengthUnit.metersToFeet(meters);
+                stringID = R.plurals.units_feet_long;
+                break;
 
             case METRIC:
             default:
                 value = meters;
-                return context.getResources().getQuantityString(R.plurals.units_meters_long, (int)value, formatter.format(value));
+                stringID = R.plurals.units_meters_long;
+                break;
         }
+        int h = ((value > 1) ? (int)Math.ceil(value)   // TODO: better use of plurals w/ fractional values..
+               : (value < 1) ? 2 : 1);   // this is a hack; there must be a better way to treat fractions as plural
+
+        NumberFormat formatter = NumberFormat.getInstance();
+        formatter.setMinimumFractionDigits(0);
+        formatter.setMaximumFractionDigits(places);
+        return context.getResources().getQuantityString(stringID, h, formatter.format(value));
     }
 
     public static TimeDisplayText formatAsHeight(Context context, double meters, WidgetSettings.LengthUnit units, int places, boolean shortForm)
