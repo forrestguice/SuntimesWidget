@@ -869,7 +869,7 @@ public class SuntimesUtils
         return new TimeDisplayText(formatAsDegrees(degreeValue, places), "", strDecSymbol);
     }
 
-    public String formatAsHeight(Context context, int meters, WidgetSettings.LengthUnit units, int places)
+    public static String formatAsHeight(Context context, int meters, WidgetSettings.LengthUnit units, int places)
     {
         NumberFormat formatter = NumberFormat.getInstance();
         formatter.setMinimumFractionDigits(places);
@@ -880,7 +880,7 @@ public class SuntimesUtils
         {
             case USC:
             case IMPERIAL:
-                value = 3.28084 * meters;
+                value = (int)WidgetSettings.LengthUnit.metersToFeet(meters);
                 return context.getResources().getQuantityString(R.plurals.units_feet_long, (int)value, formatter.format(value));
 
             case METRIC:
@@ -890,7 +890,7 @@ public class SuntimesUtils
         }
     }
 
-    public TimeDisplayText formatAsHeight(Context context, int meters, WidgetSettings.LengthUnit units)
+    public static TimeDisplayText formatAsHeight(Context context, int meters, WidgetSettings.LengthUnit units, boolean shortForm)
     {
         int value;
         String unitsString;
@@ -898,14 +898,14 @@ public class SuntimesUtils
         {
             case USC:
             case IMPERIAL:
-                value = (int)Math.floor(3.28084 * meters);
-                unitsString = context.getString(R.string.units_feet_short);
+                value = (int)WidgetSettings.LengthUnit.metersToFeet(meters);
+                unitsString = (shortForm ? context.getString(R.string.units_feet_short) : context.getString(R.string.units_feet));
                 break;
 
             case METRIC:
             default:
                 value = meters;
-                unitsString = context.getString(R.string.units_meters_short);
+                unitsString = (shortForm ? context.getString(R.string.units_meters_short) : context.getString(R.string.units_meters));
                 break;
         }
         return new TimeDisplayText(Integer.toString(value), unitsString, "");

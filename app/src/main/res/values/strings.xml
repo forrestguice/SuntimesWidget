@@ -174,13 +174,11 @@
     <string-array name="lengthUnits_values" translatable="false">
         <item>METRIC</item>
         <item>IMPERIAL</item>
-        <item>USC</item>
     </string-array>
     <string-array name="lengthUnits_display"> <!-- one-to-one with lengthUnits_values -->
         <item>@string/lengthUnits_metric</item>
         <item>@string/lengthUnits_imperial</item>
-        <item>@string/lengthUnits_usc</item>
-    </string-array>  <!-- TODO -->
+    </string-array>
 
     <string name="units_feet">feet</string>
     <string name="units_feet_short">ft</string>
