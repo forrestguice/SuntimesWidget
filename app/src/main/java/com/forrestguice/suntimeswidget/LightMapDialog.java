@@ -292,7 +292,7 @@ public class LightMapDialog extends DialogFragment
         formatter.setMinimumFractionDigits(0);
         formatter.setMaximumFractionDigits(2);
         if (meters < Double.POSITIVE_INFINITY)
-            return utils.formatAsHeight(context, (int)meters, units).toString();
+            return SuntimesUtils.formatAsHeight(context, meters, units, 2, true).toString();
         else return formatter.format(meters);
     }
 
