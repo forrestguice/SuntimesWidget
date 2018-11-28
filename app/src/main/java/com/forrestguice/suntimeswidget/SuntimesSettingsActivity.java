@@ -50,6 +50,8 @@ import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.KeyEvent;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
@@ -58,6 +60,7 @@ import com.forrestguice.suntimeswidget.calendar.SuntimesCalendarTask;
 import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.LengthPreference;
 import com.forrestguice.suntimeswidget.settings.SummaryListPreference;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -332,7 +335,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
         {
             if (key.equals(AppSettings.PREF_KEY_LOCALE) || key.equals(AppSettings.PREF_KEY_LOCALE_MODE)
-                    || key.equals(AppSettings.PREF_KEY_APPEARANCE_THEME))
+                    || key.equals(AppSettings.PREF_KEY_APPEARANCE_THEME) || key.endsWith(WidgetSettings.PREF_KEY_GENERAL_UNITS_LENGTH))
             {
                 //Log.d("SettingsActivity", "Locale change detected; restarting activity");
                 updateLocale();
@@ -574,6 +577,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             initPref_calculator(this, moonCalculatorPref, new int[] {SuntimesCalculator.FEATURE_MOON}, WidgetSettings.PREF_DEF_GENERAL_CALCULATOR_MOON);
             loadPref_calculator(this, moonCalculatorPref,"moon");
         }
+
+        String key_observerHeight = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_GENERAL + WidgetSettings.PREF_KEY_GENERAL_OBSERVERHEIGHT;
+        LengthPreference observerHeightPref = (LengthPreference) findPreference(key_observerHeight);
+        if (observerHeightPref != null)
+        {
+            initPref_observerHeight(this, observerHeightPref);
+            loadPref_observerHeight(this, observerHeightPref);
+        }
     }
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private static void initPref_general(PreferenceFragment fragment)
@@ -614,7 +625,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         }
 
         String key_observerHeight = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_GENERAL + WidgetSettings.PREF_KEY_GENERAL_OBSERVERHEIGHT;
-        EditTextPreference observerHeightPref = (EditTextPreference) fragment.findPreference(key_observerHeight);
+        LengthPreference observerHeightPref = (LengthPreference) fragment.findPreference(key_observerHeight);
         if (observerHeightPref != null)
         {
             initPref_observerHeight(fragment.getActivity(), observerHeightPref);
@@ -1236,7 +1247,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////
 
-    private static void initPref_observerHeight(final Activity context, final EditTextPreference pref)
+    private static void initPref_observerHeight(final Activity context, final LengthPreference pref)
     {
         TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.icActionShadow});
         int drawableID = a.getResourceId(0, R.drawable.ic_action_shadow);
@@ -1247,6 +1258,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         SpannableStringBuilder titleSpan = SuntimesUtils.createSpan(context, title, "[i]", shadowIcon);
         pref.setTitle(titleSpan);
 
+        WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+        pref.setMetric(units == WidgetSettings.LengthUnit.METRIC);
         pref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
         {
             @Override
@@ -1256,7 +1269,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                     double doubleValue = Double.parseDouble((String)newValue);
                     if (doubleValue > 0)
                     {
-                        preference.setSummary(formatObserverHeightSummary(preference.getContext(), doubleValue));
+                        WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+                        preference.setSummary(formatObserverHeightSummary(preference.getContext(), doubleValue, units, false));
                         return true;
 
                     } else return false;
@@ -1266,25 +1280,17 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             }
         });
     }
-    private static void loadPref_observerHeight(Context context, EditTextPreference pref)
+    private static void loadPref_observerHeight(Context context, final LengthPreference pref)
     {
+        final WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
         double observerHeight = WidgetSettings.loadObserverHeightPref(context, 0);
-        pref.setSummary(formatObserverHeightSummary(context, observerHeight));
+        pref.setSummary(formatObserverHeightSummary(context, observerHeight, units, true));
     }
-    private static CharSequence formatObserverHeightSummary(@NonNull Context context, double observerHeight)
+    private static CharSequence formatObserverHeightSummary(@NonNull Context context, double observerHeight, WidgetSettings.LengthUnit units, boolean convert)
     {
-        NumberFormat formatter = NumberFormat.getInstance();
-        formatter.setMinimumFractionDigits(0);
-        formatter.setMaximumFractionDigits(2);
-
-        int h = ((observerHeight > 1) ? (int)Math.ceil(observerHeight)
-                : (observerHeight < 1) ? 2 : 1);
-
-        Resources resources = context.getResources();
-        String observerHeightDisplay = resources.getQuantityString(R.plurals.units_meters_long, h, formatter.format(observerHeight));
+        String observerHeightDisplay = SuntimesUtils.formatAsHeight(context, observerHeight, units, convert, 2);
         return context.getString(R.string.configLabel_general_observerheight_summary, observerHeightDisplay);
     }
-
 
     private static void initPref_altitude(final Activity context, final CheckBoxPreference altitudePref)
     {

@@ -869,21 +869,21 @@ public class SuntimesUtils
         return new TimeDisplayText(formatAsDegrees(degreeValue, places), "", strDecSymbol);
     }
 
-    public static String formatAsHeight(Context context, double meters, WidgetSettings.LengthUnit units, int places)
+    public static String formatAsHeight(Context context, double value, WidgetSettings.LengthUnit units, boolean convert, int places)
     {
         int stringID;
-        double value;
         switch (units)
         {
             case USC:
             case IMPERIAL:
-                value = WidgetSettings.LengthUnit.metersToFeet(meters);
+                if (convert) {
+                    value = WidgetSettings.LengthUnit.metersToFeet(value);
+                }
                 stringID = R.plurals.units_feet_long;
                 break;
 
             case METRIC:
             default:
-                value = meters;
                 stringID = R.plurals.units_meters_long;
                 break;
         }
