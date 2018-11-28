@@ -1617,7 +1617,7 @@ public class SuntimesActivity extends AppCompatActivity
         if (supportsAltitude && enabledAltitude && location.getAltitudeAsInteger() != 0)
         {
             WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
-            SuntimesUtils.TimeDisplayText altitudeText = utils.formatAsHeight(context, location.getAltitudeAsInteger(), units);
+            SuntimesUtils.TimeDisplayText altitudeText = SuntimesUtils.formatAsHeight(context, location.getAltitudeAsInteger(), units, true);
             altitudeString = getString(R.string.location_format_alt, altitudeText.getValue(), altitudeText.getUnits());
             String altitudeTag = getString(R.string.location_format_alttag, altitudeString);
             String displayString = getString(R.string.location_format_latlonalt, locationString, altitudeTag);
