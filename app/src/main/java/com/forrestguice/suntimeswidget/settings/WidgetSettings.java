@@ -226,6 +226,13 @@ public class WidgetSettings
         {
             return displayString;
         }
+
+        public static double metersToFeet(double meters) {
+            return 3.28084d * meters;
+        }
+        public static double feetToMeters(double feet) {
+            return (feet * (1d / 3.28084d) );
+        }
     }
 
     /**
@@ -682,7 +689,7 @@ public class WidgetSettings
          */
         public Location( String latitude, String longitude )
         {
-            this(null, latitude, longitude, null);
+            this(null, latitude, longitude, null, LengthUnit.METRIC);
         }
 
         /**
@@ -692,7 +699,12 @@ public class WidgetSettings
          */
         public Location( String label, String latitude, String longitude )
         {
-            this(label, latitude, longitude, null);
+            this(label, latitude, longitude, null, LengthUnit.METRIC);
+        }
+
+        public Location( String label, String latitude, String longitude, String altitude )
+        {
+            this(label, latitude, longitude, altitude, LengthUnit.METRIC);
         }
 
         /**
@@ -701,12 +713,28 @@ public class WidgetSettings
          * @param longitude decimal degrees (DD) string
          * @param altitude meters string
          */
-        public Location( String label, String latitude, String longitude, String altitude )
+        public Location( String label, String latitude, String longitude, String altitude, LengthUnit altitudeUnits )
         {
             this.label = (label == null) ? "" : label;
             this.latitude = latitude;
             this.longitude = longitude;
-            this.altitude = (altitude == null) ? "" : altitude;
+
+            if (altitudeUnits != null)
+            {
+                switch (altitudeUnits)
+                {
+                    case IMPERIAL:
+                    case USC:
+                        this.altitude = Double.toString(LengthUnit.feetToMeters(Double.parseDouble(altitude)));
+                        break;
+
+                    case METRIC:
+                        this.altitude = altitude;
+                        break;
+                }
+            } else {
+                this.altitude = "";
+            }
         }
 
         /**
