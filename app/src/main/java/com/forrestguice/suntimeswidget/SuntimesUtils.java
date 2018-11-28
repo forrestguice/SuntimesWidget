@@ -869,7 +869,7 @@ public class SuntimesUtils
         return new TimeDisplayText(formatAsDegrees(degreeValue, places), "", strDecSymbol);
     }
 
-    public static String formatAsHeight(Context context, int meters, WidgetSettings.LengthUnit units, int places)
+    public static String formatAsHeight(Context context, double meters, WidgetSettings.LengthUnit units, int places)
     {
         NumberFormat formatter = NumberFormat.getInstance();
         formatter.setMinimumFractionDigits(places);
@@ -890,15 +890,15 @@ public class SuntimesUtils
         }
     }
 
-    public static TimeDisplayText formatAsHeight(Context context, int meters, WidgetSettings.LengthUnit units, boolean shortForm)
+    public static TimeDisplayText formatAsHeight(Context context, double meters, WidgetSettings.LengthUnit units, int places, boolean shortForm)
     {
-        int value;
+        double value;
         String unitsString;
         switch (units)
         {
             case USC:
             case IMPERIAL:
-                value = (int)WidgetSettings.LengthUnit.metersToFeet(meters);
+                value = WidgetSettings.LengthUnit.metersToFeet(meters);
                 unitsString = (shortForm ? context.getString(R.string.units_feet_short) : context.getString(R.string.units_feet));
                 break;
 
@@ -908,7 +908,11 @@ public class SuntimesUtils
                 unitsString = (shortForm ? context.getString(R.string.units_meters_short) : context.getString(R.string.units_meters));
                 break;
         }
-        return new TimeDisplayText(Integer.toString(value), unitsString, "");
+
+        NumberFormat formatter = NumberFormat.getInstance();
+        formatter.setMinimumFractionDigits(0);
+        formatter.setMaximumFractionDigits(places);
+        return new TimeDisplayText(formatter.format(value), unitsString, "");
     }
 
     /**
