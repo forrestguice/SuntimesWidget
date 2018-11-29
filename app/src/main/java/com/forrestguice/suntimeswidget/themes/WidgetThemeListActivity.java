@@ -598,6 +598,12 @@ public class WidgetThemeListActivity extends AppCompatActivity
             selected = null;
             //noinspection ConstantConditions
             adapter.setSelected(selected);
+
+            Intent intent = getIntent();
+            if (intent != null) {
+                preselectedTheme = null;
+                intent.putExtra(PARAM_SELECTED, (String)null);
+            }
         }
 
         @Override
