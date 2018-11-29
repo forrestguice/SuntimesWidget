@@ -27,6 +27,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.InsetDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -75,6 +76,8 @@ import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import java.security.InvalidParameterException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.forrestguice.suntimeswidget.themes.SuntimesTheme.THEME_BACKGROUND_COLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesTheme.THEME_NAME;
@@ -1432,6 +1435,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         return theme;
     }
 
+    /**
+     * Used when adding a new theme.
+     * @return a unique themeName
+     */
     protected String suggestThemeName()
     {
         int i = 1;
@@ -1444,17 +1451,31 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     }
 
     /**
+     * Used when copying an existing theme.
      * @param suggestedName the desired themeName (might not be unique/available)
      * @return a unique themeName
      */
-    protected String generateThemeName( String suggestedName )
+    protected String generateThemeName( @NonNull String suggestedName )
     {
         int i = 1;
+        String copyName = getString(R.string.addtheme_copyname, "", "");
         String generatedName = suggestedName;
         while (WidgetThemes.valueOf(generatedName) != null)
         {
-            generatedName = getString(R.string.addtheme_copyname, suggestedName, i+"");
-            i++;
+            String root;
+            String[] parts = generatedName.split(copyName,2);
+            if (parts.length < 2) {
+                root = suggestedName;
+                
+            } else {
+                root = parts[0];
+                try {
+                    i = Integer.parseInt(parts[1]) + 1;
+                } catch (NumberFormatException e) {
+                    i++;
+                }
+            }
+            generatedName = getString(R.string.addtheme_copyname, root, Integer.toString(i));
         }
         return generatedName;
     }
