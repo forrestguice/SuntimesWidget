@@ -41,19 +41,23 @@
             app:layout_constraintStart_toEndOf="@+id/editLabel_titleSize"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <CheckBox
-            android:id="@+id/check_titleBold"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@+id/chooser_titleColor"
-            app:layout_constraintTop_toTopOf="@+id/edit_titleSize"
-            app:layout_constraintBottom_toBottomOf="@+id/edit_titleSize"
-            android:text="@string/configLabel_themeBoldTitle" />
-
         <com.forrestguice.suntimeswidget.settings.ColorChooserView
             android:id="@+id/chooser_titleColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:reverse="true"
             app:labelText="@string/configLabel_themeColorTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editLabel_titleSize"
             app:colorHint="@string/configHint_themeColorSunrise" />
+
+        <CheckBox
+            android:id="@+id/check_titleBold"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@+id/edit_titleSize"
+            app:layout_constraintTop_toTopOf="@+id/edit_titleSize"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_titleSize"
+            android:text="@string/configLabel_themeBoldTitle" />
 
         <!-- Text Area -->
         <TextView android:labelFor="@+id/edit_textSize"
@@ -70,15 +74,15 @@
             android:layout_width="0dp"
             android:text="" android:hint="@string/configHint_themeSizeText" tools:text="10"
             app:layout_constraintStart_toEndOf="@+id/editLabel_textSize"
-            app:layout_constraintTop_toBottomOf="@+id/edit_titleSize"
+            app:layout_constraintTop_toBottomOf="@+id/chooser_titleColor"
             tools:layout_editor_absoluteX="197dp"/>
 
         <com.forrestguice.suntimeswidget.settings.ColorChooserView
             android:id="@+id/chooser_textColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@+id/edit_textSize"
-            app:layout_constraintBottom_toBottomOf="@+id/edit_textSize"
-            app:layout_constraintStart_toStartOf="@+id/chooser_titleColor"
+            app:reverse="true"
+            app:layout_constraintTop_toBottomOf="@+id/editLabel_textSize"
+            app:layout_constraintStart_toStartOf="parent"
             app:labelText="@string/configLabel_themeColorText"
             app:colorHint="@string/configHint_themeColorSunrise" />
 
@@ -97,12 +101,13 @@
             android:layout_width="0dp"
             android:text="" android:hint="@string/configHint_themeSizeTime" tools:text="12"
             app:layout_constraintStart_toEndOf="@+id/editLabel_timeSize"
-            app:layout_constraintTop_toBottomOf="@+id/edit_textSize"
+            app:layout_constraintTop_toBottomOf="@+id/chooser_textColor"
             tools:layout_editor_absoluteX="81dp"/>
 
         <CheckBox android:id="@+id/check_timeBold"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@+id/chooser_timeColor"
+            android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@+id/edit_timeSize"
             app:layout_constraintTop_toTopOf="@+id/edit_timeSize"
             app:layout_constraintBottom_toBottomOf="@+id/edit_timeSize"
             android:text="@string/configLabel_themeBoldTime" />
@@ -110,9 +115,9 @@
         <com.forrestguice.suntimeswidget.settings.ColorChooserView
             android:id="@+id/chooser_timeColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@+id/edit_timeSize"
-            app:layout_constraintBottom_toBottomOf="@+id/edit_timeSize"
-            app:layout_constraintStart_toStartOf="@+id/chooser_titleColor"
+            app:layout_constraintTop_toBottomOf="@+id/editLabel_timeSize"
+            app:layout_constraintStart_toStartOf="parent"
+            app:reverse="true"
             app:labelText="@string/configLabel_themeColorTime"
             app:colorHint="@string/configHint_themeColorSunrise" />
 
@@ -131,16 +136,16 @@
             android:layout_width="0dp"
             android:text="" android:hint="@string/configHint_themeSizeSuffix" tools:text="8"
             app:layout_constraintStart_toEndOf="@+id/editLabel_suffixSize"
-            app:layout_constraintTop_toBottomOf="@+id/edit_timeSize"
+            app:layout_constraintTop_toBottomOf="@+id/chooser_timeColor"
             tools:layout_editor_absoluteX="210dp"/>
 
 
         <com.forrestguice.suntimeswidget.settings.ColorChooserView
             android:id="@+id/chooser_suffixColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@+id/edit_suffixSize"
-            app:layout_constraintBottom_toBottomOf="@+id/edit_suffixSize"
-            app:layout_constraintStart_toStartOf="@+id/chooser_titleColor"
+            app:layout_constraintTop_toBottomOf="@+id/editLabel_suffixSize"
+            app:layout_constraintStart_toStartOf="parent"
+            app:reverse="true"
             app:labelText="@string/configLabel_themeColorSuffix"
             app:colorHint="@string/configHint_themeColorSunrise" />
 
