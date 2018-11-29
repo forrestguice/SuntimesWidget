@@ -69,9 +69,25 @@ public class ColorChooserView extends LinearLayout
         }
     }
 
+    private int getLayoutID(Context context,AttributeSet attrs)
+    {
+        int layoutID = R.layout.layout_view_colorchooser;
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ColorChooserView, 0, 0);
+        try
+        {
+            if (a.getBoolean(R.styleable.ColorChooserView_reverse, false)) {
+                layoutID = R.layout.layout_view_colorchooser_rev;
+            }
+        } finally {
+            a.recycle();
+        }
+        return layoutID;
+    }
+
     private void init(Context context, AttributeSet attrs)
     {
-        LayoutInflater.from(context).inflate(R.layout.layout_view_colorchooser, this, true);
+
+        LayoutInflater.from(context).inflate(getLayoutID(context, attrs), this, true);
         label = (TextView) findViewById(R.id.editLabel_color);
         button = (ImageButton) findViewById(R.id.editButton_color);
         edit = (EditText) findViewById(R.id.edit_color);
