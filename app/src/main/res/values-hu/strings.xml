@@ -413,42 +413,42 @@
     <string name="configLabel_themeBackground_color">Color</string>      <!-- custom background -->  <!-- TODO -->
     <string name="configLabel_themeColorBackground">Color:</string>      <!-- color label -->   <!-- TODO -->
 
-    <string name="configLabel_themeColorTitle">Title Color:</string>     <!-- color label -->  <!-- TODO -->
+    <string name="configLabel_themeColorTitle">Title</string>     <!-- color label -->  <!-- TODO -->
     <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->  <!-- TODO -->
 
-    <string name="configLabel_themeColorText">Text Color:</string>       <!-- color label -->  <!-- TODO -->
+    <string name="configLabel_themeColorText">Text</string>       <!-- color label -->  <!-- TODO -->
     <string name="configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->  <!-- TODO -->
 
-    <string name="configLabel_themeColorSpring">Spring Color:</string> <!-- color label -->  <!-- TODO -->
-    <string name="configLabel_themeColorSummer">Summer Color:</string> <!-- color label -->  <!-- TODO -->
-    <string name="configLabel_themeColorFall">Fall Color:</string> <!-- color label --> <!-- TODO -->
-    <string name="configLabel_themeColorWinter">Winter Color:</string> <!-- color label -->  <!-- TODO -->
+    <string name="configLabel_themeColorSpring">Spring Color</string> <!-- color label -->  <!-- TODO -->
+    <string name="configLabel_themeColorSummer">Summer Color</string> <!-- color label -->  <!-- TODO -->
+    <string name="configLabel_themeColorFall">Fall Color</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorWinter">Winter Color</string> <!-- color label -->  <!-- TODO -->
 
     <string name="configLabel_themeColorMapBackground">Map Background</string> <!-- color label --> <!-- TODO -->
     <string name="configLabel_themeColorMapForeground">Map Foreground</string> <!-- color label --> <!-- TODO -->
     <string name="configLabel_themeColorMapSunShadow">Shadow</string> <!-- color label -->          <!-- TODO -->
     <string name="configLabel_themeColorMapMoonHighlight">Highlight</string> <!-- color label -->   <!-- TODO -->
 
-    <string name="configLabel_themeColorMoonrise">Moonrise Color:</string> <!-- color label -->  <!-- TODO -->
-    <string name="configLabel_themeColorMoonset">Moonset Color:</string> <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorMoonWaxing">Waxing Color:</string> <!-- color label --> <!-- TODO -->
-    <string name="configLabel_themeColorMoonWaning">Waning Color:</string> <!-- color label --> <!-- TODO -->
-    <string name="configLabel_themeColorMoonFull">Full Color:</string> <!-- color label --> <!-- TODO -->
-    <string name="configLabel_themeColorMoonNew">New Color:</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorMoonrise">Moonrise</string> <!-- color label -->  <!-- TODO -->
+    <string name="configLabel_themeColorMoonset">Moonset</string> <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_themeColorMoonWaxing">Waxing</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorMoonWaning">Waning</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorMoonFull">Full</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorMoonNew">New</string> <!-- color label --> <!-- TODO -->
 
-    <string name="configLabel_themeColorSunrise">Sunrise Color:</string> <!-- color label -->  <!-- TODO -->
+    <string name="configLabel_themeColorSunrise">Sunrise</string> <!-- color label -->  <!-- TODO -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->  <!-- TODO -->
 
-    <string name="configLabel_themeColorSunset">Sunset Color:</string>   <!-- color label -->  <!-- TODO -->
+    <string name="configLabel_themeColorSunset">Sunset</string>   <!-- color label -->  <!-- TODO -->
     <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->  <!-- TODO -->
 
-    <string name="configLabel_themeColorNoon">Noon Color:</string>      <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorNoon">Noon</string>      <!-- color label --> <!-- TODO -->
     <!--<string name="configHint_themeColorNoon">#FFFFFFFF</string>-->         <!-- color hint -->
 
-    <string name="configLabel_themeColorFill">Fill:</string>         <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorFill">Fill</string>         <!-- color label --> <!-- TODO -->
     <!--<string name="configHint_themeColorFill">#FFFFFFFF</string>-->        <!-- color hint -->
 
-    <string name="configLabel_themeColorBorder">Border:</string>         <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorBorder">Border</string>         <!-- color label --> <!-- TODO -->
     <!--<string name="configHint_themeColorBorder">#FFFFFFFF</string>-->        <!-- color hint -->
 
     <string name="configLabel_themeBorderWidthRiseSet">Border Width (rise/set):</string>  <!-- size label --> <!-- TODO -->
@@ -456,10 +456,10 @@
     <string name="configLabel_themeBorderWidthNoon">Border Width (noon):</string>         <!-- size label --> <!-- TODO -->
     <!--<string name="configHint_themeBorderWidthNoon">3</string>-->
 
-    <string name="configLabel_themeColorSuffix">Suffix Color:</string>   <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorSuffix">Suffix Color</string>   <!-- color label --> <!-- TODO -->
     <string name="configHint_themeColorSuffix">#FFFFFFFF</string>        <!-- color hint --> <!-- TODO -->
 
-    <string name="configLabel_themeColorTime">Text Color2:</string>      <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorTime">Text Color2</string>      <!-- color label --> <!-- TODO -->
     <string name="configHint_themeColorTime">#FFFFFFFF</string>          <!-- color hint --> <!-- TODO -->
 
     <string name="configLabel_themeSizeTitle">Title Size:</string>  <!-- edit label --> <!-- TODO -->

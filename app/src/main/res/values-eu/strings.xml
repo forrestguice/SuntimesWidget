@@ -427,42 +427,42 @@
     <string name="configLabel_themeBackground_color">Kolorea</string>      <!-- custom background -->
     <string name="configLabel_themeColorBackground">Kolorea:</string>      <!-- color label -->
 
-    <string name="configLabel_themeColorTitle">Izenburuaren kolorea:</string>     <!-- color label -->
+    <string name="configLabel_themeColorTitle">Izenburuaren kolorea</string>     <!-- color label -->
     <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->
 
-    <string name="configLabel_themeColorText">Testuaren kolorea:</string>       <!-- color label -->
+    <string name="configLabel_themeColorText">Testuaren kolorea</string>       <!-- color label -->
     <string name="configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->
 
-    <string name="configLabel_themeColorSpring">Udaberriaren kolorea:</string> <!-- color label -->
-    <string name="configLabel_themeColorSummer">Udaren kolorea:</string> <!-- color label -->
-    <string name="configLabel_themeColorFall">Udazkenaren kolorea:</string> <!-- color label -->
-    <string name="configLabel_themeColorWinter">Neguaren kolorea:</string> <!-- color label -->
+    <string name="configLabel_themeColorSpring">Udaberriaren kolorea</string> <!-- color label -->
+    <string name="configLabel_themeColorSummer">Udaren kolorea</string> <!-- color label -->
+    <string name="configLabel_themeColorFall">Udazkenaren kolorea</string> <!-- color label -->
+    <string name="configLabel_themeColorWinter">Neguaren kolorea</string> <!-- color label -->
 
     <string name="configLabel_themeColorMapBackground">Maparen atzealdea</string> <!-- color label -->
     <string name="configLabel_themeColorMapForeground">Maparen aurrekaldea</string> <!-- color label -->
     <string name="configLabel_themeColorMapSunShadow">Itzala</string> <!-- color label -->
     <string name="configLabel_themeColorMapMoonHighlight">Ilargiaren argia</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMoonrise">Ilargiaren irteeraren kolorea:</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonset">Ilargiaren ezkutatzearen kolorea:</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonWaxing">Ilgoraren kolorea:</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonWaning">Ilbeheraren kolorea:</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonFull">Ilbetearen kolorea:</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonNew">Ilberriaren kolorea:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonrise">Ilargiaren irteeraren kolorea</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonset">Ilargiaren ezkutatzearen kolorea</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaxing">Ilgoraren kolorea</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaning">Ilbeheraren kolorea</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonFull">Ilbetearen kolorea</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonNew">Ilberriaren kolorea</string> <!-- color label -->
 
-    <string name="configLabel_themeColorSunrise">Egunsentiaren kolorea:</string> <!-- color label -->
+    <string name="configLabel_themeColorSunrise">Egunsentiaren kolorea</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
 
-    <string name="configLabel_themeColorSunset">Ilunabarraren kolorea:</string>   <!-- color label -->
+    <string name="configLabel_themeColorSunset">Ilunabarraren kolorea</string>   <!-- color label -->
     <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorNoon">Eguerdiaren kolorea:</string>      <!-- color label -->
+    <string name="configLabel_themeColorNoon">Eguerdiaren kolorea</string>      <!-- color label -->
     <string name="configHint_themeColorNoon">#FFFFFFFF</string>         <!-- color hint -->
 
-    <string name="configLabel_themeColorFill">Bete:</string>         <!-- color label -->
+    <string name="configLabel_themeColorFill">Bete</string>         <!-- color label -->
     <string name="configHint_themeColorFill">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorBorder">Ertza:</string>         <!-- color label -->
+    <string name="configLabel_themeColorBorder">Ertza</string>         <!-- color label -->
     <string name="configHint_themeColorBorder">#FFFFFFFF</string>        <!-- color hint -->
 
     <string name="configLabel_themeBorderWidthRiseSet">Ertzaren zabalera (egunsentia/ilunabarra):</string>  <!-- size label -->
@@ -470,10 +470,10 @@
     <string name="configLabel_themeBorderWidthNoon">Ertzaren zabalera (eguerdia):</string>         <!-- size label -->
     <string name="configHint_themeBorderWidthNoon">3</string>                             <!-- size hint -->
 
-    <string name="configLabel_themeColorSuffix">Atzizkiaren kolorea:</string>   <!-- color label -->
+    <string name="configLabel_themeColorSuffix">Atzizkiaren kolorea</string>   <!-- color label -->
     <string name="configHint_themeColorSuffix">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorTime">Testuaren bigarren kolorea:</string>      <!-- color label -->
+    <string name="configLabel_themeColorTime">Testuaren bigarren kolorea</string>      <!-- color label -->
     <string name="configHint_themeColorTime">#FFFFFFFF</string>          <!-- color hint -->
 
     <string name="configLabel_themeSizeTitle">Izenburuaren neurria:</string>  <!-- edit label -->
