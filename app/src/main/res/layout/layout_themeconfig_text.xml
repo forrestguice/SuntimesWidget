@@ -44,54 +44,16 @@
         <CheckBox
             android:id="@+id/check_titleBold"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@+id/layout_titleColor"
+            app:layout_constraintStart_toEndOf="@+id/chooser_titleColor"
             app:layout_constraintTop_toTopOf="@+id/edit_titleSize"
             app:layout_constraintBottom_toBottomOf="@+id/edit_titleSize"
             android:text="@string/configLabel_themeBoldTitle" />
 
-        <LinearLayout
-            android:id="@+id/layout_titleColor"
-            android:orientation="horizontal" android:gravity="center_vertical"
+        <com.forrestguice.suntimeswidget.settings.ColorChooserView
+            android:id="@+id/chooser_titleColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@+id/edit_titleSize"
-            app:layout_constraintTop_toTopOf="@+id/edit_titleSize"
-            app:layout_constraintBottom_toBottomOf="@+id/edit_titleSize">
-
-            <TextView android:labelFor="@+id/edit_titleColor"
-                android:id="@+id/editLabel_titleColor"
-                style="@style/ColorEditLabel"
-                android:paddingStart="8dp" android:paddingEnd="8dp"
-
-                android:nextFocusUp="@+id/edit_titleSize"
-                android:nextFocusLeft="@+id/editLabel_titleSize"
-                android:nextFocusRight="@+id/editLabel_suffixColor"
-                android:nextFocusDown="@+id/editLabel_textColor"
-                android:nextFocusForward="@+id/editLabel_suffixColor"
-
-                android:text="@string/configLabel_themeColorTitle"
-                tools:ignore="UnusedAttribute" />
-
-            <EditText
-                android:id="@+id/edit_titleColor"
-                style="@style/ColorEdit" android:visibility="gone"
-                android:fontFamily="monospace"
-
-                android:nextFocusUp="@+id/edit_titleSize"
-                android:nextFocusLeft="@+id/editLabel_titleSize"
-                android:nextFocusRight="@+id/editLabel_suffixColor"
-                android:nextFocusDown="@+id/editLabel_textColor"
-                android:nextFocusForward="@+id/editLabel_suffixColor"
-
-                android:text="" android:hint="@string/configHint_themeColorTitle"
-                tools:ignore="UnusedAttribute" />
-
-            <ImageButton
-                android:id="@+id/editButton_titleColor"
-                style="@style/ColorEditButton"
-                android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
-                android:contentDescription="@string/configLabel_themeColorTitle" />
-
-        </LinearLayout>
+            app:labelText="@string/configLabel_themeColorTitle"
+            app:colorHint="@string/configHint_themeColorSunrise" />
 
         <!-- Text Area -->
         <TextView android:labelFor="@+id/edit_textSize"
@@ -111,49 +73,14 @@
             app:layout_constraintTop_toBottomOf="@+id/edit_titleSize"
             tools:layout_editor_absoluteX="197dp"/>
 
-        <LinearLayout
-            android:id="@+id/layout_textColor"
-            android:orientation="horizontal" android:gravity="center_vertical"
+        <com.forrestguice.suntimeswidget.settings.ColorChooserView
+            android:id="@+id/chooser_textColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="@+id/edit_textSize"
             app:layout_constraintBottom_toBottomOf="@+id/edit_textSize"
-            app:layout_constraintStart_toStartOf="@+id/layout_titleColor">
-
-            <TextView android:labelFor="@+id/edit_textColor"
-                android:id="@+id/editLabel_textColor"
-                style="@style/ColorEditLabel"
-                android:paddingStart="8dp" android:paddingEnd="8dp"
-
-                android:nextFocusUp="@+id/editLabel_titleColor"
-                android:nextFocusLeft="@+id/editLabel_titleColor"
-                android:nextFocusRight="@+id/editLabel_timeColor"
-                android:nextFocusDown="@+id/editLabel_sunriseColor"
-                android:nextFocusForward="@+id/editLabel_timeColor"
-
-                android:text="@string/configLabel_themeColorText"
-                tools:ignore="UnusedAttribute" />
-
-            <EditText
-                android:id="@+id/edit_textColor"
-                style="@style/ColorEdit" android:visibility="gone"
-                android:fontFamily="monospace"
-
-                android:nextFocusUp="@+id/editLabel_titleColor"
-                android:nextFocusLeft="@+id/editLabel_titleColor"
-                android:nextFocusRight="@+id/editLabel_timeColor"
-                android:nextFocusDown="@+id/editLabel_sunriseColor"
-                android:nextFocusForward="@+id/editLabel_timeColor"
-
-                android:text="" android:hint="@string/configHint_themeColorText"
-                tools:ignore="UnusedAttribute" />
-
-            <ImageButton
-                android:id="@+id/editButton_textColor"
-                style="@style/ColorEditButton"
-                android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
-                android:contentDescription="@string/configLabel_themeColorText" />
-
-        </LinearLayout>
+            app:layout_constraintStart_toStartOf="@+id/chooser_titleColor"
+            app:labelText="@string/configLabel_themeColorText"
+            app:colorHint="@string/configHint_themeColorSunrise" />
 
         <!-- Time Area -->
         <TextView android:labelFor="@+id/edit_timeSize"
@@ -175,55 +102,19 @@
 
         <CheckBox android:id="@+id/check_timeBold"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@+id/layout_timeColor"
+            app:layout_constraintStart_toEndOf="@+id/chooser_timeColor"
             app:layout_constraintTop_toTopOf="@+id/edit_timeSize"
             app:layout_constraintBottom_toBottomOf="@+id/edit_timeSize"
             android:text="@string/configLabel_themeBoldTime" />
 
-        <LinearLayout
-            android:id="@+id/layout_timeColor"
-            android:orientation="horizontal" android:gravity="center_vertical"
+        <com.forrestguice.suntimeswidget.settings.ColorChooserView
+            android:id="@+id/chooser_timeColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="@+id/edit_timeSize"
             app:layout_constraintBottom_toBottomOf="@+id/edit_timeSize"
-            app:layout_constraintStart_toStartOf="@+id/layout_titleColor">
-
-            <TextView android:labelFor="@+id/edit_timeColor"
-                android:id="@+id/editLabel_timeColor"
-                style="@style/ColorEditLabel"
-                android:paddingStart="8dp" android:paddingEnd="8dp"
-
-                android:nextFocusUp="@+id/editLabel_titleColor"
-                android:nextFocusLeft="@+id/editLabel_timeColor"
-                android:nextFocusRight="@+id/editLabel_sunriseColor"
-                android:nextFocusDown="@+id/editLabel_sunriseColor"
-                android:nextFocusForward="@+id/editLabel_sunriseColor"
-
-                android:text="@string/configLabel_themeColorTime"
-                tools:ignore="UnusedAttribute" />
-
-            <EditText
-                android:id="@+id/edit_timeColor"
-                style="@style/ColorEdit" android:visibility="gone"
-                android:fontFamily="monospace"
-
-                android:nextFocusUp="@+id/editLabel_titleColor"
-                android:nextFocusLeft="@+id/editLabel_timeColor"
-                android:nextFocusRight="@+id/editLabel_sunriseColor"
-                android:nextFocusDown="@+id/editLabel_sunriseColor"
-                android:nextFocusForward="@+id/editLabel_sunriseColor"
-
-                android:text="" android:hint="@string/configHint_themeColorTime"
-                tools:ignore="UnusedAttribute" />
-
-            <ImageButton
-                android:id="@+id/editButton_timeColor"
-                style="@style/ColorEditButton"
-                android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
-                android:contentDescription="@string/configLabel_themeColorTime" />
-
-        </LinearLayout>
-
+            app:layout_constraintStart_toStartOf="@+id/chooser_titleColor"
+            app:labelText="@string/configLabel_themeColorTime"
+            app:colorHint="@string/configHint_themeColorSunrise" />
 
         <!-- Suffix Area -->
         <TextView android:labelFor="@+id/edit_suffixSize"
@@ -243,55 +134,15 @@
             app:layout_constraintTop_toBottomOf="@+id/edit_timeSize"
             tools:layout_editor_absoluteX="210dp"/>
 
-        <LinearLayout
-            android:id="@+id/layout_suffixColor"
-            android:orientation="horizontal" android:gravity="center_vertical"
+
+        <com.forrestguice.suntimeswidget.settings.ColorChooserView
+            android:id="@+id/chooser_suffixColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="@+id/edit_suffixSize"
             app:layout_constraintBottom_toBottomOf="@+id/edit_suffixSize"
-            app:layout_constraintStart_toStartOf="@+id/layout_titleColor">
-
-            <TextView android:labelFor="@+id/edit_suffixColor"
-                android:id="@+id/editLabel_suffixColor"
-                style="@style/ColorEditLabel"
-                android:paddingStart="8dp" android:paddingEnd="8dp"
-
-                android:nextFocusUp="@+id/edit_titleSize"
-                android:nextFocusLeft="@+id/editLabel_titleColor"
-                android:nextFocusRight="@+id/editLabel_textColor"
-                android:nextFocusDown="@+id/editLabel_textColor"
-                android:nextFocusForward="@+id/editLabel_textColor"
-
-                android:text="@string/configLabel_themeColorSuffix"
-                tools:ignore="UnusedAttribute" />
-
-            <EditText
-                android:id="@+id/edit_suffixColor"
-                style="@style/ColorEdit" android:visibility="gone"
-                android:fontFamily="monospace"
-
-                android:nextFocusUp="@+id/edit_titleSize"
-                android:nextFocusLeft="@+id/editLabel_titleColor"
-                android:nextFocusRight="@+id/editLabel_textColor"
-                android:nextFocusDown="@+id/editLabel_textColor"
-                android:nextFocusForward="@+id/editLabel_textColor"
-
-                android:text="" android:hint="@string/configHint_themeColorSuffix"
-                tools:ignore="UnusedAttribute" />
-
-            <ImageButton
-                android:id="@+id/editButton_suffixColor"
-                style="@style/ColorEditButton"
-                android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
-                android:contentDescription="@string/configLabel_themeColorSuffix" />
-
-        </LinearLayout>
-
-
-
-
-
-
+            app:layout_constraintStart_toStartOf="@+id/chooser_titleColor"
+            app:labelText="@string/configLabel_themeColorSuffix"
+            app:colorHint="@string/configHint_themeColorSunrise" />
 
     </android.support.constraint.ConstraintLayout>
 

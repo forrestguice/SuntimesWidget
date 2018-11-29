@@ -334,10 +334,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         chooseColorMoonFull = createColorChooser(this, R.id.chooser_moonFullColor, SuntimesTheme.THEME_MOONFULLCOLOR);
 
         // other colors
-        chooseColorTitle = createColorChooser(this, R.id.editLabel_titleColor, R.id.edit_titleColor, R.id.editButton_titleColor, SuntimesTheme.THEME_TITLECOLOR);
-        chooseColorText = createColorChooser(this, R.id.editLabel_textColor, R.id.edit_textColor, R.id.editButton_textColor, SuntimesTheme.THEME_TEXTCOLOR);
-        chooseColorTime = createColorChooser(this, R.id.editLabel_timeColor, R.id.edit_timeColor, R.id.editButton_timeColor, SuntimesTheme.THEME_TIMECOLOR);
-        chooseColorSuffix = createColorChooser(this, R.id.editLabel_suffixColor, R.id.edit_suffixColor, R.id.editButton_suffixColor, SuntimesTheme.THEME_TIMESUFFIXCOLOR);
+        chooseColorTitle = createColorChooser(this, R.id.chooser_titleColor, SuntimesTheme.THEME_TITLECOLOR);
+        chooseColorText = createColorChooser(this, R.id.chooser_textColor, SuntimesTheme.THEME_TEXTCOLOR);
+        chooseColorTime = createColorChooser(this, R.id.chooser_timeColor, SuntimesTheme.THEME_TIMECOLOR);
+        chooseColorSuffix = createColorChooser(this, R.id.chooser_suffixColor, SuntimesTheme.THEME_TIMESUFFIXCOLOR);
         chooseColorAction = createColorChooser(this, R.id.chooser_actionColor, SuntimesTheme.THEME_ACTIONCOLOR);
 
         checkUseNoon = (CheckBox)findViewById(R.id.enable_noonColor);
