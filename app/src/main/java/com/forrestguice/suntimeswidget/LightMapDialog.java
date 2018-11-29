@@ -158,10 +158,10 @@ public class LightMapDialog extends DialogFragment
         sunAzimuthAtNoon = (TextView)dialogView.findViewById(R.id.info_sun_azimuth_atnoon);
         sunAzimuthSetting = (TextView)dialogView.findViewById(R.id.info_sun_azimuth_setting);
 
-        View shadowLayout = dialogView.findViewById(R.id.info_shadow_layout);
+        /**View shadowLayout = dialogView.findViewById(R.id.info_shadow_layout);
         if (shadowLayout != null) {
             shadowLayout.setOnClickListener(onShadowLayoutClick);
-        }
+        }*/
 
         sunShadowObj = (TextView)dialogView.findViewById(R.id.info_shadow_height);
         sunShadowLength = (TextView)dialogView.findViewById(R.id.info_shadow_length);
@@ -174,7 +174,7 @@ public class LightMapDialog extends DialogFragment
         field_day = new LightMapKey(dialogView, R.id.info_time_lightmap_key_day_icon, R.id.info_time_lightmap_key_day_label, R.id.info_time_lightmap_key_day_duration);
     }
 
-    private View.OnClickListener onShadowLayoutClick =  new View.OnClickListener()
+    /**private View.OnClickListener onShadowLayoutClick =  new View.OnClickListener()
     {
         @Override
         public void onClick(View v)
@@ -185,7 +185,7 @@ public class LightMapDialog extends DialogFragment
                 Toast.makeText(context, "TODO: set height", Toast.LENGTH_SHORT).show();     // TODO: set object height
             }
         }
-    };
+    };*/
 
     @SuppressWarnings("ResourceType")
     public void themeViews(Context context)
