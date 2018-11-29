@@ -303,7 +303,7 @@
     </style>
 
     <style name="ColorEditLabel">
-        <item name="android:layout_width">75dp</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">end</item>
         <item name="android:maxLines">2</item>

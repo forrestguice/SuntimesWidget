@@ -20,7 +20,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:custom="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout android:orientation="vertical" android:gravity="right|end"
+    <LinearLayout android:orientation="vertical"
         android:id="@+id/layout_colors_map"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
@@ -31,6 +31,7 @@
         <com.forrestguice.suntimeswidget.settings.ColorChooserView
             android:id="@+id/chooser_actionColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:reverse="true"
             custom:labelText="@string/configLabel_themeColorAction"
             custom:colorHint="@string/configHint_themeColorSunrise" />
 

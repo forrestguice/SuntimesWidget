@@ -19,9 +19,9 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout android:orientation="vertical" android:gravity="right|end"
+    <LinearLayout android:orientation="vertical"
         android:id="@+id/layout_colors_graph"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -29,30 +29,35 @@
         <com.forrestguice.suntimeswidget.settings.ColorChooserView
             android:id="@+id/chooser_dayColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:reverse="true"
             app:labelText="@string/timeMode_day"
             app:colorHint="@string/configHint_themeColorSunrise" />
 
         <com.forrestguice.suntimeswidget.settings.ColorChooserView
             android:id="@+id/chooser_civilColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:reverse="true"
             app:labelText="@string/timeMode_civil"
             app:colorHint="@string/configHint_themeColorSunrise" />
 
         <com.forrestguice.suntimeswidget.settings.ColorChooserView
             android:id="@+id/chooser_nauticalColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:reverse="true"
             app:labelText="@string/timeMode_nautical"
             app:colorHint="@string/configHint_themeColorSunrise" />
 
         <com.forrestguice.suntimeswidget.settings.ColorChooserView
             android:id="@+id/chooser_astroColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:reverse="true"
             app:labelText="@string/timeMode_astronomical"
             app:colorHint="@string/configHint_themeColorSunrise" />
 
         <com.forrestguice.suntimeswidget.settings.ColorChooserView
             android:id="@+id/chooser_nightColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:reverse="true"
             app:labelText="@string/timeMode_night"
             app:colorHint="@string/configHint_themeColorSunrise" />
 

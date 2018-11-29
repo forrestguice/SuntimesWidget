@@ -19,7 +19,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout android:orientation="vertical" android:gravity="right|end"
+    <LinearLayout android:orientation="vertical"
         android:id="@+id/layout_colors_map"
         android:layout_width="match_parent" android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
@@ -29,24 +29,28 @@
         <com.forrestguice.suntimeswidget.settings.ColorChooserView
             android:id="@+id/chooser_mapBackgroundColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:reverse="true"
             app:labelText="@string/configLabel_themeColorMapBackground"
             app:colorHint="@string/configHint_themeColorSunrise" />
 
         <com.forrestguice.suntimeswidget.settings.ColorChooserView
             android:id="@+id/chooser_mapForegroundColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:reverse="true"
             app:labelText="@string/configLabel_themeColorMapForeground"
             app:colorHint="@string/configHint_themeColorSunrise" />
 
         <com.forrestguice.suntimeswidget.settings.ColorChooserView
             android:id="@+id/chooser_mapSunShadowColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:reverse="true"
             app:labelText="@string/configLabel_themeColorMapSunShadow"
             app:colorHint="@string/configHint_themeColorSunrise" />
 
         <com.forrestguice.suntimeswidget.settings.ColorChooserView
             android:id="@+id/chooser_mapMoonHighlightColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:reverse="true"
             app:labelText="@string/configLabel_themeColorMapMoonHighlight"
             app:colorHint="@string/configHint_themeColorSunrise" />
 

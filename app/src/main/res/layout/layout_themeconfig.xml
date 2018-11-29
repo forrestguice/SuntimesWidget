@@ -68,7 +68,7 @@
                     app:layout_constraintStart_toStartOf="@+id/layout_sun" app:layout_constraintEnd_toEndOf="@+id/layout_sun" />
 
                 <LinearLayout android:id="@+id/layout_sun"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider_sun">
@@ -83,7 +83,7 @@
                     app:layout_constraintStart_toStartOf="@+id/layout_sun" app:layout_constraintEnd_toEndOf="@+id/layout_sun" />
 
                 <LinearLayout android:id="@+id/layout_seasons"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider_seasons">
@@ -98,7 +98,7 @@
                     app:layout_constraintStart_toStartOf="@+id/layout_moon" app:layout_constraintEnd_toEndOf="@+id/layout_moon" />
 
                 <LinearLayout android:id="@+id/layout_moon"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider_moon">
@@ -113,7 +113,7 @@
                     app:layout_constraintStart_toStartOf="@+id/layout_graph" app:layout_constraintEnd_toEndOf="@+id/layout_graph" />
 
                 <LinearLayout android:id="@+id/layout_graph"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider_graph">
@@ -128,7 +128,7 @@
                     app:layout_constraintStart_toStartOf="@+id/layout_map" app:layout_constraintEnd_toEndOf="@+id/layout_map" />
 
                 <LinearLayout android:id="@+id/layout_map"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider_map">
@@ -143,7 +143,7 @@
                     app:layout_constraintStart_toStartOf="@+id/layout_misc" app:layout_constraintEnd_toEndOf="@+id/layout_misc" />
 
                 <LinearLayout android:id="@+id/layout_misc"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider_misc">
