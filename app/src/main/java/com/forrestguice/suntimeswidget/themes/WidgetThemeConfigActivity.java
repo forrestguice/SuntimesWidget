@@ -320,10 +320,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         chooseColorMapHighlight.setShowAlpha(true);
 
         // season colors
-        chooseColorSpring = createColorChooser(this, R.id.editLabel_springColor, R.id.edit_springColor, R.id.editButton_springColor, SuntimesTheme.THEME_SPRINGCOLOR );
-        chooseColorSummer = createColorChooser(this, R.id.editLabel_summerColor, R.id.edit_summerColor, R.id.editButton_summerColor, SuntimesTheme.THEME_SUMMERCOLOR);
-        chooseColorFall = createColorChooser(this, R.id.editLabel_fallColor, R.id.edit_fallColor, R.id.editButton_fallColor, SuntimesTheme.THEME_FALLCOLOR);
-        chooseColorWinter = createColorChooser(this, R.id.editLabel_winterColor, R.id.edit_winterColor, R.id.editButton_winterColor, SuntimesTheme.THEME_WINTERCOLOR);
+        chooseColorSpring = createColorChooser(this, R.id.chooser_springColor, SuntimesTheme.THEME_SPRINGCOLOR );
+        chooseColorSummer = createColorChooser(this, R.id.chooser_summerColor, SuntimesTheme.THEME_SUMMERCOLOR);
+        chooseColorFall = createColorChooser(this, R.id.chooser_fallColor, SuntimesTheme.THEME_FALLCOLOR);
+        chooseColorWinter = createColorChooser(this, R.id.chooser_winterColor, SuntimesTheme.THEME_WINTERCOLOR);
 
         // moon colors
         chooseColorMoonrise = createColorChooser(this, R.id.editLabel_moonriseColor, R.id.edit_moonriseColor, R.id.editButton_moonriseColor, SuntimesTheme.THEME_MOONRISECOLOR);
