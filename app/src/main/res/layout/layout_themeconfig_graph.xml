@@ -19,231 +19,43 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout android:orientation="vertical" android:gravity="right|end"
         android:id="@+id/layout_colors_graph"
         android:layout_width="match_parent" android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Day Color -->
-        <LinearLayout
-            android:id="@+id/layout_dayColor"
-            android:orientation="horizontal" android:gravity="center_vertical"
+        <com.forrestguice.suntimeswidget.settings.ColorChooserView
+            android:id="@+id/chooser_dayColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:labelText="@string/timeMode_day"
+            app:colorHint="@string/configHint_themeColorSunrise" />
 
-            <TextView android:labelFor="@+id/edit_dayColor"
-                android:id="@+id/editLabel_dayColor"
-                style="@style/ColorEditLabel"
-                android:paddingStart="8dp" android:paddingEnd="8dp"
-
-                android:nextFocusUp="@+id/editLabel_noonIconStroke"
-                android:nextFocusLeft="@+id/editLabel_noonIconStroke"
-                android:nextFocusRight="@+id/editLabel_summerColor"
-                android:nextFocusForward="@+id/editLabel_summerColor"
-                android:nextFocusDown="@+id/editLabel_fallColor"
-
-                android:text="@string/timeMode_day"
-                tools:ignore="UnusedAttribute" />
-
-            <EditText
-                android:id="@+id/edit_dayColor"
-                style="@style/ColorEdit" android:visibility="gone"
-                android:fontFamily="monospace"
-
-                android:nextFocusUp="@+id/editLabel_noonIconStroke"
-                android:nextFocusLeft="@+id/editLabel_noonIconStroke"
-                android:nextFocusRight="@+id/editLabel_summerColor"
-                android:nextFocusForward="@+id/editLabel_summerColor"
-                android:nextFocusDown="@+id/editLabel_fallColor"
-
-                android:text="" android:hint="@string/configHint_themeColorSunrise"
-                tools:ignore="UnusedAttribute" />
-
-            <ImageButton
-                android:id="@+id/editButton_dayColor"
-                style="@style/ColorEditButton"
-                android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
-                android:contentDescription="@string/timeMode_day" />
-
-        </LinearLayout>
-
-        <!-- Civil Color -->
-        <LinearLayout
-            android:id="@+id/layout_civilColor"
-            android:orientation="horizontal" android:gravity="center_vertical"
+        <com.forrestguice.suntimeswidget.settings.ColorChooserView
+            android:id="@+id/chooser_civilColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@+id/layout_dayColor"
-            app:layout_constraintStart_toEndOf="@+id/layout_dayColor"
-            android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
-            android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
+            app:labelText="@string/timeMode_civil"
+            app:colorHint="@string/configHint_themeColorSunrise" />
 
-            <TextView android:labelFor="@+id/edit_civilColor"
-                android:id="@+id/editLabel_civilColor"
-                style="@style/ColorEditLabel"
-                android:paddingStart="8dp" android:paddingEnd="8dp"
-
-                android:nextFocusUp="@+id/editLabel_dayColor"
-                android:nextFocusLeft="@+id/editLabel_dayColor"
-                android:nextFocusRight="@+id/editLabel_nauticalColor"
-                android:nextFocusForward="@+id/editLabel_nauticalColor"
-                android:nextFocusDown="@+id/editLabel_astroColor"
-
-                android:text="@string/timeMode_civil_short"
-                tools:ignore="UnusedAttribute" />
-
-            <EditText
-                android:id="@+id/edit_civilColor"
-                style="@style/ColorEdit" android:visibility="gone"
-                android:fontFamily="monospace"
-
-                android:nextFocusUp="@+id/editLabel_dayColor"
-                android:nextFocusLeft="@+id/editLabel_dayColor"
-                android:nextFocusRight="@+id/editLabel_nauticalColor"
-                android:nextFocusForward="@+id/editLabel_nauticalColor"
-                android:nextFocusDown="@+id/editLabel_astroColor"
-
-                android:text="" android:hint="@string/configHint_themeColorSunset"
-                tools:ignore="UnusedAttribute" />
-
-            <ImageButton
-                android:id="@+id/editButton_civilColor"
-                style="@style/ColorEditButton"
-                android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
-                android:contentDescription="@string/timeMode_civil_short" />
-
-        </LinearLayout>
-
-        <!-- Nautical Color -->
-        <LinearLayout
-            android:id="@+id/layout_nauticalColor"
-            android:orientation="horizontal" android:gravity="center_vertical"
+        <com.forrestguice.suntimeswidget.settings.ColorChooserView
+            android:id="@+id/chooser_nauticalColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/layout_dayColor"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteX="27dp">
+            app:labelText="@string/timeMode_nautical"
+            app:colorHint="@string/configHint_themeColorSunrise" />
 
-            <TextView android:labelFor="@+id/edit_nauticalColor"
-                android:id="@+id/editLabel_nauticalColor"
-                style="@style/ColorEditLabel"
-                android:paddingStart="8dp" android:paddingEnd="8dp"
-
-                android:nextFocusUp="@+id/editLabel_dayColor"
-                android:nextFocusLeft="@+id/editLabel_civilColor"
-                android:nextFocusRight="@+id/editLabel_astroColor"
-                android:nextFocusForward="@+id/editLabel_astroColor"
-                android:nextFocusDown="@+id/editLabel_astroColor"
-
-                android:text="@string/timeMode_nautical_short"
-                tools:ignore="UnusedAttribute" />
-
-            <EditText
-                android:id="@+id/edit_nauticalColor"
-                style="@style/ColorEdit" android:visibility="gone"
-                android:fontFamily="monospace"
-
-                android:nextFocusUp="@+id/editLabel_dayColor"
-                android:nextFocusLeft="@+id/editLabel_civilColor"
-                android:nextFocusRight="@+id/editLabel_astroColor"
-                android:nextFocusForward="@+id/editLabel_astroColor"
-                android:nextFocusDown="@+id/editLabel_astroColor"
-
-                android:text="" android:hint="@string/configHint_themeColorSunrise"
-                tools:ignore="UnusedAttribute" />
-
-            <ImageButton
-                android:id="@+id/editButton_nauticalColor"
-                style="@style/ColorEditButton"
-                android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
-                android:contentDescription="@string/timeMode_nautical_short" />
-
-        </LinearLayout>
-
-        <!-- Astro Color -->
-        <LinearLayout
-            android:id="@+id/layout_astroColor"
-            android:orientation="horizontal" android:gravity="center_vertical"
+        <com.forrestguice.suntimeswidget.settings.ColorChooserView
+            android:id="@+id/chooser_astroColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@+id/layout_nauticalColor"
-            app:layout_constraintStart_toEndOf="@+id/layout_nauticalColor"
-            android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
-            android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
+            app:labelText="@string/timeMode_astronomical"
+            app:colorHint="@string/configHint_themeColorSunrise" />
 
-            <TextView android:labelFor="@+id/edit_astroColor"
-                android:id="@+id/editLabel_astroColor"
-                style="@style/ColorEditLabel"
-                android:paddingStart="8dp" android:paddingEnd="8dp"
-
-                android:nextFocusUp="@+id/editLabel_civilColor"
-                android:nextFocusLeft="@+id/editLabel_nauticalColor"
-                android:nextFocusRight="@+id/editLabel_nightColor"
-                android:nextFocusForward="@+id/editLabel_nightColor"
-                android:nextFocusDown="@+id/editLabel_nightColor"
-
-                android:text="@string/timeMode_astronomical_short" />
-
-            <EditText
-                android:id="@+id/edit_astroColor"
-                style="@style/ColorEdit" android:visibility="gone"
-                android:fontFamily="monospace"
-
-                android:nextFocusUp="@+id/editLabel_civilColor"
-                android:nextFocusLeft="@+id/editLabel_nauticalColor"
-                android:nextFocusRight="@+id/editLabel_nightColor"
-                android:nextFocusForward="@+id/editLabel_nightColor"
-                android:nextFocusDown="@+id/editLabel_nightColor"
-
-                android:text="" android:hint="@string/configHint_themeColorSunset"
-                tools:ignore="UnusedAttribute" />
-
-            <ImageButton
-                android:id="@+id/editButton_astroColor"
-                style="@style/ColorEditButton"
-                android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
-                android:contentDescription="@string/timeMode_astronomical_short" />
-
-        </LinearLayout>
-
-        <!-- Night Color -->
-        <LinearLayout
-            android:id="@+id/layout_nightColor"
-            android:orientation="horizontal" android:gravity="center_vertical"
+        <com.forrestguice.suntimeswidget.settings.ColorChooserView
+            android:id="@+id/chooser_nightColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/layout_nauticalColor"
-            app:layout_constraintStart_toStartOf="parent">
+            app:labelText="@string/timeMode_night"
+            app:colorHint="@string/configHint_themeColorSunrise" />
 
-            <TextView android:labelFor="@+id/edit_nightColor"
-                android:id="@+id/editLabel_nightColor"
-                style="@style/ColorEditLabel"
-                android:paddingStart="8dp" android:paddingEnd="8dp"
-
-                android:nextFocusUp="@+id/editLabel_nauticalColor"
-                android:nextFocusLeft="@+id/editLabel_astroColor"
-
-                android:text="@string/timeMode_night" />
-
-            <EditText
-                android:id="@+id/edit_nightColor"
-                style="@style/ColorEdit" android:visibility="gone"
-                android:fontFamily="monospace"
-
-                android:nextFocusUp="@+id/editLabel_nauticalColor"
-                android:nextFocusLeft="@+id/editLabel_astroColor"
-
-                android:text="" android:hint="@string/configHint_themeColorSunset"
-                tools:ignore="UnusedAttribute" />
-
-            <ImageButton
-                android:id="@+id/editButton_nightColor"
-                style="@style/ColorEditButton"
-                android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
-                android:contentDescription="@string/timeMode_night" />
-
-        </LinearLayout>
-
-
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 
 </merge>
