@@ -17,45 +17,23 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto">
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout android:orientation="vertical" android:gravity="right|end"
         android:id="@+id/layout_colors_map"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <!-- Action Color -->
-        <LinearLayout
-            android:id="@+id/layout_actionColor"
-            android:orientation="horizontal" android:gravity="center_vertical"
+        <com.forrestguice.suntimeswidget.settings.ColorChooserView
+            android:id="@+id/chooser_actionColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            custom:labelText="@string/configLabel_themeColorAction"
+            custom:colorHint="@string/configHint_themeColorSunrise" />
 
-            <TextView android:labelFor="@+id/edit_actionColor"
-                android:id="@+id/editLabel_actionColor"
-                style="@style/ColorEditLabel"
-                android:paddingStart="8dp" android:paddingEnd="8dp"
-                android:text="@string/configLabel_themeColorAction"
-                tools:ignore="UnusedAttribute" />
-
-            <EditText
-                android:id="@+id/edit_actionColor"
-                style="@style/ColorEdit" android:visibility="gone"
-                android:fontFamily="monospace"
-                android:text="" android:hint="@string/configHint_themeColorSunrise"
-                tools:ignore="UnusedAttribute" />
-
-            <ImageButton
-                android:id="@+id/editButton_actionColor"
-                style="@style/ColorEditButton"
-                android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
-                android:contentDescription="@string/configLabel_themeColorAction" />
-
-        </LinearLayout>
-
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 
 </merge>

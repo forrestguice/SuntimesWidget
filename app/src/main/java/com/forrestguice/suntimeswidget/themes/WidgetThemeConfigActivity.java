@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
@@ -68,6 +69,7 @@ import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
 import com.forrestguice.suntimeswidget.map.WorldMapTask;
 import com.forrestguice.suntimeswidget.map.WorldMapView;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.ColorChooserView;
 import com.forrestguice.suntimeswidget.settings.PaddingChooser;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
@@ -337,7 +339,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         chooseColorText = createColorChooser(this, R.id.editLabel_textColor, R.id.edit_textColor, R.id.editButton_textColor, SuntimesTheme.THEME_TEXTCOLOR);
         chooseColorTime = createColorChooser(this, R.id.editLabel_timeColor, R.id.edit_timeColor, R.id.editButton_timeColor, SuntimesTheme.THEME_TIMECOLOR);
         chooseColorSuffix = createColorChooser(this, R.id.editLabel_suffixColor, R.id.edit_suffixColor, R.id.editButton_suffixColor, SuntimesTheme.THEME_TIMESUFFIXCOLOR);
-        chooseColorAction = createColorChooser(this, R.id.editLabel_actionColor, R.id.edit_actionColor, R.id.editButton_actionColor, SuntimesTheme.THEME_ACTIONCOLOR);
+        chooseColorAction = createColorChooser(this, R.id.chooser_actionColor, SuntimesTheme.THEME_ACTIONCOLOR);
 
         checkUseNoon = (CheckBox)findViewById(R.id.enable_noonColor);
         checkUseNoon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
@@ -548,6 +550,11 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         ColorChooser chooser = new ColorChooser(context, label, edit, button, id);
         colorChoosers.add(chooser);
         return chooser;
+    }
+    private ColorChooser createColorChooser(Context context, int colorChooserID, String id)
+    {
+        ColorChooserView view = (ColorChooserView)findViewById(colorChooserID);
+        return createColorChooser(this, view.getLabel(), view.getEdit(), view.getButton(), id);
     }
 
     private SizeChooser createSizeChooser(Context context, float min, float max, String id)
