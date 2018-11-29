@@ -308,15 +308,15 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         chooseColorNight = createColorChooser(context, R.id.editLabel_nightColor, R.id.edit_nightColor, R.id.editButton_nightColor, SuntimesTheme.THEME_NIGHTCOLOR);
 
         // map colors
-        chooseColorMapBackground = createColorChooser(context, R.id.editLabel_mapBackgroundColor, R.id.edit_mapBackgroundColor, R.id.editButton_mapBackgroundColor, SuntimesTheme.THEME_MAP_BACKGROUNDCOLOR);
+        chooseColorMapBackground = createColorChooser(context, R.id.chooser_mapBackgroundColor, SuntimesTheme.THEME_MAP_BACKGROUNDCOLOR);
         chooseColorMapBackground.setShowAlpha(true);
 
-        chooseColorMapForeground = createColorChooser(context, R.id.editLabel_mapForegroundColor, R.id.edit_mapForegroundColor, R.id.editButton_mapForegroundColor, SuntimesTheme.THEME_MAP_FOREGROUNDCOLOR);
+        chooseColorMapForeground = createColorChooser(context, R.id.chooser_mapForegroundColor, SuntimesTheme.THEME_MAP_FOREGROUNDCOLOR);
 
-        chooseColorMapShadow = createColorChooser(context, R.id.editLabel_mapSunShadowColor, R.id.edit_mapSunShadowColor, R.id.editButton_mapSunShadowColor, SuntimesTheme.THEME_MAP_SHADOWCOLOR);
+        chooseColorMapShadow = createColorChooser(context, R.id.chooser_mapSunShadowColor, SuntimesTheme.THEME_MAP_SHADOWCOLOR);
         chooseColorMapShadow.setShowAlpha(true);
 
-        chooseColorMapHighlight = createColorChooser(context, R.id.editLabel_mapMoonHighlightColor, R.id.edit_mapMoonHighlightColor, R.id.editButton_mapMoonHighlightColor, SuntimesTheme.THEME_MAP_HIGHLIGHTCOLOR);
+        chooseColorMapHighlight = createColorChooser(context, R.id.chooser_mapMoonHighlightColor, SuntimesTheme.THEME_MAP_HIGHLIGHTCOLOR);
         chooseColorMapHighlight.setShowAlpha(true);
 
         // season colors
