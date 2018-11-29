@@ -245,7 +245,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             }
         });
 
-        chooseColorBackground = createColorChooser(context, R.id.editLabel_backgroundColor, R.id.edit_backgroundColor, R.id.editButton_backgroundColor, THEME_BACKGROUND_COLOR);
+        chooseColorBackground = createColorChooser(context, R.id.chooser_backgroundColor, THEME_BACKGROUND_COLOR);
         chooseColorBackground.setShowAlpha(true);
 
         EditText editName = (EditText)findViewById(R.id.edit_themeName);
