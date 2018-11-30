@@ -33,7 +33,7 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             app:reverse="true"
             custom:labelText="@string/configLabel_themeColorAction"
-            custom:colorHint="@string/configHint_themeColorSunrise" />
+            custom:hintText="@string/configHint_themeColorSunrise" />
 
     </LinearLayout>
 

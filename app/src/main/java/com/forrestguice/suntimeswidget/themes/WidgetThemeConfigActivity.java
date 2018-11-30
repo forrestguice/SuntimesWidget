@@ -71,6 +71,7 @@ import com.forrestguice.suntimeswidget.map.WorldMapView;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.ColorChooserView;
 import com.forrestguice.suntimeswidget.settings.PaddingChooser;
+import com.forrestguice.suntimeswidget.settings.SizeEditView;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
@@ -267,10 +268,11 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             }
         });
 
-        chooseTitleSize = createSizeChooser(this, R.id.edit_titleSize, SuntimesTheme.THEME_TITLESIZE_MIN, SuntimesTheme.THEME_TITLESIZE_MAX, SuntimesTheme.THEME_TITLESIZE);
-        chooseTextSize = createSizeChooser(this, R.id.edit_textSize, SuntimesTheme.THEME_TEXTSIZE_MIN, SuntimesTheme.THEME_TEXTSIZE_MAX, SuntimesTheme.THEME_TEXTSIZE);
-        chooseTimeSize = createSizeChooser(this, R.id.edit_timeSize, SuntimesTheme.THEME_TIMESIZE_MIN, SuntimesTheme.THEME_TIMESIZE_MAX, SuntimesTheme.THEME_TIMESIZE);
-        chooseSuffixSize = createSizeChooser(this, R.id.edit_suffixSize, SuntimesTheme.THEME_TIMESUFFIXSIZE_MIN, SuntimesTheme.THEME_TIMESUFFIXSIZE_MAX, SuntimesTheme.THEME_TIMESUFFIXSIZE);
+        chooseTitleSize = createSizeChooser(this, R.id.chooser_titleSize, SuntimesTheme.THEME_TITLESIZE_MIN, SuntimesTheme.THEME_TITLESIZE_MAX, SuntimesTheme.THEME_TITLESIZE);
+        chooseTextSize = createSizeChooser(this, R.id.chooser_textSize, SuntimesTheme.THEME_TEXTSIZE_MIN, SuntimesTheme.THEME_TEXTSIZE_MAX, SuntimesTheme.THEME_TEXTSIZE);
+        chooseTimeSize = createSizeChooser(this, R.id.chooser_timeSize, SuntimesTheme.THEME_TIMESIZE_MIN, SuntimesTheme.THEME_TIMESIZE_MAX, SuntimesTheme.THEME_TIMESIZE);
+        chooseSuffixSize = createSizeChooser(this, R.id.chooser_suffixSize, SuntimesTheme.THEME_TIMESUFFIXSIZE_MIN, SuntimesTheme.THEME_TIMESUFFIXSIZE_MAX, SuntimesTheme.THEME_TIMESUFFIXSIZE);
+
         chooseIconStroke = createSizeChooser(this, R.id.edit_iconStroke, SuntimesTheme.THEME_SETICON_STROKE_WIDTH_MIN, SuntimesTheme.THEME_SETICON_STROKE_WIDTH_MAX, SuntimesTheme.THEME_SETICON_STROKE_WIDTH);
         chooseNoonIconStroke = createSizeChooser(this, R.id.edit_noonIconStroke, SuntimesTheme.THEME_NOONICON_STROKE_WIDTH_MIN, SuntimesTheme.THEME_NOONICON_STROKE_WIDTH_MAX, SuntimesTheme.THEME_NOONICON_STROKE_WIDTH);
         chooseMoonStroke = createSizeChooser(this, SuntimesTheme.THEME_MOON_STROKE_MIN, SuntimesTheme.THEME_MOON_STROKE_MAX, SuntimesTheme.THEME_MOONFULL_STROKE_WIDTH);
@@ -560,10 +562,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     {
         return createSizeChooser(context, null, min, max, id);
     }
-    private SizeChooser createSizeChooser(Context context, int editID, float min, float max, String id)
+    private SizeChooser createSizeChooser(Context context, int sizeEditViewID, float min, float max, String id)
     {
-        EditText edit = (EditText)findViewById(editID);
-        return createSizeChooser(context, edit, min, max, id);
+        SizeEditView sizeEdit = (SizeEditView)findViewById(sizeEditViewID);
+        return createSizeChooser(context, sizeEdit.getEdit(), min, max, id);
     }
     private SizeChooser createSizeChooser(Context context, EditText edit, float min, float max, String id)
     {

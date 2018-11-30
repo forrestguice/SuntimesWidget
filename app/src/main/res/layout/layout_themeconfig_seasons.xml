@@ -31,28 +31,28 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             app:reverse="true"
             app:labelText="@string/configLabel_themeColorSpring"
-            app:colorHint="@string/configHint_themeColorSunrise" />
+            app:hintText="@string/configHint_themeColorSunrise" />
 
         <com.forrestguice.suntimeswidget.settings.ColorChooserView
             android:id="@+id/chooser_summerColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             app:reverse="true"
             app:labelText="@string/configLabel_themeColorSummer"
-            app:colorHint="@string/configHint_themeColorSunrise" />
+            app:hintText="@string/configHint_themeColorSunrise" />
 
         <com.forrestguice.suntimeswidget.settings.ColorChooserView
             android:id="@+id/chooser_fallColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             app:reverse="true"
             app:labelText="@string/configLabel_themeColorFall"
-            app:colorHint="@string/configHint_themeColorSunrise" />
+            app:hintText="@string/configHint_themeColorSunrise" />
 
         <com.forrestguice.suntimeswidget.settings.ColorChooserView
             android:id="@+id/chooser_winterColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             app:reverse="true"
             app:labelText="@string/configLabel_themeColorWinter"
-            app:colorHint="@string/configHint_themeColorSunrise" />
+            app:hintText="@string/configHint_themeColorSunrise" />
 
     </LinearLayout>
 

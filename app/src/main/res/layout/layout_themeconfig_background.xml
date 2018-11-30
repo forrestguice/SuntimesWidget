@@ -46,7 +46,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@+id/editSpin_background"
             app:labelText="@string/configLabel_themeColorBackground"
-            app:colorHint="@string/configHint_themeColorSunrise" />
+            app:hintText="@string/configHint_themeColorSunrise" />
 
         <!-- Padding -->
         <TextView android:labelFor="@+id/edit_padding"

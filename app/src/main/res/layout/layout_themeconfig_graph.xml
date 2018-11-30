@@ -31,35 +31,35 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             app:reverse="true"
             app:labelText="@string/timeMode_day"
-            app:colorHint="@string/configHint_themeColorSunrise" />
+            app:hintText="@string/configHint_themeColorSunrise" />
 
         <com.forrestguice.suntimeswidget.settings.ColorChooserView
             android:id="@+id/chooser_civilColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             app:reverse="true"
             app:labelText="@string/timeMode_civil"
-            app:colorHint="@string/configHint_themeColorSunrise" />
+            app:hintText="@string/configHint_themeColorSunrise" />
 
         <com.forrestguice.suntimeswidget.settings.ColorChooserView
             android:id="@+id/chooser_nauticalColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             app:reverse="true"
             app:labelText="@string/timeMode_nautical"
-            app:colorHint="@string/configHint_themeColorSunrise" />
+            app:hintText="@string/configHint_themeColorSunrise" />
 
         <com.forrestguice.suntimeswidget.settings.ColorChooserView
             android:id="@+id/chooser_astroColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             app:reverse="true"
             app:labelText="@string/timeMode_astronomical"
-            app:colorHint="@string/configHint_themeColorSunrise" />
+            app:hintText="@string/configHint_themeColorSunrise" />
 
         <com.forrestguice.suntimeswidget.settings.ColorChooserView
             android:id="@+id/chooser_nightColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             app:reverse="true"
             app:labelText="@string/timeMode_night"
-            app:colorHint="@string/configHint_themeColorSunrise" />
+            app:hintText="@string/configHint_themeColorSunrise" />
 
     </LinearLayout>
 

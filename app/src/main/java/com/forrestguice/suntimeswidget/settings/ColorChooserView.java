@@ -59,7 +59,7 @@ public class ColorChooserView extends LinearLayout
                 button.setContentDescription(labelText);
             }
 
-            String hintText = a.getString(R.styleable.ColorChooserView_colorHint);
+            String hintText = a.getString(R.styleable.ColorChooserView_hintText);
             if (hintText != null) {
                 edit.setHint(hintText);
             }
