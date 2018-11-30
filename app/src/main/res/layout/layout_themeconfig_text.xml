@@ -20,134 +20,174 @@
     xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
 
     <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <!-- Title Area -->
-        <TextView android:labelFor="@+id/edit_titleSize"
+        <TextView
             android:id="@+id/editLabel_titleSize"
             style="@style/SizeEditLabel"
-            android:paddingStart="8dp" android:paddingEnd="8dp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:labelFor="@+id/edit_titleSize"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            android:text="@string/configLabel_themeSizeTitle"
             app:layout_constraintBaseline_toBaselineOf="@+id/edit_titleSize"
-            android:text="@string/configLabel_themeSizeTitle" />
+            app:layout_constraintBottom_toTopOf="@+id/chooser_titleColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread" />
 
         <EditText
-            android:id="@+id/edit_titleSize" style="@style/SizeEdit"
+            android:id="@+id/edit_titleSize"
+            style="@style/SizeEdit"
             android:layout_width="0dp"
-            android:text="" android:hint="@string/configHint_themeSizeTitle" tools:text="14"
+            android:hint="@string/configHint_themeSizeTitle"
+            android:text=""
             app:layout_constraintStart_toEndOf="@+id/editLabel_titleSize"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="14" />
 
         <com.forrestguice.suntimeswidget.settings.ColorChooserView
             android:id="@+id/chooser_titleColor"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            app:reverse="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:colorHint="@string/configHint_themeColorSunrise"
             app:labelText="@string/configLabel_themeColorTitle"
+            app:layout_constraintBottom_toTopOf="@+id/editLabel_textSize"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editLabel_titleSize"
-            app:colorHint="@string/configHint_themeColorSunrise" />
+            app:reverse="true" />
 
         <CheckBox
             android:id="@+id/check_titleBold"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@+id/edit_titleSize"
-            app:layout_constraintTop_toTopOf="@+id/edit_titleSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/configLabel_themeBoldTitle"
             app:layout_constraintBottom_toBottomOf="@+id/edit_titleSize"
-            android:text="@string/configLabel_themeBoldTitle" />
+            app:layout_constraintStart_toEndOf="@+id/edit_titleSize"
+            app:layout_constraintTop_toTopOf="@+id/edit_titleSize" />
 
         <!-- Text Area -->
-        <TextView android:labelFor="@+id/edit_textSize"
+        <TextView
             android:id="@+id/editLabel_textSize"
             style="@style/SizeEditLabel"
-            android:paddingStart="8dp" android:paddingEnd="8dp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:labelFor="@+id/edit_textSize"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            android:text="@string/configLabel_themeSizeText"
             app:layout_constraintBaseline_toBaselineOf="@+id/edit_textSize"
-            android:text="@string/configLabel_themeSizeText"/>
+            app:layout_constraintBottom_toTopOf="@+id/chooser_timeColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chooser_titleColor" />
 
         <EditText
             android:id="@+id/edit_textSize"
             style="@style/SizeEdit"
             android:layout_width="0dp"
-            android:text="" android:hint="@string/configHint_themeSizeText" tools:text="10"
+            android:hint="@string/configHint_themeSizeText"
+            android:text=""
             app:layout_constraintStart_toEndOf="@+id/editLabel_textSize"
             app:layout_constraintTop_toBottomOf="@+id/chooser_titleColor"
-            tools:layout_editor_absoluteX="197dp"/>
+            tools:layout_editor_absoluteX="197dp"
+            tools:text="10" />
 
         <com.forrestguice.suntimeswidget.settings.ColorChooserView
             android:id="@+id/chooser_textColor"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            app:reverse="true"
-            app:layout_constraintTop_toBottomOf="@+id/editLabel_textSize"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:colorHint="@string/configHint_themeColorSunrise"
             app:labelText="@string/configLabel_themeColorText"
-            app:colorHint="@string/configHint_themeColorSunrise" />
+            app:layout_constraintBottom_toTopOf="@+id/editLabel_timeSize"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editLabel_textSize"
+            app:reverse="true" />
 
         <!-- Time Area -->
-        <TextView android:labelFor="@+id/edit_timeSize"
+        <TextView
             android:id="@+id/editLabel_timeSize"
             style="@style/SizeEditLabel"
-            android:paddingStart="8dp" android:paddingEnd="8dp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:labelFor="@+id/edit_timeSize"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            android:text="@string/configLabel_themeSizeTime"
             app:layout_constraintBaseline_toBaselineOf="@+id/edit_timeSize"
-            android:text="@string/configLabel_themeSizeTime" />
+            app:layout_constraintBottom_toTopOf="@+id/chooser_timeColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chooser_textColor" />
 
         <EditText
             android:id="@+id/edit_timeSize"
             style="@style/SizeEdit"
             android:layout_width="0dp"
-            android:text="" android:hint="@string/configHint_themeSizeTime" tools:text="12"
+            android:hint="@string/configHint_themeSizeTime"
+            android:text=""
+            app:layout_constraintBottom_toBottomOf="@+id/editLabel_timeSize"
             app:layout_constraintStart_toEndOf="@+id/editLabel_timeSize"
-            app:layout_constraintTop_toBottomOf="@+id/chooser_textColor"
-            tools:layout_editor_absoluteX="81dp"/>
+            app:layout_constraintTop_toTopOf="@+id/editLabel_timeSize"
+            tools:layout_editor_absoluteX="81dp"
+            tools:text="12" />
 
-        <CheckBox android:id="@+id/check_timeBold"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@+id/edit_timeSize"
-            app:layout_constraintTop_toTopOf="@+id/edit_timeSize"
+        <CheckBox
+            android:id="@+id/check_timeBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/configLabel_themeBoldTime"
             app:layout_constraintBottom_toBottomOf="@+id/edit_timeSize"
-            android:text="@string/configLabel_themeBoldTime" />
+            app:layout_constraintStart_toEndOf="@+id/edit_timeSize"
+            app:layout_constraintTop_toTopOf="@+id/edit_timeSize" />
 
         <com.forrestguice.suntimeswidget.settings.ColorChooserView
             android:id="@+id/chooser_timeColor"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/editLabel_timeSize"
-            app:layout_constraintStart_toStartOf="parent"
-            app:reverse="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:colorHint="@string/configHint_themeColorSunrise"
             app:labelText="@string/configLabel_themeColorTime"
-            app:colorHint="@string/configHint_themeColorSunrise" />
+            app:layout_constraintBottom_toTopOf="@+id/editLabel_suffixSize"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editLabel_timeSize"
+            app:reverse="true" />
 
         <!-- Suffix Area -->
-        <TextView android:labelFor="@+id/edit_suffixSize"
+        <TextView
             android:id="@+id/editLabel_suffixSize"
             style="@style/SizeEditLabel"
-            android:paddingStart="8dp" android:paddingEnd="8dp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:labelFor="@+id/edit_suffixSize"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            android:text="@string/configLabel_themeSizeSuffix"
             app:layout_constraintBaseline_toBaselineOf="@+id/edit_suffixSize"
-            android:text="@string/configLabel_themeSizeSuffix" />
+            app:layout_constraintBottom_toTopOf="@+id/chooser_suffixColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chooser_timeColor" />
 
         <EditText
             android:id="@+id/edit_suffixSize"
             style="@style/SizeEdit"
             android:layout_width="0dp"
-            android:text="" android:hint="@string/configHint_themeSizeSuffix" tools:text="8"
+            android:hint="@string/configHint_themeSizeSuffix"
+            android:text=""
             app:layout_constraintStart_toEndOf="@+id/editLabel_suffixSize"
             app:layout_constraintTop_toBottomOf="@+id/chooser_timeColor"
-            tools:layout_editor_absoluteX="210dp"/>
-
+            tools:layout_editor_absoluteX="210dp"
+            tools:text="8" />
 
         <com.forrestguice.suntimeswidget.settings.ColorChooserView
             android:id="@+id/chooser_suffixColor"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/editLabel_suffixSize"
-            app:layout_constraintStart_toStartOf="parent"
-            app:reverse="true"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            app:colorHint="@string/configHint_themeColorSunrise"
             app:labelText="@string/configLabel_themeColorSuffix"
-            app:colorHint="@string/configHint_themeColorSunrise" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editLabel_suffixSize"
+
+            app:reverse="true" />
 
     </android.support.constraint.ConstraintLayout>
 
