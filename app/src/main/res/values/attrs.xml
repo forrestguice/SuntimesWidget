@@ -102,4 +102,9 @@
         <attr name="reverse" format="boolean" />
     </declare-styleable>
 
+    <declare-styleable name="SizeEditView">
+        <attr name="labelText" />
+        <attr name="hintText" />
+    </declare-styleable>
+
 </resources>
