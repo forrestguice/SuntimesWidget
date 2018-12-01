@@ -155,9 +155,10 @@
     <string name="date_format_long"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g>, <xliff:g id="patternYear">yyyy</xliff:g></string>  
     <string name="datetime_format_short"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>           
     <string name="datetime_format_long"><xliff:g id="monthYear">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>        
-    <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        
+    <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>
 
-    
+    <string name="lengthUnits_metric">Metric</string>    <!-- TODO -->
+    <string name="lengthUnits_imperial">Imperial</string>   <!-- TODO -->
     <string name="units_feet">pies</string>
     <string name="units_feet_short">ft</string>
     <!--<plurals name="units_feet_long">
