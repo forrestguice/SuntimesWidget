@@ -33,6 +33,7 @@
         <com.forrestguice.suntimeswidget.settings.ColorChooserView
             android:id="@+id/chooser_mapForegroundColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginLeft="48dp" android:layout_marginStart="48dp"
             app:reverse="true"
             app:labelText="@string/configLabel_themeColorMapForeground"
             app:hintText="@string/configHint_themeColorSunrise" />
@@ -47,6 +48,7 @@
         <com.forrestguice.suntimeswidget.settings.ColorChooserView
             android:id="@+id/chooser_mapMoonHighlightColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginLeft="48dp" android:layout_marginStart="48dp"
             app:reverse="true"
             app:labelText="@string/configLabel_themeColorMapMoonHighlight"
             app:hintText="@string/configHint_themeColorSunrise" />

@@ -25,7 +25,7 @@
         <TextView
             android:id="@+id/editLabel_size" android:labelFor="@+id/edit_titleSize"
             style="@style/SizeEditLabel" android:paddingEnd="8dp" android:paddingStart="8dp"
-            tools:text="label" />
+            tools:text="very long label text that wraps" />
 
         <EditText android:id="@+id/edit_size"
             style="@style/SizeEdit" android:layout_width="match_parent"

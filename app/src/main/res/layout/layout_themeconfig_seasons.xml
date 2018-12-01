@@ -21,10 +21,7 @@
 
     <LinearLayout android:orientation="vertical"
         android:id="@+id/layout_colors_seasons"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:layout_width="match_parent" android:layout_height="wrap_content">
 
         <com.forrestguice.suntimeswidget.settings.ColorChooserView
             android:id="@+id/chooser_springColor"
@@ -36,6 +33,7 @@
         <com.forrestguice.suntimeswidget.settings.ColorChooserView
             android:id="@+id/chooser_summerColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginLeft="48dp" android:layout_marginStart="48dp"
             app:reverse="true"
             app:labelText="@string/configLabel_themeColorSummer"
             app:hintText="@string/configHint_themeColorSunrise" />
@@ -50,6 +48,7 @@
         <com.forrestguice.suntimeswidget.settings.ColorChooserView
             android:id="@+id/chooser_winterColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginLeft="48dp" android:layout_marginStart="48dp"
             app:reverse="true"
             app:labelText="@string/configLabel_themeColorWinter"
             app:hintText="@string/configHint_themeColorSunrise" />

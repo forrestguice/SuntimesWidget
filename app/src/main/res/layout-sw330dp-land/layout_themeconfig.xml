@@ -46,9 +46,10 @@
                 <!-- Background Section -->
                 <LinearLayout android:id="@+id/layout_background"
                     android:layout_width="0dp" android:layout_height="wrap_content"
+                    app:layout_constraintHorizontal_weight="1"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/layout_text">
+                    app:layout_constraintEnd_toStartOf="@+id/layout_moon">
                     <include layout="@layout/layout_themeconfig_background" />
                 </LinearLayout>
 
@@ -56,7 +57,9 @@
                 <LinearLayout android:id="@+id/layout_text"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@+id/layout_background"
-                    app:layout_constraintStart_toStartOf="parent">
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/layout_background"
+                    app:layout_constraintHorizontal_bias="0">
                     <include layout="@layout/layout_themeconfig_text" />
                 </LinearLayout>
 
@@ -71,6 +74,8 @@
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/layout_background"
+                    app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintTop_toBottomOf="@+id/divider_sun">
                     <include layout="@layout/layout_themeconfig_sun" />
                 </LinearLayout>
@@ -81,7 +86,9 @@
                     android:layout_marginStart="16dp" android:layout_marginLeft="16dp"
                     android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
                     android:layout_marginTop="16dp"
-                    app:layout_constraintStart_toEndOf="@+id/layout_text" app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toEndOf="@+id/layout_background"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/layout_background">
                     <include layout="@layout/layout_themeconfig_moon" />
                 </LinearLayout>
@@ -127,6 +134,8 @@
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/layout_background"
+                    app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintTop_toBottomOf="@+id/divider_map">
                     <include layout="@layout/layout_themeconfig_map" />
                 </LinearLayout>
@@ -142,6 +151,8 @@
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/layout_background"
+                    app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintTop_toBottomOf="@+id/divider_misc">
                     <include layout="@layout/layout_themeconfig_misc" />
                 </LinearLayout>
