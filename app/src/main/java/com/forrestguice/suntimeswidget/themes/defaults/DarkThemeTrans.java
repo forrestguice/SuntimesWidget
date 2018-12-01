@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2018 Forrest Guice
+   Copyright (C) 2014 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -16,38 +16,39 @@
    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.forrestguice.suntimeswidget.themes;
+package com.forrestguice.suntimeswidget.themes.defaults;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
+import android.graphics.Color;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
-import com.forrestguice.suntimeswidget.R;
 
-public class DarkThemeTranslucent extends DarkThemeTrans
+public class DarkThemeTrans extends DarkTheme
 {
-    public static final String THEMEDEF_NAME = "dark_translucent";
-    public static final String THEMEDEF_DISPLAYSTRING = "Dark (translucent)";
+    public static final String THEMEDEF_NAME = "dark_transparent";
+    public static final String THEMEDEF_DISPLAYSTRING = "Dark (transparent)";
     public static final int THEMEDEF_VERSION = BuildConfig.VERSION_CODE;
     public static final ThemeDescriptor THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, THEMEDEF_DISPLAYSTRING, THEMEDEF_VERSION);
 
-    public static final ThemeBackground THEMEDEF_BACKGROUND = ThemeBackground.COLOR;
-    public static final int THEMEDEF_BACKGROUND_COLOR_ID = R.color.widget_bg_dark;
+    public static final ThemeBackground THEMEDEF_BACKGROUND = ThemeBackground.TRANSPARENT;
+    public static final boolean THEMEDEF_TITLEBOLD = true;
+    public static final boolean THEMEDEF_TIMEBOLD = true;
 
-    public DarkThemeTranslucent(Context context)
+    public DarkThemeTrans(Context context)
     {
         super(context);
         this.themeVersion = THEMEDEF_VERSION;
         this.themeName = THEMEDEF_NAME;
         this.themeIsDefault = true;
         this.themeDisplayString = THEMEDEF_DISPLAYSTRING;
-
         this.themeBackground = THEMEDEF_BACKGROUND;
-        this.themeBackgroundColor = ContextCompat.getColor(context, THEMEDEF_BACKGROUND_COLOR_ID);
+        this.themeBackgroundColor = Color.TRANSPARENT;
+        this.themeTitleBold = THEMEDEF_TITLEBOLD;
+        this.themeTimeBold = THEMEDEF_TIMEBOLD;
     }
 
     public ThemeDescriptor themeDescriptor()
     {
-        return DarkThemeTranslucent.THEMEDEF_DESCRIPTOR;
+        return DarkThemeTrans.THEMEDEF_DESCRIPTOR;
     }
 }

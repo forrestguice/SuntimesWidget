@@ -43,6 +43,8 @@
     -->
     <!-- line commented to use default: <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string> -->
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> Strefa czasowa może być niepoprawna dla tego miejsca (nie lokalna).</string>  <!-- snackbar message -->
+    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> Daylight Saving</string>  <!-- timezone dialog label -->  <!-- TODO -->
+    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> equation of time</string>  <!-- timezone dialog label -->  <!-- TODO -->
 
     <!-- Field: date
          The date field that appears above the table (main activity).
@@ -415,42 +417,42 @@
     <string name="configLabel_themeBackground_color">Kolor</string>      <!-- custom background -->
     <string name="configLabel_themeColorBackground">Kolor:</string>      <!-- color label -->
 
-    <string name="configLabel_themeColorTitle">Kolor tytułu:</string>     <!-- color label -->
+    <string name="configLabel_themeColorTitle">Kolor tytułu</string>     <!-- color label -->
     <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->
 
-    <string name="configLabel_themeColorText">Kolor tekstu:</string>       <!-- color label -->
+    <string name="configLabel_themeColorText">Kolor tekstu</string>       <!-- color label -->
     <string name="configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->
 
-    <string name="configLabel_themeColorSpring">Wiosenny kolor:</string> <!-- color label -->
-    <string name="configLabel_themeColorSummer">Letni kolor:</string> <!-- color label -->
-    <string name="configLabel_themeColorFall">Jesienny kolor:</string> <!-- color label -->
-    <string name="configLabel_themeColorWinter">Zimowy kolor:</string> <!-- color label -->
+    <string name="configLabel_themeColorSpring">Wiosenny kolor</string> <!-- color label -->
+    <string name="configLabel_themeColorSummer">Letni kolor</string> <!-- color label -->
+    <string name="configLabel_themeColorFall">Jesienny kolor</string> <!-- color label -->
+    <string name="configLabel_themeColorWinter">Zimowy kolor</string> <!-- color label -->
 
     <string name="configLabel_themeColorMapBackground">Tło mapy</string> <!-- color label -->
     <string name="configLabel_themeColorMapForeground">Pierwszy plan mapy</string> <!-- color label -->
     <string name="configLabel_themeColorMapSunShadow">Cień</string> <!-- color label -->
     <string name="configLabel_themeColorMapMoonHighlight">Podświetlenie</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMoonrise">Kolor wschodu Księżyca:</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonset">Kolor zachodu Księżyca:</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonWaxing">Kolor rosnącego:</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonWaning">Kolor malejącego:</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonFull">Kolor pełni:</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonNew">Kolor nowiu:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonrise">Kolor wschodu Księżyca</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonset">Kolor zachodu Księżyca</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaxing">Kolor rosnącego</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaning">Kolor malejącego</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonFull">Kolor pełni</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonNew">Kolor nowiu</string> <!-- color label -->
 
-    <string name="configLabel_themeColorSunrise">Kolor wschodu Słońca:</string> <!-- color label -->
+    <string name="configLabel_themeColorSunrise">Kolor wschodu Słońca</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
 
-    <string name="configLabel_themeColorSunset">Kolor zachodu Słońca:</string>   <!-- color label -->
+    <string name="configLabel_themeColorSunset">Kolor zachodu Słońca</string>   <!-- color label -->
     <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorNoon">Kolor południa:</string>      <!-- color label -->
+    <string name="configLabel_themeColorNoon">Kolor południa</string>      <!-- color label -->
     <!--<string name="configHint_themeColorNoon">#FFFFFFFF</string>-->         <!-- color hint -->
 
-    <string name="configLabel_themeColorFill">Wypełnienie:</string>         <!-- color label -->
+    <string name="configLabel_themeColorFill">Wypełnienie</string>         <!-- color label -->
     <!--<string name="configHint_themeColorFill">#FFFFFFFF</string>-->        <!-- color hint -->
 
-    <string name="configLabel_themeColorBorder">Obramowanie:</string>         <!-- color label -->
+    <string name="configLabel_themeColorBorder">Obramowanie</string>         <!-- color label -->
     <!--<string name="configHint_themeColorBorder">#FFFFFFFF</string>-->        <!-- color hint -->
 
     <string name="configLabel_themeBorderWidthRiseSet">Szerokość obramowania (wschód/zachód):</string>  <!-- size label -->
@@ -458,10 +460,10 @@
     <string name="configLabel_themeBorderWidthNoon">Szerokość obramowania (południe):</string>         <!-- size label -->
     <!--<string name="configHint_themeBorderWidthNoon">3</string>-->
 
-    <string name="configLabel_themeColorSuffix">Kolor sufiksu:</string>   <!-- color label -->
+    <string name="configLabel_themeColorSuffix">Kolor sufiksu</string>   <!-- color label -->
     <string name="configHint_themeColorSuffix">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorTime">Kolor tekstu 2:</string>      <!-- color label -->
+    <string name="configLabel_themeColorTime">Kolor tekstu 2</string>      <!-- color label -->
     <string name="configHint_themeColorTime">#FFFFFFFF</string>          <!-- color hint -->
 
     <string name="configLabel_themeSizeTitle">Rozmiar tytułu:</string>  <!-- edit label -->

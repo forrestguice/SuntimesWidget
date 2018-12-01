@@ -17,6 +17,7 @@
 */
 package com.forrestguice.suntimeswidget;
 
+import android.annotation.SuppressLint;
 import android.appwidget.AppWidgetManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -111,6 +112,7 @@ public class LocationConfigView extends LinearLayout
         String latitude = text_locationLat.getText().toString();
         String longitude = text_locationLon.getText().toString();
 
+        WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(getContext(), appWidgetId);
         String altitude = text_locationAlt.getText().toString();
         if (altitude.trim().isEmpty()) {
             altitude = "0";
@@ -133,9 +135,10 @@ public class LocationConfigView extends LinearLayout
             latitude = WidgetSettings.PREF_DEF_LOCATION_LATITUDE;
             longitude = WidgetSettings.PREF_DEF_LOCATION_LONGITUDE;
             altitude = WidgetSettings.PREF_DEF_LOCATION_ALTITUDE;
+            units = WidgetSettings.PREF_DEF_GENERAL_UNITS_LENGTH;
         }
 
-        return new WidgetSettings.Location(name, latitude, longitude, altitude);
+        return new WidgetSettings.Location(name, latitude, longitude, altitude, units);
     }
 
     public WidgetSettings.LocationMode getLocationMode()
@@ -301,6 +304,7 @@ public class LocationConfigView extends LinearLayout
 
     private TextView labl_locationAlt;
     private EditText text_locationAlt;
+    private TextView text_locationAltUnits;
 
     private TextView labl_locationLat;
     private EditText text_locationLat;
@@ -470,6 +474,7 @@ public class LocationConfigView extends LinearLayout
 
         labl_locationAlt = (TextView)findViewById(R.id.appwidget_location_alt_label);
         text_locationAlt = (EditText)findViewById(R.id.appwidget_location_alt);
+        text_locationAltUnits = (TextView)findViewById(R.id.appwidget_location_alt_units);
 
         // custom mode: toggle edit mode
         button_edit = (ImageButton)findViewById(R.id.appwidget_location_edit);
@@ -541,12 +546,32 @@ public class LocationConfigView extends LinearLayout
     /**
      * @param location a WidgetSettings.Location instance to update from
      */
+    @SuppressLint("SetTextI18n")
     private void updateViews(WidgetSettings.Location location)
     {
         text_locationLat.setText(location.getLatitude());
         text_locationLon.setText(location.getLongitude());
         text_locationName.setText(location.getLabel());
-        text_locationAlt.setText(location.getAltitude());
+
+        Context context = getContext();
+        if (context != null)
+        {
+            WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(getContext(), appWidgetId);
+            switch (units)
+            {
+                case IMPERIAL:
+                case USC:
+                    text_locationAlt.setText( Double.toString(WidgetSettings.LengthUnit.metersToFeet(location.getAltitudeAsDouble())) );
+                    text_locationAltUnits.setText(context.getString(R.string.units_feet_short));
+                    break;
+
+                case METRIC:
+                default:
+                    text_locationAlt.setText(location.getAltitude());
+                    text_locationAltUnits.setText(context.getString(R.string.units_meters));
+                    break;
+            }
+        }
     }
 
     /**
@@ -659,7 +684,7 @@ public class LocationConfigView extends LinearLayout
             String longitude = text_locationLon.getText().toString();
             String altitude = text_locationAlt.getText().toString();
             String name = text_locationName.getText().toString();
-            WidgetSettings.Location location = new WidgetSettings.Location(name, latitude, longitude, altitude);
+            WidgetSettings.Location location = new WidgetSettings.Location(name, latitude, longitude, altitude, WidgetSettings.loadLengthUnitsPref(context, appWidgetId));
             WidgetSettings.saveLocationPref(context, appWidgetId, location);
             return true;
         }

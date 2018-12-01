@@ -38,6 +38,7 @@ import android.widget.TextView;
 public class AboutDialog extends DialogFragment
 {
     public static final String WEBSITE_URL = "https://forrestguice.github.io/SuntimesWidget/";
+    public static final String ADDONS_URL = "https://forrestguice.github.io/SuntimesWidget/";
     public static final String PRIVACY_URL = "https://github.com/forrestguice/SuntimesWidget/wiki/Privacy";
     public static final String CHANGELOG_URL = "https://github.com/forrestguice/SuntimesWidget/blob/master/CHANGELOG.md";
     public static final String COMMIT_URL = "https://github.com/forrestguice/SuntimesWidget/commit/";
@@ -143,8 +144,7 @@ public class AboutDialog extends DialogFragment
         legalView3.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_legal3)));
 
         TextView legalView4 = (TextView) dialogContent.findViewById(R.id.txt_about_legal4);
-        String permissionsExplained = context.getString(R.string.privacy_permission_location) + "<br/><br/>" +
-                                      context.getString(R.string.privacy_permission_calendar);
+        String permissionsExplained = context.getString(R.string.privacy_permission_location);
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             permissionsExplained += "<br/><br/>" + context.getString(R.string.privacy_permission_storage);
         }

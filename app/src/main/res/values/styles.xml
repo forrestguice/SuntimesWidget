@@ -80,6 +80,7 @@
         <item name="icActionWidgets">@drawable/ic_action_widget_light</item>
         <item name="icActionAppearance">@drawable/ic_palette_light</item>
         <item name="icActionAltitude">@drawable/baseline_terrain_black_18</item>
+        <item name="icActionShadow">@drawable/ic_action_shadow_light</item>
         <item name="icActionLocale">@drawable/ic_action_locale_light</item>
         <item name="icActionSettings">@drawable/ic_action_settings_light</item>
         <item name="icActionHelp">@drawable/ic_action_help_light</item>
@@ -91,6 +92,7 @@
         <item name="icActionCopy">@drawable/ic_action_copy_light</item>
         <item name="icActionDismiss">@drawable/ic_action_cancel_light</item>
         <item name="icActionCancel">@drawable/ic_action_cancel_light</item>
+        <item name="icActionShare">@drawable/ic_action_share_light</item>
 
         <item name="windowActionModeOverlay">true</item>
     </style>
@@ -175,6 +177,7 @@
         <item name="icActionWidgets">@drawable/ic_action_widget</item>
         <item name="icActionAppearance">@drawable/ic_palette</item>
         <item name="icActionAltitude">@drawable/baseline_terrain_white_18</item>
+        <item name="icActionShadow">@drawable/ic_action_shadow</item>
         <item name="icActionLocale">@drawable/ic_action_locale</item>
         <item name="icActionSettings">@drawable/ic_action_settings</item>
         <item name="icActionHelp">@drawable/ic_action_help</item>
@@ -186,6 +189,7 @@
         <item name="icActionCopy">@drawable/ic_action_copy</item>
         <item name="icActionDismiss">@drawable/ic_action_cancel</item>
         <item name="icActionCancel">@drawable/ic_action_cancel</item>
+        <item name="icActionShare">@drawable/ic_action_share</item>
 
         <item name="windowActionModeOverlay">true</item>
     </style>
@@ -323,7 +327,7 @@
     </style>
 
     <style name="ColorEditLabel">
-        <item name="android:layout_width">75dp</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">end</item>
         <item name="android:maxLines">2</item>
@@ -355,9 +359,10 @@
     <style name="SizeEditLabel">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:maxWidth">100dp</item>
+        <item name="android:maxWidth">200dp</item>
         <item name="android:gravity">end</item>
-        <item name="android:maxLines">3</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
         <item name="android:paddingLeft">8dp</item>
         <item name="android:paddingRight">8dp</item>
     </style>

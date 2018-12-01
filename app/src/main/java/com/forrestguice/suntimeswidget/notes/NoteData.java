@@ -30,11 +30,12 @@ public class NoteData
     public String prefixText;
     public String noteText;
     public int noteIconResource;
-    public int noteColor;
+    public int noteIconStroke;
+    public int noteColor, noteColor2;
     public Date time;
     public boolean tomorrow = false;
 
-    public NoteData(SolarEvents noteMode, SuntimesUtils.TimeDisplayText timeText, String prefixText, String noteText, int noteIconResource, int noteColor)
+    public NoteData(SolarEvents noteMode, SuntimesUtils.TimeDisplayText timeText, String prefixText, String noteText, int noteIconResource, int noteColor, int noteColor2, int noteIconStroke)
     {
         this.noteMode = noteMode;
         this.timeText = timeText;
@@ -42,6 +43,8 @@ public class NoteData
         this.noteText = noteText;
         this.noteIconResource = noteIconResource;
         this.noteColor = noteColor;
+        this.noteColor2 = noteColor2;
+        this.noteIconStroke = noteIconStroke;
     }
 
     public NoteData( NoteData other )
@@ -52,6 +55,8 @@ public class NoteData
         this.noteText = other.noteText;
         this.noteIconResource = other.noteIconResource;
         this.noteColor = other.noteColor;
+        this.noteColor2 = other.noteColor2;
+        this.noteIconStroke = other.noteIconStroke;
     }
 
     @Override
