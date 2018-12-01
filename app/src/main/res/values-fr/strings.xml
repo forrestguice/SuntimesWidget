@@ -645,31 +645,7 @@
 
     <!-- App Setting: calendars -->
     <string name="configLabel_calendars">Calendars</string>   <!-- group title -->  <!-- TODO -->
-
     <string name="configLabel_calendars_enabled">Calendar Integration</string>  <!-- TODO -->
-    <string name="configLabel_calendars_enabled_summary">Supply events to the Calendar app (moon phases, solstices, and equinoxes).</string>  <!-- TODO -->
-
-    <string name="configLabel_calendars_window0">Window (start)</string>  <!-- TODO -->
-    <string name="configLabel_calendars_window0_summary">A period starting <xliff:g id="calendars_window_display" example="one year">%s</xliff:g> ago</string>  <!-- TODO -->
-
-    <string name="configLabel_calendars_window1">Window (end)</string>  <!-- TODO -->
-    <string name="configLabel_calendars_window1_summary">A period ending <xliff:g id="calendars_window_display" example="two years">%s</xliff:g> from now</string>  <!-- TODO -->
-
-    <string name="calendars_notification_adding">Adding calendars…</string>  <!-- TODO -->
-    <string name="calendars_notification_added">Calendars have been added.</string>  <!-- TODO -->
-
-    <string name="calendars_notification_clearing">Clearing calendars…</string>  <!-- TODO -->
-    <string name="calendars_notification_cleared">Calendars have been cleared.</string>  <!-- TODO -->
-
-    <string-array name="calendars_window_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
-        <item>one year</item>
-        <item>two years</item>
-        <item>five years</item>
-        <item>ten years</item>
-    </string-array>  <!-- TODO -->
-
-    <string name="calendar_solstice_displayName">Solstices and Equinoxes</string>  <!-- TODO -->
-    <string name="calendar_moonPhase_displayName">Moon Phases</string>  <!-- TODO -->
 
     <!-- App Setting: passive location mode -->
     <string name="configLabel_getFix_passiveMode">Localisation passive</string>  
@@ -992,9 +968,15 @@
           The [Icon Default] default themes cannot be modified.
     </string> <!-- text explains themelist actions/icons; [Icon tags] are substituted at runtime (should remain unaltered)  --> <!-- TODO -->
 
+    <string name="help_calendar"><![CDATA[Supply events to the Calendar app (moon phases, solstices, and equinoxes).<br />
+        <br />
+        <u><b><font color="#ff9900">Calendar permissions have been removed.</font></b></u><br />
+        <br />
+        This feature is now available as a <a href="moreInfoLink">separate app</a>.
+    ]]></string>  <!-- TODO -->
+
     <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>Suntimes does not collect, store, or transmit personal user data. It contains <b>no advertising</b>, <b>no analytics</b>, <b>no trackers</b>, and <b>no unnecessary permissions</b>. <br/><br/>The app is configured from location data. This information (and other configuration data used by the app) is stored locally and does not leave the device.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string> <!-- TODO -->
     <string name="privacy_permission_location"><![CDATA[Suntimes uses the <b>location</b> permission to determine your current longitude and latitude.<br/><br/>This permission is optional; the location is manually configured by default.]]></string> <!-- TODO -->
-    <string name="privacy_permission_calendar"><![CDATA[Suntimes uses <b>calendar</b> permissions to integrate with the Calendar app. These permissions allow the app to create custom calendars and events.<br/><br/>Permissions are also required when disabling calendar integration (to remove custom calendars).]]></string> <!-- TODO -->
     <string name="privacy_permission_storage"><![CDATA[Suntimes uses <b>external storage</b> permissions to backup/export data to file (e.g. places, themes).]]></string> <!-- TODO -->
     <string name="privacy_permissiondialog_title">Permissions</string> <!-- TODO -->
 

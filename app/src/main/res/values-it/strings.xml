@@ -43,6 +43,8 @@
     -->
     <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain" >%1$s</xliff:g> <xliff:g id="dstTag" >[d]</xliff:g><xliff:g id="warningTag" >[w]</xliff:g></string>
     <string name="timezoneWarning"><xliff:g id="warningTag" >[w]</xliff:g> Il fuso orario potrebbe essere sbagliato per questa zona.</string>  <!-- snackbar message -->
+    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> daylight saving</string>  <!-- timezone dialog label -->  <!-- TODO -->
+    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> equation of time</string>  <!-- timezone dialog label -->  <!-- TODO -->
 
     <!-- Field: date
          The date field that appears above the table (main activity).
@@ -671,31 +673,7 @@
 
     <!-- App Setting: calendars -->
     <string name="configLabel_calendars">Calendari</string>   <!-- group title -->
-
     <string name="configLabel_calendars_enabled">Integrazione nel calendario</string>
-    <string name="configLabel_calendars_enabled_summary">Fornisci eventi all\'applicazione Calendario (fasi lunari, solstizi, e equinozi).</string>
-
-    <string name="configLabel_calendars_window0">Finestra (inizio)</string>
-    <string name="configLabel_calendars_window0_summary">Un periodo che inizia <xliff:g id="calendars_window_display" example="one year" >%s</xliff:g> fa</string>
-
-    <string name="configLabel_calendars_window1">Finestra (fine)</string>
-    <string name="configLabel_calendars_window1_summary">Un periodo che finisce a <xliff:g id="calendars_window_display" example="two years" >%s</xliff:g> da adesso</string>
-
-    <string name="calendars_notification_adding">Aggiungendo i calendari…</string>
-    <string name="calendars_notification_added">I calendari sono stati aggiunti.</string>
-
-    <string name="calendars_notification_clearing">Rimuovendo i calendari…</string>
-    <string name="calendars_notification_cleared">I calendari sono stati rimossi.</string>
-
-    <string-array name="calendars_window_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
-        <item>one year</item>
-        <item>two years</item>
-        <item>five years</item>
-        <item>ten years</item>
-    </string-array>  <!-- TODO -->
-
-    <string name="calendar_solstice_displayName">Solstizi ed equinozi</string>
-    <string name="calendar_moonPhase_displayName">Fasi lunari</string>
 
     <!-- App Setting: passive location mode -->
     <string name="configLabel_getFix_passiveMode">Locazione passiva</string>
@@ -1051,9 +1029,15 @@
           The [Icon Default] default themes cannot be modified.
     </string> <!-- text explains themelist actions/icons; [Icon tags] are substituted at runtime (should remain unaltered)  --> <!-- TODO -->
 
+    <string name="help_calendar"><![CDATA[Supply events to the Calendar app (moon phases, solstices, and equinoxes).<br />
+        <br />
+        <u><b><font color="#ff9900">Calendar permissions have been removed.</font></b></u><br />
+        <br />
+        This feature is now available as a <a href="moreInfoLink">separate app</a>.
+    ]]></string>  <!-- TODO -->
+
     <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>Suntimes non raccoglie, memorizza, né trasmette dati personali dell\'utente. Non contiene <b>nessuna pubblicità</b>, <b>nessuna analitica</b>, <b>nessun tracker</b>, e <b>nessun permesso superfluo</b>. <br/><br/>L\'applicazione si configura in base alla località.  Queste informazioni (e altri dati di configurazione utilizzati dall\'applicazione) sono memorizzate localmente e non vengono trasmesse altrove.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes utilizza il permesso di accesso alla <b>posizione</b> per determinare la tua latitudine e longitudine correnti.<br/><br/> Questo permesso è opzionale; la posizione viene configurata manualmente di default.]]></string>
-    <string name="privacy_permission_calendar"><![CDATA[Suntimes utilizza i permessi di accesso al <b>calendario</b> per integrarsi con l\'applicazione Calendario. Questi permessi consentono all\'applicazione di creare calendari propri ed eventi.<br/><br/>I permessi sono anche utilizzati quando si disattivano le integrazioni con il calendario (per rimuovere i calendari creati).]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes utilizza il permesso di accesso alla <b>memoria esterna</b> per effettuare backup e esportare dati su file (e.g. località, temi).]]></string>
     <string name="privacy_permissiondialog_title">Permessi</string>
     <string name="privacy_url"><xliff:g id="url" ><![CDATA[

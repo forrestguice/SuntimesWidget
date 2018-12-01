@@ -674,31 +674,7 @@
 
     <!-- App Setting: calendars -->
     <string name="configLabel_calendars">Egutegiak</string>   <!-- group title -->
-
     <string name="configLabel_calendars_enabled">Egutegiaren integrazioa</string>
-    <string name="configLabel_calendars_enabled_summary">Gertaeraz hornitu egutegiaren aplikazioa (ilargialdiak, solstizioak, eta ekinokzioak).</string>
-
-    <string name="configLabel_calendars_window0">Tartea (hasiera)</string>
-    <string name="configLabel_calendars_window0_summary">Orain dela <xliff:g id="calendars_window_display" example="one year">%s</xliff:g> hasitako denboraldi bat</string>
-
-    <string name="configLabel_calendars_window1">Tartea (amaiera)</string>
-    <string name="configLabel_calendars_window1_summary"><xliff:g id="calendars_window_display" example="two years">%s</xliff:g> barru amaituko den denboraldia</string>
-
-    <string name="calendars_notification_adding">Egutegiak gehitzen…</string>
-    <string name="calendars_notification_added">Egutegiak gehitu dira.</string>
-
-    <string name="calendars_notification_clearing">Egutegiak husten…</string>
-    <string name="calendars_notification_cleared">Egutegiak hustu dira.</string>
-
-    <string-array name="calendars_window_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
-        <item>urte bat</item>
-        <item>bi urte</item>
-        <item>bost urte</item>
-        <item>hamar urte</item>
-    </string-array>
-
-    <string name="calendar_solstice_displayName">Solstizioak eta ekinokzioak</string>
-    <string name="calendar_moonPhase_displayName">Ilargialdiak</string>
 
     <!-- App Setting: passive location mode -->
     <string name="configLabel_getFix_passiveMode">Kokapen pasiboa</string>
@@ -1052,9 +1028,15 @@
         Gai [Icon Default] lehenetsiak ezin dira ezabatu.
     </string> <!-- text explains themelist actions/icons; [Icon tags] are substituted at runtime (should remain unaltered)  -->
 
+    <string name="help_calendar"><![CDATA[Supply events to the Calendar app (moon phases, solstices, and equinoxes).<br />
+        <br />
+        <u><b><font color="#ff9900">Calendar permissions have been removed.</font></b></u><br />
+        <br />
+        This feature is now available as a <a href="moreInfoLink">separate app</a>.
+    ]]></string>  <!-- TODO -->
+
     <string name="privacy_policy"><![CDATA[<b>Pribatutasuna:</b><br/>Suntimes aplikazioak ez du inolako informazio pertsonalik biltzen, gordetzen, edo bidaltzen. <b>Ez du iragarkirik</b>, <b>ez analisi tresnarik</b>, <b>ez aztarnaririk</b>, ezta <b>beharrezkoa ez den baimenik</b>. <br/><br/>Aplikazioa kokapen datuekin konfiguratuta dago. Informazio hau (eta aplikazioak erabiltzen duen beste konfigurazio datuak) gailuan bertan gordetzen da eta ez du gailua uzten.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes aplikazioak <b>kokapen</b> baimena behar du zure uneko longitudea eta latitudea zehazteko.<br/><br/>Baimen hau hautazkoa da; kokapena eskuz ezartzen da modu lehenetsian.]]></string>
-    <string name="privacy_permission_calendar"><![CDATA[Suntimes aplikazioak <b>egutegi</b> baimenak behar ditu egutegiaren aplikazioarekin integratzeko. Baimen hauek egutegi pertsonalizatuak eta gertaerak sortzea baimentze diote aplikazioari.<br/><br/>Baimenak egutegiarekin integrazioa kentzerakoan ere behar dira (egutegi pertsonalizatuak kentzeko).]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes aplikazioak <b>kanpoko biltegirako</b> baimenak behar ditu datuen babes kopiak egiteko eta esportatzeko (adib. tokiak, gaiak).]]></string>
     <string name="privacy_permissiondialog_title">Baimenak</string>
 
