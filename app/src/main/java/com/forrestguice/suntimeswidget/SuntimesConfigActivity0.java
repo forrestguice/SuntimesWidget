@@ -1272,7 +1272,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected int getAboutIconID()
     {
-        return R.mipmap.ic_suntimes;
+        return R.mipmap.ic_launcher;
     }
 
     /**
