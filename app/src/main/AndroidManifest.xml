@@ -9,12 +9,6 @@
 
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />      <!-- needed to interact w/ AlarmClock -->
 
-    <uses-permission android:name="android.permission.READ_CALENDAR" />
-    <uses-permission android:name="android.permission.WRITE_CALENDAR" />           <!-- needed to interact w/ Calendar -->
-
-    <uses-permission android:name="android.permission.READ_SYNC_STATS" />
-    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />      <!-- needed to add new Calendars (via SyncAdapter) -->
-
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="18" />  <!-- needed by "export" features (e.g. "export places" to file) -->
 
     <uses-sdk tools:overrideLibrary="com.flask.colorpicker" />
@@ -58,22 +52,6 @@
             android:permission="suntimeswidget.calculator.permission.READ_PROVIDER"
             android:exported="true"
             android:syncable="false" />
-
-        <!-- Calendar Provider -->
-        <provider
-            android:name="com.forrestguice.suntimeswidget.calendar.SuntimesCalendarProvider"
-            android:authorities="com.forrestguice.suntimeswidget.datasync.provider"
-            android:exported="false"
-            android:syncable="true"/>
-        <service
-            android:name="com.forrestguice.suntimeswidget.calendar.SuntimesSyncService"
-            android:exported="true" android:permission="signature"
-            android:process=":sync">  <!-- TODO: lint security warning.. exported="false" or define a permission? -->
-            <intent-filter>
-                <action android:name="android.content.SyncAdapter"/>
-            </intent-filter>
-            <meta-data android:name="android.content.SyncAdapter" android:resource="@xml/syncadapter" />
-        </service>
 
         <!-- Calculator Plugins -->
         <!--EXAMPLE:
