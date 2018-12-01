@@ -763,6 +763,11 @@ public class SuntimesActivity extends AppCompatActivity
             row.label.setTextColor(labelColor);
         }
 
+        int disabledColor = ContextCompat.getColor(context, resID_buttonDisabledColor);
+        int actionColor = theme.getActionColor();
+        txt_date.setTextColor(SuntimesUtils.colorStateList(labelColor, disabledColor, actionColor));
+        txt_date2.setTextColor(SuntimesUtils.colorStateList(labelColor, disabledColor, actionColor));
+
         int sunriseIconColor = theme.getSunriseIconColor();
         int sunriseIconColor2 = theme.getSunriseIconStrokeColor();
         int sunriseIconStrokeWidth = theme.getSunriseIconStrokePixels(this);
