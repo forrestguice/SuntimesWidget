@@ -32,33 +32,14 @@
             app:labelText="@string/configLabel_themeColorSunrise"
             app:reverse="true" />
 
-        <!-- Sunset Color -->
-        <com.forrestguice.suntimeswidget.settings.ColorChooserView
-            android:id="@+id/chooser_sunsetColor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:hintText="@string/configHint_themeColorSunrise"
-            app:labelText="@string/configLabel_themeColorSunset"
-            app:reverse="true" />
-
         <!-- Sunrise Fill Color -->
-        <com.forrestguice.suntimeswidget.settings.ColorChooserView
-            android:id="@+id/chooser_sunriseFillColor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:hintText="@string/configHint_themeColorSunrise"
-            app:labelText="@string/configLabel_themeColorFill"
-            app:reverse="true" />
-
-        <!-- Sunset Fill Color -->
         <LinearLayout android:orientation="horizontal" android:gravity="center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginStart="48dp" android:layout_marginLeft="48dp">
 
             <com.forrestguice.suntimeswidget.settings.ColorChooserView
-                android:id="@+id/chooser_sunsetFillColor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/chooser_sunriseFillColor"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
                 app:hintText="@string/configHint_themeColorSunrise"
                 app:labelText="@string/configLabel_themeColorFill"
                 app:reverse="true" />
@@ -71,23 +52,13 @@
         </LinearLayout>
 
         <!-- Sunrise Stroke Color -->
-        <com.forrestguice.suntimeswidget.settings.ColorChooserView
-            android:id="@+id/chooser_sunriseStrokeColor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:hintText="@string/configHint_themeColorSunrise"
-            app:labelText="@string/configLabel_themeColorBorder"
-            app:reverse="true" />
-
-        <!-- Sunset Stroke Color -->
         <LinearLayout android:orientation="horizontal" android:gravity="center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginStart="48dp" android:layout_marginLeft="48dp">
 
             <com.forrestguice.suntimeswidget.settings.ColorChooserView
-                android:id="@+id/chooser_sunsetStrokeColor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/chooser_sunriseStrokeColor"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
                 app:hintText="@string/configHint_themeColorSunrise"
                 app:labelText="@string/configLabel_themeColorBorder"
                 app:reverse="true" />
@@ -98,6 +69,31 @@
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
+
+        <!-- Sunset Color -->
+        <com.forrestguice.suntimeswidget.settings.ColorChooserView
+            android:id="@+id/chooser_sunsetColor"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:hintText="@string/configHint_themeColorSunrise" app:labelText="@string/configLabel_themeColorSunset"
+            app:reverse="true" />
+
+        <!-- Sunset Fill Color -->
+        <com.forrestguice.suntimeswidget.settings.ColorChooserView
+            android:id="@+id/chooser_sunsetFillColor"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginStart="48dp" android:layout_marginLeft="48dp"
+            app:hintText="@string/configHint_themeColorSunrise"
+            app:labelText="@string/configLabel_themeColorFill"
+            app:reverse="true" />
+
+        <!-- Sunset Stroke Color -->
+        <com.forrestguice.suntimeswidget.settings.ColorChooserView
+            android:id="@+id/chooser_sunsetStrokeColor"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginStart="48dp" android:layout_marginLeft="48dp"
+            app:hintText="@string/configHint_themeColorSunrise"
+            app:labelText="@string/configLabel_themeColorBorder"
+            app:reverse="true" />
 
         <!-- Noon Color -->
         <LinearLayout android:orientation="horizontal" android:gravity="center_vertical"
@@ -122,16 +118,16 @@
         <!-- Noon Fill Color -->
         <com.forrestguice.suntimeswidget.settings.ColorChooserView
             android:id="@+id/chooser_noonFillColor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginStart="48dp" android:layout_marginLeft="48dp"
             app:hintText="@string/configHint_themeColorSunrise"
             app:labelText="@string/configLabel_themeColorFill"
             app:reverse="true" />
 
         <!-- Noon Stroke Color -->
         <LinearLayout android:orientation="horizontal" android:gravity="center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginStart="48dp" android:layout_marginLeft="48dp">
 
             <com.forrestguice.suntimeswidget.settings.ColorChooserView
                 android:id="@+id/chooser_noonStrokeColor"
