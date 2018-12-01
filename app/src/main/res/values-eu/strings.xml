@@ -203,6 +203,8 @@
     <string name="configLabel_general_altitude_enabled">Altitudea erabili</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">Altitudean oinarritutako hobekuntzak erabili.</string>        <!-- checkbox label -->
 
+    <string name="configLabel_general_lengthUnits">Units of length</string>        <!-- spinner label -->  <!-- TODO -->
+
     <string name="configLabel_general_showSeconds">Segunduak erakutsi</string>        <!-- checkbox label -->
     <string name="configLabel_general_showSeconds_summary">Gehitu segunduak denborak erakusterakoan.</string>        <!-- checkbox label -->
 

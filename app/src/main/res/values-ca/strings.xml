@@ -199,6 +199,8 @@
     <string name="configLabel_general_altitude_enabled">Utilitza elevació</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">Aplica refinaments basats en l\'altitud.</string>        <!-- checkbox label -->
 
+    <string name="configLabel_general_lengthUnits">Units of length</string>        <!-- spinner label -->  <!-- TODO -->
+
     <string name="configLabel_general_showSeconds">Mostrar segons</string>        <!-- checkbox label -->
     <string name="configLabel_general_showSeconds_summary">Inclou segons quan es mostra el temps.</string>        <!-- checkbox label -->
 

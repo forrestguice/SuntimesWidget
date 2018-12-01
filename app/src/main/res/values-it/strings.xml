@@ -200,6 +200,8 @@
     <string name="configLabel_general_altitude_enabled">Usa l\'altitudine</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">Applica aggiustamenti basati sulla quota.</string>        <!-- checkbox label -->
 
+    <string name="configLabel_general_lengthUnits">Units of length</string>        <!-- spinner label -->  <!-- TODO -->
+
     <string name="configLabel_general_showSeconds">Mostra secondi</string>        <!-- checkbox label -->
     <string name="configLabel_general_showSeconds_summary">Includi i secondi negli orari visualizzati.</string>        <!-- checkbox label -->
 

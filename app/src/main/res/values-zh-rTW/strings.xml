@@ -208,6 +208,8 @@
     <string name="configLabel_general_altitude_enabled">使用海拔</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">套用海拔以提高精度。</string>        <!-- checkbox label -->
 
+    <string name="configLabel_general_lengthUnits">Units of length</string>        <!-- spinner label -->  <!-- TODO -->
+
     <string name="configLabel_general_showSeconds">顯示秒</string>        <!-- checkbox label -->
     <string name="configLabel_general_showSeconds_summary">顯示時間時包含秒。</string>        <!-- checkbox label -->
 

@@ -189,6 +189,8 @@
     <string name="configLabel_general_altitude_enabled">Use Elevation</string>        <!-- checkbox label --> <!-- TODO -->
     <string name="configLabel_general_altitude_enabled_summary">Apply altitude based refinements.</string>        <!-- checkbox label --> <!-- TODO -->
 
+    <string name="configLabel_general_lengthUnits">Units of length</string>        <!-- spinner label -->  <!-- TODO -->
+
     <string name="configLabel_general_showSeconds">Show seconds</string>        <!-- checkbox label --> <!-- TODO -->
     <string name="configLabel_general_showSeconds_summary">Include seconds when displaying times.</string>        <!-- checkbox label --> <!-- TODO -->
 

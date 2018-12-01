@@ -191,6 +191,8 @@
     <string name="configLabel_general_altitude_enabled">Użyj wysokości</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">Zastosuj poprawki uwzględniające wysokość n.p.m.</string>        <!-- checkbox label -->
 
+    <string name="configLabel_general_lengthUnits">Units of length</string>        <!-- spinner label -->  <!-- TODO -->
+
     <string name="configLabel_general_showSeconds">Wyświetl sekundy</string>        <!-- checkbox label -->
     <string name="configLabel_general_showSeconds_summary">Uwzględnij sekundy podczas wyświetlania czasów.</string>        <!-- checkbox label -->
 

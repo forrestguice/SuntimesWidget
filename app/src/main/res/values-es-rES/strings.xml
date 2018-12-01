@@ -200,6 +200,8 @@
     <string name="configLabel_general_altitude_enabled">Usar elevación</string>        
     <string name="configLabel_general_altitude_enabled_summary">Aplica refinamientos basados en altitud.</string>
 
+    <string name="configLabel_general_lengthUnits">Units of length</string>        <!-- spinner label -->  <!-- TODO -->
+
     <string name="configLabel_general_showSeconds">Mostrar según</string>
     <string name="configLabel_general_showSeconds_summary">Incluye segundos cuando se muestra el tiempo.</string>        
 
