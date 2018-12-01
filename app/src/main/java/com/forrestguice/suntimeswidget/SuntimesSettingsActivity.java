@@ -29,11 +29,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -48,6 +50,8 @@ import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.KeyEvent;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
@@ -56,6 +60,7 @@ import com.forrestguice.suntimeswidget.calendar.SuntimesCalendarTask;
 import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.LengthPreference;
 import com.forrestguice.suntimeswidget.settings.SummaryListPreference;
 import com.forrestguice.suntimeswidget.settings.ThemePreference;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -65,6 +70,7 @@ import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 
 import java.io.File;
 import java.security.InvalidParameterException;
+import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -369,7 +375,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
         {
             if (key.equals(AppSettings.PREF_KEY_LOCALE) || key.equals(AppSettings.PREF_KEY_LOCALE_MODE)
-                    || key.equals(AppSettings.PREF_KEY_APPEARANCE_THEME))
+                    || key.equals(AppSettings.PREF_KEY_APPEARANCE_THEME) || key.endsWith(WidgetSettings.PREF_KEY_GENERAL_UNITS_LENGTH))
             {
                 //Log.d("SettingsActivity", "Locale change detected; restarting activity");
                 updateLocale();
@@ -477,6 +483,26 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
             // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
             WidgetSettings.saveShowHoursPref(this, 0, sharedPreferences.getBoolean(key, WidgetSettings.PREF_DEF_GENERAL_SHOWHOURS));
+            return;
+        }
+
+        if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_OBSERVERHEIGHT))
+        {
+            // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
+            // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
+            try {
+                WidgetSettings.saveObserverHeightPref(this, 0,
+                        Float.parseFloat(sharedPreferences.getString(key, WidgetSettings.PREF_DEF_GENERAL_OBSERVERHEIGHT + "")));
+            } catch (NumberFormatException e) {
+                Log.e(LOG_TAG, "onPreferenceChangeD: Failed to persist observerHeight: bad value!" + e);
+            }
+        }
+
+        if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_UNITS_LENGTH))
+        {
+            // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
+            // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
+            WidgetSettings.saveLengthUnitsPref(this, 0, WidgetSettings.getLengthUnit(sharedPreferences.getString(key, WidgetSettings.PREF_DEF_GENERAL_UNITS_LENGTH.name())));
             return;
         }
     }
@@ -591,6 +617,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             initPref_calculator(this, moonCalculatorPref, new int[] {SuntimesCalculator.FEATURE_MOON}, WidgetSettings.PREF_DEF_GENERAL_CALCULATOR_MOON);
             loadPref_calculator(this, moonCalculatorPref,"moon");
         }
+
+        String key_observerHeight = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_GENERAL + WidgetSettings.PREF_KEY_GENERAL_OBSERVERHEIGHT;
+        LengthPreference observerHeightPref = (LengthPreference) findPreference(key_observerHeight);
+        if (observerHeightPref != null)
+        {
+            initPref_observerHeight(this, observerHeightPref);
+            loadPref_observerHeight(this, observerHeightPref);
+        }
     }
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private static void initPref_general(PreferenceFragment fragment)
@@ -629,8 +663,15 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             initPref_calculator(context, moonCalculatorPref, new int[] {SuntimesCalculator.FEATURE_MOON}, WidgetSettings.PREF_DEF_GENERAL_CALCULATOR_MOON);
             loadPref_calculator(context, moonCalculatorPref, "moon");
         }
-    }
 
+        String key_observerHeight = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_GENERAL + WidgetSettings.PREF_KEY_GENERAL_OBSERVERHEIGHT;
+        LengthPreference observerHeightPref = (LengthPreference) fragment.findPreference(key_observerHeight);
+        if (observerHeightPref != null)
+        {
+            initPref_observerHeight(fragment.getActivity(), observerHeightPref);
+            loadPref_observerHeight(fragment.getActivity(), observerHeightPref);
+        }
+    }
 
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////
@@ -1342,6 +1383,51 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////
+
+    private static void initPref_observerHeight(final Activity context, final LengthPreference pref)
+    {
+        TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.icActionShadow});
+        int drawableID = a.getResourceId(0, R.drawable.ic_action_shadow);
+        a.recycle();
+
+        String title = context.getString(R.string.configLabel_general_observerheight) + "  [i]";
+        ImageSpan shadowIcon = SuntimesUtils.createImageSpan(context, drawableID, 32, 32, 0);
+        SpannableStringBuilder titleSpan = SuntimesUtils.createSpan(context, title, "[i]", shadowIcon);
+        pref.setTitle(titleSpan);
+
+        WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+        pref.setMetric(units == WidgetSettings.LengthUnit.METRIC);
+        pref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
+        {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue)
+            {
+                try {
+                    double doubleValue = Double.parseDouble((String)newValue);
+                    if (doubleValue > 0)
+                    {
+                        WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+                        preference.setSummary(formatObserverHeightSummary(preference.getContext(), doubleValue, units, false));
+                        return true;
+
+                    } else return false;
+                } catch (NumberFormatException e) {
+                    return false;
+                }
+            }
+        });
+    }
+    private static void loadPref_observerHeight(Context context, final LengthPreference pref)
+    {
+        final WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+        double observerHeight = WidgetSettings.loadObserverHeightPref(context, 0);
+        pref.setSummary(formatObserverHeightSummary(context, observerHeight, units, true));
+    }
+    private static CharSequence formatObserverHeightSummary(@NonNull Context context, double observerHeight, WidgetSettings.LengthUnit units, boolean convert)
+    {
+        String observerHeightDisplay = SuntimesUtils.formatAsHeight(context, observerHeight, units, convert, 2);
+        return context.getString(R.string.configLabel_general_observerheight_summary, observerHeightDisplay);
+    }
 
     private static void initPref_altitude(final Activity context, final CheckBoxPreference altitudePref)
     {

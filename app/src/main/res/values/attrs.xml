@@ -64,6 +64,7 @@
     <attr name="icActionWidgets" format="reference" />
     <attr name="icActionAppearance" format="reference" />
     <attr name="icActionAltitude" format="reference" />
+    <attr name="icActionShadow" format="reference" />
     <attr name="icActionLocale" format="reference" />
     <attr name="icActionSettings" format="reference" />
     <attr name="icActionHelp" format="reference" />

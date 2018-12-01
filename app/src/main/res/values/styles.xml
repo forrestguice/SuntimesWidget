@@ -71,6 +71,7 @@
         <item name="icActionWidgets">@drawable/ic_action_widget_light</item>
         <item name="icActionAppearance">@drawable/ic_palette_light</item>
         <item name="icActionAltitude">@drawable/baseline_terrain_black_18</item>
+        <item name="icActionShadow">@drawable/ic_action_shadow_light</item>
         <item name="icActionLocale">@drawable/ic_action_locale_light</item>
         <item name="icActionSettings">@drawable/ic_action_settings_light</item>
         <item name="icActionHelp">@drawable/ic_action_help_light</item>
@@ -156,6 +157,7 @@
         <item name="icActionWidgets">@drawable/ic_action_widget</item>
         <item name="icActionAppearance">@drawable/ic_palette</item>
         <item name="icActionAltitude">@drawable/baseline_terrain_white_18</item>
+        <item name="icActionShadow">@drawable/ic_action_shadow</item>
         <item name="icActionLocale">@drawable/ic_action_locale</item>
         <item name="icActionSettings">@drawable/ic_action_settings</item>
         <item name="icActionHelp">@drawable/ic_action_help</item>
