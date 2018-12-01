@@ -35,6 +35,8 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.graphics.drawable.InsetDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
@@ -90,7 +92,9 @@ import com.forrestguice.suntimeswidget.notes.SuntimesNotes;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.lang.reflect.Method;
 import java.text.DateFormat;
@@ -135,6 +139,7 @@ public class SuntimesActivity extends AppCompatActivity
     private Menu actionBarMenu;
     private String appTheme;
     private int appThemeResID;
+    private SuntimesTheme appThemeOverride = null;
     private AppSettings.LocaleInfo localeInfo;
 
     private GetFixHelper getFixHelper;
@@ -147,7 +152,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     private int color_textTimeDelta;
     private int resID_noonIcon;
-    private int resID_buttonPressColor;
+    private int resID_buttonPressColor, resID_buttonDisabledColor;
 
     // clock views
     private TextView txt_time;
@@ -176,7 +181,12 @@ public class SuntimesActivity extends AppCompatActivity
     private ImageButton btn_flipperPrev_tomorrow;
 
     private View sunriseHeader, sunriseHeader2;
+    private TextView header_sunrise,        header_sunrise2;
+    private ImageView icon_sunrise,         icon_sunrise2;
+
     private View sunsetHeader, sunsetHeader2;
+    private TextView header_sunset,         header_sunset2;
+    private ImageView icon_sunset,          icon_sunset2;
 
     private TextView txt_date,              txt_date2;
 
@@ -214,6 +224,7 @@ public class SuntimesActivity extends AppCompatActivity
     private boolean isRtl = false;
     private boolean userSwappedCard = false;
     private HashMap<SolarEvents.SolarEventField, TextView> timeFields;
+    private ArrayList<TimeFieldRow> rows = new ArrayList<>();
 
     private boolean showWarnings = false;
     private SuntimesWarning timezoneWarning;
@@ -254,6 +265,7 @@ public class SuntimesActivity extends AppCompatActivity
         initLocale(this);  // must follow super.onCreate or locale is reverted
         setContentView(R.layout.layout_main);
         initViews(context);
+        themeViews(context);
 
         initWarnings(context, savedState);
 
@@ -275,13 +287,26 @@ public class SuntimesActivity extends AppCompatActivity
         appTheme = AppSettings.loadThemePref(this);
         setTheme(appThemeResID = AppSettings.themePrefToStyleId(this, appTheme, null));
 
-        int[] attrs = new int[] { R.attr.sunnoonIcon, R.attr.buttonPressColor };
+        String themeName = getThemeOverride();
+        if (themeName != null)
+        {
+            Log.i("initTheme", "Overriding \"" + appTheme + "\" using: " + themeName);
+            appThemeOverride = WidgetThemes.loadTheme(this, themeName);
+        }
+
+        int[] attrs = new int[] { R.attr.sunnoonIcon, R.attr.buttonPressColor, R.attr.text_disabledColor };
         TypedArray a = obtainStyledAttributes(attrs);
         resID_noonIcon = a.getResourceId(0, R.drawable.ic_noon_large);
         resID_buttonPressColor = a.getResourceId(1, R.color.btn_tint_pressed_dark);
+        resID_buttonDisabledColor = a.getResourceId(2, R.color.text_disabled_dark);
         a.recycle();
 
         GetFixUI.themeIcons(this);
+    }
+    private String getThemeOverride()
+    {
+        String themeOverride = ((appThemeResID == R.style.AppTheme_Light) ? AppSettings.loadThemeLightPref(this) : AppSettings.loadThemeDarkPref(this));
+        return ((themeOverride != null && !themeOverride.equals("default")) ? themeOverride : null);
     }
 
     private void initLocale( Context context )
@@ -381,6 +406,7 @@ public class SuntimesActivity extends AppCompatActivity
         LightMapDialog lightMapDialog = (LightMapDialog) fragments.findFragmentByTag(DIALOGTAG_LIGHTMAP);
         if (lightMapDialog != null)
         {
+            lightMapDialog.themeViews(this, appThemeOverride);
             lightMapDialog.setData(dataset);
             lightMapDialog.updateViews();
             //Log.d("DEBUG", "LightMapDialog updated on restore.");
@@ -389,6 +415,7 @@ public class SuntimesActivity extends AppCompatActivity
         WorldMapDialog worldMapDialog = (WorldMapDialog) fragments.findFragmentByTag(DIALOGTAG_WORLDMAP);
         if (worldMapDialog != null)
         {
+            worldMapDialog.themeViews(this, appThemeOverride);
             worldMapDialog.setData(dataset);
             worldMapDialog.updateViews();
             //Log.d("DEBUG", "WorldMapDialog updated on restore.");
@@ -397,6 +424,7 @@ public class SuntimesActivity extends AppCompatActivity
         EquinoxDialog equinoxDialog = (EquinoxDialog) fragments.findFragmentByTag(DIALOGTAG_EQUINOX);
         if (equinoxDialog != null)
         {
+            equinoxDialog.themeViews(this, appThemeOverride);
             equinoxDialog.setData((dataset2 != null) ? dataset2 : new SuntimesEquinoxSolsticeDataset(SuntimesActivity.this));
             equinoxDialog.updateViews();
             //Log.d("DEBUG", "EquinoxDialog updated on restore.");
@@ -405,6 +433,7 @@ public class SuntimesActivity extends AppCompatActivity
         MoonDialog moonDialog = (MoonDialog) fragments.findFragmentByTag(DIALOGTAG_MOON);
         if (moonDialog != null)
         {
+            moonDialog.themeViews(this, appThemeOverride);
             moonDialog.setData((dataset3 != null) ? dataset3 : new SuntimesMoonData(SuntimesActivity.this, 0, "moon"));
             moonDialog.updateViews();
             //Log.d("DEBUG", "MoonDialog updated on restore.");
@@ -640,9 +669,10 @@ public class SuntimesActivity extends AppCompatActivity
     {
         if (requestCode == SUNTIMES_SETTINGS_REQUEST && resultCode == RESULT_OK)
         {
-            boolean needsRecreate = ((!AppSettings.loadThemePref(SuntimesActivity.this).equals(appTheme))       // theme changed
-                    || (localeInfo.localeMode != AppSettings.loadLocaleModePref(SuntimesActivity.this))         // or localeMode changed
-                    || ((localeInfo.localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE                             // or customLocale changed
+            boolean needsRecreate = ((!AppSettings.loadThemePref(SuntimesActivity.this).equals(appTheme))                           // theme mode changed
+                    || (appThemeOverride != null && !appThemeOverride.themeName().equals(getThemeOverride()))                       // or theme override changed
+                    || (localeInfo.localeMode != AppSettings.loadLocaleModePref(SuntimesActivity.this))                             // or localeMode changed
+                    || ((localeInfo.localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE                                              // or customLocale changed
                     && !AppSettings.loadLocalePref(SuntimesActivity.this).equals(localeInfo.customLocale))));
 
             if (needsRecreate)
@@ -669,6 +699,112 @@ public class SuntimesActivity extends AppCompatActivity
             }
         }
     };
+
+    /**
+     * Override the appearance of views if appThemeOverride is defined.
+     * @param context Context
+     */
+    protected void themeViews(Context context)
+    {
+        if (appThemeOverride != null)
+        {
+            Log.i("themeViews", "Applying theme: " + appThemeOverride.themeName());
+            int titleColor = appThemeOverride.getTitleColor();
+            int timeColor = appThemeOverride.getTimeColor();
+            int textColor = appThemeOverride.getTextColor();
+            int disabledColor = ContextCompat.getColor(context, resID_buttonDisabledColor);
+            int pressedColor = appThemeOverride.getActionColor();
+
+            Toolbar actionBar = (Toolbar) findViewById(R.id.app_menubar);
+            actionBar.setTitleTextColor(titleColor);
+            actionBar.setSubtitleTextColor(textColor);
+
+            txt_time.setTextColor(timeColor);
+            txt_time_suffix.setTextColor(timeColor);
+            txt_timezone.setTextColor(SuntimesUtils.colorStateList(textColor, disabledColor, pressedColor));
+
+            txt_time1_note1.setTextColor(timeColor);
+            txt_time1_note2.setTextColor(textColor);
+            txt_time2_note1.setTextColor(timeColor);
+            txt_time2_note2.setTextColor(textColor);
+
+            txt_datasource.setTextColor(SuntimesUtils.colorStateList(textColor, disabledColor, pressedColor));
+            txt_altitude.setTextColor(timeColor);
+
+            themeCardViews(context, appThemeOverride);
+            card_equinoxSolstice.themeViews(context, appThemeOverride);
+            lightmap.themeViews(context, appThemeOverride);
+        }
+    }
+
+    protected void themeCardViews(Context context, @NonNull SuntimesTheme theme)
+    {
+        color_textTimeDelta = theme.getTimeColor();
+
+        int textColor = theme.getTextColor();
+        txt_daylength.setTextColor(textColor);
+        txt_daylength2.setTextColor(textColor);
+        txt_lightlength.setTextColor(textColor);
+        txt_lightlength2.setTextColor(textColor);
+
+        int sunriseTextColor = theme.getSunriseTextColor();
+        int sunsetTextColor = theme.getSunsetTextColor();
+        for (SolarEvents.SolarEventField field : timeFields.keySet())
+        {
+            TextView textView = timeFields.get(field);
+            if (textView != null)
+            {
+                switch (field.event)
+                {
+                    case MORNING_ASTRONOMICAL: case MORNING_NAUTICAL: case MORNING_CIVIL:
+                    case MORNING_BLUE8: case MORNING_BLUE4:
+                    case EVENING_GOLDEN:
+                    case SUNRISE: textView.setTextColor(sunriseTextColor);
+                        break;
+                    case EVENING_ASTRONOMICAL: case EVENING_NAUTICAL: case EVENING_CIVIL:
+                    case EVENING_BLUE8: case EVENING_BLUE4:
+                    case MORNING_GOLDEN: case NOON:
+                    case SUNSET: textView.setTextColor(sunsetTextColor);
+                        break;
+                }
+            }
+        }
+
+        int labelColor = theme.getTitleColor();
+        for (TimeFieldRow row : rows) {
+            row.label.setTextColor(labelColor);
+        }
+
+        int disabledColor = ContextCompat.getColor(context, resID_buttonDisabledColor);
+        int actionColor = theme.getActionColor();
+        txt_date.setTextColor(SuntimesUtils.colorStateList(labelColor, disabledColor, actionColor));
+        txt_date2.setTextColor(SuntimesUtils.colorStateList(labelColor, disabledColor, actionColor));
+
+        int sunriseIconColor = theme.getSunriseIconColor();
+        int sunriseIconColor2 = theme.getSunriseIconStrokeColor();
+        int sunriseIconStrokeWidth = theme.getSunriseIconStrokePixels(this);
+        SuntimesUtils.tintDrawable((InsetDrawable)icon_sunrise.getBackground(), sunriseIconColor, sunriseIconColor2, sunriseIconStrokeWidth);
+        SuntimesUtils.tintDrawable((InsetDrawable)icon_sunrise2.getBackground(), sunriseIconColor, sunriseIconColor2, sunriseIconStrokeWidth);
+        header_sunrise.setTextColor(sunriseTextColor);
+        header_sunrise2.setTextColor(sunriseTextColor);
+
+        int sunsetIconColor = theme.getSunsetIconColor();
+        int sunsetIconColor2 = theme.getSunsetIconStrokeColor();
+        int sunsetIconStrokeWidth = theme.getSunsetIconStrokePixels(this);
+        SuntimesUtils.tintDrawable((InsetDrawable)icon_sunset.getBackground(), sunsetIconColor, sunsetIconColor2, sunsetIconStrokeWidth);
+        SuntimesUtils.tintDrawable((InsetDrawable)icon_sunset2.getBackground(), sunsetIconColor, sunsetIconColor2, sunsetIconStrokeWidth);
+        header_sunset.setTextColor(sunsetTextColor);
+        header_sunset2.setTextColor(sunsetTextColor);
+
+        moonrise.themeViews(context, theme);
+        moonrise2.themeViews(context, theme);
+
+        moonphase.themeViews(context, theme);
+        moonphase2.themeViews(context, theme);
+
+        moonlabel.setTextColor(labelColor);
+        moonlabel2.setTextColor(labelColor);
+    }
 
     /**
      * initialize ui/views
@@ -986,38 +1122,42 @@ public class SuntimesActivity extends AppCompatActivity
 
             sunriseHeader = viewToday.findViewById(R.id.header_time_sunrise);
             sunriseHeader.setOnClickListener(onSunriseClick);
+            header_sunrise = (TextView) viewToday.findViewById(R.id.label_time_sunrise);
+            icon_sunrise = (ImageView) viewToday.findViewById(R.id.icon_time_sunrise);
 
             sunsetHeader = viewToday.findViewById(R.id.header_time_sunset);
             sunsetHeader.setOnClickListener(onSunsetClick);
+            header_sunset = (TextView) viewToday.findViewById(R.id.label_time_sunset);
+            icon_sunset = (ImageView) viewToday.findViewById(R.id.icon_time_sunset);
 
-            row_actual = new TimeFieldRow(viewToday, R.id.text_time_label_official, R.id.text_time_sunrise_actual, R.id.text_time_sunset_actual);
+            rows.add(row_actual = new TimeFieldRow(viewToday, R.id.text_time_label_official, R.id.text_time_sunrise_actual, R.id.text_time_sunset_actual));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.SUNRISE, false), row_actual.getField(0));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.SUNSET, false), row_actual.getField(1));
 
-            row_civil = new TimeFieldRow(viewToday, R.id.text_time_label_civil, R.id.text_time_sunrise_civil, R.id.text_time_sunset_civil);
+            rows.add(row_civil = new TimeFieldRow(viewToday, R.id.text_time_label_civil, R.id.text_time_sunrise_civil, R.id.text_time_sunset_civil));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_CIVIL, false), row_civil.getField(0));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_CIVIL, false), row_civil.getField(1));
 
-            row_nautical = new TimeFieldRow(viewToday, R.id.text_time_label_nautical, R.id.text_time_sunrise_nautical, R.id.text_time_sunset_nautical);
+            rows.add(row_nautical = new TimeFieldRow(viewToday, R.id.text_time_label_nautical, R.id.text_time_sunrise_nautical, R.id.text_time_sunset_nautical));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_NAUTICAL, false), row_nautical.getField(0));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_NAUTICAL, false), row_nautical.getField(1));
 
-            row_astro = new TimeFieldRow(viewToday, R.id.text_time_label_astro, R.id.text_time_sunrise_astro, R.id.text_time_sunset_astro);
+            rows.add(row_astro = new TimeFieldRow(viewToday, R.id.text_time_label_astro, R.id.text_time_sunrise_astro, R.id.text_time_sunset_astro));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_ASTRONOMICAL, false), row_astro.getField(0));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_ASTRONOMICAL, false), row_astro.getField(1));
 
-            row_solarnoon = new TimeFieldRow(viewToday, R.id.text_time_label_noon, R.id.text_time_noon);
+            rows.add(row_solarnoon = new TimeFieldRow(viewToday, R.id.text_time_label_noon, R.id.text_time_noon));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.NOON, false), row_solarnoon.getField(0));
 
-            row_gold = new TimeFieldRow(viewToday, R.id.text_time_label_golden, R.id.text_time_golden_morning, R.id.text_time_golden_evening);
+            rows.add(row_gold = new TimeFieldRow(viewToday, R.id.text_time_label_golden, R.id.text_time_golden_morning, R.id.text_time_golden_evening));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_GOLDEN, false), row_gold.getField(0));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_GOLDEN, false), row_gold.getField(1));
 
-            row_blue8 = new TimeFieldRow(viewToday, R.id.text_time_label_blue8, R.id.text_time_blue8_morning, R.id.text_time_blue8_evening);
+            rows.add(row_blue8 = new TimeFieldRow(viewToday, R.id.text_time_label_blue8, R.id.text_time_blue8_morning, R.id.text_time_blue8_evening));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_BLUE8, false), row_blue8.getField(0));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_BLUE8, false), row_blue8.getField(1));
 
-            row_blue4 = new TimeFieldRow(viewToday, R.id.text_time_label_blue4, R.id.text_time_blue4_morning, R.id.text_time_blue4_evening);
+            rows.add(row_blue4 = new TimeFieldRow(viewToday, R.id.text_time_label_blue4, R.id.text_time_blue4_morning, R.id.text_time_blue4_evening));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_BLUE4, false), row_blue4.getField(0));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_BLUE4, false), row_blue4.getField(1));
 
@@ -1045,7 +1185,9 @@ public class SuntimesActivity extends AppCompatActivity
                 public boolean onTouch(View view, MotionEvent motionEvent)
                 {
                     if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                        btn_flipperNext_today.setColorFilter(ContextCompat.getColor(SuntimesActivity.this, resID_buttonPressColor));
+                        btn_flipperNext_today.setColorFilter((appThemeOverride != null
+                                ? appThemeOverride.getActionColor()
+                                : ContextCompat.getColor(SuntimesActivity.this, resID_buttonPressColor)));
                     } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                         btn_flipperNext_today.setColorFilter(null);
                     }
@@ -1071,38 +1213,42 @@ public class SuntimesActivity extends AppCompatActivity
 
             sunriseHeader2 = viewTomorrow.findViewById(R.id.header_time_sunrise);
             sunriseHeader2.setOnClickListener(onSunriseClick);
+            header_sunrise2 = (TextView) viewTomorrow.findViewById(R.id.label_time_sunrise);
+            icon_sunrise2 = (ImageView) viewTomorrow.findViewById(R.id.icon_time_sunrise);
 
             sunsetHeader2 = viewTomorrow.findViewById(R.id.header_time_sunset);
             sunsetHeader2.setOnClickListener(onSunsetClick);
+            header_sunset2 = (TextView) viewTomorrow.findViewById(R.id.label_time_sunset);
+            icon_sunset2 = (ImageView) viewTomorrow.findViewById(R.id.icon_time_sunset);
 
-            row_actual2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_official, R.id.text_time_sunrise_actual, R.id.text_time_sunset_actual);
+            rows.add(row_actual2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_official, R.id.text_time_sunrise_actual, R.id.text_time_sunset_actual));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.SUNRISE, true), row_actual2.getField(0));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.SUNSET, true), row_actual2.getField(1));
 
-            row_civil2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_civil, R.id.text_time_sunrise_civil, R.id.text_time_sunset_civil);
+            rows.add(row_civil2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_civil, R.id.text_time_sunrise_civil, R.id.text_time_sunset_civil));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_CIVIL, true), row_civil2.getField(0));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_CIVIL, true), row_civil2.getField(1));
 
-            row_nautical2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_nautical, R.id.text_time_sunrise_nautical, R.id.text_time_sunset_nautical);
+            rows.add(row_nautical2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_nautical, R.id.text_time_sunrise_nautical, R.id.text_time_sunset_nautical));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_NAUTICAL, true), row_nautical2.getField(0));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_NAUTICAL, true), row_nautical2.getField(1));
 
-            row_astro2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_astro, R.id.text_time_sunrise_astro, R.id.text_time_sunset_astro);
+            rows.add(row_astro2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_astro, R.id.text_time_sunrise_astro, R.id.text_time_sunset_astro));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_ASTRONOMICAL, true), row_astro2.getField(0));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_ASTRONOMICAL, true), row_astro2.getField(1));
 
-            row_solarnoon2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_noon, R.id.text_time_noon);
+            rows.add(row_solarnoon2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_noon, R.id.text_time_noon));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.NOON, true), row_solarnoon2.getField(0));
 
-            row_gold2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_golden, R.id.text_time_golden_morning, R.id.text_time_golden_evening);
+            rows.add(row_gold2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_golden, R.id.text_time_golden_morning, R.id.text_time_golden_evening));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_GOLDEN, true), row_gold2.getField(0));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_GOLDEN, true), row_gold2.getField(1));
 
-            row_blue8_2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_blue8, R.id.text_time_blue8_morning, R.id.text_time_blue8_evening);
+            rows.add(row_blue8_2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_blue8, R.id.text_time_blue8_morning, R.id.text_time_blue8_evening));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_BLUE8, true), row_blue8_2.getField(0));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_BLUE8, true), row_blue8_2.getField(1));
 
-            row_blue4_2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_blue4, R.id.text_time_blue4_morning, R.id.text_time_blue4_evening);
+            rows.add(row_blue4_2 = new TimeFieldRow(viewTomorrow, R.id.text_time_label_blue4, R.id.text_time_blue4_morning, R.id.text_time_blue4_evening));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_BLUE4, true), row_blue4_2.getField(0));
             timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_BLUE4, true), row_blue4_2.getField(1));
 
@@ -1138,7 +1284,9 @@ public class SuntimesActivity extends AppCompatActivity
                 {
                     if (motionEvent.getAction() == MotionEvent.ACTION_DOWN)
                     {
-                        btn_flipperPrev_tomorrow.setColorFilter(ContextCompat.getColor(SuntimesActivity.this, resID_buttonPressColor));
+                        btn_flipperPrev_tomorrow.setColorFilter((appThemeOverride != null
+                                ? appThemeOverride.getActionColor()
+                                : ContextCompat.getColor(SuntimesActivity.this, resID_buttonPressColor)));
                     } else if (motionEvent.getAction() == MotionEvent.ACTION_UP)
                     {
                         btn_flipperPrev_tomorrow.setColorFilter(null);
@@ -1224,6 +1372,7 @@ public class SuntimesActivity extends AppCompatActivity
     private void initNotes()
     {
         notes = new SuntimesNotes();
+        notes.themeViews(this, appThemeOverride);
         notes.init(this, dataset, dataset3);
         notes.setOnChangedListener(new NoteChangedListener()
         {
@@ -1634,8 +1783,9 @@ public class SuntimesActivity extends AppCompatActivity
         String altitudeString = "";
         if (supportsAltitude && enabledAltitude && location.getAltitudeAsInteger() != 0)
         {
-            String altitudeUnits = getString(R.string.units_meters_short);    // TODO: support display in feet
-            altitudeString = getString(R.string.location_format_alt, ("" + location.getAltitudeAsInteger()), altitudeUnits);
+            WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+            SuntimesUtils.TimeDisplayText altitudeText = SuntimesUtils.formatAsHeight(context, location.getAltitudeAsDouble(), units, 0,true);
+            altitudeString = getString(R.string.location_format_alt, altitudeText.getValue(), altitudeText.getUnits());
             String altitudeTag = getString(R.string.location_format_alttag, altitudeString);
             String displayString = getString(R.string.location_format_latlonalt, locationString, altitudeTag);
             locationSubtitle = SuntimesUtils.createRelativeSpan(null, displayString, altitudeTag, 0.5f);
@@ -2400,6 +2550,7 @@ public class SuntimesActivity extends AppCompatActivity
     protected void showLightMapDialog()
     {
         final LightMapDialog lightMapDialog = new LightMapDialog();
+        lightMapDialog.themeViews(this, appThemeOverride);
         lightMapDialog.setData(dataset);
         lightMapDialog.show(getSupportFragmentManager(), DIALOGTAG_LIGHTMAP);
     }
@@ -2414,6 +2565,7 @@ public class SuntimesActivity extends AppCompatActivity
     protected void showWorldMapDialog()
     {
         WorldMapDialog worldMapDialog = new WorldMapDialog();
+        worldMapDialog.themeViews(this, appThemeOverride);
         worldMapDialog.setData(dataset);
         worldMapDialog.show(getSupportFragmentManager(), DIALOGTAG_WORLDMAP);
     }
@@ -2426,6 +2578,7 @@ public class SuntimesActivity extends AppCompatActivity
     protected void showEquinoxDialog()
     {
         EquinoxDialog equinoxDialog = new EquinoxDialog();
+        equinoxDialog.themeViews(this, appThemeOverride);
         equinoxDialog.setData((dataset2 != null) ? dataset2 : new SuntimesEquinoxSolsticeDataset(SuntimesActivity.this));
         equinoxDialog.show(getSupportFragmentManager(), DIALOGTAG_EQUINOX);
     }
@@ -2433,6 +2586,7 @@ public class SuntimesActivity extends AppCompatActivity
     protected void showMoonDialog()
     {
         MoonDialog moonDialog = new MoonDialog();
+        moonDialog.themeViews(this, appThemeOverride);
         moonDialog.setData((dataset3 != null) ? dataset3 : new SuntimesMoonData(SuntimesActivity.this, 0, "moon"));
         moonDialog.show(getSupportFragmentManager(), DIALOGTAG_MOON);
     }
@@ -2619,6 +2773,9 @@ public class SuntimesActivity extends AppCompatActivity
         {
             // currently using view1, ready view2
             ic_time2_note.setBackgroundResource(note.noteIconResource);
+            if (appThemeOverride != null) {
+                SuntimesUtils.tintDrawable(ic_time2_note.getBackground(), note.noteColor, note.noteColor2, note.noteIconStroke);
+            }
             adjustNoteIconSize(note, ic_time2_note);
             ic_time2_note.setVisibility(View.VISIBLE);
             txt_time2_note1.setText(note.timeText.toString());
@@ -2630,6 +2787,9 @@ public class SuntimesActivity extends AppCompatActivity
         } else {
             // currently using view2, ready view1
             ic_time1_note.setBackgroundResource(note.noteIconResource);
+            if (appThemeOverride != null) {
+                SuntimesUtils.tintDrawable(ic_time1_note.getBackground(), note.noteColor, note.noteColor2, note.noteIconStroke);
+            }
             adjustNoteIconSize(note, ic_time1_note);
             ic_time1_note.setVisibility(View.VISIBLE);
             txt_time1_note1.setText(note.timeText.toString());

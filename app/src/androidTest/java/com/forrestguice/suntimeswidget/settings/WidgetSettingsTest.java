@@ -22,14 +22,15 @@ import android.content.Context;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.time4a.Time4ASimpleSuntimesCalculator;
 import com.forrestguice.suntimeswidget.lightmap.LightMapWidgetSettings;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
-import com.forrestguice.suntimeswidget.themes.DarkTheme;
-import com.forrestguice.suntimeswidget.themes.LightTheme;
-import com.forrestguice.suntimeswidget.themes.LightThemeTrans;
+import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
+import com.forrestguice.suntimeswidget.themes.defaults.LightTheme;
+import com.forrestguice.suntimeswidget.themes.defaults.LightThemeTrans;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import org.junit.Before;
@@ -45,6 +46,34 @@ import static junit.framework.Assert.assertTrue;
 @RunWith(AndroidJUnit4.class)
 public class WidgetSettingsTest extends SuntimesActivityTestBase
 {
+    @Test
+    public void test_lengthUnitsPref()
+    {
+        Context context = activityRule.getActivity();
+        int appWidgetId = Integer.MAX_VALUE;
+
+        WidgetSettings.saveLengthUnitsPref(context, appWidgetId, WidgetSettings.LengthUnit.METRIC);
+        WidgetSettings.LengthUnit units3 = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
+        assertTrue("units should be metric, was " + units3, units3 == WidgetSettings.LengthUnit.METRIC);
+
+        WidgetSettings.saveLengthUnitsPref(context, appWidgetId, WidgetSettings.LengthUnit.IMPERIAL);
+        WidgetSettings.LengthUnit units2 = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
+        assertTrue("units should be imperial, was " + units2, units2 == WidgetSettings.LengthUnit.IMPERIAL);
+
+        WidgetSettings.saveLengthUnitsPref(context, appWidgetId, WidgetSettings.LengthUnit.USC);
+        WidgetSettings.LengthUnit units1 = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
+        assertTrue("units should be usc, was " + units1, units1 == WidgetSettings.LengthUnit.USC);
+
+        WidgetSettings.deleteLengthUnitsPref(context, appWidgetId);
+        WidgetSettings.LengthUnit units0 = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
+        assertTrue("units should be default (metric) but was " + units0, units0 == WidgetSettings.PREF_DEF_GENERAL_UNITS_LENGTH);
+
+        double meters0 = Math.PI;
+        double feet0 = WidgetSettings.LengthUnit.metersToFeet(meters0);
+        double meters1 = WidgetSettings.LengthUnit.feetToMeters(feet0);
+        assertTrue("conversion should make round trip", (meters1-meters0 < 0.1));
+    }
+
     @Test
     public void test_timeFormatModePref()
     {

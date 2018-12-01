@@ -1,6 +1,5 @@
 ### ~
 
-
 ###
 * adds dst label to timezone dialog; displayed when selected timezone is using daylight saving time.
 * adds eot label to timezone dialog; displayed for apparent solar time.

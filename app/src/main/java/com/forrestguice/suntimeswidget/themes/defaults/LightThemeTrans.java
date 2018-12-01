@@ -16,25 +16,25 @@
    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.forrestguice.suntimeswidget.themes;
+package com.forrestguice.suntimeswidget.themes.defaults;
 
 import android.content.Context;
 import android.graphics.Color;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
 
-public class DarkThemeTrans extends DarkTheme
+public class LightThemeTrans extends LightTheme
 {
-    public static final String THEMEDEF_NAME = "dark_transparent";
-    public static final String THEMEDEF_DISPLAYSTRING = "Dark (transparent)";
+    public static final String THEMEDEF_NAME = "light_transparent";
     public static final int THEMEDEF_VERSION = BuildConfig.VERSION_CODE;
+    public static final String THEMEDEF_DISPLAYSTRING = "Light (transparent)";
     public static final ThemeDescriptor THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, THEMEDEF_DISPLAYSTRING, THEMEDEF_VERSION);
 
     public static final ThemeBackground THEMEDEF_BACKGROUND = ThemeBackground.TRANSPARENT;
     public static final boolean THEMEDEF_TITLEBOLD = true;
     public static final boolean THEMEDEF_TIMEBOLD = true;
 
-    public DarkThemeTrans(Context context)
+    public LightThemeTrans(Context context)
     {
         super(context);
         this.themeVersion = THEMEDEF_VERSION;
@@ -49,6 +49,6 @@ public class DarkThemeTrans extends DarkTheme
 
     public ThemeDescriptor themeDescriptor()
     {
-        return DarkThemeTrans.THEMEDEF_DESCRIPTOR;
+        return LightThemeTrans.THEMEDEF_DESCRIPTOR;
     }
 }
