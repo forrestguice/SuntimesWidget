@@ -509,6 +509,7 @@
     <!--<string name="configLabel_widgetList_itemTitlePattern"><xliff:g id="titlePattern"><![CDATA[%M (%lat, %lon) [%t]]]></xliff:g></string> --> <!-- the pattern used when generating widget titles for display in the list -->
     <string name="configLabel_widgetListHelp_title">Pomoc</string>               <!-- always the first item in the widgetList -->
     <string name="configLabel_widgetListHelp_summary">Pokaż pomoc dot. widżetów</string>
+    <string name="configLabel_widgetList_emptyMsg">Brak widżetów</string>          <!-- a label that is displayed in place of an empty listview -->
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">Miejsca</string>                           <!-- group title -->
@@ -681,8 +682,8 @@
         <item>Kataloński</item>
         <item>Baskijski</item>
         <item>Norweski</item>
-        <item>Traditional Chinese</item>
-    </string-array>  <!-- TODO -->
+        <item>Chiński tradycyjny</item>
+    </string-array>
 
     <!-- position formats -->
     <string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
@@ -943,6 +944,12 @@
           Przejdź do ekranu głównego, aby <b>dodać nowy widżet</b>.<br/><br/>
           Aby <b>edytować istniejący widżet</b>, wybierz go z poniższej listy.<br/>
     ]]></string>
+    <string name="help_themelist">
+          [Icon Add] Utwórz nową skórkę lub [Icon Copy] skopiuj istniejącą.\n
+          \n
+          [Icon Edit] Edytuj lub [Icon Delete] usuwaj skórki.\n
+          Nie można modifikować [Icon Default] domyślnych skórek.
+    </string> <!-- text explains themelist actions/icons; [Icon tags] are substituted at runtime (should remain unaltered)  -->
 
     <string name="privacy_policy"><![CDATA[<b>Prywatność:</b><br/>Aplikacja Zmierzchy i Świty nie zbiera, przechowuje i przesyła osobistych danych użytkownika. Ta aplikacja nie zawiera reklam, narzędzi analitycznych i zbędnych uprawnień.<br/><br/>Aplikacja konfiguruje się używając danych lokalizacji; te dane (i inne używane przez program) są zapisywane lokalnie i nie opuszczają urządzenia.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Uprawnienie <b>określenia lokalizacji</b> jest używane do ustalenia bieżącej szerokości i długości geograficznej. To uprawnienie jest opcjonalne; położenie domyślnie jest wpisywane ręcznie.]]></string>

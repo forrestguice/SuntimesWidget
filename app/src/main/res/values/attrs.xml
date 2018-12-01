@@ -4,6 +4,7 @@
     <bool name="api_post_14">false</bool>
 
     <attr name="dialogBackground" format="reference" />
+    <attr name="dialogBackgroundAlt" format="reference" />
     <attr name="settingsCardBackground" format="reference" />
     <attr name="timeCardBackground" format="reference" />
     <attr name="semiTransparentBackground" format="reference" />
@@ -11,6 +12,7 @@
     <attr name="text_accentColor" format="reference" />
     <attr name="text_disabledColor" format="reference" />
 
+    <attr name="buttonPressColor" format="reference" />
     <attr name="text_buttonSelector" format="reference" />
     <attr name="date_buttonSelector" format="reference" />
 
@@ -23,9 +25,11 @@
     <attr name="graphColor_pointFill" format="reference" />
     <attr name="graphColor_pointStroke" format="reference" />
 
-    <attr name="sunriseIcon" format="reference" />
+    <attr name="sunriseIconSmall" format="reference" />
+    <attr name="sunriseIconLarge" format="reference" />
     <attr name="sunriseColor" format="reference" />
-    <attr name="sunsetIcon" format="reference" />
+    <attr name="sunsetIconSmall" format="reference" />
+    <attr name="sunsetIconLarge" format="reference" />
     <attr name="sunsetColor" format="reference" />
     <attr name="sunnoonIcon" format="reference" />
 
@@ -53,9 +57,11 @@
     <attr name="icActionTime" format="reference" />
     <attr name="icActionDst" format="reference" />
     <attr name="icActionAlarm" format="reference" />
+    <attr name="icActionCalendar" format="reference" />
     <attr name="icActionAbout" format="reference" />
     <attr name="icActionWarning" format="reference" />
     <attr name="icActionError" format="reference" />
+    <attr name="icActionWidgets" format="reference" />
     <attr name="icActionAppearance" format="reference" />
     <attr name="icActionAltitude" format="reference" />
     <attr name="icActionLocale" format="reference" />

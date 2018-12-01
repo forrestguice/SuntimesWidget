@@ -46,6 +46,7 @@ import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.text.style.RelativeSizeSpan;
+import android.text.style.UnderlineSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -1030,6 +1031,20 @@ public class SuntimesUtils
             span = createBoldSpan(span, text, toColorize);
         }
         return createColorSpan(span, text, toColorize, color);
+    }
+
+    public static SpannableString createUnderlineSpan(SpannableString span, String text, String toUnderline)
+    {
+        if (span == null) {
+            span = new SpannableString(text);
+        }
+        int start = text.indexOf(toUnderline);
+        if (start >= 0)
+        {
+            int end = start + toUnderline.length();
+            span.setSpan(new UnderlineSpan(), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        return span;
     }
 
     public static SpannableString createBoldSpan(SpannableString span, String text, String toBold)

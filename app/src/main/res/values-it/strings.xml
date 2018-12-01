@@ -525,6 +525,7 @@
     <string name="configLabel_widgetList_itemSummaryPattern"><xliff:g id="widgetType" >%1$s</xliff:g> [<xliff:g id="datasource" >%2$s</xliff:g>]</string>
     <string name="configLabel_widgetListHelp_title">Aiuto</string>               <!-- always the first item in the widgetList -->
     <string name="configLabel_widgetListHelp_summary">Mostra aiuto per il widget</string>
+    <string name="configLabel_widgetList_emptyMsg">No Widgets</string>          <!-- a label that is displayed in place of an empty listview -->  <!-- TODO -->
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">Luoghi</string>                           <!-- group title -->
@@ -1022,6 +1023,12 @@
         Per <b>aggiungere un nuovo widget</b> devi recarti sulla schermata principale.<br/><br/>
         Per <b>riconfigurare un widget esistente</b> puoi selezionarlo dalla lista seguente.<br/>
     ]]></string>
+    <string name="help_themelist">
+          [Icon Add] Add a new theme or [Icon Copy] copy from an existing theme.\n
+          \n
+          [Icon Edit] Edit or [Icon Delete] delete themes.\n
+          The [Icon Default] default themes cannot be modified.
+    </string> <!-- text explains themelist actions/icons; [Icon tags] are substituted at runtime (should remain unaltered)  --> <!-- TODO -->
 
     <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>Suntimes non raccoglie, memorizza, né trasmette dati personali dell\'utente. Non contiene <b>nessuna pubblicità</b>, <b>nessuna analitica</b>, <b>nessun tracker</b>, e <b>nessun permesso superfluo</b>. <br/><br/>L\'applicazione si configura in base alla località.  Queste informazioni (e altri dati di configurazione utilizzati dall\'applicazione) sono memorizzate localmente e non vengono trasmesse altrove.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes utilizza il permesso di accesso alla <b>posizione</b> per determinare la tua latitudine e longitudine correnti.<br/><br/> Questo permesso è opzionale; la posizione viene configurata manualmente di default.]]></string>

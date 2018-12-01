@@ -212,15 +212,33 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                 reconfigureWidget(widgetItem);
             }
         });
+
+        View widgetListEmpty = findViewById(android.R.id.empty);
+        widgetListEmpty.setOnClickListener(onEmptyViewClick);
+        widgetList.setEmptyView(widgetListEmpty);
     }
 
+    /**
+     * onEmptyViewClick
+     */
+    private View.OnClickListener onEmptyViewClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            showHelp();
+        }
+    };
+
+    /**
+     * updateViews
+     * @param context context
+     */
     protected void updateViews(Context context)
     {
         widgetList.setAdapter(WidgetListAdapter.createWidgetListAdapter(context));
     }
 
     /**
-     *
+     * showHelp
      */
     protected void showHelp()
     {
@@ -230,7 +248,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     }
 
     /**
-     *
+     * showAbout
      */
     protected void showAbout()
     {
@@ -239,7 +257,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     }
 
     /**
-     *
+     * launchThemeEditor
      */
     protected void launchThemeEditor(Context context)
     {
@@ -260,6 +278,10 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         startActivity(configIntent);
     }
 
+    /**
+     * updateWidgetAlarms
+     * @param context context
+     */
     public static void updateWidgetAlarms(Context context)
     {
         Intent updateIntent = new Intent();
