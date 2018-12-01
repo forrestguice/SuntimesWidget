@@ -273,8 +273,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         chooseTimeSize = createSizeChooser(this, R.id.chooser_timeSize, SuntimesTheme.THEME_TIMESIZE_MIN, SuntimesTheme.THEME_TIMESIZE_MAX, SuntimesTheme.THEME_TIMESIZE);
         chooseSuffixSize = createSizeChooser(this, R.id.chooser_suffixSize, SuntimesTheme.THEME_TIMESUFFIXSIZE_MIN, SuntimesTheme.THEME_TIMESUFFIXSIZE_MAX, SuntimesTheme.THEME_TIMESUFFIXSIZE);
 
-        chooseIconStroke = createSizeChooser(this, R.id.edit_iconStroke, SuntimesTheme.THEME_SETICON_STROKE_WIDTH_MIN, SuntimesTheme.THEME_SETICON_STROKE_WIDTH_MAX, SuntimesTheme.THEME_SETICON_STROKE_WIDTH);
-        chooseNoonIconStroke = createSizeChooser(this, R.id.edit_noonIconStroke, SuntimesTheme.THEME_NOONICON_STROKE_WIDTH_MIN, SuntimesTheme.THEME_NOONICON_STROKE_WIDTH_MAX, SuntimesTheme.THEME_NOONICON_STROKE_WIDTH);
+        chooseIconStroke = createSizeChooser(this, R.id.chooser_iconStroke, SuntimesTheme.THEME_SETICON_STROKE_WIDTH_MIN, SuntimesTheme.THEME_SETICON_STROKE_WIDTH_MAX, SuntimesTheme.THEME_SETICON_STROKE_WIDTH);
+        chooseNoonIconStroke = createSizeChooser(this, R.id.chooser_noonIconStroke, SuntimesTheme.THEME_NOONICON_STROKE_WIDTH_MIN, SuntimesTheme.THEME_NOONICON_STROKE_WIDTH_MAX, SuntimesTheme.THEME_NOONICON_STROKE_WIDTH);
         chooseMoonStroke = createSizeChooser(this, SuntimesTheme.THEME_MOON_STROKE_MIN, SuntimesTheme.THEME_MOON_STROKE_MAX, SuntimesTheme.THEME_MOONFULL_STROKE_WIDTH);
 
         EditText editPadding = (EditText)findViewById(R.id.edit_padding);
@@ -288,19 +288,19 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         };
 
         // sunrise colors
-        chooseColorRise = createColorChooser(this, R.id.editLabel_sunriseColor, R.id.edit_sunriseColor, R.id.editButton_sunriseColor, SuntimesTheme.THEME_SUNRISECOLOR);
-        chooseColorRiseIconFill = createColorChooser(this, R.id.editLabel_sunriseFillColor, R.id.edit_sunriseFillColor, R.id.editButton_sunriseFillColor, SuntimesTheme.THEME_RISEICON_FILL_COLOR);
-        chooseColorRiseIconStroke = createColorChooser(this, R.id.editLabel_sunriseStrokeColor, R.id.edit_sunriseStrokeColor, R.id.editButton_sunriseStrokeColor, SuntimesTheme.THEME_RISEICON_STROKE_COLOR);
+        chooseColorRise = createColorChooser(this, R.id.chooser_sunriseColor, SuntimesTheme.THEME_SUNRISECOLOR);
+        chooseColorRiseIconFill = createColorChooser(this, R.id.chooser_sunriseFillColor, SuntimesTheme.THEME_RISEICON_FILL_COLOR);
+        chooseColorRiseIconStroke = createColorChooser(this, R.id.chooser_sunriseStrokeColor, SuntimesTheme.THEME_RISEICON_STROKE_COLOR);
 
         // noon colors
-        chooseColorNoon = createColorChooser(this, R.id.editLabel_noonColor, R.id.edit_noonColor, R.id.editButton_noonColor, SuntimesTheme.THEME_NOONCOLOR);
-        chooseColorNoonIconFill = createColorChooser(this, R.id.editLabel_noonFillColor, R.id.edit_noonFillColor,  R.id.editButton_noonFillColor, SuntimesTheme.THEME_NOONICON_FILL_COLOR);
-        chooseColorNoonIconStroke = createColorChooser(this, R.id.editLabel_noonStrokeColor, R.id.edit_noonStrokeColor, R.id.editButton_noonStrokeColor, SuntimesTheme.THEME_NOONICON_STROKE_COLOR);
+        chooseColorNoon = createColorChooser(this, R.id.chooser_noonColor, SuntimesTheme.THEME_NOONCOLOR);
+        chooseColorNoonIconFill = createColorChooser(this, R.id.chooser_noonFillColor, SuntimesTheme.THEME_NOONICON_FILL_COLOR);
+        chooseColorNoonIconStroke = createColorChooser(this, R.id.chooser_noonStrokeColor, SuntimesTheme.THEME_NOONICON_STROKE_COLOR);
 
         // sunset colors
-        chooseColorSet = createColorChooser(this, R.id.editLabel_sunsetColor, R.id.edit_sunsetColor, R.id.editButton_sunsetColor, SuntimesTheme.THEME_SUNSETCOLOR);
-        chooseColorSetIconFill = createColorChooser(this, R.id.editLabel_sunsetFillColor, R.id.edit_sunsetFillColor, R.id.editButton_sunsetFillColor, SuntimesTheme.THEME_SETICON_FILL_COLOR);
-        chooseColorSetIconStroke = createColorChooser(this, R.id.editLabel_sunsetStrokeColor, R.id.edit_sunsetStrokeColor, R.id.editButton_sunsetStrokeColor, SuntimesTheme.THEME_SETICON_STROKE_COLOR);
+        chooseColorSet = createColorChooser(this, R.id.chooser_sunsetColor, SuntimesTheme.THEME_SUNSETCOLOR);
+        chooseColorSetIconFill = createColorChooser(this, R.id.chooser_sunsetFillColor, SuntimesTheme.THEME_SETICON_FILL_COLOR);
+        chooseColorSetIconStroke = createColorChooser(this, R.id.chooser_sunsetStrokeColor, SuntimesTheme.THEME_SETICON_STROKE_COLOR);
 
         // graph colors
         chooseColorDay = createColorChooser(context, R.id.chooser_dayColor, SuntimesTheme.THEME_DAYCOLOR);
