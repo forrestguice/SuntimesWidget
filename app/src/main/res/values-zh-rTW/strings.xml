@@ -169,14 +169,14 @@
     <string name="units_feet">英尺</string>
     <string name="units_feet_short">ft</string>
     <plurals name="units_feet_long">
-        <item quantity="one">%d 英尺</item>
-        <item quantity="other">%d 英尺</item>
+        <item quantity="one">%s 英尺</item>
+        <item quantity="other">%s 英尺</item>
     </plurals>
     <string name="units_meters">米</string>
     <string name="units_meters_short">m</string>
     <plurals name="units_meters_long">
-        <item quantity="one">%d 米</item>
-        <item quantity="other">%d 米</item>
+        <item quantity="one">%s 米</item>
+        <item quantity="other">%s 米</item>
     </plurals>
 
     <!--

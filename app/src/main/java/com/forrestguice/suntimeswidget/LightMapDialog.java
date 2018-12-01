@@ -38,11 +38,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -53,6 +57,7 @@ public class LightMapDialog extends DialogFragment
     private View sunLayout;
     private TextView sunAzimuth, sunAzimuthRising, sunAzimuthSetting, sunAzimuthAtNoon;
     private TextView sunElevation, sunElevationAtNoon;
+    private TextView sunShadowObj, sunShadowLength, sunShadowLengthAtNoon;
 
     private LightMapView lightmap;
     private LightMapKey field_night, field_astro, field_nautical, field_civil, field_day;
@@ -153,12 +158,34 @@ public class LightMapDialog extends DialogFragment
         sunAzimuthAtNoon = (TextView)dialogView.findViewById(R.id.info_sun_azimuth_atnoon);
         sunAzimuthSetting = (TextView)dialogView.findViewById(R.id.info_sun_azimuth_setting);
 
+        /**View shadowLayout = dialogView.findViewById(R.id.info_shadow_layout);
+        if (shadowLayout != null) {
+            shadowLayout.setOnClickListener(onShadowLayoutClick);
+        }*/
+
+        sunShadowObj = (TextView)dialogView.findViewById(R.id.info_shadow_height);
+        sunShadowLength = (TextView)dialogView.findViewById(R.id.info_shadow_length);
+        sunShadowLengthAtNoon = (TextView)dialogView.findViewById(R.id.info_shadow_length_atnoon);
+
         field_night = new LightMapKey(dialogView, R.id.info_time_lightmap_key_night_icon, R.id.info_time_lightmap_key_night_label, R.id.info_time_lightmap_key_night_duration);
         field_astro = new LightMapKey(dialogView, R.id.info_time_lightmap_key_astro_icon, R.id.info_time_lightmap_key_astro_label, R.id.info_time_lightmap_key_astro_duration);
         field_nautical = new LightMapKey(dialogView, R.id.info_time_lightmap_key_nautical_icon, R.id.info_time_lightmap_key_nautical_label, R.id.info_time_lightmap_key_nautical_duration);
         field_civil = new LightMapKey(dialogView, R.id.info_time_lightmap_key_civil_icon, R.id.info_time_lightmap_key_civil_label, R.id.info_time_lightmap_key_civil_duration);
         field_day = new LightMapKey(dialogView, R.id.info_time_lightmap_key_day_icon, R.id.info_time_lightmap_key_day_label, R.id.info_time_lightmap_key_day_duration);
     }
+
+    /**private View.OnClickListener onShadowLayoutClick =  new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+            Context context = getContext();
+            if (context != null)
+            {
+                Toast.makeText(context, "TODO: set height", Toast.LENGTH_SHORT).show();     // TODO: set object height
+            }
+        }
+    };*/
 
     @SuppressWarnings("ResourceType")
     public void themeViews(Context context)
@@ -259,6 +286,16 @@ public class LightMapDialog extends DialogFragment
         return (span != null ? span : elevationString);
     }
 
+    private CharSequence styleLengthText(@NonNull Context context, double meters, WidgetSettings.LengthUnit units)
+    {
+        NumberFormat formatter = NumberFormat.getInstance();
+        formatter.setMinimumFractionDigits(0);
+        formatter.setMaximumFractionDigits(2);
+        if (meters < Double.POSITIVE_INFINITY)
+            return SuntimesUtils.formatAsHeight(context, meters, units, 2, true).toString();
+        else return formatter.format(meters);
+    }
+
     private int getColorForPosition(SuntimesCalculator.SunPosition position, SuntimesCalculator.SunPosition noonPosition)
     {
         if (position.elevation >= 0)
@@ -342,6 +379,28 @@ public class LightMapDialog extends DialogFragment
                 sunElevationAtNoon.setText("");
                 sunAzimuthAtNoon.setText("");
                 sunAzimuthAtNoon.setContentDescription("");
+            }
+
+            Context context = getContext();
+            if (context != null && calculator != null)
+            {
+                double objectHeight = WidgetSettings.loadObserverHeightPref(context, 0);
+                if (objectHeight > 0)
+                {
+                    WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+
+                    if (sunShadowObj != null) {
+                        sunShadowObj.setText(styleLengthText(context, objectHeight, units));
+                    }
+                    if (sunShadowLength != null) {
+                        double shadowLength = calculator.getShadowLength(objectHeight, data.now());
+                        sunShadowLength.setText((shadowLength >= 0) ? styleLengthText(context, shadowLength, units) : "");
+                    }
+                    if (sunShadowLengthAtNoon != null && noonTime != null) {
+                        double shadowLengthAtNoon = calculator.getShadowLength(objectHeight, noonTime );
+                        sunShadowLengthAtNoon.setText((shadowLengthAtNoon >= 0) ? styleLengthText(context, shadowLengthAtNoon, units) : "");
+                    }
+                }
             }
 
             showSunPosition(currentPosition != null);

@@ -869,6 +869,58 @@ public class SuntimesUtils
         return new TimeDisplayText(formatAsDegrees(degreeValue, places), "", strDecSymbol);
     }
 
+    public static String formatAsHeight(Context context, double value, WidgetSettings.LengthUnit units, boolean convert, int places)
+    {
+        int stringID;
+        switch (units)
+        {
+            case USC:
+            case IMPERIAL:
+                if (convert) {
+                    value = WidgetSettings.LengthUnit.metersToFeet(value);
+                }
+                stringID = R.plurals.units_feet_long;
+                break;
+
+            case METRIC:
+            default:
+                stringID = R.plurals.units_meters_long;
+                break;
+        }
+        int h = ((value > 1) ? (int)Math.ceil(value)   // TODO: better use of plurals w/ fractional values..
+               : (value < 1) ? 2 : 1);   // this is a hack; there must be a better way to treat fractions as plural
+
+        NumberFormat formatter = NumberFormat.getInstance();
+        formatter.setMinimumFractionDigits(0);
+        formatter.setMaximumFractionDigits(places);
+        return context.getResources().getQuantityString(stringID, h, formatter.format(value));
+    }
+
+    public static TimeDisplayText formatAsHeight(Context context, double meters, WidgetSettings.LengthUnit units, int places, boolean shortForm)
+    {
+        double value;
+        String unitsString;
+        switch (units)
+        {
+            case USC:
+            case IMPERIAL:
+                value = WidgetSettings.LengthUnit.metersToFeet(meters);
+                unitsString = (shortForm ? context.getString(R.string.units_feet_short) : context.getString(R.string.units_feet));
+                break;
+
+            case METRIC:
+            default:
+                value = meters;
+                unitsString = (shortForm ? context.getString(R.string.units_meters_short) : context.getString(R.string.units_meters));
+                break;
+        }
+
+        NumberFormat formatter = NumberFormat.getInstance();
+        formatter.setMinimumFractionDigits(0);
+        formatter.setMaximumFractionDigits(places);
+        return new TimeDisplayText(formatter.format(value), unitsString, "");
+    }
+
     /**
      * Creates a title string from a given "title pattern".
      *
