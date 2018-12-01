@@ -64,6 +64,7 @@
     <attr name="icActionWidgets" format="reference" />
     <attr name="icActionAppearance" format="reference" />
     <attr name="icActionAltitude" format="reference" />
+    <attr name="icActionShadow" format="reference" />
     <attr name="icActionLocale" format="reference" />
     <attr name="icActionSettings" format="reference" />
     <attr name="icActionHelp" format="reference" />
@@ -74,6 +75,7 @@
     <attr name="icActionEdit" format="reference" />
     <attr name="icActionDelete" format="reference" />
     <attr name="icActionCopy" format="reference" />
+    <attr name="icActionShare" format="reference" />
 
     <attr name="icActionNext" format="reference" />
     <attr name="icActionPrevious" format="reference" />
@@ -93,6 +95,17 @@
 
     <declare-styleable name="MoonRiseSetView">
         <attr name="showPosition" />
+    </declare-styleable>
+
+    <declare-styleable name="ColorChooserView">
+        <attr name="labelText" format="string" />
+        <attr name="hintText" format="string" />
+        <attr name="reverse" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="SizeEditView">
+        <attr name="labelText" />
+        <attr name="hintText" />
     </declare-styleable>
 
 </resources>

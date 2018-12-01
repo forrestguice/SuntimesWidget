@@ -395,7 +395,7 @@
     <string name="configAction_importThemes">Importa</string>    <!-- button (contentDescription) -->
 
     <string name="addtheme_custname">tema_<xliff:g id="#" >%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
-    <string name="addtheme_copyname"><xliff:g id="themeName" >%1$s</xliff:g>_copy<xliff:g id="#" >%2$s</xliff:g></string>   <!-- copied theme id -->
+    <!--<string name="addtheme_copyname"><xliff:g id="themeName" >%1$s</xliff:g>_<xliff:g id="#" >%2$s</xliff:g></string>-->   <!-- copied theme id -->
     <string name="addtheme_copydisplay"><xliff:g id="themeName" >%1$s</xliff:g> (copia)</string>                            <!-- copied theme name (display string) -->
 
     <string name="addtheme_toast_success">Aggiunto <xliff:g id="themeName" >%1$s</xliff:g>.</string>          <!-- toast msg -->
@@ -426,42 +426,42 @@
     <string name="configLabel_themeBackground_color">Colore</string>      <!-- custom background -->
     <string name="configLabel_themeColorBackground">Colore:</string>      <!-- color label -->
 
-    <string name="configLabel_themeColorTitle">Colore titolo:</string>     <!-- color label -->
+    <string name="configLabel_themeColorTitle">Colore titolo</string>     <!-- color label -->
     <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->
 
-    <string name="configLabel_themeColorText">Colore testo:</string>       <!-- color label -->
+    <string name="configLabel_themeColorText">Colore testo</string>       <!-- color label -->
     <string name="configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->
 
-    <string name="configLabel_themeColorSpring">Colore primavera:</string> <!-- color label -->
-    <string name="configLabel_themeColorSummer">Colore estate:</string> <!-- color label -->
-    <string name="configLabel_themeColorFall">Colore autunno:</string> <!-- color label -->
-    <string name="configLabel_themeColorWinter">Colore inverno:</string> <!-- color label -->
+    <string name="configLabel_themeColorSpring">Colore primavera</string> <!-- color label -->
+    <string name="configLabel_themeColorSummer">Colore estate</string> <!-- color label -->
+    <string name="configLabel_themeColorFall">Colore autunno</string> <!-- color label -->
+    <string name="configLabel_themeColorWinter">Colore inverno</string> <!-- color label -->
 
     <string name="configLabel_themeColorMapBackground">Sfondo della mappa</string> <!-- color label -->
     <string name="configLabel_themeColorMapForeground">Primo piano della mappa</string> <!-- color label -->
     <string name="configLabel_themeColorMapSunShadow">Ombra</string> <!-- color label -->
     <string name="configLabel_themeColorMapMoonHighlight">Evidenzia</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMoonrise">Colore alba lunare:</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonset">Colore tramonto lunare:</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonWaxing">Colore luna crescente:</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonWaning">Colore luna calante:</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonFull">Colore pieno:</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonNew">Nuovo colore:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonrise">Colore alba lunare</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonset">Colore tramonto lunare</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaxing">Colore luna crescente</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaning">Colore luna calante</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonFull">Colore pieno</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonNew">Nuovo colore</string> <!-- color label -->
 
-    <string name="configLabel_themeColorSunrise">Colore alba:</string> <!-- color label -->
+    <string name="configLabel_themeColorSunrise">Colore alba</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
 
-    <string name="configLabel_themeColorSunset">Colore tramonto:</string>   <!-- color label -->
+    <string name="configLabel_themeColorSunset">Colore tramonto</string>   <!-- color label -->
     <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorNoon">Colore mezzogiorno:</string>      <!-- color label -->
+    <string name="configLabel_themeColorNoon">Colore mezzogiorno</string>      <!-- color label -->
     <string name="configHint_themeColorNoon">#FFFFFFFF</string>         <!-- color hint -->
 
-    <string name="configLabel_themeColorFill">Riempi:</string>         <!-- color label -->
+    <string name="configLabel_themeColorFill">Riempi</string>         <!-- color label -->
     <string name="configHint_themeColorFill">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorBorder">Bordo:</string>         <!-- color label -->
+    <string name="configLabel_themeColorBorder">Bordo</string>         <!-- color label -->
     <string name="configHint_themeColorBorder">#FFFFFFFF</string>        <!-- color hint -->
 
     <string name="configLabel_themeBorderWidthRiseSet">Spessore del bordo (alba/tramonto):</string>  <!-- size label -->
@@ -469,10 +469,10 @@
     <string name="configLabel_themeBorderWidthNoon">Spessore del bordo (mezzogiorno):</string>         <!-- size label -->
     <string name="configHint_themeBorderWidthNoon">3</string>                             <!-- size hint -->
 
-    <string name="configLabel_themeColorSuffix">Colore suffisso:</string>   <!-- color label -->
+    <string name="configLabel_themeColorSuffix">Colore suffisso</string>   <!-- color label -->
     <string name="configHint_themeColorSuffix">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorTime">Colore testo 2:</string>      <!-- color label -->
+    <string name="configLabel_themeColorTime">Colore testo 2</string>      <!-- color label -->
     <string name="configHint_themeColorTime">#FFFFFFFF</string>          <!-- color hint -->
 
     <string name="configLabel_themeSizeTitle">Dimensione titolo:</string>  <!-- edit label -->
