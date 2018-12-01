@@ -578,13 +578,13 @@
     <string name="configLabel_ui_showbluehour">Mostrar la hora azul</string>
     <string name="configLabel_ui_showbluehour_summary">Mostrar las horas azules.</string>
 
-    
-    <string-array name="appThemes_display"> 
-        <item>Tema claro</item>
-        <item>Tema oscuro</item>
+    <string name="appThemes_lightTheme">Tema claro</string>
+    <string name="appThemes_darkTheme">Tema oscuro</string>
+    <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
+        <item>@string/appThemes_lightTheme</item>
+        <item>@string/appThemes_darkTheme</item>
         <item>Tema claro/Tema oscuro (modo noche)</item>
     </string-array>
-
     
     <string-array name="timeFormatMode_display">                      
         <item>@string/timeFormatMode_system</item>

@@ -594,9 +594,11 @@
     <string name="configLabel_ui_showbluehour_summary">顯示藍色時刻的時間。</string>
 
     <!-- App Setting: UI Theme -->
+    <string name="appThemes_lightTheme">亮色主題</string>
+    <string name="appThemes_darkTheme">暗色主題</string>
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-        <item>亮色主題</item>
-        <item>暗色主題</item>
+        <item>@string/appThemes_lightTheme</item>
+        <item>@string/appThemes_darkTheme</item>
         <item>亮色主題 / 暗色主題 (夜間模式)</item>
     </string-array>
 

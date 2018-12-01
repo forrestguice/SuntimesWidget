@@ -587,9 +587,11 @@
     <string name="configLabel_ui_showbluehour_summary">Vis tider for den blå timen.</string>
 
     <!-- App Setting: UI Theme -->
+    <string name="appThemes_lightTheme">Lyst tema</string>
+    <string name="appThemes_darkTheme">Mørkt tema</string>
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-        <item>Lyst tema</item>
-        <item>Mørkt tema</item>
+        <item>@string/appThemes_lightTheme</item>
+        <item>@string/appThemes_darkTheme</item>
         <item>Lyst tema / Mørkt tema (nattmodus)</item>
     </string-array>
     

@@ -586,11 +586,13 @@
     <string name="configLabel_ui_showbluehour_summary">Mostra i periodi dell\'ora blu.</string>
 
     <!-- App Setting: UI Theme -->
+    <string name="appThemes_lightTheme">Light Theme</string>  <!-- TODO -->
+    <string name="appThemes_darkTheme">Dark Theme</string>  <!-- TODO -->
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-        <item>Light Theme</item>
-        <item>Dark Theme</item>
-        <item>Light Theme / Dark Theme (Night Mode)</item>
-    </string-array>  <!-- TODO -->
+        <item>@string/appThemes_lightTheme</item>
+        <item>@string/appThemes_darkTheme</item>
+        <item>Light Theme / Dark Theme (Night Mode)</item>  <!-- TODO -->
+    </string-array>
 
     <!-- App Setting: time format -->
     <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->

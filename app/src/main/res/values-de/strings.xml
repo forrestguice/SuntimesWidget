@@ -584,10 +584,12 @@
   <string name="configLabel_ui_showbluehour_summary">Zeige Zeiten der Blauen Stunde.</string>
 
   <!-- App Setting: UI Theme -->
+  <string name="appThemes_lightTheme">Helles Thema</string>
+  <string name="appThemes_darkTheme">Dunkles Thema</string>
   <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-      <item>Helles Thema</item>
-      <item>Dunkles Thema</item>
-      <item>Helles Thema / dunkles Thema (Nachtmodus)</item>
+    <item>@string/appThemes_lightTheme</item>
+    <item>@string/appThemes_darkTheme</item>
+    <item>Helles Thema / dunkles Thema (Nachtmodus)</item>
   </string-array>
 
   <!-- App Setting: Date "on tap" action -->

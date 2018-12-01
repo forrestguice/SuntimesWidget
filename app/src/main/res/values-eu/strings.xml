@@ -587,9 +587,11 @@
     <string name="configLabel_ui_showbluehour_summary">Ordu urdinak erakutsi.</string>
 
     <!-- App Setting: UI Theme -->
+    <string name="appThemes_lightTheme">Itxura argia</string>
+    <string name="appThemes_darkTheme">Itxura iluna</string>
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-        <item>Itxura argia</item>
-        <item>Itxura iluna</item>
+        <item>@string/appThemes_lightTheme</item>
+        <item>@string/appThemes_darkTheme</item>
         <item>Itxura argia / Itxura iluna (Gau modua)</item>
     </string-array>
 
