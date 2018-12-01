@@ -19,7 +19,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-//import android.os.Bundle;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
@@ -28,6 +28,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -36,7 +37,9 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 @SuppressWarnings("Convert2Diamond")
@@ -48,6 +51,7 @@ public class MoonPhasesView extends LinearLayout
 
     private LinearLayout content;
     private PhaseField phaseNew, phaseFirst, phaseFull, phaseLast;
+    private ArrayList<PhaseField> phases = new ArrayList<>();
     private TextView empty;
 
     public MoonPhasesView(Context context)
@@ -76,7 +80,7 @@ public class MoonPhasesView extends LinearLayout
     private void init(Context context, AttributeSet attrs)
     {
         initLocale(context);
-        initColors(context);
+        themeViews(context);
         LayoutInflater.from(context).inflate(R.layout.layout_view_moonphases, this, true);
 
         if (attrs != null)
@@ -88,10 +92,10 @@ public class MoonPhasesView extends LinearLayout
         empty = (TextView)findViewById(R.id.txt_empty);
         content = (LinearLayout)findViewById(R.id.moonphases_layout);
 
-        phaseNew = new PhaseField(this, R.id.moonphase_new_layout, R.id.moonphase_new_label, R.id.moonphase_new_date, R.id.moonphase_new_note);
-        phaseFirst = new PhaseField(this, R.id.moonphase_firstquarter_layout, R.id.moonphase_firstquarter_label, R.id.moonphase_firstquarter_date, R.id.moonphase_firstquarter_note);
-        phaseFull = new PhaseField(this, R.id.moonphase_full_layout, R.id.moonphase_full_label, R.id.moonphase_full_date, R.id.moonphase_full_note);
-        phaseLast = new PhaseField(this, R.id.moonphase_thirdquarter_layout, R.id.moonphase_thirdquarter_label, R.id.moonphase_thirdquarter_date, R.id.moonphase_thirdquarter_note);
+        phases.add( phaseNew = new PhaseField(this, R.id.moonphase_new_layout, R.id.moonphase_new_label, R.id.moonphase_new_date, R.id.moonphase_new_note, R.id.moonphase_new_icon) );
+        phases.add( phaseFirst = new PhaseField(this, R.id.moonphase_firstquarter_layout, R.id.moonphase_firstquarter_label, R.id.moonphase_firstquarter_date, R.id.moonphase_firstquarter_note, R.id.moonphase_firstquarter_icon) );
+        phases.add( phaseFull = new PhaseField(this, R.id.moonphase_full_layout, R.id.moonphase_full_label, R.id.moonphase_full_date, R.id.moonphase_full_note, R.id.moonphase_full_icon) );
+        phases.add( phaseLast = new PhaseField(this, R.id.moonphase_thirdquarter_layout, R.id.moonphase_thirdquarter_label, R.id.moonphase_thirdquarter_date, R.id.moonphase_thirdquarter_note, R.id.moonphase_thirdquarter_icon) );
 
         if (isInEditMode())
         {
@@ -100,13 +104,36 @@ public class MoonPhasesView extends LinearLayout
     }
 
     private int noteColor;
-    private void initColors(Context context)
+    private void themeViews(Context context)
     {
-        int[] colorAttrs = { android.R.attr.textColorPrimary }; //, R.attr.springColor, R.attr.summerColor, R.attr.fallColor, R.attr.winterColor };
+        int[] colorAttrs = { android.R.attr.textColorPrimary };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         int def = R.color.transparent;
         noteColor = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
         typedArray.recycle();
+    }
+
+    public void themeViews(Context context, SuntimesTheme theme)
+    {
+        noteColor = theme.getTimeColor();
+
+        int colorTitle = theme.getTitleColor();
+        int colorTime = theme.getTimeColor();
+        int colorText = theme.getTextColor();
+        int colorWaxing = theme.getMoonWaxingColor();
+        int colorWaning = theme.getMoonWaningColor();
+        int colorFull = theme.getMoonFullColor();
+        int colorNew = theme.getMoonNewColor();
+
+        Bitmap fullMoon =  SuntimesUtils.gradientDrawableToBitmap(context, MoonPhaseDisplay.FULL.getIcon(), colorFull, colorWaning, theme.getMoonFullStrokePixels(context));
+        Bitmap newMoon =  SuntimesUtils.gradientDrawableToBitmap(context, MoonPhaseDisplay.NEW.getIcon(), colorNew, colorWaxing, theme.getMoonNewStrokePixels(context));
+        Bitmap waxingQuarter = SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.FIRST_QUARTER.getIcon(), colorWaxing, colorWaxing, 0);
+        Bitmap waningQuarter = SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.THIRD_QUARTER.getIcon(), colorWaning, colorWaning, 0);
+
+        phaseNew.themeViews(colorTitle, colorTime, colorText, newMoon);
+        phaseFirst.themeViews(colorTitle, colorTime, colorText, waxingQuarter);
+        phaseFull.themeViews(colorTitle, colorTime, colorText, fullMoon);
+        phaseLast.themeViews(colorTitle, colorTime, colorText, waningQuarter);
     }
 
     public void initLocale(Context context)
@@ -125,10 +152,9 @@ public class MoonPhasesView extends LinearLayout
 
     protected void updateViews( Context context, SuntimesMoonData data )
     {
-        phaseNew.showLabel(true);
-        phaseFirst.showLabel(true);
-        phaseFull.showLabel(true);
-        phaseLast.showLabel(true);
+        for (PhaseField phase : phases) {
+            phase.showLabel(true);
+        }
 
         if (isInEditMode())
         {
@@ -159,10 +185,9 @@ public class MoonPhasesView extends LinearLayout
 
     private void clearLayout()
     {
-        phaseNew.removeFromLayout(content);
-        phaseFirst.removeFromLayout(content);
-        phaseFull.removeFromLayout(content);
-        phaseLast.removeFromLayout(content);
+        for (PhaseField phase : phases) {
+            phase.removeFromLayout(content);
+        }
     }
 
     private void reorderLayout( SuntimesCalculator.MoonPhase nextPhase )
@@ -231,13 +256,23 @@ public class MoonPhasesView extends LinearLayout
         public TextView field;
         public TextView note;
         public TextView label;
+        public ImageView icon;
 
-        public PhaseField(@NonNull View parent, int layoutID, int labelID, int dateTextID, int noteTextID)
+        public PhaseField(@NonNull View parent, int layoutID, int labelID, int dateTextID, int noteTextID, int imageViewID)
         {
             layout = parent.findViewById(layoutID);
             label = (TextView)parent.findViewById(labelID);
             field = (TextView)parent.findViewById(dateTextID);
             note = (TextView)parent.findViewById(noteTextID);
+            icon = (ImageView)parent.findViewById(imageViewID);
+        }
+
+        public void themeViews(int labelColor, int timeColor, int textColor, @NonNull Bitmap bitmap)
+        {
+            label.setTextColor(labelColor);
+            field.setTextColor(timeColor);
+            note.setTextColor(textColor);
+            icon.setImageBitmap(bitmap);
         }
 
         public void updateField(Context context, Calendar now, Calendar dateTime, boolean showWeeks, boolean showTime, boolean showHours, boolean showSeconds)

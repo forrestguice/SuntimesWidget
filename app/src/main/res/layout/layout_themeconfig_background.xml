@@ -40,50 +40,13 @@
             app:layout_constraintStart_toEndOf="@+id/editLabel_background"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Background Color -->
-        <LinearLayout
-            android:id="@+id/layout_backgroundColor"
-            android:orientation="horizontal" android:gravity="center_vertical"
+        <com.forrestguice.suntimeswidget.settings.ColorChooserView
+            android:id="@+id/chooser_backgroundColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/editSpin_background">
-
-            <TextView android:visibility="invisible"
-                android:labelFor="@+id/edit_backgroundColor"
-                android:id="@+id/editLabel_backgroundColor"
-                style="@style/ColorEditLabel"
-                android:paddingStart="8dp" android:paddingEnd="8dp"
-
-                android:nextFocusUp="@+id/editSpin_background"
-                android:nextFocusLeft="@+id/editSpin_background"
-                android:nextFocusRight="@+id/edit_padding"
-                android:nextFocusForward="@+id/edit_padding"
-                android:nextFocusDown="@+id/edit_padding"
-
-                android:text="@string/configLabel_themeColorBackground"
-                tools:ignore="UnusedAttribute" />
-
-            <EditText
-                android:id="@+id/edit_backgroundColor"
-                style="@style/ColorEdit" android:visibility="gone"
-                android:fontFamily="monospace"
-
-                android:nextFocusUp="@+id/editSpin_background"
-                android:nextFocusLeft="@+id/editSpin_background"
-                android:nextFocusRight="@+id/edit_padding"
-                android:nextFocusForward="@+id/edit_padding"
-                android:nextFocusDown="@+id/edit_padding"
-
-                android:text="" android:hint="@string/configHint_themeColorSunrise"
-                tools:ignore="UnusedAttribute" />
-
-            <ImageButton android:visibility="invisible"
-                android:id="@+id/editButton_backgroundColor"
-                style="@style/ColorEditButton"
-                android:layout_marginEnd="4dp" android:layout_marginRight="4dp"
-                android:contentDescription="@string/configLabel_themeColorBackground" />
-
-        </LinearLayout>
+            app:layout_constraintStart_toEndOf="@+id/editSpin_background"
+            app:labelText="@string/configLabel_themeColorBackground"
+            app:hintText="@string/configHint_themeColorSunrise" />
 
         <!-- Padding -->
         <TextView android:labelFor="@+id/edit_padding"

@@ -1,5 +1,9 @@
 ### ~
 
+###
+* adds dst label to timezone dialog; displayed when selected timezone is using daylight saving time.
+* adds eot label to timezone dialog; displayed for apparent solar time.
+
 ### v0.9.5 (2018-11-12)
 * modifies the default colors to improve contrast and readability (#247, #264, #268).
 * fixes bug "language selectors fails for some languages" (#262).
