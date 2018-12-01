@@ -179,10 +179,6 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 addPreferencesFromResource(R.xml.preference_alarms);
                 initPref_alarms();
 
-            } else if (action.equals(ACTION_PREFS_CALENDAR)) {
-                addPreferencesFromResource(R.xml.preference_calendars);
-                initPref_calendars();
-
             } else if (action.equals(ACTION_PREFS_LOCALE)) {
                 //noinspection deprecation
                 addPreferencesFromResource(R.xml.preference_locale);
