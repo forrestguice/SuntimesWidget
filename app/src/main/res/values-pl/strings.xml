@@ -149,20 +149,24 @@
     <!-- distances (meters, feet, etc) -->
     <string name="lengthUnits_metric">Metric</string>    <!-- TODO -->
     <string name="lengthUnits_imperial">Imperial</string>   <!-- TODO -->
+
     <string name="units_feet">stopy</string>
     <string name="units_feet_short">ft</string>
-    <!--<plurals name="units_feet_long">
-      <item quantity="one">%d stopa</item>
-      <item quantity="few">%d stopy</item>
-      <item quantity="other">%d stóp</item>
-    </plurals>-->
+    <plurals name="units_feet_long">
+      <item quantity="one">%s stopa</item>
+      <item quantity="few">%s stopy</item>
+      <item quantity="other">%s stóp</item>
+      <item quantity="many">%s stóp</item>   <!-- TODO: lint complains that polish must also define "many" .. value copied from "other" but thats probably wrong -->
+    </plurals>
+
     <string name="units_meters">metry</string>
     <string name="units_meters_short">m</string>
-    <!--<plurals name="units_meters_long">
-      <item quantity="one">%d metr</item>
-      <item quantity="few">%d metry</item>
-      <item quantity="other">%d metrów</item>
-    </plurals>-->
+    <plurals name="units_meters_long">
+      <item quantity="one">%s metr</item>
+      <item quantity="few">%s metry</item>
+      <item quantity="other">%s metrów</item>
+      <item quantity="many">%s metrów</item>   <!-- TODO: lint complains that polish must also define "many" .. value copied from "other" but thats probably wrong -->
+    </plurals>
 
     <!--
          WIDGET CONFIG
