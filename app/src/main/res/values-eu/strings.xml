@@ -440,6 +440,8 @@
     <string name="configLabel_themeColorFall">Udazkenaren kolorea</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Neguaren kolorea</string> <!-- color label -->
 
+    <string name="configLabel_themeColorAction">Action</string> <!-- color label -->  <!-- TODO -->
+
     <string name="configLabel_themeColorMapBackground">Maparen atzealdea</string> <!-- color label -->
     <string name="configLabel_themeColorMapForeground">Maparen aurrekaldea</string> <!-- color label -->
     <string name="configLabel_themeColorMapSunShadow">Itzala</string> <!-- color label -->

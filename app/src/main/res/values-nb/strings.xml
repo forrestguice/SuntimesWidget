@@ -440,6 +440,8 @@
     <string name="configLabel_themeColorFall">Høstfarge</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Vinterfarge</string> <!-- color label -->
 
+    <string name="configLabel_themeColorAction">Action</string> <!-- color label -->  <!-- TODO -->
+
     <string name="configLabel_themeColorMapBackground">Kartbakgrunn</string> <!-- color label -->
     <string name="configLabel_themeColorMapForeground">Kartforgrunn</string> <!-- color label -->
     <string name="configLabel_themeColorMapSunShadow">Skygge</string> <!-- color label -->

@@ -426,6 +426,8 @@
     <string name="configLabel_themeColorFall">Fall Color</string> <!-- color label --> <!-- TODO -->
     <string name="configLabel_themeColorWinter">Winter Color</string> <!-- color label -->  <!-- TODO -->
 
+    <string name="configLabel_themeColorAction">Action</string> <!-- color label -->  <!-- TODO -->
+
     <string name="configLabel_themeColorMapBackground">Map Background</string> <!-- color label --> <!-- TODO -->
     <string name="configLabel_themeColorMapForeground">Map Foreground</string> <!-- color label --> <!-- TODO -->
     <string name="configLabel_themeColorMapSunShadow">Shadow</string> <!-- color label -->          <!-- TODO -->
