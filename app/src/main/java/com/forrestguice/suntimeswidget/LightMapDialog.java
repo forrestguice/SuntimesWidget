@@ -247,6 +247,9 @@ public class LightMapDialog extends DialogFragment
             sunAzimuth.setTextColor(themeOverride.getTimeColor());
             sunElevation.setTextColor(themeOverride.getTimeColor());
             sunAzimuthAtNoon.setTextColor(themeOverride.getTimeColor());
+            sunShadowObj.setTextColor(themeOverride.getTitleColor());
+            sunShadowLength.setTextColor(themeOverride.getTimeColor());
+            sunShadowLengthAtNoon.setTextColor(themeOverride.getSunsetTextColor());
 
             SuntimesUtils.tintDrawable((InsetDrawable)riseIcon.getBackground(), themeOverride.getSunriseIconColor(), themeOverride.getSunriseIconStrokeColor(), themeOverride.getSunriseIconStrokePixels(context));
             SuntimesUtils.tintDrawable((InsetDrawable)setIcon.getBackground(), themeOverride.getSunsetIconColor(), themeOverride.getSunsetIconStrokeColor(), themeOverride.getSunsetIconStrokePixels(context));
