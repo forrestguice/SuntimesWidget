@@ -96,6 +96,11 @@ The app benefits from the following permissions...
 |ACCESS_FINE_LOCATION|To get current location (GPS).|v0.1.0|
 |SET_ALARM|To interact with the AlarmClock app.|v0.1.0|
 |WRITE_EXTERNAL_STORAGE|To export data (places, themes, etc.) to file.|v0.2.2 (api<=18)|
+
+Version `0.9.*` contained the following additional permissions (removed in v0.10.0)...
+
+|Permission||Version|
+|---|---|---|
 |READ_CALENDAR|To interact with the Calendar app (access events).|v0.9.0|
 |WRITE_CALENDAR|To interact with the Calendar app (add/remove events).|v0.9.0|
 |READ_SYNC_STATS|To interact with the Calendar app (access custom calendars).|v0.9.0|
