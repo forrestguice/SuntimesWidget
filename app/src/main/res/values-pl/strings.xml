@@ -216,6 +216,7 @@
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Ustawienia wyglądu</string>           <!-- group title -->
+    <string name="configLabel_appearance_mode">Appearance</string>                  <!-- spinner label -->  <!-- TODO -->
     <string name="configLabel_appearance_theme">Skórka:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Poszerz do dostępnej przestrzeni (rozciągalne)</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_showLabels">Wyświetl etykiety</string>          <!-- checkbox label -->

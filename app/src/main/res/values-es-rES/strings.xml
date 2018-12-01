@@ -224,6 +224,7 @@
 
     
     <string name="configLabel_appearance">Opciones de apariencia</string>
+    <string name="configLabel_appearance_mode">Appearance</string>                  <!-- spinner label -->  <!-- TODO -->
     <string name="configLabel_appearance_theme">Tema:</string>                  
     <string name="configLabel_appearance_allowResize">Crece con el espacio disponible (reescalable)</string>
     <string name="configLabel_appearance_showLabels">Mostrar etiquetas</string>          

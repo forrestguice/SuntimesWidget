@@ -225,6 +225,7 @@
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Aspetto</string>           <!-- group title -->
+    <string name="configLabel_appearance_mode">Appearance</string>                  <!-- spinner label -->  <!-- TODO -->
     <string name="configLabel_appearance_theme">Tema:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Cresce con lo spazio disponibile (ridimensionabile)</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_showLabels">Mostra etichette</string>          <!-- checkbox label -->

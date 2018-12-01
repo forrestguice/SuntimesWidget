@@ -214,6 +214,7 @@
 
   <!-- Widget Setting: appearance -->
   <string name="configLabel_appearance">Darstellung</string>           <!-- group title -->
+  <string name="configLabel_appearance_mode">Appearance</string>                  <!-- spinner label -->  <!-- TODO -->
   <string name="configLabel_appearance_theme">Thema:</string>                  <!-- spinner label -->
   <string name="configLabel_appearance_allowResize">Verfügbaren Platz nutzen (größenveränderbar)</string>  <!-- checkbox label -->
   <string name="configLabel_appearance_showLabels">Bezeichnungen anzeigen</string>          <!-- checkbox label -->

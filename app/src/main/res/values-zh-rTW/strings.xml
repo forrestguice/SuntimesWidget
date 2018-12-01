@@ -233,6 +233,7 @@
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">顯示設置</string>           <!-- group title -->
+    <string name="configLabel_appearance_mode">Appearance</string>                  <!-- spinner label -->  <!-- TODO -->
     <string name="configLabel_appearance_theme">主題：</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">適應可用的空間（可調節大小）</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_showLabels">顯示標籤</string>          <!-- checkbox label -->
