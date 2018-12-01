@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.LightingColorFilter;
@@ -1427,6 +1428,28 @@ public class SuntimesUtils
         return drawableToBitmap(context, tinted, w, h, true);
     }
 
+    public static Drawable tintDrawable(Drawable drawable, int fillColor, int strokeColor, int strokePixels)
+    {
+        Drawable d = null;
+        try {
+            d = tintDrawable((InsetDrawable)drawable, fillColor, strokeColor, strokePixels);
+
+        } catch (ClassCastException e) {
+            try {
+                d = tintDrawable((LayerDrawable)drawable, fillColor, strokeColor, strokePixels);
+
+            } catch (ClassCastException e2) {
+                try {
+                    d = tintDrawable((GradientDrawable)drawable, fillColor, strokeColor, strokePixels);
+
+                } catch (ClassCastException e3) {
+                    Log.e("tintDrawable", "");
+                }
+            }
+        }
+        return d;
+    }
+
     /**
      * @param drawable a ShapeDrawable
      * @param fillColor the fill color
@@ -1572,6 +1595,36 @@ public class SuntimesUtils
                 }
             }
         }
+    }
+
+    /**
+     * @param enabledColor normal state color
+     * @param disabledColor disabled state color
+     * @return a ColorStateList w/ enabled / disabled states (intended for text label)
+     */
+    public static ColorStateList colorStateList(int enabledColor, int disabledColor)
+    {
+        return new ColorStateList(
+                new int[][] { new int[] { android.R.attr.state_enabled}, new int[] {-android.R.attr.state_enabled}},
+                new int[] {enabledColor, disabledColor}
+        );
+    }
+
+    /**
+     * @param enabledColor normal state color
+     * @param disabledColor disabled state color
+     * @param pressedColor pressed/focused color
+     * @return a ColorStateList w/ pressed, enabled, and disabled states (intended for text button)
+     */
+    public static ColorStateList colorStateList(int enabledColor, int disabledColor, int pressedColor)
+    {
+        return new ColorStateList(
+                new int[][] { new int[] { android.R.attr.state_pressed},
+                        new int[] { android.R.attr.state_focused},
+                        new int[] {-android.R.attr.state_enabled},
+                        new int[] {} },
+                new int[] {pressedColor, enabledColor, disabledColor, enabledColor}
+        );
     }
 
 }

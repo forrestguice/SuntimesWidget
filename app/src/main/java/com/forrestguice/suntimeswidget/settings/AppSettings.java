@@ -47,6 +47,12 @@ public class AppSettings
     public static final String PREF_KEY_APPEARANCE_THEME = "app_appearance_theme";
     public static final String PREF_DEF_APPEARANCE_THEME = THEME_DARK;
 
+    public static final String PREF_KEY_APPEARANCE_THEME_LIGHT = "app_appearance_theme_light";
+    public static final String PREF_DEF_APPEARANCE_THEME_LIGHT = "default";
+
+    public static final String PREF_KEY_APPEARANCE_THEME_DARK = "app_appearance_theme_dark";
+    public static final String PREF_DEF_APPEARANCE_THEME_DARK = "default";
+
     public static final String PREF_KEY_LOCALE_MODE = "app_locale_mode";
     public static final LocaleMode PREF_DEF_LOCALE_MODE = LocaleMode.SYSTEM_LOCALE;
 
@@ -589,6 +595,18 @@ public class AppSettings
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getString(PREF_KEY_APPEARANCE_THEME, PREF_DEF_APPEARANCE_THEME);
+    }
+
+    public static String loadThemeLightPref(Context context)
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getString(PREF_KEY_APPEARANCE_THEME_LIGHT, PREF_DEF_APPEARANCE_THEME_LIGHT);
+    }
+
+    public static String loadThemeDarkPref(Context context)
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getString(PREF_KEY_APPEARANCE_THEME_DARK, PREF_DEF_APPEARANCE_THEME_DARK);
     }
 
     public static int loadTheme(Context context)

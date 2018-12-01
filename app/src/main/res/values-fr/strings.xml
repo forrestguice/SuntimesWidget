@@ -417,42 +417,42 @@
     <string name="configLabel_themeBackground_color">Couleur</string>      <!-- custom background -->
     <string name="configLabel_themeColorBackground">Couleur:</string>      <!-- color label -->
 
-    <string name="configLabel_themeColorTitle">Couleur du titre :</string>     <!-- color label -->
+    <string name="configLabel_themeColorTitle">Couleur du titre</string>     <!-- color label -->
     <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->
 
-    <string name="configLabel_themeColorText">Couleur du texte :</string>       <!-- color label -->
+    <string name="configLabel_themeColorText">Couleur du texte</string>       <!-- color label -->
     <string name="configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->
 
-    <string name="configLabel_themeColorSpring">Printemps :</string> <!-- color label -->
-    <string name="configLabel_themeColorSummer">Été:</string> <!-- color label -->
-    <string name="configLabel_themeColorFall">Automne :</string> <!-- color label -->
-    <string name="configLabel_themeColorWinter">Hiver :</string> <!-- color label -->
+    <string name="configLabel_themeColorSpring">Printemps</string> <!-- color label -->
+    <string name="configLabel_themeColorSummer">Été</string> <!-- color label -->
+    <string name="configLabel_themeColorFall">Automne</string> <!-- color label -->
+    <string name="configLabel_themeColorWinter">Hiver</string> <!-- color label -->
 
     <string name="configLabel_themeColorMapBackground">Map Background</string> <!-- color label --> <!-- TODO -->
     <string name="configLabel_themeColorMapForeground">Map Foreground</string> <!-- color label --> <!-- TODO -->
     <string name="configLabel_themeColorMapSunShadow">Shadow</string> <!-- color label -->          <!-- TODO -->
     <string name="configLabel_themeColorMapMoonHighlight">Highlight</string> <!-- color label -->   <!-- TODO -->
 
-    <string name="configLabel_themeColorMoonrise">Lever de lune :</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonset">Coucher de lune :</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonWaxing">Lune ascendante :</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonWaning">Lune descendante :</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonFull">Pleine lune :</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonNew">Nouvelle lune :</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonrise">Lever de lune</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonset">Coucher de lune</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaxing">Lune ascendante</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaning">Lune descendante</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonFull">Pleine lune</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonNew">Nouvelle lune</string> <!-- color label -->
 
-    <string name="configLabel_themeColorSunrise">Lever du soleil :</string> <!-- color label -->
+    <string name="configLabel_themeColorSunrise">Lever du soleil</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint --> 
 
-    <string name="configLabel_themeColorSunset">Coucher du soleil :</string>   <!-- color label -->
+    <string name="configLabel_themeColorSunset">Coucher du soleil</string>   <!-- color label -->
     <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorNoon">Zénith :</string>      <!-- color label -->
+    <string name="configLabel_themeColorNoon">Zénith</string>      <!-- color label -->
     <!--<string name="configHint_themeColorNoon">#FFFFFFFF</string>-->         <!-- color hint -->
 
-    <string name="configLabel_themeColorFill">Remplissage :</string>         <!-- color label -->
+    <string name="configLabel_themeColorFill">Remplissage</string>         <!-- color label -->
     <!--<string name="configHint_themeColorFill">#FFFFFFFF</string>-->        <!-- color hint -->
 
-    <string name="configLabel_themeColorBorder">Bordure :</string>         <!-- color label -->
+    <string name="configLabel_themeColorBorder">Bordure</string>         <!-- color label -->
     <!--<string name="configHint_themeColorBorder">#FFFFFFFF</string>-->        <!-- color hint -->
 
     <string name="configLabel_themeBorderWidthRiseSet">Taille de la bordure (lever/coucher):</string>  <!-- size label -->
@@ -460,10 +460,10 @@
     <string name="configLabel_themeBorderWidthNoon">Taille de la bordure (zénith):</string>         <!-- size label -->
     <!--<string name="configHint_themeBorderWidthNoon">3</string>-->
 
-    <string name="configLabel_themeColorSuffix">Couleur du suffixe:</string>   <!-- color label -->
+    <string name="configLabel_themeColorSuffix">Couleur du suffixe</string>   <!-- color label -->
     <string name="configHint_themeColorSuffix">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorTime">Couleur2 du texte:</string>      <!-- color label --> 
+    <string name="configLabel_themeColorTime">Couleur2 du texte</string>      <!-- color label -->
     <string name="configHint_themeColorTime">#FFFFFFFF</string>          <!-- color hint --> 
 
     <string name="configLabel_themeSizeTitle">Taille du titre :</string>  <!-- edit label --> 

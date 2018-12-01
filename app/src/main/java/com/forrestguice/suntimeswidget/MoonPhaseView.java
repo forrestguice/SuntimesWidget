@@ -20,12 +20,14 @@ package com.forrestguice.suntimeswidget;
 import android.content.Context;
 import android.content.res.TypedArray;
 //import android.os.Bundle;
+import android.graphics.Bitmap;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -33,6 +35,7 @@ import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.text.NumberFormat;
 
@@ -77,7 +80,7 @@ public class MoonPhaseView extends LinearLayout
     private void init(Context context, AttributeSet attrs)
     {
         initLocale(context);
-        initColors(context);
+        themeViews(context);
         LayoutInflater.from(context).inflate(R.layout.layout_view_moonphase, this, true);
 
         if (attrs != null)
@@ -100,13 +103,60 @@ public class MoonPhaseView extends LinearLayout
     }
 
     private int noteColor;
-    private void initColors(Context context)
+    private void themeViews(Context context)
     {
         int[] colorAttrs = { android.R.attr.textColorPrimary }; //, R.attr.springColor, R.attr.summerColor, R.attr.fallColor, R.attr.winterColor };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         int def = R.color.transparent;
         noteColor = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
         typedArray.recycle();
+    }
+
+    public void themeViews(Context context, SuntimesTheme theme)
+    {
+        noteColor = theme.getTimeColor();
+        int textColor = theme.getTextColor();
+
+        illumText.setTextColor(textColor);
+        azimuthText.setTextColor(textColor);
+        elevationText.setTextColor(textColor);
+        phaseText.setTextColor(theme.getTimeColor());
+
+        int[] viewID = getIconViewIDs();
+        Bitmap[] bitmaps = getThemedBitmaps(context, theme);
+        for (int i=0; i<viewID.length; i++)
+        {
+            ImageView view = (ImageView)findViewById(viewID[i]);
+            if (view != null && bitmaps[i] != null) {
+                view.setImageBitmap(bitmaps[i]);
+            }
+        }
+    }
+
+    private static Bitmap[] getThemedBitmaps(Context context, SuntimesTheme theme)
+    {
+        int colorWaxing = theme.getMoonWaxingColor();
+        int colorWaning = theme.getMoonWaningColor();
+        int colorFull = theme.getMoonFullColor();
+        int colorNew = theme.getMoonNewColor();
+
+        return new Bitmap[] {
+                SuntimesUtils.gradientDrawableToBitmap(context, MoonPhaseDisplay.FULL.getIcon(), colorFull, colorWaning, theme.getMoonFullStrokePixels(context)),
+                SuntimesUtils.gradientDrawableToBitmap(context, MoonPhaseDisplay.NEW.getIcon(), colorNew, colorWaxing, theme.getMoonNewStrokePixels(context)),
+                SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.WAXING_CRESCENT.getIcon(), colorWaxing, colorWaxing, 0),
+                SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.FIRST_QUARTER.getIcon(), colorWaxing, colorWaxing, 0),
+                SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.WAXING_GIBBOUS.getIcon(), colorWaxing, colorWaxing, 0),
+                SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.WANING_CRESCENT.getIcon(), colorWaning, colorWaning, 0),
+                SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.THIRD_QUARTER.getIcon(), colorWaning, colorWaning, 0),
+                SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.WANING_GIBBOUS.getIcon(), colorWaning, colorWaning, 0)
+        };
+    }
+    private static int[] getIconViewIDs()
+    {
+        return new int[] { R.id.icon_info_moonphase_full, R.id.icon_info_moonphase_new,
+                R.id.icon_info_moonphase_waxing_crescent, R.id.icon_info_moonphase_waxing_quarter,
+                R.id.icon_info_moonphase_waxing_gibbous, R.id.icon_info_moonphase_waning_crescent,
+                R.id.icon_info_moonphase_waning_quarter, R.id.icon_info_moonphase_waning_gibbous };
     }
 
     private boolean tomorrowMode = false;

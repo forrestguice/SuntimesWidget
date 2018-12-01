@@ -7,7 +7,13 @@
               android:title="@string/configAction_deleteTheme"
               android:icon="?attr/icActionDelete"
               app:showAsAction="never"
-              android:orderInCategory="4" />
+              android:orderInCategory="5" />
+
+        <item android:id="@+id/exportTheme"
+            android:title="@string/configAction_shareTheme"
+            android:icon="?attr/icActionShare"
+            app:showAsAction="never"
+            android:orderInCategory="4" />
 
         <item android:id="@+id/copyTheme"
               android:title="@string/configAction_copyTheme"
