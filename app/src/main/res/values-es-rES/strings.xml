@@ -212,8 +212,10 @@
     <string name="configLabel_general_showWeeks_summary">Divide intervalos de tiempo mayores a 7 días en semanas (p. Ej. 15d se transforma en 2se 1d).</string>
 
     <string name="configLabel_general_showHours">Mostrar horas</string>
-    <string name="configLabel_general_showHours_summary">Incluye horas y minutos en intervalos de tiempo mayores a un día.</string>    
+    <string name="configLabel_general_showHours_summary">Incluye horas y minutos en intervalos de tiempo mayores a un día.</string>
 
+    <string name="configLabel_general_observerheight">Object Shadow</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_observerheight_summary">Display the length of shadows cast by an object with a height of <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->  <!-- TODO -->
     
     <string name="configLabel_advanced">Configuración avanzada</string>
     <string name="configLabel_experimental">Configuración experimental</string>

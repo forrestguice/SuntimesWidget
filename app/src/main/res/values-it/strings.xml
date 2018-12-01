@@ -214,6 +214,9 @@
     <string name="configLabel_general_showHours">Mostra ore</string>        <!-- checkbox label -->
     <string name="configLabel_general_showHours_summary">Includi ore e minuti in intervalli di tempo che si estendono oltre una giornata.</string>    <!-- checkbox label -->
 
+    <string name="configLabel_general_observerheight">Object Shadow</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_observerheight_summary">Display the length of shadows cast by an object with a height of <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->  <!-- TODO -->
+
     <!-- Widget Setting: advanced / experimental -->
     <string name="configLabel_advanced">Impostazioni avanzate</string>                        <!-- group title -->
     <string name="configLabel_experimental">Impostazioni sperimentali</string>                <!-- group title -->

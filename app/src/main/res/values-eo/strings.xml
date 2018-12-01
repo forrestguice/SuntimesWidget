@@ -202,6 +202,9 @@
     <string name="configLabel_general_showHours">Montri horojn</string>        <!-- checkbox label -->
     <string name="configLabel_general_showHours_summary">Ampleksi horojn kaj minutojn por temp-intervaloj pli longaj ol tagnokto.</string>    <!-- checkbox label -->
 
+    <string name="configLabel_general_observerheight">Object Shadow</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_observerheight_summary">Display the length of shadows cast by an object with a height of <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->  <!-- TODO -->
+
     <!-- Widget Setting: advanced / experimental -->
     <string name="configLabel_advanced">Spertaj agordoj</string>                        <!-- group title -->
     <string name="configLabel_experimental">Altnivelaj agordoj</string>                <!-- group title -->

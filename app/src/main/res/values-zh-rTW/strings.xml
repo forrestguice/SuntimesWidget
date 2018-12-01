@@ -222,6 +222,9 @@
     <string name="configLabel_general_showHours">顯示小時</string>        <!-- checkbox label -->
     <string name="configLabel_general_showHours_summary">大於一天的時候包含小時和分鐘。</string>    <!-- checkbox label -->
 
+    <string name="configLabel_general_observerheight">Object Shadow</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_observerheight_summary">Display the length of shadows cast by an object with a height of <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->  <!-- TODO -->
+
     <!-- Widget Setting: advanced / experimental -->
     <string name="configLabel_advanced">高級設置</string>                        <!-- group title -->
     <string name="configLabel_experimental">實驗性設置</string>                <!-- group title -->
