@@ -1355,7 +1355,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         double observerHeight = WidgetSettings.loadObserverHeightPref(context, 0);
         pref.setSummary(formatObserverHeightSummary(context, observerHeight, units, true));
     }
-    private static CharSequence formatObserverHeightSummary(@NonNull Context context, double observerHeight, WidgetSettings.LengthUnit units, boolean convert)
+    private static CharSequence formatObserverHeightSummary(Context context, double observerHeight, WidgetSettings.LengthUnit units, boolean convert)
     {
         String observerHeightDisplay = SuntimesUtils.formatAsHeight(context, observerHeight, units, convert, 2);
         return context.getString(R.string.configLabel_general_observerheight_summary, observerHeightDisplay);
