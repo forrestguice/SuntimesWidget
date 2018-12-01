@@ -19,6 +19,10 @@
 
     <uses-sdk tools:overrideLibrary="com.flask.colorpicker" />
 
+    <permission
+        android:name="suntimeswidget.calculator.permission.READ_PROVIDER"
+        android:protectionLevel="normal" />
+
     <application
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor"
@@ -47,9 +51,17 @@
 
         </activity>
 
+        <!-- Calculator Provider -->
+        <provider
+            android:name="com.forrestguice.suntimeswidget.calculator.CalculatorProvider"
+            android:authorities="suntimeswidget.calculator.provider"
+            android:permission="suntimeswidget.calculator.permission.READ_PROVIDER"
+            android:exported="true"
+            android:syncable="false" />
+
         <!-- Calendar Provider -->
         <provider
-            android:name="com.forrestguice.suntimeswidget.calendar.SuntimesContentProvider"
+            android:name="com.forrestguice.suntimeswidget.calendar.SuntimesCalendarProvider"
             android:authorities="com.forrestguice.suntimeswidget.datasync.provider"
             android:exported="false"
             android:syncable="true"/>

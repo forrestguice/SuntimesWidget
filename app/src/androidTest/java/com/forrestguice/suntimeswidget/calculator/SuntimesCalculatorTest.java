@@ -37,9 +37,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(AndroidJUnit4.class)
 public class SuntimesCalculatorTest
 {
-    private Context mockContext;
-
-    private WidgetSettings.Location[] locations = new WidgetSettings.Location[]
+    public static final WidgetSettings.Location[] TEST_LOCATIONS = new WidgetSettings.Location[]
     {
             new WidgetSettings.Location("test0", "0", "0", "0"),             // 0, all zero
             new WidgetSettings.Location("test1", "35", "-112"),                      // 1, no altitude
@@ -48,6 +46,9 @@ public class SuntimesCalculatorTest
             new WidgetSettings.Location("test4", "35", "-112", "10999"),     // 4, at bounds (max altitude)
             new WidgetSettings.Location("test5", "35", "-112", "11000")      // 5, out of bounds (max altitude + 1)
     };
+
+    private Context mockContext;
+    private WidgetSettings.Location[] locations = TEST_LOCATIONS;
 
     @Before
     public void setup()
