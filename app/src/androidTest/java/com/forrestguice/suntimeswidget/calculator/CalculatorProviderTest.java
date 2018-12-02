@@ -208,7 +208,7 @@ public class CalculatorProviderTest
         SuntimesCalculatorDescriptor descriptor = WidgetSettings.loadCalculatorModePref(mockContext, appWidgetID);
         assertTrue("COLUMN_CONFIG_CALCULATOR should be " + descriptor.getName(), descriptor.getName().equals(cursor.getString(cursor.getColumnIndex(COLUMN_CONFIG_CALCULATOR))));
 
-        WidgetSettings.Location location = WidgetSettings.loadLocationPref(mockContext, appWidgetID);
+        Location location = WidgetSettings.loadLocationPref(mockContext, appWidgetID);
         assertTrue("COLUMN_CONFIG_APPWIDGETID should be " + appWidgetID, cursor.getInt(cursor.getColumnIndex(COLUMN_CONFIG_APPWIDGETID)) == appWidgetID);
         assertTrue("COLUMN_CONFIG_LATITUDE should be " + location.getLatitude(), cursor.getString(cursor.getColumnIndex(COLUMN_CONFIG_LATITUDE)).equals(location.getLatitude()));
         assertTrue("COLUMN_CONFIG_LONGITUDE should be " + location.getLongitude(), cursor.getString(cursor.getColumnIndex(COLUMN_CONFIG_LONGITUDE)).equals(location.getLongitude()));
@@ -588,7 +588,7 @@ public class CalculatorProviderTest
         {
             assertTrue("TEST_LOCATION should contain 3 parts!", location_parts.length == 3);
             HashMap<String,String> selection = createSelection(location_parts);
-            WidgetSettings.Location location = CalculatorProvider.processSelection_location(selection);
+            Location location = CalculatorProvider.processSelection_location(selection);
             if (location_parts[0] == null || location_parts[1] == null) {
                 assertTrue("Location should be null (missing latitude or longitude)", location == null);
 

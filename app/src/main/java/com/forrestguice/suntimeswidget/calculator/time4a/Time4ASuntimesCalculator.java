@@ -22,7 +22,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.calculator.Location;
 
 import net.time4j.Moment;
 import net.time4j.PlainDate;
@@ -60,19 +60,19 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     }
 
     @Override
-    public void init(WidgetSettings.Location locationSetting, String timezone)
+    public void init(Location locationSetting, String timezone)
     {
         init(locationSetting, TimeZone.getTimeZone(timezone));
     }
 
     @Override
-    public void init(WidgetSettings.Location location, TimeZone timezone)
+    public void init(Location location, TimeZone timezone)
     {
         init(location, timezone, null);
     }
 
     @Override
-    public void init(WidgetSettings.Location location, TimeZone timezone, Context context)
+    public void init(Location location, TimeZone timezone, Context context)
     {
         this.solarTime = SolarTime.ofLocation(location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), clampAltitude(location.getAltitudeAsInteger()), getCalculator());
         this.timezone = timezone;

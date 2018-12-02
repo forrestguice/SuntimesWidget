@@ -29,7 +29,7 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.calculator.Location;
 
 /**
  * WorldMapTask
@@ -180,7 +180,7 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
          * @param pos azimuth and altitude
          * @return { greenwich hour angle, declination }
          */
-        protected double[] gha(WidgetSettings.Location location, SuntimesCalculator.Position pos)
+        protected double[] gha(Location location, SuntimesCalculator.Position pos)
         {
             double radLat = Math.toRadians(location.getLatitudeAsDouble());
             double sinLat = Math.sin(radLat);

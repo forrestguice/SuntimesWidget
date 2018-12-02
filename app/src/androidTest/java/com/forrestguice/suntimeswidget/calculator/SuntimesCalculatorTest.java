@@ -23,8 +23,6 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
 
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,18 +35,18 @@ import static org.junit.Assert.assertTrue;
 @RunWith(AndroidJUnit4.class)
 public class SuntimesCalculatorTest
 {
-    public static final WidgetSettings.Location[] TEST_LOCATIONS = new WidgetSettings.Location[]
+    public static final Location[] TEST_LOCATIONS = new Location[]
     {
-            new WidgetSettings.Location("test0", "0", "0", "0"),             // 0, all zero
-            new WidgetSettings.Location("test1", "35", "-112"),                      // 1, no altitude
-            new WidgetSettings.Location("test2", "35", "-112", "-14"),       // 2, out of bounds (negative altitude)
-            new WidgetSettings.Location("test3", "35", "-112", "14"),        // 3
-            new WidgetSettings.Location("test4", "35", "-112", "10999"),     // 4, at bounds (max altitude)
-            new WidgetSettings.Location("test5", "35", "-112", "11000")      // 5, out of bounds (max altitude + 1)
+            new Location("test0", "0", "0", "0"),             // 0, all zero
+            new Location("test1", "35", "-112"),                      // 1, no altitude
+            new Location("test2", "35", "-112", "-14"),       // 2, out of bounds (negative altitude)
+            new Location("test3", "35", "-112", "14"),        // 3
+            new Location("test4", "35", "-112", "10999"),     // 4, at bounds (max altitude)
+            new Location("test5", "35", "-112", "11000")      // 5, out of bounds (max altitude + 1)
     };
 
     private Context mockContext;
-    private WidgetSettings.Location[] locations = TEST_LOCATIONS;
+    private Location[] locations = TEST_LOCATIONS;
 
     @Before
     public void setup()
@@ -60,7 +58,7 @@ public class SuntimesCalculatorTest
     public void test_init()
     {
         TimeZone timezone = TimeZone.getDefault();
-        for (WidgetSettings.Location location : locations)
+        for (Location location : locations)
         {
             test_init(location, timezone, com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.getDescriptor());
             test_init(location, timezone, com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator.getDescriptor());
@@ -70,7 +68,7 @@ public class SuntimesCalculatorTest
             test_init(location, timezone, com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator.getDescriptor());
         }
     }
-    public void test_init(WidgetSettings.Location location, TimeZone timezone, SuntimesCalculatorDescriptor descriptor)
+    public void test_init(Location location, TimeZone timezone, SuntimesCalculatorDescriptor descriptor)
     {
         SuntimesCalculatorFactory calculatorFactory = new SuntimesCalculatorFactory(mockContext, descriptor);
         SuntimesCalculator calculator = calculatorFactory.createCalculator(location, timezone);

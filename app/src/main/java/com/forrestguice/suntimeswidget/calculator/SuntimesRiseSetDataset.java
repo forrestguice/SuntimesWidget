@@ -254,7 +254,7 @@ public class SuntimesRiseSetDataset
         }
     }
 
-    public WidgetSettings.Location location()
+    public Location location()
     {
         return dataActual.location();
     }

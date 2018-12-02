@@ -87,8 +87,8 @@ public class SuntimesData
     /**
      * Property: location
      */
-    protected WidgetSettings.Location location;
-    public WidgetSettings.Location location()
+    protected Location location;
+    public Location location()
     {
         return location;
     }

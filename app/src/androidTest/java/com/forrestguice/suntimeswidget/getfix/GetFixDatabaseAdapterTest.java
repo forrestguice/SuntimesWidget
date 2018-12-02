@@ -26,7 +26,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
 
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.calculator.Location;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -47,13 +47,13 @@ public class GetFixDatabaseAdapterTest
 {
     private Context mockContext;
     private GetFixDatabaseAdapter db;
-    private WidgetSettings.Location[] locations = new WidgetSettings.Location[] {
-            new WidgetSettings.Location("Test Loc0", "35", "-112", "0"),
-            new WidgetSettings.Location("Test Loc1", "36", "-111", "1"),
-            new WidgetSettings.Location("Test's Loc2", "37", "-110", "2"),    // name contains '
-            new WidgetSettings.Location("Test\"s Loc3", "38", "-109", "3"),   // name contains "
-            new WidgetSettings.Location("Test`s Loc4", "38", "-109", "3"),    // name contains `
-            new WidgetSettings.Location("Test, Loc5", "-10", "10", "5")       // name contains ,
+    private Location[] locations = new Location[] {
+            new Location("Test Loc0", "35", "-112", "0"),
+            new Location("Test Loc1", "36", "-111", "1"),
+            new Location("Test's Loc2", "37", "-110", "2"),    // name contains '
+            new Location("Test\"s Loc3", "38", "-109", "3"),   // name contains "
+            new Location("Test`s Loc4", "38", "-109", "3"),    // name contains `
+            new Location("Test, Loc5", "-10", "10", "5")       // name contains ,
     };
 
     @Before
@@ -71,7 +71,7 @@ public class GetFixDatabaseAdapterTest
     {
         int count = 0;
         db.open();
-        for (WidgetSettings.Location location : locations)
+        for (Location location : locations)
         {
             long id = db.addPlace(location);
             assertTrue("ID should be >= 0 (was " + id + ")", id != -1);
@@ -117,9 +117,9 @@ public class GetFixDatabaseAdapterTest
         return rowID;
     }
 
-    protected HashMap<Long, WidgetSettings.Location> mapDatabase(long[] rowID)
+    protected HashMap<Long, Location> mapDatabase(long[] rowID)
     {
-        HashMap<Long, WidgetSettings.Location> result = new HashMap<>();
+        HashMap<Long, Location> result = new HashMap<>();
         for (int i=0; i<rowID.length; i++)
         {
             result.put(rowID[i], locations[i]);
@@ -193,7 +193,7 @@ public class GetFixDatabaseAdapterTest
         db.close();
     }
 
-    protected void verifyPlace(Cursor cursor, boolean fullEntry, long rowID, WidgetSettings.Location location)
+    protected void verifyPlace(Cursor cursor, boolean fullEntry, long rowID, Location location)
     {
         // KEY_ROWID, KEY_PLACE_NAME, KEY_PLACE_LATITUDE, KEY_PLACE_LONGITUDE, KEY_PLACE_ALTITUDE, KEY_PLACE_COMMENT
         assertTrue("rowID should match", cursor.getLong(0) == rowID);
@@ -210,7 +210,7 @@ public class GetFixDatabaseAdapterTest
     {
         db.open();
         long[] rowID = populateDatabase();
-        HashMap<Long, WidgetSettings.Location> map = mapDatabase(rowID);
+        HashMap<Long, Location> map = mapDatabase(rowID);
 
         // testing n=0, fullEntry=false
         Cursor cursor0 = db.getAllPlaces(0, false);
@@ -298,7 +298,7 @@ public class GetFixDatabaseAdapterTest
         long[] rowID = populateDatabase();
         for (int i=0; i<rowID.length; i++)
         {
-            WidgetSettings.Location location = new WidgetSettings.Location(locations[i].getLabel(), "0", "0", "0");  // update all values to 0
+            Location location = new Location(locations[i].getLabel(), "0", "0", "0");  // update all values to 0
             db.updatePlace(location);
             verifyPlace(db.getPlace(rowID[i]), true, rowID[i], location);
         }

@@ -322,7 +322,7 @@ public class CalculatorProvider extends ContentProvider
             SuntimesCalculator calculator = initSunCalculator(getContext(), selection);
             if (calculator != null)
             {
-                WidgetSettings.Location location = null;
+                Location location = null;
                 Object[] row = new Object[columns.length];
                 for (int i=0; i<columns.length; i++)
                 {
@@ -788,7 +788,7 @@ public class CalculatorProvider extends ContentProvider
 
         String timezoneID = selection.get(COLUMN_CONFIG_TIMEZONE);
         TimeZone timezone = (timezoneID != null ? TimeZone.getTimeZone(timezoneID) : null);
-        WidgetSettings.Location location = processSelection_location(selection);
+        Location location = processSelection_location(selection);
 
         SuntimesCalculatorDescriptor descriptor = null;
         String calculator = selection.get(COLUMN_CONFIG_CALCULATOR);
@@ -822,7 +822,7 @@ public class CalculatorProvider extends ContentProvider
     {
         SuntimesCalculator retValue = sunSource.get(appWidgetID);   // lazy init
         if (retValue == null) {
-            WidgetSettings.Location location = WidgetSettings.loadLocationPref(context, appWidgetID);
+            Location location = WidgetSettings.loadLocationPref(context, appWidgetID);
             TimeZone timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, appWidgetID));
             SuntimesCalculatorDescriptor descriptor = WidgetSettings.loadCalculatorModePref(context, appWidgetID);
             SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, descriptor);
@@ -840,7 +840,7 @@ public class CalculatorProvider extends ContentProvider
         SuntimesCalculator retValue = moonSource.get(appWidgetID);
         if (retValue == null)    // lazy init
         {
-            WidgetSettings.Location location = WidgetSettings.loadLocationPref(context, appWidgetID);
+            Location location = WidgetSettings.loadLocationPref(context, appWidgetID);
             TimeZone timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, appWidgetID));
             SuntimesCalculatorDescriptor descriptor = WidgetSettings.loadCalculatorModePref(context, 0, "moon");      // always use app calculator (0)
             SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, descriptor);
@@ -916,9 +916,9 @@ public class CalculatorProvider extends ContentProvider
      * @return a WidgetSettings.Location created from the selection (or null if selection is missing COLUMN_CONFIG_LATITUDE or COLUMN_CONFIG_LONGITUDE)
      */
     @Nullable
-    public static WidgetSettings.Location processSelection_location(@NonNull HashMap<String,String> selection)
+    public static Location processSelection_location(@NonNull HashMap<String,String> selection)
     {
-        WidgetSettings.Location location = null;
+        Location location = null;
         if (selection.containsKey(COLUMN_CONFIG_LATITUDE) || selection.containsKey(COLUMN_CONFIG_LONGITUDE))
         {
             String value_latitude = selection.get(COLUMN_CONFIG_LATITUDE);
@@ -926,8 +926,8 @@ public class CalculatorProvider extends ContentProvider
             if (value_latitude != null && value_longitude != null)
             {
                 boolean hasAltitude = selection.containsKey(COLUMN_CONFIG_ALTITUDE);
-                location = (hasAltitude) ? new WidgetSettings.Location("", value_latitude, value_longitude, selection.get(COLUMN_CONFIG_ALTITUDE))
-                        : new WidgetSettings.Location("", value_latitude, value_longitude);
+                location = (hasAltitude) ? new Location("", value_latitude, value_longitude, selection.get(COLUMN_CONFIG_ALTITUDE))
+                        : new Location("", value_latitude, value_longitude);
                 if (hasAltitude) {
                     location.setUseAltitude(true);
                 }

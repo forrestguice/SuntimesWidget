@@ -36,7 +36,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.InsetDrawable;
-import android.graphics.drawable.LayerDrawable;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
@@ -142,7 +141,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     private GetFixHelper getFixHelper;
 
-    private WidgetSettings.Location location;
+    private com.forrestguice.suntimeswidget.calculator.Location location;
     protected SuntimesNotes notes;
     protected SuntimesRiseSetDataset dataset;
     protected SuntimesEquinoxSolsticeDataset dataset2;
@@ -930,7 +929,7 @@ public class SuntimesActivity extends AppCompatActivity
             @Override
             public void updateUI(Location... locations)
             {
-                WidgetSettings.Location location = new WidgetSettings.Location(getString(R.string.gps_lastfix_title_found), locations[0]);
+                com.forrestguice.suntimeswidget.calculator.Location location = new com.forrestguice.suntimeswidget.calculator.Location(getString(R.string.gps_lastfix_title_found), locations[0]);
                 actionBar.setSubtitle(location.toString());
             }
 
@@ -965,7 +964,7 @@ public class SuntimesActivity extends AppCompatActivity
 
                     if (result != null)
                     {
-                        WidgetSettings.Location location = new WidgetSettings.Location(getString(R.string.gps_lastfix_title_found), result);
+                        com.forrestguice.suntimeswidget.calculator.Location location = new com.forrestguice.suntimeswidget.calculator.Location(getString(R.string.gps_lastfix_title_found), result);
                         WidgetSettings.saveLocationPref(SuntimesActivity.this, 0, location);
 
                     } else {

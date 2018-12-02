@@ -20,8 +20,6 @@ package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
 
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -62,7 +60,7 @@ public interface SuntimesCalculator
      * @param timezone a timezone identifier
      * @since 1.0.0 (FEATURE_RISESET)
      */
-    void init( WidgetSettings.Location location, String timezone );
+    void init(Location location, String timezone );
 
     /**
      * Initialize the calculator with a given location and timezone.
@@ -70,7 +68,7 @@ public interface SuntimesCalculator
      * @param timezone a timezone object
      * @since 1.1.0
      */
-    void init( WidgetSettings.Location location, TimeZone timezone );
+    void init(Location location, TimeZone timezone );
 
     /**
      * Initialize the calculator with the given location, timezone, and app context.
@@ -79,7 +77,7 @@ public interface SuntimesCalculator
      * @param context a context object
      * @since 1.2.0
      */
-    void init( WidgetSettings.Location location, TimeZone timezone, Context context );
+    void init(Location location, TimeZone timezone, Context context );
 
     /**
      * Morning Astronomical Twilight

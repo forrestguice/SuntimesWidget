@@ -48,19 +48,19 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     public SunriseSunsetSuntimesCalculator() { /* EMPTY */ }
 
     @Override
-    public void init(WidgetSettings.Location locationSetting, String timezone)
+    public void init(com.forrestguice.suntimeswidget.calculator.Location locationSetting, String timezone)
     {
         init(locationSetting, TimeZone.getTimeZone(timezone));
     }
 
     @Override
-    public void init(WidgetSettings.Location locationSetting, TimeZone timezone)
+    public void init(com.forrestguice.suntimeswidget.calculator.Location locationSetting, TimeZone timezone)
     {
         init(locationSetting, timezone, null);
     }
 
     @Override
-    public void init(WidgetSettings.Location locationSetting, TimeZone timezone, Context context)
+    public void init(com.forrestguice.suntimeswidget.calculator.Location locationSetting, TimeZone timezone, Context context)
     {
         try
         {
