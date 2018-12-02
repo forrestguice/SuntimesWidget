@@ -70,10 +70,7 @@ public class SunLayout_1x1_0 extends SunLayout
     {
         super.updateViews(context, appWidgetId, views, data);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
-
-        if (order == WidgetSettings.RiseSetOrder.TODAY)
-            updateViewsSunRiseSetText(context, views, data, showSeconds);
-        else updateViewsSunRiseSetText(context, views, (SuntimesRiseSetData2)data, showSeconds, order);
+        updateViewsSunRiseSetText(context, views, data, showSeconds, order);
     }
 
     @Override

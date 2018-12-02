@@ -142,6 +142,20 @@ public class SuntimesRiseSetData extends SuntimesData
         return sunsetCalendarOther;
     }
 
+    public Calendar sunriseCalendar(int i)
+    {
+        if (i == 0)
+            return sunriseCalendarToday;
+        else return sunriseCalendarOther;
+    }
+
+    public Calendar sunsetCalendar(int i)
+    {
+        if (i == 0)
+            return sunsetCalendarToday;
+        else return sunsetCalendarOther;
+    }
+
     /**
      * Property: day delta prefix
      */

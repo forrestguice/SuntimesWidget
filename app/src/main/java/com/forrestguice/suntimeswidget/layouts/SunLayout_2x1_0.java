@@ -57,10 +57,7 @@ public class SunLayout_2x1_0 extends SunLayout
     {
         super.updateViews(context, appWidgetId, views, data);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
-
-        if (order == WidgetSettings.RiseSetOrder.TODAY)
-            updateViewsSunRiseSetText(context, views, data, showSeconds);
-        else updateViewsSunRiseSetText(context, views, (SuntimesRiseSetData2)data, showSeconds, order);
+        updateViewsSunRiseSetText(context, views, data, showSeconds, order);
 
         // update day delta
         boolean showDayDelta = WidgetSettings.loadShowComparePref(context, appWidgetId);

@@ -57,13 +57,7 @@ public abstract class SunLayout extends SuntimesLayout
         //Log.v("DEBUG", "title text: " + titleText);
     }
 
-    protected void updateViewsSunRiseSetText(Context context, RemoteViews views, SuntimesRiseSetData data, boolean showSeconds)
-    {
-        updateViewsSunriseText(context, views, data.sunriseCalendarToday(), showSeconds);
-        updateViewsSunsetText(context, views, data.sunsetCalendarToday(), showSeconds);
-    }
-
-    protected void updateViewsSunRiseSetText(Context context, RemoteViews views, SuntimesRiseSetData2 data, boolean showSeconds, WidgetSettings.RiseSetOrder order)
+    protected void updateViewsSunRiseSetText(Context context, RemoteViews views, SuntimesRiseSetData data, boolean showSeconds, WidgetSettings.RiseSetOrder order)
     {
         if (order == WidgetSettings.RiseSetOrder.TODAY)
         {
