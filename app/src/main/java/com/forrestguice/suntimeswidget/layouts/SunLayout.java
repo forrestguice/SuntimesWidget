@@ -25,6 +25,8 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import java.util.Calendar;
+
 public abstract class SunLayout extends SuntimesLayout
 {
     /**
@@ -91,6 +93,12 @@ public abstract class SunLayout extends SuntimesLayout
     {
         switch (order)
         {
+            case LASTNEXT:
+                Calendar now = data.now();
+                if (now.before(data.sunsetCalendarToday()))
+                    return layout1;   // last sunrise, next sunset
+                else return layout2;  // last sunset, next sunrise
+
             case TODAY:
             default:
                 return layout1;
