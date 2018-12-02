@@ -80,7 +80,7 @@ public class SunLayout_2x1_0 extends SunLayout
         boolean showSolarNoon = WidgetSettings.loadShowNoonPref(context, appWidgetId);
         if (showSolarNoon && noonData != null)
         {
-            updateViewsNoonText(context, views, noonData.sunsetCalendarToday(), showSeconds);
+            updateViewsNoonText(context, views, noonData.sunsetCalendarToday(), showSeconds);  // TODO: order
             views.setViewVisibility(R.id.layout_noon, View.VISIBLE);
 
         } else {

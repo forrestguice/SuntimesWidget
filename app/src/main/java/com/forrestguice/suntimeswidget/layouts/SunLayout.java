@@ -71,11 +71,23 @@ public abstract class SunLayout extends SuntimesLayout
             updateViewsSunsetText(context, views, data.sunsetCalendarToday(), showSeconds);
 
         } else {
-            // TODO
             Calendar now = data.now();
-            boolean sunsetToday = now.before(data.sunsetCalendarToday());
-            updateViewsSunriseText(context, views, data.sunriseCalendarToday(), showSeconds);
-            updateViewsSunsetText(context, views, data.sunsetCalendarToday(), showSeconds);
+            Calendar sunriseToday = data.sunriseCalendarToday();
+            Calendar sunsetToday = data.sunsetCalendarToday();
+
+            if (now.before(sunriseToday))      // in the wee hours
+            {
+                updateViewsSunriseText(context, views, data.sunriseCalendar(1), showSeconds);  // sunrise today
+                updateViewsSunsetText(context, views, data.sunsetCalendar(0), showSeconds);    // sunset yesterday
+
+            } else if (now.before(sunsetToday)) {       // during the day
+                updateViewsSunriseText(context, views, data.sunriseCalendar(1), showSeconds);  // sunrise today
+                updateViewsSunsetText(context, views, data.sunsetCalendar(1), showSeconds);    // sunset today
+
+            } else {                          // night; the day is over (but "tomorrow" has yet to arrive)
+                updateViewsSunsetText(context, views, data.sunsetCalendar(1), showSeconds);    // sunset today
+                updateViewsSunriseText(context, views, data.sunriseCalendar(2), showSeconds);  // sunrise tomorrow
+            }
         }
 
     }
@@ -113,9 +125,15 @@ public abstract class SunLayout extends SuntimesLayout
         {
             case LASTNEXT:
                 Calendar now = data.now();
-                if (now.before(data.sunsetCalendarToday()))
+                if (now.before(data.sunriseCalendarToday())) {
+                    return layout2;   // last sunset, next sunrise
+
+                } else if (now.before(data.sunsetCalendarToday())) {
                     return layout1;   // last sunrise, next sunset
-                else return layout2;  // last sunset, next sunrise
+
+                } else {
+                    return layout2;   // last sunset, next sunrise
+                }
 
             case TODAY:
             default:
