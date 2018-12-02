@@ -951,8 +951,7 @@ public class WidgetSettings
     public static enum RiseSetOrder
     {
         TODAY("Today"),
-        LASTNEXT("Last / Next"),
-        FUTURE("Future");
+        LASTNEXT("Last / Next");
 
         private String displayString;
 
@@ -975,7 +974,6 @@ public class WidgetSettings
         {
             TODAY.setDisplayString( context.getString(R.string.risesetorder_today) );
             LASTNEXT.setDisplayString( context.getString(R.string.risesetorder_lastnext) );
-            FUTURE.setDisplayString( context.getString(R.string.risesetorder_future) );
         }
     }
 

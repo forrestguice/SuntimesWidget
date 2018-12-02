@@ -261,7 +261,6 @@
     <string name="configLabel_general_riseSetOrder">Order:</string>     <!-- label -->  <!-- TODO: i18n -->
     <string name="risesetorder_today">Today</string>                    <!-- setting -->  <!-- TODO: i18n -->
     <string name="risesetorder_lastnext">Last / Next</string>           <!-- setting -->  <!-- TODO: i18n -->
-    <string name="risesetorder_future">Future</string>                  <!-- setting -->  <!-- TODO: i18n -->
 
     <!-- Widget Setting: time mode -->
     <string name="timeMode_noon_short">Noon</string>                    <!-- setting -->
