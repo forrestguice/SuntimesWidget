@@ -450,9 +450,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
      */
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SunLayout layout, Class widgetClass)
     {
-        WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
-        SuntimesRiseSetData data = (order == WidgetSettings.RiseSetOrder.TODAY)
-                                 ? new SuntimesRiseSetData(context, appWidgetId) : new SuntimesRiseSetData2(context, appWidgetId); // constructor inits data from widget settings
+        SuntimesRiseSetData data = getRiseSetData(context, appWidgetId);
         data.calculate();
 
         boolean showSolarNoon = WidgetSettings.loadShowNoonPref(context, appWidgetId);
@@ -476,6 +474,16 @@ public class SuntimesWidget0 extends AppWidgetProvider
         layout.updateViews(context, appWidgetId, views, data);
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
+    }
+
+    /**
+     * getRiseSetData
+     */
+    protected static SuntimesRiseSetData getRiseSetData(Context context, int appWidgetId)
+    {
+        WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
+        return (order == WidgetSettings.RiseSetOrder.TODAY)
+                ? new SuntimesRiseSetData(context, appWidgetId) : new SuntimesRiseSetData2(context, appWidgetId);
     }
 
     /**

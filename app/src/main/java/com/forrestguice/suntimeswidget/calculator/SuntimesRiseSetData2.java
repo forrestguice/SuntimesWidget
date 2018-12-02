@@ -26,6 +26,11 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Calendar;
 
+/**
+ * An extended version of SuntimesRiseSetData that fixes erroneous assumptions regarding "other"
+ * times (which refers to both yesterday and tomorrow). The extended version performs three calculations;
+ * yesterday / today / tomorrow (..vs today / other).
+ */
 public class SuntimesRiseSetData2 extends SuntimesRiseSetData
 {
     private Context context;
