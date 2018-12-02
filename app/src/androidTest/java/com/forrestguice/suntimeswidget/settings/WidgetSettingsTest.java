@@ -22,7 +22,7 @@ import android.content.Context;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.time4a.Time4ASimpleSuntimesCalculator;
@@ -279,31 +279,31 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
 
     @Test public void test_location()
     {
-        WidgetSettings.Location loc0 = new WidgetSettings.Location("0", "0");
+        Location loc0 = new Location("0", "0");
         assertEquals(0d, loc0.getLatitudeAsDouble());
         assertEquals(0d, loc0.getLongitudeAsDouble());
 
-        WidgetSettings.Location loc1 = new WidgetSettings.Location("90", "180");
+        Location loc1 = new Location("90", "180");
         assertEquals(90d, loc1.getLatitudeAsDouble());
         assertEquals(-180d, loc1.getLongitudeAsDouble());
 
-        WidgetSettings.Location loc2 = new WidgetSettings.Location("-90", "-180");
+        Location loc2 = new Location("-90", "-180");
         assertEquals(-90d, loc2.getLatitudeAsDouble());
         assertEquals(-180d, loc2.getLongitudeAsDouble());
 
-        WidgetSettings.Location loc3 = new WidgetSettings.Location("91", "181");
+        Location loc3 = new Location("91", "181");
         assertEquals(89d, loc3.getLatitudeAsDouble());
         assertEquals(-179d, loc3.getLongitudeAsDouble());
 
-        WidgetSettings.Location loc4 = new WidgetSettings.Location("181", "359");
+        Location loc4 = new Location("181", "359");
         assertEquals(89d, loc4.getLatitudeAsDouble());
         assertEquals(-1d, loc4.getLongitudeAsDouble());
 
-        WidgetSettings.Location loc5 = new WidgetSettings.Location("-91", "-181");
+        Location loc5 = new Location("-91", "-181");
         assertEquals(-89d, loc5.getLatitudeAsDouble());
         assertEquals(179d, loc5.getLongitudeAsDouble());
 
-        WidgetSettings.Location loc6 = new WidgetSettings.Location("-179", "-359");
+        Location loc6 = new Location("-179", "-359");
         assertEquals(-1d, loc6.getLatitudeAsDouble());
         assertEquals(1d, loc6.getLongitudeAsDouble());
     }
@@ -326,19 +326,19 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
 
     @Test public void test_locationPref()
     {
-        WidgetSettings.Location testloc2 = new WidgetSettings.Location(TESTLOC_0_LABEL, TESTLOC_0_LAT, TESTLOC_0_LON);
+        Location testloc2 = new Location(TESTLOC_0_LABEL, TESTLOC_0_LAT, TESTLOC_0_LON);
         WidgetSettings.saveLocationPref(context, appWidgetId, testloc2);
-        WidgetSettings.Location pref2 = WidgetSettings.loadLocationPref(context, appWidgetId);
+        Location pref2 = WidgetSettings.loadLocationPref(context, appWidgetId);
         assertTrue("location does not match! " + pref2, pref2.equals(testloc2));
 
-        WidgetSettings.Location testloc1 = new WidgetSettings.Location(TESTLOC_1_LABEL, TESTLOC_1_LAT, TESTLOC_1_LON, TESTLOC_1_ALT);
+        Location testloc1 = new Location(TESTLOC_1_LABEL, TESTLOC_1_LAT, TESTLOC_1_LON, TESTLOC_1_ALT);
         WidgetSettings.saveLocationPref(context, appWidgetId, testloc1);
-        WidgetSettings.Location pref1 = WidgetSettings.loadLocationPref(context, appWidgetId);
+        Location pref1 = WidgetSettings.loadLocationPref(context, appWidgetId);
         assertTrue("location does not match! " + pref1, pref1.equals(testloc1));
 
-        WidgetSettings.Location testloc0 = new WidgetSettings.Location(WidgetSettings.PREF_DEF_LOCATION_LABEL, WidgetSettings.PREF_DEF_LOCATION_LATITUDE, WidgetSettings.PREF_DEF_LOCATION_LONGITUDE, WidgetSettings.PREF_DEF_LOCATION_ALTITUDE);
+        Location testloc0 = new Location(WidgetSettings.PREF_DEF_LOCATION_LABEL, WidgetSettings.PREF_DEF_LOCATION_LATITUDE, WidgetSettings.PREF_DEF_LOCATION_LONGITUDE, WidgetSettings.PREF_DEF_LOCATION_ALTITUDE);
         WidgetSettings.deleteLocationPref(context, appWidgetId);
-        WidgetSettings.Location pref0 = WidgetSettings.loadLocationPref(context, appWidgetId);
+        Location pref0 = WidgetSettings.loadLocationPref(context, appWidgetId);
         assertTrue("location does not match default! " + pref0, pref0.equals(testloc0));
     }
 

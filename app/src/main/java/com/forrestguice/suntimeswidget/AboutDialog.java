@@ -44,7 +44,7 @@ public class AboutDialog extends DialogFragment
     public static final String COMMIT_URL = "https://github.com/forrestguice/SuntimesWidget/commit/";
 
     public static final String KEY_ICONID = "paramIconID";
-    private int param_iconID = R.mipmap.ic_suntimes;
+    private int param_iconID = R.mipmap.ic_launcher;
     public void setIconID( int resID )
     {
         param_iconID = resID;

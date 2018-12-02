@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.calculator;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Calendar;

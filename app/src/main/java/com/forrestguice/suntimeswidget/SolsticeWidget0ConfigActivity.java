@@ -24,7 +24,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 

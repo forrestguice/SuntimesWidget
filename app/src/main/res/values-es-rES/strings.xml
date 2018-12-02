@@ -155,21 +155,24 @@
     <string name="date_format_long"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g>, <xliff:g id="patternYear">yyyy</xliff:g></string>  
     <string name="datetime_format_short"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>           
     <string name="datetime_format_long"><xliff:g id="monthYear">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>        
-    <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        
+    <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>
 
-    
+    <string name="lengthUnits_metric">Metric</string>    <!-- TODO -->
+    <string name="lengthUnits_imperial">Imperial</string>   <!-- TODO -->
+
     <string name="units_feet">pies</string>
     <string name="units_feet_short">ft</string>
-    <!--<plurals name="units_feet_long">
-      <item quantity="one">%d foot</item>
-      <item quantity="other">%d feet</item>
-    </plurals>-->
+    <plurals name="units_feet_long">
+        <item quantity="one">%s foot</item>
+        <item quantity="other">%s feet</item>
+    </plurals>  <!-- TODO -->
+
     <string name="units_meters">metros</string>
     <string name="units_meters_short">m</string>
-    <!--<plurals name="units_meters_long">
-      <item quantity="one">%d meter</item>
-      <item quantity="other">%d meters</item>
-    </plurals>-->
+    <plurals name="units_meters_long">
+        <item quantity="one">%s meter</item>
+        <item quantity="other">%s meters</item>
+    </plurals>  <!-- TODO -->
 
     <!--
          WIDGET CONFIG
@@ -200,6 +203,8 @@
     <string name="configLabel_general_altitude_enabled">Usar elevación</string>        
     <string name="configLabel_general_altitude_enabled_summary">Aplica refinamientos basados en altitud.</string>
 
+    <string name="configLabel_general_lengthUnits">Units of length</string>        <!-- spinner label -->  <!-- TODO -->
+
     <string name="configLabel_general_showSeconds">Mostrar según</string>
     <string name="configLabel_general_showSeconds_summary">Incluye segundos cuando se muestra el tiempo.</string>        
 
@@ -210,8 +215,10 @@
     <string name="configLabel_general_showWeeks_summary">Divide intervalos de tiempo mayores a 7 días en semanas (p. Ej. 15d se transforma en 2se 1d).</string>
 
     <string name="configLabel_general_showHours">Mostrar horas</string>
-    <string name="configLabel_general_showHours_summary">Incluye horas y minutos en intervalos de tiempo mayores a un día.</string>    
+    <string name="configLabel_general_showHours_summary">Incluye horas y minutos en intervalos de tiempo mayores a un día.</string>
 
+    <string name="configLabel_general_observerheight">Object Shadow</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_observerheight_summary">Display the length of shadows cast by an object with a height of <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->  <!-- TODO -->
     
     <string name="configLabel_advanced">Configuración avanzada</string>
     <string name="configLabel_experimental">Configuración experimental</string>
@@ -220,6 +227,7 @@
 
     
     <string name="configLabel_appearance">Opciones de apariencia</string>
+    <string name="configLabel_appearance_mode">Appearance</string>                  <!-- spinner label -->  <!-- TODO -->
     <string name="configLabel_appearance_theme">Tema:</string>                  
     <string name="configLabel_appearance_allowResize">Crece con el espacio disponible (reescalable)</string>
     <string name="configLabel_appearance_showLabels">Mostrar etiquetas</string>          
@@ -437,6 +445,8 @@
     <string name="configLabel_themeColorFall">Color de otoño</string>
     <string name="configLabel_themeColorWinter">Color de invierno</string>
 
+    <string name="configLabel_themeColorAction">Action</string> <!-- color label -->  <!-- TODO -->
+
     <string name="configLabel_themeColorMapBackground">Fondo del mapa</string> 
     <string name="configLabel_themeColorMapForeground">Frente del mapa</string>
     <string name="configLabel_themeColorMapSunShadow">Sombra</string>
@@ -571,13 +581,13 @@
     <string name="configLabel_ui_showbluehour">Mostrar la hora azul</string>
     <string name="configLabel_ui_showbluehour_summary">Mostrar las horas azules.</string>
 
-    
-    <string-array name="appThemes_display"> 
-        <item>Tema claro</item>
-        <item>Tema oscuro</item>
+    <string name="appThemes_lightTheme">Tema claro</string>
+    <string name="appThemes_darkTheme">Tema oscuro</string>
+    <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
+        <item>@string/appThemes_lightTheme</item>
+        <item>@string/appThemes_darkTheme</item>
         <item>Tema claro/Tema oscuro (modo noche)</item>
     </string-array>
-
     
     <string-array name="timeFormatMode_display">                      
         <item>@string/timeFormatMode_system</item>
@@ -658,31 +668,7 @@
 
     
     <string name="configLabel_calendars">Calendarios</string>
-
     <string name="configLabel_calendars_enabled">Integración con el calendario</string>
-    <string name="configLabel_calendars_enabled_summary">Proporcionar eventos a la aplicación de calendario (fases lunares, solsticios, y equinoccios).</string>
-
-    <string name="configLabel_calendars_window0">Ventana (inicio)</string>
-    <string name="configLabel_calendars_window0_summary">Un periodo empezó <xliff:g example="one year" id="calendars_window_display">%s</xliff:g> atrás</string>
-
-    <string name="configLabel_calendars_window1">Ventana (fin)</string>
-    <string name="configLabel_calendars_window1_summary">Un periodo finalizará dentro de <xliff:g example="two years" id="calendars_window_display">%s</xliff:g> contando desde ahora</string>
-
-    <string name="calendars_notification_adding">Añadiendo calendarios…</string>
-    <string name="calendars_notification_added">Los calendarios se han añadido.</string>
-
-    <string name="calendars_notification_clearing">Limpiando calendarios…</string>
-    <string name="calendars_notification_cleared">Los calendarios se han añadido.</string>
-
-    <string-array name="calendars_window_display">   
-        <item>un año</item>
-        <item>dos años</item>
-        <item>cinco años</item>
-        <item>diez años</item>
-    </string-array>
-
-    <string name="calendar_solstice_displayName">Solsticios y equinoccios</string>
-    <string name="calendar_moonPhase_displayName">Fases lunares</string>
 
     
     <string name="configLabel_getFix_passiveMode">Localización pasiva</string>
@@ -886,9 +872,21 @@
     
     <string name="msg_export_success">Copiar temporalmente a<xliff:g id="filepath">%s</xliff:g></string>
     <string name="msg_export_failure">Exportar a <xliff:g id="filepath">%s</xliff:g> failed!</string>
-    <string name="msg_export_to">Exportar con</string>  
+    <string name="msg_export_to">Exportar con</string>
 
-    
+    <!-- Dialog: Import Themes -->
+    <string name="themesimport_dialog_title">Importing Themes</string>                   <!-- TODO -->
+    <string name="themesimport_dialog_message">Importing themes from file…</string>      <!-- TODO -->
+
+    <string name="msg_import_success">Imported <xliff:g id="themePlural">%s</xliff:g>.</string>  <!-- TODO -->
+    <string name="msg_import_failure">Import from <xliff:g id="filepath">%s</xliff:g> failed!</string>  <!-- TODO -->
+    <string name="msg_import_noresults">Import skipped; no new themes were found.</string>  <!-- TODO -->
+
+    <plurals name="themePlural">
+        <item quantity="one">%d theme</item>
+        <item quantity="other">%d themes</item>
+    </plurals>  <!-- TODO -->
+
     <string name="color_dialog_msg">Escoger color</string>
     <string name="color_dialog_ok">Seleccionar</string>
     <string name="color_dialog_cancel">Cancelar</string>
@@ -1004,9 +1002,15 @@
           The [Icon Default] default themes cannot be modified.
     </string> <!-- text explains themelist actions/icons; [Icon tags] are substituted at runtime (should remain unaltered)  --> <!-- TODO -->
 
+    <string name="help_calendar"><![CDATA[Supply events to the Calendar app (moon phases, solstices, and equinoxes).<br />
+        <br />
+        <u><b><font color="#ff9900">Calendar permissions have been removed.</font></b></u><br />
+        <br />
+        This feature is now available as a <a href="moreInfoLink">separate app</a>.
+    ]]></string>  <!-- TODO -->
+
     <string name="privacy_policy"><![CDATA[<b>Privacidad:</b> <br /> Suntimes no colectivo, almacena, o transmite datos personales. <b>No contiene anuncios</b>, <b>cálculos estadísticos</b>, <b>rastreadores</b>, y <b>no utiliza permisos innecesarios</b>. <br/><br/> La aplicación se configura con datos de localización. Esta información (y cualquier otro dato configurada empleada por la aplicación) se almacena localmente y no sale del dispositivo. <br/><br/> <xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes utiliza el permiso de <b>localización</b> para determinar tu longitud y latitud. <br /> Este permiso es opcional; la localización se configura manualmente por defecto.]]></string>
-    <string name="privacy_permission_calendar"><![CDATA[Suntimes utiliza el permiso de <b>calendario</b> para integrarse con la aplicación Calendario. Estos permisos permiten crear calendarios y eventos personalizados. <br /><br /> También se necesitan permisos cuando se desactiva la integración con el calendario (para eliminar calendarios personalizados).]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes utiliza el permiso de <b>almacenamiento externo</b> para hacer una copia de seguridad o exportar datos a un archivo (p. Ej. Lugares, temas).]]></string>
     <string name="privacy_permissiondialog_title">Permisos</string>
 

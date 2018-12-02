@@ -38,75 +38,78 @@ import java.util.HashMap;
 import java.util.TimeZone;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
+import com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.AUTHORITY;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_ALTITUDE;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_APPWIDGETID;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_APP_THEME;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_APP_VERSION;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_APP_VERSION_CODE;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_CALCULATOR;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_CALCULATOR_FEATURES;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LATITUDE;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LOCALE;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_LONGITUDE;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_PROVIDER_VERSION;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_PROVIDER_VERSION_CODE;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_CONFIG_TIMEZONE;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_ALT;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_AZ;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_DATE;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_DEC;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_ILLUMINATION;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOONPOS_RA;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOON_RISE;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOON_SET;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUNPOS_ALT;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUNPOS_AZ;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUNPOS_DATE;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUNPOS_DEC;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUNPOS_ISDAY;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUNPOS_RA;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_ACTUAL_RISE;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_ACTUAL_SET;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_ASTRO_RISE;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_ASTRO_SET;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_BLUE4_RISE;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_BLUE4_SET;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_BLUE8_RISE;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_BLUE8_SET;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_CIVIL_RISE;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_CIVIL_SET;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_GOLDEN_EVENING;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_GOLDEN_MORNING;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_NAUTICAL_RISE;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_NAUTICAL_SET;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SUN_NOON;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_CONFIG;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_CONFIG_PROJECTION;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_MOON;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_MOONPHASE;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOON_FIRST;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOON_FULL;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOON_NEW;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_MOON_THIRD;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_MOONPHASE_PROJECTION;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_MOONPOS;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_MOONPOS_PROJECTION;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_MOON_PROJECTION;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_SEASONS;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SEASON_AUTUMN;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SEASON_SUMMER;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SEASON_VERNAL;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SEASON_WINTER;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.COLUMN_SEASON_YEAR;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_SEASONS_PROJECTION;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_SUN;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_SUNPOS;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_SUNPOS_PROJECTION;
-import static com.forrestguice.suntimeswidget.calculator.CalculatorProviderContract.QUERY_SUN_PROJECTION;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.AUTHORITY;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_ALTITUDE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_APPWIDGETID;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_APP_THEME;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_APP_VERSION;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_APP_VERSION_CODE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_CALCULATOR;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_CALCULATOR_FEATURES;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LATITUDE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LOCALE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LONGITUDE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_PROVIDER_VERSION;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_PROVIDER_VERSION_CODE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_TIMEZONE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOONPOS_ALT;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOONPOS_AZ;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOONPOS_DATE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOONPOS_DEC;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOONPOS_ILLUMINATION;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOONPOS_RA;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_RISE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_SET;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUNPOS_ALT;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUNPOS_AZ;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUNPOS_DATE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUNPOS_DEC;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUNPOS_ISDAY;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUNPOS_RA;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUN_ACTUAL_RISE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUN_ACTUAL_SET;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUN_ASTRO_RISE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUN_ASTRO_SET;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUN_BLUE4_RISE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUN_BLUE4_SET;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUN_BLUE8_RISE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUN_BLUE8_SET;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUN_CIVIL_RISE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUN_CIVIL_SET;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUN_GOLDEN_EVENING;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUN_GOLDEN_MORNING;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUN_NAUTICAL_RISE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUN_NAUTICAL_SET;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUN_NOON;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.QUERY_CONFIG;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.QUERY_CONFIG_PROJECTION;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.QUERY_MOON;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.QUERY_MOONPHASE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_FIRST;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_FULL;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_NEW;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_THIRD;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.QUERY_MOONPHASE_PROJECTION;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.QUERY_MOONPOS;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.QUERY_MOONPOS_PROJECTION;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.QUERY_MOON_PROJECTION;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.QUERY_SEASONS;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_AUTUMN;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_SUMMER;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_VERNAL;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_WINTER;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_YEAR;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.QUERY_SEASONS_PROJECTION;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.QUERY_SUN;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.QUERY_SUNPOS;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.QUERY_SUNPOS_PROJECTION;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.QUERY_SUN_PROJECTION;
 
 /**
  * CalculatorProvider
@@ -322,7 +325,7 @@ public class CalculatorProvider extends ContentProvider
             SuntimesCalculator calculator = initSunCalculator(getContext(), selection);
             if (calculator != null)
             {
-                WidgetSettings.Location location = null;
+                Location location = null;
                 Object[] row = new Object[columns.length];
                 for (int i=0; i<columns.length; i++)
                 {
@@ -788,7 +791,7 @@ public class CalculatorProvider extends ContentProvider
 
         String timezoneID = selection.get(COLUMN_CONFIG_TIMEZONE);
         TimeZone timezone = (timezoneID != null ? TimeZone.getTimeZone(timezoneID) : null);
-        WidgetSettings.Location location = processSelection_location(selection);
+        Location location = processSelection_location(selection);
 
         SuntimesCalculatorDescriptor descriptor = null;
         String calculator = selection.get(COLUMN_CONFIG_CALCULATOR);
@@ -822,7 +825,7 @@ public class CalculatorProvider extends ContentProvider
     {
         SuntimesCalculator retValue = sunSource.get(appWidgetID);   // lazy init
         if (retValue == null) {
-            WidgetSettings.Location location = WidgetSettings.loadLocationPref(context, appWidgetID);
+            Location location = WidgetSettings.loadLocationPref(context, appWidgetID);
             TimeZone timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, appWidgetID));
             SuntimesCalculatorDescriptor descriptor = WidgetSettings.loadCalculatorModePref(context, appWidgetID);
             SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, descriptor);
@@ -840,7 +843,7 @@ public class CalculatorProvider extends ContentProvider
         SuntimesCalculator retValue = moonSource.get(appWidgetID);
         if (retValue == null)    // lazy init
         {
-            WidgetSettings.Location location = WidgetSettings.loadLocationPref(context, appWidgetID);
+            Location location = WidgetSettings.loadLocationPref(context, appWidgetID);
             TimeZone timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, appWidgetID));
             SuntimesCalculatorDescriptor descriptor = WidgetSettings.loadCalculatorModePref(context, 0, "moon");      // always use app calculator (0)
             SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, descriptor);
@@ -916,9 +919,9 @@ public class CalculatorProvider extends ContentProvider
      * @return a WidgetSettings.Location created from the selection (or null if selection is missing COLUMN_CONFIG_LATITUDE or COLUMN_CONFIG_LONGITUDE)
      */
     @Nullable
-    public static WidgetSettings.Location processSelection_location(@NonNull HashMap<String,String> selection)
+    public static Location processSelection_location(@NonNull HashMap<String,String> selection)
     {
-        WidgetSettings.Location location = null;
+        Location location = null;
         if (selection.containsKey(COLUMN_CONFIG_LATITUDE) || selection.containsKey(COLUMN_CONFIG_LONGITUDE))
         {
             String value_latitude = selection.get(COLUMN_CONFIG_LATITUDE);
@@ -926,8 +929,8 @@ public class CalculatorProvider extends ContentProvider
             if (value_latitude != null && value_longitude != null)
             {
                 boolean hasAltitude = selection.containsKey(COLUMN_CONFIG_ALTITUDE);
-                location = (hasAltitude) ? new WidgetSettings.Location("", value_latitude, value_longitude, selection.get(COLUMN_CONFIG_ALTITUDE))
-                        : new WidgetSettings.Location("", value_latitude, value_longitude);
+                location = (hasAltitude) ? new Location("", value_latitude, value_longitude, selection.get(COLUMN_CONFIG_ALTITUDE))
+                        : new Location("", value_latitude, value_longitude);
                 if (hasAltitude) {
                     location.setUseAltitude(true);
                 }

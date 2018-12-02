@@ -41,7 +41,7 @@
 
         <ImageButton
             android:id="@+id/editButton_color"
-            style="@style/ColorEditButton"
+            style="@style/ColorEditButton" android:contentDescription="@string/configAction_chooseColor"
             android:layout_marginEnd="4dp" android:layout_marginRight="4dp" />
 
     </LinearLayout>
