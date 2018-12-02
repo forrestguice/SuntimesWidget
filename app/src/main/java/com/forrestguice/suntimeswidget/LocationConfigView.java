@@ -138,7 +138,7 @@ public class LocationConfigView extends LinearLayout
             units = WidgetSettings.PREF_DEF_GENERAL_UNITS_LENGTH;
         }
 
-        return new com.forrestguice.suntimeswidget.calculator.Location(name, latitude, longitude, altitude, units);
+        return new com.forrestguice.suntimeswidget.calculator.Location(name, latitude, longitude, altitude, units == WidgetSettings.LengthUnit.METRIC);
     }
 
     public WidgetSettings.LocationMode getLocationMode()
@@ -644,7 +644,7 @@ public class LocationConfigView extends LinearLayout
             String longitude = text_locationLon.getText().toString();
             String altitude = text_locationAlt.getText().toString();
             String name = text_locationName.getText().toString();
-            com.forrestguice.suntimeswidget.calculator.Location location = new com.forrestguice.suntimeswidget.calculator.Location(name, latitude, longitude, altitude, WidgetSettings.loadLengthUnitsPref(context, appWidgetId));
+            com.forrestguice.suntimeswidget.calculator.Location location = new com.forrestguice.suntimeswidget.calculator.Location(name, latitude, longitude, altitude, WidgetSettings.loadLengthUnitsPref(context, appWidgetId) == WidgetSettings.LengthUnit.METRIC);
             WidgetSettings.saveLocationPref(context, appWidgetId, location);
             return true;
         }
