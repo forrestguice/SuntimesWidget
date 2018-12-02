@@ -87,7 +87,7 @@ public class AlarmClockItem
         {
             String locLabel = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_PLACELABEL);
             String locAlt = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_ALTITUDE);
-            location = new WidgetSettings.Location(locLabel, locLat, locLon, locAlt);
+            location = new Location(locLabel, locLat, locLon, locAlt);
         } else location = null;
 
         String eventString = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_SOLAREVENT);

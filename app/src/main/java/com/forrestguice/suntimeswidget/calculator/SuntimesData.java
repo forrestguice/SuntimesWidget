@@ -94,7 +94,7 @@ public class SuntimesData
     {
         return location;
     }
-    public void setLocation(WidgetSettings.Location location)
+    public void setLocation(Location location)
     {
         this.location = location;
         invalidateCalculation();

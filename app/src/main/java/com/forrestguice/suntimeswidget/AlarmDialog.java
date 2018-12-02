@@ -50,6 +50,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
@@ -612,7 +613,7 @@ public class AlarmDialog extends DialogFragment
         }
     }
 
-    public static boolean updateLocationLabel(Context context, TextView text_location, WidgetSettings.Location location)
+    public static boolean updateLocationLabel(Context context, TextView text_location, Location location)
     {
         if (text_location != null)
         {

@@ -77,6 +77,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -116,7 +117,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
     private AlarmClockAdapter adapter = null;
     private Long t_selectedItem = null;
-    private WidgetSettings.Location t_selectedLocation = null;
+    private Location t_selectedLocation = null;
 
     private AlarmClockListTask updateTask = null;
     private static final SuntimesUtils utils = new SuntimesUtils();
@@ -622,7 +623,7 @@ public class AlarmClockActivity extends AppCompatActivity
         dialog.show(getSupportFragmentManager(), DIALOGTAG_EVENT);
     }
 
-    private void initEventDialog(AlarmDialog dialog, WidgetSettings.Location forLocation)
+    private void initEventDialog(AlarmDialog dialog, Location forLocation)
     {
         SuntimesRiseSetDataset sunData = new SuntimesRiseSetDataset(this, 0);
         SuntimesMoonData moonData = new SuntimesMoonData(this, 0);
@@ -655,7 +656,7 @@ public class AlarmClockActivity extends AppCompatActivity
     private LocationConfigDialog.LocationConfigDialogListener onLocationChanged = new LocationConfigDialog.LocationConfigDialogListener()
     {
         @Override
-        public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, WidgetSettings.Location location)
+        public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, Location location)
         {
             AlarmClockItem item = adapter.findItem(t_selectedItem);
             t_selectedItem = null;

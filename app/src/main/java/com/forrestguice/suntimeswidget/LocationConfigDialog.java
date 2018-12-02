@@ -31,6 +31,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.TypedValue;
 import android.view.View;
 
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 public class LocationConfigDialog extends DialogFragment
@@ -68,7 +69,7 @@ public class LocationConfigDialog extends DialogFragment
     protected LocationConfigDialogListener defaultDialogListener = new LocationConfigDialogListener()
     {
         @Override
-        public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, WidgetSettings.Location location)
+        public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, Location location)
         {
             return dialogContent.saveSettings(context);
         }
@@ -84,7 +85,7 @@ public class LocationConfigDialog extends DialogFragment
 
     public static abstract class LocationConfigDialogListener
     {
-        public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, WidgetSettings.Location location)
+        public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, Location location)
         {
             return true;
         }
@@ -94,8 +95,8 @@ public class LocationConfigDialog extends DialogFragment
      * setLocation
      * @param location
      */
-    private WidgetSettings.Location presetLocation = null;
-    public void setLocation(Context context, WidgetSettings.Location location)
+    private Location presetLocation = null;
+    public void setLocation(Context context, Location location)
     {
         presetLocation = location;
         if (dialogContent != null) {
