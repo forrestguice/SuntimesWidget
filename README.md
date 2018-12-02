@@ -132,7 +132,7 @@ Icons and images from:
 * "NASA Visible Earth: Blue Marble" [Public Domain] (https://visibleearth.nasa.gov/view_cat.php?categoryID=1484)
 
 Libraries used:
-* Time4A [LGPL-2.1] (http://github.com/MenoData/Time4A) 
+* Time4A [Apache License 2.0] (http://github.com/MenoData/Time4A) 
 * ca.rmen.sunrisesunset [LGPL-2.1] (http://github.com/caarmen/SunriseSunset)
 * sunrisesunsetlib-java [Apache License 2.0] (http://mikereedell.github.io/sunrisesunsetlib-java/) 
 * QuadFlask/colorpicker [Apache License 2.0] (https://github.com/QuadFlask/colorpicker) 
