@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.settings;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -54,7 +55,7 @@ import java.util.TimeZone;
 
 public class WidgetTimezones
 {
-    public static boolean isProbablyNotLocal( TimeZone timezone, WidgetSettings.Location atLocation, Date onDate )
+    public static boolean isProbablyNotLocal(TimeZone timezone, Location atLocation, Date onDate )
     {
         double zoneOffset = timezone.getOffset(onDate.getTime()) / (1000 * 60 * 60);   // timezone offset in hrs
         double lonOffset = atLocation.getLongitudeAsDouble() * 24 / 360;               // longitude offset in hrs
@@ -93,12 +94,12 @@ public class WidgetTimezones
     ///////////////////////////////////////
     ///////////////////////////////////////
 
-    public static TimeZone localMeanTime( Context context, WidgetSettings.Location location )
+    public static TimeZone localMeanTime( Context context, Location location )
     {
         return new LocalMeanTime(location.getLongitudeAsDouble(), context.getString(R.string.solartime_localMean));
     }
 
-    public static TimeZone apparentSolarTime( Context context, WidgetSettings.Location location )
+    public static TimeZone apparentSolarTime( Context context, Location location )
     {
         return new ApparentSolarTime(location.getLongitudeAsDouble(), context.getString(R.string.solartime_apparent));
     }

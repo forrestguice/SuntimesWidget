@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.settings;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -56,10 +57,15 @@ public class ThemePreference extends ListPreference
         super.onBindView(view);
 
         ImageView actionButton = (ImageView) view.findViewById(R.id.actionButton0);
-        if (actionButton != null) {
+        if (actionButton != null)
+        {
             boolean enabled = isEnabled();
             actionButton.setEnabled(enabled);
-            actionButton.setAlpha(enabled ? 1f : 0f);
+
+            if (Build.VERSION.SDK_INT >= 11) {
+                actionButton.setAlpha(enabled ? 1f : 0f);
+            }
+
             actionButton.setOnClickListener(onActionClicked);
         }
     }

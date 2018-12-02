@@ -147,18 +147,22 @@
   <string name="time_loading">…</string>  <!-- calculating / time is loading -->
 
   <!-- distances (meters, feet, etc) -->
+  <string name="lengthUnits_metric">Metric</string>    <!-- TODO -->
+  <string name="lengthUnits_imperial">Imperial</string>   <!-- TODO -->
+
   <string name="units_feet">feet</string>   <!-- TODO -->
   <string name="units_feet_short">ft</string>   <!-- TODO -->
-  <!--<plurals name="units_feet_long">
-    <item quantity="one">%d foot</item>
-    <item quantity="other">%d feet</item>
-  </plurals>-->
+  <plurals name="units_feet_long">
+    <item quantity="one">%s foot</item>
+    <item quantity="other">%s feet</item>
+  </plurals>  <!-- TODO -->
+
   <string name="units_meters">meters</string>  <!-- TODO -->
   <string name="units_meters_short">m</string>  <!-- TODO -->
-  <!--<plurals name="units_meters_long">
-    <item quantity="one">%d meter</item>
-    <item quantity="other">%d meters</item>
-  </plurals>-->
+  <plurals name="units_meters_long">
+    <item quantity="one">%s meter</item>
+    <item quantity="other">%s meters</item>
+  </plurals>  <!-- TODO -->
 
   <!--
        WIDGET CONFIG
@@ -189,6 +193,8 @@
   <string name="configLabel_general_altitude_enabled">Use Elevation</string>        <!-- checkbox label --> <!-- TODO -->
   <string name="configLabel_general_altitude_enabled_summary">Apply altitude based refinements.</string>        <!-- checkbox label --> <!-- TODO -->
 
+  <string name="configLabel_general_lengthUnits">Units of length</string>        <!-- spinner label -->  <!-- TODO -->
+
   <string name="configLabel_general_showSeconds">Sekunden anzeigen</string>        <!-- checkbox label -->
   <string name="configLabel_general_showSeconds_summary">Bei Uhrzeiten Sekunden anzeigen.</string>        <!-- checkbox label -->
 
@@ -201,6 +207,9 @@
   <string name="configLabel_general_showHours">Stunden anzeigen</string>        <!-- checkbox label -->
   <string name="configLabel_general_showHours_summary">Bei Zeiträumen länger als einem Tag, Stunden und Minuten anzeigen.</string>    <!-- checkbox label -->
 
+  <string name="configLabel_general_observerheight">Object Shadow</string>        <!-- checkbox label -->  <!-- TODO -->
+  <string name="configLabel_general_observerheight_summary">Display the length of shadows cast by an object with a height of <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->  <!-- TODO -->
+
   <!-- Widget Setting: advanced / experimental -->
   <string name="configLabel_advanced">Advanced Settings</string>                        <!-- group title -->  <!-- TODO -->
   <string name="configLabel_experimental">Experimental Settings</string>                <!-- group title --> <!-- TODO -->
@@ -209,6 +218,7 @@
 
   <!-- Widget Setting: appearance -->
   <string name="configLabel_appearance">Darstellung</string>           <!-- group title -->
+  <string name="configLabel_appearance_mode">Appearance</string>                  <!-- spinner label -->  <!-- TODO -->
   <string name="configLabel_appearance_theme">Thema:</string>                  <!-- spinner label -->
   <string name="configLabel_appearance_allowResize">Verfügbaren Platz nutzen (größenveränderbar)</string>  <!-- checkbox label -->
   <string name="configLabel_appearance_showLabels">Bezeichnungen anzeigen</string>          <!-- checkbox label -->
@@ -440,6 +450,8 @@
   <string name="configLabel_themeColorFall">Herbstfarbe</string> <!-- color label -->
   <string name="configLabel_themeColorWinter">Winterfarbe</string> <!-- color label -->
 
+  <string name="configLabel_themeColorAction">Action</string> <!-- color label -->  <!-- TODO -->
+
   <string name="configLabel_themeColorMapBackground">Map Background</string> <!-- color label --> <!-- TODO -->
   <string name="configLabel_themeColorMapForeground">Map Foreground</string> <!-- color label --> <!-- TODO -->
   <string name="configLabel_themeColorMapSunShadow">Shadow</string> <!-- color label -->          <!-- TODO -->
@@ -576,10 +588,12 @@
   <string name="configLabel_ui_showbluehour_summary">Zeige Zeiten der Blauen Stunde.</string>
 
   <!-- App Setting: UI Theme -->
+  <string name="appThemes_lightTheme">Helles Thema</string>
+  <string name="appThemes_darkTheme">Dunkles Thema</string>
   <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-      <item>Helles Thema</item>
-      <item>Dunkles Thema</item>
-      <item>Helles Thema / dunkles Thema (Nachtmodus)</item>
+    <item>@string/appThemes_lightTheme</item>
+    <item>@string/appThemes_darkTheme</item>
+    <item>Helles Thema / dunkles Thema (Nachtmodus)</item>
   </string-array>
 
   <!-- App Setting: Date "on tap" action -->
@@ -643,31 +657,7 @@
 
   <!-- App Setting: calendars -->
   <string name="configLabel_calendars">Calendars</string>   <!-- group title -->  <!-- TODO -->
-
   <string name="configLabel_calendars_enabled">Calendar Integration</string>  <!-- TODO -->
-  <string name="configLabel_calendars_enabled_summary">Supply events to the Calendar app (moon phases, solstices, and equinoxes).</string>  <!-- TODO -->
-
-  <string name="configLabel_calendars_window0">Window (start)</string>  <!-- TODO -->
-  <string name="configLabel_calendars_window0_summary">A period starting <xliff:g id="calendars_window_display" example="one year">%s</xliff:g> ago</string>  <!-- TODO -->
-
-  <string name="configLabel_calendars_window1">Window (end)</string>  <!-- TODO -->
-  <string name="configLabel_calendars_window1_summary">A period ending <xliff:g id="calendars_window_display" example="two years">%s</xliff:g> from now</string>  <!-- TODO -->
-
-  <string name="calendars_notification_adding">Adding calendars…</string>  <!-- TODO -->
-  <string name="calendars_notification_added">Calendars have been added.</string>  <!-- TODO -->
-
-  <string name="calendars_notification_clearing">Clearing calendars…</string>  <!-- TODO -->
-  <string name="calendars_notification_cleared">Calendars have been cleared.</string>  <!-- TODO -->
-
-  <string-array name="calendars_window_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
-    <item>one year</item>
-    <item>two years</item>
-    <item>five years</item>
-    <item>ten years</item>
-  </string-array>  <!-- TODO -->
-
-  <string name="calendar_solstice_displayName">Solstices and Equinoxes</string>  <!-- TODO -->
-  <string name="calendar_moonPhase_displayName">Moon Phases</string>  <!-- TODO -->
 
   <!-- App Setting: passive location mode -->
   <string name="configLabel_getFix_passiveMode">Passive Location</string>  <!-- TODO -->
@@ -822,6 +812,19 @@
   <string name="msg_export_failure">Exportieren nach <xliff:g id="filepath">%s</xliff:g> ist fehlgeschlagen!</string>
   <string name="msg_export_to">Exportiere mit</string>  <!-- title displayed over "share action" chooser -->
 
+  <!-- Dialog: Import Themes -->
+  <string name="themesimport_dialog_title">Importing Themes</string>                   <!-- TODO -->
+  <string name="themesimport_dialog_message">Importing themes from file…</string>      <!-- TODO -->
+
+  <string name="msg_import_success">Imported <xliff:g id="themePlural">%s</xliff:g>.</string>  <!-- TODO -->
+  <string name="msg_import_failure">Import from <xliff:g id="filepath">%s</xliff:g> failed!</string>  <!-- TODO -->
+  <string name="msg_import_noresults">Import skipped; no new themes were found.</string>  <!-- TODO -->
+
+  <plurals name="themePlural">
+    <item quantity="one">%d theme</item>
+    <item quantity="other">%d themes</item>
+  </plurals>  <!-- TODO -->
+
   <!-- Dialog: Color -->
   <string name="color_dialog_msg">Farbe wählen</string>
   <string name="color_dialog_ok">OK</string>
@@ -939,9 +942,15 @@
           The [Icon Default] default themes cannot be modified.
     </string> <!-- text explains themelist actions/icons; [Icon tags] are substituted at runtime (should remain unaltered)  --> <!-- TODO -->
 
+  <string name="help_calendar"><![CDATA[Supply events to the Calendar app (moon phases, solstices, and equinoxes).<br />
+        <br />
+        <u><b><font color="#ff9900">Calendar permissions have been removed.</font></b></u><br />
+        <br />
+        This feature is now available as a <a href="moreInfoLink">separate app</a>.
+    ]]></string>  <!-- TODO -->
+
   <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>Suntimes does not collect, store, or transmit personal user data. It contains <b>no advertising</b>, <b>no analytics</b>, <b>no trackers</b>, and <b>no unnecessary permissions</b>. <br/><br/>The app is configured from location data. This information (and other configuration data used by the app) is stored locally and does not leave the device.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string> <!-- TODO -->
   <string name="privacy_permission_location"><![CDATA[Suntimes uses the <b>location</b> permission to determine your current longitude and latitude.<br/><br/>This permission is optional; the location is manually configured by default.]]></string> <!-- TODO -->
-  <string name="privacy_permission_calendar"><![CDATA[Suntimes uses <b>calendar</b> permissions to integrate with the Calendar app. These permissions allow the app to create custom calendars and events.<br/><br/>Permissions are also required when disabling calendar integration (to remove custom calendars).]]></string> <!-- TODO -->
   <string name="privacy_permission_storage"><![CDATA[Suntimes uses <b>external storage</b> permissions to backup/export data to file (e.g. places, themes).]]></string> <!-- TODO -->
   <string name="privacy_permissiondialog_title">Permissions</string> <!-- TODO -->
 

@@ -40,13 +40,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
-import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.text.NumberFormat;
@@ -247,6 +245,9 @@ public class LightMapDialog extends DialogFragment
             sunAzimuth.setTextColor(themeOverride.getTimeColor());
             sunElevation.setTextColor(themeOverride.getTimeColor());
             sunAzimuthAtNoon.setTextColor(themeOverride.getTimeColor());
+            sunShadowObj.setTextColor(themeOverride.getTitleColor());
+            sunShadowLength.setTextColor(themeOverride.getTimeColor());
+            sunShadowLengthAtNoon.setTextColor(themeOverride.getSunsetTextColor());
 
             SuntimesUtils.tintDrawable((InsetDrawable)riseIcon.getBackground(), themeOverride.getSunriseIconColor(), themeOverride.getSunriseIconStrokeColor(), themeOverride.getSunriseIconStrokePixels(context));
             SuntimesUtils.tintDrawable((InsetDrawable)setIcon.getBackground(), themeOverride.getSunsetIconColor(), themeOverride.getSunsetIconStrokeColor(), themeOverride.getSunsetIconStrokePixels(context));

@@ -43,7 +43,7 @@ import android.widget.TextView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptorListAdapter;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
@@ -1299,7 +1299,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected int getAboutIconID()
     {
-        return R.mipmap.ic_suntimes;
+        return R.mipmap.ic_launcher;
     }
 
     /**
