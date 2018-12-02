@@ -25,6 +25,7 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -54,7 +55,7 @@ public class AlarmClockItem
     public long offset = 0;
     public String label = null;
     public SolarEvents event = null;
-    public WidgetSettings.Location location = null;
+    public Location location = null;
     public String ringtoneName = null;
     public String ringtoneURI = null;
     public boolean vibrate = false;
