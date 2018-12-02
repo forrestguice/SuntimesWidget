@@ -19,7 +19,8 @@
 package com.forrestguice.suntimeswidget.calculator.core;
 
 import android.net.Uri;
-import android.support.annotation.NonNull;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import java.text.DecimalFormat;
@@ -29,7 +30,7 @@ import java.util.Locale;
 /**
  * Location
  */
-public class Location
+public class Location implements Parcelable
 {
     public static String pattern_latLon = "#.#####";
 
@@ -94,7 +95,7 @@ public class Location
      * @param label display name
      * @param location an android.location.Location object (that might be obtained via GPS or otherwise)
      */
-    public Location(String label, @NonNull android.location.Location location )
+    public Location(String label, android.location.Location location )
     {
         double rawLatitude = location.getLatitude();
         double rawLongitude = location.getLongitude();
@@ -236,5 +237,46 @@ public class Location
     private static double feetToMeters(double feet) {
         return (feet * (1d / 3.28084d) );
     }
+
+    /**
+     * @param in Parcel
+     */
+    public Location( Parcel in )
+    {
+        this.label = in.readString();
+        this.latitude = in.readString();
+        this.longitude = in.readString();
+        this.altitude = in.readString();
+        this.useAltitude = (in.readInt() == 1);
+    }
+
+    @Override
+    public int describeContents()
+    {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags)
+    {
+        dest.writeString(label);
+        dest.writeString(latitude);
+        dest.writeString(longitude);
+        dest.writeString(altitude);
+        dest.writeInt(useAltitude ? 1 : 0);
+    }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator()
+    {
+        public Location createFromParcel(Parcel in)
+        {
+            return new Location(in);
+        }
+
+        public Location[] newArray(int size)
+        {
+            return new Location[size];
+        }
+    };
 
 }
