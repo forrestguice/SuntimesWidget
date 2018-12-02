@@ -67,14 +67,19 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
     /**
      * result: sunrise today
      */
+    @Override
     public boolean hasSunriseTimeToday()
     {
         return (sunrise[1] != null);
     }
+
+    @Override
     public Calendar sunriseCalendarToday()
     {
         return sunrise[1];
     }
+
+    @Override
     public Calendar sunriseCalendar(int i)
     {
         if (i >= 0 && i < sunrise.length)
@@ -85,14 +90,19 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
     /**
      * result: sunset today
      */
+    @Override
     public boolean hasSunsetTimeToday()
     {
         return (sunset[1] != null);
     }
+
+    @Override
     public Calendar sunsetCalendarToday()
     {
         return sunset[1];
     }
+
+    @Override
     public Calendar sunsetCalendar(int i)
     {
         if (i >= 0 && i < sunset.length)
@@ -103,10 +113,13 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
     /**
      * result: sunrise other
      */
+    @Override
     public boolean hasSunriseTimeOther()
     {
         return (sunrise[indexOfOther()] != null);
     }
+
+    @Override
     public Calendar sunriseCalendarOther()
     {
         return sunrise[indexOfOther()];
@@ -115,22 +128,16 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
     /**
      * result: sunset other
      */
+    @Override
     public boolean hasSunsetTimeOther()
     {
         return (sunset[indexOfOther()] != null);
     }
+
+    @Override
     public Calendar sunsetCalendarOther()
     {
         return sunset[indexOfOther()];
-    }
-
-    /**
-     * Property: day delta prefix
-     */
-    private String dayDeltaPrefix;
-    public String dayDeltaPrefix()
-    {
-        return dayDeltaPrefix;
     }
 
     /**
