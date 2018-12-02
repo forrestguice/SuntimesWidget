@@ -23,6 +23,7 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData2;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Calendar;
@@ -58,31 +59,48 @@ public abstract class SunLayout extends SuntimesLayout
 
     protected void updateViewsSunRiseSetText(Context context, RemoteViews views, SuntimesRiseSetData data, boolean showSeconds)
     {
-        updateViewsSunriseText(context, views, data, showSeconds);
-        updateViewsSunsetText(context, views, data, showSeconds);
+        updateViewsSunriseText(context, views, data.sunriseCalendarToday(), showSeconds);
+        updateViewsSunsetText(context, views, data.sunsetCalendarToday(), showSeconds);
     }
 
-    protected void updateViewsSunriseText(Context context, RemoteViews views, SuntimesRiseSetData data, boolean showSeconds)
+    protected void updateViewsSunRiseSetText(Context context, RemoteViews views, SuntimesRiseSetData2 data, boolean showSeconds, WidgetSettings.RiseSetOrder order)
     {
-        SuntimesUtils.TimeDisplayText sunriseText = utils.calendarTimeShortDisplayString(context, data.sunriseCalendarToday(), showSeconds);
+        if (order == WidgetSettings.RiseSetOrder.TODAY)
+        {
+            updateViewsSunriseText(context, views, data.sunriseCalendarToday(), showSeconds);
+            updateViewsSunsetText(context, views, data.sunsetCalendarToday(), showSeconds);
+
+        } else {
+            // TODO
+            Calendar now = data.now();
+            boolean sunsetToday = now.before(data.sunsetCalendarToday());
+            updateViewsSunriseText(context, views, data.sunriseCalendarToday(), showSeconds);
+            updateViewsSunsetText(context, views, data.sunsetCalendarToday(), showSeconds);
+        }
+
+    }
+
+    protected void updateViewsSunriseText(Context context, RemoteViews views, Calendar event, boolean showSeconds)
+    {
+        SuntimesUtils.TimeDisplayText sunriseText = utils.calendarTimeShortDisplayString(context, event, showSeconds);
         String sunriseString = sunriseText.getValue();
         CharSequence sunrise = (boldTime ? SuntimesUtils.createBoldSpan(null, sunriseString, sunriseString) : sunriseString);
         views.setTextViewText(R.id.text_time_rise, sunrise);
         views.setTextViewText(R.id.text_time_rise_suffix, sunriseText.getSuffix());
     }
 
-    protected void updateViewsSunsetText(Context context, RemoteViews views, SuntimesRiseSetData data, boolean showSeconds)
+    protected void updateViewsSunsetText(Context context, RemoteViews views, Calendar event, boolean showSeconds)
     {
-        SuntimesUtils.TimeDisplayText sunsetText = utils.calendarTimeShortDisplayString(context, data.sunsetCalendarToday(), showSeconds);
+        SuntimesUtils.TimeDisplayText sunsetText = utils.calendarTimeShortDisplayString(context, event, showSeconds);
         String sunsetString = sunsetText.getValue();
         CharSequence sunset = (boldTime ? SuntimesUtils.createBoldSpan(null, sunsetString, sunsetString) : sunsetString);
         views.setTextViewText(R.id.text_time_set, sunset);
         views.setTextViewText(R.id.text_time_set_suffix, sunsetText.getSuffix());
     }
 
-    protected void updateViewsNoonText(Context context, RemoteViews views, SuntimesRiseSetData data, boolean showSeconds)
+    protected void updateViewsNoonText(Context context, RemoteViews views, Calendar event, boolean showSeconds)
     {
-        SuntimesUtils.TimeDisplayText noonText = utils.calendarTimeShortDisplayString(context, data.sunsetCalendarToday(), showSeconds);
+        SuntimesUtils.TimeDisplayText noonText = utils.calendarTimeShortDisplayString(context, event, showSeconds);
         String noonString = noonText.getValue();
         CharSequence noon = (boldTime ? SuntimesUtils.createBoldSpan(null, noonString, noonString) : noonString);
         views.setTextViewText(R.id.text_time_noon, noon);

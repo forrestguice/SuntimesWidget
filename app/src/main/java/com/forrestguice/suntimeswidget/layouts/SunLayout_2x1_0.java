@@ -28,9 +28,12 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData2;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.SuntimesUtils.TimeDisplayText;
+
+import java.util.Calendar;
 
 public class SunLayout_2x1_0 extends SunLayout
 {
@@ -54,7 +57,10 @@ public class SunLayout_2x1_0 extends SunLayout
     {
         super.updateViews(context, appWidgetId, views, data);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
-        updateViewsSunRiseSetText(context, views, data, showSeconds);
+
+        if (order == WidgetSettings.RiseSetOrder.TODAY)
+            updateViewsSunRiseSetText(context, views, data, showSeconds);
+        else updateViewsSunRiseSetText(context, views, (SuntimesRiseSetData2)data, showSeconds, order);
 
         // update day delta
         boolean showDayDelta = WidgetSettings.loadShowComparePref(context, appWidgetId);
@@ -74,7 +80,7 @@ public class SunLayout_2x1_0 extends SunLayout
         boolean showSolarNoon = WidgetSettings.loadShowNoonPref(context, appWidgetId);
         if (showSolarNoon && noonData != null)
         {
-            updateViewsNoonText(context, views, noonData, showSeconds);
+            updateViewsNoonText(context, views, noonData.sunsetCalendarToday(), showSeconds);
             views.setViewVisibility(R.id.layout_noon, View.VISIBLE);
 
         } else {

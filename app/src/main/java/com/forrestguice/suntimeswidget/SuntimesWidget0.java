@@ -35,6 +35,7 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData2;
 import com.forrestguice.suntimeswidget.layouts.SunLayout;
 import com.forrestguice.suntimeswidget.layouts.SunLayout_2x1_0;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
@@ -449,7 +450,9 @@ public class SuntimesWidget0 extends AppWidgetProvider
      */
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SunLayout layout, Class widgetClass)
     {
-        SuntimesRiseSetData data = new SuntimesRiseSetData(context, appWidgetId); // constructor inits data from widget settings
+        WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
+        SuntimesRiseSetData data = (order == WidgetSettings.RiseSetOrder.TODAY)
+                                 ? new SuntimesRiseSetData(context, appWidgetId) : new SuntimesRiseSetData2(context, appWidgetId); // constructor inits data from widget settings
         data.calculate();
 
         boolean showSolarNoon = WidgetSettings.loadShowNoonPref(context, appWidgetId);

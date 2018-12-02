@@ -26,7 +26,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Calendar;
 
-public class SuntimesRiseSetData2 extends SuntimesData
+public class SuntimesRiseSetData2 extends SuntimesRiseSetData
 {
     private Context context;
     private Calendar[] calendar = {null, null, null};
@@ -36,21 +36,25 @@ public class SuntimesRiseSetData2 extends SuntimesData
 
     public SuntimesRiseSetData2(Context context, int appWidgetId)
     {
+        super(context, appWidgetId);
         this.context = context;
         initFromSettings(context, appWidgetId);
     }
     public SuntimesRiseSetData2(Context context, int appWidgetId, String calculatorName)
     {
+        super(context, appWidgetId, calculatorName);
         this.context = context;
         initFromSettings(context, appWidgetId, calculatorName);
     }
     public SuntimesRiseSetData2(SuntimesRiseSetData2 other)
     {
+        super(other);
         this.context = other.context;
         initFromOther(other, other.layoutID);
     }
     public SuntimesRiseSetData2(SuntimesRiseSetData2 other, int layoutID)
     {
+        super(other, layoutID);
         this.context = other.context;
         initFromOther(other, layoutID);
     }
@@ -110,6 +114,12 @@ public class SuntimesRiseSetData2 extends SuntimesData
     {
         return sunrise[1];
     }
+    public Calendar sunriseCalendar(int i)
+    {
+        if (i >= 0 && i < sunrise.length)
+            return sunrise[i];
+        else return null;
+    }
 
     /**
      * result: sunset today
@@ -121,6 +131,12 @@ public class SuntimesRiseSetData2 extends SuntimesData
     public Calendar sunsetCalendarToday()
     {
         return sunset[1];
+    }
+    public Calendar sunsetCalendar(int i)
+    {
+        if (i >= 0 && i < sunset.length)
+            return sunset[i];
+        else return null;
     }
 
     /**

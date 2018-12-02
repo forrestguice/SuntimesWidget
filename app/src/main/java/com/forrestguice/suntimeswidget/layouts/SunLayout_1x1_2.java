@@ -56,7 +56,7 @@ public class SunLayout_1x1_2 extends SunLayout
     {
         super.updateViews(context, appWidgetId, views, data);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
-        updateViewsSunsetText(context, views, data, showSeconds);
+        updateViewsSunsetText(context, views, data.sunsetCalendarToday(), showSeconds);  // TODO: order
     }
 
     @Override
