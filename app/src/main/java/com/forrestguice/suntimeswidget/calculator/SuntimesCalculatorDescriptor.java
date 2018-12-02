@@ -26,6 +26,8 @@ import android.content.pm.ResolveInfo;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculatorInfo;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 
 import java.security.InvalidParameterException;

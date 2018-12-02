@@ -22,7 +22,7 @@ import android.content.Context;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
-import com.forrestguice.suntimeswidget.calculator.Location;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.time4a.Time4ASimpleSuntimesCalculator;

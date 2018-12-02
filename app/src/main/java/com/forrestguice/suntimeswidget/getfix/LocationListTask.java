@@ -24,7 +24,7 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.forrestguice.suntimeswidget.calculator.Location;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 
 public class LocationListTask extends AsyncTask<Object, Object, LocationListTask.LocationListTaskResult>
 {

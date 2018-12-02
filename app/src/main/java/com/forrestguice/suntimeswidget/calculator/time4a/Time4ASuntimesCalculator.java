@@ -21,8 +21,8 @@ package com.forrestguice.suntimeswidget.calculator.time4a;
 import android.content.Context;
 import android.util.Log;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.calculator.Location;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 
 import net.time4j.Moment;
 import net.time4j.PlainDate;

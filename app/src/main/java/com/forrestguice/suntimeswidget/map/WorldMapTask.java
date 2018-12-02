@@ -27,9 +27,9 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
-import com.forrestguice.suntimeswidget.calculator.Location;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 
 /**
  * WorldMapTask

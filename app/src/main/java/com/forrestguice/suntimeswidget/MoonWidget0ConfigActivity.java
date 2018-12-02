@@ -23,7 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.ArrayAdapter;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;

@@ -28,7 +28,7 @@ import android.os.Build;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.calculator.Location;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

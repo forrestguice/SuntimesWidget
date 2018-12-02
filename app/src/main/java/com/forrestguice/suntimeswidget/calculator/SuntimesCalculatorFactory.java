@@ -21,6 +21,9 @@ package com.forrestguice.suntimeswidget.calculator;
 import android.content.Context;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+
 import java.lang.ref.WeakReference;
 import java.util.TimeZone;
 

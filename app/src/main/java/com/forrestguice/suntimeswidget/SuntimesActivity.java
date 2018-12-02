@@ -75,7 +75,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 
@@ -141,7 +141,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     private GetFixHelper getFixHelper;
 
-    private com.forrestguice.suntimeswidget.calculator.Location location;
+    private com.forrestguice.suntimeswidget.calculator.core.Location location;
     protected SuntimesNotes notes;
     protected SuntimesRiseSetDataset dataset;
     protected SuntimesEquinoxSolsticeDataset dataset2;
@@ -929,7 +929,7 @@ public class SuntimesActivity extends AppCompatActivity
             @Override
             public void updateUI(Location... locations)
             {
-                com.forrestguice.suntimeswidget.calculator.Location location = new com.forrestguice.suntimeswidget.calculator.Location(getString(R.string.gps_lastfix_title_found), locations[0]);
+                com.forrestguice.suntimeswidget.calculator.core.Location location = new com.forrestguice.suntimeswidget.calculator.core.Location(getString(R.string.gps_lastfix_title_found), locations[0]);
                 actionBar.setSubtitle(location.toString());
             }
 
@@ -964,7 +964,7 @@ public class SuntimesActivity extends AppCompatActivity
 
                     if (result != null)
                     {
-                        com.forrestguice.suntimeswidget.calculator.Location location = new com.forrestguice.suntimeswidget.calculator.Location(getString(R.string.gps_lastfix_title_found), result);
+                        com.forrestguice.suntimeswidget.calculator.core.Location location = new com.forrestguice.suntimeswidget.calculator.core.Location(getString(R.string.gps_lastfix_title_found), result);
                         WidgetSettings.saveLocationPref(SuntimesActivity.this, 0, location);
 
                     } else {

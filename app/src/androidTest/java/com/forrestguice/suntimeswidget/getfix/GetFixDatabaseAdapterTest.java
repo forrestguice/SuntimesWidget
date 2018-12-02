@@ -26,7 +26,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
 
-import com.forrestguice.suntimeswidget.calculator.Location;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 
 import org.junit.Before;
 import org.junit.Test;

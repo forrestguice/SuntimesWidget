@@ -19,7 +19,7 @@
 package com.forrestguice.suntimeswidget.calculator.time4a;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 
 import net.time4j.calendar.astro.StdSolarCalculator;

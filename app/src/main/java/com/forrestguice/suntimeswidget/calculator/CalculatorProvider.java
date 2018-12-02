@@ -38,6 +38,8 @@ import java.util.HashMap;
 import java.util.TimeZone;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 

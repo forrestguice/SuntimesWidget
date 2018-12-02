@@ -19,7 +19,7 @@
 package com.forrestguice.suntimeswidget.settings;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.calculator.Location;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 
 import android.annotation.TargetApi;
 import android.content.Context;

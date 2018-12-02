@@ -22,7 +22,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.luckycatlabs.sunrisesunset.dto.Location;
@@ -48,19 +48,19 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     public SunriseSunsetSuntimesCalculator() { /* EMPTY */ }
 
     @Override
-    public void init(com.forrestguice.suntimeswidget.calculator.Location locationSetting, String timezone)
+    public void init(com.forrestguice.suntimeswidget.calculator.core.Location locationSetting, String timezone)
     {
         init(locationSetting, TimeZone.getTimeZone(timezone));
     }
 
     @Override
-    public void init(com.forrestguice.suntimeswidget.calculator.Location locationSetting, TimeZone timezone)
+    public void init(com.forrestguice.suntimeswidget.calculator.core.Location locationSetting, TimeZone timezone)
     {
         init(locationSetting, timezone, null);
     }
 
     @Override
-    public void init(com.forrestguice.suntimeswidget.calculator.Location locationSetting, TimeZone timezone, Context context)
+    public void init(com.forrestguice.suntimeswidget.calculator.core.Location locationSetting, TimeZone timezone, Context context)
     {
         try
         {

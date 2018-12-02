@@ -16,7 +16,7 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.forrestguice.suntimeswidget.calculator;
+package com.forrestguice.suntimeswidget.calculator.core;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;

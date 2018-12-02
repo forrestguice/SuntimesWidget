@@ -24,7 +24,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.calculator.Location;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_0;
