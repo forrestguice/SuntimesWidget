@@ -59,45 +59,6 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
         initFromOther(other, layoutID);
     }
 
-    /**
-     * Property: layoutID
-     */
-    private int layoutID = R.layout.layout_widget_1x1_0i;
-    public int layoutID()
-    {
-        return layoutID;
-    }
-    public void setLayoutID( int id )
-    {
-        layoutID = id;
-    }
-
-    /**
-     * Property: time mode
-     */
-    private WidgetSettings.TimeMode timeMode;
-    public WidgetSettings.TimeMode timeMode()
-    {
-        return timeMode;
-    }
-    public void setTimeMode( WidgetSettings.TimeMode mode )
-    {
-        timeMode = mode;
-    }
-
-    /**
-     * Property: compare mode
-     */
-    private WidgetSettings.CompareMode compareMode;
-    public WidgetSettings.CompareMode compareMode()
-    {
-        return compareMode;
-    }
-    public void setCompareMode( WidgetSettings.CompareMode mode )
-    {
-        compareMode = mode;
-    }
-
     protected int indexOfOther()
     {
         return (compareMode == WidgetSettings.CompareMode.TOMORROW ? 2 : 0);
@@ -173,37 +134,6 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
     }
 
     /**
-     * Property: day length ("today")
-     */
-    protected long dayLengthToday = 0L;
-    public long dayLengthToday()
-    {
-        return dayLengthToday;
-    }
-
-    /**
-     * Property: day length ("other")
-     */
-    protected long dayLengthOther = 0L;
-    public long dayLengthOther()
-    {
-        return dayLengthOther;
-    }
-
-    /**
-     * Property: linked data
-     */
-    private SuntimesRiseSetData2 linked = null;
-    public SuntimesRiseSetData2 getLinked()
-    {
-        return linked;
-    }
-    public void linkData(SuntimesRiseSetData2 data)
-    {
-        linked = data;
-    }
-
-    /**
      * @param other another instance of SuntimesRiseSetData
      * @param layoutID an R.layout.someLayoutID to be associated w/ this data
      */
@@ -226,38 +156,6 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
             this.sunset[i] = other.sunset[i];
             this.daylength[i] = other.daylength[i];
         }
-    }
-
-    /**
-     * @param context a context used to access shared prefs
-     * @param appWidgetId the widgetID to load settings from (0 for app)
-     */
-    @Override
-    protected void initFromSettings(Context context, int appWidgetId, String calculatorName)
-    {
-        super.initFromSettings(context, appWidgetId, calculatorName);
-        this.timeMode = WidgetSettings.loadTimeModePref(context, appWidgetId);
-        this.compareMode = WidgetSettings.loadCompareModePref(context, appWidgetId);
-    }
-
-    public boolean isDay()
-    {
-        return isDay(Calendar.getInstance(timezone()));
-    }
-    public boolean isDay(Calendar now)
-    {
-        if (calculator != null)
-        {
-            return calculator.isDay(now);
-        } else {
-            Log.w("isDay", "calculator is null! returning false");
-            return false;
-        }
-    }
-
-    public void initCalculator()
-    {
-        initCalculator(context);
     }
 
     /**
@@ -368,33 +266,6 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
         super.calculate();
     }
 
-    /**
-     * @param sunrise
-     * @param sunset
-     * @return
-     */
-    private long determineDayLength(Calendar sunrise, Calendar sunset)
-    {
-        if (sunrise != null && sunset != null) {
-            // average case: rises and sets
-            return sunset.getTimeInMillis() - sunrise.getTimeInMillis();
-
-        } else if (sunrise == null && sunset == null) {
-            // edge case: no rise or set
-            return 0;
-
-        } else if (sunrise != null) {
-            // edge case.. rises but doesn't set
-            Calendar midnight1 = midnight();
-            midnight1.add(Calendar.DAY_OF_YEAR, 1);
-            return midnight1.getTimeInMillis() - sunrise.getTimeInMillis();
-
-        } else {
-            // edge case.. sets but doesn't rise
-            Calendar midnight0 = midnight();
-            return sunset.getTimeInMillis() - midnight0.getTimeInMillis();
-        }
-    }
 }
 
 
