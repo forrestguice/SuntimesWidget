@@ -20,9 +20,10 @@ package com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset;
 
 import android.content.Context;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -35,7 +36,7 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     public static final String LINK = "github.com/caarmen/SunriseSunset";
     public static final int[] FEATURES = new int[] { SuntimesCalculator.FEATURE_RISESET, SuntimesCalculator.FEATURE_GOLDBLUE };
 
-    WidgetSettings.Location location;
+    Location location;
 
     public SunriseSunsetSuntimesCalculator() { /* EMPTY */ }
 
@@ -46,19 +47,19 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     }
 
     @Override
-    public void init(WidgetSettings.Location locationSetting, String timezone)
+    public void init(Location locationSetting, String timezone)
     {
         init(locationSetting, TimeZone.getTimeZone(timezone), null);
     }
 
     @Override
-    public void init(WidgetSettings.Location location, TimeZone timezone)
+    public void init(Location location, TimeZone timezone)
     {
         init(location, timezone, null);
     }
 
     @Override
-    public void init(WidgetSettings.Location location, TimeZone timezone, Context context)
+    public void init(Location location, TimeZone timezone, Context context)
     {
         this.location = location;
         //this.timezone =  // not used; ca.rmen.sunrisesunset obtains the timezone from Calendar obj

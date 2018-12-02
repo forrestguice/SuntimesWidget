@@ -44,8 +44,8 @@
     -->
     <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> The time zone may be wrong for this location.</string>  <!-- snackbar message -->
-    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> daylight saving</string>  <!-- timezone dialog label -->  <!-- TODO: it -->
-    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> equation of time</string>  <!-- timezone dialog label -->  <!-- TODO: it -->
+    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> daylight saving</string>  <!-- timezone dialog label -->
+    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> equation of time</string>  <!-- timezone dialog label -->
 
     <!-- Field: date
          The date field that appears above the table (main activity).
@@ -169,9 +169,8 @@
     <string name="location_format_latlonalt"><xliff:g id="latlon">%1$s</xliff:g> <xliff:g id="altitudeTag">%2$s</xliff:g></string>        <!-- latitude, longitude [altitude] -->
 
     <!-- distances (meters, feet, etc) -->
-
-    <string name="lengthUnits_metric">Metric</string>    <!-- TODO -->
-    <string name="lengthUnits_imperial">Imperial</string>   <!-- TODO -->
+    <string name="lengthUnits_metric">Metric</string>
+    <string name="lengthUnits_imperial">Imperial</string>
     <string name="lengthUnits_usc">U.S. Customary</string>     <!-- TODO -->
     <string-array name="lengthUnits_values" translatable="false">
         <item>METRIC</item>
@@ -225,7 +224,7 @@
     <string name="configLabel_general_altitude_enabled">Use Elevation</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">Apply altitude based refinements.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_lengthUnits">Units of length</string>        <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_general_lengthUnits">Units of length</string>        <!-- spinner label -->
 
     <string name="configLabel_general_showSeconds">Show Seconds</string>        <!-- checkbox label -->
     <string name="configLabel_general_showSeconds_summary">Include seconds when displaying times.</string>        <!-- checkbox label -->
@@ -239,8 +238,8 @@
     <string name="configLabel_general_showHours">Show Hours</string>        <!-- checkbox label -->
     <string name="configLabel_general_showHours_summary">Include hours and minutes in time spans greater than a day.</string>    <!-- checkbox label -->
 
-    <string name="configLabel_general_observerheight">Object Shadow</string>        <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_general_observerheight_summary">Display the length of shadows cast by an object with a height of <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_observerheight">Object Shadow</string>        <!-- checkbox label -->
+    <string name="configLabel_general_observerheight_summary">Display the length of shadows cast by an object with a height of <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: advanced / experimental -->
     <string name="configLabel_advanced">Advanced Settings</string>                        <!-- group title -->
@@ -250,7 +249,7 @@
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Appearance Settings</string>           <!-- group title -->
-    <string name="configLabel_appearance_mode">Appearance</string>                  <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_mode">Appearance</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Theme:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Grow with available space (resizeable)</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_showLabels">Show Labels</string>          <!-- checkbox label -->
@@ -425,7 +424,6 @@
     <string name="configAction_exportThemes">Export</string>    <!-- button (contentDescription) -->  <!-- export many themes -->
     <string name="configAction_shareTheme">Share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
     <string name="configAction_importThemes">Import</string>    <!-- button (contentDescription) -->
-    <string name="configAction_configThemes">Manage Themes</string>  <!-- button / action text --> <!-- TODO -->
 
     <string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
     <string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_<xliff:g id="#">%2$s</xliff:g></string>   <!-- copied theme id -->
@@ -470,7 +468,7 @@
     <string name="configLabel_themeColorFall">Autumn</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Winter</string> <!-- color label -->
 
-    <string name="configLabel_themeColorAction">Action</string> <!-- color label -->  <!-- TODO -->
+    <string name="configLabel_themeColorAction">Action</string> <!-- color label -->
 
     <string name="configLabel_themeColorMapBackground">Map Background</string> <!-- color label -->
     <string name="configLabel_themeColorMapForeground">Map Foreground</string> <!-- color label -->
@@ -703,11 +701,11 @@
     <string name="configLabel_ui_showbluehour_summary">Show blue hour times.</string>
 
     <!-- App Setting: UI Theme -->
-    <string name="appThemes_lightTheme">Light Theme</string>  <!-- TODO -->
-    <string name="appThemes_darkTheme">Dark Theme</string>  <!-- TODO -->
+    <string name="appThemes_lightTheme">Light Theme</string>
+    <string name="appThemes_darkTheme">Dark Theme</string>
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-        <item>@string/appThemes_lightTheme</item>  <!-- TODO -->
-        <item>@string/appThemes_darkTheme</item>  <!-- TODO -->
+        <item>@string/appThemes_lightTheme</item>
+        <item>@string/appThemes_darkTheme</item>
         <item>Light Theme / Dark Theme (Night Mode)</item>
     </string-array>
     <string-array name="appThemes_values" translatable="false">  <!-- config values (one-to-one with appThemes_display) -->
@@ -849,37 +847,7 @@
 
     <!-- App Setting: calendars -->
     <string name="configLabel_calendars">Calendars</string>   <!-- group title -->
-
     <string name="configLabel_calendars_enabled">Calendar Integration</string>
-    <string name="configLabel_calendars_enabled_summary">Supply events to the Calendar app (moon phases, solstices, and equinoxes).</string>
-
-    <string name="configLabel_calendars_window0">Window (start)</string>
-    <string name="configLabel_calendars_window0_summary">A period starting <xliff:g id="calendars_window_display" example="one year">%s</xliff:g> ago</string>
-
-    <string name="configLabel_calendars_window1">Window (end)</string>
-    <string name="configLabel_calendars_window1_summary">A period ending <xliff:g id="calendars_window_display" example="two years">%s</xliff:g> from now</string>
-
-    <string name="calendars_notification_adding">Adding calendars…</string>
-    <string name="calendars_notification_added">Calendars have been added.</string>
-
-    <string name="calendars_notification_clearing">Clearing calendars…</string>
-    <string name="calendars_notification_cleared">Calendars have been cleared.</string>
-
-    <string-array name="calendars_window_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
-        <item>one year</item>
-        <item>two years</item>
-        <item>five years</item>
-        <item>ten years</item>
-    </string-array>
-    <string-array name="calendars_window_values" translatable="false">     <!-- ms config values (one-to-one with getFix_maxAge_display) -->
-        <item>31536000000</item>
-        <item>63072000000</item>
-        <item>157680000000</item>
-        <item>315360000000</item>
-    </string-array>
-
-    <string name="calendar_solstice_displayName">Solstices and Equinoxes</string>
-    <string name="calendar_moonPhase_displayName">Moon Phases</string>
 
     <!-- App Setting: passive location mode -->
     <string name="configLabel_getFix_passiveMode">Passive Location</string>
@@ -1113,22 +1081,23 @@
     <string name="themesexport_dialog_title">Exporting Themes</string>
     <string name="themesexport_dialog_message">Exporting themes to file.</string>
 
-    <!-- Dialog: Import Themes -->
-    <string name="themesimport_dialog_title">Importing Themes</string>                   <!-- TODO -->
-    <string name="themesimport_dialog_message">Importing themes from file…</string>      <!-- TODO -->
-
     <!-- Dialog: Import / Export -->
     <string name="msg_export_success">Temporary copy at <xliff:g id="filepath">%s</xliff:g></string>
     <string name="msg_export_failure">Export to <xliff:g id="filepath">%s</xliff:g> failed!</string>
     <string name="msg_export_to">Export with</string>  <!-- title displayed over "share action" chooser -->
 
-    <string name="msg_import_success">Imported <xliff:g id="themePlural">%s</xliff:g>.</string>  <!-- TODO -->
-    <string name="msg_import_failure">Import from <xliff:g id="filepath">%s</xliff:g> failed!</string>  <!-- TODO -->
-    <string name="msg_import_noresults">Import skipped; no new themes were found.</string>  <!-- TODO -->
+    <!-- Dialog: Import Themes -->
+    <string name="themesimport_dialog_title">Importing Themes</string>
+    <string name="themesimport_dialog_message">Importing themes from file…</string>
+
+    <string name="msg_import_success">Imported <xliff:g id="themePlural">%s</xliff:g>.</string>
+    <string name="msg_import_failure">Import from <xliff:g id="filepath">%s</xliff:g> failed!</string>
+    <string name="msg_import_noresults">Import skipped; no new themes were found.</string>
+
     <plurals name="themePlural">
         <item quantity="one">%d theme</item>
         <item quantity="other">%d themes</item>
-    </plurals>  <!-- TODO -->
+    </plurals>
 
     <!-- Dialog: Color -->
     <string name="color_dialog_msg">Choose Colour</string>
@@ -1276,11 +1245,10 @@
         <u><b><font color="#ff9900">Calendar permissions have been removed.</font></b></u><br />
         <br />
         This feature is now available as a <a href="moreInfoLink">separate app</a>.
-    ]]></string>  <!-- TODO -->
+    ]]></string>
 
     <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>Suntimes does not collect, store, or transmit personal user data. It contains <b>no advertising</b>, <b>no analytics</b>, <b>no trackers</b>, and <b>no unnecessary permissions</b>. <br/><br/>The app is configured from location data. This information (and other configuration data used by the app) is stored locally and does not leave the device.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes uses the <b>location</b> permission to determine your current longitude and latitude.<br/><br/>This permission is optional; the location is manually configured by default.]]></string>
-    <string name="privacy_permission_calendar"><![CDATA[Suntimes uses <b>calendar</b> permissions to integrate with the Calendar app. These permissions allow the app to create custom calendars and events.<br/><br/>Permissions are also required when disabling calendar integration (to remove custom calendars).]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes uses <b>external storage</b> permissions to backup/export data to file (e.g. places, themes).]]></string>
     <string name="privacy_permissiondialog_title">Permissions</string>
     <string name="privacy_url"><xliff:g id="url"><![CDATA[

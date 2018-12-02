@@ -21,6 +21,8 @@ package com.forrestguice.suntimeswidget.calculator;
 import android.content.Context;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
@@ -87,8 +89,8 @@ public class SuntimesData
     /**
      * Property: location
      */
-    protected WidgetSettings.Location location;
-    public WidgetSettings.Location location()
+    protected Location location;
+    public Location location()
     {
         return location;
     }

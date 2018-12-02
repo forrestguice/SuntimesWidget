@@ -43,6 +43,8 @@
     -->
     <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> 這個位置的時區可能是錯的。</string>  <!-- snackbar message -->
+    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> daylight saving</string>  <!-- timezone dialog label -->  <!-- TODO -->
+    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> equation of time</string>  <!-- timezone dialog label -->  <!-- TODO -->
 
     <!-- Field: date
          The date field that appears above the table (main activity).
@@ -166,12 +168,16 @@
     <string name="location_format_latlonalt"><xliff:g id="latlon">%1$s</xliff:g> <xliff:g id="altitudeTag">%2$s</xliff:g></string>        <!-- latitude, longitude [altitude] -->
 
     <!-- distances (meters, feet, etc) -->
+    <string name="lengthUnits_metric">Metric</string>    <!-- TODO -->
+    <string name="lengthUnits_imperial">Imperial</string>   <!-- TODO -->
+
     <string name="units_feet">英尺</string>
     <string name="units_feet_short">ft</string>
     <plurals name="units_feet_long">
         <item quantity="one">%s 英尺</item>
         <item quantity="other">%s 英尺</item>
     </plurals>
+
     <string name="units_meters">米</string>
     <string name="units_meters_short">m</string>
     <plurals name="units_meters_long">
@@ -208,6 +214,8 @@
     <string name="configLabel_general_altitude_enabled">使用海拔</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">套用海拔以提高精度。</string>        <!-- checkbox label -->
 
+    <string name="configLabel_general_lengthUnits">Units of length</string>        <!-- spinner label -->  <!-- TODO -->
+
     <string name="configLabel_general_showSeconds">顯示秒</string>        <!-- checkbox label -->
     <string name="configLabel_general_showSeconds_summary">顯示時間時包含秒。</string>        <!-- checkbox label -->
 
@@ -220,6 +228,9 @@
     <string name="configLabel_general_showHours">顯示小時</string>        <!-- checkbox label -->
     <string name="configLabel_general_showHours_summary">大於一天的時候包含小時和分鐘。</string>    <!-- checkbox label -->
 
+    <string name="configLabel_general_observerheight">Object Shadow</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_observerheight_summary">Display the length of shadows cast by an object with a height of <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->  <!-- TODO -->
+
     <!-- Widget Setting: advanced / experimental -->
     <string name="configLabel_advanced">高級設置</string>                        <!-- group title -->
     <string name="configLabel_experimental">實驗性設置</string>                <!-- group title -->
@@ -228,6 +239,7 @@
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">顯示設置</string>           <!-- group title -->
+    <string name="configLabel_appearance_mode">Appearance</string>                  <!-- spinner label -->  <!-- TODO -->
     <string name="configLabel_appearance_theme">主題：</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">適應可用的空間（可調節大小）</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_showLabels">顯示標籤</string>          <!-- checkbox label -->
@@ -445,6 +457,8 @@
     <string name="configLabel_themeColorFall">秋季顏色</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">冬季顏色</string> <!-- color label -->
 
+    <string name="configLabel_themeColorAction">Action</string> <!-- color label -->  <!-- TODO -->
+
     <string name="configLabel_themeColorMapBackground">地圖背景</string> <!-- color label -->
     <string name="configLabel_themeColorMapForeground">地圖前景</string> <!-- color label -->
     <string name="configLabel_themeColorMapSunShadow">陰影</string> <!-- color label -->
@@ -584,9 +598,11 @@
     <string name="configLabel_ui_showbluehour_summary">顯示藍色時刻的時間。</string>
 
     <!-- App Setting: UI Theme -->
+    <string name="appThemes_lightTheme">亮色主題</string>
+    <string name="appThemes_darkTheme">暗色主題</string>
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-        <item>亮色主題</item>
-        <item>暗色主題</item>
+        <item>@string/appThemes_lightTheme</item>
+        <item>@string/appThemes_darkTheme</item>
         <item>亮色主題 / 暗色主題 (夜間模式)</item>
     </string-array>
 
@@ -671,31 +687,7 @@
 
     <!-- App Setting: calendars -->
     <string name="configLabel_calendars">日曆</string>   <!-- group title -->
-
     <string name="configLabel_calendars_enabled">日曆集成</string>
-    <string name="configLabel_calendars_enabled_summary">為日曆應用提供事件（月相，夏冬至，春秋分）。</string>
-
-    <string name="configLabel_calendars_window0">視窗（啟動）</string>
-    <string name="configLabel_calendars_window0_summary"><xliff:g id="calendars_window_display" example="one year">%s</xliff:g> 前開始的一段時期。</string>
-
-    <string name="configLabel_calendars_window1">視窗（結束）</string>
-    <string name="configLabel_calendars_window1_summary">到<xliff:g id="calendars_window_display" example="two years">%s</xliff:g>為止的一段時間。</string>
-
-    <string name="calendars_notification_adding">添加日曆中……</string>
-    <string name="calendars_notification_added">日曆添加好了。</string>
-
-    <string name="calendars_notification_clearing">清理日曆中……</string>
-    <string name="calendars_notification_cleared">日曆清理好了。</string>
-
-    <string-array name="calendars_window_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
-        <item>一年</item>
-        <item>兩年</item>
-        <item>五年</item>
-        <item>十年</item>
-    </string-array>
-
-    <string name="calendar_solstice_displayName">夏冬至和春秋分</string>
-    <string name="calendar_moonPhase_displayName">月相</string>
 
     <!-- App Setting: passive location mode -->
     <string name="configLabel_getFix_passiveMode">被動位置</string>
@@ -902,6 +894,19 @@
     <string name="msg_export_failure">導出到 <xliff:g id="filepath">%s</xliff:g> 失敗了。</string>
     <string name="msg_export_to">其他導出工具</string>  <!-- title displayed over "share action" chooser -->
 
+    <!-- Dialog: Import Themes -->
+    <string name="themesimport_dialog_title">Importing Themes</string>                   <!-- TODO -->
+    <string name="themesimport_dialog_message">Importing themes from file…</string>      <!-- TODO -->
+
+    <string name="msg_import_success">Imported <xliff:g id="themePlural">%s</xliff:g>.</string>  <!-- TODO -->
+    <string name="msg_import_failure">Import from <xliff:g id="filepath">%s</xliff:g> failed!</string>  <!-- TODO -->
+    <string name="msg_import_noresults">Import skipped; no new themes were found.</string>  <!-- TODO -->
+
+    <plurals name="themePlural">
+        <item quantity="one">%d theme</item>
+        <item quantity="other">%d themes</item>
+    </plurals>  <!-- TODO -->
+
     <!-- Dialog: Color -->
     <string name="color_dialog_msg">選擇顏色</string>
     <string name="color_dialog_ok">選擇</string>
@@ -1039,9 +1044,15 @@
           [Icon Default]缺省主題是不能被刪除的。
     </string>
 
+    <string name="help_calendar"><![CDATA[Supply events to the Calendar app (moon phases, solstices, and equinoxes).<br />
+        <br />
+        <u><b><font color="#ff9900">Calendar permissions have been removed.</font></b></u><br />
+        <br />
+        This feature is now available as a <a href="moreInfoLink">separate app</a>.
+    ]]></string>  <!-- TODO -->
+
     <string name="privacy_policy"><![CDATA[<b>隱私：</b><br/>Suntimes不會蒐集、儲存、傳輸個人用戶數據。它<b>沒有廣告</b>, <b>沒有用戶分析</b>, <b>沒有跟蹤器</b>，並且<b>不使用不必要的權限</b>。<br/><br/>本應用使用位置信息來配置。位置信息（和其他用來配置本應用的數據）保存在本機並且不會離開本機。<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes uses the <b>location</b> permission to determine your current longitude and latitude.<br/><br/>This permission is optional; the location is manually configured by default.]]></string>
-    <string name="privacy_permission_calendar"><![CDATA[Suntimes uses <b>calendar</b> permissions to integrate with the Calendar app. These permissions allow the app to create custom calendars and events.<br/><br/>Permissions are also required when disabling calendar integration (to remove custom calendars).]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes uses <b>external storage</b> permissions to backup/export data to file (e.g. places, themes).]]></string>
     <string name="privacy_permissiondialog_title">Permissions</string>
     <string name="privacy_url"><xliff:g id="url"><![CDATA[

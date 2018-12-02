@@ -21,7 +21,8 @@ package com.forrestguice.suntimeswidget.calculator;
 import android.content.Context;
 import android.util.Log;
 
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
 import java.lang.ref.WeakReference;
 import java.util.TimeZone;
@@ -86,7 +87,7 @@ public class SuntimesCalculatorFactory
      * @param timezone a timezone string
      * @return a calculator object that implements SuntimesCalculator
      */
-    public SuntimesCalculator createCalculator(WidgetSettings.Location location, TimeZone timezone)
+    public SuntimesCalculator createCalculator(Location location, TimeZone timezone)
     {
         //long bench_start = System.nanoTime();
         SuntimesCalculator calculator;
