@@ -22,8 +22,6 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -47,7 +45,7 @@ public class Location
      */
     public Location(String latitude, String longitude )
     {
-        this(null, latitude, longitude, null, WidgetSettings.LengthUnit.METRIC);
+        this(null, latitude, longitude, null, true);
     }
 
     /**
@@ -57,41 +55,38 @@ public class Location
      */
     public Location(String label, String latitude, String longitude )
     {
-        this(label, latitude, longitude, null, WidgetSettings.LengthUnit.METRIC);
+        this(label, latitude, longitude, null, true);
     }
 
     public Location(String label, String latitude, String longitude, String altitude )
     {
-        this(label, latitude, longitude, altitude, WidgetSettings.LengthUnit.METRIC);
+        this(label, latitude, longitude, altitude, true);
     }
 
     /**
      * @param label display name
      * @param latitude decimal degrees (DD) string
      * @param longitude decimal degrees (DD) string
-     * @param altitude meters string
+     * @param altitude feet or meters string
+     * @param altitudeUnitsMetric true altitude is meters, false altitude is feet
      */
-    public Location(String label, String latitude, String longitude, String altitude, WidgetSettings.LengthUnit altitudeUnits )
+    public Location(String label, String latitude, String longitude, String altitude, boolean altitudeUnitsMetric)
     {
         this.label = (label == null) ? "" : label;
         this.latitude = latitude;
         this.longitude = longitude;
 
-        if (altitudeUnits != null)
+        if (!altitudeUnitsMetric)
         {
-            switch (altitudeUnits)
-            {
-                case IMPERIAL:
-                case USC:
-                    this.altitude = Double.toString(WidgetSettings.LengthUnit.feetToMeters(Double.parseDouble(altitude)));
-                    break;
+            try {
+                this.altitude = Double.toString(feetToMeters(Double.parseDouble(altitude)));
 
-                case METRIC:
-                    this.altitude = altitude;
-                    break;
+            } catch (NumberFormatException e) {
+                Log.e("Location", "Invalid altitude " + altitude + " (ft); unable to make conversion.");
+                this.altitude = "";
             }
         } else {
-            this.altitude = "";
+            this.altitude = altitude;
         }
     }
 
@@ -237,4 +232,9 @@ public class Location
         formatter.applyLocalizedPattern(pattern_latLon);
         return formatter;
     }
+
+    private static double feetToMeters(double feet) {
+        return (feet * (1d / 3.28084d) );
+    }
+
 }
