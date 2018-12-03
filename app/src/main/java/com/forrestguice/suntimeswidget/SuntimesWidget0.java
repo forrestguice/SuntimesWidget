@@ -563,7 +563,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
             PendingIntent alarmIntent = getUpdateIntent(context, alarmID);
             long updateTime = getUpdateTimeMillis(context, alarmID);
             if (Build.VERSION.SDK_INT < 19) {
-                alarmManager.setExact(AlarmManager.RTC, updateTime, alarmIntent);
+                alarmManager.set(AlarmManager.RTC, updateTime, alarmIntent);
             } else {
                 alarmManager.setWindow(AlarmManager.RTC, updateTime, 5 * 1000, alarmIntent);
             }
