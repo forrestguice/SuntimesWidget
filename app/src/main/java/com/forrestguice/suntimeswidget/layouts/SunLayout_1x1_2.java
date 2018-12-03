@@ -30,6 +30,8 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
+import java.util.Calendar;
+
 /**
  * A 1x1 layout that displays only the sunset time.
  */
@@ -56,7 +58,17 @@ public class SunLayout_1x1_2 extends SunLayout
     {
         super.updateViews(context, appWidgetId, views, data);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
-        updateViewsSunsetText(context, views, data.sunsetCalendarToday(), showSeconds);  // TODO: order
+        WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
+
+        Calendar event = data.sunsetCalendar(1);
+        if (order != WidgetSettings.RiseSetOrder.TODAY)
+        {
+            Calendar now = Calendar.getInstance();
+            if (now.after(event)) {
+                event = data.sunsetCalendar(2);
+            }
+        }
+        updateViewsSunsetText(context, views, event, showSeconds);
     }
 
     @Override
