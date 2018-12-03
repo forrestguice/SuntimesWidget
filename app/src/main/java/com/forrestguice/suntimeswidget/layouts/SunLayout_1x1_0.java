@@ -62,7 +62,7 @@ public class SunLayout_1x1_0 extends SunLayout
     public void prepareForUpdate(Context context, int appWidgetID, SuntimesRiseSetData data)
     {
         order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetID);
-        this.layoutID = chooseSunLayout(R.layout.layout_widget_1x1_0, R.layout.layout_widget_1x1_01, data, order);  // TODO
+        this.layoutID = chooseSunLayout(R.layout.layout_widget_1x1_0, R.layout.layout_widget_1x1_01, data, order);
     }
 
     @Override

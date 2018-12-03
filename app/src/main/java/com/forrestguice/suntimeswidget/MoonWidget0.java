@@ -34,7 +34,6 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 public class MoonWidget0 extends SuntimesWidget0
 {
     public static final String WIDGET_UPDATE = "suntimes.MOON_WIDGET_UPDATE";
-    private static final int UPDATEALARM_ID = 4;
 
     @Override
     protected Class getConfigClass()
@@ -46,12 +45,6 @@ public class MoonWidget0 extends SuntimesWidget0
     protected String getUpdateIntentFilter()
     {
         return MoonWidget0.WIDGET_UPDATE;
-    }
-
-    @Override
-    protected int getUpdateAlarmId()
-    {
-        return MoonWidget0.UPDATEALARM_ID;
     }
 
     @Override

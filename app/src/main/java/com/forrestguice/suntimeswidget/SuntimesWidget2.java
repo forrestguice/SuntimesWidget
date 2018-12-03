@@ -34,18 +34,11 @@ import java.util.Calendar;
 public class SuntimesWidget2 extends SuntimesWidget0
 {
     public static final String SUNTIMES_WIDGET_UPDATE2 = "suntimes.SUNTIMES_WIDGET_UPDATE2";
-    public static final int UPDATEALARM_ID = 7;
 
     @Override
     protected Class getConfigClass()
     {
         return SuntimesConfigActivity2.class;
-    }
-
-    @Override
-    protected int getUpdateAlarmId()
-    {
-        return SuntimesWidget2.UPDATEALARM_ID;
     }
 
     @Override

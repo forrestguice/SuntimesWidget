@@ -40,7 +40,6 @@ import java.util.Calendar;
 public class SolsticeWidget0 extends SuntimesWidget0
 {
     public static final String SOLSTICE_WIDGET_UPDATE = "suntimes.SOLSTICE_WIDGET_UPDATE";
-    private static final int UPDATEALARM_ID = 3;
 
     @Override
     protected Class getConfigClass()
@@ -52,15 +51,6 @@ public class SolsticeWidget0 extends SuntimesWidget0
     protected String getUpdateIntentFilter()
     {
         return SolsticeWidget0.SOLSTICE_WIDGET_UPDATE;
-    }
-
-    /**
-     * @return an update alarm identifier for this class (SolsticeWidget0: 3)
-     */
-    @Override
-    protected int getUpdateAlarmId()
-    {
-        return SolsticeWidget0.UPDATEALARM_ID;
     }
 
     @Override
