@@ -24,12 +24,15 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
+import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_2x1_0;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_3x1_0;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+
+import java.util.Calendar;
 
 public class MoonWidget0 extends SuntimesWidget0
 {
@@ -76,6 +79,13 @@ public class MoonWidget0 extends SuntimesWidget0
         layout.updateViews(context, appWidgetId, views, data);
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
+
+        Calendar now = Calendar.getInstance();
+        WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
+        WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId,
+                ((order == WidgetSettings.RiseSetOrder.TODAY) ? -1
+                        : SuntimesData.findSoonest(now, data.getRiseSetEvents()) + 5000)
+        );
     }
 
     protected static MoonLayout getWidgetLayout(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize, MoonLayout defLayout)
