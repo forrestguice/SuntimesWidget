@@ -107,7 +107,7 @@ public class MoonLayout_2x1_0 extends MoonLayout
     }
 
     @Override
-    public void prepareForUpdate(SuntimesMoonData data)
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesMoonData data)
     {
         this.layoutID = chooseMoonLayout(R.layout.layout_widget_moon_2x1_0, R.layout.layout_widget_moon_2x1_01, data);
     }

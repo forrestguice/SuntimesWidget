@@ -46,7 +46,7 @@ public abstract class MoonLayout extends SuntimesLayout
      * modify its state based on the supplied data.
      * @param data the data object (should be the same as supplied to updateViews)
      */
-    public void prepareForUpdate(SuntimesMoonData data)
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesMoonData data)
     {
         // EMPTY
     }

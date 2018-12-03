@@ -64,7 +64,7 @@ public class MoonWidget0 extends SuntimesWidget0
     {
         SuntimesMoonData data = new SuntimesMoonData(context, appWidgetId);
         data.calculate();
-        layout.prepareForUpdate(data);
+        layout.prepareForUpdate(context, appWidgetId, data);
 
         RemoteViews views = layout.getViews(context);
         views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, widgetClass));
