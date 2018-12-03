@@ -68,15 +68,89 @@ public abstract class MoonLayout extends SuntimesLayout
         //Log.v("DEBUG", "title text: " + titleText);
     }
 
-    protected void updateViewsMoonRiseSetText(Context context, RemoteViews views, SuntimesMoonData data, boolean showSeconds)
+    protected void updateViewsMoonRiseSetText(Context context, RemoteViews views, SuntimesMoonData data, boolean showSeconds, WidgetSettings.RiseSetOrder order)
     {
-        SuntimesUtils.TimeDisplayText riseText = utils.calendarTimeShortDisplayString(context, data.moonriseCalendarToday(), showSeconds);
+        Calendar moonrise, moonset;
+        if (order == WidgetSettings.RiseSetOrder.TODAY)
+        {
+            moonrise = data.moonriseCalendarToday();
+            moonset = data.moonsetCalendarToday();
+
+        } else {
+            Calendar now = Calendar.getInstance();
+            Calendar[] moon1 = new Calendar[] { data.moonriseCalendarToday(), data.moonsetCalendarToday() };
+            if (moon1[0] == null || moon1[0].before(moon1[1]))
+            {
+                // today: rising, then setting
+                if (now.before(moon1[0]))
+                {
+                    // waiting for moonrise
+                    moonset = data.moonsetCalendarYesterday();  // last: moonset yesterday
+                    moonrise = data.moonriseCalendarToday();    // next: moonrise today
+                    if (moonrise == null) {
+                        moonrise = data.moonriseCalendarTomorrow();   // .. or moonrise tomorrow
+                    }
+
+                } else if (now.before(moon1[1])) {
+                    // waiting for moonset (past rise)
+                    moonrise = data.moonriseCalendarToday();    // last: moonrise today
+                    if (moonrise == null) {
+                        moonrise = data.moonriseCalendarYesterday();  // .. or moonrise yesterday
+                    }
+                    moonset = data.moonsetCalendarToday();      // next: moonset today
+                    if (moonset == null) {
+                        moonset = data.moonsetCalendarTomorrow();     // .. or moonset tomorrow
+                    }
+
+                } else {
+                    // waiting for moonrise (tomorrow)
+                    moonset = data.moonsetCalendarToday();       // last: moonset today
+                    if (moonset == null) {
+                        moonset = data.moonsetCalendarYesterday();    // .. or moonset yesterday
+                    }
+                    moonrise = data.moonriseCalendarTomorrow();  // next: moonrise tomorrow
+                }
+
+            } else {
+                // today: setting, then rising
+                if (now.before(moon1[1]))
+                {
+                    // waiting for moonset
+                    moonrise = data.moonriseCalendarYesterday();   // last: moonrise yesterday
+                    moonset = data.moonsetCalendarToday();         // next: moonset today
+                    if (moonset == null) {
+                        moonset = data.moonsetCalendarTomorrow();      // .. or moonset tomorrow
+                    }
+
+                } else if (now.before(moon1[0])) {
+                    // waiting for moonrise (past set)
+                    moonset = data.moonsetCalendarToday();         // next: moonset today
+                    if (moonset == null) {
+                        moonset = data.moonsetCalendarYesterday();     // .. or moonset yesterday
+                    }
+                    moonrise = data.moonriseCalendarToday();       // next: moonrise today
+                    if (moonrise == null) {
+                        moonrise = data.moonriseCalendarTomorrow();    // .. or moonrise tomorrow
+                    }
+
+                } else {
+                    // waiting for moonset (tomorrow)
+                    moonrise = data.moonriseCalendarToday();       // last: moonrise today
+                    if (moonrise == null) {
+                        moonrise = data.moonriseCalendarYesterday();    // .. or moonrise yesterday
+                    }
+                    moonset = data.moonsetCalendarTomorrow();      // next: moonset tomorrow
+                }
+            }
+        }
+
+        SuntimesUtils.TimeDisplayText riseText = utils.calendarTimeShortDisplayString(context, moonrise, showSeconds);
         String riseString = riseText.getValue();
         CharSequence riseSequence = (boldTime ? SuntimesUtils.createBoldSpan(null, riseString, riseString) : riseString);
         views.setTextViewText(R.id.text_time_moonrise, riseSequence);
         views.setTextViewText(R.id.text_time_moonrise_suffix, riseText.getSuffix());
 
-        SuntimesUtils.TimeDisplayText setText = utils.calendarTimeShortDisplayString(context, data.moonsetCalendarToday(), showSeconds);
+        SuntimesUtils.TimeDisplayText setText = utils.calendarTimeShortDisplayString(context, moonset, showSeconds);
         String setString = setText.getValue();
         CharSequence setSequence = (boldTime ? SuntimesUtils.createBoldSpan(null, setString, setString) : setString);
         views.setTextViewText(R.id.text_time_moonset, setSequence);
@@ -191,24 +265,64 @@ public abstract class MoonLayout extends SuntimesLayout
         views.setImageViewBitmap(R.id.icon_time_moonset, moonsetIcon);
     }
 
-    protected int chooseMoonLayout(int layout1, int layout2, SuntimesMoonData data)
+    protected int chooseMoonLayout(int layout1, int layout2, SuntimesMoonData data, WidgetSettings.RiseSetOrder order)
     {
-        Calendar riseTime = data.moonriseCalendarToday();
-        Calendar setTime = data.moonsetCalendarToday();
-        if (riseTime != null && setTime != null)
+        if (order == WidgetSettings.RiseSetOrder.TODAY)
         {
-            if (riseTime.before(setTime))
-                return layout1;      // moon rises then sets
-            else return layout2;    // moon sets then rises
+            Calendar riseTime = data.moonriseCalendarToday();
+            Calendar setTime = data.moonsetCalendarToday();
+            if (riseTime != null && setTime != null)
+            {
+                if (riseTime.before(setTime))
+                    return layout1;      // moon rises then sets
+                else return layout2;    // moon sets then rises
 
-        } else if (riseTime == null && setTime == null) {
-            return layout1;  // moon doesn't rise or set today
+            } else if (riseTime == null && setTime == null) {
+                return layout1;  // moon doesn't rise or set today
 
-        } else if (setTime != null) {
-            return layout2;  // moon doesn't rise (but it sets)
+            } else if (setTime != null) {
+                return layout2;  // moon doesn't rise (but it sets)
+
+            } else {
+                return layout1;  // moon doesn't set (but it rises)
+            }
 
         } else {
-            return layout1;  // moon doesn't set (but it rises)
+            Calendar now = Calendar.getInstance();
+            Calendar[] moon1 = new Calendar[] { data.moonriseCalendarToday(), data.moonsetCalendarToday() };
+            if (moon1[0] == null || moon1[0].before(moon1[1]))
+            {
+                // today: rising, then setting
+                if (now.before(moon1[0]))
+                {
+                    // last: moonset yesterday .. next: moonrise today
+                    return layout2;
+
+                } else if (now.before(moon1[1])) {
+                    // last: moonrise today .. next: moonset today
+                    return layout1;
+
+                } else {
+                    // last: moonset today .. next: moonrise tomorrow
+                    return layout2;
+                }
+
+            } else {
+                // today: setting, then rising
+                if (now.before(moon1[1]))
+                {
+                    // last: moonrise yesterday .. next: moonset today
+                    return layout1;
+
+                } else if (now.before(moon1[0])) {
+                    // last: moonset today .. next: moonrise today
+                    return layout2;
+
+                } else {
+                    // last: moonrise today .. next: moonset tomorrow
+                    return layout1;
+                }
+            }
         }
     }
 
