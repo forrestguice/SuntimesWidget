@@ -165,6 +165,14 @@ public class SuntimesMoonData extends SuntimesData
         return null;
     }
 
+    public Calendar[] getRiseSetEvents()
+    {
+        Calendar midnight = midnight();
+        midnight.add(Calendar.DAY_OF_MONTH, 1);
+        return new Calendar[] { moonriseCalendarYesterday(), moonriseCalendarToday(), moonriseCalendarTomorrow(),
+                                moonsetCalendarYesterday(), moonsetCalendarToday(), moonsetCalendarTomorrow(), midnight };
+    }
+
     /**
      * init from other SuntimesEquinoxSolsticeData object
      * @param other another SuntimesEquinoxSolsticeData obj

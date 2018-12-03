@@ -24,8 +24,6 @@ import com.forrestguice.suntimeswidget.layouts.MoonLayout_3x1_0;
 
 public class MoonWidget0_3x1 extends MoonWidget0
 {
-    private static final int UPDATEALARM_ID = 6;
-
     @Override
     protected Class getConfigClass()
     {
@@ -37,12 +35,6 @@ public class MoonWidget0_3x1 extends MoonWidget0
     {
         minSize[0] = context.getResources().getInteger(R.integer.widget_size_minWidthDp3x1);
         minSize[1] = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
-    }
-
-    @Override
-    protected int getUpdateAlarmId()
-    {
-        return MoonWidget0_3x1.UPDATEALARM_ID;
     }
 
     @Override

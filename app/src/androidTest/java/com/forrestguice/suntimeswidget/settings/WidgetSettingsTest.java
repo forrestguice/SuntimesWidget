@@ -46,6 +46,21 @@ import static junit.framework.Assert.assertTrue;
 public class WidgetSettingsTest extends SuntimesActivityTestBase
 {
     @Test
+    public void test_nextUpdate()
+    {
+        Context context = activityRule.getActivity();
+        int appWidgetId = Integer.MAX_VALUE;
+
+        WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, 10);
+        long value1 = WidgetSettings.getNextSuggestedUpdate(context, appWidgetId);
+        assertTrue("value should be 10", value1 == 10);
+
+        WidgetSettings.deleteNextSuggestedUpdate(context, appWidgetId);
+        long value0 = WidgetSettings.getNextSuggestedUpdate(context, appWidgetId);
+        assertTrue("value should be -1", value0 == -1 && value0 == WidgetSettings.PREF_DEF_NEXTUPDATE);
+    }
+
+    @Test
     public void test_lengthUnitsPref()
     {
         Context context = activityRule.getActivity();
@@ -694,6 +709,22 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     protected boolean equals(float float1, float float2)
     {
         return (Math.abs(float1 - float2) < FLOAT_TOLERANCE);
+    }
+
+    @Test
+    public void test_riseSetOrderPref()
+    {
+        WidgetSettings.saveRiseSetOrderPref(context, appWidgetId, WidgetSettings.RiseSetOrder.TODAY);
+        WidgetSettings.RiseSetOrder mode = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
+        assertTrue("riseSetOrder should be TODAY but was " + mode, mode == WidgetSettings.RiseSetOrder.TODAY);
+
+        WidgetSettings.saveRiseSetOrderPref(context, appWidgetId, WidgetSettings.RiseSetOrder.LASTNEXT);
+        mode = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
+        assertTrue("riseSetOrder should be LASTNEXT but was " + mode, mode == WidgetSettings.RiseSetOrder.LASTNEXT);
+
+        WidgetSettings.deleteRiseSetOrderPref(context, appWidgetId);
+        mode = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
+        assertTrue("riseSetOrder should be default (TODAY) but was " + mode, mode == WidgetSettings.RiseSetOrder.TODAY && mode == WidgetSettings.PREF_DEF_GENERAL_RISESETORDER);
     }
 
 }
