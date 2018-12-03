@@ -281,10 +281,16 @@ public abstract class MoonLayout extends SuntimesLayout
                 return layout1;  // moon doesn't rise or set today
 
             } else if (setTime != null) {
-                return layout2;  // moon doesn't rise (but it sets)
+                riseTime = data.moonsetCalendarYesterday();   // moon doesn't rise (but it sets)
+                if (riseTime != null && riseTime.after(data.moonsetCalendarYesterday()))
+                    return layout1;
+                else return layout2;
 
             } else {
-                return layout1;  // moon doesn't set (but it rises)
+                setTime = data.moonsetCalendarYesterday();   // moon doesn't set (but it rises)
+                if (setTime != null && setTime.after(data.moonriseCalendarYesterday()))
+                    return layout2;
+                else return layout1;
             }
 
         } else {
@@ -292,35 +298,27 @@ public abstract class MoonLayout extends SuntimesLayout
             Calendar[] moon1 = new Calendar[] { data.moonriseCalendarToday(), data.moonsetCalendarToday() };
             if (moon1[0] == null || moon1[0].before(moon1[1]))
             {
-                // today: rising, then setting
-                if (now.before(moon1[0]))
-                {
-                    // last: moonset yesterday .. next: moonrise today
-                    return layout2;
+                // today the moon is.. rising, then setting
+                if (now.before(moon1[0])) {
+                    return layout2;                    // last: moonset yesterday .. next: moonrise today
 
                 } else if (now.before(moon1[1])) {
-                    // last: moonrise today .. next: moonset today
-                    return layout1;
+                    return layout1;                    // last: moonrise today .. next: moonset today
 
                 } else {
-                    // last: moonset today .. next: moonrise tomorrow
-                    return layout2;
+                    return layout2;                    // last: moonset today .. next: moonrise tomorrow
                 }
 
             } else {
-                // today: setting, then rising
-                if (now.before(moon1[1]))
-                {
-                    // last: moonrise yesterday .. next: moonset today
-                    return layout1;
+                // today the moon is.. setting, then rising
+                if (now.before(moon1[1])) {
+                    return layout1;                    // last: moonrise yesterday .. next: moonset today
 
                 } else if (now.before(moon1[0])) {
-                    // last: moonset today .. next: moonrise today
-                    return layout2;
+                    return layout2;                    // last: moonset today .. next: moonrise today
 
                 } else {
-                    // last: moonrise today .. next: moonset tomorrow
-                    return layout1;
+                    return layout1;                    // last: moonrise today .. next: moonset tomorrow
                 }
             }
         }
