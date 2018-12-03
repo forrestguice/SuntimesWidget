@@ -60,7 +60,7 @@ public class SolsticeWidget0 extends SuntimesWidget0
     }
 
     @Override
-    protected long getUpdateTimeMillis()
+    protected long getUpdateTimeMillis(Context context, int appWidgetId)
     {
         Calendar updateTime = Calendar.getInstance();
         updateTime.add(Calendar.SECOND, (int)(getUpdateInterval() / 1000));

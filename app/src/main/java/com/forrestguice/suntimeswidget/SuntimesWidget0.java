@@ -44,7 +44,9 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Comparator;
 
 /**
  * Widget receiver for resizable widget (that falls back to 1x1 layout).
@@ -551,7 +553,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
         if (alarmManager != null)
         {
             PendingIntent alarmIntent = getUpdateIntent(context, alarmID);
-            long updateTime = getUpdateTimeMillis();
+            long updateTime = getUpdateTimeMillis(context, alarmID);
             if (Build.VERSION.SDK_INT < 19) {
                 alarmManager.setExact(AlarmManager.RTC, updateTime, alarmIntent);
             } else {
@@ -577,36 +579,39 @@ public class SuntimesWidget0 extends AppWidgetProvider
     }
 
     /**
-     * @return time of update event (in millis); next midnight
+     * @return time of update event (in millis)
      */
-    protected long getUpdateTimeMillis()
+    protected long getUpdateTimeMillis( Context context, int appWidgetID )
     {
-        return getUpdateTimeMillis(null, null);
+        long suggestedUpdateMillis = WidgetSettings.getNextSuggestedUpdate(context, appWidgetID);
+        if (suggestedUpdateMillis <= 0)
+        {
+            return getUpdateTimeMillis(null);
+
+        } else {
+            Calendar suggestedUpdate = Calendar.getInstance();
+            suggestedUpdate.setTimeInMillis(suggestedUpdateMillis);
+            return getUpdateTimeMillis(suggestedUpdate);
+        }
     }
 
-    protected long getUpdateTimeMillis(Calendar riseTime, Calendar setTime)
+    protected long getUpdateTimeMillis(Calendar suggestedUpdateTime)
     {
         Calendar updateTime = Calendar.getInstance();
         Calendar now = Calendar.getInstance();
-        if (now.before(riseTime))
-        {
-            // update at rising time
-            updateTime.setTimeInMillis(riseTime.getTimeInMillis());
-            Log.d("getUpdateTimeMillis", "next update is at sunrise: " + updateTime);
 
-        } else if (now.before(setTime)) {
-            // update at setting time
-            updateTime.setTimeInMillis(setTime.getTimeInMillis());
-            Log.d("getUpdateTimeMillis", "next update is at sunset: " + updateTime);
+        if (now.before(suggestedUpdateTime))
+        {
+            updateTime.setTimeInMillis(suggestedUpdateTime.getTimeInMillis());
+            Log.d(TAG, "getUpdateTimeMillis: next update is at: " + updateTime);
 
         } else {
-            // update at midnight
             updateTime.set(Calendar.MILLISECOND, 0);   // reset seconds, minutes, and hours to 0
             updateTime.set(Calendar.MINUTE, 0);
             updateTime.set(Calendar.SECOND, 0);
             updateTime.set(Calendar.HOUR_OF_DAY, 0);
             updateTime.add(Calendar.DAY_OF_MONTH, 1);  // and increment the date by 1 day
-            Log.d("getUpdateTimeMillis", "next update is at midnight: " + updateTime);
+            Log.d(TAG, "getUpdateTimeMillis: next update is at midnight: " + updateTime);
         }
         return updateTime.getTimeInMillis();
     }
