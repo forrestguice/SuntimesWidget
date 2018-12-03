@@ -857,7 +857,9 @@
 
     <plurals name="themePlural">
         <item quantity="one">%d theme</item>
+        <item quantity="few">%d themes</item>
         <item quantity="other">%d themes</item>
+        <item quantity="many">%d themes</item>
     </plurals>  <!-- TODO -->
 
     <!-- Dialog: Color -->
