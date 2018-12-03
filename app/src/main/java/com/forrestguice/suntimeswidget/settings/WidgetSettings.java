@@ -191,6 +191,9 @@ public class WidgetSettings
     public static final String PREF_KEY_DATE_DAY = "dateDay";
     public static final int PREF_DEF_DATE_DAY = -1;
 
+    public static final String PREF_KEY_NEXTUPDATE = "nextUpdate";
+    public static final long PREF_DEF_NEXTUPDATE = -1L;
+
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -975,6 +978,30 @@ public class WidgetSettings
             TODAY.setDisplayString( context.getString(R.string.risesetorder_today) );
             LASTNEXT.setDisplayString( context.getString(R.string.risesetorder_lastnext) );
         }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static long getNextSuggestedUpdate(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId;
+        return prefs.getLong(prefs_prefix + PREF_KEY_NEXTUPDATE, -1);
+    }
+    public static void saveNextSuggestedUpdate(Context context, int appWidgetId, long updateTime)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId;
+        prefs.putLong(prefs_prefix + PREF_KEY_NEXTUPDATE, updateTime);
+        prefs.apply();
+    }
+    public static void deleteNextSuggestedUpdate(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId;
+        prefs.remove(prefs_prefix + PREF_KEY_NEXTUPDATE);
+        prefs.apply();
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -2224,6 +2251,7 @@ public class WidgetSettings
 
     public static void deletePrefs(Context context, int appWidgetId)
     {
+        deleteNextSuggestedUpdate(context, appWidgetId);
         deleteActionModePref(context, appWidgetId);
         deleteActionLaunchPref(context, appWidgetId);
 

@@ -46,6 +46,21 @@ import static junit.framework.Assert.assertTrue;
 public class WidgetSettingsTest extends SuntimesActivityTestBase
 {
     @Test
+    public void test_nextUpdate()
+    {
+        Context context = activityRule.getActivity();
+        int appWidgetId = Integer.MAX_VALUE;
+
+        WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, 10);
+        long value1 = WidgetSettings.getNextSuggestedUpdate(context, appWidgetId);
+        assertTrue("value should be 10", value1 == 10);
+
+        WidgetSettings.deleteNextSuggestedUpdate(context, appWidgetId);
+        long value0 = WidgetSettings.getNextSuggestedUpdate(context, appWidgetId);
+        assertTrue("value should be -1", value0 == -1 && value0 == WidgetSettings.PREF_DEF_NEXTUPDATE);
+    }
+
+    @Test
     public void test_lengthUnitsPref()
     {
         Context context = activityRule.getActivity();
