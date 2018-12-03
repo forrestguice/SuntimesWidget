@@ -324,6 +324,30 @@ public class SuntimesData
         return nowThen;
     }
 
+    /**
+     * findSoonest
+     */
+    public static long findSoonest(Calendar now, Calendar... events)
+    {
+        Calendar soonest = null;
+        long tillSoonest = Long.MAX_VALUE;
+        long nowMillis = now.getTimeInMillis();
+
+        for (Calendar event : events)
+        {
+            if (now.before(event))
+            {
+                long tillEvent = event.getTimeInMillis() - nowMillis;
+                if (tillEvent < tillSoonest)
+                {
+                    soonest = event;
+                    tillSoonest = tillEvent;
+                }
+            }
+        }
+        return (soonest != null ? soonest.getTimeInMillis() : -1);
+    }
+
 }
 
 

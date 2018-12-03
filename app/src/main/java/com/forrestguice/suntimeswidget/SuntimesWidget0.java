@@ -34,6 +34,7 @@ import android.widget.RemoteViews;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData2;
 import com.forrestguice.suntimeswidget.layouts.SunLayout;
@@ -496,6 +497,13 @@ public class SuntimesWidget0 extends AppWidgetProvider
         layout.updateViews(context, appWidgetId, views, data);
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
+
+        Calendar now = Calendar.getInstance();
+        WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
+        WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId,
+                ((order == WidgetSettings.RiseSetOrder.TODAY) ? -1
+                        : SuntimesData.findSoonest(now, data.getEvents()) + 5000)
+        );
     }
 
     /**

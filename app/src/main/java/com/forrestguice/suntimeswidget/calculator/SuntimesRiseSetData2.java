@@ -24,6 +24,7 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import java.util.Arrays;
 import java.util.Calendar;
 
 /**
@@ -168,6 +169,19 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
             this.sunset[i] = other.sunset[i];
             this.daylength[i] = other.daylength[i];
         }
+    }
+
+    @Override
+    public Calendar[] getEvents()
+    {
+        Calendar[] retValue = Arrays.copyOf(sunrise, sunrise.length + sunset.length + 1);   // sunrise array (3) + sunset array (3) + midnight (1)
+        System.arraycopy(sunset, 0, retValue, sunrise.length, sunset.length);
+
+        Calendar midnight = midnight();
+        midnight.add(Calendar.DAY_OF_MONTH,  1);
+        retValue[retValue.length-1] = midnight;
+
+        return retValue;
     }
 
     /**

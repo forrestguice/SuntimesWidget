@@ -156,6 +156,13 @@ public class SuntimesRiseSetData extends SuntimesData
         else return sunsetCalendarOther;
     }
 
+    public Calendar[] getEvents()
+    {
+        Calendar midnight = midnight();
+        midnight.add(Calendar.DAY_OF_MONTH,  1);
+        return new Calendar[] { sunriseCalendarToday, sunsetCalendarToday, sunriseCalendarOther, sunsetCalendarOther, midnight };
+    }
+
     /**
      * Property: day delta prefix
      */
