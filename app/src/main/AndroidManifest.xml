@@ -115,6 +115,7 @@
 
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.intent.action.TIME_SET"/>
                 <action android:name="suntimes.SUNTIMES_WIDGET_UPDATE" />
                 <action android:name="suntimes.SUNTIMES_THEME_UPDATE" />
                 <action android:name="suntimes.SUNTIMES_ALARM_UPDATE" />
@@ -140,6 +141,7 @@
 
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.intent.action.TIME_SET"/>
                 <action android:name="suntimes.SUNTIMES_WIDGET_UPDATE" />
                 <action android:name="suntimes.SUNTIMES_THEME_UPDATE" />
                 <action android:name="suntimes.SUNTIMES_ALARM_UPDATE" />
@@ -167,6 +169,7 @@
 
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.intent.action.TIME_SET"/>
                 <action android:name="suntimes.SUNTIMES_WIDGET_UPDATE1" />
                 <action android:name="suntimes.SUNTIMES_THEME_UPDATE" />
                 <action android:name="suntimes.SUNTIMES_ALARM_UPDATE" />
@@ -308,6 +311,7 @@
 
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.intent.action.TIME_SET"/>
                 <action android:name="suntimes.MOON_WIDGET_UPDATE" />
                 <action android:name="suntimes.SUNTIMES_THEME_UPDATE" />
                 <action android:name="suntimes.SUNTIMES_ALARM_UPDATE" />
@@ -334,6 +338,7 @@
 
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.intent.action.TIME_SET"/>
                 <action android:name="suntimes.MOON_WIDGET_UPDATE" />
                 <action android:name="suntimes.SUNTIMES_THEME_UPDATE" />
                 <action android:name="suntimes.SUNTIMES_ALARM_UPDATE" />
@@ -360,6 +365,7 @@
 
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.intent.action.TIME_SET"/>
                 <action android:name="suntimes.MOON_WIDGET_UPDATE" />
                 <action android:name="suntimes.SUNTIMES_THEME_UPDATE" />
                 <action android:name="suntimes.SUNTIMES_ALARM_UPDATE" />

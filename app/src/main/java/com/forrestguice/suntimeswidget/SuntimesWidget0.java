@@ -45,9 +45,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Comparator;
 
 /**
  * Widget receiver for resizable widget (that falls back to 1x1 layout).
@@ -139,6 +137,12 @@ public class SuntimesWidget0 extends AppWidgetProvider
 
         } else if (action != null && action.equals(SUNTIMES_ALARM_UPDATE)) {
             Log.d(TAG, "onReceive: SUNTIMES_ALARM_UPDATE :: " + getClass());
+            updateWidgets(context);
+            setUpdateAlarms(context);
+
+        } else if (action != null && action.equals("android.intent.action.TIME_SET")) {
+            Log.d(TAG, "onReceive: android.intent.action.TIME_SET :: " + getClass());
+            updateWidgets(context);
             setUpdateAlarms(context);
 
         } else if (action != null && action.equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE)) {
@@ -618,7 +622,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
         if (now.before(suggestedUpdateTime))
         {
             updateTime.setTimeInMillis(suggestedUpdateTime.getTimeInMillis());
-            Log.d(TAG, "getUpdateTimeMillis: next update is at: " + updateTime);
+            Log.d(TAG, "getUpdateTimeMillis: next update is at: " + updateTime.getTimeInMillis());
 
         } else {
             updateTime.set(Calendar.MILLISECOND, 0);   // reset seconds, minutes, and hours to 0
@@ -626,7 +630,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
             updateTime.set(Calendar.SECOND, 0);
             updateTime.set(Calendar.HOUR_OF_DAY, 0);
             updateTime.add(Calendar.DAY_OF_MONTH, 1);  // and increment the date by 1 day
-            Log.d(TAG, "getUpdateTimeMillis: next update is at midnight: " + updateTime);
+            Log.d(TAG, "getUpdateTimeMillis: next update is at midnight: " + updateTime.getTimeInMillis());
         }
         return updateTime.getTimeInMillis();
     }
