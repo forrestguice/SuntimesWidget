@@ -1083,15 +1083,18 @@
          <b>Sun Widgets:</b> <br/>
                 * <b>%m</b> for mode (short) (e.g. Civil) <br/>
                 * <b>%M</b> for mode (long) (e.g. Civil Twilight) <br/>
+                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
          <br/>
          <b>Moon Widgets:</b> <br/>
                 * <b>%i</b> for moon illumination (e.g. 25%) <br/>
                 * <b>%M</b> for moon phase (e.g. Waxing Crescent) <br/>
+                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
          <br/>
          <b>Solstice Widgets:</b> <br/>
                 * <b>%m</b> for mode (short) (e.g. Solstice) <br/>
                 * <b>%M</b> for mode (long) (e.g. Winter Solstice) <br/>
-    ]]></string>
+                * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
+    ]]></string>  <!-- TODO: %o is new and isn't advertised in any of the translations -->
 
     <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
