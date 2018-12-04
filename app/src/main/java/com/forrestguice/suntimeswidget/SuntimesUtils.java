@@ -949,9 +949,14 @@ public class SuntimesUtils
         String displayString = displayStringForTitlePattern(context, titlePattern, (SuntimesData)data);
         String modePattern = "%M";
         String modePatternShort = "%m";
+        String orderPattern = "%o";
+
         WidgetSettings.TimeMode timeMode = data.timeMode();
+        WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, data.appWidgetID());
+
         displayString = displayString.replaceAll(modePatternShort, timeMode.getShortDisplayString());
         displayString = displayString.replaceAll(modePattern, timeMode.getLongDisplayString());
+        displayString = displayString.replaceAll(orderPattern, order.toString());
         return displayString;
     }
 
@@ -963,9 +968,13 @@ public class SuntimesUtils
             String modePattern = "%M";
             String modePatternShort = "%m";
             String illumPattern = "%i";
+            String orderPattern = "%o";
+
+            WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, data.appWidgetID());
 
             displayString = displayString.replaceAll(modePatternShort, data.getMoonPhaseToday().getShortDisplayString());
             displayString = displayString.replaceAll(modePattern, data.getMoonPhaseToday().getLongDisplayString());
+            displayString = displayString.replaceAll(orderPattern, order.toString());
 
             if (displayString.contains(illumPattern)) {
                 NumberFormat percentage = NumberFormat.getPercentInstance();
@@ -980,9 +989,14 @@ public class SuntimesUtils
         String displayString = displayStringForTitlePattern(context, titlePattern, (SuntimesData)data);
         String modePattern = "%M";
         String modePatternShort = "%m";
+        String orderPattern = "%o";
+
+        WidgetSettings.TrackingMode trackingMode = WidgetSettings.loadTrackingModePref(context, data.appWidgetID());
         WidgetSettings.SolsticeEquinoxMode timeMode = data.timeMode();
+
         displayString = displayString.replaceAll(modePatternShort, timeMode.getShortDisplayString());
         displayString = displayString.replaceAll(modePattern, timeMode.getLongDisplayString());
+        displayString = displayString.replaceAll(orderPattern, trackingMode.toString());
         return displayString;
     }
 
