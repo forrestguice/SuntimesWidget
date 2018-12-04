@@ -498,12 +498,19 @@ public class SuntimesWidget0 extends AppWidgetProvider
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
 
-        Calendar now = Calendar.getInstance();
         WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
-        WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId,
-                ((order == WidgetSettings.RiseSetOrder.TODAY) ? -1
-                        : SuntimesData.findSoonest(now, data.getEvents()) + 5000)
-        );
+        if (order == WidgetSettings.RiseSetOrder.TODAY) {
+            WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, -1);
+            Log.d(TAG, "saveNextSuggestedUpdate: -1");
+
+        } else {
+            long soonest = SuntimesData.findSoonest(Calendar.getInstance(), data.getEvents());
+            if (soonest != -1) {
+                soonest += 5000;   // +5s
+            }
+            WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId,  soonest);
+            Log.d(TAG, "saveNextSuggestedUpdate: " + utils.calendarDateTimeDisplayString(context, soonest).toString());
+        }
     }
 
     /**

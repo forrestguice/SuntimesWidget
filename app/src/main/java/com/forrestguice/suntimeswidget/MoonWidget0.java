@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -80,12 +81,19 @@ public class MoonWidget0 extends SuntimesWidget0
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
 
-        Calendar now = Calendar.getInstance();
         WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
-        WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId,
-                ((order == WidgetSettings.RiseSetOrder.TODAY) ? -1
-                        : SuntimesData.findSoonest(now, data.getRiseSetEvents()) + 5000)
-        );
+        if (order == WidgetSettings.RiseSetOrder.TODAY) {
+            WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, -1);
+            Log.d(TAG, "saveNextSuggestedUpdate: -1");
+
+        } else {
+            long soonest = SuntimesData.findSoonest(Calendar.getInstance(), data.getRiseSetEvents());
+            if (soonest != -1) {
+                soonest += 5000;   // +5s
+            }
+            WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, soonest);
+            Log.d(TAG, "saveNextSuggestedUpdate: " + utils.calendarDateTimeDisplayString(context, soonest).toString());
+        }
     }
 
     protected static MoonLayout getWidgetLayout(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize, MoonLayout defLayout)
