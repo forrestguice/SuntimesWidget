@@ -21,18 +21,25 @@ package com.forrestguice.suntimeswidget.settings;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PermissionInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 
+import java.util.HashMap;
 import java.util.Locale;
 
 /**
@@ -676,6 +683,77 @@ public class AppSettings
     {
         LocaleMode.initDisplayStrings(context);
         ClockTapAction.initDisplayStrings(context);
+    }
+
+    /**
+     * Verify that our custom permissions are not being held by some other app. Displays a dialog
+     * warning the user of potential malicious behavior when duplicate permissions are found.
+     *
+     * This security issue is fixed in api21; apps with differing signatures are not allowed to
+     * (re)define the same permission. However lower apis are still vulnerable to "permission squatting"
+     * by potentially malicious apps (that may attempt to redefine a permission's definition by exploiting
+     * the "first come first served" nature of custom permissions).
+     *
+     * @param context a Context
+     */
+    public static void checkCustomPermissions(Context context)
+    {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+        {
+            long bench_start = System.nanoTime();
+
+            int[] attrs = new int[] { R.attr.icActionWarning };
+            TypedArray a = context.obtainStyledAttributes(attrs);
+            int warningIcon = a.getResourceId(0, R.drawable.ic_action_warning);
+            a.recycle();
+
+            PackageManager packageManager = context.getPackageManager();
+            String myPackageName = context.getPackageName();
+
+            try {
+                PackageInfo myPackageInfo = packageManager.getPackageInfo(myPackageName, PackageManager.GET_PERMISSIONS);
+                HashMap<String, PermissionInfo> myPermissions = new HashMap<>();
+                for (PermissionInfo permission : myPackageInfo.permissions) {
+                    myPermissions.put(permission.name, permission);
+                }
+
+                for (PackageInfo packageInfo : packageManager.getInstalledPackages(PackageManager.GET_PERMISSIONS))
+                {
+                    if (packageInfo.packageName.equals(myPackageName) || packageInfo.permissions == null) {
+                        continue;      // skip our entry.. and skip entries without any permissions
+                    }
+
+                    for (PermissionInfo permission : packageInfo.permissions)                           // for each package that defines permissions..
+                    {                                                                                     // and for each of those permissions..
+                        if (myPermissions.containsKey(permission.name))                                      // check against our permissions..
+                        {
+                            // !!! some other app has claimed our permission!
+                            // On api21+ this security risk is prevented (but is still possible for lower apis).
+                            // Warn the user that the other package might be malicious!
+
+                            AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+                            alertDialog.setIcon(warningIcon);
+                            alertDialog.setTitle(context.getString(R.string.security_dialog_title));
+                            alertDialog.setMessage(context.getString(R.string.security_duplicate_permissions, permission.name, packageInfo.packageName));
+                            alertDialog.setNeutralButton( context.getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            });
+
+                            Log.e("checkCustomPermissions", "Duplicate permissions! " + packageInfo.packageName + " also defines " + permission.name + "!");
+                            alertDialog.show();
+                        }
+                    }
+                }
+
+            } catch (PackageManager.NameNotFoundException e) {
+                Log.e("checkCustomPermissions", "Unable to get package " + myPackageName);
+            }
+
+            long bench_end = System.nanoTime();
+            Log.d("checkCustomPermissions", "permission check took :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
+        }
     }
 
 }
