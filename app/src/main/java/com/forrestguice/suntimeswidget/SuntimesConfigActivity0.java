@@ -1265,7 +1265,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
             final Context context = SuntimesConfigActivity0.this;
             saveSettings(context);
-            updateWidget(context);
+            updateWidgets(context,  new int[] {appWidgetId});
 
             Intent resultValue = new Intent();
             resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
@@ -1278,11 +1278,16 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      * Update all widgets of this type (direct update, no broadcast).
      * @param context a context used to access resources
      */
-    protected void updateWidget(Context context)
+    protected void updateWidgets(Context context, int[] appWidgetIds)
     {
-        SunLayout defLayout = WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId);
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0.class, minWidgetSize(context), defLayout);
+        Intent updateIntent = new Intent(context, SuntimesWidget0.class);
+        updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+        sendBroadcast(updateIntent);
+
+        //SunLayout defLayout = WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId);
+        //AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        //SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0.class, minWidgetSize(context), defLayout);
     }
 
     /**

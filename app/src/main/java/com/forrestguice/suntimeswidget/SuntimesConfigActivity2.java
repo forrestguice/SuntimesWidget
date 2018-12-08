@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.content.Intent;
 import android.widget.ArrayAdapter;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -83,10 +84,15 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     private static int[] requiredFeatures = new int[] { SuntimesCalculator.FEATURE_POSITION };
 
     @Override
-    protected void updateWidget(Context context)
+    protected void updateWidgets(Context context, int[] appWidgetIds)
     {
-        SunPosLayout defLayout = new SunPosLayout_1X1_0();
-        SuntimesWidget2.updateAppWidget(context, AppWidgetManager.getInstance(context), appWidgetId, SuntimesWidget2.class, minWidgetSize(context), defLayout);
+        Intent updateIntent = new Intent(context, SuntimesWidget2.class);
+        updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+        sendBroadcast(updateIntent);
+
+        //SunPosLayout defLayout = new SunPosLayout_1X1_0();
+        //SuntimesWidget2.updateAppWidget(context, AppWidgetManager.getInstance(context), appWidgetId, SuntimesWidget2.class, minWidgetSize(context), defLayout);
     }
 
     @Override

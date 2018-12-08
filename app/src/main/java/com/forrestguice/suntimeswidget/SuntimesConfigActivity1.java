@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.content.Intent;
 
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -71,10 +72,15 @@ public class SuntimesConfigActivity1 extends SuntimesConfigActivity0
     }
 
     @Override
-    protected void updateWidget(Context context)
+    protected void updateWidgets(Context context, int[] appWidgetIds)
     {
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        SuntimesWidget1.updateAppWidget(context, appWidgetManager, appWidgetId);
+        Intent updateIntent = new Intent(context, SuntimesWidget1.class);
+        updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+        sendBroadcast(updateIntent);
+
+        //AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        //SuntimesWidget1.updateAppWidget(context, appWidgetManager, appWidgetId);
     }
 
 }

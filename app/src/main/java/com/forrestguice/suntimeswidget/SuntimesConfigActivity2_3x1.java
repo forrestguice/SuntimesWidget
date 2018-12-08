@@ -47,13 +47,18 @@ public class SuntimesConfigActivity2_3x1 extends SuntimesConfigActivity2
     }
 
     @Override
-    protected void updateWidget(Context context)
+    protected void updateWidgets(Context context, int[] appWidgetIds)
     {
-        UpdateTask updateTask = new UpdateTask(appWidgetId, minWidgetSize(context));
-        updateTask.execute(this);
+        Intent updateIntent = new Intent(context, SuntimesWidget2_3x1.class);
+        updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+        sendBroadcast(updateIntent);
+
+        //UpdateTask updateTask = new UpdateTask(appWidgetId, minWidgetSize(context));
+        //updateTask.execute(this);
     }
 
-    private static class UpdateTask extends AsyncTask<Object, Void, Void>
+    /**private static class UpdateTask extends AsyncTask<Object, Void, Void>
     {
         int appWidgetId;
         int[] minWidgetSize;
@@ -77,7 +82,7 @@ public class SuntimesConfigActivity2_3x1 extends SuntimesConfigActivity2
             }
             return null;
         }
-    }
+    }*/
 
     @Override
     protected int[] minWidgetSize( Context context )

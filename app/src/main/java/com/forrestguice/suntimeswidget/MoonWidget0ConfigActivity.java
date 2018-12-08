@@ -54,10 +54,15 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
     }
 
     @Override
-    protected void updateWidget(Context context)
+    protected void updateWidgets(Context context, int[] appWidgetIds)
     {
-        MoonLayout defLayout = WidgetSettings.loadMoon1x1ModePref_asLayout(context, appWidgetId);
-        MoonWidget0.updateAppWidget(context, AppWidgetManager.getInstance(context), appWidgetId, MoonWidget0.class, minWidgetSize(context), defLayout);
+        Intent updateIntent = new Intent(context, MoonWidget0.class);
+        updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+        sendBroadcast(updateIntent);
+
+        //MoonLayout defLayout = WidgetSettings.loadMoon1x1ModePref_asLayout(context, appWidgetId);
+        //MoonWidget0.updateAppWidget(context, AppWidgetManager.getInstance(context), appWidgetId, MoonWidget0.class, minWidgetSize(context), defLayout);
     }
 
     @Override
