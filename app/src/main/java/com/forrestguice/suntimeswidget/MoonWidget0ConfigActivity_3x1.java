@@ -23,7 +23,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
-import com.forrestguice.suntimeswidget.layouts.MoonLayout_3x1_0;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity;
 
 import static com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity.PICK_THEME_REQUEST;

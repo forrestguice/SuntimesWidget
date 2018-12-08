@@ -23,8 +23,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
-import com.forrestguice.suntimeswidget.layouts.SunLayout_2x1_0;
-
 /**
  * Widget config activity (for resizable widget that falls back to 2x1 layout).
  */

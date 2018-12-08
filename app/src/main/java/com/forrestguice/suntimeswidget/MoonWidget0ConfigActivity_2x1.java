@@ -23,8 +23,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
-import com.forrestguice.suntimeswidget.layouts.MoonLayout_2x1_0;
-
 public class MoonWidget0ConfigActivity_2x1 extends MoonWidget0ConfigActivity
 {
     public MoonWidget0ConfigActivity_2x1()
