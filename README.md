@@ -14,10 +14,10 @@ Android app (and widget collection) that displays sunlight and moonlight times f
 Displays sunrise and sunset, twilights (civil / nautical / astronomical), blue and golden hour, solstices and equinoxes, moonrise and moonset, moon phases and illumination. 
 
 <a href="https://f-droid.org/repository/browse/?fdid=com.forrestguice.suntimeswidget" target="_blank">
-<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="80" style="float:left" /></a>
+<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="80" align="left" /></a>
 
-<p style="float:left; margin-left:48px"><a href="https://github.com/forrestguice/SuntimesCalendars/releases"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/images/ic_launcher.png" height="48" /></a> <span style="margin-left:12px"><a href="https://github.com/forrestguice/SuntimesCalendars/releases">Suntimes Calendars</a></span> <br /><span style="margin-left:12px;">A calendar provider add-on.</span>
-</p>
+<a href="https://github.com/forrestguice/SuntimesCalendars/releases"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/images/ic_launcher.png" height="64" /></a> <a href="https://github.com/forrestguice/SuntimesCalendars/releases">Suntimes Calendars</a> <br />
+A calendar provider add-on.<br/><br />
     
 The app:
 * displays the current time (system time zone, custom time zone, or solar time) 
