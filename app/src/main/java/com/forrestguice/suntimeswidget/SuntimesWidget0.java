@@ -142,8 +142,9 @@ public class SuntimesWidget0 extends AppWidgetProvider
 
         } else if (action != null && action.equals("android.intent.action.TIME_SET")) {
             Log.d(TAG, "onReceive: android.intent.action.TIME_SET :: " + getClass());
-            updateWidgets(context);
-            setUpdateAlarms(context);
+            //updateWidgets(context);
+            //setUpdateAlarms(context);
+            // TODO: handle TIME_SET better .. when automatic/network time is enabled this thing fires /frequently/ ...
 
         } else if (action != null && action.equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE)) {
             Log.d(TAG, "onReceive: ACTION_APPWIDGET_UPDATE :: " + getClass());
