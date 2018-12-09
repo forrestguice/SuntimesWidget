@@ -26,14 +26,6 @@
             android:entries="@array/timeFormatMode_display" android:entryValues="@array/timeFormatMode_values"
             android:defaultValue="@string/def_appwidget_0_appearance_timeformatmode" />
 
-        <com.forrestguice.suntimeswidget.settings.ListPreference
-            android:key="appwidget_0_general_lengthunits"
-            android:title="@string/configLabel_general_lengthUnits"
-            android:dialogTitle="@string/configLabel_general_lengthUnits"
-            android:summary="%s"
-            android:entries="@array/lengthUnits_display" android:entryValues="@array/lengthUnits_values"
-            android:defaultValue="@string/default_units_length" />
-
         <CheckBoxPreference
             android:key="appwidget_0_general_showseconds"
             android:title="@string/configLabel_general_showSeconds"
@@ -43,6 +35,14 @@
             android:key="appwidget_0_general_showtimedate"
             android:title="@string/configLabel_general_showTimeDate"
             android:summary="@string/configLabel_general_showTimeDate_summary" android:defaultValue="@string/def_appwidget_0_general_showtimedate" />
+
+        <com.forrestguice.suntimeswidget.settings.ListPreference
+            android:key="appwidget_0_general_lengthunits"
+            android:title="@string/configLabel_general_lengthUnits"
+            android:dialogTitle="@string/configLabel_general_lengthUnits"
+            android:summary="%s"
+            android:entries="@array/lengthUnits_display" android:entryValues="@array/lengthUnits_values"
+            android:defaultValue="@string/default_units_length" />
 
         <CheckBoxPreference
             android:key="appwidget_0_location_altitude_enabled"
