@@ -57,7 +57,7 @@ public class SunLayout_1x1_4 extends SunLayout
     {
         super.updateViews(context, appWidgetId, views, data);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
-        updateViewsNoonText(context, views, data, showSeconds);
+        updateViewsNoonText(context, views, data.sunsetCalendarToday(), showSeconds);
     }
 
     @Override

@@ -29,8 +29,11 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData2;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+
+import java.util.Calendar;
 
 /**
  * A 1x1 layout that displays both the sunrise and sunset time.
@@ -53,12 +56,21 @@ public class SunLayout_1x1_0 extends SunLayout
         this.layoutID = R.layout.layout_widget_1x1_0;
     }
 
+    private WidgetSettings.RiseSetOrder order = WidgetSettings.RiseSetOrder.TODAY;
+
+    @Override
+    public void prepareForUpdate(Context context, int appWidgetID, SuntimesRiseSetData data)
+    {
+        order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetID);
+        this.layoutID = chooseSunLayout(R.layout.layout_widget_1x1_0, R.layout.layout_widget_1x1_01, data, order);
+    }
+
     @Override
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesRiseSetData data)
     {
         super.updateViews(context, appWidgetId, views, data);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
-        updateViewsSunRiseSetText(context, views, data, showSeconds);
+        updateViewsSunRiseSetText(context, views, data, showSeconds, order);
     }
 
     @Override

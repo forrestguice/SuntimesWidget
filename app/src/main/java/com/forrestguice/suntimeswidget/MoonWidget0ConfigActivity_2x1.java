@@ -20,9 +20,8 @@ package com.forrestguice.suntimeswidget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
-
-import com.forrestguice.suntimeswidget.layouts.MoonLayout_2x1_0;
 
 public class MoonWidget0ConfigActivity_2x1 extends MoonWidget0ConfigActivity
 {
@@ -42,9 +41,14 @@ public class MoonWidget0ConfigActivity_2x1 extends MoonWidget0ConfigActivity
     }
 
     @Override
-    protected void updateWidget(Context context)
+    protected void updateWidgets(Context context, int[] appWidgetIds)
     {
-        MoonWidget0_2x1.updateAppWidget(context, AppWidgetManager.getInstance(context), appWidgetId, MoonWidget0_2x1.class, minWidgetSize(context), new MoonLayout_2x1_0());
+        Intent updateIntent = new Intent(context, MoonWidget0_2x1.class);
+        updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+        sendBroadcast(updateIntent);
+
+        //MoonWidget0_2x1.updateAppWidget(context, AppWidgetManager.getInstance(context), appWidgetId, MoonWidget0_2x1.class, minWidgetSize(context), new MoonLayout_2x1_0());
     }
 
     @Override

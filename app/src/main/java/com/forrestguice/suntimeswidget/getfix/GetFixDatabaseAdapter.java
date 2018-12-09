@@ -25,7 +25,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 
 public class GetFixDatabaseAdapter
 {
@@ -168,7 +168,7 @@ public class GetFixDatabaseAdapter
      * @param place a Location object describing the place
      * @return the rowID of the newly added place or -1 if an error
      */
-    public long addPlace( WidgetSettings.Location place )
+    public long addPlace( Location place )
     {
         ContentValues values = new ContentValues();
         values.put(KEY_PLACE_NAME, place.getLabel());
@@ -179,7 +179,7 @@ public class GetFixDatabaseAdapter
         return database.insert(TABLE_PLACES, null, values);
     }
 
-    public void updatePlace( WidgetSettings.Location place )
+    public void updatePlace( Location place )
     {
         ContentValues values = new ContentValues();
         values.put(KEY_PLACE_NAME, place.getLabel());

@@ -26,12 +26,13 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -54,7 +55,11 @@ public class SuntimesNotes
     private SuntimesRiseSetDataset dataset;
     private SuntimesMoonData moondata;         // may be null
 
-    private int colorSunrise, colorSunset, colorMoonrise, colorMoonset;
+    private int colorSunrise, colorSunriseStroke;
+    private int colorSunset, colorSunsetStroke;
+    private int colorMoonrise, colorMoonset;
+    private int colorNoon, colorNoonStroke;
+    private int strokeWidthRising, strokeWidthSetting, strokeWidthNoon;
 
     public SuntimesNotes()
     {
@@ -66,16 +71,41 @@ public class SuntimesNotes
     }
 
     @SuppressWarnings("ResourceType")
-    private void initColors(Context context)
+    private void themeViews(Context context)
     {
-        int[] colorAttrs = { R.attr.sunriseColor, R.attr.sunsetColor, R.attr.moonriseColor, R.attr.moonsetColor };
-        TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
-        int def = R.color.transparent;
-        colorSunrise = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
-        colorSunset = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
-        colorMoonrise = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
-        colorMoonset = ContextCompat.getColor(context, typedArray.getResourceId(3, def));
-        typedArray.recycle();
+        if (themeOverride == null)
+        {
+            int[] colorAttrs = { R.attr.sunriseColor, R.attr.sunsetColor, R.attr.moonriseColor, R.attr.moonsetColor };
+            TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+            int def = R.color.transparent;
+            colorSunrise = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
+            colorSunset = colorNoon = colorNoonStroke = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
+            strokeWidthNoon = strokeWidthRising = strokeWidthSetting = 0;
+            colorMoonrise = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
+            colorMoonset = ContextCompat.getColor(context, typedArray.getResourceId(3, def));
+            typedArray.recycle();
+
+        } else {
+            colorSunrise = themeOverride.getSunriseIconColor();
+            colorSunriseStroke = themeOverride.getSunriseIconStrokeColor();
+            colorSunset = themeOverride.getSunsetIconColor();
+            colorSunsetStroke = themeOverride.getSunsetIconStrokeColor();
+            colorNoon = themeOverride.getNoonIconColor();
+            colorNoonStroke = themeOverride.getNoonIconStrokeColor();
+            strokeWidthNoon = themeOverride.getNoonIconStrokePixels(context);
+            strokeWidthRising = themeOverride.getSunriseIconStrokePixels(context);
+            strokeWidthSetting = themeOverride.getSunsetIconStrokePixels(context);
+            colorMoonrise = themeOverride.getMoonriseTextColor();
+            colorMoonset = themeOverride.getMoonsetTextColor();
+        }
+    }
+
+    private SuntimesTheme themeOverride = null;
+    public void themeViews(Context context, SuntimesTheme theme)
+    {
+        if (theme != null) {
+            themeOverride = theme;
+        }
     }
 
     public void init(Context context, SuntimesRiseSetDataset sundata, SuntimesMoonData moondata)
@@ -85,7 +115,7 @@ public class SuntimesNotes
         this.moondata = moondata;
         SuntimesUtils.initDisplayStrings(context);
 
-        initColors(context);
+        themeViews(context);
 
         boolean[] showFields = AppSettings.loadShowFieldsPref(context);
         boolean enabledActual = showFields[AppSettings.FIELD_ACTUAL];
@@ -310,89 +340,122 @@ public class SuntimesNotes
         int noteIcon = typedArray.getResourceId(0, def);
         typedArray.recycle();
 
-        int noteColor;
+        int iconStroke;
+        int noteColor, noteColor2;
         String untilString = prefixString(event, false);
         String noteString;
 
         switch (event)
         {
             case MOONRISE:
-                noteColor = colorMoonrise;
+                iconStroke = strokeWidthRising;
+                noteColor = noteColor2 = colorMoonrise;
                 noteString = context.getString(R.string.until_moonrise);
                 break;
 
             case MOONSET:
-                noteColor = colorMoonset;
+                iconStroke = strokeWidthSetting;
+                noteColor = noteColor2 = colorMoonset;
                 noteString = context.getString(R.string.until_moonset);
                 break;
 
             case MORNING_ASTRONOMICAL:
+                iconStroke = strokeWidthRising;
                 noteColor = colorSunrise;
+                noteColor2 = colorSunriseStroke;
                 noteString = context.getString(R.string.until_astroTwilight);
                 break;
             case MORNING_NAUTICAL:
+                iconStroke = strokeWidthRising;
                 noteColor = colorSunrise;
+                noteColor2 = colorSunriseStroke;
                 noteString = context.getString(R.string.until_nauticalTwilight);
                 break;
             case MORNING_BLUE8:
+                iconStroke = strokeWidthRising;
                 noteColor = colorSunrise;
+                noteColor2 = colorSunriseStroke;
                 noteString = context.getString(R.string.until_bluehour);
                 break;
             case MORNING_CIVIL:
+                iconStroke = strokeWidthRising;
                 noteColor = colorSunrise;
+                noteColor2 = colorSunriseStroke;
                 noteString = context.getString(R.string.until_civilTwilight);
                 break;
             case MORNING_BLUE4:
+                iconStroke = strokeWidthRising;
                 noteColor = colorSunrise;
+                noteColor2 = colorSunriseStroke;
                 noteString = context.getString(R.string.untilEnd_bluehour);
                 break;
             case SUNRISE:
+                iconStroke = strokeWidthRising;
                 noteColor = colorSunrise;
+                noteColor2 = colorSunriseStroke;
                 noteString = context.getString(R.string.until_sunrise);
                 break;
             case MORNING_GOLDEN:
+                iconStroke = strokeWidthRising;
                 noteColor = colorSunrise;
+                noteColor2 = colorSunriseStroke;
                 noteString = context.getString(R.string.untilEnd_goldhour);
                 break;
 
             case NOON:
-                noteColor = colorSunset;
+                iconStroke = strokeWidthNoon;
+                noteColor = colorNoon;
+                noteColor2 = colorNoonStroke;
                 noteString = context.getString(R.string.until_noon);
                 break;
 
             case EVENING_GOLDEN:
+                iconStroke = strokeWidthSetting;
                 noteColor = colorSunset;
+                noteColor2 = colorSunsetStroke;
                 noteString = context.getString(R.string.until_goldhour);
                 break;
             case SUNSET:
+                iconStroke = strokeWidthSetting;
                 noteColor = colorSunset;
+                noteColor2 = colorSunsetStroke;
                 noteString = context.getString(R.string.until_sunset);
                 break;
             case EVENING_BLUE4:
+                iconStroke = strokeWidthSetting;
                 noteColor = colorSunset;
+                noteColor2 = colorSunsetStroke;
                 noteString = context.getString(R.string.until_bluehour);
                 break;
             case EVENING_CIVIL:
+                iconStroke = strokeWidthSetting;
                 noteColor = colorSunset;
+                noteColor2 = colorSunsetStroke;
                 noteString = context.getString(R.string.untilEnd_civilTwilight);
                 break;
             case EVENING_BLUE8:
+                iconStroke = strokeWidthSetting;
                 noteColor = colorSunset;
+                noteColor2 = colorSunsetStroke;
                 noteString = context.getString(R.string.untilEnd_bluehour);
                 break;
             case EVENING_NAUTICAL:
+                iconStroke = strokeWidthSetting;
                 noteColor = colorSunset;
+                noteColor2 = colorSunsetStroke;
                 noteString = context.getString(R.string.untilEnd_nauticalTwilight);
                 break;
             case EVENING_ASTRONOMICAL:
             default:
+                iconStroke = strokeWidthSetting;
                 noteColor = colorSunset;
+                noteColor2 = colorSunsetStroke;
                 noteString = context.getString(R.string.untilEnd_astroTwilight);
                 break;
         }
 
         SuntimesUtils.TimeDisplayText timeString = new SuntimesUtils.TimeDisplayText();
-        return new NoteData(event, timeString, untilString, noteString, noteIcon, noteColor);
+        return new NoteData(event, timeString, untilString, noteString, noteIcon, noteColor, noteColor2, iconStroke);
     }
 
     private String prefixString(SolarEvents event, boolean useSince)

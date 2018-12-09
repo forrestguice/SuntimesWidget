@@ -43,6 +43,8 @@
     -->
     <!-- line commented to use default: <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string> -->
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> Strefa czasowa może być niepoprawna dla tego miejsca (nie lokalna).</string>  <!-- snackbar message -->
+    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> Daylight Saving</string>  <!-- timezone dialog label -->  <!-- TODO -->
+    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> equation of time</string>  <!-- timezone dialog label -->  <!-- TODO -->
 
     <!-- Field: date
          The date field that appears above the table (main activity).
@@ -145,20 +147,26 @@
     <string name="time_format_12hr_veryshort"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- shortest 12hr time format; should omit am/pm -->
 
     <!-- distances (meters, feet, etc) -->
+    <string name="lengthUnits_metric">Metric</string>    <!-- TODO -->
+    <string name="lengthUnits_imperial">Imperial</string>   <!-- TODO -->
+
     <string name="units_feet">stopy</string>
     <string name="units_feet_short">ft</string>
-    <!--<plurals name="units_feet_long">
-      <item quantity="one">%d stopa</item>
-      <item quantity="few">%d stopy</item>
-      <item quantity="other">%d stóp</item>
-    </plurals>-->
+    <plurals name="units_feet_long">
+      <item quantity="one">%s stopa</item>
+      <item quantity="few">%s stopy</item>
+      <item quantity="other">%s stóp</item>
+      <item quantity="many">%s stóp</item>   <!-- TODO: lint complains that polish must also define "many" .. value copied from "other" but thats probably wrong -->
+    </plurals>
+
     <string name="units_meters">metry</string>
     <string name="units_meters_short">m</string>
-    <!--<plurals name="units_meters_long">
-      <item quantity="one">%d metr</item>
-      <item quantity="few">%d metry</item>
-      <item quantity="other">%d metrów</item>
-    </plurals>-->
+    <plurals name="units_meters_long">
+      <item quantity="one">%s metr</item>
+      <item quantity="few">%s metry</item>
+      <item quantity="other">%s metrów</item>
+      <item quantity="many">%s metrów</item>   <!-- TODO: lint complains that polish must also define "many" .. value copied from "other" but thats probably wrong -->
+    </plurals>
 
     <!--
          WIDGET CONFIG
@@ -189,6 +197,8 @@
     <string name="configLabel_general_altitude_enabled">Użyj wysokości</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">Zastosuj poprawki uwzględniające wysokość n.p.m.</string>        <!-- checkbox label -->
 
+    <string name="configLabel_general_lengthUnits">Units of length</string>        <!-- spinner label -->  <!-- TODO -->
+
     <string name="configLabel_general_showSeconds">Wyświetl sekundy</string>        <!-- checkbox label -->
     <string name="configLabel_general_showSeconds_summary">Uwzględnij sekundy podczas wyświetlania czasów.</string>        <!-- checkbox label -->
 
@@ -201,6 +211,9 @@
     <string name="configLabel_general_showHours">Wyświetl godziny</string>        <!-- checkbox label -->
     <string name="configLabel_general_showHours_summary">Uwzględnij godziny i minuty dla okresów dłuższych niż dzień.</string>    <!-- checkbox label -->
 
+    <string name="configLabel_general_observerheight">Object Shadow</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_observerheight_summary">Display the length of shadows cast by an object with a height of <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->  <!-- TODO -->
+
     <!-- Widget Setting: advanced / experimental -->
     <string name="configLabel_advanced">Zaawansowane ustawienia</string>                        <!-- group title -->
     <string name="configLabel_experimental">Eksperymentalne ustawienia</string>                <!-- group title -->
@@ -209,6 +222,7 @@
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Ustawienia wyglądu</string>           <!-- group title -->
+    <string name="configLabel_appearance_mode">Appearance</string>                  <!-- spinner label -->  <!-- TODO -->
     <string name="configLabel_appearance_theme">Skórka:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Poszerz do dostępnej przestrzeni (rozciągalne)</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_showLabels">Wyświetl etykiety</string>          <!-- checkbox label -->
@@ -415,42 +429,44 @@
     <string name="configLabel_themeBackground_color">Kolor</string>      <!-- custom background -->
     <string name="configLabel_themeColorBackground">Kolor:</string>      <!-- color label -->
 
-    <string name="configLabel_themeColorTitle">Kolor tytułu:</string>     <!-- color label -->
+    <string name="configLabel_themeColorTitle">Kolor tytułu</string>     <!-- color label -->
     <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->
 
-    <string name="configLabel_themeColorText">Kolor tekstu:</string>       <!-- color label -->
+    <string name="configLabel_themeColorText">Kolor tekstu</string>       <!-- color label -->
     <string name="configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->
 
-    <string name="configLabel_themeColorSpring">Wiosenny kolor:</string> <!-- color label -->
-    <string name="configLabel_themeColorSummer">Letni kolor:</string> <!-- color label -->
-    <string name="configLabel_themeColorFall">Jesienny kolor:</string> <!-- color label -->
-    <string name="configLabel_themeColorWinter">Zimowy kolor:</string> <!-- color label -->
+    <string name="configLabel_themeColorSpring">Wiosenny kolor</string> <!-- color label -->
+    <string name="configLabel_themeColorSummer">Letni kolor</string> <!-- color label -->
+    <string name="configLabel_themeColorFall">Jesienny kolor</string> <!-- color label -->
+    <string name="configLabel_themeColorWinter">Zimowy kolor</string> <!-- color label -->
+
+    <string name="configLabel_themeColorAction">Action</string> <!-- color label -->  <!-- TODO -->
 
     <string name="configLabel_themeColorMapBackground">Tło mapy</string> <!-- color label -->
     <string name="configLabel_themeColorMapForeground">Pierwszy plan mapy</string> <!-- color label -->
     <string name="configLabel_themeColorMapSunShadow">Cień</string> <!-- color label -->
     <string name="configLabel_themeColorMapMoonHighlight">Podświetlenie</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMoonrise">Kolor wschodu Księżyca:</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonset">Kolor zachodu Księżyca:</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonWaxing">Kolor rosnącego:</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonWaning">Kolor malejącego:</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonFull">Kolor pełni:</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonNew">Kolor nowiu:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonrise">Kolor wschodu Księżyca</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonset">Kolor zachodu Księżyca</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaxing">Kolor rosnącego</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaning">Kolor malejącego</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonFull">Kolor pełni</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonNew">Kolor nowiu</string> <!-- color label -->
 
-    <string name="configLabel_themeColorSunrise">Kolor wschodu Słońca:</string> <!-- color label -->
+    <string name="configLabel_themeColorSunrise">Kolor wschodu Słońca</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
 
-    <string name="configLabel_themeColorSunset">Kolor zachodu Słońca:</string>   <!-- color label -->
+    <string name="configLabel_themeColorSunset">Kolor zachodu Słońca</string>   <!-- color label -->
     <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorNoon">Kolor południa:</string>      <!-- color label -->
+    <string name="configLabel_themeColorNoon">Kolor południa</string>      <!-- color label -->
     <!--<string name="configHint_themeColorNoon">#FFFFFFFF</string>-->         <!-- color hint -->
 
-    <string name="configLabel_themeColorFill">Wypełnienie:</string>         <!-- color label -->
+    <string name="configLabel_themeColorFill">Wypełnienie</string>         <!-- color label -->
     <!--<string name="configHint_themeColorFill">#FFFFFFFF</string>-->        <!-- color hint -->
 
-    <string name="configLabel_themeColorBorder">Obramowanie:</string>         <!-- color label -->
+    <string name="configLabel_themeColorBorder">Obramowanie</string>         <!-- color label -->
     <!--<string name="configHint_themeColorBorder">#FFFFFFFF</string>-->        <!-- color hint -->
 
     <string name="configLabel_themeBorderWidthRiseSet">Szerokość obramowania (wschód/zachód):</string>  <!-- size label -->
@@ -458,10 +474,10 @@
     <string name="configLabel_themeBorderWidthNoon">Szerokość obramowania (południe):</string>         <!-- size label -->
     <!--<string name="configHint_themeBorderWidthNoon">3</string>-->
 
-    <string name="configLabel_themeColorSuffix">Kolor sufiksu:</string>   <!-- color label -->
+    <string name="configLabel_themeColorSuffix">Kolor sufiksu</string>   <!-- color label -->
     <string name="configHint_themeColorSuffix">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorTime">Kolor tekstu 2:</string>      <!-- color label -->
+    <string name="configLabel_themeColorTime">Kolor tekstu 2</string>      <!-- color label -->
     <string name="configHint_themeColorTime">#FFFFFFFF</string>          <!-- color hint -->
 
     <string name="configLabel_themeSizeTitle">Rozmiar tytułu:</string>  <!-- edit label -->
@@ -560,9 +576,11 @@
     <string name="configLabel_ui_showbluehour_summary">Wyświetl okres błękitnej godziny.</string>
 
     <!-- App Setting: UI Theme -->
+    <string name="appThemes_lightTheme">Jasna skórka</string>
+    <string name="appThemes_darkTheme">Ciemna skórka</string>
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-        <item>Jasna skórka</item>
-        <item>Ciemna skórka</item>
+        <item>@string/appThemes_lightTheme</item>
+        <item>@string/appThemes_darkTheme</item>
         <item>Jasna skórka (dzień) / Ciemna skórka (noc)</item>
     </string-array>
 
@@ -627,31 +645,7 @@
 
     <!-- App Setting: calendars -->
     <string name="configLabel_calendars">Kalendarz</string>   <!-- group title -->
-
     <string name="configLabel_calendars_enabled">Integracja z kalendarzem</string>
-    <string name="configLabel_calendars_enabled_summary">Dodaj wydarzenia do aplikacji kalendarza (fazy Księżyca, przesilenia i równonoce).</string>
-
-    <string name="configLabel_calendars_window0">Początek zakresu</string>
-    <string name="configLabel_calendars_window0_summary">Dodaj wydarzenia począwszy od <xliff:g id="calendars_window_display" example="roku">%s</xliff:g> temu</string>
-
-    <string name="configLabel_calendars_window1">Koniec zakresu</string>
-    <string name="configLabel_calendars_window1_summary">Dodaj wydarzenia do <xliff:g id="calendars_window_display" example="dwóch lat">%s</xliff:g> w przyszłość</string>
-
-    <string name="calendars_notification_adding">Dodawanie do kalendarza…</string>
-    <string name="calendars_notification_added">Dodano wydarzenia do kalendarza.</string>
-
-    <string name="calendars_notification_clearing">Czyszczenie kalendarza…</string>
-    <string name="calendars_notification_cleared">Usunięto wydarzenia z kalendarza.</string>
-
-    <string-array name="calendars_window_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
-        <item>roku</item>
-        <item>dwóch lat</item>
-        <item>pięciu lat</item>
-        <item>dziesięciu lat</item>
-    </string-array>
-
-    <string name="calendar_solstice_displayName">Przesilenia i równonoce</string>
-    <string name="calendar_moonPhase_displayName">Fazy Księżyca</string>
 
     <!-- App Setting: passive location mode -->
     <string name="configLabel_getFix_passiveMode">Pasywna lokalizacja</string>
@@ -853,6 +847,21 @@
     <string name="msg_export_failure">Eksport do <xliff:g id="filepath">%s</xliff:g> nieudany!</string>
     <string name="msg_export_to">Eksportuj używając</string>  <!-- title displayed over "share action" chooser -->
 
+    <!-- Dialog: Import Themes -->
+    <string name="themesimport_dialog_title">Importing Themes</string>                   <!-- TODO -->
+    <string name="themesimport_dialog_message">Importing themes from file…</string>      <!-- TODO -->
+
+    <string name="msg_import_success">Imported <xliff:g id="themePlural">%s</xliff:g>.</string>  <!-- TODO -->
+    <string name="msg_import_failure">Import from <xliff:g id="filepath">%s</xliff:g> failed!</string>  <!-- TODO -->
+    <string name="msg_import_noresults">Import skipped; no new themes were found.</string>  <!-- TODO -->
+
+    <plurals name="themePlural">
+        <item quantity="one">%d theme</item>
+        <item quantity="few">%d themes</item>
+        <item quantity="other">%d themes</item>
+        <item quantity="many">%d themes</item>
+    </plurals>  <!-- TODO -->
+
     <!-- Dialog: Color -->
     <string name="color_dialog_msg">Wybierz kolor</string>
     <string name="color_dialog_ok">Ustaw</string>
@@ -951,9 +960,15 @@
           Nie można modifikować [Icon Default] domyślnych skórek.
     </string> <!-- text explains themelist actions/icons; [Icon tags] are substituted at runtime (should remain unaltered)  -->
 
+    <string name="help_calendar"><![CDATA[Supply events to the Calendar app (moon phases, solstices, and equinoxes).<br />
+        <br />
+        <u><b><font color="#ff9900">Calendar permissions have been removed.</font></b></u><br />
+        <br />
+        This feature is now available as a <a href="moreInfoLink">separate app</a>.
+    ]]></string>  <!-- TODO -->
+
     <string name="privacy_policy"><![CDATA[<b>Prywatność:</b><br/>Aplikacja Zmierzchy i Świty nie zbiera, przechowuje i przesyła osobistych danych użytkownika. Ta aplikacja nie zawiera reklam, narzędzi analitycznych i zbędnych uprawnień.<br/><br/>Aplikacja konfiguruje się używając danych lokalizacji; te dane (i inne używane przez program) są zapisywane lokalnie i nie opuszczają urządzenia.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Uprawnienie <b>określenia lokalizacji</b> jest używane do ustalenia bieżącej szerokości i długości geograficznej. To uprawnienie jest opcjonalne; położenie domyślnie jest wpisywane ręcznie.]]></string>
-    <string name="privacy_permission_calendar"><![CDATA[Uprawnienie do <b>odczytu kalendarza</b> jest używane do integracji z aplikacją kalendarza. Pozwala to na dodanie własnych wydarzeń do kalendarza. Jest ono także wymagane, aby wyłączyć integrację z kalendarzem (lub usunąć własne kalendarze).]]></string>
     <string name="privacy_permission_storage"><![CDATA[Uprawnienie <b>dostępu do pamięci zewnętrznej</b> jest wymagane do wyeksportowania danych do pliku (np. miejsc, skórek).]]></string>
     <string name="privacy_permissiondialog_title">Uprawnienia</string>
 

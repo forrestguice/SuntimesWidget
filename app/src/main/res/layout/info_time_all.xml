@@ -78,7 +78,7 @@
                 android:id="@+id/icon_time_sunrise"
                 style="@style/TableHeadImageView"
                 android:layout_width="@dimen/table_heading_iconsize"
-                android:background="@drawable/ic_sunrise"
+                android:background="?attr/sunriseIconSmall"
                 android:layout_gravity="bottom|center_horizontal"
                 android:layout_margin="0dp"
                 tools:ignore="contentDescription"/>
@@ -113,7 +113,7 @@
                     android:id="@+id/icon_time_sunset"
                     style="@style/TableHeadImageView"
                     android:layout_width="@dimen/table_heading_iconsize"
-                    android:background="@drawable/ic_sunset"
+                    android:background="?attr/sunsetIconSmall"
                     android:layout_gravity="bottom|center_horizontal"
                     android:layout_margin="0dp"
                     tools:ignore="contentDescription"/>

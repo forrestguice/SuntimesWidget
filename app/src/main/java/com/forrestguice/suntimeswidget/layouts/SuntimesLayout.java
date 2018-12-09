@@ -28,7 +28,6 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
-import com.forrestguice.suntimeswidget.themes.ThemeBackground;
 
 public abstract class SuntimesLayout
 {
@@ -92,7 +91,7 @@ public abstract class SuntimesLayout
         SuntimesUtils.initDisplayStrings(context);
 
         // theme background
-        ThemeBackground background = theme.getBackground();
+        SuntimesTheme.ThemeBackground background = theme.getBackground();
         if (background.supportsCustomColors())
         {
             views.setInt(R.id.widgetframe_inner, "setBackgroundColor", theme.getBackgroundColor());

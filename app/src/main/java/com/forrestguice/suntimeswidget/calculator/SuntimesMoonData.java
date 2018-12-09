@@ -20,6 +20,8 @@ package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
 
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -161,6 +163,14 @@ public class SuntimesMoonData extends SuntimesData
             return moonPhases.get(phase);
         }
         return null;
+    }
+
+    public Calendar[] getRiseSetEvents()
+    {
+        Calendar midnight = midnight();
+        midnight.add(Calendar.DAY_OF_MONTH, 1);
+        return new Calendar[] { moonriseCalendarYesterday(), moonriseCalendarToday(), moonriseCalendarTomorrow(),
+                                moonsetCalendarYesterday(), moonsetCalendarToday(), moonsetCalendarTomorrow(), midnight };
     }
 
     /**

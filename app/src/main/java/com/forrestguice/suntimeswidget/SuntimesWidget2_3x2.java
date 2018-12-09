@@ -25,8 +25,6 @@ import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X2_0;
 
 public class SuntimesWidget2_3x2 extends SuntimesWidget2
 {
-    public static final int UPDATEALARM_ID = 9;
-
     @Override
     protected Class getConfigClass()
     {
@@ -38,12 +36,6 @@ public class SuntimesWidget2_3x2 extends SuntimesWidget2
     {
         minSize[0] = context.getResources().getInteger(R.integer.widget_size_minWidthDp3x1);
         minSize[1] = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
-    }
-
-    @Override
-    protected int getUpdateAlarmId()
-    {
-        return SuntimesWidget2_3x2.UPDATEALARM_ID;
     }
 
     @Override

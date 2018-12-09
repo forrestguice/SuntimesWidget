@@ -8,8 +8,6 @@
             android:summary=""
             tools:ignore="UnusedAttribute">
 
-        <extra android:name="someKey" android:value="someHeaderValue" />
-
     </header>
 
     <header android:fragment="com.forrestguice.suntimeswidget.SuntimesSettingsActivity$CalendarPrefsFragment"

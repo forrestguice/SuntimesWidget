@@ -20,12 +20,11 @@ package com.forrestguice.suntimeswidget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.content.Intent;
 import android.widget.ArrayAdapter;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
-import com.forrestguice.suntimeswidget.layouts.SunPosLayout;
-import com.forrestguice.suntimeswidget.layouts.SunPosLayout_1X1_0;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -48,6 +47,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
         super.initViews(context);
         setConfigActivityTitle(getString(R.string.configLabel_title2));
         hideOptionShowSeconds();
+        showOptionRiseSetOrder(false);
         hideOptionCompareAgainst();
         showTimeMode(false);
         showOptionShowNoon(false);
@@ -82,10 +82,15 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     private static int[] requiredFeatures = new int[] { SuntimesCalculator.FEATURE_POSITION };
 
     @Override
-    protected void updateWidget(Context context)
+    protected void updateWidgets(Context context, int[] appWidgetIds)
     {
-        SunPosLayout defLayout = new SunPosLayout_1X1_0();
-        SuntimesWidget2.updateAppWidget(context, AppWidgetManager.getInstance(context), appWidgetId, SuntimesWidget2.class, minWidgetSize(context), defLayout);
+        Intent updateIntent = new Intent(context, SuntimesWidget2.class);
+        updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+        sendBroadcast(updateIntent);
+
+        //SunPosLayout defLayout = new SunPosLayout_1X1_0();
+        //SuntimesWidget2.updateAppWidget(context, AppWidgetManager.getInstance(context), appWidgetId, SuntimesWidget2.class, minWidgetSize(context), defLayout);
     }
 
     @Override
