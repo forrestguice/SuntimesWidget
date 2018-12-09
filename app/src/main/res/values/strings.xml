@@ -1154,7 +1154,7 @@
 
     <string name="help_calendar"><![CDATA[Supply events to the Calendar app (moon phases, solstices, and equinoxes).<br />
         <br />
-        <u><b><font color="#ff9900">Calendar permissions have been removed.</font></b></u><br />
+        <u><b><font color="#ff9900">Calendar integration has been removed.</font></b></u><br />
         <br />
         This feature is now available as a <a href="moreInfoLink">separate app</a>.
     ]]></string>
@@ -1168,7 +1168,7 @@
     ]]></xliff:g></string>
 
     <string name="security_dialog_title">Security Alert</string>  <!-- TODO -->
-    <string name="security_duplicate_permissions">A permission that belongs to Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g> \n\nThis is a potential security risk! The recommended action is to remove the offending application.</string>  <!-- TODO -->
+    <string name="security_duplicate_permissions">A permission that belongs to Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>  <!-- TODO -->
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
