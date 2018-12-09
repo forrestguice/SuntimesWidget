@@ -42,8 +42,8 @@
     -->
     <!-- line commented to use default: <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string> -->
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> La horzono povas esti erara por tiu ĉi loko (ne ĉi-tiea).</string>  <!-- snackbar message -->
-    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> Daylight Saving</string>  <!-- timezone dialog label -->  <!-- TODO -->
-    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> equation of time</string>  <!-- timezone dialog label -->  <!-- TODO -->
+    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> somera tempo</string>  <!-- timezone dialog label -->
+    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> ekvacio de tempo</string>  <!-- timezone dialog label -->
 
     <!-- Field: date
          The date field that appears above the table (main activity).
@@ -146,15 +146,15 @@
     <string name="time_format_12hr_veryshort"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- shortest 12hr time format; should omit am/pm -->
 
     <!-- distances (meters, feet, etc) -->
-    <string name="lengthUnits_metric">Metric</string>    <!-- TODO -->
-    <string name="lengthUnits_imperial">Imperial</string>   <!-- TODO -->
+    <string name="lengthUnits_metric">metraj</string>
+    <string name="lengthUnits_imperial">imperiaj</string>
 
     <string name="units_feet">futoj</string>
     <string name="units_feet_short">ft</string>
     <plurals name="units_feet_long">
-        <item quantity="one">%s foot</item>
-        <item quantity="other">%s feet</item>
-    </plurals>  <!-- TODO -->
+        <item quantity="one">%s futo</item>
+        <item quantity="other">%s futoj</item>
+    </plurals>
 
     <string name="units_meters">metroj</string>
     <string name="units_meters_short">m</string>
@@ -192,7 +192,7 @@
     <string name="configLabel_general_altitude_enabled">Uzi altitudon</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">Apliki plibonigojn surbaze de altitudo.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_lengthUnits">Units of length</string>        <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_general_lengthUnits">Unuoj de longo/string>        <!-- spinner label -->
 
     <string name="configLabel_general_showSeconds">Montri sekundojn</string>        <!-- checkbox label -->
     <string name="configLabel_general_showSeconds_summary">Ampleksi sekundojn dum montrado de horoj.</string>        <!-- checkbox label -->
@@ -206,8 +206,8 @@
     <string name="configLabel_general_showHours">Montri horojn</string>        <!-- checkbox label -->
     <string name="configLabel_general_showHours_summary">Ampleksi horojn kaj minutojn por temp-intervaloj pli longaj ol tagnokto.</string>    <!-- checkbox label -->
 
-    <string name="configLabel_general_observerheight">Object Shadow</string>        <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_general_observerheight_summary">Display the length of shadows cast by an object with a height of <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_observerheight">Ombro de objekto</string>        <!-- checkbox label -->
+    <string name="configLabel_general_observerheight_summary">Montri longon de ombro kaŭzata de objekto kun alto <xliff:g id="value" example="1 metro">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: advanced / experimental -->
     <string name="configLabel_advanced">Spertaj agordoj</string>                        <!-- group title -->
@@ -217,7 +217,7 @@
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Agordoj de aspekto</string>           <!-- group title -->
-    <string name="configLabel_appearance_mode">Appearance</string>                  <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_mode">Aspekto</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Etoso:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Etendigi al disponebla spaco (regrandigebla)</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_showLabels">Montri etikedojn</string>          <!-- checkbox label -->
@@ -442,7 +442,7 @@
     <string name="configLabel_themeColorFall">Aŭtuna koloro</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Vintra koloro</string> <!-- color label -->
 
-    <string name="configLabel_themeColorAction">Action</string> <!-- color label -->  <!-- TODO -->
+    <string name="configLabel_themeColorAction">Ago</string> <!-- color label -->
 
     <string name="configLabel_themeColorMapBackground">Fono de mapo</string> <!-- color label -->
     <string name="configLabel_themeColorMapForeground">Malfono de mapo</string> <!-- color label -->
@@ -843,17 +843,17 @@
     <string name="msg_export_to">Elporti per</string>  <!-- title displayed over "share action" chooser -->
 
     <!-- Dialog: Import Themes -->
-    <string name="themesimport_dialog_title">Importing Themes</string>                   <!-- TODO -->
-    <string name="themesimport_dialog_message">Importing themes from file…</string>      <!-- TODO -->
+    <string name="themesimport_dialog_title">Enporti etosojn</string>
+    <string name="themesimport_dialog_message">Enportado de etosoj el dosiero…</string>
 
-    <string name="msg_import_success">Imported <xliff:g id="themePlural">%s</xliff:g>.</string>  <!-- TODO -->
-    <string name="msg_import_failure">Import from <xliff:g id="filepath">%s</xliff:g> failed!</string>  <!-- TODO -->
-    <string name="msg_import_noresults">Import skipped; no new themes were found.</string>  <!-- TODO -->
+    <string name="msg_import_success">Enportis <xliff:g id="themePlural">%s</xliff:g>.</string>
+    <string name="msg_import_failure">Fiaskis enporti el <xliff:g id="filepath">%s</xliff:g>!</string>
+    <string name="msg_import_noresults">Enportis nenion; ne trovis novajn etosojn.</string>
 
     <plurals name="themePlural">
-        <item quantity="one">%d theme</item>
-        <item quantity="other">%d themes</item>
-    </plurals>  <!-- TODO -->
+        <item quantity="one">%d etoson</item>
+        <item quantity="other">%d etosojn</item>
+    </plurals>
 
     <!-- Dialog: Color -->
     <string name="color_dialog_msg">Elekti koloron</string>
