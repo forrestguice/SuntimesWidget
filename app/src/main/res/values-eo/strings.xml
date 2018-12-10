@@ -590,7 +590,7 @@
     <string-array name="dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
         <item>Fari nenion</item>
         <item>Baskuli langetojn (hodiaŭ/morgaŭ)</item>
-        <item>Montri aplikaĵon Kalendaro</item>
+        <item>Montri aplikaĵon de kalendaro</item>
         <item>Agordi propran daton</item>
     </string-array>
 
@@ -961,12 +961,12 @@
           Oni ne povas modifii [Icon Default] implicitajn etosojn.
     </string> <!-- text explains themelist actions/icons; [Icon tags] are substituted at runtime (should remain unaltered)  -->
 
-    <string name="help_calendar"><![CDATA[Supply events to the Calendar app (moon phases, solstices, and equinoxes).<br />
+    <string name="help_calendar"><![CDATA[Aldoni okazaĵojn (lunfazojn, sunekstremojn kaj tagnoktegalecojn) al la aplikaĵo de kalendaro.<br />
         <br />
-        <u><b><font color="#ff9900">Calendar permissions have been removed.</font></b></u><br />
+        <u><b><font color="#ff9900">Kalendaraj permesoj estis forigitaj.</font></b></u><br />
         <br />
-        This feature is now available as a <a href="moreInfoLink">separate app</a>.
-    ]]></string>  <!-- TODO -->
+        Tiu eblaĵo estas nun disponebla kiel <a href="moreInfoLink">aparta aplikaĵo</a>.
+    ]]></string>
 
     <string name="privacy_policy"><![CDATA[<b>Privateco:</b><br/>La aplikaĵo Suntempoj ne kolektas, konservas aŭ transigas personajn informojn de la uzanto. Ĝi enhavas <b>neniujn reklamojn</b>, <b>neniujn analizilojn</b>, <b>neniujn spurilojn</b> kaj <b>neniujn malnecesajn permesojn</b>. <br/><br/>La aplikaĵo agordiĝas de lokaj datumoj. Tiuj informoj (kaj aliaj agordoj uzataj de la aplikaĵo) estas konservataj loke kaj ne eliras el la aparato.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[La permeso por <b>determini pozicion</b> estas uzata por trovi vian nunan longitudon kaj latitudon. Tiu permeso estas malnepra, pozicio estas implicite agordita permane.]]></string>
