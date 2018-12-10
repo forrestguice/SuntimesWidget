@@ -252,9 +252,11 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             themeChanged = !prevTheme.equals(appTheme);
         }
 
-        if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) && (themeChanged))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
         {
-            invalidateHeaders();
+            if (themeChanged) {
+                invalidateHeaders();
+            }
         }
     }
 
