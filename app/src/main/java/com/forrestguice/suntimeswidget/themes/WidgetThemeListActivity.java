@@ -829,9 +829,11 @@ public class WidgetThemeListActivity extends AppCompatActivity
                 background.setImageDrawable(wallpaper);
                 background.setVisibility(View.VISIBLE);
 
-                if (animate && (Build.VERSION.SDK_INT >= 12))
+                if (Build.VERSION.SDK_INT >= 12)
                 {
-                    background.animate().alpha(1f).setDuration(WALLPAPER_DELAY);
+                    if (animate) {
+                        background.animate().alpha(1f).setDuration(WALLPAPER_DELAY);
+                    } else background.setAlpha(1f);
 
                 } else if (Build.VERSION.SDK_INT >= 11) {
                     background.setAlpha(1f);
