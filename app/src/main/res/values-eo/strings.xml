@@ -192,7 +192,7 @@
     <string name="configLabel_general_altitude_enabled">Uzi altitudon</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">Apliki plibonigojn surbaze de altitudo.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_lengthUnits">Unuoj de longo/string>        <!-- spinner label -->
+    <string name="configLabel_general_lengthUnits">Unuoj de longo</string>        <!-- spinner label -->
 
     <string name="configLabel_general_showSeconds">Montri sekundojn</string>        <!-- checkbox label -->
     <string name="configLabel_general_showSeconds_summary">Ampleksi sekundojn dum montrado de horoj.</string>        <!-- checkbox label -->
