@@ -13,8 +13,6 @@
 
     <uses-permission android:name="android.permission.VIBRATE" />  <!-- needed by AlarmClock -->
     
-    <uses-sdk tools:overrideLibrary="com.flask.colorpicker" />
-
     <permission
         android:name="suntimes.permission.READ_CALCULATOR"
         android:protectionLevel="normal" />                       <!-- protects suntimeswidget.calculator.provider -->
