@@ -43,8 +43,8 @@
     -->
     <!-- line commented to use default: <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string> -->
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> Strefa czasowa może być niepoprawna dla tego miejsca (nie lokalna).</string>  <!-- snackbar message -->
-    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> Daylight Saving</string>  <!-- timezone dialog label -->  <!-- TODO -->
-    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> equation of time</string>  <!-- timezone dialog label -->  <!-- TODO -->
+    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> czas letni</string>  <!-- timezone dialog label -->
+    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> równanie czasu</string>  <!-- timezone dialog label -->
 
     <!-- Field: date
          The date field that appears above the table (main activity).
@@ -147,8 +147,8 @@
     <string name="time_format_12hr_veryshort"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- shortest 12hr time format; should omit am/pm -->
 
     <!-- distances (meters, feet, etc) -->
-    <string name="lengthUnits_metric">Metric</string>    <!-- TODO -->
-    <string name="lengthUnits_imperial">Imperial</string>   <!-- TODO -->
+    <string name="lengthUnits_metric">Metryczne</string>
+    <string name="lengthUnits_imperial">Imperialne</string>
 
     <string name="units_feet">stopy</string>
     <string name="units_feet_short">ft</string>
@@ -156,7 +156,7 @@
       <item quantity="one">%s stopa</item>
       <item quantity="few">%s stopy</item>
       <item quantity="other">%s stóp</item>
-      <item quantity="many">%s stóp</item>   <!-- TODO: lint complains that polish must also define "many" .. value copied from "other" but thats probably wrong -->
+      <item quantity="many">%s stóp</item>
     </plurals>
 
     <string name="units_meters">metry</string>
@@ -165,7 +165,7 @@
       <item quantity="one">%s metr</item>
       <item quantity="few">%s metry</item>
       <item quantity="other">%s metrów</item>
-      <item quantity="many">%s metrów</item>   <!-- TODO: lint complains that polish must also define "many" .. value copied from "other" but thats probably wrong -->
+      <item quantity="many">%s metrów</item>
     </plurals>
 
     <!--
@@ -197,7 +197,7 @@
     <string name="configLabel_general_altitude_enabled">Użyj wysokości</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">Zastosuj poprawki uwzględniające wysokość n.p.m.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_lengthUnits">Units of length</string>        <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_general_lengthUnits">Jednostki długości</string>        <!-- spinner label -->
 
     <string name="configLabel_general_showSeconds">Wyświetl sekundy</string>        <!-- checkbox label -->
     <string name="configLabel_general_showSeconds_summary">Uwzględnij sekundy podczas wyświetlania czasów.</string>        <!-- checkbox label -->
@@ -211,8 +211,8 @@
     <string name="configLabel_general_showHours">Wyświetl godziny</string>        <!-- checkbox label -->
     <string name="configLabel_general_showHours_summary">Uwzględnij godziny i minuty dla okresów dłuższych niż dzień.</string>    <!-- checkbox label -->
 
-    <string name="configLabel_general_observerheight">Object Shadow</string>        <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_general_observerheight_summary">Display the length of shadows cast by an object with a height of <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_observerheight">Cień obiektu</string>        <!-- checkbox label -->
+    <string name="configLabel_general_observerheight_summary">Wyświetl długość cienia rzucanego przez obiekt o wysokości <xliff:g id="value" example="1 metra">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: advanced / experimental -->
     <string name="configLabel_advanced">Zaawansowane ustawienia</string>                        <!-- group title -->
@@ -222,7 +222,7 @@
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Ustawienia wyglądu</string>           <!-- group title -->
-    <string name="configLabel_appearance_mode">Appearance</string>                  <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_mode">Wygląd</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Skórka:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Poszerz do dostępnej przestrzeni (rozciągalne)</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_showLabels">Wyświetl etykiety</string>          <!-- checkbox label -->
@@ -440,7 +440,7 @@
     <string name="configLabel_themeColorFall">Jesienny kolor</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Zimowy kolor</string> <!-- color label -->
 
-    <string name="configLabel_themeColorAction">Action</string> <!-- color label -->  <!-- TODO -->
+    <string name="configLabel_themeColorAction">Akcja</string> <!-- color label -->
 
     <string name="configLabel_themeColorMapBackground">Tło mapy</string> <!-- color label -->
     <string name="configLabel_themeColorMapForeground">Pierwszy plan mapy</string> <!-- color label -->
@@ -848,17 +848,19 @@
     <string name="msg_export_to">Eksportuj używając</string>  <!-- title displayed over "share action" chooser -->
 
     <!-- Dialog: Import Themes -->
-    <string name="themesimport_dialog_title">Importing Themes</string>                   <!-- TODO -->
-    <string name="themesimport_dialog_message">Importing themes from file…</string>      <!-- TODO -->
+    <string name="themesimport_dialog_title">Import skórek</string>
+    <string name="themesimport_dialog_message">Importowanie skórek z pliku…</string>
 
-    <string name="msg_import_success">Imported <xliff:g id="themePlural">%s</xliff:g>.</string>  <!-- TODO -->
-    <string name="msg_import_failure">Import from <xliff:g id="filepath">%s</xliff:g> failed!</string>  <!-- TODO -->
-    <string name="msg_import_noresults">Import skipped; no new themes were found.</string>  <!-- TODO -->
+    <string name="msg_import_success">Zaimportowano <xliff:g id="themePlural">%s</xliff:g>.</string>
+    <string name="msg_import_failure">Nie udało się zaimportować z <xliff:g id="filepath">%s</xliff:g>!</string>
+    <string name="msg_import_noresults">Pominięto importowanie; nie znaleziono nowych skórek.</string>
 
     <plurals name="themePlural">
-        <item quantity="one">%d theme</item>
-        <item quantity="other">%d themes</item>
-    </plurals>  <!-- TODO -->
+        <item quantity="one">%d skórkę</item>
+        <item quantity="few">%d skórki</item>
+        <item quantity="other">%d skórek</item>
+        <item quantity="many">%d skórek</item>
+    </plurals>
 
     <!-- Dialog: Color -->
     <string name="color_dialog_msg">Wybierz kolor</string>
@@ -958,12 +960,12 @@
           Nie można modifikować [Icon Default] domyślnych skórek.
     </string> <!-- text explains themelist actions/icons; [Icon tags] are substituted at runtime (should remain unaltered)  -->
 
-    <string name="help_calendar"><![CDATA[Supply events to the Calendar app (moon phases, solstices, and equinoxes).<br />
+    <string name="help_calendar"><![CDATA[Dodaje wydarzenia do aplikacji kalendarza (fazy Księżyca, przesilenia i równonoce).<br />
         <br />
-        <u><b><font color="#ff9900">Calendar permissions have been removed.</font></b></u><br />
+        <u><b><font color="#ff9900">Uprawnienia kalendarza zostały usunięte.</font></b></u><br />
         <br />
-        This feature is now available as a <a href="moreInfoLink">separate app</a>.
-    ]]></string>  <!-- TODO -->
+        Ta funkcja jest teraz dostępna jako <a href="moreInfoLink">osobna aplikacja</a>.
+    ]]></string>
 
     <string name="privacy_policy"><![CDATA[<b>Prywatność:</b><br/>Aplikacja Zmierzchy i Świty nie zbiera, przechowuje i przesyła osobistych danych użytkownika. Ta aplikacja nie zawiera reklam, narzędzi analitycznych i zbędnych uprawnień.<br/><br/>Aplikacja konfiguruje się używając danych lokalizacji; te dane (i inne używane przez program) są zapisywane lokalnie i nie opuszczają urządzenia.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Uprawnienie <b>określenia lokalizacji</b> jest używane do ustalenia bieżącej szerokości i długości geograficznej. To uprawnienie jest opcjonalne; położenie domyślnie jest wpisywane ręcznie.]]></string>

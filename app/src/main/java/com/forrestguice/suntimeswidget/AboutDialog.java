@@ -22,6 +22,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -34,6 +35,8 @@ import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 
 public class AboutDialog extends DialogFragment
 {
@@ -57,12 +60,22 @@ public class AboutDialog extends DialogFragment
 
         final Activity myParent = getActivity();
         LayoutInflater inflater = myParent.getLayoutInflater();
-        @SuppressLint("InflateParams")
-        View dialogContent = inflater.inflate(R.layout.layout_dialog_about, null);
+        @SuppressLint("InflateParams") final View dialogContent = inflater.inflate(R.layout.layout_dialog_about, null);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
         builder.setView(dialogContent);
         AlertDialog dialog = builder.create();
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                dialogContent.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        AppSettings.checkCustomPermissions(getContext());
+                    }
+                });
+            }
+        });
 
         if (savedInstanceState != null)
         {

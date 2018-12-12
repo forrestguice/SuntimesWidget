@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2014 Forrest Guice
+   Copyright (C) 2014-2018 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -28,9 +28,12 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData2;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.SuntimesUtils.TimeDisplayText;
+
+import java.util.Calendar;
 
 public class SunLayout_2x1_0 extends SunLayout
 {
@@ -40,12 +43,21 @@ public class SunLayout_2x1_0 extends SunLayout
         this.layoutID = R.layout.layout_widget_2x1_0;
     }
 
+    private WidgetSettings.RiseSetOrder order = WidgetSettings.RiseSetOrder.TODAY;
+
+    @Override
+    public void prepareForUpdate(Context context, int appWidgetID, SuntimesRiseSetData data)
+    {
+        order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetID);
+        this.layoutID = chooseSunLayout(R.layout.layout_widget_2x1_0, R.layout.layout_widget_2x1_01, data, order);
+    }
+
     @Override
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesRiseSetData data)
     {
         super.updateViews(context, appWidgetId, views, data);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
-        updateViewsSunRiseSetText(context, views, data, showSeconds);
+        updateViewsSunRiseSetText(context, views, data, showSeconds, order);
 
         // update day delta
         boolean showDayDelta = WidgetSettings.loadShowComparePref(context, appWidgetId);
@@ -65,7 +77,7 @@ public class SunLayout_2x1_0 extends SunLayout
         boolean showSolarNoon = WidgetSettings.loadShowNoonPref(context, appWidgetId);
         if (showSolarNoon && noonData != null)
         {
-            updateViewsNoonText(context, views, noonData, showSeconds);
+            updateViewsNoonText(context, views, noonData.sunsetCalendarToday(), showSeconds);
             views.setViewVisibility(R.id.layout_noon, View.VISIBLE);
 
         } else {

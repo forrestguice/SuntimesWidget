@@ -34,7 +34,9 @@ import android.widget.RemoteViews;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData2;
 import com.forrestguice.suntimeswidget.layouts.SunLayout;
 import com.forrestguice.suntimeswidget.layouts.SunLayout_2x1_0;
 import com.forrestguice.suntimeswidget.lightmap.LightMapWidgetSettings;
@@ -54,9 +56,10 @@ public class SuntimesWidget0 extends AppWidgetProvider
     public static final String SUNTIMES_WIDGET_UPDATE = "suntimes.SUNTIMES_WIDGET_UPDATE";
     public static final String SUNTIMES_THEME_UPDATE = "suntimes.SUNTIMES_THEME_UPDATE";
     public static final String SUNTIMES_ALARM_UPDATE = "suntimes.SUNTIMES_ALARM_UPDATE";
-    public static final int UPDATEALARM_ID = 0;
-    public static final String KEY_ALARMID = "alarmID";
+
+    public static final String KEY_WIDGETCLASS = "widgetClass";
     public static final String KEY_THEME = "themeName";
+
     public static final String TAG = "WidgetUpdate";
 
     protected static SuntimesUtils utils = new SuntimesUtils();
@@ -103,16 +106,22 @@ public class SuntimesWidget0 extends AppWidgetProvider
 
         String filter = getUpdateIntentFilter();
         String action = intent.getAction();
+        Bundle extras = intent.getExtras();
+
         if (action != null && action.equals(filter))
         {
-            int alarmID = intent.getIntExtra(KEY_ALARMID, -1);
-            if (alarmID == getUpdateAlarmId())
+            String widgetClass = intent.getStringExtra(KEY_WIDGETCLASS);
+            if (getClass().toString().equals(widgetClass))
             {
-                Log.d(TAG, "onReceive: " + filter + "(" + alarmID + "): " + getClass().toString());
-                updateWidgets(context);
-                if (Build.VERSION.SDK_INT >= 19) {
-                    setUpdateAlarm(context);      // schedule next update
-                }  // api<19 uses a repeating alarm
+                int appWidgetID = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);  // synonymous
+                Log.d(TAG, "onReceive: " + filter + "(" + appWidgetID + "): " + getClass().toString());
+
+                if (appWidgetID <= 0) {
+                    updateWidgets(context);
+                } else {
+                    onUpdate(context, AppWidgetManager.getInstance(context), new int[]{appWidgetID});
+                }
+                setUpdateAlarm(context, appWidgetID);      // schedule next update
             }
 
         } else if (isClickAction(action)) {
@@ -129,12 +138,27 @@ public class SuntimesWidget0 extends AppWidgetProvider
 
         } else if (action != null && action.equals(SUNTIMES_ALARM_UPDATE)) {
             Log.d(TAG, "onReceive: SUNTIMES_ALARM_UPDATE :: " + getClass());
-            if (getWidgetIds(context).length > 0) {
-                setUpdateAlarm(context);
-            }
+            updateWidgets(context);
+            setUpdateAlarms(context);
+
+        } else if (action != null && action.equals("android.intent.action.TIME_SET")) {
+            Log.d(TAG, "onReceive: android.intent.action.TIME_SET :: " + getClass());
+            //updateWidgets(context);
+            //setUpdateAlarms(context);
+            // TODO: handle TIME_SET better .. when automatic/network time is enabled this thing fires /frequently/ ...
 
         } else if (action != null && action.equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE)) {
             Log.d(TAG, "onReceive: ACTION_APPWIDGET_UPDATE :: " + getClass());
+            if (extras != null)
+            {
+                int[] appWidgetIds = extras.getIntArray(AppWidgetManager.EXTRA_APPWIDGET_IDS);
+                if (appWidgetIds != null)
+                {
+                    for (int appWidgetId : appWidgetIds) {
+                        setUpdateAlarm(context, appWidgetId);
+                    }
+                }
+            }
 
         } else {
             Log.d(TAG, "onReceive: unhandled :: " + action + " :: " + getClass());
@@ -329,6 +353,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
     {
         for (int appWidgetId : appWidgetIds)
         {
+            unsetUpdateAlarm(context, appWidgetId);
             WidgetSettings.deletePrefs(context, appWidgetId);
             WorldMapWidgetSettings.deletePrefs(context, appWidgetId);
             LightMapWidgetSettings.deletePrefs(context, appWidgetId);
@@ -336,25 +361,29 @@ public class SuntimesWidget0 extends AppWidgetProvider
     }
 
     /**
-     * Widget was enabled (called when the first widget is created); register alarm for updates.
+     * Widget was enabled (called when the first widget is created).
      * @param context the context
      */
     @Override
     public void onEnabled(Context context)
     {
         super.onEnabled(context);
-        setUpdateAlarm(context);
+        //setUpdateAlarms(context);       // this call no longer makes sense..
+        // The update alarms are now per appWidgetID, so now this call only triggers an update for the first widget (leaving subsequent widgets without an alarm)
+        // The update alarms are now registered in onReceive( ACTION_APPWIDGET_UPDATE ) as each widget is added
     }
 
     /**
-     * Widget was disabled (called after the last widget is deleted); unregister update alarm.
+     * Widget was disabled (called after the last widget is deleted).
      * @param context the context
      */
     @Override
     public void onDisabled(Context context)
     {
         super.onDisabled(context);
-        unsetUpdateAlarm(context);
+        //unsetUpdateAlarms(context);        // this call no longer makes sense..
+        // The update alarms are now per appWidgetID, so by the time this runs all widgets are deleted (too late to cleanup alarms without an appWidgetID).
+        // The update alarms are now removed in onDeleted().
     }
 
     protected static int[] widgetSizeDp(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize)
@@ -451,14 +480,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
      */
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SunLayout layout, Class widgetClass)
     {
-        RemoteViews views = layout.getViews(context);
-
-        boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId);
-        views.setViewVisibility(R.id.text_title, showTitle ? View.VISIBLE : View.GONE);
-
-        layout.themeViews(context, views, appWidgetId);
-
-        SuntimesRiseSetData data = new SuntimesRiseSetData(context, appWidgetId); // constructor inits data from widget settings
+        SuntimesRiseSetData data = getRiseSetData(context, appWidgetId);
         data.calculate();
 
         boolean showSolarNoon = WidgetSettings.loadShowNoonPref(context, appWidgetId);
@@ -470,9 +492,42 @@ public class SuntimesWidget0 extends AppWidgetProvider
             data.linkData(noonData);
         }
 
+        layout.prepareForUpdate(context, appWidgetId, data);
+
+        RemoteViews views = layout.getViews(context);
         views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, widgetClass));
+
+        boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId);
+        views.setViewVisibility(R.id.text_title, showTitle ? View.VISIBLE : View.GONE);
+
+        layout.themeViews(context, views, appWidgetId);
         layout.updateViews(context, appWidgetId, views, data);
+
         appWidgetManager.updateAppWidget(appWidgetId, views);
+
+        WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
+        if (order == WidgetSettings.RiseSetOrder.TODAY) {
+            WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, -1);
+            Log.d(TAG, "saveNextSuggestedUpdate: -1");
+
+        } else {
+            long soonest = SuntimesData.findSoonest(Calendar.getInstance(), data.getEvents());
+            if (soonest != -1) {
+                soonest += 5000;   // +5s
+            }
+            WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId,  soonest);
+            Log.d(TAG, "saveNextSuggestedUpdate: " + utils.calendarDateTimeDisplayString(context, soonest).toString());
+        }
+    }
+
+    /**
+     * getRiseSetData
+     */
+    protected static SuntimesRiseSetData getRiseSetData(Context context, int appWidgetId)
+    {
+        WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
+        return (order == WidgetSettings.RiseSetOrder.TODAY)
+                ? new SuntimesRiseSetData(context, appWidgetId) : new SuntimesRiseSetData2(context, appWidgetId);
     }
 
     /**
@@ -494,28 +549,39 @@ public class SuntimesWidget0 extends AppWidgetProvider
     }
 
     /**
+     * Start widget updates; register an alarm (inexactRepeating) that does not wake the device for each widget.
+     * @param context the Context
+     */
+    protected void setUpdateAlarms( Context context )
+    {
+        for (int appWidgetID : getWidgetIds(context)) {
+            setUpdateAlarm(context, appWidgetID);
+        }
+    }
+    protected void unsetUpdateAlarms( Context context )
+    {
+        for (int appWidgetID : getWidgetIds(context)) {
+            unsetUpdateAlarm(context, appWidgetID);
+        }
+    }
+
+    /**
      * Start widget updates; register an alarm (inexactRepeating) that does not wake the device.
      * @param context the context
      */
-    protected void setUpdateAlarm( Context context )
+    protected void setUpdateAlarm( Context context, int alarmID )
     {
-        PendingIntent alarmIntent = getUpdateIntent(context);
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         if (alarmManager != null)
         {
-            long updateInterval = getUpdateInterval();
-            long updateTime = getUpdateTimeMillis();
-
-            if (Build.VERSION.SDK_INT < 19)
-            {
-                alarmManager.setRepeating(AlarmManager.RTC, updateTime, updateInterval, alarmIntent);
-
+            PendingIntent alarmIntent = getUpdateIntent(context, alarmID);
+            long updateTime = getUpdateTimeMillis(context, alarmID);
+            if (Build.VERSION.SDK_INT < 19) {
+                alarmManager.set(AlarmManager.RTC, updateTime, alarmIntent);
             } else {
                 alarmManager.setWindow(AlarmManager.RTC, updateTime, 5 * 1000, alarmIntent);
             }
-
-            SuntimesUtils.TimeDisplayText updateDebug = utils.calendarDateTimeDisplayString(context, updateTime);
-            Log.d(TAG, "setUpdateAlarm: " + updateDebug + " --> " + getUpdateIntentFilter() + "(" + getUpdateAlarmId() + ") :: " + utils.timeDeltaLongDisplayString(updateInterval, true) );
+            Log.d(TAG, "setUpdateAlarm: " + utils.calendarDateTimeDisplayString(context, updateTime).toString() + " --> " + getUpdateIntentFilter() + "(" + alarmID + ") :: " + utils.timeDeltaLongDisplayString(getUpdateInterval(), true) );
         }
     }
 
@@ -523,34 +589,52 @@ public class SuntimesWidget0 extends AppWidgetProvider
      * Stop widget updates; unregisters the update alarm.
      * @param context the context
      */
-    protected void unsetUpdateAlarm( Context context )
+    protected void unsetUpdateAlarm( Context context, int alarmID )
     {
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         if (alarmManager != null)
         {
-            PendingIntent alarmIntent = getUpdateIntent(context);
+            PendingIntent alarmIntent = getUpdateIntent(context, alarmID);
             alarmManager.cancel(alarmIntent);
-            Log.d(TAG, "unsetUpdateAlarm: unset alarm --> " + getUpdateIntentFilter());
+            Log.d(TAG, "unsetUpdateAlarm: unset alarm --> " + getUpdateIntentFilter() + "(" + alarmID + ")");
         }
     }
 
-    protected void resetUpdateAlarm( Context context )
+    /**
+     * @return time of update event (in millis)
+     */
+    protected long getUpdateTimeMillis( Context context, int appWidgetID )
     {
-        unsetUpdateAlarm(context);
-        setUpdateAlarm(context);
+        long suggestedUpdateMillis = WidgetSettings.getNextSuggestedUpdate(context, appWidgetID);
+        if (suggestedUpdateMillis <= 0)
+        {
+            return getUpdateTimeMillis(null);
+
+        } else {
+            Calendar suggestedUpdate = Calendar.getInstance();
+            suggestedUpdate.setTimeInMillis(suggestedUpdateMillis);
+            return getUpdateTimeMillis(suggestedUpdate);
+        }
     }
 
-    /**
-     * @return time of update event (in millis); next midnight
-     */
-    protected long getUpdateTimeMillis()
+    protected long getUpdateTimeMillis(Calendar suggestedUpdateTime)
     {
         Calendar updateTime = Calendar.getInstance();
-        updateTime.set(Calendar.MILLISECOND, 0);   // reset seconds, minutes, and hours to 0
-        updateTime.set(Calendar.MINUTE, 0);
-        updateTime.set(Calendar.SECOND, 0);
-        updateTime.set(Calendar.HOUR_OF_DAY, 0);
-        updateTime.add(Calendar.DAY_OF_MONTH, 1);  // and increment the date by 1 day
+        Calendar now = Calendar.getInstance();
+
+        if (now.before(suggestedUpdateTime))
+        {
+            updateTime.setTimeInMillis(suggestedUpdateTime.getTimeInMillis());
+            Log.d(TAG, "getUpdateTimeMillis: next update is at: " + updateTime.getTimeInMillis());
+
+        } else {
+            updateTime.set(Calendar.MILLISECOND, 0);   // reset seconds, minutes, and hours to 0
+            updateTime.set(Calendar.MINUTE, 0);
+            updateTime.set(Calendar.SECOND, 0);
+            updateTime.set(Calendar.HOUR_OF_DAY, 0);
+            updateTime.add(Calendar.DAY_OF_MONTH, 1);  // and increment the date by 1 day
+            Log.d(TAG, "getUpdateTimeMillis: next update is at midnight: " + updateTime.getTimeInMillis());
+        }
         return updateTime.getTimeInMillis();
     }
 
@@ -566,12 +650,12 @@ public class SuntimesWidget0 extends AppWidgetProvider
      * @param context the context
      * @return a SUNTIMES_WIDGET_UPDATE broadcast intent for widget alarmId (@see getUpdateAlarmId)
      */
-    protected PendingIntent getUpdateIntent(Context context)
+    protected PendingIntent getUpdateIntent(Context context, int appWidgetId)
     {
-        int alarmId = getUpdateAlarmId();
         String updateFilter = getUpdateIntentFilter();
         Intent intent = new Intent(updateFilter);
-        intent.putExtra(KEY_ALARMID, alarmId);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        intent.putExtra(KEY_WIDGETCLASS, getClass().toString());
 
         /**
          * https://stackoverflow.com/questions/14029400/flag-cancel-current-or-flag-update-current
@@ -579,7 +663,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
          * results in stale alarms (that may eventually consume all of the device's memory).
          */
         //return PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        return PendingIntent.getBroadcast(context, alarmId, intent, 0);
+        return PendingIntent.getBroadcast(context, appWidgetId, intent, 0);
     }
 
     /**
@@ -588,14 +672,6 @@ public class SuntimesWidget0 extends AppWidgetProvider
     protected String getUpdateIntentFilter()
     {
         return SuntimesWidget0.SUNTIMES_WIDGET_UPDATE;
-    }
-
-    /**
-     * @return an update alarm identifier for this class (SuntimesWidget: 0)
-     */
-    protected int getUpdateAlarmId()
-    {
-        return SuntimesWidget0.UPDATEALARM_ID;
     }
 
     /**
