@@ -15,6 +15,7 @@
 * adds "action color" to themes (button press color) (#275).
 * fixes cropped text in theme config activity (#254); misc layout improvements.
 * updates the legacy icon to match the appearance of the adaptive icon (#272).
+* updates translation to Polish and Esperanto (eo, pl) (#282 by Verdulo).
 * updates build; Android gradle plugin version bumped to `com.android.tools.build:gradle:3.0.0` (and gradle wrapper to `gradle-4.1`).
 * updates dependency (Time4A 4.1-2018g).
 
