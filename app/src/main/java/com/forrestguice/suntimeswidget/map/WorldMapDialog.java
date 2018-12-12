@@ -43,6 +43,7 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,6 +60,7 @@ public class WorldMapDialog extends DialogFragment
 
     public static final String LOGTAG = "WorldMapDialog";
 
+    private TextView dialogTitle;
     private WorldMapView worldmap;
     private View dialogContent = null;
     private TextView utcTime;
@@ -159,6 +161,7 @@ public class WorldMapDialog extends DialogFragment
 
     public void initViews(Context context, View dialogView)
     {
+        dialogTitle = (TextView)dialogView.findViewById(R.id.worldmapdialog_title);
         utcTime = (TextView)dialogView.findViewById(R.id.info_time_utc);
         worldmap = (WorldMapView)dialogView.findViewById(R.id.info_time_worldmap);
         worldmap.setOnLongClickListener(new View.OnLongClickListener()
@@ -219,6 +222,24 @@ public class WorldMapDialog extends DialogFragment
     @SuppressWarnings("ResourceType")
     public void themeViews(Context context)
     {
+        if (themeOverride != null)
+        {
+            dialogTitle.setTextColor(themeOverride.getTitleColor());
+            utcTime.setTextColor(themeOverride.getTimeColor());
+            worldmap.themeViews(context, themeOverride);
+        }
+    }
+
+    private SuntimesTheme themeOverride = null;
+    public void themeViews(Context context, SuntimesTheme theme)
+    {
+        if (theme != null)
+        {
+            themeOverride = theme;
+            if (worldmap != null) {
+                themeViews(context);
+            }
+        }
     }
 
     public void updateOptions(Context context)

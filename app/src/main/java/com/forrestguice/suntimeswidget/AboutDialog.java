@@ -22,6 +22,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -35,15 +36,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.settings.AppSettings;
+
 public class AboutDialog extends DialogFragment
 {
     public static final String WEBSITE_URL = "https://forrestguice.github.io/SuntimesWidget/";
+    public static final String ADDONS_URL = "https://forrestguice.github.io/SuntimesWidget/";
     public static final String PRIVACY_URL = "https://github.com/forrestguice/SuntimesWidget/wiki/Privacy";
     public static final String CHANGELOG_URL = "https://github.com/forrestguice/SuntimesWidget/blob/master/CHANGELOG.md";
     public static final String COMMIT_URL = "https://github.com/forrestguice/SuntimesWidget/commit/";
 
     public static final String KEY_ICONID = "paramIconID";
-    private int param_iconID = R.mipmap.ic_suntimes;
+    private int param_iconID = R.mipmap.ic_launcher;
     public void setIconID( int resID )
     {
         param_iconID = resID;
@@ -56,12 +60,22 @@ public class AboutDialog extends DialogFragment
 
         final Activity myParent = getActivity();
         LayoutInflater inflater = myParent.getLayoutInflater();
-        @SuppressLint("InflateParams")
-        View dialogContent = inflater.inflate(R.layout.layout_dialog_about, null);
+        @SuppressLint("InflateParams") final View dialogContent = inflater.inflate(R.layout.layout_dialog_about, null);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
         builder.setView(dialogContent);
         AlertDialog dialog = builder.create();
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                dialogContent.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        AppSettings.checkCustomPermissions(getContext());
+                    }
+                });
+            }
+        });
 
         if (savedInstanceState != null)
         {
@@ -143,8 +157,7 @@ public class AboutDialog extends DialogFragment
         legalView3.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_legal3)));
 
         TextView legalView4 = (TextView) dialogContent.findViewById(R.id.txt_about_legal4);
-        String permissionsExplained = context.getString(R.string.privacy_permission_location) + "<br/><br/>" +
-                                      context.getString(R.string.privacy_permission_calendar);
+        String permissionsExplained = context.getString(R.string.privacy_permission_location);
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             permissionsExplained += "<br/><br/>" + context.getString(R.string.privacy_permission_storage);
         }

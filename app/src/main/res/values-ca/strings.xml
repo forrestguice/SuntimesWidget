@@ -44,6 +44,8 @@
     -->
     <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> La zona horària pot estar malament per a aquesta localització.</string>  <!-- snackbar message -->
+    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> Daylight Saving</string>  <!-- timezone dialog label -->  <!-- TODO -->
+    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> equation of time</string>  <!-- timezone dialog label -->  <!-- TODO -->
 
     <!-- Field: date
          The date field that appears above the table (main activity).
@@ -155,18 +157,22 @@
     <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
 
     <!-- distances (meters, feet, etc) -->
+    <string name="lengthUnits_metric">Metric</string>    <!-- TODO -->
+    <string name="lengthUnits_imperial">Imperial</string>   <!-- TODO -->
+
     <string name="units_feet">peus</string>
     <string name="units_feet_short">ft</string>
-    <!--<plurals name="units_feet_long">
-      <item quantity="one">%d foot</item>
-      <item quantity="other">%d feet</item>
-    </plurals>-->
+    <plurals name="units_feet_long">
+        <item quantity="one">%s foot</item>
+        <item quantity="other">%s feet</item>
+    </plurals>  <!-- TODO -->
+
     <string name="units_meters">metres</string>
     <string name="units_meters_short">m</string>
-    <!--<plurals name="units_meters_long">
-      <item quantity="one">%d meter</item>
-      <item quantity="other">%d meters</item>
-    </plurals>-->
+    <plurals name="units_meters_long">
+        <item quantity="one">%s meter</item>
+        <item quantity="other">%s meters</item>
+    </plurals>  <!-- TODO -->
 
     <!--
          WIDGET CONFIG
@@ -197,6 +203,8 @@
     <string name="configLabel_general_altitude_enabled">Utilitza elevació</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">Aplica refinaments basats en l\'altitud.</string>        <!-- checkbox label -->
 
+    <string name="configLabel_general_lengthUnits">Units of length</string>        <!-- spinner label -->  <!-- TODO -->
+
     <string name="configLabel_general_showSeconds">Mostrar segons</string>        <!-- checkbox label -->
     <string name="configLabel_general_showSeconds_summary">Inclou segons quan es mostra el temps.</string>        <!-- checkbox label -->
 
@@ -209,6 +217,9 @@
     <string name="configLabel_general_showHours">Mostrar hores</string>        <!-- checkbox label -->
     <string name="configLabel_general_showHours_summary">Inclou hores i minuts en intervals de temps majors a un dia.</string>    <!-- checkbox label -->
 
+    <string name="configLabel_general_observerheight">Object Shadow</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_observerheight_summary">Display the length of shadows cast by an object with a height of <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->  <!-- TODO -->
+
     <!-- Widget Setting: advanced / experimental -->
     <string name="configLabel_advanced">Configuració avançada</string>                        <!-- group title -->
     <string name="configLabel_experimental">Configuració experimental</string>                <!-- group title -->
@@ -217,6 +228,7 @@
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Opcions d\'apariència</string>           <!-- group title -->
+    <string name="configLabel_appearance_mode">Appearance</string>                  <!-- spinner label -->  <!-- TODO -->
     <string name="configLabel_appearance_theme">Tema:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Creix amb l\'espai disponible (reescalable)</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_showLabels">Mostra etiquetes</string>          <!-- checkbox label -->
@@ -392,7 +404,7 @@
     <string name="configAction_importThemes">Importar</string>    <!-- button (contentDescription) -->
 
     <string name="addtheme_custname">tema_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
-    <string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_còpia<xliff:g id="#">%2$s</xliff:g></string>   <!-- copied theme id -->
+    <!--<string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_<xliff:g id="#">%2$s</xliff:g></string>-->   <!-- copied theme id -->
     <string name="addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g> (còpia)</string>                            <!-- copied theme name (display string) -->
 
     <string name="addtheme_toast_success">Afegit <xliff:g id="themeName">%1$s</xliff:g>.</string>          <!-- toast msg -->
@@ -423,42 +435,44 @@
     <string name="configLabel_themeBackground_color">Color</string>      <!-- custom background -->
     <string name="configLabel_themeColorBackground">Color:</string>      <!-- color label -->
 
-    <string name="configLabel_themeColorTitle">Color de títol:</string>     <!-- color label -->
+    <string name="configLabel_themeColorTitle">Color de títol</string>     <!-- color label -->
     <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->
 
-    <string name="configLabel_themeColorText">Color de text:</string>       <!-- color label -->
+    <string name="configLabel_themeColorText">Color de text</string>       <!-- color label -->
     <string name="configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->
 
-    <string name="configLabel_themeColorSpring">Color de primavera:</string> <!-- color label -->
-    <string name="configLabel_themeColorSummer">Color de estiu:</string> <!-- color label -->
-    <string name="configLabel_themeColorFall">Color de tardor:</string> <!-- color label -->
-    <string name="configLabel_themeColorWinter">Color de hivern:</string> <!-- color label -->
+    <string name="configLabel_themeColorSpring">Color de primavera</string> <!-- color label -->
+    <string name="configLabel_themeColorSummer">Color de estiu</string> <!-- color label -->
+    <string name="configLabel_themeColorFall">Color de tardor</string> <!-- color label -->
+    <string name="configLabel_themeColorWinter">Color de hivern</string> <!-- color label -->
+
+    <string name="configLabel_themeColorAction">Action</string> <!-- color label -->  <!-- TODO -->
 
     <string name="configLabel_themeColorMapBackground">Fons del mapa</string> <!-- color label -->
     <string name="configLabel_themeColorMapForeground">Front del mapa</string> <!-- color label -->
     <string name="configLabel_themeColorMapSunShadow">Ombra</string> <!-- color label -->
     <string name="configLabel_themeColorMapMoonHighlight">Accent</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMoonrise">Color de sortida de la Lluna:</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonset">Color de posta de la Lluna:</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonWaxing">Color creixent:</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonWaning">Color minvant:</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonFull">Color plena:</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonNew">Color nova:</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonrise">Color de sortida de la Lluna</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonset">Color de posta de la Lluna</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaxing">Color creixent</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaning">Color minvant</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonFull">Color plena</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonNew">Color nova</string> <!-- color label -->
 
-    <string name="configLabel_themeColorSunrise">Color d\'alba:</string> <!-- color label -->
+    <string name="configLabel_themeColorSunrise">Color d\'alba</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
 
-    <string name="configLabel_themeColorSunset">Color del capvespre:</string>   <!-- color label -->
+    <string name="configLabel_themeColorSunset">Color del capvespre</string>   <!-- color label -->
     <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorNoon">Color del migdia:</string>      <!-- color label -->
+    <string name="configLabel_themeColorNoon">Color del migdia</string>      <!-- color label -->
     <string name="configHint_themeColorNoon">#FFFFFFFF</string>         <!-- color hint -->
 
-    <string name="configLabel_themeColorFill">Farcit:</string>         <!-- color label -->
+    <string name="configLabel_themeColorFill">Farcit</string>         <!-- color label -->
     <string name="configHint_themeColorFill">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorBorder">Vora:</string>         <!-- color label -->
+    <string name="configLabel_themeColorBorder">Vora</string>         <!-- color label -->
     <string name="configHint_themeColorBorder">#FFFFFFFF</string>        <!-- color hint -->
 
     <string name="configLabel_themeBorderWidthRiseSet">Ample de la vora (sortida/posta):</string>  <!-- size label -->
@@ -466,10 +480,10 @@
     <string name="configLabel_themeBorderWidthNoon">Ample de la vora (migdia):</string>         <!-- size label -->
     <string name="configHint_themeBorderWidthNoon">3</string>                             <!-- size hint -->
 
-    <string name="configLabel_themeColorSuffix">Color del sufixe:</string>   <!-- color label -->
+    <string name="configLabel_themeColorSuffix">Color del sufixe</string>   <!-- color label -->
     <string name="configHint_themeColorSuffix">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorTime">Color de text2:</string>      <!-- color label -->
+    <string name="configLabel_themeColorTime">Color de text2</string>      <!-- color label -->
     <string name="configHint_themeColorTime">#FFFFFFFF</string>          <!-- color hint -->
 
     <string name="configLabel_themeSizeTitle">Tamany del títol:</string>  <!-- edit label -->
@@ -569,9 +583,11 @@
     <string name="configLabel_ui_showbluehour_summary">Mostrar les hores blaves.</string>
 
     <!-- App Setting: UI Theme -->
+    <string name="appThemes_lightTheme">Tema clar</string>
+    <string name="appThemes_darkTheme">Tema fosc</string>
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-        <item>Tema clar</item>
-        <item>Tema fosc</item>
+        <item>@string/appThemes_lightTheme</item>
+        <item>@string/appThemes_darkTheme</item>
         <item>Tema clar / Tema fosc (mode nit)</item>
     </string-array>
 
@@ -655,31 +671,7 @@
 
     <!-- App Setting: calendars -->
     <string name="configLabel_calendars">Calendaris</string>   <!-- group title -->
-
     <string name="configLabel_calendars_enabled">Integració amb el calendari</string>
-    <string name="configLabel_calendars_enabled_summary">Proporcionar esdeveniments a l\'aplicació de calendari (fases llunars, solsticis, i equinoccis).</string>
-
-    <string name="configLabel_calendars_window0">Finestra (inici)</string>
-    <string name="configLabel_calendars_window0_summary">Un període començà <xliff:g id="calendars_window_display" example="one year">%s</xliff:g> enrere</string>
-
-    <string name="configLabel_calendars_window1">Finestra (fi)</string>
-    <string name="configLabel_calendars_window1_summary">Un període finalitzarà en <xliff:g id="calendars_window_display" example="two years">%s</xliff:g> comptant des d\'ara</string>
-
-    <string name="calendars_notification_adding">Afegint calendaris…</string>
-    <string name="calendars_notification_added">Els calendaris s\'han afegit.</string>
-
-    <string name="calendars_notification_clearing">Netejant calendaris…</string>
-    <string name="calendars_notification_cleared">Els calendaris s\'han afegit.</string>
-
-    <string-array name="calendars_window_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
-        <item>un any</item>
-        <item>dos anys</item>
-        <item>cinc anys</item>
-        <item>deu anys</item>
-    </string-array>
-
-    <string name="calendar_solstice_displayName">Solsticis i equinoccis</string>
-    <string name="calendar_moonPhase_displayName">Fases llunars</string>
 
     <!-- App Setting: passive location mode -->
     <string name="configLabel_getFix_passiveMode">Localització passiva</string>
@@ -885,6 +877,19 @@
     <string name="msg_export_failure">Exportar a <xliff:g id="filepath">%s</xliff:g> failed!</string>
     <string name="msg_export_to">Exportar amb</string>  <!-- title displayed over "share action" chooser -->
 
+    <!-- Dialog: Import Themes -->
+    <string name="themesimport_dialog_title">Importing Themes</string>                   <!-- TODO -->
+    <string name="themesimport_dialog_message">Importing themes from file…</string>      <!-- TODO -->
+
+    <string name="msg_import_success">Imported <xliff:g id="themePlural">%s</xliff:g>.</string>  <!-- TODO -->
+    <string name="msg_import_failure">Import from <xliff:g id="filepath">%s</xliff:g> failed!</string>  <!-- TODO -->
+    <string name="msg_import_noresults">Import skipped; no new themes were found.</string>  <!-- TODO -->
+
+    <plurals name="themePlural">
+        <item quantity="one">%d theme</item>
+        <item quantity="other">%d themes</item>
+    </plurals>  <!-- TODO -->
+
     <!-- Dialog: Color -->
     <string name="color_dialog_msg">Escollir color</string>
     <string name="color_dialog_ok">Seleccionar</string>
@@ -1001,9 +1006,15 @@
           The [Icon Default] default themes cannot be modified.
     </string> <!-- text explains themelist actions/icons; [Icon tags] are substituted at runtime (should remain unaltered)  --> <!-- TODO -->
 
+    <string name="help_calendar"><![CDATA[Supply events to the Calendar app (moon phases, solstices, and equinoxes).<br />
+        <br />
+        <u><b><font color="#ff9900">Calendar permissions have been removed.</font></b></u><br />
+        <br />
+        This feature is now available as a <a href="moreInfoLink">separate app</a>.
+    ]]></string>  <!-- TODO -->
+
     <string name="privacy_policy"><![CDATA[<b>Privadesa:</b><br/>Suntimes no coŀlecta, emmagatzema, o transmet dades personals. <b>No contè anuncis</b>, <b>càlculs estadístics</b>, <b>rastrejadors</b>, i <b>no utilitza permissos innecessaris</b>. <br/><br/>L\'aplicació es configura amb dades de localització. Aquesta informació (i qualsevol altra dada configurada emprada per l\'aplicació) s\'emmagatzema localment i no surt del dispositiu.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes utilitza el permís de <b>localització</b> per determinar la teva longitud i latitud.<br/><br/>Aquest permís és opcional; la localització es configura manualment per defecte.]]></string>
-    <string name="privacy_permission_calendar"><![CDATA[Suntimes utilitza el permís de <b>calendari</b> per integrar-se amb l\'aplicació Calendari. Aquests permisos permeten crear calendaris i esdeveniments personalitzats.<br/><br/>També es necessiten permisos quan es desactiva la integració amb el calendari (per eliminar calendaris personalitzats).]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes utilitza el permís d\'<b>emmagatzematge extern</b> per fer una còpia de seguretat o exportar dades a un arxiu (p. ex. llocs, temes).]]></string>
     <string name="privacy_permissiondialog_title">Permissos</string>
 

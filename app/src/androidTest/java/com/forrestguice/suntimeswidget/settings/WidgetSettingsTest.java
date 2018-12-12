@@ -22,13 +22,14 @@ import android.content.Context;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.time4a.Time4ASimpleSuntimesCalculator;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
-import com.forrestguice.suntimeswidget.themes.DarkTheme;
-import com.forrestguice.suntimeswidget.themes.LightTheme;
-import com.forrestguice.suntimeswidget.themes.LightThemeTrans;
+import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
+import com.forrestguice.suntimeswidget.themes.defaults.LightTheme;
+import com.forrestguice.suntimeswidget.themes.defaults.LightThemeTrans;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import org.junit.Before;
@@ -44,6 +45,49 @@ import static junit.framework.Assert.assertTrue;
 @RunWith(AndroidJUnit4.class)
 public class WidgetSettingsTest extends SuntimesActivityTestBase
 {
+    @Test
+    public void test_nextUpdate()
+    {
+        Context context = activityRule.getActivity();
+        int appWidgetId = Integer.MAX_VALUE;
+
+        WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, 10);
+        long value1 = WidgetSettings.getNextSuggestedUpdate(context, appWidgetId);
+        assertTrue("value should be 10", value1 == 10);
+
+        WidgetSettings.deleteNextSuggestedUpdate(context, appWidgetId);
+        long value0 = WidgetSettings.getNextSuggestedUpdate(context, appWidgetId);
+        assertTrue("value should be -1", value0 == -1 && value0 == WidgetSettings.PREF_DEF_NEXTUPDATE);
+    }
+
+    @Test
+    public void test_lengthUnitsPref()
+    {
+        Context context = activityRule.getActivity();
+        int appWidgetId = Integer.MAX_VALUE;
+
+        WidgetSettings.saveLengthUnitsPref(context, appWidgetId, WidgetSettings.LengthUnit.METRIC);
+        WidgetSettings.LengthUnit units3 = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
+        assertTrue("units should be metric, was " + units3, units3 == WidgetSettings.LengthUnit.METRIC);
+
+        WidgetSettings.saveLengthUnitsPref(context, appWidgetId, WidgetSettings.LengthUnit.IMPERIAL);
+        WidgetSettings.LengthUnit units2 = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
+        assertTrue("units should be imperial, was " + units2, units2 == WidgetSettings.LengthUnit.IMPERIAL);
+
+        WidgetSettings.saveLengthUnitsPref(context, appWidgetId, WidgetSettings.LengthUnit.USC);
+        WidgetSettings.LengthUnit units1 = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
+        assertTrue("units should be usc, was " + units1, units1 == WidgetSettings.LengthUnit.USC);
+
+        WidgetSettings.deleteLengthUnitsPref(context, appWidgetId);
+        WidgetSettings.LengthUnit units0 = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
+        assertTrue("units should be default (metric) but was " + units0, units0 == WidgetSettings.PREF_DEF_GENERAL_UNITS_LENGTH);
+
+        double meters0 = Math.PI;
+        double feet0 = WidgetSettings.LengthUnit.metersToFeet(meters0);
+        double meters1 = WidgetSettings.LengthUnit.feetToMeters(feet0);
+        assertTrue("conversion should make round trip", (meters1-meters0 < 0.1));
+    }
+
     @Test
     public void test_timeFormatModePref()
     {
@@ -249,31 +293,31 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
 
     @Test public void test_location()
     {
-        WidgetSettings.Location loc0 = new WidgetSettings.Location("0", "0");
+        Location loc0 = new Location("0", "0");
         assertEquals(0d, loc0.getLatitudeAsDouble());
         assertEquals(0d, loc0.getLongitudeAsDouble());
 
-        WidgetSettings.Location loc1 = new WidgetSettings.Location("90", "180");
+        Location loc1 = new Location("90", "180");
         assertEquals(90d, loc1.getLatitudeAsDouble());
         assertEquals(-180d, loc1.getLongitudeAsDouble());
 
-        WidgetSettings.Location loc2 = new WidgetSettings.Location("-90", "-180");
+        Location loc2 = new Location("-90", "-180");
         assertEquals(-90d, loc2.getLatitudeAsDouble());
         assertEquals(-180d, loc2.getLongitudeAsDouble());
 
-        WidgetSettings.Location loc3 = new WidgetSettings.Location("91", "181");
+        Location loc3 = new Location("91", "181");
         assertEquals(89d, loc3.getLatitudeAsDouble());
         assertEquals(-179d, loc3.getLongitudeAsDouble());
 
-        WidgetSettings.Location loc4 = new WidgetSettings.Location("181", "359");
+        Location loc4 = new Location("181", "359");
         assertEquals(89d, loc4.getLatitudeAsDouble());
         assertEquals(-1d, loc4.getLongitudeAsDouble());
 
-        WidgetSettings.Location loc5 = new WidgetSettings.Location("-91", "-181");
+        Location loc5 = new Location("-91", "-181");
         assertEquals(-89d, loc5.getLatitudeAsDouble());
         assertEquals(179d, loc5.getLongitudeAsDouble());
 
-        WidgetSettings.Location loc6 = new WidgetSettings.Location("-179", "-359");
+        Location loc6 = new Location("-179", "-359");
         assertEquals(-1d, loc6.getLatitudeAsDouble());
         assertEquals(1d, loc6.getLongitudeAsDouble());
     }
@@ -296,19 +340,19 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
 
     @Test public void test_locationPref()
     {
-        WidgetSettings.Location testloc2 = new WidgetSettings.Location(TESTLOC_0_LABEL, TESTLOC_0_LAT, TESTLOC_0_LON);
+        Location testloc2 = new Location(TESTLOC_0_LABEL, TESTLOC_0_LAT, TESTLOC_0_LON);
         WidgetSettings.saveLocationPref(context, appWidgetId, testloc2);
-        WidgetSettings.Location pref2 = WidgetSettings.loadLocationPref(context, appWidgetId);
+        Location pref2 = WidgetSettings.loadLocationPref(context, appWidgetId);
         assertTrue("location does not match! " + pref2, pref2.equals(testloc2));
 
-        WidgetSettings.Location testloc1 = new WidgetSettings.Location(TESTLOC_1_LABEL, TESTLOC_1_LAT, TESTLOC_1_LON, TESTLOC_1_ALT);
+        Location testloc1 = new Location(TESTLOC_1_LABEL, TESTLOC_1_LAT, TESTLOC_1_LON, TESTLOC_1_ALT);
         WidgetSettings.saveLocationPref(context, appWidgetId, testloc1);
-        WidgetSettings.Location pref1 = WidgetSettings.loadLocationPref(context, appWidgetId);
+        Location pref1 = WidgetSettings.loadLocationPref(context, appWidgetId);
         assertTrue("location does not match! " + pref1, pref1.equals(testloc1));
 
-        WidgetSettings.Location testloc0 = new WidgetSettings.Location(WidgetSettings.PREF_DEF_LOCATION_LABEL, WidgetSettings.PREF_DEF_LOCATION_LATITUDE, WidgetSettings.PREF_DEF_LOCATION_LONGITUDE, WidgetSettings.PREF_DEF_LOCATION_ALTITUDE);
+        Location testloc0 = new Location(WidgetSettings.PREF_DEF_LOCATION_LABEL, WidgetSettings.PREF_DEF_LOCATION_LATITUDE, WidgetSettings.PREF_DEF_LOCATION_LONGITUDE, WidgetSettings.PREF_DEF_LOCATION_ALTITUDE);
         WidgetSettings.deleteLocationPref(context, appWidgetId);
-        WidgetSettings.Location pref0 = WidgetSettings.loadLocationPref(context, appWidgetId);
+        Location pref0 = WidgetSettings.loadLocationPref(context, appWidgetId);
         assertTrue("location does not match default! " + pref0, pref0.equals(testloc0));
     }
 
@@ -665,6 +709,22 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     protected boolean equals(float float1, float float2)
     {
         return (Math.abs(float1 - float2) < FLOAT_TOLERANCE);
+    }
+
+    @Test
+    public void test_riseSetOrderPref()
+    {
+        WidgetSettings.saveRiseSetOrderPref(context, appWidgetId, WidgetSettings.RiseSetOrder.TODAY);
+        WidgetSettings.RiseSetOrder mode = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
+        assertTrue("riseSetOrder should be TODAY but was " + mode, mode == WidgetSettings.RiseSetOrder.TODAY);
+
+        WidgetSettings.saveRiseSetOrderPref(context, appWidgetId, WidgetSettings.RiseSetOrder.LASTNEXT);
+        mode = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
+        assertTrue("riseSetOrder should be LASTNEXT but was " + mode, mode == WidgetSettings.RiseSetOrder.LASTNEXT);
+
+        WidgetSettings.deleteRiseSetOrderPref(context, appWidgetId);
+        mode = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
+        assertTrue("riseSetOrder should be default (TODAY) but was " + mode, mode == WidgetSettings.RiseSetOrder.TODAY && mode == WidgetSettings.PREF_DEF_GENERAL_RISESETORDER);
     }
 
 }

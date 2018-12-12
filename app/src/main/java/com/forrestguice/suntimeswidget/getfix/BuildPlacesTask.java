@@ -28,7 +28,7 @@ import android.os.Build;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -78,13 +78,13 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
     private int buildPlaces()
     {
         int result = 0;
-        ArrayList<WidgetSettings.Location> locations = new ArrayList<>();
+        ArrayList<Location> locations = new ArrayList<>();
         try {
             Context context = contextRef.get();
             db.open();
             for (Locale locale : Locale.getAvailableLocales())
             {
-                WidgetSettings.Location location = null;
+                Location location = null;
                 if (Build.VERSION.SDK_INT >= 17 && context != null)
                 {
                     Configuration config = new Configuration(context.getResources().getConfiguration());
@@ -95,7 +95,7 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
                     String lat = resources.getString(R.string.default_location_latitude);
                     String lon = resources.getString(R.string.default_location_longitude);
                     String alt = resources.getString(R.string.default_location_altitude);
-                    location = new WidgetSettings.Location(label, lat, lon, alt);
+                    location = new Location(label, lat, lon, alt);
                 } // else    // TODO: legacy support
 
                 if (location != null && !locations.contains(location))
@@ -104,10 +104,10 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
                 }
             }
 
-            Collections.sort(locations, new Comparator<WidgetSettings.Location>()
+            Collections.sort(locations, new Comparator<Location>()
             {
                 @Override
-                public int compare(WidgetSettings.Location o1, WidgetSettings.Location o2)
+                public int compare(Location o1, Location o2)
                 {
                     return o2.getLabel().compareTo(o1.getLabel());  // descending
                 }
@@ -116,7 +116,7 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
             Cursor cursor = db.getAllPlaces(0, false);
             for (int i=0; i<locations.size(); i++)
             {
-                WidgetSettings.Location location = locations.get(i);
+                Location location = locations.get(i);
                 int p = GetFixDatabaseAdapter.findPlaceByName(location.getLabel(), cursor);
                 if (p < 0)    // if not found
                 {                 // then add new place

@@ -21,6 +21,8 @@ package com.forrestguice.suntimeswidget.calculator;
 import android.content.Context;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
@@ -87,8 +89,8 @@ public class SuntimesData
     /**
      * Property: location
      */
-    protected WidgetSettings.Location location;
-    public WidgetSettings.Location location()
+    protected Location location;
+    public Location location()
     {
         return location;
     }
@@ -320,6 +322,30 @@ public class SuntimesData
         nowThen.set(Calendar.MONTH, date.get(Calendar.MONTH));
         nowThen.set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH));
         return nowThen;
+    }
+
+    /**
+     * findSoonest
+     */
+    public static long findSoonest(Calendar now, Calendar... events)
+    {
+        Calendar soonest = null;
+        long tillSoonest = Long.MAX_VALUE;
+        long nowMillis = now.getTimeInMillis();
+
+        for (Calendar event : events)
+        {
+            if (now.before(event))
+            {
+                long tillEvent = event.getTimeInMillis() - nowMillis;
+                if (tillEvent < tillSoonest)
+                {
+                    soonest = event;
+                    tillSoonest = tillEvent;
+                }
+            }
+        }
+        return (soonest != null ? soonest.getTimeInMillis() : -1);
     }
 
 }

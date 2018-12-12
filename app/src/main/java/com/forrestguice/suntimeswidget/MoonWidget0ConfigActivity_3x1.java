@@ -23,7 +23,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
-import com.forrestguice.suntimeswidget.layouts.MoonLayout_3x1_0;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity;
 
 import static com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity.PICK_THEME_REQUEST;
@@ -46,9 +45,14 @@ public class MoonWidget0ConfigActivity_3x1 extends MoonWidget0ConfigActivity
     }
 
     @Override
-    protected void updateWidget(Context context)
+    protected void updateWidgets(Context context, int[] appWidgetIds)
     {
-        MoonWidget0_3x1.updateAppWidget(context, AppWidgetManager.getInstance(context), appWidgetId, MoonWidget0_3x1.class, minWidgetSize(context), new MoonLayout_3x1_0());
+        Intent updateIntent = new Intent(context, MoonWidget0_3x1.class);
+        updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+        sendBroadcast(updateIntent);
+
+        //MoonWidget0_3x1.updateAppWidget(context, AppWidgetManager.getInstance(context), appWidgetId, MoonWidget0_3x1.class, minWidgetSize(context), new MoonLayout_3x1_0());
     }
 
     @Override
