@@ -36,23 +36,20 @@ public class MoonLayout_1x1_0 extends MoonLayout
         super();
     }
 
-    /**public MoonLayout_1x1_0(int layoutID)
-    {
-        this.layoutID = layoutID;
-    }*/
-
     @Override
     public void initLayoutID()
     {
         this.layoutID = R.layout.layout_widget_moon_1x1_0;
     }
 
+    private WidgetSettings.RiseSetOrder order = WidgetSettings.RiseSetOrder.TODAY;
+
     @Override
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesMoonData data)
     {
         super.updateViews(context, appWidgetId, views, data);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
-        updateViewsMoonRiseSetText(context, views, data, showSeconds);
+        updateViewsMoonRiseSetText(context, views, data, showSeconds, order);
     }
 
     @Override
@@ -64,9 +61,10 @@ public class MoonLayout_1x1_0 extends MoonLayout
     }
 
     @Override
-    public void prepareForUpdate(SuntimesMoonData data)
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesMoonData data)
     {
-        this.layoutID = chooseMoonLayout(R.layout.layout_widget_moon_1x1_0, R.layout.layout_widget_moon_1x1_01, data);
+        order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
+        this.layoutID = chooseMoonLayout(R.layout.layout_widget_moon_1x1_0, R.layout.layout_widget_moon_1x1_01, data, order);
     }
 
 }

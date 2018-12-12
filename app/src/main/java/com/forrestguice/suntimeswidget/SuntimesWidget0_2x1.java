@@ -28,18 +28,10 @@ import com.forrestguice.suntimeswidget.layouts.SunLayout_2x1_0;
  */
 public class SuntimesWidget0_2x1 extends SuntimesWidget0
 {
-    public static final int UPDATEALARM_ID = 2;
-
     @Override
     protected Class getConfigClass()
     {
         return SuntimesConfigActivity0_2x1.class;
-    }
-
-    @Override
-    protected int getUpdateAlarmId()
-    {
-        return SuntimesWidget0_2x1.UPDATEALARM_ID;
     }
 
     @Override

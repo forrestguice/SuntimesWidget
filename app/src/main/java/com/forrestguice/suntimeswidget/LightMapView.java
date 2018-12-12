@@ -24,14 +24,16 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.AsyncTask;
 //import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 
 import android.util.AttributeSet;
 import android.util.Log;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.Calendar;
 
@@ -113,6 +115,21 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         {
             updateViews(true);
         }
+    }
+
+    /**
+     * themeViews
+     */
+    public void themeViews( Context context, @NonNull SuntimesTheme theme )
+    {
+        colors = new LightMapColors();
+        colors.colorNight = theme.getNightColor();
+        colors.colorDay = theme.getDayColor();
+        colors.colorAstro = theme.getAstroColor();
+        colors.colorNautical = theme.getNauticalColor();
+        colors.colorCivil = theme.getCivilColor();
+        colors.colorPointFill = theme.getNoonIconColor();
+        colors.colorPointStroke = theme.getNoonIconStrokeColor();
     }
 
     /**

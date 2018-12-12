@@ -14,8 +14,11 @@ Android app (and widget collection) that displays sunlight and moonlight times f
 Displays sunrise and sunset, twilights (civil / nautical / astronomical), blue and golden hour, solstices and equinoxes, moonrise and moonset, moon phases and illumination. 
 
 <a href="https://f-droid.org/repository/browse/?fdid=com.forrestguice.suntimeswidget" target="_blank">
-<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="80"/></a>
+<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="68" align="left" /></a>
 
+<a href="https://github.com/forrestguice/SuntimesCalendars/releases"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/images/ic_launcher.png" height="64" /></a> <a href="https://github.com/forrestguice/SuntimesCalendars/releases">Suntimes Calendars</a> <br />
+A calendar provider add-on.<br/><br />
+    
 The app:
 * displays the current time (system time zone, custom time zone, or solar time) 
 * displays the time until the next rising/setting event.
@@ -26,7 +29,6 @@ The app:
 * displays the sun's current position, and its position at sunrise, sunset, and noon.
 * displays the moon's current position, and its position at moonrise and moonset.
 * can set an alarm for the next sunrise or sunset (or other rising/setting event).
-* can provide the Calendar app with custom calendars (moon phase, solstice, and equinox events).
 * can display the configured location on a map (requires a map application) and configure the location from a map (using geo intent).
 
 The app:
@@ -96,6 +98,11 @@ The app benefits from the following permissions...
 |ACCESS_FINE_LOCATION|To get current location (GPS).|v0.1.0|
 |SET_ALARM|To interact with the AlarmClock app.|v0.1.0|
 |WRITE_EXTERNAL_STORAGE|To export data (places, themes, etc.) to file.|v0.2.2 (api<=18)|
+
+Version `0.9.*` contained the following additional permissions (removed in v0.10.0)...
+
+|Permission||Version|
+|---|---|---|
 |READ_CALENDAR|To interact with the Calendar app (access events).|v0.9.0|
 |WRITE_CALENDAR|To interact with the Calendar app (add/remove events).|v0.9.0|
 |READ_SYNC_STATS|To interact with the Calendar app (access custom calendars).|v0.9.0|
@@ -127,7 +134,7 @@ Icons and images from:
 * "NASA Visible Earth: Blue Marble" [Public Domain] (https://visibleearth.nasa.gov/view_cat.php?categoryID=1484)
 
 Libraries used:
-* Time4A [LGPL-2.1] (http://github.com/MenoData/Time4A) 
+* Time4A [Apache License 2.0] (http://github.com/MenoData/Time4A) 
 * ca.rmen.sunrisesunset [LGPL-2.1] (http://github.com/caarmen/SunriseSunset)
 * sunrisesunsetlib-java [Apache License 2.0] (http://mikereedell.github.io/sunrisesunsetlib-java/) 
 * QuadFlask/colorpicker [Apache License 2.0] (https://github.com/QuadFlask/colorpicker) 

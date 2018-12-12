@@ -28,6 +28,7 @@ import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import org.junit.Before;
@@ -48,22 +49,22 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
     private static String version = BuildConfig.VERSION_NAME;
 
     private HashMap<String, ScreenshotConfig> config;
-    private ScreenshotConfig defaultConfig = new ScreenshotConfig(new WidgetSettings.Location("Phoenix", "33.45579", "-111.94580", "385"), "US/Arizona", false);
+    private ScreenshotConfig defaultConfig = new ScreenshotConfig(new Location("Phoenix", "33.45579", "-111.94580", "385"), "US/Arizona", false);
 
     @Before
     public void initScreenshots()
     {
         config = new HashMap<String, ScreenshotConfig>();
-        config.put("ca", new ScreenshotConfig(new WidgetSettings.Location("Barcelona", "41.3825", "2.1769", "31"), "CET", true));
-        config.put("de", new ScreenshotConfig(new WidgetSettings.Location("Berlin", "52.5243", "13.4105", "40"), "Europe/Berlin", true));
-        config.put("es_ES", new ScreenshotConfig(new WidgetSettings.Location("Madrid", "40.4378", "-3.8196", "681"), "Europe/Madrid", false));
-        config.put("eu", new ScreenshotConfig(new WidgetSettings.Location("Euskal Herriko erdigunea", "42.883008", "-1.935491", "1258"), "CET", true));
-        config.put("fr", new ScreenshotConfig(new WidgetSettings.Location("Paris", "48.8566", "2.3518", "41"), "Europe/Paris", true));
-        config.put("hu", new ScreenshotConfig(new WidgetSettings.Location("Budapest", "47.4811", "18.9902", "225"), "Europe/Budapest", true));
-        config.put("it", new ScreenshotConfig(new WidgetSettings.Location("Roma", "41.9099", "12.3959", "79"), "CET", false));
-        config.put("pl", new ScreenshotConfig(new WidgetSettings.Location("Warszawa", "52.2319", "21.0067", "143"), "Poland", true));
-        config.put("nb", new ScreenshotConfig(new WidgetSettings.Location("Oslo", "59.8937", "10.6450", "0"), "Europe/Oslo", true));
-        config.put("zh_TW", new ScreenshotConfig(new WidgetSettings.Location("Taiwan", "23.5491", "119.8998", "0"), "Asia/Taipei", false));
+        config.put("ca", new ScreenshotConfig(new Location("Barcelona", "41.3825", "2.1769", "31"), "CET", true));
+        config.put("de", new ScreenshotConfig(new Location("Berlin", "52.5243", "13.4105", "40"), "Europe/Berlin", true));
+        config.put("es_ES", new ScreenshotConfig(new Location("Madrid", "40.4378", "-3.8196", "681"), "Europe/Madrid", false));
+        config.put("eu", new ScreenshotConfig(new Location("Euskal Herriko erdigunea", "42.883008", "-1.935491", "1258"), "CET", true));
+        config.put("fr", new ScreenshotConfig(new Location("Paris", "48.8566", "2.3518", "41"), "Europe/Paris", true));
+        config.put("hu", new ScreenshotConfig(new Location("Budapest", "47.4811", "18.9902", "225"), "Europe/Budapest", true));
+        config.put("it", new ScreenshotConfig(new Location("Roma", "41.9099", "12.3959", "79"), "CET", false));
+        config.put("pl", new ScreenshotConfig(new Location("Warszawa", "52.2319", "21.0067", "143"), "Poland", true));
+        config.put("nb", new ScreenshotConfig(new Location("Oslo", "59.8937", "10.6450", "0"), "Europe/Oslo", true));
+        config.put("zh_TW", new ScreenshotConfig(new Location("Taiwan", "23.5491", "119.8998", "0"), "Asia/Taipei", false));
 
         if (!version.startsWith("v"))
             version = "v" + version;
@@ -221,11 +222,11 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
 
     public static class ScreenshotConfig
     {
-        public WidgetSettings.Location location;
+        public Location location;
         public String timezoneID;
         public WidgetSettings.TimeFormatMode timeformat;
 
-        public ScreenshotConfig(WidgetSettings.Location location, String timezoneID, boolean format24)
+        public ScreenshotConfig(Location location, String timezoneID, boolean format24)
         {
             this.location = location;
             this.timezoneID = timezoneID;

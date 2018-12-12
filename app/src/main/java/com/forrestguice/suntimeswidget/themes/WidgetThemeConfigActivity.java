@@ -25,8 +25,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.InsetDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -67,13 +69,18 @@ import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
 import com.forrestguice.suntimeswidget.map.WorldMapTask;
 import com.forrestguice.suntimeswidget.map.WorldMapView;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.ColorChooserView;
 import com.forrestguice.suntimeswidget.settings.PaddingChooser;
+import com.forrestguice.suntimeswidget.settings.SizeEditView;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
+import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 
 import java.security.InvalidParameterException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.forrestguice.suntimeswidget.themes.SuntimesTheme.THEME_BACKGROUND_COLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesTheme.THEME_NAME;
@@ -119,7 +126,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private ColorChooser chooseColorRise, chooseColorRiseIconFill, chooseColorRiseIconStroke;
     private ColorChooser chooseColorNoon, chooseColorNoonIconFill, chooseColorNoonIconStroke;
     private ColorChooser chooseColorSet, chooseColorSetIconFill, chooseColorSetIconStroke;
-    private ColorChooser chooseColorTitle, chooseColorText, chooseColorTime, chooseColorSuffix;
+    private ColorChooser chooseColorTitle, chooseColorText, chooseColorTime, chooseColorSuffix, chooseColorAction;
     private ColorChooser chooseColorDay, chooseColorCivil, chooseColorNautical, chooseColorAstro, chooseColorNight;
     private ColorChooser chooseColorSpring, chooseColorSummer, chooseColorFall, chooseColorWinter;
     private ColorChooser chooseColorMoonrise, chooseColorMoonset;
@@ -131,7 +138,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private CheckBox checkTitleBold, checkTimeBold;
 
     private Spinner spinBackground;
-    private ArrayAdapter<ThemeBackground> spinBackground_adapter;
+    private ArrayAdapter<SuntimesTheme.ThemeBackground> spinBackground_adapter;
     private ColorChooser chooseColorBackground;
 
     private ViewFlipper preview;
@@ -197,7 +204,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     {
         WidgetSettings.initDefaults(this);
         WidgetSettings.initDisplayStrings(this);
-        ThemeBackground.initDisplayStrings(this);
+        SuntimesTheme.ThemeBackground.initDisplayStrings(this);
         SuntimesUtils.initDisplayStrings(this);
     }
 
@@ -217,7 +224,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        spinBackground_adapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, ThemeBackground.values());
+        spinBackground_adapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, SuntimesTheme.ThemeBackground.values());
         spinBackground_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinBackground = (Spinner)findViewById(R.id.editSpin_background);
         spinBackground.setAdapter(spinBackground_adapter);
@@ -227,7 +234,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
             {
                 updatePreview();
-                ThemeBackground background = spinBackground_adapter.getItem(i);
+                SuntimesTheme.ThemeBackground background = spinBackground_adapter.getItem(i);
                 boolean enabled = (background != null && background.supportsCustomColors());
                 //chooseColorBackground.setEnabled(enabled);
                 chooseColorBackground.setVisibility(enabled ? View.VISIBLE : View.INVISIBLE);
@@ -239,7 +246,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             }
         });
 
-        chooseColorBackground = createColorChooser(context, R.id.editLabel_backgroundColor, R.id.edit_backgroundColor, R.id.editButton_backgroundColor, THEME_BACKGROUND_COLOR);
+        chooseColorBackground = createColorChooser(context, R.id.chooser_backgroundColor, THEME_BACKGROUND_COLOR);
         chooseColorBackground.setShowAlpha(true);
 
         EditText editName = (EditText)findViewById(R.id.edit_themeName);
@@ -261,12 +268,13 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             }
         });
 
-        chooseTitleSize = createSizeChooser(this, R.id.edit_titleSize, SuntimesTheme.THEME_TITLESIZE_MIN, SuntimesTheme.THEME_TITLESIZE_MAX, SuntimesTheme.THEME_TITLESIZE);
-        chooseTextSize = createSizeChooser(this, R.id.edit_textSize, SuntimesTheme.THEME_TEXTSIZE_MIN, SuntimesTheme.THEME_TEXTSIZE_MAX, SuntimesTheme.THEME_TEXTSIZE);
-        chooseTimeSize = createSizeChooser(this, R.id.edit_timeSize, SuntimesTheme.THEME_TIMESIZE_MIN, SuntimesTheme.THEME_TIMESIZE_MAX, SuntimesTheme.THEME_TIMESIZE);
-        chooseSuffixSize = createSizeChooser(this, R.id.edit_suffixSize, SuntimesTheme.THEME_TIMESUFFIXSIZE_MIN, SuntimesTheme.THEME_TIMESUFFIXSIZE_MAX, SuntimesTheme.THEME_TIMESUFFIXSIZE);
-        chooseIconStroke = createSizeChooser(this, R.id.edit_iconStroke, SuntimesTheme.THEME_SETICON_STROKE_WIDTH_MIN, SuntimesTheme.THEME_SETICON_STROKE_WIDTH_MAX, SuntimesTheme.THEME_SETICON_STROKE_WIDTH);
-        chooseNoonIconStroke = createSizeChooser(this, R.id.edit_noonIconStroke, SuntimesTheme.THEME_NOONICON_STROKE_WIDTH_MIN, SuntimesTheme.THEME_NOONICON_STROKE_WIDTH_MAX, SuntimesTheme.THEME_NOONICON_STROKE_WIDTH);
+        chooseTitleSize = createSizeChooser(this, R.id.chooser_titleSize, SuntimesTheme.THEME_TITLESIZE_MIN, SuntimesTheme.THEME_TITLESIZE_MAX, SuntimesTheme.THEME_TITLESIZE);
+        chooseTextSize = createSizeChooser(this, R.id.chooser_textSize, SuntimesTheme.THEME_TEXTSIZE_MIN, SuntimesTheme.THEME_TEXTSIZE_MAX, SuntimesTheme.THEME_TEXTSIZE);
+        chooseTimeSize = createSizeChooser(this, R.id.chooser_timeSize, SuntimesTheme.THEME_TIMESIZE_MIN, SuntimesTheme.THEME_TIMESIZE_MAX, SuntimesTheme.THEME_TIMESIZE);
+        chooseSuffixSize = createSizeChooser(this, R.id.chooser_suffixSize, SuntimesTheme.THEME_TIMESUFFIXSIZE_MIN, SuntimesTheme.THEME_TIMESUFFIXSIZE_MAX, SuntimesTheme.THEME_TIMESUFFIXSIZE);
+
+        chooseIconStroke = createSizeChooser(this, R.id.chooser_iconStroke, SuntimesTheme.THEME_SETICON_STROKE_WIDTH_MIN, SuntimesTheme.THEME_SETICON_STROKE_WIDTH_MAX, SuntimesTheme.THEME_SETICON_STROKE_WIDTH);
+        chooseNoonIconStroke = createSizeChooser(this, R.id.chooser_noonIconStroke, SuntimesTheme.THEME_NOONICON_STROKE_WIDTH_MIN, SuntimesTheme.THEME_NOONICON_STROKE_WIDTH_MAX, SuntimesTheme.THEME_NOONICON_STROKE_WIDTH);
         chooseMoonStroke = createSizeChooser(this, SuntimesTheme.THEME_MOON_STROKE_MIN, SuntimesTheme.THEME_MOON_STROKE_MAX, SuntimesTheme.THEME_MOONFULL_STROKE_WIDTH);
 
         EditText editPadding = (EditText)findViewById(R.id.edit_padding);
@@ -280,59 +288,59 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         };
 
         // sunrise colors
-        chooseColorRise = createColorChooser(this, R.id.editLabel_sunriseColor, R.id.edit_sunriseColor, R.id.editButton_sunriseColor, SuntimesTheme.THEME_SUNRISECOLOR);
-        chooseColorRiseIconFill = createColorChooser(this, R.id.editLabel_sunriseFillColor, R.id.edit_sunriseFillColor, R.id.editButton_sunriseFillColor, SuntimesTheme.THEME_RISEICON_FILL_COLOR);
-        chooseColorRiseIconStroke = createColorChooser(this, R.id.editLabel_sunriseStrokeColor, R.id.edit_sunriseStrokeColor, R.id.editButton_sunriseStrokeColor, SuntimesTheme.THEME_RISEICON_STROKE_COLOR);
+        chooseColorRise = createColorChooser(this, R.id.chooser_sunriseColor, SuntimesTheme.THEME_SUNRISECOLOR);
+        chooseColorRiseIconFill = createColorChooser(this, R.id.chooser_sunriseFillColor, SuntimesTheme.THEME_RISEICON_FILL_COLOR);
+        chooseColorRiseIconStroke = createColorChooser(this, R.id.chooser_sunriseStrokeColor, SuntimesTheme.THEME_RISEICON_STROKE_COLOR);
 
         // noon colors
-        chooseColorNoon = createColorChooser(this, R.id.editLabel_noonColor, R.id.edit_noonColor, R.id.editButton_noonColor, SuntimesTheme.THEME_NOONCOLOR);
-        chooseColorNoonIconFill = createColorChooser(this, R.id.editLabel_noonFillColor, R.id.edit_noonFillColor,  R.id.editButton_noonFillColor, SuntimesTheme.THEME_NOONICON_FILL_COLOR);
-        chooseColorNoonIconStroke = createColorChooser(this, R.id.editLabel_noonStrokeColor, R.id.edit_noonStrokeColor, R.id.editButton_noonStrokeColor, SuntimesTheme.THEME_NOONICON_STROKE_COLOR);
+        chooseColorNoon = createColorChooser(this, R.id.chooser_noonColor, SuntimesTheme.THEME_NOONCOLOR);
+        chooseColorNoonIconFill = createColorChooser(this, R.id.chooser_noonFillColor, SuntimesTheme.THEME_NOONICON_FILL_COLOR);
+        chooseColorNoonIconStroke = createColorChooser(this, R.id.chooser_noonStrokeColor, SuntimesTheme.THEME_NOONICON_STROKE_COLOR);
 
         // sunset colors
-        chooseColorSet = createColorChooser(this, R.id.editLabel_sunsetColor, R.id.edit_sunsetColor, R.id.editButton_sunsetColor, SuntimesTheme.THEME_SUNSETCOLOR);
-        chooseColorSetIconFill = createColorChooser(this, R.id.editLabel_sunsetFillColor, R.id.edit_sunsetFillColor, R.id.editButton_sunsetFillColor, SuntimesTheme.THEME_SETICON_FILL_COLOR);
-        chooseColorSetIconStroke = createColorChooser(this, R.id.editLabel_sunsetStrokeColor, R.id.edit_sunsetStrokeColor, R.id.editButton_sunsetStrokeColor, SuntimesTheme.THEME_SETICON_STROKE_COLOR);
+        chooseColorSet = createColorChooser(this, R.id.chooser_sunsetColor, SuntimesTheme.THEME_SUNSETCOLOR);
+        chooseColorSetIconFill = createColorChooser(this, R.id.chooser_sunsetFillColor, SuntimesTheme.THEME_SETICON_FILL_COLOR);
+        chooseColorSetIconStroke = createColorChooser(this, R.id.chooser_sunsetStrokeColor, SuntimesTheme.THEME_SETICON_STROKE_COLOR);
 
         // graph colors
-        chooseColorDay = createColorChooser(context, R.id.editLabel_dayColor, R.id.edit_dayColor, R.id.editButton_dayColor, SuntimesTheme.THEME_DAYCOLOR);
-        chooseColorCivil = createColorChooser(context, R.id.editLabel_civilColor, R.id.edit_civilColor, R.id.editButton_civilColor, SuntimesTheme.THEME_CIVILCOLOR);
-        chooseColorNautical = createColorChooser(context, R.id.editLabel_nauticalColor, R.id.edit_nauticalColor, R.id.editButton_nauticalColor, SuntimesTheme.THEME_NAUTICALCOLOR);
-        chooseColorAstro = createColorChooser(context, R.id.editLabel_astroColor, R.id.edit_astroColor, R.id.editButton_astroColor, SuntimesTheme.THEME_ASTROCOLOR);
-        chooseColorNight = createColorChooser(context, R.id.editLabel_nightColor, R.id.edit_nightColor, R.id.editButton_nightColor, SuntimesTheme.THEME_NIGHTCOLOR);
+        chooseColorDay = createColorChooser(context, R.id.chooser_dayColor, SuntimesTheme.THEME_DAYCOLOR);
+        chooseColorCivil = createColorChooser(context, R.id.chooser_civilColor, SuntimesTheme.THEME_CIVILCOLOR);
+        chooseColorNautical = createColorChooser(context, R.id.chooser_nauticalColor, SuntimesTheme.THEME_NAUTICALCOLOR);
+        chooseColorAstro = createColorChooser(context, R.id.chooser_astroColor, SuntimesTheme.THEME_ASTROCOLOR);
+        chooseColorNight = createColorChooser(context, R.id.chooser_nightColor, SuntimesTheme.THEME_NIGHTCOLOR);
 
         // map colors
-        chooseColorMapBackground = createColorChooser(context, R.id.editLabel_mapBackgroundColor, R.id.edit_mapBackgroundColor, R.id.editButton_mapBackgroundColor, SuntimesTheme.THEME_MAP_BACKGROUNDCOLOR);
+        chooseColorMapBackground = createColorChooser(context, R.id.chooser_mapBackgroundColor, SuntimesTheme.THEME_MAP_BACKGROUNDCOLOR);
         chooseColorMapBackground.setShowAlpha(true);
 
-        chooseColorMapForeground = createColorChooser(context, R.id.editLabel_mapForegroundColor, R.id.edit_mapForegroundColor, R.id.editButton_mapForegroundColor, SuntimesTheme.THEME_MAP_FOREGROUNDCOLOR);
+        chooseColorMapForeground = createColorChooser(context, R.id.chooser_mapForegroundColor, SuntimesTheme.THEME_MAP_FOREGROUNDCOLOR);
 
-        chooseColorMapShadow = createColorChooser(context, R.id.editLabel_mapSunShadowColor, R.id.edit_mapSunShadowColor, R.id.editButton_mapSunShadowColor, SuntimesTheme.THEME_MAP_SHADOWCOLOR);
+        chooseColorMapShadow = createColorChooser(context, R.id.chooser_mapSunShadowColor, SuntimesTheme.THEME_MAP_SHADOWCOLOR);
         chooseColorMapShadow.setShowAlpha(true);
 
-        chooseColorMapHighlight = createColorChooser(context, R.id.editLabel_mapMoonHighlightColor, R.id.edit_mapMoonHighlightColor, R.id.editButton_mapMoonHighlightColor, SuntimesTheme.THEME_MAP_HIGHLIGHTCOLOR);
+        chooseColorMapHighlight = createColorChooser(context, R.id.chooser_mapMoonHighlightColor, SuntimesTheme.THEME_MAP_HIGHLIGHTCOLOR);
         chooseColorMapHighlight.setShowAlpha(true);
 
         // season colors
-        chooseColorSpring = createColorChooser(this, R.id.editLabel_springColor, R.id.edit_springColor, R.id.editButton_springColor, SuntimesTheme.THEME_SPRINGCOLOR );
-        chooseColorSummer = createColorChooser(this, R.id.editLabel_summerColor, R.id.edit_summerColor, R.id.editButton_summerColor, SuntimesTheme.THEME_SUMMERCOLOR);
-        chooseColorFall = createColorChooser(this, R.id.editLabel_fallColor, R.id.edit_fallColor, R.id.editButton_fallColor, SuntimesTheme.THEME_FALLCOLOR);
-        chooseColorWinter = createColorChooser(this, R.id.editLabel_winterColor, R.id.edit_winterColor, R.id.editButton_winterColor, SuntimesTheme.THEME_WINTERCOLOR);
+        chooseColorSpring = createColorChooser(this, R.id.chooser_springColor, SuntimesTheme.THEME_SPRINGCOLOR );
+        chooseColorSummer = createColorChooser(this, R.id.chooser_summerColor, SuntimesTheme.THEME_SUMMERCOLOR);
+        chooseColorFall = createColorChooser(this, R.id.chooser_fallColor, SuntimesTheme.THEME_FALLCOLOR);
+        chooseColorWinter = createColorChooser(this, R.id.chooser_winterColor, SuntimesTheme.THEME_WINTERCOLOR);
 
         // moon colors
-        chooseColorMoonrise = createColorChooser(this, R.id.editLabel_moonriseColor, R.id.edit_moonriseColor, R.id.editButton_moonriseColor, SuntimesTheme.THEME_MOONRISECOLOR);
-        chooseColorMoonset = createColorChooser(this, R.id.editLabel_moonsetColor, R.id.edit_moonsetColor, R.id.editButton_moonsetColor, SuntimesTheme.THEME_MOONSETCOLOR);
-
-        chooseColorMoonWaning = createColorChooser(this, R.id.editLabel_moonWaningColor, R.id.edit_moonWaningColor, R.id.editButton_moonWaningColor, SuntimesTheme.THEME_MOONWANINGCOLOR);
-        chooseColorMoonNew = createColorChooser(this, R.id.editLabel_moonNewColor, R.id.edit_moonNewColor, R.id.editButton_moonNewColor, SuntimesTheme.THEME_MOONNEWCOLOR);
-        chooseColorMoonWaxing = createColorChooser(this, R.id.editLabel_moonWaxingColor, R.id.edit_moonWaxingColor, R.id.editButton_moonWaxingColor, SuntimesTheme.THEME_MOONWAXINGCOLOR);
-        chooseColorMoonFull = createColorChooser(this, R.id.editLabel_moonFullColor, R.id.edit_moonFullColor, R.id.editButton_moonFullColor, SuntimesTheme.THEME_MOONFULLCOLOR);
+        chooseColorMoonrise = createColorChooser(this, R.id.chooser_moonriseColor, SuntimesTheme.THEME_MOONRISECOLOR);
+        chooseColorMoonset = createColorChooser(this, R.id.chooser_moonsetColor, SuntimesTheme.THEME_MOONSETCOLOR);
+        chooseColorMoonWaning = createColorChooser(this, R.id.chooser_moonWaningColor, SuntimesTheme.THEME_MOONWANINGCOLOR);
+        chooseColorMoonNew = createColorChooser(this, R.id.chooser_moonNewColor, SuntimesTheme.THEME_MOONNEWCOLOR);
+        chooseColorMoonWaxing = createColorChooser(this, R.id.chooser_moonWaxingColor, SuntimesTheme.THEME_MOONWAXINGCOLOR);
+        chooseColorMoonFull = createColorChooser(this, R.id.chooser_moonFullColor, SuntimesTheme.THEME_MOONFULLCOLOR);
 
         // other colors
-        chooseColorTitle = createColorChooser(this, R.id.editLabel_titleColor, R.id.edit_titleColor, R.id.editButton_titleColor, SuntimesTheme.THEME_TITLECOLOR);
-        chooseColorText = createColorChooser(this, R.id.editLabel_textColor, R.id.edit_textColor, R.id.editButton_textColor, SuntimesTheme.THEME_TEXTCOLOR);
-        chooseColorTime = createColorChooser(this, R.id.editLabel_timeColor, R.id.edit_timeColor, R.id.editButton_timeColor, SuntimesTheme.THEME_TIMECOLOR);
-        chooseColorSuffix = createColorChooser(this, R.id.editLabel_suffixColor, R.id.edit_suffixColor, R.id.editButton_suffixColor, SuntimesTheme.THEME_TIMESUFFIXCOLOR);
+        chooseColorTitle = createColorChooser(this, R.id.chooser_titleColor, SuntimesTheme.THEME_TITLECOLOR);
+        chooseColorText = createColorChooser(this, R.id.chooser_textColor, SuntimesTheme.THEME_TEXTCOLOR);
+        chooseColorTime = createColorChooser(this, R.id.chooser_timeColor, SuntimesTheme.THEME_TIMECOLOR);
+        chooseColorSuffix = createColorChooser(this, R.id.chooser_suffixColor, SuntimesTheme.THEME_TIMESUFFIXCOLOR);
+        chooseColorAction = createColorChooser(this, R.id.chooser_actionColor, SuntimesTheme.THEME_ACTIONCOLOR);
 
         checkUseNoon = (CheckBox)findViewById(R.id.enable_noonColor);
         checkUseNoon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
@@ -544,15 +552,20 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         colorChoosers.add(chooser);
         return chooser;
     }
+    private ColorChooser createColorChooser(Context context, int colorChooserID, String id)
+    {
+        ColorChooserView view = (ColorChooserView)findViewById(colorChooserID);
+        return createColorChooser(this, view.getLabel(), view.getEdit(), view.getButton(), id);
+    }
 
     private SizeChooser createSizeChooser(Context context, float min, float max, String id)
     {
         return createSizeChooser(context, null, min, max, id);
     }
-    private SizeChooser createSizeChooser(Context context, int editID, float min, float max, String id)
+    private SizeChooser createSizeChooser(Context context, int sizeEditViewID, float min, float max, String id)
     {
-        EditText edit = (EditText)findViewById(editID);
-        return createSizeChooser(context, edit, min, max, id);
+        SizeEditView sizeEdit = (SizeEditView)findViewById(sizeEditViewID);
+        return createSizeChooser(context, sizeEdit.getEdit(), min, max, id);
     }
     private SizeChooser createSizeChooser(Context context, EditText edit, float min, float max, String id)
     {
@@ -620,7 +633,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         View previewBackground = previewLayout.findViewById(R.id.widgetframe_inner);
         if (previewBackground != null)
         {
-            ThemeBackground background = (ThemeBackground)spinBackground.getSelectedItem();
+            SuntimesTheme.ThemeBackground background = (SuntimesTheme.ThemeBackground)spinBackground.getSelectedItem();
             if (background != null)
             {
                 if (background.supportsCustomColors())
@@ -1131,7 +1144,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         outState.putString(SuntimesTheme.THEME_DISPLAYSTRING, editDisplay.getText().toString());
         outState.putInt(PARAM_PREVIEWID, preview.getDisplayedChild());
 
-        ThemeBackground background = (ThemeBackground)spinBackground.getSelectedItem();
+        SuntimesTheme.ThemeBackground background = (SuntimesTheme.ThemeBackground)spinBackground.getSelectedItem();
         if (background != null)
         {
             outState.putString(SuntimesTheme.THEME_BACKGROUND, background.name());
@@ -1163,7 +1176,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         flipToPreview(savedState.getInt(PARAM_PREVIEWID, -1));
 
-        ThemeBackground background = (ThemeBackground)spinBackground.getSelectedItem();
+        SuntimesTheme.ThemeBackground background = (SuntimesTheme.ThemeBackground)spinBackground.getSelectedItem();
         String backgroundName = savedState.getString(SuntimesTheme.THEME_BACKGROUND);
         if (backgroundName == null)
         {
@@ -1171,7 +1184,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         }
 
         try {
-            setSelectedBackground(ThemeBackground.valueOf(backgroundName));
+            setSelectedBackground(SuntimesTheme.ThemeBackground.valueOf(backgroundName));
         } catch (IllegalArgumentException e) {
             Log.e("setBackground", "Unable to resolve ThemeBackground " + backgroundName);
             spinBackground.setSelection(0);
@@ -1285,6 +1298,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             chooseColorText.setColor(theme.getTextColor());
             chooseColorTime.setColor(theme.getTimeColor());
             chooseColorSuffix.setColor(theme.getTimeSuffixColor());
+            chooseColorAction.setColor(theme.getActionColor());
 
             checkTitleBold.setChecked(theme.getTitleBold());
             checkTimeBold.setChecked(theme.getTimeBold());
@@ -1342,7 +1356,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         toggleNoonIconColor(usingNoonIconColor(), true);
     }
 
-    private void setSelectedBackground(ThemeBackground themeBackground)
+    private void setSelectedBackground(SuntimesTheme.ThemeBackground themeBackground)
     {
         int backgroundPos = spinBackground_adapter.getPosition(themeBackground);
         spinBackground.setSelection( backgroundPos < 0 ? 0 : backgroundPos );
@@ -1367,6 +1381,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 this.themeTextColor = chooseColorText.getColor();
                 this.themeTimeColor = chooseColorTime.getColor();
                 this.themeTimeSuffixColor = chooseColorSuffix.getColor();
+                this.themeActionColor = chooseColorAction.getColor();
 
                 this.themeTitleBold = checkTitleBold.isChecked();
                 this.themeTimeBold = checkTimeBold.isChecked();
@@ -1428,6 +1443,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         return theme;
     }
 
+    /**
+     * Used when adding a new theme.
+     * @return a unique themeName
+     */
     protected String suggestThemeName()
     {
         int i = 1;
@@ -1440,17 +1459,31 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     }
 
     /**
+     * Used when copying an existing theme.
      * @param suggestedName the desired themeName (might not be unique/available)
      * @return a unique themeName
      */
-    protected String generateThemeName( String suggestedName )
+    protected String generateThemeName( @NonNull String suggestedName )
     {
         int i = 1;
+        String copyName = getString(R.string.addtheme_copyname, "", "");
         String generatedName = suggestedName;
         while (WidgetThemes.valueOf(generatedName) != null)
         {
-            generatedName = getString(R.string.addtheme_copyname, suggestedName, i+"");
-            i++;
+            String root;
+            String[] parts = generatedName.split(copyName,2);
+            if (parts.length < 2) {
+                root = suggestedName;
+                
+            } else {
+                root = parts[0];
+                try {
+                    i = Integer.parseInt(parts[1]) + 1;
+                } catch (NumberFormatException e) {
+                    i++;
+                }
+            }
+            generatedName = getString(R.string.addtheme_copyname, root, Integer.toString(i));
         }
         return generatedName;
     }

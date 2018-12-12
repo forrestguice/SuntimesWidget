@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.LightingColorFilter;
@@ -66,6 +67,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings.TimeFormatMode;
 
@@ -869,6 +871,58 @@ public class SuntimesUtils
         return new TimeDisplayText(formatAsDegrees(degreeValue, places), "", strDecSymbol);
     }
 
+    public static String formatAsHeight(Context context, double value, WidgetSettings.LengthUnit units, boolean convert, int places)
+    {
+        int stringID;
+        switch (units)
+        {
+            case USC:
+            case IMPERIAL:
+                if (convert) {
+                    value = WidgetSettings.LengthUnit.metersToFeet(value);
+                }
+                stringID = R.plurals.units_feet_long;
+                break;
+
+            case METRIC:
+            default:
+                stringID = R.plurals.units_meters_long;
+                break;
+        }
+        int h = ((value > 1) ? (int)Math.ceil(value)   // TODO: better use of plurals w/ fractional values..
+               : (value < 1) ? 2 : 1);   // this is a hack; there must be a better way to treat fractions as plural
+
+        NumberFormat formatter = NumberFormat.getInstance();
+        formatter.setMinimumFractionDigits(0);
+        formatter.setMaximumFractionDigits(places);
+        return context.getResources().getQuantityString(stringID, h, formatter.format(value));
+    }
+
+    public static TimeDisplayText formatAsHeight(Context context, double meters, WidgetSettings.LengthUnit units, int places, boolean shortForm)
+    {
+        double value;
+        String unitsString;
+        switch (units)
+        {
+            case USC:
+            case IMPERIAL:
+                value = WidgetSettings.LengthUnit.metersToFeet(meters);
+                unitsString = (shortForm ? context.getString(R.string.units_feet_short) : context.getString(R.string.units_feet));
+                break;
+
+            case METRIC:
+            default:
+                value = meters;
+                unitsString = (shortForm ? context.getString(R.string.units_meters_short) : context.getString(R.string.units_meters));
+                break;
+        }
+
+        NumberFormat formatter = NumberFormat.getInstance();
+        formatter.setMinimumFractionDigits(0);
+        formatter.setMaximumFractionDigits(places);
+        return new TimeDisplayText(formatter.format(value), unitsString, "");
+    }
+
     /**
      * Creates a title string from a given "title pattern".
      *
@@ -895,9 +949,14 @@ public class SuntimesUtils
         String displayString = displayStringForTitlePattern(context, titlePattern, (SuntimesData)data);
         String modePattern = "%M";
         String modePatternShort = "%m";
+        String orderPattern = "%o";
+
         WidgetSettings.TimeMode timeMode = data.timeMode();
+        WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, data.appWidgetID());
+
         displayString = displayString.replaceAll(modePatternShort, timeMode.getShortDisplayString());
         displayString = displayString.replaceAll(modePattern, timeMode.getLongDisplayString());
+        displayString = displayString.replaceAll(orderPattern, order.toString());
         return displayString;
     }
 
@@ -909,9 +968,13 @@ public class SuntimesUtils
             String modePattern = "%M";
             String modePatternShort = "%m";
             String illumPattern = "%i";
+            String orderPattern = "%o";
+
+            WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, data.appWidgetID());
 
             displayString = displayString.replaceAll(modePatternShort, data.getMoonPhaseToday().getShortDisplayString());
             displayString = displayString.replaceAll(modePattern, data.getMoonPhaseToday().getLongDisplayString());
+            displayString = displayString.replaceAll(orderPattern, order.toString());
 
             if (displayString.contains(illumPattern)) {
                 NumberFormat percentage = NumberFormat.getPercentInstance();
@@ -926,9 +989,14 @@ public class SuntimesUtils
         String displayString = displayStringForTitlePattern(context, titlePattern, (SuntimesData)data);
         String modePattern = "%M";
         String modePatternShort = "%m";
+        String orderPattern = "%o";
+
+        WidgetSettings.TrackingMode trackingMode = WidgetSettings.loadTrackingModePref(context, data.appWidgetID());
         WidgetSettings.SolsticeEquinoxMode timeMode = data.timeMode();
+
         displayString = displayString.replaceAll(modePatternShort, timeMode.getShortDisplayString());
         displayString = displayString.replaceAll(modePattern, timeMode.getLongDisplayString());
+        displayString = displayString.replaceAll(orderPattern, trackingMode.toString());
         return displayString;
     }
 
@@ -955,7 +1023,7 @@ public class SuntimesUtils
         String widgetIDPattern = "%id";
         String percentPattern = "%%";
 
-        WidgetSettings.Location location = data.location();
+        Location location = data.location();
         String timezoneID = data.timezone().getID();
         String datasource = (data.calculatorMode() == null) ? "" : data.calculatorMode().getName();
         String appWidgetID = (data.appWidgetID() != null ? String.format("%s", data.appWidgetID()) : "");
@@ -1375,6 +1443,28 @@ public class SuntimesUtils
         return drawableToBitmap(context, tinted, w, h, true);
     }
 
+    public static Drawable tintDrawable(Drawable drawable, int fillColor, int strokeColor, int strokePixels)
+    {
+        Drawable d = null;
+        try {
+            d = tintDrawable((InsetDrawable)drawable, fillColor, strokeColor, strokePixels);
+
+        } catch (ClassCastException e) {
+            try {
+                d = tintDrawable((LayerDrawable)drawable, fillColor, strokeColor, strokePixels);
+
+            } catch (ClassCastException e2) {
+                try {
+                    d = tintDrawable((GradientDrawable)drawable, fillColor, strokeColor, strokePixels);
+
+                } catch (ClassCastException e3) {
+                    Log.e("tintDrawable", "");
+                }
+            }
+        }
+        return d;
+    }
+
     /**
      * @param drawable a ShapeDrawable
      * @param fillColor the fill color
@@ -1520,6 +1610,36 @@ public class SuntimesUtils
                 }
             }
         }
+    }
+
+    /**
+     * @param enabledColor normal state color
+     * @param disabledColor disabled state color
+     * @return a ColorStateList w/ enabled / disabled states (intended for text label)
+     */
+    public static ColorStateList colorStateList(int enabledColor, int disabledColor)
+    {
+        return new ColorStateList(
+                new int[][] { new int[] { android.R.attr.state_enabled}, new int[] {-android.R.attr.state_enabled}},
+                new int[] {enabledColor, disabledColor}
+        );
+    }
+
+    /**
+     * @param enabledColor normal state color
+     * @param disabledColor disabled state color
+     * @param pressedColor pressed/focused color
+     * @return a ColorStateList w/ pressed, enabled, and disabled states (intended for text button)
+     */
+    public static ColorStateList colorStateList(int enabledColor, int disabledColor, int pressedColor)
+    {
+        return new ColorStateList(
+                new int[][] { new int[] { android.R.attr.state_pressed},
+                        new int[] { android.R.attr.state_focused},
+                        new int[] {-android.R.attr.state_enabled},
+                        new int[] {} },
+                new int[] {pressedColor, enabledColor, disabledColor, enabledColor}
+        );
     }
 
 }
