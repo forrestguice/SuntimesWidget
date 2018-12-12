@@ -20,10 +20,12 @@ package com.forrestguice.suntimeswidget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
+import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_2x1_0;
@@ -31,10 +33,11 @@ import com.forrestguice.suntimeswidget.layouts.MoonLayout_3x1_0;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import java.util.Calendar;
+
 public class MoonWidget0 extends SuntimesWidget0
 {
     public static final String WIDGET_UPDATE = "suntimes.MOON_WIDGET_UPDATE";
-    private static final int UPDATEALARM_ID = 4;
 
     @Override
     protected Class getConfigClass()
@@ -46,12 +49,6 @@ public class MoonWidget0 extends SuntimesWidget0
     protected String getUpdateIntentFilter()
     {
         return MoonWidget0.WIDGET_UPDATE;
-    }
-
-    @Override
-    protected int getUpdateAlarmId()
-    {
-        return MoonWidget0.UPDATEALARM_ID;
     }
 
     @Override
@@ -71,7 +68,7 @@ public class MoonWidget0 extends SuntimesWidget0
     {
         SuntimesMoonData data = new SuntimesMoonData(context, appWidgetId);
         data.calculate();
-        layout.prepareForUpdate(data);
+        layout.prepareForUpdate(context, appWidgetId, data);
 
         RemoteViews views = layout.getViews(context);
         views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, widgetClass));
@@ -83,6 +80,20 @@ public class MoonWidget0 extends SuntimesWidget0
         layout.updateViews(context, appWidgetId, views, data);
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
+
+        WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
+        if (order == WidgetSettings.RiseSetOrder.TODAY) {
+            WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, -1);
+            Log.d(TAG, "saveNextSuggestedUpdate: -1");
+
+        } else {
+            long soonest = SuntimesData.findSoonest(Calendar.getInstance(), data.getRiseSetEvents());
+            if (soonest != -1) {
+                soonest += 5000;   // +5s
+            }
+            WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, soonest);
+            Log.d(TAG, "saveNextSuggestedUpdate: " + utils.calendarDateTimeDisplayString(context, soonest).toString());
+        }
     }
 
     protected static MoonLayout getWidgetLayout(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize, MoonLayout defLayout)

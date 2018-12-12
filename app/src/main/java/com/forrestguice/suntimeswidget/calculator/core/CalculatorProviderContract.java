@@ -206,7 +206,7 @@ package com.forrestguice.suntimeswidget.calculator.core;
 public interface CalculatorProviderContract
 {
     String AUTHORITY = "suntimeswidget.calculator.provider";
-    String READ_PERMISSION = "suntimeswidget.calculator.permission.READ_PROVIDER";
+    String READ_PERMISSION = "suntimes.permission.READ_CALCULATOR";
     String VERSION_NAME = "v0.1.0";
     int VERSION_CODE = 0;
 

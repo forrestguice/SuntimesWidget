@@ -23,8 +23,8 @@ android
         minSdkVersion 10
         //noinspection OldTargetApi
         targetSdkVersion 25
-        versionCode 36
-        versionName "0.9.5"
+        versionCode 37
+        versionName "0.10.0"
 
         buildConfigField "java.util.Date", "BUILD_TIME", "new java.util.Date(" + getDateAsMillis() + "L)"
         buildConfigField "String", "GIT_HASH", "\"${getGitHash()}\""
@@ -45,7 +45,6 @@ android
     lintOptions
     {
         disable 'MissingTranslation'
-        disable 'IconLauncherFormat'
     }
 }
 

@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
@@ -44,7 +45,7 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
     {
         super.initViews(context);
         setConfigActivityTitle(getString(R.string.configLabel_solsticewidget0));
-
+        showOptionRiseSetOrder(false);
         hideOptionUseAltitude();
         hideOptionCompareAgainst();
         hideOption1x1LayoutMode();
@@ -60,10 +61,15 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
     }
 
     @Override
-    protected void updateWidget(Context context)
+    protected void updateWidgets(Context context, int[] appWidgetIds)
     {
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        SolsticeWidget0.updateAppWidget(context, appWidgetManager, appWidgetId);
+        Intent updateIntent = new Intent(context, SolsticeWidget0.class);
+        updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+        sendBroadcast(updateIntent);
+
+        //AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        //SolsticeWidget0.updateAppWidget(context, appWidgetManager, appWidgetId);
     }
 
     @Override

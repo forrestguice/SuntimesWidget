@@ -54,7 +54,7 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * Property: layoutID
      */
-    private int layoutID = R.layout.layout_widget_1x1_0i;
+    protected int layoutID = R.layout.layout_widget_1x1_0i;
     public int layoutID()
     {
         return layoutID;
@@ -67,7 +67,7 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * Property: time mode
      */
-    private WidgetSettings.TimeMode timeMode;
+    protected WidgetSettings.TimeMode timeMode;
     public WidgetSettings.TimeMode timeMode()
     {
         return timeMode;
@@ -80,7 +80,7 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * Property: compare mode
      */
-    private WidgetSettings.CompareMode compareMode;
+    protected WidgetSettings.CompareMode compareMode;
     public WidgetSettings.CompareMode compareMode()
     {
         return compareMode;
@@ -93,7 +93,7 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * result: sunrise today
      */
-    private Calendar sunriseCalendarToday;
+    protected Calendar sunriseCalendarToday;
     public boolean hasSunriseTimeToday()
     {
         return (sunriseCalendarToday != null);
@@ -106,7 +106,7 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * result: sunset today
      */
-    private Calendar sunsetCalendarToday;
+    protected Calendar sunsetCalendarToday;
     public boolean hasSunsetTimeToday()
     {
         return (sunsetCalendarToday != null);
@@ -119,7 +119,7 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * result: sunrise other
      */
-    private Calendar sunriseCalendarOther;
+    protected Calendar sunriseCalendarOther;
     public boolean hasSunriseTimeOther()
     {
         return (sunriseCalendarOther != null);
@@ -132,7 +132,7 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * result: sunset other
      */
-    private Calendar sunsetCalendarOther;
+    protected Calendar sunsetCalendarOther;
     public boolean hasSunsetTimeOther()
     {
         return (sunsetCalendarOther != null);
@@ -142,10 +142,31 @@ public class SuntimesRiseSetData extends SuntimesData
         return sunsetCalendarOther;
     }
 
+    public Calendar sunriseCalendar(int i)
+    {
+        if (i == 0)
+            return sunriseCalendarToday;
+        else return sunriseCalendarOther;
+    }
+
+    public Calendar sunsetCalendar(int i)
+    {
+        if (i == 0)
+            return sunsetCalendarToday;
+        else return sunsetCalendarOther;
+    }
+
+    public Calendar[] getEvents()
+    {
+        Calendar midnight = midnight();
+        midnight.add(Calendar.DAY_OF_MONTH,  1);
+        return new Calendar[] { sunriseCalendarToday, sunsetCalendarToday, sunriseCalendarOther, sunsetCalendarOther, midnight };
+    }
+
     /**
      * Property: day delta prefix
      */
-    private String dayDeltaPrefix;
+    protected String dayDeltaPrefix;
     public String dayDeltaPrefix()
     {
         return dayDeltaPrefix;
@@ -172,7 +193,7 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * Property: linked data
      */
-    private SuntimesRiseSetData linked = null;
+    protected SuntimesRiseSetData linked = null;
     public SuntimesRiseSetData getLinked()
     {
         return linked;
@@ -346,7 +367,7 @@ public class SuntimesRiseSetData extends SuntimesData
      * @param sunset
      * @return
      */
-    private long determineDayLength(Calendar sunrise, Calendar sunset)
+    protected long determineDayLength(Calendar sunrise, Calendar sunset)
     {
         if (sunrise != null && sunset != null) {
             // average case: rises and sets

@@ -132,7 +132,7 @@ public class MoonLayout_3x1_0 extends MoonLayout
     }
 
     @Override
-    public void prepareForUpdate(SuntimesMoonData data)
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesMoonData data)
     {
         Calendar midnight = data.midnight();
         SuntimesCalculator.MoonPhase nextPhase = data.nextPhase(midnight);

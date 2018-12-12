@@ -11,15 +11,15 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="18" />  <!-- needed by "export" features (e.g. "export places" to file) -->
 
-
     <uses-permission android:name="android.permission.VIBRATE" />  <!-- needed by AlarmClock -->
-
-
+    
     <uses-sdk tools:overrideLibrary="com.flask.colorpicker" />
 
     <permission
-        android:name="suntimeswidget.calculator.permission.READ_PROVIDER"
-        android:protectionLevel="normal" />
+        android:name="suntimes.permission.READ_CALCULATOR"
+        android:protectionLevel="normal" />                       <!-- protects suntimeswidget.calculator.provider -->
+
+    <uses-sdk tools:overrideLibrary="com.flask.colorpicker" />
 
     <application
         android:allowBackup="true"
@@ -54,7 +54,7 @@
         <provider
             android:name="com.forrestguice.suntimeswidget.calculator.CalculatorProvider"
             android:authorities="suntimeswidget.calculator.provider"
-            android:permission="suntimeswidget.calculator.permission.READ_PROVIDER"
+            android:permission="suntimes.permission.READ_CALCULATOR"
             android:exported="true"
             android:syncable="false" />
 
