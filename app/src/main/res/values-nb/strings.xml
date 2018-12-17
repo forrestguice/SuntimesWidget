@@ -43,8 +43,8 @@
     -->
     <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> The time zone may be wrong for this location.</string>  <!-- snackbar message -->
-    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> Daylight Saving</string>  <!-- timezone dialog label -->  <!-- TODO -->
-    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> equation of time</string>  <!-- timezone dialog label -->  <!-- TODO -->
+    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> Sommertid</string>  <!-- timezone dialog label -->
+    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> tidsjevning</string>  <!-- timezone dialog label -->
 
     <!-- Field: date
          The date field that appears above the table (main activity).
@@ -161,22 +161,22 @@
     <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
 
     <!-- distances (meters, feet, etc) -->
-    <string name="lengthUnits_metric">Metric</string>    <!-- TODO -->
-    <string name="lengthUnits_imperial">Imperial</string>   <!-- TODO -->
+    <string name="lengthUnits_metric">Metrisk</string>
+    <string name="lengthUnits_imperial">Britisk</string>
 
     <string name="units_feet">fot</string>
     <string name="units_feet_short">ft</string>
     <plurals name="units_feet_long">
-        <item quantity="one">%s foot</item>
-        <item quantity="other">%s feet</item>
-    </plurals>  <!-- TODO -->
+        <item quantity="one">%s fot</item>
+        <item quantity="other">%s fot</item>
+    </plurals>
 
     <string name="units_meters">meter</string>
     <string name="units_meters_short">m</string>
     <plurals name="units_meters_long">
         <item quantity="one">%s meter</item>
-        <item quantity="other">%s meters</item>
-    </plurals>  <!-- TODO -->
+        <item quantity="other">%s meter</item>
+    </plurals>
 
     <!--
          WIDGET CONFIG
@@ -184,7 +184,7 @@
 
     <string name="configAction_restoreDefaults">Restore Defaults</string>   <!-- button / menu text -->
 
-    <string name="configLabel_tagDefault">[default]</string>                <!-- TODO -->
+    <string name="configLabel_tagDefault">[standard]</string>
     <string name="configLabel_tagPlugin">[plugin]</string>                <!-- TODO -->
     <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->  <!-- TODO -->
 
@@ -207,7 +207,7 @@
     <string name="configLabel_general_altitude_enabled">Bruk høyde</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">Bruk høydebaserte forbedringer.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_lengthUnits">Units of length</string>        <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_general_lengthUnits">Lengdeenhet</string>        <!-- spinner label -->
 
     <string name="configLabel_general_showSeconds">Vis sekunder</string>        <!-- checkbox label -->
     <string name="configLabel_general_showSeconds_summary">Inkluder sekunder ved visning av tid.</string>        <!-- checkbox label -->
@@ -221,8 +221,8 @@
     <string name="configLabel_general_showHours">Vis timer</string>        <!-- checkbox label -->
     <string name="configLabel_general_showHours_summary">Inkluder timer og minutter ved lengre tidsrom enn en dag.</string>    <!-- checkbox label -->
 
-    <string name="configLabel_general_observerheight">Object Shadow</string>        <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_general_observerheight_summary">Display the length of shadows cast by an object with a height of <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_observerheight">Objektskygge</string>        <!-- checkbox label -->
+    <string name="configLabel_general_observerheight_summary">Vis skyggelengde fra et objekt med en høyde på <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: advanced / experimental -->
     <string name="configLabel_advanced">Advanced Settings</string>                        <!-- group title -->  <!-- TODO -->
@@ -232,7 +232,7 @@
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Utseende-innstillinger</string>           <!-- group title -->
-    <string name="configLabel_appearance_mode">Appearance</string>                  <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_mode">Utseende</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Tema:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Grow with available space (resizeable)</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_showLabels">Vis påskrifter</string>          <!-- checkbox label -->
@@ -450,7 +450,7 @@
     <string name="configLabel_themeColorFall">Høstfarge</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Vinterfarge</string> <!-- color label -->
 
-    <string name="configLabel_themeColorAction">Action</string> <!-- color label -->  <!-- TODO -->
+    <string name="configLabel_themeColorAction">Handling</string> <!-- color label -->
 
     <string name="configLabel_themeColorMapBackground">Kartbakgrunn</string> <!-- color label -->
     <string name="configLabel_themeColorMapForeground">Kartforgrunn</string> <!-- color label -->
@@ -479,7 +479,7 @@
     <string name="configLabel_themeColorBorder">Ramme</string>         <!-- color label -->
     <string name="configHint_themeColorBorder">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeBorderWidthRiseSet">Rammebredde (oppgang/nedgang):</string>  <!-- size label -->
+    <string name="configLabel_themeBorderWidthRiseSet">Rammebredde (opp-/nedgang):</string>  <!-- size label -->
     <string name="configHint_themeBorderWidthRiseSet">2</string>                          <!-- size hint -->
     <string name="configLabel_themeBorderWidthNoon">Rammebredde (middag):</string>         <!-- size label -->
     <string name="configHint_themeBorderWidthNoon">3</string>                             <!-- size hint -->
@@ -506,14 +506,14 @@
     <string name="configLabel_themeSizeSuffix">Suffiksstørrelse:</string> <!-- edit label -->
     <string name="configHint_themeSizeSuffix">8</string>                  <!-- edit hint -->
 
-    <string name="configLabel_themePadding">Padding:</string>            <!-- edit label -->
-    <string name="configHint_themePadding">[left, top, right, bottom]</string> <!-- edit hint -->
+    <string name="configLabel_themePadding">Utfylling:</string>            <!-- edit label -->
+    <string name="configHint_themePadding">[venstre, øverst, høyre, nederst]</string> <!-- edit hint -->
 
     <string name="configLabel_themeID">ID:</string>                      <!-- edit label -->
-    <string name="configHint_themeID">Theme ID</string>                  <!-- edit hint -->
+    <string name="configHint_themeID">Tema-ID</string>                  <!-- edit hint -->
 
-    <string name="configLabel_themeName">Display:</string>               <!-- edit label -->
-    <string name="configHint_themeName">Label</string>                   <!-- edit hint -->
+    <string name="configLabel_themeName">Vis:</string>               <!-- edit label -->
+    <string name="configHint_themeName">Påskrift</string>                   <!-- edit hint -->
 
     <string name="widgetLabel_azimuth">Asimut</string>                   <!-- label -->
     <string name="widgetLabel_azimuth_short">Az</string>                   <!-- label -->
@@ -602,7 +602,7 @@
     <!-- App Setting: Date "on tap" action -->
     <string-array name="dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
         <item>Ikke gjør noe</item>
-        <item>Bytt visning (i dag/i morgen)</item>
+        <item>Bytt visning (i dag / i morgen)</item>
         <item>Vis kalender-app</item>
         <item>Still inn dato</item>
     </string-array>
@@ -875,17 +875,17 @@
     <string name="msg_export_to">Eksporter med</string>  <!-- title displayed over "share action" chooser -->
 
     <!-- Dialog: Import Themes -->
-    <string name="themesimport_dialog_title">Importing Themes</string>                   <!-- TODO -->
-    <string name="themesimport_dialog_message">Importing themes from file…</string>      <!-- TODO -->
+    <string name="themesimport_dialog_title">Importer temaer</string>
+    <string name="themesimport_dialog_message">Importerer temaer fra fil…</string>
 
-    <string name="msg_import_success">Imported <xliff:g id="themePlural">%s</xliff:g>.</string>  <!-- TODO -->
-    <string name="msg_import_failure">Import from <xliff:g id="filepath">%s</xliff:g> failed!</string>  <!-- TODO -->
-    <string name="msg_import_noresults">Import skipped; no new themes were found.</string>  <!-- TODO -->
+    <string name="msg_import_success">Importert <xliff:g id="themePlural">%s</xliff:g>.</string>
+    <string name="msg_import_failure">Import fra <xliff:g id="filepath">%s</xliff:g> feilet!</string>
+    <string name="msg_import_noresults">Import hoppet over; ingen nye temaer funnet.</string>
 
     <plurals name="themePlural">
-        <item quantity="one">%d theme</item>
-        <item quantity="other">%d themes</item>
-    </plurals>  <!-- TODO -->
+        <item quantity="one">%d tema</item>
+        <item quantity="other">%d temaer</item>
+    </plurals>
 
     <!-- Dialog: Color -->
     <string name="color_dialog_msg">Velg farge</string>
