@@ -1,5 +1,10 @@
 ### ~
 
+### v0.10.1 (2018-12-23)
+* fixes bug "sun/moon circles are difficult to see (too small)" (#286) on lightmap and worldmap widgets.
+* updates translation to Norwegian (nb) (#285 by FTno).
+* updates dependency (Time4A 4.2-2018g).
+
 ### v0.10.0 (2018-12-09)
 * adds support for themes to the app; it is now possible to customize the app's appearance using widget themes (#264, #275).
 * adds "order" option to sun and moon widgets; "display tomorrow's sunrise once sunset time has passed" (#190).
