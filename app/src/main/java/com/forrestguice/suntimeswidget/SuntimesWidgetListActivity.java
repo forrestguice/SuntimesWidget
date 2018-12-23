@@ -424,7 +424,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                         widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
                         data = data0;
 
-                    } else if (widgetClass == MoonWidget0.class || widgetClass == MoonWidget0_2x1.class || widgetClass == MoonWidget0_3x1.class) {
+                    } else if (widgetClass == MoonWidget0.class || widgetClass == MoonWidget0_2x1.class || widgetClass == MoonWidget0_3x1.class || widgetClass == MoonWidget0_3x2.class) {
                         SuntimesMoonData data0 =  new SuntimesMoonData(context, id, "moon");
                         widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
                         data = data0;
@@ -458,6 +458,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             items.addAll(createWidgetListItems(context, widgetManager, MoonWidget0.class, titlePattern1));
             items.addAll(createWidgetListItems(context, widgetManager, MoonWidget0_2x1.class, titlePattern1));
             items.addAll(createWidgetListItems(context, widgetManager, MoonWidget0_3x1.class, titlePattern1));
+            items.addAll(createWidgetListItems(context, widgetManager, MoonWidget0_3x2.class, titlePattern1));
             items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget2.class, titlePattern1));
             items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget2_3x1.class, titlePattern1));
             items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget2_3x2.class, titlePattern1));
@@ -478,6 +479,9 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
 
             if (widgetClass == MoonWidget0_3x1.class)
                 return context.getString(R.string.app_name_moonwidget0) + " (3x1)";
+
+            if (widgetClass == MoonWidget0_3x2.class)
+                return context.getString(R.string.app_name_moonwidget0) + " (3x2)";
 
             if (widgetClass == SuntimesWidget1.class)
                 return context.getString(R.string.app_name_widget1);
