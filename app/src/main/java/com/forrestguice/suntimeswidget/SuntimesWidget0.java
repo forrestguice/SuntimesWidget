@@ -500,21 +500,23 @@ public class SuntimesWidget0 extends AppWidgetProvider
 
         layout.themeViews(context, views, appWidgetId);
         layout.updateViews(context, appWidgetId, views, data);
-
         appWidgetManager.updateAppWidget(appWidgetId, views);
 
-        WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
-        if (order == WidgetSettings.RiseSetOrder.TODAY) {
-            WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, -1);
-            Log.d(TAG, "saveNextSuggestedUpdate: -1");
+        if (!layout.saveNextSuggestedUpdate(context, appWidgetId))
+        {
+            WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
+            if (order == WidgetSettings.RiseSetOrder.TODAY) {
+                WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, -1);
+                Log.d(TAG, "saveNextSuggestedUpdate: -1");
 
-        } else {
-            long soonest = SuntimesData.findSoonest(Calendar.getInstance(), data.getEvents());
-            if (soonest != -1) {
-                soonest += 5000;   // +5s
+            } else {
+                long soonest = SuntimesData.findSoonest(Calendar.getInstance(), data.getEvents());
+                if (soonest != -1) {
+                    soonest += 5000;   // +5s
+                }
+                WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId,  soonest);
+                Log.d(TAG, "saveNextSuggestedUpdate: " + utils.calendarDateTimeDisplayString(context, soonest).toString());
             }
-            WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId,  soonest);
-            Log.d(TAG, "saveNextSuggestedUpdate: " + utils.calendarDateTimeDisplayString(context, soonest).toString());
         }
     }
 

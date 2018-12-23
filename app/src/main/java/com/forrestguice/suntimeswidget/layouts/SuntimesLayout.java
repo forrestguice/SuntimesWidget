@@ -121,4 +121,16 @@ public abstract class SuntimesLayout
         boldTime = theme.getTimeBold();
     }
 
+    /**
+     * Should call through to WidgetSettings.saveNextSuggestedUpdate (and return true) OR do nothing (and return false).
+     * @param context context
+     * @param appWidgetId the widgetID
+     * @return true if an update time was saved, false otherwise
+     */
+    public boolean saveNextSuggestedUpdate(Context context, int appWidgetId)
+    {
+        /* EMPTY */
+        return false;
+    }
+
 }
