@@ -22,6 +22,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.text.SpannableString;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -33,6 +34,11 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
+import java.util.Calendar;
+
+/**
+ * Moon Position Widget (dec, right asc)
+ */
 public class MoonLayout_1x1_6 extends MoonLayout
 {
     public MoonLayout_1x1_6()
@@ -118,5 +124,15 @@ public class MoonLayout_1x1_6 extends MoonLayout
         declination = SuntimesUtils.createBoldColorSpan(declination, declinationString, declinationSymbol, suffixColor);
         declination = SuntimesUtils.createRelativeSpan(declination, declinationString, declinationSymbol, PositionLayout.SYMBOL_RELATIVE_SIZE);
         views.setTextViewText(R.id.info_moon_declination_current, declination);
+    }
+
+    @Override
+    public boolean saveNextSuggestedUpdate(Context context, int appWidgetId)
+    {
+        long updateInterval = (5 * 60 * 1000);                 // update every 5 min
+        long nextUpdate = Calendar.getInstance().getTimeInMillis() + updateInterval;
+        WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, nextUpdate);
+        Log.d("MoonLayout", "saveNextSuggestedUpdate: " + utils.calendarDateTimeDisplayString(context, nextUpdate).toString());
+        return true;
     }
 }
