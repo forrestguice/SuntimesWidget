@@ -18,14 +18,12 @@ package com.forrestguice.suntimeswidget;
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import android.app.AlarmManager;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
-import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.layouts.ClockLayout;
 import com.forrestguice.suntimeswidget.layouts.ClockLayout_1x1_0;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -55,17 +53,7 @@ public class ClockWidget0 extends SuntimesWidget0
     @Override
     protected long getUpdateInterval()
     {
-        // TODO
-        return AlarmManager.INTERVAL_HOUR * 3;
-    }
-
-    @Override
-    protected long getUpdateTimeMillis(Context context, int appWidgetId)
-    {
-        // TODO
-        Calendar updateTime = Calendar.getInstance();
-        updateTime.add(Calendar.SECOND, (int)(getUpdateInterval() / 1000));
-        return updateTime.getTimeInMillis();
+        return 1000 * 60;  // every minute
     }
 
     @Override
@@ -95,12 +83,17 @@ public class ClockWidget0 extends SuntimesWidget0
         layout.themeViews(context, views, appWidgetId);
         layout.updateViews(context, appWidgetId, views, data);
         appWidgetManager.updateAppWidget(appWidgetId, views);
+
+        Calendar nextUpdate = Calendar.getInstance();
+        nextUpdate.setTimeInMillis(data.calendar().getTimeInMillis());
+        nextUpdate.add(Calendar.MINUTE, 1);   // up to a minute from now
+        nextUpdate.set(Calendar.SECOND, 1);
+        WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, nextUpdate.getTimeInMillis());
     }
 
     protected static ClockLayout getWidgetLayout(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
-        ClockLayout layout = new ClockLayout_1x1_0();
-        return layout;
+        return new ClockLayout_1x1_0();
     }
 
     @Override
