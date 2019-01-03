@@ -88,6 +88,7 @@ public class ClockWidget0 extends SuntimesWidget0
         views.setViewVisibility(R.id.text_title, showTitle ? View.VISIBLE : View.GONE);
 
         SuntimesClockData data = new SuntimesClockData(context, appWidgetId);
+        data.calculate();
 
         views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, ClockWidget0.class));
         layout.prepareForUpdate(data);

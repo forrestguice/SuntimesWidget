@@ -56,8 +56,15 @@ public class ClockLayout_1x1_0 extends ClockLayout
     @Override
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesClockData data)
     {
-        super.updateViews(context, appWidgetId, views);
-        // TODO
+        super.updateViews(context, appWidgetId, views, data);
+
+        Calendar now = data.calendar();
+        SuntimesUtils.TimeDisplayText nowText = utils.calendarTimeShortDisplayString(context, now, false);
+        String nowString = nowText.getValue();
+        CharSequence nowChars = (boldTime ? SuntimesUtils.createBoldSpan(null, nowString, nowString) : nowString);
+
+        views.setTextViewText(R.id.text_time, nowChars);
+        views.setTextViewText(R.id.text_time_suffix, nowText.getSuffix());
     }
 
     private int timeColor = Color.WHITE;
