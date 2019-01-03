@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -453,6 +453,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget0_2x1.class, titlePattern0));
             items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget1.class, titlePattern0));
             items.addAll(createWidgetListItems(context, widgetManager, SolsticeWidget0.class, titlePattern0));
+            items.addAll(createWidgetListItems(context, widgetManager, ClockWidget0.class, titlePattern0));
 
             String titlePattern1 = context.getString(R.string.configLabel_widgetList_itemTitlePattern1);
             items.addAll(createWidgetListItems(context, widgetManager, MoonWidget0.class, titlePattern1));
@@ -469,6 +470,9 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         {
             if (widgetClass == SolsticeWidget0.class)
                 return context.getString(R.string.app_name_solsticewidget0);
+
+            if (widgetClass == ClockWidget0.class)
+                return context.getString(R.string.app_name_clockwidget0);
 
             if (widgetClass == MoonWidget0.class)
                 return context.getString(R.string.app_name_moonwidget0);

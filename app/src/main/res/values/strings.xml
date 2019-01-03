@@ -212,6 +212,7 @@
     <string name="configLabel_title0">@string/app_name_widget0</string>         <!-- used as title when adding -->
     <string name="configLabel_title1">Flippable Widget</string>                 <!-- used as title when adding -->
     <string name="configLabel_title2">@string/app_name_widget2</string>                  <!-- used as title when adding -->
+    <string name="configLabel_clockwidget0">@string/app_name_clockwidget0</string>                  <!-- used as title when adding -->
     <string name="configLabel_solsticewidget0">@string/app_name_solsticewidget0</string>                  <!-- used as title when adding -->
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
@@ -1023,6 +1024,7 @@
     <string name="app_name_widget0">Suntimes Widget</string>
     <string name="app_name_widget1">Suntimes Widget (flippable)</string>
     <string name="app_name_widget2">Sun Position Widget</string>
+    <string name="app_name_clockwidget0">Clock Widget</string>  <!-- TODO -->
     <string name="app_name_solsticewidget0">Solstice Widget</string>
     <string name="app_name_moonwidget0">Moon Widget</string>
     <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
