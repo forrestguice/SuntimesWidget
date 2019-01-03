@@ -574,12 +574,15 @@ public class SuntimesWidget0 extends AppWidgetProvider
         {
             PendingIntent alarmIntent = getUpdateIntent(context, alarmID);
             long updateTime = getUpdateTimeMillis(context, alarmID);
-            if (Build.VERSION.SDK_INT < 19) {
-                alarmManager.set(AlarmManager.RTC, updateTime, alarmIntent);
-            } else {
-                alarmManager.setWindow(AlarmManager.RTC, updateTime, 5 * 1000, alarmIntent);
-            }
-            Log.d(TAG, "setUpdateAlarm: " + utils.calendarDateTimeDisplayString(context, updateTime).toString() + " --> " + getUpdateIntentFilter() + "(" + alarmID + ") :: " + utils.timeDeltaLongDisplayString(getUpdateInterval(), true) );
+            if (updateTime > 0)
+            {
+                if (Build.VERSION.SDK_INT < 19) {
+                    alarmManager.set(AlarmManager.RTC, updateTime, alarmIntent);
+                } else {
+                    alarmManager.setWindow(AlarmManager.RTC, updateTime, 5 * 1000, alarmIntent);
+                }
+                Log.d(TAG, "setUpdateAlarm: " + utils.calendarDateTimeDisplayString(context, updateTime).toString() + " --> " + getUpdateIntentFilter() + "(" + alarmID + ") :: " + utils.timeDeltaLongDisplayString(getUpdateInterval(), true) );
+            } else Log.d(TAG, "setUpdateAlarm: skipping " + alarmID);
         }
     }
 
