@@ -78,7 +78,7 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <LinearLayout android:id="@+id/appwidget_general_layout"
                 style="@style/SunsetTimeWidget_dark"
                 android:layout_marginBottom="@dimen/settingsGroup_margin"
                 android:layout_width="match_parent" android:layout_height="wrap_content"

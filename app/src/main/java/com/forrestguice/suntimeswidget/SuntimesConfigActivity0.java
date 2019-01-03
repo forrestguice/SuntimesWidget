@@ -1344,6 +1344,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
+    protected void hideGeneralSettings()
+    {
+        View generalSettings = findViewById(R.id.appwidget_general_layout);
+        if (generalSettings != null) {
+            generalSettings.setVisibility(View.GONE);
+        }
+    }
+
     protected void showDataSource(boolean showDataSourceUI)
     {
         View dataSourceLayout = findViewById(R.id.appwidget_general_calculator_layout);
