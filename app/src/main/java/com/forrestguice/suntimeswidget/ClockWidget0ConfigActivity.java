@@ -21,9 +21,6 @@ package com.forrestguice.suntimeswidget;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -44,6 +41,7 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
     {
         super.initViews(context);
         setConfigActivityTitle(getString(R.string.configLabel_clockwidget0));
+
         showOptionRiseSetOrder(false);
         hideOptionUseAltitude();
         hideOptionCompareAgainst();
@@ -52,13 +50,14 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
         showOptionHours(false);
         showOptionTimeDate(false);
         showOptionLabels(false);
-        showOptionShowNoon(false);
         hideOptionShowSeconds();
+        showOptionShowNoon(false);
         disableOptionAllowResize();
         showOptionTrackingMode(false);
         showOptionTimeModeOverride(false);
         showDataSource(false);
-        // TODO: hide entire "general" section
+
+        hideGeneralSettings();
     }
 
     @Override
