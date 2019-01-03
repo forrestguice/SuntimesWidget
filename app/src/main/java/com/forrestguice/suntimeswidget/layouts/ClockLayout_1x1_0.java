@@ -61,6 +61,7 @@ public class ClockLayout_1x1_0 extends ClockLayout
     }
 
     private int timeColor = Color.WHITE;
+    private int suffixColor = Color.GRAY;
     private boolean boldTime = false;
 
     @Override
@@ -68,22 +69,20 @@ public class ClockLayout_1x1_0 extends ClockLayout
     {
         super.themeViews(context, views, theme);
         timeColor = theme.getTimeColor();
+        suffixColor = theme.getTimeSuffixColor();
         boldTime = theme.getTimeBold();
 
-        /**int textColor = theme.getTextColor();
-        views.setTextColor(R.id.text_time_event_note, textColor);
-        views.setTextColor(R.id.text_time_event, eventColor);
-        views.setTextColor(R.id.text_time_event_label, eventColor);
+        views.setTextColor(R.id.text_time, timeColor);
+        views.setTextColor(R.id.text_time_suffix, suffixColor);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
-            float textSize = theme.getTextSizeSp();
             float timeSize = theme.getTimeSizeSp();
+            float suffixSize = theme.getTimeSuffixSizeSp();
 
-            views.setTextViewTextSize(R.id.text_time_event_label, TypedValue.COMPLEX_UNIT_SP, textSize);
-            views.setTextViewTextSize(R.id.text_time_event_note, TypedValue.COMPLEX_UNIT_SP, textSize);
-            views.setTextViewTextSize(R.id.text_time_event, TypedValue.COMPLEX_UNIT_SP, timeSize);
-        }*/
+            views.setTextViewTextSize(R.id.text_time, TypedValue.COMPLEX_UNIT_SP, timeSize);
+            views.setTextViewTextSize(R.id.text_time_suffix, TypedValue.COMPLEX_UNIT_SP, suffixSize);
+        }
     }
 
     @Override
