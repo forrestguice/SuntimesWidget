@@ -24,6 +24,8 @@ import android.content.Context;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.layouts.ClockLayout;
 import com.forrestguice.suntimeswidget.layouts.ClockLayout_1x1_0;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -85,12 +87,12 @@ public class ClockWidget0 extends SuntimesWidget0
         boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId);
         views.setViewVisibility(R.id.text_title, showTitle ? View.VISIBLE : View.GONE);
 
-        // TODO
+        SuntimesClockData data = new SuntimesClockData(context, appWidgetId);
 
         views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, ClockWidget0.class));
-        layout.prepareForUpdate();
+        layout.prepareForUpdate(data);
         layout.themeViews(context, views, appWidgetId);
-        layout.updateViews(context, appWidgetId, views);
+        layout.updateViews(context, appWidgetId, views, data);
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 

@@ -23,6 +23,7 @@ import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 public abstract class ClockLayout extends SuntimesLayout
@@ -36,7 +37,7 @@ public abstract class ClockLayout extends SuntimesLayout
      * Called by widget before themeViews and updateViews to give the layout obj an opportunity to
      * modify its state based on the supplied data.
      */
-    public void prepareForUpdate()
+    public void prepareForUpdate(SuntimesClockData data)
     {
         // EMPTY
     }
@@ -47,15 +48,13 @@ public abstract class ClockLayout extends SuntimesLayout
      * @param appWidgetId the android widget ID to update
      * @param views the RemoteViews to apply the data to
      */
-    public void updateViews(Context context, int appWidgetId, RemoteViews views)
+    public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesClockData data)
     {
-        // update title
         String titlePattern = WidgetSettings.loadTitleTextPref(context, appWidgetId);
-        String titleText = ""; //utils.displayStringForTitlePattern(context, titlePattern, data);
+        String titleText = utils.displayStringForTitlePattern(context, titlePattern, data);
         CharSequence title = (boldTitle ? SuntimesUtils.createBoldSpan(null, titleText, titleText) : titleText);
         views.setTextViewText(R.id.text_title, title);
         //Log.v("DEBUG", "title text: " + titleText);
     }
-
 
 }

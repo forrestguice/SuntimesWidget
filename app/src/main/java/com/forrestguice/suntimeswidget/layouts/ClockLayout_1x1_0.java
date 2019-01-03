@@ -29,6 +29,7 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.SuntimesUtils.TimeDisplayText;
+import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
@@ -52,7 +53,8 @@ public class ClockLayout_1x1_0 extends ClockLayout
         this.layoutID = R.layout.layout_widget_clock_1x1_0;
     }
 
-    public void updateViews(Context context, int appWidgetId, RemoteViews views)
+    @Override
+    public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesClockData data)
     {
         super.updateViews(context, appWidgetId, views);
         // TODO
@@ -85,8 +87,8 @@ public class ClockLayout_1x1_0 extends ClockLayout
     }
 
     @Override
-    public void prepareForUpdate()
+    public void prepareForUpdate(SuntimesClockData data)
     {
-        // TODO
+        /* EMPTY */
     }
 }
