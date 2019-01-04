@@ -177,7 +177,7 @@ public class WidgetSettings
     public static final String PREF_DEF_TIMEZONE_CUSTOM = "US/Arizona";
 
     public static final String PREF_KEY_TIMEZONE_SOLARMODE = "solarmode";
-    public static final SolarTimeMode PREF_DEF_TIMEZONE_SOLARMODE = SolarTimeMode.LOCAL_MEAN_TIME;
+    public static final SolarTimeMode PREF_DEF_TIMEZONE_SOLARMODE = SolarTimeMode.APPARENT_SOLAR_TIME;
 
     public static final String PREF_KEY_DATE_MODE = "dateMode";
     public static final DateMode PREF_DEF_DATE_MODE = DateMode.CURRENT_DATE;
