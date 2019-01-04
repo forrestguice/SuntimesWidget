@@ -58,6 +58,7 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
         showDataSource(false);
 
         hideGeneralSettings();
+        moveSectionToTop(R.id.appwidget_timezone_layout);
     }
 
     @Override
