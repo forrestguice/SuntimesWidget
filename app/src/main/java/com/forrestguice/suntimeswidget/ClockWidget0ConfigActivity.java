@@ -100,4 +100,10 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
         text_titleText.setText(titleText);
     }
 
+    @Override
+    protected WidgetSettings.TimezoneMode getDefaultTimezoneMode()
+    {
+        return WidgetSettings.TimezoneMode.SOLAR_TIME;
+    }
+
 }
