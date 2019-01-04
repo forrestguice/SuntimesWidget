@@ -2,7 +2,7 @@
 
 ##
  
-* adds a clock widget (#154, #260); displays the current solar time (Local Mean Time, Apparent Solar Time), or the time in a given timezone.
+* adds a clock widget (#154, #260); displays solar time (Local Mean Time, Apparent Solar Time), or the time in a given timezone.
 * changes the default solar time mode to "Apparent Solar Time".
 
 ### v0.10.1 (2018-12-23)
