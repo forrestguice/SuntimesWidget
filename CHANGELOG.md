@@ -1,5 +1,10 @@
 ### ~
 
+##
+ 
+* adds a clock widget; displays the current solar time (Local Mean Time, Apparent Solar Time), or the time in a given timezone.
+* changes the default solar time mode to "Apparent Solar Time".
+
 ### v0.10.1 (2018-12-23)
 * fixes bug "sun/moon circles are difficult to see (too small)" (#286) on lightmap and worldmap widgets.
 * updates translation to Norwegian (nb) (#285 by FTno).
