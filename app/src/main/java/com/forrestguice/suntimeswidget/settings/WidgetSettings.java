@@ -1801,9 +1801,13 @@ public class WidgetSettings
     }
     public static WidgetSettings.TimezoneMode loadTimezoneModePref(Context context, int appWidgetId)
     {
+        return loadTimezoneModePref(context, appWidgetId, PREF_DEF_TIMEZONE_MODE);
+    }
+    public static WidgetSettings.TimezoneMode loadTimezoneModePref(Context context, int appWidgetId, TimezoneMode defaultMode)
+    {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_TIMEZONE;
-        String modeString = prefs.getString(prefs_prefix + PREF_KEY_TIMEZONE_MODE, PREF_DEF_TIMEZONE_MODE.name());
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_TIMEZONE_MODE, defaultMode.name());
 
         TimezoneMode timezoneMode;
         try
@@ -1811,7 +1815,7 @@ public class WidgetSettings
             timezoneMode = WidgetSettings.TimezoneMode.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
-            timezoneMode = PREF_DEF_TIMEZONE_MODE;
+            timezoneMode = defaultMode;
         }
         return timezoneMode;
     }

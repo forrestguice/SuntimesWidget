@@ -1193,7 +1193,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      */
     protected void loadTimezoneSettings(Context context)
     {
-        WidgetSettings.TimezoneMode timezoneMode = WidgetSettings.loadTimezoneModePref(context, appWidgetId);
+        WidgetSettings.TimezoneMode timezoneMode = WidgetSettings.loadTimezoneModePref(context, appWidgetId, getDefaultTimezoneMode());
         spinner_timezoneMode.setSelection(timezoneMode.ordinal());
 
         WidgetSettings.SolarTimeMode solartimeMode = WidgetSettings.loadSolarTimeModePref(context, appWidgetId);
@@ -1204,6 +1204,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
         customTimezoneID = WidgetSettings.loadTimezonePref(context, appWidgetId);
         WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
+    }
+
+    protected WidgetSettings.TimezoneMode getDefaultTimezoneMode()
+    {
+        return WidgetSettings.PREF_DEF_TIMEZONE_MODE;
     }
 
     /**
