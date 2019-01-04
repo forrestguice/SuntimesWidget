@@ -19,22 +19,18 @@
 package com.forrestguice.suntimeswidget.layouts;
 
 import android.annotation.TargetApi;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Build;
-import android.text.SpannableString;
+import android.support.annotation.NonNull;
 import android.util.TypedValue;
-import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.SuntimesUtils.TimeDisplayText;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -69,8 +65,11 @@ public class ClockLayout_1x1_0 extends ClockLayout
         String nowString = nowText.getValue();
         CharSequence nowChars = (boldTime ? SuntimesUtils.createBoldSpan(null, nowString, nowString) : nowString);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            adjustTextSize(context, views, "00:00", "MM");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        {
+            if (WidgetSettings.loadAllowResizePref(context, appWidgetId)) {
+                adjustTextSize(context, views, "sans-serif","00:00", "MM");
+            }
         }
 
         views.setTextViewText(R.id.text_time, nowChars);
@@ -78,17 +77,17 @@ public class ClockLayout_1x1_0 extends ClockLayout
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    private void adjustTextSize(Context context, RemoteViews views, String timeText, String suffixText)
+    private void adjustTextSize(Context context, RemoteViews views, String fontFamily, String timeText, String suffixText)
     {
         float adjustedTimeSizeSp = timeSizeSp;
         Rect timeBounds = new Rect();
         Paint timePaint = new Paint();
-        timePaint.setTypeface(Typeface.create("sans-serif", boldTime ? Typeface.BOLD : Typeface.NORMAL));
+        timePaint.setTypeface(Typeface.create(fontFamily, boldTime ? Typeface.BOLD : Typeface.NORMAL));
 
         float adjustedSuffixSizeSp = suffixSizeSp;
         Rect suffixBounds = new Rect();
         Paint suffixPaint = new Paint();
-        suffixPaint.setTypeface(Typeface.create("sans-serif", Typeface.BOLD));
+        suffixPaint.setTypeface(Typeface.create(fontFamily, Typeface.BOLD));
 
         float stepSizeSp = 0.1f;                                      // upscale by stepSize (until maxWidth is filled)
         float suffixRatio = suffixSizeSp / timeSizeSp;                // preserve suffix proportions while scaling
@@ -110,7 +109,7 @@ public class ClockLayout_1x1_0 extends ClockLayout
         }
     }
 
-    private void getTextBounds(Context context, String text, float textSizeSp, Paint textPaint, Rect textBounds)
+    private void getTextBounds(@NonNull Context context, @NonNull String text, float textSizeSp, @NonNull Paint textPaint, @NonNull Rect textBounds)
     {
         textPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, textSizeSp, context.getResources().getDisplayMetrics()));
         textPaint.getTextBounds(text, 0, text.length(), textBounds);

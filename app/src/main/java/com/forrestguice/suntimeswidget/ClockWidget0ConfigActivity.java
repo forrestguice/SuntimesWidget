@@ -52,7 +52,6 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
         showOptionLabels(false);
         hideOptionShowSeconds();
         showOptionShowNoon(false);
-        disableOptionAllowResize();
         showOptionTrackingMode(false);
         showOptionTimeModeOverride(false);
         showDataSource(false);
