@@ -1544,6 +1544,17 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
+    public void moveSectionToTop(int sectionLayoutID)
+    {
+        View sectionLayout = findViewById(sectionLayoutID);
+        LinearLayout settingsLayout = (LinearLayout)findViewById(R.id.appwidget_settings_layout);
+        if (sectionLayout != null && settingsLayout != null)
+        {
+            settingsLayout.removeView(sectionLayout);
+            settingsLayout.addView(sectionLayout, 0);
+        }
+    }
+
     /**
      * @param requestCode anticipates PICK_THEME_REQUEST
      * @param resultCode RESULT_OK, RESULT_CANCELED
