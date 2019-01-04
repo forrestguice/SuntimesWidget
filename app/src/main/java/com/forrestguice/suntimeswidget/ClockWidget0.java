@@ -59,12 +59,12 @@ public class ClockWidget0 extends SuntimesWidget0
     @Override
     protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
-        ClockWidget0.updateAppWidget(context, appWidgetManager, appWidgetId);
+        ClockWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, getMinSize(context));
     }
 
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
+    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize)
     {
-        ClockLayout layout = ClockWidget0.getWidgetLayout(context, appWidgetManager, appWidgetId);
+        ClockLayout layout = ClockWidget0.getWidgetLayout(context, appWidgetManager, appWidgetId, defSize);
         ClockWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, layout);
     }
 
@@ -91,9 +91,11 @@ public class ClockWidget0 extends SuntimesWidget0
         WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, nextUpdate.getTimeInMillis());
     }
 
-    protected static ClockLayout getWidgetLayout(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
+    protected static ClockLayout getWidgetLayout(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize)
     {
-        return new ClockLayout_1x1_0();
+        ClockLayout layout = new ClockLayout_1x1_0();
+        layout.setMaxDimensionsDp(widgetSizeDp(context, appWidgetManager, appWidgetId, defSize));
+        return layout;
     }
 
     @Override
