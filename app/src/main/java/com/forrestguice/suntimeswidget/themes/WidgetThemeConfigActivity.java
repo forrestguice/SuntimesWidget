@@ -65,6 +65,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.layouts.ClockLayout_1x1_0;
 import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
 import com.forrestguice.suntimeswidget.map.WorldMapTask;
 import com.forrestguice.suntimeswidget.map.WorldMapView;
@@ -79,6 +80,7 @@ import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import java.security.InvalidParameterException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -98,6 +100,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     public static final int PREVIEWID_MOON_3x1 = 2;
     public static final int PREVIEWID_SUNPOS_3x1 = 3;
     public static final int PREVIEWID_SUNPOS_3x2 = 4;
+    public static final int PREVIEWID_CLOCK_1x1 = 5;
 
     public static final int ADD_THEME_REQUEST = 0;
     public static final int EDIT_THEME_REQUEST = 1;
@@ -663,6 +666,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         updatePreview_sun(previewLayout);
         updatePreview_moon(previewLayout);
+        updatePreview_clock(previewLayout);
 
         int displayed = preview.getDisplayedChild();
         if (displayed == PREVIEWID_SUNPOS_3x1)
@@ -741,7 +745,33 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     }
 
     /**
-     * Update the provided preview layout.
+     * @param previewLayout the layout to update
+     */
+    protected void updatePreview_clock(View previewLayout)
+    {
+        TextView previewTime = (TextView)previewLayout.findViewById(R.id.text_time);
+        TextView previewTimeSuffix = (TextView)previewLayout.findViewById(R.id.text_time_suffix);
+        if (previewTime != null && previewTimeSuffix != null)
+        {
+            float[] adjustedSizeSp = ClockLayout_1x1_0.adjustTextSize(this, new int[] {80, 80}, choosePadding.getPadding(), "sans-serif", checkTimeBold.isChecked(),"00:00", (float)chooseTimeSize.getValue(), "MM", (float)chooseSuffixSize.getValue());
+            previewTime.setTextSize(TypedValue.COMPLEX_UNIT_SP, adjustedSizeSp[0]);
+            previewTimeSuffix.setTextSize(TypedValue.COMPLEX_UNIT_SP, adjustedSizeSp[1]);
+
+            Calendar now = Calendar.getInstance();
+            WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(this, 0);
+            SuntimesUtils.TimeDisplayText nowText = utils.calendarTimeShortDisplayString(this, now, false, timeFormat);
+            String nowString = nowText.getValue();
+            CharSequence nowChars = (checkTimeBold.isChecked() ? SuntimesUtils.createBoldSpan(null, nowString, nowString) : nowString);
+
+            previewTime.setTextColor(chooseColorTime.getColor());
+            previewTime.setText(nowChars);
+
+            previewTimeSuffix.setTextColor(chooseColorSuffix.getColor());
+            previewTimeSuffix.setText(nowText.getSuffix());
+        }
+    }
+
+    /**
      * @param previewLayout the layout to update
      */
     protected void updatePreview_sun(View previewLayout)
