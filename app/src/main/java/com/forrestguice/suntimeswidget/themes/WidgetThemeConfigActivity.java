@@ -65,6 +65,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.layouts.ClockLayout;
 import com.forrestguice.suntimeswidget.layouts.ClockLayout_1x1_0;
 import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
 import com.forrestguice.suntimeswidget.map.WorldMapTask;
@@ -86,6 +87,7 @@ import java.util.regex.Pattern;
 
 import static com.forrestguice.suntimeswidget.themes.SuntimesTheme.THEME_BACKGROUND_COLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesTheme.THEME_NAME;
+import static com.forrestguice.suntimeswidget.themes.SuntimesTheme.THEME_TIMESIZE_MAX;
 
 public class WidgetThemeConfigActivity extends AppCompatActivity
 {
@@ -753,7 +755,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         TextView previewTimeSuffix = (TextView)previewLayout.findViewById(R.id.text_time_suffix);
         if (previewTime != null && previewTimeSuffix != null)
         {
-            float[] adjustedSizeSp = ClockLayout_1x1_0.adjustTextSize(this, new int[] {80, 80}, choosePadding.getPadding(), "sans-serif", checkTimeBold.isChecked(),"00:00", (float)chooseTimeSize.getValue(), "MM", (float)chooseSuffixSize.getValue());
+            float[] adjustedSizeSp = ClockLayout_1x1_0.adjustTextSize(this, new int[] {80, 80}, choosePadding.getPadding(),
+                    "sans-serif", checkTimeBold.isChecked(),"00:00", (float)chooseTimeSize.getValue(), THEME_TIMESIZE_MAX, "MM", (float)chooseSuffixSize.getValue());
             previewTime.setTextSize(TypedValue.COMPLEX_UNIT_SP, adjustedSizeSp[0]);
             previewTimeSuffix.setTextSize(TypedValue.COMPLEX_UNIT_SP, adjustedSizeSp[1]);
 

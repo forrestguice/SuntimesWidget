@@ -84,7 +84,7 @@ public abstract class ClockLayout extends SuntimesLayout
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public static float[] adjustTextSize(Context context, int[] maxDimensionsDp, int[] paddingDp,
-                                         String fontFamily, boolean bold, String timeText, float timeSizeSp, String suffixText, float suffixSizeSp)
+                                         String fontFamily, boolean bold, String timeText, float timeSizeSp, float timeSizeMaxSp, String suffixText, float suffixSizeSp)
     {
         float adjustedTimeSizeSp = timeSizeSp;
         Rect timeBounds = new Rect();
@@ -102,7 +102,7 @@ public abstract class ClockLayout extends SuntimesLayout
         float maxWidthPixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, maxWidthDp, context.getResources().getDisplayMetrics());
 
         while ((timeBounds.width() + suffixBounds.width()) < maxWidthPixels
-                && adjustedTimeSizeSp < CLOCKFACE_MAX_SP)
+                && (adjustedTimeSizeSp < timeSizeMaxSp || timeSizeMaxSp == -1))
         {
             adjustedTimeSizeSp += stepSizeSp;
             adjustedSuffixSizeSp += stepSizeSp * suffixRatio;

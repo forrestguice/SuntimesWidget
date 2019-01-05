@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.layouts;
 
+import android.appwidget.AppWidgetProviderInfo;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
@@ -65,7 +66,8 @@ public class ClockLayout_1x1_0 extends ClockLayout
         {
             if (WidgetSettings.loadAllowResizePref(context, appWidgetId))
             {
-                float[] adjustedSizeSp = adjustTextSize(context, maxDimensionsDp, paddingDp, "sans-serif", boldTime,"00:00", timeSizeSp, "MM", suffixSizeSp);
+                float maxSp = ClockLayout.CLOCKFACE_MAX_SP;  // ((category == AppWidgetProviderInfo.WIDGET_CATEGORY_KEYGUARD) ? CLOCKFACE_MAX_SP : -1);
+                float[] adjustedSizeSp = adjustTextSize(context, maxDimensionsDp, paddingDp, "sans-serif", boldTime,"00:00", timeSizeSp, maxSp, "MM", suffixSizeSp);
                 if (adjustedSizeSp[0] != timeSizeSp) {
                     views.setTextViewTextSize(R.id.text_time, TypedValue.COMPLEX_UNIT_SP, adjustedSizeSp[0]);
                     views.setTextViewTextSize(R.id.text_time_suffix, TypedValue.COMPLEX_UNIT_SP, adjustedSizeSp[1]);
