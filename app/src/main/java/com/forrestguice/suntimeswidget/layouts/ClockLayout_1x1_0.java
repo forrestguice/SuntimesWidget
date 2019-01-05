@@ -61,7 +61,8 @@ public class ClockLayout_1x1_0 extends ClockLayout
         super.updateViews(context, appWidgetId, views, data);
 
         Calendar now = data.calendar();
-        SuntimesUtils.TimeDisplayText nowText = utils.calendarTimeShortDisplayString(context, now, false);
+        WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
+        SuntimesUtils.TimeDisplayText nowText = utils.calendarTimeShortDisplayString(context, now, false, timeFormat);
         String nowString = nowText.getValue();
         CharSequence nowChars = (boldTime ? SuntimesUtils.createBoldSpan(null, nowString, nowString) : nowString);
 

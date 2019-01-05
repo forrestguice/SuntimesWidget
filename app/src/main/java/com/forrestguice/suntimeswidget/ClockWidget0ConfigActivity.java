@@ -51,13 +51,17 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
         showOptionTimeDate(false);
         showOptionLabels(false);
         hideOptionShowSeconds();
-        showOptionShowNoon(false);
+
         showOptionTrackingMode(false);
         showOptionTimeModeOverride(false);
         showDataSource(false);
 
-        hideGeneralSettings();
+        showTimeMode(false);
+        showOptionShowNoon(false);
+        showTimeFormatMode(true);
+
         moveSectionToTop(R.id.appwidget_timezone_layout);
+        moveSectionToTop(R.id.appwidget_general_layout);
     }
 
     @Override
