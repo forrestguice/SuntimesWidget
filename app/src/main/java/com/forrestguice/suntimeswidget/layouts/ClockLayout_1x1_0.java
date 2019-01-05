@@ -18,20 +18,25 @@
 
 package com.forrestguice.suntimeswidget.layouts;
 
-import android.appwidget.AppWidgetProviderInfo;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.ImageSpan;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.Calendar;
+import java.util.TimeZone;
 
 public class ClockLayout_1x1_0 extends ClockLayout
 {
@@ -56,6 +61,9 @@ public class ClockLayout_1x1_0 extends ClockLayout
     {
         super.updateViews(context, appWidgetId, views, data);
 
+        boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
+        views.setViewVisibility(R.id.text_time_extras, showLabels ? View.VISIBLE : View.GONE);
+
         Calendar now = data.calendar();
         WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
         SuntimesUtils.TimeDisplayText nowText = utils.calendarTimeShortDisplayString(context, now, false, timeFormat);
@@ -77,9 +85,45 @@ public class ClockLayout_1x1_0 extends ClockLayout
 
         views.setTextViewText(R.id.text_time, nowChars);
         views.setTextViewText(R.id.text_time_suffix, nowText.getSuffix());
+
+        if (showLabels)
+        {
+            int stringResID;
+            Long offset = null;
+            if (data.timezoneMode() == WidgetSettings.TimezoneMode.SOLAR_TIME)
+            {
+                stringResID = R.string.timezoneExtraApparentSolar_short;
+                if (WidgetSettings.loadSolarTimeModePref(context, appWidgetId) == WidgetSettings.SolarTimeMode.APPARENT_SOLAR_TIME) {
+                    offset = (long)WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(now.getTimeInMillis());
+                }
+
+            } else {
+                stringResID = R.string.timezoneExtraDST_short;
+                TimeZone timezone = data.timezone();
+                boolean usesDST = (Build.VERSION.SDK_INT < 24 ? timezone.useDaylightTime() : timezone.observesDaylightTime());
+                boolean inDST = usesDST && timezone.inDaylightTime(now.getTime());
+                if (inDST) {
+                    offset = (long) timezone.getDSTSavings();
+                }
+            }
+
+            if (offset != null)
+            {
+                SuntimesUtils.TimeDisplayText offsetText = utils.timeDeltaLongDisplayString(0L, offset, false, false, true);
+                String offsetString = (offsetText.getRawValue() < 0 ? "-" : "+") + offsetText.getValue();
+                String extrasString = context.getString(stringResID, offsetString);
+                SpannableString boldedExtrasSpan = SuntimesUtils.createBoldColorSpan(SpannableString.valueOf(extrasString), extrasString, offsetString, timeColor);
+                views.setTextViewText(R.id.text_time_extras, boldedExtrasSpan);
+                views.setViewVisibility(R.id.text_time_extras, View.VISIBLE);
+
+            } else {
+                views.setViewVisibility(R.id.text_time_extras, View.GONE);
+            }
+        }
     }
 
     private int timeColor = Color.WHITE;
+    private int textColor = Color.WHITE;
     private int suffixColor = Color.GRAY;
     private boolean boldTime = false;
     private float timeSizeSp = 12;
@@ -91,12 +135,14 @@ public class ClockLayout_1x1_0 extends ClockLayout
     {
         super.themeViews(context, views, theme);
         timeColor = theme.getTimeColor();
+        textColor = theme.getTextColor();
         suffixColor = theme.getTimeSuffixColor();
         boldTime = theme.getTimeBold();
         paddingDp = theme.getPadding();
 
         views.setTextColor(R.id.text_time, timeColor);
         views.setTextColor(R.id.text_time_suffix, suffixColor);
+        views.setTextColor(R.id.text_time_extras, textColor);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
@@ -105,6 +151,7 @@ public class ClockLayout_1x1_0 extends ClockLayout
 
             views.setTextViewTextSize(R.id.text_time, TypedValue.COMPLEX_UNIT_SP, timeSizeSp);
             views.setTextViewTextSize(R.id.text_time_suffix, TypedValue.COMPLEX_UNIT_SP, suffixSizeSp);
+            views.setTextViewTextSize(R.id.text_time_extras, TypedValue.COMPLEX_UNIT_SP, theme.getTextSizeSp());
         }
     }
 
