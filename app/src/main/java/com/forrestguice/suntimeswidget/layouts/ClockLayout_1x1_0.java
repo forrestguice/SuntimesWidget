@@ -18,14 +18,9 @@
 
 package com.forrestguice.suntimeswidget.layouts;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.Typeface;
 import android.os.Build;
-import android.support.annotation.NonNull;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 
@@ -80,45 +75,6 @@ public class ClockLayout_1x1_0 extends ClockLayout
 
         views.setTextViewText(R.id.text_time, nowChars);
         views.setTextViewText(R.id.text_time_suffix, nowText.getSuffix());
-    }
-
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    public static float[] adjustTextSize(Context context, int[] maxDimensionsDp, int[] paddingDp,
-                                      String fontFamily, boolean bold, String timeText, float timeSizeSp, String suffixText, float suffixSizeSp)
-    {
-        float adjustedTimeSizeSp = timeSizeSp;
-        Rect timeBounds = new Rect();
-        Paint timePaint = new Paint();
-        timePaint.setTypeface(Typeface.create(fontFamily, bold ? Typeface.BOLD : Typeface.NORMAL));
-
-        float adjustedSuffixSizeSp = suffixSizeSp;
-        Rect suffixBounds = new Rect();
-        Paint suffixPaint = new Paint();
-        suffixPaint.setTypeface(Typeface.create(fontFamily, Typeface.BOLD));
-
-        float stepSizeSp = 0.1f;                                      // upscale by stepSize (until maxWidth is filled)
-        float suffixRatio = suffixSizeSp / timeSizeSp;                // preserve suffix proportions while scaling
-        float maxWidthDp = (maxDimensionsDp[0] - paddingDp[0] - 8);   // maxWidth is adjusted for padding and margins
-        float maxWidthPixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, maxWidthDp, context.getResources().getDisplayMetrics());
-
-        while ((timeBounds.width() + suffixBounds.width()) < maxWidthPixels)
-        {
-            adjustedTimeSizeSp += stepSizeSp;
-            adjustedSuffixSizeSp += stepSizeSp * suffixRatio;
-            getTextBounds(context,  timeText, adjustedTimeSizeSp, timePaint, timeBounds);
-            getTextBounds(context, suffixText, adjustedSuffixSizeSp, suffixPaint, suffixBounds);
-        }
-
-        float[] retValue = new float[2];
-        retValue[0] = adjustedTimeSizeSp;
-        retValue[1] = adjustedSuffixSizeSp;
-        return retValue;
-    }
-
-    public static void getTextBounds(@NonNull Context context, @NonNull String text, float textSizeSp, @NonNull Paint textPaint, @NonNull Rect textBounds)
-    {
-        textPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, textSizeSp, context.getResources().getDisplayMetrics()));
-        textPaint.getTextBounds(text, 0, text.length(), textBounds);
     }
 
     private int timeColor = Color.WHITE;
