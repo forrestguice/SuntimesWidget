@@ -68,8 +68,13 @@ public class ClockLayout_1x1_0 extends ClockLayout
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
-            if (WidgetSettings.loadAllowResizePref(context, appWidgetId)) {
-                adjustTextSize(context, views, "sans-serif","00:00", "MM");
+            if (WidgetSettings.loadAllowResizePref(context, appWidgetId))
+            {
+                float[] adjustedSizeSp = adjustTextSize(context, maxDimensionsDp, paddingDp, "sans-serif", boldTime,"00:00", timeSizeSp, "MM", suffixSizeSp);
+                if (adjustedSizeSp[0] != timeSizeSp) {
+                    views.setTextViewTextSize(R.id.text_time, TypedValue.COMPLEX_UNIT_SP, adjustedSizeSp[0]);
+                    views.setTextViewTextSize(R.id.text_time_suffix, TypedValue.COMPLEX_UNIT_SP, adjustedSizeSp[1]);
+                }
             }
         }
 
@@ -78,12 +83,13 @@ public class ClockLayout_1x1_0 extends ClockLayout
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    private void adjustTextSize(Context context, RemoteViews views, String fontFamily, String timeText, String suffixText)
+    public static float[] adjustTextSize(Context context, int[] maxDimensionsDp, int[] paddingDp,
+                                      String fontFamily, boolean bold, String timeText, float timeSizeSp, String suffixText, float suffixSizeSp)
     {
         float adjustedTimeSizeSp = timeSizeSp;
         Rect timeBounds = new Rect();
         Paint timePaint = new Paint();
-        timePaint.setTypeface(Typeface.create(fontFamily, boldTime ? Typeface.BOLD : Typeface.NORMAL));
+        timePaint.setTypeface(Typeface.create(fontFamily, bold ? Typeface.BOLD : Typeface.NORMAL));
 
         float adjustedSuffixSizeSp = suffixSizeSp;
         Rect suffixBounds = new Rect();
@@ -103,14 +109,13 @@ public class ClockLayout_1x1_0 extends ClockLayout
             getTextBounds(context, suffixText, adjustedSuffixSizeSp, suffixPaint, suffixBounds);
         }
 
-        if (adjustedTimeSizeSp != timeSizeSp)
-        {
-            views.setTextViewTextSize(R.id.text_time, TypedValue.COMPLEX_UNIT_SP, adjustedTimeSizeSp);
-            views.setTextViewTextSize(R.id.text_time_suffix, TypedValue.COMPLEX_UNIT_SP, adjustedSuffixSizeSp);
-        }
+        float[] retValue = new float[2];
+        retValue[0] = adjustedTimeSizeSp;
+        retValue[1] = adjustedSuffixSizeSp;
+        return retValue;
     }
 
-    private void getTextBounds(@NonNull Context context, @NonNull String text, float textSizeSp, @NonNull Paint textPaint, @NonNull Rect textBounds)
+    public static void getTextBounds(@NonNull Context context, @NonNull String text, float textSizeSp, @NonNull Paint textPaint, @NonNull Rect textBounds)
     {
         textPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, textSizeSp, context.getResources().getDisplayMetrics()));
         textPaint.getTextBounds(text, 0, text.length(), textBounds);
