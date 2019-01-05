@@ -43,6 +43,12 @@ public abstract class ClockLayout extends SuntimesLayout
         initLayoutID();
     }
 
+    protected int category = -1;
+    public void setCategory(int category)
+    {
+        this.category = category;
+    }
+
     protected int[] maxDimensionsDp = new int[] {40, 40};
     public void setMaxDimensionsDp(int[] size)
     {

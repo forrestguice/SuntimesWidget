@@ -384,6 +384,13 @@ public class SuntimesWidget0 extends AppWidgetProvider
         // The update alarms are now removed in onDeleted().
     }
 
+    @TargetApi(17)
+    public static int widgetCategory(AppWidgetManager appWidgetManager, int appWidgetId)
+    {
+        Bundle widgetOptions = appWidgetManager.getAppWidgetOptions(appWidgetId);
+        return widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_HOST_CATEGORY);
+    }
+
     protected static int[] widgetSizeDp(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize)
     {
         int[] mustFitWithinDp = {defSize[0], defSize[1]};

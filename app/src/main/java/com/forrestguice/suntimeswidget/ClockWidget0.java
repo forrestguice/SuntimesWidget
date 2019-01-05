@@ -95,6 +95,7 @@ public class ClockWidget0 extends SuntimesWidget0
     {
         ClockLayout layout = new ClockLayout_1x1_0();
         layout.setMaxDimensionsDp(widgetSizeDp(context, appWidgetManager, appWidgetId, defSize));
+        layout.setCategory(widgetCategory(appWidgetManager, appWidgetId));
         return layout;
     }
 
