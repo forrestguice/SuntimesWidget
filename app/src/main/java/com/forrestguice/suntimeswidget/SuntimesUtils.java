@@ -462,6 +462,34 @@ public class SuntimesUtils
                     : calendarTime12HrDisplayString(context, cal, showSeconds));
         }
     }
+    public TimeDisplayText calendarTimeShortDisplayString(Context context, Calendar cal, boolean showSeconds, TimeFormatMode format)
+    {
+        if (!initialized) {
+            Log.w("SuntimesUtils", "Not initialized! (calendarTimeShortDisplayString was called anyway; using defaults)");
+        }
+
+        if (cal == null) {
+            return new TimeDisplayText(strTimeNone);
+
+        } else {
+            switch (format)
+            {
+                case MODE_24HR:
+                    return calendarTime24HrDisplayString(context, cal, showSeconds);
+
+                case MODE_12HR:
+                    return calendarTime12HrDisplayString(context, cal, showSeconds);
+
+                case MODE_SYSTEM:
+                    boolean sysIs24 = android.text.format.DateFormat.is24HourFormat(context);
+                    return (sysIs24 ? calendarTime24HrDisplayString(context, cal, showSeconds)
+                            : calendarTime12HrDisplayString(context, cal, showSeconds));
+
+                default:
+                    return new TimeDisplayText(strTimeNone);
+            }
+        }
+    }
 
     /**
      * formats a time display string (lets the system determine the exact format).

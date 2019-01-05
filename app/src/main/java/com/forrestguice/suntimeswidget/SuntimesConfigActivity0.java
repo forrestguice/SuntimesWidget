@@ -79,6 +79,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected TextView text_appWidgetID;
 
     protected Spinner spinner_calculatorMode;
+    protected Spinner spinner_timeFormatMode;
     protected Spinner spinner_timeMode;
     protected CheckBox checkbox_timeModeOverride;
     protected ImageButton button_timeModeHelp;
@@ -408,6 +409,12 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 public void onNothingSelected(AdapterView<?> adapterView) {}
             });
         }
+
+        //
+        // widget: time format mode
+        //
+        spinner_timeFormatMode = (Spinner) findViewById(R.id.appwidget_general_timeformatmode);
+        initTimeFormatMode(context);
 
         //
         // widget: time mode
@@ -754,6 +761,47 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // EMPTY
     }
 
+
+    /**
+     * @param context a context used to access resources
+     */
+    protected void initTimeFormatMode(Context context)
+    {
+        if (spinner_timeFormatMode != null)
+        {
+            final ArrayAdapter<WidgetSettings.TimeFormatMode> spinner_timeFormatModeAdapter;
+            spinner_timeFormatModeAdapter = new ArrayAdapter<WidgetSettings.TimeFormatMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.TimeFormatMode.values());
+            spinner_timeFormatModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner_timeFormatMode.setAdapter(spinner_timeFormatModeAdapter);
+        }
+    }
+
+    /**
+     * @param context a context used to access shared prefs
+     */
+    protected void loadTimeFormatMode(Context context)
+    {
+        if (spinner_timeFormatMode != null)
+        {
+            WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
+            spinner_timeFormatMode.setSelection(mode.ordinal());
+        }
+    }
+
+    /**
+     * @param context a context used to access shared prefs
+     */
+    protected void saveTimeFormatMode(Context context)
+    {
+        if (spinner_timeFormatMode != null)
+        {
+            final WidgetSettings.TimeFormatMode[] modes = WidgetSettings.TimeFormatMode.values();
+            WidgetSettings.TimeFormatMode mode = modes[spinner_timeFormatMode.getSelectedItemPosition()];
+            WidgetSettings.saveTimeFormatModePref(context, appWidgetId, mode);
+        }
+    }
+
+
     /**
      * @param context a context used to access resources
      */
@@ -1098,6 +1146,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // save: time mode
         saveTimeMode(context);
         saveTimeModeOverride(context);
+
+        // save: time format
+        saveTimeFormatMode(context);
     }
 
     /**
@@ -1156,6 +1207,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // load: time mode
         loadTimeMode(context);
         loadTimeModeOverride(context);
+
+        // load: time format
+        loadTimeFormatMode(context);
     }
 
     /**
@@ -1372,6 +1426,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (timeModeLayout != null)
         {
             timeModeLayout.setVisibility((showTimeModeUI ? View.VISIBLE : View.GONE));
+        }
+    }
+
+    protected void showTimeFormatMode(boolean show)
+    {
+        View layout = findViewById(R.id.appwidget_general_timeformatmode_layout);
+        if (layout != null) {
+            layout.setVisibility((show ? View.VISIBLE : View.GONE));
         }
     }
 

@@ -633,7 +633,11 @@ public class WidgetSettings
             MODE_SYSTEM.setDisplayString(context.getString(R.string.timeFormatMode_system));
             MODE_12HR.setDisplayString(context.getString(R.string.timeFormatMode_12hr));
             MODE_24HR.setDisplayString(context.getString(R.string.timeFormatMode_24hr));
+        }
 
+        public String toString()
+        {
+            return displayString;
         }
     }
 
