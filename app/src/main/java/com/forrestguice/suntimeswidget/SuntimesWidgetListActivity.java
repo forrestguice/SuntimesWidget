@@ -45,6 +45,7 @@ import android.view.MenuItem;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
@@ -429,6 +430,11 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                         widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
                         data = data0;
 
+                    } else if (widgetClass ==ClockWidget0.class || widgetClass == ClockWidget0_3x1.class) {
+                        SuntimesClockData data0 = new SuntimesClockData(context, id);
+                        widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
+                        data = data0;
+
                     } else {
                         SuntimesRiseSetData data0 = new SuntimesRiseSetData(context, id);
                         widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
@@ -454,6 +460,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget1.class, titlePattern0));
             items.addAll(createWidgetListItems(context, widgetManager, SolsticeWidget0.class, titlePattern0));
             items.addAll(createWidgetListItems(context, widgetManager, ClockWidget0.class, titlePattern0));
+            items.addAll(createWidgetListItems(context, widgetManager, ClockWidget0_3x1.class, titlePattern0));
 
             String titlePattern1 = context.getString(R.string.configLabel_widgetList_itemTitlePattern1);
             items.addAll(createWidgetListItems(context, widgetManager, MoonWidget0.class, titlePattern1));
@@ -473,6 +480,9 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
 
             if (widgetClass == ClockWidget0.class)
                 return context.getString(R.string.app_name_clockwidget0);
+
+            if (widgetClass == ClockWidget0_3x1.class)
+                return context.getString(R.string.app_name_clockwidget0) + " (3x1)";
 
             if (widgetClass == MoonWidget0.class)
                 return context.getString(R.string.app_name_moonwidget0);
