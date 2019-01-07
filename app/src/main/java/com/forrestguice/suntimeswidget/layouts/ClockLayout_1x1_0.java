@@ -94,7 +94,7 @@ public class ClockLayout_1x1_0 extends ClockLayout
             {
                 stringResID = R.string.timezoneExtraApparentSolar_short;
                 if (WidgetSettings.loadSolarTimeModePref(context, appWidgetId) == WidgetSettings.SolarTimeMode.APPARENT_SOLAR_TIME) {
-                    offset = (long)WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(now.getTimeInMillis());
+                    offset = (long)data.calculator().equationOfTime(now) * 1000L;  //(long)WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(now.getTimeInMillis());
                 }
 
             } else {

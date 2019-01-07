@@ -19,6 +19,9 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
+
+import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
+
 import java.util.Calendar;
 
 public class SuntimesClockData extends SuntimesData
@@ -50,6 +53,7 @@ public class SuntimesClockData extends SuntimesData
         //Log.v("SuntimesWidgetData", "timezone: " + timezone);
 
         initCalculator(context);
+        initTimezone(context);   // reinit
 
         todaysCalendar = Calendar.getInstance(timezone);
         otherCalendar = Calendar.getInstance(timezone);
