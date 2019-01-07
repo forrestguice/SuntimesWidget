@@ -49,6 +49,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
@@ -96,6 +97,12 @@ public class TimeZoneDialog extends DialogFragment
     public void setLongitude( double longitude )
     {
         this.longitude = longitude;
+    }
+
+    private SuntimesCalculator calculator = null;
+    public void setCalculator( SuntimesCalculator calculator )
+    {
+        this.calculator = calculator;
     }
 
     @SuppressWarnings({"deprecation","RestrictedApi"})
@@ -301,7 +308,7 @@ public class TimeZoneDialog extends DialogFragment
             WidgetSettings.SolarTimeMode item = (WidgetSettings.SolarTimeMode)item0;
             if (item != null && item == WidgetSettings.SolarTimeMode.APPARENT_SOLAR_TIME)
             {
-                int eot = WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(now.getTimeInMillis());
+                int eot = WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(now.getTimeInMillis(), calculator);
                 updateExtrasLabel(getContext(), R.string.timezoneExtraApparentSolar, eot);
             } else updateExtrasLabel(null);
 

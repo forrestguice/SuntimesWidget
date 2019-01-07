@@ -221,19 +221,29 @@ public class WidgetTimezones
         @Override
         public int getOffset( long date )
         {
+            return getRawOffset() + equationOfTimeOffset(date, calculator);
+        }
+
+        public static int equationOfTimeOffset(long date,SuntimesCalculator calculator)
+        {
             if (calculator != null)
             {
                 Calendar calendar = new GregorianCalendar();
                 calendar.setTimeInMillis(date);
                 double eotSeconds = calculator.equationOfTime(calendar);
-                if (eotSeconds != Double.NaN)
+                if (eotSeconds != Double.POSITIVE_INFINITY)
                 {
-                    Log.d("ApparentSolar", "using calculator: eot is: " + (eotSeconds / 60d) + " minutes" );
-                    int eotMillis = (int)(eotSeconds * 1000);
-                    return getRawOffset() + eotMillis;
+                    //Log.d("ApparentSolar", "equationOfTime: using " + calculator.name() + ": eot is: " + (eotSeconds / 60d) + " minutes" );
+                    return (int)(eotSeconds * 1000);
 
-                } else return getRawOffset() + equationOfTimeOffset(date);    // not supported; use fall-back implementation
-            } else return getRawOffset() + equationOfTimeOffset(date);      // no calculator; use fall-back implementation
+                } else {
+                    //Log.d("ApparentSolar", "equationOfTime: not supported by " + calculator.name() + " using fallback: " + (equationOfTimeOffset(date) / 1000d / 60d) );
+                    return equationOfTimeOffset(date);    // not supported; use fall-back implementation
+                }
+            } else {
+                //Log.d("ApparentSolar", "equationOfTime: null calculator, using fallback: " + (equationOfTimeOffset(date) / 1000d / 60d) );
+                return equationOfTimeOffset(date);      // no calculator; use fall-back implementation
+            }
         }
 
         /**
