@@ -312,7 +312,7 @@ public interface SuntimesCalculator
 
     /**
      * @param dateTime a Calendar representing a given date + time
-     * @return the equation of time value in seconds (or NAN if not supported)
+     * @return the equation of time value in seconds (or INFINITY if not supported)
      * @since 1.5.0 FEATURE_POSITION, FEATURE_RISESET
      */
     double equationOfTime( Calendar dateTime );

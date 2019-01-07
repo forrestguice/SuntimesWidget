@@ -278,7 +278,7 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     @Override
     public double equationOfTime(Calendar dateTime)
     {
-        return Double.NaN;
+        return Double.POSITIVE_INFINITY;
     }
 
 }

@@ -226,7 +226,7 @@ public class WidgetTimezones
                 Calendar calendar = new GregorianCalendar();
                 calendar.setTimeInMillis(date);
                 double eotSeconds = calculator.equationOfTime(calendar);
-                if (eotSeconds != Double.NaN)
+                if (eotSeconds != Double.POSITIVE_INFINITY)
                 {
                     Log.d("ApparentSolar", "using calculator: eot is: " + (eotSeconds / 60d) + " minutes" );
                     int eotMillis = (int)(eotSeconds * 1000);
