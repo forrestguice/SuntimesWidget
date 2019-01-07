@@ -261,5 +261,11 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     public double getShadowLength(double objHeight, Calendar dateTime) {
         return -1;
     }
+
+    @Override
+    public double equationOfTime(Calendar dateTime)
+    {
+        return Double.NaN;
+    }
 }
 

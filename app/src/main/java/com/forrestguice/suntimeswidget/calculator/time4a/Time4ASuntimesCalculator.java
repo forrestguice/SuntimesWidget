@@ -389,5 +389,12 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         return position.getShadowLength(objHeight);
     }
 
+    @Override
+    public double equationOfTime(Calendar dateTime)
+    {
+        Moment moment = TemporalType.JAVA_UTIL_DATE.translate(dateTime.getTime());
+        return SolarTime.equationOfTime(moment, solarTime.getCalculator().name());
+    }
+
 }
 
