@@ -313,7 +313,7 @@ public class LocationConfigView extends LinearLayout
             DecimalFormat formatter = com.forrestguice.suntimeswidget.calculator.core.Location.decimalDegreesFormatter();
             text_locationLat.setText( formatter.format(locations[0].getLatitude()) );
             text_locationLon.setText( formatter.format(locations[0].getLongitude()) );
-            text_locationAlt.setText( formatter.format(locations[0].getAltitude()) );
+            text_locationAlt.setText( getAltitudeString(locations[0], formatter, WidgetSettings.loadLengthUnitsPref(getContext(), appWidgetId)) );
         }
 
         @Override
@@ -337,6 +337,20 @@ public class LocationConfigView extends LinearLayout
         }
     };
 
+    protected CharSequence getAltitudeString(Location location, DecimalFormat formatter, WidgetSettings.LengthUnit units)
+    {
+        switch (units)
+        {
+            case IMPERIAL:
+            case USC:
+                return formatter.format(WidgetSettings.LengthUnit.metersToFeet(location.getAltitude()));
+
+            case METRIC:
+            default:
+                return formatter.format(location.getAltitude());
+        }
+    }
+
     private ImageButton button_auto;
     private ProgressBar progress_auto;
     private GetFixUI getFixUI_autoMode = new GetFixUI()
@@ -356,7 +370,7 @@ public class LocationConfigView extends LinearLayout
             DecimalFormat formatter = com.forrestguice.suntimeswidget.calculator.core.Location.decimalDegreesFormatter();
             text_locationLat.setText( formatter.format(locations[0].getLatitude()) );
             text_locationLon.setText( formatter.format(locations[0].getLongitude()) );
-            text_locationAlt.setText( formatter.format(locations[0].getAltitude()) );
+            text_locationAlt.setText( getAltitudeString(locations[0], formatter, WidgetSettings.loadLengthUnitsPref(getContext(), appWidgetId)) );
         }
 
         @Override
