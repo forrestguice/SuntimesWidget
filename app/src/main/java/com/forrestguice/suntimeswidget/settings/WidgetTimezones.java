@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.settings;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -99,7 +100,7 @@ public class WidgetTimezones
         return new LocalMeanTime(location.getLongitudeAsDouble(), context.getString(R.string.solartime_localMean));
     }
 
-    public static TimeZone apparentSolarTime( Context context, Location location )
+    public static TimeZone apparentSolarTime(Context context, Location location)
     {
         return new ApparentSolarTime(location.getLongitudeAsDouble(), context.getString(R.string.solartime_apparent));
     }
@@ -188,6 +189,18 @@ public class WidgetTimezones
             super(longitude, name);
         }
 
+        public ApparentSolarTime(double longitude, String name, SuntimesCalculator calculator)
+        {
+            super(longitude, name);
+            this.calculator = calculator;
+        }
+
+        private SuntimesCalculator calculator = null;
+        public void setCalculator(SuntimesCalculator calculator)
+        {
+            this.calculator = calculator;
+        }
+
         @Override
         public int getOffset(int era, int year, int month, int day, int dayOfWeek, int milliseconds)
         {
@@ -203,7 +216,18 @@ public class WidgetTimezones
         @Override
         public int getOffset( long date )
         {
-            return getRawOffset() + equationOfTimeOffset(date);
+            if (calculator != null)
+            {
+                Calendar calendar = new GregorianCalendar();
+                calendar.setTimeInMillis(date);
+                double eotSeconds = calculator.equationOfTime(calendar);
+                if (eotSeconds != Double.NaN)
+                {
+                    int eotMillis = (int)(eotSeconds * 1000);
+                    return getRawOffset() + eotMillis;
+
+                } else return getRawOffset() + equationOfTimeOffset(date);    // not supported; use fall-back implementation
+            } else return getRawOffset() + equationOfTimeOffset(date);      // no calculator; use fall-back implementation
         }
 
         /**
