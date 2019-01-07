@@ -58,8 +58,9 @@
                 android:layout_below="@+id/text_time_suffix" android:layout_alignRight="@+id/text_time_suffix" android:layout_alignEnd="@+id/text_time_suffix"
                 android:layout_marginTop="0dp" android:layout_marginBottom="4dp"
                 android:paddingTop="0dp" android:paddingBottom="0dp"
+                android:maxLines="1"
                 android:layout_gravity="center" android:gravity="top|end"
-                tools:text="+1hr dst" />
+                tools:text="-12m 36s eot" />
 
         </RelativeLayout>
 
