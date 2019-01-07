@@ -1,5 +1,9 @@
 ### ~
 
+### v0.10.2 (2019-01-09)
+* fixes bug "'get location' does not honor the 'units of length' pref" (#290).
+* improves the accuracy of the apparent solar time calculation (#291).
+
 ### v0.10.1 (2018-12-23)
 * fixes bug "sun/moon circles are difficult to see (too small)" (#286) on lightmap and worldmap widgets.
 * updates translation to Norwegian (nb) (#285 by FTno).
