@@ -228,11 +228,14 @@ public class WidgetTimezones
                 double eotSeconds = calculator.equationOfTime(calendar);
                 if (eotSeconds != Double.POSITIVE_INFINITY)
                 {
-                    Log.d("ApparentSolar", "using calculator: eot is: " + (eotSeconds / 60d) + " minutes" );
+                    Log.d("ApparentSolar", "equationOfTime: using " + calculator.name() + ": eot is: " + (eotSeconds / 60d) + " minutes" );
                     int eotMillis = (int)(eotSeconds * 1000);
                     return getRawOffset() + eotMillis;
 
-                } else return getRawOffset() + equationOfTimeOffset(date);    // not supported; use fall-back implementation
+                } else {
+                    Log.d("ApparentSolar", "equationOfTime: not supported by " + calculator.name() + " using fallback: " + (equationOfTimeOffset(date) / 1000d / 60d) );
+                    return getRawOffset() + equationOfTimeOffset(date);    // not supported; use fall-back implementation
+                }
             } else return getRawOffset() + equationOfTimeOffset(date);      // no calculator; use fall-back implementation
         }
 
