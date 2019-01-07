@@ -308,8 +308,7 @@ public class TimeZoneDialog extends DialogFragment
             WidgetSettings.SolarTimeMode item = (WidgetSettings.SolarTimeMode)item0;
             if (item != null && item == WidgetSettings.SolarTimeMode.APPARENT_SOLAR_TIME)
             {
-                int eot = (calculator != null ? (int)(calculator.equationOfTime(now) * 1000)
-                                              : WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(now.getTimeInMillis()));
+                int eot = WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(now.getTimeInMillis(), calculator);
                 updateExtrasLabel(getContext(), R.string.timezoneExtraApparentSolar, eot);
             } else updateExtrasLabel(null);
 
