@@ -105,6 +105,11 @@ public class WidgetTimezones
         return new ApparentSolarTime(location.getLongitudeAsDouble(), context.getString(R.string.solartime_apparent));
     }
 
+    public static TimeZone apparentSolarTime(Context context, Location location, SuntimesCalculator calculator)
+    {
+        return new ApparentSolarTime(location.getLongitudeAsDouble(), context.getString(R.string.solartime_apparent), calculator);
+    }
+
     /**
      * LocalMeanTime : TimeZone
      */
@@ -223,6 +228,7 @@ public class WidgetTimezones
                 double eotSeconds = calculator.equationOfTime(calendar);
                 if (eotSeconds != Double.NaN)
                 {
+                    Log.d("ApparentSolar", "using calculator: eot is: " + (eotSeconds / 60d) + " minutes" );
                     int eotMillis = (int)(eotSeconds * 1000);
                     return getRawOffset() + eotMillis;
 
