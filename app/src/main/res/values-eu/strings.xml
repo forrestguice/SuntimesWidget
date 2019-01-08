@@ -43,8 +43,8 @@
     -->
     <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> Ordu eremua okerra izan liteke kokapen honetarako.</string>  <!-- snackbar message -->
-    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> Daylight Saving</string>  <!-- timezone dialog label -->  <!-- TODO -->
-    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> equation of time</string>  <!-- timezone dialog label -->  <!-- TODO -->
+    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> udako ordutegia</string>  <!-- timezone dialog label -->
+    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> denbora ekuazioa</string>  <!-- timezone dialog label -->
 
     <!-- Field: date
          The date field that appears above the table (main activity).
@@ -161,22 +161,22 @@
     <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
 
     <!-- distances (meters, feet, etc) -->
-    <string name="lengthUnits_metric">Metric</string>    <!-- TODO -->
-    <string name="lengthUnits_imperial">Imperial</string>   <!-- TODO -->
+    <string name="lengthUnits_metric">Metrikoa</string>
+    <string name="lengthUnits_imperial">Inperiala</string>
 
     <string name="units_feet">oin</string>
     <string name="units_feet_short">ft</string>   <!-- TODO -->
     <plurals name="units_feet_long">
-        <item quantity="one">%s foot</item>
-        <item quantity="other">%s feet</item>
-    </plurals>  <!-- TODO -->
+        <item quantity="one">oin %s</item>
+        <item quantity="other">%s oin</item>
+    </plurals>
 
     <string name="units_meters">metroak</string>
     <string name="units_meters_short">m</string>
     <plurals name="units_meters_long">
-        <item quantity="one">%s meter</item>
-        <item quantity="other">%s meters</item>
-    </plurals>  <!-- TODO -->
+        <item quantity="one">metro %s</item>
+        <item quantity="other">%s metro</item>
+    </plurals>
 
     <!--
          WIDGET CONFIG
@@ -207,7 +207,7 @@
     <string name="configLabel_general_altitude_enabled">Altitudea erabili</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">Altitudean oinarritutako hobekuntzak erabili.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_lengthUnits">Units of length</string>        <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_general_lengthUnits">Luzera unitateak</string>        <!-- spinner label -->
 
     <string name="configLabel_general_showSeconds">Segunduak erakutsi</string>        <!-- checkbox label -->
     <string name="configLabel_general_showSeconds_summary">Gehitu segunduak denborak erakusterakoan.</string>        <!-- checkbox label -->
@@ -221,8 +221,8 @@
     <string name="configLabel_general_showHours">Orduak erakutsi</string>        <!-- checkbox label -->
     <string name="configLabel_general_showHours_summary">Egun bat baino luzeagoak diren denbora tarteetan orduak eta minutuak gehitu.</string>    <!-- checkbox label -->
 
-    <string name="configLabel_general_observerheight">Object Shadow</string>        <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_general_observerheight_summary">Display the length of shadows cast by an object with a height of <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_observerheight">Objektuen itzala</string>        <!-- checkbox label -->
+    <string name="configLabel_general_observerheight_summary"><xliff:g id="value" example="1 meter">%1$s</xliff:g> altuera duen objektu baten itzalaren luzera erakutsi.</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: advanced / experimental -->
     <string name="configLabel_advanced">Ezarpen aurreratuak</string>                        <!-- group title -->
@@ -232,7 +232,7 @@
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Itxuraren ezarpenak</string>           <!-- group title -->
-    <string name="configLabel_appearance_mode">Appearance</string>                  <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_mode">Itxura</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Gaia:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Handitu lekuaren arabera (neurriz aldagarria)</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_showLabels">Etiketak erakutsi</string>          <!-- checkbox label -->
@@ -450,7 +450,7 @@
     <string name="configLabel_themeColorFall">Udazkenaren kolorea</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Neguaren kolorea</string> <!-- color label -->
 
-    <string name="configLabel_themeColorAction">Action</string> <!-- color label -->  <!-- TODO -->
+    <string name="configLabel_themeColorAction">Ekintza</string> <!-- color label -->
 
     <string name="configLabel_themeColorMapBackground">Maparen atzealdea</string> <!-- color label -->
     <string name="configLabel_themeColorMapForeground">Maparen aurrekaldea</string> <!-- color label -->
@@ -591,12 +591,12 @@
     <string name="configLabel_ui_showbluehour_summary">Ordu urdinak erakutsi.</string>
 
     <!-- App Setting: UI Theme -->
-    <string name="appThemes_lightTheme">Itxura argia</string>
-    <string name="appThemes_darkTheme">Itxura iluna</string>
+    <string name="appThemes_lightTheme">Argia</string>
+    <string name="appThemes_darkTheme">Iluna</string>
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
         <item>@string/appThemes_lightTheme</item>
         <item>@string/appThemes_darkTheme</item>
-        <item>Itxura argia / Itxura iluna (Gau modua)</item>
+        <item>Argia / iluna (Gau modua)</item>
     </string-array>
 
     <!-- App Setting: time format -->
@@ -766,7 +766,7 @@
     -->
 
     <!-- Dialog: World Map -->
-    <string name="worldmap_dialog_title">@string/configAction_worldMap</string>   <!-- TODO -->
+    <string name="worldmap_dialog_title">@string/configAction_worldMap</string>
     <string name="worldmap_dialog_option_sunlight">Eguzkiaren argia</string>
     <string name="worldmap_dialog_option_moonlight">Ilargiaren argia</string>
     <string name="worldmap_dialog_option_all">Biak</string>
@@ -888,17 +888,17 @@
     <string name="msg_export_to">Esportatu honekin</string>  <!-- title displayed over "share action" chooser -->
 
     <!-- Dialog: Import Themes -->
-    <string name="themesimport_dialog_title">Importing Themes</string>                   <!-- TODO -->
-    <string name="themesimport_dialog_message">Importing themes from file…</string>      <!-- TODO -->
+    <string name="themesimport_dialog_title">Gaiak inportatu</string>
+    <string name="themesimport_dialog_message">Gaiak fitxategi batetik inportatu…</string>
 
-    <string name="msg_import_success">Imported <xliff:g id="themePlural">%s</xliff:g>.</string>  <!-- TODO -->
-    <string name="msg_import_failure">Import from <xliff:g id="filepath">%s</xliff:g> failed!</string>  <!-- TODO -->
-    <string name="msg_import_noresults">Import skipped; no new themes were found.</string>  <!-- TODO -->
+    <string name="msg_import_success"><xliff:g id="themePlural">%s</xliff:g> inportatuta.</string>
+    <string name="msg_import_failure"><xliff:g id="filepath">%s</xliff:g>(e)tik inportatzeak huts egin du!</string>
+    <string name="msg_import_noresults">Inportazioa eten da; ez da gai berri gehiagorik aurkitu.</string>
 
     <plurals name="themePlural">
-        <item quantity="one">%d theme</item>
-        <item quantity="other">%d themes</item>
-    </plurals>  <!-- TODO -->
+        <item quantity="one">gai %d</item>
+        <item quantity="other">%d gai</item>
+    </plurals>
 
     <!-- Dialog: Color -->
     <string name="color_dialog_msg">Kolorea hautatu</string>
@@ -1034,12 +1034,12 @@
         Gai [Icon Default] lehenetsiak ezin dira ezabatu.
     </string> <!-- text explains themelist actions/icons; [Icon tags] are substituted at runtime (should remain unaltered)  -->
 
-    <string name="help_calendar"><![CDATA[Supply events to the Calendar app (moon phases, solstices, and equinoxes).<br />
+    <string name="help_calendar"><![CDATA[Gertaeraz hornitu egutegiaren aplikazioa (ilargialdiak, solstizioak, eta ekinokzioak).<br />
         <br />
-        <u><b><font color="#ff9900">Calendar permissions have been removed.</font></b></u><br />
+        <u><b><font color="#ff9900">Egutegi baimenak kendu dira.</font></b></u><br />
         <br />
-        This feature is now available as a <a href="moreInfoLink">separate app</a>.
-    ]]></string>  <!-- TODO -->
+        Ezaugarri hau <a href="moreInfoLink">beste aplikazio</a> batean eskuragarri dago.
+    ]]></string>
 
     <string name="privacy_policy"><![CDATA[<b>Pribatutasuna:</b><br/>Suntimes aplikazioak ez du inolako informazio pertsonalik biltzen, gordetzen, edo bidaltzen. <b>Ez du iragarkirik</b>, <b>ez analisi tresnarik</b>, <b>ez aztarnaririk</b>, ezta <b>beharrezkoa ez den baimenik</b>. <br/><br/>Aplikazioa kokapen datuekin konfiguratuta dago. Informazio hau (eta aplikazioak erabiltzen duen beste konfigurazio datuak) gailuan bertan gordetzen da eta ez du gailua uzten.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes aplikazioak <b>kokapen</b> baimena behar du zure uneko longitudea eta latitudea zehazteko.<br/><br/>Baimen hau hautazkoa da; kokapena eskuz ezartzen da modu lehenetsian.]]></string>
