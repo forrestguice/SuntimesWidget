@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.settings;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -99,9 +100,14 @@ public class WidgetTimezones
         return new LocalMeanTime(location.getLongitudeAsDouble(), context.getString(R.string.solartime_localMean));
     }
 
-    public static TimeZone apparentSolarTime( Context context, Location location )
+    public static TimeZone apparentSolarTime(Context context, Location location)
     {
         return new ApparentSolarTime(location.getLongitudeAsDouble(), context.getString(R.string.solartime_apparent));
+    }
+
+    public static TimeZone apparentSolarTime(Context context, Location location, SuntimesCalculator calculator)
+    {
+        return new ApparentSolarTime(location.getLongitudeAsDouble(), context.getString(R.string.solartime_apparent), calculator);
     }
 
     /**
@@ -188,6 +194,18 @@ public class WidgetTimezones
             super(longitude, name);
         }
 
+        public ApparentSolarTime(double longitude, String name, SuntimesCalculator calculator)
+        {
+            super(longitude, name);
+            this.calculator = calculator;
+        }
+
+        private SuntimesCalculator calculator = null;
+        public void setCalculator(SuntimesCalculator calculator)
+        {
+            this.calculator = calculator;
+        }
+
         @Override
         public int getOffset(int era, int year, int month, int day, int dayOfWeek, int milliseconds)
         {
@@ -203,7 +221,29 @@ public class WidgetTimezones
         @Override
         public int getOffset( long date )
         {
-            return getRawOffset() + equationOfTimeOffset(date);
+            return getRawOffset() + equationOfTimeOffset(date, calculator);
+        }
+
+        public static int equationOfTimeOffset(long date,SuntimesCalculator calculator)
+        {
+            if (calculator != null)
+            {
+                Calendar calendar = new GregorianCalendar();
+                calendar.setTimeInMillis(date);
+                double eotSeconds = calculator.equationOfTime(calendar);
+                if (eotSeconds != Double.POSITIVE_INFINITY)
+                {
+                    //Log.d("ApparentSolar", "equationOfTime: using " + calculator.name() + ": eot is: " + (eotSeconds / 60d) + " minutes" );
+                    return (int)(eotSeconds * 1000);
+
+                } else {
+                    //Log.d("ApparentSolar", "equationOfTime: not supported by " + calculator.name() + " using fallback: " + (equationOfTimeOffset(date) / 1000d / 60d) );
+                    return equationOfTimeOffset(date);    // not supported; use fall-back implementation
+                }
+            } else {
+                //Log.d("ApparentSolar", "equationOfTime: null calculator, using fallback: " + (equationOfTimeOffset(date) / 1000d / 60d) );
+                return equationOfTimeOffset(date);      // no calculator; use fall-back implementation
+            }
         }
 
         /**

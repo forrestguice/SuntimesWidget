@@ -222,6 +222,7 @@ public class SuntimesMoonData extends SuntimesData
     public void calculate()
     {
         initCalculator(context);
+        initTimezone(context);
 
         todaysCalendar = Calendar.getInstance(timezone);
         otherCalendar = Calendar.getInstance(timezone);

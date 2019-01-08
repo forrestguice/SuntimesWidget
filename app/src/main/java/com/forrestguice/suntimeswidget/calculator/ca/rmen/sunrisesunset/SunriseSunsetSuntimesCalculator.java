@@ -275,5 +275,11 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
                 R.string.calculator_displayString_caarmensunrisesunset, SunriseSunsetSuntimesCalculator.FEATURES);
     }
 
+    @Override
+    public double equationOfTime(Calendar dateTime)
+    {
+        return Double.POSITIVE_INFINITY;
+    }
+
 }
 
