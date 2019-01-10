@@ -1,6 +1,6 @@
 ### ~
 
-### v0.10.2 (2019-01-09)
+### v0.10.2 (2019-01-10)
 * fixes bug "'get location' does not honor the 'units of length' pref" (#290).
 * improves the accuracy of the apparent solar time calculation (#291).
 * updates translation to Basque (eu) (#294 by beriain). 
