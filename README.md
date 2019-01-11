@@ -128,6 +128,7 @@ When submitting a bug please be detailed and specific. What did you expect the a
 
 ## Legal Stuff
 
+Copyright &#169 2014-2019 Forrest Guice
 The goal of this project is an app that is free and open-source (FOSS). The source code is available under *GPLv3* (https://github.com/forrestguice/SuntimesWidget).
 
 Icons and images from:

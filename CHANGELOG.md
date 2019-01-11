@@ -1,9 +1,13 @@
 ### ~
 
 ##
- 
 * adds a clock widget (#154, #260); displays solar time (Local Mean Time, Apparent Solar Time), or the time in a given timezone.
 * changes the default solar time mode to "Apparent Solar Time".
+
+### v0.10.2 (2019-01-10)
+* fixes bug "'get location' does not honor the 'units of length' pref" (#290).
+* improves the accuracy of the apparent solar time calculation (#291).
+* updates translation to Basque (eu) (#294 by beriain). 
 
 ### v0.10.1 (2018-12-23)
 * fixes bug "sun/moon circles are difficult to see (too small)" (#286) on lightmap and worldmap widgets.
