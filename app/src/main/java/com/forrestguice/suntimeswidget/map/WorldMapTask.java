@@ -139,8 +139,8 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
         public boolean showSunPosition = true;
         public int sunFillColor = Color.YELLOW;
         public int sunStrokeColor = Color.BLACK;
-        public int sunRadius = 6;
-        public int sunStroke = 2;
+        public int sunScale = 48;                     // 48; default 48 suns fit within the width of the image (which is 24 hr wide meaning the sun has diameter of a half-hour)
+        public int sunStrokeScale = 3;                // 3; default 3 strokes fit within the radius of the sun (i.e. the stroke is 1/3 the width)
 
         public boolean showSunShadow = true;
         public int sunShadowColor = Color.BLACK;
@@ -148,8 +148,8 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
         public boolean showMoonPosition = true;
         public int moonFillColor = Color.WHITE;
         public int moonStrokeColor = Color.BLACK;
-        public int moonRadius = 5;
-        public int moonStroke = 2;
+        public int moonScale = 72;                    // 72; default moonscale is 3/4 the size of the sun (48)
+        public int moonStrokeScale = 3;               // 3; default 3 strokes fit within the radius of the moon
 
         public boolean showMoonLight = true;
         public int moonLightColor = Color.LTGRAY;
@@ -236,26 +236,34 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
 
         protected void drawSun(Canvas c, int x, int y, Paint p, WorldMapTask.WorldMapOptions options)
         {
+            double sunDiameter = (int)Math.ceil(c.getWidth() / (double)options.sunScale);
+            int sunRadius = (int)Math.ceil(sunDiameter / 2d);
+            int sunStroke = (int)Math.ceil(sunRadius / (double)options.sunStrokeScale);
+
             p.setStyle(Paint.Style.FILL);
             p.setColor(options.sunFillColor);
-            c.drawCircle(x, y, options.sunRadius, p);
+            c.drawCircle(x, y, sunRadius, p);
 
             p.setStyle(Paint.Style.STROKE);
-            p.setStrokeWidth(options.sunStroke);
+            p.setStrokeWidth(sunStroke);
             p.setColor(options.sunStrokeColor);
-            c.drawCircle(x, y, options.sunRadius, p);
+            c.drawCircle(x, y, sunRadius, p);
         }
 
         protected void drawMoon(Canvas c, int x, int y, Paint p, WorldMapTask.WorldMapOptions options)
         {
+            double moonDiameter = Math.ceil(c.getWidth() / (double)options.moonScale);
+            int moonRadius = (int)Math.ceil(moonDiameter / 2d);
+            int moonStroke = (int)Math.ceil(moonRadius / (double)options.moonStrokeScale);
+
             p.setStyle(Paint.Style.FILL);
             p.setColor(options.moonFillColor);
-            c.drawCircle(x, y, options.moonRadius, p);
+            c.drawCircle(x, y, moonRadius, p);
 
             p.setStyle(Paint.Style.STROKE);
-            p.setStrokeWidth(options.moonStroke);
+            p.setStrokeWidth(moonStroke);
             p.setColor(options.moonStrokeColor);
-            c.drawCircle(x, y, options.moonRadius, p);
+            c.drawCircle(x, y, moonRadius, p);
         }
 
     }

@@ -23,8 +23,8 @@ android
         minSdkVersion 10
         //noinspection OldTargetApi
         targetSdkVersion 25
-        versionCode 37
-        versionName "0.10.0"
+        versionCode 39
+        versionName "0.10.2"
 
         buildConfigField "java.util.Date", "BUILD_TIME", "new java.util.Date(" + getDateAsMillis() + "L)"
         buildConfigField "String", "GIT_HASH", "\"${getGitHash()}\""
@@ -55,7 +55,7 @@ dependencies
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.github.forrestguice:sunrisesunsetlib-java:SunriseSunsetCalculator-1.2-p0-fixdst'
     compile 'com.github.caarmen.SunriseSunset:lib-sunrise-sunset:1.1.0'
-    compile group: 'net.time4j', name: 'time4j-android', version: '4.1-2018g'
+    compile group: 'net.time4j', name: 'time4j-android', version: '4.2-2018g'
 
     compile 'com.github.QuadFlask:colorpicker:0.0.13'
 
