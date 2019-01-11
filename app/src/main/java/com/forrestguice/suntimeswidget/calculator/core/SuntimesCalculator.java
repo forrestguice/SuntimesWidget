@@ -27,7 +27,7 @@ import java.util.TimeZone;
  * An interface used when calculating sunrise and sunset times. Implementations
  * of this interface are intended to be thin wrappers around third party code.
  *
- * @version 1.4.0
+ * @version 1.5.0
  */
 public interface SuntimesCalculator
 {
@@ -304,9 +304,17 @@ public interface SuntimesCalculator
 
     /**
      * @param objHeight height of the obj (meters)
+     * @param dateTime a Calendar representing a given date + time
      * @return length of shadow (meters) or infinity
      * @since 1.4.0 FEATURE_POSITION, FEATURE_RISESET
      */
     double getShadowLength( double objHeight, Calendar dateTime );
+
+    /**
+     * @param dateTime a Calendar representing a given date + time
+     * @return the equation of time value in seconds (or INFINITY if not supported)
+     * @since 1.5.0 FEATURE_POSITION, FEATURE_RISESET
+     */
+    double equationOfTime( Calendar dateTime );
 
 }

@@ -205,31 +205,7 @@ public class SuntimesData
         // from timezone settings
         timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, appWidgetId));
         timezoneMode = WidgetSettings.loadTimezoneModePref(context, appWidgetId);
-
-        switch (timezoneMode)
-        {
-            case CUSTOM_TIMEZONE:
-                // empty; use preset timezone value
-                break;
-
-            case CURRENT_TIMEZONE:
-                timezone = TimeZone.getDefault();
-                break;
-
-            case SOLAR_TIME:
-                WidgetSettings.SolarTimeMode solarMode = WidgetSettings.loadSolarTimeModePref(context, appWidgetId);
-                switch (solarMode)
-                {
-                    case APPARENT_SOLAR_TIME:
-                        timezone = WidgetTimezones.apparentSolarTime(context, location);
-                        break;
-
-                    default:
-                        timezone = WidgetTimezones.localMeanTime(context, location);
-                        break;
-                }
-                break;
-        }
+        initTimezone(context);
 
         // from date settings
         WidgetSettings.DateMode dateMode = WidgetSettings.loadDateModePref(context, appWidgetId);
@@ -247,6 +223,34 @@ public class SuntimesData
 
         } else {
             setTodayIsToday();
+        }
+    }
+
+    protected void initTimezone(Context context)
+    {
+        switch (timezoneMode)
+        {
+            case CUSTOM_TIMEZONE:
+                // empty; use preset timezone value
+                break;
+
+            case CURRENT_TIMEZONE:
+                timezone = TimeZone.getDefault();
+                break;
+
+            case SOLAR_TIME:
+                WidgetSettings.SolarTimeMode solarMode = WidgetSettings.loadSolarTimeModePref(context, appWidgetID);
+                switch (solarMode)
+                {
+                    case APPARENT_SOLAR_TIME:
+                        timezone = WidgetTimezones.apparentSolarTime(context, location, calculator);
+                        break;
+
+                    default:
+                        timezone = WidgetTimezones.localMeanTime(context, location);
+                        break;
+                }
+                break;
         }
     }
 
