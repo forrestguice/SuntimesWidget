@@ -32,6 +32,7 @@ import android.test.RenamingDelegatingContext;
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -125,6 +126,7 @@ public class CalculatorProviderTest
 {
     private Context mockContext;
     private Calendar TEST_DATE0, TEST_DATE1;
+    private SuntimesCalculator sunCalculator, moonCalculator;
 
     @Before
     public void setup()
@@ -136,6 +138,18 @@ public class CalculatorProviderTest
 
         TEST_DATE1 = Calendar.getInstance();
         TEST_DATE1.set(2019, 0, 0, 0, 0, 0);
+
+        sunCalculator = getCalculator("");
+        moonCalculator = getCalculator("moon");
+    }
+
+    private SuntimesCalculator getCalculator(String calculatorName)
+    {
+        Location location = WidgetSettings.loadLocationPref(mockContext, 0);
+        TimeZone timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(mockContext, 0));
+        SuntimesCalculatorDescriptor descriptor = WidgetSettings.loadCalculatorModePref(mockContext, 0, calculatorName);
+        SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(mockContext, descriptor);
+        return factory.createCalculator(location, timezone);
     }
 
     @Test
@@ -439,18 +453,35 @@ public class CalculatorProviderTest
         String[] projection = QUERY_MOON_PROJECTION;
         Cursor cursor = resolver.query(uri, projection, null, null, null);
         test_cursorHasColumns("QUERY_MOON", cursor, projection);
+        test_moontimes(cursor, moonCalculator.getMoonTimesForDate(Calendar.getInstance()));
 
         // case 1: date
         Uri uri1 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_MOON + "/" + TEST_DATE0.getTimeInMillis());
         String[] projection1 = QUERY_MOON_PROJECTION;
         Cursor cursor1 = resolver.query(uri1, projection1, null, null, null);
         test_cursorHasColumns("QUERY_MOON", cursor1, projection1);
+        test_moontimes(cursor1, moonCalculator.getMoonTimesForDate(TEST_DATE0));
 
         // case 2: range
         Uri uri2 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_MOON + "/" + TEST_DATE0.getTimeInMillis() + "-" + TEST_DATE1.getTimeInMillis());
         String[] projection2 = QUERY_MOON_PROJECTION;
         Cursor cursor2 = resolver.query(uri2, projection2, null, null, null);
         test_cursorHasColumns("QUERY_MOON", cursor2, projection2);
+    }
+
+    public void test_moontimes(Cursor cursor, SuntimesCalculator.MoonTimes oracle)
+    {
+        if (cursor != null)
+        {
+            cursor.moveToFirst();
+            Calendar moonrise = Calendar.getInstance();
+            moonrise.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_MOON_RISE)));
+            assertTrue("moonrise time should match .. " + oracle.riseTime + " != " + moonrise, oracle.riseTime.getTimeInMillis() == moonrise.getTimeInMillis());
+
+            Calendar moonset = Calendar.getInstance();
+            moonset.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_MOON_SET)));
+            assertTrue("moonset time should match .. " + oracle.setTime + " != " + moonset, oracle.setTime.getTimeInMillis() == moonset.getTimeInMillis());
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
