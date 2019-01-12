@@ -28,6 +28,7 @@ import android.support.annotation.Nullable;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
+import android.util.Log;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract;
@@ -280,12 +281,16 @@ public class CalculatorProviderTest
         String[] projection0 = QUERY_SEASONS_PROJECTION;
         Cursor cursor0 = resolver.query(uri0, projection0, null, null, null);
         test_cursorHasColumns("QUERY_SEASONS", cursor0, projection0);
+        assertTrue(COLUMN_SEASON_YEAR + " should contain int!", columnIsInt(cursor0, COLUMN_SEASON_YEAR));
+        test_allColumnsLong("QUERY_SEASONS", cursor0, new String[] {COLUMN_SEASON_VERNAL, COLUMN_SEASON_SUMMER, COLUMN_SEASON_AUTUMN, COLUMN_SEASON_WINTER});
 
         // case 1: year
         Uri uri1 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_SEASONS + "/" + TEST_DATE0.get(Calendar.YEAR));
         String[] projection1 = QUERY_SEASONS_PROJECTION;
         Cursor cursor1 = resolver.query(uri1, projection1, null, null, null);
         test_cursorHasColumns("QUERY_SEASONS", cursor1, projection1);
+        assertTrue(COLUMN_SEASON_YEAR + " should contain int!", columnIsInt(cursor1, COLUMN_SEASON_YEAR));
+        test_allColumnsLong("QUERY_SEASONS", cursor1, new String[] {COLUMN_SEASON_VERNAL, COLUMN_SEASON_SUMMER, COLUMN_SEASON_AUTUMN, COLUMN_SEASON_WINTER});
 
         // case 2: range
         Uri uri2 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_SEASONS + "/" + TEST_DATE0.get(Calendar.YEAR) + "-" + TEST_DATE1.get(Calendar.YEAR));
@@ -363,6 +368,7 @@ public class CalculatorProviderTest
         String[] projection = QUERY_SUN_PROJECTION;
         Cursor cursor = resolver.query(uri, projection, null, null, null);
         test_cursorHasColumns("QUERY_SUN", cursor, projection);
+        test_allColumnsLong("QUERY_SUN", cursor, projection);
         test_suntimes(cursor, sunCalculator, Calendar.getInstance());
 
         // case 1: date
@@ -370,6 +376,7 @@ public class CalculatorProviderTest
         String[] projection1 = QUERY_SUN_PROJECTION;
         Cursor cursor1 = resolver.query(uri1, projection1, null, null, null);
         test_cursorHasColumns("QUERY_SUN", cursor1, projection1);
+        test_allColumnsLong("QUERY_SUN", cursor, projection1);
         test_suntimes(cursor1, sunCalculator, TEST_DATE0);
 
         // case 2: range
@@ -501,12 +508,16 @@ public class CalculatorProviderTest
         String[] projection = QUERY_SUNPOS_PROJECTION;
         Cursor cursor = resolver.query(uri, projection, null, null, null);
         test_cursorHasColumns("QUERY_SUNPOS", cursor, projection);
+        test_allColumnsDouble("QUERY_SUNPOS", cursor, new String[] {COLUMN_SUNPOS_ALT, COLUMN_SUNPOS_AZ, COLUMN_SUNPOS_DEC, COLUMN_SUNPOS_RA} );
+        assertTrue("sunpos date column should be long", columnIsLong(cursor, COLUMN_SUNPOS_DATE));
 
         // case 1: date
         Uri uri1 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_SUNPOS + "/" + TEST_DATE0.getTimeInMillis());
         String[] projection1 = QUERY_SUNPOS_PROJECTION;
         Cursor cursor1 = resolver.query(uri1, projection1, null, null, null);
         test_cursorHasColumns("QUERY_SUNPOS", cursor1, projection1);
+        test_allColumnsDouble("QUERY_SUNPOS", cursor, new String[] {COLUMN_SUNPOS_ALT, COLUMN_SUNPOS_AZ, COLUMN_SUNPOS_DEC, COLUMN_SUNPOS_RA} );
+        assertTrue("sunpos date column should be long", columnIsLong(cursor, COLUMN_SUNPOS_DATE));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -541,6 +552,7 @@ public class CalculatorProviderTest
         String[] projection = QUERY_MOON_PROJECTION;
         Cursor cursor = resolver.query(uri, projection, null, null, null);
         test_cursorHasColumns("QUERY_MOON", cursor, projection);
+        test_allColumnsLong("QUERY_MOONP", cursor, projection);
         test_moontimes(cursor, moonCalculator.getMoonTimesForDate(Calendar.getInstance()));
 
         // case 1: date
@@ -548,6 +560,7 @@ public class CalculatorProviderTest
         String[] projection1 = QUERY_MOON_PROJECTION;
         Cursor cursor1 = resolver.query(uri1, projection1, null, null, null);
         test_cursorHasColumns("QUERY_MOON", cursor1, projection1);
+        test_allColumnsLong("QUERY_MOON", cursor, projection1);
         test_moontimes(cursor1, moonCalculator.getMoonTimesForDate(TEST_DATE0));
 
         // case 2: range
@@ -608,12 +621,16 @@ public class CalculatorProviderTest
         String[] projection0 = QUERY_MOONPOS_PROJECTION;
         Cursor cursor0 = resolver.query(uri0, projection0, null, null, null);
         test_cursorHasColumns("QUERY_MOONPOS", cursor0, projection0);
+        test_allColumnsDouble("QUERY_MOONPOS", cursor0, new String[] {COLUMN_MOONPOS_ALT, COLUMN_MOONPOS_AZ, COLUMN_MOONPOS_DEC, COLUMN_MOONPOS_RA} );
+        assertTrue("moonpos date column should be long", columnIsLong(cursor0, COLUMN_MOONPOS_DATE));
 
         // case 1: date
         Uri uri1 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_MOONPOS + "/" + TEST_DATE0.getTimeInMillis());
         String[] projection1 = QUERY_MOONPOS_PROJECTION;
         Cursor cursor1 = resolver.query(uri1, projection1, null, null, null);
         test_cursorHasColumns("QUERY_MOONPOS", cursor1, projection1);
+        test_allColumnsDouble("QUERY_MOONPOS", cursor0, new String[] {COLUMN_MOONPOS_ALT, COLUMN_MOONPOS_AZ, COLUMN_MOONPOS_DEC, COLUMN_MOONPOS_RA} );
+        assertTrue("moonpos date column should be long", columnIsLong(cursor0, COLUMN_MOONPOS_DATE));
     }
 
 
@@ -654,18 +671,21 @@ public class CalculatorProviderTest
         String[] projection0 = QUERY_MOONPHASE_PROJECTION;
         Cursor cursor0 = resolver.query(uri0, projection0, null, null, null);
         test_cursorHasColumns("QUERY_MOONPHASE", cursor0, projection0);
+        test_allColumnsLong("QUERY_MOONPHASE", cursor0, projection0);
 
         // case 1: date
         Uri uri1 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_MOONPHASE + "/" + startDate.getTimeInMillis());
         String[] projection1 = QUERY_MOONPHASE_PROJECTION;
         Cursor cursor1 = resolver.query(uri1, projection1, null, null, null);
         test_cursorHasColumns("QUERY_MOONPHASE", cursor1, projection1);
+        test_allColumnsLong("QUERY_MOONPHASE", cursor1, projection1);
 
         // case 2: range
         Uri uri2 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_MOONPHASE + "/" + startDate.getTimeInMillis() + "-" + endDate.getTimeInMillis());
         String[] projection2 = QUERY_MOONPHASE_PROJECTION;
         Cursor cursor2 = resolver.query(uri2, projection2, null, null, null);
         test_cursorHasColumns("QUERY_MOONPHASE", cursor2, projection2);
+        test_allColumnsLong("QUERY_MOONPHASE", cursor2, projection2);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -806,6 +826,92 @@ public class CalculatorProviderTest
         for (String column : projection) {
             assertTrue(tag + " results should contain " + column, cursor.getColumnIndex(column) >= 0);
         }
+    }
+
+    private void test_allColumnsLong(String tag, Cursor cursor, String[] columns)
+    {
+        if (cursor != null)
+        {
+            cursor.moveToFirst();
+            boolean allColumnsLong = true;
+            for (String column : columns)
+            {
+                boolean isLong = columnIsLong(cursor, column);
+                allColumnsLong = (allColumnsLong && isLong);
+
+                if (!isLong) {
+                    Log.w(tag, column + " is not long!");
+                }
+            }
+            assertTrue("all columns should contain long!", allColumnsLong);
+        }
+    }
+
+    private void test_allColumnsDouble(String tag, Cursor cursor, String[] columns)
+    {
+        if (cursor != null)
+        {
+            cursor.moveToFirst();
+            boolean allColumnsDouble = true;
+            for (String column : columns)
+            {
+                boolean isDouble = columnIsDouble(cursor, column);
+                allColumnsDouble = (allColumnsDouble && isDouble);
+
+                if (!isDouble) {
+                    Log.w(tag, column + " is not double!");
+                }
+            }
+            assertTrue("all columns should contain double!", allColumnsDouble);
+        }
+    }
+
+    private boolean columnIsInt(Cursor cursor, String column)
+    {
+        if (cursor != null) {
+            try {
+                int index = cursor.getColumnIndex(column);
+                if (cursor.getType(index) == Cursor.FIELD_TYPE_INTEGER);
+                {
+                    int value = cursor.getInt(index);
+                    return true;
+                }
+
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    private boolean columnIsDouble(Cursor cursor, String column)
+    {
+        if (cursor != null) {
+            try {
+                int index = cursor.getColumnIndex(column);
+                if (cursor.getType(index) == Cursor.FIELD_TYPE_FLOAT)
+                {
+                    double value = cursor.getDouble(index);
+                    return true;
+                }
+
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    private boolean columnIsLong(Cursor cursor, String column)
+    {
+        if (cursor != null) {
+            try {
+                long value = cursor.getLong(cursor.getColumnIndex(column));
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void test_projectionHasUniqueColumns(String[] projection)
