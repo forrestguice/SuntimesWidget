@@ -363,18 +363,106 @@ public class CalculatorProviderTest
         String[] projection = QUERY_SUN_PROJECTION;
         Cursor cursor = resolver.query(uri, projection, null, null, null);
         test_cursorHasColumns("QUERY_SUN", cursor, projection);
+        test_suntimes(cursor, sunCalculator, Calendar.getInstance());
 
         // case 1: date
         Uri uri1 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_SUN + "/" + TEST_DATE0.getTimeInMillis());
         String[] projection1 = QUERY_SUN_PROJECTION;
         Cursor cursor1 = resolver.query(uri1, projection1, null, null, null);
         test_cursorHasColumns("QUERY_SUN", cursor1, projection1);
+        test_suntimes(cursor1, sunCalculator, TEST_DATE0);
 
         // case 2: range
         Uri uri2 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_SUN + "/" + TEST_DATE0.getTimeInMillis() + "-" + TEST_DATE1.getTimeInMillis());
         String[] projection2 = QUERY_SUN_PROJECTION;
         Cursor cursor2 = resolver.query(uri2, projection2, null, null, null);
         test_cursorHasColumns("QUERY_SUN", cursor2, projection2);
+    }
+
+    public void test_suntimes(Cursor cursor, SuntimesCalculator calculator, Calendar date)
+    {
+        if (cursor != null)
+        {
+            cursor.moveToFirst();
+
+            Calendar noon0 = calculator.getSolarNoonCalendarForDate(date);
+            Calendar noon1 = Calendar.getInstance();
+            noon1.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_SUN_NOON)));
+            assertTrue("noon time should match .. " + noon0 + " != " + noon1, noon0.getTimeInMillis() == noon1.getTimeInMillis());
+
+
+            Calendar sunrise0 = calculator.getOfficialSunriseCalendarForDate(date);
+            Calendar sunrise1 = Calendar.getInstance();
+            sunrise1.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_SUN_ACTUAL_RISE)));
+            assertTrue("sunrise time should match .. " + sunrise0 + " != " + sunrise1, sunrise0.getTimeInMillis() == sunrise1.getTimeInMillis());
+
+            Calendar civilrise0 = calculator.getCivilSunriseCalendarForDate(date);
+            Calendar civilrise1 = Calendar.getInstance();
+            civilrise1.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_SUN_CIVIL_RISE)));
+            assertTrue("civilrise time should match .. " + civilrise0 + " != " + civilrise1, civilrise0.getTimeInMillis() == civilrise1.getTimeInMillis());
+
+            Calendar nauticalrise0 = calculator.getNauticalSunriseCalendarForDate(date);
+            Calendar nauticalrise1 = Calendar.getInstance();
+            nauticalrise1.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_SUN_NAUTICAL_RISE)));
+            assertTrue("nauticalrise time should match .. " + nauticalrise0 + " != " + nauticalrise1, nauticalrise0.getTimeInMillis() == nauticalrise1.getTimeInMillis());
+
+            Calendar astrorise0 = calculator.getAstronomicalSunriseCalendarForDate(date);
+            Calendar astrorise1 = Calendar.getInstance();
+            astrorise1.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_SUN_ASTRO_RISE)));
+            assertTrue("astrorise time should match .. " + astrorise0 + " != " + astrorise1, astrorise0.getTimeInMillis() == astrorise1.getTimeInMillis());
+
+
+            Calendar sunset0 = calculator.getOfficialSunsetCalendarForDate(date);
+            Calendar sunset1 = Calendar.getInstance();
+            sunset1.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_SUN_ACTUAL_SET)));
+            assertTrue("sunset time should match .. " + sunset0 + " != " + sunset1, sunset0.getTimeInMillis() == sunset1.getTimeInMillis());
+
+            Calendar civilset0 = calculator.getCivilSunsetCalendarForDate(date);
+            Calendar civilset1 = Calendar.getInstance();
+            civilset1.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_SUN_CIVIL_SET)));
+            assertTrue("civilset time should match .. " + civilset0 + " != " + civilset1, civilset0.getTimeInMillis() == civilset1.getTimeInMillis());
+
+            Calendar nauticalset0 = calculator.getNauticalSunsetCalendarForDate(date);
+            Calendar nauticalset1 = Calendar.getInstance();
+            nauticalset1.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_SUN_NAUTICAL_SET)));
+            assertTrue("nauticalset time should match .. " + nauticalset0 + " != " + nauticalset1, nauticalset0.getTimeInMillis() == nauticalset1.getTimeInMillis());
+
+            Calendar astroset0 = calculator.getAstronomicalSunsetCalendarForDate(date);
+            Calendar astroset1 = Calendar.getInstance();
+            astroset1.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_SUN_ASTRO_SET)));
+            assertTrue("astroset time should match .. " + astroset0 + " != " + astroset1, astroset0.getTimeInMillis() == astroset1.getTimeInMillis());
+
+
+            Calendar golden_m0 = calculator.getMorningGoldenHourForDate(date);
+            Calendar golden_m1 = Calendar.getInstance();
+            golden_m1.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_SUN_GOLDEN_MORNING)));
+            assertTrue("golden morning time should match .. " + golden_m0 + " != " + golden_m1, golden_m0.getTimeInMillis() == golden_m1.getTimeInMillis());
+
+            Calendar golden_e0 = calculator.getMorningGoldenHourForDate(date);
+            Calendar golden_e1 = Calendar.getInstance();
+            golden_e1.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_SUN_GOLDEN_EVENING)));
+            assertTrue("golden evening time should match .. " + golden_e0 + " != " + golden_e1, golden_e0.getTimeInMillis() == golden_e1.getTimeInMillis());
+
+
+            Calendar[] blueMorning0 = calculator.getMorningBlueHourForDate(date);
+            Calendar[] blueEvening0 = calculator.getEveningBlueHourForDate(date);
+
+            Calendar blueMorning_81 = Calendar.getInstance();
+            blueMorning_81.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_SUN_BLUE8_RISE)));
+            assertTrue("blue morning time should match .. " + blueMorning0[0] + " != " + blueMorning_81, blueMorning0[0].getTimeInMillis() == blueMorning_81.getTimeInMillis());
+
+            Calendar blueMorning_41 = Calendar.getInstance();
+            blueMorning_41.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_SUN_BLUE4_RISE)));
+            assertTrue("blue morning time should match .. " + blueMorning0[1] + " != " + blueMorning_41, blueMorning0[1].getTimeInMillis() == blueMorning_41.getTimeInMillis());
+
+            Calendar blueEvening_41 = Calendar.getInstance();
+            blueEvening_41.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_SUN_BLUE4_SET)));
+            assertTrue("blue evening time should match .. " + blueEvening0[0] + " != " + blueEvening_41, blueEvening0[0].getTimeInMillis() == blueEvening_41.getTimeInMillis());
+
+            Calendar blueEvening_81 = Calendar.getInstance();
+            blueEvening_81.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_SUN_BLUE8_SET)));
+            assertTrue("blue evening time should match .. " + blueEvening0[1] + " != " + blueEvening_81, blueEvening0[1].getTimeInMillis() == blueEvening_81.getTimeInMillis());
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
