@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget.calculator.core;
 
 /**
  * CalculatorProviderContract
- * @version 0 (0.1.0)
+ * @version 1 (0.2.0)
  *
  * Supported URIs have the form: "content://AUTHORITY/query"
  * ..where [AUTHORITY] is "suntimeswidget.calculator.provider"
@@ -207,8 +207,8 @@ public interface CalculatorProviderContract
 {
     String AUTHORITY = "suntimeswidget.calculator.provider";
     String READ_PERMISSION = "suntimes.permission.READ_CALCULATOR";
-    String VERSION_NAME = "v0.1.0";
-    int VERSION_CODE = 0;
+    String VERSION_NAME = "v0.2.0";
+    int VERSION_CODE = 1;
 
     /**
      * CONFIG
@@ -219,6 +219,7 @@ public interface CalculatorProviderContract
     String COLUMN_CONFIG_APP_VERSION_CODE = "config_app_version_code";             // int (app version code)
     String COLUMN_CONFIG_APP_THEME = "config_app_theme";                           // String (themeName)
     String COLUMN_CONFIG_LOCALE = "config_locale";                                 // String (localeCode)
+    String COLUMN_CONFIG_LOCATION = "location";                                    // String (locationName)
     String COLUMN_CONFIG_LATITUDE = "latitude";                                    // String (dd)
     String COLUMN_CONFIG_LONGITUDE = "longitude";                                  // String (dd)
     String COLUMN_CONFIG_ALTITUDE = "altitude";                                    // String (meters)
@@ -233,7 +234,7 @@ public interface CalculatorProviderContract
             COLUMN_CONFIG_PROVIDER_VERSION, COLUMN_CONFIG_PROVIDER_VERSION_CODE,
             COLUMN_CONFIG_LOCALE, COLUMN_CONFIG_APP_THEME,
             COLUMN_CONFIG_CALCULATOR, COLUMN_CONFIG_CALCULATOR_FEATURES,
-            COLUMN_CONFIG_LATITUDE, COLUMN_CONFIG_LONGITUDE, COLUMN_CONFIG_ALTITUDE,
+            COLUMN_CONFIG_LOCATION, COLUMN_CONFIG_LATITUDE, COLUMN_CONFIG_LONGITUDE, COLUMN_CONFIG_ALTITUDE,
             COLUMN_CONFIG_TIMEZONE, COLUMN_CONFIG_APPWIDGETID
     };
 
