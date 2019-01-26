@@ -1,5 +1,8 @@
 ### ~
 
+* reveals previously hidden azimuthal map projection in the World Map dialog (#284); layout issues for this projection continue to exist for smaller screens.
+* fixes a CalculatorProvider bug where sun/moon queries returned the wrong data type (Calendar obj vs long timestamp).
+
 ### v0.10.2 (2019-01-10)
 * fixes bug "'get location' does not honor the 'units of length' pref" (#290).
 * improves the accuracy of the apparent solar time calculation (#291).
