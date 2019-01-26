@@ -1,5 +1,6 @@
 ### ~
 
+### v0.10.2 (2019-01-28)
 * reveals previously hidden azimuthal map projection in the World Map dialog (#284); layout issues for this projection continue to exist for smaller screens.
 * fixes a CalculatorProvider bug where sun/moon queries returned the wrong data type (Calendar obj vs long timestamp).
 
