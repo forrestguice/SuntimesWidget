@@ -243,6 +243,7 @@ public class CalculatorProvider extends ContentProvider
                 break;
             case URIMATCH_SUN_FOR_DATE:
                 Log.d("CalculatorProvider", "URIMATCH_SUN_FOR_DATE");
+                date.setTimeInMillis(ContentUris.parseId(uri));
                 retValue = querySun(new Calendar[] {date, date}, uri, projection, selectionMap, sortOrder);
                 break;
             case URIMATCH_SUN_FOR_RANGE:
@@ -257,6 +258,7 @@ public class CalculatorProvider extends ContentProvider
                 break;
             case URIMATCH_SUNPOS_FOR_DATE:
                 Log.d("CalculatorProvider", "URIMATCH_SUNPOS_FOR_DATE");
+                date.setTimeInMillis(ContentUris.parseId(uri));
                 retValue = querySunPos(date, uri, projection, selectionMap, sortOrder);
                 break;
 
@@ -266,6 +268,7 @@ public class CalculatorProvider extends ContentProvider
                 break;
             case URIMATCH_MOON_FOR_DATE:
                 Log.d("CalculatorProvider", "URIMATCH_MOON_FOR_DATE");
+                date.setTimeInMillis(ContentUris.parseId(uri));
                 retValue = queryMoon(new Calendar[] {date, date}, uri, projection, selectionMap, sortOrder);
                 break;
             case URIMATCH_MOON_FOR_RANGE:
@@ -280,6 +283,7 @@ public class CalculatorProvider extends ContentProvider
                 break;
             case URIMATCH_MOONPOS_FOR_DATE:
                 Log.d("CalculatorProvider", "URIMATCH_MOONPOS_FOR_DATE");
+                date.setTimeInMillis(ContentUris.parseId(uri));
                 retValue = queryMoonPos(date, uri, projection, selectionMap, sortOrder);
                 break;
 
@@ -422,6 +426,7 @@ public class CalculatorProvider extends ContentProvider
             endDay.setTimeInMillis(range[1].getTimeInMillis() + 1000);      // +1000ms (make range[1] inclusive)
 
             do {
+                Calendar calendar;
                 Calendar[] morningBlueHour = null, eveningBlueHour = null;
                 Object[] row = new Object[columns.length];
                 for (int i=0; i<columns.length; i++)
@@ -429,68 +434,79 @@ public class CalculatorProvider extends ContentProvider
                     switch (columns[i])
                     {
                         case COLUMN_SUN_ACTUAL_RISE:
-                            row[i] = calculator.getOfficialSunriseCalendarForDate(day);
+                            calendar = calculator.getOfficialSunriseCalendarForDate(day);
+                            row[i] = (calendar != null) ? calendar.getTimeInMillis() : null;
                             break;
                         case COLUMN_SUN_ACTUAL_SET:
-                            row[i] = calculator.getOfficialSunsetCalendarForDate(day);
+                            calendar = calculator.getOfficialSunsetCalendarForDate(day);
+                            row[i] = (calendar != null) ? calendar.getTimeInMillis() : null;
                             break;
 
                         case COLUMN_SUN_CIVIL_RISE:
-                            row[i] = calculator.getCivilSunriseCalendarForDate(day);
+                            calendar = calculator.getCivilSunriseCalendarForDate(day);
+                            row[i] = (calendar != null) ? calendar.getTimeInMillis() : null;
                             break;
                         case COLUMN_SUN_CIVIL_SET:
-                            row[i] = calculator.getCivilSunsetCalendarForDate(day);
+                            calendar = calculator.getCivilSunsetCalendarForDate(day);
+                            row[i] = (calendar != null) ? calendar.getTimeInMillis() : null;
                             break;
 
                         case COLUMN_SUN_NAUTICAL_RISE:
-                            row[i] = calculator.getNauticalSunriseCalendarForDate(day);
+                            calendar = calculator.getNauticalSunriseCalendarForDate(day);
+                            row[i] = (calendar != null) ? calendar.getTimeInMillis() : null;
                             break;
                         case COLUMN_SUN_NAUTICAL_SET:
-                            row[i] = calculator.getNauticalSunsetCalendarForDate(day);
+                            calendar = calculator.getNauticalSunsetCalendarForDate(day);
+                            row[i] = (calendar != null) ? calendar.getTimeInMillis() : null;
                             break;
 
                         case COLUMN_SUN_ASTRO_RISE:
-                            row[i] = calculator.getAstronomicalSunriseCalendarForDate(day);
+                            calendar = calculator.getAstronomicalSunriseCalendarForDate(day);
+                            row[i] = (calendar != null) ? calendar.getTimeInMillis() : null;
                             break;
                         case COLUMN_SUN_ASTRO_SET:
-                            row[i] = calculator.getAstronomicalSunsetCalendarForDate(day);
+                            calendar = calculator.getAstronomicalSunsetCalendarForDate(day);
+                            row[i] = (calendar != null) ? calendar.getTimeInMillis() : null;
                             break;
 
                         case COLUMN_SUN_NOON:
-                            row[i] = calculator.getSolarNoonCalendarForDate(day);
+                            calendar = calculator.getSolarNoonCalendarForDate(day);
+                            row[i] = (calendar != null) ? calendar.getTimeInMillis() : null;
                             break;
 
                         case COLUMN_SUN_GOLDEN_EVENING:
-                            row[i] = calculator.getEveningGoldenHourForDate(day);
+                            calendar = calculator.getEveningGoldenHourForDate(day);
+                            row[i] = (calendar != null) ? calendar.getTimeInMillis() : null;
                             break;
                         case COLUMN_SUN_GOLDEN_MORNING:
-                            row[i] = calculator.getMorningGoldenHourForDate(day);
+                            calendar =  calculator.getMorningGoldenHourForDate(day);
+                            row[i] = (calendar != null) ? calendar.getTimeInMillis() : null;
                             break;
 
                         case COLUMN_SUN_BLUE8_RISE:
                             if (morningBlueHour == null) {
                                 morningBlueHour = calculator.getMorningBlueHourForDate(day);
                             }
-                            row[i] = morningBlueHour[0];
+                            row[i] = (morningBlueHour[0] != null) ? morningBlueHour[0].getTimeInMillis() : null;
                             break;
                         case COLUMN_SUN_BLUE4_RISE:
                             if (morningBlueHour == null) {
                                 morningBlueHour = calculator.getMorningBlueHourForDate(day);
                             }
-                            row[i] = morningBlueHour[1];
+                            row[i] = (morningBlueHour[1] != null) ? morningBlueHour[1].getTimeInMillis() : null;
                             break;
 
                         case COLUMN_SUN_BLUE4_SET:
                             if (eveningBlueHour == null) {
                                 eveningBlueHour = calculator.getEveningBlueHourForDate(day);
                             }
-                            row[i] = eveningBlueHour[0];
+                            row[i] = (eveningBlueHour[0] != null) ? eveningBlueHour[0].getTimeInMillis() : null;
                             break;
                         case COLUMN_SUN_BLUE8_SET:
                             if (eveningBlueHour == null) {
                                 eveningBlueHour = calculator.getEveningBlueHourForDate(day);
                             }
-                            row[i] = eveningBlueHour[1];
+                            row[i] = (eveningBlueHour[1] != null) ? eveningBlueHour[1].getTimeInMillis() : null;
                             break;
 
                         default:
@@ -585,11 +601,11 @@ public class CalculatorProvider extends ContentProvider
                     {
                         case COLUMN_MOON_RISE:
                             moontimes = (moontimes == null ? calculator.getMoonTimesForDate(day) : moontimes);
-                            row[i] = moontimes.riseTime;
+                            row[i] = (moontimes.riseTime) != null ? moontimes.riseTime.getTimeInMillis() : null;
                             break;
                         case COLUMN_MOON_SET:
                             moontimes = (moontimes == null ? calculator.getMoonTimesForDate(day) : moontimes);
-                            row[i] = moontimes.setTime;
+                            row[i] = (moontimes.setTime) != null ? moontimes.setTime.getTimeInMillis() : null;
                             break;
 
                         default:
