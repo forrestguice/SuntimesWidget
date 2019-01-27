@@ -42,6 +42,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
@@ -1361,8 +1362,16 @@ public class AlarmClockActivity extends AppCompatActivity
             TextView option_offset = (TextView) view.findViewById(R.id.option_offset);
             if (option_offset != null)
             {
-                // TODO: format/display offset
-                option_offset.setText("TODO");
+                if (item.offset == 0) {
+                    option_offset.setText("at");  // TODO
+
+                } else {
+                    boolean isBefore = (item.offset <= 0);
+                    String offsetText = utils.timeDeltaLongDisplayString(0, item.offset).getValue();
+                    String offsetDisplay = offsetText + (isBefore ? " before" : " after");        // TODO
+                    Spannable offsetSpan = SuntimesUtils.createBoldSpan(null, offsetDisplay, offsetText);
+                    option_offset.setText(offsetSpan);
+                }
 
                 option_offset.setOnClickListener(new View.OnClickListener()
                 {

@@ -79,7 +79,7 @@
         <TextView
             android:id="@+id/text_datetime"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            tools:text="22:22"
+            tools:text="22:22" android:layout_marginTop="14dp"
             android:textSize="52sp" android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/layout_options"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
@@ -133,22 +133,23 @@
 
         <TextView
             android:id="@+id/option_offset"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
             android:textColor="?attr/text_buttonSelector"
-            android:maxLines="1" android:ellipsize="end"
-            tools:text="offset"
+            android:textSize="12sp" android:maxLines="1" android:ellipsize="end"
+            tools:text="1h 30m before" android:minEms="5"
 
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1"
-            app:layout_constraintStart_toEndOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/text_location_label" />  <!-- TODO: better layout -->
+            app:layout_constraintStart_toStartOf="@+id/text_datetime"
+            app:layout_constraintEnd_toEndOf="@+id/text_datetime"
+            app:layout_constraintTop_toBottomOf="@+id/layout_header"
+            app:layout_constraintBottom_toTopOf="@+id/text_datetime" />
 
         <LinearLayout
             android:id="@+id/layout_options"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
 
             android:gravity="start|center_vertical"
             android:orientation="horizontal"
