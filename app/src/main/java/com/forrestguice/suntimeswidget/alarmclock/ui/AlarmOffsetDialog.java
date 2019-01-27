@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -30,6 +30,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.NumberPicker;
 
 import com.forrestguice.suntimeswidget.R;
 
@@ -108,21 +109,97 @@ public class AlarmOffsetDialog extends DialogFragment
         super.onSaveInstanceState(outState);
     }
 
+    private NumberPicker pickerDirection;
+    private NumberPicker pickerOffsetMinutes, pickerOffsetHours;
+
+    private static String[] minuteStrings = new String[] {"--", "1m", "5m", "10m", "15m", "20m", "25m", "30m", "35m", "40m", "45m", "50m", "55m"};
+    private static int[] minuteValues = new int[] {0, 1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55};
+
+    private static String[] hourStrings = new String[] {"--", "1h", "2h", "3h", "4h", "5h", "6h", "7h", "8h", "9h", "10h", "11h", "12h"};
+    private static int[] hourValues = new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+
     protected void initViews( final Context context, View dialogContent )
     {
+        pickerDirection = (NumberPicker) dialogContent.findViewById(R.id.alarmOption_offset_direction);
+        pickerDirection.setMinValue(0);
+        pickerDirection.setMaxValue(1);
+        pickerDirection.setDisplayedValues( new String[] {"before", "after"} );  // TODO: i18n
+        pickerDirection.setOnValueChangedListener(onOffsetChanged);
+
+        pickerOffsetMinutes = (NumberPicker) dialogContent.findViewById(R.id.alarmOption_offset_minute);
+        pickerOffsetMinutes.setMinValue(0);
+        pickerOffsetMinutes.setMaxValue(minuteStrings.length-1);
+        pickerOffsetMinutes.setDisplayedValues(minuteStrings);
+        pickerOffsetMinutes.setOnValueChangedListener(onOffsetChanged);
+
+        pickerOffsetHours = (NumberPicker) dialogContent.findViewById(R.id.alarmOption_offset_hour);
+        pickerOffsetHours.setMinValue(0);
+        pickerOffsetHours.setMaxValue(hourStrings.length-1);
+        pickerOffsetHours.setDisplayedValues(hourStrings);
+        pickerOffsetHours.setOnValueChangedListener(onOffsetChanged);
+    }
+
+    private NumberPicker.OnValueChangeListener onOffsetChanged = new NumberPicker.OnValueChangeListener() {
+        @Override
+        public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+            offset = determineOffset();
+        }
+    };
+    private long determineOffset()
+    {
+        if (pickerDirection != null && pickerOffsetHours != null && pickerOffsetMinutes != null)
+        {
+            int direction = (pickerDirection.getValue() == 0) ? -1 : 1;
+            int minutes = minuteValues[pickerOffsetMinutes.getValue()];
+            int hours = hourValues[pickerOffsetHours.getValue()];
+            return direction * ((minutes * 60 * 1000) + (hours * 60 * 60 * 1000));
+
+        } else {
+            return 0;
+        }
+    }
+
+    private int findMinutesValue(int minuteValue)
+    {
+        int closestIndex = 0;
+        int diff, smallestDiff = Integer.MAX_VALUE;
+        for (int i=0; i<minuteValues.length; i++)
+        {
+            if ((diff = Math.abs(minuteValue - minuteValues[i])) < smallestDiff) {
+                smallestDiff = diff;
+                closestIndex = i;
+            }
+        }
+        return closestIndex;
     }
 
     private void updateViews(Context context)
     {
+        boolean isBefore = (offset <= 0);
+        long offset0 = Math.abs(offset);
+        int h = (int)(offset0 / 1000) / 60 / 60;
+        int m = (int)(offset0 / 1000 / 60) % 60;
+
+        if (pickerDirection != null) {
+            pickerDirection.setValue( isBefore ? 0 : 1 );
+        }
+        if (pickerOffsetHours != null) {
+            pickerOffsetHours.setValue(h);
+        }
+        if (pickerOffsetMinutes != null) {
+            pickerOffsetMinutes.setValue( (m == 0 || m == 1) ? m : findMinutesValue(m) );
+        }
     }
 
     public void setOffset(long offset)
     {
         this.offset = offset;
+        updateViews(getContext());
     }
 
     public long getOffset()
     {
+        determineOffset();
         return offset;
     }
 
