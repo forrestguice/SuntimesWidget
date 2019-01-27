@@ -31,10 +31,24 @@
         android:orientation="horizontal">
 
         <NumberPicker
-            android:id="@+id/alarmOption_offset"
+            android:id="@+id/alarmOption_offset_hour"
             android:layout_width="0dp" android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:descendantFocusability="blocksDescendants"
+            android:fadingEdge="vertical" />
+
+        <TextView
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text=":" />
+
+        <NumberPicker
+            android:id="@+id/alarmOption_offset_minute"
+            android:layout_width="0dp" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:descendantFocusability="blocksDescendants"
             android:fadingEdge="vertical" />
 
         <NumberPicker
@@ -42,6 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:descendantFocusability="blocksDescendants"
             android:fadingEdge="vertical" />
 
     </LinearLayout>
